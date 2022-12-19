@@ -1,5 +1,5 @@
 import React from "react";
-import './_home.scss'
+import "./_home.scss";
 
 import MarketPlace from "./GameMarketplace/Marketplace";
 import VideoWrapper from "./VideoWrapper/VideoWrapper";

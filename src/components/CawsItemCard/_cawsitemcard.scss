@@ -1,0 +1,22 @@
+.itemcard-wrapper {
+  --mask: linear-gradient(
+    45deg,
+    #0000 35.36px,
+    #000 0 calc(100% - 35.36px),
+    #0000 0
+  );
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+
+.purple-bottom-wrapper {
+  background: linear-gradient(180deg, #5b08d0 0%, #7f2df7 100%);
+  border-radius: 6px;
+  padding: 16px;
+  --mask: linear-gradient(45deg,#0000 28.28px,#000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  position: relative;
+  top: -54px;
+  width: 100%;
+}
