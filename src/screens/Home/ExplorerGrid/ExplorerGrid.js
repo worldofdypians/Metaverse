@@ -31,8 +31,8 @@ const ExplorerGrid = () => {
 
 
   return (
-    <div>
-      <div className="mx-0 w-100 ">
+    <div className="px-5">
+      <div className="w-100">
         <h2 className="font-organetto explorer-grid-title px-0 w-50">
           The world is yours to <mark className="font-organetto explore-tag">explore</mark>
         </h2>

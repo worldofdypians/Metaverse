@@ -5,6 +5,7 @@ import './app.scss'
 import './fonts/Organetto.ttf'
 
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
       </Routes>
+      <Footer />
      </div>
     </BrowserRouter>
   );

@@ -5,7 +5,7 @@ import cawsHeroBanner from "../../../assets/cawsHeroBanner.webp";
 
 const CawsWorld = () => {
   return (
-    <div className="row mx-0 mt-5 caws-world-wrapper py-5">
+    <div className="row px-5 mt-5 caws-world-wrapper py-5">
       
       <div className="col-6">
         <div className="d-flex flex-column gap-3">
@@ -24,7 +24,7 @@ const CawsWorld = () => {
           </div>
         </div>
       </div>
-      <div className="col-6">
+      <div className="col-6 d-flex justify-content-end">
         <img src={cawsHeroBanner} alt="" />
       </div>
     </div>

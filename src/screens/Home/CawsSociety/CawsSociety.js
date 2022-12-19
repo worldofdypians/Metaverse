@@ -4,8 +4,8 @@ import "./_cawssociety.scss";
 
 const CawsSociety = () => {
   return (
-    <div className="row mx-0 mt-5">
-      <div className="col-6 ps-0">
+    <div className="row px-5 mt-5">
+      <div className="col-6">
         <img src={cawsHeroBanner} alt="" />
       </div>
       <div className="col-6">
