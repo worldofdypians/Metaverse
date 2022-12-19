@@ -7,7 +7,7 @@ const Header = ()=>{
     return (
         <div className="container-lg navbar-wrapper py-4">
             <div className="row mx-0 w-100">
-                <div className="col-3 d-flex align-items-center justify-content-start">
+                <div className="col-3 d-flex align-items-center justify-content-start ps-0">
                     <img src={metaverse} alt="metaverse" />
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-around">
