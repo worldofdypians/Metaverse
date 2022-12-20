@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "Organetto";
+  src: url("./fonts/Organetto.ttf");
+}
+
+body {
+  background: #080b2a;
+
+  .font-poppins {
+    font-family: "Poppins", sans-serif !important;
+  }
+
+  .font-organetto {
+    font-family: "Organetto" !important;
+  }
+
+  .linear-border {
+    position: relative;
+    padding: 2px;
+    background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
+    border-radius: 8px;
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+  }
+
+  .linear-border::before {
+    content: "";
+  }
+
+  .outline-btn {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: #080b2a;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #ffffff;
+    white-space: pre;
+  }
+
+  .filled-btn {
+    clip-path: polygon(
+        0 19px,
+        19px 0,
+        100% 0,
+        100% calc(100% - 19px),
+        calc(100% - 19px) 100%,
+        0 100%
+      );
+    background: linear-gradient(89.7deg, #7BD8B0 0.23%, #DCFB85 99.72%);
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #080b2a;
+    border: none !important;
+  }
+}

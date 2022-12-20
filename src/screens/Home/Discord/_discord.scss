@@ -1,0 +1,34 @@
+.discord-wrapper {
+  background: linear-gradient(262.84deg, #7e39fd 0%, #2f1369 100%);
+    position: relative;
+
+  .discord-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 43px;
+    color: #ffffff;
+  }
+
+  .discord-content {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: #ffffff;
+  }
+}
+
+.discord-wrapper::before{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    
+    content: "";
+    background-image: url("../../../assets/discordBackground.webp");
+    background-repeat: no-repeat;
+    background-position: right;
+}

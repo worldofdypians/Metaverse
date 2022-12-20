@@ -1,0 +1,63 @@
+.itemcard-wrapper {
+  --mask: linear-gradient(-135deg,#0000 28.28px,#000 0);	
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+}
+
+.purple-bottom-wrapper {
+  background: linear-gradient(180deg, #5b08d0 0%, #7f2df7 100%);
+  border-radius: 6px;
+  padding: 16px;
+  --mask: linear-gradient(45deg, #0000 28.28px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  position: relative;
+  top: -10px;
+  width: 100%;
+}
+
+.cawsitem-title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  color: #f7f7fc;
+}
+
+.cawsitem-details {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #f7f7fc;
+}
+
+.pricetext {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  color: #f7f7fc;
+}
+
+.priceamount-eth {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.01em;
+  color: #f7f7fc;
+}
+
+.priceamount-usd {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.01em;
+  color: #f7f7fc;
+  opacity: 0.5;
+}

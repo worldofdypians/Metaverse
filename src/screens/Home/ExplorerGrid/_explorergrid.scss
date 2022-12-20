@@ -1,0 +1,38 @@
+.explorer-grid-title {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 43px;
+
+  color: #ffffff;
+
+  .explore-tag {
+    background: none !important;
+    color: rgba(140, 86, 255, 1) !important;
+  }
+}
+
+.explorer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+
+  .explorer-card-title {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 48px;
+    color: #ffffff;
+  }
+
+  .explorer-card-content {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: #ffffff;
+  }
+}
