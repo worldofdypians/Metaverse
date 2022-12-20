@@ -1,0 +1,51 @@
+.nft-staking-wrapper {
+  background: linear-gradient(52.09deg, #554FD8 14.21%, #7770E0 104.46%);
+  box-shadow: 16px 32px 56px rgba(0, 0, 0, 0.12);
+  border-radius: 28px;
+  padding: 2rem;
+
+  h2 {
+    font-style: normal;
+    font-weight: 200;
+    font-size: 42px;
+    margin-top: revert;
+     line-height: 53px;
+    color: #FFFFFF;
+  }
+
+  h1 {
+    font-style: normal;
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 53px;
+    color: #FFFFFF;
+  }
+
+  p{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+  }
+
+
+
+}
+  .innerwrapper {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+  }
+  .start-staking-btn {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    color: #554FD8;
+    padding: 10px;
+    background-color: white;
+    outline: none;
+    border: none;
+    border-radius: 6px;
+  }
