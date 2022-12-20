@@ -1,12 +1,10 @@
 @font-face {
   font-family: "Organetto";
-  src: local("Organetto") url("./fonts/Organetto.ttf") format("truetype");
+  src: url("./fonts/Organetto.ttf");
 }
 
 body {
-  background-image: url("./assets/siteBackground.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: #080b2a;
 
   .font-poppins {
     font-family: "Poppins", sans-serif !important;

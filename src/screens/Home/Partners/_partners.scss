@@ -1,0 +1,22 @@
+.partners-wrapper {
+  background-image: url("../../../assets/partnersBackground.webp");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  .partners-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 43px;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .partner-name {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 28px;
+    color: #f7f7fc;
+  }
+}
