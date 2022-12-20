@@ -11,6 +11,7 @@ import Tooltip from "../../elements/ToolTip";
 import { formattedNum } from "../../functions/formatUSD";
 import axios from "axios";
 import getFormattedNumber from "../../functions/get-formatted-number";
+import './_myStakes.scss'
 
 let settings = {
   dots: true,

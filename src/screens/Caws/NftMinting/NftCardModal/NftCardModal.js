@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from "prop-types"
 // import showToast from '../../../../../Utils/toast';
 import { shortAddress } from '../../functions/shortAddress'
+import './_nftCardModal.scss'
 
 const NftCardModal = ({ nftItem, modalId, onShareClick, visible, link, score, rarity }) => {
     const copyAddress = () => {

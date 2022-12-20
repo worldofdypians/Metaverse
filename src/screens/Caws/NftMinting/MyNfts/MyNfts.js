@@ -2,9 +2,13 @@ import NftCawCard from "../General/NftCawCard/NftCawCard";
 import TitleWithParagraph from "../General/TitleWithParagraph";
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
+
 import PropTypes from "prop-types";
 import SvgTimesIcon from "./SvgTimesIcon";
 import Info from "../MyStakes/info.svg";
+import './_myNfts.scss';
+import './_latestMints.scss';
+
 
 let settings = {
   dots: true,
@@ -109,10 +113,10 @@ const MyNfts = ({
         </div>
         <div className="row mints-container ">
           <div className="graphic-container d-flex d-sm-none">
-            {/* <img
-              src={require("../../../../../assets/Nft/NftMintinglist/collection-graphic.png")}
+            <img
+              src={require("../../assets/Nft/NftMintinglist/collection-graphic.png")}
               alt=""
-            /> */}
+            />
             <p>{label}</p>
             {numberOfNfts > 4 && (
               <button
@@ -126,10 +130,10 @@ const MyNfts = ({
           </div>
           <div className="cards-grid">
             <div className="graphic-container d-none d-sm-flex">
-              {/* <img
-                src={require("../../../../../assets/Nft/NftMintinglist/collection-graphic.png")}
+              <img
+                src={require("../../assets/Nft/NftMintinglist/collection-graphic.png")}
                 alt=""
-              /> */}
+              />
 
               <p>{label}</p>
               {numberOfNfts > 4 && (

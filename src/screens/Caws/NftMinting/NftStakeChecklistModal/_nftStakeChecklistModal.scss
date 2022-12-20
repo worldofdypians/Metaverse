@@ -1,3 +1,7 @@
+@import '../../responsive';
+@import '../../colors';
+
+
 .details-modal-content {
     display: flex;
   
@@ -319,7 +323,7 @@
     }
   
     .select-apr {
-      color: $black-26;
+      color: var(--light-gray-dc);
       font-style: normal;
       font-weight: 700;
       font-size: 18px;

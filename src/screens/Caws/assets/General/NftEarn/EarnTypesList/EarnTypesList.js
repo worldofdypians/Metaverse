@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import ChevronArrowSvg from "../../ChevronArrowSvg/ChevronArrowSvg";
 import { handleHorizontalScroll } from "../../../../components/NftEarn/NftEarn";
+import './_earnTypesList.scss'
 
 const EarnTypesList = ({ typesArray, activeType, onItemClick }) => {
   const itemRef = useRef([]);

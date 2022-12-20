@@ -5,6 +5,7 @@ import axios from 'axios'
 import SvgEyeIcon from "../NftCawCard/SvgEyeIcon";
 import {formattedNum} from '../../../functions/formatUSD'
 import getFormattedNumber from "../../../functions/get-formatted-number";
+import './_nftStakeCawCard.scss'
 
 const NftStakingCawCard = ({ modalId, action, nft, id, isconnectedWallet }) => {
 

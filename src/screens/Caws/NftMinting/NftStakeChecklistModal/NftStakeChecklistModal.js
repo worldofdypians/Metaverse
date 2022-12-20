@@ -13,6 +13,7 @@ import getFormattedNumber from "../../functions/get-formatted-number";
 // import EthLogo from "../../assets/eth-create-nft.png";
 import CountDownTimerUnstake from "../../elements/CountDownUnstake";
 // import CatLogo from "../../assets/cat-totalsupply-icon.svg";
+import './_nftStakeChecklistModal.scss'
 
 const NftStakeCheckListModal = ({
   nftItem,
@@ -339,7 +340,7 @@ const NftStakeCheckListModal = ({
               }}
             >
               <h3
-                className=""
+                className="text-white"
                 style={{ fontSize: devicewidth < 500 ? 16 : 32 }}
               >
                 My NFTs
@@ -412,7 +413,7 @@ const NftStakeCheckListModal = ({
                     display: "flex",
                     pointerEvents: nftItem.length !== 0 ? "auto" : "none",
                     opacity: nftItem.length !== 0 ? "1" : "0.4",
-                    color: checkbtn === true ? "#E30613" : "var(--black)",
+                    color: checkbtn === true ? "#E30613" : "#fff",
                   }}
                 >
                   <input
@@ -438,7 +439,7 @@ const NftStakeCheckListModal = ({
                     pointerEvents: nftItem.length !== 0 ? "auto" : "none",
                     opacity: nftItem.length !== 0 ? "1" : "0.4",
                     color:
-                      checkUnstakebtn === true ? "#E30613" : "var(--black)",
+                      checkUnstakebtn === true ? "#E30613" : "#fff",
                   }}
                 >
                   <input

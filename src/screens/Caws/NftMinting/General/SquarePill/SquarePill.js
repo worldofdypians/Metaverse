@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from "prop-types"
+import './_squarePill.scss'
 
 const SquarePill = ({ text }) => {
     return (

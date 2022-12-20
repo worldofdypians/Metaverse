@@ -8,6 +8,10 @@ import NftStakeCheckListModal from "./NftStakeChecklistModal/NftStakeChecklistMo
 import NftUnstakeModal from "./NftUnstakeModal/NftUnstakeModal";
 import NftStakeModal from "./NftStakeModal/NftStakeModal";
 
+import NewMintForm from './NewMintForm/NewMintForm'
+
+import NftMintingHero from './NftMintingHero/NftMintingHero'
+
 const NftMinting = () => {
   const [connectedWallet, setConnectedWallet] = useState(false);
   const [showLoadingModal, setShowLoadingModal] = useState(false);
@@ -520,6 +524,11 @@ const NftMinting = () => {
       />
 
  
+<NftMintingHero smallTitle="SOCIETY" bigTitle="BENEFITS" />
+
+
+
+<NewMintForm handleConnectWallet={handleConnectWallet} connectedWallet={connectedWallet}/>
 
       <MyNfts
         onItemClick={onStakeNft}

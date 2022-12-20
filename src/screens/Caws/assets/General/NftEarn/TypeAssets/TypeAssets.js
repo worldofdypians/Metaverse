@@ -6,6 +6,7 @@ import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import ChevronArrowSvg from "../../ChevronArrowSvg/ChevronArrowSvg";
 import { handleHorizontalScroll } from "../../../../components/NftEarn/NftEarn";
+import './_typeAssets.scss'
 
 const TypeAssets = ({ assets, onTypeAssetClicked, clickedAsset }) => {
   const [scrollOffset, setScrollOffset] = useState(0);

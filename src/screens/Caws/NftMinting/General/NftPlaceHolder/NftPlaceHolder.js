@@ -1,14 +1,15 @@
 import React from "react";
+import './_nftPlaceHolder.scss'
 
 const NftPlaceHolder = ({onMintClick}) => {
   return (
     <div className="placeholder-wrapper nft-caw-card" style={{width: 195}}>
       <div className="placeholder-content">
-        {/* <img
-          src={require("../../../../../assets/Nft/cat_desktop.png")}
+        <img
+          src={require("../../../assets/Nft/cat_desktop.png")}
           alt=""
           className="placeholder-content-img"
-        /> */}
+        />
         <p className="placeholder-content-text">
          You can view all your NFTs to manage them
         </p>

@@ -1,3 +1,7 @@
+@import '../../../responsive';
+@import '../../../colors';
+
+
 .nft-caw-card {
   margin: 0 10px;
   @include medium {
@@ -217,7 +221,7 @@
 }
 
 .select-apr {
-  color: $black-26;
+  color: var(--light-gray-dc);
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
