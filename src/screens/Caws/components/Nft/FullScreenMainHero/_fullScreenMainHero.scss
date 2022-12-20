@@ -1,0 +1,82 @@
+@import '../../../responsive';
+@import '../../../colors';
+
+
+.full-screen-main-hero {
+
+    video {
+        //margin-top: -39px;
+        //overflow: hidden;
+        //padding: 0;
+        //width: 610px ;
+        //height: 383px ;
+        //border-radius: 8px;
+        //display: flex;
+        display: flex;
+        overflow: hidden;
+        object-fit: cover;
+        max-height: 690px;
+        width: 100%;
+        height: 100%;
+        //border-radius: 10px;
+    }
+
+    @media only screen and (max-width: 450px) {
+
+        video {
+            //margin-top: -39px;
+            overflow: hidden;
+            display: flex;
+        }
+    }
+
+    .scrolling-element {
+        position: absolute;
+        bottom: 0;
+        overflow: hidden;
+        width: 100%;
+        height: 200px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        background: linear-gradient(360deg, rgba(30, 40, 234, 0.3), rgba(250, 72, 51, 0) 30%);
+        // @include medium {
+        //      background: linear-gradient(360deg, scale-color(#e30613, $alpha: -40%), scale-color(#fa4833, $alpha: -100%) 70.49%);
+        // }
+        button {
+            background-color: transparent;
+            border: none;
+        }
+    }
+
+    .play-icon{
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 190px;
+        cursor: pointer;
+        @include medium {
+            width: 196px;
+        }
+    }
+
+    .modal-dialog{
+        max-width: 700px;
+
+        .modal-content{
+            background: transparent;
+            border: none;
+        }
+
+        button{
+            padding-right: 0;
+            opacity: 1;
+        }
+
+        iframe{
+            width: 100%;
+            height: 400px;
+        }
+    }
+}

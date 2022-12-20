@@ -1,0 +1,53 @@
+.vault-card {
+    &-top {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        .coin-icon {
+            margin-right: 12px;
+        }
+        p {
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 20px;
+            color: var('--black');
+            margin: 0;
+        }
+        .action-button {
+            margin-left: auto;
+            border: none !important;
+        outline: none !important;
+        }
+    }
+    &-middle {
+        display: flex;
+        justify-content: space-between;
+        p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+            color: var('--black');
+            opacity: 0.4;
+        }
+    }
+
+    &-bottom {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid $light-gray-f5;
+        margin-bottom: 16px;
+        @include medium {
+            border-bottom: none;
+
+            margin-bottom: 0;
+        }
+
+        p {
+            font-weight: 800;
+            font-size: 18px;
+            line-height: 23px;
+            color: $accent-green;
+            margin-bottom: 0px;
+        }
+    }
+}

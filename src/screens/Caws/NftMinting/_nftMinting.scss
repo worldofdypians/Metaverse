@@ -1,0 +1,24 @@
+.nft-minting {
+    font-family: 'Mulish';
+    background-color: $light-gray-f5;
+    max-width: 100%;
+    width: 100%;
+}
+.dark{
+    .nft-minting {
+        background-color: $white-theme;
+    }
+    .modal-dialog{
+        background-color: $black-26;
+        .modal-content{
+            background-color: $black-26;
+        }
+    }
+    .square-pill{
+        color: $white;
+        &:after {
+            background-color: $text-dark;
+            color: $white;
+        }
+    }
+}

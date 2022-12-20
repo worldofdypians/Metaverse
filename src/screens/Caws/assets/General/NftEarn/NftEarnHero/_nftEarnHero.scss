@@ -1,0 +1,96 @@
+.nft-earn-hero {
+    padding-top: 24px;
+    @include medium {
+        padding-top: 40px;
+    }
+    .common-title-text {
+        h1,
+        p {
+            color: $black-theme;
+        }
+    }
+    .earn-data-section {
+        width: 100%;
+        height: 195px;
+        background: url("../../../images/NftEarn/nft-earn-hero-background.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-between;
+        overflow: hidden;
+        position: relative;
+
+        @include medium {
+            height: 260px;
+        }
+        
+        .main-data {
+            margin-left: 24px;
+            margin-top: auto;
+            margin-bottom: 58px;
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            z-index: 3;
+            img {
+                margin-left: 8px;
+                margin-top: 4px;
+            }
+
+            p {
+                color: var(--white);
+                text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
+                margin: 0;
+            }
+            .price {
+                font-size: 22px;
+                line-height: 30px;
+                font-weight: 600;
+                @include medium {
+                    font-size: 32px;
+                    line-height: 40px;
+                }
+            }
+            .text {
+                font-size: 12px;
+                line-height: 10px;
+                font-weight: 300;
+                @include medium {
+                    font-size: 18px;
+                    line-height: 23px;
+                }
+            }
+        }
+    }
+    .list-items {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        .blur-circle {
+            background: #5d5fef;
+            opacity: 0.6;
+            filter: blur(114px);
+            position: absolute;
+            right: -17%;
+            bottom: 180px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .small {
+            width: 719px;
+            height: 741px;
+            right: -665px;
+            top: -200px;
+        }
+    }
+}
+.dark {
+    .nft-earn-hero {
+        background-color: $black-26;
+    }
+}
+

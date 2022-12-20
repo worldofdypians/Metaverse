@@ -1,0 +1,190 @@
+.caws-left-wrapper {
+  max-width: 60%;
+  width: 100%;
+
+  //@media only screen and(max-width: 1178px) {
+  //    max-width: 100%;
+  //    width: 100%;
+  //}
+
+  .caws-content-wrapper {
+      display: flex;
+    //  @media only screen and(max-width: 615px) {
+    //    flex-direction: column;
+    //}
+  }
+
+  .buy-caws-wrapper {
+    background: linear-gradient(260.63deg, #4318bd 4.05%, #2081e2 94.11%);
+    box-shadow: 12px 16px 44px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    padding: 31px 20px 20px 20px;
+    height: 100%;
+
+
+    h1 {
+      font-weight: 1000;
+      font-size: 32px;
+      line-height: 40px;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    p {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 26px;
+      color: #ffffff;
+    }
+
+    .buy-caws-btn {
+      background: linear-gradient(266.71deg, #a420e2 8.87%, #1829bd 91.56%);
+      box-shadow: 20px 10px 30px rgba(67, 24, 189, 0.32);
+      border-radius: 500px;
+      width: 202px;
+      height: 60px;
+      padding: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer;
+
+      //@media only screen and(max-width: 500px) {
+      //  margin-top: 1rem;
+      //}
+
+      span {
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 18px;
+        display: flex;
+      }
+
+      img {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    #multi-caws2 {
+        width: 239.64px;
+        // height: 145px;
+    }
+  }
+}
+
+.caws-right-wrapper {
+  max-width: 37%;
+  width: 100%;
+//  @media only screen and(max-width: 1178px) {
+//    max-width: 100%;
+//    width: 100%;
+//}
+
+.caws-content-wrapper {
+    display: flex;
+
+    //@media only screen and(max-width: 615px) {
+    //    flex-direction: column;
+    //}
+}
+
+  .caw-game-wrapper {
+    background: linear-gradient(238.65deg, #32f7b0 11.65%, #1db0d0 90.96%);
+    box-shadow: 12px 16px 44px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    padding: 31px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h1 {
+      font-weight: 1000;
+      font-size: 32px;
+      line-height: 40px;
+      text-transform: uppercase;
+
+      color: #ffffff;
+    }
+
+    p {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 26px;
+      color: #ffffff;
+    }
+
+    #cawsLogo2 {
+      height: 100px;
+      width: 94px;
+    }
+
+    #console2 {
+      height: 65px;
+      width: 65px;
+      bottom: 50px;
+      position: relative;
+    }
+
+    .play-now-btn {
+      background: linear-gradient(87.11deg, #e40814 8.56%, #fa5b47 93.03%);
+      box-shadow: 20px 10px 30px rgba(228, 8, 20, 0.32);
+      border-radius: 500px;
+      width: 146px;
+      height: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+
+      span {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 18px;
+        color: #ffffff;
+      }
+
+      img {
+        width: 25px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.nft-rarity-button{
+  background: linear-gradient(87.11deg, #bd185d 8.56%, #ba18bd 93.03%);
+  box-shadow: 20px 10px 30px rgb(189 24 93 / 32%);
+  border-radius: 6px;
+  color: white !important;
+  font-size: 16px;
+  padding: 10px 15px 12px 10px;
+}
+
+@media screen and (max-width: 786px) {
+  .caws-left-wrapper{
+    max-width: 100%;
+  }
+
+  .caws-right-wrapper{
+    max-width: 100%;
+  }
+  .cats-and-watches-society-benefits .graphics {
+    position: relative;
+    // right: 20px;
+    max-height: 500px !important;
+  }
+  
+}
+
+@media screen and (max-width: 375px) {
+  .cats-and-watches-society-benefits .graphics{
+    position: relative;
+    right: 30px;
+  }
+}

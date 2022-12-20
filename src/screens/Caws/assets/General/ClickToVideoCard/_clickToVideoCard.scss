@@ -1,0 +1,47 @@
+.video-card-wrapper {
+    border-radius: 18px;
+    position: relative;
+    width: fit-content;
+    background: linear-gradient(205deg, rgba(252, 79, 54, 1) 15%, rgba(255, 239, 237, 1) 49%, rgba(252, 79, 54, 1) 80%);
+    margin: 24px 0;
+    padding: 3.5px;
+    @include medium {
+        width: 390px;
+        height: 220px;
+    }
+    .image-wrapper {
+        background-color: $white;
+        padding: 3px;
+        border-radius: 18px;
+        img {
+            border-radius: 18px;
+            width: 100%;
+            @include medium {
+                width: 100%;
+                height: 208px;
+                object-fit: cover;
+            }
+        }
+    }
+    .action-button {
+        width: 58px;
+        height: 58px;
+        left: 289px;
+        top: 155px;
+        border-radius: 100%;
+        border: none !important;
+        outline: none !important;
+        position: absolute;
+        background: #ff2000;
+        box-shadow: 20px 34px 211px rgba(252, 79, 54, 0.1), inset 0px 0px 30px 4px rgba(252, 165, 147, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include medium {
+            width: 72px;
+            height: 72px;
+            top: 180px;
+            left: 350px;
+        }
+    }
+}
