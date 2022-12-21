@@ -6,12 +6,14 @@ import './fonts/Organetto.ttf'
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 
 function App() {
   return (
     <BrowserRouter>
-     <div className="container-fluid p-0 main-wrapper">
+     <div className="container-fluid p-0 main-wrapper position-relative">
      <Header />
+     <MobileNavbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
       </Routes>

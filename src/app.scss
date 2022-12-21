@@ -70,5 +70,11 @@ body {
     line-height: 24px;
     color: #080b2a;
     border: none !important;
+    white-space: pre;
   }
+}
+
+.hidescroll{
+  overflow: hidden;
+  pointer-events: none;
 }

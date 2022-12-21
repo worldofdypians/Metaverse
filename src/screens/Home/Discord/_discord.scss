@@ -32,3 +32,15 @@
     background-repeat: no-repeat;
     background-position: right;
 }
+
+
+@media screen and (max-width: 786px) {
+  .discord-wrapper{
+    min-height: 950px;
+  }
+
+  .discord-wrapper::before{
+    background-position-x: right;
+    background-position-y: bottom;
+  }
+}

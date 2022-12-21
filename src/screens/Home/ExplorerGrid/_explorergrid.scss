@@ -36,3 +36,10 @@
     color: #ffffff;
   }
 }
+
+
+@media screen and (max-width: 786px) {
+  .explorer-grid{
+    grid-template-columns: auto;
+  }
+}

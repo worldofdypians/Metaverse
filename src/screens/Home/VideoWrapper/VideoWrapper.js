@@ -6,8 +6,8 @@ import buttonBorder from '../../../assets/buttonBorder.svg'
 
 const VideoWrapper = () => {
   return (
-    <div className="video-wrapper flex-column gap-5 d-flex align-items-center justify-content-center">
-      <h1 className="video-main-title font-organetto">
+    <div className="video-wrapper flex-column gap-5 d-flex align-items-center justify-content-around justify-content-lg-center">
+      <h1 className="video-main-title font-organetto w-100">
         The most exciting game of all time
       </h1>
       {/* <img src={buttonBorder} alt="button-border" className="video-button-border" /> */}

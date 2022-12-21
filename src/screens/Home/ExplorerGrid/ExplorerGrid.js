@@ -5,7 +5,7 @@ import playIcon from '../../../assets/playIcon.svg'
 const ExplorerGrid = () => {
 
 
-    const explorerCards = [
+  const explorerCards = [
       
         {
             title: 'Play',
@@ -31,7 +31,7 @@ const ExplorerGrid = () => {
 
 
   return (
-    <div className="px-5">
+    <div className="px-3 px-lg-5">
       <div className="w-100">
         <h2 className="font-organetto explorer-grid-title px-0 w-50">
           The world is yours to <mark className="font-organetto explore-tag">explore</mark>
@@ -40,9 +40,9 @@ const ExplorerGrid = () => {
       <div className="explorer-grid mt-5">
         {explorerCards.map((card) => (
                <div className="d-flex flex-column gap-3">
-               <div className="d-flex flex-column gap-3">
+               <div className="d-flex flex-row flex-lg-column align-items-center align-items-lg-start gap-3">
                     <img src={require(`../../../assets/${card.icon}.svg`)} alt="play icon" height={56} width={56} />
-                    <h6 className="explorer-card-title">{card.title}</h6>
+                    <h6 className="explorer-card-title mb-0">{card.title}</h6>
                </div>
                <p className="explorer-card-content">{card.content}</p>
            </div>
