@@ -6,7 +6,7 @@ import metaverse from '../../assets/navbarAssets/metaverse.svg'
 
 const Header = ({handleRegister})=>{
     return (
-        <div className="d-none d-lg-flex mx-5 navbar-wrapper py-4">
+        <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
             <div className="row mx-0 w-100">
                 <div className="col-3 d-flex align-items-center justify-content-start ps-0">
                     <NavLink to='/'>
@@ -14,10 +14,10 @@ const Header = ({handleRegister})=>{
                     </NavLink>
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-around">
-                    <div className="nav-anchor font-poppins">Explore</div>
-                    <div className="nav-anchor font-poppins">Marketplace</div>
+                    <a href="#explorer" className="nav-anchor font-poppins">Explore</a>
+                    <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a>
                     <div className="nav-anchor font-poppins">Roadmap</div>
-                    <div className="nav-anchor font-poppins">News</div>
+                    <NavLink to='/news' className="nav-anchor font-poppins">News</NavLink>
                 </div>
                 <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
                     <div className="linear-border">

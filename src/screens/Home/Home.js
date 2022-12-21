@@ -19,7 +19,7 @@ const Home = () => {
         <CawsWorld />
         <MarketPlace/>
         <Discord />
-        <Partners />
+        {/* <Partners /> */}
       </div>
     </div>
   );
