@@ -15,14 +15,15 @@ const CawsSociety = () => {
             The world of the CAWS society
           </h2>
           <p className="caws-hero-content">
-            orem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue,
-            elit ut vulputate suscipit, nisi metus gravida justo, nec placerat
-            massa est sed ex. Interdum et malesuada fames ac ante ipsum primis
-            in faucibus. Sed orci justo, iaculis ut viverra nec, imperdiet non
-            ligula.
+            The Cats and Watches Society (CAWS) NFT is a unique collection of
+            utility NFTs developed by Dypius. Owners of these NFTs will be able
+            to adventure with their CAT companion enhancing the player’s
+            abilities and increasing rewards.
           </p>
-          <div className="linear-border" style={{width: 'fit-content'}}>
-            <NavLink className="btn filled-btn px-5" to='/caws'>View here</NavLink>
+          <div className="linear-border" style={{ width: "fit-content" }}>
+            <NavLink className="btn filled-btn px-5" to="/caws">
+              View more
+            </NavLink>
           </div>
         </div>
       </div>

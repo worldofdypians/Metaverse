@@ -10,7 +10,7 @@ const Footer = () => {
     <div className="footer-container flex-column px-3 px-lg-5">
         <div className="d-flex pt-5 pb-4 w-100 flex-column flex-lg-row align-items-start align-items-lg-center gap-4 gap-lg-0 justify-content-between">
           <img src={metaverse} alt="" />
-          <span className="footer-link font-poppins">Dypius</span>
+          <a href='https://www.dypius.com/' target="_blank" className="footer-link font-poppins">Dypius</a>
           <span className="footer-link font-poppins">Whitepaper</span>
           <span className="footer-link font-poppins">Terms & Conditions</span>
           <span className="footer-link font-poppins">Privacy Policy</span>
@@ -19,7 +19,7 @@ const Footer = () => {
         <hr className="footer-divider mt-0 mb-4" />
         <div className="d-flex w-100 align-items-center justify-content-center mb-4">
           <span className="footer-link font-poppins">
-            Metaverse {year}. We love our users
+          Copyright © Dypius {year}. All rights reserved.
           </span>
         </div>
     </div>
