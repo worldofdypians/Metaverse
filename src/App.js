@@ -9,6 +9,7 @@ import Footer from "./components/Footer/Footer";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import Caws from "./screens/Caws/Caws";
 import NftMinting from "./screens/Caws/NftMinting/NftMinting";
+import News from "./screens/News/News";
 import RegisterModal from "./components/RegisterModal/RegisterModal";
 
 function App() {
@@ -41,10 +42,12 @@ function App() {
 
   return (
     <BrowserRouter>
+
       <div className="container-fluid p-0 main-wrapper position-relative">
         <Header handleRegister={handleRegister} />
         <MobileNavbar />
         <Routes>
+        <Route exact path="/news" element={<News />} />
           <Route exact path="/" element={<Home />} />
           <Route exact path="/caws" element={<Caws />} />
           <Route exact path="/stake" element={<NftMinting />} />
