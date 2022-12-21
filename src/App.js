@@ -15,11 +15,15 @@ import RegisterModal from "./components/RegisterModal/RegisterModal";
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [coinbase, setCoinbase] = useState(false);
+  const [coinbase, setCoinbase] = useState();
+  const [showForms, setShowForms] = useState(false);
+
 
   const handleRegister = () => {
     setShowWalletModal(true);
   };
+
+
 
   const handleConnection = async () => {
     try {
@@ -30,8 +34,9 @@ function App() {
       await window.getCoinbase().then((data) => {
         setCoinbase(data);
       });
+      setShowForms(true)
     } catch (e) {
-      this.setState({ show: false });
+      setShowWalletModal(false);
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
       return;
@@ -62,6 +67,7 @@ function App() {
           }}
           handleConnect={handleConnection}
           coinbase={coinbase}
+          showForms={showForms}
         />
       )}
     </BrowserRouter>
