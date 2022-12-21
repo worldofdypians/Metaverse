@@ -6,14 +6,16 @@ import './fonts/Organetto.ttf'
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import Caws from "./screens/Caws/Caws";
 import NftMinting from "./screens/Caws/NftMinting/NftMinting";
 
 function App() {
   return (
     <BrowserRouter>
-     <div className="container-fluid p-0 main-wrapper">
+     <div className="container-fluid p-0 main-wrapper position-relative">
      <Header />
+     <MobileNavbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/caws" element={<Caws />} />

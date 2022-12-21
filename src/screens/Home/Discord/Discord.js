@@ -3,8 +3,8 @@ import "./_discord.scss";
 
 const Discord = () => {
   return (
-    <div className="row w-100 px-5 mx-0 discord-wrapper py-5">
-      <div className="col-6" style={{zIndex: '3'}}>
+    <div className="row w-100 px-3 px-lg-5 mx-0 discord-wrapper py-5">
+      <div className="col-12 col-lg-6" style={{zIndex: '3'}}>
         <div className="d-flex flex-column gap-3">
           <h2 className="discord-title font-organetto">
             Connect with our immerse discord community
@@ -14,13 +14,17 @@ const Discord = () => {
             elit ut vulputate suscipit, nisi metus gravida justo, nec placerat
             massa est sed ex.
           </p>
-          <div className="d-flex align-items-center justify-content-start gap-4">
-            <div className="linear-border">
+          <div className="d-flex flex-column flex-lg-row w-100 align-items-center justify-content-start gap-4 gap-lg-0">
+           <div className="d-flex w-100 justify-content-start">
+           <div className="linear-border">
               <button className="btn filled-btn px-5">Join today</button>
             </div>
-            <div className="linear-border">
+           </div>
+           <div className="d-flex w-100 justify-content-end justify-content-lg-start">
+           <div className="linear-border">
               <button className="btn outline-btn px-5">Contact Us</button>
             </div>
+           </div>
           </div>
         </div>
       </div>

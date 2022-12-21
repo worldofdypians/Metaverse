@@ -3,6 +3,8 @@
   background-size: 100% 100%;
   background-repeat: no-repeat;
 
+
+  
   .partners-title {
     font-style: normal;
     font-weight: 800;
@@ -17,6 +19,16 @@
     font-weight: 600;
     font-size: 22px;
     line-height: 28px;
+    text-align: center;
     color: #f7f7fc;
   }
+}
+
+@media screen and (max-width: 786px) {
+  .partners-grid{
+    display: grid !important;
+    grid-template-columns: repeat(2,1fr);
+    gap: 30px;
+  }
+  
 }

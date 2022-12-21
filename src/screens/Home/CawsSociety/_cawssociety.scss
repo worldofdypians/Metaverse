@@ -20,3 +20,9 @@ color: #FFFFFF;
 backdrop-filter: blur(5.5px);
 // transform: matrix(-1, 0, 0, 1, 0, 0);
 }
+
+@media screen and (max-width: 786px) {
+    .caws-banner{
+        width: 300px;
+    }
+}
