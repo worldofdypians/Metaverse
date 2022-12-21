@@ -9,6 +9,7 @@ import Footer from "./components/Footer/Footer";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import Caws from "./screens/Caws/Caws";
 import NftMinting from "./screens/Caws/NftMinting/NftMinting";
+import News from "./screens/News/News";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/caws" element={<Caws />} />
         <Route exact path="/stake" element={<NftMinting />} />
-
+        <Route exact path="/news" element={<News />} />
       </Routes>
       <Footer />
      </div>

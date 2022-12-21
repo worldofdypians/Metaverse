@@ -5,7 +5,7 @@ import metaverse from '../../assets/navbarAssets/metaverse.svg'
 
 const Header = ()=>{
     return (
-        <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
+        <div className="d-none d-lg-flex mx-5 navbar-wrapper py-4">
             <div className="row mx-0 w-100">
                 <div className="col-3 d-flex align-items-center justify-content-start ps-0">
                     <img src={metaverse} alt="metaverse" />
