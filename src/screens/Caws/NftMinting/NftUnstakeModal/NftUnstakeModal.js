@@ -54,7 +54,7 @@ const NftUnstakeModal = ({
   };
 
   const handleUnstake = async (itemId) => {
-    let stake_contract = await window.getContract("NFTSTAKING");
+    let stake_contract = await window.getContractNFT("NFTSTAKING");
     setloading(true);
     setStatus("*Processing unstake");
     setColor("#F13227");
@@ -95,7 +95,7 @@ const NftUnstakeModal = ({
     });
 
     let calculateRewards;
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
     setActive(true);
     calculateRewards = await staking_contract.methods
       .calculateReward(address, parseInt(currentId))
@@ -115,7 +115,7 @@ const NftUnstakeModal = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
 
     setloadingClaim(true);
     setActive(false);
@@ -194,9 +194,9 @@ const NftUnstakeModal = ({
               </div>
             </div>
             <div className="caw-card">
-              {/* {nftItem.image && ( 
+              {nftItem.image && ( 
                  <img src={nftItem.image} alt="" className="nft-img" />
-               )}*/}
+               )}
               <div className="id">
                 <h1>{nftItem?.name}</h1>
                 <p>ID {nftItem?.nftId}</p>
