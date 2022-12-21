@@ -68,9 +68,11 @@ const News = () => {
             </h2>
           </h2>
         {news.length > 0 ?
-        news.map((newsItem) => (
+        <div className="d-grid news-grid px-0">
+        { news.map((newsItem) => (
           <NewsCard type={newsItem.type} title={newsItem.title} content={newsItem.content} image={newsItem.image} date={newsItem.date} />
-        ))  
+        )) }
+        </div> 
 
         :
         null
@@ -93,14 +95,18 @@ const News = () => {
                 Stay up-to-date with our latest news, amazing features, and
                 exciting events delivered straight to your inbox.
               </p>
-              <div className="d-flex align-items-center justify-content-start gap-5">
-               <ThemeProvider theme={theme}>
+              <div className="d-flex flex-column flex-lg-row align-items-center justify-content-start gap-3 gap-lg-5">
+                <div className="newsletter-input-container">
+                <ThemeProvider theme={theme}>
                <StyledTextField
+                  style={{width: '100%'}}
                   label="Email Address"
                   variant="outlined"
                   size="small"
+                
                 />
                </ThemeProvider>
+                </div>
                 <button
                   className="btn filled-btn px-5"
                   style={{ background: "black", color: "white" }}
@@ -114,7 +120,7 @@ const News = () => {
               </span>
             </div>
           </div>
-          <div className="col-12 col-lg-6 d-flex align-items-center justify-content-center">
+          <div className="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
             <img src={newsLetterImage} alt="newsletter image" />
           </div>
         </div>

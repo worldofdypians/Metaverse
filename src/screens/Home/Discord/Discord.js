@@ -10,9 +10,7 @@ const Discord = () => {
             Connect with our immerse discord community
           </h2>
           <p className="discord-content font-poppins">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue,
-            elit ut vulputate suscipit, nisi metus gravida justo, nec placerat
-            massa est sed ex.
+          Join the World of Dypians community on discord. connect with other players and receive the latest news and updates.
           </p>
           <div className="d-flex flex-column flex-lg-row w-100 align-items-center justify-content-start gap-4 gap-lg-0">
            <div className="d-flex w-100 justify-content-start">

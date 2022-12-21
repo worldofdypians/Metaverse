@@ -3,6 +3,8 @@ import "./_marketplace.scss";
 import CawsItemCard from "../../../components/CawsItemCard/CawsItemCard";
 import useWindowSize from "../../../hooks/useWindowSize";
 import Slider from "react-slick";
+import Marquee from "react-fast-marquee";
+import marketDummy from '../../../assets/marketDummy.png'
 
 const MarketPlace = () => {
   var settings = {
@@ -45,26 +47,42 @@ const MarketPlace = () => {
   const windowSize = useWindowSize();
 
   return (
-    <div className="row px-3 px-lg-5 flex-column justify-content-center text-white gap-4">
+    <div className="row px-3 px-lg-5 flex-column justify-content-center text-white gap-4" id="marketplace">
       <div className="d-flex justify-content-center align-items-center flex-column gap-2">
-        <h2 className="marketplace-title font-organetto">Game market place</h2>
+        <h2 className="marketplace-title font-organetto">world of dypians official media</h2>
         <p className="marketplace-desc font-poppins">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue,
-          elit ut vulputate suscipit, nisi metus gravida justo, nec placerat
-          massa est sed ex.
+        The world of dypians awaits you. experience gameplay like never seen before.
         </p>
       </div>
       {windowSize.width > 786 ? (
-        <div className="caws-grid">
-          <CawsItemCard />
-          <CawsItemCard />
-          <CawsItemCard />
-          <CawsItemCard />
-          <CawsItemCard />
-          <CawsItemCard />
-          <CawsItemCard />
-          <CawsItemCard />
-        </div>
+        // <div className="caws-grid">
+        //   <CawsItemCard />
+        //   <CawsItemCard />
+        //   <CawsItemCard />
+        //   <CawsItemCard />
+        //   <CawsItemCard />
+        //   <CawsItemCard />
+        //   <CawsItemCard />
+        //   <CawsItemCard />
+        // </div>
+       <>
+        <Marquee gradient={false} style={{gap: '45px'}} >
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+        </Marquee>
+        <Marquee gradient={false} style={{gap: '45px'}} direction="right" >
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+          <img src={marketDummy} alt="" />
+        </Marquee>
+       </>
       ) : (
         <Slider {...settings}>
           <CawsItemCard />
