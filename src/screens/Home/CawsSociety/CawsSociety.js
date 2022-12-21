@@ -5,11 +5,11 @@ import "./_cawssociety.scss";
 
 const CawsSociety = () => {
   return (
-    <div className="row px-5 mt-5">
-      <div className="col-6">
-        <img src={cawsHeroBanner} alt="" />
+    <div className="row px-3 px-lg-5 mt-5 gap-4 gap-lg-0">
+      <div className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-start">
+        <img src={cawsHeroBanner} alt="caws banner" className="caws-banner" />
       </div>
-      <div className="col-6">
+      <div className="col-12 col-lg-6">
         <div className="d-flex flex-column gap-3">
           <h2 className="font-organetto caws-hero-title">
             The world of the CAWS society

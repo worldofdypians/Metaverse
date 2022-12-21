@@ -24,7 +24,7 @@ const NftStakingCawCard = ({ modalId, action, nft, id, isconnectedWallet }) => {
     });
 
     let calculateRewards;
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
     calculateRewards = await staking_contract.methods
       .calculateReward(address, parseInt(currentId))
       .call()
@@ -56,7 +56,7 @@ const NftStakingCawCard = ({ modalId, action, nft, id, isconnectedWallet }) => {
   }, [EthRewards, isconnectedWallet]);
 
   const handleClaim = async (id) => {
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
 
     await staking_contract.methods
       .claimRewards([id])

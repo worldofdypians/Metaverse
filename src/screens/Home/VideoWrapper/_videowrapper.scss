@@ -2,7 +2,8 @@
   background-image: url("../../../assets/videoBackground.webp");
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 750px;
+  min-height: 100vh;
+  background-position: center;
 
   .video-main-title {
     font-style: normal;
@@ -20,5 +21,13 @@
 
   .video-button-border{
     position: absolute;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  .video-main-title{
+    font-size: 24px !important;
+    line-height: 32px !important;
+    width: 100% !important;
   }
 }

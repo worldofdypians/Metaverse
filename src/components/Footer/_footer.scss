@@ -1,4 +1,24 @@
-.footer-container{
-    max-width: 2400px;
+.footer-container {
+    min-width: 100%;
+  max-width: 2400px;
+  position: relative;
+  bottom: 0;
+  overflow: hidden;
+
+  .footer-link {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .footer-divider{
+    width: 100%;
+    background: #ffffff;
+    height: 3px;
+    opacity: 0.3;
+  }
 
 }

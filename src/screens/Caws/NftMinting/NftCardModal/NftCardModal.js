@@ -12,7 +12,7 @@ const NftCardModal = ({ nftItem, modalId, onShareClick, visible, link, score, ra
     }
 
     return (
-        <Modal visible={visible} modalId={modalId}>
+        <Modal visible={visible} modalId={modalId} >
             <div className='details-modal-content'>
 
                 <div className="left-col">

@@ -72,7 +72,7 @@ const NftMinting = () => {
       console.error(error);
     }
   }
-
+  
   const onStakeNft = async (item) => {
     setOpenStakeNft(item);
     setOpenStakeNft(item);
@@ -126,12 +126,6 @@ const NftMinting = () => {
     setItem(nftId);
   };
 
-  const onUnstakeChecklistNft = async (item) => {
-    setOpenUnStakeNft(item);
-    setOpenStakeChecklist(false);
-    let nftId = item.name?.slice(6, item.name?.length);
-    setItem(nftId);
-  };
 
   const onStakCheckList = (item) => {
     setOpenStakeChecklist(item);
@@ -182,7 +176,7 @@ const NftMinting = () => {
       return data[0];
     });
 
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
     let finalDay = await staking_contract.methods
       .stakingTime(address)
       .call()
@@ -216,48 +210,7 @@ const NftMinting = () => {
     "Unrevealed",
   ];
 
-  const onCreateClick = async (data) => {
-    if (isConnectedWallet) {
-      try {
-        //Check Whitelist
-        // let whitelist = await window.checkWhitelist(connectedWallet)
-        let whitelist = 1;
-
-        if (parseInt(whitelist) == 1) {
-          setShowLoadingModal(true);
-
-          let tokenId = await window.nft.mintNFT(data.amount);
-          console.log(tokenId);
-
-          if (isNaN(Number(tokenId))) {
-            throw new Error("Invalid Token ID");
-          }
-
-          let getNftData = await window.getNft(tokenId);
-
-          setMyNFTsCreated(getNftData);
-
-          // setShowLoadingModal(false)
-        } else {
-          setShowWhitelistLoadingModal(true);
-        }
-      } catch (e) {
-        window.alertify.error(
-          typeof e == "object" && e.message
-            ? e.message
-            : typeof e == "string"
-            ? String(e)
-            : "Oops, something went wrong! Refresh the page and try again!"
-        );
-      }
-    } else {
-      try {
-        handleConnectWallet();
-      } catch (e) {
-        window.alertify.error("No web3 detected! Please Install MetaMask!");
-      }
-    }
-  };
+ 
 
   const handleConnectWallet = async () => {
     try {
@@ -352,7 +305,7 @@ const NftMinting = () => {
     const address = await window.web3.eth?.getAccounts().then((data) => {
       return data[0];
     });
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
       .depositsOf(address)
@@ -383,7 +336,7 @@ const NftMinting = () => {
     let myStakes = await getStakesIds();
     let calculateRewards = [];
     let result = 0;
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
     if (myStakes.length > 0) {
       calculateRewards = await staking_contract.methods
         .calculateRewards(address, myStakes)
@@ -405,7 +358,7 @@ const NftMinting = () => {
 
   const claimRewards = async () => {
     let myStakes = await getStakesIds();
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
 
     setclaimAllStatus("Claiming all rewards, please wait...");
     await staking_contract.methods
@@ -423,7 +376,7 @@ const NftMinting = () => {
 
   const handleUnstakeAll = async () => {
     let myStakes = await getStakesIds();
-    let stake_contract = await window.getContract("NFTSTAKING");
+    let stake_contract = await window.getContractNFT("NFTSTAKING");
     setunstakeAllStatus("Unstaking all please wait...");
 
     await stake_contract.methods
@@ -439,12 +392,6 @@ const NftMinting = () => {
       });
   };
 
-  const handleCancel = () => {
-    setShowUnstakeModal(false);
-  };
-  const handleCancelClaim = () => {
-    setShowClaimAllModal(false);
-  };
 
   const handleShowUnstake = () => {
     setShowUnstakeModal(true);
