@@ -1,5 +1,6 @@
 import React from "react";
 import cawsHeroBanner from "../../../assets/cawsHeroBanner.webp";
+import { NavLink } from "react-router-dom";
 import "./_cawssociety.scss";
 
 const CawsSociety = () => {
@@ -21,7 +22,7 @@ const CawsSociety = () => {
             ligula.
           </p>
           <div className="linear-border" style={{width: 'fit-content'}}>
-            <button className="btn filled-btn px-5">View here</button>
+            <NavLink className="btn filled-btn px-5" to='/caws'>View here</NavLink>
           </div>
         </div>
       </div>

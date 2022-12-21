@@ -1,0 +1,36 @@
+.caws-traits{
+
+    .graphics{
+        max-height: 600px;
+        object-fit: contain;
+    }
+
+    .dark-gif{
+        display: none;
+    }
+}
+
+.dark .caws-traits{
+    .white-gif{
+        display: none;
+    }
+
+    .dark-gif{
+        display: inline;
+    }
+}
+
+@media screen and (max-width: 786px) {
+    .white-gif{
+        max-height: 450px !important;
+    }
+}
+
+.common-title-text{
+    mark {
+        color: #7770E0;
+    }
+    p {
+        font-size: 16px;
+    }
+}

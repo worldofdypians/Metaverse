@@ -1,0 +1,23 @@
+.nft-page-container{
+  font-family: 'Mulish';
+  //background-color: #fff;
+  //padding-top: 75px;
+
+}
+
+
+.caws-container{
+  padding-left: 70px;
+  padding-right: 70px;
+}
+
+@media screen and (max-width: 786px) {
+.nft-page-container{
+  top: 65px;
+  position: relative;
+}
+
+.caws-container{
+padding: 0 !important;
+}
+}

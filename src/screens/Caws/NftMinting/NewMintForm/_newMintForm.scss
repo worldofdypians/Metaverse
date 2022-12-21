@@ -1,0 +1,12 @@
+.buttons-row {
+        width: 40%;
+        justify-content: space-between;
+
+        @media only screen and (max-width: 1255px) {
+            justify-content: center;
+        }
+
+        @media only screen and (max-width: 491px) {
+            width: auto;
+        }
+}

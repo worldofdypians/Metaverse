@@ -1,3 +1,13 @@
+@import '../src/screens/Caws/caws';
+@import '../src/screens/Caws/colors';
+@import '../src/screens/Caws/nftWhiteList';
+@import '../src/screens/Caws/responsive';
+@import '../src/screens/Caws/NftMinting/MyStakes/myStakes';
+@import '../src//screens/Caws/NftMinting/MyNfts/myNfts';
+
+
+
+
 @font-face {
   font-family: "Organetto";
   src: url("./fonts/Organetto.ttf");
@@ -77,4 +87,37 @@ body {
 .hidescroll{
   overflow: hidden;
   pointer-events: none;
+}
+.elevated-container {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 12px 16px 44px rgba(0, 0, 0, 0.12);
+  padding: 24px 16px;
+  @include medium {
+    padding: 32px;
+  }
+}
+
+.modal .modal-dialog {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(111.64deg, #080B2A 0%, #8C56FF 100.5%);
+}
+
+.MuiBox-root {
+  background: linear-gradient(111.64deg, #080B2A 0%, #8C56FF 100.5%);
+}
+
+.close-x {
+  width: 50px;
+  position: relative;
+  bottom: 65px;
+  cursor: pointer;
+}
+
+.sub-navbar-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
 }
