@@ -58,8 +58,8 @@ const NftStakeModal = ({
     if (address) {
       setConnectedWallet(true);
     } else setConnectedWallet(false);
-
-    const stakeApr50 = await window.config.nftstaking_address50;
+if(address)
+   { const stakeApr50 = await window.config.nftstaking_address50;
     if (apr == 50) {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
@@ -74,7 +74,7 @@ const NftStakeModal = ({
         setshowApprove(true);
         setActive(false);
       }
-    }
+    }}
   };
 
   const handleClearStatus = () => {
@@ -105,7 +105,7 @@ const NftStakeModal = ({
   };
 
   const handleDeposit = async (currentId) => {
-    let stake_contract = await window.getContract("NFTSTAKING");
+    let stake_contract = await window.getContractNFT("NFTSTAKING");
     setloadingdeposit(true);
 
     setStatus("*Processing deposit");
@@ -144,7 +144,7 @@ const NftStakeModal = ({
     });
 
     let calculateRewards;
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
     calculateRewards = await staking_contract.methods
       .calculateReward(address, parseInt(currentId))
       .call()
@@ -162,7 +162,7 @@ const NftStakeModal = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
 
     setloadingClaim(true);
     setActive(false);
@@ -186,7 +186,7 @@ const NftStakeModal = ({
   };
 
   const handleUnstake = async (itemId) => {
-    let stake_contract = await window.getContract("NFTSTAKING");
+    let stake_contract = await window.getContractNFT("NFTSTAKING");
     setloading(true);
     setStatus("*Processing unstake");
     setColor("#F13227");
@@ -271,9 +271,9 @@ const NftStakeModal = ({
                 </div>
               </div>
               <div className="caw-card">
-                {/* {nftItem.image && (
+                {nftItem.image && (
                   <img src={nftItem.image} alt="" className="nft-img" />
-                )} */}
+                )}
                 <div className="id">
                   <h1>{nftItem?.name}</h1>
                   <p>ID {nftItem?.nftId}</p>

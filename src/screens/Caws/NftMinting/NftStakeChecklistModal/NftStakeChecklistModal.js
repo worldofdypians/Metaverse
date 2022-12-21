@@ -99,8 +99,8 @@ const NftStakeCheckListModal = ({
     } else setConnectedWallet(false);
 
     const stakeApr50 = await window.config.nftstaking_address50;
-
-    if (apr == 50) {
+if(address)
+    {if (apr == 50) {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
         .then((data) => {
@@ -117,7 +117,7 @@ const NftStakeCheckListModal = ({
         setStatus(" *Please approve before deposit");
         setshowApprove(true);
       }
-    }
+    }}
   };
 
   const handleSelectAll = () => {
@@ -163,7 +163,7 @@ const NftStakeCheckListModal = ({
   };
 
   const handleDeposit = async (value) => {
-    let stake_contract = await window.getContract("NFTSTAKING");
+    let stake_contract = await window.getContractNFT("NFTSTAKING");
     setloadingdeposit(true);
     setStatus("*Processing deposit");
     setColor("#F13227");
@@ -254,7 +254,7 @@ const NftStakeCheckListModal = ({
   const onEmptyState = () => {};
 
   const handleUnstake = async (value) => {
-    let stake_contract = await window.getContract("NFTSTAKING");
+    let stake_contract = await window.getContractNFT("NFTSTAKING");
     setStatus("*Processing unstake");
     setColor("#F13227");
 
@@ -283,7 +283,7 @@ const NftStakeCheckListModal = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
 
     setloadingClaim(true);
     setActive(false);

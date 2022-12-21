@@ -48,7 +48,7 @@ const NftStakingCawChecklist = ({
     });
 
     let calculateRewards;
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
 
     calculateRewards = await staking_contract.methods
       .calculateReward(address, parseInt(currentId))
@@ -67,7 +67,7 @@ const NftStakingCawChecklist = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
 
     await staking_contract.methods
       .claimRewards([itemId])
@@ -82,7 +82,7 @@ const NftStakingCawChecklist = ({
   };
 
   const handleUnstake = async (itemId) => {
-    let stake_contract = await window.getContract("NFTSTAKING");
+    let stake_contract = await window.getContractNFT("NFTSTAKING");
     setloading(true);
 
     await stake_contract.methods
@@ -123,7 +123,7 @@ const NftStakingCawChecklist = ({
     const address = await window.web3.eth?.getAccounts().then((data) => {
       return data[0];
     });
-    let staking_contract = await window.getContract("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
       .depositsOf(address)
