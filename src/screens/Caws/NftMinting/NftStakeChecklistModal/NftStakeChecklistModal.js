@@ -35,7 +35,6 @@ const NftStakeCheckListModal = ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: window.innerWidth < 500 ? "77%" : "55%",
-    // bgcolor: "var(--black-26-nft)",
     boxShadow: 24,
     p: 4,
     overflow: "scroll",
