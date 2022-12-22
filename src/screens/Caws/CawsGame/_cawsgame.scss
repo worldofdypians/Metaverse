@@ -2,16 +2,16 @@
   max-width: 60%;
   width: 100%;
 
-  //@media only screen and(max-width: 1178px) {
-  //    max-width: 100%;
-  //    width: 100%;
-  //}
+  @media only screen and (max-width: 1178px) {
+     max-width: 100%;
+     width: 100%;
+  }
 
   .caws-content-wrapper {
       display: flex;
-    //  @media only screen and(max-width: 615px) {
-    //    flex-direction: column;
-    //}
+     @media only screen and (max-width: 615px) {
+       flex-direction: column;
+    }
   }
 
   .buy-caws-wrapper {
@@ -78,17 +78,17 @@
 .caws-right-wrapper {
   max-width: 37%;
   width: 100%;
-//  @media only screen and(max-width: 1178px) {
-//    max-width: 100%;
-//    width: 100%;
-//}
+ @media only screen and (max-width: 1178px) {
+   max-width: 100%;
+   width: 100%;
+}
 
 .caws-content-wrapper {
     display: flex;
 
-    //@media only screen and(max-width: 615px) {
-    //    flex-direction: column;
-    //}
+    @media only screen and (max-width: 615px) {
+       flex-direction: column;
+    }
 }
 
   .caw-game-wrapper {
@@ -163,7 +163,11 @@
   border-radius: 6px;
   color: white !important;
   font-size: 16px;
-  padding: 10px 15px 12px 10px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
 }
 
 @media screen and (max-width: 786px) {
