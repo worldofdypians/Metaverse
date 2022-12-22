@@ -84,6 +84,7 @@ const RegisterModal = ({
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
 
+
   const handleChange = async (e) => {
     const { name, value } = e.target;
 
@@ -93,6 +94,8 @@ const RegisterModal = ({
     });
   };
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors(validate(values));
@@ -101,13 +104,18 @@ const RegisterModal = ({
       if (values.discord !== "" && values.email !== "") {
         setLoading(true);
 
+        let signature = "";
+        await window
+          .sign(window.config.whitelist_nft, coinbase)
+          .then((data) => {
+            signature = data;
+          });
         const data = {
+          signature: signature,
           address: coinbase,
           email: values.email,
           discord: values.discord,
         };
-
-        await window.sign(window.config.whitelist_nft, coinbase);
         try {
           const send = await axios
             .post("https://api3.dyp.finance/api/whitelist/insert", data)
@@ -163,8 +171,6 @@ const RegisterModal = ({
   useEffect(() => {
     countSeats();
   }, []);
-
-  console.log(status);
 
   return (
     <Modal
