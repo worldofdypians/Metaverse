@@ -13,9 +13,9 @@ const CatsAndWatchesSociety = () => {
   return (
     <div className="cats-and-watches-society container-padding">
       <div className="container-fluid" style={{ paddingTop: "150px" }}>
-        <div className="row align-items-center">
+        <div className="row align-items-center w-100 m-0 gap-2">
           {/* to be checked if text on blue cards is static */}
-          <div className="col-md-5">
+          <div className="col-12 col-md-12 col-lg-5">
             <TitleWithParagraph>
               <h1  className="text-white font-poppins">
                 <small>COME IN AND</small> <br />
@@ -53,7 +53,7 @@ const CatsAndWatchesSociety = () => {
               </p>
             </TitleWithParagraph>
           </div>
-          <div className="col-md-7">
+          <div className="col-12 col-md-12 col-lg-6">
             <img
               src={require("../../../assets/Nft/caws-meta-dark.png")}
               className="main-hero-graphics graphics w-100"

@@ -7,8 +7,7 @@
   z-index: 5;
   border-bottom: 2px solid #525469;
   max-width: 2400px;
-  background: #080B2A;
-
+  background: #080b2a;
 
   .nav-anchor {
     font-weight: 400;
@@ -16,5 +15,14 @@
     line-height: 24px;
     color: #ffffff;
     text-decoration: none;
+  }
+
+  .nav-anchor:hover {
+    text-decoration: underline !important;
+  }
+
+  .activenavlink {
+    color: #7bd8b0;
+    text-decoration: underline !important;
   }
 }

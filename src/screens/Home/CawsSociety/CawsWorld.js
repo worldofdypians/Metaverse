@@ -1,6 +1,6 @@
 import React from "react";
 import "./_cawssociety.scss";
-import cawsHeroBanner from "../../../assets/cawsHeroBanner.webp";
+import cawsSecondBanner from "../../../assets/cawsSecondBanner.png";
 
 const CawsWorld = () => {
   return (
@@ -25,7 +25,7 @@ const CawsWorld = () => {
         </div>
       </div>
       <div className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end">
-        <img src={cawsHeroBanner} alt="caws banner" className="caws-banner" />
+        <img src={cawsSecondBanner} alt="caws banner" className="caws-banner" />
       </div>
     </div>
   );

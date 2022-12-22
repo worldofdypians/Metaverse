@@ -5,7 +5,7 @@ import mobileArrow from "../../assets/navbarAssets/mobileArrow.svg";
 import xMark from "../../assets/navbarAssets/xMark.svg";
 import { NavLink } from "react-router-dom";
 
-const MobileNavbar = () => {
+const MobileNavbar = ({onLogin, onRegister}) => {
   const [openNavbar, setOpenNavbar] = useState(false);
 
   const bgmenu = document.querySelector("#bgmenu");
@@ -29,7 +29,8 @@ const MobileNavbar = () => {
         className="mobile-navbar d-flex d-lg-none p-3 align-items-center justify-content-between"
         id="mobileNavbar"
       >
-        <img src={metaverse} alt="metaverse" width={126} />
+        <NavLink to="/">
+        <img src={metaverse} alt="metaverse" width={126} /></NavLink>
         {openNavbar === false ? (
           <div className="linear-border" onClick={() => setOpenNavbar(true)}>
             <button
@@ -58,7 +59,12 @@ const MobileNavbar = () => {
         id="bgmenu"
       >
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink to="/explorer" className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100">
+          <NavLink
+            to="/explorer"
+            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+            style={{ textDecoration: "none" }}
+            onClick={() => setOpenNavbar(false)}
+          >
             <h6 className="mobile-nav-link font-poppins mb-0">Explore</h6>
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
@@ -72,17 +78,22 @@ const MobileNavbar = () => {
           <img src={mobileArrow} alt="arrow" />
         </div> */}
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink to="/news" className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100">
+          <NavLink
+            to="/news"
+            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+            style={{ textDecoration: "none" }}
+            onClick={() => setOpenNavbar(false)}
+          >
             <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
         <div className="w-100 d-flex align-items-center justify-content-between gap-3">
           <div className="linear-border">
-            <button className="btn outline-btn px-5">Log In</button>
+            <button className="btn outline-btn px-5" onClick={()=>{onLogin();setOpenNavbar(false)}}>Log In</button>
           </div>
           <div className="linear-border">
-            <button className="btn filled-btn px-5">Register</button>
+            <button className="btn filled-btn px-5" onClick={()=>{onRegister();setOpenNavbar(false)}}>Register</button>
           </div>
         </div>
       </div>

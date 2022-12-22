@@ -107,7 +107,7 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
                           <img src={MultipleCaws} id="multi-caws2" alt="" />
                         </div>
                         <div
-                          className="d-flex m-0 buttons-row"
+                          className="row m-0 buttons-row"
                           style={{ alignItems: "center", gap: 20 }}
                         >
                           <a
@@ -115,6 +115,7 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
                             target={"_blank"}
                             rel="noreferrer"
                             style={{ textDecoration: "none" }}
+                            className="p-0"
                           >
                             <div className="buy-caws-btn">
                               <img src={Ship} alt="" />
@@ -122,7 +123,7 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
                               <ChevronArrowSvg size="12" />
                             </div>
                           </a>
-                          <div>
+                          <div className="">
                             <a
                               className="nft-rarity-button"
                               href="https://rarity.tools/catsandwatchessocietycaws"
@@ -157,7 +158,7 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
                                   </clipPath>
                                 </defs>
                               </svg>
-                              &nbsp; &nbsp; Rarity Tools &nbsp;
+                               Rarity Tools 
                               <ChevronArrowSvg color="white" />
                             </a>
                           </div>
