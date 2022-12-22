@@ -57,6 +57,7 @@
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     border: 1px solid #15bffd;
+    width: 25%;
 
     .game-mode-title {
       font-style: normal;
@@ -191,6 +192,11 @@
 
 
 @media screen and (max-width: 786px) {
+
+  .explorer-main-wrapper{
+    background-image: none !important;
+  }
+
   .character-info{
     width: 100% !important;
   }
@@ -210,5 +216,9 @@
   .character-card{
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  .game-mode-card{
+    width: 100% !important;
   }
 }

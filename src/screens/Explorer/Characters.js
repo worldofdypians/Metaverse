@@ -1,5 +1,6 @@
 import React from 'react'
-import warrior from '../../assets/explorerAssets/warrior.png'
+import warrior from '../../assets/explorerAssets/warrior.webp'
+import mage from '../../assets/explorerAssets/mage.webp'
 
 const Characters = () => {
   return (
@@ -24,7 +25,7 @@ const Characters = () => {
         </div>
         <div className="col-12 col-lg-6 character-card">
           <div className="d-flex flex-column flex-lg-row gap-3 character-card justify-content-start second-character">
-              <img src={warrior} alt="" />
+              <img src={mage} alt="" />
             <div className="d-flex flex-column justify-content-start gap-5 character-info" style={{width: '34%'}}>
               <div className="d-flex flex-column gap-3">
                 <div className="character-title font-organetto">Sorcerer</div>
