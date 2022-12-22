@@ -1,12 +1,9 @@
-@import '../src/screens/Caws/caws';
-@import '../src/screens/Caws/colors';
-@import '../src/screens/Caws/nftWhiteList';
-@import '../src/screens/Caws/responsive';
-@import '../src/screens/Caws/NftMinting/MyStakes/myStakes';
-@import '../src//screens/Caws/NftMinting/MyNfts/myNfts';
-
-
-
+@import "../src/screens/Caws/caws";
+@import "../src/screens/Caws/colors";
+@import "../src/screens/Caws/nftWhiteList";
+@import "../src/screens/Caws/responsive";
+@import "../src/screens/Caws/NftMinting/MyStakes/myStakes";
+@import "../src//screens/Caws/NftMinting/MyNfts/myNfts";
 
 @font-face {
   font-family: "Organetto";
@@ -16,7 +13,6 @@
 body {
   background: #080b2a;
   font-family: "Poppins", sans-serif !important;
-
 
   .font-poppins {
     font-family: "Poppins", sans-serif !important;
@@ -65,16 +61,24 @@ body {
     white-space: pre;
   }
 
+  .simple-btn {
+    background: transparent;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    text-decoration: underline;
+  }
+
   .filled-btn {
     clip-path: polygon(
-        0 19px,
-        19px 0,
-        100% 0,
-        100% calc(100% - 19px),
-        calc(100% - 19px) 100%,
-        0 100%
-      );
-    background: linear-gradient(89.7deg, #7BD8B0 0.23%, #DCFB85 99.72%);
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -86,7 +90,7 @@ body {
   }
 }
 
-.hidescroll{
+.hidescroll {
   overflow: hidden;
   pointer-events: none;
 }
@@ -104,11 +108,11 @@ body {
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
-  background: linear-gradient(111.64deg, #080B2A 0%, #8C56FF 100.5%);
+  background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
 }
 
 .MuiBox-root {
-  background: linear-gradient(111.64deg, #080B2A 0%, #8C56FF 100.5%);
+  background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
 }
 
 .close-x {

@@ -58,7 +58,11 @@ const MobileNavbar = () => {
         id="bgmenu"
       >
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink to="/explorer" className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100">
+          <NavLink
+            to="/explorer"
+            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+            style={{ textDecoration: "none" }}
+          >
             <h6 className="mobile-nav-link font-poppins mb-0">Explore</h6>
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
@@ -72,7 +76,11 @@ const MobileNavbar = () => {
           <img src={mobileArrow} alt="arrow" />
         </div> */}
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink to="/news" className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100">
+          <NavLink
+            to="/news"
+            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+            style={{ textDecoration: "none" }}
+          >
             <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
