@@ -1,12 +1,12 @@
 import React from "react";
-import cawsImg from "../../assets/caws-img.png";
+// import cawsImg from "../../assets/mediaAssets";
 import "./_cawsitemcard.scss";
 
-const CawsItemCard = ({ cawsID, price }) => {
+const CawsItemCard = ({ hero, price }) => {
   return (
     <div className="position-relative px-0">
       <div className="itemcard-wrapper">
-        <img src={cawsImg} alt="" className="w-100"/>
+      <img src={require(`../../assets/mediaAssets/${hero}`)} alt="" className="w-100" />
       </div>
       <div className="purple-bottom-wrapper">
         <div className="d-flex flex-column gap-2">
