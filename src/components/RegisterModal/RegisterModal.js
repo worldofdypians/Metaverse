@@ -416,18 +416,22 @@ const RegisterModal = ({
                 background: "transparent",
               }}
             >
-              <button
+              <a
+                href="https://discord.gg/dypcaws"
+                target="_blank"
+                rel="noreferrer"
                 className="btn outline-btn px-5 d-flex gap-1 align-items-center"
                 style={{
                   background:
                     "linear-gradient(89.7deg, #5865F2 0.23%, #A2AAFE 99.72%)",
                   border: "none",
+                  textDecoration: "none",
                 }}
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
                 Join discord channel
-              </button>
+              </a>
             </div>
 
             <button className="btn simple-btn px-5" onClick={onClose}>
@@ -464,18 +468,22 @@ const RegisterModal = ({
                 background: "transparent",
               }}
             >
-              <button
+              <a
+                href="https://discord.gg/dypcaws"
+                target="_blank"
+                rel="noreferrer"
                 className="btn outline-btn px-5 d-flex gap-1 align-items-center"
                 style={{
                   background:
                     "linear-gradient(89.7deg, #5865F2 0.23%, #A2AAFE 99.72%)",
                   border: "none",
+                  textDecoration: "none",
                 }}
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
                 Join discord channel
-              </button>
+              </a>
             </div>
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close
@@ -512,18 +520,22 @@ const RegisterModal = ({
                 background: "transparent",
               }}
             >
-              <button
+              <a
+                href="https://discord.gg/dypcaws"
+                target="_blank"
+                rel="noreferrer"
                 className="btn outline-btn px-5 d-flex gap-1 align-items-center"
                 style={{
                   background:
                     "linear-gradient(89.7deg, #5865F2 0.23%, #A2AAFE 99.72%)",
                   border: "none",
+                  textDecoration: "none",
                 }}
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
                 Join discord channel
-              </button>
+              </a>
             </div>
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close
