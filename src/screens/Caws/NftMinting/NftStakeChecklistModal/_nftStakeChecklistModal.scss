@@ -41,16 +41,7 @@
             margin-left: 17px;
           }
         }
-        .red-text {
-          font-weight: 700;
-          font-size: 20px;
-          line-height: 25px;
-          color: $accent-red;
-          @include medium {
-            font-size: 24px;
-            line-height: 30px;
-          }
-        }
+
         .gray-text {
           font-weight: 700;
           font-size: 20px;
@@ -422,3 +413,13 @@
     }
   }
   
+  .red-text {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    color: $accent-red;
+    @include medium {
+      font-size: 24px;
+      line-height: 30px;
+    }
+  }
