@@ -1,0 +1,25 @@
+.news-card {
+  background: #181636;
+  border-radius: 8px;
+  min-height: 350px;
+}
+
+.update-title {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 43px;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  width: 65%;
+}
+
+
+.terms-main-wrapper {
+    gap: 80px;
+    max-width: 2400px;
+    overflow-x: hidden;
+    background-image: url(http://localhost:3000/static/media/newsBackground.8d8fcdc….webp);
+    background-size: cover;
+}

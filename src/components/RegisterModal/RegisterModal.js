@@ -121,14 +121,12 @@ const RegisterModal = ({
           setStatus("Already joined");
           setSuccess(false);
           setLoading(false);
-        }
-        if (send.status === 1) {
+        } else if (send.status === 1) {
           //successfully registered
           setStatus("Successfully joined");
           setSuccess(true);
           setLoading(false);
-        }
-        if (send.status === 2) {
+        } else if (send.status === 2) {
           setStatus("Added to next available");
           //more than 500
           setSuccess(false);
@@ -159,6 +157,8 @@ const RegisterModal = ({
     countSeats();
   }, []);
 
+  console.log(status);
+
   return (
     <Modal
       open={open}
@@ -169,7 +169,7 @@ const RegisterModal = ({
         {status === "" && (
           <div>
             <div className="d-flex justify-content-between gap-1">
-              <h2 className="font-organetto register-grid-title px-0 w-50">
+              <h2 className="font-organetto register-grid-title px-0">
                 Join our{" "}
                 <mark className="font-organetto register-tag">whitelist</mark>
               </h2>
@@ -235,6 +235,7 @@ const RegisterModal = ({
                             <img
                               src={require(`../../assets/walletIcons/${item.icon}`)}
                               className="option-wallet"
+                              alt=""
                             />
                           </div>
                         </div>
@@ -277,6 +278,7 @@ const RegisterModal = ({
                     required
                     onChange={handleChange}
                     sx={{ width: "100%" }}
+                    placeholder={'User#1234'}
                   />
                 </div>
                 <div
@@ -308,17 +310,101 @@ const RegisterModal = ({
             )}
           </div>
         )}
+        {status === "Successfully joined" && (
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
+            <h2 className="font-organetto register-grid-title px-0">
+              {status}{" "}
+              <mark className="font-organetto register-tag">whitelist</mark>
+            </h2>
+            <img src={successLogo} alt="" />
+            <p className="text-white m-0">
+              Congratulations, your World of Dypians whitelist registration is
+              successful. Please visit the Dypius Discord for more information.
+            </p>
+            <div
+              className="linear-border"
+              style={{
+                width: "fit-content",
+                margin: "2rem auto auto auto",
+              }}
+            >
+              <button className="btn filled-btn px-5" onClick={onClose}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
         {status === "Already joined" && (
-          <div>
-            <h2 className="font-organetto register-grid-title px-0 w-50">
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
+            <h2 className="font-organetto register-grid-title px-0">
               {status}{" "}
               <mark className="font-organetto register-tag">whitelist</mark>
             </h2>
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
-              Congratulations, your World of Dypians whitelist registration is
-              successful. Please visit the Dypius Discord for more information.
+              Warning, your application as a World of Dypians beta tester has
+              already been received and is currently pending. Please check back
+              soon.
             </p>
+            <div
+              className="linear-border"
+              style={{
+                width: "fit-content",
+                margin: "2rem auto auto auto",
+              }}
+            >
+              <button className="btn filled-btn px-5" onClick={onClose}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+        {status === "Added to next available" && (
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
+            <h2 className="font-organetto register-grid-title px-0">
+              {status}{" "}
+              <mark className="font-organetto register-tag">whitelist</mark>
+            </h2>
+            <img src={waitlistLogo} alt="" />
+            <p className="text-white m-0">
+              Thank you for your application as a World of Dypius Beta Tester.
+              Unfortunately, all current reservations are full and your
+              application has been added to the next waiting list.
+            </p>
+            <div
+              className="linear-border"
+              style={{
+                width: "fit-content",
+                margin: "2rem auto auto auto",
+              }}
+            >
+              <button className="btn filled-btn px-5" onClick={onClose}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+                {status === "Failed to join" && (
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
+            <h2 className="font-organetto register-grid-title px-0">
+              {status}{" "}
+              <mark className="font-organetto register-tag">whitelist</mark>
+            </h2>
+            <img src={failed} alt="" />
+            <p className="text-white m-0">
+            Unable to join the World of Dypius beta tester whitelist. Please try again.
+            </p>
+            <div
+              className="linear-border"
+              style={{
+                width: "fit-content",
+                margin: "2rem auto auto auto",
+              }}
+            >
+              <button className="btn filled-btn px-5" onClick={onClose}>
+                Close
+              </button>
+            </div>
           </div>
         )}
       </Box>

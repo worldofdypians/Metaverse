@@ -1,7 +1,6 @@
 import Home from "./screens/Home/Home";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import './app.scss'
 import "./fonts/Organetto.ttf";
 
 import Header from "./components/Header/Header";
@@ -11,6 +10,8 @@ import Caws from "./screens/Caws/Caws";
 import NftMinting from "./screens/Caws/NftMinting/NftMinting";
 import News from "./screens/News/News";
 import RegisterModal from "./components/RegisterModal/RegisterModal";
+import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
+import TermsConditions from "./screens/TermsConditions/TermsConditions";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -49,13 +50,16 @@ function App() {
     <BrowserRouter>
 
       <div className="container-fluid p-0 main-wrapper position-relative">
-        <Header handleRegister={handleRegister} />
+        <Header/>
         <MobileNavbar />
         <Routes>
         <Route exact path="/news" element={<News />} />
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home  handleRegister={handleRegister} />} />
           <Route exact path="/caws" element={<Caws />} />
           <Route exact path="/stake" element={<NftMinting />} />
+          <Route exact path="/terms-conditions" element={<TermsConditions />} />
+          <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
+
         </Routes>
         <Footer />
       </div>

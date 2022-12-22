@@ -39,7 +39,7 @@ var options = { year: "numeric", month: "short", day: "numeric" };
           <img
             src={image}
             alt="news image"
-            className="news-image"
+            className="news-image"z
           />
           
         </div>

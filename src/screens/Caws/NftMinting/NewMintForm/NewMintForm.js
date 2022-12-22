@@ -16,8 +16,8 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
   return (
     <>
       <div className="create-nft-form">
-        <div className="container-fluid padding-inline">
-          <div className="row mt-4 mt-md-5">
+        <div className="p-0 container-fluid news-main-wrapper2">
+          <div className="row mt-4 mt-md-5 w-100 px-3 px-lg-5 mx-0 news-container">
             <div className="col-md-12">
               <div className="row">
                 <div className="col-12 ">
@@ -104,16 +104,17 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
                           </p>
                         </div>
                         <div>
-                          <img src={MultipleCaws} id="multi-caws2" />
+                          <img src={MultipleCaws} id="multi-caws2" alt="" />
                         </div>
                         <div
-                          className="row m-0 buttons-row"
+                          className="d-flex m-0 buttons-row"
                           style={{ alignItems: "center", gap: 20 }}
                         >
                           <a
                             href="https://opensea.io/collection/catsandwatchessocietycaws"
                             target={"_blank"}
                             rel="noreferrer"
+                            style={{ textDecoration: "none" }}
                           >
                             <div className="buy-caws-btn">
                               <img src={Ship} alt="" />
@@ -126,6 +127,8 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
                               className="nft-rarity-button"
                               href="https://rarity.tools/catsandwatchessocietycaws"
                               target={"_blank"}
+                              rel="noreferrer"
+                              style={{ textDecoration: "none" }}
                             >
                               <svg
                                 width="24"

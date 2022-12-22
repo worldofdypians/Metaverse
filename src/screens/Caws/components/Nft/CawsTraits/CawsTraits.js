@@ -44,6 +44,8 @@ const CawsTraits = () => {
                   className="nft-rarity-button"
                   href="https://rarity.tools/catsandwatchessocietycaws"
                   target={"_blank"}
+                  rel="noreferrer"
+                  style={{ textDecoration: "none" }}
                 >
                   <svg
                     width="24"
