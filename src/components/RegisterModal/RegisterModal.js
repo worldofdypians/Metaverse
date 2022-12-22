@@ -4,6 +4,9 @@ import Box from "@mui/material/Box";
 import X from "../../assets/x_close.png";
 import whitelistIcon from "../../assets/whitelist-icon.svg";
 import whitewallet from "../../assets/wallet-white.svg";
+import blackwallet from "../../assets/wallet-black.svg";
+import discord from "../../assets/discord.svg";
+
 import axios from "axios";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import TextField from "@mui/material/TextField";
@@ -42,7 +45,7 @@ const RegisterModal = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "fit-content",
+    width: "min-content",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -82,8 +85,40 @@ const RegisterModal = ({
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [mouseOver, setMouseOver] = useState(false);
+  const [timer, setTimer] = useState(null);
   const [status, setStatus] = useState("");
 
+  const checkInput = async (name) => {
+    if (name === "discord") {
+      const data = { discord: values.discord };
+      const check = await axios
+        .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
+        .then(function (result) {
+          return result.data;
+        });
+
+      if (check.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
+      }
+    }
+
+    if (name === "email") {
+      const data = { email: values.email };
+      const check = await axios
+        .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
+        .then(function (result) {
+          return result.data;
+        });
+      if (check.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
+      }
+    }
+  };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -93,8 +128,6 @@ const RegisterModal = ({
       [name]: value,
     });
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -168,9 +201,38 @@ const RegisterModal = ({
       });
   };
 
+  const checkData = async () => {
+    if (coinbase) {
+      const check = await axios
+        .get(`https://api3.dyp.finance/api/whitelist/check/${coinbase}`)
+        .then(function (result) {
+          return result.data;
+        });
+
+      if (check.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
+      }
+    }
+  };
+
   useEffect(() => {
     countSeats();
   }, []);
+
+  useEffect(() => {
+    checkData();
+  }, [coinbase]);
+
+  useEffect(() => {
+    if (values.email !== "") {
+      checkInput("email");
+    }
+    if (values.discord !== "") {
+      checkInput("discord");
+    }
+  }, [values.discord, values.email]);
 
   return (
     <Modal
@@ -197,19 +259,33 @@ const RegisterModal = ({
               />
             </div>
             <div className="d-flex flex-column gap-3">
-              <p className="text-white m-0 walletdesc font-poppins">
-                You will be eligible to be part of the beta testers team based
-                on the details you provide
-              </p>
+              {coinbase ? (
+                <p className="text-white m-0 walletdesc font-poppins">
+                  Please provide the information below to resister as a World of
+                  Dypians Beta Tester. Limited spots are available.
+                </p>
+              ) : (
+                <p className="text-white m-0 walletdesc font-poppins">
+                  You will be eligible to be part of the beta testers team based
+                  on the details you provide. Even if all the slots are taken,
+                  you can register to the whitelist.
+                </p>
+              )}
+
               <div className="d-flex gap-1 align-items-center">
                 <img src={whitelistIcon} alt="" />
                 <span className="text-white whitedesc">
-                  <mark className="font-poppins register-tag">{seats}</mark>/500
-                  seats
+                  <mark
+                    className="font-poppins register-tag"
+                    style={{ fontSize: 32 }}
+                  >
+                    {seats}
+                  </mark>
+                  /500 seats
                 </span>
               </div>
               <p className="m-0 text-white walletdesc font-poppins">
-                Seats available for this round
+                Available seats
               </p>
             </div>
             <div className="separator"></div>
@@ -226,8 +302,17 @@ const RegisterModal = ({
               <button
                 className="btn outline-btn px-5 d-flex gap-1 align-items-center"
                 onClick={handleConnect}
+                onMouseEnter={() => {
+                  setMouseOver(true);
+                }}
+                onMouseLeave={() => {
+                  setMouseOver(false);
+                }}
               >
-                <img src={whitewallet} alt="" />
+                <img
+                  src={mouseOver === true ? blackwallet : whitewallet}
+                  alt=""
+                />
                 Connect Wallet
               </button>
             </div>
@@ -250,7 +335,9 @@ const RegisterModal = ({
                     value={values.email}
                     helperText={errors.email}
                     required
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     sx={{ width: "100%" }}
                   />
 
@@ -263,7 +350,9 @@ const RegisterModal = ({
                     value={values.discord}
                     helperText={errors.discord}
                     required
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     sx={{ width: "100%" }}
                     placeholder={"User#1234"}
                   />
@@ -299,58 +388,117 @@ const RegisterModal = ({
         )}
         {status === "Successfully joined" && (
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
-            <h2 className="font-organetto register-grid-title px-0">
-              {status}{" "}
-              <mark className="font-organetto register-tag">whitelist</mark>
-            </h2>
+            <div className="d-flex justify-content-between gap-1 position-relative">
+              <h2 className="font-organetto register-grid-title px-0">
+                {status}{" "}
+                <mark className="font-organetto register-tag">whitelist</mark>
+              </h2>
+              <img
+                src={X}
+                alt=""
+                className="close-x position-absolute"
+                onClick={() => {
+                  onClose();
+                }}
+                style={{ right: "0px" }}
+              />
+            </div>
+
             <img src={successLogo} alt="" />
             <p className="text-white m-0">
               Congratulations, your World of Dypians whitelist registration is
               successful. Please visit the Dypius Discord for more information.
             </p>
             <div
-              className="linear-border"
+              className={"linear-border m-auto"}
               style={{
                 width: "fit-content",
-                margin: "2rem auto auto auto",
+                background: "transparent",
               }}
             >
-              <button className="btn filled-btn px-5" onClick={onClose}>
-                Close
+              <button
+                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                style={{
+                  background:
+                    "linear-gradient(89.7deg, #5865F2 0.23%, #A2AAFE 99.72%)",
+                  border: "none",
+                }}
+                onClick={handleConnect}
+              >
+                <img src={discord} alt="" />
+                Join discord channel
               </button>
             </div>
+
+            <button className="btn simple-btn px-5" onClick={onClose}>
+              Close
+            </button>
           </div>
         )}
         {status === "Already joined" && (
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
-            <h2 className="font-organetto register-grid-title px-0">
-              {status}{" "}
-              <mark className="font-organetto register-tag">whitelist</mark>
-            </h2>
+            <div className="d-flex justify-content-between gap-1 position-relative">
+              <h2 className="font-organetto register-grid-title px-0">
+                {status}{" "}
+                <mark className="font-organetto register-tag">whitelist</mark>
+              </h2>
+              <img
+                src={X}
+                alt=""
+                className="close-x position-absolute"
+                onClick={() => {
+                  onClose();
+                }}
+                style={{ right: "0px" }}
+              />
+            </div>
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
-              Warning, your application as a World of Dypians beta tester has
-              already been received. Please check back soon.
+              Your application as a World of Dypians beta tester has already
+              been received. Please check back soon.
             </p>
             <div
-              className="linear-border"
+              className={"linear-border m-auto"}
               style={{
                 width: "fit-content",
-                margin: "2rem auto auto auto",
+                background: "transparent",
               }}
             >
-              <button className="btn filled-btn px-5" onClick={onClose}>
-                Close
+              <button
+                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                style={{
+                  background:
+                    "linear-gradient(89.7deg, #5865F2 0.23%, #A2AAFE 99.72%)",
+                  border: "none",
+                }}
+                onClick={handleConnect}
+              >
+                <img src={discord} alt="" />
+                Join discord channel
               </button>
             </div>
+            <button className="btn simple-btn px-5" onClick={onClose}>
+              Close
+            </button>
           </div>
         )}
         {status === "Added to next available" && (
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
-            <h2 className="font-organetto register-grid-title px-0">
-              {status}{" "}
-              <mark className="font-organetto register-tag">whitelist</mark>
-            </h2>
+            <div className="d-flex justify-content-between gap-1 position-relative">
+              <h2 className="font-organetto register-grid-title px-0">
+                {status}{" "}
+                <mark className="font-organetto register-tag">whitelist</mark>
+              </h2>
+              <img
+                src={X}
+                alt=""
+                className="close-x position-absolute"
+                onClick={() => {
+                  onClose();
+                }}
+                style={{ right: "0px" }}
+              />
+            </div>
             <img src={waitlistLogo} alt="" />
             <p className="text-white m-0">
               Thank you for your application as a World of Dypius Beta Tester.
@@ -358,40 +506,55 @@ const RegisterModal = ({
               application has been added to the next waiting list.
             </p>
             <div
-              className="linear-border"
+              className={"linear-border m-auto"}
               style={{
                 width: "fit-content",
-                margin: "2rem auto auto auto",
+                background: "transparent",
               }}
             >
-              <button className="btn filled-btn px-5" onClick={onClose}>
-                Close
+              <button
+                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                style={{
+                  background:
+                    "linear-gradient(89.7deg, #5865F2 0.23%, #A2AAFE 99.72%)",
+                  border: "none",
+                }}
+                onClick={handleConnect}
+              >
+                <img src={discord} alt="" />
+                Join discord channel
               </button>
             </div>
+            <button className="btn simple-btn px-5" onClick={onClose}>
+              Close
+            </button>
           </div>
         )}
         {status === "Failed to join" && (
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
-            <h2 className="font-organetto register-grid-title px-0">
-              {status}{" "}
-              <mark className="font-organetto register-tag">whitelist</mark>
-            </h2>
+            <div className="d-flex justify-content-between gap-1 position-relative">
+              <h2 className="font-organetto register-grid-title px-0">
+                {status}{" "}
+                <mark className="font-organetto register-tag">whitelist</mark>
+              </h2>
+              <img
+                src={X}
+                alt=""
+                className="close-x position-absolute"
+                onClick={() => {
+                  onClose();
+                }}
+                style={{ right: "0px" }}
+              />
+            </div>
             <img src={failed} alt="" />
             <p className="text-white m-0">
               Unable to join the World of Dypius beta tester whitelist. Please
               try again.
             </p>
-            <div
-              className="linear-border"
-              style={{
-                width: "fit-content",
-                margin: "2rem auto auto auto",
-              }}
-            >
-              <button className="btn filled-btn px-5" onClick={onClose}>
-                Close
-              </button>
-            </div>
+            <button className="btn simple-btn px-5" onClick={onClose}>
+              Close
+            </button>
           </div>
         )}
       </Box>

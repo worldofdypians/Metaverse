@@ -51,7 +51,7 @@ function App() {
     <BrowserRouter>
 
       <div className="container-fluid p-0 main-wrapper position-relative">
-        <Header/>
+        <Header onLogin={handleRegister} onRegister={handleRegister}/>
         <MobileNavbar />
         <Routes>
         <Route exact path="/news" element={<News />} />
