@@ -4,9 +4,9 @@ import './_catsAndWatchesSocietyBenefits.scss'
 
 const CatsAndWatchesSocietyBenefits = () => {
     return (
-        <div className="cats-and-watches-society-benefits container-padding pb-0">
+        <div className="cats-and-watches-society-benefits container-padding pb-0 mt-5 mb-5">
             <div className="container-fluid">
-                <div className="row align-items-center">
+                <div className="row align-items-center justify-content-between">
                     {/* to be checked if text on blue cards is static */}
                     <div className="col-md-6">
                         <TitleWithParagraph >
@@ -25,7 +25,7 @@ const CatsAndWatchesSocietyBenefits = () => {
                             </p>
                         </TitleWithParagraph>
                     </div>
-                    <div className="col-md-6 mt-5 mt-md-0">
+                    <div className="col-md-4 mt-5 mt-md-0">
                         <img src={require("../../../assets/Nft/cats-and-watches-society-benefits-new.png")}
                             className="graphics "
                             alt="phone-graphics" />

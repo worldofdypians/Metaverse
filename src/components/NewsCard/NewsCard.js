@@ -51,7 +51,7 @@ var options = { year: "numeric", month: "short", day: "numeric" };
           <span className="news-date font-poppins">{date.toLocaleDateString("en-US", options)}</span>
         </div>
             </div>
-            <div className="update-title font-organetto">
+            <div className="update-title font-organetto m-0">
               {title}
             </div>
           </div>

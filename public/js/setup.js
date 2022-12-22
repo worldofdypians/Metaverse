@@ -1584,7 +1584,7 @@ window.config = {
   default_gas_amount: 1200000,
   token_decimals: 18,
   lp_amplify_factor: 1,
-
+  whitelist_nft: "WorldOfDypians Whitelist",
   constant_stakingold_30_address: "0x7Fc2174670d672AD7f666aF0704C2D961EF32c73",
   constant_stakingold_60_address: "0x036e336eA3ac2E255124CF775C4FDab94b2C42e4",
   constant_stakingold_90_address: "0x0A32749D95217b7Ee50127E24711c97849b70C6a",
