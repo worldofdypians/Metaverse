@@ -3,6 +3,7 @@ import "./_mobilenavbar.scss";
 import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import mobileArrow from "../../assets/navbarAssets/mobileArrow.svg";
 import xMark from "../../assets/navbarAssets/xMark.svg";
+import { NavLink } from "react-router-dom";
 
 const MobileNavbar = () => {
   const [openNavbar, setOpenNavbar] = useState(false);
@@ -57,8 +58,10 @@ const MobileNavbar = () => {
         id="bgmenu"
       >
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <h6 className="mobile-nav-link font-poppins mb-0">Explore</h6>
-          <img src={mobileArrow} alt="arrow" />
+          <NavLink to="/explorer" className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100">
+            <h6 className="mobile-nav-link font-poppins mb-0">Explore</h6>
+            <img src={mobileArrow} alt="arrow" />{" "}
+          </NavLink>
         </div>
         {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <h6 className="mobile-nav-link font-poppins mb-0">Marketplace</h6>
@@ -69,11 +72,13 @@ const MobileNavbar = () => {
           <img src={mobileArrow} alt="arrow" />
         </div> */}
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
-          <img src={mobileArrow} alt="arrow" />
+          <NavLink to="/news" className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100">
+            <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
+            <img src={mobileArrow} alt="arrow" />{" "}
+          </NavLink>
         </div>
         <div className="w-100 d-flex align-items-center justify-content-between gap-3">
-        <div className="linear-border">
+          <div className="linear-border">
             <button className="btn outline-btn px-5">Log In</button>
           </div>
           <div className="linear-border">
