@@ -14,7 +14,7 @@ const Header = ()=>{
                     </NavLink>
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-around">
-                    <a href="#explorer" className="nav-anchor font-poppins">Explore</a>
+                    <NavLink to="/explorer" className="nav-anchor font-poppins">Explore</NavLink>
                     <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a>
                     <div className="nav-anchor font-poppins">Roadmap</div>
                     <NavLink to='/news' className="nav-anchor font-poppins">News</NavLink>

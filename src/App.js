@@ -12,6 +12,7 @@ import News from "./screens/News/News";
 import RegisterModal from "./components/RegisterModal/RegisterModal";
 import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./screens/TermsConditions/TermsConditions";
+import Explorer from "./screens/Explorer/Explorer";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -56,6 +57,7 @@ function App() {
         <Route exact path="/news" element={<News />} />
           <Route exact path="/" element={<Home  handleRegister={handleRegister} />} />
           <Route exact path="/caws" element={<Caws />} />
+          <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
