@@ -5,19 +5,19 @@ import "./_cawsTraits.scss";
 
 const CawsTraits = () => {
   return (
-    <div className="caws-traits container-padding">
+    <div className="caws-traits container-padding" style={{marginBottom: '5rem'}}>
       <div className="container-fluid">
         <div className="row align-items-center">
           {/* to be checked if text on blue cards is static */}
           <div className="col-md-5 d-flex align-items-center justify-content-center position-relative order-2 order-md-1 mt-5 mt-md-0">
             {/* <span className='blur-backgroud-top-left left-0' /> */}
             <img
-              src={require("../../../assets/Nft/caw_trait.gif")}
+              src={require("../../../assets/Nft/caws_transparent.gif")}
               className="graphics white-gif"
               alt="phone-graphics"
             />
             <img
-              src={require("../../../assets/Nft/caw_trait_dark.gif")}
+              src={require("../../../assets/Nft/caws_transparent.gif")}
               className="graphics dark-gif"
               alt="phone-graphics"
             />

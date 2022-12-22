@@ -45,8 +45,8 @@ const RegisterModal = ({
     width: "fit-content",
     boxShadow: 24,
     p: 4,
-    overflow: "scroll",
-    height: "fit-content",
+    overflow: "auto",
+    minHeight: 200,
     borderRadius: "8px",
     overflowX: "hidden",
   };
@@ -107,34 +107,41 @@ const RegisterModal = ({
           discord: values.discord,
         };
 
-        const send = await axios
-          .post("https://api3.dyp.finance/api/whitelist/insert", data)
-          .then(function (result) {
-            return result.data;
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
+        await window.sign(window.config.whitelist_nft, coinbase);
+        try {
+          const send = await axios
+            .post("https://api3.dyp.finance/api/whitelist/insert", data)
+            .then(function (result) {
+              return result.data;
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
 
-        if (send.status === 0) {
-          //user already exists
-          setStatus("Already joined");
-          setSuccess(false);
-          setLoading(false);
-        } else if (send.status === 1) {
-          //successfully registered
-          setStatus("Successfully joined");
-          setSuccess(true);
-          setLoading(false);
-        } else if (send.status === 2) {
-          setStatus("Added to next available");
-          //more than 500
-          setSuccess(false);
-          setLoading(false);
-        } else {
-          setStatus("Failed to join");
-          setSuccess(false);
-          setLoading(false);
+          if (send.status === 0) {
+            //user already exists
+            setStatus("Already joined");
+            setSuccess(false);
+            setLoading(false);
+          } else if (send.status === 1) {
+            //successfully registered
+            setStatus("Successfully joined");
+            setSuccess(true);
+            setLoading(false);
+          } else if (send.status === 2) {
+            setStatus("Added to next available");
+            //more than 500
+            setSuccess(false);
+            setLoading(false);
+          } else {
+            setStatus("Failed to join");
+            setSuccess(false);
+            setLoading(false);
+          }
+        } catch (e) {
+          window.alertify.error("Something went wrong!" + e.responseText);
+        } finally {
+          setValues({ ...initialState });
         }
       } else {
         setSuccess(false);
@@ -210,39 +217,13 @@ const RegisterModal = ({
                 display: showForms === true ? "none" : "",
               }}
             >
-              {showOptions === false ? (
-                <button
-                  className="btn outline-btn px-5 d-flex gap-1 align-items-center"
-                  onClick={() => {
-                    setShowOptions(true);
-                  }}
-                >
-                  <img src={whitewallet} alt="" />
-                  Connect Wallet
-                </button>
-              ) : (
-                <div className="d-flex flex-column gap-2">
-                  {options.length > 0 &&
-                    options.map((item, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="optionwrapper"
-                          onClick={handleConnect}
-                        >
-                          <div className="d-flex justify-content-between gap-2 align-items-center">
-                            <p className="m-0 walletname">{item.name}</p>
-                            <img
-                              src={require(`../../assets/walletIcons/${item.icon}`)}
-                              className="option-wallet"
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              )}
+              <button
+                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                onClick={handleConnect}
+              >
+                <img src={whitewallet} alt="" />
+                Connect Wallet
+              </button>
             </div>
             {showForms === true && (
               <div>
@@ -278,7 +259,7 @@ const RegisterModal = ({
                     required
                     onChange={handleChange}
                     sx={{ width: "100%" }}
-                    placeholder={'User#1234'}
+                    placeholder={"User#1234"}
                   />
                 </div>
                 <div
@@ -343,8 +324,7 @@ const RegisterModal = ({
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
               Warning, your application as a World of Dypians beta tester has
-              already been received and is currently pending. Please check back
-              soon.
+              already been received. Please check back soon.
             </p>
             <div
               className="linear-border"
@@ -384,7 +364,7 @@ const RegisterModal = ({
             </div>
           </div>
         )}
-                {status === "Failed to join" && (
+        {status === "Failed to join" && (
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <h2 className="font-organetto register-grid-title px-0">
               {status}{" "}
@@ -392,7 +372,8 @@ const RegisterModal = ({
             </h2>
             <img src={failed} alt="" />
             <p className="text-white m-0">
-            Unable to join the World of Dypius beta tester whitelist. Please try again.
+              Unable to join the World of Dypius beta tester whitelist. Please
+              try again.
             </p>
             <div
               className="linear-border"

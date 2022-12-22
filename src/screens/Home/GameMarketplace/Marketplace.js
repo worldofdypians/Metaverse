@@ -96,9 +96,9 @@ const MarketPlace = () => {
         </Slider>
       )}
       <div className="d-flex w-100 align-items-center justify-content-center mt-5">
-        <div className="linear-border" style={{ width: "fit-content" }}>
+        {/* <div className="linear-border" style={{ width: "fit-content" }}>
           <button className="btn filled-btn px-5">View on marketplace</button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

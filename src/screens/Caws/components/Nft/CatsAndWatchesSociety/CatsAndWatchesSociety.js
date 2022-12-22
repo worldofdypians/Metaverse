@@ -55,7 +55,7 @@ const CatsAndWatchesSociety = () => {
           </div>
           <div className="col-md-7">
             <img
-              src={require("../../../assets/Nft/join-society-image.png")}
+              src={require("../../../assets/Nft/caws-meta-dark.png")}
               className="main-hero-graphics graphics w-100"
               alt="phone-graphics"
             />
