@@ -415,7 +415,7 @@ const NftMinting = () => {
       <NftCardModal
         modalId="newNft"
         nftItem={openedNft}
-        visible={openedNft ? true : false}
+        open={openedNft ? true : false}
         link={link}
         score={score}
         rarity={rarity}
@@ -432,6 +432,9 @@ const NftMinting = () => {
         onShareClick={onShareClick}
         itemId={parseInt(nftItemId)}
         countDownLeft={countDownLeft}
+        onClose={() => {
+          setOpenStakeNft(false);
+        }}
       />
 
       <NftUnstakeModal
@@ -444,6 +447,9 @@ const NftMinting = () => {
         onShareClick={onShareClick}
         itemId={parseInt(itemId)}
         countDownLeft={countDownLeft}
+        onClose={() => {
+          setOpenUnStakeNft(false);
+        }}
       />
 
       <NftStakeCheckListModal
