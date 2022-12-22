@@ -54,28 +54,28 @@ const RegisterModal = ({
     overflowX: "hidden",
   };
 
-  const options = [
-    {
-      name: "Metamask",
-      icon: "metamask.png",
-    },
-    {
-      name: "Coinbase",
-      icon: "coinbase.png",
-    },
-    {
-      name: "Coin98",
-      icon: "coin98.png",
-    },
-    {
-      name: "Trustwallet",
-      icon: "trustwallet.png",
-    },
-    {
-      name: "Safepal",
-      icon: "safepal.png",
-    },
-  ];
+  // const options = [
+  //   {
+  //     name: "Metamask",
+  //     icon: "metamask.png",
+  //   },
+  //   {
+  //     name: "Coinbase",
+  //     icon: "coinbase.png",
+  //   },
+  //   {
+  //     name: "Coin98",
+  //     icon: "coin98.png",
+  //   },
+  //   {
+  //     name: "Trustwallet",
+  //     icon: "trustwallet.png",
+  //   },
+  //   {
+  //     name: "Safepal",
+  //     icon: "safepal.png",
+  //   },
+  // ];
 
   const initialState = { email: "", discord: "" };
 
@@ -96,6 +96,8 @@ const RegisterModal = ({
         .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
         .then(function (result) {
           return result.data;
+        }).catch(function (error) {
+          console.error(error);
         });
 
       if (check.status === 1) {
@@ -111,6 +113,8 @@ const RegisterModal = ({
         .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
         .then(function (result) {
           return result.data;
+        }).catch(function (error) {
+          console.error(error);
         });
       if (check.status === 1) {
         setStatus("Already joined");
@@ -119,7 +123,7 @@ const RegisterModal = ({
       }
     }
   };
-
+  
   const handleChange = async (e) => {
     const { name, value } = e.target;
 
@@ -127,6 +131,15 @@ const RegisterModal = ({
       ...values,
       [name]: value,
     });
+
+
+    clearTimeout(timer)
+
+    const newTimer = setTimeout(() => {
+      checkInput(name)
+    }, 500)
+
+    setTimer(newTimer)
   };
 
   const handleSubmit = async (e) => {
@@ -134,7 +147,7 @@ const RegisterModal = ({
     setErrors(validate(values));
 
     if (Object.keys(errors).length === 0) {
-      if (values.discord !== "" && values.email !== "") {
+      if (values.discord !== "" && values.email !== "" && errors.email === '' && errors.discord === '') {
         setLoading(true);
 
         let signature = "";
@@ -142,7 +155,10 @@ const RegisterModal = ({
           .sign(window.config.whitelist_nft, coinbase)
           .then((data) => {
             signature = data;
-          });
+          }).catch((e)=>{
+            setLoading(false);
+            console.error(e)
+          })
         const data = {
           signature: signature,
           address: coinbase,
@@ -198,6 +214,8 @@ const RegisterModal = ({
       .get("https://api3.dyp.finance/api/whitelist/count")
       .then((data) => {
         setSeats(data.data.count);
+      }).catch(function (error) {
+        console.error(error);
       });
   };
 
@@ -207,6 +225,8 @@ const RegisterModal = ({
         .get(`https://api3.dyp.finance/api/whitelist/check/${coinbase}`)
         .then(function (result) {
           return result.data;
+        }).catch(function (error) {
+          console.error(error);
         });
 
       if (check.status === 1) {
@@ -225,15 +245,7 @@ const RegisterModal = ({
     checkData();
   }, [coinbase]);
 
-  useEffect(() => {
-    if (values.email !== "") {
-      checkInput("email");
-    }
-    if (values.discord !== "") {
-      checkInput("discord");
-    }
-  }, [values.discord, values.email]);
-
+  
   return (
     <Modal
       open={open}
