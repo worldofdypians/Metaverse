@@ -1,4 +1,5 @@
-import Modal from "../General/Modal/Modal";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -9,6 +10,8 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { formattedNum } from "../../functions/formatUSD";
 import getFormattedNumber from "../../functions/get-formatted-number";
 import ToolTip from "../../elements/ToolTip";
+import X from "../../../../assets/x_close.png";
+
 const NftStakeModal = ({
   nftItem,
   modalId,
@@ -19,6 +22,7 @@ const NftStakeModal = ({
   score,
   rarity,
   countDownLeft,
+  onClose,
 }) => {
   const copyAddress = () => {
     navigator.clipboard.writeText(nftItem.address);
@@ -223,9 +227,27 @@ if(address)
   }, [apr, EthRewards, itemId, isconnectedWallet]);
 
   const devicewidth = window.innerWidth;
-
+  const style = {
+    position: "absolute",
+    top: "60%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "fit-content",
+    boxShadow: 24,
+    p: 4,
+    overflow: "scroll",
+    height: "fit-content",
+    borderRadius: "8px",
+    overflowX: "hidden",
+  };
   return (
-    <Modal visible={visible} modalId={modalId}>
+    <Modal
+    open={visible}
+    modalId={modalId}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+  >
+    <Box sx={style}>
       <OutsideClickHandler
         onOutsideClick={() => {
           setshowClaim(false);
@@ -234,6 +256,24 @@ if(address)
         }}
       >
         <div>
+          <div className="d-flex justify-content-between gap-2 align-items-center"
+            style={{ flexDirection: "row-reverse" }}>
+                <img
+              src={X}
+              alt=""
+              className="close-x"
+              onClick={() => {
+                onClose();
+              }}
+              style={{ bottom: "25px" }}
+            />
+            <div className="d-flex gap-2 align-items-center">
+            <h3 className="red-text">Rarity rank</h3>
+                <h3 className="text-white">
+                  {rarity ? rarity : "Coming soon..."}
+                </h3>
+            </div>
+          </div>
           <div className="details-modal-content pb-0">
             <div className="left-col">
               <div className="rarity-rank">
@@ -244,10 +284,7 @@ if(address)
                   }
                   alt=""
                 /> */}
-                <h3 className="red-text">Rarity rank</h3>
-                <h3 className="gray-text">
-                  {rarity ? rarity : "Coming soon..."}
-                </h3>
+                
               </div>
               <div className="ownerId-section">
                 <p>Owner</p>
@@ -312,7 +349,7 @@ if(address)
               <div>
                 <div>
                   <div>
-                    <h3 className="stakeNft-Title d-flex" style={{ gap: 12 }}>
+                    <h3 className="stakeNft-Title d-flex text-white" style={{ gap: 12 }}>
                       Stake NFT
                       <h3
                         className="stakeNft-Title aprText "
@@ -607,6 +644,7 @@ if(address)
           </p>
         </div>
       </OutsideClickHandler>
+      </Box>
     </Modal>
   );
 };
