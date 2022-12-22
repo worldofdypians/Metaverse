@@ -137,7 +137,7 @@ const RegisterModal = ({
 
     const newTimer = setTimeout(() => {
       checkInput(name, value)
-    }, 1000)
+    }, 500)
 
     setTimer(newTimer)
   };
