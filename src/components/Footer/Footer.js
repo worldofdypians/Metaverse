@@ -18,10 +18,9 @@ const Footer = () => {
         >
           Dypius
         </a>
-        <span className="footer-link font-poppins">Whitepaper</span>
         <NavLink to='/terms-conditions' style={{textDecoration: 'none'}}><span className="footer-link font-poppins">Terms & Conditions</span></NavLink>
         <NavLink to='/privacy-policy' style={{textDecoration: 'none'}}><span className="footer-link font-poppins">Privacy Policy</span></NavLink>
-        <span className="footer-link font-poppins">Contact Us</span>
+        <a  href="mailto:helpcenter@dypius.com" className="footer-link font-poppins">Contact Us</a>
       </div>
       <hr className="footer-divider mt-0 mb-4" />
       <div className="d-flex w-100 align-items-center justify-content-center mb-4">

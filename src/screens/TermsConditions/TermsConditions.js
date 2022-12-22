@@ -16,7 +16,7 @@ const TermsConditions = () => {
           <div className="update-title font-organetto">
             Terms AND CONDITIONS
           </div>
-          <div className="news-card p-4 d-flex flex-column gap-3 mb-5">
+          <div className="news-card terms-container p-4 d-flex flex-column gap-3 mb-5">
             <p className="text-white m-0">Last Revised on December 27, 2022</p>
             <p className="text-white m-0">
               Welcome to the Terms of Service (these “Terms”) for the website

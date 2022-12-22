@@ -2,7 +2,7 @@
   gap: 80px;
   max-width: 2400px;
   background-image: url("../../assets/explorerAssets/explorerBg2.webp");
-  background-size: cover;
+  background-size: 100% 110%;
   background-repeat: no-repeat;
 
   .character-card {
@@ -117,9 +117,9 @@
     align-items: center;
   }
 
-  .pillars-grid{
+  .pillars-grid {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 50px;
     .pillar-title {
       font-style: normal;
@@ -128,13 +128,87 @@
       line-height: 48px;
       color: #ffffff;
     }
-  
+
     .pillar-desc {
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-  
+
       color: #ffffff;
     }
+  }
+
+  .journey-grid{
+    // display: grid;
+    // grid-template-columns: repeat(4,1fr);
+    // gap: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    .journey-card {
+      background: linear-gradient(180deg, #5b08d0 0%, #7f2df7 183.33%);
+      --mask: linear-gradient(45deg, #0000 18px, #000 0);
+      -webkit-mask: var(--mask);
+      mask: var(--mask);
+  
+  
+      .journey-card-title{
+        font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  color: #F7F7FC;
+      }
+    }
+  
+
+  }
+  .journey-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 43px;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .journey-desc {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #ffffff;
+  }
+}
+
+
+.skill-group-grid{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+}
+
+
+@media screen and (max-width: 786px) {
+  .character-info{
+    width: 100% !important;
+  }
+  .second-character{
+    top: 0 !important;
+  }
+
+  .character-trait{
+    left: 5% !important;
+  }
+
+  .pillars-grid{
+    grid-template-columns: auto !important;
+    gap: 25px !important;
+  }
+
+  .character-card{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }

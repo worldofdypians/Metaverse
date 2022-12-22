@@ -37,7 +37,7 @@ const GamePillars = () => {
     ]
 
   return (
-   <div className="pillars-grid px-3 px-lg-5">
+   <div className="pillars-grid mx-0 px-3 px-lg-5">
     {pillars.map((pillar) => (
         <div className="d-flex flex-column gap-4">
         <img src={require(`../../assets/explorerAssets/pillarIcons/${pillar.icon}.svg`)} width={56} height={56} alt="" />
