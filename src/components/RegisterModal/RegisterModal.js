@@ -89,9 +89,9 @@ const RegisterModal = ({
   const [timer, setTimer] = useState(null);
   const [status, setStatus] = useState("");
 
-  const checkInput = async (name) => {
+  const checkInput = async (name, inputValue) => {
     if (name === "discord") {
-      const data = { discord: values.discord };
+      const data = { discord: inputValue};
       const check = await axios
         .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
         .then(function (result) {
@@ -108,7 +108,7 @@ const RegisterModal = ({
     }
 
     if (name === "email") {
-      const data = { email: values.email };
+      const data = { email: inputValue };
       const check = await axios
         .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
         .then(function (result) {
@@ -136,8 +136,8 @@ const RegisterModal = ({
     clearTimeout(timer)
 
     const newTimer = setTimeout(() => {
-      checkInput(name)
-    }, 500)
+      checkInput(name, value)
+    }, 1000)
 
     setTimer(newTimer)
   };
@@ -146,8 +146,8 @@ const RegisterModal = ({
     e.preventDefault();
     setErrors(validate(values));
 
-    if (Object.keys(errors).length === 0) {
-      if (values.discord !== "" && values.email !== "" && errors.email === '' && errors.discord === '') {
+    if ( !errors.email && !errors.discord) {
+      if (values.discord !== "" && values.email !== "") {
         setLoading(true);
 
         let signature = "";
