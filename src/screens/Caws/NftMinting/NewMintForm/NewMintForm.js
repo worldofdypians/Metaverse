@@ -115,7 +115,7 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
                             target={"_blank"}
                             rel="noreferrer"
                             style={{ textDecoration: "none" }}
-                            className="col-2"
+                            className="p-0"
                           >
                             <div className="buy-caws-btn">
                               <img src={Ship} alt="" />
@@ -123,7 +123,7 @@ const NewMintForm = ({ handleConnectWallet, connectedWallet }) => {
                               <ChevronArrowSvg size="12" />
                             </div>
                           </a>
-                          <div className="col-3 col-lg-4">
+                          <div className="">
                             <a
                               className="nft-rarity-button"
                               href="https://rarity.tools/catsandwatchessocietycaws"
