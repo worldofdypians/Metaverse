@@ -4,7 +4,7 @@ import './_header.scss'
 import metaverse from '../../assets/navbarAssets/metaverse.svg'
 
 
-const Header = ({handleRegister})=>{
+const Header = ()=>{
     return (
         <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
             <div className="row mx-0 w-100">
@@ -24,7 +24,7 @@ const Header = ({handleRegister})=>{
                     <button className="btn outline-btn px-5">Log In</button>
                     </div>
                     <div className="linear-border">
-                    <button className="btn filled-btn px-5" onClick={handleRegister}>Register</button>
+                    <button className="btn filled-btn px-5">Register</button>
                     </div>
                 </div>
             </div>

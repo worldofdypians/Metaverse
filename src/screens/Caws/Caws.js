@@ -11,6 +11,7 @@ import NftStaking from "./NftStaking";
 
 const Caws = () => {
 
+    
     const [latestMintNft, setLatestMintNft] = useState([]);
     const [openedNft, setOpenedNft] = useState(false);
     const [connectedWallet, setConnectedWallet] = useState(false);
@@ -80,8 +81,13 @@ const Caws = () => {
     //     return () => clearInterval(interval);
     // }, [connectedWallet]);
 
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
+
     return (
-        <div className="nft-page-container">
+        <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
+            <div className="d-flex w-100 flex-column news-main-wrapper" style={{gap: 0}}>
             <FullScreenMainHero image={"nft-main-image2.jpg"} hasScroll={true} />
             <div className="caws-container px-3 px-lg-5">
                 <CatsAndWatchesSociety />
@@ -118,7 +124,7 @@ const Caws = () => {
                     NFT Drops
                 </a>
             </div>
-
+</div>
         </div>
     )
 }

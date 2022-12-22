@@ -13,7 +13,7 @@ const NftStaking = () => {
 
   const devicewidth = window.innerWidth;
   return (
-    <div className="caws-traits container-padding nft-staking-wrapper" style={{margin: '5rem auto', maxWidth: '93%'}}>
+    <div className="caws-traits container-padding nft-staking-wrapper" style={{margin: '5rem auto'}}>
       <div className="row justify-content-between">
         <div className="col-lg-4 d-flex align-items-center justify-content-center">
           <img src={CatHero} alt="" style={{width: '75%', height: '100%'}} />
@@ -27,18 +27,14 @@ const NftStaking = () => {
             <img src={Stakegraph} alt="" height={100}  style={{ display: devicewidth < 500 ? 'none' : ''}}/>
           </div>
           <div>
-            {/*<p>*/}
-            {/*  Time for staking has finally arrived! You can now do even more with your newly-<br/>acquired icons by*/}
-            {/*  staking them.<br/> Staking is as easy as you’d expect: To get started, simply select one or all of your*/}
-            {/*  minted NFTs, and begin earning continuous ETH rewards!*/}
-            {/*</p>*/}
             <p>
               Time for staking has finally arrived! You can now do even more with your CAWS.<br/>
-              Staking is as easy as you’d expect: To get started, simply select one or all of your minted NFTs, and
+              Staking is as easy as you'd expect: To get started, simply select one or all of your minted NFTs, and
               begin earning continuous ETH rewards!
             </p>
             
-            <NavLink className="start-staking-btn" to='/stake'>
+                           
+            <NavLink className="start-staking-btn" to='/stake' style={{textDecoration: 'none'}} >
               Start Earning
             </NavLink>
           </div>

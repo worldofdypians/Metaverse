@@ -53,9 +53,9 @@ const News = () => {
 
   useEffect(() => {
     fetchNews();
-  }, [])
+    window.scrollTo(0,0)
 
-  console.log(news);
+  }, [])
 
   return (
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
@@ -121,7 +121,7 @@ const News = () => {
             </div>
           </div>
           <div className="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
-            <img src={newsLetterImage} alt="newsletter image" />
+            <img src={newsLetterImage} alt="newsletter" />
           </div>
         </div>
       </div>
