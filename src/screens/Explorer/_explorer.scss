@@ -1,0 +1,140 @@
+.explorer-main-wrapper {
+  gap: 80px;
+  max-width: 2400px;
+  background-image: url("../../assets/explorerAssets/explorerBg2.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  .character-card {
+    .character-title {
+      font-style: normal;
+      font-weight: 800;
+      font-size: 32px;
+      line-height: 43px;
+      color: #ffffff;
+    }
+
+    .character-desc {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      text-transform: capitalize;
+      color: #ffffff;
+    }
+
+    .character-list {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      border: 1px solid #15bffd;
+      margin-bottom: 0;
+      .character-trait {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        color: #b4c5cb;
+        position: relative;
+        left: 10%;
+      }
+    }
+  }
+
+  .second-character {
+    position: relative;
+    top: 30%;
+  }
+
+  .game-mode-header {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 43px;
+    color: #ffffff;
+  }
+
+  .game-mode-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid #15bffd;
+
+    .game-mode-title {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 24px;
+      color: #8c56ff;
+    }
+
+    .game-mode-desc {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+      color: #b4c5cb;
+    }
+  }
+
+  .skills-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 43px;
+    color: #ffffff;
+  }
+
+  .skills-desc {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: #ffffff;
+  }
+
+  .first-skill-group {
+    display: flex;
+    // grid-template-columns: repeat(7,1fr);
+    gap: 30px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+  }
+  .second-skill-group {
+    display: flex;
+    // grid-template-columns: repeat(6,1fr);
+    gap: 30px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+  }
+  .third-skill-group {
+    display: flex;
+    // grid-template-columns: repeat(7,1fr);
+    gap: 30px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pillars-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 50px;
+    .pillar-title {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 32px;
+      line-height: 48px;
+      color: #ffffff;
+    }
+  
+    .pillar-desc {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+  
+      color: #ffffff;
+    }
+  }
+}
