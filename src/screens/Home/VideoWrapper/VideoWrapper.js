@@ -5,7 +5,7 @@ import "./_videowrapper.scss";
 const VideoWrapper = ({handleRegister}) => {
   return (
     <div className="video-wrapper flex-column gap-5 d-flex align-items-center justify-content-around justify-content-lg-center">
-      <h1 className="video-main-title font-organetto w-100">
+      <h1 className="video-main-title font-organetto">
         Explore the world of dypians
       </h1>
       {/* <img src={buttonBorder} alt="button-border" className="video-button-border" /> */}

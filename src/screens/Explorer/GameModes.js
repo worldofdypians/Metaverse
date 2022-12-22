@@ -2,9 +2,9 @@ import React from "react";
 
 const GameModes = () => {
   return (
-    <div className="row w-100 px-3 px-lg-5 gap-5" style={{minHeight: '60vh'}}>
-      <h3 className="game-mode-header font-organetto">Game modes</h3>
-      <div className="d-flex align-items-center justify-content-between">
+    <div className="row w-100 mx-0 px-3 px-lg-5 flex-column gap-5" style={{minHeight: '60vh'}}>
+      <h3 className="game-mode-header font-organetto px-0">Game modes</h3>
+      <div className="d-flex flex-column flex-lg-row gap-5 gap-lg-0 align-items-center justify-content-between px-0">
         <div className="game-mode-card p-3 d-flex flex-column gap-1">
           <span className="game-mode-title font-poppins">Campaign Mode</span>
           <span className="game-mode-desc font-poppins">

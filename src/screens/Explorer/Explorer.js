@@ -3,6 +3,7 @@ import CawsSociety from "../Home/CawsSociety/CawsSociety";
 import Characters from "./Characters";
 import GameModes from "./GameModes";
 import GamePillars from "./GamePillars";
+import Journey from "./Journey";
 import Skills from "./Skills";
 import "./_explorer.scss";
 
@@ -15,6 +16,7 @@ const Explorer = () => {
         <GamePillars />
         <CawsSociety />
         <Skills />
+        <Journey />
       </div>
     </div>
   );

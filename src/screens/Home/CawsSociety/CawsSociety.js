@@ -1,5 +1,7 @@
 import React from "react";
 import cawsHeroBanner from "../../../assets/cawsHeroBanner.webp";
+import cawsFirstBanner from "../../../assets/cawsFirstBanner.png";
+
 import { NavLink } from "react-router-dom";
 import "./_cawssociety.scss";
 
@@ -7,7 +9,7 @@ const CawsSociety = () => {
   return (
     <div className="row px-3 px-lg-5 mt-5 gap-4 gap-lg-0">
       <div className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-start">
-        <img src={cawsHeroBanner} alt="caws banner" className="caws-banner" />
+        <img src={cawsFirstBanner} alt="caws banner" className="caws-banner" />
       </div>
       <div className="col-12 col-lg-6">
         <div className="d-flex flex-column gap-3">

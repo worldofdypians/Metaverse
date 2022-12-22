@@ -44,6 +44,22 @@ const MarketPlace = () => {
     ],
   };
 
+  const firstMarquee = [
+    'firstMedia.webp',
+    'secondMedia.webp',
+    'thirdMedia.webp',
+    'fourthMedia.webp',
+    'fifthMedia.webp',
+  ]
+
+  const second = [
+    'sixthMedia.webp',
+    'seventhMedia.webp',
+    'eightMedia.webp',
+    'ninthMedia.webp',
+    'tenthMedia.webp',
+  ]
+
   const windowSize = useWindowSize();
 
   return (
@@ -67,20 +83,14 @@ const MarketPlace = () => {
         // </div>
        <>
         <Marquee gradient={false} style={{gap: '45px'}} >
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
+         {firstMarquee.map((item, index) => (
+          <img key={index} src={require(`../../../assets/mediaAssets/${item}`)} alt="" />
+         ) )}
         </Marquee>
         <Marquee gradient={false} style={{gap: '45px'}} direction="right" >
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
-          <img src={marketDummy} alt="" />
+        {second.map((item, index) => (
+          <img key={index} src={require(`../../../assets/mediaAssets/${item}`)} alt="" />
+         ) )}
         </Marquee>
        </>
       ) : (
