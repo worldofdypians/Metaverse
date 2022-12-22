@@ -100,7 +100,8 @@ const MyNfts = ({
 
   return (
     <div className="my-nfts">
-      <div className="container-fluid padding-inline">
+      <div className="p-0 container-fluid news-main-wrapper2">
+        <div className="row mt-4 mt-md-5 w-100 px-3 px-lg-5 mx-0 news-container justify-content-center">
         <div className="row">
           <div className="col">
             <TitleWithParagraph>
@@ -171,7 +172,7 @@ const MyNfts = ({
               </div>
             )}
           </div>
-        </div>
+        </div></div>
       </div>
     </div>
   );

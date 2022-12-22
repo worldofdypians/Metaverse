@@ -8,9 +8,9 @@ import NftStakeCheckListModal from "./NftStakeChecklistModal/NftStakeChecklistMo
 import NftUnstakeModal from "./NftUnstakeModal/NftUnstakeModal";
 import NftStakeModal from "./NftStakeModal/NftStakeModal";
 
-import NewMintForm from './NewMintForm/NewMintForm'
+import NewMintForm from "./NewMintForm/NewMintForm";
 
-import NftMintingHero from './NftMintingHero/NftMintingHero'
+import NftMintingHero from "./NftMintingHero/NftMintingHero";
 
 const NftMinting = () => {
   const [connectedWallet, setConnectedWallet] = useState(false);
@@ -72,7 +72,7 @@ const NftMinting = () => {
       console.error(error);
     }
   }
-  
+
   const onStakeNft = async (item) => {
     setOpenStakeNft(item);
     setOpenStakeNft(item);
@@ -125,7 +125,6 @@ const NftMinting = () => {
 
     setItem(nftId);
   };
-
 
   const onStakCheckList = (item) => {
     setOpenStakeChecklist(item);
@@ -209,8 +208,6 @@ const NftMinting = () => {
     // "Glasses",
     "Unrevealed",
   ];
-
- 
 
   const handleConnectWallet = async () => {
     try {
@@ -392,7 +389,6 @@ const NftMinting = () => {
       });
   };
 
-
   const handleShowUnstake = () => {
     setShowUnstakeModal(true);
     setOpenStakeChecklist(false);
@@ -402,6 +398,10 @@ const NftMinting = () => {
     setShowClaimAllModal(true);
     setOpenStakeChecklist(false);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="nft-minting">
@@ -470,12 +470,12 @@ const NftMinting = () => {
         countDownLeft={countDownLeft}
       />
 
- 
-<NftMintingHero smallTitle="SOCIETY" bigTitle="BENEFITS" />
+      <NftMintingHero smallTitle="SOCIETY" bigTitle="BENEFITS" />
 
-
-
-<NewMintForm handleConnectWallet={handleConnectWallet} connectedWallet={connectedWallet}/>
+      <NewMintForm
+        handleConnectWallet={handleConnectWallet}
+        connectedWallet={connectedWallet}
+      />
 
       <MyNfts
         onItemClick={onStakeNft}
@@ -496,7 +496,6 @@ const NftMinting = () => {
         onClaimAllRewards={claimRewards}
         ETHrewards={EthRewards}
       />
-
     </div>
   );
 };
