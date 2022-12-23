@@ -28,12 +28,9 @@ useEffect(() => {
 var options = { year: "numeric", month: "short", day: "numeric" };
 
 
-
-    const paragraph = "Fixed Hoodwink Decoy not casting Sharpshooter due to insufficient mana Fixed Io's tethered movespeed able to go below minimum movement speed Fixed Monkey King's Tree Dance sometimes not correctly highlighting all trees in jump range Fixed Batrider's Sticky Napalm cast range being 550 instead of 600 Fixed Razor's Damage Stolen Static Link talent giving extra damage stolen"
-
   return (
-    <div className="news-card-wrapper">
-    <div className="news-card p-3 d-flex flex-column gap-3">
+    <div className="news-card-wrapper" style={{cursor: 'pointer'}} onClick={() => setShowContent(!showContent)}>
+    <div className={`news-card ${showContent && 'news-card-active'} p-3 d-flex flex-column gap-3`}>
       <div className="d-flex flex-column flex-lg-row align-items-start justify-content-between gap-3">
         <div className="d-flex align-items-start">
           <img
