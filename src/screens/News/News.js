@@ -140,7 +140,7 @@ const News = () => {
                   Stay up-to-date with our latest news, amazing features, and
                   exciting events delivered straight to your inbox.
                 </p>
-                <div className="d-flex flex-column flex-lg-row align-items-center justify-content-start gap-3 gap-lg-5">
+                <div className="d-flex flex-column flex-lg-row align-items-start justify-content-start gap-3 gap-lg-5">
                   <div className="newsletter-input-container">
                     <ThemeProvider theme={theme}>
                       <StyledTextField
