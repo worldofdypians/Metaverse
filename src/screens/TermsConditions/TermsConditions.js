@@ -17,7 +17,7 @@ const TermsConditions = () => {
             <p className="text-white m-0">Last Revised on December 27, 2022</p>
             <p className="text-white m-0">
               Welcome to the Terms of Service (these “Terms”) for the website
-              https://worldofdypians.com (the “Website”), the World of Dypians
+              https://www.worldofdypians.com/ (the “Website”), the World of Dypians
               game (the “Game”), and all content and functionalities accessible
               via our Website and the Game (the “Services”), in each case
               operated by or on behalf of Dypius (“Company,” “we,” or “us”).
