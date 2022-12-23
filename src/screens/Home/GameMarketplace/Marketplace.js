@@ -10,6 +10,7 @@ const MarketPlace = () => {
   var settings = {
     dots: true,
     arrows: false,
+    fade: true,
     infinite: false,
     dotsClass: "button__bar",
     speed: 500,

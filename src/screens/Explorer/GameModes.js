@@ -8,12 +8,12 @@ const GameModes = () => {
         <div className="game-mode-card p-3 d-flex flex-column gap-1">
           <span className="game-mode-title font-poppins">Campaign Mode</span>
           <span className="game-mode-desc font-poppins">
-            Explore maps to fight creatures, loot materials, forge new items and
+            Explore maps to fight creatures, loot materials, forge new items, and
             earn rewards
           </span>
         </div>
         <div className="game-mode-card p-3 d-flex flex-column gap-1">
-          <span className="game-mode-title font-poppins">Open world Mode</span>
+          <span className="game-mode-title font-poppins">Open World Mode</span>
           <span className="game-mode-desc font-poppins">
             Real-time interaction with other players and NPCs
           </span>

@@ -16,7 +16,7 @@ const GamePillars = () => {
         },
         {
             title: 'Real-time interaction',
-            content: 'Access to real-time interaction with global players, NPCs and fresh game content.',
+            content: 'Access to real-time interaction with global players, NPCs, and fresh game content.',
             icon: 'realIcon'
         },
         {
