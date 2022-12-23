@@ -21,7 +21,7 @@ const Explorer = () => {
         <Characters />
         <GameModes />
         <GamePillars />
-        <CawsSociety />
+        <CawsSociety content="Adventurers can use CAWS NFT to enhance their player's abilities, power up their skills, and improve their chances at in game rewards." />
         <Skills />
         <Journey />
       </div>
