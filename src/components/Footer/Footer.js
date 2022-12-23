@@ -34,7 +34,7 @@ const Footer = () => {
       <hr className="footer-divider mt-0 mb-4" />
       <div className="d-flex w-100 align-items-center justify-content-center mb-4 flex-column">
         <span className="footer-link font-poppins">
-          Copyright © Dypius {year}.All rights reserved.
+          Copyright © Dypius {year}. All rights reserved.
         </span>
         <span className="footer-link font-poppins">Powered by Dypius.</span>
       </div>

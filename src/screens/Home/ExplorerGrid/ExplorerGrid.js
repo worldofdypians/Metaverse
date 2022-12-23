@@ -9,7 +9,7 @@ const ExplorerGrid = () => {
       
         {
             title: 'Play',
-            content: 'Experience unique gameplay and explore a world without end in a quest to form your destiny. Players can create their own  tools and armors to assist in their journey. The opportunities are endless ensuring infinite playability.',
+            content: 'Experience unique gameplay and explore a world without end in a quest to form your destiny. Players can create their own  tools and armors to assist in their journey. The opportunities are endless ensuring infinite possibilities.',
             icon: 'playIcon'
         },
         {
@@ -19,7 +19,7 @@ const ExplorerGrid = () => {
         },
         {
             title: 'Discover',
-            content: 'Players can discover new areas of the world as the map continuously grows and expands. As your journey continues, you will get access to new areas to explore and create in. An evolving world ready for discovery.',
+            content: 'Players can discover new areas of the world as the map continuously grows and expands. As your journey continues, you will get access to new areas to explore and create in. An evolving world ready to be discovered.',
             icon: 'discoverIcon'
         },
         {

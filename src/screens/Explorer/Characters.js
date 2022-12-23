@@ -10,12 +10,12 @@ const Characters = () => {
             <div className="d-flex flex-column justify-content-start gap-5 character-info" style={{width: '38%'}}>
               <div className="d-flex flex-column gap-3">
                 <div className="character-title font-organetto">Warrior</div>
-                <div className="character-desc font-poppins">Specializing in combat, the warrior utilizes weapons, armor, and brute strength to conquer his enemies.</div>
+                <div className="character-desc font-poppins">Specializing in combat, the warrior utilizes weapons, armor, and brute strength to conquer their enemies.</div>
               </div>
               <ul className="character-list p-3">
                 <li className="character-trait">Physically strongest class</li>
                 <li className="character-trait">Masters of weapons and armor</li>
-                <li className="character-trait">Excel at meele combat</li>
+                <li className="character-trait">Excel at melee combat</li>
                 <li className="character-trait">Wield swords, axes, maces and shields</li>
                 <li className="character-trait">High vitality</li>
               </ul>
@@ -33,9 +33,9 @@ const Characters = () => {
               </div>
               <ul className="character-list p-3">
                 <li className="character-trait">Highest intellect class</li>
-                <li className="character-trait">Proeficent in high end spell casting</li>
+                <li className="character-trait">Proficent in high end spell casting</li>
                 <li className="character-trait">Excel at long range combat</li>
-                <li className="character-trait">Leveling spells increases damage</li>
+                <li className="character-trait">Levelling spells increases damage</li>
               </ul>
             </div>
            
