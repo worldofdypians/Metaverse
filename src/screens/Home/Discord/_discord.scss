@@ -35,12 +35,9 @@
 
 
 @media screen and (max-width: 786px) {
-  .discord-wrapper{
-    min-height: 950px;
-  }
-
   .discord-wrapper::before{
     background-position-x: right;
     background-position-y: bottom;
+    background-size: 480px;
   }
 }

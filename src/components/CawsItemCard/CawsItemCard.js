@@ -6,9 +6,9 @@ const CawsItemCard = ({ hero, price }) => {
   return (
     <div className="position-relative px-0">
       <div className="itemcard-wrapper">
-      <img src={require(`../../assets/mediaAssets/${hero}`)} alt="" className="w-100" />
+      <img src={require(`../../assets/mediaAssets/${hero}`)} alt="" className="w-100 mb-4" />
       </div>
-      <div className="purple-bottom-wrapper">
+      {/* <div className="purple-bottom-wrapper">
         <div className="d-flex flex-column gap-2">
           <div className="d-flex flex-column gap-1">
           <p className="cawsitem-title font-poppins text-uppercase m-0">caws 1234</p>
@@ -22,7 +22,7 @@ const CawsItemCard = ({ hero, price }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

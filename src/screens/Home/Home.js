@@ -21,7 +21,10 @@ const Home = ({handleRegister}) => {
       <div className="d-flex flex-column home-main-wrapper">
         <VideoWrapper handleRegister={handleRegister}/>
         <ExplorerGrid />
-        <CawsSociety />
+        <CawsSociety content="The Cats and Watches Society (CAWS) NFT is a unique collection of
+            utility NFTs developed by Dypius. Owners of these NFTs will be able
+            to adventure with their CAT companion enhancing the player’s
+            abilities and increasing rewards." />
         <CawsWorld />
         <MarketPlace/>
         <Discord />

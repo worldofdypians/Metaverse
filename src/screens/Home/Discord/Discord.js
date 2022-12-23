@@ -7,7 +7,7 @@ const Discord = () => {
       <div className="col-12 col-lg-6 px-0" style={{zIndex: '3'}}>
         <div className="d-flex flex-column gap-3">
           <h2 className="discord-title font-organetto">
-            Connect with our immerse discord community
+          Join our Immersive Discord Community.
           </h2>
           <p className="discord-content font-poppins">
           Join the World of Dypians community on discord. connect with other players and receive the latest news and updates.
