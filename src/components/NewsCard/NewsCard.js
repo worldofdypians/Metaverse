@@ -55,7 +55,7 @@ var options = { year: "numeric", month: "short", day: "numeric" };
        
        
       </div>
-      <p className="news-content font-poppins" dangerouslySetInnerHTML={{__html: content.slice(0, contentLength) + dots}}>
+      <p className="news-content font-poppins d-flex flex-column align-items-center justify-content-center" dangerouslySetInnerHTML={{__html: content.slice(0, contentLength) + dots}}>
       </p>
       <div className="d-flex align-items-center gap-2" style={{cursor: 'pointer'}} onClick={() => setShowContent(!showContent)}>
         <span className="read-more font-poppins">{showContent ? 'Read less' : 'Read more'}</span>
