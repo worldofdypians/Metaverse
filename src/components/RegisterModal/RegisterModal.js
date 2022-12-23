@@ -146,8 +146,8 @@ const RegisterModal = ({
     e.preventDefault();
     setErrors(validate(values));
 
-    if ( !errors.email && !errors.discord) {
-      if (values.discord !== "" && values.email !== "") {
+    if ( errors.email === undefined && errors.discord === undefined) {
+      if (values.discord !== "" && values.email !== "" && values.discord.includes('#')) {
         setLoading(true);
 
         let signature = "";
@@ -208,7 +208,7 @@ const RegisterModal = ({
       setValues({ ...initialState });
     }
   };
-
+  
   const countSeats = async () => {
     await axios
       .get("https://api3.dyp.finance/api/whitelist/count")
