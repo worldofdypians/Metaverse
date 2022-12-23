@@ -97,6 +97,9 @@ const News = () => {
   useEffect(() => {
     fetchNews();
     window.scrollTo(0, 0);
+    document.title = 'News'
+
+
   }, []);
   return (
     <>
