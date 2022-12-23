@@ -59,6 +59,9 @@
         @include medium {
             width: 196px;
         }
+        @media only screen and (max-width: 500px) {
+            width: 100px;
+        }
     }
 
     .modal-dialog{

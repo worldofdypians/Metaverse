@@ -50,9 +50,10 @@
       align-items: center;
       cursor: pointer;
 
-      //@media only screen and(max-width: 500px) {
-      //  margin-top: 1rem;
-      //}
+      @media only screen and (max-width: 500px) {
+       margin-top: 1rem;
+       margin: auto;
+      }
 
       span {
         color: white;
@@ -168,6 +169,10 @@
   align-items: center;
   gap: 10px;
   width: fit-content;
+
+  @media only screen and (max-width: 615px) {
+    margin: auto;
+ }
 }
 
 @media screen and (max-width: 786px) {

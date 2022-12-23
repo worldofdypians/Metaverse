@@ -10,6 +10,8 @@ import "./_explorer.scss";
 const Explorer = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Explorer';
+
   }, []);
 
   return (
