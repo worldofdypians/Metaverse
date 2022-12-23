@@ -4,6 +4,9 @@ import "./_terms.scss";
 const TermsConditions = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Terms and Conditions'
+
+
   }, []);
 
   return (

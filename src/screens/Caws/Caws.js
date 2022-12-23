@@ -83,6 +83,9 @@ const Caws = () => {
 
     useEffect(()=>{
         window.scrollTo(0,0)
+        document.title = 'Caws'
+
+
     },[])
 
     return (
