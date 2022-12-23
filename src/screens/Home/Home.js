@@ -13,6 +13,8 @@ const Home = ({handleRegister}) => {
 
   useEffect(()=>{
     window.scrollTo(0,0)
+    document.title = 'World of Dypians'
+
 },[])
 
 
