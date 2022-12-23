@@ -1,9 +1,13 @@
 .video-wrapper {
-  background-image: url("../../../assets/videoBackground.webp");
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
   background-position: center;
+
+  @media only screen and (max-width: 991px) {
+  background-image: url("../../../assets/videoBackground.webp");
+
+  }
 
   .video-main-title {
     font-style: normal;
