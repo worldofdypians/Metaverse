@@ -83,6 +83,7 @@ const News = () => {
               setSuccess(true)
             }else{
               setSuccess(false)
+              setError({email: result.data.message})
             }
           })
           .catch(function (error) {
