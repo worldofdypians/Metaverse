@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
               complying with any applicable law and regulation regarding your
               personal information. This Privacy Policy describes how we
               collect, use, disclose, and protect your personal information,
-              including across our website https://worldofdypians.com (the
+              including across our website https://www.worldofdypians.com/ (the
               “Website”), the World of Dypians game (the “Game”), and all
               content and functionalities accessible via our Website and the
               Game (the “Services”), in each case operated by or on behalf of
