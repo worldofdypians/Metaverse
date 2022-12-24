@@ -54,28 +54,12 @@ const RegisterModal = ({
     overflowX: "hidden",
   };
 
-  // const options = [
-  //   {
-  //     name: "Metamask",
-  //     icon: "metamask.png",
-  //   },
-  //   {
-  //     name: "Coinbase",
-  //     icon: "coinbase.png",
-  //   },
-  //   {
-  //     name: "Coin98",
-  //     icon: "coin98.png",
-  //   },
-  //   {
-  //     name: "Trustwallet",
-  //     icon: "trustwallet.png",
-  //   },
-  //   {
-  //     name: "Safepal",
-  //     icon: "safepal.png",
-  //   },
-  // ];
+  const options = [
+    {
+      name: "Metamask",
+      icon: "metamask.png",
+    },
+  ];
 
   const initialState = { email: "", discord: "" };
 
@@ -301,8 +285,7 @@ const RegisterModal = ({
               </p>
             </div>
             <div className="separator"></div>
-
-            <div
+             <div
               className={
                 showOptions === false ? "linear-border m-auto" : "m-auto"
               }
@@ -311,9 +294,12 @@ const RegisterModal = ({
                 display: showForms === true ? "none" : "",
               }}
             >
-              <button
+              {showOptions === false ? (
+          <button
                 className="btn outline-btn px-5 d-flex gap-1 align-items-center"
-                onClick={handleConnect}
+                onClick={() => {
+                  setShowOptions(true);
+                }}
                 onMouseEnter={() => {
                   setMouseOver(true);
                 }}
@@ -325,9 +311,32 @@ const RegisterModal = ({
                   src={mouseOver === true ? blackwallet : whitewallet}
                   alt=""
                 />
-                Connect Wallet
-              </button>
-            </div>
+                  Connect Wallet
+                </button>
+              ) : (
+                <div className="d-flex flex-column gap-2">
+                  {options.length > 0 &&
+                    options.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="optionwrapper"
+                          onClick={handleConnect}
+                        >
+                          <div className="d-flex justify-content-between gap-2 align-items-center">
+                            <p className="m-0 walletname">{item.name}</p>
+                            <img
+                              src={require(`../../assets/walletIcons/${item.icon}`)}
+                              className="option-wallet"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+)}
+              </div>
             {showForms === true && (
               <div>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
