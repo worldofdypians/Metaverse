@@ -33,6 +33,8 @@ const MarketPlace = () => {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
+          infinite: true,
+          autoplay: true,
         },
       },
       {
@@ -40,6 +42,8 @@ const MarketPlace = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          infinite: true,
+          autoplay: true,
         },
       },
     ],

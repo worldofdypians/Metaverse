@@ -5,7 +5,7 @@ import mobileArrow from "../../assets/navbarAssets/mobileArrow.svg";
 import xMark from "../../assets/navbarAssets/xMark.svg";
 import { NavLink } from "react-router-dom";
 
-const MobileNavbar = ({onLogin, onRegister}) => {
+const MobileNavbar = () => {
   const [openNavbar, setOpenNavbar] = useState(false);
 
   const bgmenu = document.querySelector("#bgmenu");
@@ -90,10 +90,10 @@ const MobileNavbar = ({onLogin, onRegister}) => {
         </div>
         <div className="w-100 d-flex align-items-center justify-content-between gap-3">
           <div className="linear-border">
-            <button className="btn outline-btn px-5" onClick={()=>{onLogin();setOpenNavbar(false)}}>Log In</button>
+            <a href='https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth' target='_blank' rel="noreferrer" className="btn outline-btn px-5" onClick={()=>{setOpenNavbar(false)}}>Log In</a>
           </div>
           <div className="linear-border">
-            <button className="btn filled-btn px-5" onClick={()=>{onRegister();setOpenNavbar(false)}}>Register</button>
+            <a  href='https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth' target='_blank' rel="noreferrer" className="btn filled-btn px-5" onClick={()=>{setOpenNavbar(false)}}>Register</a>
           </div>
         </div>
       </div>
