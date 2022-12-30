@@ -51,8 +51,8 @@ function App() {
     <BrowserRouter>
 
       <div className="container-fluid p-0 main-wrapper position-relative">
-        <Header onLogin={handleRegister} onRegister={handleRegister}/>
-        <MobileNavbar onLogin={handleRegister} onRegister={handleRegister} />
+        <Header/>
+        <MobileNavbar/>
         <Routes>
         <Route exact path="/news" element={<News />} />
           <Route exact path="/" element={<Home  handleRegister={handleRegister} />} />
