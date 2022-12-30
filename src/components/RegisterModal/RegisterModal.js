@@ -251,7 +251,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ bottom: "25px", right: '-25px' }}
+                style={{ bottom: "25px", right: '-25px', height: 'fit-content' }}
               />
             </div>
             <div className="d-flex flex-column gap-3">
@@ -420,7 +420,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: '-25px' }}
+                style={{ right: '-25px', height: 'fit-content' }}
               />
             </div>
 
@@ -473,7 +473,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: '-25px'}}
+                style={{ right: '-25px', height: 'fit-content'}}
               />
             </div>
             <img src={alreadyjoinedLogo} alt="" />
@@ -524,7 +524,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: '-25px' }}
+                style={{ right: '-25px', height: 'fit-content' }}
               />
             </div>
             <img src={waitlistLogo} alt="" />
@@ -576,7 +576,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: '-25px' }}
+                style={{ right: '-25px', height: 'fit-content' }}
               />
             </div>
             <img src={failed} alt="" />
