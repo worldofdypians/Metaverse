@@ -22,8 +22,22 @@
     opacity: 0.3;
   }
 
+
+  .footer-socials{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 40px;
+  }
+
 }
 
 .poweredtext {
   font-size: 12px;
+}
+
+@media screen and (max-width: 786px) {
+  .footer-socials{
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 100% !important;
+  }
 }
