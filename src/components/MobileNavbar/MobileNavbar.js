@@ -90,10 +90,10 @@ const MobileNavbar = () => {
         </div>
         <div className="w-100 d-flex align-items-center justify-content-between gap-3">
           <div className="linear-border">
-            <a href='loginlink' target='_blank' rel="noreferrer" className="btn outline-btn px-5" onClick={()=>{setOpenNavbar(false)}}>Log In</a>
+            <a href='https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth' target='_blank' rel="noreferrer" className="btn outline-btn px-5" onClick={()=>{setOpenNavbar(false)}}>Log In</a>
           </div>
           <div className="linear-border">
-            <a  href='registerlink' target='_blank' rel="noreferrer" className="btn filled-btn px-5" onClick={()=>{setOpenNavbar(false)}}>Register</a>
+            <a  href='https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth' target='_blank' rel="noreferrer" className="btn filled-btn px-5" onClick={()=>{setOpenNavbar(false)}}>Register</a>
           </div>
         </div>
       </div>
