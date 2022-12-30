@@ -257,8 +257,8 @@ const RegisterModal = ({
             <div className="d-flex flex-column gap-3">
               {coinbase ? (
                 <p className="text-white m-0 walletdesc font-poppins">
-                  Please provide the information below to resister as a World of
-                  Dypians Beta Tester. Limited spots are available.
+                  Please provide the information below to register as a World of
+                  Dypians Beta Tester.
                 </p>
               ) : (
                 <p className="text-white m-0 walletdesc font-poppins">

@@ -24,6 +24,18 @@ const VideoWrapper = ({ handleRegister }) => {
       <div className="video-wrapper flex-column gap-5 d-flex align-items-center justify-content-around justify-content-lg-center">
         <div className="position-absolute d-flex flex-column gap-4 align-items-center">
           <div className="row m-0 gap-5 align-items-center justify-content-center">
+        
+            <div
+              className="pink-linear-border"
+              style={{ width: "fit-content", zIndex: 5, position: "relative" }}
+            >
+              <button
+                className="btn outline-btn px-5 d-flex align-items-center gap-2"
+                onClick={handleRegister}
+              >
+                Join Whitelist
+              </button>
+            </div>
             <div
               className="linear-border"
               style={{ width: "fit-content", zIndex: 5, position: "relative" }}
@@ -37,17 +49,6 @@ const VideoWrapper = ({ handleRegister }) => {
                 Download
                 <img src={downloadIcon} alt="download icon" />
               </a>
-            </div>
-            <div
-              className="pink-linear-border"
-              style={{ width: "fit-content", zIndex: 5, position: "relative" }}
-            >
-              <button
-                className="btn outline-btn px-5 d-flex align-items-center gap-2"
-                onClick={handleRegister}
-              >
-                Join Whitelist
-              </button>
             </div>
           </div>
           <div className="d-flex align-items-center gap-2">
