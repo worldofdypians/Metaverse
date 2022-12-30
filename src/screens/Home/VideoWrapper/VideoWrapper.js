@@ -6,7 +6,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import downloadIcon from '../../../assets/downloadIcon.svg'
 
 const VideoWrapper = ({ handleRegister }) => {
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
 
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
