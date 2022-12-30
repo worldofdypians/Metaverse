@@ -170,7 +170,7 @@ const RegisterModal = ({
             setSuccess(true);
             setLoading(false);
           } else if (send.status === 2) {
-            setStatus("Added to next available");
+            setStatus("Successfully joined");
             //more than 500
             setSuccess(false);
             setLoading(false);
@@ -263,8 +263,7 @@ const RegisterModal = ({
               ) : (
                 <p className="text-white m-0 walletdesc font-poppins">
                   You will be eligible to be part of the beta testers team based
-                  on the details you provide. Even if all the slots are taken,
-                  you can register to the whitelist.
+                  on the details you provide. 
                 </p>
               )}
 
@@ -277,11 +276,11 @@ const RegisterModal = ({
                   >
                     {seats}
                   </mark>
-                  /500 seats
+                  
                 </span>
               </div>
               <p className="m-0 text-white walletdesc font-poppins">
-                Available seats
+                Available seats: 400
               </p>
             </div>
             <div className="separator"></div>
