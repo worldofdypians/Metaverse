@@ -1,3 +1,73 @@
+.system-requirements-modal {
+  background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  border-radius: 8px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 40%;
+  height: fit-content;
+  z-index: 10;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  pointer-events: auto !important;
+
+ @media screen and (max-width: 786px) {
+  width: 95%;
+  height: 95%;
+  overflow: hidden;
+ }
+
+ .overall-requirements{
+    overflow-y: scroll;
+    height: 80%;
+
+ }
+
+  .sys-req-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 27px;
+    color: #ffffff;
+  }
+
+  .requirements-title {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+  }
+
+  .requirements-content {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #ffffff;
+  }
+
+  .requirements-divider {
+    background: #ffffff;
+    opacity: 0.3;
+    height: 2px;
+  }
+
+  .close-modal {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    color: #f7f7fc;
+    cursor: pointer;
+  }
+}
+
 .video-wrapper {
   background-size: cover;
   background-repeat: no-repeat;
@@ -5,8 +75,7 @@
   background-position: center;
 
   @media only screen and (max-width: 991px) {
-  background-image: url("../../../assets/videoBackground.webp");
-
+    background-image: url("../../../assets/videoBackground.webp");
   }
 
   .video-main-title {
@@ -22,14 +91,28 @@
     text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8);
   }
 
-
-  .video-button-border{
+  .video-button-border {
     position: absolute;
+  }
+
+  .sys-req {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    color: #d9fa86;
+    z-index: 5;
+    cursor: pointer;
+  }
+
+  .sys-req:hover {
+    text-decoration: underline;
   }
 }
 
 @media screen and (max-width: 786px) {
-  .video-main-title{
+  .video-main-title {
     font-size: 24px !important;
     line-height: 32px !important;
     width: 100% !important;
