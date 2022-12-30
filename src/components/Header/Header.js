@@ -37,14 +37,10 @@ const Header = () => {
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
           <div className="linear-border">
             <a href='https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth' target={'_blank'} rel='noreferrer' className="btn outline-btn px-5" >
-              Log In
+              Sign Up
             </a>
           </div>
-          <div className="linear-border">
-            <a  href='https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth' target={'_blank'} rel='noreferrer' className="btn filled-btn px-5">
-              Register
-            </a>
-          </div>
+          
         </div>
       </div>
     </div>
