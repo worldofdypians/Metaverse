@@ -41,7 +41,7 @@ const VideoWrapper = ({ handleRegister }) => {
               style={{ width: "fit-content", zIndex: 5, position: "relative" }}
             >
               <a
-                href="https://drive.google.com/file/d/1-dpm-aZ4uWU4rko9R1rYU1D9Xid-Hqe8/view?usp=sharing"
+                href="https://drive.google.com/file/d/1XJRAQiDdi9buqsn0pyIz5q_izxDLU4Nz/view?usp=share_link"
                 target={"_blank"}
                 rel="noreferrer"
                 className="btn filled-btn px-5 d-flex align-items-center gap-2"
