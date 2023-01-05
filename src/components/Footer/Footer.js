@@ -1,7 +1,6 @@
 import React from "react";
 import "./_footer.scss";
 import { NavLink } from "react-router-dom";
-import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 
 const Footer = () => {
@@ -32,7 +31,7 @@ const Footer = () => {
     },
     {
       icon: "reddit",
-      link: "https://www.reddit.com/user/worldofdypians/",
+      link: "https://www.reddit.com/r/WorldofDypians/",
     },
     {
       icon: "tiktok",
