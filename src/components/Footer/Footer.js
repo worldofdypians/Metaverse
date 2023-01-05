@@ -12,35 +12,35 @@ const Footer = () => {
   const socials = [
     {
       icon: "twitter",
-      link: "#",
+      link: "https://twitter.com/worldofdypians",
     },
     {
       icon: "telegram",
-      link: "#",
+      link: "https://t.me/worldofdypians",
     },
     {
       icon: "discord",
-      link: "#",
+      link: "https://discord.gg/dypcaws",
     },
     {
       icon: "instagram",
-      link: "#",
+      link: "https://www.instagram.com/worldofdypians",
     },
     {
       icon: "facebook",
-      link: "#",
+      link: "https://www.facebook.com/worldofdypians",
     },
     {
       icon: "reddit",
-      link: "#",
+      link: "https://www.reddit.com/user/worldofdypians/",
     },
     {
       icon: "tiktok",
-      link: "#",
+      link: "https://www.tiktok.com/@worldofdypians",
     },
     {
       icon: "youtube",
-      link: "#",
+      link: "https://www.youtube.com/channel/UCnRXdsNpnb2kMiNb7Cu4bDA",
     },
   ];
 
@@ -71,7 +71,7 @@ const Footer = () => {
         {windowSize.width > 786 ? (
           <div className="footer-socials">
             {socials.map((item, index) => (
-              <a href={item.link} key={index}>
+              <a href={item.link} key={index} target='_blank' rel='noreferrer'>
                 <img
                   src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                   alt={item.icon}
@@ -83,7 +83,7 @@ const Footer = () => {
           <>
             <div className="mobile-socials d-flex align-items-center justify-content-between w-100">
               {socials.slice(0, 4).map((item, index) => (
-                <a href={item.link} key={index}>
+                <a href={item.link} key={index} target='_blank' rel='noreferrer'>
                   <img
                     src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                     alt={item.icon}
@@ -93,7 +93,7 @@ const Footer = () => {
             </div>
             <div className="mobile-socials d-flex align-items-center justify-content-between w-100">
               {socials.slice(4,8).map((item, index) => (
-                <a href={item.link} key={index}>
+                <a href={item.link} key={index} target='_blank' rel='noreferrer'>
                   <img
                     src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                     alt={item.icon}
