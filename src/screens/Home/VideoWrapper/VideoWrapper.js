@@ -5,7 +5,7 @@ import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import downloadIcon from "../../../assets/downloadIcon.svg";
 
-const VideoWrapper = ({ handleRegister }) => {
+const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
 
   const reqmodal = document.querySelector("#reqmodal");
@@ -40,15 +40,13 @@ const VideoWrapper = ({ handleRegister }) => {
               className="linear-border"
               style={{ width: "fit-content", zIndex: 5, position: "relative" }}
             >
-              <a
-                href="https://drive.google.com/file/d/1XJRAQiDdi9buqsn0pyIz5q_izxDLU4Nz/view?usp=share_link"
-                target={"_blank"}
-                rel="noreferrer"
+              <button
+                onClick={handleDownload}
                 className="btn filled-btn px-5 d-flex align-items-center gap-2"
               >
                 Download
                 <img src={downloadIcon} alt="download icon" />
-              </a>
+              </button>
             </div>
           </div>
           <div className="d-flex align-items-center gap-2">
