@@ -14,7 +14,7 @@ const [dots, setDots] = useState('...')
 
 useEffect(() => {
   
-  if(showContent === true){
+  if(showContent === true || content.length < 280){
     setContentLength(content.length)
     setDots('')
   }else{
