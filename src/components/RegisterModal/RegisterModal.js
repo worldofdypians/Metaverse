@@ -280,7 +280,7 @@ const RegisterModal = ({
                 </span>
               </div>
               <p className="m-0 text-white walletdesc font-poppins">
-                Available seats: 400
+                Available seats: 200
               </p>
             </div>
             <div className="separator"></div>
