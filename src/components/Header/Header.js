@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./_header.scss";
 import metaverse from "../../assets/navbarAssets/metaverse.svg";
 
-const Header = () => {
+const Header = ({ handleSignUp }) => {
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
@@ -36,9 +36,12 @@ const Header = () => {
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
           <div className="linear-border">
-            <a href='https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth' target={'_blank'} rel='noreferrer' className="btn outline-btn px-5" >
+            <button
+                className="btn outline-btn px-5"
+                onClick={handleSignUp}
+            >
               Sign Up
-            </a>
+            </button>
           </div>
           
         </div>
