@@ -88,15 +88,21 @@
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
-      line-height: 24px;
+      line-height: 20px;
       text-transform: capitalize;
       color: #ffffff;
+      margin: 0;
 
       p{
         color: #ffffff !important;
       }
       span{
         color: #ffffff !important;
+
+        img {
+          width: 100%;
+          object-fit: contain;
+        }
       }
     }
 
