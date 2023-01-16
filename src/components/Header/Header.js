@@ -33,6 +33,16 @@ const Header = ({ handleSignUp }) => {
           >
             News
           </NavLink>
+          <NavLink
+            to="/land"
+            className={({isActive}) =>
+              isActive
+                ? "nav-anchor font-poppins activenavlink"
+                : "nav-anchor font-poppins"
+            }
+          >
+            Land
+          </NavLink>
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
           <div className="linear-border">
