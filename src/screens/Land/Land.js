@@ -1,4 +1,5 @@
 import React from 'react'
+import Community from './Community'
 import LandBenefits from './LandBenefits'
 import LandHero from './LandHero'
 import LandStaking from './LandStaking'
@@ -12,6 +13,7 @@ const Land = () => {
             <LandHero />
             <LandStaking />
             <LandTiers />
+            <Community />
             <LandBenefits />
         </div>
     </div>

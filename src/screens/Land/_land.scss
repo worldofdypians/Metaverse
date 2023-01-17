@@ -6,7 +6,6 @@
   background-size: 100% 100%;
   overflow-x: hidden;
 
-
   .land-hero-title {
     font-weight: 800;
     font-size: 32px;
@@ -33,6 +32,13 @@
       font-size: 24px;
       line-height: 36px;
       color: #ffffff;
+    }
+    .benefits-content {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #ffffff;
+      opacity: 0.8;
     }
   }
 
@@ -182,7 +188,7 @@
     mask: var(--mask);
     padding: 30px;
     position: absolute;
-    bottom: -20px;
+    top: 80%;
   }
 
   .land-desc {
@@ -206,7 +212,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 40px;
-    margin-bottom: 150px;
+    margin-bottom: 25rem;
   }
 
   .genesis-wrapper:nth-child(even) {
@@ -284,6 +290,63 @@
     font-size: 12px;
     line-height: 16px;
 
+    color: #ffffff;
+  }
+
+  .community-card {
+    background: #181636;
+    border-radius: 8px;
+
+    .community-title {
+      font-weight: 800;
+      font-size: 20px;
+      line-height: 27px;
+      color: #ffffff;
+    }
+
+    .community-desc {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #ffffff;
+    }
+
+    .community-date {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      letter-spacing: -0.018em;
+      color: #f7f7f7;
+    }
+  }
+
+  .tier-specs {
+    background: rgba(0, 0, 0, 0.32);
+    border-radius: 4px;
+    .spec-value {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      color: #ffffff;
+    }
+    .spec-type {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 18px;
+      color: #8c56ff;
+    }
+  }
+  .land-benefits-title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #ffffff;
+  }
+
+  .tier-benefit {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 22px;
     color: #ffffff;
   }
 }

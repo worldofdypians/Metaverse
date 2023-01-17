@@ -7,26 +7,32 @@ const LandHero = () => {
     {
       title: "1 Multi-functional Building",
       icon: "building",
+      content: 'A customizable and multi-functional structure that allows users to interact with each other in a fun and lucrative way'
     },
     {
       title: "2 Enviriomental Items",
       icon: "envirioment",
+      content: 'Add a unique touch to your space that reflects your personal style '
     },
     {
       title: "1 NPC Character",
       icon: "npc",
+      content: 'An informative virtual assistant that will greet users from all over the world'
     },
     {
       title: "Exclusive Land NFT Staking",
       icon: "coin",
+      content: 'A dedicated staking pool with 25% APR with no lock period that rewards users in Ethereum'
     },
     {
       title: "Earn Special Rewards",
       icon: "rewards",
+      content: 'Receive additional in-game benefits and increased rewards'
     },
     {
       title: "Monetize Land",
       icon: "monetize",
+      content: 'Display and advertise virtual goods that can be sold in-game to other users'
     },
   ];
 
@@ -67,14 +73,17 @@ const LandHero = () => {
           </h6>
           <div className="benefits-wrapper p-4">
             {benefits.map((benefit, index) => (
-              <div className="d-flex align-items-center gap-2" key={index}>
+              <div className="d-flex align-items-start gap-2" key={index}>
                 <img
                   src={require(`../../assets/landAssets/${benefit.icon}Icon.svg`)}
                   alt=""
                 />
+                <div className="d-flex flex-column gap-2">
                 <span className="benefits-title font-poppins">
                   {benefit.title}
                 </span>
+                <p className="benefits-content">{benefit.content}</p>
+                </div>
               </div>
             ))}
           </div>
