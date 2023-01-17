@@ -10,7 +10,7 @@ import Caws from "./screens/Caws/Caws";
 import NftMinting from "./screens/Caws/NftMinting/NftMinting";
 import News from "./screens/News/News";
 import RegisterModal from "./components/RegisterModal/RegisterModal";
-import CheckWhitelistModal from "./components/CheckWhitelistModal/CheckWhitelistModal"
+import CheckWhitelistModal from "./components/CheckWhitelistModal/CheckWhitelistModal";
 import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./screens/TermsConditions/TermsConditions";
 import Explorer from "./screens/Explorer/Explorer";
@@ -25,7 +25,6 @@ function App() {
   const [coinbase, setCoinbase] = useState();
   const [showForms, setShowForms] = useState(false);
 
-
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -39,7 +38,6 @@ function App() {
     setShowWalletModalRegister(true);
   };
 
-
   const handleConnection = async () => {
     try {
       localStorage.setItem("logout", "false");
@@ -49,7 +47,7 @@ function App() {
       await window.getCoinbase().then((data) => {
         setCoinbase(data);
       });
-      setShowForms(true)
+      setShowForms(true);
     } catch (e) {
       setShowWalletModal(false);
       window.alertify.error(String(e) || "Cannot connect wallet!");
@@ -60,26 +58,56 @@ function App() {
     return isConnected;
   };
 
+  const handleConnectWallet = async () => {
+    try {
+      await window.connectWallet().then((data) => {
+        setIsConnected(data);
+      });
+      await window.getCoinbase().then((data) => {
+        setCoinbase(data);
+      });
+    } catch (e) {
+      window.alertify.error(String(e) || "Cannot connect wallet!");
+      console.log(e);
+      return;
+    }
+    return isConnected;
+  };
+
   return (
     <BrowserRouter>
-
       <div className="container-fluid p-0 main-wrapper position-relative">
-        <Header handleSignUp={handleSignUp}/>
-        <MobileNavbar handleSignUp={handleSignUp}/>
+        <Header handleSignUp={handleSignUp} />
+        <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
-        <Route exact path="/news" element={<News />} />
-        <Route
-            exact path="/"
+          <Route exact path="/news" element={<News />} />
+          <Route
+            exact
+            path="/"
             element={
-              <Home handleRegister={handleRegister} handleDownload={handleDownload} />}
-        />
-        <Route exact path="/caws" element={<Caws />} />
-        <Route exact path="/explorer" element={<Explorer />} />
-        <Route exact path="/stake" element={<NftMinting />} />
-        <Route exact path="/land" element={<Land />} />
-        <Route exact path="/terms-conditions" element={<TermsConditions />} />
-        <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Home
+                handleRegister={handleRegister}
+                handleDownload={handleDownload}
+              />
+            }
+          />
+          <Route exact path="/caws" element={<Caws />} />
+          <Route exact path="/explorer" element={<Explorer />} />
+          <Route exact path="/stake" element={<NftMinting />} />
 
+          <Route
+            exact
+            path="/land"
+            element={
+              <Land
+                handleConnectWallet={handleConnectWallet}
+                coinbase={coinbase}
+                isConnected={isConnected}
+              />
+            }
+          />
+          <Route exact path="/terms-conditions" element={<TermsConditions />} />
+          <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
         <Footer />
       </div>
@@ -96,32 +124,32 @@ function App() {
       )}
 
       {showWalletModalDownload === true && (
-          <CheckWhitelistModal
-              open={showWalletModalDownload}
-              onClose={() => {
-                setdownloadSelected(false);
-                setShowWalletModalDownload(false);
-              }}
-              handleConnect={handleConnection}
-              coinbase={coinbase}
-              showForms={showForms}
-              openRegister={handleRegister}
-              donwloadSelected={donwloadSelected}
-          />
+        <CheckWhitelistModal
+          open={showWalletModalDownload}
+          onClose={() => {
+            setdownloadSelected(false);
+            setShowWalletModalDownload(false);
+          }}
+          handleConnect={handleConnection}
+          coinbase={coinbase}
+          showForms={showForms}
+          openRegister={handleRegister}
+          donwloadSelected={donwloadSelected}
+        />
       )}
 
       {showWalletModalRegister === true && (
-          <CheckWhitelistModal
-              open={showWalletModalRegister}
-              onClose={() => {
-                setShowWalletModalRegister(false);
-              }}
-              handleConnect={handleConnection}
-              coinbase={coinbase}
-              showForms={showForms}
-              openRegister={handleRegister}
-              donwloadSelected={donwloadSelected}
-          />
+        <CheckWhitelistModal
+          open={showWalletModalRegister}
+          onClose={() => {
+            setShowWalletModalRegister(false);
+          }}
+          handleConnect={handleConnection}
+          coinbase={coinbase}
+          showForms={showForms}
+          openRegister={handleRegister}
+          donwloadSelected={donwloadSelected}
+        />
       )}
     </BrowserRouter>
   );

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-// import SvgEyeIcon from "../NftCawCard/SvgEyeIcon";
-// import EthLogo from "../../../../../assets/General/eth-create-nft.png";
 import { formattedNum } from "../../../functions/formatUSD";
 import getFormattedNumber from "../../../functions/get-formatted-number";
 

@@ -401,8 +401,7 @@ const NftMinting = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'NFT Staking'
-
+    document.title = "NFT Staking";
   }, []);
 
   return (

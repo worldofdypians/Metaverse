@@ -1,0 +1,44 @@
+.landplaceholder-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  .landplaceholder-content {
+    height: fit-content;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(180.07deg, #FFF088 0.13%, #B8711B 78.06%);
+    opacity: 0.8;
+    gap: 10px;
+    .landplaceholder-content-img {
+      width: 110px;
+      border: 1px dashed;
+      border-radius: 8px;
+    }
+
+    .landplaceholder-content-text {
+      color: #fff;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .landplaceholder-button {
+      background: linear-gradient(180deg, #5b08d0 -17.02%, #7f2df7 100%);
+      border: 1px solid #f7f7fc;
+      box-sizing: border-box;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 18px;
+      padding: 5px 18px;
+      color: #f7f7fc;
+    }
+  }
+}
