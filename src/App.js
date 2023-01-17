@@ -14,6 +14,7 @@ import CheckWhitelistModal from "./components/CheckWhitelistModal/CheckWhitelist
 import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./screens/TermsConditions/TermsConditions";
 import Explorer from "./screens/Explorer/Explorer";
+import Land from "./screens/Land/Land";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -75,6 +76,7 @@ function App() {
         <Route exact path="/caws" element={<Caws />} />
         <Route exact path="/explorer" element={<Explorer />} />
         <Route exact path="/stake" element={<NftMinting />} />
+        <Route exact path="/land" element={<Land />} />
         <Route exact path="/terms-conditions" element={<TermsConditions />} />
         <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
 
