@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import communityDummy from "../../assets/newsAssets/communityDummy.png";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
-import halfArrow from "../../assets/newsAssets/halfArrow.svg";
+import ComunityNewsCard from "../../components/CommunityNewsCard/ComunityNewsCard";
 import Slider from "react-slick";
 import axios from "axios";
 
@@ -50,92 +49,39 @@ const Community = () => {
   const [news, setNews] = useState([]);
 
   const fetchNews = async () => {
-    axios
+    const communityNews = await axios
       .get("https://api3.dyp.finance/api/communities")
       .then((res) => {
-        setNews(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
+        return res.data;
       });
+
+      const datedNews = communityNews.map((item) => {
+        return { ...item, date: new Date(item.date) };
+      });
+      const sortedNews = datedNews.sort(function (a, b) {
+        return b.date - a.date;
+      });
+      
+    setNews(sortedNews)
   };
 
   useEffect(() => {
-   fetchNews()
-  }, [])
+    fetchNews();
+  }, []);
+  console.log(news);
 
   return (
     <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
+      <h6 className="community-title font-organetto">The World of dypians <span
+            className="community-title font-organetto"
+            style={{ color: "#8c56ff" }}
+          >
+            community
+          </span></h6>
       <Slider {...settings}>
-        <div className="community-card d-flex flex-column gap-3 p-3">
-          <img src={communityDummy} alt="" className="community-image" />
-          <h6 className="community-title font-organetto">
-            Metaverse Patch 12.20 notes December edition
-          </h6>
-          <p className="community-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue,
-            elit ut vulputate suscipit, nisi metus gravida justo...
-          </p>
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center gap-2">
-              <img src={calendarIcon} alt="calendar" width={24} height={24} />
-              <span className="community-date">Sept 10, 2022</span>
-            </div>
-            <img src={halfArrow} alt="arrow" />
-          </div>
-        </div>{" "}
-        <div className="community-card d-flex flex-column gap-3 p-3">
-          <img src={communityDummy} alt="" className="community-image" />
-          <h6 className="community-title font-organetto">
-            Metaverse Patch 12.20 notes December edition
-          </h6>
-          <p className="community-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue,
-            elit ut vulputate suscipit, nisi metus gravida justo...
-          </p>
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center gap-2">
-              <img src={calendarIcon} alt="calendar" width={24} height={24} />
-              <span className="community-date">Sept 10, 2022</span>
-            </div>
-            <img src={halfArrow} alt="arrow" />
-          </div>
-        </div>{" "}
-        <div className="community-card d-flex flex-column gap-3 p-3">
-          <img src={communityDummy} alt="" className="community-image" />
-          <h6 className="community-title font-organetto">
-            Metaverse Patch 12.20 notes December edition
-          </h6>
-          <p className="community-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue,
-            elit ut vulputate suscipit, nisi metus gravida justo...
-          </p>
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center gap-2">
-              <img src={calendarIcon} alt="calendar" width={24} height={24} />
-              <span className="community-date">Sept 10, 2022</span>
-            </div>
-            <img src={halfArrow} alt="arrow" />
-          </div>
-        </div>{" "}
-        <div className="community-card d-flex flex-column gap-3 p-3">
-          <img src={communityDummy} alt="" className="community-image" />
-          <h6 className="community-title font-organetto">
-            Metaverse Patch 12.20 notes December edition
-          </h6>
-          <p className="community-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue,
-            elit ut vulputate suscipit, nisi metus gravida justo...
-          </p>
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center gap-2">
-              <img src={calendarIcon} alt="calendar" width={24} height={24} />
-              <span className="community-date">Sept 10, 2022</span>
-            </div>
-            <img src={halfArrow} alt="arrow" />
-          </div>
-        </div>
+       {news.map((item, index) => (
+        <ComunityNewsCard key={index} date={item.date} content={item.content} link={item.link} video={item.video} image={item.image} id={item.id} />
+       ))}
       </Slider>
     </div>
   );

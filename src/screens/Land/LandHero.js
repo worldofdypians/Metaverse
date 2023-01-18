@@ -41,7 +41,7 @@ const LandHero = () => {
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
         <div className="col-12 col-lg-5 ps-2 ps-lg-0">
           <h6 className="land-hero-title font-organetto">
-            1000 Premium WOD Land
+            1,000 Premium WOD Land
           </h6>
           <h6
             className="land-hero-title font-organetto"

@@ -29,7 +29,7 @@ const LandTiers = () => {
           type: 'Genesis',
           chain: 'Ethereum',
           dimensions: '125x125m',
-          area: '15,625',
+          area: '15,625m\u00b2',
           benefits: [
             '1 Multi Functional Land',
             '2 Enviromental Items',
@@ -95,7 +95,7 @@ const LandTiers = () => {
                 <div className="d-flex align-items-start gap-2">
                     <img src={dimensions} alt="ethereum"  width={20} height={20} />
                     <div className="d-flex flex-column">
-                      <span className="spec-value">{tier.content.dimensions} ({tier.content.area}m2)</span>
+                      <span className="spec-value">{tier.content.dimensions} ({tier.content.area})</span>
                       <span className="spec-type">Dimensions</span>
                     </div>
                   </div>

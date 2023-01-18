@@ -116,7 +116,7 @@
 
     .mint-divider {
       width: 100%;
-      background: #4f4770 !important;
+      border-top: 1px solid #4f4770 !important;
       opacity: 1 !important;
     }
   }
@@ -293,9 +293,18 @@
     color: #ffffff;
   }
 
+  .community-title {
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 43px;
+    color: #ffffff;
+    white-space: pre;
+  }
+
   .community-card {
     background: #181636;
     border-radius: 8px;
+    height: 500px;
 
     .community-title {
       font-weight: 800;
@@ -308,7 +317,31 @@
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: #ffffff;
+      color: #ffffff !important;
+      max-height: 90px;
+      text-decoration: none !important;
+      p {
+        font-weight: 400 !important;
+        font-size: 16px !important;
+        line-height: 24px !important;
+        color: #ffffff !important;
+        margin-bottom: 0 !important;
+      }
+      span {
+        font-weight: 400 !important;
+        font-size: 16px !important;
+        line-height: 24px !important;
+        color: #ffffff !important;
+        margin-bottom: 0 !important;
+      }
+
+      h6 {
+        font-weight: 400 !important;
+        font-size: 16px !important;
+        line-height: 24px !important;
+        color: #ffffff !important;
+        margin-bottom: 0 !important;
+      }
     }
 
     .community-date {
@@ -348,6 +381,141 @@
     font-size: 12px;
     line-height: 22px;
     color: #ffffff;
+  }
+
+  .community-image {
+    --mask: linear-gradient(-135deg, #0000 30px, #000 0);
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+    height: 300px;
+    object-fit: cover;
+  }
+
+  .twitter-tag {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .members-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+
+    color: #ffffff;
+  }
+
+  .glass-bubble {
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: inset 0px 5.48547px 5.48547px rgba(255, 255, 255, 0.16),
+      inset 0px 0px 43.8838px rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18.5135px);
+    border-radius: 50%;
+    width: fit-content;
+    
+  }
+
+  .first-glass{
+    width: 235px;
+    height: 235px;
+  }
+
+  .second-glass{
+    width: 173px;
+    height: 173px;
+  }
+  .third-glass{
+    width: 235px;
+    height: 235px;
+  }
+  .fourth-glass{
+    width: 173px;
+    height: 173px;
+  }
+
+  .first-bubble{
+    position: absolute;
+    left: 15%;
+    // top: 30%;
+    z-index: 2;
+    .members-playing{
+      position: absolute;
+      left: -1%;
+      top: -3%;
+      z-index: 3;
+    }
+  }
+  .second-bubble{
+    position: absolute;
+    left: 24%;
+    top: 55%;
+    
+  }
+  .third-bubble{
+    position: absolute;
+    left: 70%;
+    .discord-members{
+      position: absolute;
+      left: 7%;
+      top: -20%;
+      z-index: 3;
+    }
+  }
+  .fourth-bubble{
+    position: absolute;
+    left: 65%;
+    top: 55%;
+    .twitter-members{
+      position: absolute;
+      left: -1%;
+      top: -20%;
+      z-index: 3;
+    }
+  }
+
+  .pink-title {
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 37px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0px 0px 37.3867px rgba(241, 28, 220, 0.52),
+      0px 0px 15.7418px rgba(241, 28, 220, 0.48);
+    filter: blur(0.491931px);
+  }
+
+  .pink-content {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 27px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0px 0px 37.3867px rgba(241, 28, 220, 0.52),
+      0px 0px 15.7418px rgba(241, 28, 220, 0.48);
+    filter: blur(0.491931px);
+  }
+  .blue-title {
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 37px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0px 0px 37.3867px rgba(88, 101, 242, 0.52),
+      0px 0px 15.7418px rgba(88, 101, 242, 0.48);
+    filter: blur(0.491931px);
+  }
+
+  .blue-content {
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 33px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0px 0px 37.3867px rgba(88, 101, 242, 0.52),
+      0px 0px 15.7418px rgba(88, 101, 242, 0.48);
+    filter: blur(0.491931px);
   }
 }
 
