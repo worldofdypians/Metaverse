@@ -25,7 +25,7 @@ const Community = () => {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
