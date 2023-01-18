@@ -183,7 +183,7 @@ const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
         <LandTiers />
          <Community />
             <Members />
-        <LandBenefits />
+        <LandBenefits />\SobarniaTom\status\1615455621259890689
       </div>
     </div>
   );
