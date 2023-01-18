@@ -10,6 +10,28 @@
   src: url("./fonts/Organetto.ttf");
 }
 
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #26264F; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8E97CD; 
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
 body {
   background: #080b2a;
   font-family: "Poppins", sans-serif !important;
@@ -21,6 +43,7 @@ body {
   .font-organetto {
     font-family: "Organetto" !important;
   }
+
 
   .linear-border {
     position: relative;
