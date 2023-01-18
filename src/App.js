@@ -103,6 +103,7 @@ function App() {
                 handleConnectWallet={handleConnectWallet}
                 coinbase={coinbase}
                 isConnected={isConnected}
+                handleRegister={handleRegister}
               />
             }
           />

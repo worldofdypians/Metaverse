@@ -27,9 +27,22 @@ const ToolTip = ({ title, icon, borderColor, color, padding }) => {
           disableHoverListener
           disableTouchListener
           title={title}
+          placement={'top'}
         >
-          <p onClick={handleTooltipOpen} style={{ cursor: "pointer", color: color, borderColor: borderColor, padding: padding }} id='tooltip-icon'>
-           {icon}
+          <p
+            onClick={handleTooltipOpen}
+            className='m-0'
+            style={{
+              cursor: "pointer",
+              color: color,
+              backgroundColor: borderColor,
+              padding: padding,
+              borderRadius: "50%",
+              fontSize: 16,
+            }}
+            id="tooltip-icon"
+          >
+            {icon}
           </p>
         </Tooltip>
       </div>
@@ -42,8 +55,7 @@ ToolTip.propTypes = {
   icon: PropTypes.string,
   borderColor: PropTypes.string,
   color: PropTypes.string,
-  padding: PropTypes.string
-
+  padding: PropTypes.string,
 };
 
 export default ToolTip;

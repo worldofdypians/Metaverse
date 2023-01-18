@@ -8,6 +8,7 @@ import subtractActive from "../../assets/landAssets/subtractActive.svg";
 import subtractInactive from "../../assets/landAssets/subtractInactive.svg";
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import genesisBg from "../../assets/landAssets/genesisBg.svg";
+import ToolTip from "../Caws/elements/ToolTip";
 
 const LandStaking = ({
   handleConnectWallet,
@@ -16,6 +17,7 @@ const LandStaking = ({
   coinbase,
   handleWithdraw,
   isConnected,
+  withdrawModalShow
 }) => {
   const [nftCount, setNftCount] = useState(1);
 
@@ -71,9 +73,15 @@ const LandStaking = ({
           </div>
         </div>
       </div>
-      <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5" style={{minHeight: '518px'}}>
-        <div className="col-2 ps-2 ps-lg-0" style={{minHeight: '518px'}}>
-          <div className="d-flex flex-column gap-5 justify-content-between" style={{minHeight: '518px'}}>
+      <div
+        className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
+        style={{ minHeight: "518px" }}
+      >
+        <div className="col-2 ps-2 ps-lg-0" style={{ minHeight: "518px" }}>
+          <div
+            className="d-flex flex-column gap-5 justify-content-between"
+            style={{ minHeight: "518px" }}
+          >
             <div className="genesis-wrapper position-relative">
               <img src={genesisBg} alt="genesis" className="w-100" />
               <img src={dummyBadge} className="genesis-badge" alt="badge" />
@@ -109,11 +117,19 @@ const LandStaking = ({
             </span>
             <div className="d-flex align-items-center justify-content-between">
               <span className="create-land-title font-poppins">
-                Create your NFT
+                Create your Genesis Land NFT
               </span>
               <div className="d-flex align-items-center gap-2">
                 <span className="more-info">More information</span>
-                <img src={questionMark} alt="" />
+                <ToolTip
+                  title={
+                    "Mint your Genesis Land NFT to gain access to a variety of WoD Metaverse benefits."
+                  }
+                  icon={"?"}
+                  color={"#000"}
+                  borderColor={"#7BD8B0"}
+                  padding={"0px 8px"}
+                />
               </div>
             </div>
             <div className="d-flex mt-3 align-items-center">
@@ -123,7 +139,7 @@ const LandStaking = ({
               </div>
               <div className="d-flex flex-column gap-2 w-50">
                 <span className="land-placeholder">Description</span>
-                <h6 className="land-name">Premium land tier 1</h6>
+                <h6 className="land-name">Genesis Land</h6>
               </div>
             </div>
             <hr className="mint-divider m-0" />
@@ -199,9 +215,20 @@ const LandStaking = ({
             </span>
             <div className="d-flex align-items-center justify-content-between">
               <span className="create-land-title font-poppins">
-                Land NFT's staking
+                Genesis Land Staking
               </span>
-              {/* <img src={tooltipIcon} alt="tooltip" /> */}
+              <div className="d-flex align-items-center gap-2">
+                <span className="more-info">More information</span>
+                <ToolTip
+                  title={
+                    "Stake your Genesis Land NFT into the 25% APR pool and earn rewards in Ethereum."
+                  }
+                  icon={"?"}
+                  color={"#000"}
+                  borderColor={"#7BD8B0"}
+                  padding={"0px 8px"}
+                />
+              </div>
             </div>
             <hr className="mint-divider" />
             <div className="d-flex align-items-center justify-content-between">
@@ -296,7 +323,7 @@ const LandStaking = ({
                   } px-5 w-100`}
                   disabled={!isConnected}
                   onClick={() => {
-                    handleWithdraw();
+                    withdrawModalShow();
                   }}
                 >
                   Withdraw

@@ -33,7 +33,7 @@ const LandStakingChecklistModal = ({
 }) => {
   const style = {
     position: "absolute",
-    top: "50%",
+    top: "52%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: window.innerWidth < 500 ? "77%" : "55%",
