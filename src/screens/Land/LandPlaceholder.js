@@ -13,9 +13,15 @@ const LandPlaceHolder = ({ onMintClick }) => {
         <p className="landplaceholder-content-text">
           You can view all your NFTs to manage them
         </p>
-        <button className="landplaceholder-button" onClick={onMintClick}>
-          Mint more NFTs
-        </button>
+        <div
+              className={"linear-border" }
+            >
+              <button
+                className={`btn outline-btn px-3`}
+              >
+                Mint more NFTs
+              </button>
+            </div>
       </div>
     </div>
   );

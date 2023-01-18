@@ -10,17 +10,19 @@
     align-items: center;
     padding: 10px;
     border-radius: 8px;
-    background: linear-gradient(180.07deg, #FFF088 0.13%, #B8711B 78.06%);
+    background: #26264F;
     opacity: 0.8;
     gap: 10px;
     .landplaceholder-content-img {
       width: 110px;
       border: 1px dashed;
       border-radius: 8px;
+      border-color: #8E97CD;
+      padding: 10px;
     }
 
     .landplaceholder-content-text {
-      color: #fff;
+      color: #F7F7FC;
       font-style: normal;
       font-weight: 400;
       font-size: 12px;

@@ -130,7 +130,15 @@ const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
   const handleMint = () => {};
   const handleStake = () => {
     setOpenStakeChecklist(true);
+    setshowStaked(false);
+    setshowToStake(true);
   };
+
+  const handleWithdraw = () =>{
+    setOpenStakeChecklist(true);
+    setshowStaked(true);
+    setshowToStake(false);
+  }
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
       <LandStakingChecklistModal
@@ -145,6 +153,8 @@ const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
           setshowStaked(true);
           setshowToStake(false);
         }}
+        showStaked={showStaked}
+        showToStake={showToStake}
         onshowToStake={() => {
           setshowStaked(false);
           setshowToStake(true);
@@ -165,6 +175,7 @@ const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
           handleStake={handleStake}
           coinbase={coinbase}
           isConnected={isConnected}
+          handleWithdraw={handleWithdraw}
         />
         <LandTiers />
         <LandBenefits />

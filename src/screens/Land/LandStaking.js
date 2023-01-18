@@ -14,6 +14,7 @@ const LandStaking = ({
   handleMint,
   handleStake,
   coinbase,
+  handleWithdraw,
   isConnected,
 }) => {
   const [nftCount, setNftCount] = useState(1);
@@ -268,7 +269,7 @@ const LandStaking = ({
                   } px-5 w-100`}
                   disabled={!isConnected}
                 >
-                  Claim
+                  Claim all
                 </button>
               </div>
             </div>
@@ -294,6 +295,9 @@ const LandStaking = ({
                       : "outline-btn"
                   } px-5 w-100`}
                   disabled={!isConnected}
+                  onClick={() => {
+                    handleWithdraw();
+                  }}
                 >
                   Withdraw
                 </button>
