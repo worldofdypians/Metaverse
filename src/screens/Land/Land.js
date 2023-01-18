@@ -5,20 +5,22 @@ import LandStaking from "./LandStaking";
 import LandTiers from "./LandTiers";
 import LandStakingChecklistModal from "./LandStakingChecklistModal";
 import "./_land.scss";
-import Members from './Members'
-import Community from './Community'
+import Members from "./Members";
+import Community from "./Community";
+import UnstakeAllModal from "./UnstakeAllModal";
 
-
-const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
+const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) => {
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);
+  const [showWithdrawModal, setshowWithdrawModal] = useState(false);
+
   const [showToStake, setshowToStake] = useState(false);
   const [showStaked, setshowStaked] = useState(true);
   const [showClaimAllModal, setShowClaimAllModal] = useState(false);
   const [claimAllStatus, setclaimAllStatus] = useState(
-    "Are you sure you want to Claim all your current selected NFT’s?"
+    "Are you sure you want to Claim all your current selected NFTs?"
   );
   const [unstakeAllStatus, setunstakeAllStatus] = useState(
-    "Are you sure you want to Unstake all your current selected NFT’s?"
+    "Are you sure you want to Unstake all your current selected NFTs?"
   );
 
   const [myNFTs, setMyNFTs] = useState([]);
@@ -129,7 +131,6 @@ const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
     setOpenStakeChecklist(false);
   };
 
-
   const handleMint = () => {};
   const handleStake = () => {
     setOpenStakeChecklist(true);
@@ -137,38 +138,53 @@ const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
     setshowToStake(true);
   };
 
-  const handleWithdraw = () =>{
+  const handleWithdraw = () => {
     setOpenStakeChecklist(true);
     setshowStaked(true);
     setshowToStake(false);
-  }
+  };
+
+  const withdrawModalShow = () => {
+    setshowWithdrawModal(true);
+  };
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
-      <LandStakingChecklistModal
-        onClose={() => {
-          setOpenStakeChecklist(false);
-        }}
-        nftItem={showStaked ? mystakes : showToStake ? myNFTs : showStaked}
-        open={openStakeChecklist ? true : false}
-        // link={link}
-        // onShareClick={onShareClick}
-        onshowStaked={() => {
-          setshowStaked(true);
-          setshowToStake(false);
-        }}
-        showStaked={showStaked}
-        showToStake={showToStake}
-        onshowToStake={() => {
-          setshowStaked(false);
-          setshowToStake(true);
-        }}
-        onClaimAll={() => {
-          handleShowClaimAll();
-        }}
-        onUnstake={() => handleShowUnstake()}
-        ETHrewards={EthRewards}
-        coinbase={coinbase}
-      />
+      {openStakeChecklist === true && (
+        <LandStakingChecklistModal
+          onClose={() => {
+            setOpenStakeChecklist(false);
+          }}
+          nftItem={showStaked ? mystakes : showToStake ? myNFTs : showStaked}
+          open={openStakeChecklist ? true : false}
+          // link={link}
+          // onShareClick={onShareClick}
+          onshowStaked={() => {
+            setshowStaked(true);
+            setshowToStake(false);
+          }}
+          showStaked={showStaked}
+          showToStake={showToStake}
+          onshowToStake={() => {
+            setshowStaked(false);
+            setshowToStake(true);
+          }}
+          onClaimAll={() => {
+            handleShowClaimAll();
+          }}
+          onUnstake={() => handleShowUnstake()}
+          ETHrewards={EthRewards}
+          coinbase={coinbase}
+        />
+      )}
+
+      {showWithdrawModal === true && (
+        <UnstakeAllModal
+          open={showWithdrawModal}
+          onClose={() => {
+            setshowWithdrawModal(false);
+          }}
+        />
+      )}
 
       <div className="land-main-wrapper px-0 w-100 mt-5 d-flex flex-column">
         <LandHero />
@@ -179,10 +195,11 @@ const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
           coinbase={coinbase}
           isConnected={isConnected}
           handleWithdraw={handleWithdraw}
+          withdrawModalShow={withdrawModalShow}
         />
         <LandTiers />
-         <Community />
-            <Members />
+        <Community />
+        <Members handleRegister={handleRegister}/>
         <LandBenefits />
       </div>
     </div>
