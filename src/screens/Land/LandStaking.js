@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import blackWallet from "../../assets/wallet-black.svg";
 import dummyBadge from "../../assets/landAssets/dummyBadge.png";
 import questionMark from "../../assets/landAssets/questionMark.svg";
@@ -42,6 +42,7 @@ const LandStaking = ({
   withdrawModalShow,
 }) => {
   const [nftCount, setNftCount] = useState(1);
+  const [nftStatus, setNftStatus] = useState('*10 NFT limit')
 
   const addNft = () => {
     if (nftCount === null) {
@@ -59,6 +60,16 @@ const LandStaking = ({
     }
     // console.log(nftCount);
   };
+
+  useEffect(()=>{
+    if(nftCount > 10) {
+      setNftStatus('*Exceeded mint limit of 10 NFTs')
+      setTimeout(() => {
+        setNftCount(10);
+        setNftStatus("*10 NFT limit");
+      }, 5000);
+    }
+  })
 
   return (
     <>
@@ -164,7 +175,7 @@ const LandStaking = ({
                   value={nftCount}
                   onChange={(e) => setNftCount(e.target.value)}
                 />
-                <span className="limit-span">*10 NFT limit per wallet</span>
+                <span className="limit-span" style={{color: nftStatus.includes('Exceeded') ? '#D87B7B' : '#FFFFFF'}}>{nftStatus}</span>
               </div>
               <div className="d-flex align-items-center gap-5">
                 <img
