@@ -24,7 +24,7 @@ const Members = ({handleRegister}) => {
 
   return (
     <div className="row flex-column justify-content-center align-items-center position-relative w-100 mx-0 px-3 px-lg-5">
-      <h6 className="font-organetto members-title" style={{ color: "#8C56FF" }}>
+      <h6 className="font-organetto members-title" style={{ color: "#85fbc9" }}>
         Live Beta Testing
       </h6>
       <h6 className="font-organetto members-title mb-5">
