@@ -24,7 +24,7 @@ body {
 
   .linear-border {
     position: relative;
-    padding: 2px;
+    padding: 3px;
     background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
     border-radius: 8px;
     clip-path: polygon(
@@ -38,6 +38,25 @@ body {
   }
 
   .linear-border::before {
+    content: "";
+  }
+
+  .linear-border-disabled {
+    position: relative;
+    padding: 2px;
+    background: #C4C4C4;
+    border-radius: 8px;
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+  }
+
+  .linear-border-disabled::before {
     content: "";
   }
 
@@ -59,6 +78,28 @@ body {
     text-align: center;
     color: #ffffff;
     white-space: pre;
+  }
+
+  .outline-btn-disabled {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: #C4C4C4;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #080B2A;
+    white-space: pre;
+    border: none;
+    outline: none;
   }
 
   .simple-btn {

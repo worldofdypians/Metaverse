@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import purpleWallet from "../../assets/landAssets/purpleWallet.svg";
-import greenWallet from "../../assets/landAssets/greenWallet.svg";
+import blackWallet from "../../assets/wallet-black.svg";
 import dummyBadge from "../../assets/landAssets/dummyBadge.png";
 import questionMark from "../../assets/landAssets/questionMark.svg";
 import addActive from "../../assets/landAssets/addActive.svg";
@@ -8,94 +7,93 @@ import addInactive from "../../assets/landAssets/addInactive.svg";
 import subtractActive from "../../assets/landAssets/subtractActive.svg";
 import subtractInactive from "../../assets/landAssets/subtractInactive.svg";
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
-import tooltipIcon from "../../assets/landAssets/tooltipIcon.svg";
 import genesisBg from "../../assets/landAssets/genesisBg.svg";
 
-const LandStaking = () => {
-
-  const [nftCount, setNftCount] = useState(null)
+const LandStaking = ({
+  handleConnectWallet,
+  handleMint,
+  handleStake,
+  coinbase,
+  handleWithdraw,
+  isConnected,
+}) => {
+  const [nftCount, setNftCount] = useState(1);
 
   const addNft = () => {
-    if(nftCount === null){
-      setNftCount(1)
-    }else if(nftCount < 10){
-      setNftCount(nftCount + 1)
+    if (nftCount === null) {
+      setNftCount(1);
+    } else if (nftCount < 10) {
+      setNftCount(nftCount + 1);
     }
-    console.log(nftCount);
-  }
+    // console.log(nftCount);
+  };
   const subtractNft = () => {
-    if(nftCount === null){
-      setNftCount(1)
-    }else if(nftCount > 1){
-      setNftCount(nftCount - 1)
+    if (nftCount === null) {
+      setNftCount(1);
+    } else if (nftCount > 1) {
+      setNftCount(nftCount - 1);
     }
-    console.log(nftCount);
-  }
+    // console.log(nftCount);
+  };
 
   return (
     <>
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
         <div className="col-12 ps-2 ps-lg-0">
-        <div className="d-flex align-items-end justify-content-between">
-          {/* <div className="d-flex flex-column gap-2">
-          <span className="connect-wallet-title font-organetto">
-            Connect{" "}
-            <span className="connect-wallet-title" style={{ color: "#8c56ff" }}>
-              wallet 
-            </span>
-          </span>
-          <div className="p-4 connect-wallet-wrapper d-flex align-items-center justify-content-center gap-5">
-            <div className="d-flex align-items-center gap-3">
-              <img src={purpleWallet} alt="wallet" />
-              <span className="connect-wallet-content">
-                Please connect your wallet
+          <div className="d-flex align-items-end justify-content-between">
+            <div className="d-flex flex-column gap-2">
+              <span className="connect-wallet-title font-organetto">
+                Mint time{" "}
+                <span
+                  className="connect-wallet-title"
+                  style={{ color: "#8c56ff" }}
+                >
+                  remaining
+                </span>
               </span>
-            </div>
-            <button className="btn wallet-btn d-flex align-items-center justify-content-center gap-2">
-              <img src={greenWallet} alt="wallet" />
-              <span className="wallet-text">Connect wallet</span>
-            </button>
-          </div>
-          </div> */}
-          <div className="d-flex flex-column gap-2">
-          <span className="connect-wallet-title font-organetto">
-            Mint time{" "}
-            <span className="connect-wallet-title" style={{ color: "#8c56ff" }}>
-              remaining 
-            </span>
-          </span>
-          <div className="timer-wrapper d-flex align-items-start gap-3">
-            <div className="d-flex flex-column gap-1">
-              <h6 className="mint-time">14</h6>
-              <span className="days">Days</span>
-            </div>
-            <h6 className="mint-time">:</h6>
-            <div className="d-flex flex-column gap-1">
-              <h6 className="mint-time">23</h6>
-              <span className="days">Hours</span>
-            </div>
-            <h6 className="mint-time">:</h6>
-            <div className="d-flex flex-column gap-1">
-              <h6 className="mint-time">46</h6>
-              <span className="days">minutes</span>
+              <div className="timer-wrapper d-flex align-items-start gap-3">
+                <div className="d-flex flex-column gap-1">
+                  <h6 className="mint-time">14</h6>
+                  <span className="days">Days</span>
+                </div>
+                <h6 className="mint-time">:</h6>
+                <div className="d-flex flex-column gap-1">
+                  <h6 className="mint-time">23</h6>
+                  <span className="days">Hours</span>
+                </div>
+                <h6 className="mint-time">:</h6>
+                <div className="d-flex flex-column gap-1">
+                  <h6 className="mint-time">46</h6>
+                  <span className="days">minutes</span>
+                </div>
+              </div>
             </div>
           </div>
-          </div>
-        </div>
         </div>
       </div>
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5" style={{minHeight: '518px'}}>
         <div className="col-2 ps-2 ps-lg-0" style={{minHeight: '518px'}}>
           <div className="d-flex flex-column gap-5 justify-content-between" style={{minHeight: '518px'}}>
             <div className="genesis-wrapper position-relative">
-            <img src={genesisBg} alt="genesis" className="w-100" />
-            <img src={dummyBadge} className="genesis-badge" alt="badge" />
-            <div className="genesis-desc">
-              <h6 className="font-organetto land-desc w-75">Genesis Land</h6>
+              <img src={genesisBg} alt="genesis" className="w-100" />
+              <img src={dummyBadge} className="genesis-badge" alt="badge" />
+              <div className="genesis-desc">
+                <h6 className="font-organetto land-desc w-75">Genesis Land</h6>
+              </div>
             </div>
-            </div>
-            <div className="linear-border mb-3">
-              <button className="btn outline-btn px-5 w-100">
+            <div
+              className={
+                isConnected === false
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }
+            >
+              <button
+                className={`btn ${
+                  isConnected === false ? "outline-btn-disabled" : "outline-btn"
+                } px-5 w-100`}
+                disabled={!isConnected}
+              >
                 View collection
               </button>
             </div>
@@ -104,7 +102,10 @@ const LandStaking = () => {
         <div className="col-6">
           <div className="p-3 mint-wrapper d-flex flex-column gap-5">
             <span className="font-organetto land-stake-title">
-            <span className="font-organetto" style={{color: '#8c56ff'}}>Mint</span> Genesis Land NFT
+              <span className="font-organetto" style={{ color: "#8c56ff" }}>
+                Mint
+              </span>{" "}
+              Genesis Land NFT
             </span>
             <div className="d-flex align-items-center justify-content-between">
               <span className="create-land-title font-poppins">
@@ -140,8 +141,32 @@ const LandStaking = () => {
                 <span className="limit-span">*10 NFT limit per wallet</span>
               </div>
               <div className="d-flex align-items-center gap-5">
-                <img src={nftCount > 1 ? subtractActive : subtractInactive} alt="subtract" onClick={subtractNft} style={{cursor: 'pointer'}} />
-                <img src={nftCount < 10 ? addActive : addInactive} alt="add" onClick={addNft} style={{cursor: 'pointer'}} />
+                <img
+                  src={
+                    nftCount > 1 && isConnected
+                      ? subtractActive
+                      : subtractInactive
+                  }
+                  alt="subtract"
+                  onClick={subtractNft}
+                  style={{
+                    cursor: isConnected ? "pointer" : "default",
+                    pointerEvents: isConnected ? "auto" : "none",
+                  }}
+                />
+                <img
+                  src={
+                    nftCount < 10 && nftCount >= 1 && isConnected
+                      ? addActive
+                      : addInactive
+                  }
+                  alt="add"
+                  onClick={addNft}
+                  style={{
+                    cursor: isConnected ? "pointer" : "default",
+                    pointerEvents: isConnected ? "auto" : "none",
+                  }}
+                />
               </div>
             </div>
             <hr className="mint-divider m-0" />
@@ -151,8 +176,14 @@ const LandStaking = () => {
                 <span className="eth-price">Price: 0.08 ETH</span>
               </div>
               <div className="linear-border">
-                <button className="btn filled-btn px-5 w-100">
-                  Mint NFT
+                <button
+                  className="btn filled-btn px-5 w-100"
+                  onClick={() => {
+                    isConnected ? handleMint() : handleConnectWallet();
+                  }}
+                >
+                  {!isConnected && <img src={blackWallet} alt="" />}{" "}
+                  {isConnected ? "Mint NFT" : "Connect wallet"}
                 </button>
               </div>
             </div>
@@ -161,7 +192,10 @@ const LandStaking = () => {
         <div className="col-4 pe-2 pe-lg-0">
           <div className="p-3 mint-wrapper d-flex flex-column gap-3">
             <span className="font-organetto land-stake-title">
-              Land NFT <span className="font-organetto" style={{color: '#8c56ff'}}>staking</span>
+              Land NFT{" "}
+              <span className="font-organetto" style={{ color: "#8c56ff" }}>
+                staking
+              </span>
             </span>
             <div className="d-flex align-items-center justify-content-between">
               <span className="create-land-title font-poppins">
@@ -172,11 +206,34 @@ const LandStaking = () => {
             <hr className="mint-divider" />
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex flex-column gap-2">
-                <h6 className="land-apr">25% <span className="land-apr" style={{color: '#8c56ff'}}>APR</span></h6>
+                <h6 className="land-apr">
+                  25%{" "}
+                  <span className="land-apr" style={{ color: "#8c56ff" }}>
+                    APR
+                  </span>
+                </h6>
                 <span className="land-lock-time">No lock time</span>
               </div>
-              <div className="linear-border">
-                <button className="btn filled-btn px-5 w-100">Stake NFT</button>
+              <div
+                className={
+                  isConnected === false
+                    ? "linear-border-disabled"
+                    : "linear-border"
+                }
+              >
+                <button
+                  className={`btn ${
+                    isConnected === false
+                      ? "outline-btn-disabled"
+                      : "filled-btn"
+                  } px-5 w-100`}
+                  disabled={!isConnected}
+                  onClick={() => {
+                    isConnected ? handleStake() : console.log();
+                  }}
+                >
+                  Stake NFT
+                </button>
               </div>
             </div>
             <hr className="mint-divider" />
@@ -197,8 +254,23 @@ const LandStaking = () => {
                   <span className="eth-rewards">($1,475.12)</span>
                 </div>
               </div>
-              <div className="linear-border">
-                <button className="btn filled-btn px-5 w-100">Claim</button>
+              <div
+                className={
+                  isConnected === false
+                    ? "linear-border-disabled"
+                    : "linear-border"
+                }
+              >
+                <button
+                  className={`btn ${
+                    isConnected === false
+                      ? "outline-btn-disabled"
+                      : "filled-btn"
+                  } px-5 w-100`}
+                  disabled={!isConnected}
+                >
+                  Claim all
+                </button>
               </div>
             </div>
             <hr className="mint-divider" />
@@ -209,8 +281,26 @@ const LandStaking = () => {
                   Withdraw your deposited NFTs from the staking pool
                 </span>
               </div>
-              <div className="linear-border">
-                <button className="btn outline-btn px-5 w-100">Withdraw</button>
+              <div
+                className={
+                  isConnected === false
+                    ? "linear-border-disabled"
+                    : "linear-border"
+                }
+              >
+                <button
+                  className={`btn ${
+                    isConnected === false
+                      ? "outline-btn-disabled"
+                      : "outline-btn"
+                  } px-5 w-100`}
+                  disabled={!isConnected}
+                  onClick={() => {
+                    handleWithdraw();
+                  }}
+                >
+                  Withdraw
+                </button>
               </div>
             </div>
           </div>

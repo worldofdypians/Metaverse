@@ -1936,6 +1936,12 @@ window.config = {
   nftstaking_address: "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
   nftstaking_address50: "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
 
+
+
+    /* MINT LANDNFT */
+    landnft_address: "",
+    landnftstake_address: "",
+
   //buyback bsc
   buyback_stakingbsc1_1_address: "0x94b1a7b57c441890b7a0f64291b39ad6f7e14804",
   buyback_stakingbsc1_2_address: "0x4ef782e66244a0cf002016aa1db3019448c670ae",
@@ -2841,6 +2847,137 @@ class NFT {
 }
 
 window.nft = new NFT();
+
+
+
+
+
+
+
+
+
+
+/**
+ *
+ * @param {"TOKEN" | "LANDNFTSTAKE" } key
+ */
+async function getContractNFT(key) {
+  let ABI = window[key + "_ABI"];
+  let address = window.config[key.toLowerCase() + "_address"];
+  if (!window.cached_contracts[key]) {
+    window.web3 = new Web3(window.ethereum);
+    window.cached_contracts[key] = new window.web3.eth.Contract(
+      key === "LANDNFTSTAKE" ? window.NFTSTAKING_ABI : ABI,
+     
+      key === "LANDNFTSTAKE"
+        ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
+        : address,
+      {
+        from: await getCoinbase(),
+      }
+    );
+  }
+
+  return window.cached_contracts[key];
+}
+
+class LANDNFT {
+  constructor(key = "LANDNFT") {
+    this.key = key;
+    [
+      "MAX_CAWS",
+      "balanceOf",
+      "baseURI",
+      "cawsPrice",
+      "maxCawsPurchase",
+      "ownerOf",
+    ].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractNFT(this.key);
+        return await contract.methods[fn_name](...args).call();
+      };
+    });
+
+    ["mintCaws"].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractNFT(this.key);
+        return await contract.methods[fn_name](...args).send({
+          from: await getCoinbase(),
+        });
+      };
+    });
+  }
+
+  async mintNFT(amount) {
+    let nft_contract = await getContractNFT("LANDNFT");
+    let priceCaws = await nft_contract.methods.cawsPrice().call();
+    let value = new BigNumber(priceCaws).times(amount);
+
+    let second = nft_contract.methods
+      .mintCaws(amount)
+      .send({ value, from: await getCoinbase() });
+    // batch.execute()
+    let result = await second;
+    let sizeResult = Object.keys(result.events["Transfer"]).length;
+    if (result.events["Transfer"].blockNumber > 0) sizeResult = 101;
+    if (result.status == true) {
+      let nftId = 0;
+      if (sizeResult != 101) {
+        nftId = window.web3.utils
+          .toBN(result.events["Transfer"][sizeResult - 1].raw.topics[3])
+          .toString(10);
+      } else {
+        nftId = window.web3.utils
+          .toBN(result.events["Transfer"].raw.topics[3])
+          .toString(10);
+      }
+      return nftId;
+    } else {
+      throw new Error("Minting failed!");
+    }
+  }
+
+  async approveStake(addr) {
+    let nft_contract = await getContractNFT("LANDNFT");
+    let staking_addr = addr;
+    return await nft_contract.methods
+      .setApprovalForAll(staking_addr, true)
+      .send();
+  }
+
+  async checkapproveStake(useraddr, addr) {
+    let nft_contract = await getContractNFT("LANDNFT");
+
+    return await nft_contract.methods.isApprovedForAll(useraddr, addr).call();
+  }
+
+  async depositStake() {
+    let nft_contract = await getContractNFT("LANDNFT");
+
+    return await nft_contract.methods.deposit([]).send();
+  }
+
+  async checkLockoutTime() {
+    let nft_contract = await getContractNFT("LANDNFTSTAKE");
+    const time = await nft_contract.methods.LOCKUP_TIME().call();
+    return time;
+  }
+
+}
+
+window.landnft = new LANDNFT();
+
+
+
+
+
+
+
+
+
+
+
+
 
 window.token_dyps = new TOKEN("REWARD_TOKEN_DYPS");
 
