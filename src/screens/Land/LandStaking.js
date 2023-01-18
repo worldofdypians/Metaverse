@@ -101,6 +101,9 @@ const LandStaking = ({
                   isConnected === false ? "outline-btn-disabled" : "outline-btn"
                 } px-5 w-100`}
                 disabled={!isConnected}
+                onClick={() => {
+                  isConnected ? handleStake() : console.log();
+                }}
               >
                 View collection
               </button>
