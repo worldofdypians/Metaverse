@@ -147,6 +147,14 @@ const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) =>
   const withdrawModalShow = () => {
     setshowWithdrawModal(true);
   };
+
+  useEffect(()=>{
+    window.scrollTo(0,0)
+    document.title = 'Land'
+
+
+},[])
+
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
       {openStakeChecklist === true && (
