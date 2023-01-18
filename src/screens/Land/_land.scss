@@ -452,6 +452,7 @@
     position: absolute;
     left: 24%;
     top: 55%;
+    z-index: 3;
     
   }
   .third-bubble{
@@ -524,4 +525,14 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+@media screen and (max-width: 1441px) {
+  .benefit-card{
+    width: 285px !important;
+  }
+
+  .glass-card{
+    bottom: 300px !important;
+  }
 }

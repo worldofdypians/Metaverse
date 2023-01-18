@@ -6,7 +6,7 @@ const LandBenefits = () => {
   return (
     <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 position-relative mb-5">
       <div className="d-flex flex-column align-items-center justify-content-center mb-5">
-        <h6 className="land-tiers font-organetto w-50">
+        <h6 className="land-tiers font-organetto d-flex">
           WOrld of dypians land owner{" "}
           <span
             className="land-tiers font-organetto"
