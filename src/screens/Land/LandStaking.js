@@ -9,6 +9,28 @@ import subtractInactive from "../../assets/landAssets/subtractInactive.svg";
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import genesisBg from "../../assets/landAssets/genesisBg.svg";
 import ToolTip from "../Caws/elements/ToolTip";
+import Countdown from "react-countdown";
+
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <div className="timer-wrapper d-flex align-items-start gap-3">
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{days < 10 ? "0" + days : days}</h6>
+        <span className="days">Days</span>
+      </div>
+      <h6 className="mint-time">:</h6>
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{hours < 10 ? "0" + hours : hours}</h6>
+        <span className="days">Hours</span>
+      </div>
+      <h6 className="mint-time">:</h6>
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{minutes < 10 ? "0" + minutes : minutes}</h6>
+        <span className="days">minutes</span>
+      </div>
+    </div>
+  );
+};
 
 const LandStaking = ({
   handleConnectWallet,
@@ -17,7 +39,7 @@ const LandStaking = ({
   coinbase,
   handleWithdraw,
   isConnected,
-  withdrawModalShow
+  withdrawModalShow,
 }) => {
   const [nftCount, setNftCount] = useState(1);
 
@@ -53,22 +75,7 @@ const LandStaking = ({
                   remaining
                 </span>
               </span>
-              <div className="timer-wrapper d-flex align-items-start gap-3">
-                <div className="d-flex flex-column gap-1">
-                  <h6 className="mint-time">14</h6>
-                  <span className="days">Days</span>
-                </div>
-                <h6 className="mint-time">:</h6>
-                <div className="d-flex flex-column gap-1">
-                  <h6 className="mint-time">23</h6>
-                  <span className="days">Hours</span>
-                </div>
-                <h6 className="mint-time">:</h6>
-                <div className="d-flex flex-column gap-1">
-                  <h6 className="mint-time">46</h6>
-                  <span className="days">minutes</span>
-                </div>
-              </div>
+              <Countdown date={"2023-02-02T16:02:03"} renderer={renderer} />
             </div>
           </div>
         </div>

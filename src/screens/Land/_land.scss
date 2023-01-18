@@ -37,8 +37,8 @@
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: #ffffff;
-      opacity: 0.8;
+      color: #C0CBF7;
+
     }
   }
 
@@ -217,7 +217,7 @@
 
   .genesis-wrapper:nth-child(even) {
     position: relative;
-    top: 80px;
+    // top: 80px;
   }
 
   .land-tiers {
@@ -358,16 +358,16 @@
     background: rgba(0, 0, 0, 0.32);
     border-radius: 4px;
     .spec-value {
-      font-weight: 400;
+      font-weight: 500;
       font-size: 12px;
       line-height: 14px;
       color: #ffffff;
     }
     .spec-type {
-      font-weight: 600;
-      font-size: 12px;
+      font-weight: 400;
+      font-size: 10px;
       line-height: 18px;
-      color: #8c56ff;
+      color: rgba(255,255,255, 0.7);
     }
   }
   .land-benefits-title {
