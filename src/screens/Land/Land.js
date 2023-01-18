@@ -5,6 +5,9 @@ import LandStaking from "./LandStaking";
 import LandTiers from "./LandTiers";
 import LandStakingChecklistModal from "./LandStakingChecklistModal";
 import "./_land.scss";
+import Members from './Members'
+import Community from './Community'
+
 
 const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);
@@ -178,6 +181,8 @@ const Land = ({ handleConnectWallet, coinbase, isConnected }) => {
           handleWithdraw={handleWithdraw}
         />
         <LandTiers />
+         <Community />
+            <Members />
         <LandBenefits />
       </div>
     </div>

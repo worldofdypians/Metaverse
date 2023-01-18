@@ -71,9 +71,9 @@ const LandStaking = ({
           </div>
         </div>
       </div>
-      <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
-        <div className="col-2 ps-2 ps-lg-0">
-          <div className="d-flex flex-column gap-5">
+      <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5" style={{minHeight: '518px'}}>
+        <div className="col-2 ps-2 ps-lg-0" style={{minHeight: '518px'}}>
+          <div className="d-flex flex-column gap-5 justify-content-between" style={{minHeight: '518px'}}>
             <div className="genesis-wrapper position-relative">
               <img src={genesisBg} alt="genesis" className="w-100" />
               <img src={dummyBadge} className="genesis-badge" alt="badge" />

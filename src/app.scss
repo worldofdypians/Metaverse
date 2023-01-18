@@ -128,6 +128,13 @@ body {
     color: #080b2a;
     border: none !important;
     white-space: pre;
+    transition: all .25s;
+  }
+
+  .filled-btn:hover{
+    color: #ffffff;
+    background: #080b2a;
+
   }
 
   .pink-filled-btn {
