@@ -84,8 +84,8 @@ const LandStaking = ({
             <div
               className={
                 isConnected === false
-                  ? "linear-border-disabled"
-                  : "linear-border"
+                  ? "linear-border-disabled mb-3"
+                  : "linear-border mb-3"
               }
             >
               <button
