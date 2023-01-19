@@ -106,7 +106,7 @@ const LandTiers = () => {
                 Genesis Land Benefits
               </h6>
               {tier.content.benefits.map((item, index) => (
-                <div className=" d-none d-xxl-flex align-items-center justify-content-center justify-content-xxl-start gap-2 " key={index}>
+                <div className=" d-flex align-items-center justify-content-start gap-2 " key={index}>
                   <img src={tierCheck} alt="check" />
                   <span className="tier-benefit">{item}</span>
                 </div>
