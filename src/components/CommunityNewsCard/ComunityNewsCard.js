@@ -13,17 +13,21 @@ const ComunityNewsCard = ({ image, link, content, date, video, id }) => {
   const player = (id) => {
     let video = document.getElementById(id);
     setPlayButton(false)
+    setCount(1)
     
-    video.play();
-    // setControls(true);
-    
+    setControls(true);
+    setTimeout(() => {
+      if(count === 0){
+        video.play();
+      }
+    }, 1000);    
     video.addEventListener("ended", function () {
       video.load();
     });
   };
 
   const [controls, setControls] = useState(false);
-
+  const [count, setCount] = useState(0)
 
 
   const [playButton, setPlayButton] = useState(true)

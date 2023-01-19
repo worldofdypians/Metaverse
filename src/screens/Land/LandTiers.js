@@ -58,20 +58,22 @@ const LandTiers = () => {
           tiers
         </span>
       </h6>
-      <span className="w-50 tiers-desc">
+      <span className=" tiers-desc">
         World of Dypians offers 5 tiers of land NFTs. Each tier offers unique
         rewards and benefits within the metaverse.
       </span>
       <div className="tiers-grid mt-5">
         {tiers.map((tier, index) => (
-          <div className="genesis-wrapper position-relative" key={index}>
-            <img src={genesisBg} alt="genesis" className="w-100" />
+          <div className="d-flex flex-column">
+            <div className="genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative" key={index}>
+            {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
             <img
               src={require(`../../assets/landAssets/${tier.icon}`)}
               className="genesis-badge"
               alt="badge"
             />
-            <div className="genesis-desc">
+          </div>
+            <div className="genesis-desc position-relative" style={{bottom: '5px'}}>
               <h6 className="font-organetto land-desc w-75">{tier.title}</h6>
               {tier.content && 
               <>
