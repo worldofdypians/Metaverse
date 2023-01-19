@@ -39,7 +39,7 @@ const LandHero = () => {
   return (
     <>
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
-        <div className="col-12 col-lg-5 ps-2 ps-lg-0">
+        <div className="col-12 col-lg-5 ps-2 ps-lg-0 pt-5 pt-lg-0">
           <h6 className="land-hero-title font-organetto">
             1,000 Premium WOD Land
           </h6>
@@ -60,12 +60,12 @@ const LandHero = () => {
           </p>
         </div>
         <div className="col-12 col-lg-6 pe-2 pe-lg-0 d-flex justify-content-end">
-          <img src={landBg} className="land-bg" alt="background" />
+          <img src={landBg} className="land-bg w-100" alt="background" />
         </div>
       </div>
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
         <div className="col-12 ps-2 ps-lg-0">
-          <h6 className="land-hero-title font-organetto d-flex gap-2">
+          <h6 className="land-hero-title font-organetto d-flex flex-column flex-lg-row gap-2">
             Genesis Land{" "}
             <h6 className="land-hero-title" style={{ color: "#8c56ff" }}>
               Benefits

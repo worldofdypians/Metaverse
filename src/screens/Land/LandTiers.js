@@ -75,8 +75,8 @@ const LandTiers = () => {
               <h6 className="font-organetto land-desc w-75">{tier.title}</h6>
               {tier.content && 
               <>
-              <div className="tier-specs d-flex flex-column gap-2 p-3">
-                <div className="d-flex flex-column flex-xxl-row align-items-start align-items-xxl-center justify-content-between">
+              <div className="tier-specs d-flex flex-column gap-3 p-3">
+                <div className="d-flex flex-column gap-3 align-items-start">
                   <div className="d-flex align-items-start gap-2">
                     <img src={landType} alt="type"  idth={20} height={20}/>
                     <div className="d-flex flex-column">
@@ -100,11 +100,11 @@ const LandTiers = () => {
                     </div>
                   </div>
               </div>
-              <h6 className="land-benefits-title mt-2">
+              <h6 className="land-benefits-title mt-2 d-none d-xxl-flex">
                 Genesis Land Benefits
               </h6>
               {tier.content.benefits.map((item) => (
-                <div className="d-flex align-items-center justify-content-center justify-content-xxl-start gap-2">
+                <div className=" d-none d-xxl-flex align-items-center justify-content-center justify-content-xxl-start gap-2 ">
                   <img src={tierCheck} alt="check" />
                   <span className="tier-benefit">{item}</span>
                 </div>

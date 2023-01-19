@@ -194,7 +194,7 @@ const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) =>
         />
       )}
 
-      <div className="land-main-wrapper px-0 w-100 mt-5 d-flex flex-column">
+      <div className="land-main-wrapper px-0 w-100 pt-5 d-flex flex-column">
         <LandHero />
         <LandStaking
           handleConnectWallet={handleConnectWallet}
@@ -206,8 +206,8 @@ const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) =>
           withdrawModalShow={withdrawModalShow}
         />
         <LandTiers />
-        <Community />
         <Members handleRegister={handleRegister}/>
+        <Community />
         <LandBenefits />
       </div>
     </div>

@@ -27,6 +27,10 @@
     border-radius: 12px;
     gap: 40px;
 
+    @media screen and (max-width: 786px) {
+      grid-template-columns: auto;
+    }
+
     .benefits-title {
       font-weight: 300;
       font-size: 24px;
@@ -85,6 +89,9 @@
       white-space: pre;
       left: 0;
       top: -40px;
+      @media screen and (max-width: 786px) {
+        top: -50px;
+      }
     }
     .create-land-title {
       font-weight: 600;
@@ -163,6 +170,11 @@
     font-size: 14px;
     line-height: 21px;
     color: #ffffff;
+    width: 75%;
+    padding-bottom: 5px;
+    @media screen and (max-width: 1500px) {
+      width: 100%;
+    }
   }
 
   .earned-span {
@@ -213,12 +225,25 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 40px;
     margin-bottom: 25rem;
+    @media screen and (max-width: 1300px) {
+      grid-template-columns: repeat(3, 1fr);
+    // place-items: center;
+
+    }
+    @media screen and (max-width: 786px) {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 100px;
+      margin-bottom: 1rem;
+    }
   }
 
   .genesis-wrapper:nth-child(even) {
     position: relative;
     // top: 80px;
   }
+
+
+  
 
   .land-tiers {
     font-weight: 800;
@@ -227,6 +252,10 @@
     text-align: center;
     color: #ffffff;
     white-space: pre;
+
+    @media screen and (max-width: 786px ) {
+      white-space: normal;
+    }
   }
 
   .tiers-desc {
@@ -235,6 +264,10 @@
     line-height: 24px;
     text-align: center;
     color: #ffffff;
+    width: 50%;
+    @media screen and (max-width: 786px) {
+      width: 100%;
+    }
   }
 
   .benefit-card {
@@ -299,6 +332,9 @@
     line-height: 43px;
     color: #ffffff;
     white-space: pre;
+    @media screen and (max-width: 786px) {
+      white-space: normal;
+    }
   }
 
   .community-card {
@@ -390,6 +426,7 @@
     mask: var(--mask);
     height: 300px;
     object-fit: cover;
+    cursor: pointer;
   }
 
   .twitter-tag {
@@ -519,6 +556,50 @@
       0px 0px 15.7418px rgba(88, 101, 242, 0.48);
     filter: blur(0.491931px);
   }
+
+.play-button{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  cursor: pointer;
+  pointer-events: none;
+//   padding: 15px;
+//   box-shadow: 0px 4px 54px rgba(0, 0, 0, 0.25), inset 0px 5.48547px 5.48547px rgba(255, 255, 255, 0.16), inset 0px 0px 43.8838px rgba(255, 255, 255, 0.08);
+// backdrop-filter: blur(18.5135px);
+// background: rgba(255, 255, 255, 0.03);
+}
+
+.slider-buttons-wrapper{
+  position: absolute;
+  bottom: -5%;
+  right: 2.5%;
+  width: fit-content;
+  @media screen and (max-width: 786px) {
+    right: 3.5%;
+    bottom: -10%;
+  }
+}
+
+
+.prev-button{
+  transform: rotate(180deg);
+  z-index: 2;
+  margin: auto;
+  width: fit-content;
+  cursor: pointer;
+
+}
+.next-button{
+  z-index: 2;
+  margin: auto;
+  width: fit-content;
+  cursor: pointer;
+
+}
+
 }
 
 input::-webkit-outer-spin-button,
@@ -535,4 +616,9 @@ input::-webkit-inner-spin-button {
   .glass-card{
     bottom: 300px !important;
   }
+}
+@media screen and (max-width: 786px) {
+ .genesis-wrapper:nth-child(4){
+  padding-bottom: 100px !important;
+ }
 }
