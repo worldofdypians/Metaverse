@@ -278,6 +278,8 @@ const Land = ({
           totalCreated={myNFTsCreated.length}
           mintStatus={mintStatus}
           mintloading={mintloading}
+          ETHrewards={EthRewards}
+
         />
         <LandTiers />
         <Members handleRegister={handleRegister} />

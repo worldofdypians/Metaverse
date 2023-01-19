@@ -10,6 +10,8 @@ import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import genesisBg from "../../assets/landAssets/genesisBg.svg";
 import ToolTip from "../Caws/elements/ToolTip";
 import Countdown from "react-countdown";
+import axios from "axios";
+import { formattedNum } from "../Caws/functions/formatUSD";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -44,10 +46,12 @@ const LandStaking = ({
   totalCreated,
   mintStatus,
   mintloading,
+  ETHrewards,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
   const [showBadge, setshowBadge] = useState(false);
+  const [ethToUSD, setethToUSD] = useState(0);
 
   const handleCreate = () => {
     handleMint({
@@ -73,6 +77,20 @@ const LandStaking = ({
     // console.log(nftCount);
   };
 
+  const convertEthToUsd = async () => {
+    const res = axios
+      .get("https://api.coinbase.com/v2/prices/ETH-USD/spot")
+      .then((data) => {
+        return data.data.data.amount;
+      });
+    return res;
+  };
+
+  const setUSDPrice = async () => {
+    const ethprice = await convertEthToUsd();
+    setethToUSD(Number(ethprice) * Number(ETHrewards));
+  };
+
   useEffect(() => {
     if (nftCount > 10) {
       setNftStatus("*Exceeded mint limit of 10 NFTs");
@@ -84,6 +102,7 @@ const LandStaking = ({
   }, [nftCount]);
 
   useEffect(() => {
+    setUSDPrice();
     if (totalCreated > 0) {
       setshowBadge(true);
     }
@@ -358,25 +377,27 @@ const LandStaking = ({
                       height={20}
                       alt="ethereum"
                     />
-                    <span className="eth-rewards">0.74 ETH</span>
+                    <span className="eth-rewards">{ETHrewards} ETH</span>
                   </div>
-                  <span className="eth-rewards">($1,475.12)</span>
+                  <span className="eth-rewards">
+                    ({formattedNum(ethToUSD, true)})
+                  </span>
                 </div>
               </div>
               <div
                 className={
-                  isConnected === false
+                  isConnected === false || ETHrewards == 0
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
               >
                 <button
                   className={`btn ${
-                    isConnected === false
+                    isConnected === false || ETHrewards == 0
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
-                  disabled={!isConnected}
+                  disabled={isConnected === false || ETHrewards == 0}
                 >
                   Claim all
                 </button>

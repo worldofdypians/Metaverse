@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import ToolTip from "../Caws/elements/ToolTip";
 import X from "../../assets/x_close.png";
 import LandPlaceHolder from "./LandPlaceholder";
-import NftStakingCawChecklist from "../Caws/NftMinting/General/NftStakingCawChecklist/NftStakingCawChecklist";
+import LandItem from "./LandItem";
 import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import CountDownTimerUnstake from "../Caws/elements/CountDownUnstake";
@@ -46,10 +46,8 @@ const LandStakingChecklistModal = ({
   };
 
   const [active, setActive] = useState(true);
-
   const [checkbtn, setCheckBtn] = useState(false);
   const [checkUnstakebtn, setCheckUnstakeBtn] = useState(false);
-
   const [status, setStatus] = useState("");
   const [loading, setloading] = useState(false);
   const [loadingdeposit, setloadingdeposit] = useState(false);
@@ -61,9 +59,7 @@ const LandStakingChecklistModal = ({
   const [val, setVal] = useState("");
   const [color, setColor] = useState("#F13227");
 
-  //Array of selected NFTs
   const [selectNftIds, setSelectedNftIds] = useState([]);
-
   const [ethToUSD, setethToUSD] = useState(0);
   let nftIds = [];
 
@@ -493,7 +489,7 @@ const LandStakingChecklistModal = ({
                     }
                     return (
                       <>
-                        <NftStakingCawChecklist
+                        <LandItem
                           key={id}
                           nft={item}
                           modalId="#newNftchecklist"
@@ -515,6 +511,7 @@ const LandStakingChecklistModal = ({
                             console.log(selectNftIds);
                             setVal(value);
                           }}
+                          coinbase={coinbase}
                         />
                       </>
                     );
@@ -552,7 +549,8 @@ const LandStakingChecklistModal = ({
                   }
                   return (
                     <>
-                      <NftStakingCawChecklist
+                      <LandItem
+                        coinbase={coinbase}
                         key={id}
                         nft={item}
                         action={onShareClick}
