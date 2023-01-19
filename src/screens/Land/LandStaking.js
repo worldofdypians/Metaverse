@@ -112,7 +112,7 @@ const LandStaking = ({
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
         style={{ minHeight: "518px" }}
       >
-        <div className="col-2 ps-2 ps-lg-0" style={{ minHeight: "518px" }}>
+        <div className="col-12 col-md-4 col-xxl-2 ps-2 ps-lg-0" style={{ minHeight: "518px" }}>
           <div
             className="d-flex flex-column gap-5 justify-content-between"
             style={{ minHeight: "518px" }}
@@ -132,8 +132,8 @@ const LandStaking = ({
             <div
               className={
                 isConnected === false
-                  ? "linear-border-disabled mb-3"
-                  : "linear-border mb-3"
+                  ? "linear-border-disabled"
+                  : "linear-border"
               }
             >
               <button
@@ -150,9 +150,9 @@ const LandStaking = ({
             </div>
           </div>
         </div>
-        <div className="col-6">
-          <div className="p-3 mint-wrapper d-flex flex-column gap-5">
-            <span className="font-organetto land-stake-title">
+        <div className="col-12 col-md-8 col-xxl-6 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+          <div className="p-3 mint-wrapper d-flex flex-column gap-5" style={{ minHeight: "518px" }}>
+            <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 Mint
               </span>{" "}
@@ -241,7 +241,8 @@ const LandStaking = ({
             {mintStatus.length > 0 && (
               <span className="mint-span">{mintStatus}</span>
             )}
-            <div className="d-flex align-items-center justify-content-between">
+            <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
+
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
                 <span className="eth-price">Price: 0.08 ETH</span>
@@ -260,8 +261,8 @@ const LandStaking = ({
             </div>
           </div>
         </div>
-        <div className="col-4 pe-2 pe-lg-0">
-          <div className="p-3 mint-wrapper d-flex flex-column gap-3">
+        <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+          <div className="p-3 mint-wrapper d-flex flex-column gap-3" style={{ minHeight: "518px" }}>
             <span className="font-organetto land-stake-title">
               Land NFT{" "}
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
@@ -323,7 +324,7 @@ const LandStaking = ({
               <div className="d-flex flex-column gap-1">
                 <h6 className="create-land-title">Total rewards</h6>
                 <span className="earned-span">Earned</span>
-                <div className="d-flex align-items-center gap-3">
+                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3">
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={mintEthIcon}
@@ -359,7 +360,7 @@ const LandStaking = ({
             <div className="d-flex align-items-end justify-content-between">
               <div className="d-flex flex-column gap-2">
                 <h6 className="create-land-title">Unstake</h6>
-                <span className="land-lock-time w-50">
+                <span className="land-lock-time">
                   Withdraw your deposited NFTs from the staking pool
                 </span>
               </div>

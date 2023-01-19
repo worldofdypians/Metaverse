@@ -248,7 +248,7 @@ const Land = ({
         />
       )}
 
-      <div className="land-main-wrapper px-0 w-100 mt-5 d-flex flex-column">
+      <div className="land-main-wrapper px-0 w-100 pt-5 d-flex flex-column">
         <LandHero />
         <LandStaking
           handleConnectWallet={handleConnectWallet}
@@ -263,8 +263,8 @@ const Land = ({
           mintStatus={mintStatus}
         />
         <LandTiers />
+        <Members handleRegister={handleRegister}/>
         <Community />
-        <Members handleRegister={handleRegister} />
         <LandBenefits />
       </div>
     </div>

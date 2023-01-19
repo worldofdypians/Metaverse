@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import communityDummy from "../../assets/newsAssets/communityDummy.png";
+import React, { useEffect, useRef, useState } from "react";
+import nextButton from "../../assets/landAssets/nextButton.svg";
 import ComunityNewsCard from "../../components/CommunityNewsCard/ComunityNewsCard";
 import Slider from "react-slick";
 import axios from "axios";
@@ -43,6 +43,7 @@ const Community = () => {
           slidesToScroll: 1,
           infinite: true,
           autoplay: true,
+          dots: false
         },
       },
     ],
@@ -67,6 +68,16 @@ const Community = () => {
     setNews(sortedNews)
   };
 
+  
+  const slider = useRef();
+
+  const next = () => {
+    slider.current.slickNext();
+  };
+  const previous = () => {
+    slider.current.slickPrev();
+  };
+
   useEffect(() => {
     fetchNews();
   }, []);
@@ -75,18 +86,23 @@ const Community = () => {
 
   // console.log(ref);
   return (
-    <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
-      <h6 className="community-title font-organetto">The World of dypians <span
+    <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5 position-relative">
+      <h6 className="community-title font-organetto d-flex flex-column flex-lg-ro">The World of dypians <span
             className="community-title font-organetto"
             style={{ color: "#8c56ff" }}
           >
             community
           </span></h6>
-      <Slider {...settings} ref={ref}>
+      <Slider  ref={(c) => (slider.current = c)} {...settings}>
        {news.map((item, index) => (
         <ComunityNewsCard key={index} date={item.date} content={item.content} link={item.link} video={item.video} image={item.image} id={item.id} />
        ))}
       </Slider>
+      <div className="d-flex align-items-center gap-3 slider-buttons-wrapper">
+      <img src={nextButton} className="prev-button" width={40} height={40} alt="" onClick={previous} />
+      <img src={nextButton} className="next-button" width={40} height={40} alt="" onClick={next} />
+      </div>
+
     </div>
   );
 };

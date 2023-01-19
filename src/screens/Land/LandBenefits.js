@@ -6,7 +6,7 @@ const LandBenefits = () => {
   return (
     <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 position-relative mb-5">
       <div className="d-flex flex-column align-items-center justify-content-center mb-5">
-        <h6 className="land-tiers font-organetto d-flex">
+        <h6 className="land-tiers font-organetto d-flex flex-column flex-lg-row">
           WOrld of dypians land owner{" "}
           <span
             className="land-tiers font-organetto"
@@ -15,7 +15,7 @@ const LandBenefits = () => {
             benefits
           </span>
         </h6>
-        <span className="w-50 tiers-desc">
+        <span className="tiers-desc">
           World of Dypian land ownership provides users with many in-game
           benefits
         </span>
