@@ -3,17 +3,19 @@ import nextButton from "../../assets/landAssets/nextButton.svg";
 import ComunityNewsCard from "../../components/CommunityNewsCard/ComunityNewsCard";
 import Slider from "react-slick";
 import axios from "axios";
+import './_community.scss'
 
 const Community = () => {
   var settings = {
     dots: true,
     arrows: false,
-    infinite: false,
-    dotsClass: "button__bar",
+    infinite: true,
+    dotsClass: "button__bar slick-dots w-100",
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
     initialSlide: 0,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 1440,
@@ -79,8 +81,10 @@ const Community = () => {
   useEffect(() => {
     fetchNews();
   }, []);
-  console.log(news);
 
+  const ref=useRef()
+
+  // console.log(ref);
   return (
     <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5 position-relative">
       <h6 className="community-title font-organetto d-flex flex-column flex-lg-ro">The World of dypians <span

@@ -66,7 +66,7 @@ const FullScreenMainHero = ({ image, hasScroll }) => {
               autoPlay=""
               loop=""
               muted="muted"
-              playsInline="true"
+              playsInline={true}
               onClick={player}
               controlsList="nodownload"
             ></video>
