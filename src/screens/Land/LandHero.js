@@ -22,7 +22,7 @@ const LandHero = () => {
     {
       title: "Exclusive Land NFT Staking",
       icon: "coin",
-      content: 'A dedicated staking pool with 25% APR with no lock period that rewards users in Ethereum'
+      content: 'Access to a dedicated staking pool yielding users 25% APR in ETH rewards with no lock period requirements'
     },
     {
       title: "Earn Special Rewards",
