@@ -18,6 +18,7 @@ import failed from "../../assets/failed.svg";
 import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
 
 import "./_registerModal.scss";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 const StyledTextField = styled(TextField)(({}) => ({
   "& .MuiOutlinedInput-root": {
@@ -274,13 +275,13 @@ const RegisterModal = ({
                     className="font-poppins register-tag"
                     style={{ fontSize: 32 }}
                   >
-                    {seats}
+                    {getFormattedNumber(seats,0) }
                   </mark>
                   
                 </span>
               </div>
               <p className="m-0 text-white walletdesc font-poppins">
-                Available seats: 200
+                Available seats: 300
               </p>
             </div>
             <div className="separator"></div>

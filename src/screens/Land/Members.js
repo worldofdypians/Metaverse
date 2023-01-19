@@ -4,6 +4,7 @@ import landtop from "../../assets/landAssets/landtop.webp";
 import membersTwitter from "../../assets/landAssets/membersTwitter.svg";
 import membersDiscord from "../../assets/landAssets/membersDiscord.svg";
 import membersPlaying from "../../assets/landAssets/membersPlaying.svg";
+import getFormattedNumber from "../Caws/functions/get-formatted-number";
 
 const Members = ({handleRegister}) => {
   const [seats, setSeats] = useState(0);
@@ -25,10 +26,10 @@ const Members = ({handleRegister}) => {
   return (
     <div className="row flex-column justify-content-center align-items-center position-relative w-100 mx-0 px-3 px-lg-5">
       <h6 className="font-organetto members-title" style={{ color: "#85fbc9" }}>
-        Live Beta Testing
+      Registration for live beta testing open now!
       </h6>
       <h6 className="font-organetto members-title mb-5">
-        Get First Look At The Latest Game Before Everyone Else Does!
+      Gain early access and provide valuable community feedback
       </h6>
       <img src={landtop} className="w-25" alt="land laptop" />
       <div className="first-bubble">
@@ -44,10 +45,10 @@ const Members = ({handleRegister}) => {
             className="pink-title font-organetto"
             style={{ fontSize: "25px" }}
           >
-            {seats}
+            {getFormattedNumber(seats,0) }
           </h6>
           <span className="pink-content" style={{ fontSize: "15px" }}>
-            Whitelisted
+            Registered
           </span>
         </div>
       </div>
