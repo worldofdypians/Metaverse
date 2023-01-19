@@ -40,9 +40,19 @@ const LandStaking = ({
   handleWithdraw,
   isConnected,
   withdrawModalShow,
+  createdNft,
+  totalCreated,
 }) => {
   const [nftCount, setNftCount] = useState(1);
-  const [nftStatus, setNftStatus] = useState('*10 NFT limit')
+  const [nftStatus, setNftStatus] = useState("*10 NFT limit");
+
+  const handleCreate = () => {
+    handleMint({
+      amount: nftCount,
+    });
+
+    setNftCount(1);
+  };
 
   const addNft = () => {
     if (nftCount === null) {
@@ -61,15 +71,15 @@ const LandStaking = ({
     // console.log(nftCount);
   };
 
-  useEffect(()=>{
-    if(nftCount > 10) {
-      setNftStatus('*Exceeded mint limit of 10 NFTs')
+  useEffect(() => {
+    if (nftCount > 10) {
+      setNftStatus("*Exceeded mint limit of 10 NFTs");
       setTimeout(() => {
         setNftCount(10);
         setNftStatus("*10 NFT limit");
       }, 5000);
     }
-  })
+  });
 
   return (
     <>
@@ -175,7 +185,16 @@ const LandStaking = ({
                   value={nftCount}
                   onChange={(e) => setNftCount(e.target.value)}
                 />
-                <span className="limit-span" style={{color: nftStatus.includes('Exceeded') ? '#D87B7B' : '#FFFFFF'}}>{nftStatus}</span>
+                <span
+                  className="limit-span"
+                  style={{
+                    color: nftStatus.includes("Exceeded")
+                      ? "#D87B7B"
+                      : "#FFFFFF",
+                  }}
+                >
+                  {nftStatus}
+                </span>
               </div>
               <div className="d-flex align-items-center gap-5">
                 <img
@@ -216,7 +235,7 @@ const LandStaking = ({
                 <button
                   className="btn filled-btn px-5 w-100"
                   onClick={() => {
-                    isConnected ? handleMint() : handleConnectWallet();
+                    isConnected ? handleCreate() : handleConnectWallet();
                   }}
                 >
                   {!isConnected && <img src={blackWallet} alt="" />}{" "}

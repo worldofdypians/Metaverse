@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import communityDummy from "../../assets/newsAssets/communityDummy.png";
 import ComunityNewsCard from "../../components/CommunityNewsCard/ComunityNewsCard";
 import Slider from "react-slick";
 import axios from "axios";
+import './_community.scss'
 
 const Community = () => {
   var settings = {
     dots: true,
     arrows: false,
-    infinite: false,
-    dotsClass: "button__bar",
+    infinite: true,
+    dotsClass: "button__bar slick-dots w-100",
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
     initialSlide: 0,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 1440,
@@ -68,8 +70,10 @@ const Community = () => {
   useEffect(() => {
     fetchNews();
   }, []);
-  console.log(news);
 
+  const ref=useRef()
+
+  // console.log(ref);
   return (
     <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
       <h6 className="community-title font-organetto">The World of dypians <span
@@ -78,7 +82,7 @@ const Community = () => {
           >
             community
           </span></h6>
-      <Slider {...settings}>
+      <Slider {...settings} ref={ref}>
        {news.map((item, index) => (
         <ComunityNewsCard key={index} date={item.date} content={item.content} link={item.link} video={item.video} image={item.image} id={item.id} />
        ))}

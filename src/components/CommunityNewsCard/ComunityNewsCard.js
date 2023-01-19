@@ -43,7 +43,7 @@ const ComunityNewsCard = ({ image, link, content, date, video, id }) => {
               autoPlay=""
               loop=""
               muted="muted"
-              playsInline="true"
+              playsInline={true}
               controlsList="nodownload"
               className="community-image w-100"
               controls={controls}

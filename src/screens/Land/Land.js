@@ -9,7 +9,12 @@ import Members from "./Members";
 import Community from "./Community";
 import UnstakeAllModal from "./UnstakeAllModal";
 
-const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) => {
+const Land = ({
+  handleConnectWallet,
+  coinbase,
+  isConnected,
+  handleRegister,
+}) => {
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
 
@@ -27,6 +32,7 @@ const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) =>
   const [mystakes, setMystakes] = useState([]);
   const [EthRewards, setEthRewards] = useState(0);
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
+  const [myNFTsCreated, setMyNFTsCreated] = useState([]);
 
   const myNft = async () => {
     let myNft = await window.myNftListContract(coinbase);
@@ -131,7 +137,49 @@ const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) =>
     setOpenStakeChecklist(false);
   };
 
-  const handleMint = () => {};
+  const handleMint = async (data) => {
+    if (isConnected) {
+      try {
+        //Check Whitelist
+        // let whitelist = await window.checkWhitelist(connectedWallet)
+        let whitelist = 1;
+
+        if (parseInt(whitelist) == 1) {
+          // setShowLoadingModal(true);
+
+          let tokenId = await window.landnft.mintNFT(data.amount);
+          // console.log(tokenId);
+
+          if (isNaN(Number(tokenId))) {
+            throw new Error("Invalid Token ID");
+          }
+
+          let getNftData = await window.getNft(tokenId); //tbd
+
+          setMyNFTsCreated(getNftData);
+
+          // setShowLoadingModal(false)
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+      }
+    } else {
+      try {
+        handleConnectWallet();
+      } catch (e) {
+        window.alertify.error("No web3 detected! Please Install MetaMask!");
+      }
+    }
+  };
+
   const handleStake = () => {
     setOpenStakeChecklist(true);
     setshowStaked(false);
@@ -148,12 +196,10 @@ const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) =>
     setshowWithdrawModal(true);
   };
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-    document.title = 'Land'
-
-
-},[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "Land";
+  }, []);
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
@@ -204,10 +250,12 @@ const Land = ({ handleConnectWallet, coinbase, isConnected, handleRegister }) =>
           isConnected={isConnected}
           handleWithdraw={handleWithdraw}
           withdrawModalShow={withdrawModalShow}
+          createdNft={myNFTsCreated}
+          totalCreated={myNFTsCreated.length}
         />
         <LandTiers />
         <Community />
-        <Members handleRegister={handleRegister}/>
+        <Members handleRegister={handleRegister} />
         <LandBenefits />
       </div>
     </div>

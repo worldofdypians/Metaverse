@@ -1,0 +1,34 @@
+.slick-dots li {
+    display: none;
+    width: auto;
+    height: auto;
+}
+.slick-dots li.slick-active,
+.slick-dots li.slick-active + li,
+.slick-dots li.slick-active + li + li {
+    display: block;
+}
+
+.slick-dots li:nth-last-child(1),
+.slick-dots li:nth-last-child(2),
+.slick-dots li:nth-last-child(3) {
+    display: block;
+}
+
+.slick-dots li.slick-active ~ li:nth-last-child(1),
+.slick-dots li.slick-active ~ li:nth-last-child(2),
+.slick-dots li.slick-active ~ li:nth-last-child(3) {
+    display: none;
+}
+.slick-dots li.slick-active + li + li:nth-last-child(3),
+.slick-dots li.slick-active + li + li:nth-last-child(2),
+.slick-dots li.slick-active + li + li:nth-last-child(1),
+.slick-dots li.slick-active + li:nth-last-child(3),
+.slick-dots li.slick-active + li:nth-last-child(2),
+.slick-dots li.slick-active + li:nth-last-child(1){
+    display: block;
+}
+
+.slick-dots li button:before {
+    content: '' !important
+}
