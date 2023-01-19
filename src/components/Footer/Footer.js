@@ -45,32 +45,34 @@ const Footer = () => {
 
   return (
     <div className="footer-container flex-column px-3 px-lg-5">
-      <div className="d-flex pt-5 pb-4 w-100 flex-column flex-lg-row align-items-start align-items-lg-center gap-4 gap-lg-0 justify-content-between">
-        <a
-          href="https://www.dypius.com/"
-          target="_blank"
-          className="footer-link font-poppins"
-          rel="noreferrer"
-        >
-          Dypius
-        </a>
-        {/* <span className="footer-link font-poppins">Whitepaper</span> */}
-        <NavLink to="/terms-conditions" style={{ textDecoration: "none" }}>
-          <span className="footer-link font-poppins">Terms & Conditions</span>
-        </NavLink>
-        <NavLink to="/privacy-policy" style={{ textDecoration: "none" }}>
-          <span className="footer-link font-poppins">Privacy Policy</span>
-        </NavLink>
-        <a
-          href="mailto:helpcenter@dypius.com"
-          className="footer-link font-poppins"
-        >
-          Contact Us
-        </a>
+      <div className="d-flex w-100 pb-4 flex-column flex-xxl-row flex-lg-row flex-xl-row  gap-3 justify-content-between align-items-baseline">
+        <div className="d-flex pt-5  w-50 footer-wrapper flex-row align-items-start align-items-lg-center gap-4 gap-lg-0 justify-content-between">
+          <a
+            href="https://www.dypius.com/"
+            target="_blank"
+            className="footer-link font-poppins"
+            rel="noreferrer"
+          >
+            Dypius
+          </a>
+          {/* <span className="footer-link font-poppins">Whitepaper</span> */}
+          <NavLink to="/terms-conditions" style={{ textDecoration: "none" }}>
+            <span className="footer-link font-poppins">Terms & Conditions</span>
+          </NavLink>
+          <NavLink to="/privacy-policy" style={{ textDecoration: "none" }}>
+            <span className="footer-link font-poppins">Privacy Policy</span>
+          </NavLink>
+          <a
+            href="mailto:helpcenter@dypius.com"
+            className="footer-link font-poppins"
+          >
+            Contact Us
+          </a>
+        </div>
         {windowSize.width > 786 ? (
           <div className="footer-socials">
             {socials.map((item, index) => (
-              <a href={item.link} key={index} target='_blank' rel='noreferrer'>
+              <a href={item.link} key={index} target="_blank" rel="noreferrer">
                 <img
                   src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                   alt={item.icon}
@@ -82,7 +84,12 @@ const Footer = () => {
           <>
             <div className="mobile-socials d-flex align-items-center justify-content-between w-100">
               {socials.slice(0, 4).map((item, index) => (
-                <a href={item.link} key={index} target='_blank' rel='noreferrer'>
+                <a
+                  href={item.link}
+                  key={index}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img
                     src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                     alt={item.icon}
@@ -91,8 +98,13 @@ const Footer = () => {
               ))}
             </div>
             <div className="mobile-socials d-flex align-items-center justify-content-between w-100">
-              {socials.slice(4,8).map((item, index) => (
-                <a href={item.link} key={index} target='_blank' rel='noreferrer'>
+              {socials.slice(4, 8).map((item, index) => (
+                <a
+                  href={item.link}
+                  key={index}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img
                     src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                     alt={item.icon}

@@ -5,7 +5,7 @@ import benefitsBuilding from "../../assets/landAssets/benefitsBuilding.png";
 const LandBenefits = () => {
   const dimensions = [
     {
-      title: "2000km\u00b2",
+      title: "2,000km\u00b2",
       content: "Total WoD area",
     },
     {
@@ -28,7 +28,7 @@ const LandBenefits = () => {
     },
     {
       title: "Trade",
-      content: "Trade items, equipments, gears, and much more",
+      content: "Trade items, equipment, gear, and much more",
     },
     {
       title: "Stake",
@@ -48,7 +48,7 @@ const LandBenefits = () => {
     },
     {
       title: "Quests",
-      content: "complete quests to earn loot",
+      content: "Complete quests to earn loot",
     },
     {
       title: " Achievements",
@@ -110,7 +110,7 @@ const LandBenefits = () => {
     },
     {
       title: "Forge & Craft",
-      content: "Create new items, equipments, armor, and much more",
+      content: "Create new items, equipment, armor, and much more",
     },
     {
       title: "Business integration",

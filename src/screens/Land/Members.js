@@ -31,7 +31,7 @@ const Members = ({handleRegister}) => {
       <h6 className="font-organetto members-title mb-5">
       Gain early access and provide valuable community feedback
       </h6>
-      <img src={landtop} className="w-25" alt="land laptop" />
+      <img src={landtop} className="w-25 laptop" alt="land laptop" />
       <div className="first-bubble">
         <img src={membersPlaying} alt="" className="members-playing" />
         <div className="d-flex flex-column align-items-center justify-content-center gap-2 glass-bubble first-glass">

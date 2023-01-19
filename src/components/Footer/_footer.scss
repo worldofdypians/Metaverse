@@ -41,3 +41,21 @@
     gap: 100% !important;
   }
 }
+
+@media screen and (max-width: 459px) {
+  .footer-wrapper {
+    grid-template-columns: repeat(2, 1fr) !important;
+    display: grid !important;
+    place-items: baseline;
+    gap: 10px !important;
+    margin-bottom: 1rem;
+  }
+}
+
+
+@media screen and (max-width: 991px) {
+ .footer-wrapper {
+   width: 100% !important;
+ }
+
+}

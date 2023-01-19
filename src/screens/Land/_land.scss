@@ -233,6 +233,20 @@
     line-height: 22px;
     letter-spacing: -0.01em;
     color: #f7f7fc;
+
+    @media screen and (max-width: 1300px) {
+      display: flex;
+      white-space: nowrap;
+    }
+    @media screen and (max-width: 1080px) {
+      display: flex;
+      white-space: normal;
+    }
+
+    @media screen and (max-width: 434px) {
+      display: flex;
+      white-space: nowrap;
+    }
   }
 
   .genesis-badge {
@@ -491,6 +505,10 @@
   .first-glass {
     width: 235px;
     height: 235px;
+    @media screen and (max-width: 1171px) {
+      width: 200px;
+      height: 200px;
+    }
   }
 
   .second-glass {
@@ -500,6 +518,10 @@
   .third-glass {
     width: 235px;
     height: 235px;
+    @media screen and (max-width: 1171px) {
+      width: 200px;
+      height: 200px;
+    }
   }
   .fourth-glass {
     width: 173px;
@@ -509,40 +531,82 @@
   .first-bubble {
     position: absolute;
     left: 15%;
-    // top: 30%;
+    top: 27%;
     z-index: 2;
+
+
+    @media screen and (max-width: 1171px) {
+      top: 38%;
+    left: 6%;
+
+    }
+
     .members-playing {
       position: absolute;
       left: -1%;
       top: -3%;
       z-index: 3;
+
+      @media screen and (max-width: 1171px) {
+        left: 0%;
+        top: -15%;
+        z-index: 3;
+        scale: 0.8;
+      }
     }
   }
   .second-bubble {
     position: absolute;
-    left: 24%;
-    top: 55%;
+    left: 22%;
+    top: 62%;
     z-index: 3;
+    @media screen and (max-width: 1171px) {
+      left: 10%;
+      top: 76%;
+    }
   }
   .third-bubble {
     position: absolute;
     left: 70%;
+    top: 27%;
+    @media screen and (max-width: 1171px) {
+      left: 71%;
+      top: 39%;  
+    }
+
     .discord-members {
       position: absolute;
       left: 7%;
       top: -20%;
       z-index: 3;
+      @media screen and (max-width: 1171px) {
+        left: 7%;
+        top: -20%;
+        z-index: 3;
+        scale: 0.8;
+      }
     }
   }
   .fourth-bubble {
     position: absolute;
-    left: 65%;
-    top: 55%;
+    left: 67%;
+    top: 62%;
+
+    @media screen and (max-width: 1171px) {
+      left: 68%;
+    top: 76%;
+    }
+
     .twitter-members {
       position: absolute;
       left: -1%;
       top: -20%;
       z-index: 3;
+
+      @media screen and (max-width: 1171px) {
+        left: -1%;
+        top: -20%;
+      }
     }
   }
 
@@ -699,4 +763,69 @@ input::-webkit-inner-spin-button {
   .genesis-wrapper:nth-child(4) {
     padding-bottom: 100px !important;
   }
+
+  .laptop {
+    width: 50% !important;
+  }
+
+  .land-main-wrapper .first-bubble {
+    top: 26%;
+    left: -14%;
+    scale: 0.6;
+}
+
+
+.land-main-wrapper .second-bubble {
+  left: -6%;
+  top: 45%;
+    scale: 0.7;
+}
+
+
+.land-main-wrapper .third-bubble {
+    left: 56%;
+    top: 26%;
+    scale: 0.6;
+}
+
+.land-main-wrapper .fourth-bubble {
+    left: 58%;
+    top: 45%;
+    scale: 0.7;
+}
+}
+
+
+@media screen and (max-width: 598px) {
+ 
+  .land-main-wrapper .first-bubble {
+    top: 44%;
+    left: -18%;
+    scale: 0.5;
+}
+
+
+.land-main-wrapper .second-bubble {
+    left: -15%;
+    top: 61%;
+    scale: 0.6;
+}
+
+
+
+.land-main-wrapper .third-bubble {
+  left: 46%;
+  top: 42%;
+    scale: 0.5;
+}
+
+
+.land-main-wrapper .fourth-bubble {
+  left: 51%;
+  top: 61%;
+    scale: 0.6;
+}
+.land-main-wrapper .members-title {
+  font-size: 17px;
+}
 }
