@@ -43,6 +43,7 @@ const LandStaking = ({
   createdNft,
   totalCreated,
   mintStatus,
+  mintloading,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
@@ -112,7 +113,10 @@ const LandStaking = ({
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
         style={{ minHeight: "518px" }}
       >
-        <div className="col-12 col-md-4 col-xxl-2 ps-2 ps-lg-0" style={{ minHeight: "518px" }}>
+        <div
+          className="col-12 col-md-4 col-xxl-2 ps-2 ps-lg-0"
+          style={{ minHeight: "518px" }}
+        >
           <div
             className="d-flex flex-column gap-5 justify-content-between"
             style={{ minHeight: "518px" }}
@@ -151,7 +155,10 @@ const LandStaking = ({
           </div>
         </div>
         <div className="col-12 col-md-8 col-xxl-6 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
-          <div className="p-3 mint-wrapper d-flex flex-column gap-5" style={{ minHeight: "518px" }}>
+          <div
+            className="p-3 mint-wrapper d-flex flex-column gap-5"
+            style={{ minHeight: "518px" }}
+          >
             <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 Mint
@@ -242,7 +249,6 @@ const LandStaking = ({
               <span className="mint-span">{mintStatus}</span>
             )}
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
-
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
                 <span className="eth-price">Price: 0.08 ETH</span>
@@ -253,16 +259,36 @@ const LandStaking = ({
                   onClick={() => {
                     isConnected ? handleCreate() : handleConnectWallet();
                   }}
+                  disabled={
+                    mintloading === "error" || mintloading === "success"
+                      ? true
+                      : false
+                  }
                 >
                   {!isConnected && <img src={blackWallet} alt="" />}{" "}
-                  {isConnected ? "Mint NFT" : "Connect wallet"}
+                  {mintloading === "initial" && isConnected ? (
+                    "Mint NFT"
+                  ) : mintloading === "mint" && isConnected ? (
+                    <>
+                      <div className="spinner-border " role="status"></div>
+                    </>
+                  ) : mintloading === "error" && isConnected ? (
+                    "Failed"
+                  ) : mintloading === "success" && isConnected ? (
+                    "Success"
+                  ) : (
+                    "Connect wallet"
+                  )}
                 </button>
               </div>
             </div>
           </div>
         </div>
         <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
-          <div className="p-3 mint-wrapper d-flex flex-column gap-3" style={{ minHeight: "518px" }}>
+          <div
+            className="p-3 mint-wrapper d-flex flex-column gap-3"
+            style={{ minHeight: "518px" }}
+          >
             <span className="font-organetto land-stake-title">
               Land NFT{" "}
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
