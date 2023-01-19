@@ -100,13 +100,27 @@ const LandStaking = ({
             className="d-flex flex-column gap-5 justify-content-between"
             style={{ minHeight: "518px" }}
           >
-            <div className="genesis-wrapper position-relative">
+            {/* <div className="genesis-wrapper position-relative">
               <img src={genesisBg} alt="genesis" className="w-100" />
               <img src={dummyBadge} className="genesis-badge" alt="badge" />
               <div className="genesis-desc">
                 <h6 className="font-organetto land-desc w-75">Genesis Land</h6>
               </div>
+            </div> */}
+            <div className="d-flex flex-column">
+            <div className="genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative h-100">
+            {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
+            <img
+              src={dummyBadge}
+              className="genesis-badge"
+              alt="badge"
+            />
+          </div>
+            <div className="genesis-desc position-relative" style={{bottom: '5px'}}>
+              <h6 className="font-organetto land-desc w-75">Genesis Land</h6>
+             
             </div>
+          </div>
             <div
               className={
                 isConnected === false
