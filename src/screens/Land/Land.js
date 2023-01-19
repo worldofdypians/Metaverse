@@ -34,6 +34,7 @@ const Land = ({
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [mintStatus, setmintStatus] = useState("");
+  const [mintloading, setmintloading] = useState("initial");
 
   const myNft = async () => {
     let myNft = await window.myNftListContract(coinbase);
@@ -146,12 +147,17 @@ const Land = ({
         let whitelist = 1;
 
         if (parseInt(whitelist) == 1) {
-          // setShowLoadingModal(true);
+          setmintloading("mint");
 
           let tokenId = await window.landnft.mintNFT(data.amount);
-          // console.log(tokenId);
 
           if (isNaN(Number(tokenId))) {
+            setmintloading("error");
+            setmintStatus("Invalid Token ID");
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
             throw new Error("Invalid Token ID");
           }
 
@@ -159,11 +165,17 @@ const Land = ({
 
           setMyNFTsCreated(getNftData);
           setmintStatus("Success! Your Nft was minted successfully!");
-          // setShowLoadingModal(false)
+          setmintloading("success");
+          setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
         } else {
           // setShowWhitelistLoadingModal(true);
         }
       } catch (e) {
+        setmintloading("error");
+
         if (typeof e == "object" && e.message) {
           setmintStatus(e.message);
         } else {
@@ -178,6 +190,10 @@ const Land = ({
             ? String(e)
             : "Oops, something went wrong! Refresh the page and try again!"
         );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
       }
     } else {
       try {
@@ -261,9 +277,12 @@ const Land = ({
           createdNft={myNFTsCreated}
           totalCreated={myNFTsCreated.length}
           mintStatus={mintStatus}
+          mintloading={mintloading}
+          ETHrewards={EthRewards}
+
         />
         <LandTiers />
-        <Members handleRegister={handleRegister}/>
+        <Members handleRegister={handleRegister} />
         <Community />
         <LandBenefits />
       </div>

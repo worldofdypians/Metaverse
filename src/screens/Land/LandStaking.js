@@ -10,6 +10,8 @@ import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import genesisBg from "../../assets/landAssets/genesisBg.svg";
 import ToolTip from "../Caws/elements/ToolTip";
 import Countdown from "react-countdown";
+import axios from "axios";
+import { formattedNum } from "../Caws/functions/formatUSD";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -43,10 +45,13 @@ const LandStaking = ({
   createdNft,
   totalCreated,
   mintStatus,
+  mintloading,
+  ETHrewards,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
   const [showBadge, setshowBadge] = useState(false);
+  const [ethToUSD, setethToUSD] = useState(0);
 
   const handleCreate = () => {
     handleMint({
@@ -72,6 +77,20 @@ const LandStaking = ({
     // console.log(nftCount);
   };
 
+  const convertEthToUsd = async () => {
+    const res = axios
+      .get("https://api.coinbase.com/v2/prices/ETH-USD/spot")
+      .then((data) => {
+        return data.data.data.amount;
+      });
+    return res;
+  };
+
+  const setUSDPrice = async () => {
+    const ethprice = await convertEthToUsd();
+    setethToUSD(Number(ethprice) * Number(ETHrewards));
+  };
+
   useEffect(() => {
     if (nftCount > 10) {
       setNftStatus("*Exceeded mint limit of 10 NFTs");
@@ -83,6 +102,7 @@ const LandStaking = ({
   }, [nftCount]);
 
   useEffect(() => {
+    setUSDPrice();
     if (totalCreated > 0) {
       setshowBadge(true);
     }
@@ -112,7 +132,10 @@ const LandStaking = ({
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
         style={{ minHeight: "518px" }}
       >
-        <div className="col-12 col-md-4 col-xxl-2 ps-2 ps-lg-0" style={{ minHeight: "518px" }}>
+        <div
+          className="col-12 col-md-4 col-xxl-2 ps-2 ps-lg-0"
+          style={{ minHeight: "518px" }}
+        >
           <div
             className="d-flex flex-column gap-5 justify-content-between"
             style={{ minHeight: "518px" }}
@@ -160,7 +183,10 @@ const LandStaking = ({
           </div>
         </div>
         <div className="col-12 col-md-8 col-xxl-6 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
-          <div className="p-3 mint-wrapper d-flex flex-column gap-5" style={{ minHeight: "518px" }}>
+          <div
+            className="p-3 mint-wrapper d-flex flex-column gap-5"
+            style={{ minHeight: "518px" }}
+          >
             <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 Mint
@@ -251,27 +277,46 @@ const LandStaking = ({
               <span className="mint-span">{mintStatus}</span>
             )}
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
-
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
                 <span className="eth-price">Price: 0.08 ETH</span>
               </div>
-              <div className="linear-border">
+              <div className={ mintloading === "error" ? 'linear-border-disabled' : "linear-border"}>
                 <button
-                  className="btn filled-btn px-5 w-100"
+                  className={`btn ${mintloading === "error" ? 'filled-error-btn' : 'filled-btn'}  px-5 w-100`}
                   onClick={() => {
                     isConnected ? handleCreate() : handleConnectWallet();
                   }}
+                  disabled={
+                    mintloading === "error" || mintloading === "success"
+                      ? true
+                      : false
+                  }
                 >
                   {!isConnected && <img src={blackWallet} alt="" />}{" "}
-                  {isConnected ? "Mint NFT" : "Connect wallet"}
+                  {mintloading === "initial" && isConnected ? (
+                    "Mint NFT"
+                  ) : mintloading === "mint" && isConnected ? (
+                    <>
+                      <div className="spinner-border " role="status"></div>
+                    </>
+                  ) : mintloading === "error" && isConnected ? (
+                    "Failed"
+                  ) : mintloading === "success" && isConnected ? (
+                    "Success"
+                  ) : (
+                    "Connect wallet"
+                  )}
                 </button>
               </div>
             </div>
           </div>
         </div>
         <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
-          <div className="p-3 mint-wrapper d-flex flex-column gap-3" style={{ minHeight: "518px" }}>
+          <div
+            className="p-3 mint-wrapper d-flex flex-column gap-3"
+            style={{ minHeight: "518px" }}
+          >
             <span className="font-organetto land-stake-title">
               Land NFT{" "}
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
@@ -341,25 +386,27 @@ const LandStaking = ({
                       height={20}
                       alt="ethereum"
                     />
-                    <span className="eth-rewards">0.74 ETH</span>
+                    <span className="eth-rewards">{ETHrewards} ETH</span>
                   </div>
-                  <span className="eth-rewards">($1,475.12)</span>
+                  <span className="eth-rewards">
+                    ({formattedNum(ethToUSD, true)})
+                  </span>
                 </div>
               </div>
               <div
                 className={
-                  isConnected === false
+                  isConnected === false || ETHrewards == 0
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
               >
                 <button
                   className={`btn ${
-                    isConnected === false
+                    isConnected === false || ETHrewards == 0
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
-                  disabled={!isConnected}
+                  disabled={isConnected === false || ETHrewards == 0}
                 >
                   Claim all
                 </button>
