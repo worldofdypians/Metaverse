@@ -40,9 +40,20 @@ const LandStaking = ({
   handleWithdraw,
   isConnected,
   withdrawModalShow,
+  createdNft,
+  totalCreated,
+  mintStatus,
 }) => {
   const [nftCount, setNftCount] = useState(1);
-  const [nftStatus, setNftStatus] = useState('*10 NFT limit')
+  const [nftStatus, setNftStatus] = useState("*10 NFT limit");
+  const [showBadge, setshowBadge] = useState(false);
+
+  const handleCreate = () => {
+    handleMint({
+      amount: nftCount,
+    });
+    setNftCount(1);
+  };
 
   const addNft = () => {
     if (nftCount === null) {
@@ -61,15 +72,21 @@ const LandStaking = ({
     // console.log(nftCount);
   };
 
-  useEffect(()=>{
-    if(nftCount > 10) {
-      setNftStatus('*Exceeded mint limit of 10 NFTs')
+  useEffect(() => {
+    if (nftCount > 10) {
+      setNftStatus("*Exceeded mint limit of 10 NFTs");
       setTimeout(() => {
         setNftCount(10);
         setNftStatus("*10 NFT limit");
       }, 5000);
     }
-  })
+  }, [nftCount]);
+
+  useEffect(() => {
+    if (totalCreated > 0) {
+      setshowBadge(true);
+    }
+  }, [totalCreated]);
 
   return (
     <>
@@ -189,7 +206,16 @@ const LandStaking = ({
                   value={nftCount}
                   onChange={(e) => setNftCount(e.target.value)}
                 />
-                <span className="limit-span" style={{color: nftStatus.includes('Exceeded') ? '#D87B7B' : '#FFFFFF'}}>{nftStatus}</span>
+                <span
+                  className="limit-span"
+                  style={{
+                    color: nftStatus.includes("Exceeded")
+                      ? "#D87B7B"
+                      : "#FFFFFF",
+                  }}
+                >
+                  {nftStatus}
+                </span>
               </div>
               <div className="d-flex align-items-center gap-5">
                 <img
@@ -221,7 +247,11 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider m-0" />
+            {mintStatus.length > 0 && (
+              <span className="mint-span">{mintStatus}</span>
+            )}
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
+
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
                 <span className="eth-price">Price: 0.08 ETH</span>
@@ -230,7 +260,7 @@ const LandStaking = ({
                 <button
                   className="btn filled-btn px-5 w-100"
                   onClick={() => {
-                    isConnected ? handleMint() : handleConnectWallet();
+                    isConnected ? handleCreate() : handleConnectWallet();
                   }}
                 >
                   {!isConnected && <img src={blackWallet} alt="" />}{" "}
