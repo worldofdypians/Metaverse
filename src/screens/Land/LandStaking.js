@@ -42,15 +42,16 @@ const LandStaking = ({
   withdrawModalShow,
   createdNft,
   totalCreated,
+  mintStatus,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
+  const [showBadge, setshowBadge] = useState(false);
 
   const handleCreate = () => {
     handleMint({
       amount: nftCount,
     });
-
     setNftCount(1);
   };
 
@@ -79,7 +80,13 @@ const LandStaking = ({
         setNftStatus("*10 NFT limit");
       }, 5000);
     }
-  });
+  }, [nftCount]);
+
+  useEffect(() => {
+    if (totalCreated > 0) {
+      setshowBadge(true);
+    }
+  }, [totalCreated]);
 
   return (
     <>
@@ -111,6 +118,11 @@ const LandStaking = ({
             style={{ minHeight: "518px" }}
           >
             <div className="genesis-wrapper position-relative">
+              {showBadge && (
+                <div className="totalcreated">
+                  <span>{totalCreated}</span>
+                </div>
+              )}
               <img src={genesisBg} alt="genesis" className="w-100" />
               <img src={dummyBadge} className="genesis-badge" alt="badge" />
               <div className="genesis-desc">
@@ -226,6 +238,9 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider m-0" />
+            {mintStatus.length > 0 && (
+              <span className="mint-span">{mintStatus}</span>
+            )}
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />

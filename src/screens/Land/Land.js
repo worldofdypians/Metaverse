@@ -33,6 +33,7 @@ const Land = ({
   const [EthRewards, setEthRewards] = useState(0);
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
+  const [mintStatus, setmintStatus] = useState("");
 
   const myNft = async () => {
     let myNft = await window.myNftListContract(coinbase);
@@ -157,12 +158,19 @@ const Land = ({
           let getNftData = await window.getNft(tokenId); //tbd
 
           setMyNFTsCreated(getNftData);
-
+          setmintStatus("Success! Your Nft was minted successfully!");
           // setShowLoadingModal(false)
         } else {
           // setShowWhitelistLoadingModal(true);
         }
       } catch (e) {
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
         window.alertify.error(
           typeof e == "object" && e.message
             ? e.message
@@ -252,6 +260,7 @@ const Land = ({
           withdrawModalShow={withdrawModalShow}
           createdNft={myNFTsCreated}
           totalCreated={myNFTsCreated.length}
+          mintStatus={mintStatus}
         />
         <LandTiers />
         <Community />
