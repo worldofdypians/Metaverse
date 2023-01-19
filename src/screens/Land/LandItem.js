@@ -13,24 +13,17 @@ const LandItem = ({
   onChange,
   countDownLeft,
   onNftCheckListClick,
-  coinbase
+  coinbase,
+  isConnected
+
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
   const [checkPassiveBtn, setcheckPassiveBtn] = useState(false);
-
-  const [isconnectedWallet, setisConnectedWallet] = useState(false);
   const [EthRewards, setEthRewards] = useState(0);
 
   const [ethToUSD, setethToUSD] = useState(0);
   const [loading, setloading] = useState(false);
-  const checkConnection = async () => {
-    let test = await window.web3.eth?.getAccounts().then((data) => {
-      data.length === 0
-        ? setisConnectedWallet(false)
-        : setisConnectedWallet(true);
-    });
-  };
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -96,16 +89,11 @@ const LandItem = ({
   };
 
   useEffect(() => {
-    checkConnection().then();
-    if (isconnectedWallet) {
+    if (isConnected) {
       getStakesIds().then();
       calculateReward(checklistItemID).then();
-
-      if (countDownLeft <= 0 && countDownLeft !== undefined) {
-        setcheckPassiveBtn(true);
-      }
     }
-  }, [EthRewards, checklistItemID, isconnectedWallet, countDownLeft]);
+  }, [EthRewards, checklistItemID, isConnected]);
 
   useEffect(() => {
     setCheckBtn(checked);

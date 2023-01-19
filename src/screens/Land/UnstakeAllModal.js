@@ -11,10 +11,10 @@ const UnstakeAllModal = ({ open, onClose, onUnstake, onClaimAll }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: '100%',
-    maxWidth: '710px',
+    width: "100%",
+    maxWidth: "710px",
     boxShadow: 24,
-    p: '3rem',
+    p: "3rem",
     overflow: "auto",
     height: "fit-content",
     borderRadius: "8px",
@@ -35,16 +35,15 @@ const UnstakeAllModal = ({ open, onClose, onUnstake, onClaimAll }) => {
       <Box sx={style}>
         <div className="d-flex flex-column gap-4 align-items-center justify-content-between">
           <div className="d-flex justify-content-between align-items-center">
-          <h1 className="unstaketitle">
-            Are you sure you want to Unstake all your current selected NFTs?
-          </h1>
-          <img
+            <h1 className="unstaketitle">
+              Are you sure you want to Unstake all your current selected NFTs?
+            </h1>
+            <img
               src={X}
               alt=""
               className="close-x"
               onClick={() => {
                 onClose();
-               
               }}
             />
           </div>

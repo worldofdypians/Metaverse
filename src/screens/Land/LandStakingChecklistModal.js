@@ -30,6 +30,7 @@ const LandStakingChecklistModal = ({
   coinbase,
   showStaked,
   showToStake,
+  isConnected
 }) => {
   const style = {
     position: "absolute",
@@ -512,6 +513,8 @@ const LandStakingChecklistModal = ({
                             setVal(value);
                           }}
                           coinbase={coinbase}
+          isConnected={isConnected}
+                          
                         />
                       </>
                     );
@@ -573,6 +576,8 @@ const LandStakingChecklistModal = ({
                           console.log(selectNftIds);
                           setVal(value);
                         }}
+          isConnected={isConnected}
+
                       />
                     </>
                   );

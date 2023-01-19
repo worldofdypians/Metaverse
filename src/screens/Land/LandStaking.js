@@ -272,9 +272,9 @@ const LandStaking = ({
                 <img src={mintEthIcon} alt="ethereum" />
                 <span className="eth-price">Price: 0.08 ETH</span>
               </div>
-              <div className="linear-border">
+              <div className={ mintloading === "error" ? 'linear-border-disabled' : "linear-border"}>
                 <button
-                  className="btn filled-btn px-5 w-100"
+                  className={`btn ${mintloading === "error" ? 'filled-error-btn' : 'filled-btn'}  px-5 w-100`}
                   onClick={() => {
                     isConnected ? handleCreate() : handleConnectWallet();
                   }}
