@@ -37,7 +37,7 @@ const renderer = ({ days, hours, minutes }) => {
 };
 
 const LandStaking = ({
-  handleConnectWallet,
+  showWalletConnect,
   handleMint,
   handleStake,
   coinbase,
@@ -200,7 +200,7 @@ const LandStaking = ({
               </span>
               Genesis Land NFT
             </span>
-            <div className="d-flex align-items-center justify-content-between">
+            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <span className="create-land-title font-poppins">
                 Create your Genesis Land NFT
               </span>
@@ -300,7 +300,7 @@ const LandStaking = ({
                     mintloading === "error" ? "filled-error-btn" : "filled-btn"
                   }  px-5 w-100`}
                   onClick={() => {
-                    isConnected ? handleCreate() : handleConnectWallet();
+                    isConnected ? handleCreate() : showWalletConnect();
                   }}
                   disabled={
                     mintloading === "error" || mintloading === "success"
@@ -338,7 +338,7 @@ const LandStaking = ({
                 staking
               </span>
             </span>
-            <div className="d-flex align-items-center justify-content-between">
+            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <span className="create-land-title font-poppins">
                 Genesis Land Staking
               </span>

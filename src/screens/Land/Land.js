@@ -8,6 +8,7 @@ import "./_land.scss";
 import Members from "./Members";
 import Community from "./Community";
 import UnstakeAllModal from "./UnstakeAllModal";
+import WalletModal from "../../components/WalletModal/WalletModal";
 
 const Land = ({
   handleConnectWallet,
@@ -35,6 +36,7 @@ const Land = ({
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [mintStatus, setmintStatus] = useState("");
   const [mintloading, setmintloading] = useState("initial");
+  const [walletModal, setwalletModal] = useState(false);
 
   const myNft = async () => {
     let myNft = await window.myNftListContract(coinbase);
@@ -204,6 +206,10 @@ const Land = ({
     }
   };
 
+  const showWalletConnect = () => {
+    setwalletModal(true);
+  };
+
   const handleStake = () => {
     setOpenStakeChecklist(true);
     setshowStaked(false);
@@ -223,7 +229,14 @@ const Land = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Land";
+
   }, []);
+
+  useEffect(() => {
+    if (isConnected === true) {
+      setwalletModal(false);
+    }
+  }, [isConnected]);
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
@@ -264,10 +277,22 @@ const Land = ({
         />
       )}
 
+      {walletModal === true && (
+        <WalletModal
+          show={walletModal}
+          handleClose={() => {
+            setwalletModal(false);
+          }}
+          handleConnection={() => {
+            handleConnectWallet();
+          }}
+        />
+      )}
+
       <div className="land-main-wrapper px-0 w-100 pt-5 d-flex flex-column">
         <LandHero />
         <LandStaking
-          handleConnectWallet={handleConnectWallet}
+          showWalletConnect={showWalletConnect}
           handleMint={handleMint}
           handleStake={handleStake}
           coinbase={coinbase}
@@ -279,7 +304,6 @@ const Land = ({
           mintStatus={mintStatus}
           mintloading={mintloading}
           ETHrewards={EthRewards}
-
         />
         <LandTiers />
         <Members handleRegister={handleRegister} />
