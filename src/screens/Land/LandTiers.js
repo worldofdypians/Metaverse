@@ -126,7 +126,7 @@ const LandTiers = () => {
                   </h6>
                   {tier.content.benefits.map((item, index) => (
                     <div
-                      className=" d-flex align-items-center justify-content-start gap-2 "
+                      className=" d-flex align-items-center justify-content-start gap-2 mb-2"
                       key={index}
                     >
                       <img src={tierCheck} alt="check" />
