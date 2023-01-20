@@ -807,7 +807,7 @@ input::-webkit-inner-spin-button {
 
 .land-main-wrapper .second-bubble {
     left: -15%;
-    top: 61%;
+    top: 64%;
     scale: 0.6;
 }
 
@@ -822,10 +822,18 @@ input::-webkit-inner-spin-button {
 
 .land-main-wrapper .fourth-bubble {
   left: 51%;
-  top: 61%;
+  top: 63%;
     scale: 0.6;
 }
 .land-main-wrapper .members-title {
   font-size: 17px;
 }
+}
+
+
+@media screen and (max-width: 488px) {
+ 
+  .laptop{
+    width: 75% !important;
+  }
 }
