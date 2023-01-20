@@ -529,8 +529,10 @@
     width: 235px;
     height: 235px;
     @media screen and (max-width: 1171px) {
-      width: 200px;
-      height: 200px;
+      min-width: 200px !important;
+      min-height: 200px !important;
+      max-width: 200px !important;
+      max-height: 200px !important;
     }
   }
 
