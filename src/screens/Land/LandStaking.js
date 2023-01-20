@@ -200,7 +200,7 @@ const LandStaking = ({
               </span>
               Genesis Land NFT
             </span>
-            <div className="d-flex align-items-center justify-content-between">
+            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <span className="create-land-title font-poppins">
                 Create your Genesis Land NFT
               </span>
