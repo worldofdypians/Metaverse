@@ -202,7 +202,7 @@ const LandBenefits = () => {
           </div>
         </div>
       </div> */}
-      <div className="d-flex flex-column gap-5">
+      <div className="land-benefits-wrapper d-flex flex-column gap-5">
         <div className="d-flex flex-column">
           <div className="d-flex align-items-center justify-content-center">
             <h6 className="new-benefits-header font-organetto mb-5">
