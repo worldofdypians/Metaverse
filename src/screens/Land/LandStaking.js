@@ -12,6 +12,8 @@ import ToolTip from "../Caws/elements/ToolTip";
 import Countdown from "react-countdown";
 import axios from "axios";
 import { formattedNum } from "../Caws/functions/formatUSD";
+import getFormattedNumber from "../Caws/functions/get-formatted-number";
+
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -52,6 +54,7 @@ const LandStaking = ({
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
   const [showBadge, setshowBadge] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
+  const [mintPrice, setmintPrice] = useState(0);
 
   const handleCreate = () => {
     handleMint({
@@ -91,6 +94,11 @@ const LandStaking = ({
     setethToUSD(Number(ethprice) * Number(ETHrewards));
   };
 
+  const getMintPrice = async () => {
+    const ethprice = await convertEthToUsd();
+    setmintPrice(1000 / Number(ethprice));
+  };
+
   useEffect(() => {
     if (nftCount > 10) {
       setNftStatus("*Exceeded mint limit of 10 NFTs");
@@ -103,6 +111,7 @@ const LandStaking = ({
 
   useEffect(() => {
     setUSDPrice();
+    getMintPrice();
     if (totalCreated > 0) {
       setshowBadge(true);
     }
@@ -148,19 +157,17 @@ const LandStaking = ({
               </div>
             </div> */}
             <div className="d-flex flex-column">
-            <div className="genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative h-100">
-            {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
-            <img
-              src={dummyBadge}
-              className="genesis-badge"
-              alt="badge"
-            />
-          </div>
-            <div className="genesis-desc position-relative" style={{bottom: '5px'}}>
-              <h6 className="font-organetto land-desc w-75">Genesis Land</h6>
-             
+              <div className="genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative h-100">
+                {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
+                <img src={dummyBadge} className="genesis-badge" alt="badge" />
+              </div>
+              <div
+                className="genesis-desc position-relative"
+                style={{ bottom: "5px" }}
+              >
+                <h6 className="font-organetto land-desc w-75">Genesis Land</h6>
+              </div>
             </div>
-          </div>
             <div
               className={
                 isConnected === false
@@ -187,10 +194,10 @@ const LandStaking = ({
             className="p-3 mint-wrapper d-flex flex-column gap-5"
             style={{ minHeight: "518px" }}
           >
-            <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row">
+            <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 Mint
-              </span>{" "}{" "}
+              </span>
               Genesis Land NFT
             </span>
             <div className="d-flex align-items-center justify-content-between">
@@ -279,11 +286,19 @@ const LandStaking = ({
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
-                <span className="eth-price">Price: 0.08 ETH</span>
+                <span className="eth-price">Price: {getFormattedNumber(mintPrice,2)} ETH</span>
               </div>
-              <div className={ mintloading === "error" ? 'linear-border-disabled' : "linear-border"}>
+              <div
+                className={
+                  mintloading === "error"
+                    ? "linear-border-disabled"
+                    : "linear-border"
+                }
+              >
                 <button
-                  className={`btn ${mintloading === "error" ? 'filled-error-btn' : 'filled-btn'}  px-5 w-100`}
+                  className={`btn ${
+                    mintloading === "error" ? "filled-error-btn" : "filled-btn"
+                  }  px-5 w-100`}
                   onClick={() => {
                     isConnected ? handleCreate() : handleConnectWallet();
                   }}
