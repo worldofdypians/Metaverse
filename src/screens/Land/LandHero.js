@@ -10,7 +10,7 @@ const LandHero = () => {
       content: 'A customizable and multi-functional structure that allows users to interact with each other in a fun and lucrative way'
     },
     {
-      title: "2 Enviriomental Items",
+      title: "2 Environmental Items",
       icon: "envirioment",
       content: 'Add a unique touch to your space that reflects your personal style '
     },

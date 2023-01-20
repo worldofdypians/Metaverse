@@ -31,8 +31,8 @@ const LandTiers = () => {
           dimensions: '125x125m',
           area: '15,625m\u00b2',
           benefits: [
-            '1 Multi Functional Land',
-            '2 Enviromental Items',
+            '1 Multi-functional Building',
+            '2 Environmental Items',
             '1 NPC Character',
             'Exclusive Land NFT Staking', 
             'Earn Special Rewards',

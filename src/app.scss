@@ -64,6 +64,40 @@ body {
     content: "";
   }
 
+  .walletbutton {
+    background: var(--box-bg);
+    outline: currentcolor none medium;
+    border: 1px solid rgb(237, 238, 242);
+    border-radius: 12px;
+    width: 93% !important;
+    display: flex;
+    flex-direction: row;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: justify;
+    padding: 1rem;
+    margin: auto;
+    opacity: 1;
+  }
+
+  .walletbutton:hover {
+    border: 1px solid rgb(140, 86, 255);
+  }
+  
+  .walletmodal-wrapper {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .walletclose {
+    display: flex;
+    justify-content: end;
+    padding: 18px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+  }
   .linear-border-disabled {
     position: relative;
     padding: 2px;
