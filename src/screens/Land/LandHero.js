@@ -38,7 +38,8 @@ const LandHero = () => {
 
   return (
     <>
-      <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
+    <div className="land-hero-wrapper py-5  d-flex flex-column gap-5">
+    <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
         <div className="col-12 col-lg-5 ps-2 ps-lg-0 pt-5 pt-lg-0">
           <h6 className="land-hero-title font-organetto">
             1,000 Premium WOD Land
@@ -59,8 +60,8 @@ const LandHero = () => {
             available for minting on the Ethereum blockchain.
           </p>
         </div>
-        <div className="col-12 col-lg-6 pe-2 pe-lg-0 d-flex justify-content-end">
-          <img src={landBg} className="land-bg w-100" alt="background" />
+        <div className="col-12 col-lg-6 pe-2 pe-lg-0 d-flex justify-content-center">
+          <img src={require(`../../assets/landAssets/wodMap.webp`)} className="land-bg" alt="background" />
         </div>
       </div>
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
@@ -89,6 +90,7 @@ const LandHero = () => {
           </div>
         </div>
       </div>
+    </div>
     </>
   );
 };

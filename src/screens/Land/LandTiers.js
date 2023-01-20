@@ -63,13 +63,13 @@ const LandTiers = () => {
         {tiers.map((tier, index) => (
           <div className="d-flex flex-column">
             <div
-              className="genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative"
+              className={`genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative ${tier.title === "Genesis Land" && 'genesis-land'}`}
               key={index}
             >
               {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
               <img
                 src={require(`../../assets/landAssets/${tier.icon}`)}
-                className="genesis-badge"
+                className={`genesis-badge ${tier.title === "Genesis Land" && 'd-none'}`}
                 alt="badge"
               />
             </div>

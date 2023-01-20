@@ -10,6 +10,17 @@
     background-size: cover;
   }
 
+  .land-hero-wrapper{
+    background-image: url('../../assets/landAssets/landHeroBg.webp');
+    background-repeat: no-repeat;
+    background-size: 100% 130%;
+
+    @media screen and (max-width: 786px) {
+      background-size: cover;
+    }
+  }
+
+
   .land-hero-title {
     font-weight: 800;
     font-size: 32px;
@@ -472,6 +483,14 @@
     color: #ffffff;
   }
 
+
+  .genesis-land{
+    background-image: url('../../assets/landAssets/landNft.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
   .community-image {
     --mask: linear-gradient(-135deg, #0000 30px, #000 0);
     -webkit-mask: var(--mask);
@@ -846,6 +865,10 @@ input::-webkit-inner-spin-button {
 
 @media screen and (max-width: 488px) {
  
+  .land-bg{
+    width: 100%;
+  }
+
   .laptop{
     width: 75% !important;
   }
