@@ -24,13 +24,12 @@ const LandStakingChecklistModal = ({
   onUnstake,
   onClaimAll,
   link,
-  countDownLeft,
   ETHrewards,
   onNftCheckListClick,
   coinbase,
   showStaked,
   showToStake,
-  isConnected
+  isConnected,
 }) => {
   const style = {
     position: "absolute",
@@ -495,7 +494,6 @@ const LandStakingChecklistModal = ({
                           nft={item}
                           modalId="#newNftchecklist"
                           isStake={showStaked}
-                          countDownLeft={countDownLeft}
                           checked={
                             (showToStake === true && checkbtn === true) ||
                             (showStaked === true && checkUnstakebtn === true)
@@ -513,8 +511,7 @@ const LandStakingChecklistModal = ({
                             setVal(value);
                           }}
                           coinbase={coinbase}
-          isConnected={isConnected}
-                          
+                          isConnected={isConnected}
                         />
                       </>
                     );
@@ -559,7 +556,6 @@ const LandStakingChecklistModal = ({
                         action={onShareClick}
                         modalId="#NftUnstake2"
                         isStake={showStaked}
-                        countDownLeft={countDownLeft}
                         checked={
                           (showToStake === true && checkbtn === true) ||
                           (showStaked === true && checkUnstakebtn === true)
@@ -576,8 +572,7 @@ const LandStakingChecklistModal = ({
                           console.log(selectNftIds);
                           setVal(value);
                         }}
-          isConnected={isConnected}
-
+                        isConnected={isConnected}
                       />
                     </>
                   );

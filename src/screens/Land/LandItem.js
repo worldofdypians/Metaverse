@@ -11,7 +11,6 @@ const LandItem = ({
   checked,
   checklistItemID,
   onChange,
-  countDownLeft,
   onNftCheckListClick,
   coinbase,
   isConnected
