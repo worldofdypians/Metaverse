@@ -13,7 +13,7 @@ import Countdown from "react-countdown";
 import axios from "axios";
 import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
-
+import { shortAddress } from "../Caws/functions/shortAddress";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -58,7 +58,7 @@ const LandStaking = ({
 
   const handleCreate = () => {
     handleMint({
-      amount: nftCount,
+      numberOfTokens: nftCount,
     });
     setNftCount(1);
   };
@@ -201,9 +201,16 @@ const LandStaking = ({
               Genesis Land NFT
             </span>
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
-              <span className="create-land-title font-poppins">
-                Create your Genesis Land NFT
-              </span>
+              <div className="d-flex justify-content-between gap-2">
+                <span className="create-land-title font-poppins ">
+                  Create your Genesis Land NFT
+                </span>
+                {coinbase && (
+                  <span className="create-land-title font-poppins">
+                   Wallet Address: {shortAddress(coinbase)}
+                  </span>
+                )}
+              </div>
               <div className="d-flex align-items-center gap-2">
                 <span className="more-info">More information</span>
                 <ToolTip
@@ -286,7 +293,9 @@ const LandStaking = ({
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
-                <span className="eth-price">Price: {getFormattedNumber(mintPrice,2)} ETH</span>
+                <span className="eth-price">
+                  Price: {getFormattedNumber(mintPrice, 2)} ETH
+                </span>
               </div>
               <div
                 className={
