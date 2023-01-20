@@ -58,7 +58,7 @@ const UnstakeAllModal = ({ open, onClose, onUnstake, onClaimAll }) => {
                           
                        px-5 w-100`}
                 onClick={() => {
-                  onClose();
+                  onUnstake();
                 }}
               >
                 Continue

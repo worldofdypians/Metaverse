@@ -63,6 +63,7 @@ function App() {
       await window.connectWallet().then((data) => {
         setIsConnected(data);
       });
+      
       await window.getCoinbase().then((data) => {
         setCoinbase(data);
       });
@@ -73,6 +74,8 @@ function App() {
     }
     return isConnected;
   };
+
+  
 
   return (
     <BrowserRouter>

@@ -10,6 +10,7 @@ import Community from "./Community";
 import UnstakeAllModal from "./UnstakeAllModal";
 import WalletModal from "../../components/WalletModal/WalletModal";
 
+
 const Land = ({
   handleConnectWallet,
   coinbase,
@@ -48,7 +49,7 @@ const Land = ({
 
   const getStakesIds = async () => {
     const address = coinbase;
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
       .depositsOf(address)
@@ -72,10 +73,11 @@ const Land = ({
 
   const handleClaimAll = async () => {
     const address = coinbase;
+
     let myStakes = await getStakesIds();
     let calculateRewards = [];
     let result = 0;
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     if (myStakes.length > 0) {
       calculateRewards = await staking_contract.methods
         .calculateRewards(address, myStakes)
@@ -97,7 +99,7 @@ const Land = ({
 
   const claimRewards = async () => {
     let myStakes = await getStakesIds();
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
 
     setclaimAllStatus("Claiming all rewards, please wait...");
     await staking_contract.methods
@@ -115,7 +117,7 @@ const Land = ({
 
   const handleUnstakeAll = async () => {
     let myStakes = await getStakesIds();
-    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     setunstakeAllStatus("Unstaking all please wait...");
 
     await stake_contract.methods
@@ -150,10 +152,14 @@ const Land = ({
 
         if (parseInt(whitelist) == 1) {
           setmintloading("mint");
+          console.log(data);
+          let tokenId = await window.landnft
+            .mintNFT(data.numberOfTokens)
+            .catch((e) => {
+              console.error();
+            });
 
-          let tokenId = await window.landnft.mintNFT(data.numberOfTokens).catch((e)=>{
-            console.error(e)
-          })
+          console.log(tokenId);
 
           if (isNaN(Number(tokenId))) {
             setmintloading("error");
@@ -165,7 +171,7 @@ const Land = ({
             throw new Error("Invalid Token ID");
           }
 
-          // let getNftData = await window.getNft(tokenId); 
+          // let getNftData = await window.getNft(tokenId);
 
           // setMyNFTsCreated(getNftData);
           setmintStatus("Success! Your Nft was minted successfully!");
@@ -231,7 +237,6 @@ const Land = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Land";
-
   }, []);
 
   useEffect(() => {
@@ -239,6 +244,18 @@ const Land = ({
       setwalletModal(false);
     }
   }, [isConnected]);
+
+  useEffect(() => {
+
+    const interval = setInterval(async () => {
+      if (isConnected && coinbase) {
+        handleClaimAll().then();
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isConnected, EthRewards, coinbase]);
+
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
@@ -276,6 +293,8 @@ const Land = ({
           onClose={() => {
             setshowWithdrawModal(false);
           }}
+          onUnstake={handleUnstakeAll}
+          onClaimAll={claimRewards}
         />
       )}
 

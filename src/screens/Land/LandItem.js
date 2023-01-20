@@ -37,7 +37,7 @@ const LandItem = ({
     const address = coinbase;
 
     let calculateRewards;
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
 
     calculateRewards = await staking_contract.methods
       .calculateReward(address, parseInt(currentId))
@@ -56,7 +56,7 @@ const LandItem = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
 
     await staking_contract.methods
       .claimRewards([itemId])
@@ -71,7 +71,7 @@ const LandItem = ({
   };
 
   const handleUnstake = async (itemId) => {
-    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     setloading(true);
 
     await stake_contract.methods
@@ -105,7 +105,7 @@ const LandItem = ({
 
   const getStakesIds = async () => {
     const address =  coinbase
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
       .depositsOf(address)

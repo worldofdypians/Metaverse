@@ -10,7 +10,6 @@ import LandPlaceHolder from "./LandPlaceholder";
 import LandItem from "./LandItem";
 import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
-import CountDownTimerUnstake from "../Caws/elements/CountDownUnstake";
 import "../Caws/NftMinting/NftStakeChecklistModal/_nftStakeChecklistModal.scss";
 import ethereum from "../../assets/landAssets/ethereum.svg";
 
@@ -53,7 +52,6 @@ const LandStakingChecklistModal = ({
   const [loadingdeposit, setloadingdeposit] = useState(false);
   const [showClaim, setshowClaim] = useState(false);
   const [loadingClaim, setloadingClaim] = useState(false);
-  const [connectedWallet, setConnectedWallet] = useState(false);
   const [apr, setapr] = useState(25);
   const [showApprove, setshowApprove] = useState(true);
   const [val, setVal] = useState("");
@@ -88,10 +86,6 @@ const LandStakingChecklistModal = ({
 
   const checkApproval = async () => {
     const address = coinbase;
-    if (address) {
-      setConnectedWallet(true);
-    } else setConnectedWallet(false);
-
     const stake25 = await window.config.landnftstake_address;
     if (address) {
       if (apr == 25) {
@@ -137,7 +131,6 @@ const LandStakingChecklistModal = ({
 
   const handleApprove = async () => {
     const stake25 = await window.config.landnftstake_address;
-
     setloading(true);
     setStatus("*Waiting for approval");
     await window.landnft
@@ -157,7 +150,7 @@ const LandStakingChecklistModal = ({
   };
 
   const handleDeposit = async (value) => {
-    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     setloadingdeposit(true);
     setStatus("*Processing deposit");
     setColor("#F13227");
@@ -256,7 +249,7 @@ const LandStakingChecklistModal = ({
   const onEmptyState = () => {};
 
   const handleUnstake = async (value) => {
-    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     setStatus("*Processing unstake");
     setColor("#F13227");
 
@@ -285,7 +278,7 @@ const LandStakingChecklistModal = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
 
     setloadingClaim(true);
     setActive(false);
