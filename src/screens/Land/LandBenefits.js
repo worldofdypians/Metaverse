@@ -122,17 +122,16 @@ const LandBenefits = () => {
     <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 position-relative mb-5">
       <div className="d-flex flex-column align-items-center justify-content-center mb-5">
         <h6 className="land-tiers font-organetto d-flex flex-column flex-lg-row">
-          WOrld of dypians land owner{" "}
+        Embrace the opportunities in{" "}
           <span
             className="land-tiers font-organetto"
             style={{ color: "#8c56ff" }}
           >
-            benefits
+            World of dypians
           </span>
         </h6>
         <span className="tiers-desc">
-          World of Dypian land ownership provides users with many in-game
-          benefits
+        Possibilities are limited only by your imagination
         </span>
       </div>
       {/* <div className="glass-card">
@@ -205,7 +204,7 @@ const LandBenefits = () => {
       <div className="d-flex flex-column gap-5">
         <div className="d-flex flex-column">
           <div className="d-flex align-items-center justify-content-center">
-            <h6 className="new-benefits-header font-organetto mb-5">
+            <h6 className="new-benefits-header font-organetto mb-5" style={{ color: "#85fbc9" }}>
               Dimensions
             </h6>
           </div>
@@ -223,7 +222,7 @@ const LandBenefits = () => {
         </div>
         <div className="d-flex flex-column">
           <div className="d-flex align-items-center justify-content-center">
-            <h6 className="new-benefits-header font-organetto mb-5">
+            <h6 className="new-benefits-header font-organetto mb-5" style={{ color: "#85fbc9" }}>
               Play-to-earn
             </h6>
           </div>
@@ -241,7 +240,7 @@ const LandBenefits = () => {
         </div>
         <div className="d-flex flex-column">
           <div className="d-flex align-items-center justify-content-center">
-            <h6 className="new-benefits-header font-organetto mb-5">
+            <h6 className="new-benefits-header font-organetto mb-5" style={{ color: "#85fbc9" }}>
               Interactions
             </h6>
           </div>
@@ -259,7 +258,7 @@ const LandBenefits = () => {
         </div>
         <div className="d-flex flex-column">
           <div className="d-flex align-items-center justify-content-center">
-            <h6 className="new-benefits-header font-organetto mb-5">
+            <h6 className="new-benefits-header font-organetto mb-5" style={{ color: "#85fbc9" }}>
               Creativity
             </h6>
           </div>
