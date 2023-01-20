@@ -78,7 +78,7 @@ const LandTiers = () => {
               {tier.content && 
               <>
               <div className="tier-specs d-flex flex-column gap-3 p-3">
-                <div className="d-flex flex-column gap-3 align-items-start">
+                <div className="d-flex gap-3 align-items-start justify-content-between">
                   <div className="d-flex align-items-start gap-2">
                     <img src={landType} alt="type"  idth={20} height={20}/>
                     <div className="d-flex flex-column">
@@ -102,7 +102,7 @@ const LandTiers = () => {
                     </div>
                   </div>
               </div>
-              <h6 className="land-benefits-title mt-2 d-none d-xxl-flex">
+              <h6 className="land-benefits-title mt-2 d-flex">
                 Genesis Land Benefits
               </h6>
               {tier.content.benefits.map((item, index) => (
