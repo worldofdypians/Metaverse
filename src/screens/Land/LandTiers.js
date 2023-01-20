@@ -8,7 +8,6 @@ import tierCheck from "../../assets/landAssets/tierCheck.svg";
 
 const LandTiers = () => {
   const tiers = [
-   
     {
       title: "WOD Land tier 1",
       icon: "tierOneLand.svg",
@@ -24,22 +23,20 @@ const LandTiers = () => {
     {
       title: "Genesis Land",
       icon: "dummyBadge.png",
-      content: 
-        {
-          type: 'Genesis',
-          chain: 'Ethereum',
-          dimensions: '125x125m',
-          area: '15,625m\u00b2',
-          benefits: [
-            '1 Multi-functional Building',
-            '2 Environmental Items',
-            '1 NPC Character',
-            'Exclusive Land NFT Staking', 
-            'Earn Special Rewards',
-            'Monetize Land'
-          ]
-        }
-      ,
+      content: {
+        type: "Genesis",
+        chain: "Ethereum",
+        dimensions: "125x125m",
+        area: "15,625m\u00b2",
+        benefits: [
+          "1 Multi Functional Land",
+          "2 Enviromental Items",
+          "1 NPC Character",
+          "Exclusive Land NFT Staking",
+          "Earn Special Rewards",
+          "Monetize Land",
+        ],
+      },
     },
     {
       title: "WOD Land tier 4",
@@ -65,54 +62,79 @@ const LandTiers = () => {
       <div className="tiers-grid mt-5">
         {tiers.map((tier, index) => (
           <div className="d-flex flex-column">
-            <div className="genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative" key={index}>
-            {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
-            <img
-              src={require(`../../assets/landAssets/${tier.icon}`)}
-              className="genesis-badge"
-              alt="badge"
-            />
-          </div>
-            <div className="genesis-desc position-relative" style={{bottom: '5px'}}>
+            <div
+              className="genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative"
+              key={index}
+            >
+              {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
+              <img
+                src={require(`../../assets/landAssets/${tier.icon}`)}
+                className="genesis-badge"
+                alt="badge"
+              />
+            </div>
+            <div
+              className="genesis-desc position-relative"
+              style={{ bottom: "5px" }}
+            >
               <h6 className="font-organetto land-desc w-75">{tier.title}</h6>
-              {tier.content && 
-              <>
-              <div className="tier-specs d-flex flex-column gap-3 p-3">
-                <div className="d-flex flex-column gap-3 align-items-start">
-                  <div className="d-flex align-items-start gap-2">
-                    <img src={landType} alt="type"  idth={20} height={20}/>
-                    <div className="d-flex flex-column">
-                      <span className="spec-value">{tier.content.type}</span>
-                      <span className="spec-type">Type</span>
+              {tier.content && (
+                <>
+                  <div className="tier-specs d-flex flex-column gap-3 p-3">
+                    <div className="d-flex gap-3 align-items-start justify-content-between">
+                      <div className="d-flex align-items-start gap-2">
+                        <img
+                          src={mintEthIcon}
+                          alt="ethereum"
+                          width={20}
+                          height={20}
+                        />
+                        <div className="d-flex flex-column">
+                          <span className="spec-value">
+                            {tier.content.chain}
+                          </span>
+                          <span className="spec-type">Chain</span>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-start gap-2">
+                        <img src={landType} alt="type" idth={20} height={20} />
+                        <div className="d-flex flex-column">
+                          <span className="spec-value">
+                            {tier.content.type}
+                          </span>
+                          <span className="spec-type">Type</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-start gap-2">
+                      <img
+                        src={dimensions}
+                        alt="ethereum"
+                        width={20}
+                        height={20}
+                      />
+                      <div className="d-flex flex-column">
+                        <span className="spec-value">
+                          {tier.content.dimensions} ({tier.content.area})
+                        </span>
+                        <span className="spec-type">Dimensions</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="d-flex align-items-start gap-2">
-                    <img src={mintEthIcon} alt="ethereum"  width={20} height={20} />
-                    <div className="d-flex flex-column">
-                      <span className="spec-value">{tier.content.chain}</span>
-                      <span className="spec-type">Chain</span>
+                  <h6 className="land-benefits-title mt-2 d-flex">
+                    Genesis Land Benefits
+                  </h6>
+                  {tier.content.benefits.map((item, index) => (
+                    <div
+                      className=" d-flex align-items-center justify-content-start gap-2 "
+                      key={index}
+                    >
+                      <img src={tierCheck} alt="check" />
+                      <span className="tier-benefit">{item}</span>
                     </div>
-                  </div>
-                </div>
-                <div className="d-flex align-items-start gap-2">
-                    <img src={dimensions} alt="ethereum"  width={20} height={20} />
-                    <div className="d-flex flex-column">
-                      <span className="spec-value">{tier.content.dimensions} ({tier.content.area})</span>
-                      <span className="spec-type">Dimensions</span>
-                    </div>
-                  </div>
-              </div>
-              <h6 className="land-benefits-title mt-2 d-none d-xxl-flex">
-                Genesis Land Benefits
-              </h6>
-              {tier.content.benefits.map((item, index) => (
-                <div className=" d-flex align-items-center justify-content-start gap-2 " key={index}>
-                  <img src={tierCheck} alt="check" />
-                  <span className="tier-benefit">{item}</span>
-                </div>
-              ))}
-              </>
-              }
+                  ))}
+                </>
+              )}
             </div>
           </div>
         ))}
