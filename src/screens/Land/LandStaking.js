@@ -58,7 +58,7 @@ const LandStaking = ({
 
   const handleCreate = () => {
     handleMint({
-      amount: nftCount,
+      numberOfTokens: nftCount,
     });
     setNftCount(1);
   };

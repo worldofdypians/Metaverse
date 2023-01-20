@@ -48,7 +48,7 @@ const Land = ({
 
   const getStakesIds = async () => {
     const address = coinbase;
-    let staking_contract = await window.getContractNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
     let stakenft = [];
     let myStakes = await staking_contract.methods
       .depositsOf(address)
@@ -75,7 +75,7 @@ const Land = ({
     let myStakes = await getStakesIds();
     let calculateRewards = [];
     let result = 0;
-    let staking_contract = await window.getContractNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
     if (myStakes.length > 0) {
       calculateRewards = await staking_contract.methods
         .calculateRewards(address, myStakes)
@@ -97,7 +97,7 @@ const Land = ({
 
   const claimRewards = async () => {
     let myStakes = await getStakesIds();
-    let staking_contract = await window.getContractNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
 
     setclaimAllStatus("Claiming all rewards, please wait...");
     await staking_contract.methods
@@ -115,7 +115,7 @@ const Land = ({
 
   const handleUnstakeAll = async () => {
     let myStakes = await getStakesIds();
-    let stake_contract = await window.getContractNFT("LANDNFTSTAKE");
+    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKE");
     setunstakeAllStatus("Unstaking all please wait...");
 
     await stake_contract.methods
@@ -151,7 +151,9 @@ const Land = ({
         if (parseInt(whitelist) == 1) {
           setmintloading("mint");
 
-          let tokenId = await window.landnft.mintNFT(data.amount);
+          let tokenId = await window.landnft.mintNFT(data.numberOfTokens).catch((e)=>{
+            console.error(e)
+          })
 
           if (isNaN(Number(tokenId))) {
             setmintloading("error");
@@ -163,9 +165,9 @@ const Land = ({
             throw new Error("Invalid Token ID");
           }
 
-          let getNftData = await window.getNft(tokenId); //tbd
+          // let getNftData = await window.getNft(tokenId); 
 
-          setMyNFTsCreated(getNftData);
+          // setMyNFTsCreated(getNftData);
           setmintStatus("Success! Your Nft was minted successfully!");
           setmintloading("success");
           setTimeout(() => {

@@ -157,7 +157,7 @@ const LandStakingChecklistModal = ({
   };
 
   const handleDeposit = async (value) => {
-    let stake_contract = await window.getContractNFT("LANDNFTSTAKE");
+    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKE");
     setloadingdeposit(true);
     setStatus("*Processing deposit");
     setColor("#F13227");
@@ -256,7 +256,7 @@ const LandStakingChecklistModal = ({
   const onEmptyState = () => {};
 
   const handleUnstake = async (value) => {
-    let stake_contract = await window.getContractNFT("LANDNFTSTAKE");
+    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKE");
     setStatus("*Processing unstake");
     setColor("#F13227");
 
@@ -285,7 +285,7 @@ const LandStakingChecklistModal = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContractNFT("LANDNFTSTAKE");
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKE");
 
     setloadingClaim(true);
     setActive(false);
