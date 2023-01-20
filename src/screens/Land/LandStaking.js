@@ -190,7 +190,7 @@ const LandStaking = ({
             <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 Mint
-              </span>{" "}
+              </span>{" "}{" "}
               Genesis Land NFT
             </span>
             <div className="d-flex align-items-center justify-content-between">
