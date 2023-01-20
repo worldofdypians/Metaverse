@@ -49,6 +49,7 @@ const LandStaking = ({
   mintStatus,
   mintloading,
   ETHrewards,
+  onClaimAll
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
@@ -115,7 +116,7 @@ const LandStaking = ({
     if (totalCreated > 0) {
       setshowBadge(true);
     }
-  }, [totalCreated]);
+  }, [totalCreated, ETHrewards]);
 
   return (
     <>
@@ -410,7 +411,7 @@ const LandStaking = ({
                       height={20}
                       alt="ethereum"
                     />
-                    <span className="eth-rewards">{ETHrewards} ETH</span>
+                    <span className="eth-rewards">{getFormattedNumber(ETHrewards,6) } ETH</span>
                   </div>
                   <span className="eth-rewards">
                     ({formattedNum(ethToUSD, true)})
@@ -431,6 +432,7 @@ const LandStaking = ({
                       : "filled-btn"
                   } px-5 w-100`}
                   disabled={isConnected === false || ETHrewards == 0}
+                  onClick={onClaimAll}
                 >
                   Claim all
                 </button>

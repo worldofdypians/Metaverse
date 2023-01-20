@@ -3062,6 +3062,23 @@ async function myNftListContract(address) {
   return nftList;
 }
 
+
+async function myNftLandListContract(address) {
+  let nft_contract = await getContractLandNFT("LANDNFTSTAKE");
+
+  let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
+
+  let nftList = [];
+
+  for (let i = 0; i < getBalanceOf; i++)
+    nftList.push(
+      await nft_contract.methods.tokenOfOwnerByIndex(address, i).call()
+    );
+
+  return nftList;
+}
+
+
 async function myNftList(address) {
   return await window.$.get(
     `https://mint.dyp.finance/api/v1/my/${address}`

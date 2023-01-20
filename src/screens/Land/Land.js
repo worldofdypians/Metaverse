@@ -40,7 +40,7 @@ const Land = ({
   const [walletModal, setwalletModal] = useState(false);
 
   const myNft = async () => {
-    let myNft = await window.myNftListContract(coinbase);
+    let myNft = await window.myNftLandListContract(coinbase);
     let nfts = myNft.map((nft) => window.getNft(nft));
     nfts = await Promise.all(nfts);
     nfts.reverse();
@@ -250,6 +250,8 @@ const Land = ({
     const interval = setInterval(async () => {
       if (isConnected && coinbase) {
         handleClaimAll().then();
+        myStakes();
+        myNft()
       }
     }, 1000);
 
@@ -325,6 +327,7 @@ const Land = ({
           mintStatus={mintStatus}
           mintloading={mintloading}
           ETHrewards={EthRewards}
+          onClaimAll={claimRewards}
         />
         <LandTiers />
         <Members handleRegister={handleRegister} />
