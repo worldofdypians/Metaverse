@@ -6,6 +6,10 @@
   background-size: 100% 100%;
   overflow-x: hidden;
 
+  @media screen and (max-width: 786px) {
+    background-size: cover;
+  }
+
   .land-hero-title {
     font-weight: 800;
     font-size: 32px;
@@ -741,6 +745,15 @@
       color: #ffffff;
     }
   }
+
+
+.land-benefits-wrapper{
+  background-image: url('../../assets/landAssets/landBenefitsBg.svg');
+  background-repeat: no-repeat;
+  background-size: 75% 75%;
+  background-position: center;
+}
+
 }
 
 input::-webkit-outer-spin-button,
