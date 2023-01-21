@@ -12,7 +12,7 @@ const NftStakingCawChecklist = ({
   checklistItemID,
   onChange,
   countDownLeft,
-  onNftCheckListClick,
+  // onNftCheckListClick,
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
@@ -186,9 +186,9 @@ const NftStakingCawChecklist = ({
               src={nft.image.replace("images", "thumbs")}
               className="nft-img"
               alt=""
-              onClick={() => {
-                onNftCheckListClick(nft);
-              }}
+              // onClick={() => {
+              //   onNftCheckListClick(nft);
+              // }}
               // style={{ cursor: "pointer" }}
             />
             <p
@@ -351,7 +351,7 @@ NftStakingCawChecklist.propTypes = {
   checked: PropTypes.bool,
   checklistItemID: PropTypes.number,
   onChange: PropTypes.func,
-  onNftCheckListClick: PropTypes.func,
+  // onNftCheckListClick: PropTypes.func,
   countDownLeft: PropTypes.any,
 };
 

@@ -25,7 +25,7 @@ const NftStakeCheckListModal = ({
   link,
   countDownLeft,
   ETHrewards,
-  onNftCheckListClick,
+  
 }) => {
   const style = {
     position: "absolute",
@@ -952,7 +952,7 @@ NftStakeCheckListModal.propTypes = {
   onClaimAll: PropTypes.func,
   onUnstake: PropTypes.func,
   ETHrewards: PropTypes.number,
-  onNftCheckListClick: PropTypes.func,
+  
 };
 
 export default NftStakeCheckListModal;

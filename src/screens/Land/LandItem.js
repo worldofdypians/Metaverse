@@ -11,18 +11,19 @@ const LandItem = ({
   checked,
   checklistItemID,
   onChange,
-  onNftCheckListClick,
-  coinbase,
-  isConnected
 
+  coinbase,
+  isConnected,
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
-  const [checkPassiveBtn, setcheckPassiveBtn] = useState(false);
+  const [checkPassiveBtn, setcheckPassiveBtn] = useState(true);
   const [EthRewards, setEthRewards] = useState(0);
 
   const [ethToUSD, setethToUSD] = useState(0);
   const [loading, setloading] = useState(false);
+  const [loadingclaim, setloadingclaim] = useState(false);
+
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -40,7 +41,7 @@ const LandItem = ({
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
 
     calculateRewards = await staking_contract.methods
-      .calculateReward(address, parseInt(currentId))
+      .calculateReward(address, [parseInt(currentId)])
       .call()
       .then((data) => {
         return data;
@@ -57,16 +58,20 @@ const LandItem = ({
 
   const handleClaim = async (itemId) => {
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
-
+    setloadingclaim(true)
     await staking_contract.methods
       .claimRewards([itemId])
       .send()
       .then(() => {
         // setethToUSD(0);
         setEthRewards(0);
+    setloadingclaim(false)
+
       })
       .catch((err) => {
         window.alertify.error(err?.message);
+    setloadingclaim(false)
+
       });
   };
 
@@ -90,9 +95,12 @@ const LandItem = ({
   useEffect(() => {
     if (isConnected) {
       getStakesIds().then();
-      calculateReward(checklistItemID).then();
     }
-  }, [EthRewards, checklistItemID, isConnected]);
+    const interval = setInterval(async () => {
+      calculateReward(checklistItemID);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [EthRewards, checklistItemID, isConnected, coinbase]);
 
   useEffect(() => {
     setCheckBtn(checked);
@@ -104,7 +112,7 @@ const LandItem = ({
   }
 
   const getStakesIds = async () => {
-    const address =  coinbase
+    const address = coinbase;
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
@@ -149,19 +157,19 @@ const LandItem = ({
         >
           <div
             style={{
-              background: "white",
+              background: "#26264F",
               border: isStake
                 ? checked === true
                   ? Unstakebtn === true
-                    ? "2px solid #E30613"
+                    ? "2px solid #4ED5D2"
                     : "none"
                   : Unstakebtn === true
-                  ? "2px solid #E30613"
+                  ? "2px solid #4ED5D2"
                   : "none"
                 : checked === true && checkbtn === true
-                ? "2px solid #E30613"
+                ? "2px solid #4ED5D2"
                 : checked === false && checkbtn === true
-                ? "2px solid #E30613"
+                ? "2px solid #4ED5D2"
                 : "none",
             }}
             className="sub-container"
@@ -170,24 +178,24 @@ const LandItem = ({
               src={nft.image.replace("images", "thumbs")}
               className="nft-img"
               alt=""
-              onClick={() => {
-                onNftCheckListClick(nft);
-              }}
+              // onClick={() => {
+              //   onNftCheckListClick(nft);
+              // }}
               // style={{ cursor: "pointer" }}
             />
             <p
               style={{
-                color: "var(--light-gray-99-nft)",
+                color: "#C0CBF7",
               }}
             >
-              CAWS {checklistItemID}
+              LAND {checklistItemID}
             </p>
             <div className="footer" style={{ flexDirection: "column" }}>
               <div className="d-flex w-100 justify-content-between align-baseline">
                 <p
                   className="nft-id"
                   style={{
-                    color: "var(--black-nft)",
+                    color: "#F7F7FC",
                   }}
                 >
                   #{String(nft.name).replace("CAWS #", "")}
@@ -234,18 +242,17 @@ const LandItem = ({
                     className="earn-checklist-container d-block mb-0 p-0 w-100"
                     style={{ boxShadow: "none", borderTop: "none" }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <p id="earnedText">Pending</p>
-                      <div>
-                        <p id="ethPrice">
+                    <div className="d-flex flex-column align-items-baseline justify-content-between">
+                      <p id="earnedText" style={{ color: "#C0C9FF" }}>
+                        Pending
+                      </p>
+                      <div className="d-flex gap-1 align-items-center justify-content-between w-100 mb-2">
+                        <p class="eth-rewards">
                           {getFormattedNumber(EthRewards, 2)}ETH
                         </p>
-                        <p id="fiatPrice">{formattedNum(ethToUSD, true)}</p>
+                        <p class="eth-rewards">
+                          {formattedNum(ethToUSD, true)}
+                        </p>
                       </div>
                       {/* <img
                         src={EthLogo}
@@ -254,38 +261,61 @@ const LandItem = ({
                       /> */}
                     </div>{" "}
                   </div>
-                  <button
-                    className="claim-rewards-btn-countdown mb-1"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleClaim(checklistItemID);
-                    }}
-                    style={{
-                      pointerEvents: EthRewards == 0 ? "none" : "auto",
-                      borderColor: EthRewards == 0 ? "#C4C4C4" : "#FF0000",
-                      color: EthRewards == 0 ? "#fff" : "#FF0000",
-                      background: EthRewards == 0 ? "#C4C4C4" : "#fff",
-                    }}
+
+                  <div
+                    className={
+                      EthRewards === 0
+                        ? "linear-border-disabled"
+                        : "linear-border"
+                    }
                   >
-                    Claim reward
-                  </button>
+                    <button
+                      className={`btn ${
+                        EthRewards === 0 ? "outline-btn-disabled" : "filled-btn"
+                      } px-3`}
+                      disabled={EthRewards === 0 ? true : false}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleClaim(checklistItemID);
+                      }}
+                      style={{width: 147}}
+                    >
+                      {loadingclaim ? (
+                  <>
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{ height: "1.5rem", width: "1.5rem" }}
+                    ></div>
+                  </>
+                ) : (
+                  "Claim reward"
+                )}
+
+                     
+                    </button>
+                  </div>
                 </>
               )}
             </div>
           </div>
           {isStake ? (
             <>
+               
+              <div
+              className={
+                checkPassiveBtn === false
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }
+            >
               <button
-                className="checkbox-button"
+                className={`btn ${
+                  checkPassiveBtn === false ? "outline-btn-disabled" : "outline-btn"
+                } px-5 w-100`}
+                disabled={!checkPassiveBtn}
                 onClick={() => {
                   handleUnstake(checklistItemID);
-                }}
-                style={{
-                  background:
-                    checkPassiveBtn === true
-                      ? "linear-gradient(51.32deg, #e30613 -12.3%, #fa4a33 50.14%)"
-                      : "#C4C4C4",
-                  pointerEvents: checkPassiveBtn === true ? "auto" : "none",
                 }}
               >
                 {loading ? (
@@ -300,6 +330,8 @@ const LandItem = ({
                   "Unstake"
                 )}
               </button>
+            </div>
+
             </>
           ) : (
             <>
@@ -335,7 +367,7 @@ LandItem.propTypes = {
   checked: PropTypes.bool,
   checklistItemID: PropTypes.number,
   onChange: PropTypes.func,
-  onNftCheckListClick: PropTypes.func,
+  // onNftCheckListClick: PropTypes.func,
   countDownLeft: PropTypes.any,
 };
 
