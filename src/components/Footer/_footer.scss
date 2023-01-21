@@ -47,7 +47,8 @@
     grid-template-columns: repeat(2, 1fr) !important;
     display: grid !important;
     place-items: baseline;
-    gap: 10px !important;
+    row-gap: 10px !important;
+    column-gap: 70px !important;
     margin-bottom: 1rem;
   }
 }
