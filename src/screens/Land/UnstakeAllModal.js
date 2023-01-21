@@ -93,7 +93,6 @@ UnstakeAllModal.propTypes = {
   onClaimAll: PropTypes.func,
   onUnstake: PropTypes.func,
   ETHrewards: PropTypes.number,
-  onNftCheckListClick: PropTypes.func,
 };
 
 export default UnstakeAllModal;

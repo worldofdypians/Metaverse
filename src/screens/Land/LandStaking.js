@@ -61,7 +61,7 @@ const LandStaking = ({
     handleMint({
       numberOfTokens: nftCount,
     });
-    setNftCount(1);
+    // setNftCount(1);
   };
 
   const addNft = () => {
@@ -117,7 +117,7 @@ const LandStaking = ({
       setshowBadge(true);
     }
   }, [totalCreated, ETHrewards]);
-
+  
   return (
     <>
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
@@ -157,9 +157,15 @@ const LandStaking = ({
                 <h6 className="font-organetto land-desc w-75">Genesis Land</h6>
               </div>
             </div> */}
-            <div className="d-flex flex-column">
+            <div className="d-flex flex-column position-relative">
+            {showBadge && (
+                <div className="totalcreated">
+                  <span>{totalCreated}</span>
+                </div>
+              )} 
               <div className="genesis-wrapper genesis-land d-flex justify-content-center align-items-center p-3 position-relative h-100">
                 {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
+               
                 <img src={dummyBadge} className="genesis-badge" style={{visibility: 'hidden'}} alt="badge" />
               </div>
               <div

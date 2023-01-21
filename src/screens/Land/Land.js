@@ -43,6 +43,8 @@ const Land = ({
     let myNft = await window.myNftLandListContract(coinbase);
     let nfts = myNft.map((nft) => window.getNft(nft));
     nfts = await Promise.all(nfts);
+    setMyNFTsCreated(nfts);
+
     nfts.reverse();
     setMyNFTs(nfts);
   };
@@ -134,7 +136,7 @@ const Land = ({
   };
 
   const handleShowUnstake = () => {
-    setShowUnstakeModal(true);
+    setshowWithdrawModal(true);
     setOpenStakeChecklist(false);
   };
 
@@ -171,9 +173,9 @@ const Land = ({
             throw new Error("Invalid Token ID");
           }
 
-          // let getNftData = await window.getNft(tokenId);
+          let getNftData = await window.getNft(tokenId);
 
-          // setMyNFTsCreated(getNftData);
+          setMyNFTsCreated(getNftData);
           setmintStatus("Success! Your Nft was minted successfully!");
           setmintloading("success");
           setTimeout(() => {
@@ -281,7 +283,7 @@ const Land = ({
             setshowToStake(true);
           }}
           onClaimAll={() => {
-            handleShowClaimAll();
+            claimRewards();
           }}
           onUnstake={() => handleShowUnstake()}
           ETHrewards={EthRewards}
