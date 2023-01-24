@@ -8,6 +8,8 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 
 const Members = ({handleRegister}) => {
   const [seats, setSeats] = useState(0);
+  const [players, setPlayers] = useState([]);
+
 
   const countSeats = async () => {
     await axios
@@ -19,8 +21,19 @@ const Members = ({handleRegister}) => {
       });
   };
 
+  const countPlayers = async () => {
+    await axios
+    .get("https://api.dyp.finance/api/get_wod")
+    .then((data) => {
+     setPlayers(data.data)
+    }).catch(function (error) {
+      console.error(error);
+    });
+  };
+
   useEffect(() => {
     countSeats();
+    countPlayers()
   }, []);
 
   return (
@@ -35,7 +48,7 @@ const Members = ({handleRegister}) => {
       <div className="first-bubble">
         <img src={membersPlaying} alt="" className="members-playing" />
         <div className="d-flex flex-column align-items-center justify-content-center gap-2 glass-bubble first-glass">
-          <h6 className="pink-title font-organetto">300</h6>
+          <h6 className="pink-title font-organetto">{players?.playing}</h6>
           <span className="pink-content">Already playing</span>
         </div>
       </div>
@@ -55,7 +68,7 @@ const Members = ({handleRegister}) => {
       <div className="third-bubble">
         <img src={membersDiscord} alt="" className="discord-members" />
         <div className="d-flex flex-column align-items-center justify-content-center gap-2 glass-bubble third-glass">
-          <h6 className="blue-title font-organetto">13K</h6>
+          <h6 className="blue-title font-organetto">{players?.discordmembers}</h6>
           <span className="blue-content">Members</span>
         </div>
       </div>
@@ -66,7 +79,7 @@ const Members = ({handleRegister}) => {
             className="blue-title font-organetto"
             style={{ fontSize: "25px" }}
           >
-            122K
+            {players?.twitterfollowers}
           </h6>
           <span className="blue-content" style={{ fontSize: "15px" }}>
             Followers
