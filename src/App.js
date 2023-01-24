@@ -23,6 +23,8 @@ function App() {
   const [donwloadSelected, setdownloadSelected] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [coinbase, setCoinbase] = useState();
+  const [chainId, setChainId] = useState();
+
   const [showForms, setShowForms] = useState(false);
 
   const handleRegister = () => {
@@ -58,15 +60,31 @@ function App() {
     return isConnected;
   };
 
+
+  const checkNetworkId = () => {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "net_version" })
+        .then((data) => {
+          setChainId(parseInt(data));
+        })
+        .catch(console.error);
+    } else {
+      setChainId(1);
+    }
+  };
+
+
   const handleConnectWallet = async () => {
     try {
       await window.connectWallet().then((data) => {
         setIsConnected(data);
       });
-      
+
       await window.getCoinbase().then((data) => {
         setCoinbase(data);
       });
+      checkNetworkId()
     } catch (e) {
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
@@ -75,7 +93,13 @@ function App() {
     return isConnected;
   };
 
-  
+
+  const { ethereum } = window;
+
+  if (window.ethereum) {
+    ethereum?.on("chainChanged", checkNetworkId);
+    ethereum?.on("accountsChanged", handleConnectWallet);
+  }
 
   return (
     <BrowserRouter>
@@ -107,6 +131,7 @@ function App() {
                 coinbase={coinbase}
                 isConnected={isConnected}
                 handleRegister={handleRegister}
+                chainId={chainId}
               />
             }
           />
