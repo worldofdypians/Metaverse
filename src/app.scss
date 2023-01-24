@@ -137,6 +137,26 @@ body {
     white-space: pre;
   }
 
+  .outline-btn:hover {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(89.7deg, #7B84D8 0.23%, #A4FB85 99.72%);
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #000;
+    white-space: pre;
+  }
+
   .outline-btn-disabled {
     clip-path: polygon(
       0 19px,

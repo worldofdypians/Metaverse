@@ -16,6 +16,7 @@ const Land = ({
   coinbase,
   isConnected,
   handleRegister,
+  chainId
 }) => {
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
@@ -34,7 +35,9 @@ const Land = ({
   const [mystakes, setMystakes] = useState([]);
   const [EthRewards, setEthRewards] = useState(0);
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
+  const [latestMintNft, setLatestMintNft] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
+
   const [mintStatus, setmintStatus] = useState("");
   const [mintloading, setmintloading] = useState("initial");
   const [walletModal, setwalletModal] = useState(false);
@@ -48,6 +51,31 @@ const Land = ({
     nfts.reverse();
     setMyNFTs(nfts);
   };
+
+  function range(start, end, step = 1) {
+    const len = Math.floor((end - start) / step) + 1;
+    return Array(len)
+      .fill()
+      .map((_, idx) => start + idx * step);
+  }
+
+
+  const latestMint = async () => {
+    let end = await window.latestMint();
+
+    let start = end - 7;
+
+    let latest = range(start, end);
+
+    let nfts = latest.map((nft) => window.getNft(nft));
+
+    nfts = await Promise.all(nfts);
+
+    nfts.reverse();
+
+    setLatestMintNft(nfts);
+  };
+
 
   const getStakesIds = async () => {
     const address = coinbase;
@@ -157,31 +185,45 @@ const Land = ({
           console.log(data);
           let tokenId = await window.landnft
             .mintNFT(data.numberOfTokens)
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+            })
             .catch((e) => {
-              console.error();
+              console.error(e);
+              setmintloading("error");
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
             });
 
-          console.log(tokenId);
+          // if (isNaN(Number(tokenId))) {
+          //   setmintloading("error");
+          //   setmintStatus("Invalid Token ID");
+          //   setTimeout(() => {
+          //     setmintloading("initial");
+          //     setmintStatus("");
+          //   }, 5000);
+          //   throw new Error("Invalid Token ID");
+          // }
 
-          if (isNaN(Number(tokenId))) {
-            setmintloading("error");
-            setmintStatus("Invalid Token ID");
-            setTimeout(() => {
-              setmintloading("initial");
-              setmintStatus("");
-            }, 5000);
-            throw new Error("Invalid Token ID");
+          if (tokenId) {
+            let getNftData = await window.getNft(tokenId);
+            setMyNFTsCreated(getNftData);
           }
 
-          let getNftData = await window.getNft(tokenId);
-
-          setMyNFTsCreated(getNftData);
-          setmintStatus("Success! Your Nft was minted successfully!");
-          setmintloading("success");
-          setTimeout(() => {
-            setmintStatus("");
-            setmintloading("initial");
-          }, 5000);
         } else {
           // setShowWhitelistLoadingModal(true);
         }
@@ -199,8 +241,8 @@ const Land = ({
           typeof e == "object" && e.message
             ? e.message
             : typeof e == "string"
-            ? String(e)
-            : "Oops, something went wrong! Refresh the page and try again!"
+              ? String(e)
+              : "Oops, something went wrong! Refresh the page and try again!"
         );
         setTimeout(() => {
           setmintloading("initial");
@@ -241,6 +283,7 @@ const Land = ({
     document.title = "Land";
   }, []);
 
+
   useEffect(() => {
     if (isConnected === true) {
       setwalletModal(false);
@@ -255,11 +298,11 @@ const Land = ({
         myStakes();
         myNft()
       }
+      latestMint().then();
     }, 1000);
 
     return () => clearInterval(interval);
   }, [isConnected, EthRewards, coinbase]);
-
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
@@ -330,6 +373,9 @@ const Land = ({
           mintloading={mintloading}
           ETHrewards={EthRewards}
           onClaimAll={claimRewards}
+          latestMintNft={latestMintNft}
+          chainId={chainId}
+
         />
         <LandTiers />
         <Members handleRegister={handleRegister} />

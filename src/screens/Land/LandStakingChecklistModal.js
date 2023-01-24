@@ -56,9 +56,11 @@ const LandStakingChecklistModal = ({
   const [showApprove, setshowApprove] = useState(true);
   const [val, setVal] = useState("");
   const [color, setColor] = useState("#F13227");
-
   const [selectNftIds, setSelectedNftIds] = useState([]);
   const [ethToUSD, setethToUSD] = useState(0);
+
+
+
   let nftIds = [];
 
   const handleClearStatus = () => {
@@ -133,6 +135,7 @@ const LandStakingChecklistModal = ({
     const stake25 = await window.config.landnftstake_address;
     setloading(true);
     setStatus("*Waiting for approval");
+    setColor("#52A8A4");
     await window.landnft
       .approveStake(stake25)
       .then(() => {
@@ -182,9 +185,6 @@ const LandStakingChecklistModal = ({
       });
   };
 
-  // useEffect(() => {
-  //   setshowStaked(true);
-  // }, []);
 
   useEffect(() => {
     setUSDPrice().then();
@@ -251,7 +251,7 @@ const LandStakingChecklistModal = ({
   const handleUnstake = async (value) => {
     let stake_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     setStatus("*Processing unstake");
-    setColor("#F13227");
+    setColor("#52A8A4");
 
     await stake_contract.methods
       .withdraw(
@@ -279,11 +279,11 @@ const LandStakingChecklistModal = ({
 
   const handleClaim = async (itemId) => {
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
-
+    setColor("#52A8A4");
     setloadingClaim(true);
     setActive(false);
     setStatus("*Claiming rewards...");
-    setColor("#F13227");
+   
 
     await staking_contract.methods
       .claimRewards(
@@ -721,7 +721,7 @@ const LandStakingChecklistModal = ({
                             ></div>
                           </>
                         ) : (
-                          "Deposit stake"
+                          "Stake"
                         )}
                       </button>
                     </div>

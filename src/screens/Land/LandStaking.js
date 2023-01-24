@@ -49,13 +49,16 @@ const LandStaking = ({
   mintStatus,
   mintloading,
   ETHrewards,
-  onClaimAll
+  onClaimAll,
+  latestMintNft,
+  chainId,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
   const [showBadge, setshowBadge] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
   const [mintPrice, setmintPrice] = useState(0);
+  const [activeButton, setactiveButton] = useState(false);
 
   const handleCreate = () => {
     handleMint({
@@ -111,13 +114,26 @@ const LandStaking = ({
   }, [nftCount]);
 
   useEffect(() => {
+    if (isConnected) {
+      if (chainId !== undefined) {
+        if (chainId !== 1 || chainId !== 5) {
+          setactiveButton(false);
+        }
+        if (chainId === 1 || chainId === 5) {
+          setactiveButton(true);
+        }
+      }
+    }
+  }, [isConnected, chainId]);
+
+  useEffect(() => {
     setUSDPrice();
     getMintPrice();
     if (totalCreated > 0) {
       setshowBadge(true);
     }
   }, [totalCreated, ETHrewards]);
-  
+
   return (
     <>
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
@@ -158,15 +174,20 @@ const LandStaking = ({
               </div>
             </div> */}
             <div className="d-flex flex-column position-relative">
-            {showBadge && (
+              {showBadge && (
                 <div className="totalcreated">
                   <span>{totalCreated}</span>
                 </div>
-              )} 
+              )}
               <div className="genesis-wrapper genesis-land d-flex justify-content-center align-items-center p-3 position-relative h-100">
                 {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
-               
-                <img src={dummyBadge} className="genesis-badge" style={{visibility: 'hidden'}} alt="badge" />
+
+                <img
+                  src={dummyBadge}
+                  className="genesis-badge"
+                  style={{ visibility: "hidden" }}
+                  alt="badge"
+                />
               </div>
               <div
                 className="genesis-desc position-relative"
@@ -177,18 +198,22 @@ const LandStaking = ({
             </div>
             <div
               className={
-                isConnected === false
+                (isConnected === false || activeButton === false)
                   ? "linear-border-disabled"
                   : "linear-border"
               }
             >
               <button
                 className={`btn ${
-                  isConnected === false ? "outline-btn-disabled" : "outline-btn"
+                  (isConnected === false || activeButton === false)
+                    ? "outline-btn-disabled"
+                    : "outline-btn"
                 } px-5 w-100`}
-                disabled={!isConnected}
+                disabled={(isConnected === false || activeButton === false)}
                 onClick={() => {
-                  isConnected ? handleStake() : console.log();
+                  isConnected === true && activeButton === true
+                    ? handleStake()
+                    : console.log();
                 }}
               >
                 View collection
@@ -212,11 +237,22 @@ const LandStaking = ({
                 <span className="create-land-title font-poppins ">
                   Create your Genesis Land NFT
                 </span>
-                {coinbase && (
+                {coinbase && activeButton === true ? (
                   <span className="create-land-title font-poppins">
-                   Wallet Address: {shortAddress(coinbase)}
+                    Wallet Address: {shortAddress(coinbase)}
                   </span>
-                )}
+                ) : (coinbase && activeButton === false) ? (
+                  <span className="errormsg">
+                    <img
+                      src={
+                        require("../../assets/landAssets/alert-triangle.svg")
+                          .default
+                      }
+                      alt=""
+                    />{" "}
+                    Please switch to Ethereum Chain to continue minting
+                  </span>
+                ) : <></>}
               </div>
               <div className="d-flex align-items-center gap-2">
                 <span className="more-info">More information</span>
@@ -234,7 +270,7 @@ const LandStaking = ({
             <div className="d-flex mt-3 align-items-center">
               <div className="d-flex flex-column gap-2 w-50">
                 <span className="land-placeholder">Name</span>
-                <h6 className="land-name">Land #2553</h6>
+                <h6 className="land-name">{latestMintNft[0]?.name}</h6>
               </div>
               <div className="d-flex flex-column gap-2 w-50">
                 <span className="land-placeholder">Description</span>
@@ -267,28 +303,45 @@ const LandStaking = ({
               <div className="d-flex align-items-center gap-5">
                 <img
                   src={
-                    nftCount > 1 && isConnected
+                    nftCount > 1 &&
+                    isConnected === true &&
+                    activeButton === true
                       ? subtractActive
                       : subtractInactive
                   }
                   alt="subtract"
                   onClick={subtractNft}
                   style={{
-                    cursor: isConnected ? "pointer" : "default",
-                    pointerEvents: isConnected ? "auto" : "none",
+                    cursor:
+                      isConnected === true && activeButton === true
+                        ? "pointer"
+                        : "default",
+                    pointerEvents:
+                      isConnected === true && activeButton === true
+                        ? "auto"
+                        : "none",
                   }}
                 />
                 <img
                   src={
-                    nftCount < 10 && nftCount >= 1 && isConnected
+                    nftCount < 10 &&
+                    nftCount >= 1 &&
+                    isConnected === true &&
+                    activeButton === true
                       ? addActive
                       : addInactive
                   }
                   alt="add"
                   onClick={addNft}
                   style={{
-                    cursor: isConnected ? "pointer" : "default",
-                    pointerEvents: isConnected ? "auto" : "none",
+                    cursor:
+                      isConnected === true && activeButton === true
+                        ? "pointer"
+                        : "default",
+                    pointerEvents:
+                      isConnected === true && activeButton === true
+                        ? "auto"
+                        : "none",
                   }}
                 />
               </div>
@@ -316,24 +369,37 @@ const LandStaking = ({
                     mintloading === "error" ? "filled-error-btn" : "filled-btn"
                   }  px-5 w-100`}
                   onClick={() => {
-                    isConnected ? handleCreate() : showWalletConnect();
+                    isConnected === true && activeButton === true
+                      ? handleCreate()
+                      : showWalletConnect();
                   }}
                   disabled={
-                    mintloading === "error" || mintloading === "success"
+                    mintloading === "error" || mintloading === "success" ||(isConnected === true && activeButton === false)
                       ? true
                       : false
                   }
                 >
-                  {!isConnected && <img src={blackWallet} alt="" />}{" "}
-                  {mintloading === "initial" && isConnected ? (
+                  {(isConnected === false || activeButton === false) && (
+                    <img src={blackWallet} alt="" />
+                  )}{" "}
+                  {mintloading === "initial" &&
+                  isConnected === true &&
+                  activeButton === true ? (
                     "Mint NFT"
-                  ) : mintloading === "mint" && isConnected ? (
+                  ) : mintloading === "mint" &&
+                    isConnected === true &&
+                    activeButton === true ? (
                     <>
                       <div className="spinner-border " role="status"></div>
                     </>
-                  ) : mintloading === "error" && isConnected ? (
+                  ) : mintloading === "error" &&
+                    isConnected === true &&
+                    activeButton === true ? (
                     "Failed"
-                  ) : mintloading === "success" && isConnected ? (
+                  ) : mintloading === "success" &&
+                    isConnected === true &&
+                    activeButton ===
+                      (isConnected === true && activeButton === true) ? (
                     "Success"
                   ) : (
                     "Connect wallet"
@@ -384,20 +450,22 @@ const LandStaking = ({
               </div>
               <div
                 className={
-                  isConnected === false
+                  isConnected === false || activeButton === false
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
               >
                 <button
                   className={`btn ${
-                    isConnected === false
+                    isConnected === false || activeButton === false
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
-                  disabled={!isConnected}
+                  disabled={isConnected === false || activeButton === false}
                   onClick={() => {
-                    isConnected ? handleStake() : console.log();
+                    isConnected === true && activeButton === true
+                      ? handleStake()
+                      : console.log();
                   }}
                 >
                   Stake NFT
@@ -417,7 +485,9 @@ const LandStaking = ({
                       height={20}
                       alt="ethereum"
                     />
-                    <span className="eth-rewards">{getFormattedNumber(ETHrewards,6) } ETH</span>
+                    <span className="eth-rewards">
+                      {getFormattedNumber(ETHrewards, 6)} ETH
+                    </span>
                   </div>
                   <span className="eth-rewards">
                     ({formattedNum(ethToUSD, true)})
@@ -426,18 +496,23 @@ const LandStaking = ({
               </div>
               <div
                 className={
-                  isConnected === false || ETHrewards == 0
+                  (isConnected === false && activeButton === false) ||
+                  ETHrewards == 0
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
               >
                 <button
                   className={`btn ${
-                    isConnected === false || ETHrewards == 0
+                    (isConnected === false && activeButton === false) ||
+                    ETHrewards == 0
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
-                  disabled={isConnected === false || ETHrewards == 0}
+                  disabled={
+                    (isConnected === false && activeButton === false) ||
+                    ETHrewards == 0
+                  }
                   onClick={onClaimAll}
                 >
                   Claim all
@@ -454,18 +529,18 @@ const LandStaking = ({
               </div>
               <div
                 className={
-                  isConnected === false
+                  isConnected === false || activeButton === false
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
               >
                 <button
                   className={`btn ${
-                    isConnected === false
+                    isConnected === false || activeButton === false
                       ? "outline-btn-disabled"
                       : "outline-btn"
                   } px-5 w-100`}
-                  disabled={!isConnected}
+                  disabled={isConnected === false || activeButton === false}
                   onClick={() => {
                     withdrawModalShow();
                   }}

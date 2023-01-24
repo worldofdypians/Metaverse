@@ -10,8 +10,8 @@
     background-size: cover;
   }
 
-  .land-hero-wrapper{
-    background-image: url('../../assets/landAssets/landHeroBg.webp');
+  .land-hero-wrapper {
+    background-image: url("../../assets/landAssets/landHeroBg.webp");
     background-repeat: no-repeat;
     background-size: 100% 130%;
 
@@ -19,7 +19,6 @@
       background-size: cover;
     }
   }
-
 
   .land-hero-title {
     font-weight: 800;
@@ -114,6 +113,17 @@
         color: #7bd8b0;
       }
     }
+  }
+
+  .errormsg {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    color: #d87b7b;
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
 
   .mint-wrapper {
@@ -484,9 +494,8 @@
     color: #ffffff;
   }
 
-
-  .genesis-land{
-    background-image: url('../../assets/landAssets/landNft.webp');
+  .genesis-land {
+    background-image: url("../../assets/landAssets/landNft.webp");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -549,7 +558,6 @@
       min-height: 200px !important;
       max-width: 200px !important;
       max-height: 200px !important;
-
     }
   }
   .fourth-glass {
@@ -563,11 +571,9 @@
     top: 27%;
     z-index: 2;
 
-
     @media screen and (max-width: 1171px) {
       top: 38%;
-    left: 6%;
-
+      left: 6%;
     }
 
     .members-playing {
@@ -600,7 +606,7 @@
     top: 27%;
     @media screen and (max-width: 1171px) {
       left: 71%;
-      top: 39%;  
+      top: 39%;
     }
 
     .discord-members {
@@ -623,7 +629,7 @@
 
     @media screen and (max-width: 1171px) {
       left: 68%;
-    top: 76%;
+      top: 76%;
     }
 
     .twitter-members {
@@ -771,14 +777,12 @@
     }
   }
 
-
-.land-benefits-wrapper{
-  background-image: url('../../assets/landAssets/landBenefitsBg.svg');
-  background-repeat: no-repeat;
-  background-size: 75% 75%;
-  background-position: center;
-}
-
+  .land-benefits-wrapper {
+    background-image: url("../../assets/landAssets/landBenefitsBg.svg");
+    background-repeat: no-repeat;
+    background-size: 75% 75%;
+    background-position: center;
+  }
 }
 
 input::-webkit-outer-spin-button,
@@ -810,72 +814,62 @@ input::-webkit-inner-spin-button {
     top: 26%;
     left: -14%;
     scale: 0.6;
-}
+  }
 
-
-.land-main-wrapper .second-bubble {
-  left: -6%;
-  top: 45%;
+  .land-main-wrapper .second-bubble {
+    left: -6%;
+    top: 45%;
     scale: 0.7;
-}
+  }
 
-
-.land-main-wrapper .third-bubble {
+  .land-main-wrapper .third-bubble {
     left: 56%;
     top: 26%;
     scale: 0.6;
-}
+  }
 
-.land-main-wrapper .fourth-bubble {
+  .land-main-wrapper .fourth-bubble {
     left: 58%;
     top: 45%;
     scale: 0.7;
+  }
 }
-}
-
 
 @media screen and (max-width: 598px) {
- 
   .land-main-wrapper .first-bubble {
     top: 44%;
     left: -18%;
     scale: 0.5;
-}
+  }
 
-
-.land-main-wrapper .second-bubble {
+  .land-main-wrapper .second-bubble {
     left: -15%;
     top: 64%;
     scale: 0.6;
-}
+  }
 
-
-
-.land-main-wrapper .third-bubble {
-  left: 46%;
-  top: 42%;
+  .land-main-wrapper .third-bubble {
+    left: 46%;
+    top: 42%;
     scale: 0.5;
-}
+  }
 
-
-.land-main-wrapper .fourth-bubble {
-  left: 51%;
-  top: 63%;
+  .land-main-wrapper .fourth-bubble {
+    left: 51%;
+    top: 63%;
     scale: 0.6;
+  }
+  .land-main-wrapper .members-title {
+    font-size: 17px;
+  }
 }
-.land-main-wrapper .members-title {
-  font-size: 17px;
-}
-}
-
 
 @media screen and (max-width: 488px) {
- 
-  .land-bg{
+  .land-bg {
     width: 100%;
   }
 
-  .laptop{
+  .laptop {
     width: 75% !important;
   }
 }
