@@ -388,6 +388,10 @@
     font-size: 40px;
     line-height: 54px;
     color: #ffffff;
+
+    @media screen and (max-width: 786px) {
+      font-size: 30px;
+    }
   }
 
   .days {
@@ -396,8 +400,10 @@
     font-weight: 800;
     font-size: 12px;
     line-height: 16px;
-
     color: #ffffff;
+    @media screen and (max-width: 786px) {
+      font-size: 10px;
+    }
   }
 
   .community-title {
@@ -838,12 +844,12 @@ input::-webkit-inner-spin-button {
 @media screen and (max-width: 598px) {
   .land-main-wrapper .first-bubble {
     top: 44%;
-    left: -18%;
+    left: -22%;
     scale: 0.5;
   }
 
   .land-main-wrapper .second-bubble {
-    left: -15%;
+    left: -19%;
     top: 64%;
     scale: 0.6;
   }
