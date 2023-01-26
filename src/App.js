@@ -16,6 +16,7 @@ import TermsConditions from "./screens/TermsConditions/TermsConditions";
 import Explorer from "./screens/Explorer/Explorer";
 import Land from "./screens/Land/Land";
 import LandPopup from "./components/LandPopup/LandPopup";
+import Roadmap from "./screens/Roadmap/Roadmap";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -121,6 +122,7 @@ function App() {
             }
           />
           <Route exact path="/caws" element={<Caws />} />
+          <Route exact path="/roadmap" element={<Roadmap />} />
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
 
