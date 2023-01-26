@@ -427,6 +427,7 @@ const Land = ({
           mintPrice={mintPrice}
           totalCAWCreated={myCAWSNFTsCreated.length}
           totalCAWStaked={myCAWSNFTsTotalStaked.length}
+          handleConnect={handleConnectWallet}
         />
       )}
 
