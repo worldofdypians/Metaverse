@@ -11,6 +11,14 @@ import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
 import "./_landwhitelistmodal.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import discord from "../../assets/discord.svg";
+import telegram from "../../assets/telegram.svg";
+
+import whitewallet from "../../assets/wallet-white.svg";
+import blackwallet from "../../assets/wallet-black.svg";
+
+import purplecircle from "../../assets/landAssets/purplecircle.svg";
+import xmark from "../../assets/landAssets/xmark.svg";
+import checkcircle from "../../assets/landAssets/checkcircle.svg";
 
 const LandWhitelistModal = ({
   open,
@@ -28,7 +36,7 @@ const LandWhitelistModal = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "min-content",
+    width: "350px",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -42,6 +50,22 @@ const LandWhitelistModal = ({
       name: "Metamask",
       icon: "metamask.png",
     },
+    {
+      name: "Coinbase",
+      icon: "coinbase.png",
+    },
+    {
+      name: "Coin98",
+      icon: "coin98.png",
+    },
+    {
+      name: "SafePal",
+      icon: "safepal.png",
+    },
+    {
+      name: "Trust Wallet",
+      icon: "trustwallet.png",
+    },
   ];
 
   const initialState = { email: "", discord: "" };
@@ -51,6 +75,7 @@ const LandWhitelistModal = ({
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
+  const [mouseOver, setMouseOver] = useState(false);
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -78,24 +103,15 @@ const LandWhitelistModal = ({
           setStatus("Failed to join");
           console.error(error);
         });
-
+        
       if (send.status === 0) {
         //user already exists
-        setStatus("Already joined");
+        setStatus("Failed to join");
         setSuccess(false);
         setLoading(false);
-      } else if (send.status === 1) {
-        //successfully registered
-        setStatus("Successfully joined");
-        setSuccess(true);
-        setLoading(false);
-      } else if (send.status === 2) {
+      }  else{
         setStatus("Successfully joined");
         //more than 500
-        setSuccess(false);
-        setLoading(false);
-      } else {
-        setStatus("Failed to join");
         setSuccess(false);
         setLoading(false);
       }
@@ -121,7 +137,7 @@ const LandWhitelistModal = ({
   const checkData = async () => {
     if (coinbase) {
       const check = await axios
-        .get(`https://api3.dyp.finance/api/whitelist/check/${coinbase}`)
+        .get(`https://api3.dyp.finance/api/whitelist_land/check/${coinbase}`)
         .then(function (result) {
           return result.data;
         })
@@ -136,6 +152,10 @@ const LandWhitelistModal = ({
       }
     }
   };
+
+  useEffect(()=>{
+    checkData()
+  },[coinbase])
 
   return (
     <Modal
@@ -163,47 +183,129 @@ const LandWhitelistModal = ({
             </div>
             <div className="d-flex flex-column gap-3">
               <p className="text-white m-0 walletdesc font-poppins">
-              Become a World of Dypians Genesis Land NFT owner in Metaverse. In order to be eligible for this process, you must meet the following criteria's:
+                Become a World of Dypians Genesis Land NFT owner in Metaverse.
+                In order to be eligible for this process, you must meet the
+                following criteria's:
               </p>
-              <p className="text-white m-0 walletdesc font-poppins">Requirements:</p>
-              <div className="d-flex justify-content-between gap-1 ">
-                <img src={require('../../assets/landAssets/purplecircle.svg').default} alt=''/>
-                <div className="d-flex flex-column gap-2 justify-content-between">
-                  <span className="reqtitle">
-                  CAWS NFT
-                  </span>
+              <p className="text-white m-0 walletdesc font-poppins">
+                Requirements:
+              </p>
+              <div className="d-flex justify-content-between gap-2 align-items-start">
+                <img
+                  src={
+                    (totalCAWCreated === 0 ||totalCAWStaked === 0 ) && coinbase
+                    ? xmark
+                    : (totalCAWCreated !== 0 ||
+                      totalCAWStaked !== 0) && coinbase
+                    ? checkcircle
+                    : purplecircle
+                  }
+                  alt=""
+                  style={{ position: "relative", top: "3px" }}
+                />
+                <div className="d-flex flex-column gap-0 justify-content-between">
+                  <span className="reqtitle">CAWS NFT</span>
                   <span className="reqdesc">
-                  You must have at least one CAWS NFT in your wallet or staked into the CAWS staking pool.
+                    You must have at least one CAWS NFT in your wallet or staked
+                    into the CAWS staking pool.
                   </span>
-
+                </div>
+              </div>
+              <div className="position-relative">
+                <div className="separator"></div>
+                <div
+                  className="text-white position-absolute"
+                  style={{
+                    top: "4px",
+                    left: "50%",
+                    transform: "translate(-50%, 0)",
+                  }}
+                >
+                  <span>or</span>
+                </div>
+              </div>
+              <div className="d-flex justify-content-between gap-2 align-items-start">
+                <img
+                  src={
+                     (balance < mintPrice )&& coinbase
+                      ? xmark
+                      : (balance >= mintPrice) && coinbase
+                      ? checkcircle
+                      : purplecircle
+                  }
+                  alt=""
+                  style={{ position: "relative", top: "3px" }}
+                />
+                <div className="d-flex flex-column gap-0 justify-content-between">
+                  <span className="reqtitle">ETH Balance</span>
+                  <span className="reqdesc">
+                    You must have at least $1,000 in ETH in your wallet.
+                  </span>
                 </div>
               </div>
             </div>
             <div className="separator"></div>
+            <div
+              className={
+                showOptions === false ? "linear-border m-auto" : "m-auto"
+              }
+              style={{
+                width: showOptions === false ? "fit-content" : "",
+                display: showForms === true ? "none" : "",
+              }}
+            >
+              {showOptions === false ? (
+                <button
+                  className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                  onClick={() => {
+                    setShowOptions(true);
+                  }}
+                  onMouseEnter={() => {
+                    setMouseOver(true);
+                  }}
+                  onMouseLeave={() => {
+                    setMouseOver(false);
+                  }}
+                >
+                  <img
+                    src={mouseOver === true ? blackwallet : whitewallet}
+                    alt=""
+                  />
+                  Connect Wallet
+                </button>
+              ) : (
+                <div className="d-flex flex-column gap-2">
+                  {options.length > 0 &&
+                    options.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="optionwrapper"
+                          onClick={handleConnect}
+                        >
+                          <div className="d-flex justify-content-between gap-2 align-items-center">
+                            <p className="m-0 walletname">{item.name}</p>
+                            <img
+                              src={require(`../../assets/walletIcons/${item.icon}`)}
+                              className="option-wallet"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+
             {showForms === true && (
               <div>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
                   <p className="m-0 wallettext font-poppins">Wallet address</p>
-                  <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
+                  <p className="purpledesc m-0" style={{color: '#181636'}}>{shortAddress(coinbase)}</p>
                 </div>
                 <div className="separator"></div>
-                <div className="d-flex justify-content-between gap-2 align-items-center">
-                  <p className="m-0 wallettext font-poppins">
-                    {"ETH Balance > $1000"}
-                  </p>
-                  <p className="purpledesc m-0">
-                    {" "}
-                    {balance > mintPrice ||
-                    totalCAWCreated > 0 ||
-                    totalCAWStaked > 0
-                      ? "✅"
-                      : "❌"}
-                  </p>
-                </div>
-                <div className="separator"></div>
-                <div className="d-flex flex-column gap-3">
-                  <h6 className="text-white">Registration details</h6>
-                </div>
+
                 <div
                   className={
                     balance < mintPrice &&
@@ -270,8 +372,7 @@ const LandWhitelistModal = ({
 
             <img src={successLogo} alt="" />
             <p className="text-white m-0">
-              Congratulations, your World of Dypians whitelist registration is
-              successful. Please visit the Dypius Discord for more information.
+            Congratulations, you have successfully registered for the World of Dypians Genesis Land NFT whitelist. Please follow our official channels for additional information.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -295,6 +396,31 @@ const LandWhitelistModal = ({
               >
                 <img src={discord} alt="" />
                 Join discord channel
+              </a>
+            </div>
+
+            <div
+              className={"linear-border m-auto"}
+              style={{
+                width: "fit-content",
+                background: "transparent",
+              }}
+            >
+              <a
+                href="https://t.me/worldofdypiansmetaverse"
+                target="_blank"
+                rel="noreferrer"
+                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                style={{
+                  background:
+                    "linear-gradient(89.7deg, #1C8BBF 0.23%, #69B6DE 99.72%)",
+                  border: "none",
+                  textDecoration: "none",
+                }}
+                onClick={handleConnect}
+              >
+                <img src={telegram} alt="" />
+                Join Telegram channel
               </a>
             </div>
 
@@ -322,8 +448,7 @@ const LandWhitelistModal = ({
             </div>
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
-              Your application as a World of Dypians beta tester has already
-              been received. Please check back soon.
+            Your application for the World of Dypians Genesis Land NFT whitelist has already been received. Please check back soon.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -349,6 +474,31 @@ const LandWhitelistModal = ({
                 Join discord channel
               </a>
             </div>
+            <div
+              className={"linear-border m-auto"}
+              style={{
+                width: "fit-content",
+                background: "transparent",
+              }}
+            >
+              <a
+                href="https://t.me/worldofdypiansmetaverse"
+                target="_blank"
+                rel="noreferrer"
+                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                style={{
+                  background:
+                    "linear-gradient(89.7deg, #1C8BBF 0.23%, #69B6DE 99.72%)",
+                  border: "none",
+                  textDecoration: "none",
+                }}
+                onClick={handleConnect}
+              >
+                <img src={telegram} alt="" />
+                Join Telegram channel
+              </a>
+            </div>
+
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close
             </button>
@@ -420,13 +570,12 @@ const LandWhitelistModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: "-25px", height: "50px" }}
+                style={{ right: "-32px", height: "50px", bottom: '50px' }}
               />
             </div>
             <img src={failed} alt="" />
             <p className="text-white m-0">
-              Unable to join the World of Dypius beta tester whitelist. Please
-              try again.
+            Unable to join the World of Dypians Genesis Land NFT whitelist. Please try again.
             </p>
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close
