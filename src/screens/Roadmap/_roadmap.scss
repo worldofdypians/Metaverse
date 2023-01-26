@@ -1,6 +1,103 @@
-.roadmap-main-wrapper{
-    gap: 80px;
-    max-width: 2400px;
-    
-    overflow-x: hidden;
+.roadmap-main-wrapper {
+  gap: 80px;
+  max-width: 2400px;
+  overflow-x: hidden;
+
+  .roadmap-title {
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 43px;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .roadmap-content {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 30px;
+
+    @media screen and (max-width: 786px) {
+        grid-template-columns: auto;
+    }
+  }
+
+  .roadmap-main-update {
+    background-image: url("./assets/mainUpdateFrame.png");
+    background-size: 100% 100%;
+    min-height: 180px;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    .main-update-title-wrapper {
+      background: linear-gradient(180deg, #5b08d0 -341.29%, #7f2df7 -177.5%);
+      border-radius: 6px;
+      padding: 25px 10px;
+      position: absolute;
+      bottom: 0;
+      --mask: linear-gradient(-153.5deg, #0000 30.57px, #000 0);
+      -webkit-mask: var(--mask);
+      mask: var(--mask);
+
+      .main-update-title {
+        font-weight: 800;
+        font-size: 18px;
+        line-height: 24px;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .roadmap-items {
+    --mask: linear-gradient(-153.5deg, #0000 30.57px, #000 0);
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+    width: 100%;
+    background: linear-gradient(180deg, #5b08d0 -341.29%, #7f2df7 -177.5%);
+    bottom: 40px;
+    min-height: 230px;
+  }
+
+  .quarter {
+    width: 100%;
+    position: relative;
+    bottom: 120px;
+  }
+  .roadmap-image {
+    width: 100%;
+    background-image: url("./assets/roadmapFrame.png");
+    background-size: cover;
+  }
+
+  .step-title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #ffffff;
+  }
+
+  .step-content {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 18px;
+    color: #ffffff;
+  }
+
+  .live-now-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 30px;
+    color: #7bd8b0;
+    text-align: center;
+    text-shadow: 0px 4px 10px rgba(123, 216, 176, 0.42);
+  }
 }
