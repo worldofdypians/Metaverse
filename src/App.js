@@ -15,6 +15,7 @@ import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./screens/TermsConditions/TermsConditions";
 import Explorer from "./screens/Explorer/Explorer";
 import Land from "./screens/Land/Land";
+import LandPopup from "./components/LandPopup/LandPopup";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -104,6 +105,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="container-fluid p-0 main-wrapper position-relative">
+        <LandPopup />
         <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
