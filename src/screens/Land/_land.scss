@@ -178,6 +178,108 @@
     }
   }
 
+  .mint-wrappernew {
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+    border-radius: 8px;
+    position: relative;
+    .land-stake-title {
+      font-weight: 800;
+      font-size: 18px;
+      line-height: 24px;
+      color: #ffffff;
+      position: absolute;
+      white-space: pre;
+      left: 0;
+      top: -40px;
+      @media screen and (max-width: 991px) {
+        top: -95px;
+        white-space: break-spaces;
+      }
+    }
+
+    .land-stake-titlenew {
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 32px;
+      color: #ffffff;
+      position: relative;
+      // white-space: pre;
+      // @media screen and (max-width: 786px) {
+      //   top: -70px;
+      // }
+    }
+
+    .land-lock-timenew {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      color: #ffffff;
+      position: relative;
+    }
+
+    .cawsimg {
+      height: 140px;
+      object-fit: contain;
+      width: fit-content;
+    }
+
+    .marktext {
+      color: #09FBD3;
+      font-weight: bold;
+      background-color: transparent;
+    }
+
+    .whitelist-desc {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      color: #ffffff;
+    }
+
+    .minthero {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      height: 100%;
+      object-fit: cover;
+    }
+    .create-land-title {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: #ffffff;
+    }
+
+    .more-info {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      color: #ffffff;
+    }
+
+    .land-placeholder {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 21px;
+      color: #ffffff;
+    }
+
+    .land-name {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: #ffffff;
+    }
+
+    .mint-divider {
+      width: 100%;
+      border-top: 1px solid #4f4770 !important;
+      opacity: 1 !important;
+    }
+  }
+
   .land-input {
     background: #272450;
     border: 1px solid #aaa5eb;

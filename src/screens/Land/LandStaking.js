@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import blackWallet from "../../assets/wallet-black.svg";
+import whitewallet from "../../assets/wallet-white.svg";
 import dummyBadge from "../../assets/landAssets/dummyBadge.png";
 import questionMark from "../../assets/landAssets/questionMark.svg";
 import addActive from "../../assets/landAssets/addActive.svg";
@@ -42,6 +43,7 @@ const LandStaking = ({
   handleStake,
   coinbase,
   handleWithdraw,
+  handleWhitelist,
   isConnected,
   withdrawModalShow,
   createdNft,
@@ -52,13 +54,14 @@ const LandStaking = ({
   onClaimAll,
   latestMintNft,
   chainId,
+  mintPrice,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
   const [showBadge, setshowBadge] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
-  const [mintPrice, setmintPrice] = useState(0);
   const [activeButton, setactiveButton] = useState(false);
+  const [mouseOver, setMouseOver] = useState(false);
 
   const handleCreate = () => {
     handleMint({
@@ -98,11 +101,6 @@ const LandStaking = ({
     setethToUSD(Number(ethprice) * Number(ETHrewards));
   };
 
-  const getMintPrice = async () => {
-    const ethprice = await convertEthToUsd();
-    setmintPrice(1000 / Number(ethprice));
-  };
-
   useEffect(() => {
     if (nftCount > 10) {
       setNftStatus("*Exceeded mint limit of 10 NFTs");
@@ -113,22 +111,21 @@ const LandStaking = ({
     }
   }, [nftCount]);
 
-  useEffect(() => {
-    if (isConnected) {
-      if (chainId !== undefined) {
-        if (chainId !== 1 || chainId !== 5) {
-          setactiveButton(false);
-        }
-        if (chainId === 1 || chainId === 5) {
-          setactiveButton(true);
-        }
-      }
-    }
-  }, [isConnected, chainId]);
+  // useEffect(() => {
+  //   if (isConnected) {
+  //     if (chainId !== undefined) {
+  //       if (chainId !== 1 || chainId !== 5) {
+  //         setactiveButton(false);
+  //       }
+  //       if (chainId === 1 || chainId === 5) {
+  //         setactiveButton(true);
+  //       }
+  //     }
+  //   }
+  // }, [isConnected, chainId]);
 
   useEffect(() => {
     setUSDPrice();
-    getMintPrice();
     if (totalCreated > 0) {
       setshowBadge(true);
     }
@@ -156,9 +153,9 @@ const LandStaking = ({
       </div>
       <div
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
-        style={{ minHeight: "518px" }}
+        // style={{ minHeight: "518px" }}
       >
-        <div
+        {/* <div
           className="col-12 col-md-4 col-xxl-2 ps-2 ps-lg-0"
           style={{ minHeight: "518px" }}
         >
@@ -166,13 +163,6 @@ const LandStaking = ({
             className="d-flex flex-column  gap-3 justify-content-between"
             style={{ minHeight: "518px" }}
           >
-            {/* <div className="genesis-wrapper position-relative">
-              <img src={genesisBg} alt="genesis" className="w-100" />
-              <img src={dummyBadge} className="genesis-badge" alt="badge" />
-              <div className="genesis-desc">
-                <h6 className="font-organetto land-desc w-75">Genesis Land</h6>
-              </div>
-            </div> */}
             <div className="d-flex flex-column position-relative">
               {showBadge && (
                 <div className="totalcreated">
@@ -180,8 +170,6 @@ const LandStaking = ({
                 </div>
               )}
               <div className="genesis-wrapper genesis-land d-flex justify-content-center align-items-center p-3 position-relative h-100">
-                {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
-
                 <img
                   src={dummyBadge}
                   className="genesis-badge"
@@ -198,18 +186,18 @@ const LandStaking = ({
             </div>
             <div
               className={
-                (isConnected === false || activeButton === false)
+                isConnected === false || activeButton === false
                   ? "linear-border-disabled"
                   : "linear-border"
               }
             >
               <button
                 className={`btn ${
-                  (isConnected === false || activeButton === false)
+                  isConnected === false || activeButton === false
                     ? "outline-btn-disabled"
                     : "outline-btn"
                 } px-5 w-100`}
-                disabled={(isConnected === false || activeButton === false)}
+                disabled={isConnected === false || activeButton === false}
                 onClick={() => {
                   isConnected === true && activeButton === true
                     ? handleStake()
@@ -220,28 +208,76 @@ const LandStaking = ({
               </button>
             </div>
           </div>
-        </div>
-        <div className="col-12 col-md-8 col-xxl-6 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        </div> */}
+        <div className="col-12 col-md-12 col-xxl-7 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
-            className="p-3 mint-wrapper d-flex flex-column gap-5"
-            style={{ minHeight: "518px" }}
+            className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
+            style={{ minHeight: "463px" }}
           >
+            <img
+              src={require("../../assets/landAssets/genesis-hero.png")}
+              alt=""
+              className="minthero"
+            />
             <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
-                Mint
+                Join
               </span>
-              Genesis Land NFT
+              Genesis Land NFT Whitelist
             </span>
-            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+            <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-xxl-7 col-lg-7 col-9 justify-content-between align-items-start position-relative">
+              <span className="font-organetto land-stake-titlenew">
+                Become a Genesis
+                <br /> land nft {"  "}
+                <span className="font-organetto" style={{ color: "#8c56ff" }}>
+                  Owner
+                </span>
+              </span>
+              <span class="land-lock-timenew col-9">
+                Apply to be included to the World of Dypians Metaverse whitelist
+                and have access to a variety of benefits.
+              </span>
+              <div className="row m-0 flex-column flex-xxl-row flex-lg-row flex-md-row gap-1 align-items-center">
+              <img
+              src={require("../../assets/landAssets/cawsimg.png")}
+              alt=""
+              className="cawsimg"
+            />
+            <span className="whitelist-desc col-xxl-5 col-lg-5 p-0 m-0">
+            *If you hold or have staked a CAWS NFT, you will receive a <br/>
+<mark className="marktext">20% discount</mark> on the World of Dypians Genesis Land NFT collection.
+            </span>
+              </div>
+              <div
+                className={
+                  mintloading === "error"
+                    ? "linear-border-disabled"
+                    : "linear-border"
+                }
+              >
+                <button
+                  className={`btn 
+                    filled-btn
+                    px-5 w-100`}
+                  onClick={() => {handleWhitelist()
+                  }}
+                 
+                >
+                  
+                 Join Whitelist
+                </button>
+              </div>
+            </div>
+            {/*  <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2">
                 <span className="create-land-title font-poppins ">
                   Create your Genesis Land NFT
                 </span>
-                {coinbase && activeButton === true ? (
+                {coinbase && (chainId === 1 || chainId === 5) ? (
                   <span className="create-land-title font-poppins">
                     Wallet Address: {shortAddress(coinbase)}
                   </span>
-                ) : (coinbase && activeButton === false) ? (
+                ) : coinbase && (chainId !== 1 || chainId !== 5) ? (
                   <span className="errormsg">
                     <img
                       src={
@@ -252,7 +288,9 @@ const LandStaking = ({
                     />{" "}
                     Please switch to Ethereum Chain to continue minting
                   </span>
-                ) : <></>}
+                ) : (
+                  <></>
+                )}
               </div>
               <div className="d-flex align-items-center gap-2">
                 <span className="more-info">More information</span>
@@ -369,50 +407,65 @@ const LandStaking = ({
                     mintloading === "error" ? "filled-error-btn" : "filled-btn"
                   }  px-5 w-100`}
                   onClick={() => {
-                    isConnected === true && activeButton === true
-                      ? handleCreate()
+                    isConnected === true && (chainId === 1 || chainId === 5)
+                      ?
+                        handleWhitelist()
                       : showWalletConnect();
                   }}
                   disabled={
-                    mintloading === "error" || mintloading === "success" ||(isConnected === true && activeButton === false)
+                    mintloading === "error" ||
+                    mintloading === "success" ||
+                    (isConnected === true && chainId !== 1 && chainId !== 5)
                       ? true
                       : false
                   }
+                  onMouseEnter={() => {
+                    setMouseOver(true);
+                  }}
+                  onMouseLeave={() => {
+                    setMouseOver(false);
+                  }}
                 >
-                  {(isConnected === false || activeButton === false) && (
-                    <img src={blackWallet} alt="" />
+                  {(isConnected === false ||
+                    chainId !== 1 ||
+                    chainId !== 5) && (
+                    <img
+                      src={mouseOver === false ? blackWallet : whitewallet}
+                      alt=""
+                    />
                   )}{" "}
                   {mintloading === "initial" &&
                   isConnected === true &&
-                  activeButton === true ? (
-                    "Mint NFT"
+                  (chainId === 1 || chainId === 5) ? (
+                    "Join Whitelist"
                   ) : mintloading === "mint" &&
                     isConnected === true &&
-                    activeButton === true ? (
+                    (chainId === 1 || chainId === 5) ? (
                     <>
                       <div className="spinner-border " role="status"></div>
                     </>
                   ) : mintloading === "error" &&
                     isConnected === true &&
-                    activeButton === true ? (
+                    (chainId === 1 || chainId === 5) ? (
                     "Failed"
                   ) : mintloading === "success" &&
                     isConnected === true &&
                     activeButton ===
-                      (isConnected === true && activeButton === true) ? (
+                      (isConnected === true &&
+                        (chainId === 1 || chainId === 5)) ? (
                     "Success"
                   ) : (
                     "Connect wallet"
                   )}
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
-        <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-xxl-5 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
-            className="p-3 mint-wrapper d-flex flex-column gap-3"
-            style={{ minHeight: "518px" }}
+            className="p-3 mint-wrapper d-flex flex-column gap-1"
+            // style={{ minHeight: "518px" }}
           >
             <span className="font-organetto land-stake-title">
               Land NFT{" "}
