@@ -182,6 +182,13 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
     border-radius: 8px;
     position: relative;
+
+    @media screen and (max-width: 786px) {
+      background-image: url('../../assets/landAssets/newGenesisBg.webp');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
     .land-stake-title {
       font-weight: 800;
       font-size: 18px;
@@ -204,9 +211,9 @@
       color: #ffffff;
       position: relative;
       // white-space: pre;
-      // @media screen and (max-width: 786px) {
-      //   top: -70px;
-      // }
+      @media screen and (max-width: 786px) {
+        font-size: 18px;
+      }
     }
 
     .land-lock-timenew {
@@ -236,6 +243,9 @@
       font-size: 12px;
       line-height: 18px;
       color: #ffffff;
+      @media screen and (max-width: 786px) {
+        width: 50%;
+      }
     }
 
     .minthero {
@@ -279,6 +289,21 @@
       opacity: 1 !important;
     }
   }
+
+
+  // .mint-wrappernew::after{
+  //   content: "";
+  //   background-image: url('../../assets/landAssets/genesis-hero.png');
+  //   background-repeat: no-repeat;
+  //   background-size: cover;
+  //   background-position: center;
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   bottom: 0;
+  //   right: 0;
+  //   margin: auto;
+  // }
 
   .land-input {
     background: #272450;

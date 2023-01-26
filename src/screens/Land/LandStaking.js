@@ -217,7 +217,7 @@ const LandStaking = ({
             <img
               src={require("../../assets/landAssets/genesis-hero.png")}
               alt=""
-              className="minthero"
+              className="minthero d-none d-xl-flex"
             />
             <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
@@ -225,7 +225,7 @@ const LandStaking = ({
               </span>
               Genesis Land NFT Whitelist
             </span>
-            <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-xxl-7 col-lg-7 col-9 justify-content-between align-items-start position-relative">
+            <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
               <span className="font-organetto land-stake-titlenew">
                 Become a Genesis
                 <br /> land nft {"  "}
@@ -233,18 +233,18 @@ const LandStaking = ({
                   Owner
                 </span>
               </span>
-              <span class="land-lock-timenew col-9">
+              <span class="land-lock-timenew col-12 col-lg-9">
                 Apply to be included to the World of Dypians Metaverse whitelist
                 and have access to a variety of benefits.
               </span>
-              <div className="row m-0 flex-column flex-xxl-row flex-lg-row flex-md-row gap-1 align-items-center">
+              <div className="row m-0 gap-1 align-items-center">
               <img
               src={require("../../assets/landAssets/cawsimg.png")}
               alt=""
               className="cawsimg"
             />
             <span className="whitelist-desc col-xxl-5 col-lg-5 p-0 m-0">
-            *If you hold or have staked a CAWS NFT, you will receive a <br/>
+            *If you hold or have staked a CAWS NFT, you will receive a <br className="d-none d-lg-flex"/>
 <mark className="marktext">20% discount</mark> on the World of Dypians Genesis Land NFT collection.
             </span>
               </div>
@@ -267,6 +267,7 @@ const LandStaking = ({
                  Join Whitelist
                 </button>
               </div>
+              <img src={require('../../components/LandPopup/landPopup.webp')} alt="land nft" className="w-100 d-flex d-lg-none" />
             </div>
             {/*  <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2">
