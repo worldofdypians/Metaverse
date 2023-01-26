@@ -156,6 +156,8 @@ const LandWhitelistModal = ({
   useEffect(()=>{
     checkData()
   },[coinbase])
+  
+  
 
   return (
     <Modal
@@ -183,9 +185,7 @@ const LandWhitelistModal = ({
             </div>
             <div className="d-flex flex-column gap-3">
               <p className="text-white m-0 walletdesc font-poppins">
-                Become a World of Dypians Genesis Land NFT owner in Metaverse.
-                In order to be eligible for this process, you must meet the
-                following criteria's:
+              Register now to become a World of Dypians Genesis Land NFT owner. In order to be whitelist eligible, you must meet the following requirements:
               </p>
               <p className="text-white m-0 walletdesc font-poppins">
                 Requirements:
@@ -206,8 +206,7 @@ const LandWhitelistModal = ({
                 <div className="d-flex flex-column gap-0 justify-content-between">
                   <span className="reqtitle">CAWS NFT</span>
                   <span className="reqdesc">
-                    You must have at least one CAWS NFT in your wallet or staked
-                    into the CAWS staking pool.
+                  You must hold at least one CAWS NFT in your wallet or staked in the CAWS staking pool.
                   </span>
                 </div>
               </div>
@@ -239,7 +238,7 @@ const LandWhitelistModal = ({
                 <div className="d-flex flex-column gap-0 justify-content-between">
                   <span className="reqtitle">ETH Balance</span>
                   <span className="reqdesc">
-                    You must have at least $1,000 in ETH in your wallet.
+                  You must hold at least one CAWS NFT in your wallet or staked in the CAWS staking pool.
                   </span>
                 </div>
               </div>
