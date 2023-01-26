@@ -1,8 +1,8 @@
 import Home from "./screens/Home/Home";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./fonts/Organetto.ttf";
-
+import Web3 from "web3";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
@@ -26,8 +26,9 @@ function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [coinbase, setCoinbase] = useState();
   const [chainId, setChainId] = useState();
-
+  const [currencyAmount, setCurrencyAmount] = useState(0);
   const [showForms, setShowForms] = useState(false);
+  const [showForms2, setShowForms2] = useState(false);
 
   const handleRegister = () => {
     setShowWalletModal(true);
@@ -62,7 +63,6 @@ function App() {
     return isConnected;
   };
 
-
   const checkNetworkId = () => {
     if (window.ethereum) {
       window.ethereum
@@ -76,6 +76,24 @@ function App() {
     }
   };
 
+  const getEthBalance = async () => {
+    const ethereum = window.ethereum;
+    if (isConnected === true) {
+      if(coinbase)
+     { const balance = await ethereum.request({
+        method: "eth_getBalance",
+        params: [coinbase, "latest"],
+      });
+      
+      if (balance) {
+        if (chainId === 1) {
+          const stringBalance = window.infuraWeb3.utils.hexToNumberString(balance);
+          const amount = window.infuraWeb3.utils.fromWei(stringBalance, "ether");
+          setCurrencyAmount(amount.slice(0, 7));
+        }
+      }}
+    }
+  };
 
   const handleConnectWallet = async () => {
     try {
@@ -86,7 +104,8 @@ function App() {
       await window.getCoinbase().then((data) => {
         setCoinbase(data);
       });
-      checkNetworkId()
+      setShowForms2(true);
+      checkNetworkId();
     } catch (e) {
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
@@ -95,13 +114,18 @@ function App() {
     return isConnected;
   };
 
-
   const { ethereum } = window;
 
   if (window.ethereum) {
     ethereum?.on("chainChanged", checkNetworkId);
     ethereum?.on("accountsChanged", handleConnectWallet);
   }
+
+  useEffect(() => {
+      getEthBalance();
+    },[isConnected, coinbase,currencyAmount]
+  );
+
 
   return (
     <BrowserRouter>
@@ -136,6 +160,8 @@ function App() {
                 isConnected={isConnected}
                 handleRegister={handleRegister}
                 chainId={chainId}
+                showForms={showForms2}
+                balance={currencyAmount}
               />
             }
           />
