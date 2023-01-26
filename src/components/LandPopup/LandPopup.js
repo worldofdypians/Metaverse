@@ -40,10 +40,10 @@ const LandPopup = () => {
         <div className="d-flex flex-column align-items-center justify-content-center">
             <h6 className="popup-title metaverse font-organetto" style={{color: '#8C56FF'}}>Genesis</h6>
             <h6 className="popup-title metaverse font-organetto mb-3">Land NFT Launch</h6>
-            <span className="popup-span mb-0">Mint your Genesis Land NFT to gain access to a variety of World of Dypians Metaverse benefits</span>
+            <span className="popup-span mb-0">Become one of the original land owners and gain access to immediate rewards and earn opportunities in the World of Dypians by minting a Genesis Land NFT</span>
         </div>
-        <img src={landPopup} className="w-75" alt="land nft" />
-        <span className="popup-content">A world limited only by your imagination</span>
+        <img src={landPopup} className="land-nft-image" alt="land nft" />
+        <span className="popup-content">Total Genesis land supply limited to only 1,000 parcels</span>
         <NavLink to="/land" onClick={() => setActive(false)}>
         <div className="linear-border" style={{ width: "fit-content" }}>
         <button className="btn filled-btn px-5 w-100">Explore more</button>

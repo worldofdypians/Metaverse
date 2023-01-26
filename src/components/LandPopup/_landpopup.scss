@@ -20,6 +20,12 @@
 
 }
 
+
+.land-nft-image{
+    width: 450px;
+
+}
+
 .popup-title{
     font-weight: 600;
 font-size: 28px;
@@ -54,5 +60,9 @@ color: #f7f7fc;
 @media screen and (max-width: 786px) {
     .popup-span{
         width: 100%;
+    }
+
+    .land-nft-image{
+        width: 75% !important;
     }
 }
