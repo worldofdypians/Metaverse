@@ -217,7 +217,7 @@ const LandStaking = ({
             <img
               src={require("../../assets/landAssets/genesis-hero.png")}
               alt=""
-              className="minthero d-none d-xl-flex"
+              className="minthero d-none d-xl-flex d-lg-flex"
             />
             <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
