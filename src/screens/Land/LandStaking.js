@@ -138,7 +138,7 @@ const LandStaking = ({
           <div className="d-flex align-items-end justify-content-between">
             <div className="d-flex flex-column gap-2">
               <span className="connect-wallet-title font-organetto">
-                Mint time{" "}
+                Whitelist time{" "}
                 <span
                   className="connect-wallet-title"
                   style={{ color: "#8c56ff" }}
@@ -234,8 +234,7 @@ const LandStaking = ({
                 </span>
               </span>
               <span class="land-lock-timenew col-12 col-lg-9">
-                Apply to be included to the World of Dypians Metaverse whitelist
-                and have access to a variety of benefits.
+              Join the Genesis Land NFT whitelist now! Upon mint, users will gain immediate access to their land and all of it's benefits.
               </span>
               <div className="row m-0 gap-1 align-items-center">
               <img
@@ -244,8 +243,8 @@ const LandStaking = ({
               className="cawsimg"
             />
             <span className="whitelist-desc col-xxl-5 col-lg-5 p-0 m-0">
-            *If you hold or have staked a CAWS NFT, you will receive a <br className="d-none d-lg-flex"/>
-<mark className="marktext">20% discount</mark> on the World of Dypians Genesis Land NFT collection.
+            *If you are currently holding or staking a CAWS NFT, you will receive a <br className="d-none d-lg-flex"/>
+<mark className="marktext">20% discount</mark> on the World of Dypians Genesis Land NFT mint price.
             </span>
               </div>
               <div
@@ -469,7 +468,7 @@ const LandStaking = ({
             // style={{ minHeight: "518px" }}
           >
             <span className="font-organetto land-stake-title">
-              Land NFT{" "}
+              Genesis Land NFT{" "}
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 staking
               </span>
