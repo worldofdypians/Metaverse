@@ -442,7 +442,7 @@ const Land = ({
         />
       )}
 
-      <div className="land-main-wrapper px-0 w-100  d-flex flex-column">
+      <div className="land-main-wrapper px-0 w-100 d-flex flex-column">
         <LandHero />
         <LandStaking
           showWalletConnect={showWalletConnect}
