@@ -7,7 +7,7 @@ import quarterOne from '../../screens/Roadmap/assets/quarterOne.svg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
-const RoadmapCard = ({quarter, content, index}) => {
+const RoadmapCard = ({quarter, content, index, image}) => {
 
 
 const [activeCard, setActiveCard] = useState(false)
@@ -50,7 +50,7 @@ const showDesc = (index) => {
   return (
     <div className="roadmap-card position-relative" id={quarter} onClick={() => setActiveCard(!activeCard)} style={{cursor: 'pointer'}}>
               <img
-                src={roadmapDummy}
+                src={require(`../../screens/Roadmap/assets/${image}.png`)}
                 alt="roadmap-image"
                 className="roadmap-image"
               />
@@ -58,7 +58,7 @@ const showDesc = (index) => {
                 <div className="d-flex pt-3  flex-column align-items-center justify-content-start gap-2 roadmap-items-wrapper">
                   <img src={roadmapIndicator} alt="indicator" style={{transform: desc !== null ? 'rotate(0deg)' : 'rotate(180deg)', visibility: index === 4 ? 'hidden' : 'visible'}} />
                   
-                 <div className="d-flex flex-column align-items-start gap-3 gap-lg-1">
+                 <div className="d-flex flex-column align-items-start gap-3 gap-lg-2">
                  {content.map((item, index) => (
                     <div className={`d-flex px-3 flex-column gap-1 ${desc === index && 'active-road-faq'}`} key={index}>
                     <div className="d-flex align-items-start gap-2">
