@@ -1,15 +1,14 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import "./_roadmap.scss";
 import roadmapDummy from "./assets/roadmapDummy.png";
 import roadmapIndicator from "./assets/roadmapIndicator.svg";
 import quarterOne from "./assets/quarterOne.svg";
 import completed from "./assets/completed.svg";
 import RoadmapCard from "../../components/RoadmapCard/RoadmapCard";
-import demoLaunch from '../../assets/landAssets/demoLaunch.png'
-import betaTesting from '../../assets/landAssets/betaTesting.png'
+import demoLaunch from "../../assets/landAssets/demoLaunch.png";
+import betaTesting from "../../assets/landAssets/betaTesting.png";
 
 const Roadmap = () => {
-
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Roadmap";
@@ -18,7 +17,7 @@ const Roadmap = () => {
   const roadmapItems = [
     {
       quarter: "quarterOne",
-      image: 'quarterOneImage',
+      image: "quarterOneImage",
       content: [
         {
           title: "Demo Launch",
@@ -63,7 +62,7 @@ const Roadmap = () => {
     },
     {
       quarter: "quarterTwo",
-      image: 'quarterTwoImage',
+      image: "quarterTwoImage",
 
       content: [
         {
@@ -102,7 +101,7 @@ const Roadmap = () => {
     },
     {
       quarter: "quarterThree",
-      image: 'quarterThreeImage',
+      image: "quarterThreeImage",
 
       content: [
         {
@@ -121,7 +120,7 @@ const Roadmap = () => {
     },
     {
       quarter: "quarterFour",
-      image: 'quarterFourImage',
+      image: "quarterFourImage",
 
       content: [
         {
@@ -184,37 +183,45 @@ const Roadmap = () => {
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5">
       <div className="roadmap-main-wrapper px-0 w-100 d-flex flex-column">
-        <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
+        <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
           <h6 className="roadmap-title font-organetto d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
-            World of Dypians{" "}
+            Roadmap{" "}
             <span
               className="roadmap-title font-organetto"
               style={{ color: "#8c56ff" }}
             >
-              Roadmap 2023
+              2023
             </span>
           </h6>
           <span className="roadmap-content">
-            The development has just begun...
+            Dypius is developing an extremely ambitious and complex game. The
+            World of Dypians contains a massive 2,000 sq km explorable
+            environment, integration of advanced artificial intelligence, a
+            unique land ownership and real estate market, high graphic gameplay
+            and is built to support multiple blockchains.
           </span>
         </div>
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
-          <div className="roadmap-grid px-0">
+          <div className="roadmap-grid px-3 px-lg-0">
             <div className="d-flex flex-column gap-3">
               <div className="roadmap-main-update position-relative">
-              <img src={demoLaunch} className="main-update-image" alt="" />
+                <img src={demoLaunch} className="main-update-image" alt="" />
                 <div className="main-update-title-wrapper w-100">
-                  <span className="font-organetto main-update-date">Dec 2022</span>
+                  <span className="font-organetto main-update-date">
+                    Dec 2022
+                  </span>
                   <h6 className="main-update-title mb-0 font-organetto">
                     Demo launch
                   </h6>
                 </div>
               </div>
               <div className="roadmap-main-update position-relative">
-              <img src={betaTesting} className="main-update-image" alt="" />
+                <img src={betaTesting} className="main-update-image" alt="" />
 
                 <div className="main-update-title-wrapper d-flex flex-column w-100">
-                  <span className="font-organetto main-update-date">Dec 2022</span>
+                  <span className="font-organetto main-update-date">
+                    Dec 2022
+                  </span>
                   <h6 className="main-update-title mb-0 font-organetto">
                     Beta tester access
                   </h6>
