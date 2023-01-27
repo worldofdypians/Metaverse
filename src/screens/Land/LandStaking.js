@@ -243,7 +243,7 @@ const LandStaking = ({
               className="cawsimg"
             />
             <span className="whitelist-desc col-xxl-5 col-lg-5 p-0 m-0">
-            *If you are currently holding or staking a CAWS NFT, you will receive a <br className="d-none d-lg-flex"/>
+            *If you are currently holding or staking a CAWS NFT, you will receive a <br className="discount-break"/>
 <mark className="marktext">20% discount</mark> on the World of Dypians Genesis Land NFT mint price.
             </span>
               </div>

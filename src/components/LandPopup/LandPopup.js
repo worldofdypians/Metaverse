@@ -43,7 +43,7 @@ const LandPopup = () => {
             <span className="popup-span mb-0">Become one of the original land owners and gain access to immediate rewards and earn opportunities in the World of Dypians by minting a Genesis Land NFT</span>
         </div>
         <img src={landPopup} className="land-nft-image" alt="land nft" />
-        <span className="popup-content">Total Genesis land supply limited to only 1,000 parcels</span>
+        <span className="popup-content">Total Genesis land supply limited to only 1,000 plots</span>
         <NavLink to="/land" onClick={() => setActive(false)}>
         <div className="linear-border" style={{ width: "fit-content" }}>
         <button className="btn filled-btn px-5 w-100">Explore more</button>

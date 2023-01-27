@@ -69,7 +69,7 @@ const Roadmap = () => {
           desc: 'Enhance your companion`s size and abilities to assist in exploration and battle'
         },
         {
-          title: 'ntroduction of in-game mounts',
+          title: 'Introduction of in-game mounts',
           desc: 'Players can journey throughout the world by land, sea, and air'
         },
         {
@@ -144,17 +144,16 @@ const Roadmap = () => {
       <div className="roadmap-main-wrapper px-0 w-100 d-flex flex-column">
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
           <h6 className="roadmap-title font-organetto d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
-            Roadmap{" "}
+            World of Dypians{" "}
             <span
               className="roadmap-title font-organetto"
               style={{ color: "#8c56ff" }}
             >
-              2023
+              Roadmap
             </span>
           </h6>
           <span className="roadmap-content">
-            The largest and unique Super rare NFT marketplace For
-            crypto-collectibles
+            The development has just begun...
           </span>
         </div>
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
@@ -184,7 +183,7 @@ const Roadmap = () => {
               <h6 className="live-now-title font-organetto mt-4">Live Now!</h6>
             </div>
             {roadmapItems.map((item, index) => (
-            <RoadmapCard quarter={item.quarter} key={index} content={item.content} />
+            <RoadmapCard quarter={item.quarter} key={index} content={item.content} index={index} />
             ))}
           </div>
         </div>
