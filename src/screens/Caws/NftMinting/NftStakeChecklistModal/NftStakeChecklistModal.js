@@ -10,9 +10,7 @@ import NftPlaceHolder from "../General/NftPlaceHolder/NftPlaceHolder";
 import NftStakingCawChecklist from "../General/NftStakingCawChecklist/NftStakingCawChecklist";
 import { formattedNum } from "../../functions/formatUSD";
 import getFormattedNumber from "../../functions/get-formatted-number";
-// import EthLogo from "../../assets/eth-create-nft.png";
 import CountDownTimerUnstake from "../../elements/CountDownUnstake";
-// import CatLogo from "../../assets/cat-totalsupply-icon.svg";
 import './_nftStakeChecklistModal.scss'
 
 const NftStakeCheckListModal = ({
@@ -27,7 +25,7 @@ const NftStakeCheckListModal = ({
   link,
   countDownLeft,
   ETHrewards,
-  onNftCheckListClick,
+  
 }) => {
   const style = {
     position: "absolute",
@@ -954,7 +952,7 @@ NftStakeCheckListModal.propTypes = {
   onClaimAll: PropTypes.func,
   onUnstake: PropTypes.func,
   ETHrewards: PropTypes.number,
-  onNftCheckListClick: PropTypes.func,
+  
 };
 
 export default NftStakeCheckListModal;

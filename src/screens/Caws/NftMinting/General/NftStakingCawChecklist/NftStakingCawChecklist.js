@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-// import SvgEyeIcon from "../NftCawCard/SvgEyeIcon";
-// import EthLogo from "../../../../../assets/General/eth-create-nft.png";
 import { formattedNum } from "../../../functions/formatUSD";
 import getFormattedNumber from "../../../functions/get-formatted-number";
 
@@ -14,7 +12,7 @@ const NftStakingCawChecklist = ({
   checklistItemID,
   onChange,
   countDownLeft,
-  onNftCheckListClick,
+  // onNftCheckListClick,
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
@@ -188,9 +186,9 @@ const NftStakingCawChecklist = ({
               src={nft.image.replace("images", "thumbs")}
               className="nft-img"
               alt=""
-              onClick={() => {
-                onNftCheckListClick(nft);
-              }}
+              // onClick={() => {
+              //   onNftCheckListClick(nft);
+              // }}
               // style={{ cursor: "pointer" }}
             />
             <p
@@ -353,7 +351,7 @@ NftStakingCawChecklist.propTypes = {
   checked: PropTypes.bool,
   checklistItemID: PropTypes.number,
   onChange: PropTypes.func,
-  onNftCheckListClick: PropTypes.func,
+  // onNftCheckListClick: PropTypes.func,
   countDownLeft: PropTypes.any,
 };
 

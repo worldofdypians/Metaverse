@@ -63,7 +63,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           autoPlay={true}
           loop={true}
           muted="muted"
-          playsInline="true"
+          playsInline={true}
           controlsList="nodownload"
           style={{ maxWidth: "2400px", width: "100%" }}
         ></video>

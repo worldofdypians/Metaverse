@@ -10,6 +10,28 @@
   src: url("./fonts/Organetto.ttf");
 }
 
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #26264F; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8E97CD; 
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
 body {
   background: #080b2a;
   font-family: "Poppins", sans-serif !important;
@@ -22,9 +44,10 @@ body {
     font-family: "Organetto" !important;
   }
 
+
   .linear-border {
     position: relative;
-    padding: 2px;
+    padding: 3px;
     background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
     border-radius: 8px;
     clip-path: polygon(
@@ -38,6 +61,59 @@ body {
   }
 
   .linear-border::before {
+    content: "";
+  }
+
+  .walletbutton {
+    background: var(--box-bg);
+    outline: currentcolor none medium;
+    border: 1px solid rgb(237, 238, 242);
+    border-radius: 12px;
+    width: 93% !important;
+    display: flex;
+    flex-direction: row;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: justify;
+    padding: 1rem;
+    margin: auto;
+    opacity: 1;
+  }
+
+  .walletbutton:hover {
+    border: 1px solid rgb(140, 86, 255);
+  }
+  
+  .walletmodal-wrapper {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .walletclose {
+    display: flex;
+    justify-content: end;
+    padding: 18px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+  }
+  .linear-border-disabled {
+    position: relative;
+    padding: 2px;
+    background: #C4C4C4;
+    border-radius: 8px;
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+  }
+
+  .linear-border-disabled::before {
     content: "";
   }
 
@@ -59,6 +135,48 @@ body {
     text-align: center;
     color: #ffffff;
     white-space: pre;
+  }
+
+  .outline-btn:hover {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(89.7deg, #7B84D8 0.23%, #A4FB85 99.72%);
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #000;
+    white-space: pre;
+  }
+
+  .outline-btn-disabled {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: #C4C4C4;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #080B2A;
+    white-space: pre;
+    border: none;
+    outline: none;
   }
 
   .simple-btn {
@@ -87,6 +205,34 @@ body {
     color: #080b2a;
     border: none !important;
     white-space: pre;
+    transition: all .25s;
+  }
+
+  .filled-error-btn {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(89.7deg, #D87B7B 0.23%, #FB85D3 99.72%);
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #080b2a;
+    border: none !important;
+    white-space: pre;
+    transition: all .25s;
+  }
+
+  .filled-btn:hover{
+    color: #ffffff;
+    background: #080b2a;
+
   }
 
   .pink-filled-btn {
@@ -166,4 +312,14 @@ body {
   display: flex;
   justify-content: center;
   gap: 50px;
+}
+
+
+.MuiTooltip-tooltip {
+  background: #3B217B !important;
+  box-shadow: 0px 6px 9px rgba(0, 0, 0, 0.16) !important;
+  border-radius: 6px !important;
+  margin-bottom: auto !important;
+  font-size: 12px !important;
+  max-width: 250px !important;
 }
