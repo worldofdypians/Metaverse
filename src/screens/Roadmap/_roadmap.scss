@@ -18,6 +18,10 @@
     line-height: 24px;
     text-align: center;
     color: #ffffff;
+    width: 50%;
+    @media screen and (max-width: 786px) {
+      width: 100%;
+    }
   }
 
   .roadmap-grid {
