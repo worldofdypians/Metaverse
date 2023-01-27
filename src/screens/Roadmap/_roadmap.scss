@@ -64,12 +64,34 @@
     background: linear-gradient(180deg, #5b08d0 -341.29%, #7f2df7 -177.5%);
     bottom: 40px;
     min-height: 230px;
+
+.roadmap-items-wrapper{
+  padding-bottom: 100px;
+  @media screen and (max-width: 786px) {
+    padding-bottom: 150px;
+  }
+}
+
   }
 
   .quarter {
     width: 100%;
     position: relative;
     bottom: 120px;
+
+    @media screen and (max-width: 1620px) {
+      bottom: 110px;
+    }
+    @media screen and (max-width: 1460px) {
+      bottom: 105px;
+    }
+    @media screen and (max-width: 1350px) {
+      bottom: 100px;
+    }
+    @media screen and (max-width: 786px) {
+      bottom: 150px;
+    }
+    
   }
   .roadmap-image {
     width: 100%;
@@ -82,6 +104,18 @@
     font-size: 14px;
     line-height: 21px;
     color: #ffffff;
+    transition: all 0.3s;
+  }
+
+  .step-title:hover{
+    color: #7bd8b0;
+  }
+
+  .active-road-faq{
+border-top: 1px solid #965DEA;
+border-bottom: 1px solid #965DEA;
+background: #5207BC;
+padding: 10px 0px;
   }
 
   .step-content {

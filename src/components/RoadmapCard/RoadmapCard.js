@@ -7,10 +7,20 @@ import quarterOne from '../../screens/Roadmap/assets/quarterOne.svg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
-const RoadmapCard = ({quarter, content}) => {
+const RoadmapCard = ({quarter, content, index}) => {
 
 
 const [activeCard, setActiveCard] = useState(false)
+
+const [desc, setDesc] = useState(null)
+
+const showDesc = (index) => {
+  if(desc === null || index !== desc){
+    setDesc(index)
+  }else{
+    setDesc(null)
+  }
+}
 
 
 
@@ -45,18 +55,18 @@ const [activeCard, setActiveCard] = useState(false)
                 className="roadmap-image"
               />
               <div className="roadmap-items position-relative">
-                <div className="d-flex pt-3 ps-3 pe-3 flex-column align-items-center justify-content-start gap-2" style={{paddingBottom: '100px'}}>
-                  <img src={roadmapIndicator} alt="indicator" style={{transform: activeCard && 'rotate(180deg)'}} />
+                <div className="d-flex pt-3  flex-column align-items-center justify-content-start gap-2 roadmap-items-wrapper">
+                  <img src={roadmapIndicator} alt="indicator" style={{transform: desc !== null ? 'rotate(0deg)' : 'rotate(180deg)', visibility: index === 4 ? 'hidden' : 'visible'}} />
                   
-                 <div className="d-flex flex-column align-items-start gap-1">
+                 <div className="d-flex flex-column align-items-start gap-3 gap-lg-1">
                  {content.map((item, index) => (
-                    <div className="d-flex flex-column gap-1" key={index}>
-                    <div className="d-flex align-items-center gap-2">
-                      <img src={item?.completed === true ? completed : uncompleted} alt="completed" />
-                      <span className="step-title">{item.title}</span>
+                    <div className={`d-flex px-3 flex-column gap-1 ${desc === index && 'active-road-faq'}`} key={index}>
+                    <div className="d-flex align-items-start gap-2">
+                      <img src={item?.completed === true ? completed : uncompleted} alt="completed" style={{position: 'relative', top : '2px'}} />
+                      <span className="step-title" onClick={() => item.desc !== null && showDesc(index)}>{item.title}</span>
                     </div>
                     {item.desc !== null &&
-                      <p className={`step-content ms-4 ${!activeCard && 'd-none'}`}>
+                      <p className={`step-content ms-4 ${desc === index ? 'd-flex' : 'd-none'}`}>
                       {item.desc}
                     </p>
                     }

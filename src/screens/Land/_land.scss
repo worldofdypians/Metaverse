@@ -894,6 +894,17 @@
     padding: 30px;
     min-width: 350px;
     max-width: 350px;
+
+    @media screen and (max-width: 1600px) {
+    background-size: 300px 150px;
+      min-width: 300px;
+    max-width: 300px;
+    }
+    @media screen and (max-width: 1500px) {
+    background-size: 350px 150px;
+      min-width: 350px;
+    max-width: 350px;
+    }
     .new-benefit-title {
       font-weight: 700;
       font-size: 18px;
@@ -1004,5 +1015,11 @@ input::-webkit-inner-spin-button {
 
   .laptop {
     width: 75% !important;
+  }
+}
+
+@media screen and (max-width: 1827px) {
+  .discount-break{
+    display: none;
   }
 }
