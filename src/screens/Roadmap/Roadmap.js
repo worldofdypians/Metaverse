@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./_roadmap.scss";
 import roadmapDummy from "./assets/roadmapDummy.png";
 import roadmapIndicator from "./assets/roadmapIndicator.svg";
@@ -9,6 +9,12 @@ import demoLaunch from '../../assets/landAssets/demoLaunch.png'
 import betaTesting from '../../assets/landAssets/betaTesting.png'
 
 const Roadmap = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "Roadmap";
+  }, []);
+
   const roadmapItems = [
     {
       quarter: "quarterOne",
@@ -185,7 +191,7 @@ const Roadmap = () => {
               className="roadmap-title font-organetto"
               style={{ color: "#8c56ff" }}
             >
-              Roadmap
+              Roadmap 2023
             </span>
           </h6>
           <span className="roadmap-content">
