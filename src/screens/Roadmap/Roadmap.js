@@ -5,140 +5,176 @@ import roadmapIndicator from "./assets/roadmapIndicator.svg";
 import quarterOne from "./assets/quarterOne.svg";
 import completed from "./assets/completed.svg";
 import RoadmapCard from "../../components/RoadmapCard/RoadmapCard";
+import demoLaunch from '../../assets/landAssets/demoLaunch.png'
+import betaTesting from '../../assets/landAssets/betaTesting.png'
 
 const Roadmap = () => {
-
   const roadmapItems = [
+    {
+      quarter: "quarterOne",
+      image: 'quarterOneImage',
+      content: [
+        {
+          title: "Demo Launch",
+          desc: "Players can now get a taste of the game`s mechanics and gameplay. The demo offers a sneak peek at the game`s features and content, giving players a chance to see what the game has to offer.",
+          completed: true,
+        },
+        {
+          title: "Beta Testing Begins",
+          desc: "Gather feedback from beta testig phase to identify any issues or areas for improvement and make changes before the game is officially released.",
+          completed: true,
+        },
+        {
+          title: "Genesis Land Launch",
+          desc: "World of Dypians Genesis edition is limited to 1,000 NFTs, each of which represents a piece of land located in a prime area within the game that will provide players with a wide range of benefits",
+          // completed: true,
+        },
+        {
+          title: "Multichain Integration",
+          desc: "Incorporation of multiple chains providing users with optimal options and solutions",
+        },
+        {
+          title: "CAWS NFT 3D rendering",
+          desc: "Users are able to create an in-game playable 3D version of the owned CAWS NFT.",
+        },
+        {
+          title: "Special in-game events",
+          desc: "Players will be invited to participate in exciting and unique events with rewards and prizes",
+        },
+        {
+          title: "Leaderboard",
+          desc: "Introducing a leaderboard system where users assess their daily/weekly/monthly performance. Top ranked players will get rewards or bonuses  in the form of in-game items, currency, or access to exclusive content.",
+        },
+        {
+          title: "Introducing the CAWS Timepiece NFT collection",
+          desc: "The CAWS Timepiece NFT collection will provide users additional utility and perks in the World of Dypians Metaverse.CAWS owners will have the ability to mint CAWS Timepiece for free.",
+        },
+        {
+          title: "Addition and development of partnerships",
+          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards and airdrops, and much more",
+        },
+      ],
+    },
+    {
+      quarter: "quarterTwo",
+      image: 'quarterTwoImage',
 
-    {
-      quarter: 'quarterOne',
-      content : [
-        {
-          title: 'Multichain Integration', 
-          desc: 'Incorporation of multiple chains providing users with optimal options and solutions',
-          completed: true
-        },
-        {
-          title: 'CAWS NFT 3D rendering', 
-          desc: 'Users are able to create an in-game playable 3D version of owned CAWS NFT.',
-        },
-        {
-          title: 'Special in-game events', 
-          desc: 'Players will be invited to participate in exciting and unique events with rewards and prizes',
-        },
-        {
-          title: 'Addition and development of partnerships', 
-          desc: 'Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards and airdrops, and much more',
-        }
-      ]
-    },
-    {
-      quarter: 'quarterTwo',
       content: [
         {
-          title: 'Introduction of marketplace and purchasable in-game NFTs',
-          desc: 'Users can access WoD marketplace to purchase assets used to customize and enhance their experience'
+          title: "Introduction of 25,000 Land NFTs",
+          desc: "The creation of a multi-tiered NFT Land collection with different features, such as special rewards, futuristic buildings, AI driven NPCs, and much more.  Each user can preview the in-game land before purchasing the associated NFT.",
         },
         {
-          title: 'Introduction of Mall and shopping centers',
-          desc: 'User can acquire gear, tools, consumable items and skins'
+          title: "In-game representation of Land NFTs",
+          desc: "Players can access the land they own and enjoy its benefits within the game. It is possible to trade Land NFTs and transfer the associated benefits to the new owner.",
         },
         {
-          title: 'Rewarding quests',
-          desc: 'Adventurers will complete quests to earn items and gain prestige'
+          title: "Introduction of marketplace",
+          desc: "Users can access WoD marketplace to purchase assets used to customize and enhance their experience",
         },
         {
-          title: 'Tracking goals and achievements',
-          desc: 'Players will receive special rewards and titles for accomplishing some of the game`s most difficult tasks'
+          title: "Introduction of Mall and shopping centers",
+          desc: "Users can acquire game items, skins, and much more.",
         },
         {
-          title: 'Introduction of tutorial guide v1',
-          desc: 'In-depth tips and tricks to help players master World of Dypians'
+          title: "Quest System",
+          desc: "Adventurers will complete quests to earn items and gain prestige",
         },
         {
-          title: 'Addition and development of partnerships',
-          desc: 'Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards and airdrops, and much more'
+          title: "Tracking goals and achievements",
+          desc: "Players will receive special rewards and titles for accomplishing some of the game's most difficult tasks",
         },
-      ]
+        {
+          title: "Introduction of tutorial guide v1",
+          desc: "In-depth tips and tricks to help players master World of Dypians",
+        },
+        {
+          title: "Addition and development of partnerships",
+          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards and airdrops, and much more",
+        },
+      ],
     },
     {
-      quarter: 'quarterThree',
+      quarter: "quarterThree",
+      image: 'quarterThreeImage',
+
       content: [
         {
-          title: 'CAWS NFT transformation',
-          desc: 'Enhance your companion`s size and abilities to assist in exploration and battle'
+          title: "CAWS NFT transformation",
+          desc: "Transform your CAWS to different epic creatures to assist in special abilities and benefits",
         },
         {
-          title: 'Introduction of in-game mounts',
-          desc: 'Players can journey throughout the world by land, sea, and air'
+          title: "Introduction of in-game mounts",
+          desc: "Players can journey throughout the world using in-game mounts",
         },
         {
-          title: 'Addition and development of partnerships',
-          desc: 'Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards and airdrops, and much more'
+          title: "Addition and development of partnerships",
+          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards and airdrops, and much more",
         },
-      ]
+      ],
     },
     {
-      quarter: 'quarterFour',
+      quarter: "quarterFour",
+      image: 'quarterFourImage',
+
       content: [
         {
-          title: 'Multiplayer PVP',
-          desc: 'Engage in 1v1 or huge battle events against other players'
+          title: "Multiplayer PVE",
+          desc: "Adventure with other players to complete quests, fight bosses, survive against waves of enemies, earn rewards and much more",
         },
         {
-          title: 'Co-op PVE',
-          desc: 'Adventure together with allies to complete quests and objectives'
+          title: "Multiplayer PVP",
+          desc: "Engage in huge battle events against other players in real-time. Players can compete and interact against each other and form teams to complete objectives.",
         },
         {
-          title: 'In-game chat',
-          desc: 'Uses can communicate via voice and chat texts in multiple channels'
+          title: "In-game chat",
+          desc: "Users can communicate via voice and chat texts in multiple channels.",
         },
         {
-          title: 'P2P trade',
-          desc: 'Exchange and trade items directly with other users'
+          title: "P2P trade",
+          desc: "Exchange and trade items directly with other users",
         },
         {
-          title: 'Global environmental events',
-          desc: 'Participate in huge global events with leaderboards and prizes'
+          title: "Global environmental events",
+          desc: "Participate in huge global events with leaderboards and prizes",
         },
         {
-          title: 'Introduction of tutorial guide v2',
-          desc: 'In-depth tips and tricks to help players master World of Dypians'
+          title: "Introduction of tutorial guide v2",
+          desc: "In-depth tips and tricks to help players master World of Dypians",
         },
         {
-          title: 'Weapons and armor customization',
-          desc: 'Forge unique gear to enhance abilities and appearance'
+          title: "Weapons and armor customization",
+          desc: "Users can customise unique in-game assets such as weapons, armor, skins, and much more. These NFTs can be bought, sold, and traded on the open market, and the ownership of the NFT grants the owner the right to use the corresponding in-game asset.",
         },
         {
-          title: 'Addition and development of partnerships',
-          desc: 'Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards and airdrops, and much more'
+          title: "Addition and development of partnerships",
+          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards and airdrops, and much more",
         },
-      ]
+      ],
     },
-    {
-      quarter: '2024',
-      content: [
-        {
-          title: 'Introduction of build hub',
-          desc: null
-        },
-        {
-          title: 'Additional clan support',
-          desc: null
-        },
-        {
-          title: 'Updated and improved battle arenas',
-          desc: null
-        },
-        {
-          title: 'Tame wild animals increasing team size',
-          desc: null
-        },
-      
-      ]
-    },
-  ]
-  
+    // {
+    //   quarter: "2024",
+    //   content: [
+    //     {
+    //       title: "Introduction of build hub",
+    //       desc: null,
+    //     },
+    //     {
+    //       title: "Additional clan support",
+    //       desc: null,
+    //     },
+    //     {
+    //       title: "Updated and improved battle arenas",
+    //       desc: null,
+    //     },
+    //     {
+    //       title: "Tame wild animals increasing team size",
+    //       desc: null,
+    //     },
+    //   ],
+    // },
+  ];
+
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5">
       <div className="roadmap-main-wrapper px-0 w-100 d-flex flex-column">
@@ -160,30 +196,41 @@ const Roadmap = () => {
           <div className="roadmap-grid px-0">
             <div className="d-flex flex-column gap-3">
               <div className="roadmap-main-update position-relative">
+              <img src={demoLaunch} className="main-update-image" alt="" />
                 <div className="main-update-title-wrapper w-100">
-                  <h6 className="main-update-title font-organetto">
+                  <span className="font-organetto main-update-date">Dec 2022</span>
+                  <h6 className="main-update-title mb-0 font-organetto">
                     Demo launch
                   </h6>
                 </div>
               </div>
               <div className="roadmap-main-update position-relative">
-                <div className="main-update-title-wrapper w-100">
-                  <h6 className="main-update-title font-organetto">
+              <img src={betaTesting} className="main-update-image" alt="" />
+
+                <div className="main-update-title-wrapper d-flex flex-column w-100">
+                  <span className="font-organetto main-update-date">Dec 2022</span>
+                  <h6 className="main-update-title mb-0 font-organetto">
                     Beta tester access
                   </h6>
                 </div>
               </div>
-              <div className="roadmap-main-update position-relative">
+              {/* <div className="roadmap-main-update position-relative">
                 <div className="main-update-title-wrapper w-100">
                   <h6 className="main-update-title font-organetto">
-                    Genesis Launch
+                    Genesis Land Launch
                   </h6>
                 </div>
-              </div>
-              <h6 className="live-now-title font-organetto mt-4">Live Now!</h6>
+              </div> */}
+              <h6 className="live-now-title font-organetto mt-4">Out Now!</h6>
             </div>
             {roadmapItems.map((item, index) => (
-            <RoadmapCard quarter={item.quarter} key={index} content={item.content} index={index} />
+              <RoadmapCard
+                quarter={item.quarter}
+                key={index}
+                content={item.content}
+                index={index}
+                image={item.image}
+              />
             ))}
           </div>
         </div>
