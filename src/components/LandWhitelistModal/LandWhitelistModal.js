@@ -77,6 +77,7 @@ const LandWhitelistModal = ({
   const [status, setStatus] = useState("");
   const [mouseOver, setMouseOver] = useState(false);
 
+
   const handleSubmit = async (e) => {
     setLoading(true);
 
@@ -193,7 +194,7 @@ const LandWhitelistModal = ({
               <div className="d-flex justify-content-between gap-2 align-items-start">
                 <img
                   src={
-                    (totalCAWCreated === 0 ||totalCAWStaked === 0 ) && coinbase
+                    (totalCAWCreated === 0 && totalCAWStaked === 0 ) && coinbase
                     ? xmark
                     : (totalCAWCreated !== 0 ||
                       totalCAWStaked !== 0) && coinbase
@@ -328,8 +329,8 @@ const LandWhitelistModal = ({
                     }`}
                     disabled={
                       balance < mintPrice &&
-                      totalCAWCreated === 0 &&
-                      totalCAWStaked === 0
+                      (totalCAWCreated === 0 &&
+                      totalCAWStaked === 0)
                     }
                     onClick={handleSubmit}
                   >
@@ -409,12 +410,14 @@ const LandWhitelistModal = ({
                 href="https://t.me/worldofdypiansmetaverse"
                 target="_blank"
                 rel="noreferrer"
-                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                className="btn outline-btn d-flex gap-1 align-items-center"
                 style={{
                   background:
                     "linear-gradient(89.7deg, #1C8BBF 0.23%, #69B6DE 99.72%)",
                   border: "none",
                   textDecoration: "none",
+                  paddingLeft: '2.5rem',
+                  paddingRight: '2.5rem'
                 }}
                 onClick={handleConnect}
               >
@@ -484,12 +487,14 @@ const LandWhitelistModal = ({
                 href="https://t.me/worldofdypiansmetaverse"
                 target="_blank"
                 rel="noreferrer"
-                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                className="btn outline-btn d-flex gap-1 align-items-center"
                 style={{
                   background:
                     "linear-gradient(89.7deg, #1C8BBF 0.23%, #69B6DE 99.72%)",
                   border: "none",
                   textDecoration: "none",
+                  paddingLeft: '2.5rem',
+                  paddingRight: '2.5rem'
                 }}
                 onClick={handleConnect}
               >
