@@ -214,6 +214,24 @@ const LandStaking = ({
             className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
             style={{ minHeight: "463px" }}
           >
+            <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
+              <span className="pricetext position-relative">Price</span>
+              <span className="totalprice position-relative">$ 1,200</span>
+              <div className="price-separator"></div>
+              <span className="pricetext position-relative">
+                {" "}
+                <img
+                  src={mintEthIcon}
+                  alt="ethereum"
+                  style={{ width: 20 }}
+                />{" "}
+                ETH{" "}
+                <span className="mintpric position-relative">
+                  {getFormattedNumber(mintPrice, 2)}
+                </span>
+              </span>
+            
+            </div>
             <img
               src={require("../../assets/landAssets/genesis-hero.png")}
               alt=""
@@ -234,18 +252,21 @@ const LandStaking = ({
                 </span>
               </span>
               <span class="land-lock-timenew col-12 col-lg-9">
-              Join the Genesis Land NFT whitelist now! Upon mint, users will gain immediate access to their land and all of it's benefits.
+                Join the Genesis Land NFT whitelist now! Upon mint, users will
+                gain immediate access to their land and all of it's benefits.
               </span>
               <div className="row m-0 gap-1 align-items-center">
-              <img
-              src={require("../../assets/landAssets/cawsimg.png")}
-              alt=""
-              className="cawsimg"
-            />
-            <span className="whitelist-desc col-xxl-5 col-lg-5 p-0 m-0">
-            *If you are currently holding or staking a CAWS NFT, you will receive a <br className="discount-break"/>
-<mark className="marktext">20% discount</mark> on the World of Dypians Genesis Land NFT mint price.
-            </span>
+                <img
+                  src={require("../../assets/landAssets/cawsimg.png")}
+                  alt=""
+                  className="cawsimg"
+                />
+                <span className="whitelist-desc col-xxl-5 col-lg-5 p-0 m-0">
+                  *If you are currently holding or staking a CAWS NFT, you will
+                  receive a <br className="discount-break" />
+                  <mark className="marktext">20% discount</mark> on the World of
+                  Dypians Genesis Land NFT mint price.
+                </span>
               </div>
               <div
                 className={
@@ -258,15 +279,18 @@ const LandStaking = ({
                   className={`btn 
                     filled-btn
                     px-5 w-100`}
-                  onClick={() => {handleWhitelist()
+                  onClick={() => {
+                    handleWhitelist();
                   }}
-                 
                 >
-                  
-                 Join Whitelist
+                  Join Whitelist
                 </button>
               </div>
-              <img src={require('../../components/LandPopup/landPopup.webp')} alt="land nft" className="w-100 d-flex d-lg-none" />
+              <img
+                src={require("../../components/LandPopup/landPopup.webp")}
+                alt="land nft"
+                className="w-100 d-flex d-lg-none"
+              />
             </div>
             {/*  <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2">
