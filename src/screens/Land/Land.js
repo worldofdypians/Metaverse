@@ -368,7 +368,7 @@ const Land = ({
          myCAWStakes();
          myCAWNft()
        }
-       latestMint().then();
+      //  latestMint().then();
      }, 1000);
 
      return () => clearInterval(interval);

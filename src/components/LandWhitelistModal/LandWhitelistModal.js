@@ -77,6 +77,7 @@ const LandWhitelistModal = ({
   const [status, setStatus] = useState("");
   const [mouseOver, setMouseOver] = useState(false);
 
+
   const handleSubmit = async (e) => {
     setLoading(true);
 
@@ -193,7 +194,7 @@ const LandWhitelistModal = ({
               <div className="d-flex justify-content-between gap-2 align-items-start">
                 <img
                   src={
-                    (totalCAWCreated === 0 ||totalCAWStaked === 0 ) && coinbase
+                    (totalCAWCreated === 0 && totalCAWStaked === 0 ) && coinbase
                     ? xmark
                     : (totalCAWCreated !== 0 ||
                       totalCAWStaked !== 0) && coinbase
@@ -328,8 +329,8 @@ const LandWhitelistModal = ({
                     }`}
                     disabled={
                       balance < mintPrice &&
-                      totalCAWCreated === 0 &&
-                      totalCAWStaked === 0
+                      (totalCAWCreated === 0 &&
+                      totalCAWStaked === 0)
                     }
                     onClick={handleSubmit}
                   >
