@@ -48,7 +48,7 @@ const showDesc = (index) => {
 
     
   return (
-    <div className="roadmap-card position-relative" id={quarter} onClick={() => setActiveCard(!activeCard)} style={{cursor: 'pointer'}}>
+    <div className="roadmap-card position-relative" id={quarter} onClick={() => setActiveCard(!activeCard)} >
               <img
                 src={require(`../../screens/Roadmap/assets/${image}.png`)}
                 alt="roadmap-image"
@@ -60,7 +60,7 @@ const showDesc = (index) => {
                   
                  <div className="d-flex flex-column align-items-start gap-3 gap-lg-2">
                  {content.map((item, index) => (
-                    <div className={`d-flex px-3 flex-column gap-1 ${desc === index && 'active-road-faq'}`} key={index}>
+                    <div className={`d-flex px-3 flex-column gap-1 ${desc === index && 'active-road-faq'}`} key={index} style={{cursor: 'pointer'}}>
                     <div className="d-flex align-items-start gap-2">
                       <img src={item?.completed === true ? completed : uncompleted} alt="completed" style={{position: 'relative', top : '2px'}} />
                       <span className="step-title" onClick={() => item.desc !== null && showDesc(index)}>{item.title}</span>
