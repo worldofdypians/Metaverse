@@ -239,7 +239,7 @@ const LandWhitelistModal = ({
                 <div className="d-flex flex-column gap-0 justify-content-between">
                   <span className="reqtitle">ETH Balance</span>
                   <span className="reqdesc">
-                  You must hold at least one CAWS NFT in your wallet or staked in the CAWS staking pool.
+                  You must have at least $1,200 of ETH in your wallet.
                   </span>
                 </div>
               </div>

@@ -125,6 +125,49 @@
     align-items: center;
     gap: 5px;
   }
+  .pricetext {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .price-separator {
+    height: 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 100%;
+  }
+  .pricetag {
+    right: 20px;
+    top: 20px;
+    z-index: 1;
+
+    @media screen and (max-width: 991px) {
+      right: 30px;
+      bottom: 105px;
+      top: auto;
+
+    }
+  }
+
+  .totalprice {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    color: #ffffff;
+  }
+
+  .mintprice {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+  }
 
   .mint-wrapper {
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
@@ -184,7 +227,7 @@
     position: relative;
 
     @media screen and (max-width: 991px) {
-      background-image: url('../../assets/landAssets/newGenesisBg.webp');
+      background-image: url("../../assets/landAssets/newGenesisBg.webp");
       background-size: cover;
       background-repeat: no-repeat;
     }
@@ -232,7 +275,7 @@
     }
 
     .marktext {
-      color: #09FBD3;
+      color: #09fbd3;
       font-weight: bold;
       background-color: transparent;
     }
@@ -289,7 +332,6 @@
       opacity: 1 !important;
     }
   }
-
 
   // .mint-wrappernew::after{
   //   content: "";
@@ -896,14 +938,14 @@
     max-width: 350px;
 
     @media screen and (max-width: 1600px) {
-    background-size: 300px 150px;
+      background-size: 300px 150px;
       min-width: 300px;
-    max-width: 300px;
+      max-width: 300px;
     }
     @media screen and (max-width: 1500px) {
-    background-size: 350px 150px;
+      background-size: 350px 150px;
       min-width: 350px;
-    max-width: 350px;
+      max-width: 350px;
     }
     .new-benefit-title {
       font-weight: 700;
@@ -1019,7 +1061,7 @@ input::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 1827px) {
-  .discount-break{
+  .discount-break {
     display: none;
   }
 }
