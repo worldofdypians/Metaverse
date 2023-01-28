@@ -26,7 +26,7 @@ const Roadmap = () => {
         },
         {
           title: "Beta testing Begins",
-          desc: "Gather feedback from beta testig phase to identify any issues or areas for improvement and make changes before the game is officially released.",
+          desc: "Gather feedback from beta testing phase to identify any issues or areas for improvement and make changes before the game is officially released.",
           completed: true,
         },
         {
