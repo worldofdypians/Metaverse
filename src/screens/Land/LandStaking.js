@@ -209,7 +209,7 @@ const LandStaking = ({
             </div>
           </div>
         </div> */}
-        <div className="col-12 col-md-12 col-xxl-7 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-md-12 col-xxl-8 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
             className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
             style={{ minHeight: "463px" }}
@@ -486,7 +486,7 @@ const LandStaking = ({
             </div> */}
           </div>
         </div>
-        <div className="col-12 col-xxl-5 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
             className="p-3 mint-wrapper d-flex flex-column gap-1"
             // style={{ minHeight: "518px" }}
