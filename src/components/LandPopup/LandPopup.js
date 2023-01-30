@@ -11,7 +11,7 @@ const LandPopup = () => {
     const [count, setCount] = useState(0)
     setTimeout(() => {
         if(count === 0){
-            setActive(false)
+            setActive(true)
             setCount(1)
         }
     }, 500);

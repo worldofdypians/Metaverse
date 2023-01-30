@@ -40,7 +40,7 @@ const LandWhitelistModal = ({
     boxShadow: 24,
     p: 4,
     overflow: "auto",
-    minHeight: 200,
+    height: 535,
     borderRadius: "8px",
     overflowX: "hidden",
   };
