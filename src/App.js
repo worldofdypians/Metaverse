@@ -17,6 +17,8 @@ import Explorer from "./screens/Explorer/Explorer";
 import Land from "./screens/Land/Land";
 import LandPopup from "./components/LandPopup/LandPopup";
 import Roadmap from "./screens/Roadmap/Roadmap";
+import scrollToTop from './assets/scrollToTop.svg'
+
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -168,6 +170,7 @@ function App() {
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
+        <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" />
         <Footer />
       </div>
       {showWalletModal === true && (
