@@ -24,7 +24,7 @@ const NewsCard = ({ type, image, title, content, date }) => {
     <div
       className="news-card-wrapper"
       style={{ cursor: "pointer" }}
-      onClick={() => setShowContent(!showContent)}
+      onClick={() => content.length > 280 && setShowContent(!showContent)}
     >
       <div
         className={`news-card ${
@@ -36,7 +36,7 @@ const NewsCard = ({ type, image, title, content, date }) => {
             <img src={image} alt="news image" className="news-image" z />
           </div>
           <div className="d-flex flex-column gap-3 w-100">
-            <div className="d-flex  align-items-center justify-content-between">
+            <div className="d-flex align-items-center justify-content-between">
               <div
                 className={`${
                   type === "announcement"
@@ -63,9 +63,10 @@ const NewsCard = ({ type, image, title, content, date }) => {
           }}
         ></p>
         <div
-          className="d-flex align-items-center gap-2"
-          style={{ cursor: "pointer" }}
-          onClick={() => setShowContent(!showContent)}
+          className={`d-flex align-items-center gap-2`}
+          style={{ cursor: "pointer", visibility: content.length < 280 && 'hidden' }}
+          onClick={() => content.length > 280 && setShowContent(!showContent)}
+
         >
           <span className="read-more font-poppins">
             {showContent ? "Read less" : "Read more"}
