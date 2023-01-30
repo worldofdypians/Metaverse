@@ -47,7 +47,7 @@ const RegisterModal = ({
             let result = window.checkWhitelistWod(coinbase)
             if (result == 1){
                 if (donwloadSelected == true)
-                    window.location.href = "https://drive.google.com/file/d/1XJRAQiDdi9buqsn0pyIz5q_izxDLU4Nz/view?usp=share_link"
+                    window.location.href = "https://drive.google.com/file/d/1pyRTB0_Lr27p_eIg3yRqQYLPSWBnyePp/view"
                 else
                     window.location.href = "https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth"
             }
