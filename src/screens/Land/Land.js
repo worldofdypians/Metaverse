@@ -342,7 +342,7 @@ const Land = ({
 
   const getMintPrice = async () => {
     const ethprice = await convertEthToUsd();
-    setmintPrice(1200 / Number(ethprice));
+    setmintPrice(300 / Number(ethprice));
   };
 
 

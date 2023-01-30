@@ -152,7 +152,7 @@ function App() {
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
 
-          {/* <Route
+          <Route
             exact
             path="/land"
             element={
@@ -166,7 +166,7 @@ function App() {
                 balance={currencyAmount}
               />
             }
-          /> */}
+          />
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
