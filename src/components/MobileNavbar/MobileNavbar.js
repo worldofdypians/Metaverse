@@ -88,7 +88,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-        {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/land"
             className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -98,7 +98,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             <h6 className="mobile-nav-link font-poppins mb-0">Land</h6>
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
-        </div> */}
+        </div>
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/roadmap"

@@ -159,7 +159,7 @@ const LandWhitelistModal = ({
   },[coinbase])
   
   
-
+// console.log(balance, mintPrice)
   return (
     <Modal
       open={open}
