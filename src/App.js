@@ -18,6 +18,7 @@ import Land from "./screens/Land/Land";
 import LandPopup from "./components/LandPopup/LandPopup";
 import Roadmap from "./screens/Roadmap/Roadmap";
 import scrollToTop from './assets/scrollToTop.svg'
+import ScrollTop from "./components/ScrollTop";
 
 
 function App() {
@@ -170,7 +171,8 @@ function App() {
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
-        <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" />
+        {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
+        <ScrollTop />
         <Footer />
       </div>
       {showWalletModal === true && (
