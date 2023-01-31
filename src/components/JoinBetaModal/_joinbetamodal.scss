@@ -1,0 +1,86 @@
+.register-grid-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 27px;
+    color: #ffffff;
+  }
+  
+  .register-tag {
+    background: none !important;
+    color: rgba(140, 86, 255, 1) !important;
+  }
+  
+  .walletdesc {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  
+  .whitedesc {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  
+  .separator {
+    height: 1px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .optionwrapper {
+    border: 2px solid #6a608c;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+  }
+  
+  .optionwrapper:hover {
+    border: 2px solid #7bd8b0;
+  }
+  
+  .walletname {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #f7f7fc;
+  }
+  
+  .option-wallet {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .purpledesc {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: right;
+    color: #FFFFFF;
+  }
+  
+  .wallettext {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #d1d0d7;
+  }
+
+  
+  .checkbox-title{
+    font-weight: 400;
+font-size: 14px;
+line-height: 21px;
+color: #FFFFFF;
+  }
+
+  .checkbox-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
