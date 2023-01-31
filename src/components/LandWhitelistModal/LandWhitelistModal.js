@@ -40,7 +40,7 @@ const LandWhitelistModal = ({
     boxShadow: 24,
     p: 4,
     overflow: "auto",
-    height: 535,
+    height: 'auto',
     borderRadius: "8px",
     overflowX: "hidden",
   };
@@ -171,8 +171,8 @@ const LandWhitelistModal = ({
           <div>
             <div className="d-flex justify-content-between gap-1">
               <h2 className="font-organetto register-grid-title px-0">
-                Join our{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+              WoD Genesis Land NFT{" "}
+                <mark className="font-organetto register-tag"> whitelist</mark>
               </h2>
               <img
                 src={X}
@@ -186,10 +186,10 @@ const LandWhitelistModal = ({
             </div>
             <div className="d-flex flex-column gap-3">
               <p className="text-white m-0 walletdesc font-poppins">
-              Register now to become a World of Dypians Genesis Land NFT owner. In order to be whitelist eligible, you must meet the following requirements:
+              Connect your wallet for a chance at a limited 1,000 plot Genesis Land NFT mint whitelist spot guaranteeing access to a maximum of 10 Genesis Land NFT mints per wallet.
               </p>
               <p className="text-white m-0 walletdesc font-poppins">
-                Requirements:
+              Connected wallets must meet at least one of the following  two requirements to be eligible for a whitelist spot:
               </p>
               <div className="d-flex justify-content-between gap-2 align-items-start">
                 <img
@@ -205,9 +205,9 @@ const LandWhitelistModal = ({
                   style={{ position: "relative", top: "3px" }}
                 />
                 <div className="d-flex flex-column gap-0 justify-content-between">
-                  <span className="reqtitle">CAWS NFT</span>
+                  <span className="reqtitle">CAWS NFT Ownership</span>
                   <span className="reqdesc">
-                  You must hold at least one CAWS NFT in your wallet or staked in the CAWS staking pool.
+                  Registered wallet must currently hold at least one CAWS NFT or contain a CAWS NFT deposited in the CAWS Staking pool.
                   </span>
                 </div>
               </div>
@@ -237,9 +237,9 @@ const LandWhitelistModal = ({
                   style={{ position: "relative", top: "3px" }}
                 />
                 <div className="d-flex flex-column gap-0 justify-content-between">
-                  <span className="reqtitle">ETH Balance</span>
+                  <span className="reqtitle">Meet token Balance Threshold</span>
                   <span className="reqdesc">
-                  You must have at least $1,200 of ETH in your wallet.
+                  Wallet must carry a minimum balance of $1,200 (usd) worth of ETH at the time of  WL registration.
                   </span>
                 </div>
               </div>
@@ -302,7 +302,7 @@ const LandWhitelistModal = ({
               <div>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
                   <p className="m-0 wallettext font-poppins">Wallet address</p>
-                  <p className="purpledesc m-0" style={{color: '#181636'}}>{shortAddress(coinbase)}</p>
+                  <p className="purpledesc m-0" style={{color: '#f7f7fc'}}>{shortAddress(coinbase)}</p>
                 </div>
                 <div className="separator"></div>
 
