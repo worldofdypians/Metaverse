@@ -5,6 +5,7 @@ import membersTwitter from "../../assets/landAssets/membersTwitter.svg";
 import membersDiscord from "../../assets/landAssets/membersDiscord.svg";
 import membersPlaying from "../../assets/landAssets/membersPlaying.svg";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import { NavLink } from "react-router-dom";
 
 const Members = ({handleRegister}) => {
   const [seats, setSeats] = useState(0);
@@ -86,9 +87,11 @@ const Members = ({handleRegister}) => {
           </span>
         </div>
       </div>
-      <div className="linear-border" style={{ width: "fit-content" }}>
-        <button className="btn filled-btn px-5 w-100" onClick={handleRegister}>Join Beta</button>
-      </div>
+      <NavLink to="join-beta" className="linear-border" style={{ width: "fit-content", textDecoration: 'none' }}>
+        <button className="btn filled-btn px-5 w-100" 
+        // onClick={handleRegister}
+        >Join Beta</button>
+      </NavLink>
     </div>
   );
 };

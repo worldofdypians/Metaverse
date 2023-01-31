@@ -71,7 +71,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
   return (
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex w-100 flex-column beta-main-wrapper py-5">
-        <div className="row w-100 px-3 px-lg-5 mx-0 justify-content-between align-items-center">
+        <div className="row w-100 pt-5 pt-lg-0 px-3 px-lg-5 mx-0 justify-content-between align-items-center">
           <div className="col-12 col-lg-6">
             <h6 className="beta-tester-title font-organetto">
               Beta Testing{" "}
