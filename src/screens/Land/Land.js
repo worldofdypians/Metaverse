@@ -372,7 +372,7 @@ const Land = ({
     //  }, 1000);
 
     //  return () => clearInterval(interval);
-  }, [isConnected, EthRewards, coinbase, chainId]);
+  }, [isConnected, EthRewards, coinbase, chainId, myCAWSNFTsCreated.length, myCAWSNFTsTotalStaked.length]);
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
