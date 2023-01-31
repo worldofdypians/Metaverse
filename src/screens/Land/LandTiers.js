@@ -31,7 +31,7 @@ const LandTiers = () => {
         benefits: [
           "1 Multi Functional Building",
           "2 Enviromental Items",
-          "1 AI Powered NPC (Non-Player Character)",
+          "1 AI Powered NPC",
           "Exclusive Land NFT Staking",
           "Earn Special Rewards",
           "Monetize Land",
