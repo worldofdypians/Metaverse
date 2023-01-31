@@ -10,33 +10,39 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 
 const JoinBeta = ({ coinbase, handleRegister }) => {
   const requirements = [
-    "PC minimum requirements",
-    "Joined Discord",
-    "Twitter Account",
-    "Web 3 Wallet",
-    "Screen capture software",
+    "Access to a PC that meets minimum system requirements",
+    "Member of Dypius Discord Server",
+    "Must own an active Twitter account ",
+    "Able to provide an Email Address",
+    "Supported Web 3 Wallet available",
+    "Screen capturing software ",
+    'Good Communication Skills',
+    'Attention to Detail'
   ];
 
   const tasks = [
-    "Log in daily",
-    "Explore game in entirety",
-    "Define bugs (content & technical)",
-    "Create tickets",
-    "Support game community",
-    "Give suggestions",
     "Follow Team instructions",
-    "Share game features on social media",
+    "Download and install latest updates",
+    "Frequent login and testing",
+    "Explore game in its entirety",
+    "Create feedback tickets",
+    "Document game bugs and findings",
+    "Provide valuable suggestions",
+    "Engage with community",
+    "Share experiences on social media"
   ];
 
   const benefits = [
-    "Early Access",
-    "Test latest features",
-    "Private Discord Channels",
-    "Closed beta giveaways",
-    "Rewards",
+    "Early content access",
+    "Assist in improving World of Dypians",
+    "Access to private Discord channels",
+    "Meet new community members",
+    "Exclusive Beta giveaways",
     "Priority on employee openings",
-    "Gain experience",
-    "Certified WoD Beta Tester",
+    "Monetary compensation and other special prizes",
+    "Gain valuable experience",
+    "Become certified WoD Beta Tester",
+    "Improve potential employment opportunities"
   ];
 
   const [seats, setSeats] = useState();
@@ -74,35 +80,33 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
         <div className="row w-100 pt-5 pt-lg-0 px-3 px-lg-5 mx-0 justify-content-between align-items-center">
           <div className="col-12 col-lg-6">
             <h6 className="beta-tester-title font-organetto">
-              Beta Testing{" "}
+              Beta Tester{" "}
               <span className="beta-tester-title" style={{ color: "#8c56ff" }}>
                 Application
               </span>
             </h6>
             <p className="beta-tester-desc">
-              Become a World of Dypians beta tester and get early access to
-              latest features, access to private discord channels, rewards and
-              opportunities to test new products. The rewarding campaigns are an
-              extra bonus that will make your experience as a beta tester even
-              more enjoyable.
+              Apply to become a World of Dypians beta tester to gain early
+              access to the latest game updates and features, entrance to
+              private tester discord channels, provide valuable feedback to
+              developers, and earn rewards while enjoying exciting gameplay.
             </p>
             <p className="beta-tester-desc">
-            Additionally, as a beta tester, you will have the
-              opportunity to play the game in its early stages, provide valuable
-              feedback, and shape the development of the game. By participating
-              in the beta testing process, you will be making a significant
-              contribution to the success of World of Dypians.
+              If your application is selected to become a beta tester, you will
+              have the opportunity to help shape the development of the game and
+              make a significant contribution to the success of World of
+              Dypians.
             </p>
           </div>
           <div className="col-12 col-lg-5">
             <div className="join-beta-banner  d-flex justify-content-center  flex-column gap-2">
               <h6 className="font-organetto become-tester-title">
-                Become a beta tester{" "}
+              Apply to become a WoD{" "}
                 <span
                   className="become-tester-title"
                   style={{ color: "#00fecf" }}
                 >
-                  now!
+                  Beta Tester
                 </span>
               </h6>
               <div className="d-flex align-items-end justify-content-between">
@@ -127,7 +131,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
                     className="btn filled-btn px-5 d-flex align-items-center gap-2"
                     onClick={handleRegister}
                   >
-                    Join Beta
+                    Apply Now
                   </button>
                 </div>
               </div>
@@ -159,7 +163,6 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
                 <div className="d-flex align-items-center gap-2">
                   <img src={checkIcon} alt="check" />
                   <span className="beta-info-item">{item}</span>
-                  
                 </div>
               ))}
             </div>

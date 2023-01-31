@@ -40,8 +40,6 @@ const JoinBetaModal = ({
   coinbase,
   showForms,
 }) => {
-  
-
   const options = [
     {
       name: "Metamask",
@@ -57,7 +55,7 @@ const JoinBetaModal = ({
     products: "",
   };
 
-  var productsArray = []
+  var productsArray = [];
   const [showOptions, setShowOptions] = useState(false);
   const [seats, setSeats] = useState(0);
   const [values, setValues] = useState(initialState);
@@ -67,44 +65,44 @@ const JoinBetaModal = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [timer, setTimer] = useState(null);
   const [status, setStatus] = useState("");
-  const [modalWidth, setModalWidth] = useState(showForms)
+  const [modalWidth, setModalWidth] = useState(showForms);
 
-//   const checkInput = async (name, inputValue) => {
-//     if (name === "discord") {
-//       const data = { discord: inputValue };
-//       const check = await axios
-//         .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
-//         .then(function (result) {
-//           return result.data;
-//         })
-//         .catch(function (error) {
-//           console.error(error);
-//         });
+  //   const checkInput = async (name, inputValue) => {
+  //     if (name === "discord") {
+  //       const data = { discord: inputValue };
+  //       const check = await axios
+  //         .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
+  //         .then(function (result) {
+  //           return result.data;
+  //         })
+  //         .catch(function (error) {
+  //           console.error(error);
+  //         });
 
-//       if (check.status === 1) {
-//         setStatus("Already joined");
-//       } else {
-//         setStatus("");
-//       }
-//     }
+  //       if (check.status === 1) {
+  //         setStatus("Already joined");
+  //       } else {
+  //         setStatus("");
+  //       }
+  //     }
 
-//     if (name === "email") {
-//       const data = { email: inputValue };
-//       const check = await axios
-//         .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
-//         .then(function (result) {
-//           return result.data;
-//         })
-//         .catch(function (error) {
-//           console.error(error);
-//         });
-//       if (check.status === 1) {
-//         setStatus("Already joined");
-//       } else {
-//         setStatus("");
-//       }
-//     }
-//   };
+  //     if (name === "email") {
+  //       const data = { email: inputValue };
+  //       const check = await axios
+  //         .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
+  //         .then(function (result) {
+  //           return result.data;
+  //         })
+  //         .catch(function (error) {
+  //           console.error(error);
+  //         });
+  //       if (check.status === 1) {
+  //         setStatus("Already joined");
+  //       } else {
+  //         setStatus("");
+  //       }
+  //     }
+  //   };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -123,20 +121,19 @@ const JoinBetaModal = ({
   };
 
   const addProducts = (product) => {
-    if(productsArray.includes(product)){
-        const index = productsArray.indexOf(product)
-        productsArray.splice(index, 1)
-    }else{
-        productsArray.push(product)
+    if (productsArray.includes(product)) {
+      const index = productsArray.indexOf(product);
+      productsArray.splice(index, 1);
+    } else {
+      productsArray.push(product);
     }
     console.log(productsArray);
-  }
+  };
 
   const handleSubmit = async (e) => {
-
     productsArray.map((item) => {
-        setValues({...values, products: values.products.concat(item)})
-    })
+      setValues({ ...values, products: values.products.concat(item) });
+    });
 
     e.preventDefault();
     setErrors(validate(values));
@@ -165,11 +162,14 @@ const JoinBetaModal = ({
           email: values.email,
           discord: values.discord,
           twitter: values.twitter,
-          country: values.country
+          country: values.country,
         };
         try {
           const send = await axios
-            .post("https://api3.dyp.finance/api/beta_tester_application/insert", data)
+            .post(
+              "https://api3.dyp.finance/api/beta_tester_application/insert",
+              data
+            )
             .then(function (result) {
               return result.data;
             })
@@ -182,24 +182,23 @@ const JoinBetaModal = ({
             setStatus("Already joined");
             setSuccess(false);
             setLoading(false);
-            setModalWidth(false)
+            setModalWidth(false);
           } else if (send.status === 1) {
             //successfully registered
             setStatus("Successfully joined");
             setSuccess(true);
             setLoading(false);
-            setModalWidth(false)
+            setModalWidth(false);
           } else if (send.status === 2) {
             setStatus("Successfully joined");
             //more than 500
             setSuccess(false);
             setLoading(false);
-            setModalWidth(false)
+            setModalWidth(false);
           } else {
             setStatus("Failed to join");
             setSuccess(false);
             setLoading(false);
-            
           }
         } catch (e) {
           window.alertify.error("Something went wrong!" + e.responseText);
@@ -243,7 +242,9 @@ const JoinBetaModal = ({
   const checkData = async () => {
     if (coinbase) {
       const check = await axios
-        .get(`https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`)
+        .get(
+          `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
+        )
         .then(function (result) {
           return result.data;
         })
@@ -266,7 +267,7 @@ const JoinBetaModal = ({
   useEffect(() => {
     checkData();
   }, [coinbase]);
-   
+
   console.log(modalWidth);
   return (
     <Modal
@@ -279,7 +280,8 @@ const JoinBetaModal = ({
           <div>
             <div className="d-flex justify-content-between gap-1">
               <h2 className="font-organetto d-flex align-items-center register-grid-title px-0">
-                Join <mark className="font-organetto register-tag">beta</mark>
+                Tester{" "}
+                <mark className="font-organetto register-tag">Application</mark>
               </h2>
               <img
                 src={X}
@@ -299,9 +301,9 @@ const JoinBetaModal = ({
                 </p>
               ) : (
                 <p className="text-white m-0 walletdesc font-poppins">
-                  Become a World of Dypians beta tester and get early access to
-                  latest features, access to private discord channels, rewards
-                  and opportunities to test new products.
+                  Become a World of Dypians beta tester to get early access to
+                  the latest content, entrance to private discord channels, earn
+                  rewards, gain experience, and help improve the game.
                 </p>
               )}
 
@@ -444,62 +446,61 @@ const JoinBetaModal = ({
                     // placeholder={"User#1234"}
                   />
                 </div>
-               <div className="mt-3">
-               <span className="checkbox-title mt-3">What Dypius products do you use?</span>
-                <div className="checkbox-grid">
+                <div className="mt-3">
+                  <span className="checkbox-title mt-3">
+                    What Dypius products do you use?
+                  </span>
+                  <div className="checkbox-grid">
                     <div className="d-flex align-items-center gap-2">
-                        <Checkbox
-                        onChange={() => addProducts('Hold DYP,')}
-                         sx={{
-                      color: "white",
-                      '&.Mui-checked': {
-                      color: "#00FECF",
-                       },
-                     }}
-                        />
-                        <span className="checkbox-title">Hold DYP</span>
+                      <Checkbox
+                        onChange={() => addProducts("Hold DYP,")}
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#00FECF",
+                          },
+                        }}
+                      />
+                      <span className="checkbox-title">Hold DYP</span>
                     </div>
                     <div className="d-flex align-items-center gap-2">
-                        <Checkbox
-                        onChange={() => addProducts('Hold iDYP,')}
-
-                         sx={{
-                      color: "white",
-                      '&.Mui-checked': {
-                      color: "#00FECF",
-                       },
-                     }}
-                        />
-                        <span className="checkbox-title">Hold iDYP</span>
+                      <Checkbox
+                        onChange={() => addProducts("Hold iDYP,")}
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#00FECF",
+                          },
+                        }}
+                      />
+                      <span className="checkbox-title">Hold iDYP</span>
                     </div>
                     <div className="d-flex align-items-center gap-2">
-                        <Checkbox
-                        onChange={() => addProducts('CAWS NFT,')}
-
-                         sx={{
-                      color: "white",
-                      '&.Mui-checked': {
-                      color: "#00FECF",
-                       },
-                     }}
-                        />
-                        <span className="checkbox-title">CAWS NFT</span>
+                      <Checkbox
+                        onChange={() => addProducts("CAWS NFT,")}
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#00FECF",
+                          },
+                        }}
+                      />
+                      <span className="checkbox-title">CAWS NFT</span>
                     </div>
                     <div className="d-flex align-items-center gap-2">
-                        <Checkbox
-                        onChange={() => addProducts('Earn Products,')}
-
-                         sx={{
-                      color: "white",
-                      '&.Mui-checked': {
-                      color: "#00FECF",
-                       },
-                     }}
-                        />
-                        <span className="checkbox-title">Earn products</span>
+                      <Checkbox
+                        onChange={() => addProducts("Earn Products,")}
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#00FECF",
+                          },
+                        }}
+                      />
+                      <span className="checkbox-title">Earn products</span>
                     </div>
+                  </div>
                 </div>
-               </div>
 
                 <div
                   className="linear-border"
