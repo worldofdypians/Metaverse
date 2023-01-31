@@ -214,7 +214,7 @@ const LandStaking = ({
             className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
             style={{ minHeight: "463px" }}
           >
-            <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
+            {/* <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
               <span className="pricetext position-relative">Price</span>
               <span className="totalprice position-relative">$ 1,200</span>
               <div className="price-separator"></div>
@@ -231,7 +231,7 @@ const LandStaking = ({
                 </span>
               </span>
             
-            </div>
+            </div> */}
             <img
               src={require("../../assets/landAssets/genesis-hero.png")}
               alt=""
@@ -261,12 +261,17 @@ const LandStaking = ({
                   alt=""
                   className="cawsimg"
                 />
-                <span className="whitelist-desc col-xxl-5 col-lg-5 p-0 m-0">
+               <div className="d-flex flex-column gap-2 col-6 col-xxl-5 col-lg-5 p-0 m-0">
+               <span className="whitelist-desc ">
                   *If you are currently holding or staking a CAWS NFT, you will
                   receive a <br className="discount-break" />
                   <mark className="marktext">20% discount</mark> on the World of
                   Dypians Genesis Land NFT mint price.
                 </span>
+                <span className="minting-price">
+                  Mint price $1,200 ({getFormattedNumber(mintPrice, 2)} ETH)
+                </span>
+               </div>
               </div>
               <div
                 className={

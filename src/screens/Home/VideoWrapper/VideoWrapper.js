@@ -33,7 +33,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                 className="btn outline-btn px-5 d-flex align-items-center gap-2"
                 onClick={handleRegister}
               >
-                Join Whitelist
+                Join Beta
               </button>
             </div>
             <div

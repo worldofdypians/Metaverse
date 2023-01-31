@@ -87,7 +87,7 @@ const Members = ({handleRegister}) => {
         </div>
       </div>
       <div className="linear-border" style={{ width: "fit-content" }}>
-        <button className="btn filled-btn px-5 w-100" onClick={handleRegister}>Join whitelist</button>
+        <button className="btn filled-btn px-5 w-100" onClick={handleRegister}>Join Beta</button>
       </div>
     </div>
   );
