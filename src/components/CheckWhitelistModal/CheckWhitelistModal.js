@@ -50,7 +50,7 @@ const RegisterModal = ({
       if (result == 1) {
         if (donwloadSelected == true)
           window.location.href =
-            "https://drive.google.com/file/d/1pyRTB0_Lr27p_eIg3yRqQYLPSWBnyePp/view";
+            "https://drive.google.com/file/d/1gbce0Q7siFOvqOhHNEDtib1kev2-qgJZ/view?usp=sharingw";
         else window.location.href = "https://worldofdypians.com/account";
       }
     }
