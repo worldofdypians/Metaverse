@@ -277,34 +277,34 @@ const JoinBetaModal = ({
       });
   };
 
-  // const checkData = async () => {
-  //   if (coinbase) {
-  //     const check = await axios
-  //       .get(
-  //         `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
-  //       )
-  //       .then(function (result) {
-  //         return result.data;
-  //       })
-  //       .catch(function (error) {
-  //         console.error(error);
-  //       });
+  const checkData = async () => {
+    if (coinbase) {
+      const check = await axios
+        .get(
+          `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
+        )
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
 
-  //     if (check.status === 1) {
-  //       setStatus("Already joined");
-  //     } else {
-  //       setStatus("");
-  //     }
-  //   }
-  // };
+      if (check.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
+      }
+    }
+  };
 
   useEffect(() => {
     countSeats();
   }, []);
 
-  // useEffect(() => {
-  //   checkData();
-  // }, [coinbase]);
+  useEffect(() => {
+    checkData();
+  }, [coinbase]);
 
   // console.log(modalWidth);
   return (
