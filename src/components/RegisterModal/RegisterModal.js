@@ -19,6 +19,7 @@ import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
 
 import "./_registerModal.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import { useNavigate } from "react-router-dom";
 
 const StyledTextField = styled(TextField)(({}) => ({
   "& .MuiOutlinedInput-root": {
@@ -62,6 +63,8 @@ const RegisterModal = ({
     },
   ];
 
+  const navigate = useNavigate();
+
   const initialState = { email: "", discord: "" };
 
   const [showOptions, setShowOptions] = useState(false);
@@ -73,15 +76,17 @@ const RegisterModal = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [timer, setTimer] = useState(null);
   const [status, setStatus] = useState("");
+  const [betaStatus, setBetaStatus] = useState()
 
   const checkInput = async (name, inputValue) => {
     if (name === "discord") {
-      const data = { discord: inputValue};
+      const data = { discord: inputValue };
       const check = await axios
         .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
         .then(function (result) {
           return result.data;
-        }).catch(function (error) {
+        })
+        .catch(function (error) {
           console.error(error);
         });
 
@@ -98,7 +103,8 @@ const RegisterModal = ({
         .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
         .then(function (result) {
           return result.data;
-        }).catch(function (error) {
+        })
+        .catch(function (error) {
           console.error(error);
         });
       if (check.status === 1) {
@@ -108,7 +114,31 @@ const RegisterModal = ({
       }
     }
   };
-  
+
+  const checkBetaTester = async () => {
+    console.log("hello");
+    if (coinbase) {
+      const check = await axios
+        .get(
+          `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
+        )
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+
+      if (check.status === 1) {
+        setBetaStatus(1);
+      } else {
+        // setBetaStatus(0);
+        onClose();
+        navigate("/join-beta")
+      }
+    }
+  };
+
   const handleChange = async (e) => {
     const { name, value } = e.target;
 
@@ -117,22 +147,25 @@ const RegisterModal = ({
       [name]: value,
     });
 
-
-    clearTimeout(timer)
+    clearTimeout(timer);
 
     const newTimer = setTimeout(() => {
-      checkInput(name, value)
-    }, 500)
+      checkInput(name, value);
+    }, 500);
 
-    setTimer(newTimer)
+    setTimer(newTimer);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors(validate(values));
 
-    if ( errors.email === undefined && errors.discord === undefined) {
-      if (values.discord !== "" && values.email !== "" && values.discord.includes('#')) {
+    if (errors.email === undefined && errors.discord === undefined) {
+      if (
+        values.discord !== "" &&
+        values.email !== "" &&
+        values.discord.includes("#")
+      ) {
         setLoading(true);
 
         let signature = "";
@@ -140,10 +173,11 @@ const RegisterModal = ({
           .sign(window.config.whitelist_nft, coinbase)
           .then((data) => {
             signature = data;
-          }).catch((e)=>{
-            setLoading(false);
-            console.error(e)
           })
+          .catch((e) => {
+            setLoading(false);
+            console.error(e);
+          });
         const data = {
           signature: signature,
           address: coinbase,
@@ -193,13 +227,14 @@ const RegisterModal = ({
       setValues({ ...initialState });
     }
   };
-  
+
   const countSeats = async () => {
     await axios
       .get("https://api3.dyp.finance/api/whitelist/count")
       .then((data) => {
         setSeats(data.data.count);
-      }).catch(function (error) {
+      })
+      .catch(function (error) {
         console.error(error);
       });
   };
@@ -210,7 +245,8 @@ const RegisterModal = ({
         .get(`https://api3.dyp.finance/api/whitelist/check/${coinbase}`)
         .then(function (result) {
           return result.data;
-        }).catch(function (error) {
+        })
+        .catch(function (error) {
           console.error(error);
         });
 
@@ -227,10 +263,10 @@ const RegisterModal = ({
   }, []);
 
   useEffect(() => {
+    checkBetaTester();
     checkData();
   }, [coinbase]);
 
-  
   return (
     <Modal
       open={open}
@@ -252,7 +288,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ bottom: "25px", right: '-25px', height: '50px' }}
+                style={{ bottom: "25px", right: "-25px", height: "50px" }}
               />
             </div>
             <div className="d-flex flex-column gap-3">
@@ -264,7 +300,7 @@ const RegisterModal = ({
               ) : (
                 <p className="text-white m-0 walletdesc font-poppins">
                   You will be eligible to be part of the beta testers team based
-                  on the details you provide. 
+                  on the details you provide.
                 </p>
               )}
 
@@ -275,9 +311,8 @@ const RegisterModal = ({
                     className="font-poppins register-tag"
                     style={{ fontSize: 32 }}
                   >
-                    {getFormattedNumber(seats,0) }
+                    {getFormattedNumber(seats, 0)}
                   </mark>
-                  
                 </span>
               </div>
               {/* <p className="m-0 text-white walletdesc font-poppins">
@@ -285,7 +320,7 @@ const RegisterModal = ({
               </p> */}
             </div>
             <div className="separator"></div>
-             <div
+            <div
               className={
                 showOptions === false ? "linear-border m-auto" : "m-auto"
               }
@@ -295,22 +330,22 @@ const RegisterModal = ({
               }}
             >
               {showOptions === false ? (
-          <button
-                className="btn outline-btn px-5 d-flex gap-1 align-items-center"
-                onClick={() => {
-                  setShowOptions(true);
-                }}
-                onMouseEnter={() => {
-                  setMouseOver(true);
-                }}
-                onMouseLeave={() => {
-                  setMouseOver(false);
-                }}
-              >
-                <img
-                  src={mouseOver === true ? blackwallet : whitewallet}
-                  alt=""
-                />
+                <button
+                  className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                  onClick={() => {
+                    setShowOptions(true);
+                  }}
+                  onMouseEnter={() => {
+                    setMouseOver(true);
+                  }}
+                  onMouseLeave={() => {
+                    setMouseOver(false);
+                  }}
+                >
+                  <img
+                    src={mouseOver === true ? blackwallet : whitewallet}
+                    alt=""
+                  />
                   Connect Wallet
                 </button>
               ) : (
@@ -335,10 +370,10 @@ const RegisterModal = ({
                       );
                     })}
                 </div>
-)}
-              </div>
+              )}
+            </div>
             {showForms === true && (
-              <div>
+              <div style={{opacity: 0}}>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
                   <p className="m-0 wallettext font-poppins">Wallet address</p>
                   <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
@@ -421,7 +456,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: '-25px', height: '50px'}}
+                style={{ right: "-25px", height: "50px" }}
               />
             </div>
 
@@ -451,7 +486,7 @@ const RegisterModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
 
@@ -474,7 +509,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: '-25px', height: '50px'}}
+                style={{ right: "-25px", height: "50px" }}
               />
             </div>
             <img src={alreadyjoinedLogo} alt="" />
@@ -503,7 +538,7 @@ const RegisterModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
             <button className="btn simple-btn px-5" onClick={onClose}>
@@ -525,7 +560,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: '-25px', height: '50px' }}
+                style={{ right: "-25px", height: "50px" }}
               />
             </div>
             <img src={waitlistLogo} alt="" />
@@ -555,7 +590,7 @@ const RegisterModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
             <button className="btn simple-btn px-5" onClick={onClose}>
@@ -577,7 +612,7 @@ const RegisterModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: '-25px', height: '50px' }}
+                style={{ right: "-25px", height: "50px" }}
               />
             </div>
             <img src={failed} alt="" />

@@ -8,6 +8,7 @@ import blackwallet from "../../assets/wallet-black.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 
 import "./_checkWhitelistModal.scss";
+import axios from "axios";
 
 const RegisterModal = ({
   open,
@@ -41,6 +42,7 @@ const RegisterModal = ({
 
   const [showOptions, setShowOptions] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
+  const [status, setStatus] = useState()
 
   const checkData = async () => {
     if (coinbase) {
@@ -56,8 +58,31 @@ const RegisterModal = ({
     }
   };
 
+
+  const checkBetaTester = async () => {
+    if (coinbase) {
+      const check = await axios
+        .get(
+          `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
+        )
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+
+      if (check.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
+      }
+    }
+  };
+
   useEffect(() => {
     checkData();
+    checkBetaTester();
   }, [coinbase]);
 
   return (

@@ -131,9 +131,7 @@ const JoinBetaModal = ({
   };
 
   const handleSubmit = async (e) => {
-    productsArray.map((item) => {
-      setValues({ ...values, products: values.products.concat(item) });
-    });
+
 
     e.preventDefault();
     setErrors(validate(values));
@@ -163,6 +161,7 @@ const JoinBetaModal = ({
           discord: values.discord,
           twitter: values.twitter,
           country: values.country,
+          products: productsArray.join()
         };
         try {
           const send = await axios
@@ -453,7 +452,7 @@ const JoinBetaModal = ({
                   <div className="checkbox-grid">
                     <div className="d-flex align-items-center gap-2">
                       <Checkbox
-                        onChange={() => addProducts("Hold DYP,")}
+                        onChange={() => addProducts("Hold DYP")}
                         sx={{
                           color: "white",
                           "&.Mui-checked": {
@@ -465,7 +464,7 @@ const JoinBetaModal = ({
                     </div>
                     <div className="d-flex align-items-center gap-2">
                       <Checkbox
-                        onChange={() => addProducts("Hold iDYP,")}
+                        onChange={() => addProducts("Hold iDYP")}
                         sx={{
                           color: "white",
                           "&.Mui-checked": {
@@ -477,7 +476,7 @@ const JoinBetaModal = ({
                     </div>
                     <div className="d-flex align-items-center gap-2">
                       <Checkbox
-                        onChange={() => addProducts("CAWS NFT,")}
+                        onChange={() => addProducts("CAWS NFT")}
                         sx={{
                           color: "white",
                           "&.Mui-checked": {
@@ -489,7 +488,7 @@ const JoinBetaModal = ({
                     </div>
                     <div className="d-flex align-items-center gap-2">
                       <Checkbox
-                        onChange={() => addProducts("Earn Products,")}
+                        onChange={() => addProducts("Earn Products")}
                         sx={{
                           color: "white",
                           "&.Mui-checked": {
@@ -575,7 +574,7 @@ const JoinBetaModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
 
@@ -627,7 +626,7 @@ const JoinBetaModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
             <button className="btn simple-btn px-5" onClick={onClose}>
@@ -679,7 +678,7 @@ const JoinBetaModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
             <button className="btn simple-btn px-5" onClick={onClose}>

@@ -68,6 +68,9 @@ const Footer = () => {
           >
             Contact Us
           </a>
+          <NavLink to="/join-beta" style={{ textDecoration: "none" }}>
+            <span className="footer-link font-poppins">Join Beta</span>
+          </NavLink>
         </div>
         {windowSize.width > 786 ? (
           <div className="footer-socials">
