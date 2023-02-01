@@ -72,6 +72,9 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
   useEffect(() => {
     countWhitelist();
     countBeta();
+    window.scrollTo(0,0);
+    document.title = 'Join Beta'
+
   }, []);
 
   return (
