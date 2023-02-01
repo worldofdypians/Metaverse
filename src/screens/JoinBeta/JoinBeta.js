@@ -146,8 +146,8 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {requirements.map((item) => (
-                <div className="d-flex align-items-center gap-2">
-                  <img src={checkIcon} alt="check" />
+                <div className="d-flex align-items-start gap-2">
+                  <img src={checkIcon} alt="check" style={{position: 'relative', top: '2px'}} />
                   <span className="beta-info-item">{item}</span>
                 </div>
               ))}
@@ -160,8 +160,8 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {tasks.map((item) => (
-                <div className="d-flex align-items-center gap-2">
-                  <img src={checkIcon} alt="check" />
+                <div className="d-flex align-items-start gap-2">
+                  <img src={checkIcon} alt="check" style={{position: 'relative', top: '2px'}} />
                   <span className="beta-info-item">{item}</span>
                 </div>
               ))}
@@ -174,8 +174,8 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {benefits.map((item) => (
-                <div className="d-flex align-items-center gap-2">
-                  <img src={checkIcon} alt="check" />
+                <div className="d-flex align-items-start gap-2">
+                  <img src={checkIcon} alt="check" style={{position: 'relative', top: '2px'}} />
                   <span className="beta-info-item">{item}</span>
                 </div>
               ))}
