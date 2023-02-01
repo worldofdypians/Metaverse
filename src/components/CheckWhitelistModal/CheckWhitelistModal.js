@@ -42,7 +42,7 @@ const RegisterModal = ({
 
   const [showOptions, setShowOptions] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
-  const [status, setStatus] = useState()
+  const [status, setStatus] = useState();
 
   const checkData = async () => {
     if (coinbase) {
@@ -51,13 +51,10 @@ const RegisterModal = ({
         if (donwloadSelected == true)
           window.location.href =
             "https://drive.google.com/file/d/1pyRTB0_Lr27p_eIg3yRqQYLPSWBnyePp/view";
-        else
-          window.location.href =
-            "https://protaldyp.d3if9fd90qiqrq.amplifyapp.com/auth";
+        else window.location.href = "https://worldofdypians.com/account";
       }
     }
   };
-
 
   const checkBetaTester = async () => {
     if (coinbase) {
@@ -95,8 +92,7 @@ const RegisterModal = ({
         <div>
           <div className="d-flex justify-content-between gap-1">
             <h2 className="font-organetto register-grid-title px-0">
-              Join our{" "}
-              <mark className="font-organetto register-tag">whitelist</mark>
+              Join <mark className="font-organetto register-tag">beta</mark>
             </h2>
             <img
               src={X}
@@ -111,13 +107,13 @@ const RegisterModal = ({
           <div className="d-flex flex-column gap-3">
             {coinbase ? (
               <p className="text-white m-0 walletdesc font-poppins">
-                You must join the whitelist first to be part of the beta tester
-                users that will have access to World of Dypians. If you have
-                already joined the whitelist, please check back soon.
+                You must first join the beta in order to access World of
+                Dypians. If you have already registered for beta, please check
+                back soon.
               </p>
             ) : (
               <p className="text-white m-0 walletdesc font-poppins">
-                Please connect your wallet to verify if you are whitelisted as a
+                Please connect your wallet to verify if you are selected as a
                 Beta Tester.
               </p>
             )}
@@ -178,7 +174,12 @@ const RegisterModal = ({
           {showForms === true && (
             <div>
               <div className="d-flex justify-content-between gap-2 align-items-center">
-                <p className="m-0 wallettext font-poppins">Wallet address</p>
+                <p
+                  className="m-0 wallettext font-poppins"
+                  style={{ whiteSpace: "pre" }}
+                >
+                  Wallet address
+                </p>
                 <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
               </div>
               <div className="separator"></div>

@@ -71,42 +71,42 @@ const JoinBetaModal = ({
   const [status, setStatus] = useState("");
   const [modalWidth, setModalWidth] = useState(showForms);
 
-  //   const checkInput = async (name, inputValue) => {
-  //     if (name === "discord") {
-  //       const data = { discord: inputValue };
-  //       const check = await axios
-  //         .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
-  //         .then(function (result) {
-  //           return result.data;
-  //         })
-  //         .catch(function (error) {
-  //           console.error(error);
-  //         });
+    const checkInput = async (name, inputValue) => {
+      if (name === "discord") {
+        const data = { discord: inputValue };
+        const check = await axios
+          .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
+          .then(function (result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
 
-  //       if (check.status === 1) {
-  //         setStatus("Already joined");
-  //       } else {
-  //         setStatus("");
-  //       }
-  //     }
+        if (check.status === 1) {
+          setStatus("Already joined");
+        } else {
+          setStatus("");
+        }
+      }
 
-  //     if (name === "email") {
-  //       const data = { email: inputValue };
-  //       const check = await axios
-  //         .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
-  //         .then(function (result) {
-  //           return result.data;
-  //         })
-  //         .catch(function (error) {
-  //           console.error(error);
-  //         });
-  //       if (check.status === 1) {
-  //         setStatus("Already joined");
-  //       } else {
-  //         setStatus("");
-  //       }
-  //     }
-  //   };
+      if (name === "email") {
+        const data = { email: inputValue };
+        const check = await axios
+          .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
+          .then(function (result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+        if (check.status === 1) {
+          setStatus("Already joined");
+        } else {
+          setStatus("");
+        }
+      }
+    };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -115,13 +115,13 @@ const JoinBetaModal = ({
       ...values,
       [name]: value,
     });
-    // clearTimeout(timer);
+    clearTimeout(timer);
 
-    // const newTimer = setTimeout(() => {
-    //   checkInput(name, value);
-    // }, 500);
+    const newTimer = setTimeout(() => {
+      checkInput(name, value);
+    }, 500);
 
-    // setTimer(newTimer);
+    setTimer(newTimer);
   };
 
   const addProducts = (product) => {
@@ -131,7 +131,7 @@ const JoinBetaModal = ({
     } else {
       productsArray.push(product);
     }
-    console.log(productsArray);
+    // console.log(productsArray);
   };
 
   const handleSubmit = async (e) => {
@@ -275,7 +275,7 @@ const JoinBetaModal = ({
     checkData();
   }, [coinbase]);
 
-  console.log(modalWidth);
+  // console.log(modalWidth);
   return (
     <Modal
       open={open}
@@ -385,7 +385,7 @@ const JoinBetaModal = ({
             {showForms === true && (
               <div>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
-                  <p className="m-0 wallettext font-poppins">Wallet address</p>
+                  <p className="m-0 wallettext font-poppins" style={{whiteSpace: 'pre'}}>Wallet address</p>
                   <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
                 </div>
                 <div className="separator"></div>
@@ -543,7 +543,7 @@ const JoinBetaModal = ({
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
                 {status}{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+                <mark className="font-organetto register-tag">beta</mark>
               </h2>
               <img
                 src={X}
@@ -558,8 +558,7 @@ const JoinBetaModal = ({
 
             <img src={successLogo} alt="" />
             <p className="text-white m-0">
-              Congratulations, your World of Dypians whitelist registration is
-              successful. Please visit the Dypius Discord for more information.
+            Congratulations, your World of Dypians Beta Tester registration is successful. Please visit the Dypius Discord for more information.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -596,7 +595,7 @@ const JoinBetaModal = ({
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
                 {status}{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+                <mark className="font-organetto register-tag">beta</mark>
               </h2>
               <img
                 src={X}
@@ -610,8 +609,7 @@ const JoinBetaModal = ({
             </div>
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
-              Your application as a World of Dypians beta tester has already
-              been received. Please check back soon.
+            Your application as a World of Dypians Beta Tester has already been received. Please check back soon.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -647,7 +645,7 @@ const JoinBetaModal = ({
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
                 {status}{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+                <mark className="font-organetto register-tag">beta</mark>
               </h2>
               <img
                 src={X}
@@ -699,7 +697,7 @@ const JoinBetaModal = ({
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
                 {status}{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+                <mark className="font-organetto register-tag">beta</mark>
               </h2>
               <img
                 src={X}
@@ -713,8 +711,7 @@ const JoinBetaModal = ({
             </div>
             <img src={failed} alt="" />
             <p className="text-white m-0">
-              Unable to join the World of Dypius beta tester whitelist. Please
-              try again.
+            Unable to join the World of Dypius Beta Tester. Please try again.
             </p>
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close
