@@ -175,9 +175,9 @@ function App() {
                 chainId={chainId}
                 showForms={showForms2}
                 balance={currencyAmount}
-              /> */}
+              />
             }
-          />
+          /> */}
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
