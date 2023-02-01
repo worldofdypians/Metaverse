@@ -33,7 +33,7 @@ const Header = ({ handleSignUp }) => {
           >
             News
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/land"
             className={({isActive}) =>
               isActive
@@ -42,7 +42,7 @@ const Header = ({ handleSignUp }) => {
             }
           >
             Land
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/roadmap"
             className={({isActive}) =>
