@@ -14,11 +14,11 @@ const LandHero = () => {
       icon: "envirioment",
       content: 'Add a unique touch to your space that reflects your personal style '
     },
-    // {
-    //   title: "1 AI Powered NPC (Non-Player Character)",
-    //   icon: "npc",
-    //   content: 'An informative virtual assistant that will greet users from all over the world'
-    // },
+    {
+      title: "1 AI Powered NPC",
+      icon: "npc",
+      content: 'An informative virtual assistant that will greet users from all over the world'
+    },
     {
       title: "Exclusive Land NFT Staking",
       icon: "coin",
