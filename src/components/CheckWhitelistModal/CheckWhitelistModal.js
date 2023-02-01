@@ -196,7 +196,7 @@ const RegisterModal = ({
                     openRegister();
                   }}
                 >
-                  Join Whitelist
+                  Join Beta
                 </button>
               </div>
             </div>

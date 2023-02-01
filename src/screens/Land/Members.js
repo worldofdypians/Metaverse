@@ -87,7 +87,7 @@ const Members = ({handleRegister}) => {
           </span>
         </div>
       </div>
-      <NavLink to="join-beta" className="linear-border" style={{ width: "fit-content", textDecoration: 'none' }}>
+      <NavLink to="/join-beta" className="linear-border" style={{ width: "fit-content", textDecoration: 'none' }}>
         <button className="btn filled-btn px-5 w-100" 
         // onClick={handleRegister}
         >Join Beta</button>

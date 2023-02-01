@@ -18,6 +18,8 @@ import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
 import "./_joinbetamodal.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { Checkbox } from "@mui/material";
+import useWindowSize from '../../hooks/useWindowSize'
+
 
 const StyledTextField = styled(TextField)(({}) => ({
   "& .MuiOutlinedInput-root": {
@@ -54,6 +56,8 @@ const JoinBetaModal = ({
     country: "",
     products: "",
   };
+
+  const windowSize = useWindowSize();
 
   var productsArray = [];
   const [showOptions, setShowOptions] = useState(false);
@@ -182,18 +186,22 @@ const JoinBetaModal = ({
             setSuccess(false);
             setLoading(false);
             setModalWidth(false);
+            setValues({...initialState})
           } else if (send.status === 1) {
             //successfully registered
             setStatus("Successfully joined");
             setSuccess(true);
             setLoading(false);
             setModalWidth(false);
+            setValues({...initialState})
           } else if (send.status === 2) {
             setStatus("Successfully joined");
             //more than 500
             setSuccess(false);
             setLoading(false);
             setModalWidth(false);
+            setValues({...initialState})
+
           } else {
             setStatus("Failed to join");
             setSuccess(false);
@@ -209,7 +217,7 @@ const JoinBetaModal = ({
         setLoading(false);
       }
 
-      setValues({ ...initialState });
+      // setValues({ ...initialState });
     }
   };
 
@@ -218,7 +226,7 @@ const JoinBetaModal = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: modalWidth === true ? "fit-content" : "min-content",
+    width: windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -278,7 +286,7 @@ const JoinBetaModal = ({
         {status === "" && (
           <div>
             <div className="d-flex justify-content-between gap-1">
-              <h2 className="font-organetto d-flex align-items-center register-grid-title px-0">
+              <h2 className="font-organetto d-flex align-items-start align-items-lg-center flex-column flex-lg-row register-grid-title px-0">
                 Tester{" "}
                 <mark className="font-organetto register-tag">Application</mark>
               </h2>
