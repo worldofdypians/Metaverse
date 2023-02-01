@@ -40,7 +40,7 @@ const LandWhitelistModal = ({
     boxShadow: 24,
     p: 4,
     overflow: "auto",
-    height: 'auto',
+    height: "auto",
     borderRadius: "8px",
     overflowX: "hidden",
   };
@@ -77,7 +77,6 @@ const LandWhitelistModal = ({
   const [status, setStatus] = useState("");
   const [mouseOver, setMouseOver] = useState(false);
 
-
   const handleSubmit = async (e) => {
     setLoading(true);
 
@@ -104,13 +103,13 @@ const LandWhitelistModal = ({
           setStatus("Failed to join");
           console.error(error);
         });
-        
+
       if (send.status === 0) {
         //user already exists
         setStatus("Failed to join");
         setSuccess(false);
         setLoading(false);
-      }  else{
+      } else {
         setStatus("Successfully joined");
         //more than 500
         setSuccess(false);
@@ -154,12 +153,11 @@ const LandWhitelistModal = ({
     }
   };
 
-  useEffect(()=>{
-    checkData()
-  },[coinbase])
-  
-  
-// console.log(balance, mintPrice)
+  useEffect(() => {
+    checkData();
+  }, [coinbase]);
+
+  // console.log(balance, mintPrice)
   return (
     <Modal
       open={open}
@@ -171,7 +169,7 @@ const LandWhitelistModal = ({
           <div>
             <div className="d-flex justify-content-between gap-1">
               <h2 className="font-organetto register-grid-title px-0">
-              WoD Genesis Land NFT{" "}
+                WoD Genesis Land NFT{" "}
                 <mark className="font-organetto register-tag"> whitelist</mark>
               </h2>
               <img
@@ -186,20 +184,23 @@ const LandWhitelistModal = ({
             </div>
             <div className="d-flex flex-column gap-3">
               <p className="text-white m-0 walletdesc font-poppins">
-              Connect your wallet for a chance at a limited 1,000 plot Genesis Land NFT mint whitelist spot guaranteeing access to a maximum of 10 Genesis Land NFT mints per wallet.
+                Connect your wallet for a chance at a limited 1,000 plot Genesis
+                Land NFT mint whitelist spot guaranteeing access to a maximum of
+                10 Genesis Land NFT mints per wallet.
               </p>
               <p className="text-white m-0 walletdesc font-poppins">
-              Connected wallets must meet at least one of the following  two requirements to be eligible for a whitelist spot:
+                Connected wallets must meet at least one of the following two
+                requirements to be eligible for a whitelist spot:
               </p>
               <div className="d-flex justify-content-between gap-2 align-items-start">
                 <img
                   src={
-                    (totalCAWCreated === 0 && totalCAWStaked === 0 ) && coinbase
-                    ? xmark
-                    : (totalCAWCreated !== 0 ||
-                      totalCAWStaked !== 0) && coinbase
-                    ? checkcircle
-                    : purplecircle
+                    totalCAWCreated === 0 && totalCAWStaked === 0 && coinbase
+                      ? xmark
+                      : (totalCAWCreated !== 0 || totalCAWStaked !== 0) &&
+                        coinbase
+                      ? checkcircle
+                      : purplecircle
                   }
                   alt=""
                   style={{ position: "relative", top: "3px" }}
@@ -207,7 +208,8 @@ const LandWhitelistModal = ({
                 <div className="d-flex flex-column gap-0 justify-content-between">
                   <span className="reqtitle">CAWS NFT Ownership</span>
                   <span className="reqdesc">
-                  Registered wallet must currently hold at least one CAWS NFT or contain a CAWS NFT deposited in the CAWS Staking pool.
+                    Registered wallet must currently hold at least one CAWS NFT
+                    or contain a CAWS NFT deposited in the CAWS Staking pool.
                   </span>
                 </div>
               </div>
@@ -227,9 +229,9 @@ const LandWhitelistModal = ({
               <div className="d-flex justify-content-between gap-2 align-items-start">
                 <img
                   src={
-                     (balance < mintPrice )&& coinbase
+                    balance < mintPrice && coinbase
                       ? xmark
-                      : (balance >= mintPrice) && coinbase
+                      : balance >= mintPrice && coinbase
                       ? checkcircle
                       : purplecircle
                   }
@@ -239,7 +241,8 @@ const LandWhitelistModal = ({
                 <div className="d-flex flex-column gap-0 justify-content-between">
                   <span className="reqtitle">Meet token Balance Threshold</span>
                   <span className="reqdesc">
-                  Wallet must carry a minimum balance of $1,200 (usd) worth of ETH at the time of  WL registration.
+                    Wallet must carry a minimum balance of $1,200 (usd) worth of
+                    ETH at the time of WL registration.
                   </span>
                 </div>
               </div>
@@ -302,7 +305,9 @@ const LandWhitelistModal = ({
               <div>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
                   <p className="m-0 wallettext font-poppins">Wallet address</p>
-                  <p className="purpledesc m-0" style={{color: '#f7f7fc'}}>{shortAddress(coinbase)}</p>
+                  <p className="purpledesc m-0" style={{ color: "#f7f7fc" }}>
+                    {shortAddress(coinbase)}
+                  </p>
                 </div>
                 <div className="separator"></div>
 
@@ -329,8 +334,8 @@ const LandWhitelistModal = ({
                     }`}
                     disabled={
                       balance < mintPrice &&
-                      (totalCAWCreated === 0 &&
-                      totalCAWStaked === 0)
+                      totalCAWCreated === 0 &&
+                      totalCAWStaked === 0
                     }
                     onClick={handleSubmit}
                   >
@@ -372,7 +377,9 @@ const LandWhitelistModal = ({
 
             <img src={successLogo} alt="" />
             <p className="text-white m-0">
-            Congratulations, you have successfully registered for the World of Dypians Genesis Land NFT whitelist. Please follow our official channels for additional information.
+              Congratulations, you have successfully registered for the World of
+              Dypians Genesis Land NFT whitelist. Please follow our official
+              channels for additional information.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -395,7 +402,7 @@ const LandWhitelistModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
 
@@ -416,8 +423,8 @@ const LandWhitelistModal = ({
                     "linear-gradient(89.7deg, #1C8BBF 0.23%, #69B6DE 99.72%)",
                   border: "none",
                   textDecoration: "none",
-                  paddingLeft: '2.5rem',
-                  paddingRight: '2.5rem'
+                  paddingLeft: "2.5rem",
+                  paddingRight: "2.5rem",
                 }}
                 onClick={handleConnect}
               >
@@ -450,7 +457,8 @@ const LandWhitelistModal = ({
             </div>
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
-            Your application for the World of Dypians Genesis Land NFT whitelist has already been received. Please check back soon.
+              Your application for the World of Dypians Genesis Land NFT
+              whitelist has already been received. Please check back soon.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -473,7 +481,7 @@ const LandWhitelistModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
             <div
@@ -493,8 +501,8 @@ const LandWhitelistModal = ({
                     "linear-gradient(89.7deg, #1C8BBF 0.23%, #69B6DE 99.72%)",
                   border: "none",
                   textDecoration: "none",
-                  paddingLeft: '2.5rem',
-                  paddingRight: '2.5rem'
+                  paddingLeft: "2.5rem",
+                  paddingRight: "2.5rem",
                 }}
                 onClick={handleConnect}
               >
@@ -552,7 +560,7 @@ const LandWhitelistModal = ({
                 onClick={handleConnect}
               >
                 <img src={discord} alt="" />
-                Join discord channel
+                Join Discord server
               </a>
             </div>
             <button className="btn simple-btn px-5" onClick={onClose}>
@@ -574,12 +582,13 @@ const LandWhitelistModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: "-32px", height: "50px", bottom: '50px' }}
+                style={{ right: "-32px", height: "50px", bottom: "50px" }}
               />
             </div>
             <img src={failed} alt="" />
             <p className="text-white m-0">
-            Unable to join the World of Dypians Genesis Land NFT whitelist. Please try again.
+              Unable to join the World of Dypians Genesis Land NFT whitelist.
+              Please try again.
             </p>
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close
