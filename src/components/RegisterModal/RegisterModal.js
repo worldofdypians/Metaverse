@@ -19,6 +19,7 @@ import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
 
 import "./_registerModal.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import { useNavigate } from "react-router-dom";
 
 const StyledTextField = styled(TextField)(({}) => ({
   "& .MuiOutlinedInput-root": {
@@ -62,6 +63,8 @@ const RegisterModal = ({
     },
   ];
 
+  const navigate = useNavigate();
+
   const initialState = { email: "", discord: "" };
 
   const [showOptions, setShowOptions] = useState(false);
@@ -73,6 +76,7 @@ const RegisterModal = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [timer, setTimer] = useState(null);
   const [status, setStatus] = useState("");
+  const [betaStatus, setBetaStatus] = useState()
 
   const checkInput = async (name, inputValue) => {
     if (name === "discord") {
@@ -107,6 +111,30 @@ const RegisterModal = ({
         setStatus("Already joined");
       } else {
         setStatus("");
+      }
+    }
+  };
+
+  const checkBetaTester = async () => {
+    console.log("hello");
+    if (coinbase) {
+      const check = await axios
+        .get(
+          `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
+        )
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+
+      if (check.status === 1) {
+        setBetaStatus(1);
+      } else {
+        // setBetaStatus(0);
+        onClose();
+        navigate("/join-beta")
       }
     }
   };
@@ -235,6 +263,7 @@ const RegisterModal = ({
   }, []);
 
   useEffect(() => {
+    checkBetaTester();
     checkData();
   }, [coinbase]);
 
@@ -344,7 +373,7 @@ const RegisterModal = ({
               )}
             </div>
             {showForms === true && (
-              <div>
+              <div style={{opacity: 0}}>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
                   <p className="m-0 wallettext font-poppins">Wallet address</p>
                   <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
