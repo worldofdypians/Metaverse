@@ -88,6 +88,21 @@ const JoinBetaModal = ({
         } else {
           setStatus("");
         }
+        const betaData = { discord: inputValue };
+        const betaCheck = await axios
+          .post(`https://api3.dyp.finance/api/beta_testers_application/check/discord`, betaData)
+          .then(function (result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+
+        if (betaCheck.status === 1) {
+          setStatus("Already joined");
+        } else {
+          setStatus("");
+        }
       }
 
       if (name === "email") {
@@ -105,6 +120,22 @@ const JoinBetaModal = ({
         } else {
           setStatus("");
         }
+        const betaData = { email: inputValue };
+        const betaCheck = await axios
+          .post(`https://api3.dyp.finance/api/beta_testers_application/check/email`, betaData)
+          .then(function (result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+        if (betaCheck.status === 1) {
+          setStatus("Already joined");
+        } else {
+          setStatus("");
+        }
+
+        
       }
     };
 
