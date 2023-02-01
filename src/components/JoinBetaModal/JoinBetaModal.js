@@ -146,13 +146,13 @@ const JoinBetaModal = ({
       ...values,
       [name]: value,
     });
-    clearTimeout(timer);
+    // clearTimeout(timer);
 
-    const newTimer = setTimeout(() => {
-      checkInput(name, value);
-    }, 500);
+    // const newTimer = setTimeout(() => {
+    //   checkInput(name, value);
+    // }, 500);
 
-    setTimer(newTimer);
+    // setTimer(newTimer);
   };
 
   const addProducts = (product) => {
@@ -167,7 +167,7 @@ const JoinBetaModal = ({
 
   const handleSubmit = async (e) => {
 
-
+    checkInput();
     e.preventDefault();
     setErrors(validate(values));
 
@@ -277,34 +277,34 @@ const JoinBetaModal = ({
       });
   };
 
-  const checkData = async () => {
-    if (coinbase) {
-      const check = await axios
-        .get(
-          `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
-        )
-        .then(function (result) {
-          return result.data;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
+  // const checkData = async () => {
+  //   if (coinbase) {
+  //     const check = await axios
+  //       .get(
+  //         `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
+  //       )
+  //       .then(function (result) {
+  //         return result.data;
+  //       })
+  //       .catch(function (error) {
+  //         console.error(error);
+  //       });
 
-      if (check.status === 1) {
-        setStatus("Already joined");
-      } else {
-        setStatus("");
-      }
-    }
-  };
+  //     if (check.status === 1) {
+  //       setStatus("Already joined");
+  //     } else {
+  //       setStatus("");
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     countSeats();
   }, []);
 
-  useEffect(() => {
-    checkData();
-  }, [coinbase]);
+  // useEffect(() => {
+  //   checkData();
+  // }, [coinbase]);
 
   // console.log(modalWidth);
   return (
@@ -576,7 +576,7 @@ const JoinBetaModal = ({
                 {status}{" "}
                 <mark className="font-organetto register-tag">beta</mark>
               </h2>
-              <img
+              {/* <img
                 src={X}
                 alt=""
                 className="close-x position-absolute"
@@ -584,7 +584,7 @@ const JoinBetaModal = ({
                   onClose();
                 }}
                 style={{ right: "-25px", height: "50px" }}
-              />
+              /> */}
             </div>
 
             <img src={successLogo} alt="" />
@@ -628,7 +628,7 @@ const JoinBetaModal = ({
                 {status}{" "}
                 <mark className="font-organetto register-tag">beta</mark>
               </h2>
-              <img
+              {/* <img
                 src={X}
                 alt=""
                 className="close-x position-absolute"
@@ -636,7 +636,7 @@ const JoinBetaModal = ({
                   onClose();
                 }}
                 style={{ right: "-25px", height: "50px" }}
-              />
+              /> */}
             </div>
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
@@ -678,7 +678,7 @@ const JoinBetaModal = ({
                 {status}{" "}
                 <mark className="font-organetto register-tag">beta</mark>
               </h2>
-              <img
+              {/* <img
                 src={X}
                 alt=""
                 className="close-x position-absolute"
@@ -686,7 +686,7 @@ const JoinBetaModal = ({
                   onClose();
                 }}
                 style={{ right: "-25px", height: "50px" }}
-              />
+              /> */}
             </div>
             <img src={waitlistLogo} alt="" />
             <p className="text-white m-0">
@@ -730,7 +730,7 @@ const JoinBetaModal = ({
                 {status}{" "}
                 <mark className="font-organetto register-tag">beta</mark>
               </h2>
-              <img
+              {/* <img
                 src={X}
                 alt=""
                 className="close-x position-absolute"
@@ -738,7 +738,7 @@ const JoinBetaModal = ({
                   onClose();
                 }}
                 style={{ right: "-25px", height: "50px" }}
-              />
+              /> */}
             </div>
             <img src={failed} alt="" />
             <p className="text-white m-0">
