@@ -50,7 +50,7 @@ const RegisterModal = ({
       if (result == 1) {
         if (donwloadSelected == true)
           window.location.href =
-            "https://drive.google.com/file/d/1gbce0Q7siFOvqOhHNEDtib1kev2-qgJZ/view?usp=sharingw";
+            "https://drive.google.com/file/d/1NqUAHsnvsBhU698AU6fic08FrIz-yBuP/view?usp=sharing";
         else window.location.href = "https://worldofdypians.com/account";
       }
     }
@@ -91,9 +91,19 @@ const RegisterModal = ({
       <Box sx={style}>
         <div>
           <div className="d-flex justify-content-between gap-1">
-            <h2 className="font-organetto register-grid-title px-0">
-              Join <mark className="font-organetto register-tag">beta</mark>
-            </h2>
+            {showForms === true ? (
+              <h2 className="font-organetto register-grid-title px-0">
+                Access{" "}
+                <mark className="font-organetto register-tag">
+                  Unsuccessful
+                </mark>
+              </h2>
+            ) : (
+              <h2 className="font-organetto register-grid-title px-0">
+                Verify{" "}
+                <mark className="font-organetto register-tag">Access</mark>
+              </h2>
+            )}
             <img
               src={X}
               alt=""
@@ -105,7 +115,7 @@ const RegisterModal = ({
             />
           </div>
           <div className="d-flex flex-column gap-3">
-            {coinbase ? (
+            {coinbase  ? (
               <p className="text-white m-0 walletdesc font-poppins">
                 You must first join the beta in order to access World of
                 Dypians. If you have already registered for beta, please check
