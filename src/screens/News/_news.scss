@@ -72,6 +72,10 @@
       line-height: 27px;
       color: #ffffff;
       width: 65%;
+
+      @media screen and (max-width: 786px) {
+        width: 100%;
+      }
     }
 
     .news-date {
