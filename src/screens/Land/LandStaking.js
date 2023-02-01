@@ -259,7 +259,7 @@ const LandStaking = ({
                 <img
                   src={require("../../assets/landAssets/cawsimg.png")}
                   alt=""
-                  className="cawsimg"
+                  className="cawsimg col-6 px-0 px-lg-2"
                 />
                <div className="d-flex flex-column gap-2 col-6 col-xxl-5 col-lg-5 p-0 m-0">
                <span className="whitelist-desc ">
