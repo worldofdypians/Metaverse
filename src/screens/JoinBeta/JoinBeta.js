@@ -128,7 +128,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
                   }}
                 >
                   <button
-                    className="btn filled-btn px-5 d-flex align-items-center gap-2"
+                    className="btn filled-btn px-4 px-lg-5 d-flex align-items-center gap-2"
                     onClick={handleRegister}
                   >
                     Apply Now
