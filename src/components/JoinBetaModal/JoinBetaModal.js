@@ -70,28 +70,35 @@ const JoinBetaModal = ({
   const [status, setStatus] = useState("");
   const [modalWidth, setModalWidth] = useState(showForms);
 
-  const checkInput = async (name, inputValue) => {
-    if (name === "discord") {
-      const data = { discord: inputValue };
-      const check = await axios
-        .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
-        .then(function (result) {
-          return result.data;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
+  const checkInput = async (email, discord) => {
+    // if (name === "discord") {
+    const discordData = { discord: discord };
+    const emailData = { email: email };
 
-      if (check.status === 1) {
-        setStatus("Already joined");
-      } else {
-        setStatus("");
-      }
-      const betaData = { discord: inputValue };
-      const betaCheck = await axios
+    // if(discord === "" || email === ""){
+    setErrors(validate(values));
+    // }else{
+
+      const discordCheck = await axios
+      .post(
+        ` https://api3.dyp.finance/api/whitelist/check/discord/`,
+        discordData
+      )
+      .then(function (result) {
+        return result.data;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+
+    if (discordCheck.status === 1) {
+      setStatus("Already joined");
+    } else {
+      setStatus("");
+      const discordBetaCheck = await axios
         .post(
           `https://api3.dyp.finance/api/beta_testers_application/check/discord`,
-          betaData
+          discordData
         )
         .then(function (result) {
           return result.data;
@@ -100,46 +107,46 @@ const JoinBetaModal = ({
           console.error(error);
         });
 
-      if (betaCheck.status === 1) {
+      if (discordBetaCheck.status === 1) {
         setStatus("Already joined");
       } else {
         setStatus("");
+        const emailCheck = await axios
+          .post(
+            `https://api3.dyp.finance/api/whitelist/check/email/`,
+            emailData
+          )
+          .then(function (result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+        if (emailCheck.status === 1) {
+          setStatus("Already joined");
+        } else {
+          setStatus("");
+          const emailBetaCheck = await axios
+            .post(
+              `https://api3.dyp.finance/api/beta_testers_application/check/email`,
+              emailData
+            )
+            .then(function (result) {
+              return result.data;
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+          if (emailBetaCheck.status === 1) {
+            setStatus("Already joined");
+          } else {
+            setStatus("");
+            handleSubmit();
+          }
+        }
       }
     }
-
-    if (name === "email") {
-      const data = { email: inputValue };
-      const check = await axios
-        .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
-        .then(function (result) {
-          return result.data;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-      if (check.status === 1) {
-        setStatus("Already joined");
-      } else {
-        setStatus("");
-      }
-      const betaData = { email: inputValue };
-      const betaCheck = await axios
-        .post(
-          `https://api3.dyp.finance/api/beta_testers_application/check/email`,
-          betaData
-        )
-        .then(function (result) {
-          return result.data;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-      if (betaCheck.status === 1) {
-        setStatus("Already joined");
-      } else {
-        setStatus("");
-      }
-    }
+    // }
   };
 
   const handleChange = async (e) => {
@@ -168,89 +175,92 @@ const JoinBetaModal = ({
     // console.log(productsArray);
   };
 
-  const handleSubmit = async (e) => {
-    checkInput();
-    e.preventDefault();
-    setErrors(validate(values));
+  const handleSubmit = async () => {
+    
+    // e.preventDefault();
 
-    if (errors.email === undefined && errors.discord === undefined) {
-      if (
-        values.discord !== "" &&
-        values.email !== "" &&
-        values.discord.includes("#")
-      ) {
-        setLoading(true);
-
-        let signature = "";
-        await window
-          .sign(window.config.beta_test, coinbase)
-          .then((data) => {
-            signature = data;
-          })
-          .catch((e) => {
-            setLoading(false);
-            console.error(e);
-          });
-        const data = {
-          signature: signature,
-          address: coinbase,
-          email: values.email,
-          discord: values.discord,
-          twitter: values.twitter,
-          country: values.country,
-          products: productsArray.join(),
-        };
-        try {
-          const send = await axios
-            .post(
-              "https://api3.dyp.finance/api/beta_tester_application/insert",
-              data
-            )
-            .then(function (result) {
-              return result.data;
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
-
-          if (send.status === 0) {
-            //user already exists
-            setStatus("Already joined");
-            setSuccess(false);
-            setLoading(false);
-            setModalWidth(false);
-            setValues({ ...initialState });
-          } else if (send.status === 1) {
-            //successfully registered
-            setStatus("Successfully joined");
-            setSuccess(true);
-            setLoading(false);
-            setModalWidth(false);
-            setValues({ ...initialState });
-          } else if (send.status === 2) {
-            setStatus("Successfully joined");
-            //more than 500
-            setSuccess(false);
-            setLoading(false);
-            setModalWidth(false);
-            setValues({ ...initialState });
-          } else {
-            setStatus("Failed to join");
-            setSuccess(false);
-            setLoading(false);
-          }
-        } catch (e) {
-          window.alertify.error("Something went wrong!" + e.responseText);
-        } finally {
-          setValues({ ...initialState });
-        }
-      } else {
-        setSuccess(false);
+    // if (!status === "Already joined") {
+      if (errors.email === undefined && errors.discord === undefined) {
+        if (
+          values.discord !== "" &&
+          values.email !== "" &&
+          values.discord.includes("#")
+        ) {
+          setLoading(true);
+          let signature = "";
+    await window
+      .sign(window.config.beta_test, coinbase)
+      .then((data) => {
+        signature = data;
+        // checkInput(values.email, values.discord);
+      })
+      .catch((e) => {
         setLoading(false);
-      }
+        console.error(e);
+      });
 
-      // setValues({ ...initialState });
-    }
+
+          const data = {
+            signature: signature,
+            address: coinbase,
+            email: values.email,
+            discord: values.discord,
+            twitter: values.twitter,
+            country: values.country,
+            products: productsArray.join(),
+          };
+          try {
+            const send = await axios
+              .post(
+                "https://api3.dyp.finance/api/beta_tester_application/insert",
+                data
+              )
+              .then(function (result) {
+                return result.data;
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
+
+            if (send.status === 0) {
+              //user already exists
+              setStatus("Already joined");
+              setSuccess(false);
+              setLoading(false);
+              setModalWidth(false);
+              setValues({ ...initialState });
+            } else if (send.status === 1) {
+              //successfully registered
+              setStatus("Successfully joined");
+              setSuccess(true);
+              setLoading(false);
+              setModalWidth(false);
+              setValues({ ...initialState });
+            } else if (send.status === 2) {
+              setStatus("Successfully joined");
+              //more than 500
+              setSuccess(false);
+              setLoading(false);
+              setModalWidth(false);
+              setValues({ ...initialState });
+            } else {
+              setStatus("Failed to join");
+              setSuccess(false);
+              setLoading(false);
+            }
+          } catch (e) {
+            window.alertify.error("Something went wrong!" + e.responseText);
+          } finally {
+            setValues({ ...initialState });
+          }
+        } else {
+          setSuccess(false);
+          setLoading(false);
+        }
+
+        // setValues({ ...initialState });
+      }
+    // }
   };
 
   const style = {
@@ -259,7 +269,7 @@ const JoinBetaModal = ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width:
-      windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
+      windowSize.width > 1600 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -556,7 +566,7 @@ const JoinBetaModal = ({
                 >
                   <button
                     className="btn filled-btn px-5"
-                    onClick={handleSubmit}
+                    onClick={() => checkInput(values.email, values.discord)}
                   >
                     {loading === true ? (
                       <div
@@ -580,8 +590,10 @@ const JoinBetaModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {'Successfully applied as'}{" "}
-                <mark className="font-organetto register-tag">WoD Beta Tester</mark>
+                {"Successfully applied as"}{" "}
+                <mark className="font-organetto register-tag">
+                  WoD Beta Tester
+                </mark>
               </h2>
               {/* <img
                 src={X}
@@ -596,7 +608,9 @@ const JoinBetaModal = ({
 
             <img src={successLogo} alt="" />
             <p className="text-white m-0">
-            Congratulations, your World of Dypians Beta Tester application is successful. Please visit the Dypius Discord Server for more information.
+              Congratulations, your World of Dypians Beta Tester application is
+              successful. Please visit the Dypius Discord Server for more
+              information.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -632,7 +646,7 @@ const JoinBetaModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {'Application has been'}{" "}
+                {"Application has been"}{" "}
                 <mark className="font-organetto register-tag">received</mark>
               </h2>
               {/* <img
@@ -735,7 +749,7 @@ const JoinBetaModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {'Application'}{" "}
+                {"Application"}{" "}
                 <mark className="font-organetto register-tag">Error</mark>
               </h2>
               {/* <img
