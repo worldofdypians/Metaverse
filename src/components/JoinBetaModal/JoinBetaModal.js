@@ -6,20 +6,19 @@ import whitelistIcon from "../../assets/whitelist-icon.svg";
 import whitewallet from "../../assets/wallet-white.svg";
 import blackwallet from "../../assets/wallet-black.svg";
 import discord from "../../assets/discord.svg";
-
 import axios from "axios";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
-import validate from "./validateHelpInfo";
+import validate from "../RegisterModal/validateHelpInfo";
 import successLogo from "../../assets/successLogo.svg";
 import waitlistLogo from "../../assets/waitlistLogo.svg";
 import failed from "../../assets/failed.svg";
 import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
-
-import "./_registerModal.scss";
+import "./_joinbetamodal.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import { useNavigate } from "react-router-dom";
+import { Checkbox } from "@mui/material";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const StyledTextField = styled(TextField)(({}) => ({
   "& .MuiOutlinedInput-root": {
@@ -35,27 +34,13 @@ const StyledTextField = styled(TextField)(({}) => ({
   },
 }));
 
-const RegisterModal = ({
+const JoinBetaModal = ({
   open,
   onClose,
   handleConnect,
   coinbase,
   showForms,
 }) => {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "min-content",
-    boxShadow: 24,
-    p: 4,
-    overflow: "auto",
-    minHeight: 200,
-    borderRadius: "8px",
-    overflowX: "hidden",
-  };
-
   const options = [
     {
       name: "Metamask",
@@ -63,10 +48,17 @@ const RegisterModal = ({
     },
   ];
 
-  const navigate = useNavigate();
+  const initialState = {
+    email: "",
+    discord: "",
+    twitter: "",
+    country: "",
+    products: "",
+  };
 
-  const initialState = { email: "", discord: "" };
+  const windowSize = useWindowSize();
 
+  var productsArray = [];
   const [showOptions, setShowOptions] = useState(false);
   const [seats, setSeats] = useState(0);
   const [values, setValues] = useState(initialState);
@@ -76,51 +68,34 @@ const RegisterModal = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [timer, setTimer] = useState(null);
   const [status, setStatus] = useState("");
-  const [betaStatus, setBetaStatus] = useState()
+  const [modalWidth, setModalWidth] = useState(showForms);
 
-  const checkInput = async (name, inputValue) => {
-    if (name === "discord") {
-      const data = { discord: inputValue };
-      const check = await axios
-        .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
-        .then(function (result) {
-          return result.data;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
+  const checkInput = async (email, discord) => {
+    const discordData = { discord: discord };
+    const emailData = { email: email };
+    const allErrors = validate(values);
+    setErrors(validate(values));
 
-      if (check.status === 1) {
-        setStatus("Already joined");
-      } else {
-        setStatus("");
-      }
-    }
+    const discordCheck = await axios
+      .post(
+        ` https://api3.dyp.finance/api/whitelist/check/discord/`,
+        discordData
+      )
+      .then(function (result) {
+        return result.data;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
 
-    if (name === "email") {
-      const data = { email: inputValue };
-      const check = await axios
-        .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
-        .then(function (result) {
-          return result.data;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-      if (check.status === 1) {
-        setStatus("Already joined");
-      } else {
-        setStatus("");
-      }
-    }
-  };
-
-  const checkBetaTester = async () => {
-    console.log("hello");
-    if (coinbase) {
-      const check = await axios
-        .get(
-          `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
+    if (discordCheck.status === 1) {
+      setStatus("Already joined");
+    } else {
+      setStatus("");
+      const discordBetaCheck = await axios
+        .post(
+          `https://api3.dyp.finance/api/beta_testers_application/check/discord`,
+          discordData
         )
         .then(function (result) {
           return result.data;
@@ -129,14 +104,49 @@ const RegisterModal = ({
           console.error(error);
         });
 
-      if (check.status === 1) {
-        setBetaStatus(1);
+      if (discordBetaCheck.status === 1) {
+        setStatus("Already joined");
       } else {
-        // setBetaStatus(0);
-        onClose();
-        navigate("/join-beta")
+        setStatus("");
+        const emailCheck = await axios
+          .post(
+            `https://api3.dyp.finance/api/whitelist/check/email/`,
+            emailData
+          )
+          .then(function (result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+        if (emailCheck.status === 1) {
+          setStatus("Already joined");
+        } else {
+          setStatus("");
+          const emailBetaCheck = await axios
+            .post(
+              `https://api3.dyp.finance/api/beta_testers_application/check/email`,
+              emailData
+            )
+            .then(function (result) {
+              return result.data;
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+          if (emailBetaCheck.status === 1) {
+            setStatus("Already joined");
+          } else {
+            setStatus("");
+            // if (allErrors.email === undefined && allErrors.discord) {
+              handleSubmit();
+            // }
+            
+          }
+        }
       }
     }
+    // }
   };
 
   const handleChange = async (e) => {
@@ -146,47 +156,63 @@ const RegisterModal = ({
       ...values,
       [name]: value,
     });
+    // clearTimeout(timer);
 
-    clearTimeout(timer);
+    // const newTimer = setTimeout(() => {
+    //   checkInput(name, value);
+    // }, 500);
 
-    const newTimer = setTimeout(() => {
-      checkInput(name, value);
-    }, 500);
-
-    setTimer(newTimer);
+    // setTimer(newTimer);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrors(validate(values));
+  const addProducts = (product) => {
+    if (productsArray.includes(product)) {
+      const index = productsArray.indexOf(product);
+      productsArray.splice(index, 1);
+    } else {
+      productsArray.push(product);
+    }
+    // console.log(productsArray);
+  };
 
-    if (errors.email === undefined && errors.discord === undefined) {
+  const handleSubmit = async () => {
+    const allErrors = validate(values);
+
+    // if (!status === "Already joined") {
+    if (allErrors.email === undefined && allErrors.discord === undefined) {
       if (
         values.discord !== "" &&
         values.email !== "" &&
         values.discord.includes("#")
       ) {
         setLoading(true);
-
         let signature = "";
         await window
-          .sign(window.config.whitelist_nft, coinbase)
+          .sign(window.config.beta_test, coinbase)
           .then((data) => {
             signature = data;
+            // checkInput(values.email, values.discord);
           })
           .catch((e) => {
             setLoading(false);
             console.error(e);
           });
+
         const data = {
           signature: signature,
           address: coinbase,
           email: values.email,
           discord: values.discord,
+          twitter: values.twitter,
+          country: values.country,
+          products: productsArray.join(),
         };
         try {
           const send = await axios
-            .post("https://api3.dyp.finance/api/whitelist/insert", data)
+            .post(
+              "https://api3.dyp.finance/api/beta_tester_application/insert",
+              data
+            )
             .then(function (result) {
               return result.data;
             })
@@ -199,16 +225,22 @@ const RegisterModal = ({
             setStatus("Already joined");
             setSuccess(false);
             setLoading(false);
+            setModalWidth(false);
+            setValues({ ...initialState });
           } else if (send.status === 1) {
             //successfully registered
             setStatus("Successfully joined");
             setSuccess(true);
             setLoading(false);
+            setModalWidth(false);
+            setValues({ ...initialState });
           } else if (send.status === 2) {
             setStatus("Successfully joined");
             //more than 500
             setSuccess(false);
             setLoading(false);
+            setModalWidth(false);
+            setValues({ ...initialState });
           } else {
             setStatus("Failed to join");
             setSuccess(false);
@@ -224,8 +256,24 @@ const RegisterModal = ({
         setLoading(false);
       }
 
-      setValues({ ...initialState });
+      // setValues({ ...initialState });
     }
+    // }
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width:
+      windowSize.width > 1600 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
+    boxShadow: 24,
+    p: 4,
+    overflow: "auto",
+    minHeight: 200,
+    borderRadius: "8px",
+    overflowX: "hidden",
   };
 
   const countSeats = async () => {
@@ -242,7 +290,9 @@ const RegisterModal = ({
   const checkData = async () => {
     if (coinbase) {
       const check = await axios
-        .get(`https://api3.dyp.finance/api/whitelist/check/${coinbase}`)
+        .get(
+          `https://api3.dyp.finance/api/beta_testers_application/check/${coinbase}`
+        )
         .then(function (result) {
           return result.data;
         })
@@ -263,10 +313,10 @@ const RegisterModal = ({
   }, []);
 
   useEffect(() => {
-    checkBetaTester();
     checkData();
   }, [coinbase]);
 
+  // console.log(modalWidth);
   return (
     <Modal
       open={open}
@@ -277,9 +327,9 @@ const RegisterModal = ({
         {status === "" && (
           <div>
             <div className="d-flex justify-content-between gap-1">
-              <h2 className="font-organetto register-grid-title px-0">
-                Join our{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+              <h2 className="font-organetto d-flex align-items-start align-items-lg-center flex-column flex-lg-row register-grid-title px-0">
+                Tester{" "}
+                <mark className="font-organetto register-tag">Application</mark>
               </h2>
               <img
                 src={X}
@@ -294,17 +344,18 @@ const RegisterModal = ({
             <div className="d-flex flex-column gap-3">
               {coinbase ? (
                 <p className="text-white m-0 walletdesc font-poppins">
-                  Please provide the information below to register as a World of
+                  Please provide the information below to apply as a World of
                   Dypians Beta Tester.
                 </p>
               ) : (
                 <p className="text-white m-0 walletdesc font-poppins">
-                  You will be eligible to be part of the beta testers team based
-                  on the details you provide.
+                  Become a World of Dypians beta tester to get early access to
+                  the latest content, entrance to private discord channels, earn
+                  rewards, gain experience, and help improve the game.
                 </p>
               )}
 
-              <div className="d-flex gap-1 align-items-center">
+              {/* <div className="d-flex gap-1 align-items-center">
                 <img src={whitelistIcon} alt="" />
                 <span className="text-white whitedesc">
                   <mark
@@ -314,10 +365,10 @@ const RegisterModal = ({
                     {getFormattedNumber(seats, 0)}
                   </mark>
                 </span>
-              </div>
+              </div> */}
               {/* <p className="m-0 text-white walletdesc font-poppins">
-                Available seats: 300
-              </p> */}
+            Available seats: 300
+          </p> */}
             </div>
             <div className="separator"></div>
             <div
@@ -373,9 +424,14 @@ const RegisterModal = ({
               )}
             </div>
             {showForms === true && (
-              <div style={{opacity: 0}}>
+              <div>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
-                  <p className="m-0 wallettext font-poppins">Wallet address</p>
+                  <p
+                    className="m-0 wallettext font-poppins"
+                    style={{ whiteSpace: "pre" }}
+                  >
+                    Wallet address
+                  </p>
                   <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
                 </div>
                 <div className="separator"></div>
@@ -400,7 +456,7 @@ const RegisterModal = ({
                   <StyledTextField
                     error={errors.discord ? true : false}
                     size="small"
-                    label="Discord"
+                    label="Discord Username"
                     id="discord"
                     name="discord"
                     value={values.discord}
@@ -412,7 +468,93 @@ const RegisterModal = ({
                     sx={{ width: "100%" }}
                     placeholder={"User#1234"}
                   />
+                  <StyledTextField
+                    // error={errors.discord ? true : false}
+                    size="small"
+                    label="Country"
+                    id="country"
+                    name="country"
+                    value={values.country}
+                    // helperText={errors.discord}
+                    // required
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    sx={{ width: "100%" }}
+                    // placeholder={"User#1234"}
+                  />
+                  <StyledTextField
+                    // error={errors.discord ? true : false}
+                    size="small"
+                    label="Twitter username"
+                    id="twitter"
+                    name="twitter"
+                    value={values.twitter}
+                    // helperText={errors.discord}
+                    // required
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    sx={{ width: "100%" }}
+                    // placeholder={"User#1234"}
+                  />
                 </div>
+                <div className="mt-3">
+                  <span className="checkbox-title mt-3">
+                    What Dypius products do you use?
+                  </span>
+                  <div className="checkbox-grid">
+                    <div className="d-flex align-items-center gap-2">
+                      <Checkbox
+                        onChange={() => addProducts("Hold DYP")}
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#00FECF",
+                          },
+                        }}
+                      />
+                      <span className="checkbox-title">Hold DYP</span>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <Checkbox
+                        onChange={() => addProducts("Hold iDYP")}
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#00FECF",
+                          },
+                        }}
+                      />
+                      <span className="checkbox-title">Hold iDYP</span>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <Checkbox
+                        onChange={() => addProducts("CAWS NFT")}
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#00FECF",
+                          },
+                        }}
+                      />
+                      <span className="checkbox-title">CAWS NFT</span>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <Checkbox
+                        onChange={() => addProducts("Earn Products")}
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#00FECF",
+                          },
+                        }}
+                      />
+                      <span className="checkbox-title">Earn products</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div
                   className="linear-border"
                   style={{
@@ -422,7 +564,7 @@ const RegisterModal = ({
                 >
                   <button
                     className="btn filled-btn px-5"
-                    onClick={handleSubmit}
+                    onClick={() => checkInput(values.email, values.discord)}
                   >
                     {loading === true ? (
                       <div
@@ -446,10 +588,12 @@ const RegisterModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {status}{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+                {"Successfully applied as"}{" "}
+                <mark className="font-organetto register-tag">
+                  WoD Beta Tester
+                </mark>
               </h2>
-              <img
+              {/* <img
                 src={X}
                 alt=""
                 className="close-x position-absolute"
@@ -457,13 +601,14 @@ const RegisterModal = ({
                   onClose();
                 }}
                 style={{ right: "-25px", height: "50px" }}
-              />
+              /> */}
             </div>
 
             <img src={successLogo} alt="" />
             <p className="text-white m-0">
-              Congratulations, your World of Dypians whitelist registration is
-              successful. Please visit the Dypius Discord for more information.
+              Congratulations, your World of Dypians Beta Tester application is
+              successful. Please visit the Dypius Discord Server for more
+              information.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -499,10 +644,10 @@ const RegisterModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {status}{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+                {"Application has been"}{" "}
+                <mark className="font-organetto register-tag">received</mark>
               </h2>
-              <img
+              {/* <img
                 src={X}
                 alt=""
                 className="close-x position-absolute"
@@ -510,11 +655,11 @@ const RegisterModal = ({
                   onClose();
                 }}
                 style={{ right: "-25px", height: "50px" }}
-              />
+              /> */}
             </div>
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
-              Your application as a World of Dypians beta tester has already
+              Your application as a World of Dypians Beta Tester has already
               been received. Please check back soon.
             </p>
             <div
@@ -551,9 +696,9 @@ const RegisterModal = ({
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
                 {status}{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+                <mark className="font-organetto register-tag">beta</mark>
               </h2>
-              <img
+              {/* <img
                 src={X}
                 alt=""
                 className="close-x position-absolute"
@@ -561,7 +706,7 @@ const RegisterModal = ({
                   onClose();
                 }}
                 style={{ right: "-25px", height: "50px" }}
-              />
+              /> */}
             </div>
             <img src={waitlistLogo} alt="" />
             <p className="text-white m-0">
@@ -602,10 +747,10 @@ const RegisterModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {status}{" "}
-                <mark className="font-organetto register-tag">whitelist</mark>
+                {"Application"}{" "}
+                <mark className="font-organetto register-tag">Error</mark>
               </h2>
-              <img
+              {/* <img
                 src={X}
                 alt=""
                 className="close-x position-absolute"
@@ -613,12 +758,11 @@ const RegisterModal = ({
                   onClose();
                 }}
                 style={{ right: "-25px", height: "50px" }}
-              />
+              /> */}
             </div>
             <img src={failed} alt="" />
             <p className="text-white m-0">
-              Unable to join the World of Dypius beta tester whitelist. Please
-              try again.
+              Unable to join the World of Dypius Beta Tester. Please try again.
             </p>
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close
@@ -630,4 +774,4 @@ const RegisterModal = ({
   );
 };
 
-export default RegisterModal;
+export default JoinBetaModal;

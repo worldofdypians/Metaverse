@@ -360,7 +360,7 @@ const Land = ({
   }, [isConnected]);
 
   useEffect(() => {
-     const interval = setInterval(async () => {
+    //  const interval = setInterval(async () => {
        if (isConnected && coinbase && chainId === 1) {
         //  handleClaimAll().then();
         //  myStakes();
@@ -369,10 +369,10 @@ const Land = ({
          myCAWNft()
        }
       //  latestMint().then();
-     }, 1000);
+    //  }, 1000);
 
-     return () => clearInterval(interval);
-  }, [isConnected, EthRewards, coinbase, chainId]);
+    //  return () => clearInterval(interval);
+  }, [isConnected, EthRewards, coinbase, chainId, myCAWSNFTsCreated.length, myCAWSNFTsTotalStaked.length]);
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">

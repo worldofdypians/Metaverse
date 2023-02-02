@@ -119,6 +119,8 @@
       
   }
 
+  
+
   .step-title {
     font-weight: 500;
     font-size: 14px;
@@ -161,4 +163,17 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+@media screen and (max-width: 786px) {
+  .roadmap-card:nth-child(3){
+   margin-top: -100px; 
+  }
+  .roadmap-card:nth-child(4){
+   margin-top: -100px; 
+  }
+  .roadmap-card:nth-child(5){
+   margin-top: -100px; 
+  }
+
 }

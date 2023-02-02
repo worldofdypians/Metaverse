@@ -4,6 +4,7 @@ import sysReq from "../../../assets/sysReq.svg";
 import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import downloadIcon from "../../../assets/downloadIcon.svg";
+import { NavLink } from "react-router-dom";
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
@@ -25,20 +26,20 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         <div className="position-absolute d-flex flex-column gap-4 align-items-center">
           <div className="row m-0 gap-5 align-items-center justify-content-center">
         
-            <div
+            <NavLink to="join-beta"
               className="pink-linear-border"
-              style={{ width: "fit-content", zIndex: 5, position: "relative" }}
+              style={{ width: "fit-content", zIndex: 5, position: "relative", textDecoration: 'none' }}
             >
               <button
                 className="btn outline-btn px-5 d-flex align-items-center gap-2"
-                onClick={handleRegister}
+                // onClick={handleRegister}
               >
-                Join Whitelist
+                Join Beta
               </button>
-            </div>
-            <div
+            </NavLink>
+            <div 
               className="linear-border"
-              style={{ width: "fit-content", zIndex: 5, position: "relative" }}
+              style={{ width: "fit-content", zIndex: 5, position: "relative", textDecoration: 'none' }}
             >
               <button
                 onClick={handleDownload}

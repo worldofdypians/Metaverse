@@ -116,7 +116,7 @@ const MobileNavbar = ({ handleSignUp }) => {
                 className="btn outline-btn px-5"
                 onClick={()=>{setOpenNavbar(false); handleSignUp();}}
             >
-              Sign Up
+              Account
             </button>
           </div>
           

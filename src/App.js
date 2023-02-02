@@ -17,11 +17,17 @@ import Explorer from "./screens/Explorer/Explorer";
 import Land from "./screens/Land/Land";
 import LandPopup from "./components/LandPopup/LandPopup";
 import Roadmap from "./screens/Roadmap/Roadmap";
+import scrollToTop from './assets/scrollToTop.svg'
+import ScrollTop from "./components/ScrollTop";
+import JoinBeta from "./screens/JoinBeta/JoinBeta";
+import JoinBetaModal from "./components/JoinBetaModal/JoinBetaModal";
+
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showWalletModalDownload, setShowWalletModalDownload] = useState(false);
   const [showWalletModalRegister, setShowWalletModalRegister] = useState(false);
+  const [betaModal, setBetaModal] = useState(false)
   const [donwloadSelected, setdownloadSelected] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [coinbase, setCoinbase] = useState();
@@ -33,6 +39,10 @@ function App() {
   const handleRegister = () => {
     setShowWalletModal(true);
   };
+
+  const handleBetaRegister = () => {
+    setBetaModal(true)
+  }
 
   const handleDownload = () => {
     setdownloadSelected(true);
@@ -134,7 +144,9 @@ function App() {
   return (
     <BrowserRouter>
       <div className="container-fluid p-0 main-wrapper position-relative">
+        {/* {!window.location.href.includes('/land') &&
         <LandPopup />
+        } */}
         <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
@@ -153,6 +165,7 @@ function App() {
           <Route exact path="/roadmap" element={<Roadmap />} />
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
+          <Route exact path="/join-beta" element={<JoinBeta coinbase={coinbase} handleRegister={handleBetaRegister} />} />
 
           <Route exact path="/account" element={<Redirect />} />
 
@@ -174,6 +187,8 @@ function App() {
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
+        {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
+        <ScrollTop />
         <Footer />
       </div>
       {showWalletModal === true && (
@@ -181,6 +196,17 @@ function App() {
           open={showWalletModal}
           onClose={() => {
             setShowWalletModal(false);
+          }}
+          handleConnect={handleConnection}
+          coinbase={coinbase}
+          showForms={showForms}
+        />
+      )}
+      {betaModal === true && (
+        <JoinBetaModal
+          open={betaModal}
+          onClose={() => {
+            setBetaModal(false);
           }}
           handleConnect={handleConnection}
           coinbase={coinbase}

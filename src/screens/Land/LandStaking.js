@@ -146,7 +146,7 @@ const LandStaking = ({
                   remaining
                 </span>
               </span>
-              <Countdown date={"2023-02-02T16:02:03"} renderer={renderer} />
+              <Countdown date={"2023-02-13T18:15:03"} renderer={renderer} />
             </div>
           </div>
         </div>
@@ -209,12 +209,12 @@ const LandStaking = ({
             </div>
           </div>
         </div> */}
-        <div className="col-12 col-md-12 col-xxl-7 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-md-12 col-xxl-8 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
             className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
             style={{ minHeight: "463px" }}
           >
-            <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
+            {/* <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
               <span className="pricetext position-relative">Price</span>
               <span className="totalprice position-relative">$ 1,200</span>
               <div className="price-separator"></div>
@@ -231,7 +231,7 @@ const LandStaking = ({
                 </span>
               </span>
             
-            </div>
+            </div> */}
             <img
               src={require("../../assets/landAssets/genesis-hero.png")}
               alt=""
@@ -259,14 +259,19 @@ const LandStaking = ({
                 <img
                   src={require("../../assets/landAssets/cawsimg.png")}
                   alt=""
-                  className="cawsimg"
+                  className="cawsimg col-6 px-0 px-lg-2"
                 />
-                <span className="whitelist-desc col-xxl-5 col-lg-5 p-0 m-0">
+               <div className="d-flex flex-column gap-2 col-6 col-xxl-5 col-lg-5 p-0 m-0">
+               <span className="whitelist-desc ">
                   *If you are currently holding or staking a CAWS NFT, you will
                   receive a <br className="discount-break" />
                   <mark className="marktext">20% discount</mark> on the World of
                   Dypians Genesis Land NFT mint price.
                 </span>
+                <span className="minting-price">
+                  Mint price $1,200 ({getFormattedNumber(mintPrice, 2)} ETH)
+                </span>
+               </div>
               </div>
               <div
                 className={
@@ -486,7 +491,7 @@ const LandStaking = ({
             </div> */}
           </div>
         </div>
-        <div className="col-12 col-xxl-5 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
             className="p-3 mint-wrapper d-flex flex-column gap-1"
             // style={{ minHeight: "518px" }}

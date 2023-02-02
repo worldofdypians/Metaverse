@@ -60,7 +60,7 @@ const Header = ({ handleSignUp }) => {
                 className="btn outline-btn px-5"
                 onClick={handleSignUp}
             >
-              Sign Up
+              Account
             </button>
           </div>
           
