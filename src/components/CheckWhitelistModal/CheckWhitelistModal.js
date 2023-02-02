@@ -61,7 +61,7 @@ const RegisterModal = ({
       if (result == 1) {
         if (donwloadSelected == true)
           window.location.href =
-            "https://drive.google.com/file/d/1NqUAHsnvsBhU698AU6fic08FrIz-yBuP/view?usp=sharing";
+            "https://drive.google.com/file/d/1UjLFRfG2qZs7iUfFMbB2MP7hDlTZL24g/view?usp=sharing";
         else window.location.href = "https://worldofdypians.com/account";
       }
     }
