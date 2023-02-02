@@ -18,8 +18,7 @@ import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
 import "./_joinbetamodal.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { Checkbox } from "@mui/material";
-import useWindowSize from '../../hooks/useWindowSize'
-
+import useWindowSize from "../../hooks/useWindowSize";
 
 const StyledTextField = styled(TextField)(({}) => ({
   "& .MuiOutlinedInput-root": {
@@ -71,73 +70,77 @@ const JoinBetaModal = ({
   const [status, setStatus] = useState("");
   const [modalWidth, setModalWidth] = useState(showForms);
 
-    const checkInput = async (name, inputValue) => {
-      if (name === "discord") {
-        const data = { discord: inputValue };
-        const check = await axios
-          .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
-          .then(function (result) {
-            return result.data;
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
+  const checkInput = async (name, inputValue) => {
+    if (name === "discord") {
+      const data = { discord: inputValue };
+      const check = await axios
+        .post(` https://api3.dyp.finance/api/whitelist/check/discord/`, data)
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
 
-        if (check.status === 1) {
-          setStatus("Already joined");
-        } else {
-          setStatus("");
-        }
-        const betaData = { discord: inputValue };
-        const betaCheck = await axios
-          .post(`https://api3.dyp.finance/api/beta_testers_application/check/discord`, betaData)
-          .then(function (result) {
-            return result.data;
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
-
-        if (betaCheck.status === 1) {
-          setStatus("Already joined");
-        } else {
-          setStatus("");
-        }
+      if (check.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
       }
+      const betaData = { discord: inputValue };
+      const betaCheck = await axios
+        .post(
+          `https://api3.dyp.finance/api/beta_testers_application/check/discord`,
+          betaData
+        )
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
 
-      if (name === "email") {
-        const data = { email: inputValue };
-        const check = await axios
-          .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
-          .then(function (result) {
-            return result.data;
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
-        if (check.status === 1) {
-          setStatus("Already joined");
-        } else {
-          setStatus("");
-        }
-        const betaData = { email: inputValue };
-        const betaCheck = await axios
-          .post(`https://api3.dyp.finance/api/beta_testers_application/check/email`, betaData)
-          .then(function (result) {
-            return result.data;
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
-        if (betaCheck.status === 1) {
-          setStatus("Already joined");
-        } else {
-          setStatus("");
-        }
-
-        
+      if (betaCheck.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
       }
-    };
+    }
+
+    if (name === "email") {
+      const data = { email: inputValue };
+      const check = await axios
+        .post(`https://api3.dyp.finance/api/whitelist/check/email/`, data)
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+      if (check.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
+      }
+      const betaData = { email: inputValue };
+      const betaCheck = await axios
+        .post(
+          `https://api3.dyp.finance/api/beta_testers_application/check/email`,
+          betaData
+        )
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+      if (betaCheck.status === 1) {
+        setStatus("Already joined");
+      } else {
+        setStatus("");
+      }
+    }
+  };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -166,7 +169,6 @@ const JoinBetaModal = ({
   };
 
   const handleSubmit = async (e) => {
-
     checkInput();
     e.preventDefault();
     setErrors(validate(values));
@@ -196,7 +198,7 @@ const JoinBetaModal = ({
           discord: values.discord,
           twitter: values.twitter,
           country: values.country,
-          products: productsArray.join()
+          products: productsArray.join(),
         };
         try {
           const send = await axios
@@ -217,22 +219,21 @@ const JoinBetaModal = ({
             setSuccess(false);
             setLoading(false);
             setModalWidth(false);
-            setValues({...initialState})
+            setValues({ ...initialState });
           } else if (send.status === 1) {
             //successfully registered
             setStatus("Successfully joined");
             setSuccess(true);
             setLoading(false);
             setModalWidth(false);
-            setValues({...initialState})
+            setValues({ ...initialState });
           } else if (send.status === 2) {
             setStatus("Successfully joined");
             //more than 500
             setSuccess(false);
             setLoading(false);
             setModalWidth(false);
-            setValues({...initialState})
-
+            setValues({ ...initialState });
           } else {
             setStatus("Failed to join");
             setSuccess(false);
@@ -257,7 +258,8 @@ const JoinBetaModal = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
+    width:
+      windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -334,7 +336,7 @@ const JoinBetaModal = ({
             <div className="d-flex flex-column gap-3">
               {coinbase ? (
                 <p className="text-white m-0 walletdesc font-poppins">
-                  Please provide the information below to register as a World of
+                  Please provide the information below to apply as a World of
                   Dypians Beta Tester.
                 </p>
               ) : (
@@ -416,7 +418,12 @@ const JoinBetaModal = ({
             {showForms === true && (
               <div>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
-                  <p className="m-0 wallettext font-poppins" style={{whiteSpace: 'pre'}}>Wallet address</p>
+                  <p
+                    className="m-0 wallettext font-poppins"
+                    style={{ whiteSpace: "pre" }}
+                  >
+                    Wallet address
+                  </p>
                   <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
                 </div>
                 <div className="separator"></div>
@@ -573,8 +580,8 @@ const JoinBetaModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {status}{" "}
-                <mark className="font-organetto register-tag">beta</mark>
+                {'Successfully applied as'}{" "}
+                <mark className="font-organetto register-tag">WoD Beta Tester</mark>
               </h2>
               {/* <img
                 src={X}
@@ -589,7 +596,7 @@ const JoinBetaModal = ({
 
             <img src={successLogo} alt="" />
             <p className="text-white m-0">
-            Congratulations, your World of Dypians Beta Tester registration is successful. Please visit the Dypius Discord for more information.
+            Congratulations, your World of Dypians Beta Tester application is successful. Please visit the Dypius Discord Server for more information.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -625,8 +632,8 @@ const JoinBetaModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {status}{" "}
-                <mark className="font-organetto register-tag">beta</mark>
+                {'Application has been'}{" "}
+                <mark className="font-organetto register-tag">received</mark>
               </h2>
               {/* <img
                 src={X}
@@ -640,7 +647,8 @@ const JoinBetaModal = ({
             </div>
             <img src={alreadyjoinedLogo} alt="" />
             <p className="text-white m-0">
-            Your application as a World of Dypians Beta Tester has already been received. Please check back soon.
+              Your application as a World of Dypians Beta Tester has already
+              been received. Please check back soon.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -727,8 +735,8 @@ const JoinBetaModal = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
-                {status}{" "}
-                <mark className="font-organetto register-tag">beta</mark>
+                {'Application'}{" "}
+                <mark className="font-organetto register-tag">Error</mark>
               </h2>
               {/* <img
                 src={X}
@@ -742,7 +750,7 @@ const JoinBetaModal = ({
             </div>
             <img src={failed} alt="" />
             <p className="text-white m-0">
-            Unable to join the World of Dypius Beta Tester. Please try again.
+              Unable to join the World of Dypius Beta Tester. Please try again.
             </p>
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close
