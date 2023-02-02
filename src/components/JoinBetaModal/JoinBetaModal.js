@@ -71,15 +71,12 @@ const JoinBetaModal = ({
   const [modalWidth, setModalWidth] = useState(showForms);
 
   const checkInput = async (email, discord) => {
-    // if (name === "discord") {
     const discordData = { discord: discord };
     const emailData = { email: email };
-
-    // if(discord === "" || email === ""){
+    const allErrors = validate(values);
     setErrors(validate(values));
-    // }else{
 
-      const discordCheck = await axios
+    const discordCheck = await axios
       .post(
         ` https://api3.dyp.finance/api/whitelist/check/discord/`,
         discordData
@@ -141,7 +138,10 @@ const JoinBetaModal = ({
             setStatus("Already joined");
           } else {
             setStatus("");
-            handleSubmit();
+            // if (allErrors.email === undefined && allErrors.discord) {
+              handleSubmit();
+            // }
+            
           }
         }
       }
@@ -176,90 +176,88 @@ const JoinBetaModal = ({
   };
 
   const handleSubmit = async () => {
-    
-    // e.preventDefault();
+    const allErrors = validate(values);
 
     // if (!status === "Already joined") {
-      if (errors.email === undefined && errors.discord === undefined) {
-        if (
-          values.discord !== "" &&
-          values.email !== "" &&
-          values.discord.includes("#")
-        ) {
-          setLoading(true);
-          let signature = "";
-    await window
-      .sign(window.config.beta_test, coinbase)
-      .then((data) => {
-        signature = data;
-        // checkInput(values.email, values.discord);
-      })
-      .catch((e) => {
-        setLoading(false);
-        console.error(e);
-      });
+    if (allErrors.email === undefined && allErrors.discord === undefined) {
+      if (
+        values.discord !== "" &&
+        values.email !== "" &&
+        values.discord.includes("#")
+      ) {
+        setLoading(true);
+        let signature = "";
+        await window
+          .sign(window.config.beta_test, coinbase)
+          .then((data) => {
+            signature = data;
+            // checkInput(values.email, values.discord);
+          })
+          .catch((e) => {
+            setLoading(false);
+            console.error(e);
+          });
 
+        const data = {
+          signature: signature,
+          address: coinbase,
+          email: values.email,
+          discord: values.discord,
+          twitter: values.twitter,
+          country: values.country,
+          products: productsArray.join(),
+        };
+        try {
+          const send = await axios
+            .post(
+              "https://api3.dyp.finance/api/beta_tester_application/insert",
+              data
+            )
+            .then(function (result) {
+              return result.data;
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
 
-          const data = {
-            signature: signature,
-            address: coinbase,
-            email: values.email,
-            discord: values.discord,
-            twitter: values.twitter,
-            country: values.country,
-            products: productsArray.join(),
-          };
-          try {
-            const send = await axios
-              .post(
-                "https://api3.dyp.finance/api/beta_tester_application/insert",
-                data
-              )
-              .then(function (result) {
-                return result.data;
-              })
-              .catch(function (error) {
-                console.error(error);
-              });
-
-            if (send.status === 0) {
-              //user already exists
-              setStatus("Already joined");
-              setSuccess(false);
-              setLoading(false);
-              setModalWidth(false);
-              setValues({ ...initialState });
-            } else if (send.status === 1) {
-              //successfully registered
-              setStatus("Successfully joined");
-              setSuccess(true);
-              setLoading(false);
-              setModalWidth(false);
-              setValues({ ...initialState });
-            } else if (send.status === 2) {
-              setStatus("Successfully joined");
-              //more than 500
-              setSuccess(false);
-              setLoading(false);
-              setModalWidth(false);
-              setValues({ ...initialState });
-            } else {
-              setStatus("Failed to join");
-              setSuccess(false);
-              setLoading(false);
-            }
-          } catch (e) {
-            window.alertify.error("Something went wrong!" + e.responseText);
-          } finally {
+          if (send.status === 0) {
+            //user already exists
+            setStatus("Already joined");
+            setSuccess(false);
+            setLoading(false);
+            setModalWidth(false);
             setValues({ ...initialState });
+          } else if (send.status === 1) {
+            //successfully registered
+            setStatus("Successfully joined");
+            setSuccess(true);
+            setLoading(false);
+            setModalWidth(false);
+            setValues({ ...initialState });
+          } else if (send.status === 2) {
+            setStatus("Successfully joined");
+            //more than 500
+            setSuccess(false);
+            setLoading(false);
+            setModalWidth(false);
+            setValues({ ...initialState });
+          } else {
+            setStatus("Failed to join");
+            setSuccess(false);
+            setLoading(false);
           }
-        } else {
-          setSuccess(false);
-          setLoading(false);
+        } catch (e) {
+          window.alertify.error("Something went wrong!" + e.responseText);
+        } finally {
+          setValues({ ...initialState });
         }
-
-        // setValues({ ...initialState });
+      } else {
+        setSuccess(false);
+        setLoading(false);
       }
+
+      // setValues({ ...initialState });
+    }
     // }
   };
 
