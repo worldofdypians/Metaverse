@@ -183,7 +183,7 @@ const JoinBetaModal = ({
 
         let signature = "";
         await window
-          .sign(window.config.whitelist_nft, coinbase)
+          .sign(window.config.beta_test, coinbase)
           .then((data) => {
             signature = data;
           })
