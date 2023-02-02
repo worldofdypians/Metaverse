@@ -9,6 +9,8 @@ import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 
 import "./_checkWhitelistModal.scss";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const RegisterModal = ({
   open,
@@ -19,12 +21,21 @@ const RegisterModal = ({
   openRegister,
   donwloadSelected,
 }) => {
+
+
+
+
+  const windowSize = useWindowSize();
+
+
+
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "min-content",
+    width:
+    windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -117,9 +128,7 @@ const RegisterModal = ({
           <div className="d-flex flex-column gap-3">
             {coinbase  ? (
               <p className="text-white m-0 walletdesc font-poppins">
-                You must first join the beta in order to access World of
-                Dypians. If you have already registered for beta, please check
-                back soon.
+             Please apply as a beta tester in order to access World of Dypians. If you have already applied as a beta tester please check back soon.
               </p>
             ) : (
               <p className="text-white m-0 walletdesc font-poppins">
@@ -193,7 +202,8 @@ const RegisterModal = ({
                 <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
               </div>
               <div className="separator"></div>
-              <div
+             <NavLink to='join-beta'>
+             <div
                 className="linear-border"
                 style={{
                   width: "fit-content",
@@ -204,12 +214,13 @@ const RegisterModal = ({
                   className="btn filled-btn px-5"
                   onClick={() => {
                     onClose();
-                    openRegister();
+                    // openRegister();
                   }}
                 >
                   Join Beta
                 </button>
               </div>
+             </NavLink>
             </div>
           )}
         </div>
