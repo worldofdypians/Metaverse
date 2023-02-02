@@ -220,7 +220,7 @@ const MyStakes = ({
             )}
             {isconnectedWallet === true ? (
               <div className="withdraw-wrapper">
-                <Tooltip title={"Total Rewards"} icon={'?'} color={"#1D91D0"} borderColor={"#fff"}/>
+                <Tooltip title={"Total Rewards"} icon={'?'} color={"#1D91D0"} borderColor={"#fff"} padding={"2px 10px"}/>
                 <div className="upperSection">
                   <div className="inner-withdraw-wrapper">
                     <span>Total Rewards</span>
