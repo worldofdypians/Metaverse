@@ -146,7 +146,7 @@ const LandStaking = ({
                   remaining
                 </span>
               </span>
-              <Countdown date={"2023-02-13T18:15:03"} renderer={renderer} />
+              <Countdown date={"2023-02-17T18:15:03"} renderer={renderer} />
             </div>
           </div>
         </div>
