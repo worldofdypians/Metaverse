@@ -241,7 +241,7 @@ const LandWhitelistModal = ({
                 <div className="d-flex flex-column gap-0 justify-content-between">
                   <span className="reqtitle">Meet token Balance Threshold</span>
                   <span className="reqdesc">
-                    Wallet must carry a minimum balance of $1,200 (usd) worth of
+                    Wallet must carry a minimum balance of $1,200 worth of
                     ETH at the time of WL registration.
                   </span>
                 </div>
@@ -358,7 +358,7 @@ const LandWhitelistModal = ({
           </div>
         )}
         {status === "Successfully joined" && (
-          <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
+          <div className="d-flex mt-3 flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
               <h2 className="font-organetto register-grid-title px-0">
                 {status}{" "}
@@ -371,7 +371,7 @@ const LandWhitelistModal = ({
                 onClick={() => {
                   onClose();
                 }}
-                style={{ right: "-25px", height: "50px" }}
+                style={{ right: "-25px", height: "50px", bottom: '83px' }}
               />
             </div>
 
@@ -414,7 +414,7 @@ const LandWhitelistModal = ({
               }}
             >
               <a
-                href="https://t.me/worldofdypiansmetaverse"
+                href="https://t.me/worldofdypians"
                 target="_blank"
                 rel="noreferrer"
                 className="btn outline-btn d-flex gap-1 align-items-center"
@@ -492,7 +492,7 @@ const LandWhitelistModal = ({
               }}
             >
               <a
-                href="https://t.me/worldofdypiansmetaverse"
+                href="https://t.me/worldofdypians"
                 target="_blank"
                 rel="noreferrer"
                 className="btn outline-btn d-flex gap-1 align-items-center"
