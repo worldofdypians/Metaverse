@@ -142,6 +142,10 @@ function App() {
     },[isConnected, coinbase,currencyAmount, chainId]
   );
 
+  function Redirect(){
+    window.location.href = "https://account.worldofdypians.com/";
+  }
+
 
   return (
     <BrowserRouter>
@@ -168,6 +172,8 @@ function App() {
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
           <Route exact path="/join-beta" element={<JoinBeta coinbase={coinbase} handleRegister={handleBetaRegister} />} />
+          
+          <Route exact path="/account" element={<Redirect />} />
 
           <Route
             exact
