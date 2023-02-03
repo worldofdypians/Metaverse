@@ -428,6 +428,8 @@ const Land = ({
           totalCAWCreated={myCAWSNFTsCreated.length}
           totalCAWStaked={myCAWSNFTsTotalStaked.length}
           handleConnect={handleConnectWallet}
+          chainId={chainId}
+
         />
       )}
 
