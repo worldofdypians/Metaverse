@@ -30,6 +30,7 @@ const LandWhitelistModal = ({
   mintPrice,
   totalCAWCreated,
   totalCAWStaked,
+  chainId,
 }) => {
   const style = {
     position: "absolute",
@@ -310,9 +311,10 @@ const LandWhitelistModal = ({
                   </p>
                 </div>
                 <div className="separator"></div>
-                <p className="notetext">*Please make sure you're on Ethereum Chain in order to verify if you're eligible.</p>
-                <div className="separator"></div>
-
+                {chainId !== 1 &&
+               <> <p className="notetext">*Please make sure that you are on the Ethereum chain to verify your eligibility</p>
+                <div className="separator"></div></>
+}
                 <div
                   className={
                     balance < mintPrice &&
