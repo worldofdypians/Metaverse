@@ -42,7 +42,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
     "Monetary compensation and other special prizes",
     "Gain valuable experience",
     "Become certified WoD Beta Tester",
-    "Improve potential employment opportunities"
+    "Improve your potential employment opportunities"
   ];
 
   const [seats, setSeats] = useState();
