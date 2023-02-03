@@ -308,7 +308,7 @@ const Roadmap = () => {
         </div>
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
           <div className="roadmap-grid px-3 px-lg-0">
-          <div className="d-flex flex-column align-items-center position-relative gap-3" style={{height: 'fit-content'}}>
+          <div className="d-flex flex-column align-items-center position-relative roadmap-slider-wrapper gap-3" style={{height: 'fit-content'}}>
           <Slider ref={(c) => (slider.current = c)} {...settings}>
               <div className="d-flex flex-column gap-3 ">
               {mainUpdate.slice(0,3).map((item) => (
