@@ -95,15 +95,18 @@ function App() {
         params: [coinbase, "latest"],
       });
       
-      if (balance) {
+      // if (balance) {
         if (chainId === 1) {
           const stringBalance = window.infuraWeb3.utils.hexToNumberString(balance);
           const amount = window.infuraWeb3.utils.fromWei(stringBalance, "ether");
-          setCurrencyAmount(amount.slice(0, 7));
+      
+          setCurrencyAmount(Number(amount));
         }
-      }}
+      // }
+    }
     }
   };
+  
 
   const handleConnectWallet = async () => {
     try {
@@ -115,7 +118,7 @@ function App() {
         setCoinbase(data);
       });
       setShowForms2(true);
-      checkNetworkId();
+  
     } catch (e) {
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
@@ -132,8 +135,11 @@ function App() {
   }
 
   useEffect(() => {
+  
+      checkNetworkId();
+
       getEthBalance();
-    },[isConnected, coinbase,currencyAmount]
+    },[isConnected, coinbase,currencyAmount, chainId]
   );
 
   function Redirect(){
@@ -144,9 +150,9 @@ function App() {
   return (
     <BrowserRouter>
       <div className="container-fluid p-0 main-wrapper position-relative">
-        {/* {!window.location.href.includes('/land') &&
+        {!window.location.href.includes('/land') &&
         <LandPopup />
-        } */}
+        }
         <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
@@ -166,10 +172,10 @@ function App() {
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
           <Route exact path="/join-beta" element={<JoinBeta coinbase={coinbase} handleRegister={handleBetaRegister} />} />
-
+          
           <Route exact path="/account" element={<Redirect />} />
 
-          {/* <Route
+          <Route
             exact
             path="/land"
             element={
@@ -183,7 +189,7 @@ function App() {
                 balance={currencyAmount}
               />
             }
-          /> */}
+          />
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>

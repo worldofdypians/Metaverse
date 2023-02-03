@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./_roadmap.scss";
 import roadmapDummy from "./assets/roadmapDummy.png";
 import roadmapIndicator from "./assets/roadmapIndicator.svg";
@@ -7,12 +7,61 @@ import completed from "./assets/completed.svg";
 import RoadmapCard from "../../components/RoadmapCard/RoadmapCard";
 import demoLaunch from "../../assets/landAssets/demoLaunch.png";
 import betaTesting from "../../assets/landAssets/betaTesting.png";
+import leaderboardBanner from "./assets/leaderboardBanner.png";
+import whitelistBanner from "./assets/whitelistBanner.webp";
+import cawsIntegration from "./assets/cawsIntegration.png";
+import gameEvents from "./assets/gameEvents.png";
+import nextArrow from './assets/nextArrow.svg'
+import Slider from "react-slick";
 
 const Roadmap = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Roadmap";
   }, []);
+
+
+  var settings = {
+    dots: true,
+    arrows: false,
+    fade: true,
+    infinite: false,
+    dotsClass: "button__bar",
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+          infinite: true,
+          autoplay: true,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          autoplay: true,
+        },
+      },
+    ],
+  };
 
   const roadmapItems = [
     {
@@ -25,8 +74,28 @@ const Roadmap = () => {
           completed: true,
         },
         {
-          title: "Beta testing Begins",
+          title: "Beta Tester access",
           desc: "Gather feedback from beta testing phase to identify any issues or areas for improvement and make changes before the game is officially released.",
+          completed: true,
+        },
+        {
+          title: "CAWS Integration",
+          desc: "This integration allows players to have virtual cats as companions represented by CAWS NFTs. These NFTs give players unique ownership over their virtual cats and the ability to interact with them in the game.",
+          completed: true,
+        },
+        {
+          title: "Special in-game events",
+          desc: "Players will be invited to participate in exciting and unique events with rewards and prizes.",
+          completed: true,
+        },
+        {
+          title: "Leaderboard",
+          desc: "Introducing a leaderboard system where users can monitor their daily/weekly/monthly performance. Top ranked players will get rewards or bonuses  in the form of in-game items, currency, or access to exclusive content.",
+          completed: true,
+        },
+        {
+          title: "Genesis Land Whitelist",
+          desc: "Become the owner of a limited edition of 1,000 Genesis Land NFTs located in prime locations by joining the whitelist",
           completed: true,
         },
         {
@@ -42,14 +111,7 @@ const Roadmap = () => {
           title: "CAWS NFT 3D rendering",
           desc: "Users are able to create an in-game playable 3D version of their owned CAWS NFT.",
         },
-        {
-          title: "Special in-game events",
-          desc: "Players will be invited to participate in exciting and unique events with rewards and prizes.",
-        },
-        {
-          title: "Leaderboard",
-          desc: "Introducing a leaderboard system where users can monitor their daily/weekly/monthly performance. Top ranked players will get rewards or bonuses  in the form of in-game items, currency, or access to exclusive content.",
-        },
+
         {
           title: "Introducing the CAWS Timepiece NFT collection",
           desc: "The CAWS Timepiece NFT collection will provide users additional utility and perks in the World of Dypians Metaverse. CAWS owners will have the ability to mint CAWS Timepiece for free.",
@@ -180,6 +242,49 @@ const Roadmap = () => {
     // },
   ];
 
+  const mainUpdate = [
+    {
+      title: "Demo Launch",
+      date: "Dec 2022",
+      image: demoLaunch,
+    },
+    {
+      title: "Beta Tester Access",
+      date: "Dec 2022",
+      image: betaTesting,
+    },
+    {
+      title: "CAWS Integration",
+      date: "Jan 2023",
+      image: cawsIntegration,
+    },
+    {
+      title: "Special in-game events",
+      date: "Feb 2023",
+      image: gameEvents,
+    },
+    {
+      title: "Leaderboard",
+      date: "Feb 2023",
+      image: leaderboardBanner,
+    }, 
+    {
+      title: "Genesis Land Whitelist",
+      date: "Feb 2023",
+      image: whitelistBanner,
+    },
+   
+  ];
+  const slider = useRef();
+
+  const next = () => {
+    slider.current.slickNext();
+  };
+  const previous = () => {
+    slider.current.slickPrev();
+  };
+
+
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg">
       <div className="roadmap-main-wrapper px-0 w-100 d-flex flex-column">
@@ -203,39 +308,44 @@ const Roadmap = () => {
         </div>
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
           <div className="roadmap-grid px-3 px-lg-0">
-            <div className="d-flex flex-column gap-3">
-              <div className="roadmap-main-update position-relative">
-                <img src={demoLaunch} className="main-update-image" alt="" />
+          <div className="d-flex flex-column align-items-center position-relative roadmap-slider-wrapper gap-3" style={{height: 'fit-content'}}>
+          <Slider ref={(c) => (slider.current = c)} {...settings}>
+              <div className="d-flex flex-column gap-3 ">
+              {mainUpdate.slice(0,3).map((item) => (
+                <div className="roadmap-main-update position-relative">
+                <img src={item.image} className="main-update-image" alt="" />
                 <div className="main-update-title-wrapper w-100">
                   <span className="font-organetto main-update-date">
-                    Dec 2022
+                    {item.date}
                   </span>
                   <h6 className="main-update-title mb-0 font-organetto">
-                    Demo launch
+                    {item.title}
                   </h6>
                 </div>
               </div>
-              <div className="roadmap-main-update position-relative">
-                <img src={betaTesting} className="main-update-image" alt="" />
-
-                <div className="main-update-title-wrapper d-flex flex-column w-100">
-                  <span className="font-organetto main-update-date">
-                    Dec 2022
-                  </span>
-                  <h6 className="main-update-title mb-0 font-organetto">
-                    Beta tester access
-                  </h6>
-                </div>
-              </div>
-              {/* <div className="roadmap-main-update position-relative">
-                <div className="main-update-title-wrapper w-100">
-                  <h6 className="main-update-title font-organetto">
-                    Genesis Land Launch
-                  </h6>
-                </div>
-              </div> */}
-              <h6 className="live-now-title font-organetto mt-4">Out Now!</h6>
+              ))}
             </div>
+              <div className="d-flex flex-column gap-3">
+              {mainUpdate.slice(3,6).map((item) => (
+                <div className="roadmap-main-update position-relative">
+                <img src={item.image} className="main-update-image" alt="" />
+                <div className="main-update-title-wrapper w-100">
+                  <span className="font-organetto main-update-date">
+                    {item.date}
+                  </span>
+                  <h6 className="main-update-title mb-0 font-organetto">
+                    {item.title}
+                  </h6>
+                </div>
+              </div>
+              ))}
+            </div>
+            </Slider>
+            <img src={nextArrow} alt="" className="prev-arrow" onClick={previous} />
+            <img src={nextArrow} alt="" className="next-arrow" onClick={next} />
+            <h6 className="live-now-title font-organetto mt-4">Out Now!</h6>
+          </div>
+
             {roadmapItems.map((item, index) => (
               <RoadmapCard
                 quarter={item.quarter}

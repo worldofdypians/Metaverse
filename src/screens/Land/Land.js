@@ -49,7 +49,7 @@ const Land = ({
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
 
 
-  const [mintPrice, setmintPrice] = useState(0);
+  const [mintPrice, setmintPrice] = useState();
   const [mintStatus, setmintStatus] = useState("");
   const [mintloading, setmintloading] = useState("initial");
   const [walletModal, setwalletModal] = useState(false);
@@ -428,6 +428,8 @@ const Land = ({
           totalCAWCreated={myCAWSNFTsCreated.length}
           totalCAWStaked={myCAWSNFTsTotalStaked.length}
           handleConnect={handleConnectWallet}
+          chainId={chainId}
+
         />
       )}
 
