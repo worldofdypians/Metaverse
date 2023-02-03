@@ -60,6 +60,13 @@
   }
   
 }
+@media screen and (max-width: 360px) {
+  .footer-wrapper{
+    column-gap: 0px !important;
+
+  }
+  
+}
 
 
 @media screen and (max-width: 991px) {
