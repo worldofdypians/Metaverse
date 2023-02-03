@@ -294,9 +294,9 @@
     .minting-price {
       font-style: normal;
       font-weight: 800;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 18px;
-      color: #ffffff;
+      color: #09fbd3;
       
     }
 
@@ -1002,12 +1002,18 @@
   }
 }
 
+.landtitle-wrapper {
+  white-space: initial;
+  display: block;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
+ 
 @media screen and (max-width: 1441px) {
   .benefit-card {
     width: 285px !important;
@@ -1017,6 +1023,7 @@ input::-webkit-inner-spin-button {
     bottom: 300px !important;
   }
 }
+
 
 @media screen and (max-width: 786px) {
   .genesis-wrapper:nth-child(4) {

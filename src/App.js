@@ -95,15 +95,18 @@ function App() {
         params: [coinbase, "latest"],
       });
       
-      if (balance) {
+      // if (balance) {
         if (chainId === 1) {
           const stringBalance = window.infuraWeb3.utils.hexToNumberString(balance);
           const amount = window.infuraWeb3.utils.fromWei(stringBalance, "ether");
-          setCurrencyAmount(amount.slice(0, 7));
+      
+          setCurrencyAmount(Number(amount));
         }
-      }}
+      // }
+    }
     }
   };
+  
 
   const handleConnectWallet = async () => {
     try {
@@ -115,7 +118,7 @@ function App() {
         setCoinbase(data);
       });
       setShowForms2(true);
-      checkNetworkId();
+  
     } catch (e) {
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
@@ -132,8 +135,11 @@ function App() {
   }
 
   useEffect(() => {
+  
+      checkNetworkId();
+
       getEthBalance();
-    },[isConnected, coinbase,currencyAmount]
+    },[isConnected, coinbase,currencyAmount, chainId]
   );
 
 

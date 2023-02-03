@@ -59,7 +59,7 @@ const Members = ({handleRegister}) => {
             className="pink-title font-organetto"
             style={{ fontSize: "25px" }}
           >
-            {getFormattedNumber(seats,0) }
+            {getFormattedNumber(players?.registered,0) }
           </h6>
           <span className="pink-content" style={{ fontSize: "15px" }}>
             Registered
