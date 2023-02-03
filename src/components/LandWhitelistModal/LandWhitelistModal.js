@@ -37,10 +37,10 @@ const LandWhitelistModal = ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "350px",
+    height: 625,
     boxShadow: 24,
     p: 4,
     overflow: "auto",
-    height: "auto",
     borderRadius: "8px",
     overflowX: "hidden",
   };
@@ -309,6 +309,8 @@ const LandWhitelistModal = ({
                     {shortAddress(coinbase)}
                   </p>
                 </div>
+                <div className="separator"></div>
+                <p className="notetext">*Please make sure you're on Ethereum Chain in order to verify if you're eligible.</p>
                 <div className="separator"></div>
 
                 <div

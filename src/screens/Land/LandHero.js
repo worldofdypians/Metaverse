@@ -41,15 +41,16 @@ const LandHero = () => {
     <div className="land-hero-wrapper py-5  d-flex flex-column gap-5">
     <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
         <div className="col-12 col-lg-5 ps-2 ps-lg-0 pt-5 pt-lg-0">
-          <h6 className="land-hero-title font-organetto">
-            1,000 Premium WOD Land
-          </h6>
+        
+          <h6 className="land-hero-title font-organetto landtitle-wrapper">
+            1,000 Premium
+         
           <h6
             className="land-hero-title font-organetto"
             style={{ color: "#8c56ff" }}
           >
-            Genesis Edition NFTS
-          </h6>
+            WOD Land Genesis
+          </h6>  </h6>
           <p className="land-hero-content font-poppins">
             The WOD Land Genesis edition is a new type of NFT that offers a
             unique way to own virtual land in the World of Dypians Metaverse

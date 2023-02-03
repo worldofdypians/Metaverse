@@ -137,6 +137,7 @@ function App() {
   useEffect(() => {
   
       checkNetworkId();
+
       getEthBalance();
     },[isConnected, coinbase,currencyAmount, chainId]
   );
