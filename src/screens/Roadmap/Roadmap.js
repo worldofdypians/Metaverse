@@ -9,6 +9,7 @@ import demoLaunch from "../../assets/landAssets/demoLaunch.png";
 import betaTesting from "../../assets/landAssets/betaTesting.png";
 import leaderboardBanner from "./assets/leaderboardBanner.png";
 import whitelistBanner from "./assets/whitelistBanner.webp";
+import cawsIntegration from "./assets/cawsIntegration.png";
 import gameEvents from "./assets/gameEvents.png";
 import nextArrow from './assets/nextArrow.svg'
 import Slider from "react-slick";
@@ -75,6 +76,11 @@ const Roadmap = () => {
         {
           title: "Beta Tester access",
           desc: "Gather feedback from beta testing phase to identify any issues or areas for improvement and make changes before the game is officially released.",
+          completed: true,
+        },
+        {
+          title: "CAWS Integration",
+          desc: "This integration allows players to have virtual cats as companions represented by CAWS NFTs. These NFTs give players unique ownership over their virtual cats and the ability to interact with them in the game.",
           completed: true,
         },
         {
@@ -238,19 +244,9 @@ const Roadmap = () => {
 
   const mainUpdate = [
     {
-      title: "Genesis Land Whitelist",
-      date: "Jan 2023",
-      image: whitelistBanner,
-    },
-    {
-      title: "Leaderboard",
-      date: "Jan 2023",
-      image: leaderboardBanner,
-    },
-    {
-      title: "Special in-game events",
-      date: "Jan 2023",
-      image: gameEvents,
+      title: "Demo Launch",
+      date: "Dec 2022",
+      image: demoLaunch,
     },
     {
       title: "Beta Tester Access",
@@ -258,10 +254,26 @@ const Roadmap = () => {
       image: betaTesting,
     },
     {
-      title: "Demo Launch",
-      date: "Dec 2022",
-      image: demoLaunch,
+      title: "CAWS Integration",
+      date: "Jan 2023",
+      image: cawsIntegration,
     },
+    {
+      title: "Special in-game events",
+      date: "Feb 2023",
+      image: gameEvents,
+    },
+    {
+      title: "Leaderboard",
+      date: "Feb 2023",
+      image: leaderboardBanner,
+    }, 
+    {
+      title: "Genesis Land Whitelist",
+      date: "Feb 2023",
+      image: whitelistBanner,
+    },
+   
   ];
   const slider = useRef();
 
