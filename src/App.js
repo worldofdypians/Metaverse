@@ -140,9 +140,9 @@ function App() {
   return (
     <BrowserRouter>
       <div className="container-fluid p-0 main-wrapper position-relative">
-        {/* {!window.location.href.includes('/land') &&
+        {!window.location.href.includes('/land') &&
         <LandPopup />
-        } */}
+        }
         <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
@@ -163,7 +163,7 @@ function App() {
           <Route exact path="/stake" element={<NftMinting />} />
           <Route exact path="/join-beta" element={<JoinBeta coinbase={coinbase} handleRegister={handleBetaRegister} />} />
 
-          {/* <Route
+          <Route
             exact
             path="/land"
             element={
@@ -177,7 +177,7 @@ function App() {
                 balance={currencyAmount}
               />
             }
-          /> */}
+          />
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
