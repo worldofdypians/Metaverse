@@ -159,7 +159,7 @@ const PartnerForm = () => {
         company_size: values.company_size,
         description: values.description,
         interests: testArray.join(),
-        image: selectedFile,
+        file: selectedFile,
         recaptcha: captchaToken,
       };
       console.log(data);
