@@ -84,55 +84,7 @@ const PartnerForm = () => {
   const recaptchaRef = useRef(null);
   const [success, setSuccess] = useState(false)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    setErrors(validateInfo(values, productsArray.join()));
-
-    if (Object.keys(validateInfo(values, productsArray.join())).length === 0) {
-      const captchaToken = await recaptchaRef.current.executeAsync();
-      const data = {
-        email: values.email,
-        name: values.name,
-        company_name: values.company_name,
-        company_size: values.company_size,
-        description: values.description,
-        interests: productsArray.join(),
-        image: selectedFile,
-        recaptcha: captchaToken,
-      };
-
-      if (
-        values.name !== "" &&
-        values.description !== "" &&
-        values.interests !== "" &&
-        values.email !== ""
-        // selectedFile !== ""
-      ){
-        const send = await axios
-          .post("https://api-mail.dyp.finance/api/wod/business", data)
-          .then(function(result) {
-            
-            return result.data;
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
-        if (send.status === 1) {
-          setSuccess(true);
-          console.log(values, selectedFile);
-          alert('success')
-        } else {
-          setSuccess(false);
-          alert('Fail')
-        }
-      }
-      recaptchaRef.current.reset();
-      setValues({ ...initialValues });
-      setSelectedFile(null);
-
-    }
-  };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -192,6 +144,55 @@ const PartnerForm = () => {
       event.preventDefault();
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setErrors(validateInfo(values, productsArray.join()));
+
+    if (Object.keys(validateInfo(values, productsArray.join())).length === 0) {
+      const captchaToken = await recaptchaRef.current.executeAsync();
+      const data = {
+        email: values.email,
+        name: values.name,
+        company_name: values.company_name,
+        company_size: values.company_size,
+        description: values.description,
+        interests: productsArray.join(),
+        image: selectedFile,
+        recaptcha: captchaToken,
+      };
+      if (
+        values.name !== "" &&
+        values.description !== "" &&
+        data.interests !== "" &&
+        values.email !== ""
+      ){
+        const send = await axios
+          .post("https://api-mail.dyp.finance/api/wod/business", data)
+          .then(function(result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+        if (send.status === 1) {
+          setSuccess(true);
+          alert('success')
+        } else {
+          setSuccess(false);
+          alert('Fail')
+        }
+      }else{
+      }
+      recaptchaRef.current.reset();
+      setValues({ ...initialValues });
+      setSelectedFile(null);
+
+    }
+  };
+
+
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
       <div className="partner-main-wrapper py-5 px-0 w-100 d-flex align-items-center flex-column gap-4">
