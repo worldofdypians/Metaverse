@@ -172,7 +172,7 @@ function App() {
           <Route exact path="/roadmap" element={<Roadmap />} />
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
-          <Route exact path="/partner-form" element={<PartnerForm />} />
+          <Route exact path="/build" element={<PartnerForm />} />
           <Route exact path="/join-beta" element={<JoinBeta coinbase={coinbase} handleRegister={handleBetaRegister} />} />
           
           <Route exact path="/account" element={<Redirect />} />
