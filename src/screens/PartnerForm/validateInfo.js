@@ -1,4 +1,4 @@
-export default function validateBetaInfo(values, interests) {
+export default function validateInfo(values, interests) {
     let errors = {};
   
     if (!values.email) {
