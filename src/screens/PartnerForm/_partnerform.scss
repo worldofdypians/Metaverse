@@ -1,0 +1,81 @@
+.partner-main-wrapper{
+  gap: 80px;
+  max-width: 2400px;
+  background-image: url("../../assets/explorerAssets/explorerBg2.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+  }
+}
+
+
+.partner-title {
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 43px;
+  text-align: center;
+
+  color: #ffffff;
+}
+.partner-desc {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #ffffff;
+  width: 75%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+.partner-form-wrapper {
+  background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  border-radius: 8px;
+}
+
+.partner-form-title{
+    font-weight: 800;
+font-size: 18px;
+line-height: 24px;
+color: #ffffff;
+}
+
+.partner-divider{
+    color: #4F4770 !important;
+    opacity: 1 !important;
+}
+
+.upload-btn-wrapper{
+    padding: 2px;
+    background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
+    border-radius: 10px;
+}
+
+.upload-btn{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    color: #F7F7FC;
+    background: #080B2A;
+border-radius: 10px;
+}
+
+.MuiList-root{
+  background: #080B2A;
+}
+
+.error-span{
+  color: #d32f2f;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.66;
+  letter-spacing: 0.03333em;
+}
+
+.success-modal{
+   
+}

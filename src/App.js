@@ -21,6 +21,7 @@ import scrollToTop from './assets/scrollToTop.svg'
 import ScrollTop from "./components/ScrollTop";
 import JoinBeta from "./screens/JoinBeta/JoinBeta";
 import JoinBetaModal from "./components/JoinBetaModal/JoinBetaModal";
+import PartnerForm from "./screens/PartnerForm/PartnerForm";
 
 
 function App() {
@@ -171,6 +172,7 @@ function App() {
           <Route exact path="/roadmap" element={<Roadmap />} />
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
+          <Route exact path="/build" element={<PartnerForm />} />
           <Route exact path="/join-beta" element={<JoinBeta coinbase={coinbase} handleRegister={handleBetaRegister} />} />
           
           <Route exact path="/account" element={<Redirect />} />

@@ -156,13 +156,7 @@ const JoinBetaModal = ({
       ...values,
       [name]: value,
     });
-    // clearTimeout(timer);
-
-    // const newTimer = setTimeout(() => {
-    //   checkInput(name, value);
-    // }, 500);
-
-    // setTimer(newTimer);
+    
   };
 
   const addProducts = (product) => {
