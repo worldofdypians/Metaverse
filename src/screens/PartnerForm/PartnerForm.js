@@ -79,13 +79,13 @@ const PartnerForm = () => {
     interests: "",
   };
 
-  var productsArray = [];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
   const recaptchaRef = useRef(null);
   const [success, setSuccess] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
+  const [testArray, setTestArray] = useState([])
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -97,11 +97,11 @@ const PartnerForm = () => {
   };
 
   const addProducts = (product) => {
-    if (productsArray.includes(product)) {
-      const index = productsArray.indexOf(product);
-      productsArray.splice(index, 1);
+    if (testArray.includes(product)) {
+      const index = testArray.indexOf(product);
+      testArray.splice(index, 1);
     } else {
-      productsArray.push(product);
+     setTestArray([...testArray, product])
     }
   };
 
@@ -147,10 +147,10 @@ const PartnerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(productsArray.join())
-    setErrors(validateInfo(values, productsArray.join()));
+    console.log(testArray.join())
+    setErrors(validateInfo(values, testArray.join()));
 
-    if (Object.keys(validateInfo(values, productsArray.join())).length === 0) {
+    if (Object.keys(validateInfo(values, testArray.join())).length === 0) {
       const captchaToken = await recaptchaRef.current.executeAsync();
       const data = {
         email: values.email,
@@ -158,7 +158,7 @@ const PartnerForm = () => {
         company_name: values.company_name,
         company_size: values.company_size,
         description: values.description,
-        interests: productsArray.join(),
+        interests: testArray.join(),
         image: selectedFile,
         recaptcha: captchaToken,
       };
@@ -179,10 +179,8 @@ const PartnerForm = () => {
           });
         if (send.status === 1) {
           setSuccess(true);
-          alert("success");
         } else {
           setSuccess(false);
-          alert("Fail");
         }
       } else {
       }
