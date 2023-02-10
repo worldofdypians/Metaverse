@@ -1,3 +1,16 @@
+.partner-main-wrapper{
+  gap: 80px;
+  max-width: 2400px;
+  background-image: url("../../assets/explorerAssets/explorerBg2.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+  }
+}
+
+
 .partner-title {
   font-weight: 800;
   font-size: 32px;
