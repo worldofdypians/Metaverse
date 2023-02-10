@@ -18,54 +18,56 @@ import ReCaptchaV2 from "react-google-recaptcha";
 import { useRef } from "react";
 import validateInfo from "./validateInfo";
 import axios from "axios";
+import OutsideClickHandler from "react-outside-click-handler";
+import modalClose from "../../assets/newsAssets/modalClose.svg";
+import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
 
 const StyledTextField = styled(TextField)({
-    '& label.Mui-focused': {
-      color: '#fff',
-      fontFamily: "Poppins"
-    },
-    '& .MuiInputLabel-root': {
-      color: '#fff',
+  "& label.Mui-focused": {
+    color: "#fff",
+    fontFamily: "Poppins",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#fff",
+    fontFamily: "Poppins",
+    zIndex: "2",
+  },
+  "& .MuiFormHelperText-root": {
+    fontFamily: "Poppins",
+  },
+  "& .MuiSelect-select": {
+    color: "#fff",
+    fontFamily: "Poppins",
+    zIndex: "1",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#AAA5EB",
+    fontFamily: "Poppins",
+    color: "#fff",
+    background: "#272450",
+    borderRadius: "8px",
+  },
+  "& .MuiOutlinedInput-input": {
+    zIndex: "1",
+    color: "#fff",
+    fontFamily: "Poppins",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#AAA5EB",
       fontFamily: "Poppins",
-      zIndex: '2'
+      background: "#272450",
+      borderRadius: "8px",
     },
-    '& .MuiFormHelperText-root': {
-      fontFamily: "Poppins"
-    },
-    '& .MuiSelect-select': {
-      color: '#fff',
-      fontFamily: "Poppins",
-      zIndex: "1"
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#AAA5EB',
+    "&.Mui-focused fieldset": {
+      borderColor: "#AAA5EB",
       fontFamily: "Poppins",
       color: "#fff",
       background: "#272450",
-      borderRadius: "8px"
+      borderRadius: "8px",
     },
-    '& .MuiOutlinedInput-input': {
-        zIndex: '1',
-        color: '#fff',
-        fontFamily: 'Poppins'
-      },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#AAA5EB',
-        fontFamily: "Poppins",
-        background: "#272450",
-        borderRadius: "8px",
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#AAA5EB',
-        fontFamily: "Poppins",
-        color: "#fff",
-        background: "#272450",
-        borderRadius: "8px"
-      },
-    },
-  });
-
+  },
+});
 
 const PartnerForm = () => {
   const initialValues = {
@@ -82,9 +84,8 @@ const PartnerForm = () => {
   const [errors, setErrors] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
   const recaptchaRef = useRef(null);
-  const [success, setSuccess] = useState(false)
-
-
+  const [success, setSuccess] = useState(false);
+  const [enableSubmit, setEnableSubmit] = useState(false);
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -112,30 +113,29 @@ const PartnerForm = () => {
       "application/pdf",
     ];
 
-    const file = event.target.files[0]
+    const file = event.target.files[0];
     const reader = new FileReader();
     const testImage = new Image();
 
-     reader.onload = function () {
+    reader.onload = function () {
       if (reader !== null && typeof reader.result == "string") {
         testImage.src = reader.result;
       }
     };
     reader.readAsDataURL(file);
 
-
     testImage.onload = async function () {
       if (fileTypes.includes(event.target.files[0].type)) {
-      if (event.target.files && event.target.files[0]) {
-        if (event.target.files[0].size < 5000000) {
-          setSelectedFile(reader.result);
-          console.log(reader.result);
-        } else alert("File size too big");
+        if (event.target.files && event.target.files[0]) {
+          if (event.target.files[0].size < 5000000) {
+            setSelectedFile(reader.result);
+            console.log(reader.result);
+          } else alert("File size too big");
+        }
+      } else {
+        alert("Image type not supported");
       }
-    } else {
-      alert("Image type not supported");
-    }
-    }
+    };
   };
 
   const handleChangeBg = (event) => {
@@ -147,7 +147,7 @@ const PartnerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(productsArray.join())
     setErrors(validateInfo(values, productsArray.join()));
 
     if (Object.keys(validateInfo(values, productsArray.join())).length === 0) {
@@ -162,15 +162,16 @@ const PartnerForm = () => {
         image: selectedFile,
         recaptcha: captchaToken,
       };
+      console.log(data);
       if (
         values.name !== "" &&
         values.description !== "" &&
         data.interests !== "" &&
         values.email !== ""
-      ){
+      ) {
         const send = await axios
           .post("https://api-mail.dyp.finance/api/wod/business", data)
-          .then(function(result) {
+          .then(function (result) {
             return result.data;
           })
           .catch(function (error) {
@@ -178,24 +179,22 @@ const PartnerForm = () => {
           });
         if (send.status === 1) {
           setSuccess(true);
-          alert('success')
+          alert("success");
         } else {
           setSuccess(false);
-          alert('Fail')
+          alert("Fail");
         }
-      }else{
+      } else {
       }
       recaptchaRef.current.reset();
       setValues({ ...initialValues });
       setSelectedFile(null);
-
     }
   };
 
-
   return (
-    <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
-      <div className="partner-main-wrapper py-5 px-0 w-100 d-flex align-items-center flex-column gap-4">
+    <div className="container-fluid d-flex pt-5 pt-lg-0 px-3 px-lg-0 align-items-center justify-content-center">
+      <div className="partner-main-wrapper py-5 w-100 d-flex align-items-center flex-column gap-4">
         <div className="d-flex flex-column">
           <h6 className="partner-title font-organetto">Crate your own world</h6>
           <h6
@@ -205,18 +204,16 @@ const PartnerForm = () => {
             The possibilties are endless.
           </h6>
         </div>
-        <p className="partner-desc w-75">
-          The World of Dypians (WoD) is a massive multiplayer online
-          role-playing game that is set in a vast digital environment. It offers
-          a rich and engaging experience where players can interact with others,
-          complete quests, and engage in battles. WoD combines fantasy and
-          blockchain technology to create a dynamic virtual world where players
-          can form communities, create content, and interact with each other.
-          The ultimate goal is to create a lively virtual world where players
-          can engage in meaningful experiences.
+        <p className="partner-desc">
+          The customization options in WoD allow you to express your creativity
+          and make a mark on the virtual world. With endless possibilities for
+          personalization, each player's experience in the WoD is truly
+          one-of-a-kind.
         </p>
         <div className="partner-form-wrapper col-12 col-lg-4 gap-3 p-3 d-flex flex-column">
-          <h6 className="partner-form-title font-organetto">Start creating your own world</h6>
+          <h6 className="partner-form-title font-organetto">
+            Start creating your <span className="partner-form-title" style={{color: 'rgba(140, 86, 255, 1)'}}>own world</span>
+          </h6>
           <StyledTextField
             error={errors.name ? true : false}
             size="small"
@@ -277,7 +274,7 @@ const PartnerForm = () => {
                   )}
             </FormControl> */}
 
-<StyledTextField
+            <StyledTextField
               error={errors.company_size ? true : false}
               size="small"
               label="Company size"
@@ -290,15 +287,68 @@ const PartnerForm = () => {
                 handleChange(e);
               }}
               sx={{ width: "100%" }}
-            > 
-                        <MenuItem sx={{background: "#080b2a", color: "#AAA5EB", fontFamily: "Poppins"}}  value={"Self-Employed"}>Ten</MenuItem>
-                  <MenuItem sx={{background: "#080b2a", color: "#AAA5EB", fontFamily: "Poppins"}}  value={"1 - 10 Employees"}>1 - 10 Employees</MenuItem>
-                  <MenuItem sx={{background: "#080b2a", color: "#AAA5EB", fontFamily: "Poppins"}}  value={"11 - 100 Employees"}>11 - 100 Employees</MenuItem>
-                  <MenuItem  sx={{background: "#080b2a", color: "#AAA5EB", fontFamily: "Poppins"}} value={"101 - 999 Employees"}>101 - 999 Employees</MenuItem>
-                  <MenuItem sx={{background: "#080b2a", color: "#AAA5EB", fontFamily: "Poppins"}}  value={"1,000 - 10,000 Employees"}>1,000 - 10,000 Employees</MenuItem>
-                  <MenuItem  sx={{background: "#080b2a", color: "#AAA5EB", fontFamily: "Poppins"}} value={"10,000+ Employees"}>10,000+ Employees</MenuItem>
+            >
+              <MenuItem
+                sx={{
+                  background: "#080b2a",
+                  color: "#AAA5EB",
+                  fontFamily: "Poppins",
+                }}
+                value={"Self-Employed"}
+              >
+                Ten
+              </MenuItem>
+              <MenuItem
+                sx={{
+                  background: "#080b2a",
+                  color: "#AAA5EB",
+                  fontFamily: "Poppins",
+                }}
+                value={"1 - 10 Employees"}
+              >
+                1 - 10 Employees
+              </MenuItem>
+              <MenuItem
+                sx={{
+                  background: "#080b2a",
+                  color: "#AAA5EB",
+                  fontFamily: "Poppins",
+                }}
+                value={"11 - 100 Employees"}
+              >
+                11 - 100 Employees
+              </MenuItem>
+              <MenuItem
+                sx={{
+                  background: "#080b2a",
+                  color: "#AAA5EB",
+                  fontFamily: "Poppins",
+                }}
+                value={"101 - 999 Employees"}
+              >
+                101 - 999 Employees
+              </MenuItem>
+              <MenuItem
+                sx={{
+                  background: "#080b2a",
+                  color: "#AAA5EB",
+                  fontFamily: "Poppins",
+                }}
+                value={"1,000 - 10,000 Employees"}
+              >
+                1,000 - 10,000 Employees
+              </MenuItem>
+              <MenuItem
+                sx={{
+                  background: "#080b2a",
+                  color: "#AAA5EB",
+                  fontFamily: "Poppins",
+                }}
+                value={"10,000+ Employees"}
+              >
+                10,000+ Employees
+              </MenuItem>
             </StyledTextField>
-      
           </div>
           <StyledTextField
             error={errors.description ? true : false}
@@ -316,7 +366,8 @@ const PartnerForm = () => {
             sx={{ width: "100%" }}
           />
           <span className="checkbox-title mt-3">
-          Please describe yourself / your company. What is your field of focus?* 
+            Please describe yourself / your company. What is your field of
+            focus?*
           </span>
           <div className="checkbox-grid">
             <div className="d-flex align-items-center gap-2">
@@ -353,7 +404,9 @@ const PartnerForm = () => {
                   },
                 }}
               />
-              <span className="checkbox-title">Transfer NFT or NFT collection</span>
+              <span className="checkbox-title">
+                Transfer NFT or NFT collection
+              </span>
             </div>
             <div className="d-flex align-items-center gap-2">
               <Checkbox
@@ -392,9 +445,9 @@ const PartnerForm = () => {
               <span className="checkbox-title">Other</span>
             </div>
           </div>
-          {errors?.interests && 
-          <div className="error-span">{errors.interests}</div>
-          }
+          {errors?.interests && (
+            <div className="error-span">{errors.interests}</div>
+          )}
           <hr className="partner-divider" />
           <div className="d-flex align-items-center gap-2">
             <Checkbox
@@ -404,6 +457,7 @@ const PartnerForm = () => {
                   color: "#00FECF",
                 },
               }}
+              onChange={() => setEnableSubmit(!enableSubmit)}
             />
             <span className="checkbox-title">
               I agree to share my email address with Dypius. for use in
@@ -412,40 +466,82 @@ const PartnerForm = () => {
             </span>
           </div>
           <div className="d-flex align-items-center justify-content-between mt-4">
-            {selectedFile ? 
-            <div className="d-flex align-items-center gap-2">
+            {selectedFile ? (
+              <div className="d-flex align-items-center gap-2">
                 <div className="upload-btn-wrapper">
-            <button className="btn upload-btn d-flex align-items-center gap-2">
-              <img src={uploadedIcon} alt="" />
-              File added
-            </button>
-          </div>
-          <img src={xMark} alt="x mark" onClick={handleChangeBg} style={{cursor: 'pointer'}} />
-            </div>
-            :
-            <div className="upload-btn-wrapper">
-              <button className="btn upload-btn d-flex align-items-center gap-2">
-                <input type="file" style={{opacity: "0", position: 'absolute', cursor: "pointer", width: '100px'}} className="p-2" onChange={(e) => onFileChange(e)} />
-                Upload File
-                <img src={uploadIcon} alt="" />
-              </button>
-            </div>
-            }
-            <div className="linear-border">
-              <button className="btn filled-btn px-5 d-flex align-items-center gap-2" onClick={handleSubmit}>
+                  <button className="btn upload-btn d-flex align-items-center gap-2">
+                    <img src={uploadedIcon} alt="" />
+                    File added
+                  </button>
+                </div>
+                <img
+                  src={xMark}
+                  alt="x mark"
+                  onClick={handleChangeBg}
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+            ) : (
+              <div className="upload-btn-wrapper">
+                <button className="btn upload-btn d-flex align-items-center gap-2">
+                  <input
+                    type="file"
+                    style={{
+                      opacity: "0",
+                      position: "absolute",
+                      cursor: "pointer",
+                      width: "100px",
+                    }}
+                    className="p-2"
+                    onChange={(e) => onFileChange(e)}
+                  />
+                  Upload File
+                  <img src={uploadIcon} alt="" />
+                </button>
+              </div>
+            )}
+            <div
+              className={`${
+                enableSubmit ? "linear-border" : "linear-border-disabled"
+              }`}
+            >
+              <button
+                className="btn filled-btn px-5 d-flex align-items-center gap-2"
+                onClick={handleSubmit}
+                disabled={!enableSubmit}
+              >
                 Submit
               </button>
             </div>
           </div>
           <ReCaptchaV2
-                  sitekey="6LflZgEgAAAAAO-psvqdoreRgcDdtkQUmYXoHuy2"
-                  style={{ display: "inline-block" }}
-                  theme="dark"
-                  size="invisible"
-                  ref={recaptchaRef}
-                />
+            sitekey="6LflZgEgAAAAAO-psvqdoreRgcDdtkQUmYXoHuy2"
+            style={{ display: "inline-block" }}
+            theme="dark"
+            size="invisible"
+            ref={recaptchaRef}
+          />
         </div>
       </div>
+      {success && (
+        <OutsideClickHandler onOutsideClick={() => setSuccess(false)}>
+          <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
+            <div className="d-flex w-100 justify-content-end">
+              <img
+                src={modalClose}
+                alt="close modal"
+                onClick={() => setSuccess(false)}
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+            <img src={newsLetterModal} alt="success" />
+            <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
+            <span className="newsletter-modal-span font-poppins">
+              You’ve sucessfully submited your request to World of Dypians
+            </span>
+          </div>
+        </OutsideClickHandler>
+      )}
     </div>
   );
 };
