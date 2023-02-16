@@ -245,7 +245,7 @@
       left: 0;
       top: -40px;
       @media screen and (max-width: 991px) {
-        top: -95px;
+        top: -85px;
         white-space: break-spaces;
       }
     }
@@ -352,7 +352,7 @@
     top: 0;
     margin: auto;
     // background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-    background-image: url("../../assets/landAssets/genesis-hero.png");
+    // background-image: url("../../assets/landAssets/genesis-hero.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: right;
@@ -420,7 +420,7 @@
     font-size: 14px;
     line-height: 21px;
     color: #ffffff;
-    width: 75%;
+    // width: 75%;
     padding-bottom: 5px;
     @media screen and (max-width: 1500px) {
       width: 100%;

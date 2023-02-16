@@ -228,12 +228,12 @@ const Land = ({
         //Check Whitelist
         // let whitelist = await window.checkWhitelist(connectedWallet)
         let whitelist = 1;
-
+        const cawsArray = [...myCAWSNFTsCreated,...myCAWSNFTsTotalStaked]
         if (parseInt(whitelist) == 1) {
           setmintloading("mint");
           console.log(data);
           let tokenId = await window.landnft
-            .mintNFT(data.numberOfTokens)
+            .mintNFT(data.numberOfTokens,cawsArray)
             .then(() => {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
@@ -342,7 +342,11 @@ const Land = ({
 
   const getMintPrice = async () => {
     const ethprice = await convertEthToUsd();
-    setmintPrice(1200 / Number(ethprice));
+    if(myCAWSNFTsCreated.length === 0 && myCAWSNFTsTotalStaked.length === 0)
+    {setmintPrice(1200 / Number(ethprice));}
+    else if(myCAWSNFTsTotalStaked.length > 0 || myCAWSNFTsCreated.length > 0) {
+      setmintPrice(850 / Number(ethprice))
+    }
   };
 
 
@@ -362,9 +366,9 @@ const Land = ({
   useEffect(() => {
     //  const interval = setInterval(async () => {
        if (isConnected && coinbase && chainId === 1) {
-        //  handleClaimAll().then();
-        //  myStakes();
-        //  myNft();
+         handleClaimAll().then();
+         myStakes();
+         myNft();
          myCAWStakes();
          myCAWNft()
        }

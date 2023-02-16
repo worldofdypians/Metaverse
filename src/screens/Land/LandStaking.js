@@ -111,18 +111,18 @@ const LandStaking = ({
     }
   }, [nftCount]);
 
-  // useEffect(() => {
-  //   if (isConnected) {
-  //     if (chainId !== undefined) {
-  //       if (chainId !== 1 || chainId !== 5) {
-  //         setactiveButton(false);
-  //       }
-  //       if (chainId === 1 || chainId === 5) {
-  //         setactiveButton(true);
-  //       }
-  //     }
-  //   }
-  // }, [isConnected, chainId]);
+  useEffect(() => {
+    if (isConnected) {
+      if (chainId !== undefined) {
+        if (chainId !== 1 || chainId !== 5) {
+          setactiveButton(false);
+        }
+        if (chainId === 1 || chainId === 5) {
+          setactiveButton(true);
+        }
+      }
+    }
+  }, [isConnected, chainId]);
 
   useEffect(() => {
     setUSDPrice();
@@ -146,7 +146,7 @@ const LandStaking = ({
                   remaining
                 </span>
               </span>
-              <Countdown date={"2023-02-17T18:15:03"} renderer={renderer} />
+              <Countdown date={"2023-02-17T14:00:03"} renderer={renderer} />
             </div>
           </div>
         </div>
@@ -155,8 +155,8 @@ const LandStaking = ({
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
         // style={{ minHeight: "518px" }}
       >
-        {/* <div
-          className="col-12 col-md-4 col-xxl-2 ps-2 ps-lg-0"
+        <div
+          className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0"
           style={{ minHeight: "518px" }}
         >
           <div
@@ -208,10 +208,10 @@ const LandStaking = ({
               </button>
             </div>
           </div>
-        </div> */}
-        <div className="col-12 col-md-12 col-xxl-8 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        </div>
+        <div className="col-12 col-md-12 col-xxl-6 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
-            className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
+            className="p-3 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
             style={{ minHeight: "463px" }}
           >
             {/* <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
@@ -232,18 +232,18 @@ const LandStaking = ({
               </span>
             
             </div> */}
-            <img
+            {/* <img
               src={require("../../assets/landAssets/genesis-hero.png")}
               alt=""
               className="minthero d-none d-xl-flex d-lg-flex"
-            />
+            /> */}
             <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 Join
               </span>
               Genesis Land NFT Whitelist
             </span>
-            <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
+            {/* <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
               <span className="font-organetto land-stake-titlenew">
                 Become a Genesis
                 <br /> land nft {"  "}
@@ -296,9 +296,9 @@ const LandStaking = ({
                 alt="land nft"
                 className="w-100 d-flex d-lg-none"
               />
-            </div>
-            {/*  <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
-              <div className="d-flex justify-content-between gap-2">
+            </div> */}
+             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+              <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
                 <span className="create-land-title font-poppins ">
                   Create your Genesis Land NFT
                 </span>
@@ -318,10 +318,19 @@ const LandStaking = ({
                     Please switch to Ethereum Chain to continue minting
                   </span>
                 ) : (
-                  <></>
+                  <span className="errormsg">
+                    <img
+                      src={
+                        require("../../assets/landAssets/alert-triangle.svg")
+                          .default
+                      }
+                      alt=""
+                    />{" "}
+                    Please connect your wallet
+                  </span>
                 )}
               </div>
-              <div className="d-flex align-items-center gap-2">
+              <div className="d-flex align-items-center gap-2 position-relative justify-content-start justify-content-xxl-end justify-content-lg-end justify-content-md-end">
                 <span className="more-info">More information</span>
                 <ToolTip
                   title={
@@ -345,7 +354,7 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider m-0" />
-            <div className="d-flex align-items-center justify-content-between pb-4">
+            <div className="d-flex align-items-center justify-content-between pb-4 position-relative">
               <div className="input-container position-relative w-50">
                 <input
                   type="number"
@@ -438,13 +447,13 @@ const LandStaking = ({
                   onClick={() => {
                     isConnected === true && (chainId === 1 || chainId === 5)
                       ?
-                        handleWhitelist()
+                      handleCreate()
                       : showWalletConnect();
                   }}
                   disabled={
                     mintloading === "error" ||
                     mintloading === "success" ||
-                    (isConnected === true && chainId !== 1 && chainId !== 5)
+                    (isConnected === true && (chainId !== 1 && chainId !== 5))
                       ? true
                       : false
                   }
@@ -456,8 +465,8 @@ const LandStaking = ({
                   }}
                 >
                   {(isConnected === false ||
-                    chainId !== 1 ||
-                    chainId !== 5) && (
+                    (chainId !== 1 &&
+                    chainId !== 5)) && (
                     <img
                       src={mouseOver === false ? blackWallet : whitewallet}
                       alt=""
@@ -466,7 +475,7 @@ const LandStaking = ({
                   {mintloading === "initial" &&
                   isConnected === true &&
                   (chainId === 1 || chainId === 5) ? (
-                    "Join Whitelist"
+                    "Mint"
                   ) : mintloading === "mint" &&
                     isConnected === true &&
                     (chainId === 1 || chainId === 5) ? (
@@ -488,13 +497,13 @@ const LandStaking = ({
                   )}
                 </button>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
         <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
-            className="p-3 mint-wrapper d-flex flex-column gap-1"
-            // style={{ minHeight: "518px" }}
+            className="p-3 mint-wrapper d-flex flex-column gap-1 justify-content-between"
+            style={{ minHeight: "518px" }}
           >
             <span className="font-organetto land-stake-title">
               Genesis Land NFT{" "}
@@ -503,10 +512,10 @@ const LandStaking = ({
               </span>
             </span>
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
-              <span className="create-land-title font-poppins">
+              <span className="create-land-title font-poppins"  style={{ width: "fit-content" }}>
                 Genesis Land Staking
               </span>
-              <div className="d-flex align-items-center gap-2">
+              <div className="d-flex align-items-center gap-2" style={{ width: "fit-content" }}>
                 <span className="more-info">More information</span>
                 <ToolTip
                   title={
@@ -555,11 +564,12 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider" />
-            <div className="d-flex align-items-end justify-content-between">
-              <div className="d-flex flex-column gap-1">
+            <div className="d-flex align-items-end justify-content-between flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center gap-2">
+              <div className="d-flex flex-column gap-1 w-100">
                 <h6 className="create-land-title">Total rewards</h6>
+                <div className="d-flex align-items-end justify-content-between gap-2 flex-row flex-xxl-column flex-lg-column flex-md-column align-items-xxl-start align-items-center">
                 <span className="earned-span">Earned</span>
-                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3">
+                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-start align-items-lg-center gap-xxl-3 gap-lg-3 gap-md-3 gap-2">
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={mintEthIcon}
@@ -568,13 +578,13 @@ const LandStaking = ({
                       alt="ethereum"
                     />
                     <span className="eth-rewards">
-                      {getFormattedNumber(ETHrewards, 6)} ETH
+                      {getFormattedNumber(ETHrewards, 2)} ETH
                     </span>
                   </div>
                   <span className="eth-rewards">
                     ({formattedNum(ethToUSD, true)})
                   </span>
-                </div>
+                </div></div>
               </div>
               <div
                 className={
@@ -602,7 +612,7 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider" />
-            <div className="d-flex align-items-end justify-content-between">
+            <div className="d-flex align-items-end justify-content-between flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center">
               <div className="d-flex flex-column gap-2">
                 <h6 className="create-land-title">Unstake</h6>
                 <span className="land-lock-time">

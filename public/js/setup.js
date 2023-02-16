@@ -1927,12 +1927,12 @@ window.config = {
   nftstaking_address50: "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
 
   /* MINT LANDNFT */
-  // landnft_address: "",
-  // landnftstake_address: "",
+  landnft_address: "0xf41cf5f9743f4d415709f38fb6299d5111082cf4",
+  landnftstake_address: "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
 
   /* MINT LANDNFT GOERLI */
-  landnft_address: "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc",
-  landnftstake_address: "0x428d702b625dc2a917d087679e5cf99bddbcdd13",
+  // landnft_address: "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc",
+  // landnftstake_address: "0x428d702b625dc2a917d087679e5cf99bddbcdd13",
 
   //buyback bsc
   buyback_stakingbsc1_1_address: "0x94b1a7b57c441890b7a0f64291b39ad6f7e14804",
@@ -2838,9 +2838,9 @@ async function getContractLandNFT(key) {
         : ABI,
 
       key === "LANDNFTSTAKE"
-        ? "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc"
+        ? "0xf41cf5f9743f4d415709f38fb6299d5111082cf4"
         : key === "LANDNFTSTAKING"
-        ? "0x428d702b625dc2a917d087679e5cf99bddbcdd13"
+        ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
         : address,
       {
         from: await getCoinbase(),
@@ -2878,13 +2878,52 @@ class LANDNFT {
     });
   }
 
-  async mintNFT(amount) {
-    let nft_contract = await getContractLandNFT("LANDNFTSTAKE");
-    let landnft = await nft_contract.methods.landPrice().call();
-    let value = new BigNumber(landnft).times(amount);
+  async getLandPricefromTokenId(tokenIds) {
+    return newPrice;
+  }
 
+  async mintNFT(amount, cawsArray) {
+
+    const nft_contract = await getContractLandNFT("LANDNFTSTAKE");
+    const cawsContract = await getContractNFT("NFT");
+    const cawsStakeContract = await getContractNFT("NFTSTAKING");
+    let countDiscount = 0;
+    const coinbase = await getCoinbase();
+    let newPrice = 0;
+    let landnft = await nft_contract.methods.landPrice().call();
+
+    if (cawsArray.length !== 0) {
+      for (let i = 0; i < cawsArray.length; i++) {
+        const result = await nft_contract.methods.cawsUsed(cawsArray[i]).call();
+        if (result === false) {
+          const cawsResult = await cawsContract.methods
+            .ownerOf(cawsArray[i])
+            .call();
+          //Check if user is ownerOf Caws
+          if (cawsResult === coinbase) {
+            countDiscount++;
+            continue;
+          }
+          //Check if user has deposited Caws in Staking
+          const stakeResult = await cawsStakeContract.methods
+            .calculateReward(coinbase, cawsArray[i])
+            .call();
+          if (stakeResult > 0) {
+            countDiscount++;
+          }
+        }
+      }
+    }
+ 
+
+    if (countDiscount != 0) {
+      const landPrice = await nft_contract.methods.LandPriceDiscount().call();
+      newPrice = (landPrice * countDiscount + landnft * (amount - countDiscount))/ 1e18;
+    } else newPrice = (landnft * amount)/ 1e18;
+    const value = newPrice* 1e18
+   console.log(cawsArray, newPrice)
     let second = nft_contract.methods
-      .mintWodGenesis(amount)
+      .mintWodGenesis(amount, cawsArray)
       .send({ value, from: await getCoinbase() });
     // batch.execute()
     let result = await second;
@@ -3064,7 +3103,6 @@ async function myNftListContract(address) {
   return nftList;
 }
 
-
 async function myNftLandListContract(address) {
   let nft_contract = await getContractLandNFT("LANDNFTSTAKE");
 
@@ -3079,7 +3117,6 @@ async function myNftLandListContract(address) {
 
   return nftList;
 }
-
 
 async function myNftList(address) {
   return await window.$.get(
@@ -5612,6 +5649,13 @@ window.LANDMINTING_ABI = [
   },
   {
     inputs: [],
+    name: "LandPriceDiscount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "MAX_MINT",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
@@ -5664,6 +5708,22 @@ window.LANDMINTING_ABI = [
   },
   {
     inputs: [],
+    name: "cawsContract",
+    outputs: [
+      { internalType: "contract CawsContract", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "cawsUsed",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "emergencySetStartingIndexBlock",
     outputs: [],
     stateMutability: "nonpayable",
@@ -5710,6 +5770,7 @@ window.LANDMINTING_ABI = [
   {
     inputs: [
       { internalType: "uint256", name: "numberOfTokens", type: "uint256" },
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
     ],
     name: "mintWodGenesis",
     outputs: [],
@@ -5830,6 +5891,15 @@ window.LANDMINTING_ABI = [
     name: "setStartingIndex",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakeContract",
+    outputs: [
+      { internalType: "contract StakeContract", name: "", type: "address" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -29473,8 +29543,8 @@ const whitelistWod = [
   "0xDEE9B19019f6a5Da266a7450911aa4aa6de485aa",
   "0xA620451cd9e6b0c25B2c5e232E65d80bF94E24b0",
   "0xcAc67cf89B81f8dA81Add6e8b3361587B52FF0aB",
-  "0x4a437b6078Cfb41bC599C4379A9D27259F1948dF"
-]
+  "0x4a437b6078Cfb41bC599C4379A9D27259F1948dF",
+];
 
 window.checkWhitelistWod = function (address) {
   // console.log("CHECKCK")
