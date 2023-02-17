@@ -151,7 +151,6 @@
       right: 30px;
       bottom: 105px;
       top: auto;
-
     }
   }
 
@@ -185,7 +184,6 @@
       @media screen and (max-width: 786px) {
         top: -70px;
         white-space: break-spaces;
-
       }
     }
     .create-land-title {
@@ -227,7 +225,6 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
     border-radius: 8px;
     position: relative;
-    
 
     @media screen and (max-width: 991px) {
       background-image: url("../../assets/landAssets/newGenesisBg.webp");
@@ -289,7 +286,6 @@
       font-size: 12px;
       line-height: 18px;
       color: #ffffff;
-      
     }
     .minting-price {
       font-style: normal;
@@ -297,7 +293,6 @@
       font-size: 14px;
       line-height: 18px;
       color: #09fbd3;
-      
     }
 
     .minthero {
@@ -343,7 +338,7 @@
     }
   }
 
-  .mint-wrappernew::before{
+  .mint-wrappernew::before {
     content: "";
     position: absolute;
     left: 0;
@@ -355,13 +350,11 @@
     background-image: url("../../assets/landAssets/genesis-hero.png");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: right;
+    background-position: top;
 
     @media screen and (max-width: 991px) {
       background-image: none;
-     
     }
-
   }
 
   // .mint-wrappernew::after{
@@ -722,6 +715,78 @@
     top: 0;
   }
 
+  .mint-release-date {
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 38px;
+    color: #ffffff;
+  }
+
+  .mint-release-title {
+    width: 75%;
+ 
+    @media screen and (max-width: 786px) {
+      width: 100%;
+    }
+
+    span {
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 40px;
+      color: #181637;
+      background-color: #09fbd3;
+      @media screen and (max-width: 786px) {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .mint-types {
+    background: rgba(0, 0, 0, 0.32);
+    border-radius: 4px;
+    width: 75%;
+    flex-wrap: wrap;
+    gap: 12px;
+    @media screen and (max-width: 1500px) {
+      width: 100%;
+    }
+    .type-title {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      color: #ffffff;
+    }
+    .type-desc {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 18px;
+      color: #09fbd3;
+    }
+
+    .dimensions-span {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 14px;
+      color: rgba(255, 255, 255, 0.75);
+    }
+  }
+
+  .mint-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+ 
+    @media screen and (max-width: 786px) {
+      gap: 15px;
+    }
+    .mint-benefits-title {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      color: #ffffff;
+    }
+  }
+
   .members-title {
     font-style: normal;
     font-weight: 800;
@@ -1013,7 +1078,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
- 
 @media screen and (max-width: 1441px) {
   .benefit-card {
     width: 285px !important;
@@ -1023,7 +1087,6 @@ input::-webkit-inner-spin-button {
     bottom: 300px !important;
   }
 }
-
 
 @media screen and (max-width: 786px) {
   .genesis-wrapper:nth-child(4) {
