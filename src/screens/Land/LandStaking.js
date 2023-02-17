@@ -56,12 +56,40 @@ const LandStaking = ({
   chainId,
   mintPrice,
 }) => {
+  const mintBenefits = [
+    {
+      title: "1 Multi-functional Building",
+      icon: "buildings",
+    },
+    {
+      title: "Exclusive Land NFT Staking",
+      icon: "coins",
+    },
+    {
+      title: "2 Environmental Items",
+      icon: "environment",
+    },
+    {
+      title: "Earn Special Rewards",
+      icon: "gift",
+    },
+    {
+      title: "1 NPC Character",
+      icon: "npc",
+    },
+    {
+      title: "Monetize Land",
+      icon: "coin",
+    },
+  ];
+
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
   const [showBadge, setshowBadge] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
   const [activeButton, setactiveButton] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
+  const [mintDate, setMintDate] = useState(false);
 
   const handleCreate = () => {
     handleMint({
@@ -134,22 +162,54 @@ const LandStaking = ({
   return (
     <>
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
-        <div className="col-12 ps-2 ps-lg-0">
-          <div className="d-flex align-items-end justify-content-between">
-            <div className="d-flex flex-column gap-2">
-              <span className="connect-wallet-title font-organetto">
-                Whitelist time{" "}
-                <span
-                  className="connect-wallet-title"
-                  style={{ color: "#8c56ff" }}
-                >
-                  remaining
+        {mintDate ? (
+          <div className="col-12 ps-2 ps-lg-0">
+            <div className="d-flex align-items-end justify-content-between">
+              <div className="d-flex flex-column gap-2">
+                <span className="connect-wallet-title font-organetto">
+                  Mint start{" "}
+                  <span
+                    className="connect-wallet-title"
+                    style={{ color: "#8c56ff" }}
+                  >
+                    date
+                  </span>
                 </span>
-              </span>
-              <Countdown date={"2023-02-17T18:15:03"} renderer={renderer} />
+                {/* <Countdown date={"2023-02-17T18:15:03"} renderer={renderer} /> */}
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={require(`./mintAssets/mintCalendar.svg`).default}
+                    alt=""
+                  />
+                  <h6 className="font-organetto mint-release-date mb-0">
+                    February 22
+                  </h6>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="col-12 ps-2 ps-lg-0">
+            <div className="d-flex align-items-end justify-content-between">
+              <div className="d-flex flex-column gap-2">
+                <span className="connect-wallet-title font-organetto">
+                  Whitelist time{" "}
+                  <span
+                    className="connect-wallet-title"
+                    style={{ color: "#8c56ff" }}
+                  >
+                    remaining
+                  </span>
+                </span>
+                <Countdown
+                  date={"2023-02-17T14:00:00"}
+                  renderer={renderer}
+                  onComplete={() => setMintDate(true)}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
@@ -210,11 +270,89 @@ const LandStaking = ({
           </div>
         </div> */}
         <div className="col-12 col-md-12 col-xxl-8 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
-          <div
-            className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
-            style={{ minHeight: "463px" }}
-          >
-            {/* <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
+          {mintDate ? (
+            <div
+              className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
+              style={{ minHeight: "463px" }}
+            >
+              <img
+                src={require("../../assets/landAssets/genesis-hero.png")}
+                alt=""
+                className="minthero d-none d-xl-flex d-lg-flex"
+              />
+              <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
+                <span className="font-organetto" style={{ color: "#8c56ff" }}>
+                  Mint
+                </span>
+                Genesis Land NFT
+              </span>
+              <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
+                <h6 className="mint-release-title font-organetto">
+                  <span>Get Ready to Own a Piece of Digital History</span>
+                </h6>
+
+                <div className="d-flex align-items-center justify-content-between p-3 mint-types">
+                  <div className="d-flex align-items-start gap-2">
+                    <img
+                      src={require(`./mintAssets/ethereumIcon.svg`).default}
+                      style={{ position: "relative", bottom: "3px" }}
+                      alt=""
+                    />
+                    <div className="d-flex flex-column">
+                      <span className="type-title">Ethereum</span>
+                      <span className="type-desc">Chain</span>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-start gap-2">
+                    <img
+                      src={require(`./mintAssets/genesisType.svg`).default}
+                      style={{ position: "relative", bottom: "3px" }}
+                      alt=""
+                    />
+                    <div className="d-flex flex-column">
+                      <span className="type-title">Genesis</span>
+                      <span className="type-desc">Type</span>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-start gap-2">
+                    <img
+                      src={require(`./mintAssets/dimensions.svg`).default}
+                      style={{ position: "relative", bottom: "3px" }}
+                      alt=""
+                    />
+                    <div className="d-flex flex-column">
+                      <div className="d-flex align-items-end gap-1">
+                        <span className="type-title">125mx125m</span>
+                        <span className="dimensions-span">(15,625m2)</span>
+                      </div>
+                      <span className="type-desc">Dimensions</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="mint-benefits-grid">
+                  {mintBenefits.map((item) => (
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={require(`./mintAssets/${item.icon}.svg`)}
+                        alt=""
+                      />
+                      <span className="mint-benefits-title">{item.title}</span>
+                    </div>
+                  ))}
+                </div>
+                <img
+                  src={require("../../components/LandPopup/landPopup.webp")}
+                  alt="land nft"
+                  className="w-100 d-flex d-lg-none"
+                />
+              </div>
+            </div>
+          ) : (
+            <div
+              className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
+              style={{ minHeight: "463px" }}
+            >
+              {/* <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
               <span className="pricetext position-relative">Price</span>
               <span className="totalprice position-relative">$ 1,200</span>
               <div className="price-separator"></div>
@@ -232,72 +370,73 @@ const LandStaking = ({
               </span>
             
             </div> */}
-            <img
-              src={require("../../assets/landAssets/genesis-hero.png")}
-              alt=""
-              className="minthero d-none d-xl-flex d-lg-flex"
-            />
-            <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
-              <span className="font-organetto" style={{ color: "#8c56ff" }}>
-                Join
-              </span>
-              Genesis Land NFT Whitelist
-            </span>
-            <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
-              <span className="font-organetto land-stake-titlenew">
-                Become a Genesis
-                <br /> land nft {"  "}
+              <img
+                src={require("../../assets/landAssets/genesis-hero.png")}
+                alt=""
+                className="minthero d-none d-xl-flex d-lg-flex"
+              />
+              <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
                 <span className="font-organetto" style={{ color: "#8c56ff" }}>
-                  Owner
+                  Join
                 </span>
+                Genesis Land NFT Whitelist
               </span>
-              <span class="land-lock-timenew col-12 col-lg-9">
-                Join the Genesis Land NFT whitelist now! Upon mint, users will
-                gain immediate access to their land and all of it's benefits.
-              </span>
-              <div className="row m-0 gap-1 align-items-center">
-                <img
-                  src={require("../../assets/landAssets/cawsimg.png")}
-                  alt=""
-                  className="cawsimg col-6 px-0 px-lg-2"
-                />
-               <div className="d-flex flex-column gap-2 col-6 col-xxl-5 col-lg-5 p-0 m-0">
-               <span className="whitelist-desc ">
-                  *If you are currently holding or staking a CAWS NFT, you will
-                  receive a <br className="discount-break" />
-                  <mark className="marktext">20% discount</mark> on the World of
-                  Dypians Genesis Land NFT mint price.
+              <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
+                <span className="font-organetto land-stake-titlenew">
+                  Become a Genesis
+                  <br /> land nft {"  "}
+                  <span className="font-organetto" style={{ color: "#8c56ff" }}>
+                    Owner
+                  </span>
                 </span>
-                <span className="minting-price">
-                  Mint price $1,200 ({getFormattedNumber(mintPrice, 2)} ETH)
+                <span class="land-lock-timenew col-12 col-lg-9">
+                  Join the Genesis Land NFT whitelist now! Upon mint, users will
+                  gain immediate access to their land and all of it's benefits.
                 </span>
-               </div>
-              </div>
-              <div
-                className={
-                  mintloading === "error"
-                    ? "linear-border-disabled"
-                    : "linear-border"
-                }
-              >
-                <button
-                  className={`btn 
+                <div className="row m-0 gap-1 align-items-center">
+                  <img
+                    src={require("../../assets/landAssets/cawsimg.png")}
+                    alt=""
+                    className="cawsimg col-6 px-0 px-lg-2"
+                  />
+                  <div className="d-flex flex-column gap-2 col-6 col-xxl-5 col-lg-5 p-0 m-0">
+                    <span className="whitelist-desc ">
+                      *If you are currently holding or staking a CAWS NFT, you
+                      will receive a <br className="discount-break" />
+                      <mark className="marktext">20% discount</mark> on the
+                      World of Dypians Genesis Land NFT mint price.
+                    </span>
+                    <span className="minting-price">
+                      Mint price $1,200 ({getFormattedNumber(mintPrice, 2)} ETH)
+                    </span>
+                  </div>
+                </div>
+                <div
+                  className={
+                    mintloading === "error"
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }
+                >
+                  <button
+                    className={`btn 
                     filled-btn
                     px-5 w-100`}
-                  onClick={() => {
-                    handleWhitelist();
-                  }}
-                >
-                  Join Whitelist
-                </button>
+                    onClick={() => {
+                      handleWhitelist();
+                    }}
+                  >
+                    Join Whitelist
+                  </button>
+                </div>
+                <img
+                  src={require("../../components/LandPopup/landPopup.webp")}
+                  alt="land nft"
+                  className="w-100 d-flex d-lg-none"
+                />
               </div>
-              <img
-                src={require("../../components/LandPopup/landPopup.webp")}
-                alt="land nft"
-                className="w-100 d-flex d-lg-none"
-              />
-            </div>
-            {/*  <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+
+              {/*  <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2">
                 <span className="create-land-title font-poppins ">
                   Create your Genesis Land NFT
@@ -489,7 +628,8 @@ const LandStaking = ({
                 </button>
               </div>
             </div> */}
-          </div>
+            </div>
+          )}
         </div>
         <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
