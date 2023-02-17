@@ -41,6 +41,7 @@ const LandStaking = ({
   showWalletConnect,
   handleMint,
   handleStake,
+  checkTotalcaws,
   coinbase,
   handleWithdraw,
   handleWhitelist,
@@ -55,9 +56,13 @@ const LandStaking = ({
   latestMintNft,
   chainId,
   mintPrice,
+  totalCaws,
+  mintPriceDiscount
 }) => {
   const [nftCount, setNftCount] = useState(1);
+
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
+
   const [showBadge, setshowBadge] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
   const [activeButton, setactiveButton] = useState(false);
@@ -65,9 +70,12 @@ const LandStaking = ({
 
   const handleCreate = () => {
     handleMint({
-      numberOfTokens: nftCount,
+      numberOfTokens: parseInt(nftCount),
     });
-    // setNftCount(1);
+    
+    checkTotalcaws({
+      numberOfTokens: parseInt(nftCount),
+    })
   };
 
   const addNft = () => {
@@ -75,17 +83,25 @@ const LandStaking = ({
       setNftCount(1);
     } else if (nftCount < 10) {
       setNftCount(nftCount + 1);
+      checkTotalcaws({
+        numberOfTokens: parseInt(nftCount + 1),
+      })
     }
-    // console.log(nftCount);
   };
+
+  // console.log(totalCaws)
   const subtractNft = () => {
     if (nftCount === null) {
       setNftCount(1);
     } else if (nftCount > 1) {
       setNftCount(nftCount - 1);
+      checkTotalcaws({
+        numberOfTokens: parseInt(nftCount - 1),
+      })
+
     }
-    // console.log(nftCount);
   };
+
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -109,6 +125,9 @@ const LandStaking = ({
         setNftStatus("*10 NFT limit");
       }, 5000);
     }
+    checkTotalcaws({
+      numberOfTokens: parseInt(nftCount),
+    })
   }, [nftCount]);
 
   useEffect(() => {
@@ -138,15 +157,15 @@ const LandStaking = ({
           <div className="d-flex align-items-end justify-content-between">
             <div className="d-flex flex-column gap-2">
               <span className="connect-wallet-title font-organetto">
-                Whitelist time{" "}
+              Mint{" "}
                 <span
                   className="connect-wallet-title"
                   style={{ color: "#8c56ff" }}
                 >
-                  remaining
+                  Genesis Land NFT
                 </span>
               </span>
-              <Countdown date={"2023-02-17T14:00:00"} renderer={renderer} />
+              
             </div>
           </div>
         </div>
@@ -160,8 +179,8 @@ const LandStaking = ({
           style={{ minHeight: "518px" }}
         >
           <div
-            className="d-flex flex-column  gap-3 justify-content-between"
-            style={{ minHeight: "518px" }}
+            className="d-flex flex-column gap-3 justify-content-between"
+            style={{ minHeight: "500px" }}
           >
             <div className="d-flex flex-column position-relative">
               {showBadge && (
@@ -209,95 +228,19 @@ const LandStaking = ({
             </div>
           </div>
         </div>
-        <div className="col-12 col-md-12 col-xxl-6 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-md-12 col-xxl-4 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
             className="p-3 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
-            style={{ minHeight: "463px" }}
+            style={{ minHeight: "488px" }}
           >
-            {/* <div className="position-absolute pricetag d-flex flex-column gap-1 align-items-end">
-              <span className="pricetext position-relative">Price</span>
-              <span className="totalprice position-relative">$ 1,200</span>
-              <div className="price-separator"></div>
-              <span className="pricetext position-relative">
-                {" "}
-                <img
-                  src={mintEthIcon}
-                  alt="ethereum"
-                  style={{ width: 20 }}
-                />{" "}
-                ETH{" "}
-                <span className="mintpric position-relative">
-                  {getFormattedNumber(mintPrice, 2)}
-                </span>
-              </span>
-            
-            </div> */}
-            {/* <img
-              src={require("../../assets/landAssets/genesis-hero.png")}
-              alt=""
-              className="minthero d-none d-xl-flex d-lg-flex"
-            /> */}
-            <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
+            {/* <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 Join
               </span>
               Genesis Land NFT Whitelist
-            </span>
-            {/* <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
-              <span className="font-organetto land-stake-titlenew">
-                Become a Genesis
-                <br /> land nft {"  "}
-                <span className="font-organetto" style={{ color: "#8c56ff" }}>
-                  Owner
-                </span>
-              </span>
-              <span class="land-lock-timenew col-12 col-lg-9">
-                Join the Genesis Land NFT whitelist now! Upon mint, users will
-                gain immediate access to their land and all of it's benefits.
-              </span>
-              <div className="row m-0 gap-1 align-items-center">
-                <img
-                  src={require("../../assets/landAssets/cawsimg.png")}
-                  alt=""
-                  className="cawsimg col-6 px-0 px-lg-2"
-                />
-               <div className="d-flex flex-column gap-2 col-6 col-xxl-5 col-lg-5 p-0 m-0">
-               <span className="whitelist-desc ">
-                  *If you are currently holding or staking a CAWS NFT, you will
-                  receive a <br className="discount-break" />
-                  <mark className="marktext">20% discount</mark> on the World of
-                  Dypians Genesis Land NFT mint price.
-                </span>
-                <span className="minting-price">
-                  Mint price $1,200 ({getFormattedNumber(mintPrice, 2)} ETH)
-                </span>
-               </div>
-              </div>
-              <div
-                className={
-                  mintloading === "error"
-                    ? "linear-border-disabled"
-                    : "linear-border"
-                }
-              >
-                <button
-                  className={`btn 
-                    filled-btn
-                    px-5 w-100`}
-                  onClick={() => {
-                    handleWhitelist();
-                  }}
-                >
-                  Join Whitelist
-                </button>
-              </div>
-              <img
-                src={require("../../components/LandPopup/landPopup.webp")}
-                alt="land nft"
-                className="w-100 d-flex d-lg-none"
-              />
-            </div> */}
-             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+            </span> */}
+
+            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
                 <span className="create-land-title font-poppins ">
                   Create your Genesis Land NFT
@@ -330,18 +273,7 @@ const LandStaking = ({
                   </span>
                 )}
               </div>
-              <div className="d-flex align-items-center gap-2 position-relative justify-content-start justify-content-xxl-end justify-content-lg-end justify-content-md-end">
-                <span className="more-info">More information</span>
-                <ToolTip
-                  title={
-                    "Mint your Genesis Land NFT to gain access to a variety of WoD Metaverse benefits."
-                  }
-                  icon={"?"}
-                  color={"#000"}
-                  borderColor={"#7BD8B0"}
-                  padding={"0px 8px"}
-                />
-              </div>
+              
             </div>
             <div className="d-flex mt-3 align-items-center">
               <div className="d-flex flex-column gap-2 w-50">
@@ -354,74 +286,74 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider m-0" />
-            <div className="d-flex align-items-center justify-content-between pb-4 position-relative">
-              <div className="input-container position-relative w-50">
-                <input
-                  type="number"
-                  placeholder="Nr. of Land NFT to create"
-                  max={10}
-                  min={1}
-                  className="land-input w-100"
-                  value={nftCount}
-                  onChange={(e) => setNftCount(e.target.value)}
-                />
-                <span
-                  className="limit-span"
-                  style={{
-                    color: nftStatus.includes("Exceeded")
-                      ? "#D87B7B"
-                      : "#FFFFFF",
-                  }}
-                >
-                  {nftStatus}
-                </span>
+              <div className="d-flex align-items-center justify-content-between pb-4 position-relative gap-3">
+                <div className="input-container position-relative w-50">
+                  <input
+                    type="number"
+                    placeholder="Nr. of Land NFT to create"
+                    max={10}
+                    min={1}
+                    className="land-input w-100"
+                    value={nftCount}
+                    onChange={(e) => setNftCount(e.target.value)}
+                  />
+                  <span
+                    className="limit-span"
+                    style={{
+                      color: nftStatus.includes("Exceeded")
+                        ? "#D87B7B"
+                        : "#FFFFFF",
+                    }}
+                  >
+                    {nftStatus}
+                  </span>
+                </div>
+                <div className="d-flex align-items-center gap-3">
+                  <img
+                    src={
+                      nftCount > 1 &&
+                      isConnected === true &&
+                      activeButton === true
+                        ? subtractActive
+                        : subtractInactive
+                    }
+                    alt="subtract"
+                    onClick={subtractNft}
+                    style={{
+                      cursor:
+                        isConnected === true && activeButton === true
+                          ? "pointer"
+                          : "default",
+                      pointerEvents:
+                        isConnected === true && activeButton === true
+                          ? "auto"
+                          : "none",
+                    }}
+                  />
+                  <img
+                    src={
+                      nftCount < 10 &&
+                      nftCount >= 1 &&
+                      isConnected === true &&
+                      activeButton === true
+                        ? addActive
+                        : addInactive
+                    }
+                    alt="add"
+                    onClick={addNft}
+                    style={{
+                      cursor:
+                        isConnected === true && activeButton === true
+                          ? "pointer"
+                          : "default",
+                      pointerEvents:
+                        isConnected === true && activeButton === true
+                          ? "auto"
+                          : "none",
+                    }}
+                  />
+                </div>
               </div>
-              <div className="d-flex align-items-center gap-5">
-                <img
-                  src={
-                    nftCount > 1 &&
-                    isConnected === true &&
-                    activeButton === true
-                      ? subtractActive
-                      : subtractInactive
-                  }
-                  alt="subtract"
-                  onClick={subtractNft}
-                  style={{
-                    cursor:
-                      isConnected === true && activeButton === true
-                        ? "pointer"
-                        : "default",
-                    pointerEvents:
-                      isConnected === true && activeButton === true
-                        ? "auto"
-                        : "none",
-                  }}
-                />
-                <img
-                  src={
-                    nftCount < 10 &&
-                    nftCount >= 1 &&
-                    isConnected === true &&
-                    activeButton === true
-                      ? addActive
-                      : addInactive
-                  }
-                  alt="add"
-                  onClick={addNft}
-                  style={{
-                    cursor:
-                      isConnected === true && activeButton === true
-                        ? "pointer"
-                        : "default",
-                    pointerEvents:
-                      isConnected === true && activeButton === true
-                        ? "auto"
-                        : "none",
-                  }}
-                />
-              </div>
-            </div>
             <hr className="mint-divider m-0" />
             {mintStatus.length > 0 && (
               <span className="mint-span">{mintStatus}</span>
@@ -433,6 +365,73 @@ const LandStaking = ({
                   Price: {getFormattedNumber(mintPrice, 2)} ETH
                 </span>
               </div>
+           
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-md-12 col-xxl-2 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+          <div
+            className="p-3 mint-wrappernew d-flex flex-column justify-content-between"
+            style={{ minHeight: "488px" }}
+          >
+            
+            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+             
+              <div className="d-flex align-items-center gap-2 position-relative justify-content-start justify-content-between">
+                <span className="create-land-title font-poppins">Minting Summary</span>
+                <ToolTip
+                  title={
+                    "Mint your Genesis Land NFT to gain access to a variety of WoD Metaverse benefits."
+                  }
+                  icon={"i"}
+                  color={"#000"}
+                  borderColor={"#7BD8B0"}
+                  padding={"0px 10px"}
+                />
+              </div>
+            </div>
+            <div className="d-flex align-items-end justify-content-between">
+              <div className="d-flex flex-column w-50">
+                <span className="land-placeholder">Genesis Land</span>
+                <span className="land-placeholder">x {nftCount}</span>
+
+              </div>
+              <div className="d-flex flex-column gap-2">
+                <h6 className="land-name m-0">{mintPrice * nftCount}ETH</h6>
+              </div>
+             
+            </div>
+            <hr className="mint-divider m-0" />
+            <div className="d-flex align-items-end justify-content-between">
+              <div className="d-flex flex-column w-50">
+                <span className="land-placeholder">CAWS Discount</span>
+                <span className="land-placeholder">x {totalCaws}</span>
+
+              </div>
+              <div className="d-flex flex-column gap-2">
+                <h6 className="discountprice m-0">- {mintPriceDiscount*totalCaws} ETH</h6>
+              </div>
+             
+            </div>
+            <hr className="mint-divider m-0" />
+            <div className="d-flex align-items-end justify-content-between">
+              <div className="d-flex flex-column w-50">
+                <span className="land-placeholder">Grand total</span>
+              </div>
+              <div className="d-flex flex-column gap-2">
+                <h6 className="totalprice2 m-0">{mintPriceDiscount * totalCaws} ETH</h6>
+              </div>
+             
+            </div>
+            <span className="notetxt">*Available Caws for discount eligibility
+you have 4/5 Caws remaining</span>
+            <hr className="mint-divider m-0" />
+            {mintStatus.length > 0 && (
+              <span className="mint-span">{mintStatus}</span>
+            )}
+            <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
+             
               <div
                 className={
                   mintloading === "error"
@@ -443,17 +442,16 @@ const LandStaking = ({
                 <button
                   className={`btn ${
                     mintloading === "error" ? "filled-error-btn" : "filled-btn"
-                  }  px-5 w-100`}
+                  }  px-4 w-100`}
                   onClick={() => {
                     isConnected === true && (chainId === 1 || chainId === 5)
-                      ?
-                      handleCreate()
+                      ? handleCreate()
                       : showWalletConnect();
                   }}
                   disabled={
                     mintloading === "error" ||
                     mintloading === "success" ||
-                    (isConnected === true && (chainId !== 1 && chainId !== 5))
+                    (isConnected === true && chainId !== 1 && chainId !== 5)
                       ? true
                       : false
                   }
@@ -465,8 +463,7 @@ const LandStaking = ({
                   }}
                 >
                   {(isConnected === false ||
-                    (chainId !== 1 &&
-                    chainId !== 5)) && (
+                    (chainId !== 1 && chainId !== 5)) && (
                     <img
                       src={mouseOver === false ? blackWallet : whitewallet}
                       alt=""
@@ -500,10 +497,11 @@ const LandStaking = ({
             </div>
           </div>
         </div>
+
         <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
             className="p-3 mint-wrapper d-flex flex-column gap-1 justify-content-between"
-            style={{ minHeight: "518px" }}
+            style={{ minHeight: "488px" }}
           >
             <span className="font-organetto land-stake-title">
               Genesis Land NFT{" "}
@@ -512,19 +510,25 @@ const LandStaking = ({
               </span>
             </span>
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
-              <span className="create-land-title font-poppins"  style={{ width: "fit-content" }}>
+              <span
+                className="create-land-title font-poppins"
+                style={{ width: "fit-content" }}
+              >
                 Genesis Land Staking
               </span>
-              <div className="d-flex align-items-center gap-2" style={{ width: "fit-content" }}>
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ width: "fit-content" }}
+              >
                 <span className="more-info">More information</span>
                 <ToolTip
                   title={
                     "Stake your Genesis Land NFT into the 25% APR pool and earn rewards in Ethereum."
                   }
-                  icon={"?"}
+                  icon={"i"}
                   color={"#000"}
                   borderColor={"#7BD8B0"}
-                  padding={"0px 8px"}
+                  padding={"0px 10px"}
                 />
               </div>
             </div>
@@ -568,23 +572,24 @@ const LandStaking = ({
               <div className="d-flex flex-column gap-1 w-100">
                 <h6 className="create-land-title">Total rewards</h6>
                 <div className="d-flex align-items-end justify-content-between gap-2 flex-row flex-xxl-column flex-lg-column flex-md-column align-items-xxl-start align-items-center">
-                <span className="earned-span">Earned</span>
-                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-start align-items-lg-center gap-xxl-3 gap-lg-3 gap-md-3 gap-2">
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={mintEthIcon}
-                      width={20}
-                      height={20}
-                      alt="ethereum"
-                    />
+                  <span className="earned-span">Earned</span>
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-start align-items-lg-center gap-xxl-3 gap-lg-3 gap-md-3 gap-2">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={mintEthIcon}
+                        width={20}
+                        height={20}
+                        alt="ethereum"
+                      />
+                      <span className="eth-rewards">
+                        {getFormattedNumber(ETHrewards, 2)} ETH
+                      </span>
+                    </div>
                     <span className="eth-rewards">
-                      {getFormattedNumber(ETHrewards, 2)} ETH
+                      ({formattedNum(ethToUSD, true)})
                     </span>
                   </div>
-                  <span className="eth-rewards">
-                    ({formattedNum(ethToUSD, true)})
-                  </span>
-                </div></div>
+                </div>
               </div>
               <div
                 className={

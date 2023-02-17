@@ -40,8 +40,15 @@ const Land = ({
 
   const [mystakes, setMystakes] = useState([]);
   const [myCAWstakes, setCAWMystakes] = useState([]);
+  const [finalCaws, setFinalCaws] = useState([]);
+  const [cawsToUse, setcawsToUse] = useState([]);
+
 
   const [EthRewards, setEthRewards] = useState(0);
+  const [totalCawsDiscount, settotalCawsDiscount] = useState(0);
+  const [limit, setLimit] = useState(0);
+
+
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
   const [latestMintNft, setLatestMintNft] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
@@ -50,6 +57,8 @@ const Land = ({
 
 
   const [mintPrice, setmintPrice] = useState();
+  const [mintPriceDiscount, setmintPriceDiscount] = useState();
+
   const [mintStatus, setmintStatus] = useState("");
   const [mintloading, setmintloading] = useState("initial");
   const [walletModal, setwalletModal] = useState(false);
@@ -222,18 +231,44 @@ const Land = ({
     setOpenStakeChecklist(false);
   };
 
+  const calculateCaws = (data)=>{
+    if(data.numberOfTokens === cawsToUse.length) {
+      setLimit(data.numberOfTokens)
+      setFinalCaws(cawsToUse)
+      settotalCawsDiscount(finalCaws.length)
+    }
+    else if(data.numberOfTokens >= cawsToUse.length && cawsToUse.length > 0) {
+
+      setLimit(cawsToUse.length)
+      setFinalCaws(cawsToUse)
+      settotalCawsDiscount(finalCaws.length)
+
+    }
+    else if(cawsToUse.length === 0) {
+    
+      setLimit(cawsToUse.length)
+      setFinalCaws([])
+      settotalCawsDiscount(finalCaws.length)
+
+    }
+    else if(data.numberOfTokens <= cawsToUse.length) {
+      setLimit(data.numberOfTokens)
+      setFinalCaws(cawsToUse.slice(0,data.numberOfTokens))
+      settotalCawsDiscount(finalCaws.length)
+    }
+  }
+
   const handleMint = async (data) => {
     if (isConnected) {
       try {
         //Check Whitelist
         // let whitelist = await window.checkWhitelist(connectedWallet)
         let whitelist = 1;
-        const cawsArray = [...myCAWSNFTsCreated,...myCAWSNFTsTotalStaked]
         if (parseInt(whitelist) == 1) {
           setmintloading("mint");
-          console.log(data);
+          // console.log(data,finalCaws, totalCawsDiscount);
           let tokenId = await window.landnft
-            .mintNFT(data.numberOfTokens,cawsArray)
+            .mintNFT(data.numberOfTokens,finalCaws)
             .then(() => {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
@@ -331,31 +366,61 @@ const Land = ({
   };
 
 
-  const convertEthToUsd = async () => {
-    const res = axios
-      .get("https://api.coinbase.com/v2/prices/ETH-USD/spot")
-      .then((data) => {
-        return data.data.data.amount;
-      });
-    return res;
-  };
+  const checkCawsUsed = async()=>{
+    const cawsArray = [...myCAWSNFTsCreated,...myCAWSNFTsTotalStaked]
+    const cawsContract = await window.getContractNFT("NFT");
+    const nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    const cawsStakeContract = await window.getContractNFT("NFTSTAKING");
+    let countDiscount = 0;
 
-  const getMintPrice = async () => {
-    const ethprice = await convertEthToUsd();
-    if(myCAWSNFTsCreated.length === 0 && myCAWSNFTsTotalStaked.length === 0)
-    {setmintPrice(1200 / Number(ethprice));}
-    else if(myCAWSNFTsTotalStaked.length > 0 || myCAWSNFTsCreated.length > 0) {
-      setmintPrice(850 / Number(ethprice))
+    for (let i = 0; i < cawsArray.length; i++) {
+      const result = await nft_contract.methods.cawsUsed(cawsArray[i]).call();
+      if (result === false) {
+        const cawsResult = await cawsContract.methods
+          .ownerOf(cawsArray[i])
+          .call();
+        //Check if user is ownerOf Caws
+        if (cawsResult === coinbase) {
+          countDiscount++;
+          continue;
+        } cawsToUse.push(cawsArray[i])
+        //Check if user has deposited Caws in Staking
+        const stakeResult = await cawsStakeContract.methods
+          .calculateReward(coinbase, cawsArray[i])
+          .call();
+        if (stakeResult > 0) {
+          countDiscount++;
+          cawsToUse.push(cawsArray[i])
+        }
+      }
     }
-  };
+  }
 
 
+
+  const getMintDiscountPrice = async () => {
+    const nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    const landPriceDiscount = await nft_contract.methods
+      .LandPriceDiscount()
+      .call();
+      setmintPriceDiscount(landPriceDiscount/ 1e18)
+      const mintprice = await nft_contract.methods
+      .landPrice()
+      .call();
+      setmintPrice(mintprice/ 1e18)
+
+  }; 
+
+  
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Land";
-    getMintPrice()
   }, []);
+
+  useEffect(() => {
+    getMintDiscountPrice()
+  }, [chainId]);
 
   useEffect(() => {
     if (isConnected === true) {
@@ -371,12 +436,16 @@ const Land = ({
          myNft();
          myCAWStakes();
          myCAWNft()
+         checkCawsUsed()
        }
       //  latestMint().then();
     //  }, 1000);
 
     //  return () => clearInterval(interval);
   }, [isConnected, EthRewards, coinbase, chainId, myCAWSNFTsCreated.length, myCAWSNFTsTotalStaked.length]);
+
+
+  console.log(finalCaws)
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
@@ -469,7 +538,9 @@ const Land = ({
           chainId={chainId}
           handleWhitelist={handleWhitelist}
           mintPrice={mintPrice}
-
+          mintPriceDiscount={mintPriceDiscount}
+          totalCaws = {totalCawsDiscount}
+          checkTotalcaws={calculateCaws}
         />
         <LandTiers />
         <Members handleRegister={handleRegister} />

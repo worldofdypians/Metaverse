@@ -2878,12 +2878,8 @@ class LANDNFT {
     });
   }
 
-  async getLandPricefromTokenId(tokenIds) {
-    return newPrice;
-  }
 
   async mintNFT(amount, cawsArray) {
-
     const nft_contract = await getContractLandNFT("LANDNFTSTAKE");
     const cawsContract = await getContractNFT("NFT");
     const cawsStakeContract = await getContractNFT("NFTSTAKING");
@@ -2891,7 +2887,9 @@ class LANDNFT {
     const coinbase = await getCoinbase();
     let newPrice = 0;
     let landnft = await nft_contract.methods.landPrice().call();
-
+    const landPriceDiscount = await nft_contract.methods
+      .LandPriceDiscount()
+      .call();
     if (cawsArray.length !== 0) {
       for (let i = 0; i < cawsArray.length; i++) {
         const result = await nft_contract.methods.cawsUsed(cawsArray[i]).call();
@@ -2914,14 +2912,17 @@ class LANDNFT {
         }
       }
     }
- 
 
     if (countDiscount != 0) {
-      const landPrice = await nft_contract.methods.LandPriceDiscount().call();
-      newPrice = (landPrice * countDiscount + landnft * (amount - countDiscount))/ 1e18;
-    } else newPrice = (landnft * amount)/ 1e18;
-    const value = newPrice* 1e18
-   console.log(cawsArray, newPrice)
+      newPrice =
+        (landPriceDiscount * countDiscount +
+          landnft * (amount - countDiscount)) /
+        1e18;
+    } else newPrice = (landnft * amount) / 1e18;
+
+
+    const value = newPrice * 1e18;
+    console.log(cawsArray, newPrice);
     let second = nft_contract.methods
       .mintWodGenesis(amount, cawsArray)
       .send({ value, from: await getCoinbase() });
