@@ -194,7 +194,7 @@ const PartnerForm = () => {
     <div className="container-fluid d-flex pt-5 pt-lg-0 px-3 px-lg-0 align-items-center justify-content-center">
       <div className="partner-main-wrapper py-5 w-100 d-flex align-items-center flex-column gap-4">
         <div className="d-flex flex-column">
-          <h6 className="partner-title font-organetto">Crate your own world</h6>
+          <h6 className="partner-title font-organetto">Create your own world</h6>
           <h6
             className="partner-title font-organetto"
             style={{ color: "#8C56FF" }}

@@ -69,25 +69,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-        {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <h6 className="mobile-nav-link font-poppins mb-0">Marketplace</h6>
-          <img src={mobileArrow} alt="arrow" />
-        </div> */}
-        {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <h6 className="mobile-nav-link font-poppins mb-0">Roadmap</h6>
-          <img src={mobileArrow} alt="arrow" />
-        </div> */}
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/news"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
+        
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/land"
@@ -121,7 +103,17 @@ const MobileNavbar = ({ handleSignUp }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-      
+        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <NavLink
+            to="/news"
+            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+            style={{ textDecoration: "none" }}
+            onClick={() => setOpenNavbar(false)}
+          >
+            <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
+            <img src={mobileArrow} alt="arrow" />{" "}
+          </NavLink>
+        </div>
         <div className="w-100 d-flex align-items-center justify-content-center gap-3">
           <div className="linear-border">
             <button
