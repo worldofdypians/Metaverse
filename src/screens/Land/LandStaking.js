@@ -362,7 +362,7 @@ const LandStaking = ({
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
                 <span className="eth-price">
-                  Price: {getFormattedNumber(mintPrice, 2)} ETH
+                  Price: {mintPrice} ETH
                 </span>
               </div>
            
