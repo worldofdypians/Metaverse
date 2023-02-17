@@ -2881,37 +2881,37 @@ class LANDNFT {
 
   async mintNFT(amount, cawsArray) {
     const nft_contract = await getContractLandNFT("LANDNFTSTAKE");
-    const cawsContract = await getContractNFT("NFT");
-    const cawsStakeContract = await getContractNFT("NFTSTAKING");
-    let countDiscount = 0;
-    const coinbase = await getCoinbase();
+    // const cawsContract = await getContractNFT("NFT");
+    // const cawsStakeContract = await getContractNFT("NFTSTAKING");
+    let countDiscount = cawsArray.length();
+    // const coinbase = await getCoinbase();
     let newPrice = 0;
     let landnft = await nft_contract.methods.landPrice().call();
     const landPriceDiscount = await nft_contract.methods
       .LandPriceDiscount()
       .call();
-    if (cawsArray.length !== 0) {
-      for (let i = 0; i < cawsArray.length; i++) {
-        const result = await nft_contract.methods.cawsUsed(cawsArray[i]).call();
-        if (result === false) {
-          const cawsResult = await cawsContract.methods
-            .ownerOf(cawsArray[i])
-            .call();
-          //Check if user is ownerOf Caws
-          if (cawsResult === coinbase) {
-            countDiscount++;
-            continue;
-          }
-          //Check if user has deposited Caws in Staking
-          const stakeResult = await cawsStakeContract.methods
-            .calculateReward(coinbase, cawsArray[i])
-            .call();
-          if (stakeResult > 0) {
-            countDiscount++;
-          }
-        }
-      }
-    }
+    // if (cawsArray.length !== 0) {
+    //   for (let i = 0; i < cawsArray.length; i++) {
+    //     const result = await nft_contract.methods.cawsUsed(cawsArray[i]).call();
+    //     if (result === false) {
+    //       const cawsResult = await cawsContract.methods
+    //         .ownerOf(cawsArray[i])
+    //         .call();
+    //       //Check if user is ownerOf Caws
+    //       if (cawsResult === coinbase) {
+    //         countDiscount++;
+    //         continue;
+    //       }
+    //       //Check if user has deposited Caws in Staking
+    //       const stakeResult = await cawsStakeContract.methods
+    //         .calculateReward(coinbase, cawsArray[i])
+    //         .call();
+    //       if (stakeResult > 0) {
+    //         countDiscount++;
+    //       }
+    //     }
+    //   }
+    // }
 
     if (countDiscount != 0) {
       newPrice =
