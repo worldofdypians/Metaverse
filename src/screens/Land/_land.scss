@@ -338,24 +338,22 @@
     }
   }
 
-  .mint-wrappernew::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    margin: auto;
-    // background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-    // background-image: url("../../assets/landAssets/genesis-hero.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top;
+  // .mint-wrappernew::before {
+  //   content: "";
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   top: 0;
+  //   margin: auto;
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  //   background-position: top;
 
-    @media screen and (max-width: 991px) {
-      background-image: none;
-    }
-  }
+  //   @media screen and (max-width: 991px) {
+  //     background-image: none;
+  //   }
+  // }
 
   // .mint-wrappernew::after{
   //   content: "";
