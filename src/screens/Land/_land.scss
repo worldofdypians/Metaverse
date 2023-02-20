@@ -98,6 +98,23 @@
     font-weight: 400;
   }
 
+.borderText {
+  border: 1px solid #aaa5eb;
+    padding: 3px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.3);
+}
+
+.borderText2 {
+  width: 100px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+
   .mint-span {
     font-weight: 400;
     font-size: 14px;

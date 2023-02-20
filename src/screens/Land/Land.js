@@ -226,26 +226,28 @@ const Land = ({
   };
 
   const calculateCaws = (data) => {
+    // console.log(data.numberOfTokens, cawsToUse.length)
     if (data.numberOfTokens === cawsToUse.length) {
       setLimit(data.numberOfTokens);
       setFinalCaws(cawsToUse);
-      settotalCawsDiscount(finalCaws.length);
+      settotalCawsDiscount(cawsToUse.length);
     } else if (
       data.numberOfTokens >= cawsToUse.length &&
       cawsToUse.length > 0
     ) {
       setLimit(cawsToUse.length);
       setFinalCaws(cawsToUse);
-      settotalCawsDiscount(finalCaws.length);
+      settotalCawsDiscount(cawsToUse.length);
     } else if (cawsToUse.length === 0) {
       setLimit(cawsToUse.length);
       setFinalCaws([]);
-      settotalCawsDiscount(finalCaws.length);
+      settotalCawsDiscount(cawsToUse.length);
     } else if (data.numberOfTokens <= cawsToUse.length) {
       setLimit(data.numberOfTokens);
       setFinalCaws(cawsToUse.slice(0, data.numberOfTokens));
-      settotalCawsDiscount(finalCaws.length);
+      settotalCawsDiscount(cawsToUse.length);
     }
+
   };
 
   const handleMint = async (data) => {
@@ -375,6 +377,7 @@ const Land = ({
             // console.log(cawsArray)
           //Check if user is ownerOf Caws
           if (cawsResult === coinbase) {
+            // console.log('yes')
             testArray.push(cawsId);
           }
           //Check if user has deposited Caws in Staking
@@ -445,7 +448,7 @@ const Land = ({
     myCAWSNFTsTotalStaked.length,
   ]);
 
-  console.log(myCAWSNFTsCreated, myCAWSNFTsTotalStaked);
+  // console.log(cawsToUse);
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
