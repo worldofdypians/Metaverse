@@ -235,11 +235,11 @@
     border-radius: 8px;
     position: relative;
 
-    @media screen and (max-width: 991px) {
-      background-image: url("../../assets/landAssets/newGenesisBg.webp");
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
+    // @media screen and (max-width: 991px) {
+    //   background-image: url("../../assets/landAssets/newGenesisBg.webp");
+    //   background-size: cover;
+    //   background-repeat: no-repeat;
+    // }
 
     .land-stake-title {
       font-weight: 800;
