@@ -83,15 +83,37 @@
     line-height: 24px;
     color: #ffffff;
   }
- 
 
   .mint-span-success {
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-    color: #09FBD3;
+    color: #09fbd3;
     text-align: center;
   }
+
+  .addr-text {
+    color: rgb(123, 216, 176);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+.borderText {
+  border: 1px solid #aaa5eb;
+    padding: 3px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.3);
+}
+
+.borderText2 {
+  width: 100px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
 
   .mint-span {
     font-weight: 400;
@@ -731,7 +753,7 @@
 
   .mint-release-title {
     width: 75%;
- 
+
     @media screen and (max-width: 786px) {
       width: 100%;
     }
@@ -782,7 +804,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
- 
+
     @media screen and (max-width: 786px) {
       gap: 15px;
     }
@@ -1174,29 +1196,28 @@ input::-webkit-inner-spin-button {
   }
 }
 
-
 .discountprice {
   font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 21px;
-text-align: right;
-color: #FE6A6A;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: right;
+  color: #fe6a6a;
 }
 
 .totalprice2 {
   font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 24px;
-text-align: right;
-color: #09FBD3;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  color: #09fbd3;
 }
 
 .notetxt {
   font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 18px;
-color: #B8B8B8;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #b8b8b8;
 }

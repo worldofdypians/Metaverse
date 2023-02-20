@@ -340,7 +340,7 @@ const LandStakingChecklistModal = ({
                 className="text-white"
                 style={{ fontSize: devicewidth < 500 ? 16 : 32 }}
               >
-                {showStaked === true ? "Staked NFTs" : "Stakeable NFTs"}
+                {showStaked === true ? "Staked NFTs" : "NFTs to Stake"}
               </h3>
               <h6 className="landchecklist-subtitle">
                 A list of your NFT collection that can be added and removed from

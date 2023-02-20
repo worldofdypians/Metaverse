@@ -226,26 +226,28 @@ const Land = ({
   };
 
   const calculateCaws = (data) => {
+    // console.log(data.numberOfTokens, cawsToUse.length)
     if (data.numberOfTokens === cawsToUse.length) {
       setLimit(data.numberOfTokens);
       setFinalCaws(cawsToUse);
-      settotalCawsDiscount(finalCaws.length);
+      settotalCawsDiscount(cawsToUse.length);
     } else if (
       data.numberOfTokens >= cawsToUse.length &&
       cawsToUse.length > 0
     ) {
       setLimit(cawsToUse.length);
       setFinalCaws(cawsToUse);
-      settotalCawsDiscount(finalCaws.length);
+      settotalCawsDiscount(cawsToUse.length);
     } else if (cawsToUse.length === 0) {
       setLimit(cawsToUse.length);
       setFinalCaws([]);
-      settotalCawsDiscount(finalCaws.length);
+      settotalCawsDiscount(cawsToUse.length);
     } else if (data.numberOfTokens <= cawsToUse.length) {
       setLimit(data.numberOfTokens);
       setFinalCaws(cawsToUse.slice(0, data.numberOfTokens));
-      settotalCawsDiscount(finalCaws.length);
+      settotalCawsDiscount(cawsToUse.length);
     }
+
   };
 
   const handleMint = async (data) => {
@@ -356,7 +358,7 @@ const Land = ({
   };
 
   const checkCawsToUse = async () => {
-
+    const testArray = [];
     const cawsArray = [...myCAWSNFTsCreated, ...myCAWSNFTsTotalStaked];
     const cawsContract = await window.getContractNFT("NFT");
     const nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
@@ -364,25 +366,33 @@ const Land = ({
 
     if (cawsArray.length > 0) {
       for (let i = 0; i < cawsArray.length; i++) {
-        const result = await nft_contract.methods.cawsUsed(cawsArray[i]).call();
+        const cawsId = parseInt(
+          cawsArray[i].name.slice(6, cawsArray[i].name.length)
+        );
+        const result = await nft_contract.methods.cawsUsed(cawsId).call();
         if (result === false) {
           const cawsResult = await cawsContract.methods
-            .ownerOf(cawsArray[i])
-            .call();
+            .ownerOf(cawsId)
+            .call()
+            // console.log(cawsArray)
           //Check if user is ownerOf Caws
           if (cawsResult === coinbase) {
-            cawsToUse.push(cawsArray[i]);
-            continue;
+            // console.log('yes')
+            testArray.push(cawsId);
           }
           //Check if user has deposited Caws in Staking
-          const stakeResult = await cawsStakeContract.methods
-            .calculateReward(coinbase, cawsArray[i])
-            .call();
-          if (stakeResult > 0) {
-            cawsToUse.push(cawsArray[i]);
+          else {
+            const stakeResult = await cawsStakeContract.methods
+              .calculateReward(coinbase, cawsId)
+              .call();
+            if (stakeResult > 0) {
+              testArray.push(cawsId);
+            }
           }
         }
       }
+      // console.log(testArray);
+      setcawsToUse(testArray);
     }
   };
 
@@ -392,7 +402,7 @@ const Land = ({
     const landPriceDiscount = await nft_contract.methods
       .LandPriceDiscount()
       .call();
-      console.log(landPriceDiscount)
+    // console.log(landPriceDiscount);
     setmintPriceDiscount(landPriceDiscount / 1e18);
     const mintprice = await nft_contract.methods.landPrice().call();
     setmintPrice(mintprice / 1e18);
@@ -404,8 +414,9 @@ const Land = ({
   }, []);
 
   useEffect(() => {
-    if(chainId === 1)
-   { getMintDiscountPrice();}
+    if (chainId === 1) {
+      getMintDiscountPrice();
+    }
   }, [chainId]);
 
   useEffect(() => {
@@ -437,7 +448,7 @@ const Land = ({
     myCAWSNFTsTotalStaked.length,
   ]);
 
-  // console.log(finalCaws);
+  // console.log(cawsToUse);
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
@@ -531,7 +542,9 @@ const Land = ({
           mintPrice={mintPrice}
           mintPriceDiscount={mintPriceDiscount}
           totalCaws={totalCawsDiscount}
-          totalCAWSAvailable={myCAWSNFTsCreated.length+myCAWSNFTsTotalStaked.length}
+          totalCAWSAvailable={
+            myCAWSNFTsCreated.length + myCAWSNFTsTotalStaked.length
+          }
           checkTotalcaws={calculateCaws}
           mystakes={mystakes.length}
         />

@@ -38,7 +38,7 @@ const LandStaking = ({
   totalCaws,
   mintPriceDiscount,
   totalCAWSAvailable,
-  mystakes
+  mystakes,
 }) => {
   const [nftCount, setNftCount] = useState(1);
 
@@ -55,10 +55,6 @@ const LandStaking = ({
     handleMint({
       numberOfTokens: parseInt(nftCount),
     });
-
-    checkTotalcaws({
-      numberOfTokens: parseInt(nftCount),
-    });
   };
 
   const addNft = () => {
@@ -66,9 +62,6 @@ const LandStaking = ({
       setNftCount(1);
     } else if (nftCount < 10) {
       setNftCount(nftCount + 1);
-      checkTotalcaws({
-        numberOfTokens: parseInt(nftCount + 1),
-      });
     }
   };
 
@@ -78,9 +71,6 @@ const LandStaking = ({
       setNftCount(1);
     } else if (nftCount > 1) {
       setNftCount(nftCount - 1);
-      checkTotalcaws({
-        numberOfTokens: parseInt(nftCount - 1),
-      });
     }
   };
 
@@ -100,7 +90,6 @@ const LandStaking = ({
       } else if (check.status !== 1 && chainId === 1) {
         setStatus("");
         // setStatus("This wallet is not whitelisted.");
-
       }
     }
   };
@@ -127,10 +116,15 @@ const LandStaking = ({
         setNftStatus("*10 NFT limit.");
       }, 5000);
     }
-    checkTotalcaws({
-      numberOfTokens: parseInt(nftCount),
-    });
   }, [nftCount]);
+
+  useEffect(() => {
+    if (isConnected) {
+      checkTotalcaws({
+        numberOfTokens: parseInt(nftCount),
+      });
+    }
+  }, [nftCount, isConnected, coinbase, chainId, totalCAWSAvailable]);
 
   useEffect(() => {
     if (isConnected) {
@@ -157,7 +151,7 @@ const LandStaking = ({
   useEffect(() => {
     if (totalCaws !== 0) {
       let newPrice =
-        mintPriceDiscount * totalCaws.length +
+        mintPriceDiscount * totalCaws +
         mintPrice * (nftCount - mintPriceDiscount);
       setGrandPrice(newPrice);
     } else {
@@ -166,9 +160,6 @@ const LandStaking = ({
       setGrandPrice(newPrice);
     }
   }, [nftCount, totalCaws, mintPrice]);
-
-
-  
 
   return (
     <>
@@ -283,13 +274,23 @@ const LandStaking = ({
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
                 <span className="create-land-title font-poppins ">
-                  Create your Genesis Land NFT
+                  Mint your Genesis Land NFT
                 </span>
                 {coinbase &&
                 (chainId === 1 || chainId === 5) &&
                 status === "" ? (
                   <span className="create-land-title font-poppins">
-                    Wallet Address: {shortAddress(coinbase)}
+                    Address:{" "}
+                    <a
+                      href={`https://etherscan.io/address/${coinbase}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <span className="addr-text">
+                        {shortAddress(coinbase)}
+                      </span>
+                    </a>
                   </span>
                 ) : (
                   <span className="errormsg">
@@ -305,19 +306,52 @@ const LandStaking = ({
                 )}
               </div>
             </div>
-            <div className="d-flex mt-3 align-items-start">
-              <div className="d-flex flex-column gap-2 w-50">
+            <div className="d-flex mt-3 align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
+              <div
+                className="d-flex flex-column gap-2"
+                style={{ width: "38%" }}
+              >
                 <span className="land-name">Name</span>
-                <h6 className="land-placeholder">{latestMintNft[0]?.name}</h6>
+                <div
+                  className="borderText borderText2"
+                  style={{ width: "100%" }}
+                >
+                  <h6
+                    className="land-placeholder mb-0"
+                    style={{ marginLeft: 11 }}
+                  >
+                    Land#144
+                  </h6>
+                </div>
               </div>
               <div className="d-flex flex-column gap-2 w-50">
                 <span className="land-name">Description</span>
-                <h6 className="land-placeholder">Genesis Land</h6>
+
+                <h6
+                  className="land-placeholder borderText"
+                  style={{ fontSize: "12px" }}
+                >
+                  Enjoy the land inside the game and stake the NFT for
+                  additional rewards.
+                  <a
+                    href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: "none" }}
+                    className="addr-text"
+                  >
+                    {" "}
+                    Download
+                  </a>
+                </h6>
               </div>
             </div>
             <hr className="mint-divider m-0" />
             <div className="d-flex align-items-center justify-content-between pb-4 position-relative gap-3">
-              <div className="input-container position-relative w-50">
+              <div
+                className="input-container position-relative"
+                style={{ width: "38%" }}
+              >
                 <input
                   type="number"
                   placeholder="Nr. of Land NFT to create"
@@ -424,7 +458,8 @@ const LandStaking = ({
                   title={
                   <React.Fragment>
                     <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                    <li>Minting of NFTs is limited to a maximum of 10 per transaction.</li>
+                    <li> The maximum number of NFTs that can be minted per
+                          transaction is 10.</li>
                     <li> CAWS NFT holders are eligible for a 20% discount on their Genesis Land NFT purchases.</li>
                     <li>The CAWS NFT discount is given at a 1:1 ratio with Genesis Land NFT purchases.</li>
                     <li>Discounts are not stackable, meaning that you cannot use the same CAWS NFT to obtain further discounts.</li>
@@ -441,7 +476,9 @@ const LandStaking = ({
             <div className="d-flex align-items-end justify-content-between">
               <div className="d-flex flex-column w-50">
                 <span className="land-placeholder">Genesis Land</span>
-                <span className="land-placeholder">x {nftCount}</span>
+                <span className="land-placeholder" style={{ color: "#09fbd3" }}>
+                  x {nftCount}
+                </span>
               </div>
               <div className="d-flex flex-column gap-2">
                 <h6 className="land-name m-0">
@@ -453,7 +490,9 @@ const LandStaking = ({
             <div className="d-flex align-items-end justify-content-between">
               <div className="d-flex flex-column w-50">
                 <span className="land-placeholder">CAWS Discount</span>
-                <span className="land-placeholder">x {totalCaws}</span>
+                <span className="land-placeholder" style={{ color: "#09fbd3" }}>
+                  x {totalCaws}
+                </span>
               </div>
               <div className="d-flex flex-column gap-2">
                 <h6 className="discountprice m-0">
@@ -473,19 +512,26 @@ const LandStaking = ({
               </div>
             </div>
             <span className="notetxt">
-              *Available Caws for discount eligibility you have {totalCaws}/{totalCAWSAvailable} Caws
-              remaining
+              *Available Caws for discount eligibility you have {totalCaws}/
+              {totalCAWSAvailable} Caws remaining
             </span>
             <hr className="mint-divider m-0" />
             {mintStatus.length > 0 && (
-              <span className={mintStatus.includes('Success') ? 'mint-span-success' : "mint-span"}>{mintStatus}</span>
+              <span
+                className={
+                  mintStatus.includes("Success")
+                    ? "mint-span-success"
+                    : "mint-span"
+                }
+              >
+                {mintStatus}
+              </span>
             )}
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
               <div
                 className={
                   mintloading === "error" ||
                   (status !== "Please connect your wallet." && status !== "")
-
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -494,8 +540,8 @@ const LandStaking = ({
                   className={`btn ${
                     mintloading === "error"
                       ? "filled-error-btn"
-                      : (status !== "Please connect your wallet." && status !== "")
-
+                      : status !== "Please connect your wallet." &&
+                        status !== ""
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   }  px-4 w-100`}
@@ -509,7 +555,6 @@ const LandStaking = ({
                     mintloading === "success" ||
                     (isConnected === true && chainId !== 1 && chainId !== 5) ||
                     (status !== "Please connect your wallet." && status !== "")
-
                       ? true
                       : false
                   }
@@ -525,7 +570,7 @@ const LandStaking = ({
                     <img
                       src={mouseOver === false ? blackWallet : whitewallet}
                       alt=""
-                      style={{width: '23px', height: '23px'}}
+                      style={{ width: "23px", height: "23px" }}
                     />
                   )}{" "}
                   {mintloading === "initial" &&
@@ -705,7 +750,8 @@ const LandStaking = ({
                 className={
                   isConnected === false ||
                   activeButton === false ||
-                  status !== "" || mystakes === 0
+                  status !== "" ||
+                  mystakes === 0
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -714,14 +760,16 @@ const LandStaking = ({
                   className={`btn ${
                     isConnected === false ||
                     activeButton === false ||
-                    status !== ""|| mystakes === 0
+                    status !== "" ||
+                    mystakes === 0
                       ? "outline-btn-disabled"
                       : "outline-btn"
                   } px-5 w-100`}
                   disabled={
                     isConnected === false ||
                     activeButton === false ||
-                    status !== "" || mystakes === 0
+                    status !== "" ||
+                    mystakes === 0
                   }
                   onClick={() => {
                     withdrawModalShow();
