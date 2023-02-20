@@ -239,15 +239,14 @@ const Land = ({
       setFinalCaws(cawsToUse);
       settotalCawsDiscount(cawsToUse.length);
     } else if (cawsToUse.length === 0) {
-      setLimit(cawsToUse.length);
+      setLimit(0);
       setFinalCaws([]);
-      settotalCawsDiscount(cawsToUse.length);
+      settotalCawsDiscount(0);
     } else if (data.numberOfTokens <= cawsToUse.length) {
       setLimit(data.numberOfTokens);
       setFinalCaws(cawsToUse.slice(0, data.numberOfTokens));
-      settotalCawsDiscount(cawsToUse.length);
+      settotalCawsDiscount(data.numberOfTokens);
     }
-
   };
 
   const handleMint = async (data) => {
@@ -360,9 +359,7 @@ const Land = ({
   const checkCawsToUse = async () => {
     const testArray = [];
     const cawsArray = [...myCAWSNFTsCreated, ...myCAWSNFTsTotalStaked];
-    const cawsContract = await window.getContractNFT("NFT");
     const nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
-    const cawsStakeContract = await window.getContractNFT("NFTSTAKING");
 
     if (cawsArray.length > 0) {
       for (let i = 0; i < cawsArray.length; i++) {
@@ -371,24 +368,7 @@ const Land = ({
         );
         const result = await nft_contract.methods.cawsUsed(cawsId).call();
         if (result === false) {
-          const cawsResult = await cawsContract.methods
-            .ownerOf(cawsId)
-            .call()
-            // console.log(cawsArray)
-          //Check if user is ownerOf Caws
-          if (cawsResult === coinbase) {
-            // console.log('yes')
-            testArray.push(cawsId);
-          }
-          //Check if user has deposited Caws in Staking
-          else {
-            const stakeResult = await cawsStakeContract.methods
-              .calculateReward(coinbase, cawsId)
-              .call();
-            if (stakeResult > 0) {
-              testArray.push(cawsId);
-            }
-          }
+          testArray.push(cawsId);
         }
       }
       // console.log(testArray);
@@ -448,7 +428,7 @@ const Land = ({
     myCAWSNFTsTotalStaked.length,
   ]);
 
-  // console.log(cawsToUse);
+  // console.log(totalCawsDiscount);
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
