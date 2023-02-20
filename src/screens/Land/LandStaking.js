@@ -151,8 +151,7 @@ const LandStaking = ({
   useEffect(() => {
     if (totalCaws !== 0) {
       let newPrice =
-        mintPriceDiscount * totalCaws +
-        mintPrice * (nftCount - mintPriceDiscount);
+       (mintPrice *nftCount ) - mintPriceDiscount* totalCaws;
       setGrandPrice(newPrice);
     } else {
       let newPrice = mintPrice * nftCount;
