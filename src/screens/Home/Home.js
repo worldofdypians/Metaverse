@@ -7,6 +7,7 @@ import ExplorerGrid from "./ExplorerGrid/ExplorerGrid";
 import CawsSociety from "./CawsSociety/CawsSociety";
 import CawsWorld from "./CawsSociety/CawsWorld";
 import Discord from "./Discord/Discord";
+import LandNft from "./LandNFT/LandNft";
 // import Partners from "./Partners/Partners";
 
 const Home = ({handleRegister, handleDownload}) => {
@@ -23,6 +24,7 @@ const Home = ({handleRegister, handleDownload}) => {
       <div className="d-flex flex-column home-main-wrapper">
         <VideoWrapper handleRegister={handleRegister} handleDownload={handleDownload}/>
         <ExplorerGrid />
+        <LandNft />
         <CawsSociety content="The Cats and Watches Society (CAWS) NFT is a unique collection of
             utility NFTs developed by Dypius. Owners of these NFTs will be able
             to adventure with their CAT companion enhancing the player’s

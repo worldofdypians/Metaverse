@@ -70,6 +70,14 @@ border-radius: 8px;
 padding: 10px;
 }
 
+.bottom-width{
+  width: 86% !important;
+  @media screen and (max-width: 786px) {
+    width: 100% !important;
+
+  }
+}
+
 .landsup-notification {
   color: white;
   width: 15px;
