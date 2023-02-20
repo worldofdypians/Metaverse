@@ -36,7 +36,7 @@ const UnstakeAllModal = ({ open, onClose, onUnstake, onClaimAll }) => {
         <div className="d-flex flex-column gap-4 align-items-center justify-content-between">
           <div className="d-flex justify-content-between align-items-center">
             <h1 className="unstaketitle">
-              Are you sure you want to Unstake all your current selected NFTs?
+            Are you sure you want to unstake all of your NFTs?
             </h1>
             <img
               src={X}
@@ -48,8 +48,7 @@ const UnstakeAllModal = ({ open, onClose, onUnstake, onClaimAll }) => {
             />
           </div>
           <p className="m-0 unstakedesc">
-            By Unstaking your NFT you will still be able to recieve your current
-            amout of ETH rewards that will be added to your wallet.
+          Please note that unstaking your NFTs will not affect the ETH rewards you have earned, and they will be automatically added to your wallet.
           </p>
           <div className="d-flex flex-column flex-xl-row flex-lg-row flex-md-row gap-4">
             <div className={"linear-border w-100"}>

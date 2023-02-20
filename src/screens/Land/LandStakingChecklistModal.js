@@ -152,13 +152,13 @@ const LandStakingChecklistModal = ({
         handleClearStatus();
       });
   };
+
   
   const handleDeposit = async (value) => {
     let stake_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     setloadingdeposit(true);
     setStatus("*Processing deposit");
     setColor("#52A8A4");
-
     await stake_contract.methods
       .deposit(
         checkbtn === true
@@ -311,6 +311,8 @@ const LandStakingChecklistModal = ({
   };
 
   const devicewidth = window.innerWidth;
+
+  
   
   return (
     <Modal

@@ -37,6 +37,8 @@ const LandStaking = ({
   mintPrice,
   totalCaws,
   mintPriceDiscount,
+  totalCAWSAvailable,
+  mystakes
 }) => {
   const [nftCount, setNftCount] = useState(1);
 
@@ -96,7 +98,7 @@ const LandStaking = ({
       if (check.status === 1) {
         setStatus("");
       } else {
-        setStatus("This wallet is not whitelisted for Genesis Land");
+        setStatus("");
       }
     }
   };
@@ -162,6 +164,9 @@ const LandStaking = ({
       setGrandPrice(newPrice);
     }
   }, [nftCount, totalCaws, mintPrice]);
+
+
+  
 
   return (
     <>
@@ -384,9 +389,9 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider m-0" />
-            {mintStatus.length > 0 && (
+            {/* {mintStatus.length > 0 && (
               <span className="mint-span">{mintStatus}</span>
-            )}
+            )} */}
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
@@ -466,18 +471,19 @@ const LandStaking = ({
               </div>
             </div>
             <span className="notetxt">
-              *Available Caws for discount eligibility you have 4/5 Caws
+              *Available Caws for discount eligibility you have {totalCaws}/{totalCAWSAvailable} Caws
               remaining
             </span>
             <hr className="mint-divider m-0" />
             {mintStatus.length > 0 && (
-              <span className="mint-span">{mintStatus}</span>
+              <span className={mintStatus.includes('Success') ? 'mint-span-success' : "mint-span"}>{mintStatus}</span>
             )}
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
               <div
                 className={
                   mintloading === "error" ||
-                  status !== "Please connect your wallet"
+                  (status !== "Please connect your wallet" && status !== "")
+
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -486,7 +492,8 @@ const LandStaking = ({
                   className={`btn ${
                     mintloading === "error"
                       ? "filled-error-btn"
-                      : status !== "Please connect your wallet"
+                      : (status !== "Please connect your wallet" && status !== "")
+
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   }  px-4 w-100`}
@@ -499,7 +506,8 @@ const LandStaking = ({
                     mintloading === "error" ||
                     mintloading === "success" ||
                     (isConnected === true && chainId !== 1 && chainId !== 5) ||
-                    status !== "Please connect your wallet"
+                    (status !== "Please connect your wallet" && status !== "")
+
                       ? true
                       : false
                   }
@@ -695,7 +703,7 @@ const LandStaking = ({
                 className={
                   isConnected === false ||
                   activeButton === false ||
-                  status !== ""
+                  status !== "" || mystakes === 0
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -704,14 +712,14 @@ const LandStaking = ({
                   className={`btn ${
                     isConnected === false ||
                     activeButton === false ||
-                    status !== ""
+                    status !== ""|| mystakes === 0
                       ? "outline-btn-disabled"
                       : "outline-btn"
                   } px-5 w-100`}
                   disabled={
                     isConnected === false ||
                     activeButton === false ||
-                    status !== ""
+                    status !== "" || mystakes === 0
                   }
                   onClick={() => {
                     withdrawModalShow();
