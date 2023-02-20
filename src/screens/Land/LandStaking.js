@@ -95,7 +95,7 @@ const LandStaking = ({
           console.error(error);
         });
 
-      if (check.status === 1) {
+      if (check.status === 1 && chainId === 1) {
         setStatus("");
       } else {
         setStatus("");
