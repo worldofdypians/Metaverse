@@ -388,7 +388,7 @@ const Land = ({
 
   const getMintDiscountPrice = async () => {
     const nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
-    console.log(nft_contract)
+    // console.log(nft_contract)
     const landPriceDiscount = await nft_contract.methods
       .LandPriceDiscount()
       .call();
