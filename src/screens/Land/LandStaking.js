@@ -43,7 +43,7 @@ const LandStaking = ({
   const [nftCount, setNftCount] = useState(1);
 
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
-  const [status, setStatus] = useState("Please connect your wallet");
+  const [status, setStatus] = useState("Please connect your wallet.");
 
   const [showBadge, setshowBadge] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
@@ -95,10 +95,12 @@ const LandStaking = ({
           console.error(error);
         });
 
-      if (check.status === 1) {
+      if (check.status === 1 && chainId === 1) {
         setStatus("");
-      } else {
+      } else if (check.status !== 1 && chainId === 1) {
         setStatus("");
+        // setStatus("This wallet is not whitelisted.");
+
       }
     }
   };
@@ -119,10 +121,10 @@ const LandStaking = ({
 
   useEffect(() => {
     if (nftCount > 10) {
-      setNftStatus("*Exceeded mint limit of 10 NFTs");
+      setNftStatus("*Exceeded mint limit of 10 NFTs.");
       setTimeout(() => {
         setNftCount(10);
-        setNftStatus("*10 NFT limit");
+        setNftStatus("*10 NFT limit.");
       }, 5000);
     }
     checkTotalcaws({
@@ -135,7 +137,7 @@ const LandStaking = ({
       if (chainId !== undefined) {
         if (chainId !== 1) {
           setactiveButton(false);
-          setStatus("Please switch to Ethereum Chain to continue minting");
+          setStatus("Please switch to Ethereum Chain to continue minting.");
         }
         if (chainId === 1) {
           setactiveButton(true);
@@ -482,7 +484,7 @@ const LandStaking = ({
               <div
                 className={
                   mintloading === "error" ||
-                  (status !== "Please connect your wallet" && status !== "")
+                  (status !== "Please connect your wallet." && status !== "")
 
                     ? "linear-border-disabled"
                     : "linear-border"
@@ -492,7 +494,7 @@ const LandStaking = ({
                   className={`btn ${
                     mintloading === "error"
                       ? "filled-error-btn"
-                      : (status !== "Please connect your wallet" && status !== "")
+                      : (status !== "Please connect your wallet." && status !== "")
 
                       ? "outline-btn-disabled"
                       : "filled-btn"
@@ -506,7 +508,7 @@ const LandStaking = ({
                     mintloading === "error" ||
                     mintloading === "success" ||
                     (isConnected === true && chainId !== 1 && chainId !== 5) ||
-                    (status !== "Please connect your wallet" && status !== "")
+                    (status !== "Please connect your wallet." && status !== "")
 
                       ? true
                       : false
