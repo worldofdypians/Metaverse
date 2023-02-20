@@ -2883,7 +2883,7 @@ class LANDNFT {
     const nft_contract = await getContractLandNFT("LANDNFTSTAKE");
     // const cawsContract = await getContractNFT("NFT");
     // const cawsStakeContract = await getContractNFT("NFTSTAKING");
-    let countDiscount = cawsArray.length();
+    let countDiscount = cawsArray.length;
     // const coinbase = await getCoinbase();
     let newPrice = 0;
     let landnft = await nft_contract.methods.landPrice().call();

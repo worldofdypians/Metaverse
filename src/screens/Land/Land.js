@@ -388,9 +388,11 @@ const Land = ({
 
   const getMintDiscountPrice = async () => {
     const nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    console.log(nft_contract)
     const landPriceDiscount = await nft_contract.methods
       .LandPriceDiscount()
       .call();
+      console.log(landPriceDiscount)
     setmintPriceDiscount(landPriceDiscount / 1e18);
     const mintprice = await nft_contract.methods.landPrice().call();
     setmintPrice(mintprice / 1e18);
@@ -402,7 +404,8 @@ const Land = ({
   }, []);
 
   useEffect(() => {
-    getMintDiscountPrice();
+    if(chainId === 1)
+   { getMintDiscountPrice();}
   }, [chainId]);
 
   useEffect(() => {
@@ -414,7 +417,7 @@ const Land = ({
   useEffect(() => {
     //  const interval = setInterval(async () => {
     if (isConnected && coinbase && chainId === 1) {
-      handleClaimAll().then();
+      handleClaimAll();
       myStakes();
       myNft();
       myCAWStakes();
@@ -528,7 +531,9 @@ const Land = ({
           mintPrice={mintPrice}
           mintPriceDiscount={mintPriceDiscount}
           totalCaws={totalCawsDiscount}
+          totalCAWSAvailable={myCAWSNFTsCreated.length+myCAWSNFTsTotalStaked.length}
           checkTotalcaws={calculateCaws}
+          mystakes={mystakes.length}
         />
         <LandTiers />
         <Members handleRegister={handleRegister} />
