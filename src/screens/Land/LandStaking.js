@@ -39,6 +39,7 @@ const LandStaking = ({
   mintPriceDiscount,
   totalCAWSAvailable,
   mystakes,
+  myCawstakes
 }) => {
   const [nftCount, setNftCount] = useState(1);
 
@@ -114,8 +115,9 @@ const LandStaking = ({
       setTimeout(() => {
         setNftCount(10);
         setNftStatus("*10 NFT limit.");
-      }, 5000);
+      }, 3000);
     }
+    
   }, [nftCount]);
 
   useEffect(() => {
@@ -124,8 +126,9 @@ const LandStaking = ({
         numberOfTokens: parseInt(nftCount),
       });
     }
-  }, [nftCount, isConnected, coinbase, chainId, totalCAWSAvailable]);
+  }, [nftCount, isConnected, coinbase, chainId, totalCAWSAvailable, myCawstakes]);
 
+  
   useEffect(() => {
     if (isConnected) {
       if (chainId !== undefined) {
