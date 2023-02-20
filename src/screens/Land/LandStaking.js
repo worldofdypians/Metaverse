@@ -421,7 +421,7 @@ const LandStaking = ({
                 <ToolTip
                   title={
                   <React.Fragment>
-                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-1 font-poppins">
+                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
                     <li>Minting of NFTs is limited to a maximum of 10 per transaction.</li>
                     <li> CAWS NFT holders are eligible for a 20% discount on their Genesis Land NFT purchases.</li>
                     <li>The CAWS NFT discount is given at a 1:1 ratio with Genesis Land NFT purchases.</li>
@@ -581,7 +581,7 @@ const LandStaking = ({
                 <ToolTip
                   title={
                     <React.Fragment>
-                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-1 font-poppins">
+                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
                     <li> When interacting with the staking pool for the first time, you are required to approve and deposit. For additional transactions, you will only be asked for deposit.</li>
                     <li>You can stake or unstake multiple NFTs at once.</li>
                     <li>The maximum number of NFTs that can be staked or unstaked per round is 50.</li>
