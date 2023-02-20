@@ -23,16 +23,7 @@ const Header = ({ handleSignUp }) => {
           </NavLink>
           {/* <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a> */}
           {/* <div className="nav-anchor font-poppins">Roadmap</div> */}
-          <NavLink
-            to="/news"
-            className={({isActive}) =>
-              isActive
-                ? "nav-anchor font-poppins activenavlink"
-                : "nav-anchor font-poppins"
-            }
-          >
-            News
-          </NavLink>
+          
           <NavLink
             to="/land"
             className={({isActive}) =>
@@ -63,7 +54,16 @@ const Header = ({ handleSignUp }) => {
           >
             Roadmap
           </NavLink>
-         
+          <NavLink
+            to="/news"
+            className={({isActive}) =>
+              isActive
+                ? "nav-anchor font-poppins activenavlink"
+                : "nav-anchor font-poppins"
+            }
+          >
+            News
+          </NavLink>
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
           <div className="linear-border">
