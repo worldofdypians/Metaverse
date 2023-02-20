@@ -149,7 +149,7 @@ const LandItem = ({
         <div
           className="elevated-stake-container"
           style={{
-            background: "rgb(38, 38, 79)",
+            background: "transparent",
             display: "flex",
             flexDirection: "column",
             gap: 5,
@@ -171,7 +171,6 @@ const LandItem = ({
                 : checked === false && checkbtn === true
                 ? "2px solid #4ED5D2"
                 : "none",
-                padding: 0, boxShadow: 'none'
             }}
             className="sub-container"
           >

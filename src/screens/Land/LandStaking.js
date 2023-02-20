@@ -283,13 +283,13 @@ const LandStaking = ({
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
                 <span className="create-land-title font-poppins ">
-                  Create your Genesis Land NFT
+                  Mint your Genesis Land NFT
                 </span>
                 {coinbase &&
                 (chainId === 1 || chainId === 5) &&
                 status === "" ? (
                   <span className="create-land-title font-poppins">
-                    Wallet Address: {shortAddress(coinbase)}
+                    Address: <a href={`https://etherscan.io/address/${coinbase}`} target='_blank' rel='noreferrer' style={{textDecoration: 'none'}}><span className="addr-text">{shortAddress(coinbase)}</span></a>
                   </span>
                 ) : (
                   <span className="errormsg">
@@ -424,7 +424,7 @@ const LandStaking = ({
                   title={
                   <React.Fragment>
                     <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-1 font-poppins">
-                    <li>Minting of NFTs is limited to a maximum of 10 per transaction.</li>
+                    <li>The maximum number of NFTs that can be minted per transaction is 10.</li>
                     <li> CAWS NFT holders are eligible for a 20% discount on their Genesis Land NFT purchases.</li>
                     <li>The CAWS NFT discount is given at a 1:1 ratio with Genesis Land NFT purchases.</li>
                     <li>Discounts are not stackable, meaning that you cannot use the same CAWS NFT to obtain further discounts.</li>
@@ -441,7 +441,7 @@ const LandStaking = ({
             <div className="d-flex align-items-end justify-content-between">
               <div className="d-flex flex-column w-50">
                 <span className="land-placeholder">Genesis Land</span>
-                <span className="land-placeholder">x {nftCount}</span>
+                <span className="land-placeholder" style={{ color: '#09fbd3'}}>x {nftCount}</span>
               </div>
               <div className="d-flex flex-column gap-2">
                 <h6 className="land-name m-0">
@@ -453,7 +453,7 @@ const LandStaking = ({
             <div className="d-flex align-items-end justify-content-between">
               <div className="d-flex flex-column w-50">
                 <span className="land-placeholder">CAWS Discount</span>
-                <span className="land-placeholder">x {totalCaws}</span>
+                <span className="land-placeholder"style={{ color: '#09fbd3'}}>x {totalCaws}</span>
               </div>
               <div className="d-flex flex-column gap-2">
                 <h6 className="discountprice m-0">
