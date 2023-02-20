@@ -305,14 +305,14 @@ const LandStaking = ({
                 )}
               </div>
             </div>
-            <div className="d-flex mt-3 align-items-center">
+            <div className="d-flex mt-3 align-items-start">
               <div className="d-flex flex-column gap-2 w-50">
-                <span className="land-placeholder">Name</span>
-                <h6 className="land-name">{latestMintNft[0]?.name}</h6>
+                <span className="land-name">Name</span>
+                <h6 className="land-placeholder">{latestMintNft[0]?.name}</h6>
               </div>
               <div className="d-flex flex-column gap-2 w-50">
-                <span className="land-placeholder">Description</span>
-                <h6 className="land-name">Genesis Land</h6>
+                <span className="land-name">Description</span>
+                <h6 className="land-placeholder">Genesis Land</h6>
               </div>
             </div>
             <hr className="mint-divider m-0" />
@@ -423,7 +423,7 @@ const LandStaking = ({
                 <ToolTip
                   title={
                   <React.Fragment>
-                    <ul className="py-2 font-poppins">
+                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-1 font-poppins">
                     <li>Minting of NFTs is limited to a maximum of 10 per transaction.</li>
                     <li> CAWS NFT holders are eligible for a 20% discount on their Genesis Land NFT purchases.</li>
                     <li>The CAWS NFT discount is given at a 1:1 ratio with Genesis Land NFT purchases.</li>
@@ -568,7 +568,7 @@ const LandStaking = ({
                 staking
               </span>
             </span> */}
-            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+            <div className="row gap-1 align-items-center justify-content-between">
               <span
                 className="create-land-title font-poppins"
                 style={{ width: "fit-content" }}
@@ -583,7 +583,7 @@ const LandStaking = ({
                 <ToolTip
                   title={
                     <React.Fragment>
-                    <ul className="py-2 font-poppins">
+                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-1 font-poppins">
                     <li> When interacting with the staking pool for the first time, you are required to approve and deposit. For additional transactions, you will only be asked for deposit.</li>
                     <li>You can stake or unstake multiple NFTs at once.</li>
                     <li>The maximum number of NFTs that can be staked or unstaked per round is 50.</li>

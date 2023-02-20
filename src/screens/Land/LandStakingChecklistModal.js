@@ -12,6 +12,8 @@ import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import "../Caws/NftMinting/NftStakeChecklistModal/_nftStakeChecklistModal.scss";
 import ethereum from "../../assets/landAssets/ethereum.svg";
+import useWindowSize from '../../hooks/useWindowSize'
+
 
 const LandStakingChecklistModal = ({
   nftItem,
@@ -30,19 +32,23 @@ const LandStakingChecklistModal = ({
   showToStake,
   isConnected,
 }) => {
+
+
+  const windowSize = useWindowSize();
+
   const style = {
     position: "absolute",
     top: "52%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: window.innerWidth < 500 ? "77%" : "55%",
+    width: windowSize.width < 500 ? "80%" : "55%",
     boxShadow: 24,
     p: 4,
     overflow: "scroll",
     height: "80%",
     borderRadius: "8px",
     overflowX: "hidden",
-    padding: window.innerWidth < 500 ? "18px" : "32px",
+    padding: windowSize.width  < 500 ? '18px' : '32px'
   };
 
   const [active, setActive] = useState(true);
@@ -578,8 +584,8 @@ const LandStakingChecklistModal = ({
             </div>
           </div>
         </div>{" "}
-        <div style={{ display: "block" }} className="bottom-static-wrapper">
-          <div className="landbottom-static-wrapper">
+        <div  className="bottom-static-wrapper d-flex flex-column align-items-center m-0">
+          <div className="landbottom-static-wrapper  bottom-width">
             <p className="d-flex landinfo-text">
               *
               {!showStaked
@@ -588,7 +594,7 @@ const LandStakingChecklistModal = ({
             </p>
           </div>
 
-          <div className="mt-2">
+          <div className="mt-2 bottom-width">
             <div
               className="gap-2 flex-column flex-xl-row flex-lg-row flex-md-row"
               style={{ display: showStaked === false ? "flex" : "none" }}
@@ -740,7 +746,7 @@ const LandStakingChecklistModal = ({
             </div>
           </div>
 
-          <div className="mt-2">
+          <div className="mt-2 bottom-width">
             <div
               className="gap-2 flex-column flex-xl-row flex-lg-row flex-md-row"
               style={{
@@ -879,7 +885,7 @@ const LandStakingChecklistModal = ({
                         {loading ? (
                           <>
                             <div
-                              className="spinner-border "
+                              className="spinner-border"
                               role="status"
                             ></div>
                           </>
