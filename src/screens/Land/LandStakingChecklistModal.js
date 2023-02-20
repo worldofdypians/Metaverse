@@ -42,6 +42,7 @@ const LandStakingChecklistModal = ({
     height: "80%",
     borderRadius: "8px",
     overflowX: "hidden",
+    padding: window.innerWidth < 500 ? '18px' : '32px'
   };
 
   const [active, setActive] = useState(true);
@@ -325,13 +326,13 @@ const LandStakingChecklistModal = ({
     >
       <Box sx={style}>
         <div className="left-col">
-          <div className="d-flex align-items-center justify-content-between width-100">
+          <div className="d-flex align-items-center justify-content-between width-100 position-relative">
             <div
               className="rarity-rank mt-6"
               style={{
                 position: "relative",
-                marginBottom: "6rem",
-                top: "3rem",
+                marginBottom: window.innerWidth < 500 ? '4rem' : "3rem",
+                top: "1rem",
               }}
             >
               <h3
@@ -348,22 +349,23 @@ const LandStakingChecklistModal = ({
             <img
               src={X}
               alt=""
-              className="close-x"
+              className="position-absolute"
               onClick={() => {
                 onClose();
                 setCheckUnstakeBtn(false);
                 setCheckBtn(false);
                 setSelectedNftIds([]);
               }}
+              style={{right: '-12px', top: '-10px', height: 'fit-content', width: 50, cursor: 'pointer'}}
             />
           </div>
-          <div>
+          <div className="d-flex flex-column gap-2 w-100">
             <div className="sub-navbar-wrapper">
               <div className={showToStake ? "linear-border" : ""}>
                 <button
                   className={`btn d-flex gap-1 ${
                     showToStake ? "outline-btn" : "landtab-wrapper border-0"
-                  } px-5 w-100`}
+                  } px-3 px-xxl-5 px-lg-5 px-md-5 w-100`}
                   onClick={() => {
                     onshowToStake();
                     //Make selectedNfts empty []
@@ -372,6 +374,7 @@ const LandStakingChecklistModal = ({
                   style={{
                     color: showToStake ? "#F7F7FC" : "#8E97CD",
                     background: showToStake ? "#1E1C40" : "transparent",
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   To Stake
@@ -381,7 +384,7 @@ const LandStakingChecklistModal = ({
                 <button
                   className={`btn d-flex gap-1 ${
                     showStaked ? "outline-btn" : "landtab-wrapper border-0"
-                  } px-5 w-100`}
+                  } px-3 px-xxl-5 px-lg-5 px-md-5 w-100`}
                   onClick={() => {
                     onshowStaked();
                     //Make selectedNfts empty []

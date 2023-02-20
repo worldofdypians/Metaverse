@@ -62,7 +62,7 @@
     background: #7bd8af;
     position: absolute;
     border-radius: 50%;
-    padding: 7px 14px;
+    padding: 4px 13px;
     top: -17px;
     left: 10px;
     z-index: 1;
@@ -242,7 +242,7 @@
       left: 0;
       top: -40px;
       @media screen and (max-width: 991px) {
-        top: -95px;
+        top: -85px;
         white-space: break-spaces;
       }
     }
@@ -347,7 +347,7 @@
     top: 0;
     margin: auto;
     // background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-    background-image: url("../../assets/landAssets/genesis-hero.png");
+    // background-image: url("../../assets/landAssets/genesis-hero.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
@@ -413,7 +413,7 @@
     font-size: 14px;
     line-height: 21px;
     color: #ffffff;
-    width: 75%;
+    // width: 75%;
     padding-bottom: 5px;
     @media screen and (max-width: 1500px) {
       width: 100%;
@@ -1165,4 +1165,31 @@ input::-webkit-inner-spin-button {
   .discount-break {
     display: none;
   }
+}
+
+
+.discountprice {
+  font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 21px;
+text-align: right;
+color: #FE6A6A;
+}
+
+.totalprice2 {
+  font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+text-align: right;
+color: #09FBD3;
+}
+
+.notetxt {
+  font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 18px;
+color: #B8B8B8;
 }
