@@ -62,7 +62,7 @@ const Land = ({
 
   const myNft = async () => {
     let myNft = await window.myNftLandListContract(coinbase);
-    let nfts = myNft.map((nft) => window.getNft(nft));
+    let nfts = myNft.map((nft) => window.getLandNft(nft));
     nfts = await Promise.all(nfts);
     setMyNFTsCreated(nfts);
 
@@ -94,7 +94,7 @@ const Land = ({
 
     let latest = range(start, end);
 
-    let nfts = latest.map((nft) => window.getNft(nft));
+    let nfts = latest.map((nft) => window.getLandNft(nft));
 
     nfts = await Promise.all(nfts);
 
@@ -137,7 +137,7 @@ const Land = ({
 
   const myStakes = async () => {
     let myStakes = await getStakesIds();
-    let stakes = myStakes.map((stake) => window.getNft(stake));
+    let stakes = myStakes.map((stake) => window.getLandNft(stake));
     stakes = await Promise.all(stakes);
     stakes.reverse();
     setMystakes(stakes);
@@ -529,9 +529,16 @@ const Land = ({
           totalCAWSAvailable={
             myCAWSNFTsCreated.length + myCAWSNFTsTotalStaked.length
           }
+          cawsMinted={
+            myCAWSNFTsCreated.length
+          }
+          cawsStaked={
+            myCAWSNFTsTotalStaked.length
+          }
           checkTotalcaws={calculateCaws}
           mystakes={mystakes.length}
-          myCawstakes={cawsToUse.length}
+          cawsToUse={cawsToUse.length}
+          limit={limit}
 
         />
         <LandTiers />

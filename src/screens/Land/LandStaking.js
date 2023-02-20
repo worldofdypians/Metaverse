@@ -39,10 +39,10 @@ const LandStaking = ({
   mintPriceDiscount,
   totalCAWSAvailable,
   mystakes,
-  myCawstakes
+  cawsToUse, cawsMinted, cawsStaked,limit
+
 }) => {
   const [nftCount, setNftCount] = useState(1);
-
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
   const [status, setStatus] = useState("Please connect your wallet.");
 
@@ -126,7 +126,7 @@ const LandStaking = ({
         numberOfTokens: parseInt(nftCount),
       });
     }
-  }, [nftCount, isConnected, coinbase, chainId, totalCAWSAvailable, myCawstakes]);
+  }, [nftCount, isConnected, coinbase, chainId, cawsToUse, cawsMinted, cawsStaked]);
 
   
   useEffect(() => {
@@ -176,8 +176,7 @@ const LandStaking = ({
           </span>
         </h6>
         <span className="tiers-desc">
-          Create and own your Land NFT and leverage its benefits in the virtual
-          world. Earn rewards through Land NFT staking.
+        Create and own your own property inside of the World of Dypians. Leverage its benefits in the virtual world and earn rewards through staking.
         </span>
       </div>
       {/* <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
@@ -333,8 +332,7 @@ const LandStaking = ({
                   className="land-placeholder borderText"
                   style={{ fontSize: "12px" }}
                 >
-                  Enjoy the land inside the game and stake the NFT for
-                  additional rewards.
+                  Enjoy the land inside of WoD and stake the NFT for additional rewards.
                   <a
                     href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
                     target="_blank"
@@ -514,8 +512,8 @@ const LandStaking = ({
               </div>
             </div>
             <span className="notetxt">
-              *Available Caws for discount eligibility you have {totalCaws}/
-              {totalCAWSAvailable} Caws remaining
+            *Available CAWS for discount eligibility: you have {limit}/
+              {cawsToUse} CAWS remaining.
             </span>
             <hr className="mint-divider m-0" />
             {mintStatus.length > 0 && (
