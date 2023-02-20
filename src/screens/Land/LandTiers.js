@@ -55,7 +55,7 @@ const LandTiers = () => {
           tiers
         </span>
       </h6>
-      <span className=" tiers-desc">
+      <span className="tiers-desc">
         World of Dypians offers 5 tiers of land NFTs. Each tier offers unique
         rewards and benefits within the metaverse.
       </span>

@@ -170,7 +170,22 @@ const LandStaking = ({
 
   return (
     <>
-      <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
+      <div className="d-flex flex-column align-items-center justify-content-center">
+        <h6 className="land-tiers font-organetto d-flex flex-column flex-lg-row align-items-center">
+          Genesis Land{" "}
+          <span
+            className="land-tiers font-organetto"
+            style={{ color: "#8c56ff" }}
+          >
+            NFTs
+          </span>
+        </h6>
+        <span className="tiers-desc">
+          Create and own your Land NFT and leverage its benefits in the virtual
+          world. Earn rewards through Land NFT staking.
+        </span>
+      </div>
+      {/* <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
         <div className="col-12 ps-2 ps-lg-0">
           <div className="d-flex align-items-end justify-content-between">
             <div className="d-flex flex-column gap-2">
@@ -186,7 +201,7 @@ const LandStaking = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
         // style={{ minHeight: "518px" }}
@@ -253,7 +268,7 @@ const LandStaking = ({
         </div>
         <div className="col-12 col-md-12 col-xxl-4 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
           <div
-            className="p-3 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
+            className="p-3 mint-wrappernew d-flex flex-column gap-5 justify-content-between"
             style={{ minHeight: "518px" }}
           >
             {/* <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
@@ -405,7 +420,14 @@ const LandStaking = ({
                 </span>
                 <ToolTip
                   title={
-                    "Mint your Genesis Land NFT to gain access to a variety of WoD Metaverse benefits."
+                  <React.Fragment>
+                    <ul className="py-2 font-poppins">
+                    <li>Minting of NFTs is limited to a maximum of 10 per transaction.</li>
+                    <li> CAWS NFT holders are eligible for a 20% discount on their Genesis Land NFT purchases.</li>
+                    <li>The CAWS NFT discount is given at a 1:1 ratio with Genesis Land NFT purchases.</li>
+                    <li>Discounts are not stackable, meaning that you cannot use the same CAWS NFT to obtain further discounts.</li>
+                    </ul>
+                  </React.Fragment>
                   }
                   icon={"i"}
                   color={"#000"}
@@ -461,6 +483,7 @@ const LandStaking = ({
                 className={
                   mintloading === "error" ||
                   (status !== "Please connect your wallet" && status !== "")
+
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -470,6 +493,7 @@ const LandStaking = ({
                     mintloading === "error"
                       ? "filled-error-btn"
                       : (status !== "Please connect your wallet" && status !== "")
+
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   }  px-4 w-100`}
@@ -483,6 +507,7 @@ const LandStaking = ({
                     mintloading === "success" ||
                     (isConnected === true && chainId !== 1 && chainId !== 5) ||
                     (status !== "Please connect your wallet" && status !== "")
+
                       ? true
                       : false
                   }
@@ -498,6 +523,7 @@ const LandStaking = ({
                     <img
                       src={mouseOver === false ? blackWallet : whitewallet}
                       alt=""
+                      style={{width: '23px', height: '23px'}}
                     />
                   )}{" "}
                   {mintloading === "initial" &&
@@ -534,12 +560,12 @@ const LandStaking = ({
             className="p-3 mint-wrapper d-flex flex-column gap-1 justify-content-between"
             style={{ minHeight: "518px" }}
           >
-            <span className="font-organetto land-stake-title">
+            {/* <span className="font-organetto land-stake-title">
               Genesis Land NFT{" "}
               <span className="font-organetto" style={{ color: "#8c56ff" }}>
                 staking
               </span>
-            </span>
+            </span> */}
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <span
                 className="create-land-title font-poppins"
@@ -551,10 +577,17 @@ const LandStaking = ({
                 className="d-flex align-items-center gap-2"
                 style={{ width: "fit-content" }}
               >
-                <span className="more-info">More information</span>
+                {/* <span className="more-info">More information</span> */}
                 <ToolTip
                   title={
-                    "Stake your Genesis Land NFT into the 25% APR pool and earn rewards in Ethereum."
+                    <React.Fragment>
+                    <ul className="py-2 font-poppins">
+                    <li> When interacting with the staking pool for the first time, you are required to approve and deposit. For additional transactions, you will only be asked for deposit.</li>
+                    <li>You can stake or unstake multiple NFTs at once.</li>
+                    <li>The maximum number of NFTs that can be staked or unstaked per round is 50.</li>
+                    <li> You have the option to claim your ETH rewards in total or withdraw them separately based on the Land NFTs you have staked.</li>
+                    </ul>
+                  </React.Fragment>
                   }
                   icon={"i"}
                   color={"#000"}
@@ -607,12 +640,12 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider" />
-            <div className="d-flex align-items-end justify-content-between flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center gap-2">
+            <div className="d-flex align-items-end justify-content-between  align-items-end gap-2">
               <div className="d-flex flex-column gap-1 w-100">
                 <h6 className="create-land-title">Total rewards</h6>
-                <div className="d-flex align-items-end justify-content-between gap-2 flex-row flex-xxl-column flex-lg-column flex-md-column align-items-xxl-start align-items-center">
+                <div className="d-flex align-items-start justify-content-between gap-2 flex-column">
                   <span className="earned-span">Earned</span>
-                  <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-start align-items-lg-center gap-xxl-3 gap-lg-3 gap-md-3 gap-2">
+                  <div className="d-flex align-items-start align-items-lg-center gap-xxl-3 gap-lg-3 gap-md-3 gap-2">
                     <div className="d-flex align-items-center gap-2">
                       <img
                         src={mintEthIcon}
@@ -659,10 +692,10 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider" />
-            <div className="d-flex align-items-end justify-content-between flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center">
+            <div className="d-flex align-items-end justify-content-between flex-column flex-xxl-row flex-lg-row flex-md-row align-items-end">
               <div className="d-flex flex-column gap-2">
                 <h6 className="create-land-title">Unstake</h6>
-                <span className="land-lock-time">
+                <span className="land-lock-time p-0">
                   Withdraw your deposited NFTs from the staking pool
                 </span>
               </div>
