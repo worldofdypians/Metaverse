@@ -259,7 +259,7 @@ const LandStaking = ({
             </div>
           </div>
         </div>
-        <div className="col-12 col-md-12 col-xxl-4 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-md-12 col-xxl-4 mt-5  mt-xxl-0">
           <div
             className="p-3 mint-wrappernew d-flex flex-column gap-5 justify-content-between"
             style={{ minHeight: "518px" }}
@@ -444,7 +444,7 @@ const LandStaking = ({
           </div>
         </div>
 
-        <div className="col-12 col-md-12 col-xxl-2 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-md-12 col-xxl-2 mt-5  mt-xxl-0">
           <div
             className="p-3 mint-wrappernew d-flex flex-column justify-content-between"
             style={{ minHeight: "518px" }}
@@ -456,27 +456,15 @@ const LandStaking = ({
                 </span>
                 <ToolTip
                   title={
-                    <React.Fragment>
-                      <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-1 font-poppins">
-                        <li>
-                          The maximum number of NFTs that can be minted per
-                          transaction is 10.
-                        </li>
-                        <li>
-                          {" "}
-                          CAWS NFT holders are eligible for a 20% discount on
-                          their Genesis Land NFT purchases.
-                        </li>
-                        <li>
-                          The CAWS NFT discount is given at a 1:1 ratio with
-                          Genesis Land NFT purchases.
-                        </li>
-                        <li>
-                          Discounts are not stackable, meaning that you cannot
-                          use the same CAWS NFT to obtain further discounts.
-                        </li>
-                      </ul>
-                    </React.Fragment>
+                  <React.Fragment>
+                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                    <li> The maximum number of NFTs that can be minted per
+                          transaction is 10.</li>
+                    <li> CAWS NFT holders are eligible for a 20% discount on their Genesis Land NFT purchases.</li>
+                    <li>The CAWS NFT discount is given at a 1:1 ratio with Genesis Land NFT purchases.</li>
+                    <li>Discounts are not stackable, meaning that you cannot use the same CAWS NFT to obtain further discounts.</li>
+                    </ul>
+                  </React.Fragment>
                   }
                   icon={"i"}
                   color={"#000"}
@@ -614,7 +602,7 @@ const LandStaking = ({
           </div>
         </div>
 
-        <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5  mt-xxl-0">
           <div
             className="p-3 mint-wrapper d-flex flex-column gap-1 justify-content-between"
             style={{ minHeight: "518px" }}
@@ -640,27 +628,13 @@ const LandStaking = ({
                 <ToolTip
                   title={
                     <React.Fragment>
-                      <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-1 font-poppins">
-                        <li>
-                          {" "}
-                          When interacting with the staking pool for the first
-                          time, you are required to approve and deposit. For
-                          additional transactions, you will only be asked for
-                          deposit.
-                        </li>
-                        <li>You can stake or unstake multiple NFTs at once.</li>
-                        <li>
-                          The maximum number of NFTs that can be staked or
-                          unstaked per round is 50.
-                        </li>
-                        <li>
-                          {" "}
-                          You have the option to claim your ETH rewards in total
-                          or withdraw them separately based on the Land NFTs you
-                          have staked.
-                        </li>
-                      </ul>
-                    </React.Fragment>
+                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                    <li> When interacting with the staking pool for the first time, you are required to approve and deposit. For additional transactions, you will only be asked for deposit.</li>
+                    <li>You can stake or unstake multiple NFTs at once.</li>
+                    <li>The maximum number of NFTs that can be staked or unstaked per round is 50.</li>
+                    <li> You have the option to claim your ETH rewards in total or withdraw them separately based on the Land NFTs you have staked.</li>
+                    </ul>
+                  </React.Fragment>
                   }
                   icon={"i"}
                   color={"#000"}
