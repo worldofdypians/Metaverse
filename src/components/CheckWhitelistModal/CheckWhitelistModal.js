@@ -20,14 +20,12 @@ const RegisterModal = ({
   showForms,
   openRegister,
   donwloadSelected,
+  cawsMinted,
+  cawsStaked,
+  landMinted,
+  landStaked,
 }) => {
-
-
-
-
   const windowSize = useWindowSize();
-
-
 
   const style = {
     position: "absolute",
@@ -35,7 +33,7 @@ const RegisterModal = ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width:
-    windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
+      windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -58,14 +56,16 @@ const RegisterModal = ({
   const [showOptions, setShowOptions] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
   const [status, setStatus] = useState();
+  const [nftresult, setResult] = useState(0);
 
   const checkData = async () => {
     if (coinbase) {
       let result = window.checkWhitelistWod(coinbase);
-      if (result == 1) {
-        if (donwloadSelected == true)
+    
+      if (result === 1 || nftresult > 0) {
+        if (donwloadSelected === true)
           window.location.href =
-            "https://drive.google.com/file/d/1UjLFRfG2qZs7iUfFMbB2MP7hDlTZL24g/view?usp=sharing";
+            "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing";
         else window.location.href = "https://worldofdypians.com/account";
       }
     }
@@ -95,7 +95,12 @@ const RegisterModal = ({
   useEffect(() => {
     checkData();
     checkBetaTester();
-  }, [coinbase]);
+  }, [coinbase, nftresult]);
+
+  useEffect(() => {
+    const sum = cawsMinted + cawsStaked + landMinted + landStaked;
+    setResult(sum);
+  }, [cawsMinted, cawsStaked, landMinted, landStaked, coinbase]);
 
   return (
     <Modal
@@ -130,9 +135,11 @@ const RegisterModal = ({
             />
           </div>
           <div className="d-flex flex-column gap-3">
-            {coinbase  ? (
+            {coinbase ? (
               <p className="text-white m-0 walletdesc font-poppins">
-             Please apply as a beta tester in order to access World of Dypians. If you have already applied as a beta tester please check back soon.
+                Please apply as a beta tester in order to access World of
+                Dypians. If you have already applied as a beta tester please
+                check back soon.
               </p>
             ) : (
               <p className="text-white m-0 walletdesc font-poppins">
@@ -206,25 +213,25 @@ const RegisterModal = ({
                 <p className="purpledesc m-0">{shortAddress(coinbase)}</p>
               </div>
               <div className="separator"></div>
-             <NavLink to='join-beta'>
-             <div
-                className="linear-border"
-                style={{
-                  width: "fit-content",
-                  margin: "2rem auto auto auto",
-                }}
-              >
-                <button
-                  className="btn filled-btn px-5"
-                  onClick={() => {
-                    onClose();
-                    // openRegister();
+              <NavLink to="join-beta">
+                <div
+                  className="linear-border"
+                  style={{
+                    width: "fit-content",
+                    margin: "2rem auto auto auto",
                   }}
                 >
-                  Join Beta
-                </button>
-              </div>
-             </NavLink>
+                  <button
+                    className="btn filled-btn px-5"
+                    onClick={() => {
+                      onClose();
+                      // openRegister();
+                    }}
+                  >
+                    Join Beta
+                  </button>
+                </div>
+              </NavLink>
             </div>
           )}
         </div>
