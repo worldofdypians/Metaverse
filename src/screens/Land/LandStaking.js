@@ -306,11 +306,8 @@ const LandStaking = ({
                 )}
               </div>
             </div>
-            <div className="d-flex mt-3 align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
-              <div
-                className="d-flex flex-column gap-2"
-                style={{ width: "38%" }}
-              >
+            <div className="d-flex mt-3 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between" >
+              <div className="d-flex flex-column gap-2 col-12 col-lg-6">
                 <span className="land-name">Name</span>
                 <div
                   className="borderText borderText2"
@@ -324,7 +321,7 @@ const LandStaking = ({
                   </h6>
                 </div>
               </div>
-              <div className="d-flex flex-column gap-2 w-50">
+              <div className="d-flex flex-column gap-2 col-12 col-lg-6">
                 <span className="land-name">Description</span>
 
                 <h6
@@ -349,8 +346,7 @@ const LandStaking = ({
             <hr className="mint-divider m-0" />
             <div className="d-flex align-items-center justify-content-between pb-4 position-relative gap-3">
               <div
-                className="input-container position-relative"
-                style={{ width: "38%" }}
+                className="input-container position-relative col-8 col-lg-6"
               >
                 <input
                   type="number"
