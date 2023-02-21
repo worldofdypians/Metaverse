@@ -61,6 +61,10 @@ const RegisterModal = ({
       name: "Metamask",
       icon: "metamask.png",
     },
+    {
+      name: "Coin98",
+      icon: "coin98.png",
+    },
   ];
 
   const navigate = useNavigate();
