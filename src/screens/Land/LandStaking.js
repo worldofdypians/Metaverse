@@ -39,9 +39,10 @@ const LandStaking = ({
   mintPriceDiscount,
   totalCAWSAvailable,
   mystakes,
+  cawsToUse, cawsMinted, cawsStaked,limit
+
 }) => {
   const [nftCount, setNftCount] = useState(1);
-
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
   const [status, setStatus] = useState("Please connect your wallet.");
 
@@ -114,8 +115,9 @@ const LandStaking = ({
       setTimeout(() => {
         setNftCount(10);
         setNftStatus("*10 NFT limit.");
-      }, 5000);
+      }, 3000);
     }
+    
   }, [nftCount]);
 
   useEffect(() => {
@@ -124,8 +126,9 @@ const LandStaking = ({
         numberOfTokens: parseInt(nftCount),
       });
     }
-  }, [nftCount, isConnected, coinbase, chainId, totalCAWSAvailable]);
+  }, [nftCount, isConnected, coinbase, chainId, cawsToUse, cawsMinted, cawsStaked]);
 
+  
   useEffect(() => {
     if (isConnected) {
       if (chainId !== undefined) {
@@ -151,8 +154,7 @@ const LandStaking = ({
   useEffect(() => {
     if (totalCaws !== 0) {
       let newPrice =
-        mintPriceDiscount * totalCaws +
-        mintPrice * (nftCount - mintPriceDiscount);
+       (mintPrice *nftCount ) - mintPriceDiscount* totalCaws;
       setGrandPrice(newPrice);
     } else {
       let newPrice = mintPrice * nftCount;
@@ -174,8 +176,7 @@ const LandStaking = ({
           </span>
         </h6>
         <span className="tiers-desc">
-          Create and own your Land NFT and leverage its benefits in the virtual
-          world. Earn rewards through Land NFT staking.
+        Create and own your own property inside of the World of Dypians. Leverage its benefits in the virtual world and earn rewards through staking.
         </span>
       </div>
       {/* <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
@@ -328,8 +329,7 @@ const LandStaking = ({
                   className="land-placeholder borderText"
                   style={{ fontSize: "12px" }}
                 >
-                  Enjoy the land inside the game and stake the NFT for
-                  additional rewards.
+                  Enjoy the land inside of WoD and stake the NFT for additional rewards.
                   <a
                     href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
                     target="_blank"
@@ -508,8 +508,8 @@ const LandStaking = ({
               </div>
             </div>
             <span className="notetxt">
-              *Available Caws for discount eligibility you have {totalCaws}/
-              {totalCAWSAvailable} Caws remaining
+            *Available CAWS for discount eligibility: you have {limit}/
+              {cawsToUse} CAWS remaining.
             </span>
             <hr className="mint-divider m-0" />
             {mintStatus.length > 0 && (

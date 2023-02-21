@@ -1928,7 +1928,7 @@ window.config = {
 
   /* MINT LANDNFT */
   landnft_address: "0xf41cf5f9743f4d415709f38fb6299d5111082cf4",
-  landnftstake_address: "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
+  landnftstake_address: "0x5c5b1da92bf8e70fe105c95386c043e60b9954ae",
 
   /* MINT LANDNFT GOERLI */
   // landnft_address: "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc",
@@ -2840,7 +2840,7 @@ async function getContractLandNFT(key) {
       key === "LANDNFTSTAKE"
         ? "0xf41cf5f9743f4d415709f38fb6299d5111082cf4"
         : key === "LANDNFTSTAKING"
-        ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
+        ? "0x5c5b1da92bf8e70fe105c95386c043e60b9954ae"
         : address,
       {
         from: await getCoinbase(),
@@ -2877,7 +2877,6 @@ class LANDNFT {
       };
     });
   }
-
 
   async mintNFT(amount, cawsArray) {
     const nft_contract = await getContractLandNFT("LANDNFTSTAKE");
@@ -2919,7 +2918,6 @@ class LANDNFT {
           landnft * (amount - countDiscount)) /
         1e18;
     } else newPrice = (landnft * amount) / 1e18;
-
 
     const value = newPrice * 1e18;
     console.log(cawsArray, newPrice);
@@ -3087,6 +3085,14 @@ async function getNft(id) {
       return result;
     }
   );
+}
+
+async function getLandNft(id) {
+  return await window.$.get(
+    `https://mint.worldofdypians.com/metadata/${id}`
+  ).then((result) => {
+    return result;
+  });
 }
 
 async function myNftListContract(address) {

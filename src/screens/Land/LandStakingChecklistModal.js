@@ -95,7 +95,7 @@ const LandStakingChecklistModal = ({
     const address = coinbase;
     const stake25 = await window.config.landnftstake_address;
     if (address) {
-      if (apr == 25) {
+     
         const result = await window.landnft
           .checkapproveStake(address, stake25)
           .then((data) => {
@@ -112,7 +112,7 @@ const LandStakingChecklistModal = ({
           setStatus(" *Please approve before deposit");
           setshowApprove(true);
         }
-      }
+      
     }
   };
 
@@ -162,6 +162,7 @@ const LandStakingChecklistModal = ({
     setloadingdeposit(true);
     setStatus("*Processing deposit");
     setColor("#52A8A4");
+    // console.log(selectNftIds)
     await stake_contract.methods
       .deposit(
         checkbtn === true
@@ -312,7 +313,7 @@ const LandStakingChecklistModal = ({
   };
 
   const devicewidth = window.innerWidth;
-
+  
   return (
     <Modal
       open={open}
@@ -479,7 +480,7 @@ const LandStakingChecklistModal = ({
               ) : nftItem.length <= 4 ? (
                 <>
                   {nftItem.map((item, id) => {
-                    let nftId = item.name?.slice(6, nftItem.name?.length);
+                    let nftId = parseInt(item.name?.slice(1, nftItem.name?.length));
 
                     if (showToStake) {
                       // selectNftIds.push(nftId);
@@ -540,7 +541,7 @@ const LandStakingChecklistModal = ({
                 </>
               ) : (
                 nftItem.map((item, id) => {
-                  let nftId = item.name?.slice(6, nftItem.name?.length);
+                  let nftId = parseInt(item.name?.slice(1, nftItem.name?.length));
                   if (showToStake) {
                     // selectNftIds.push(nftId);
                     nftIds.push(nftId);
@@ -617,16 +618,16 @@ const LandStakingChecklistModal = ({
                 <div className="mt-4 d-flex flex-column flex-xl-row flex-lg-row flex-md-row justify-content-center">
                   <div
                     className={
-                      active && selectNftIds.length > 0 && showApprove === true
+                      (active && selectNftIds.length > 0 && showApprove === true)
                         ? "linear-border w-100"
                         : "linear-border-disabled w-100"
                     }
                   >
                     <button
                       className={`btn ${
-                        active &&
+                        (active &&
                         selectNftIds.length > 0 &&
-                        showApprove === true
+                        showApprove === true)
                           ? "filled-btn"
                           : "outline-btn-disabled"
                       } px-5 w-100`}
@@ -634,9 +635,9 @@ const LandStakingChecklistModal = ({
                         handleApprove();
                       }}
                       disabled={
-                        active &&
-                        selectNftIds.length > 0 &&
-                        showApprove === true
+                       ( active &&
+                        selectNftIds.length > 0  &&
+                        showApprove === true)
                           ? false
                           : true
                       }

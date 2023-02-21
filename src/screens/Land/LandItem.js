@@ -198,7 +198,7 @@ const LandItem = ({
                     color: "#F7F7FC",
                   }}
                 >
-                  #{String(nft.name).replace("CAWS #", "")}
+                  {String(nft.name).replace("CAWS #", "")}
                 </p>
                 {isStake ? (
                   <>
