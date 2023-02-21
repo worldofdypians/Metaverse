@@ -331,7 +331,7 @@ const LandStaking = ({
                 >
                   Enjoy the land inside of WoD and stake the NFT for additional rewards.
                   <a
-                    href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                    href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing"
                     target="_blank"
                     rel="noreferrer"
                     style={{ textDecoration: "none" }}
