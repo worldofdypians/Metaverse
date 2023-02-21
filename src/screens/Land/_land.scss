@@ -369,36 +369,39 @@
     }
   }
 
-  // .mint-wrappernew::before {
-  //   content: "";
-  //   position: absolute;
-  //   left: 0;
-  //   right: 0;
-  //   bottom: 0;
-  //   top: 0;
-  //   margin: auto;
-  //   background-size: cover;
-  //   background-repeat: no-repeat;
-  //   background-position: top;
+  .mint-wrappernew::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
 
-  //   @media screen and (max-width: 991px) {
-  //     background-image: none;
-  //   }
-  // }
+    @media screen and (max-width: 991px) {
+      background-image: none;
+    }
+  }
 
-  // .mint-wrappernew::after{
-  //   content: "";
-  //   background-image: url('../../assets/landAssets/genesis-hero.png');
-  //   background-repeat: no-repeat;
-  //   background-size: cover;
-  //   background-position: center;
-  //   position: absolute;
-  //   left: 0;
-  //   top: 0;
-  //   bottom: 0;
-  //   right: 0;
-  //   margin: auto;
-  // }
+  .mint-wrappernew::after{
+    content: "";
+    background-image: url('../../assets/landAssets/genesis-hero.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    @media screen and (max-width: 991px) {
+      background-image: none;
+    }
+  }
 
   .land-input {
     background: #272450;
