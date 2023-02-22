@@ -72,7 +72,7 @@ const LandStaking = ({
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
-  const [status, setStatus] = useState("Please connect your wallet.");
+  const [status, setStatus] = useState("Connect your wallet.");
 
   const [showBadge, setshowBadge] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
@@ -547,7 +547,7 @@ const LandStaking = ({
               <div
                 className={
                   mintloading === "error" ||
-                  (status !== "Please connect your wallet." && status !== "")
+                  (status !== "Connect your wallet." && status !== "")
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -556,7 +556,7 @@ const LandStaking = ({
                   className={`btn ${
                     mintloading === "error"
                       ? "filled-error-btn"
-                      : status !== "Please connect your wallet." &&
+                      : status !== "Connect your wallet." &&
                         status !== ""
                       ? "outline-btn-disabled"
                       : "filled-btn"
@@ -570,7 +570,7 @@ const LandStaking = ({
                     mintloading === "error" ||
                     mintloading === "success" ||
                     (isConnected === true && chainId !== 1 && chainId !== 5) ||
-                    (status !== "Please connect your wallet." && status !== "")
+                    (status !== "Connect your wallet." && status !== "")
                       ? true
                       : false
                   }
