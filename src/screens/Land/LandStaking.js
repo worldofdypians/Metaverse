@@ -455,7 +455,7 @@ const LandStaking = ({
                 <h6 className="eth-price">MINT COUNTDOWN:</h6>
               <Countdown renderer={renderer} date={"2023-02-23T13:00:00"} onComplete={()=>{setCountdownFinished(true)}}/></> : <>
               <h6 className="eth-price">WHITELIST COUNTDOWN:</h6>
-              <Countdown renderer={renderer} date={"2023-02-24T17:00:00"} /></>}
+              <Countdown renderer={renderer} date={"2023-02-25T17:00:00"} /></>}
               </div>
               </div>
             </div>
