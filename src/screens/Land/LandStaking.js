@@ -68,6 +68,7 @@ const LandStaking = ({
   cawsMinted,
   cawsStaked,
   limit,
+  landName
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
@@ -101,7 +102,7 @@ const LandStaking = ({
       setNftCount(nftCount - 1);
     }
   };
-
+// console.log(totalCreated)
   const checkData = async () => {
     if (coinbase) {
       const check = await axios
@@ -113,37 +114,12 @@ const LandStaking = ({
           console.error(error);
         });
 
-      const whitelistArray = [
-        "0xa44AdcFeD2B09Cd13b97134Bc37dCC3Fe6964e5e",
-        "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
-        "0xF4914F025b45798F634fBE638d33701FBff3274A",
-        "0x170ff9ce71675ce4a1a6cbe72ba4431eedf71cd5",
-        "0x781424EE37831c0693334Dd3CB5CB90a1A77E279",
-      ];
-
-      for (let i = 0; i < whitelistArray.length; i++) {
-        
-        if (
-          whitelistArray[i].toLowerCase() === coinbase.toLowerCase() &&
-          chainId === 1
-        ) {
-          setStatus("");
-          break;
-        } else if (
-          whitelistArray[i].toLowerCase() !== coinbase.toLowerCase() &&
-          chainId === 1
-        ) {
-          setStatus("This wallet is not whitelisted.");
-        }
-      }
-
-      // if (check.status === 1 && chainId === 1) {
-        // setStatus("");
-      // } else  if (check.status !== 1 && chainId === 1){
-        // setStatus("This wallet is not whitelisted");
+      if (check.status === 1 && chainId === 1) {
+        setStatus("");
+      } else  if (check.status !== 1 && chainId === 1){
+        setStatus("This wallet is not whitelisted");
        
-
-      // }
+      }
     }
   };
 
@@ -273,7 +249,7 @@ const LandStaking = ({
             </div>
             <div
               className={
-                isConnected === false || activeButton === false || status !== ""
+                isConnected === false || activeButton === false || status !== "" || createdNft === 0
                   ? "linear-border-disabled"
                   : "linear-border"
               }
@@ -282,14 +258,14 @@ const LandStaking = ({
                 className={`btn ${
                   isConnected === false ||
                   activeButton === false ||
-                  status !== ""
+                  status !== ""|| createdNft === 0
                     ? "outline-btn-disabled"
                     : "outline-btn"
                 } px-5 w-100`}
                 disabled={
                   isConnected === false ||
                   activeButton === false ||
-                  status !== ""
+                  status !== ""|| createdNft === 0
                 }
                 onClick={() => {
                   isConnected === true && activeButton === true
@@ -350,7 +326,7 @@ const LandStaking = ({
                     className="land-placeholder mb-0"
                     style={{ marginLeft: 11 }}
                   >
-                    Land#144
+                     {landName === '' ? 'Land' : `#${landName}`}
                   </h6>
                 </div>
               </div>
@@ -703,7 +679,7 @@ const LandStaking = ({
               <div
                 className={
                   isConnected === false ||
-                  activeButton === false ||
+                  activeButton === false || createdNft === 0 ||
                   status !== ""
                     ? "linear-border-disabled"
                     : "linear-border"
@@ -712,14 +688,14 @@ const LandStaking = ({
                 <button
                   className={`btn ${
                     isConnected === false ||
-                    activeButton === false ||
+                    activeButton === false || createdNft === 0 ||
                     status !== ""
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
                   disabled={
                     isConnected === false ||
-                    activeButton === false ||
+                    activeButton === false || createdNft === 0 ||
                     status !== ""
                   }
                   onClick={() => {

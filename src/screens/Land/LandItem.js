@@ -186,7 +186,7 @@ const LandItem = ({
                 color: "#C0CBF7",
               }}
             >
-              LAND {checklistItemID}
+              # {checklistItemID}
             </p>
             <div className="footer" style={{ flexDirection: "column" }}>
               <div className="d-flex w-100 justify-content-between align-baseline">
@@ -196,7 +196,7 @@ const LandItem = ({
                     color: "#F7F7FC",
                   }}
                 >
-                  {String(nft.name).replace("CAWS #", "")}
+                  {String(nft.name)}
                 </p>
                 {isStake ? (
                   <>

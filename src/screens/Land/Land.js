@@ -47,9 +47,8 @@ const Land = ({
   const [limit, setLimit] = useState(0);
   const [newStakes, setnewStakes] = useState(0);
 
-
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
-  const [latestMintNft, setLatestMintNft] = useState([]);
+  const [mintName, setMintName] = useState("");
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -82,27 +81,22 @@ const Land = ({
     setMyCAWNFTs(nfts);
   };
 
-  function range(start, end, step = 1) {
-    const len = Math.floor((end - start) / step) + 1;
-    return Array(len)
-      .fill()
-      .map((_, idx) => start + idx * step);
-  }
+  const updateLandNft = async () => {
+    let nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
+    let totalMints = await window.myNftLandListContract(coinbase);
+    if (totalMints.length === 0) {
+      setMintName("");
+    } else {
+      await nft_contract.methods.tokenOfOwnerByIndex(
+        coinbase,
+        totalMints.length - 1
+      ).call().then((data)=>{
+        setMintName(data);
 
-  const latestMint = async () => {
-    let end = await window.latestMint();
+      })
 
-    let start = end - 7;
-
-    let latest = range(start, end);
-
-    let nfts = latest.map((nft) => window.getLandNft(nft));
-
-    nfts = await Promise.all(nfts);
-
-    nfts.reverse();
-
-    setLatestMintNft(nfts);
+      
+    }
   };
 
   const getStakesIds = async () => {
@@ -208,7 +202,7 @@ const Land = ({
       .withdraw(myStakes)
       .send()
       .then(() => {
-        refreshStakes()
+        refreshStakes();
         setunstakeAllStatus("Successfully unstaked all!");
       })
       .catch((err) => {
@@ -228,9 +222,9 @@ const Land = ({
     setOpenStakeChecklist(false);
   };
 
-  const refreshStakes = ()=>{
-setnewStakes(newStakes+1)
-  }
+  const refreshStakes = () => {
+    setnewStakes(newStakes + 1);
+  };
 
   const handleMint = async (data) => {
     if (isConnected) {
@@ -341,7 +335,7 @@ setnewStakes(newStakes+1)
 
   const checkCawsToUse = async () => {
     const testArray = [];
-    const cawsArray = [...myCAWSNFTsTotalStaked,...myCAWSNFTsCreated ];
+    const cawsArray = [...myCAWSNFTsTotalStaked, ...myCAWSNFTsCreated];
     const nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
 
     if (cawsArray.length > 0) {
@@ -350,14 +344,13 @@ setnewStakes(newStakes+1)
           cawsArray[i].name.slice(6, cawsArray[i].name.length)
         );
 
-
         const result = await nft_contract.methods.cawsUsed(cawsId).call();
-      
+
         if (result === false) {
           testArray.push(cawsId);
         }
       }
-      
+
       setcawsToUse(testArray);
     }
   };
@@ -425,8 +418,9 @@ setnewStakes(newStakes+1)
       myCAWStakes();
       myCAWNft();
       checkCawsToUse();
+      updateLandNft()
     }
-    //  latestMint().then();
+
     //  }, 1000);
 
     //  return () => clearInterval(interval);
@@ -516,6 +510,7 @@ setnewStakes(newStakes+1)
       <div className="land-main-wrapper px-0 w-100 d-flex flex-column">
         <LandHero />
         <LandStaking
+        landName={mintName}
           showWalletConnect={showWalletConnect}
           handleMint={handleMint}
           handleStake={handleStake}
@@ -523,13 +518,12 @@ setnewStakes(newStakes+1)
           isConnected={isConnected}
           handleWithdraw={handleWithdraw}
           withdrawModalShow={withdrawModalShow}
-          createdNft={myNFTsCreated}
+          createdNft={myNFTsCreated.length}
           totalCreated={myNFTsCreated.length + mystakes.length}
           mintStatus={mintStatus}
           mintloading={mintloading}
           ETHrewards={EthRewards}
           onClaimAll={claimRewards}
-          latestMintNft={latestMintNft}
           chainId={chainId}
           handleWhitelist={handleWhitelist}
           mintPrice={mintPrice}
@@ -538,17 +532,12 @@ setnewStakes(newStakes+1)
           totalCAWSAvailable={
             myCAWSNFTsCreated.length + myCAWSNFTsTotalStaked.length
           }
-          cawsMinted={
-            myCAWSNFTsCreated.length
-          }
-          cawsStaked={
-            myCAWSNFTsTotalStaked.length
-          }
+          cawsMinted={myCAWSNFTsCreated.length}
+          cawsStaked={myCAWSNFTsTotalStaked.length}
           checkTotalcaws={calculateCaws}
           mystakes={mystakes.length}
           cawsToUse={cawsToUse.length}
           limit={limit}
-
         />
         <LandTiers />
         <Members handleRegister={handleRegister} />
