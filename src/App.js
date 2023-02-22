@@ -238,7 +238,7 @@ function App() {
       <div className="container-fluid p-0 main-wrapper position-relative">
         {!window.location.href.includes('/land') &&
         // <LandPopup />
-        <LandFlyout />
+        // <LandFlyout />
         }
         <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
