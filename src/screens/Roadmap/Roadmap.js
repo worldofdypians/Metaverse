@@ -11,6 +11,7 @@ import leaderboardBanner from "./assets/leaderboardBanner.png";
 import whitelistBanner from "./assets/whitelistBanner.webp";
 import cawsIntegration from "./assets/cawsIntegration.png";
 import gameEvents from "./assets/gameEvents.png";
+import landMinting from "./assets/landMinting.png";
 import nextArrow from './assets/nextArrow.svg'
 import Slider from "react-slick";
 
@@ -101,7 +102,7 @@ const Roadmap = () => {
         {
           title: "Genesis Land Launch",
           desc: "World of Dypians Genesis edition is limited to 1,000 NFTs, each of which represents a piece of land located in a prime area within the game that will provide players with a wide range of benefits.",
-          // completed: true,
+          completed: true,
         },
         {
           title: "Multichain Integration",
@@ -273,6 +274,11 @@ const Roadmap = () => {
       date: "Feb 2023",
       image: whitelistBanner,
     },
+    {
+      title: "Genesis Land Launch",
+      date: "Feb 2023",
+      image: landMinting,
+    },
    
   ];
   const slider = useRef();
@@ -327,6 +333,43 @@ const Roadmap = () => {
             </div>
               <div className="d-flex flex-column gap-3">
               {mainUpdate.slice(3,6).map((item) => (
+                <div className="roadmap-main-update position-relative">
+                <img src={item.image} className="main-update-image" alt="" />
+                <div className="main-update-title-wrapper w-100">
+                  <span className="font-organetto main-update-date">
+                    {item.date}
+                  </span>
+                  <h6 className="main-update-title mb-0 font-organetto">
+                    {item.title}
+                  </h6>
+                </div>
+              </div>
+              ))}
+            </div>
+              <div className="d-flex flex-column gap-3">
+              <div className="roadmap-main-update position-relative" style={{visibility: 'hidden'}}>
+                <img src="" className="main-update-image" alt="" />
+                <div className="main-update-title-wrapper w-100">
+                  <span className="font-organetto main-update-date">
+                    ..
+                  </span>
+                  <h6 className="main-update-title mb-0 font-organetto">
+                    ..
+                  </h6>
+                </div>
+              </div>
+              <div className="roadmap-main-update position-relative" style={{visibility: 'hidden'}}>
+                <img src="" className="main-update-image" alt="" />
+                <div className="main-update-title-wrapper w-100">
+                  <span className="font-organetto main-update-date">
+                    ..
+                  </span>
+                  <h6 className="main-update-title mb-0 font-organetto">
+                    ..
+                  </h6>
+                </div>
+              </div>
+              {mainUpdate.slice(6, mainUpdate.length).map((item) => (
                 <div className="roadmap-main-update position-relative">
                 <img src={item.image} className="main-update-image" alt="" />
                 <div className="main-update-title-wrapper w-100">

@@ -27,7 +27,7 @@ const ToolTip = ({ title, icon, borderColor, color, padding }) => {
           disableHoverListener
           disableTouchListener
           title={title}
-          placement={'top'}
+          placement={'bottom-end'}
         >
           <p
             onClick={handleTooltipOpen}
@@ -38,7 +38,7 @@ const ToolTip = ({ title, icon, borderColor, color, padding }) => {
               backgroundColor: borderColor,
               padding: padding,
               borderRadius: "50%",
-              fontSize: 16,
+              fontSize: 14,
             }}
             id="tooltip-icon"
           >

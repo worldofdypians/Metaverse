@@ -58,11 +58,20 @@
       color: #c0cbf7;
     }
   }
+
+.staking-height{
+  height: 480px;
+  @media screen and (max-width: 786px) {
+    height: auto;
+    min-height: 600px;
+  }
+}
+
   .totalcreated {
     background: #7bd8af;
     position: absolute;
     border-radius: 50%;
-    padding: 7px 14px;
+    padding: 4px 13px;
     top: -17px;
     left: 10px;
     z-index: 1;
@@ -83,6 +92,37 @@
     line-height: 24px;
     color: #ffffff;
   }
+
+  .mint-span-success {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #09fbd3;
+    text-align: center;
+  }
+
+  .addr-text {
+    color: rgb(123, 216, 176);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+.borderText {
+  border: 1px solid #aaa5eb;
+    padding: 3px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.3);
+}
+
+.borderText2 {
+  width: 100px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
 
   .mint-span {
     font-weight: 400;
@@ -124,6 +164,12 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    width: 43%;
+    justify-content: end;
+    @media screen and (max-width: 786px) {
+      width: 100%;
+      justify-content: start;
+    }
   }
   .pricetext {
     font-weight: 500;
@@ -151,7 +197,6 @@
       right: 30px;
       bottom: 105px;
       top: auto;
-
     }
   }
 
@@ -185,7 +230,6 @@
       @media screen and (max-width: 786px) {
         top: -70px;
         white-space: break-spaces;
-
       }
     }
     .create-land-title {
@@ -227,13 +271,12 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
     border-radius: 8px;
     position: relative;
-    
 
-    @media screen and (max-width: 991px) {
-      background-image: url("../../assets/landAssets/newGenesisBg.webp");
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
+    // @media screen and (max-width: 991px) {
+    //   background-image: url("../../assets/landAssets/newGenesisBg.webp");
+    //   background-size: cover;
+    //   background-repeat: no-repeat;
+    // }
 
     .land-stake-title {
       font-weight: 800;
@@ -245,7 +288,7 @@
       left: 0;
       top: -40px;
       @media screen and (max-width: 991px) {
-        top: -95px;
+        top: -85px;
         white-space: break-spaces;
       }
     }
@@ -289,7 +332,6 @@
       font-size: 12px;
       line-height: 18px;
       color: #ffffff;
-      
     }
     .minting-price {
       font-style: normal;
@@ -297,7 +339,6 @@
       font-size: 14px;
       line-height: 18px;
       color: #09fbd3;
-      
     }
 
     .minthero {
@@ -343,26 +384,22 @@
     }
   }
 
-  .mint-wrappernew::before{
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    margin: auto;
-    // background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-    background-image: url("../../assets/landAssets/genesis-hero.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: right;
+  // .mint-wrappernew::before {
+  //   content: "";
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   top: 0;
+  //   margin: auto;
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  //   background-position: top;
 
-    @media screen and (max-width: 991px) {
-      background-image: none;
-     
-    }
-
-  }
+  //   @media screen and (max-width: 991px) {
+  //     background-image: none;
+  //   }
+  // }
 
   // .mint-wrappernew::after{
   //   content: "";
@@ -376,6 +413,9 @@
   //   bottom: 0;
   //   right: 0;
   //   margin: auto;
+  //   @media screen and (max-width: 991px) {
+  //     background-image: none;
+  //   }
   // }
 
   .land-input {
@@ -397,7 +437,7 @@
     color: #ffffff;
     position: absolute;
     left: 0;
-    bottom: -30px;
+    bottom: -48px;
   }
 
   .eth-price {
@@ -420,7 +460,7 @@
     font-size: 14px;
     line-height: 21px;
     color: #ffffff;
-    width: 75%;
+    // width: 75%;
     padding-bottom: 5px;
     @media screen and (max-width: 1500px) {
       width: 100%;
@@ -707,6 +747,14 @@
     background-position: center;
   }
 
+
+  .genesis-land-empty {
+    background-image: url("../../assets/landAssets/tierOneLand.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
   .community-image {
     --mask: linear-gradient(-135deg, #0000 30px, #000 0);
     -webkit-mask: var(--mask);
@@ -720,6 +768,78 @@
     position: absolute;
     left: 0;
     top: 0;
+  }
+
+  .mint-release-date {
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 38px;
+    color: #ffffff;
+  }
+
+  .mint-release-title {
+    width: 75%;
+
+    @media screen and (max-width: 786px) {
+      width: 100%;
+    }
+
+    span {
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 40px;
+      color: #181637;
+      background-color: #09fbd3;
+      @media screen and (max-width: 786px) {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .mint-types {
+    background: rgba(0, 0, 0, 0.32);
+    border-radius: 4px;
+    width: 75%;
+    flex-wrap: wrap;
+    gap: 12px;
+    @media screen and (max-width: 1500px) {
+      width: 100%;
+    }
+    .type-title {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      color: #ffffff;
+    }
+    .type-desc {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 18px;
+      color: #09fbd3;
+    }
+
+    .dimensions-span {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 14px;
+      color: rgba(255, 255, 255, 0.75);
+    }
+  }
+
+  .mint-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+
+    @media screen and (max-width: 786px) {
+      gap: 15px;
+    }
+    .mint-benefits-title {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      color: #ffffff;
+    }
   }
 
   .members-title {
@@ -1013,7 +1133,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
- 
 @media screen and (max-width: 1441px) {
   .benefit-card {
     width: 285px !important;
@@ -1023,7 +1142,6 @@ input::-webkit-inner-spin-button {
     bottom: 300px !important;
   }
 }
-
 
 @media screen and (max-width: 786px) {
   .genesis-wrapper:nth-child(4) {
@@ -1102,4 +1220,30 @@ input::-webkit-inner-spin-button {
   .discount-break {
     display: none;
   }
+}
+
+.discountprice {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: right;
+  color: #fe6a6a;
+}
+
+.totalprice2 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  color: #09fbd3;
+}
+
+.notetxt {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #b8b8b8;
 }

@@ -117,6 +117,36 @@ body {
     content: "";
   }
 
+  .linear-border-transparent::before {
+    content: "";
+  }
+
+  .linear-border-transparent {
+    background: transparent;
+    border: transparent;
+  }
+
+  .outline-btn-transparent {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: transparent;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #ffffff;
+    white-space: pre;
+    text-decoration: underline;
+  }
+
   .outline-btn {
     clip-path: polygon(
       0 19px,
@@ -312,6 +342,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 50px;
+  align-items: center;
 }
 
 .scroll-to-top{
@@ -334,5 +365,6 @@ body {
   border-radius: 6px !important;
   margin-bottom: auto !important;
   font-size: 12px !important;
-  max-width: 250px !important;
+  min-width: 350px !important;
+  max-width: 450px !important;
 }

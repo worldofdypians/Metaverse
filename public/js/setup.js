@@ -1927,12 +1927,12 @@ window.config = {
   nftstaking_address50: "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
 
   /* MINT LANDNFT */
-  // landnft_address: "",
-  // landnftstake_address: "",
+  landnft_address: "0xcd60d912655281908ee557ce1add61e983385a03",
+  landnftstake_address: "0x6821710b0d6e9e10acfd8433ad023f874ed782f1",
 
   /* MINT LANDNFT GOERLI */
-  landnft_address: "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc",
-  landnftstake_address: "0x428d702b625dc2a917d087679e5cf99bddbcdd13",
+  // landnft_address: "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc",
+  // landnftstake_address: "0x428d702b625dc2a917d087679e5cf99bddbcdd13",
 
   //buyback bsc
   buyback_stakingbsc1_1_address: "0x94b1a7b57c441890b7a0f64291b39ad6f7e14804",
@@ -2838,9 +2838,9 @@ async function getContractLandNFT(key) {
         : ABI,
 
       key === "LANDNFTSTAKE"
-        ? "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc"
+        ? "0xcd60d912655281908ee557ce1add61e983385a03"
         : key === "LANDNFTSTAKING"
-        ? "0x428d702b625dc2a917d087679e5cf99bddbcdd13"
+        ? "0x6821710b0d6e9e10acfd8433ad023f874ed782f1"
         : address,
       {
         from: await getCoinbase(),
@@ -2878,13 +2878,51 @@ class LANDNFT {
     });
   }
 
-  async mintNFT(amount) {
-    let nft_contract = await getContractLandNFT("LANDNFTSTAKE");
+  async mintNFT(amount, cawsArray) {
+    const nft_contract = await getContractLandNFT("LANDNFTSTAKE");
+    // const cawsContract = await getContractNFT("NFT");
+    // const cawsStakeContract = await getContractNFT("NFTSTAKING");
+    let countDiscount = cawsArray.length;
+    // const coinbase = await getCoinbase();
+    let newPrice = 0;
     let landnft = await nft_contract.methods.landPrice().call();
-    let value = new BigNumber(landnft).times(amount);
+    const landPriceDiscount = await nft_contract.methods
+      .LandPriceDiscount()
+      .call();
+    // if (cawsArray.length !== 0) {
+    //   for (let i = 0; i < cawsArray.length; i++) {
+    //     const result = await nft_contract.methods.cawsUsed(cawsArray[i]).call();
+    //     if (result === false) {
+    //       const cawsResult = await cawsContract.methods
+    //         .ownerOf(cawsArray[i])
+    //         .call();
+    //       //Check if user is ownerOf Caws
+    //       if (cawsResult === coinbase) {
+    //         countDiscount++;
+    //         continue;
+    //       }
+    //       //Check if user has deposited Caws in Staking
+    //       const stakeResult = await cawsStakeContract.methods
+    //         .calculateReward(coinbase, cawsArray[i])
+    //         .call();
+    //       if (stakeResult > 0) {
+    //         countDiscount++;
+    //       }
+    //     }
+    //   }
+    // }
 
+    if (countDiscount != 0) {
+      newPrice =
+        (landPriceDiscount * countDiscount +
+          landnft * (amount - countDiscount)) /
+        1e18;
+    } else newPrice = (landnft * amount) / 1e18;
+
+    const value = newPrice * 1e18;
+    console.log(cawsArray, newPrice);
     let second = nft_contract.methods
-      .mintWodGenesis(amount)
+      .mintWodGenesis(amount, cawsArray)
       .send({ value, from: await getCoinbase() });
     // batch.execute()
     let result = await second;
@@ -3049,6 +3087,14 @@ async function getNft(id) {
   );
 }
 
+async function getLandNft(id) {
+  return await window.$.get(
+    `https://mint.worldofdypians.com/metadata/${id}`
+  ).then((result) => {
+    return result;
+  });
+}
+
 async function myNftListContract(address) {
   let nft_contract = await getContractNFT("NFT");
 
@@ -3064,7 +3110,6 @@ async function myNftListContract(address) {
   return nftList;
 }
 
-
 async function myNftLandListContract(address) {
   let nft_contract = await getContractLandNFT("LANDNFTSTAKE");
 
@@ -3079,7 +3124,6 @@ async function myNftLandListContract(address) {
 
   return nftList;
 }
-
 
 async function myNftList(address) {
   return await window.$.get(
@@ -5612,6 +5656,13 @@ window.LANDMINTING_ABI = [
   },
   {
     inputs: [],
+    name: "LandPriceDiscount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "MAX_MINT",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
@@ -5664,6 +5715,22 @@ window.LANDMINTING_ABI = [
   },
   {
     inputs: [],
+    name: "cawsContract",
+    outputs: [
+      { internalType: "contract CawsContract", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "cawsUsed",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "emergencySetStartingIndexBlock",
     outputs: [],
     stateMutability: "nonpayable",
@@ -5710,6 +5777,7 @@ window.LANDMINTING_ABI = [
   {
     inputs: [
       { internalType: "uint256", name: "numberOfTokens", type: "uint256" },
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
     ],
     name: "mintWodGenesis",
     outputs: [],
@@ -5830,6 +5898,15 @@ window.LANDMINTING_ABI = [
     name: "setStartingIndex",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakeContract",
+    outputs: [
+      { internalType: "contract StakeContract", name: "", type: "address" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -29363,7 +29440,6 @@ const whitelistWod = [
   "0xc1fbe0b38658953df5558db3a6acf88c78a6ced6",
   "0x3acef25922d667b6c516aa71735cb858f535fe4e",
   "0xf0254e2657896cacbde972ea53939d91bee7e6db",
-  "Wallet",
   "0x3ec17d725eeb4c8a7a6e2ac28be62ae3af6ae09e",
   "0xc262047cad44b1468674240c76fd267e3b1e9a4c",
   "0xccabb78215d6e00ce5be8d549edfd9d9ddb78624",
@@ -29597,13 +29673,330 @@ const whitelistWod = [
   "0x866bf13d87ef42845f6715acf8f62f8321381364",
   "0xf102985071d60689e3c3ed676d506e4c20a6beaf",
   "0x289615c5c4d1c603396754420fead78f78b17874",
-  "0x6CE9D57FEB61CbBe2E4F69De0485cE096BC3Bde4"
-]
+  "0x6CE9D57FEB61CbBe2E4F69De0485cE096BC3Bde4",
+  "0x8694b1eed5e83ebdd06d82babd2c84b7944b5e45",
+  "0xa36e5ebce35ad6e60b1ea2bfebe19df8e9ff2aa9",
+  "0x99563ce4cbe681777adc2fb7a58f00e308e25b42",
+  "0x440f85ce11bbb56f8dac766100d9d239b19fc064",
+  "0x3403b4de3947b3b44e6feca581994f89308d98ab",
+  "0x8f3f94e32b3058f925494bde2ed42ee7735af592",
+  "0x0bf4db19f4eac2b929f36a9ad23a675cc9bdd410",
+  "0x2ce87085edbb3350b1b2416aa2d6fcaf9850b1d6",
+  "0x834e1009f2442cbdf227746a798ebd882d692212",
+  "0x2ee9f5ef675e3c95b5e54cf271bd9a707a395f8d",
+  "0x6fc4121565a29e1597a6060523466c5e7899000b",
+  "0xb7eb60cdfedfbedeac02ebf7bb572ef27d5aa1c8",
+  "0x76387f3603ee5c45c70c28983f42cd7289a1f6d4",
+  "0x524cee97e7e4ad3f5f1bcc502f6d9b39c8204b4e",
+  "0x099e123a5272533507ff398b3bb2f99dc9915e33",
+  "0x74d17bdd287487ecde0f6df19a6b3805fe4f6a25",
+  "0xbb809ad7a6a14d4447d9ab43eb1f6a374c0f90d3",
+  "0xebd0f973d199ee5f9c4dc7ee800233f1f1987ad2",
+  "0xdbc04f708802bbf7cc5cce1e35f6652ddfba418e",
+  "0x32cc8e176e4a65cec4e4c50fb2e72d9c022e76e5",
+  "0x2e7f4405ab6f7a151f092b9b9561c7d319450948",
+  "0xc931ebffce5fdaeacd4bad4aa328a21321000661",
+  "0x1b730429b429fa4745ddfec0c5c17d05fb152a76",
+  "0x8d773846e2fb8485c781e363376021c1e089290f",
+  "0x7b45b0452b1764cd4c71d272d11f02c0eef6ea5c",
+  "0xf06ffec08cc488992f11466035a0f6da4940856e",
+  "0x3fe019f3ed2a1361a29553f10f50f78cb82c71be",
+  "0x217ba06dc8f2dec12a974a41ed654fc80426fd6e",
+  "0x0df13bdd90340dc622866b7e5d9acc8c2fa1cea8",
+  "0xc3690c919d250d5c424e2737681616c93295cdd2",
+  "0xc082169c0a0544ac3df82b6d2609686caccc5da4",
+  "0x13192b1056ed57eaa06bb7e49d70964a668e8604",
+  "0x6081f129e21b0d26155ffd6719a9265705e4b4cd",
+  "0xef76c50a8d85fc9e8063daa77fc65f03ef4a12cb",
+  "0x61306196c8cef2ebf19baadb771a501de86fa6c9",
+  "0x0cee7e4a57af81b067d044d657f095f4b132415a",
+  "0x2db347b7dc44d72f6be817b13abe367ff80cfcb0",
+  "0x62fd0e9a06a4a11073bdc90ae865490968ee30b6",
+  "0xc3e8e6103f37ab34222ae020e8a42eeb6ce36c74",
+  "0x8e276f7c55b536c06f9925d73493f41b736f733c",
+  "0xc889fce92f9a29b29f8bd28050beca87afe594b9",
+  "0x3d82178d6a9fd057ed23290eb7b0c09594e8080e",
+  "0xc32438f7e4d3444acb88c23ecdadbc9989acc344",
+  "0x86f73b25dbc873bdc458cf83d7e8154c3322290c",
+  "0xd012b337919d7e85fc615de7805fd5b27a07d8ac",
+  "0x75c9f57c0efd5d4fce675dff31743b64ee798773",
+  "0x541dde5453324be302d7deb1748c23cfcca555c9",
+  "0x6b108549b6738d20d181d5e643eef297f0980032",
+  "0xe343fc77eff7cb5371ddcea5c1c1cf733b34e11c",
+  "0xa4fd9c62c3dcfc0b865ec2383d69b3df64f7f6ed",
+  "0xb6b86383831056c16b996cbfb3a6424e7438c6fd",
+  "0xc3686667391ad353f5916b0a75cefc3012b2b012",
+  "0x97e1c0d2055121dc5ca54151968e56d1ac56306c",
+  "0xedd22d51b5cfae903cd28451e341205ea76a73fa",
+  "0x2dfcdbf35e5b39b0be847beaf15ed61c3d20cf1c",
+  "0xf0348ceecc7e825a962b2a3831c517a91031f72a",
+  "0xdf35f6356d868e89f142d54a5197e3813d3e6011",
+  "0x50bf1df7f530eb3f6bbd2479c792162f204df1e3",
+  "0x8443a695cd3dff8f558e1f40d486a2e13da0ed37",
+  "0xf1aef25c4fe23941dd7145eb88ef24e2572ee0ec",
+  "0xb31e0f6d16e55f543c68ab430695526b25e209d8",
+  "0x19c927dfa825f9c5ff8353252d38daba36de3215",
+  "0xf921ab1fe45d70f47d592d373bda2fb738b9cf84",
+  "0x0174f45a2f2506ce9cec3580bfcd24a493e50a12",
+  "0xa8928227a411d13ca6cef679f7bd2c539e5db00b",
+  "0x019e1d9407ab07d1e470540deca1a254be68d0aa",
+  "0xfce5a8e6208e4e846f6dd89ff261da2d1541bb38",
+  "0xf0dff3a6ac38931ac55a7828b32be10336bf8994",
+  "0x97be21d1f50a3b314040f1a58f6023e4f99cc132",
+  "0x0973bfa5e2fbfe632d5bb6c6aaf31cc10ff5676e",
+  "0xfc211d4527be60bbc557c26c004efb2dec672a50",
+  "0xfb4caa1acbb9ca7ddbcd176c53ea748d2fdcb204",
+  "0x6a4d7250034e412a74d73ea7638ffbf8ef5d090d",
+  "0xa226b2b5b4841819391137efa6e709b084500a5c",
+  "0xdf6ed369a5533242d01f13ba632c8ab91bf76f2d",
+  "0x339af243f6de5537f171c32df869f4ebc356635d",
+  "0xabcd71d32982c984417785ae18041d8f4712e585",
+  "0x5f7a774974434b4f2e9996e459b8f335b6544dda",
+  "0x99e5c192752dd8997e272a92b56f0a0c9773c67d",
+  "0x27ec077c7bd4b3bd4c317bcc6355be7386601f94",
+  "0xbe428e7eeb353798ae0186196982ddf6ae022b3c",
+  "0x3b1bfa50a45b35340fe59f0008c513d4c6675720",
+  "0x2c82389e8c200093ed021ffcd639bc5198173a77",
+  "0x35559efd3bc506ea37985a2ae8b3051b9ecc91e0",
+  "0xdb9787a3c60d6c87f443d5a54f2de041902735fa",
+  "0x6545e1777c42dc3363f674b75abab36c05602ea6",
+  "0x65b0424d7c56f19be0dfd2c9c5bc6a3afb0d3e4a",
+  "0x48c254ceda9753684c2dfc057b8b3b7414a85fa9",
+  "0x8f426cea7d2f167773c31873152317a7f897b5dc",
+  "0x5b0005f236cf28524d4bce07a545cb157bd64d86",
+  "0x22febed9072c0f648b34742b3f6c2d9fd527a8a4",
+  "0xd8821657ec2ff38d5eb7fe3688184bb0da4b4b40",
+  "0x6c21409e563d984369d2bc3e9509906d2a777db2",
+  "0x40fdc3dd0bdfb5146d63263b0280150ca61d2b1f",
+  "0xa01746ae759663148766bb2d1025ad40d9b5a510",
+  "0xbd18d7095eedf31137bc04671a2328ba2f141e9f",
+  "0x8cde3eb3ec0d56bd8989c83129b224f931acdda8",
+  "0xc36f061773b4ebbdd8392bb2b39cecdde3ffe29a",
+  "0x43e1bbcf16cbbeee213efeeabe3a155174348e42",
+  "0xcf9cab092ab6bf960d7ae4177f0f9a9ce14fb2c2",
+  "0x4b6ba3a1fef3bc017a8c941616a71886b597258e",
+  "0xdeb381dc91752235e22123bdd40b096e5389b918",
+  "0x18855b681a2fb4bcca821bde693e68507725c3f1",
+  "0x21a935910390db5d72d31ec577bc62596a02e1bb",
+  "0xb1a75ae2560cca8c8c1e5b9fe826ab7325e197b9",
+  "0xc2da7c457b3ed27f9fb822e672eb2335ecff46ed",
+  "0x1d7a05e034a20f80eeeebaf8c8dc3c2a00288c9c",
+  "0x69351f409298af6b229b2d632c0236c06009ebd4",
+  "0x0126272754430ac70104e8ae54c8b0302aadd3ed",
+  "0xe043baf984b69d1cb3e336eccf86a988843413be",
+  "0xe5c6f1c10af2c6c545f60c447e08de4aa3da4237",
+  "0x4775ece875f98b7b76f6340d31c176ded89e6751",
+  "0xf41ec7f4082782a67fa641b5c8a60fcec7d082a8",
+  "0xffd51e3ea3629e0493fa01664dbdacddad3d283d",
+  "0x59813bfbdccd9f117c66eb8ce8c63b9bef4f6390",
+  "0x7fb8d9881cf3de50cd66aaa88e950aa98a7a208a",
+  "0xb772980e2d22bd02988109b50345605ff75983b3",
+  "0xba3654d14477f42d0ec14896f0ffffe01abe0d1a",
+  "0x09de263e04b948e2bef108936778fc1e89fc272d",
+  "0x855d1eec6b8370fcaa7f9d6f7f82397670700ee0",
+  "0xac55f7e64add6a0c9fe668e2b3d25dce85f81484",
+  "0xb5317b49e68c316c6722b875195580e4f68e7e7c",
+  "0x331d6cd78272131ef15b24b0a64da3a7a1233a2d",
+  "0x18c51e94d7b1475ec745c8136870a8daa58c9db7",
+  "0x2d00c8cd4d941b9b6467b19e3c03c2445ae3a5c7",
+  "0x0b49621caccc771d8a197ad3a4cecc7561f957d1",
+  "0xd62eb7847d29b413c328c4f3cf730cc84e980ba8",
+  "0x8fdb12c76e68d2b2869b246f67dd10795f3bb37a",
+  "0x4bee039b8081ebf03fac126b76cc28745a802f1c",
+  "0x3c5a902058adf56001a84408d44a499208bb2613",
+  "0xc196cbba35c8a568ac14d3afc1f26986d7266337",
+  "0x58ded9be7f447ea3f5737adfda3948ba208ecd4e",
+  "0x9fda2cb758983cbdaf891056e6cf7410d271b461",
+  "0x603d06dcb13fb5ae2c7bb38b0034f63f736a740d",
+  "0xfa4453b1d6995944959681319b94aabe86b1255f",
+  "0x7f29ab9c153072cbf6b101f8c79230b80ad19412",
+  "0xc05d8f8855f4c7bb17f5aee85ac45f88120ee936",
+  "0xb7af638a765b35c1ebd5a7a90a7155209921028d",
+  "0xbc11389a833cb67e42d1cba648efa25917dfcede",
+  "0x3b98df607682cbb1c7adbca6049a40980104d817",
+  "0x1a6625f712963b483d91b676ebfec5efa6710409",
+  "0xbb38cb13ebcd93b6eb9ca9261de4c439072b1fc4",
+  "0x346abad91b7970aa9e14821ff3cf12bf0caec74d",
+  "0x38704955b0b8d6772ae5ca278dc6725e4c5d8022",
+  "0x850d8bba36a0a6a69005ccdfb36eafe1219ce9fe",
+  "0xe6022eec1106c8aaa147a85f2a7e80f8f570ddbc",
+  "0x89389314ca8c231affe394c92fc7abaeb9cf386f",
+  "0x8c2164a39e22990c4bb38638f02636d811ebac6b",
+  "0xbe530d269770d0e1429e259f7cf51ec6da50f67c",
+  "0x4c15868e85ab13efc18203f2df883f363ea3b958",
+  "0xc4863ebd54ed653b038583ec95760cd570041f44",
+  "0x566eff8847f8375b3fd0316fdfcd608a53e2aa17",
+  "0x4c1b933698a361e061ce6a46206447de6a3e2f5f",
+  "0xa9bdbdfca9bb34cd1023b21de2acacb6c5081236",
+  "0x60a9827b3fbdff260d0296f5b97f2851d5166eba",
+  "0x680553284af877e0da1869cc9f066e75fa7c0916",
+  "0x2d312498a93253b78e85ac212822f33c502fb503",
+  "0xb5a09b804812bf3b02e005159dd6ed1dbfd1e826",
+  "0x56bdf029d03edbc8bbc7c7933000ed1556b5445a",
+  "0x03eaf4acb156fb5a83ddf006fda4b72c6e9a01b9",
+  "0x8d7c77fb34469056124f1a36c5d323ea6773bad7",
+  "0xbff3c8c2e2e0d94c8cb487cc8ab9a2c620350279",
+  "0xd0bb59a04ef5a4c639f52af4c797e2b5713331c2",
+  "0x91a8dfd8713d2dc6cc97a733e7dd55d5dde8f619",
+  "0xb0f24272f67d5ef9c093e8c14f7620752b26a2cb",
+  "0x110b8c2a97e5030998675dfc3e2621c57d566a2d",
+  "0x164517fdd4fb50f0a1e8100b5b231c9c93e2ebe1",
+  "0x16a5afe4d700551bd86d89d3903900c216cd3f84",
+  "0x0ec8b5640448efb95da60f54a8ad7b9938840583",
+  "0xe7448d09ac439d3735a162c937de5ac7f998e7de",
+  "0xe3ffb58c912d948f278b67b595a5d09b4dc89e10",
+  "0xdf5d71e15c9d0cadfe4aa4efcf5107036c68d202",
+  "0x7f8d6e3bdf484b1dffced3dd72116cd3e4302d8f",
+  "0x8ed9a7989d14e480243b9f03d5a3046492ef60de",
+  "0xdff8ba45eb9a34074c1b2e14d4002add0fd61a18",
+  "0xe5adf62843d76514d861aa224e677d1971b4df68",
+  "0x9e04af2102bfb4c7a6da7cd592161fc7db90e92e",
+  "0x52c7329011822b8a73d930279c5c71c0fdae9fc6",
+  "0xb2e7fac93a1b55b7e0a78c12ee987b4cf3f7b83b",
+  "0x9f91d5f514fdd8ed7cd86bdfe226e8f8b277fbc8",
+  "0xc00bc8a06efbe836f671fc56e7accb85fd57a9a2",
+  "0xf2ea00904fdbfece0b0922437b2f433cee07a625",
+  "0x97d0305d1d788768ffadf964c665d10bd11333ff",
+  "0x16f610963685142e3090dc7408f2c7a187a85419",
+  "0x5de6a36a59ebd7b01ba4f820a0349e62485c0070",
+  "0xd26f12753603d78d0c16ee3e30887bc5e622fb9e",
+  "0x0c31095ed00a65604649237e8df180adc8f81dda",
+  "0xaeb8d54c846610e7fde3b75b49c9a9e84b45da4d",
+  "0x30bea732635084d3013cef764379b1fcb7b09a1c",
+  "0x41a66316528c9ba0b89e2b118e02189e3fb7f184",
+  "0x333a89021b97eb618e7b3d76d0ce7f89e224f88a",
+  "0xbd6a593b9cf47af74782db131bd97e70894551ed",
+  "0x647f26328517e355b64dc4a2338c493baaf9878c",
+  "0x3c61ea50a08a696ad452159543a692347bfd6830",
+  "0x007f08b76a0ce33d105a796f30f91c98add9496a",
+  "0x30efa8eb7bc4f17fef4b02189330a5631b75574a",
+  "0xd4a509490b0328a556a30b96c916b3bb3db2554b",
+  "0x7786562849e2184f2f19bda6d73d7516b6a97318",
+  "0xefdbd2caa333fcbf63c0586720ca4849657dc005",
+  "0xaec24b9350646e9089250c8316f3dcea9d9dff9b",
+  "0xbbb13547a7686d00945e2b92c45dca302a07ea9a",
+  "0xd7a42111b76c829242b3b849f4ba4e015086414c",
+  "0xa8413d15c3f0644ffc9d1701aa6b4d2cafa50b94",
+  "0xc761f75e63d4904b6782287cb4b1ae5f5ce839ee",
+  "0x8c2357f19a070c747616ed9e112ba74618745ded",
+  "0x0433f1eeed93d7cd38d34f86f39cd3aefa1633bf",
+  "0x8edcde53246001a82f68fab21705ddbf73829860",
+  "0xbda0e2f1c7cb2d70a3ae8877b4a9f6e4caf57ea4",
+  "0x791faffa8beca825d0b81ab567935f2dad503d21",
+  "0xab18a4368df6b09236839ce10af1f86181dd58c7",
+  "0x645939dd7b8dbf4486f8859644234d4b2460c959",
+  "0xb61327771866a65a3ea927ce1e43d092a2dd2eaa",
+  "0xf0bc5dd658185523671aea1a59022976d55677fd",
+  "0x7f26199c184ab43ac297b5e48ec445d6eb3c2828",
+  "0x6ea8233d0ff9ace7191017878ee77dcd7c6022e1",
+  "0x157564022e9c518d6163d075a18359a6e976fd12",
+  "0xb9d5c643b3537915762a619e4480bc87a0402d4f",
+  "0x3416e6b21d6a2d1911aaa34c544237d7692e6cfa",
+  "0x6edfa04b8a174a777118aaa81e95fe8a7dcce014",
+  "0x68b24992f1ceba8be954166b48aecf4eda8e4099",
+  "0x18be4a099545f15007c38ec2c195649a52b9d828",
+  "0x3d53209ed55265a765259f00b6b9ce1ebb7c0583",
+  "0x63efd67074eaa2447f7a2af7b7f0a5bb434753d2",
+  "0x99f33527688bf8bc60935140cbfe31633c6fe997",
+  "0xc69751dcdc504ff6447bef3b76ad2fb79719e216",
+  "0x5237c5bbe109cc23858fff6c6d7a7d13f3137ede",
+  "0xb611bc7f6f070a0d766c47c9c08121851fbbc009",
+  "0x8Ec6507202854a74cC8Dad07c9bEa9cb1BADAb87",
+  "0x18be4A099545F15007c38ec2C195649A52b9d828",
+  "0x97BE21d1F50a3B314040f1A58F6023E4F99cc132",
+  "0x9859D26730B47406Bf034e9216634336EF0fD84d",
+  "0x331d6CD78272131Ef15b24b0a64DA3A7A1233A2d",
+  "0x92B8260899aCcb00A8094aBa038EF48b17D42D31",
+  "0x3D53209ED55265A765259F00B6B9cE1eBb7c0583",
+  "0x18855B681A2FB4bCcA821bDe693E68507725c3f1",
+];
 
 window.checkWhitelistWod = function (address) {
   // console.log("CHECKCK")
   let found = 0;
   for (let i of whitelistWod) {
+    if (address.toLowerCase() == i.toLowerCase()) found = 1;
+  }
+  return found;
+};
+
+
+
+const landWhitelist = [
+"0xb437a90e59785740a67fc5376180acc3b705edc4",
+"0xb4bd860f00df73559fa73df86ddb644f1a1c4ff3",
+"0xbd94fef81f1aee361adcaeac035c7eacbb8866fc",
+"0x0291a10ff53fedf62100c1051e93aa52544be85a",
+"0x6caa65efd794163141f7a0a44d6f93f3146e4dff",
+"0x13b8dacbed3be5709d6ff9639f185585b5258c9c",
+"0xe59455b7d61dba7d70db666a8930d4152400e9a6",
+"0xf1b4d55cf1d309e3c1914aa6025d90ffd24910f9",
+"0xa2b3bac969f034cc5df5a517a7f3660ae5c15bed",
+"0xc889fce92f9a29b29f8bd28050beca87afe594b9",
+"0x9912a0a767e06566b356cb17521b3e3c13ecb4ed",
+"0x2ce99f178daa9c3ac5a3ac86e22800c5bb011739",
+"0x2739b27a2b7da09e57e209f41753df6089da1b7e",
+"0xbfa3b43b735971b7f1a92028a975b44e1dfc157a",
+"0x3d0a87a9c3a31291e6952d4cb7b154f38a4bd63f",
+"0x8010b39a468fc2a05b7f213bdbdec8ac1b3cb24f",
+"0x9bd215c2530df574657510b2f991d5c326df7c50",
+"0x888147e9c6d943fc33ef8ac65d042c22c0a9ebf2",
+"0xa1f1b0daa0710b30f05194b12d0e1c47955032fe",
+"0xbb504f45adb368da44ccbb50f5142faa648c755b",
+"0xa8517fd6063c55256f9afbdbd3aa4e472ad1ac3c",
+"0xd732d553192277f48d591932d3f4ec7a405db191",
+"0x7990b8405160155d8e9cf27442680aea48b94747",
+"0x92a76b0c8af74ffbcb7e5917469f68bf5a33fa0f",
+"0xc2f2aa353e02b9590829319289556bdb3f02dee4",
+"0xfd7fef4c21fe27d06c419c126302051066a76b6a",
+"0x73b679f48dfa71e044b8eee478d22622dbdcb806",
+"0xc70c5488bd2eca4cd345007e14fa2e1cd45da711",
+"0x971560fe12837755b6ecb2c8c21effe8442325f3",
+"0x38c006dc41f3c2cd004b79c31bcd194b1c0e273d",
+"0x9a366ab27ca08138b7a73e47222b1cad29f5c783",
+"0x840e22d01aaea97b7bfad7089a994e427646ad2d",
+"0x827fb1efb4b247bf5297c25161920e77630954b6",
+"0x11a9550ae67fc85554933d26eec9715d01483018",
+"0x743bb8871ca88eb46cb87508ceaf9163e0633dd4",
+"0xf7daa481ca09b2818552c9c5d56d5cc88cf18047",
+"0x6310d0ad15c12a42d278e1234d3b087e140aeaa0",
+"0x5b70e4587a5fc8e35ebfe6548f2b3adb1724f02f",
+"0x5a3a549aea8be363d0cf797c53fb1d0932e2d17a",
+"0x4a437b6078cfb41bc599c4379a9d27259f1948df",
+"0xfb3cd59bc2f9d68c97a6e823cb1fc75ea96ead64",
+"0xfacfbb40f154b650206415163c401f3174febbc4",
+"0x4ea58393ffed8af72e3c0188de8fda3f8774fff6",
+"0x0ef5633ccf06ea7dd4d2031d4d2e958d6f97305f",
+"0x5dcff15a0e3ed0ffa1d143e0bc773af017834f56",
+"0x037237b1f278cf7e2c94ae93e9770d7aa8e3499b",
+"0x6d31ddc5fba308b3f4678c5e377ae10dfec8c5e1",
+"0x8fdf9a7cf1f761edd912eeddf8a0dccab6ae63d5",
+"0x5285638aa28e0c9e65807a80cd6e29f9427c25f4",
+"0x08bfde32b96088c9905582ff9e26af3452a4c3a3",
+"0xbc5e4b002af645d4790e6c5a358f865d89d97073",
+"0x8c999b813a7b5ca3852f814a63ea5621f2255da9",
+"0x4535f7043f42faf785c8deed1ef46b170eabc9f2",
+"0x3fdc5c80b0d5146c0911652806d7f9a4fa65c6ee",
+"0x293f89d437e0e076a01d15a6718d6d5d66223193",
+"0x9785e7b42e9d08c1e2e17f21c9c110576d520a09",
+"0x0ce02d3a89efa218cd0f486514cae77d74b88bee",
+"0x440cd0a093aad60b77ee56965cc60c2381652726",
+"0xa44AdcFeD2B09Cd13b97134Bc37dCC3Fe6964e5e",
+"0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
+"0xF4914F025b45798F634fBE638d33701FBff3274A",
+"0x170ff9ce71675ce4a1a6cbe72ba4431eedf71cd5",
+"0x781424EE37831c0693334Dd3CB5CB90a1A77E279",
+"0x3918bD07A8351eEfb46D8b3F5BC1CD3352363068",
+"0x2312D7126a0a87114D018E762dc6CAf8A74f04a8",
+"0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F"
+
+]
+
+
+window.checkWhitelistLand = function (address) {
+  // console.log("CHECKCK")
+  let found = 0;
+  for (let i of landWhitelist) {
     if (address.toLowerCase() == i.toLowerCase()) found = 1;
   }
   return found;
