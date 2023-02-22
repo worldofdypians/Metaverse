@@ -29923,7 +29923,7 @@ window.checkWhitelistWod = function (address) {
 
 
 
-const LandWhitelist = [
+const landWhitelist = [
 "0xb437a90e59785740a67fc5376180acc3b705edc4",
 "0xb4bd860f00df73559fa73df86ddb644f1a1c4ff3",
 "0xbd94fef81f1aee361adcaeac035c7eacbb8866fc",
@@ -29995,7 +29995,7 @@ const LandWhitelist = [
 window.checkWhitelistLand = function (address) {
   // console.log("CHECKCK")
   let found = 0;
-  for (let i of whitelistWod) {
+  for (let i of landWhitelist) {
     if (address.toLowerCase() == i.toLowerCase()) found = 1;
   }
   return found;
