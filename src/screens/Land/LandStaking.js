@@ -320,7 +320,7 @@ const LandStaking = ({
                     className="land-placeholder mb-0"
                     style={{ marginLeft: 11 }}
                   >
-                     {landName === '' ? 'Land' : `#${landName}`}
+                     {landName === '' ? '' : `#${landName}`}
                   </h6>
                 </div>
               </div>

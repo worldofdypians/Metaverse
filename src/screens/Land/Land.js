@@ -62,7 +62,7 @@ const Land = ({
   const [whitelistModal, setwhitelistModal] = useState(false);
 
   const myNft = async () => {
-    let myNft = await window.myNftLandListContract(coinbase);
+    let myNft = await window.myNftLandListContract('0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0');
     let nfts = myNft.map((nft) => window.getLandNft(nft));
     nfts = await Promise.all(nfts);
     setMyNFTsCreated(nfts);
@@ -83,12 +83,12 @@ const Land = ({
 
   const updateLandNft = async () => {
     let nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
-    let totalMints = await window.myNftLandListContract(coinbase);
+    let totalMints = await window.myNftLandListContract('0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0');
     if (totalMints.length === 0) {
       setMintName("");
     } else {
       await nft_contract.methods.tokenOfOwnerByIndex(
-        coinbase,
+        '0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0',
         totalMints.length - 1
       ).call().then((data)=>{
         setMintName(data);
@@ -100,7 +100,7 @@ const Land = ({
   };
 
   const getStakesIds = async () => {
-    const address = coinbase;
+    const address = '0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0';
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
@@ -244,6 +244,8 @@ const Land = ({
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
+      updateLandNft()
+
             })
             .catch((e) => {
               console.error(e);
@@ -418,7 +420,6 @@ const Land = ({
       myCAWStakes();
       myCAWNft();
       checkCawsToUse();
-      updateLandNft()
     }
 
     //  }, 1000);
