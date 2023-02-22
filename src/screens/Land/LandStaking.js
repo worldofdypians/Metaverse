@@ -168,7 +168,7 @@ const LandStaking = ({
       if (chainId !== undefined) {
         if (chainId !== 1) {
           setactiveButton(false);
-          setStatus("Please switch to Ethereum Chain to continue minting.");
+          setStatus("Switch to Ethereum Chain to continue minting.");
         }
         if (chainId === 1) {
           setactiveButton(true);
