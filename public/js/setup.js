@@ -29440,7 +29440,6 @@ const whitelistWod = [
   "0xc1fbe0b38658953df5558db3a6acf88c78a6ced6",
   "0x3acef25922d667b6c516aa71735cb858f535fe4e",
   "0xf0254e2657896cacbde972ea53939d91bee7e6db",
-  "Wallet",
   "0x3ec17d725eeb4c8a7a6e2ac28be62ae3af6ae09e",
   "0xc262047cad44b1468674240c76fd267e3b1e9a4c",
   "0xccabb78215d6e00ce5be8d549edfd9d9ddb78624",
