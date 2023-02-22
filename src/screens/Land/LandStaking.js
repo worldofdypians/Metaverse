@@ -39,8 +39,10 @@ const LandStaking = ({
   mintPriceDiscount,
   totalCAWSAvailable,
   mystakes,
-  cawsToUse, cawsMinted, cawsStaked,limit
-
+  cawsToUse,
+  cawsMinted,
+  cawsStaked,
+  limit,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
@@ -86,12 +88,37 @@ const LandStaking = ({
           console.error(error);
         });
 
-      if (check.status === 1 && chainId === 1) {
-        setStatus("");
-      } else if (check.status !== 1 && chainId === 1) {
-        setStatus("");
-        // setStatus("This wallet is not whitelisted.");
+      const whitelistArray = [
+        "0xa44AdcFeD2B09Cd13b97134Bc37dCC3Fe6964e5e",
+        "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
+        "0xF4914F025b45798F634fBE638d33701FBff3274A",
+        "0x170ff9ce71675ce4a1a6cbe72ba4431eedf71cd5",
+        "0x781424EE37831c0693334Dd3CB5CB90a1A77E279",
+      ];
+
+      for (let i = 0; i < whitelistArray.length; i++) {
+        
+        if (
+          whitelistArray[i].toLowerCase() === coinbase.toLowerCase() &&
+          chainId === 1
+        ) {
+          setStatus("");
+          break;
+        } else if (
+          whitelistArray[i].toLowerCase() !== coinbase.toLowerCase() &&
+          chainId === 1
+        ) {
+          setStatus("This wallet is not whitelisted.");
+        }
       }
+
+      // if (check.status === 1 && chainId === 1) {
+        // setStatus("");
+      // } else  if (check.status !== 1 && chainId === 1){
+        // setStatus("This wallet is not whitelisted");
+       
+
+      // }
     }
   };
 
@@ -117,7 +144,6 @@ const LandStaking = ({
         setNftStatus("*10 NFT limit.");
       }, 3000);
     }
-    
   }, [nftCount]);
 
   useEffect(() => {
@@ -126,9 +152,16 @@ const LandStaking = ({
         numberOfTokens: parseInt(nftCount),
       });
     }
-  }, [nftCount, isConnected, coinbase, chainId, cawsToUse, cawsMinted, cawsStaked]);
+  }, [
+    nftCount,
+    isConnected,
+    coinbase,
+    chainId,
+    cawsToUse,
+    cawsMinted,
+    cawsStaked,
+  ]);
 
-  
   useEffect(() => {
     if (isConnected) {
       if (chainId !== undefined) {
@@ -153,8 +186,7 @@ const LandStaking = ({
 
   useEffect(() => {
     if (totalCaws !== 0) {
-      let newPrice =
-       (mintPrice *nftCount ) - mintPriceDiscount* totalCaws;
+      let newPrice = mintPrice * nftCount - mintPriceDiscount * totalCaws;
       setGrandPrice(newPrice);
     } else {
       let newPrice = mintPrice * nftCount;
@@ -176,29 +208,14 @@ const LandStaking = ({
           </span>
         </h6>
         <span className="tiers-desc">
-        Create and own your own property inside of the World of Dypians. Leverage its benefits in the virtual world and earn rewards through staking.
+          Create and own your own property inside of the World of Dypians.
+          Leverage its benefits in the virtual world and earn rewards through
+          staking.
         </span>
       </div>
-      {/* <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
-        <div className="col-12 ps-2 ps-lg-0">
-          <div className="d-flex align-items-end justify-content-between">
-            <div className="d-flex flex-column gap-2">
-              <span className="connect-wallet-title font-organetto">
-                Mint{" "}
-                <span
-                  className="connect-wallet-title"
-                  style={{ color: "#8c56ff" }}
-                >
-                  Genesis Land NFT
-                </span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div> */}
+    
       <div
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
-        // style={{ minHeight: "518px" }}
       >
         <div
           className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0"
@@ -265,12 +282,7 @@ const LandStaking = ({
             className="p-3 mint-wrappernew d-flex flex-column gap-5 justify-content-between"
             style={{ minHeight: "518px" }}
           >
-            {/* <span className="font-organetto land-stake-title d-flex flex-column flex-lg-row gap-2">
-              <span className="font-organetto" style={{ color: "#8c56ff" }}>
-                Join
-              </span>
-              Genesis Land NFT Whitelist
-            </span> */}
+         
 
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -307,7 +319,7 @@ const LandStaking = ({
                 )}
               </div>
             </div>
-            <div className="d-flex mt-3 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between" >
+            <div className="d-flex mt-3 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
               <div className="d-flex flex-column gap-2 col-12 col-lg-6">
                 <span className="land-name">Name</span>
                 <div
@@ -329,9 +341,10 @@ const LandStaking = ({
                   className="land-placeholder borderText"
                   style={{ fontSize: "12px" }}
                 >
-                  Enjoy the land inside of WoD and stake the NFT for additional rewards.
+                  Enjoy the land inside of WoD and stake the NFT for additional
+                  rewards.
                   <a
-                    href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                    href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing"
                     target="_blank"
                     rel="noreferrer"
                     style={{ textDecoration: "none" }}
@@ -345,9 +358,7 @@ const LandStaking = ({
             </div>
             <hr className="mint-divider m-0" />
             <div className="d-flex align-items-center justify-content-between pb-4 position-relative gap-3">
-              <div
-                className="input-container position-relative col-8 col-lg-6"
-              >
+              <div className="input-container position-relative col-8 col-lg-6">
                 <input
                   type="number"
                   placeholder="Nr. of Land NFT to create"
@@ -421,9 +432,7 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider m-0" />
-            {/* {mintStatus.length > 0 && (
-              <span className="mint-span">{mintStatus}</span>
-            )} */}
+           
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
@@ -452,15 +461,28 @@ const LandStaking = ({
                 </span>
                 <ToolTip
                   title={
-                  <React.Fragment>
-                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                    <li> The maximum number of NFTs that can be minted per
-                          transaction is 10.</li>
-                    <li> CAWS NFT holders are eligible for a 20% discount on their Genesis Land NFT purchases.</li>
-                    <li>The CAWS NFT discount is given at a 1:1 ratio with Genesis Land NFT purchases.</li>
-                    <li>Discounts are not stackable, meaning that you cannot use the same CAWS NFT to obtain further discounts.</li>
-                    </ul>
-                  </React.Fragment>
+                    <React.Fragment>
+                      <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                        <li>
+                          {" "}
+                          The maximum number of NFTs that can be minted per
+                          transaction is 10.
+                        </li>
+                        <li>
+                          {" "}
+                          CAWS NFT holders are eligible for a 20% discount on
+                          their Genesis Land NFT purchases.
+                        </li>
+                        <li>
+                          The CAWS NFT discount is given at a 1:1 ratio with
+                          Genesis Land NFT purchases.
+                        </li>
+                        <li>
+                          Discounts are not stackable, meaning that you cannot
+                          use the same CAWS NFT to obtain further discounts.
+                        </li>
+                      </ul>
+                    </React.Fragment>
                   }
                   icon={"i"}
                   color={"#000"}
@@ -508,7 +530,7 @@ const LandStaking = ({
               </div>
             </div>
             <span className="notetxt">
-            *Available CAWS for discount eligibility: you have {limit}/
+              *Available CAWS for discount eligibility: you have {limit}/
               {cawsToUse} CAWS remaining.
             </span>
             <hr className="mint-divider m-0" />
@@ -603,12 +625,7 @@ const LandStaking = ({
             className="p-3 mint-wrapper d-flex flex-column gap-1 justify-content-between"
             style={{ minHeight: "518px" }}
           >
-            {/* <span className="font-organetto land-stake-title">
-              Genesis Land NFT{" "}
-              <span className="font-organetto" style={{ color: "#8c56ff" }}>
-                staking
-              </span>
-            </span> */}
+           
             <div className="row gap-1 align-items-center justify-content-between">
               <span
                 className="create-land-title font-poppins"
@@ -620,17 +637,31 @@ const LandStaking = ({
                 className="d-flex align-items-center gap-2"
                 style={{ width: "fit-content" }}
               >
-                {/* <span className="more-info">More information</span> */}
+                
                 <ToolTip
                   title={
                     <React.Fragment>
-                    <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                    <li> When interacting with the staking pool for the first time, you are required to approve and deposit. For additional transactions, you will only be asked for deposit.</li>
-                    <li>You can stake or unstake multiple NFTs at once.</li>
-                    <li>The maximum number of NFTs that can be staked or unstaked per round is 50.</li>
-                    <li> You have the option to claim your ETH rewards in total or withdraw them separately based on the Land NFTs you have staked.</li>
-                    </ul>
-                  </React.Fragment>
+                      <ul className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                        <li>
+                          {" "}
+                          When interacting with the staking pool for the first
+                          time, you are required to approve and deposit. For
+                          additional transactions, you will only be asked for
+                          deposit.
+                        </li>
+                        <li>You can stake or unstake multiple NFTs at once.</li>
+                        <li>
+                          The maximum number of NFTs that can be staked or
+                          unstaked per round is 50.
+                        </li>
+                        <li>
+                          {" "}
+                          You have the option to claim your ETH rewards in total
+                          or withdraw them separately based on the Land NFTs you
+                          have staked.
+                        </li>
+                      </ul>
+                    </React.Fragment>
                   }
                   icon={"i"}
                   color={"#000"}
@@ -683,7 +714,7 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider" />
-            <div className="d-flex align-items-end justify-content-between  align-items-end gap-2">
+            <div className="d-flex align-items-end flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between  align-items-end gap-2">
               <div className="d-flex flex-column gap-1 w-100">
                 <h6 className="create-land-title">Total rewards</h6>
                 <div className="d-flex align-items-start justify-content-between gap-2 flex-column">
@@ -697,7 +728,7 @@ const LandStaking = ({
                         alt="ethereum"
                       />
                       <span className="eth-rewards">
-                        {getFormattedNumber(ETHrewards, 2)} ETH
+                        {getFormattedNumber(ETHrewards, 7)} ETH
                       </span>
                     </div>
                     <span className="eth-rewards">
