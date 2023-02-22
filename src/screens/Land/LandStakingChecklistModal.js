@@ -26,11 +26,11 @@ const LandStakingChecklistModal = ({
   onClaimAll,
   link,
   ETHrewards,
-
   coinbase,
   showStaked,
   showToStake,
   isConnected,
+  refreshStakes
 }) => {
 
 
@@ -180,6 +180,7 @@ const LandStakingChecklistModal = ({
         setSelectedNftIds([]);
         setColor("#57AEAA");
         handleClearStatus();
+        refreshStakes()
       })
       .catch((err) => {
         setloadingdeposit(false);

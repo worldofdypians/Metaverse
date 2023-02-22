@@ -45,6 +45,8 @@ const Land = ({
   const [EthRewards, setEthRewards] = useState(0);
   const [totalCawsDiscount, settotalCawsDiscount] = useState(0);
   const [limit, setLimit] = useState(0);
+  const [newStakes, setnewStakes] = useState(0);
+
 
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
   const [latestMintNft, setLatestMintNft] = useState([]);
@@ -225,6 +227,9 @@ const Land = ({
     setOpenStakeChecklist(false);
   };
 
+  const refreshStakes = ()=>{
+setnewStakes(newStakes+1)
+  }
 
   const handleMint = async (data) => {
     if (isConnected) {
@@ -380,6 +385,7 @@ const Land = ({
       settotalCawsDiscount(data.numberOfTokens);
     }
   };
+
   const getMintDiscountPrice = async () => {
     const nft_contract = await window.getContractLandNFT("LANDNFTSTAKE");
     // console.log(nft_contract)
@@ -424,6 +430,8 @@ const Land = ({
 
     //  return () => clearInterval(interval);
   }, [
+    newStakes,
+    mintStatus,
     isConnected,
     EthRewards,
     coinbase,
@@ -444,7 +452,7 @@ const Land = ({
           nftItem={showStaked ? mystakes : showToStake ? myNFTs : showStaked}
           open={openStakeChecklist ? true : false}
           // link={link}
-          // onShareClick={onShareClick}
+          refreshStakes={refreshStakes}
           onshowStaked={() => {
             setshowStaked(true);
             setshowToStake(false);
