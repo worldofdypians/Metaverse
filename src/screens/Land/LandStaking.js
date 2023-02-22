@@ -16,6 +16,31 @@ import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import { shortAddress } from "../Caws/functions/shortAddress";
 
+
+const renderer = ({days, hours, minutes}) => {
+  return (
+    <>
+    <div className="d-flex align-items-center gap-2">
+    <div className="d-flex flex-column align-items-center" style={{width: '40px'}}>
+        <span className="eth-price mb-0">{days}</span>
+        <span className="eth-price" style={{fontWeight: 300}}>days</span>
+      </div>
+      <span className="eth-price" style={{position: 'relative', bottom: '13px'}}>:</span>
+      <div className="d-flex flex-column align-items-center" style={{width: '40px'}}>
+        <span className="eth-price mb-0">{hours}</span>
+        <span className="eth-price" style={{fontWeight: 300}}>hours</span>
+      </div>
+      <span className="eth-price" style={{position: 'relative', bottom: '13px'}}>:</span>
+      <div className="d-flex flex-column align-items-center" style={{width: '40px'}}>
+        <span className="eth-price mb-0">{minutes}</span>
+        <span className="eth-price" style={{fontWeight: 300}}>minutes</span>
+      </div>
+    </div>
+    </>
+  )
+}
+
+
 const LandStaking = ({
   showWalletConnect,
   handleMint,
@@ -218,12 +243,12 @@ const LandStaking = ({
         className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
       >
         <div
-          className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0"
-          style={{ minHeight: "518px" }}
+          className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height"
+        
         >
           <div
-            className="d-flex flex-column gap-3 justify-content-between"
-            style={{ minHeight: "500px" }}
+            className="d-flex flex-column gap-3 justify-content-between staking-height"
+          
           >
             <div className="d-flex flex-column position-relative">
               {showBadge && (
@@ -278,12 +303,7 @@ const LandStaking = ({
           </div>
         </div>
         <div className="col-12 col-md-12 col-xxl-4 mt-5  mt-xxl-0">
-          <div
-            className="p-3 mint-wrappernew d-flex flex-column gap-5 justify-content-between"
-            style={{ minHeight: "518px" }}
-          >
-         
-
+          <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height">
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
                 <span className="create-land-title font-poppins ">
@@ -434,6 +454,7 @@ const LandStaking = ({
             <hr className="mint-divider m-0" />
            
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between w-100">
               <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
                 <span className="eth-price">
@@ -445,15 +466,16 @@ const LandStaking = ({
                   ETH
                 </span>
               </div>
+              <div className="d-flex flex-column align-items-center">
+                <h6 className="eth-price">Mint countdown:</h6>
+              <Countdown renderer={renderer} date={"2023-02-24T17:00:00"} />
+              </div>
+              </div>
             </div>
           </div>
         </div>
-
         <div className="col-12 col-md-12 col-xxl-2 mt-5  mt-xxl-0">
-          <div
-            className="p-3 mint-wrappernew d-flex flex-column justify-content-between"
-            style={{ minHeight: "518px" }}
-          >
+          <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height">
             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2 position-relative justify-content-start justify-content-between">
                 <span className="create-land-title font-poppins">
@@ -621,10 +643,7 @@ const LandStaking = ({
         </div>
 
         <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5  mt-xxl-0">
-          <div
-            className="p-3 mint-wrapper d-flex flex-column gap-1 justify-content-between"
-            style={{ minHeight: "518px" }}
-          >
+          <div className="p-3 mint-wrapper d-flex flex-column gap-1 justify-content-between staking-height">
            
             <div className="row gap-1 align-items-center justify-content-between">
               <span
