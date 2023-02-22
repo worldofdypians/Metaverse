@@ -80,6 +80,8 @@ const LandStaking = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [grandPrice, setGrandPrice] = useState(0);
   const [discountprice, setdiscountprice] = useState(0);
+  const [countdownFinished, setCountdownFinished] = useState(false);
+
 
 
   const handleCreate = () => {
@@ -238,7 +240,7 @@ const LandStaking = ({
                   <span>{totalCreated}</span>
                 </div>
               )}
-              <div className="genesis-wrapper genesis-land d-flex justify-content-center align-items-center p-3 position-relative h-100">
+              <div className={`genesis-wrapper ${totalCreated > 0 ? 'genesis-land' : 'genesis-land-empty'} d-flex justify-content-center align-items-center p-3 position-relative h-100`}>
                 <img
                   src={dummyBadge}
                   className="genesis-badge"
@@ -449,8 +451,11 @@ const LandStaking = ({
                 </span>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <h6 className="eth-price">Mint countdown:</h6>
-              <Countdown renderer={renderer} date={"2023-02-24T17:00:00"} />
+                {countdownFinished === false ? <>
+                <h6 className="eth-price">MINT COUNTDOWN:</h6>
+              <Countdown renderer={renderer} date={"2023-02-23T11:21:00"} onComplete={()=>{setCountdownFinished(true)}}/></> : <>
+              <h6 className="eth-price">WHITELIST COUNTDOWN:</h6>
+              <Countdown renderer={renderer} date={"2023-02-24T17:00:00"} /></>}
               </div>
               </div>
             </div>
@@ -552,31 +557,40 @@ const LandStaking = ({
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
               <div
                 className={
-                  mintloading === "error" ||
-                  (status !== "Connect your wallet." && status !== "")
+                  // (status !== "Connect your wallet." && status !== "" && countdownFinished === false)
+
+                  // mintloading === "error" ||
+                  ( countdownFinished === false)
+                  
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
               >
                 <button
                   className={`btn ${
-                    mintloading === "error"
-                      ? "filled-error-btn"
-                      : status !== "Connect your wallet." &&
-                        status !== ""
+                    // mintloading === "error"
+                    //   ? "filled-error-btn"
+                    //   : status !== "Connect your wallet." &&
+                    //     status !== "" && 
+                        countdownFinished === false
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   }  px-4 w-100`}
                   onClick={() => {
-                    isConnected === true && (chainId === 1 || chainId === 5)
+                    isConnected === true && (chainId === 1 || chainId === 5) && countdownFinished === true
                       ? handleCreate()
                       : showWalletConnect();
                   }}
-                  disabled={
-                    mintloading === "error" ||
-                    mintloading === "success" ||
-                    (isConnected === true && chainId !== 1 && chainId !== 5) ||
-                    (status !== "Connect your wallet." && status !== "")
+                  // disabled={
+                  //   mintloading === "error" ||
+                  //   mintloading === "success" ||
+                  //   (isConnected === true && chainId !== 1 && chainId !== 5 && countdownFinished === false) ||
+                  //   (status !== "Connect your wallet." && status !== "")
+                  //     ? true
+                  //     : false
+                  // }
+
+                  disabled={countdownFinished === false
                       ? true
                       : false
                   }
@@ -588,36 +602,38 @@ const LandStaking = ({
                   }}
                 >
                   {(isConnected === false ||
-                    (chainId !== 1 && chainId !== 5)) && (
+                    (chainId !== 1)) && (
                     <img
                       src={mouseOver === false ? blackWallet : whitewallet}
                       alt=""
                       style={{ width: "23px", height: "23px" }}
                     />
                   )}{" "}
-                  {mintloading === "initial" &&
+                  {/* {mintloading === "initial" &&
                   isConnected === true &&
-                  (chainId === 1 || chainId === 5) ? (
+                  (chainId === 1) ? (
                     "Mint"
                   ) : mintloading === "mint" &&
                     isConnected === true &&
-                    (chainId === 1 || chainId === 5) ? (
+                    (chainId === 1) ? (
                     <>
                       <div className="spinner-border " role="status"></div>
                     </>
                   ) : mintloading === "error" &&
                     isConnected === true &&
-                    (chainId === 1 || chainId === 5) ? (
+                    (chainId === 1) ? (
                     "Failed"
                   ) : mintloading === "success" &&
                     isConnected === true &&
                     activeButton ===
                       (isConnected === true &&
-                        (chainId === 1 || chainId === 5)) ? (
+                        (chainId === 1)) ? (
                     "Success"
                   ) : (
-                    "Connect wallet"
-                  )}
+
+                    ""
+                  )} */}
+                  Connect wallet
                 </button>
               </div>
             </div>
