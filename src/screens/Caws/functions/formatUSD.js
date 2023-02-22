@@ -42,7 +42,7 @@ export const formatDollarAmount = (num, digits) => {
   
     if (usd) {
       if (num < 0.1) {
-        return formatDollarAmount(num, 4)
+        return formatDollarAmount(num, 2)
       } else {
         return formatDollarAmount(num, 2)
       }

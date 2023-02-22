@@ -714,7 +714,7 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider" />
-            <div className="d-flex align-items-end justify-content-between  align-items-end gap-2">
+            <div className="d-flex align-items-end flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between  align-items-end gap-2">
               <div className="d-flex flex-column gap-1 w-100">
                 <h6 className="create-land-title">Total rewards</h6>
                 <div className="d-flex align-items-start justify-content-between gap-2 flex-column">

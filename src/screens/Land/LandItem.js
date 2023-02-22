@@ -24,7 +24,6 @@ const LandItem = ({
   const [loading, setloading] = useState(false);
   const [loadingclaim, setloadingclaim] = useState(false);
 
-
   const convertEthToUsd = async () => {
     const res = axios
       .get("https://api.coinbase.com/v2/prices/ETH-USD/spot")
@@ -58,20 +57,18 @@ const LandItem = ({
 
   const handleClaim = async (itemId) => {
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
-    setloadingclaim(true)
+    setloadingclaim(true);
     await staking_contract.methods
       .claimRewards([itemId])
       .send()
       .then(() => {
         // setethToUSD(0);
         setEthRewards(0);
-    setloadingclaim(false)
-
+        setloadingclaim(false);
       })
       .catch((err) => {
         window.alertify.error(err?.message);
-    setloadingclaim(false)
-
+        setloadingclaim(false);
       });
   };
 
@@ -246,9 +243,9 @@ const LandItem = ({
                       <p id="earnedText" style={{ color: "#C0C9FF" }}>
                         Pending
                       </p>
-                      <div className="d-flex gap-1 align-items-center justify-content-between w-100 mb-2">
+                      <div className="d-flex gap-1 align-items-start align-items-xxl-center align-items-lg-center align-items-md-center justify-content-between w-100 mb-2 flex-column flex-xxl-row flex-md-row flex-lg-row">
                         <p class="eth-rewards">
-                          {getFormattedNumber(EthRewards, 2)}ETH
+                          {getFormattedNumber(EthRewards, 5)}ETH
                         </p>
                         <p class="eth-rewards">
                           {formattedNum(ethToUSD, true)}
@@ -278,21 +275,19 @@ const LandItem = ({
                         e.stopPropagation();
                         handleClaim(checklistItemID);
                       }}
-                      style={{width: 147}}
+                      style={{ width: 147 }}
                     >
                       {loadingclaim ? (
-                  <>
-                    <div
-                      className="spinner-border "
-                      role="status"
-                      style={{ height: "1.5rem", width: "1.5rem" }}
-                    ></div>
-                  </>
-                ) : (
-                  "Claim reward"
-                )}
-
-                     
+                        <>
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{ height: "1.5rem", width: "1.5rem" }}
+                          ></div>
+                        </>
+                      ) : (
+                        "Claim reward"
+                      )}
                     </button>
                   </div>
                 </>
@@ -301,37 +296,27 @@ const LandItem = ({
           </div>
           {isStake ? (
             <>
-               
-              <div
-              className={
-                checkPassiveBtn === false
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }
-            >
-              <button
-                className={`btn ${
-                  checkPassiveBtn === false ? "outline-btn-disabled" : "outline-btn"
-                } px-5 w-100`}
-                disabled={!checkPassiveBtn}
-                onClick={() => {
-                  handleUnstake(checklistItemID);
-                }}
-              >
-                {loading ? (
-                  <>
-                    <div
-                      className="spinner-border "
-                      role="status"
-                      style={{ height: "1.5rem", width: "1.5rem" }}
-                    ></div>
-                  </>
-                ) : (
-                  "Unstake"
-                )}
-              </button>
-            </div>
-
+              <div className={"linear-border-transparent"}>
+                <button
+                  className={`btn ${"outline-btn-transparent"} px-5 w-100`}
+                  disabled={!checkPassiveBtn}
+                  onClick={() => {
+                    handleUnstake(checklistItemID);
+                  }}
+                >
+                  {loading ? (
+                    <>
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{ height: "1.5rem", width: "1.5rem" }}
+                      ></div>
+                    </>
+                  ) : (
+                    "Unstake"
+                  )}
+                </button>
+              </div>
             </>
           ) : (
             <>

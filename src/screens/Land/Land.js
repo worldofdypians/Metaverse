@@ -523,7 +523,7 @@ setnewStakes(newStakes+1)
           handleWithdraw={handleWithdraw}
           withdrawModalShow={withdrawModalShow}
           createdNft={myNFTsCreated}
-          totalCreated={myNFTsCreated.length}
+          totalCreated={myNFTsCreated.length + mystakes.length}
           mintStatus={mintStatus}
           mintloading={mintloading}
           ETHrewards={EthRewards}
