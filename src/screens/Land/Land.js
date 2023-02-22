@@ -208,6 +208,7 @@ const Land = ({
       .withdraw(myStakes)
       .send()
       .then(() => {
+        refreshStakes()
         setunstakeAllStatus("Successfully unstaked all!");
       })
       .catch((err) => {
@@ -451,7 +452,7 @@ setnewStakes(newStakes+1)
           }}
           nftItem={showStaked ? mystakes : showToStake ? myNFTs : showStaked}
           open={openStakeChecklist ? true : false}
-          // link={link}
+          refreshNfts={refreshStakes}
           refreshStakes={refreshStakes}
           onshowStaked={() => {
             setshowStaked(true);

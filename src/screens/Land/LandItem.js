@@ -11,9 +11,9 @@ const LandItem = ({
   checked,
   checklistItemID,
   onChange,
-
   coinbase,
   isConnected,
+  refreshNfts
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
@@ -82,6 +82,7 @@ const LandItem = ({
       .then(() => {
         setcheckPassiveBtn(false);
         setloading(false);
+        refreshNfts()
       })
       .catch((err) => {
         console.log(err);

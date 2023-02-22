@@ -30,7 +30,8 @@ const LandStakingChecklistModal = ({
   showStaked,
   showToStake,
   isConnected,
-  refreshStakes
+  refreshStakes,
+  refreshNfts
 }) => {
 
 
@@ -517,6 +518,7 @@ const LandStakingChecklistModal = ({
                           }}
                           coinbase={coinbase}
                           isConnected={isConnected}
+                          refreshNfts={refreshNfts}
                         />
                       </>
                     );
@@ -578,6 +580,7 @@ const LandStakingChecklistModal = ({
                           setVal(value);
                         }}
                         isConnected={isConnected}
+                        refreshNfts={refreshNfts}
                       />
                     </>
                   );
