@@ -27,10 +27,10 @@ const LandFlyout = () => {
           <video
             src={planetgif}
             preload="auto"
-            autoPlay={true}
-            loop={true}
-            muted="muted"
-            playsInline={true}
+            autoPlay
+            loop
+            muted
+            playsInline
             style={{ width: "100%", height: "100%" }}
           />
           <div className="d-flex align-items-center gap-2">
