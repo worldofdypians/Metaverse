@@ -102,21 +102,15 @@ const LandStaking = ({
       setNftCount(nftCount - 1);
     }
   };
-// console.log(totalCreated)
+
   const checkData = async () => {
     if (coinbase) {
-      const check = await axios
-        .get(`https://api3.dyp.finance/api/whitelist_land/check/${coinbase}`)
-        .then(function (result) {
-          return result.data;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-
-      if (check.status === 1 && chainId === 1) {
+      let result = window.checkWhitelistLand(coinbase);
+    
+      if (result === 1 && chainId === 1) {
         setStatus("");
-      } else  if (check.status !== 1 && chainId === 1){
+      }
+      else if(result !==1  && chainId === 1){
         setStatus("This wallet is not whitelisted");
        
       }
