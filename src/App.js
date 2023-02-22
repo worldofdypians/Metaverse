@@ -22,6 +22,7 @@ import ScrollTop from "./components/ScrollTop";
 import JoinBeta from "./screens/JoinBeta/JoinBeta";
 import JoinBetaModal from "./components/JoinBetaModal/JoinBetaModal";
 import PartnerForm from "./screens/PartnerForm/PartnerForm";
+import LandFlyout from "./components/LandFlyout/LandFlyout";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -235,9 +236,10 @@ function App() {
   return (
     <BrowserRouter>
       <div className="container-fluid p-0 main-wrapper position-relative">
-        {/* {!window.location.href.includes('/land') &&
-        <LandPopup />
-        } */}
+        {!window.location.href.includes('/land') &&
+        // <LandPopup />
+        <LandFlyout />
+        }
         <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
