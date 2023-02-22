@@ -79,6 +79,8 @@ const LandStaking = ({
   const [activeButton, setactiveButton] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
   const [grandPrice, setGrandPrice] = useState(0);
+  const [discountprice, setdiscountprice] = useState(0);
+
 
   const handleCreate = () => {
     handleMint({
@@ -181,7 +183,17 @@ const LandStaking = ({
 
   useEffect(() => {
     if (totalCaws !== 0) {
-      let newPrice = mintPrice * nftCount - mintPriceDiscount * totalCaws;
+      if(totalCaws>=  nftCount)
+     { const discountprice = (nftCount*mintPrice) - (totalCaws*mintPriceDiscount)
+      setdiscountprice(discountprice)}
+      if(totalCaws < nftCount) {
+        const finalITem = nftCount - totalCaws
+        const discountprice =  (finalITem*mintPrice) - (totalCaws*mintPriceDiscount)
+      setdiscountprice(discountprice)
+      }
+      let newPrice =
+        (mintPriceDiscount * totalCaws +
+          mintPrice * (nftCount - totalCaws))
       setGrandPrice(newPrice);
     } else {
       let newPrice = mintPrice * nftCount;
@@ -506,7 +518,7 @@ const LandStaking = ({
               </div>
               <div className="d-flex flex-column gap-2">
                 <h6 className="discountprice m-0">
-                  - {getFormattedNumber(mintPriceDiscount * totalCaws, 4)} ETH
+                 {(discountprice) > 0 && '-'} {getFormattedNumber(discountprice, 4)} ETH
                 </h6>
               </div>
             </div>
