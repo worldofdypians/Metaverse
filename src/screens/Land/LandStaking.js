@@ -103,7 +103,7 @@ const LandStaking = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [grandPrice, setGrandPrice] = useState(0);
   const [discountprice, setdiscountprice] = useState(0);
-  const [countdownFinished, setCountdownFinished] = useState(false);
+  const [countdownFinished, setCountdownFinished] = useState(true);
   const [whitelistCountdown, setwhitelistCountdown] = useState(false);
 
 
@@ -576,8 +576,8 @@ const LandStaking = ({
               </div>
             </div>
             <span className="notetxt">
-              *Available CAWS for discount eligibility: you have {limit}/
-              {cawsToUse} CAWS remaining.
+              *Available CAWS for discount eligibility: you are using {limit}/
+              {cawsToUse} CAWS.
             </span>
             <hr className="mint-divider m-0" />
             {mintStatus.length > 0 && (
