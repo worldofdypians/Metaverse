@@ -112,6 +112,7 @@
     padding: 3px;
     border-radius: 5px;
     background: rgba(0,0,0,0.3);
+    min-height: 50px;
 }
 
 .borderText2 {
@@ -158,13 +159,13 @@
   .errormsg {
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 18px;
     color: #d87b7b;
     display: flex;
     align-items: center;
     gap: 5px;
-    width: 43%;
+    width: 50%;
     justify-content: end;
     @media screen and (max-width: 786px) {
       width: 100%;

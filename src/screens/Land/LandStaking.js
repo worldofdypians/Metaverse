@@ -16,30 +16,53 @@ import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import { shortAddress } from "../Caws/functions/shortAddress";
 
-
-const renderer = ({days, hours, minutes}) => {
+const renderer = ({ days, hours, minutes }) => {
   return (
     <>
-    <div className="d-flex align-items-center gap-2">
-    <div className="d-flex flex-column align-items-center" style={{width: '40px'}}>
-        <span className="eth-price mb-0">{days}</span>
-        <span className="eth-price" style={{fontWeight: 300}}>days</span>
+      <div className="d-flex align-items-center gap-2">
+        <div
+          className="d-flex flex-column align-items-center"
+          style={{ width: "40px" }}
+        >
+          <span className="eth-price mb-0">{days}</span>
+          <span className="eth-price" style={{ fontWeight: 300 }}>
+            days
+          </span>
+        </div>
+        <span
+          className="eth-price"
+          style={{ position: "relative", bottom: "13px" }}
+        >
+          :
+        </span>
+        <div
+          className="d-flex flex-column align-items-center"
+          style={{ width: "40px" }}
+        >
+          <span className="eth-price mb-0">{hours}</span>
+          <span className="eth-price" style={{ fontWeight: 300 }}>
+            hours
+          </span>
+        </div>
+        <span
+          className="eth-price"
+          style={{ position: "relative", bottom: "13px" }}
+        >
+          :
+        </span>
+        <div
+          className="d-flex flex-column align-items-center"
+          style={{ width: "40px" }}
+        >
+          <span className="eth-price mb-0">{minutes}</span>
+          <span className="eth-price" style={{ fontWeight: 300 }}>
+            minutes
+          </span>
+        </div>
       </div>
-      <span className="eth-price" style={{position: 'relative', bottom: '13px'}}>:</span>
-      <div className="d-flex flex-column align-items-center" style={{width: '40px'}}>
-        <span className="eth-price mb-0">{hours}</span>
-        <span className="eth-price" style={{fontWeight: 300}}>hours</span>
-      </div>
-      <span className="eth-price" style={{position: 'relative', bottom: '13px'}}>:</span>
-      <div className="d-flex flex-column align-items-center" style={{width: '40px'}}>
-        <span className="eth-price mb-0">{minutes}</span>
-        <span className="eth-price" style={{fontWeight: 300}}>minutes</span>
-      </div>
-    </div>
     </>
-  )
-}
-
+  );
+};
 
 const LandStaking = ({
   showWalletConnect,
@@ -68,7 +91,7 @@ const LandStaking = ({
   cawsMinted,
   cawsStaked,
   limit,
-  landName
+  landName,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
@@ -81,8 +104,6 @@ const LandStaking = ({
   const [grandPrice, setGrandPrice] = useState(0);
   const [discountprice, setdiscountprice] = useState(0);
   const [countdownFinished, setCountdownFinished] = useState(false);
-
-
 
   const handleCreate = () => {
     handleMint({
@@ -110,13 +131,11 @@ const LandStaking = ({
   const checkData = async () => {
     if (coinbase) {
       let result = window.checkWhitelistLand(coinbase);
-    
+
       if (result === 1 && chainId === 1) {
         setStatus("");
-      }
-      else if(result !==1  && chainId === 1){
+      } else if (result !== 1 && chainId === 1) {
         setStatus("This wallet is not whitelisted");
-       
       }
     }
   };
@@ -185,17 +204,19 @@ const LandStaking = ({
 
   useEffect(() => {
     if (totalCaws !== 0) {
-      if(totalCaws>=  nftCount)
-     { const discountprice = (nftCount*mintPrice) - (totalCaws*mintPriceDiscount)
-      setdiscountprice(discountprice)}
-      if(totalCaws < nftCount) {
-        const finalITem = nftCount - totalCaws
-        const discountprice =  (finalITem*mintPrice) - (totalCaws*mintPriceDiscount)
-      setdiscountprice(discountprice)
+      if (totalCaws >= nftCount) {
+        const discountprice =
+          nftCount * mintPrice - totalCaws * mintPriceDiscount;
+        setdiscountprice(discountprice);
+      }
+      if (totalCaws < nftCount) {
+        const finalITem = nftCount - totalCaws;
+        const discountprice =
+          finalITem * mintPrice - totalCaws * mintPriceDiscount;
+        setdiscountprice(discountprice);
       }
       let newPrice =
-        (mintPriceDiscount * totalCaws +
-          mintPrice * (nftCount - totalCaws))
+        mintPriceDiscount * totalCaws + mintPrice * (nftCount - totalCaws);
       setGrandPrice(newPrice);
     } else {
       let newPrice = mintPrice * nftCount;
@@ -206,7 +227,7 @@ const LandStaking = ({
 
   return (
     <>
-      <div className="d-flex flex-column align-items-center justify-content-center">
+      <div className="d-flex flex-column align-items-center justify-content-center gap-3">
         <h6 className="land-tiers font-organetto d-flex flex-column flex-lg-row align-items-center">
           Genesis Land{" "}
           <span
@@ -222,25 +243,21 @@ const LandStaking = ({
           staking.
         </span>
       </div>
-    
-      <div
-        className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5"
-      >
-        <div
-          className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height"
-        
-        >
-          <div
-            className="d-flex flex-column gap-3 justify-content-between staking-height"
-          
-          >
+
+      <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
+        <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height">
+          <div className="d-flex flex-column gap-3 justify-content-between staking-height">
             <div className="d-flex flex-column position-relative">
               {showBadge && (
                 <div className="totalcreated">
                   <span>{totalCreated}</span>
                 </div>
               )}
-              <div className={`genesis-wrapper ${totalCreated > 0 ? 'genesis-land' : 'genesis-land-empty'} d-flex justify-content-center align-items-center p-3 position-relative h-100`}>
+              <div
+                className={`genesis-wrapper ${
+                  totalCreated > 0 ? "genesis-land" : "genesis-land-empty"
+                } d-flex justify-content-center align-items-center p-3 position-relative h-100`}
+              >
                 <img
                   src={dummyBadge}
                   className="genesis-badge"
@@ -257,7 +274,10 @@ const LandStaking = ({
             </div>
             <div
               className={
-                isConnected === false || activeButton === false || status !== "" || createdNft === 0
+                isConnected === false ||
+                activeButton === false ||
+                status !== "" ||
+                createdNft === 0
                   ? "linear-border-disabled"
                   : "linear-border"
               }
@@ -266,14 +286,16 @@ const LandStaking = ({
                 className={`btn ${
                   isConnected === false ||
                   activeButton === false ||
-                  status !== ""|| createdNft === 0
+                  status !== "" ||
+                  createdNft === 0
                     ? "outline-btn-disabled"
                     : "outline-btn"
                 } px-5 w-100`}
                 disabled={
                   isConnected === false ||
                   activeButton === false ||
-                  status !== ""|| createdNft === 0
+                  status !== "" ||
+                  createdNft === 0
                 }
                 onClick={() => {
                   isConnected === true && activeButton === true
@@ -296,7 +318,7 @@ const LandStaking = ({
                 {coinbase &&
                 (chainId === 1 || chainId === 5) &&
                 status === "" ? (
-                  <span className="create-land-title font-poppins">
+                  <span className="create-land-title font-poppins" style={{fontSize: '14px'}}>
                     Address:{" "}
                     <a
                       href={`https://etherscan.io/address/${coinbase}`}
@@ -312,6 +334,8 @@ const LandStaking = ({
                 ) : (
                   <span className="errormsg">
                     <img
+                      width={18}
+                      height={18}
                       src={
                         require("../../assets/landAssets/alert-triangle.svg")
                           .default
@@ -334,7 +358,7 @@ const LandStaking = ({
                     className="land-placeholder mb-0"
                     style={{ marginLeft: 11 }}
                   >
-                     {landName === '' ? '' : `#${landName}`}
+                    {landName === "" ? "" : `#${landName}`}
                   </h6>
                 </div>
               </div>
@@ -345,8 +369,7 @@ const LandStaking = ({
                   className="land-placeholder borderText"
                   style={{ fontSize: "12px" }}
                 >
-                  Enjoy the land inside of WoD and stake the NFT for additional
-                  rewards.
+                  Enjoy your new property inside of WoD.
                   <a
                     href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing"
                     target="_blank"
@@ -436,27 +459,42 @@ const LandStaking = ({
               </div>
             </div>
             <hr className="mint-divider m-0" />
-           
+
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between w-100">
-              <div className="d-flex align-items-center gap-2">
-                <img src={mintEthIcon} alt="ethereum" />
-                <span className="eth-price">
-                  Price:{" "}
-                  {getFormattedNumber(
-                    totalCaws > 0 ? mintPriceDiscount : mintPrice,
-                    4
-                  )}{" "}
-                  ETH
-                </span>
-              </div>
-              <div className="d-flex flex-column align-items-center">
-                {countdownFinished === false ? <>
-                <h6 className="eth-price">MINT COUNTDOWN:</h6>
-              <Countdown renderer={renderer} date={"2023-02-23T11:00:00.000+00:00"} onComplete={()=>{setCountdownFinished(true)}}/></> : <>
-              <h6 className="eth-price">WHITELIST COUNTDOWN:</h6>
-              <Countdown renderer={renderer} date={"2023-02-25T17:00:00"} /></>}
-              </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img src={mintEthIcon} alt="ethereum" />
+                  <span className="eth-price">
+                    Price:{" "}
+                    {getFormattedNumber(
+                      totalCaws > 0 ? mintPriceDiscount : mintPrice,
+                      4
+                    )}{" "}
+                    ETH
+                  </span>
+                </div>
+                <div className="d-flex flex-column align-items-center">
+                  {countdownFinished === false ? (
+                    <>
+                      <h6 className="eth-price">MINT COUNTDOWN:</h6>
+                      <Countdown
+                        renderer={renderer}
+                        date={"2023-02-23T11:00:00.000+00:00"}
+                        onComplete={() => {
+                          setCountdownFinished(true);
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <h6 className="eth-price">WHITELIST COUNTDOWN:</h6>
+                      <Countdown
+                        renderer={renderer}
+                        date={"2023-02-25T17:00:00"}
+                      />
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -523,7 +561,8 @@ const LandStaking = ({
               </div>
               <div className="d-flex flex-column gap-2">
                 <h6 className="discountprice m-0">
-                 {(discountprice) > 0 && '-'} {getFormattedNumber(discountprice, 4)} ETH
+                  {discountprice > 0 && "-"}{" "}
+                  {getFormattedNumber(discountprice, 4)} ETH
                 </h6>
               </div>
             </div>
@@ -560,8 +599,7 @@ const LandStaking = ({
                   // (status !== "Connect your wallet." && status !== "" && countdownFinished === false)
 
                   // mintloading === "error" ||
-                  ( countdownFinished === false)
-                  
+                  countdownFinished === false
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -571,13 +609,15 @@ const LandStaking = ({
                     // mintloading === "error"
                     //   ? "filled-error-btn"
                     //   : status !== "Connect your wallet." &&
-                    //     status !== "" && 
-                        countdownFinished === false
+                    //     status !== "" &&
+                    countdownFinished === false
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   }  px-4 w-100`}
                   onClick={() => {
-                    isConnected === true && (chainId === 1 || chainId === 5) && countdownFinished === true
+                    isConnected === true &&
+                    (chainId === 1 || chainId === 5) &&
+                    countdownFinished === true
                       ? handleCreate()
                       : showWalletConnect();
                   }}
@@ -590,10 +630,7 @@ const LandStaking = ({
                   //     : false
                   // }
 
-                  disabled={countdownFinished === false
-                      ? true
-                      : false
-                  }
+                  disabled={countdownFinished === false ? true : false}
                   onMouseEnter={() => {
                     setMouseOver(true);
                   }}
@@ -601,8 +638,7 @@ const LandStaking = ({
                     setMouseOver(false);
                   }}
                 >
-                  {(isConnected === false ||
-                    (chainId !== 1)) && (
+                  {(isConnected === false || chainId !== 1) && (
                     <img
                       src={mouseOver === false ? blackWallet : whitewallet}
                       alt=""
@@ -642,7 +678,6 @@ const LandStaking = ({
 
         <div className="col-12 col-xxl-4 pe-2 pe-lg-0 mt-5  mt-xxl-0">
           <div className="p-3 mint-wrapper d-flex flex-column gap-1 justify-content-between staking-height">
-           
             <div className="row gap-1 align-items-center justify-content-between">
               <span
                 className="create-land-title font-poppins"
@@ -654,7 +689,6 @@ const LandStaking = ({
                 className="d-flex align-items-center gap-2"
                 style={{ width: "fit-content" }}
               >
-                
                 <ToolTip
                   title={
                     <React.Fragment>
@@ -701,7 +735,8 @@ const LandStaking = ({
               <div
                 className={
                   isConnected === false ||
-                  activeButton === false || createdNft === 0 ||
+                  activeButton === false ||
+                  createdNft === 0 ||
                   status !== ""
                     ? "linear-border-disabled"
                     : "linear-border"
@@ -710,14 +745,16 @@ const LandStaking = ({
                 <button
                   className={`btn ${
                     isConnected === false ||
-                    activeButton === false || createdNft === 0 ||
+                    activeButton === false ||
+                    createdNft === 0 ||
                     status !== ""
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
                   disabled={
                     isConnected === false ||
-                    activeButton === false || createdNft === 0 ||
+                    activeButton === false ||
+                    createdNft === 0 ||
                     status !== ""
                   }
                   onClick={() => {
