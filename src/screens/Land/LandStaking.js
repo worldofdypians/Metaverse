@@ -221,9 +221,9 @@ const LandStaking = ({
         setdiscountprice(discountprice);
       }
       if (totalCaws < nftCount) {
-        const finalITem = nftCount - totalCaws;
-        const discountprice =
-          finalITem * mintPrice - totalCaws * mintPriceDiscount;
+        // const finalITem = nftCount - limit;
+        const discountprice = totalCaws *(0.2 * mintPrice)
+          // finalITem * mintPrice - totalCaws * mintPriceDiscount;
         setdiscountprice(discountprice);
       }
       let newPrice =
@@ -288,7 +288,7 @@ const LandStaking = ({
                 isConnected === false ||
                 activeButton === false ||
                 status !== "" ||
-                createdNft === 0
+                totalCreated === 0
                   ? "linear-border-disabled"
                   : "linear-border"
               }
@@ -298,7 +298,7 @@ const LandStaking = ({
                   isConnected === false ||
                   activeButton === false ||
                   status !== "" ||
-                  createdNft === 0
+                  totalCreated === 0
                     ? "outline-btn-disabled"
                     : "outline-btn"
                 } px-5 w-100`}
@@ -306,7 +306,7 @@ const LandStaking = ({
                   isConnected === false ||
                   activeButton === false ||
                   status !== "" ||
-                  createdNft === 0
+                  totalCreated === 0
                 }
                 onClick={() => {
                   isConnected === true && activeButton === true
@@ -403,8 +403,8 @@ const LandStaking = ({
                   max={10}
                   min={1}
                   className="land-input w-100"
-                  value={nftCount}
-                  onChange={(e) => setNftCount(e.target.value)}
+                  value={parseInt(nftCount)}
+                  onChange={(e) => setNftCount(parseInt(e.target.value))}
                 />
                 <span
                   className="limit-span"
