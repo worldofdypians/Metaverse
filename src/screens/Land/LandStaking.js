@@ -245,8 +245,8 @@ const LandStaking = ({
       </div>
 
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
-        <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height">
-          <div className="d-flex flex-column gap-3 justify-content-between staking-height">
+        <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height-2">
+          <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
             <div className="d-flex flex-column position-relative">
               {showBadge && (
                 <div className="totalcreated">
@@ -461,7 +461,7 @@ const LandStaking = ({
             <hr className="mint-divider m-0" />
 
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
-              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between w-100">
+              <div className="d-flex flex-column gap-2 gap-lg-0 flex-lg-row align-items-start align-items-lg-center justify-content-between w-100">
                 <div className="d-flex align-items-center gap-2">
                   <img src={mintEthIcon} alt="ethereum" />
                   <span className="eth-price">
