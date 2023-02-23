@@ -221,9 +221,9 @@ const LandStaking = ({
         setdiscountprice(discountprice);
       }
       if (totalCaws < nftCount) {
-        const finalITem = nftCount - totalCaws;
-        const discountprice =
-          finalITem * mintPrice - totalCaws * mintPriceDiscount;
+        // const finalITem = nftCount - limit;
+        const discountprice = totalCaws *(0.2 * mintPrice)
+          // finalITem * mintPrice - totalCaws * mintPriceDiscount;
         setdiscountprice(discountprice);
       }
       let newPrice =
