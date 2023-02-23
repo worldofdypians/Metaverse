@@ -60,6 +60,8 @@ const Land = ({
   const [mintloading, setmintloading] = useState("initial");
   const [walletModal, setwalletModal] = useState(false);
   const [whitelistModal, setwhitelistModal] = useState(false);
+  const [textColor, settextColor] = useState('#fff');
+
 
   const myNft = async () => {
     let myNft = await window.myNftLandListContract(coinbase);
@@ -240,6 +242,7 @@ const Land = ({
             .then(() => {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
+              settextColor('rgb(123, 216, 176)')
               setTimeout(() => {
                 setmintStatus("");
                 setmintloading("initial");
@@ -533,6 +536,7 @@ const Land = ({
           totalCAWSAvailable={
             myCAWSNFTsCreated.length + myCAWSNFTsTotalStaked.length
           }
+          textColor={textColor}
           cawsMinted={myCAWSNFTsCreated.length}
           cawsStaked={myCAWSNFTsTotalStaked.length}
           checkTotalcaws={calculateCaws}
