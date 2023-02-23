@@ -91,7 +91,7 @@ const LandStaking = ({
   cawsMinted,
   cawsStaked,
   limit,
-  landName,
+  landName, textColor
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
@@ -104,6 +104,8 @@ const LandStaking = ({
   const [grandPrice, setGrandPrice] = useState(0);
   const [discountprice, setdiscountprice] = useState(0);
   const [countdownFinished, setCountdownFinished] = useState(false);
+  const [whitelistCountdown, setwhitelistCountdown] = useState(false);
+
 
   const handleCreate = () => {
     handleMint({
@@ -131,10 +133,19 @@ const LandStaking = ({
   const checkData = async () => {
     if (coinbase) {
       let result = window.checkWhitelistLand(coinbase);
-
-      if (result === 1 && chainId === 1) {
+    
+      if (result === 1 && chainId === 1 && whitelistCountdown === false) {
         setStatus("");
-      } else if (result !== 1 && chainId === 1) {
+      }
+      else if(result !==1  && chainId === 1 && whitelistCountdown === true){
+        setStatus("");
+      }
+
+      else if(result ===1  && chainId === 1 && whitelistCountdown === true){
+        setStatus("");
+      }
+
+      else if(result !==1  && chainId === 1 && whitelistCountdown === false){
         setStatus("This wallet is not whitelisted");
       }
     }
@@ -349,7 +360,7 @@ const LandStaking = ({
             </div>
             <div className="d-flex mt-3 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
               <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-                <span className="land-name">Name</span>
+                <span className="land-name" style={{color: textColor}}>Name</span>
                 <div
                   className="borderText borderText2"
                   style={{ width: "100%" }}
@@ -363,7 +374,7 @@ const LandStaking = ({
                 </div>
               </div>
               <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-                <span className="land-name">Description</span>
+                <span className="land-name"  style={{color: textColor}}>Description</span>
 
                 <h6
                   className="land-placeholder borderText"
@@ -462,39 +473,26 @@ const LandStaking = ({
 
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between w-100">
-                <div className="d-flex align-items-center gap-2">
-                  <img src={mintEthIcon} alt="ethereum" />
-                  <span className="eth-price">
-                    Price:{" "}
-                    {getFormattedNumber(
-                      totalCaws > 0 ? mintPriceDiscount : mintPrice,
-                      4
-                    )}{" "}
-                    ETH
-                  </span>
-                </div>
-                <div className="d-flex flex-column align-items-center">
-                  {countdownFinished === false ? (
-                    <>
-                      <h6 className="eth-price">MINT COUNTDOWN:</h6>
-                      <Countdown
-                        renderer={renderer}
-                        date={"2023-02-23T11:00:00.000+00:00"}
-                        onComplete={() => {
-                          setCountdownFinished(true);
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <h6 className="eth-price">WHITELIST COUNTDOWN:</h6>
-                      <Countdown
-                        renderer={renderer}
-                        date={"2023-02-25T17:00:00"}
-                      />
-                    </>
-                  )}
-                </div>
+              <div className="d-flex align-items-center gap-2">
+                <img src={mintEthIcon} alt="ethereum" />
+                <span className="eth-price">
+                  Price:{" "}
+                  {getFormattedNumber(
+                    totalCaws > 0 ? mintPriceDiscount : mintPrice,
+                    4
+                  )}{" "}
+                  ETH
+                </span>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                {countdownFinished === false && whitelistCountdown === false && <>
+                <h6 className="eth-price">MINT COUNTDOWN:</h6>
+              <Countdown renderer={renderer} date={"2023-02-23T11:00:00.000+00:00"} onComplete={()=>{setCountdownFinished(true)}}/></>
+               }
+               {whitelistCountdown === false && countdownFinished === true && <>
+              <h6 className="eth-price">WHITELIST COUNTDOWN:</h6>
+              <Countdown renderer={renderer} date={"2023-02-25T17:00:00.000+00:00"} onComplete={()=>{setwhitelistCountdown(true)}} /></>}
+              </div>
               </div>
             </div>
           </div>
@@ -596,21 +594,20 @@ const LandStaking = ({
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
               <div
                 className={
-                  // (status !== "Connect your wallet." && status !== "" && countdownFinished === false)
-
-                  // mintloading === "error" ||
-                  countdownFinished === false
+                  (isConnected === true && chainId !== 1 ) ||
+                      (status !== "Connect your wallet." && status !== "") || countdownFinished === false ||
+  mintloading === "error" 
+                  
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
               >
                 <button
                   className={`btn ${
-                    // mintloading === "error"
-                    //   ? "filled-error-btn"
-                    //   : status !== "Connect your wallet." &&
-                    //     status !== "" &&
-                    countdownFinished === false
+                    mintloading === "error"
+                      ? "filled-error-btn"
+                      : (isConnected === true && chainId !== 1 ) ||
+                      (status !== "Connect your wallet." && status !== "") || countdownFinished === false
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   }  px-4 w-100`}
@@ -621,16 +618,15 @@ const LandStaking = ({
                       ? handleCreate()
                       : showWalletConnect();
                   }}
-                  // disabled={
-                  //   mintloading === "error" ||
-                  //   mintloading === "success" ||
-                  //   (isConnected === true && chainId !== 1 && chainId !== 5 && countdownFinished === false) ||
-                  //   (status !== "Connect your wallet." && status !== "")
-                  //     ? true
-                  //     : false
-                  // }
+                  disabled={
+                    mintloading === "error" ||
+                    mintloading === "success" ||
+                    (isConnected === true && chainId !== 1 ) ||
+                    (status !== "Connect your wallet." && status !== "") || countdownFinished === false
+                      ? true
+                      : false
+                  }
 
-                  disabled={countdownFinished === false ? true : false}
                   onMouseEnter={() => {
                     setMouseOver(true);
                   }}
@@ -645,7 +641,7 @@ const LandStaking = ({
                       style={{ width: "23px", height: "23px" }}
                     />
                   )}{" "}
-                  {/* {mintloading === "initial" &&
+                   {mintloading === "initial" &&
                   isConnected === true &&
                   (chainId === 1) ? (
                     "Mint"
@@ -665,11 +661,12 @@ const LandStaking = ({
                       (isConnected === true &&
                         (chainId === 1)) ? (
                     "Success"
-                  ) : (
+                  ) : (isConnected === true &&
+                    (chainId !== 1)) ? (
 
-                    ""
-                  )} */}
-                  Connect wallet
+                    " Switch Chain"
+                  ) : 'Connect wallet'}  
+                 
                 </button>
               </div>
             </div>
