@@ -103,7 +103,7 @@ const LandStaking = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [grandPrice, setGrandPrice] = useState(0);
   const [discountprice, setdiscountprice] = useState(0);
-  const [countdownFinished, setCountdownFinished] = useState(false);
+  const [countdownFinished, setCountdownFinished] = useState(true);
   const [whitelistCountdown, setwhitelistCountdown] = useState(false);
 
 
