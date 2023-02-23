@@ -256,8 +256,8 @@ const LandStaking = ({
       </div>
 
       <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
-        <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height">
-          <div className="d-flex flex-column gap-3 justify-content-between staking-height">
+        <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height-2">
+          <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
             <div className="d-flex flex-column position-relative">
               {showBadge && (
                 <div className="totalcreated">
