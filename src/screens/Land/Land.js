@@ -244,6 +244,8 @@ const Land = ({
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
+      updateLandNft()
+
             })
             .catch((e) => {
               console.error(e);
@@ -418,7 +420,6 @@ const Land = ({
       myCAWStakes();
       myCAWNft();
       checkCawsToUse();
-      updateLandNft()
     }
 
     //  }, 1000);

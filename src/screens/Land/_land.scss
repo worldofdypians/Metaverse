@@ -747,6 +747,14 @@
     background-position: center;
   }
 
+
+  .genesis-land-empty {
+    background-image: url("../../assets/landAssets/tierOneLand.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
   .community-image {
     --mask: linear-gradient(-135deg, #0000 30px, #000 0);
     -webkit-mask: var(--mask);

@@ -236,11 +236,11 @@ function App() {
   return (
     <BrowserRouter>
       <div className="container-fluid p-0 main-wrapper position-relative">
-        {!window.location.href.includes('/land') &&
-        // <LandPopup />
+        {/* {!window.location.href.includes('/land') &&
+        <LandPopup />
         <LandFlyout />
-        }
-        <Header handleSignUp={handleSignUp} />
+        }*/}
+        <Header handleSignUp={handleSignUp} /> 
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
           <Route exact path="/news" element={<News />} />
