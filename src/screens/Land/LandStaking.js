@@ -288,7 +288,7 @@ const LandStaking = ({
                 isConnected === false ||
                 activeButton === false ||
                 status !== "" ||
-                createdNft === 0
+                totalCreated === 0
                   ? "linear-border-disabled"
                   : "linear-border"
               }
@@ -298,7 +298,7 @@ const LandStaking = ({
                   isConnected === false ||
                   activeButton === false ||
                   status !== "" ||
-                  createdNft === 0
+                  totalCreated === 0
                     ? "outline-btn-disabled"
                     : "outline-btn"
                 } px-5 w-100`}
@@ -306,7 +306,7 @@ const LandStaking = ({
                   isConnected === false ||
                   activeButton === false ||
                   status !== "" ||
-                  createdNft === 0
+                  totalCreated === 0
                 }
                 onClick={() => {
                   isConnected === true && activeButton === true
