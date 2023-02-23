@@ -403,8 +403,8 @@ const LandStaking = ({
                   max={10}
                   min={1}
                   className="land-input w-100"
-                  value={nftCount}
-                  onChange={(e) => setNftCount(e.target.value)}
+                  value={parseInt(nftCount)}
+                  onChange={(e) => setNftCount(parseInt(e.target.value))}
                 />
                 <span
                   className="limit-span"
