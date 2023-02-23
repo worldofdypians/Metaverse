@@ -576,8 +576,8 @@ const LandStaking = ({
               </div>
             </div>
             <span className="notetxt">
-              *Available CAWS for discount eligibility: you have {limit}/
-              {cawsToUse} CAWS remaining.
+              *Available CAWS for discount eligibility: you are using {limit}/
+              {cawsToUse} CAWS.
             </span>
             <hr className="mint-divider m-0" />
             {mintStatus.length > 0 && (
