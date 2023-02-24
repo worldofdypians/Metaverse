@@ -286,8 +286,7 @@ const LandStaking = ({
             <div
               className={
                 isConnected === false ||
-                activeButton === false ||
-                status !== "" ||
+                activeButton === false  ||
                 totalCreated === 0
                   ? "linear-border-disabled"
                   : "linear-border"
@@ -296,8 +295,7 @@ const LandStaking = ({
               <button
                 className={`btn ${
                   isConnected === false ||
-                  activeButton === false ||
-                  status !== "" ||
+                  activeButton === false  ||
                   totalCreated === 0
                     ? "outline-btn-disabled"
                     : "outline-btn"
@@ -305,7 +303,6 @@ const LandStaking = ({
                 disabled={
                   isConnected === false ||
                   activeButton === false ||
-                  status !== "" ||
                   totalCreated === 0
                 }
                 onClick={() => {
@@ -733,8 +730,7 @@ const LandStaking = ({
                 className={
                   isConnected === false ||
                   activeButton === false ||
-                  createdNft === 0 ||
-                  status !== ""
+                  createdNft === 0  
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -743,16 +739,14 @@ const LandStaking = ({
                   className={`btn ${
                     isConnected === false ||
                     activeButton === false ||
-                    createdNft === 0 ||
-                    status !== ""
+                    createdNft === 0
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
                   disabled={
                     isConnected === false ||
                     activeButton === false ||
-                    createdNft === 0 ||
-                    status !== ""
+                    createdNft === 0  
                   }
                   onClick={() => {
                     isConnected === true && activeButton === true
@@ -791,8 +785,7 @@ const LandStaking = ({
               <div
                 className={
                   (isConnected === false && activeButton === false) ||
-                  ETHrewards === 0 ||
-                  status !== ""
+                  ETHrewards === 0  
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -800,15 +793,13 @@ const LandStaking = ({
                 <button
                   className={`btn ${
                     (isConnected === false && activeButton === false) ||
-                    ETHrewards === 0 ||
-                    status !== ""
+                    ETHrewards === 0  
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
                   disabled={
                     (isConnected === false && activeButton === false) ||
-                    ETHrewards === 0 ||
-                    status !== ""
+                    ETHrewards === 0  
                   }
                   onClick={onClaimAll}
                 >
@@ -828,7 +819,6 @@ const LandStaking = ({
                 className={
                   isConnected === false ||
                   activeButton === false ||
-                  status !== "" ||
                   mystakes === 0
                     ? "linear-border-disabled"
                     : "linear-border"
@@ -838,7 +828,6 @@ const LandStaking = ({
                   className={`btn ${
                     isConnected === false ||
                     activeButton === false ||
-                    status !== "" ||
                     mystakes === 0
                       ? "outline-btn-disabled"
                       : "outline-btn"
@@ -846,7 +835,6 @@ const LandStaking = ({
                   disabled={
                     isConnected === false ||
                     activeButton === false ||
-                    status !== "" ||
                     mystakes === 0
                   }
                   onClick={() => {
