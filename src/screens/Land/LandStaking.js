@@ -756,7 +756,7 @@ const LandStaking = ({
                         alt="ethereum"
                       />
                       <span className="eth-rewards">
-                        {getFormattedNumber(ETHrewards, 7)} ETH
+                        {getFormattedNumber(ETHrewards, 7)} WETH
                       </span>
                     </div>
                     <span className="eth-rewards">

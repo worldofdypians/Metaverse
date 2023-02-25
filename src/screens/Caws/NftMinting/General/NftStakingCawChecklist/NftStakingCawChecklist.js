@@ -259,7 +259,7 @@ const NftStakingCawChecklist = ({
                       <p id="earnedText">Pending</p>
                       <div>
                         <p id="ethPrice">
-                          {getFormattedNumber(EthRewards, 2)}ETH
+                          {getFormattedNumber(EthRewards, 2)} WETH
                         </p>
                         <p id="fiatPrice">{formattedNum(ethToUSD, true)}</p>
                       </div>
