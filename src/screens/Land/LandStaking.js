@@ -130,26 +130,7 @@ const LandStaking = ({
     }
   };
 
-  const checkData = async () => {
-    if (coinbase) {
-      let result = window.checkWhitelistLand(coinbase);
-    
-      if (result === 1 && chainId === 1 && whitelistCountdown === false) {
-        setStatus("");
-      }
-      else if(result !==1  && chainId === 1 && whitelistCountdown === true){
-        setStatus("");
-      }
 
-      else if(result ===1  && chainId === 1 && whitelistCountdown === true){
-        setStatus("");
-      }
-
-      else if(result !==1  && chainId === 1 && whitelistCountdown === false){
-        setStatus("This wallet is not whitelisted");
-      }
-    }
-  };
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -200,9 +181,11 @@ const LandStaking = ({
         }
         if (chainId === 1) {
           setactiveButton(true);
+          setStatus("");
+
         }
       }
-      checkData();
+      
     }
   }, [isConnected, chainId, coinbase]);
 
@@ -286,8 +269,7 @@ const LandStaking = ({
             <div
               className={
                 isConnected === false ||
-                activeButton === false ||
-                status !== "" ||
+                activeButton === false  ||
                 totalCreated === 0
                   ? "linear-border-disabled"
                   : "linear-border"
@@ -296,8 +278,7 @@ const LandStaking = ({
               <button
                 className={`btn ${
                   isConnected === false ||
-                  activeButton === false ||
-                  status !== "" ||
+                  activeButton === false  ||
                   totalCreated === 0
                     ? "outline-btn-disabled"
                     : "outline-btn"
@@ -305,7 +286,6 @@ const LandStaking = ({
                 disabled={
                   isConnected === false ||
                   activeButton === false ||
-                  status !== "" ||
                   totalCreated === 0
                 }
                 onClick={() => {
@@ -733,8 +713,7 @@ const LandStaking = ({
                 className={
                   isConnected === false ||
                   activeButton === false ||
-                  createdNft === 0 ||
-                  status !== ""
+                  createdNft === 0  
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -743,16 +722,14 @@ const LandStaking = ({
                   className={`btn ${
                     isConnected === false ||
                     activeButton === false ||
-                    createdNft === 0 ||
-                    status !== ""
+                    createdNft === 0
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
                   disabled={
                     isConnected === false ||
                     activeButton === false ||
-                    createdNft === 0 ||
-                    status !== ""
+                    createdNft === 0  
                   }
                   onClick={() => {
                     isConnected === true && activeButton === true
@@ -779,7 +756,7 @@ const LandStaking = ({
                         alt="ethereum"
                       />
                       <span className="eth-rewards">
-                        {getFormattedNumber(ETHrewards, 7)} ETH
+                        {getFormattedNumber(ETHrewards, 7)} WETH
                       </span>
                     </div>
                     <span className="eth-rewards">
@@ -791,8 +768,7 @@ const LandStaking = ({
               <div
                 className={
                   (isConnected === false && activeButton === false) ||
-                  ETHrewards === 0 ||
-                  status !== ""
+                  ETHrewards === 0  
                     ? "linear-border-disabled"
                     : "linear-border"
                 }
@@ -800,15 +776,13 @@ const LandStaking = ({
                 <button
                   className={`btn ${
                     (isConnected === false && activeButton === false) ||
-                    ETHrewards === 0 ||
-                    status !== ""
+                    ETHrewards === 0  
                       ? "outline-btn-disabled"
                       : "filled-btn"
                   } px-5 w-100`}
                   disabled={
                     (isConnected === false && activeButton === false) ||
-                    ETHrewards === 0 ||
-                    status !== ""
+                    ETHrewards === 0  
                   }
                   onClick={onClaimAll}
                 >
@@ -828,7 +802,6 @@ const LandStaking = ({
                 className={
                   isConnected === false ||
                   activeButton === false ||
-                  status !== "" ||
                   mystakes === 0
                     ? "linear-border-disabled"
                     : "linear-border"
@@ -838,7 +811,6 @@ const LandStaking = ({
                   className={`btn ${
                     isConnected === false ||
                     activeButton === false ||
-                    status !== "" ||
                     mystakes === 0
                       ? "outline-btn-disabled"
                       : "outline-btn"
@@ -846,7 +818,6 @@ const LandStaking = ({
                   disabled={
                     isConnected === false ||
                     activeButton === false ||
-                    status !== "" ||
                     mystakes === 0
                   }
                   onClick={() => {

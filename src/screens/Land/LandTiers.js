@@ -30,7 +30,7 @@ const LandTiers = () => {
         area: "15,625m\u00b2",
         benefits: [
           "1 Multi Functional Building",
-          "2 Enviromental Items",
+          "2 Environmental Items",
           "1 AI Powered NPC",
           "Exclusive Land NFT Staking",
           "Earn Special Rewards",

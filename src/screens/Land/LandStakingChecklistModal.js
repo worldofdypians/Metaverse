@@ -771,7 +771,7 @@ const LandStakingChecklistModal = ({
                     className="landaprText d-flex m-0 align-items-center"
                     style={{ gap: 8 }}
                   >
-                    {getFormattedNumber(ETHrewards, 2)}ETH{"   "}({" "}
+                    {getFormattedNumber(ETHrewards, 2)} WETH{"   "}({" "}
                     {formattedNum(ethToUSD, true)})
                     <img
                       src={ethereum}
