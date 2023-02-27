@@ -93,6 +93,7 @@ const LandStaking = ({
   limit,
   landName,
   textColor,
+  handleSwitchChain
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
@@ -811,7 +812,7 @@ const LandStaking = ({
                 </div>
               </div>
 
-              {coinbase && (chainId === 1 || chainId === 5) && status === "" ? (
+              {coinbase && chainId === 1  && status === "" ? (
                 <span
                   className="create-land-title font-poppins"
                   style={{ fontSize: "14px" }}
@@ -833,33 +834,24 @@ const LandStaking = ({
                     (status !== "Connect your wallet." && status !== "") ||
                     countdownFinished === false ||
                     mintloading === "error"
-                      ? "linear-border-disabled"
+                      ? "linear-border-disabled-green"
                       : "linear-border"
                   }
                 >
                   <button
                     className={`btn ${
-                      mintloading === "error"
-                        ? "filled-error-btn"
-                        : (isConnected === true && chainId !== 1) ||
+                       (isConnected === true && chainId !== 1) ||
                           (status !== "Connect your wallet." &&
-                            status !== "") ||
-                          countdownFinished === false
-                        ? "outline-btn-disabled"
+                            status !== "") 
+                        ? "outline-btn-green"
                         : "filled-btn"
                     }  px-4 w-100`}
                     onClick={() => {
+                      isConnected === true && chainId !== 1 ? handleSwitchChain()
+                      :
                       showWalletConnect();
                     }}
-                    disabled={
-                      mintloading === "error" ||
-                      mintloading === "success" ||
-                      (isConnected === true && chainId !== 1) ||
-                      (status !== "Connect your wallet." && status !== "") ||
-                      countdownFinished === false
-                        ? true
-                        : false
-                    }
+                   
                     onMouseEnter={() => {
                       setMouseOver(true);
                     }}
@@ -867,14 +859,15 @@ const LandStaking = ({
                       setMouseOver(false);
                     }}
                   >
-                    {(isConnected === false || chainId !== 1) && (
+                    {(isConnected === false) && (
                       <img
                         src={mouseOver === false ? blackWallet : whitewallet}
                         alt=""
                         style={{ width: "23px", height: "23px" }}
                       />
-                    )}{" "}
-                    Connect wallet
+                    )}{ (chainId !== 1 && coinbase) ? "Switch Chain" : 'Connect wallet'}
+
+                   
                   </button>
                 </div>
               )}
