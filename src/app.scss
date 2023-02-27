@@ -305,6 +305,63 @@ body {
   }
 }
 
+.purple-btn {
+  background: linear-gradient(266.71deg,#a420e2 8.87%,#1829bd 91.56%);
+  clip-path: polygon(
+    0 20px,
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%
+  );
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  border: none !important;
+  white-space: pre;
+}
+
+.linear-border-purple::before {
+  content: "";
+}
+
+.outline-btn-green, .outline-btn-green:hover, .outline-btn-green:focus {
+  background: #14142a;
+  border-radius: 8px;
+  border: 1px solid #4ed5d2;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #4ed5d2;
+  width: 145px!important;
+}
+
+.linear-border-purple {
+  background: linear-gradient(266.71deg,#a420e2 8.87%,#1829bd 91.56%);
+  border: transparent;
+  position: relative;
+  padding: 3px;
+  border-radius: 8px;
+  clip-path: polygon(
+    0 20px,
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%
+  );
+
+  @media only screen and (max-width: 500px) {
+    align-self: center;
+  }
+
+}
+
 .hidescroll {
   overflow: hidden;
   pointer-events: none;

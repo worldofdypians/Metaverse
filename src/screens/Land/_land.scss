@@ -58,26 +58,11 @@
       color: #c0cbf7;
     }
   }
-
-.staking-height{
-  height: 480px;
-  @media screen and (max-width: 786px) {
-    height: auto;
-    min-height: 600px;
-  }
-}
-.staking-height-2{
-  height: 480px;
-  @media screen and (max-width: 786px) {
-    height: auto !important;
-  }
-}
-
   .totalcreated {
     background: #7bd8af;
     position: absolute;
     border-radius: 50%;
-    padding: 4px 13px;
+    padding: 7px 14px;
     top: -17px;
     left: 10px;
     z-index: 1;
@@ -98,38 +83,6 @@
     line-height: 24px;
     color: #ffffff;
   }
-
-  .mint-span-success {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 18px;
-    color: #09fbd3;
-    text-align: center;
-  }
-
-  .addr-text {
-    color: rgb(123, 216, 176);
-    font-size: 14px;
-    font-weight: 400;
-  }
-
-.borderText {
-  border: 1px solid #aaa5eb;
-    padding: 3px;
-    border-radius: 5px;
-    background: rgba(0,0,0,0.3);
-    min-height: 50px;
-}
-
-.borderText2 {
-  width: 100px;
-    height: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-}
-
 
   .mint-span {
     font-weight: 400;
@@ -165,18 +118,12 @@
   .errormsg {
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 18px;
     color: #d87b7b;
     display: flex;
     align-items: center;
     gap: 5px;
-    width: 50%;
-    justify-content: end;
-    @media screen and (max-width: 786px) {
-      width: 100%;
-      justify-content: start;
-    }
   }
   .pricetext {
     font-weight: 500;
@@ -279,11 +226,11 @@
     border-radius: 8px;
     position: relative;
 
-    // @media screen and (max-width: 991px) {
-    //   background-image: url("../../assets/landAssets/newGenesisBg.webp");
-    //   background-size: cover;
-    //   background-repeat: no-repeat;
-    // }
+    @media screen and (max-width: 991px) {
+      background-image: url("../../assets/landAssets/newGenesisBg.webp");
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
 
     .land-stake-title {
       font-weight: 800;
@@ -295,7 +242,7 @@
       left: 0;
       top: -40px;
       @media screen and (max-width: 991px) {
-        top: -85px;
+        top: -95px;
         white-space: break-spaces;
       }
     }
@@ -391,22 +338,24 @@
     }
   }
 
-  // .mint-wrappernew::before {
-  //   content: "";
-  //   position: absolute;
-  //   left: 0;
-  //   right: 0;
-  //   bottom: 0;
-  //   top: 0;
-  //   margin: auto;
-  //   background-size: cover;
-  //   background-repeat: no-repeat;
-  //   background-position: top;
+  .mint-wrappernew::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    // background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+    background-image: url("../../assets/landAssets/genesis-hero.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
 
-  //   @media screen and (max-width: 991px) {
-  //     background-image: none;
-  //   }
-  // }
+    @media screen and (max-width: 991px) {
+      background-image: none;
+    }
+  }
 
   // .mint-wrappernew::after{
   //   content: "";
@@ -420,9 +369,6 @@
   //   bottom: 0;
   //   right: 0;
   //   margin: auto;
-  //   @media screen and (max-width: 991px) {
-  //     background-image: none;
-  //   }
   // }
 
   .land-input {
@@ -444,7 +390,7 @@
     color: #ffffff;
     position: absolute;
     left: 0;
-    bottom: -48px;
+    bottom: -30px;
   }
 
   .eth-price {
@@ -467,8 +413,9 @@
     font-size: 14px;
     line-height: 21px;
     color: #ffffff;
-    // width: 75%;
+    width: 75%;
     padding-bottom: 5px;
+    white-space: nowrap;
     @media screen and (max-width: 1500px) {
       width: 100%;
     }
@@ -588,6 +535,7 @@
     width: 50%;
     @media screen and (max-width: 786px) {
       width: 100%;
+      padding: 0 10px;
     }
   }
 
@@ -754,14 +702,6 @@
     background-position: center;
   }
 
-
-  .genesis-land-empty {
-    background-image: url("../../assets/landAssets/tierOneLand.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-  }
-
   .community-image {
     --mask: linear-gradient(-135deg, #0000 30px, #000 0);
     -webkit-mask: var(--mask);
@@ -782,6 +722,10 @@
     font-size: 28px;
     line-height: 38px;
     color: #ffffff;
+
+    @media screen and (max-width: 786px) {
+      font-size: 22px;
+    }
   }
 
   .mint-release-title {
@@ -1140,6 +1084,18 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.newminttitle {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 32px;
+  color: #ffffff;
+}
+
+.newminttitle-marked {
+  color: #09FBD3;
+}
+
 @media screen and (max-width: 1441px) {
   .benefit-card {
     width: 285px !important;
@@ -1227,30 +1183,4 @@ input::-webkit-inner-spin-button {
   .discount-break {
     display: none;
   }
-}
-
-.discountprice {
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 21px;
-  text-align: right;
-  color: #fe6a6a;
-}
-
-.totalprice2 {
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  text-align: right;
-  color: #09fbd3;
-}
-
-.notetxt {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-  color: #b8b8b8;
 }

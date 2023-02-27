@@ -60,8 +60,7 @@ const Land = ({
   const [mintloading, setmintloading] = useState("initial");
   const [walletModal, setwalletModal] = useState(false);
   const [whitelistModal, setwhitelistModal] = useState(false);
-  const [textColor, settextColor] = useState('#fff');
-
+  const [textColor, settextColor] = useState("#fff");
 
   const myNft = async () => {
     let myNft = await window.myNftLandListContract(coinbase);
@@ -89,15 +88,12 @@ const Land = ({
     if (totalMints.length === 0) {
       setMintName("");
     } else {
-      await nft_contract.methods.tokenOfOwnerByIndex(
-        coinbase,
-        totalMints.length - 1
-      ).call().then((data)=>{
-        setMintName(data);
-
-      })
-
-      
+      await nft_contract.methods
+        .tokenOfOwnerByIndex(coinbase, totalMints.length - 1)
+        .call()
+        .then((data) => {
+          setMintName(data);
+        });
     }
   };
 
@@ -242,13 +238,12 @@ const Land = ({
             .then(() => {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
-              settextColor('rgb(123, 216, 176)')
+              settextColor("rgb(123, 216, 176)");
               setTimeout(() => {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
-      updateLandNft()
-
+              updateLandNft();
             })
             .catch((e) => {
               console.error(e);
@@ -397,6 +392,42 @@ const Land = ({
     setmintPrice(mintprice / 1e18);
   };
 
+  const handleSwitchChain = async () => {
+    const { ethereum } = window;
+    const ETHPARAMS = {
+      chainId: "0x1", // A 0x-prefixed hexadecimal string
+      chainName: "Ethereum Mainnet",
+      nativeCurrency: {
+        name: "Ethereum",
+        symbol: "ETH", // 2-6 characters long
+        decimals: 18,
+      },
+      rpcUrls: ["https://mainnet.infura.io/v3/"],
+      blockExplorerUrls: ["https://etherscan.io"],
+    };
+
+    try {
+      await ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x1" }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      console.log(switchError, "switch");
+      if (switchError.code === 4902) {
+        try {
+          await ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [ETHPARAMS],
+          });
+        } catch (addError) {
+          console.log(addError);
+        }
+      }
+      // handle other "switch" errors
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Land";
@@ -420,26 +451,21 @@ const Land = ({
       myStakes();
       myNft();
     }
+  }, [newStakes, mintStatus, isConnected, EthRewards, coinbase, chainId]);
+
+  useEffect(() => {
+    if (isConnected && coinbase && chainId === 1) {
+      myCAWStakes();
+      myCAWNft();
+      checkCawsToUse();
+    }
   }, [
-    newStakes,
-    mintStatus,
-    isConnected,
-    EthRewards,
     coinbase,
     chainId,
+    isConnected,
+    myCAWSNFTsCreated.length,
+    myCAWSNFTsTotalStaked.length,
   ]);
-
-
-  useEffect(()=>{
-    if (isConnected && coinbase && chainId === 1) {
-    myCAWStakes();
-    myCAWNft();
-    checkCawsToUse();
-    }
-
-  },[coinbase, chainId, isConnected, myCAWSNFTsCreated.length, myCAWSNFTsTotalStaked.length])
-
-  
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
@@ -514,7 +540,7 @@ const Land = ({
       <div className="land-main-wrapper px-0 w-100 d-flex flex-column">
         <LandHero />
         <LandStaking
-        landName={mintName}
+          landName={mintName}
           showWalletConnect={showWalletConnect}
           handleMint={handleMint}
           handleStake={handleStake}
@@ -543,6 +569,7 @@ const Land = ({
           mystakes={mystakes.length}
           cawsToUse={cawsToUse.length}
           limit={limit}
+          handleSwitchChain={handleSwitchChain}
         />
         <LandTiers />
         <Members handleRegister={handleRegister} />

@@ -236,9 +236,9 @@ function App() {
   return (
     <BrowserRouter>
       <div className="container-fluid p-0 main-wrapper position-relative">
-        {!window.location.href.includes('/land') &&
+        {/* {!window.location.href.includes('/land') &&
         <LandFlyout />
-        }
+        } */}
         <Header handleSignUp={handleSignUp} /> 
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
