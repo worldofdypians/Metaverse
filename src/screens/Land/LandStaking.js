@@ -675,7 +675,7 @@ const LandStaking = ({
             </div>
           </div>
         </div> */}
-        <div className="col-12 col-md-12 col-xxl-8 mt-5 pt-5 pt-xxl-0 mt-xxl-0">
+        <div className="col-12 col-md-12 col-xxl-8 mt-0 mt-xxl-5 mt-lg-0 mt-md-0 pt-0 pt-xxl-5 pt-lg-5 pt-md-5 pt-xxl-0 mt-xxl-0">
           <div
             className="p-0 mint-wrappernew d-flex flex-column gap-5 justify-content-center"
             style={{ minHeight: "463px" }}
