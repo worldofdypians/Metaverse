@@ -130,26 +130,7 @@ const LandStaking = ({
     }
   };
 
-  const checkData = async () => {
-    if (coinbase) {
-      let result = window.checkWhitelistLand(coinbase);
-    
-      if (result === 1 && chainId === 1 && whitelistCountdown === false) {
-        setStatus("");
-      }
-      else if(result !==1  && chainId === 1 && whitelistCountdown === true){
-        setStatus("");
-      }
 
-      else if(result ===1  && chainId === 1 && whitelistCountdown === true){
-        setStatus("");
-      }
-
-      else if(result !==1  && chainId === 1 && whitelistCountdown === false){
-        setStatus("This wallet is not whitelisted");
-      }
-    }
-  };
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -200,9 +181,11 @@ const LandStaking = ({
         }
         if (chainId === 1) {
           setactiveButton(true);
+          setStatus("");
+
         }
       }
-      checkData();
+      
     }
   }, [isConnected, chainId, coinbase]);
 
@@ -773,7 +756,7 @@ const LandStaking = ({
                         alt="ethereum"
                       />
                       <span className="eth-rewards">
-                        {getFormattedNumber(ETHrewards, 7)} ETH
+                        {getFormattedNumber(ETHrewards, 7)} WETH
                       </span>
                     </div>
                     <span className="eth-rewards">

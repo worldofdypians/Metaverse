@@ -246,7 +246,7 @@ const LandItem = ({
                       </p>
                       <div className="d-flex gap-1 align-items-start align-items-xxl-center align-items-lg-center align-items-md-center justify-content-between w-100 mb-2 flex-column flex-xxl-row flex-md-row flex-lg-row">
                         <p class="eth-rewards">
-                          {getFormattedNumber(EthRewards, 5)}ETH
+                          {getFormattedNumber(EthRewards, 5)} WETH
                         </p>
                         <p class="eth-rewards">
                           {formattedNum(ethToUSD, true)}
