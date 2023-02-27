@@ -881,7 +881,7 @@ const LandStaking = ({
                     APR
                   </span>
                 </h6>
-                <span className="land-lock-time">No lock time</span>
+                <span className="land-lock-time" style={{whiteSpace: 'nowrap'}}>No lock time</span>
               </div>
               <div
                 className={
