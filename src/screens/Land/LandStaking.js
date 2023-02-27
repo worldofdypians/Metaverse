@@ -750,8 +750,8 @@ const LandStaking = ({
                 alt="land nft"
                 className="w-100 d-flex d-lg-none"
               />
-              <div className={"linear-border"}>
-                <a className={`btn filled-btn px-4 d-flex gap-2 align-items-center`} href='https://opensea.io/collection/worldofdypians' target='_blank' rel='noreferrer'>
+              <div className={"linear-border-purple mt-4"}>
+                <a className={`btn purple-btn px-4 d-flex gap-2 align-items-center`} href='https://opensea.io/collection/worldofdypians' target='_blank' rel='noreferrer'>
                   <img src={opensea} alt=''/>
                   Buy on OpenSea
                 </a>
