@@ -129,6 +129,17 @@
           mask: var(--mask);
 }
 
+
+.leaderboard-bg{
+  background-image: url('../../../components/LeaderBoard/assets/leaderboardBg.png');
+  background-repeat: no-repeat;
+  background-position: right;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+  }
+}
+
 .download-buttons-wrapper{
   position: absolute;
   left: 25%;
@@ -141,3 +152,4 @@
     margin-top: 8rem;
   }
 }
+

@@ -24,7 +24,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   return (
     <>
       <div className="video-wrapper">
-        <div className="row gap-4 gap-lg-0" style={{minHeight: '100vh'}}>
+        <div className="row leaderboard-bg gap-4 gap-lg-0" style={{minHeight: '80vh'}}>
           
         <div className="col-12 col-lg-8 video-diagonal">
 
@@ -74,7 +74,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           style={{ maxWidth: "2400px", width: "100%", height: '90vh', objectFit: 'cover' }}
         ></video>
           </div>
-          <div className="col-12 col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-start">
+          <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start">
           <LeaderBoard />
           </div>
          

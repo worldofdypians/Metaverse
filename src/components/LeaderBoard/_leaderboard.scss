@@ -15,10 +15,21 @@
   background-color: #242240;
   border-radius: 8px;
   padding: 10px;
-  background-image: url("./assets/firebg.svg");
+  background-image: url("./assets/leaderboardBanner.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
+  
+}
+
+.grand-label{
+  font-weight: 600;
+font-size: 21px;
+line-height: 32px;
+letter-spacing: -0.018em;
+
+color: #F7F7FF;
+
 }
 
 .grandprizeTitle {
@@ -39,16 +50,27 @@
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.018em;
-  color: #09f3d2;
+  color: #f7f7fc;
 }
 
 .winnersamount {
   font-weight: 700;
-  font-size: 32px;
-  line-height: 48px;
+  font-size: 40px;
+  line-height: 42px;
   letter-spacing: -0.018em;
-  color: #242240;
-  text-shadow: 0px 4px 4px rgba(36, 34, 64, 0.26);
+  color: #f7f7fc;
+  text-shadow: 0px 6px 4px #5E06A2;
+}
+
+.grand-prize{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  transform: rotate(-7deg);
+  height: fit-content;
 }
 
 .playerTable {
@@ -196,7 +218,7 @@ color: #F7F7FF;
   overflow-y: scroll;
 
   @media screen and (max-width: 1600px) {
-    height: 300px;
+    height: 200px;
   }
 }
 
@@ -213,6 +235,47 @@ font-weight: bold;
 font-size: 14px;
 box-shadow: 0px 20px 40px rgba(237, 124, 43, 0.4);
 }
+
+
+.nft-hover{
+  position: absolute;
+  left: -85%;
+  top: 2.5%;
+  @media screen and (max-width: 786px) {
+    
+    position: static;
+  }
+}
+
+.nft-hover-wrapper{
+  background: linear-gradient(180deg, #582378 0%, #272343 100%);
+border-radius: 8px;
+width: 40%;
+padding: 0px 12px 0px 12px;
+
+@media screen and (max-width: 786px) {
+ 
+  width: 100%;
+}
+}
+
+.nft-hover-title{
+  font-weight: 300;
+font-size: 12px;
+line-height: 18px;
+letter-spacing: -0.018em;
+color: #F7F7FF;
+}
+
+
+.nft-hover-desc{
+  font-weight: 500;
+font-size: 14px;
+line-height: 21px;
+text-align: center;
+color: #FFFFFF;
+}
+
 
 .comingsoon {
   filter: blur(3px);

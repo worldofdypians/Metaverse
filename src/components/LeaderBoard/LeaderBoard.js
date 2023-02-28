@@ -11,6 +11,8 @@ import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
+import cawsBadge from "./assets/cawsBadge.png";
+import genesisBadge from "./assets/genesisBadge.png";
 
 const LeaderBoard = ({ username, userId }) => {
   const playerData = [
@@ -311,18 +313,7 @@ const LeaderBoard = ({ username, userId }) => {
 
   const dailyPrizes = ["40", "20", "15", "10", "5", "5", "5", "5", "5", "5"];
 
-  const weeklyPrizes = [
-    "80",
-    "40",
-    "30",
-    "20",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
+  const weeklyPrizes = ["80", "40", "30", "20", "5", "5", "5", "5", "5", "5"];
 
   const monthlyPrizes = [
     "2500",
@@ -609,15 +600,38 @@ const LeaderBoard = ({ username, userId }) => {
   ]);
 
   return (
-    <div className="d-flex flex-column gap-3 leaderboard-wrapper mt-4" style={{alignSelf: 'baseline', minWidth: '92%', maxWidth: '92%'}}>
+    <div
+      className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
+      style={{ alignSelf: "baseline", minWidth: "92%", maxWidth: "92%" }}
+    >
+      <div className="nft-hover">
+        <div className="d-flex flex-column align-items-center gap-4">
+          <span className="nft-hover-title">Grab your NFT</span>
+          <div className="nft-hover-wrapper d-flex flex-column align-items-center">
+            <div className="d-flex align-items-center" style={{position: 'relative', top: '-22px'}}>
+              <a href="https://opensea.io/collection/catsandwatchessocietycaws" target="_blank">
+                <img src={cawsBadge} alt="" width={80} />
+              </a>
+              <a href="https://opensea.io/collection/worldofdypians" target="_blank">
+                <img src={genesisBadge} alt="" width={80} />
+              </a>
+            </div>
+            <span className="nft-hover-desc" style={{position: 'relative', top: '-22px'}}>
+              CAWS and Genesis owners enjoy VIP access and attractive rewards
+            </span>
+          </div>
+        </div>
+      </div>
       <h2
         className={`font-organetto d-flex gap-1 align-items-center justify-content-center justify-content-lg-start leaderboardTitle`}
       >
         Leaderboard
       </h2>
-      <div className="grandPrices-wrapper">
+      <div className="grandPrices-wrapper position-relative">
         <div className="d-flex flex-column gap-2">
-          <h6 className="grandprizeTitle">Grand Prizes</h6>
+          <h6 className="grandprizeTitle" style={{ visibility: "hidden" }}>
+            Grand Prizes
+          </h6>
           <div className="d-flex align-items-end gap-2 justify-content-between">
             <div className="d-flex flex-column gap-2">
               <span className="prizeitem">
@@ -630,7 +644,8 @@ const LeaderBoard = ({ username, userId }) => {
                 <img src={price3} alt="" /> $3,000
               </span>
             </div>
-            <div className="d-flex flex-column gap-0">
+            <div className="d-flex flex-column align-items-center grand-prize">
+              <span className="grand-label">Grand prize</span>
               <span className="winnersamount">$30,000</span>
             </div>
           </div>
@@ -676,24 +691,24 @@ const LeaderBoard = ({ username, userId }) => {
             </span>
           </div>
         </div>
-          <div className="col-3">
+        <div className="col-3">
           <div
-          onClick={() => {
-            handleOption("genesis");
-          }}
-          className={`${
-            optionText === "genesis" && "optiongenesisactive"
-          } optiongenesis`}
-        >
-          <span
+            onClick={() => {
+              handleOption("genesis");
+            }}
             className={`${
-              optionText === "genesis" && "activeoptiongolden"
-            } optionTextGolden`}
+              optionText === "genesis" && "optiongenesisactive"
+            } optiongenesis`}
           >
-            Golden
-          </span>
-        </div>
+            <span
+              className={`${
+                optionText === "genesis" && "activeoptiongolden"
+              } optionTextGolden`}
+            >
+              Golden
+            </span>
           </div>
+        </div>
       </div>
       <div className="d-flex flex-column gap-2 tablewrapper">
         {(optionText !== "genesis" && optionText !== "monthly") ||
@@ -912,7 +927,7 @@ const LeaderBoard = ({ username, userId }) => {
               )}
           </table>
         ) : (
-          <ComingSoon optionText={optionText}/>
+          <ComingSoon optionText={optionText} />
         )}
       </div>
       {/* {activePlayer === false &&
