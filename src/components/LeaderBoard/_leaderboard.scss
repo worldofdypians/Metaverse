@@ -1,0 +1,246 @@
+.leaderboard-wrapper{
+  font-family: 'Poppins', sans-serif !important;
+}
+
+
+.leaderboardTitle {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 32px;
+  color: #ffffff;
+}
+
+.grandPrices-wrapper {
+  background-color: #242240;
+  border-radius: 8px;
+  padding: 10px;
+  background-image: url("./assets/firebg.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.grandprizeTitle {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
+}
+
+.prizeitem {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.018em;
+  color: #09f3d2;
+}
+
+.winnersamount {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: -0.018em;
+  color: #242240;
+  text-shadow: 0px 4px 4px rgba(36, 34, 64, 0.26);
+}
+
+.playerTable {
+  border-radius: 8px;
+  color: white;
+}
+
+.playerData {
+  padding: 0 10px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.018em;
+  color: #ffffff;
+}
+
+.playerHeader {
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
+  position: sticky;
+  top: 0;
+  background: #080b2a;
+  z-index: 2;
+}
+
+.optionText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  // width: 80px;
+}
+
+.optionText:hover, .activeoption {
+  color: #09F3D2;
+}
+
+.optionTextGolden {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.018em;
+  color: #F7F7FF;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.activeoptiongolden {
+  color: #F7F7FF;
+  font-size: 14px;
+  
+  }
+
+.optiongenesis:hover, .activeoptiongolden {
+color: #F7F7FF;
+font-size: 14px;
+
+}
+
+.viewWinners {
+  font-weight: 400;
+font-size: 12px;
+line-height: 18px;
+letter-spacing: -0.018em;
+color: #F7F7FF;
+
+}
+
+.previous-desc{
+  font-weight: 400;
+font-size: 10px;
+line-height: 15px;
+letter-spacing: -0.018em;
+color: #F7F7FF;
+}
+
+.optionsWrapper {
+  background: #242240;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.playerRow {
+  position: static;
+  z-index: 1;
+}
+
+.playerInnerRow {
+  background: #242240;
+
+  border-bottom: 1px solid #757086;
+}
+
+.playerInnerRow-inactive{
+  background: #223B40;
+}
+
+.playerAvatar {
+  width: 30px;
+  height: 30px;
+}
+.premium-star{
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  
+}
+
+.playerReward {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.018em;
+  color: #09f3d2;
+}
+.playerScore {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.018em;
+  color: rgba(243, 192, 9, 1);
+}
+
+.playerName {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
+}
+
+.tablewrapper {
+  height: 366px;
+  overflow-y: scroll;
+
+  @media screen and (max-width: 1600px) {
+    height: 300px;
+  }
+}
+
+.optiongenesis {
+  background: linear-gradient(90.31deg, #F1B14B 0.27%, #DC5738 99.74%);
+border-radius: 8px;
+padding: 10px;
+cursor: pointer;
+}
+
+.optiongenesis:hover, .optiongenesisactive, .optiongenesis:focus-visible, .optiongenesis:focus {
+background: linear-gradient(to right, #f46b45, #eea849);
+font-weight: bold;
+font-size: 14px;
+box-shadow: 0px 20px 40px rgba(237, 124, 43, 0.4);
+}
+
+.comingsoon {
+  filter: blur(3px);
+  
+}
+.watermark {
+  color: #fff;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 30px;
+  opacity: 0.5;
+  transform: rotate(-28deg);
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 353px;
+
+  // @media only screen and (max-width: 767px) {
+  //   left: 28%;
+  // }
+
+  @media only screen and (max-width: 500px) {
+      width: 253px;
+      font-size: 20px;
+
+  }
+  }

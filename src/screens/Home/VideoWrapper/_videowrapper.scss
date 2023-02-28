@@ -74,9 +74,9 @@
   min-height: 100vh;
   background-position: center;
 
-  @media only screen and (max-width: 991px) {
-    background-image: url("../../../assets/videoBackground.webp");
-  }
+  // @media only screen and (max-width: 991px) {
+  //   background-image: url("../../../assets/videoBackground.webp");
+  // }
 
   .video-main-title {
     font-style: normal;
@@ -116,5 +116,28 @@
     font-size: 24px !important;
     line-height: 32px !important;
     width: 100% !important;
+  }
+
+ 
+}
+
+
+.video-diagonal{
+  position: relative;
+  --mask: linear-gradient(250deg,#0000 25%,#000 0);	
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+}
+
+.download-buttons-wrapper{
+  position: absolute;
+  left: 25%;
+  top: 40%;
+  bottom: 0;
+  margin: auto;
+
+  @media screen and (max-width: 786px) {
+    position: static;
+    margin-top: 8rem;
   }
 }
