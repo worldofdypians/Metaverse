@@ -11,8 +11,8 @@ import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
-import cawsBadge from "./assets/cawsBadge.png";
-import genesisBadge from "./assets/genesisBadge.png";
+import cawsBadge from "./assets/cawsBadge2.png";
+import genesisBadge from "./assets/genesisBadge2.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import tooltipIcon from './assets/tooltip.svg'
 
@@ -613,19 +613,19 @@ const LeaderBoard = ({ username, userId }) => {
           <div className="nft-hover-wrapper d-flex flex-column align-items-center">
             <div
               className="d-flex align-items-center"
-              style={{ position: "relative", top: "-22px" }}
+              style={{ position: "relative", top: "-24px" }}
             >
               <a
                 href="https://opensea.io/collection/catsandwatchessocietycaws"
                 target="_blank"
               >
-                <img src={cawsBadge} alt="" width={80} className='opensea-badge' />
+                <img src={cawsBadge} alt="" width={90} className='opensea-badge' />
               </a>
               <a
                 href="https://opensea.io/collection/worldofdypians"
                 target="_blank"
               >
-                <img src={genesisBadge} alt="" width={80} className='opensea-badge' />
+                <img src={genesisBadge} alt="" width={90} className='opensea-badge' />
               </a>
             </div>
             <span
