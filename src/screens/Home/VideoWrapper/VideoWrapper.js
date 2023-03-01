@@ -5,6 +5,7 @@ import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import downloadIcon from "../../../assets/downloadIcon.svg";
 import { NavLink } from "react-router-dom";
+import LeaderBoard from '../../../components/LeaderBoard/LeaderBoard'
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
@@ -22,8 +23,12 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
   return (
     <>
-      <div className="video-wrapper flex-column gap-5 d-flex align-items-center justify-content-around justify-content-lg-center">
-        <div className="position-absolute d-flex flex-column gap-4 align-items-center">
+      <div className="video-wrapper">
+        <div className="row leaderboard-bg gap-4 gap-lg-0" style={{minHeight: '80vh'}}>
+          
+        <div className="col-12 col-lg-8 video-diagonal">
+
+        <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
           <div className="row m-0 gap-5 align-items-center justify-content-center">
         
             <NavLink to="join-beta"
@@ -57,7 +62,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
             </span>
           </div>
         </div>
-        <video
+          <video
           preload="auto"
           className="d-none d-lg-flex d-xl-flex elementor-video"
           src="https://dypmeta.s3.us-east-2.amazonaws.com/dypius.mov"
@@ -66,8 +71,16 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           muted="muted"
           playsInline={true}
           controlsList="nodownload"
-          style={{ maxWidth: "2400px", width: "100%" }}
+          style={{ maxWidth: "2400px", width: "100%", height: '90vh', objectFit: 'cover' }}
         ></video>
+          </div>
+          <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start">
+          <LeaderBoard />
+          </div>
+         
+        </div>
+       
+       
         {/* <img src={buttonBorder} alt="button-border" className="video-button-border" /> */}
       </div>
       {modal === true ? (
