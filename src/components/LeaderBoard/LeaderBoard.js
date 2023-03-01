@@ -619,13 +619,13 @@ const LeaderBoard = ({ username, userId }) => {
                 href="https://opensea.io/collection/catsandwatchessocietycaws"
                 target="_blank"
               >
-                <img src={cawsBadge} alt="" width={80} />
+                <img src={cawsBadge} alt="" width={80} className='opensea-badge' />
               </a>
               <a
                 href="https://opensea.io/collection/worldofdypians"
                 target="_blank"
               >
-                <img src={genesisBadge} alt="" width={80} />
+                <img src={genesisBadge} alt="" width={80} className='opensea-badge' />
               </a>
             </div>
             <span
