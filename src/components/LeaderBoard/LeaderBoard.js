@@ -609,7 +609,6 @@ const LeaderBoard = ({ username, userId }) => {
     >
       <div className="nft-hover">
         <div className="d-flex flex-column align-items-center gap-4">
-          <span className="nft-hover-title">Grab your NFT</span>
           <div className="nft-hover-wrapper d-flex flex-column align-items-center">
             <div
               className="d-flex align-items-center"
