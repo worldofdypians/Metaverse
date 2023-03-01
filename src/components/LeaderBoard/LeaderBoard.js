@@ -979,7 +979,7 @@ const LeaderBoard = ({ username, userId }) => {
             </tr>
           </table>
         )} */}
-      <div className="optionsWrapper">
+      <div className="optionsWrapper p-2">
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between gap-2 align-items-center">
             <span className="viewWinners">View previous winners</span>
