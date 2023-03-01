@@ -611,8 +611,7 @@ const LeaderBoard = ({ username, userId }) => {
         <div className="d-flex flex-column align-items-center gap-4">
           <div className="nft-hover-wrapper d-flex flex-column align-items-center">
             <div
-              className="d-flex align-items-center"
-              style={{ position: "relative", top: "-24px" }}
+              className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0"
             >
               <a
                 href="https://opensea.io/collection/catsandwatchessocietycaws"
@@ -621,7 +620,6 @@ const LeaderBoard = ({ username, userId }) => {
                 <img
                   src={cawsBadge}
                   alt=""
-                  width={90}
                   className="opensea-badge"
                 />
               </a>
@@ -632,7 +630,6 @@ const LeaderBoard = ({ username, userId }) => {
                 <img
                   src={genesisBadge}
                   alt=""
-                  width={90}
                   className="opensea-badge"
                 />
               </a>

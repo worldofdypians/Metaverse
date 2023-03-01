@@ -253,8 +253,18 @@ cursor: pointer;
 }
 
 
+.nft-badges-wrapper{
+  position: relative;
+  top: -24px;
+}
+
 .opensea-badge{
   transition: all .25s ease-in-out;
+  width: 90px;
+
+  @media screen and (max-width: 786px) {
+    width: 100px;
+  }
 }
 
 .opensea-badge:hover{
