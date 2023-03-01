@@ -118,7 +118,7 @@ const ComingSoon = ({ optionText }) => {
 
       
       </table>
-      <span className="statusText" style={{textAlign: 'left', paddingTop: 5}}>*Genesis LeaderBoard coming soon</span>
+      <span className="statusText" style={{textAlign: 'left', paddingTop: 5}}>*Genesis leaderboard coming soon</span>
     </div>
   );
 };
