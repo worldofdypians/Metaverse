@@ -330,6 +330,38 @@ const LeaderBoard = ({ username, userId }) => {
     "100",
   ];
 
+  const prevDailyPrizes = ["50", "30", "25", "5", "5", "5", "5", "5", "5", "5"];
+
+  const prevWeeklyPrizes = [
+    "100",
+    "70",
+    "50",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+  ];
+
+  const prevMonthlyPrizes = [
+    "2500",
+    "1000",
+    "500",
+    "100",
+    "100",
+    "100",
+    "100",
+    "100",
+    "100",
+    "100",
+  ];
+
+
+
+
+
   const [optionText, setOptionText] = useState("daily");
   const [dailyrecords, setRecords] = useState([]);
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
@@ -515,11 +547,18 @@ const LeaderBoard = ({ username, userId }) => {
 
   const handleOption = (item) => {
     setOptionText(item);
-    if (item === "daily") {
+    if (optionText === "daily" && inactiveBoard) {
+      setPrizes(prevDailyPrizes);
+    } else if (optionText === "weekly" && inactiveBoard) {
+      setPrizes(prevWeeklyPrizes);
+    } else if (optionText === "monthly" && inactiveBoard) {
+      setPrizes(prevMonthlyPrizes);
+    }
+    if (optionText === "daily" && !inactiveBoard) {
       setPrizes(dailyPrizes);
-    } else if (item === "weekly") {
+    } else if (optionText === "weekly" && !inactiveBoard) {
       setPrizes(weeklyPrizes);
-    } else if (item === "monthly") {
+    } else if (optionText === "monthly" && !inactiveBoard) {
       setPrizes(monthlyPrizes);
     }
   };
@@ -580,9 +619,16 @@ const LeaderBoard = ({ username, userId }) => {
     setmonthlyplayerData(result.data.data.leaderboard);
   };
 
+
+
+
   useEffect(() => {
     fetchDailyRecords();
   }, []);
+
+  useEffect(()=>{
+    handleOption(optionText)
+  },[inactiveBoard, optionText])
 
   useEffect(() => {
     if (inactiveBoard === true && optionText === "daily") {
@@ -979,7 +1025,7 @@ const LeaderBoard = ({ username, userId }) => {
             <Switch
               {...label}
               onChange={() => {
-                setInactiveBoard(!inactiveBoard);
+                setInactiveBoard(!inactiveBoard)
               }}
             />
           </div>
