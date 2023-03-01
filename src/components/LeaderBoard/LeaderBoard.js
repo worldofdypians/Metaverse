@@ -648,26 +648,7 @@ const LeaderBoard = ({ username, userId }) => {
         className={`font-organetto d-flex gap-1 align-items-center leaderboardTitle justify-content-between`}
       >
         Leaderboard
-        <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
-          <div className="d-flex align-items-center gap-2 position-relative">
-            <img
-              src={tooltipIcon}
-              alt=""
-              className="tooltip-icon"
-              style={{ cursor: "pointer", width: "20px", height: "20px" }}
-              onClick={() => setTooltip(!tooltip)}
-            />
-            <div
-              className={`tooltip-wrapper p-3 ${tooltip && "tooltip-active"}`}
-              style={{ width: 200, right: "20%" }}
-            >
-              <p className="tooltip-content">
-                World of Dypians genesis provides leaderboard information
-                regarding your rewards when hitting gems
-              </p>
-            </div>
-          </div>
-        </OutsideClickHandler>
+       
       </h2>
       <div className="grandPrices-wrapper position-relative">
         <div className="d-flex flex-column gap-2">
