@@ -14,7 +14,7 @@ import ComingSoon from "./ComingSoon";
 import cawsBadge from "./assets/cawsBadge2.png";
 import genesisBadge from "./assets/genesisBadge2.png";
 import OutsideClickHandler from "react-outside-click-handler";
-import tooltipIcon from './assets/tooltip.svg'
+import tooltipIcon from "./assets/tooltip.svg";
 
 const LeaderBoard = ({ username, userId }) => {
   const playerData = [
@@ -618,20 +618,31 @@ const LeaderBoard = ({ username, userId }) => {
                 href="https://opensea.io/collection/catsandwatchessocietycaws"
                 target="_blank"
               >
-                <img src={cawsBadge} alt="" width={90} className='opensea-badge' />
+                <img
+                  src={cawsBadge}
+                  alt=""
+                  width={90}
+                  className="opensea-badge"
+                />
               </a>
               <a
                 href="https://opensea.io/collection/worldofdypians"
                 target="_blank"
               >
-                <img src={genesisBadge} alt="" width={90} className='opensea-badge' />
+                <img
+                  src={genesisBadge}
+                  alt=""
+                  width={90}
+                  className="opensea-badge"
+                />
               </a>
             </div>
             <span
               className="nft-hover-desc"
               style={{ position: "relative", top: "-22px" }}
             >
-             CAWS and WOD owners are granted VIP access and also benefit from appealing rewards.
+              CAWS and WOD owners are granted VIP access and also benefit from
+              appealing rewards.
             </span>
           </div>
         </div>
@@ -639,7 +650,8 @@ const LeaderBoard = ({ username, userId }) => {
       <h2
         className={`font-organetto d-flex gap-1 align-items-center leaderboardTitle justify-content-between`}
       >
-        Leaderboard<OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+        Leaderboard
+        <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
           <div className="d-flex align-items-center gap-2 position-relative">
             <img
               src={tooltipIcon}
@@ -653,7 +665,8 @@ const LeaderBoard = ({ username, userId }) => {
               style={{ width: 200, right: "20%" }}
             >
               <p className="tooltip-content">
-                World of Dypians genesis provides leaderboard information regarding your rewards when hitting gems
+                World of Dypians genesis provides leaderboard information
+                regarding your rewards when hitting gems
               </p>
             </div>
           </div>
@@ -685,12 +698,15 @@ const LeaderBoard = ({ username, userId }) => {
       </div>
       <div className="d-flex align-items-center gap-1">
         <div className="optionsWrapper col-12">
-          <div className="d-flex gap-2 align-items-center justify-content-between"style={{height: 38}}>
+          <div
+            className="d-flex gap-2 align-items-center justify-content-between"
+            style={{ height: 38 }}
+          >
             <span
               className={`${
                 optionText === "daily" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: '24%' }}
+              style={{ borderRight: "1px solid #757086", width: "24%" }}
               onClick={() => {
                 handleOption("daily");
                 fetchDailyRecords();
@@ -702,7 +718,7 @@ const LeaderBoard = ({ username, userId }) => {
               className={`${
                 optionText === "weekly" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: '24%' }}
+              style={{ borderRight: "1px solid #757086", width: "24%" }}
               onClick={() => {
                 handleOption("weekly");
                 fetchWeeklyRecords();
@@ -714,7 +730,7 @@ const LeaderBoard = ({ username, userId }) => {
               className={`${
                 optionText === "monthly" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: '24%' }}
+              style={{ borderRight: "1px solid #757086", width: "24%" }}
               onClick={() => {
                 handleOption("monthly");
                 fetchMonthlyRecords();
@@ -729,13 +745,12 @@ const LeaderBoard = ({ username, userId }) => {
               onClick={() => {
                 handleOption("genesis");
               }}
-              style={{ width: '24%'}}
+              style={{ width: "24%" }}
             >
               Genesis
             </span>
           </div>
         </div>
-       
       </div>
       <div
         className="d-flex flex-column gap-2 tablewrapper"
@@ -946,7 +961,7 @@ const LeaderBoard = ({ username, userId }) => {
               })}
             {inactiveBoard === true &&
               ((dailyplayerData.length === 0 && optionText === "daily") ||
-                (weeklyplayerData.length === 0 && optionText === "weekly")||
+                (weeklyplayerData.length === 0 && optionText === "weekly") ||
                 (monthlyplayerData.length === 0 && optionText === "monthly")) &&
               optionText !== "genesis" && (
                 <CircularProgress
@@ -990,10 +1005,16 @@ const LeaderBoard = ({ username, userId }) => {
               }}
             />
           </div>
-          <span className="previous-desc mb-0">
-            Display previous {optionText} ranking results. The scores from
-            previous rankings will be accumulated towards the grand prize.
-          </span>
+          {optionText === "genesis" ? (
+            <span className="previous-desc mb-0">
+              Display previous monthly Genesis ranking results.
+            </span>
+          ) : (
+            <span className="previous-desc mb-0">
+              Display previous {optionText} ranking results. The scores from
+              previous rankings will be accumulated towards the grand prize.
+            </span>
+          )}
         </div>
       </div>
     </div>
