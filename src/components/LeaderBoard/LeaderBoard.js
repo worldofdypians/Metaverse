@@ -632,7 +632,7 @@ const LeaderBoard = ({ username, userId }) => {
               className="nft-hover-desc"
               style={{ position: "relative", top: "-22px" }}
             >
-              CAWS and Genesis owners enjoy VIP access and attractive rewards
+             CAWS and WOD owners are granted VIP access and also benefit from appealing rewards.
             </span>
           </div>
         </div>
