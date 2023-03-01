@@ -13,6 +13,8 @@ import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
 import cawsBadge from "./assets/cawsBadge.png";
 import genesisBadge from "./assets/genesisBadge.png";
+import OutsideClickHandler from "react-outside-click-handler";
+import tooltipIcon from './assets/tooltip.svg'
 
 const LeaderBoard = ({ username, userId }) => {
   const playerData = [
@@ -342,6 +344,7 @@ const LeaderBoard = ({ username, userId }) => {
   const [previousVersion, setpreviousVersion] = useState(0);
   const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
   const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
+  const [tooltip, setTooltip] = useState(false);
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -608,24 +611,54 @@ const LeaderBoard = ({ username, userId }) => {
         <div className="d-flex flex-column align-items-center gap-4">
           <span className="nft-hover-title">Grab your NFT</span>
           <div className="nft-hover-wrapper d-flex flex-column align-items-center">
-            <div className="d-flex align-items-center" style={{position: 'relative', top: '-22px'}}>
-              <a href="https://opensea.io/collection/catsandwatchessocietycaws" target="_blank">
+            <div
+              className="d-flex align-items-center"
+              style={{ position: "relative", top: "-22px" }}
+            >
+              <a
+                href="https://opensea.io/collection/catsandwatchessocietycaws"
+                target="_blank"
+              >
                 <img src={cawsBadge} alt="" width={80} />
               </a>
-              <a href="https://opensea.io/collection/worldofdypians" target="_blank">
+              <a
+                href="https://opensea.io/collection/worldofdypians"
+                target="_blank"
+              >
                 <img src={genesisBadge} alt="" width={80} />
               </a>
             </div>
-            <span className="nft-hover-desc" style={{position: 'relative', top: '-22px'}}>
+            <span
+              className="nft-hover-desc"
+              style={{ position: "relative", top: "-22px" }}
+            >
               CAWS and Genesis owners enjoy VIP access and attractive rewards
             </span>
           </div>
         </div>
       </div>
       <h2
-        className={`font-organetto d-flex gap-1 align-items-center justify-content-center justify-content-lg-start leaderboardTitle`}
+        className={`font-organetto d-flex gap-1 align-items-center leaderboardTitle justify-content-between`}
       >
-        Leaderboard
+        Leaderboard<OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+          <div className="d-flex align-items-center gap-2 position-relative">
+            <img
+              src={tooltipIcon}
+              alt=""
+              className="tooltip-icon"
+              style={{ cursor: "pointer", width: "20px", height: "20px" }}
+              onClick={() => setTooltip(!tooltip)}
+            />
+            <div
+              className={`tooltip-wrapper p-3 ${tooltip && "tooltip-active"}`}
+              style={{ width: 200, right: "20%" }}
+            >
+              <p className="tooltip-content">
+                World of Dypians genesis provides leaderboard information regarding your rewards when hitting gems
+              </p>
+            </div>
+          </div>
+        </OutsideClickHandler>
       </h2>
       <div className="grandPrices-wrapper position-relative">
         <div className="d-flex flex-column gap-2">
@@ -710,17 +743,17 @@ const LeaderBoard = ({ username, userId }) => {
           </div>
         </div>
       </div>
-      <div className="d-flex flex-column gap-2 tablewrapper">
-        {(optionText !== "genesis" && optionText !== "monthly") ||
-        (inactiveBoard === true && optionText === "monthly") ? (
+      <div
+        className="d-flex flex-column gap-2 tablewrapper"
+        style={{ height: optionText === "genesis" ? "388px" : "366px" }}
+      >
+        {optionText !== "genesis" ? (
           <table className="playerTable">
             <tr className="playerRow">
               <th className="playerHeader">Rank</th>
               <th className="playerHeader">Player</th>
-              {optionText !== "genesis" ? (
+              {optionText !== "genesis" && (
                 <th className="playerHeader">Score</th>
-              ) : (
-                <th className="playerHeader">Gem Hits</th>
               )}
               <th className="playerHeader">Reward</th>
             </tr>
@@ -918,7 +951,9 @@ const LeaderBoard = ({ username, userId }) => {
                 );
               })}
             {inactiveBoard === true &&
-              (dailyplayerData.length === 0 || weeklyplayerData.length === 0) &&
+              ((dailyplayerData.length === 0 && optionText === "daily") ||
+                (weeklyplayerData.length === 0 && optionText === "weekly")||
+                (monthlyplayerData.length === 0 && optionText === "monthly")) &&
               optionText !== "genesis" && (
                 <CircularProgress
                   size={20}
