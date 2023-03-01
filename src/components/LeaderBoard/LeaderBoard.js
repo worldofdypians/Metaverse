@@ -684,13 +684,13 @@ const LeaderBoard = ({ username, userId }) => {
         </div>
       </div>
       <div className="d-flex align-items-center gap-1">
-        <div className="optionsWrapper col-9">
-          <div className="d-flex gap-2 align-items-center justify-content-between">
+        <div className="optionsWrapper col-12">
+          <div className="d-flex gap-2 align-items-center justify-content-between"style={{height: 38}}>
             <span
               className={`${
-                optionText === "daily" && "activeoption"
-              } optionText col-4`}
-              style={{ borderRight: "1px solid #757086" }}
+                optionText === "daily" && "otheroptionsActive"
+              } optionText col-3`}
+              style={{ borderRight: "1px solid #757086", width: '24%' }}
               onClick={() => {
                 handleOption("daily");
                 fetchDailyRecords();
@@ -700,9 +700,9 @@ const LeaderBoard = ({ username, userId }) => {
             </span>
             <span
               className={`${
-                optionText === "weekly" && "activeoption"
-              } optionText col-4`}
-              style={{ borderRight: "1px solid #757086" }}
+                optionText === "weekly" && "otheroptionsActive"
+              } optionText col-3`}
+              style={{ borderRight: "1px solid #757086", width: '24%' }}
               onClick={() => {
                 handleOption("weekly");
                 fetchWeeklyRecords();
@@ -712,8 +712,9 @@ const LeaderBoard = ({ username, userId }) => {
             </span>
             <span
               className={`${
-                optionText === "monthly" && "activeoption"
-              } optionText col-4`}
+                optionText === "monthly" && "otheroptionsActive"
+              } optionText col-3`}
+              style={{ borderRight: "1px solid #757086", width: '24%' }}
               onClick={() => {
                 handleOption("monthly");
                 fetchMonthlyRecords();
@@ -721,26 +722,20 @@ const LeaderBoard = ({ username, userId }) => {
             >
               Monthly
             </span>
-          </div>
-        </div>
-        <div className="col-3">
-          <div
-            onClick={() => {
-              handleOption("genesis");
-            }}
-            className={`${
-              optionText === "genesis" && "optiongenesisactive"
-            } optiongenesis`}
-          >
             <span
               className={`${
-                optionText === "genesis" && "activeoptiongolden"
-              } optionTextGolden`}
+                optionText === "genesis" && "optiongenesis"
+              } optionText col-3`}
+              onClick={() => {
+                handleOption("genesis");
+              }}
+              style={{ width: '24%'}}
             >
-              Golden
+              Genesis
             </span>
           </div>
         </div>
+       
       </div>
       <div
         className="d-flex flex-column gap-2 tablewrapper"

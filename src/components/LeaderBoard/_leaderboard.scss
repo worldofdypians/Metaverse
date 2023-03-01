@@ -131,14 +131,7 @@ color: #F7F7FF;
 .activeoptiongolden {
   color: #F7F7FF;
   font-size: 14px;
-  
   }
-
-.optiongenesis:hover, .activeoptiongolden {
-color: #F7F7FF;
-font-size: 14px;
-
-}
 
 .viewWinners {
   font-weight: 400;
@@ -160,7 +153,7 @@ color: #F7F7FF;
 .optionsWrapper {
   background: #242240;
   border-radius: 8px;
-  padding: 10px;
+  padding: 2px;
 }
 
 .playerRow {
@@ -229,12 +222,13 @@ padding: 10px;
 cursor: pointer;
 }
 
-.optiongenesis:hover, .optiongenesisactive, .optiongenesis:focus-visible, .optiongenesis:focus {
-background: linear-gradient(to right, #f46b45, #eea849);
-font-weight: bold;
-font-size: 14px;
-box-shadow: 0px 20px 40px rgba(237, 124, 43, 0.4);
-}
+.otheroptionsActive {
+  background: linear-gradient(90.31deg, #7344B3 0.27%, #20BBCA 99.74%);;
+  // font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+  
+  }
 
 
 .nft-hover{
