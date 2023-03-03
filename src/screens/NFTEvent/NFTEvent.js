@@ -4,6 +4,7 @@ import NftCard from "../../components/NewsCard/NftCard";
 import NftCardSoldOut from "../../components/NewsCard/NftCardSoldOut";
 import arrowBlack from "../../assets/arrow-black.svg";
 import arrowWhite from "../../assets/arrow-white.svg";
+import GenesisBenefitsGrid from "./GenesisBenefitsGrid";
 import Countdown from "react-countdown";
 import limitedOfferBadge from '../../assets/limitedoffer.svg'
 
@@ -196,6 +197,7 @@ const NFTEvent = ({ coinbase }) => {
                 ))}
               </div>
             ) : null}
+      <GenesisBenefitsGrid />
           </div>
         </div>
       </div>
