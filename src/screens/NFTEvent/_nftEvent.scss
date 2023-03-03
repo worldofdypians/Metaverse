@@ -297,3 +297,33 @@
     }
   }
 }
+
+.countdown-sup {
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.countdown-sub {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.timerwrapper {
+  background: url("../../assets/timerbg.svg");
+  border-radius: 12px;
+  padding: 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.limitedbadge {
+  position: absolute;
+  top: -10px;
+}
