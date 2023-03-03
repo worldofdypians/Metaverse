@@ -19,13 +19,11 @@
     gap: 24px;
     place-items: center;
     @media only screen and (max-width: 1330px) {
-    grid-template-columns: repeat(3, 1fr);
-
+      grid-template-columns: repeat(3, 1fr);
     }
     @media only screen and (max-width: 1160px) {
       grid-template-columns: repeat(2, 1fr);
-  
-      }
+    }
   }
 
   .news-card {
@@ -111,11 +109,11 @@
       color: #ffffff;
       margin: 0;
 
-      p{
+      p {
         color: #ffffff !important;
         // margin-bottom: 0;
       }
-      span{
+      span {
         color: #ffffff !important;
 
         img {
@@ -134,7 +132,7 @@
     }
   }
 
-  .news-card-active{
+  .news-card-active {
     border: 2px solid #d9fa86;
   }
 
@@ -261,5 +259,35 @@
   font-weight: 500;
   font-size: 10px;
   line-height: 20px;
-  color: #FFFFFF;
+  color: #ffffff;
+}
+
+.countdown-sup {
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.countdown-sub {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.timerwrapper {
+  background: url("../../assets/timerbg.svg");
+  border-radius: 12px;
+  padding: 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.limitedbadge {
+  position: absolute;
+  top: -10px;
 }
