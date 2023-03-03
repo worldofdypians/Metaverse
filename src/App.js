@@ -23,6 +23,7 @@ import JoinBeta from "./screens/JoinBeta/JoinBeta";
 import JoinBetaModal from "./components/JoinBetaModal/JoinBetaModal";
 import PartnerForm from "./screens/PartnerForm/PartnerForm";
 import NFTEvent from "./screens/NFTEvent/NFTEvent";
+import WalletModal from "./components/WalletModal/WalletModal";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -44,7 +45,7 @@ function App() {
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
-
+  const [walletModal, setwalletModal] = useState(false)
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -130,6 +131,7 @@ function App() {
         setCoinbase(data);
       });
       setShowForms2(true);
+      setwalletModal(false);
     } catch (e) {
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
@@ -190,6 +192,7 @@ function App() {
     return myStakes;
   };
 
+  
   const myStakes = async () => {
     let myStakes = await getStakesIds();
     let stakes = myStakes.map((stake) => window.getLandNft(stake));
@@ -236,11 +239,20 @@ function App() {
   return (
     <BrowserRouter>
       <div className="container-fluid p-0 main-wrapper position-relative">
-        <Header handleSignUp={handleSignUp} /> 
+        <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
           <Route exact path="/news" element={<News />} />
-          <Route exact path="/nft-event" element={<NFTEvent coinbase={coinbase}/>} />
+          <Route
+            exact
+            path="/nft-event"
+            element={
+              <NFTEvent
+                coinbase={coinbase}
+                showWalletConnect={()=>{setwalletModal(true)}}
+              />
+            }
+          />
 
           <Route
             exact
@@ -315,6 +327,18 @@ function App() {
         />
       )}
 
+{walletModal === true && (
+        <WalletModal
+          show={walletModal}
+          handleClose={() => {
+            setwalletModal(false);
+          }}
+          handleConnection={() => {
+            handleConnectWallet();
+          }}
+        />
+      )}
+
       {showWalletModalDownload === true && (
         <CheckWhitelistModal
           open={showWalletModalDownload}
@@ -327,10 +351,10 @@ function App() {
           showForms={showForms}
           openRegister={handleRegister}
           donwloadSelected={donwloadSelected}
-          cawsMinted = {myCAWSNFTsCreated.length}
-          cawsStaked = {myCAWSNFTsTotalStaked.length}
-          landMinted = {myNFTs.length}
-          landStaked = {mystakes.length}
+          cawsMinted={myCAWSNFTsCreated.length}
+          cawsStaked={myCAWSNFTsTotalStaked.length}
+          landMinted={myNFTs.length}
+          landStaked={mystakes.length}
         />
       )}
 
@@ -345,10 +369,10 @@ function App() {
           showForms={showForms}
           openRegister={handleRegister}
           donwloadSelected={donwloadSelected}
-          cawsMinted = {myCAWSNFTsCreated.length}
-          cawsStaked = {myCAWSNFTsTotalStaked.length}
-          landMinted = {myNFTs.length}
-          landStaked = {mystakes.length}
+          cawsMinted={myCAWSNFTsCreated.length}
+          cawsStaked={myCAWSNFTsTotalStaked.length}
+          landMinted={myNFTs.length}
+          landStaked={mystakes.length}
         />
       )}
     </BrowserRouter>
