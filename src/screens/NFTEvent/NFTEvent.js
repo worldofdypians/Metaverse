@@ -4,6 +4,7 @@ import NftCard from "../../components/NewsCard/NftCard";
 import NftCardSoldOut from "../../components/NewsCard/NftCardSoldOut";
 import arrowBlack from "../../assets/arrow-black.svg";
 import arrowWhite from "../../assets/arrow-white.svg";
+import GenesisBenefitsGrid from "./GenesisBenefitsGrid";
 
 const NFTEvent = ({ coinbase }) => {
   const [myNFTs, setMyNFTs] = useState([]);
@@ -66,7 +67,7 @@ const NFTEvent = ({ coinbase }) => {
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex w-100 flex-column news-main-wrapper">
-          <div className="row w-100 px-3 px-lg-5 mx-0 news-container gap-5 mb-3">
+          <div className="row w-100 px-3 px-lg-5 mx-0 news-container justify-content-center gap-5 mb-3">
             <div>
               <h2 className="news-header font-organetto px-0 pt-3 pt-lg-5 pb-0 align-items-center gap-2">
                 Philippines Community Exclusive:{" "}
@@ -133,6 +134,7 @@ const NFTEvent = ({ coinbase }) => {
                 ))}
               </div>
             ) : null}
+      <GenesisBenefitsGrid />
           </div>
         </div>
       </div>
