@@ -243,7 +243,7 @@ function App() {
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
           <Route exact path="/news" element={<News />} />
-          <Route
+          {/* <Route
             exact
             path="/nft-event"
             element={
@@ -252,7 +252,7 @@ function App() {
                 showWalletConnect={()=>{setwalletModal(true)}}
               />
             }
-          />
+          /> */}
 
           <Route
             exact
