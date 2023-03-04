@@ -1,65 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./_nftEvent.scss";
-import NftCard from "../../components/NewsCard/NftCard";
-import NftCardSoldOut from "../../components/NewsCard/NftCardSoldOut";
 import arrowBlack from "../../assets/arrow-black.svg";
 import arrowWhite from "../../assets/arrow-white.svg";
 import GenesisBenefitsGrid from "./GenesisBenefitsGrid";
-import Countdown from "react-countdown";
-import limitedOfferBadge from '../../assets/limitedoffer.svg'
+import PhFlag from "../../assets/phFlag.svg";
+import UsFlag from "../../assets/enFlag.svg";
+import EventForm from "./EventForm";
 
-const renderer = ({ days, hours, minutes }) => {
-  return (
-    <>
-      <div className="d-flex align-items-center gap-3" style={{width: 'fit-content'}}>
-        <div
-          className="d-flex flex-column align-items-center"
-          style={{ width: "40px" }}
-        >
-          <span className="countdown-sup mb-0">{days}</span>
-          <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            days
-          </span>
-        </div>
-        <span
-          className="countdown-sup"
-          style={{ position: "relative", bottom: "13px" }}
-        >
-          :
-        </span>
-        <div
-          className="d-flex flex-column align-items-center"
-          style={{ width: "40px" }}
-        >
-          <span className="countdown-sup mb-0">{hours}</span>
-          <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            hours
-          </span>
-        </div>
-        <span
-          className="countdown-sup"
-          style={{ position: "relative", bottom: "13px" }}
-        >
-          :
-        </span>
-        <div
-          className="d-flex flex-column align-items-center"
-          style={{ width: "40px" }}
-        >
-          <span className="countdown-sup mb-0">{minutes}</span>
-          <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            minutes
-          </span>
-        </div>
-      </div>
-    </>
-  );
-};
-
-const NFTEvent = ({ coinbase }) => {
+const NFTEvent = ({ coinbase, showWalletConnect }) => {
   const [myNFTs, setMyNFTs] = useState([]);
   const [myNFTIds, setMyNFTIds] = useState([]);
   const [activeArrow, setactiveArrow] = useState(false);
+  const [flag, setFlag] = useState("us");
 
   const myNft = async () => {
     let myNft = await window.myNftLandListContract(
@@ -127,10 +79,13 @@ const NFTEvent = ({ coinbase }) => {
                   </h2>
                 </h2>
                 <p className="land-hero-content font-poppins text-white px-0 col-8">
-                  The customization options in WoD allow you to express your
-                  creativity and make a mark on the virtual world. With endless
-                  possibilities for personalization, each player's experience in
-                  the WoD is truly one-of-a-kind.
+                  Get ready to own a limited edition Genesis Land in World of
+                  Dypians and experience the most exciting virtual world. This
+                  is an amazing chance for you to become part of World of
+                  Dypians metaverse by owning a Genesis Land NFT and receiving a
+                  30% reimbursement of its value. But hurry, this offer is only
+                  valid for 5 days, so don't miss out on the chance to own a
+                  piece of our unique and exciting world.
                 </p>
                 <div
                   className="linear-border"
@@ -154,50 +109,38 @@ const NFTEvent = ({ coinbase }) => {
                 </div>
               </div>
               <div className="col-12 col-lg-3 col-xxl-3">
-                <div className="d-flex flex-column justify-content-between">
-                  <div className="timerwrapper position-relative">
-                    <img src={limitedOfferBadge} alt='' className="limitedbadge"/>
-                    <Countdown
-                      renderer={renderer}
-                      date={"2023-03-08T13:00:00.000+00:00"}
-                    />
+                <div className="d-flex flex-column justify-content-between gap-4">
+                  <div className="flagWrapper" style={{ alignSelf: "end" }}>
+                    <div className="d-flex flex-column gap-2 justify-content-between align-items-center">
+                      <div className="d-flex gap-4">
+                        <img
+                          className={`flag ${flag === "us" && "flag-active"}`}
+                          src={PhFlag}
+                          alt=""
+                          onClick={() => {
+                            setFlag("us");
+                          }}
+                        />
+                        <img
+                          className={`flag ${flag === "ph" && "flag-active"}`}
+                          src={UsFlag}
+                          alt=""
+                          onClick={() => {
+                            setFlag("ph");
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <span className="selectlang">Select Language</span>
+                      </div>
+                    </div>
                   </div>
+                  
                 </div>
               </div>
             </div>
-            {myNFTs.length > 0 && myNFTs.length === 10 ? (
-              <div className="d-grid nft-grid px-0">
-                {myNFTs.map((nftItem, index) => (
-                  <NftCard
-                    title={nftItem.name}
-                    content={nftItem.content}
-                    image={nftItem.image}
-                    id={nftItem.name.slice(1, nftItem.name.length)}
-                    key={index}
-                  />
-                ))}
-              </div>
-            ) : myNFTs.length > 0 && myNFTs.length < 10 ? (
-              <div className="d-grid nft-grid px-0">
-                {myNFTs.map((nftItem, index) => (
-                  <NftCard
-                    title={nftItem.name}
-                    content={nftItem.content}
-                    image={nftItem.image}
-                    id={nftItem.name.slice(1, nftItem.name.length)}
-                    key={index}
-                  />
-                ))}
-                {inactiveArray.map((nftItem, index) => (
-                  <NftCardSoldOut
-                    title={"#" + nftItem}
-                    id={nftItem}
-                    key={index}
-                  />
-                ))}
-              </div>
-            ) : null}
-      <GenesisBenefitsGrid />
+            <EventForm showWalletConnect={showWalletConnect} coinbase={coinbase}/>
+            <GenesisBenefitsGrid />
           </div>
         </div>
       </div>

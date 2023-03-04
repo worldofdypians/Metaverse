@@ -7,7 +7,7 @@ const Header = ({ handleSignUp }) => {
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
-        <div className="col-6 col-xl-5 col-xxl-5 d-flex align-items-center justify-content-between ps-0">
+        <div className="col-6 col-xl-5 col-xxl-4 d-flex align-items-center justify-content-between ps-0">
           <NavLink to="/">
             <img src={metaverse} alt="metaverse" />
           </NavLink>
@@ -64,7 +64,7 @@ const Header = ({ handleSignUp }) => {
           >
             News
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/nft-event"
             className={({isActive}) =>
               isActive
@@ -73,7 +73,7 @@ const Header = ({ handleSignUp }) => {
             }
           >
             NFT Event
-          </NavLink>
+          </NavLink> */}
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
           <div className="linear-border">
