@@ -332,18 +332,9 @@ const LeaderBoard = ({ username, userId }) => {
 
   const prevDailyPrizes = ["40", "20", "15", "10", "5", "5", "5", "5", "5", "5"];
 
-  const prevWeeklyPrizes = [
-    "100",
-    "70",
-    "50",
-    "10",
-    "10",
-    "10",
-    "10",
-    "10",
-    "10",
-    "10",
-  ];
+  const prevWeeklyPrizes = 
+    ["80", "40", "30", "20", "5", "5", "5", "5", "5", "5"]
+  
 
   const prevMonthlyPrizes = [
     "2500",
