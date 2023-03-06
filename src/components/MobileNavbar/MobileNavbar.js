@@ -114,7 +114,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-        {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/nft-event"
             className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -124,7 +124,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             <h6 className="mobile-nav-link font-poppins mb-0">NFT Event</h6>
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
-        </div> */}
+        </div>
         <div className="w-100 d-flex align-items-center justify-content-center gap-3">
           <div className="linear-border">
             <button
