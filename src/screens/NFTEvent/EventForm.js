@@ -120,67 +120,132 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
 
   return (
     <div className="row w-100 justify-content-center m-0">
-      <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center">
+      <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center gap-3">
         <div>
           <NftCardPlaceholder />
         </div>
-        <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100">
-          <div>
-            <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row gap-0 gap-lg-2">
-              Genesis
-              <h6
-                className="genesis-benefits-title"
-                style={{ color: "#8c56ff" }}
-              >
-                Form
+        <div className="d-flex flex-column justify-content-between" style={{height: '100%'}}>
+          <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100">
+            <div>
+              <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row gap-0 gap-lg-2">
+                Genesis
+                <h6
+                  className="genesis-benefits-title"
+                  style={{ color: "#8c56ff" }}
+                >
+                  Form
+                </h6>
               </h6>
-            </h6>
-            {!coinbase ? (
-              <div className={"linear-border"}>
-                <button
-                  className={`btn outline-btn
+              {!coinbase ? (
+                <div className={"linear-border"}>
+                  <button
+                    className={`btn outline-btn
                   }  px-4 w-100`}
-                  onClick={() => {
-                    showWalletConnect();
-                  }}
-                  onMouseEnter={() => {
-                    setMouseOver(true);
-                  }}
-                  onMouseLeave={() => {
-                    setMouseOver(false);
-                  }}
+                    onClick={() => {
+                      showWalletConnect();
+                    }}
+                    onMouseEnter={() => {
+                      setMouseOver(true);
+                    }}
+                    onMouseLeave={() => {
+                      setMouseOver(false);
+                    }}
+                  >
+                    <img
+                      src={mouseOver === false ? blackWallet : whitewallet}
+                      alt=""
+                      style={{ width: "23px", height: "23px" }}
+                    />
+                    Connect wallet
+                  </button>
+                </div>
+              ) : (
+                <span
+                  className="create-land-title font-poppins"
+                  style={{ fontSize: "14px" }}
                 >
-                  <img
-                    src={mouseOver === false ? blackWallet : whitewallet}
-                    alt=""
-                    style={{ width: "23px", height: "23px" }}
-                  />
-                  Connect wallet
-                </button>
-              </div>
-            ) : (
-              <span
-                className="create-land-title font-poppins"
-                style={{ fontSize: "14px" }}
-              >
-                Address:{" "}
-                <a
-                  href={`https://etherscan.io/address/${coinbase}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ textDecoration: "none" }}
-                >
-                  <span className="addr-text">{shortAddress(coinbase)}</span>
-                </a>
-              </span>
-            )}
+                  Address:{" "}
+                  <a
+                    href={`https://etherscan.io/address/${coinbase}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <span className="addr-text">{shortAddress(coinbase)}</span>
+                  </a>
+                </span>
+              )}
+            </div>
+            <div className="timerwrapper position-relative">
+              <img src={limitedOfferBadge} alt="" className="limitedbadge" />
+              <Countdown
+                renderer={renderer}
+                date={"2023-03-08T13:00:00.000+00:00"}
+              />
+            </div>
           </div>
-          <div className="timerwrapper position-relative">
-            <img src={limitedOfferBadge} alt="" className="limitedbadge" />
-            <Countdown
-              renderer={renderer}
-              date={"2023-03-08T13:00:00.000+00:00"}
-            />
+          <div className="d-flex flex-column justify-content-between gap-3">
+            <div className="d-flex justify-content-between gap-4">
+              <StyledTextField
+                error={errors.name ? true : false}
+                size="small"
+                label="Wallet address"
+                id="name"
+                name="name"
+                value={coinbase}
+                helperText={errors.name}
+                required
+                onChange={(e) => {
+                  //   handleChange(e);
+                }}
+                sx={{ width: "100%" }}
+              />
+              <StyledTextField
+                error={errors.email ? true : false}
+                size="small"
+                label="Genesis Land ID"
+                id="email"
+                name="email"
+                value={values.email}
+                helperText={errors.email}
+                required
+                onChange={(e) => {
+                  //   handleChange(e);
+                }}
+                sx={{ width: "100%" }}
+              />
+              <StyledTextField
+                error={errors.email ? true : false}
+                size="small"
+                label="Date of purchase"
+                id="email"
+                name="email"
+                value={values.email}
+                helperText={errors.email}
+                required
+                onChange={(e) => {
+                  //   handleChange(e);
+                }}
+                sx={{ width: "100%" }}
+              />
+            </div>
+            <p className="text-white eventform-desc mb-0">
+              Owning a Genesis land NFT provides you with a gateway to a
+              multitude of benefits within the World of Dypians platform. With
+              immediate access, you can explore and immerse yourself in this
+              exciting metaverse. Your NFT serves as a key that unlocks access
+              to special rewards, events, and features that are exclusive to NFT
+              holders.
+            </p>
+          </div>
+          <hr className="partner-divider" />
+          <div
+            className="linear-border"
+            style={{
+              width: "fit-content", alignSelf: 'end'
+            }}
+          >
+            <button className="btn filled-btn px-5">Submit</button>
           </div>
         </div>
       </div>
