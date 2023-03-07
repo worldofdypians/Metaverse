@@ -4,7 +4,7 @@ import ethLogo from "../../assets/eth.svg";
 const NftCardSoldOut = ({ image, title, content, id }) => {
   return (
     <div className="news-card-wrapper soldout" style={{ width: "fit-content" }}>
-      <div className={`news-card soldout p-3 d-flex flex-column gap-3`}>
+      <div className={`eventnews-card soldout p-3 d-flex flex-column gap-3`}>
         <div className="d-flex flex-column align-items-start justify-content-between gap-3">
           <div className="d-flex align-items-start">
             <img

@@ -11,7 +11,7 @@ const NftCard = ({ image, title, content, id }) => {
         target="_blank"
         rel="noreferrer"
       >
-        <div className={`news-card p-3 d-flex flex-column gap-3`}>
+        <div className={`eventnews-card p-3 d-flex flex-column gap-3`}>
           <div className="d-flex flex-column align-items-start justify-content-between gap-3">
             <div className="d-flex align-items-start">
               <img src={image} alt="news image" className="nft-image" />
