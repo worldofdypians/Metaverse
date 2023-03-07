@@ -70,7 +70,7 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex w-100 flex-column news-main-wrapper">
           <div className="row w-100 px-3 px-lg-5 mx-0 news-container gap-5 mb-3">
-            <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between">
+            <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between gap-3">
               <div className="col-12 col-lg-8 col-xxl-8">
                 <h2 className="news-header font-organetto px-0 pt-3 pt-lg-5 pb-0 align-items-center gap-2">
                   Philippines Community Exclusive:{" "}
@@ -78,7 +78,7 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
                     Unlock Your Piece of the Metaverse!
                   </h2>
                 </h2>
-                <p className="land-hero-content font-poppins text-white px-0 col-8">
+                <p className="land-hero-content font-poppins text-white px-0 col-12 col-lg-8 col-xxl-8">
                   Get ready to own a limited edition Genesis Land in World of
                   Dypians and experience the most exciting virtual world. This
                   is an amazing chance for you to become part of World of
@@ -99,16 +99,19 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
                     setactiveArrow(false);
                   }}
                 >
-                  <button className="btn filled-btn px-5">
+                  <a href="#benefits" className="text-decoration-none btn filled-btn px-5">
                     Earn with Genesis{" "}
                     <img
                       src={activeArrow === true ? arrowWhite : arrowBlack}
                       alt=""
                     />
-                  </button>
+                  </a>
                 </div>
               </div>
-              <div className="col-12 col-lg-3 col-xxl-3">
+              <div className="col-12 col-lg-2 user-select-none pe-none col-xxl-2 d-flex justify-content-center">
+                <img src={require('./assets/discounthero.svg').default} alt='' className="discount30"/>
+              </div>
+              <div className="col-12 col-lg-1 col-xxl-1">
                 <div className="d-flex flex-column justify-content-between gap-4">
                   <div className="flagWrapper" style={{ alignSelf: "end" }}>
                     <div className="d-flex flex-column gap-2 justify-content-between align-items-center">

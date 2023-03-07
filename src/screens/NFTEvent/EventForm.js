@@ -144,12 +144,12 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
       const captchaToken = await recaptchaRef.current.executeAsync();
       const data = {
         address: coinbase,
-        land: values.land,
-        purchase: values.purchase,
+        // land: values.land,
+        // purchase: values.purchase,
         recaptcha: captchaToken,
       };
       console.log(data);
-      if (values.land !== "" &&  coinbase !== "") {
+      if (coinbase !== "") {
         const send = await axios
           .post("https://api-mail.dyp.finance/api/genesis/form", data)
           .then(function (result) {
@@ -174,15 +174,15 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
 
   return (
     <div className="row w-100 justify-content-center m-0">
-      <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center gap-3">
+      <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center gap-3">
         <div>
           <NftCardPlaceholder />
         </div>
         <div
-          className="d-flex flex-column justify-content-between"
+          className="d-flex flex-column justify-content-between gap-2"
           style={{ height: "100%" }}
         >
-          <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100">
+          <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100 gap-4">
             <div>
               <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row gap-0 gap-lg-2">
                 Genesis
@@ -242,7 +242,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
             </div>
           </div>
           <div className="d-flex flex-column justify-content-between gap-3">
-            <div className="d-flex justify-content-between gap-4">
+            <div className="d-flex justify-content-between gap-4 col-12 col-xxl-5 col-lg-5">
               <StyledTextField
                 size="small"
                 label="Wallet address"
@@ -254,7 +254,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                 InputLabelProps={{ shrink: true }}
                 sx={{ width: "100%" }}
               />
-              <StyledTextField
+              {/* <StyledTextField
                 error={errors.land ? true : false}
                 size="small"
                 type="number"
@@ -285,9 +285,9 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                   handleChange(e);
                 }}
                 sx={{ width: "100%" }}
-              />
+              /> */}
             </div>
-            <p className="text-white eventform-desc mb-0">
+            <p className="text-white eventform-desc mb-0 col-12 col-lg-7 col-xxl-7">
               Owning a Genesis land NFT provides you with a gateway to a
               multitude of benefits within the World of Dypians platform. With
               immediate access, you can explore and immerse yourself in this

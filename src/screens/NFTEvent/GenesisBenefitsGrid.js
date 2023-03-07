@@ -35,7 +35,7 @@ const GenesisBenefitsGrid = () => {
   ];
 
   return (
-    <div className="row w-100 justify-content-center">
+    <div className="row w-100 justify-content-center" id="benefits">
       <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row gap-0 gap-lg-2">
         How to earn with{" "}
         <h6 className="genesis-benefits-title" style={{ color: "#8c56ff" }}>
