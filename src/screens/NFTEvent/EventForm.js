@@ -8,6 +8,8 @@ import { shortAddress } from "../Caws/functions/shortAddress";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import ReCaptchaV2 from "react-google-recaptcha";
+import validateInfo from "./validate";
+import axios from "axios";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -103,20 +105,72 @@ const StyledTextField = styled(TextField)({
       background: "#272450",
       borderRadius: "8px",
     },
+    "&.Mui-disabled fieldset": {
+      borderColor: "#AAA5EB",
+      fontFamily: "Poppins",
+      color: "#fff",
+      background: "#272450",
+      borderRadius: "8px",
+    },
   },
 });
 
 const EventForm = ({ showWalletConnect, coinbase }) => {
   const initialValues = {
-    wallet: "",
-    id: "",
-    date: "",
+    land: "",
+    purchase: "",
   };
 
   const [mouseOver, setMouseOver] = useState(false);
   const [values, setValues] = useState(initialValues);
+  const [success, setSuccess] = useState(false);
   const recaptchaRef = useRef(null);
   const [errors, setErrors] = useState({});
+
+  const handleChange = async (e) => {
+    const { name, value } = e.target;
+
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors(validateInfo(values));
+
+    if (Object.keys(validateInfo(values)).length === 0) {
+      const captchaToken = await recaptchaRef.current.executeAsync();
+      const data = {
+        address: coinbase,
+        land: values.land,
+        purchase: values.purchase,
+        recaptcha: captchaToken,
+      };
+      console.log(data);
+      if (values.land !== "" &&  coinbase !== "") {
+        const send = await axios
+          .post("https://api-mail.dyp.finance/api/genesis/form", data)
+          .then(function (result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+        if (send.status === 1) {
+          setSuccess(true);
+          console.log(1);
+        } else {
+          setSuccess(false);
+          console.log(2);
+        }
+      } else {
+      }
+      recaptchaRef.current.reset();
+      setValues({ ...initialValues });
+    }
+  };
 
   return (
     <div className="row w-100 justify-content-center m-0">
@@ -124,7 +178,10 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
         <div>
           <NftCardPlaceholder />
         </div>
-        <div className="d-flex flex-column justify-content-between" style={{height: '100%'}}>
+        <div
+          className="d-flex flex-column justify-content-between"
+          style={{ height: "100%" }}
+        >
           <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100">
             <div>
               <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row gap-0 gap-lg-2">
@@ -187,44 +244,45 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
           <div className="d-flex flex-column justify-content-between gap-3">
             <div className="d-flex justify-content-between gap-4">
               <StyledTextField
-                error={errors.name ? true : false}
                 size="small"
                 label="Wallet address"
                 id="name"
                 name="name"
                 value={coinbase}
-                helperText={errors.name}
                 required
-                onChange={(e) => {
-                  //   handleChange(e);
-                }}
+                disabled
+                InputLabelProps={{ shrink: true }}
                 sx={{ width: "100%" }}
               />
               <StyledTextField
-                error={errors.email ? true : false}
+                error={errors.land ? true : false}
                 size="small"
+                type="number"
                 label="Genesis Land ID"
-                id="email"
-                name="email"
-                value={values.email}
-                helperText={errors.email}
+                id="land"
+                name="land"
+                value={values.land}
+                helperText={errors.land}
                 required
+                inputProps={{ min: 0, max: 999, maxLength: 3 }}
                 onChange={(e) => {
-                  //   handleChange(e);
+                  handleChange(e);
                 }}
                 sx={{ width: "100%" }}
               />
               <StyledTextField
-                error={errors.email ? true : false}
+                error={errors.purchase ? true : false}
+                type="date"
                 size="small"
                 label="Date of purchase"
-                id="email"
-                name="email"
-                value={values.email}
-                helperText={errors.email}
+                id="purchase"
+                name="purchase"
+                value={values.purchase}
+                helperText={errors.purchase}
                 required
+                InputLabelProps={{ shrink: true }}
                 onChange={(e) => {
-                  //   handleChange(e);
+                  handleChange(e);
                 }}
                 sx={{ width: "100%" }}
               />
@@ -242,13 +300,23 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
           <div
             className="linear-border"
             style={{
-              width: "fit-content", alignSelf: 'end'
+              width: "fit-content",
+              alignSelf: "end",
             }}
           >
-            <button className="btn filled-btn px-5">Submit</button>
+            <button className="btn filled-btn px-5" disabled={coinbase ? false : true} onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
         </div>
       </div>
+      <ReCaptchaV2
+        sitekey="6LflZgEgAAAAAO-psvqdoreRgcDdtkQUmYXoHuy2"
+        style={{ display: "inline-block" }}
+        theme="dark"
+        size="invisible"
+        ref={recaptchaRef}
+      />
     </div>
   );
 };
