@@ -279,7 +279,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                 name="purchase"
                 value={values.purchase}
                 helperText={errors.purchase}
-                required
+                required={false}
                 InputLabelProps={{ shrink: true }}
                 onChange={(e) => {
                   handleChange(e);
