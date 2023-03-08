@@ -367,6 +367,7 @@ color: #FFFFFF;
 .flag {
   cursor: pointer;
   scale: 1.1;
+  border: 2px solid #171636;
 }
 
 .flag-active, .flag:hover {
@@ -377,4 +378,22 @@ color: #FFFFFF;
 .Mui-disabled{
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
+}
+
+.count-number{
+  width: 40px;
+  height: 40px;
+  background: #7BD8AF;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: -15px;
+}
+
+.nft-count{
+  font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+color: #080B2A;
+margin-bottom: 0 !important;
 }

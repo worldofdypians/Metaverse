@@ -11,6 +11,8 @@ import ReCaptchaV2 from "react-google-recaptcha";
 import validateInfo from "./validate";
 import axios from "axios";
 
+const { BigNumber } = window;
+
 const renderer = ({ days, hours, minutes }) => {
   return (
     <>
@@ -126,57 +128,136 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
   const [success, setSuccess] = useState(false);
   const recaptchaRef = useRef(null);
   const [errors, setErrors] = useState({});
+  const [landNfts, setLandNfts] = useState([]);
+  const [landStakes, setLandStakes] = useState([]);
+  const [count, setCount] = useState();
 
-  const handleChange = async (e) => {
-    const { name, value } = e.target;
+  const myLandNft = async () => {
+    console.log("hello");
+    if (coinbase !== null && coinbase !== undefined) {
+      const infura_web3 = window.infuraWeb3;
+      let nfts_contract = new infura_web3.eth.Contract(
+        window.LANDMINTING_ABI,
+        window.config.landnft_address
+      );
 
-    setValues({
-      ...values,
-      [name]: value,
+      let getBalanceOf = await nfts_contract.methods.balanceOf(coinbase).call();
+
+      let nftList = [];
+
+      for (let i = 0; i < getBalanceOf; i++)
+        nftList.push(
+          await nfts_contract.methods.tokenOfOwnerByIndex(coinbase, i).call()
+        );
+
+      let nfts = nftList.map((nft) => window.getLandNft(nft));
+
+      nfts = await Promise.all(nfts);
+      nfts.reverse();
+      // this.setState({ myLandNFTs: nfts });
+      setLandNfts(nfts);
+      console.log(nfts);
+    }
+  };
+
+  const getLandStakesIds = async () => {
+    const address = coinbase;
+    if (address !== null && coinbase !== undefined) {
+      const infura_web3 = window.infuraWeb3;
+      let staking_contract = new infura_web3.eth.Contract(
+        window.LANDSTAKING_ABI,
+        window.config.landnftstake_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
+  const myLandStakes = async () => {
+    console.log("hello");
+    let myStakes = await getLandStakesIds();
+    let stakes = myStakes.map((stake) => window.getLandNft(stake));
+    stakes = await Promise.all(stakes);
+    stakes.reverse();
+    // this.setState({ landStakes: stakes });
+    setLandStakes(stakes);
+  };
+
+  const getCount = async () => {
+    await axios
+      .get("https://api3.dyp.finance/api/genesis/count")
+      .then((res) => {
+        setCount(res.data.left);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (coinbase) {
+      myLandNft();
+      myLandStakes();
+    }
+    getCount();
+  }, [coinbase]);
+
+  let lands = [...landNfts, ...landStakes];
+
+  const convertLandsToString = (lands) => {
+    let tempArray = [];
+    lands.map((item) => {
+      tempArray.push(item.name.slice(1, item.name.length));
     });
+
+    return tempArray.toString();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors(validateInfo(values));
-
-    if (Object.keys(validateInfo(values)).length === 0) {
-      const captchaToken = await recaptchaRef.current.executeAsync();
-      const data = {
-        address: coinbase,
-        // land: values.land,
-        // purchase: values.purchase,
-        recaptcha: captchaToken,
-      };
-      console.log(data);
-      if (coinbase !== "") {
-        const send = await axios
-          .post("https://api-mail.dyp.finance/api/genesis/form", data)
-          .then(function (result) {
-            return result.data;
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
-        if (send.status === 1) {
-          setSuccess(true);
-          console.log(1);
-        } else {
-          setSuccess(false);
-          console.log(2);
-        }
+    let stringLands = convertLandsToString(lands);
+    const captchaToken = await recaptchaRef.current.executeAsync();
+    const data = {
+      address: coinbase,
+      nfts: stringLands,
+      recaptcha: captchaToken,
+    };
+    console.log(data);
+    if (coinbase !== "" && lands.length > 0) {
+      const send = await axios
+        .post("https://api-mail.dyp.finance/api/genesis/form", data)
+        .then(function (result) {
+          return result.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+      if (send.status === 1) {
+        setSuccess(true);
+        console.log(1);
       } else {
+        setSuccess(false);
+        console.log(2);
       }
-      recaptchaRef.current.reset();
-      setValues({ ...initialValues });
     }
+    recaptchaRef.current.reset();
   };
 
   return (
     <div className="row w-100 justify-content-center m-0">
-      <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center gap-3">
+      <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-end gap-3">
         <div>
-          <NftCardPlaceholder />
+          <NftCardPlaceholder count={count} />
         </div>
         <div
           className="d-flex flex-column justify-content-between gap-2"
@@ -193,44 +274,64 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                   Form
                 </h6>
               </h6>
-              {!coinbase ? (
-                <div className={"linear-border"}>
-                  <button
-                    className={`btn outline-btn
+              <div className="d-flex align-items-center gap-4">
+                {!coinbase ? (
+                  <div className={"linear-border"}>
+                    <button
+                      className={`btn outline-btn d-flex align-items-center gap-2
                   }  px-4 w-100`}
-                    onClick={() => {
-                      showWalletConnect();
-                    }}
-                    onMouseEnter={() => {
-                      setMouseOver(true);
-                    }}
-                    onMouseLeave={() => {
-                      setMouseOver(false);
-                    }}
+                      onClick={() => {
+                        showWalletConnect();
+                      }}
+                      onMouseEnter={() => {
+                        setMouseOver(true);
+                      }}
+                      onMouseLeave={() => {
+                        setMouseOver(false);
+                      }}
+                    >
+                      <img
+                        src={mouseOver === false ? whitewallet : blackWallet}
+                        alt=""
+                        style={{ width: "23px", height: "23px" }}
+                      />
+                      Connect wallet
+                    </button>
+                  </div>
+                ) : (
+                  <span
+                    className="create-land-title font-poppins"
+                    style={{ fontSize: "14px" }}
                   >
-                    <img
-                      src={mouseOver === false ? blackWallet : whitewallet}
-                      alt=""
-                      style={{ width: "23px", height: "23px" }}
-                    />
-                    Connect wallet
+                    Address:{" "}
+                    <a
+                      href={`https://etherscan.io/address/${coinbase}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <span className="addr-text">
+                        {shortAddress(coinbase)}
+                      </span>
+                    </a>
+                  </span>
+                )}
+                <div className="linear-border">
+                  <button
+                    className="btn filled-btn px-5"
+                    disabled={coinbase && lands.length > 0 ? false : true}
+                    onClick={handleSubmit}
+                  >
+                    Submit
                   </button>
                 </div>
+              </div>
+              {!coinbase ? (
+                <div className="mt-2"></div>
+              ) : coinbase && lands.length < 1 ? (
+                <h6 className="eventform-desc mt-2" style={{color: '#d87b7b'}}>You do not hold any lands</h6>
               ) : (
-                <span
-                  className="create-land-title font-poppins"
-                  style={{ fontSize: "14px" }}
-                >
-                  Address:{" "}
-                  <a
-                    href={`https://etherscan.io/address/${coinbase}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <span className="addr-text">{shortAddress(coinbase)}</span>
-                  </a>
-                </span>
+                <div className="mt-2"></div>
               )}
             </div>
             <div className="timerwrapper position-relative">
@@ -297,17 +398,6 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
             </p>
           </div>
           <hr className="partner-divider" />
-          <div
-            className="linear-border"
-            style={{
-              width: "fit-content",
-              alignSelf: "end",
-            }}
-          >
-            <button className="btn filled-btn px-5" disabled={coinbase ? false : true} onClick={handleSubmit}>
-              Submit
-            </button>
-          </div>
         </div>
       </div>
       <ReCaptchaV2
