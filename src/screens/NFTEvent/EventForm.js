@@ -133,7 +133,6 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
   const [count, setCount] = useState();
 
   const myLandNft = async () => {
-    console.log("hello");
     if (coinbase !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
       let nfts_contract = new infura_web3.eth.Contract(
@@ -154,9 +153,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
 
       nfts = await Promise.all(nfts);
       nfts.reverse();
-      // this.setState({ myLandNFTs: nfts });
       setLandNfts(nfts);
-      console.log(nfts);
     }
   };
 
@@ -188,7 +185,6 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
     let stakes = myStakes.map((stake) => window.getLandNft(stake));
     stakes = await Promise.all(stakes);
     stakes.reverse();
-    // this.setState({ landStakes: stakes });
     setLandStakes(stakes);
   };
 
@@ -343,7 +339,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
             </div>
           </div>
           <div className="d-flex flex-column justify-content-between gap-3">
-            <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-5 col-lg-5">
+            <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-4 col-lg-4">
               <StyledTextField
                 size="small"
                 label="Wallet address"
