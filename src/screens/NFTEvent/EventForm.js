@@ -261,7 +261,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
         </div>
         <div
           className="d-flex flex-column justify-content-between gap-2"
-          style={{ height: "100%" }}
+          style={{ height: "100%", width: '100%' }}
         >
           <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100 gap-4">
             <div>
@@ -274,7 +274,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                   Form
                 </h6>
               </h6>
-              <div className="d-flex align-items-center gap-4">
+              <div className="d-flex flex-column flex-lg-row align-items-center gap-2 gap-lg-4">
                 {!coinbase ? (
                   <div className={"linear-border"}>
                     <button
@@ -343,7 +343,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
             </div>
           </div>
           <div className="d-flex flex-column justify-content-between gap-3">
-            <div className="d-flex justify-content-between gap-4 col-12 col-xxl-5 col-lg-5">
+            <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-5 col-lg-5">
               <StyledTextField
                 size="small"
                 label="Wallet address"
