@@ -320,16 +320,6 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                     </a>
                   </span>
                 )}
-                <div className="linear-border">
-                  <button
-                    className="btn filled-btn px-5"
-                    disabled={coinbase && lands.length > 0 ? false : true}
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
               {!coinbase ? (
                 <div className="mt-2"></div>
               ) : coinbase && lands.length < 1 ? (
@@ -337,6 +327,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
               ) : (
                 <div className="mt-2"></div>
               )}
+              </div>
             </div>
             <div className="timerwrapper position-relative">
               <img src={limitedOfferBadge} alt="" className="limitedbadge" />
@@ -347,7 +338,8 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
             </div>
           </div>
           <div className="d-flex flex-column justify-content-between gap-3">
-            <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-5 col-lg-5">
+            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-4">
+            <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-4 col-lg-4">
               <StyledTextField
                 size="small"
                 label="Wallet address"
@@ -391,6 +383,16 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                 }}
                 sx={{ width: "100%" }}
               /> */}
+            </div>
+            <div className="linear-border">
+                  <button
+                    className="btn filled-btn px-5"
+                    disabled={coinbase && lands.length > 0 ? false : true}
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </button>
+                </div>
             </div>
             <p className="text-white eventform-desc mb-0 col-12 col-lg-7 col-xxl-7">
               Owning a Genesis land NFT provides you with a gateway to a
