@@ -62,8 +62,11 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
   }, []);
 
   useEffect(() => {
-    myNft();
-  }, []);
+    if(coinbase){
+
+      myNft();
+    }
+  }, [coinbase]);
 
   return (
     <>
