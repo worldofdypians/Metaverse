@@ -263,12 +263,12 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
           className="d-flex flex-column justify-content-between gap-2"
           style={{ height: "100%", width: '100%' }}
         >
-          <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100 gap-4">
+          <div className="d-flex flex-column-reverse flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100 gap-4">
             <div>
-              <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row gap-0 gap-lg-2">
+              <h6 className="genesis-benefits-title nft-event-title font-organetto d-flex  flex-lg-row gap-2 gap-lg-2">
                 Genesis
                 <h6
-                  className="genesis-benefits-title"
+                  className="genesis-benefits-title nft-event-title"
                   style={{ color: "#8c56ff" }}
                 >
                   Form
