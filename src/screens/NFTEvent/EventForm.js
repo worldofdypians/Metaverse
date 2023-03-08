@@ -183,7 +183,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
   };
 
   const myLandStakes = async () => {
-    console.log("hello");
+    
     let myStakes = await getLandStakesIds();
     let stakes = myStakes.map((stake) => window.getLandNft(stake));
     stakes = await Promise.all(stakes);
@@ -338,7 +338,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
               <img src={limitedOfferBadge} alt="" className="limitedbadge" />
               <Countdown
                 renderer={renderer}
-                date={"2023-03-08T13:00:00.000+00:00"}
+                date={"2023-03-14T13:00:00.000+00:00"}
               />
             </div>
           </div>
