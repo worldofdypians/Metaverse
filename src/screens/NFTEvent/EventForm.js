@@ -256,7 +256,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
 
   return (
     <div className="row w-100 justify-content-center m-0 gap-3">
-      <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row gap-0 gap-lg-2">
+      <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row flex-xxl-row flex-md-row  flex-sm-row  gap-0 gap-lg-2 gap-md-2 gap-sm-2">
         Genesis
         <h6 className="genesis-benefits-title" style={{ color: "#8c56ff" }}>
           Form
@@ -270,8 +270,8 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
           className="d-flex flex-column justify-content-between gap-2"
           style={{ height: "100%", width: "100%" }}
         >
-          <div className="d-flex justify-content-between gap-2 align-items-center">
-            <div className="d-flex flex-column gap-2 justify-content-between col-3">
+          <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between gap-3 align-items-center">
+            <div className="d-flex flex-column gap-2 justify-content-between col-12 col-xxl-3 col-lg-3">
               <span className="stepsTitle">A Step-by-Step Guide</span>
 
               <div className="stepscontainer">
@@ -315,7 +315,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                 </Timeline>
               </div>
             </div>
-            <div className="d-flex flex-column justify-content-between gap-2 col-8">
+            <div className="d-flex flex-column justify-content-between gap-2 col-12 col-xxl-8 col-lg-8">
               <div className="d-flex flex-column justify-content-between gap-4 mb-3">
                 <div className="timerwrapper position-relative">
                   <img
@@ -369,7 +369,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                 </div>
               </div>
 
-              <div className="d-flex flex-row justify-content-between gap-3">
+              <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center gap-3">
                 <div className="d-flex flex-column gap-2 w-100">
                 <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-7 col-lg-7">
                   <StyledTextField

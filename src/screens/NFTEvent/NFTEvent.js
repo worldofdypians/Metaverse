@@ -74,7 +74,7 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
           <div className="row w-100 px-3 px-lg-5 mx-0 news-container gap-5 mb-3">
             <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between gap-3">
               <div className="col-12 col-lg-8 col-xxl-8">
-                <h2 className="news-header font-organetto px-0 pt-3 pt-lg-5 pb-0 align-items-center gap-2">
+                <h2 className="newsevent-header font-organetto px-0 pt-3 pt-lg-5 pb-0 align-items-center gap-2">
                   Philippines Community Exclusive:{" "}
                   <h2 className="mb-0" style={{ color: "#8c56ff" }}>
                     Unlock Your Piece of the Metaverse!
@@ -111,7 +111,7 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
                   </a>
                 </div>
               </div>
-              <div className="col-12 col-lg-2 user-select-none pe-none col-xxl-2 d-flex justify-content-center">
+              <div className="col-12 col-lg-2 user-select-none pe-none col-xxl-2 d-flex justify-content-center discountwrapper">
                 <img
                   src={require("./assets/discounthero.svg").default}
                   alt=""

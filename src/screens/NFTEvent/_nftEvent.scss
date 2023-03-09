@@ -5,10 +5,10 @@
   background-image: url("../../assets/newsAssets/newsBackground.webp");
   background-size: cover;
 
-  .news-header {
+  .newsevent-header {
     font-style: normal;
     font-weight: 800;
-    font-size: 32px;
+    font-size: 28px;
     line-height: 43px;
 
     color: #ffffff;
@@ -39,7 +39,6 @@
     padding: 20px;
     border: 2px solid #99f1ff;
     background: rgba(255, 255, 255, 0.04);
-    width: fit-content;
     backdrop-filter: blur(5.5px);
   }
 
@@ -72,6 +71,15 @@
     line-height: 24px;
     letter-spacing: -0.018em;
     color: #f7f7fc;
+  }
+
+  .discountwrapper {
+    position: relative;
+    top: 80px;
+
+    @media only screen and (max-width: 991px) {
+      top: auto;
+    }
   }
 
   .eventnews-card {
@@ -370,6 +378,11 @@
   justify-content: center;
   align-items: center;
   width: 360px;
+
+  @media screen and (max-width: 991px) {
+    width: 100%;
+  }
+
 }
 
 .eventform-desc {
