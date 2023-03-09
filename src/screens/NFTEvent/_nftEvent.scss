@@ -26,6 +26,54 @@
     }
   }
 
+  .stepsTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 42px;
+    color: #ffffff;
+  }
+
+  .stepscontainer {
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid #99f1ff;
+    background: rgba(255, 255, 255, 0.04);
+    width: fit-content;
+    backdrop-filter: blur(5.5px);
+  }
+
+  .timelinedot {
+    background: #26264f !important;
+    border: 2px solid #565891 !important;
+    width: 24px;
+    height: 24px;
+    margin: 6px 0px !important;
+  }
+
+  .timeline-line {
+    background-color: #565891 !important;
+    height: 20px;
+  }
+
+  .MuiTimelineItem-root {
+    min-height: 40px !important;
+  }
+
+  .MuiTimeline-root {
+    margin-bottom: 0 !important;
+  }
+
+  .content-title2 {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.018em;
+    color: #f7f7fc;
+  }
+
   .eventnews-card {
     background: #181636;
     border-radius: 8px;
@@ -324,14 +372,13 @@
   width: 360px;
 }
 
-
 .eventform-desc {
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-color: #FFFFFF;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
 }
 
 .create-land-title {
@@ -354,14 +401,14 @@ color: #FFFFFF;
 }
 
 .selectlang {
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 14px;
-text-align: right;
-letter-spacing: -0.018em;
-color: #FFFFFF;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: right;
+  letter-spacing: -0.018em;
+  color: #ffffff;
 }
 
 .flag {
@@ -370,30 +417,31 @@ color: #FFFFFF;
   border: 2px solid #171636;
 }
 
-.flag-active, .flag:hover {
-  border: 2px solid #09FBD3;
+.flag-active,
+.flag:hover {
+  border: 2px solid #09fbd3;
   border-radius: 2px;
 }
 
-.Mui-disabled{
+.Mui-disabled {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
 }
 
-.count-number{
+.count-number {
   width: 40px;
   height: 40px;
-  background: #7BD8AF;
+  background: #7bd8af;
   border-radius: 50%;
   position: absolute;
   right: 0;
   top: -15px;
 }
 
-.nft-count{
+.nft-count {
   font-weight: 600;
-font-size: 16px;
-line-height: 24px;
-color: #080B2A;
-margin-bottom: 0 !important;
+  font-size: 16px;
+  line-height: 24px;
+  color: #080b2a;
+  margin-bottom: 0 !important;
 }

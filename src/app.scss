@@ -58,11 +58,34 @@ body {
       calc(100% - 20px) 100%,
       0 100%
     );
+    height: fit-content;
   }
 
   .linear-border::before {
     content: "";
   }
+
+  .linear-border-purp {
+    position: relative;
+    padding: 3px;
+    pointer-events: none;
+    user-select: none;
+    background: linear-gradient(89.7deg, #7E39FD 0.23%, #2F1369 99.72%);
+    border-radius: 8px;
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+  }
+
+  .linear-border-purp::before {
+    content: "";
+  }
+
 
   .walletbutton {
     background: var(--box-bg);
