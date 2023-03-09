@@ -100,7 +100,7 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
                   }}
                 >
                   <a
-                    href="#benefits"
+                    href="#how-to-earn"
                     className="text-decoration-none btn filled-btn px-5"
                   >
                     Earn with Genesis{" "}
