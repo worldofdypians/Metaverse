@@ -10,12 +10,15 @@ import styled from "styled-components";
 import ReCaptchaV2 from "react-google-recaptcha";
 import validateInfo from "./validate";
 import axios from "axios";
+import Timeline from "@mui/lab/Timeline";
+import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent from "@mui/lab/TimelineContent";
+import TimelineDot from "@mui/lab/TimelineDot";
 import OutsideClickHandler from "react-outside-click-handler";
 import modalClose from "../../assets/newsAssets/modalClose.svg";
 import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
-
-
-
 
 const { BigNumber } = window;
 
@@ -139,7 +142,6 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
   const [count, setCount] = useState();
 
   const myLandNft = async () => {
-    console.log("hello");
     if (coinbase !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
       let nfts_contract = new infura_web3.eth.Contract(
@@ -160,9 +162,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
 
       nfts = await Promise.all(nfts);
       nfts.reverse();
-      // this.setState({ myLandNFTs: nfts });
       setLandNfts(nfts);
-      console.log(nfts);
     }
   };
 
@@ -189,12 +189,10 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
   };
 
   const myLandStakes = async () => {
-    
     let myStakes = await getLandStakesIds();
     let stakes = myStakes.map((stake) => window.getLandNft(stake));
     stakes = await Promise.all(stakes);
     stakes.reverse();
-    // this.setState({ landStakes: stakes });
     setLandStakes(stakes);
   };
 
@@ -258,133 +256,149 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
   };
 
   return (
-    <div className="row w-100 justify-content-center m-0">
-      <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-end gap-3">
+    <div className="row w-100 justify-content-center m-0 gap-3">
+      <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row flex-xxl-row flex-md-row  flex-sm-row  gap-0 gap-lg-2 gap-md-2 gap-sm-2">
+        Genesis
+        <h6 className="genesis-benefits-title" style={{ color: "#8c56ff" }}>
+          Form
+        </h6>
+      </h6>
+      <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center gap-3">
         <div>
           <NftCardPlaceholder count={count} />
         </div>
         <div
           className="d-flex flex-column justify-content-between gap-2"
-          style={{ height: "100%", width: '100%' }}
+          style={{ height: "100%", width: "100%" }}
         >
-          <div className="d-flex flex-column-reverse flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center w-100 gap-4">
-            <div>
-              <h6 className="genesis-benefits-title nft-event-title font-organetto d-flex  flex-lg-row gap-2 gap-lg-2">
-                Genesis
-                <h6
-                  className="genesis-benefits-title nft-event-title"
-                  style={{ color: "#8c56ff" }}
+          <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between gap-3 align-items-center">
+            <div className="d-flex flex-column gap-2 justify-content-between col-12 col-xxl-3 col-lg-3">
+              <span className="stepsTitle">A Step-by-Step Guide</span>
+
+              <div className="stepscontainer">
+                <Timeline
+                  sx={{
+                    [`& .${timelineItemClasses.root}:before`]: {
+                      flex: 0,
+                      padding: 0,
+                    },
+                  }}
                 >
-                  Form
-                </h6>
-              </h6>
-              <div className="d-flex flex-column flex-lg-row align-items-center gap-2 gap-lg-4">
-                {!coinbase ? (
-                  <div className={"linear-border"}>
-                    <button
-                      className={`btn outline-btn d-flex align-items-center gap-2
-                  }  px-4 w-100`}
-                      onClick={() => {
-                        showWalletConnect();
-                      }}
-                      onMouseEnter={() => {
-                        setMouseOver(true);
-                      }}
-                      onMouseLeave={() => {
-                        setMouseOver(false);
-                      }}
-                    >
-                      <img
-                        src={mouseOver === false ? whitewallet : blackWallet}
-                        alt=""
-                        style={{ width: "23px", height: "23px" }}
-                      />
-                      Connect wallet
-                    </button>
-                  </div>
-                ) : (
-                  <span
-                    className="create-land-title font-poppins"
-                    style={{ fontSize: "14px" }}
-                  >
-                    Address:{" "}
-                    <a
-                      href={`https://etherscan.io/address/${coinbase}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ textDecoration: "none" }}
-                    >
-                      <span className="addr-text">
-                        {shortAddress(coinbase)}
-                      </span>
-                    </a>
-                  </span>
-                )}
-              {!coinbase ? (
-                <div className="mt-2"></div>
-              ) : coinbase && lands.length < 1 ? (
-                <h6 className="eventform-desc mt-2" style={{color: '#d87b7b'}}>You do not hold any lands</h6>
-              ) : (
-                <div className="mt-2"></div>
-              )}
+                  <TimelineItem>
+                    <TimelineSeparator>
+                      <TimelineDot className={"timelinedot"} />
+                      <TimelineConnector className={"timeline-line"} />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <h6 className="content-title2">
+                        Buy Genesis Land NFT on OpenSea
+                      </h6>
+                    </TimelineContent>
+                  </TimelineItem>
+                  <TimelineItem>
+                    <TimelineSeparator>
+                      <TimelineDot className={"timelinedot"} />
+                      <TimelineConnector className={"timeline-line"} />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <h6 className="content-title2">Complete Genesis form</h6>
+                    </TimelineContent>
+                  </TimelineItem>
+                  <TimelineItem>
+                    <TimelineSeparator>
+                      <TimelineDot className={"timelinedot"} />
+                      {/* <TimelineConnector className={"timeline-line"} /> */}
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <h6 className="content-title2">Receive reimbursement</h6>
+                    </TimelineContent>
+                  </TimelineItem>
+                </Timeline>
               </div>
             </div>
-            <div className="timerwrapper position-relative">
-              <img src={limitedOfferBadge} alt="" className="limitedbadge" />
-              <Countdown
-                renderer={renderer}
-                date={"2023-03-14T13:00:00.000+00:00"}
-              />
-            </div>
-          </div>
-          <div className="d-flex flex-column justify-content-between gap-3">
-            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-4">
-            <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-4 col-lg-4">
-              <StyledTextField
-                size="small"
-                label="Wallet address"
-                id="name"
-                name="name"
-                value={coinbase}
-                required
-                disabled
-                InputLabelProps={{ shrink: true }}
-                sx={{ width: "100%" }}
-              />
-              {/* <StyledTextField
-                error={errors.land ? true : false}
-                size="small"
-                type="number"
-                label="Genesis Land ID"
-                id="land"
-                name="land"
-                value={values.land}
-                helperText={errors.land}
-                required
-                inputProps={{ min: 0, max: 999, maxLength: 3 }}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                sx={{ width: "100%" }}
-              />
-              <StyledTextField
-                error={errors.purchase ? true : false}
-                type="date"
-                size="small"
-                label="Date of purchase"
-                id="purchase"
-                name="purchase"
-                value={values.purchase}
-                helperText={errors.purchase}
-                required={false}
-                InputLabelProps={{ shrink: true }}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                sx={{ width: "100%" }}
-              /> */}
-            </div>
-            <div className="linear-border">
+            <div className="d-flex flex-column justify-content-between gap-2 col-12 col-xxl-8 col-lg-8">
+              <div className="d-flex flex-column justify-content-between gap-4 mb-3">
+                <div className="timerwrapper position-relative">
+                  <img
+                    src={limitedOfferBadge}
+                    alt=""
+                    className="limitedbadge"
+                  />
+                  <Countdown
+                    renderer={renderer}
+                    date={"2023-03-14T13:00:00.000+00:00"}
+                  />
+                </div>{" "}
+                <div>
+                  <div className="d-flex flex-column flex-lg-row align-items-center gap-2 gap-lg-4">
+                    {!coinbase ? (
+                      <div className={"linear-border"}>
+                        <button
+                          className={`btn outline-btn d-flex align-items-center gap-2
+                  }  px-4 w-100`}
+                          onClick={() => {
+                            showWalletConnect();
+                          }}
+                          onMouseEnter={() => {
+                            setMouseOver(true);
+                          }}
+                          onMouseLeave={() => {
+                            setMouseOver(false);
+                          }}
+                        >
+                          <img
+                            src={
+                              mouseOver === false ? whitewallet : blackWallet
+                            }
+                            alt=""
+                            style={{ width: "23px", height: "23px" }}
+                          />
+                          Connect wallet
+                        </button>
+                      </div>
+                    ) : (
+                      <div className={"linear-border-purp"}>
+                        <button
+                          className={`btn outline-btn d-flex align-items-center gap-2
+                }  px-4 w-100`}
+                        >
+                          Wallet connected
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center gap-3">
+                <div className="d-flex flex-column gap-2 w-100">
+                <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-7 col-lg-7">
+                  <StyledTextField
+                    size="small"
+                    label="Wallet address"
+                    id="name"
+                    name="name"
+                    value={coinbase}
+                    required
+                    disabled
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ width: "100%" }}
+                  />
+                </div>
+                {!coinbase ? (
+                  <div className="mt-2"></div>
+                ) : coinbase && lands.length < 1 ? (
+                  <h6
+                    className="eventform-desc mt-2"
+                    style={{ color: "#d87b7b" }}
+                  >
+                    *Please purchase a Genesis Land NFT on OpenSea
+                  </h6>
+                ) : (
+                  <div className="mt-2"></div>
+                )}
+</div>
+                <div className="linear-border">
                   <button
                     className="btn filled-btn px-5"
                     disabled={coinbase && lands.length > 0 ? false : true}
@@ -393,16 +407,13 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                     Submit
                   </button>
                 </div>
+              </div>
             </div>
-            <p className="text-white eventform-desc mb-0 col-12 col-lg-7 col-xxl-7">
-              Owning a Genesis land NFT provides you with a gateway to a
-              multitude of benefits within the World of Dypians platform. With
-              immediate access, you can explore and immerse yourself in this
-              exciting metaverse. Your NFT serves as a key that unlocks access
-              to special rewards, events, and features that are exclusive to NFT
-              holders.
-            </p>
-          </div>
+          </div>{" "}
+          <p className="text-white eventform-desc mb-0 col-12">
+            Your Genesis Land NFT serves as a key that unlocks access to special
+            rewards, events, and features that are exclusive to NFT holders.
+          </p>
           <hr className="partner-divider" />
         </div>
       </div>
@@ -413,7 +424,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
         size="invisible"
         ref={recaptchaRef}
       />
-      {success && (
+       {success && (
         <OutsideClickHandler onOutsideClick={() => setSuccess(false)}>
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">

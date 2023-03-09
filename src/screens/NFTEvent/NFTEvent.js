@@ -62,8 +62,7 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
   }, []);
 
   useEffect(() => {
-    if(coinbase){
-
+    if (coinbase) {
       myNft();
     }
   }, [coinbase]);
@@ -75,20 +74,18 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
           <div className="row w-100 px-3 px-lg-5 mx-0 news-container gap-5 mb-3">
             <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between gap-3">
               <div className="col-12 col-lg-8 col-xxl-8">
-                <h2 className="news-header font-organetto px-0 pt-3 pt-lg-5 pb-0 align-items-center gap-2">
+                <h2 className="newsevent-header font-organetto px-0 pt-3 pt-lg-5 pb-0 align-items-center gap-2">
                   Philippines Community Exclusive:{" "}
                   <h2 className="mb-0" style={{ color: "#8c56ff" }}>
                     Unlock Your Piece of the Metaverse!
                   </h2>
                 </h2>
                 <p className="land-hero-content font-poppins text-white px-0 col-12 col-lg-8 col-xxl-8">
-                  Get ready to own a limited edition Genesis Land in World of
-                  Dypians and experience the most exciting virtual world. This
-                  is an amazing chance for you to become part of World of
-                  Dypians metaverse by owning a Genesis Land NFT and receiving a
-                  30% reimbursement of its value. But hurry, this offer is only
-                  valid for 5 days, so don't miss out on the chance to own a
-                  piece of our unique and exciting world.
+                  Get ready to become part of World of Dypians metaverse by
+                  owning a Genesis Land NFT and receiving a 30% reimbursement of
+                  its value. But hurry, this offer is only valid for 5 days, so
+                  don't miss out on the chance to own a piece of our unique and
+                  exciting world.
                 </p>
                 <div
                   className="linear-border"
@@ -102,7 +99,10 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
                     setactiveArrow(false);
                   }}
                 >
-                  <a href="#benefits" className="text-decoration-none btn filled-btn px-5">
+                  <a
+                    href="#how-to-earn"
+                    className="text-decoration-none btn filled-btn px-5"
+                  >
                     Earn with Genesis{" "}
                     <img
                       src={activeArrow === true ? arrowWhite : arrowBlack}
@@ -111,8 +111,12 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
                   </a>
                 </div>
               </div>
-              <div className="col-12 col-lg-2 user-select-none pe-none col-xxl-2 d-flex justify-content-center">
-                <img src={require('./assets/discounthero.svg').default} alt='' className="discount30"/>
+              <div className="col-12 col-lg-2 user-select-none pe-none col-xxl-2 d-flex justify-content-center discountwrapper">
+                <img
+                  src={require("./assets/discounthero.svg").default}
+                  alt=""
+                  className="discount30"
+                />
               </div>
               <div className="col-12 col-lg-1 col-xxl-1">
                 <div className="d-flex flex-column justify-content-between gap-4">
@@ -141,11 +145,13 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
                       </div>
                     </div>
                   </div>
-                  
                 </div>
               </div>
             </div>
-            <EventForm showWalletConnect={showWalletConnect} coinbase={coinbase}/>
+            <EventForm
+              showWalletConnect={showWalletConnect}
+              coinbase={coinbase}
+            />
             <GenesisBenefitsGrid />
           </div>
         </div>
