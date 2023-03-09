@@ -16,6 +16,9 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
+import OutsideClickHandler from "react-outside-click-handler";
+import modalClose from "../../assets/newsAssets/modalClose.svg";
+import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
 
 const { BigNumber } = window;
 
@@ -245,10 +248,8 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
         });
       if (send.status === 1) {
         setSuccess(true);
-        console.log(1);
       } else {
         setSuccess(false);
-        console.log(2);
       }
     }
     recaptchaRef.current.reset();
@@ -423,6 +424,25 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
         size="invisible"
         ref={recaptchaRef}
       />
+       {success && (
+        <OutsideClickHandler onOutsideClick={() => setSuccess(false)}>
+          <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
+            <div className="d-flex w-100 justify-content-end">
+              <img
+                src={modalClose}
+                alt="close modal"
+                onClick={() => setSuccess(false)}
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+            <img src={newsLetterModal} alt="success" />
+            <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
+            <span className="newsletter-modal-span font-poppins">
+            Your submission has been received successfully
+            </span>
+          </div>
+        </OutsideClickHandler>
+      )}
     </div>
   );
 };
