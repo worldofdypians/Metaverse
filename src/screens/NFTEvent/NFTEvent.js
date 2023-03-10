@@ -71,9 +71,9 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex w-100 flex-column news-main-wrapper">
-          <div className="row w-100 px-3 px-lg-5 mx-0 news-container gap-5 mb-3">
-            <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between gap-3">
-              <div className="col-12 col-lg-8 col-xxl-8">
+          <div className="row w-100 px-3 px-lg-5 mx-0 news-container gap-5 mb-3 mt-5 mt-lg-0">
+            <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between mt-5 mt-lg-0 gap-3">
+              <div className="col-12 col-lg-8 col-xxl-8 d-flex flex-column order-2 order-lg-1">
                 <h2 className="newsevent-header font-organetto px-0 pt-3 pt-lg-5 pb-0 align-items-center gap-2">
                   Philippines Community Exclusive:{" "}
                   <h2 className="mb-0" style={{ color: "#8c56ff" }}>
@@ -111,14 +111,14 @@ const NFTEvent = ({ coinbase, showWalletConnect }) => {
                   </a>
                 </div>
               </div>
-              <div className="col-12 col-lg-2 user-select-none pe-none col-xxl-2 d-flex justify-content-center discountwrapper">
+              <div className="col-12 col-lg-2 user-select-none pe-none col-xxl-2 d-flex order-3 order-lg-2 justify-content-center discountwrapper">
                 <img
                   src={require("./assets/discounthero.svg").default}
                   alt=""
                   className="discount30"
                 />
               </div>
-              <div className="col-12 col-lg-1 col-xxl-1">
+              <div className="col-12 col-lg-1 col-xxl-1 d-flex order-1 order-lg-3 justify-content-end">
                 <div className="d-flex flex-column justify-content-between gap-4">
                   <div className="flagWrapper" style={{ alignSelf: "end" }}>
                     <div className="d-flex flex-column gap-2 justify-content-between align-items-center">
