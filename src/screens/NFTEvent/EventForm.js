@@ -22,56 +22,7 @@ import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
 
 const { BigNumber } = window;
 
-const renderer = ({ days, hours, minutes }) => {
-  return (
-    <>
-      <div
-        className="d-flex align-items-center gap-3"
-        style={{ width: "fit-content" }}
-      >
-        <div
-          className="d-flex flex-column align-items-center"
-          style={{ width: "40px" }}
-        >
-          <span className="countdown-sup mb-0">{days}</span>
-          <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            days
-          </span>
-        </div>
-        <span
-          className="countdown-sup"
-          style={{ position: "relative", bottom: "13px" }}
-        >
-          :
-        </span>
-        <div
-          className="d-flex flex-column align-items-center"
-          style={{ width: "40px" }}
-        >
-          <span className="countdown-sup mb-0">{hours}</span>
-          <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            hours
-          </span>
-        </div>
-        <span
-          className="countdown-sup"
-          style={{ position: "relative", bottom: "13px" }}
-        >
-          :
-        </span>
-        <div
-          className="d-flex flex-column align-items-center"
-          style={{ width: "40px" }}
-        >
-          <span className="countdown-sup mb-0">{minutes}</span>
-          <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            minutes
-          </span>
-        </div>
-      </div>
-    </>
-  );
-};
+
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#fff",
@@ -126,10 +77,68 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const EventForm = ({ showWalletConnect, coinbase }) => {
+const EventForm = ({ showWalletConnect, coinbase, flag }) => {
   const initialValues = {
     land: "",
     purchase: "",
+  };
+
+
+  const renderer = ({ days, hours, minutes }) => {
+    return (
+      <>
+        <div
+          className="d-flex align-items-center gap-3"
+          style={{ width: "fit-content" }}
+        >
+          <div
+            className="d-flex flex-column align-items-center"
+            style={{ width: "40px" }}
+          >
+            <span className="countdown-sup mb-0">{days}</span>
+            <span className="countdown-sub" style={{ fontWeight: 300 }}>
+            {flag === "ph"
+                  ? `Araw`
+                  : ` Days`}
+            </span>
+          </div>
+          <span
+            className="countdown-sup"
+            style={{ position: "relative", bottom: "13px" }}
+          >
+            :
+          </span>
+          <div
+            className="d-flex flex-column align-items-center"
+            style={{ width: "40px" }}
+          >
+            <span className="countdown-sup mb-0">{hours}</span>
+            <span className="countdown-sub" style={{ fontWeight: 300 }}>
+            {flag === "ph"
+                  ? `Oras`
+                  : ` Hours`}
+            </span>
+          </div>
+          <span
+            className="countdown-sup"
+            style={{ position: "relative", bottom: "13px" }}
+          >
+            :
+          </span>
+          <div
+            className="d-flex flex-column align-items-center"
+            style={{ width: "40px" }}
+          >
+            <span className="countdown-sup mb-0">{minutes}</span>
+            <span className="countdown-sub" style={{ fontWeight: 300 }}>
+            {flag === "ph"
+                  ? `Minuto`
+                  : `Minutes`}
+            </span>
+          </div>
+        </div>
+      </>
+    );
   };
 
   const [mouseOver, setMouseOver] = useState(false);
@@ -265,7 +274,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
       </h6>
       <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center gap-3">
         <div>
-          <NftCardPlaceholder count={count} />
+          <NftCardPlaceholder flag={flag} count={count} />
         </div>
         <div
           className="d-flex flex-column justify-content-between gap-2"
@@ -273,7 +282,11 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
         >
           <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between gap-3 align-items-center">
             <div className="d-flex flex-column gap-2 justify-content-between col-12 col-xxl-3 col-lg-3">
-              <span className="stepsTitle">A Step-by-Step Guide</span>
+              <span className="stepsTitle">
+                {flag === "ph"
+                  ? `Gabay sa mga hakbang`
+                  : ` A Step-by-Step Guide`}
+              </span>
 
               <div className="stepscontainer">
                 <Timeline
@@ -291,7 +304,9 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                     </TimelineSeparator>
                     <TimelineContent>
                       <h6 className="content-title2">
-                        Buy Genesis Land NFT on OpenSea
+                        {flag === "ph"
+                          ? `Bumili ng Genesis Land NFT sa OpenSea`
+                          : `Buy Genesis Land NFT on OpenSea`}
                       </h6>
                     </TimelineContent>
                   </TimelineItem>
@@ -301,7 +316,11 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                       <TimelineConnector className={"timeline-line"} />
                     </TimelineSeparator>
                     <TimelineContent>
-                      <h6 className="content-title2">Complete Genesis form</h6>
+                      <h6 className="content-title2">
+                        {flag === "ph"
+                          ? `Kumpletuhin ang Genesis form`
+                          : `Complete Genesis form`}
+                      </h6>
                     </TimelineContent>
                   </TimelineItem>
                   <TimelineItem>
@@ -310,7 +329,11 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
                       {/* <TimelineConnector className={"timeline-line"} /> */}
                     </TimelineSeparator>
                     <TimelineContent>
-                      <h6 className="content-title2">Receive reimbursement</h6>
+                      <h6 className="content-title2">
+                        {flag === "ph"
+                          ? `Tumanggap ng reimbursement`
+                          : `Receive reimbursement`}
+                      </h6>
                     </TimelineContent>
                   </TimelineItem>
                 </Timeline>
@@ -372,32 +395,32 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
 
               <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center gap-3">
                 <div className="d-flex flex-column gap-2 w-100">
-                <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-7 col-lg-7">
-                  <StyledTextField
-                    size="small"
-                    label="Wallet address"
-                    id="name"
-                    name="name"
-                    value={coinbase}
-                    required
-                    disabled
-                    InputLabelProps={{ shrink: true }}
-                    sx={{ width: "100%" }}
-                  />
+                  <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-7 col-lg-7">
+                    <StyledTextField
+                      size="small"
+                      label="Wallet address"
+                      id="name"
+                      name="name"
+                      value={coinbase}
+                      required
+                      disabled
+                      InputLabelProps={{ shrink: true }}
+                      sx={{ width: "100%" }}
+                    />
+                  </div>
+                  {!coinbase ? (
+                    <div className="mt-2"></div>
+                  ) : coinbase && lands.length < 1 ? (
+                    <h6
+                      className="eventform-desc mt-2"
+                      style={{ color: "#d87b7b" }}
+                    >
+                      *Please purchase a Genesis Land NFT on OpenSea
+                    </h6>
+                  ) : (
+                    <div className="mt-2"></div>
+                  )}
                 </div>
-                {!coinbase ? (
-                  <div className="mt-2"></div>
-                ) : coinbase && lands.length < 1 ? (
-                  <h6
-                    className="eventform-desc mt-2"
-                    style={{ color: "#d87b7b" }}
-                  >
-                    *Please purchase a Genesis Land NFT on OpenSea
-                  </h6>
-                ) : (
-                  <div className="mt-2"></div>
-                )}
-</div>
                 <div className="linear-border">
                   <button
                     className="btn filled-btn px-5"
@@ -411,8 +434,10 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
             </div>
           </div>{" "}
           <p className="text-white eventform-desc mb-0 col-12">
-            Your Genesis Land NFT serves as a key that unlocks access to special
-            rewards, events, and features that are exclusive to NFT holders.
+            {flag === "ph"
+              ? `Ang iyong Genesis Land NFT ay nagsisilbing susi para magkaroon ng pribilehiyo sa mga espesyal na gantimpala, kaganapan, at feature na eksklusibo sa mga may hawak ng NFT.`
+              : `Your Genesis Land NFT serves as a key that unlocks access to special
+                          rewards, events, and features that are exclusive to NFT holders.`}
           </p>
           <hr className="partner-divider" />
         </div>
@@ -424,7 +449,7 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
         size="invisible"
         ref={recaptchaRef}
       />
-       {success && (
+      {success && (
         <OutsideClickHandler onOutsideClick={() => setSuccess(false)}>
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">
@@ -436,9 +461,13 @@ const EventForm = ({ showWalletConnect, coinbase }) => {
               />
             </div>
             <img src={newsLetterModal} alt="success" />
-            <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
+            <h6 className="newsletter-modal-title font-poppins">
+              {flag === "ph" ? `Salamat` : `Thank you`}
+            </h6>
             <span className="newsletter-modal-span font-poppins">
-            Your submission has been received successfully
+              {flag === "ph"
+                ? `Matagumpay na natanggap ang iyong pagsusumite`
+                : `Your submission has been received successfully`}
             </span>
           </div>
         </OutsideClickHandler>
