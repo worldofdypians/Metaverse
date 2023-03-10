@@ -22,7 +22,6 @@ import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
 
 const { BigNumber } = window;
 
-
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#fff",
@@ -83,7 +82,6 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
     purchase: "",
   };
 
-
   const renderer = ({ days, hours, minutes }) => {
     return (
       <>
@@ -97,9 +95,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
           >
             <span className="countdown-sup mb-0">{days}</span>
             <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            {flag === "ph"
-                  ? `Araw`
-                  : ` Days`}
+              {flag === "ph" ? `Araw` : ` Days`}
             </span>
           </div>
           <span
@@ -114,9 +110,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
           >
             <span className="countdown-sup mb-0">{hours}</span>
             <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            {flag === "ph"
-                  ? `Oras`
-                  : ` Hours`}
+              {flag === "ph" ? `Oras` : ` Hours`}
             </span>
           </div>
           <span
@@ -131,9 +125,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
           >
             <span className="countdown-sup mb-0">{minutes}</span>
             <span className="countdown-sub" style={{ fontWeight: 300 }}>
-            {flag === "ph"
-                  ? `Minuto`
-                  : `Minutes`}
+              {flag === "ph" ? `Minuto` : `Minutes`}
             </span>
           </div>
         </div>
@@ -415,7 +407,9 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                       className="eventform-desc mt-2"
                       style={{ color: "#d87b7b" }}
                     >
-                      *Please purchase a Genesis Land NFT on OpenSea
+                      {flag === "ph"
+                        ? `Mangyaring bumili ng Genesis Land NFT sa OpenSea`
+                        : `*Please purchase a Genesis Land NFT on OpenSea`}
                     </h6>
                   ) : (
                     <div className="mt-2"></div>
