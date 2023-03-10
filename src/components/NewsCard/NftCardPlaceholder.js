@@ -1,7 +1,7 @@
 import React from "react";
 import opensea from "./opensea.svg";
 
-const NftCardPlaceholder = ({count}) => {
+const NftCardPlaceholder = ({count, flag}) => {
   return (
     <div className="news-card-wrapper position-relative" style={{ width: "fit-content" }}>
       <div className="count-number p-2 d-flex align-items-center justify-content-center">
@@ -29,7 +29,9 @@ const NftCardPlaceholder = ({count}) => {
               rel="noreferrer"
             >
               <img src={opensea} alt="" />
-              Buy on OpenSea
+              {flag === "ph"
+                      ? `Bumili sa Opensea`
+                      : `Buy on Opensea`}
             </a>
           </div>
         </div>
