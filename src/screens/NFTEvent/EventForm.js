@@ -136,6 +136,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
   const [mouseOver, setMouseOver] = useState(false);
   const [values, setValues] = useState(initialValues);
   const [success, setSuccess] = useState(false);
+  const [success2, setSuccess2] = useState(false)
   const recaptchaRef = useRef(null);
   const [errors, setErrors] = useState({});
   const [landNfts, setLandNfts] = useState([]);
@@ -249,8 +250,11 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
         });
       if (send.status === 1) {
         setSuccess(true);
+        setSuccess2(true)
       } else {
         setSuccess(false);
+        setSuccess2(false)
+
       }
     }
     recaptchaRef.current.reset();
@@ -291,7 +295,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                 >
                   <TimelineItem>
                     <TimelineSeparator>
-                      <TimelineDot className={"timelinedot"} />
+                      <TimelineDot className={`${lands.length > 0 ? 'timelinedot-completed' : 'timelinedot'}`} />
                       <TimelineConnector className={"timeline-line"} />
                     </TimelineSeparator>
                     <TimelineContent>
@@ -304,7 +308,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                   </TimelineItem>
                   <TimelineItem>
                     <TimelineSeparator>
-                      <TimelineDot className={"timelinedot"} />
+                      <TimelineDot className={`${success2 === true ? 'timelinedot-completed' : 'timelinedot'}`} />
                       <TimelineConnector className={"timeline-line"} />
                     </TimelineSeparator>
                     <TimelineContent>
@@ -387,19 +391,31 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
 
               <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center gap-3">
                 <div className="d-flex flex-column gap-2 w-100">
-                  <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-7 col-lg-7">
-                    <StyledTextField
-                      size="small"
-                      label="Wallet address"
-                      id="name"
-                      name="name"
-                      value={coinbase}
-                      required
-                      disabled
-                      InputLabelProps={{ shrink: true }}
-                      sx={{ width: "100%" }}
-                    />
+                  <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
+                    <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-7 col-lg-7">
+                      <StyledTextField
+                        size="small"
+                        label="Wallet address"
+                        id="name"
+                        name="name"
+                        value={coinbase}
+                        required
+                        disabled
+                        InputLabelProps={{ shrink: true }}
+                        sx={{ width: "100%" }}
+                      />
+                    </div>
+                    <div className="linear-border">
+                      <button
+                        className="btn filled-btn px-5"
+                        disabled={coinbase && lands.length > 0 ? false : true}
+                        onClick={handleSubmit}
+                      >
+                        Submit
+                      </button>
+                    </div>
                   </div>
+
                   {!coinbase ? (
                     <div className="mt-2"></div>
                   ) : coinbase && lands.length < 1 ? (
@@ -414,15 +430,6 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                   ) : (
                     <div className="mt-2"></div>
                   )}
-                </div>
-                <div className="linear-border">
-                  <button
-                    className="btn filled-btn px-5"
-                    disabled={coinbase && lands.length > 0 ? false : true}
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </button>
                 </div>
               </div>
             </div>
