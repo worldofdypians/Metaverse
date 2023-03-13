@@ -309,29 +309,17 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                   <TimelineItem>
                     <TimelineSeparator>
                       <TimelineDot className={`${success2 === true ? 'timelinedot-completed' : 'timelinedot'}`} />
-                      <TimelineConnector className={"timeline-line"} />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <h6 className="content-title2">
-                        {flag === "ph"
-                          ? `Kumpletuhin ang Genesis form`
-                          : `Complete Genesis form`}
-                      </h6>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot className={"timelinedot"} />
                       {/* <TimelineConnector className={"timeline-line"} /> */}
                     </TimelineSeparator>
                     <TimelineContent>
                       <h6 className="content-title2">
                         {flag === "ph"
-                          ? `Tumanggap ng reimbursement`
-                          : `Receive reimbursement`}
+                          ? `Mag-submit ng kahilingan`
+                          : `Submit request`}
                       </h6>
                     </TimelineContent>
                   </TimelineItem>
+                 
                 </Timeline>
               </div>
             </div>
