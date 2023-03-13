@@ -391,7 +391,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
 
               <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center gap-3">
                 <div className="d-flex flex-column gap-2 w-100">
-                  <div className="d-flex align-items-center gap-4">
+                  <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
                     <div className="d-flex mt-3 mt-lg-0 justify-content-between gap-4 col-12 col-xxl-7 col-lg-7">
                       <StyledTextField
                         size="small"
