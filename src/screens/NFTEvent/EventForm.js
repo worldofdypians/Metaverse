@@ -285,42 +285,69 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
               </span>
 
               <div className="stepscontainer">
-                <Timeline
-                  sx={{
-                    [`& .${timelineItemClasses.root}:before`]: {
-                      flex: 0,
-                      padding: 0,
-                    },
-                  }}
-                >
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot className={`${lands.length > 0 ? 'timelinedot-completed' : 'timelinedot'}`} />
-                      <TimelineConnector className={"timeline-line"} />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <h6 className="content-title2">
-                        {flag === "ph"
-                          ? `Bumili ng Genesis Land NFT sa OpenSea`
-                          : `Buy Genesis Land NFT on OpenSea`}
-                      </h6>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot className={`${success2 === true ? 'timelinedot-completed' : 'timelinedot'}`} />
-                      {/* <TimelineConnector className={"timeline-line"} /> */}
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <h6 className="content-title2">
-                        {flag === "ph"
-                          ? `Mag-submit ng kahilingan`
-                          : `Submit request`}
-                      </h6>
-                    </TimelineContent>
-                  </TimelineItem>
+                {success2  ? 
+                   <Timeline
+                   sx={{
+                     [`& .${timelineItemClasses.root}:before`]: {
+                       flex: 0,
+                       padding: 0,
+                     },
+                   }}
+                 >
+                   <TimelineItem>
+                     <TimelineSeparator>
+                       <TimelineDot className={`timelinedot-completed`} />
+                       {/* <TimelineConnector className={"timeline-line"} /> */}
+                     </TimelineSeparator>
+                     <TimelineContent>
+                       <h6 className="content-title2">
+                         {flag === "ph"
+                           ? `Matagumpay na naisumite`
+                           : `Successfully submitted`}
+                       </h6>
+                     </TimelineContent>
+                   </TimelineItem>
+                 </Timeline>
                  
-                </Timeline>
+                 :
+
+                 <Timeline
+                 sx={{
+                   [`& .${timelineItemClasses.root}:before`]: {
+                     flex: 0,
+                     padding: 0,
+                   },
+                 }}
+               >
+                 <TimelineItem>
+                   <TimelineSeparator>
+                     <TimelineDot className={`${lands.length > 0 ? 'timelinedot-completed' : 'timelinedot'}`} />
+                     <TimelineConnector className={"timeline-line"} />
+                   </TimelineSeparator>
+                   <TimelineContent>
+                     <h6 className="content-title2">
+                       {flag === "ph"
+                         ? `Bumili ng Genesis Land NFT sa OpenSea`
+                         : `Buy Genesis Land NFT on OpenSea`}
+                     </h6>
+                   </TimelineContent>
+                 </TimelineItem>
+                 <TimelineItem>
+                   <TimelineSeparator>
+                     <TimelineDot className={`${success2 === true ? 'timelinedot-completed' : 'timelinedot'}`} />
+                     {/* <TimelineConnector className={"timeline-line"} /> */}
+                   </TimelineSeparator>
+                   <TimelineContent>
+                     <h6 className="content-title2">
+                       {flag === "ph"
+                         ? `Mag-submit ng kahilingan`
+                         : `Submit request`}
+                     </h6>
+                   </TimelineContent>
+                 </TimelineItem>
+               </Timeline>
+              
+              }
               </div>
             </div>
             <div className="d-flex flex-column justify-content-between gap-2 col-12 col-xxl-8 col-lg-8">
