@@ -302,7 +302,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                      <TimelineContent>
                        <h6 className="content-title2">
                          {flag === "ph"
-                           ? `Matagumpay na naisumite`
+                           ? `Matagumpay na naisubmit”`
                            : `Successfully submitted`}
                        </h6>
                      </TimelineContent>
