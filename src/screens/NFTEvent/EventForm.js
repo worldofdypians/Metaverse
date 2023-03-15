@@ -309,29 +309,17 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                   <TimelineItem>
                     <TimelineSeparator>
                       <TimelineDot className={`${success2 === true ? 'timelinedot-completed' : 'timelinedot'}`} />
-                      <TimelineConnector className={"timeline-line"} />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <h6 className="content-title2">
-                        {flag === "ph"
-                          ? `Kumpletuhin ang Genesis form`
-                          : `Complete Genesis form`}
-                      </h6>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot className={"timelinedot"} />
                       {/* <TimelineConnector className={"timeline-line"} /> */}
                     </TimelineSeparator>
                     <TimelineContent>
                       <h6 className="content-title2">
                         {flag === "ph"
-                          ? `Tumanggap ng reimbursement`
-                          : `Receive reimbursement`}
+                          ? `Mag-submit ng kahilingan`
+                          : `Submit request`}
                       </h6>
                     </TimelineContent>
                   </TimelineItem>
+                 
                 </Timeline>
               </div>
             </div>
@@ -345,7 +333,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                   />
                   <Countdown
                     renderer={renderer}
-                    date={"2023-03-14T13:00:00.000+00:00"}
+                    date={"2023-03-20T13:00:00.000+00:00"}
                   />
                 </div>{" "}
                 <div>
