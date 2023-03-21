@@ -25,6 +25,8 @@ const NftStakeCheckListModal = ({
   link,
   countDownLeft,
   ETHrewards,
+  connectedWallet,
+  isConnectedWallet
   
 }) => {
   const style = {
@@ -52,7 +54,6 @@ const NftStakeCheckListModal = ({
   const [loadingdeposit, setloadingdeposit] = useState(false);
   const [showClaim, setshowClaim] = useState(false);
   const [loadingClaim, setloadingClaim] = useState(false);
-  const [connectedWallet, setConnectedWallet] = useState(false);
   const [apr, setapr] = useState(50);
   const [showApprove, setshowApprove] = useState(true);
   const [val, setVal] = useState("");
@@ -88,12 +89,7 @@ const NftStakeCheckListModal = ({
   // array containing items whether Staked or To Stake
 
   const checkApproval = async () => {
-    const address = await window.web3.eth?.getAccounts().then((data) => {
-      return data[0];
-    });
-    if (address) {
-      setConnectedWallet(true);
-    } else setConnectedWallet(false);
+    const address =  connectedWallet
 
     const stakeApr50 = await window.config.nftstaking_address50;
 if(address)
@@ -173,7 +169,7 @@ if(address)
             : selectNftIds
           : selectNftIds
       )
-      .send()
+      .send({from: connectedWallet})
       .then(() => {
         setloadingdeposit(false);
         setshowClaim(true);
@@ -189,6 +185,7 @@ if(address)
         setStatus("*An error occurred. Please try again");
         setSelectedNftIds([]);
         handleClearStatus();
+        window.alertify.error(err?.message)
       });
   };
 
@@ -263,7 +260,7 @@ if(address)
             : selectNftIds
           : selectNftIds
       )
-      .send()
+      .send({from: connectedWallet})
       .then(() => {
         setStatus("*Unstaked successfully");
         setColor("#57AEAA");
@@ -295,7 +292,7 @@ if(address)
             : selectNftIds
           : selectNftIds
       )
-      .send()
+      .send({from: connectedWallet})
       .then(() => {
         setloadingClaim(false);
         setStatus("*Claimed successfully");
@@ -503,6 +500,8 @@ if(address)
                             console.log(selectNftIds);
                             setVal(value);
                           }}
+                          connectedWallet={connectedWallet}
+        isConnectedWallet={isConnectedWallet}
                         />
                       </>
                     );
@@ -563,6 +562,8 @@ if(address)
                           console.log(selectNftIds);
                           setVal(value);
                         }}
+                        connectedWallet={connectedWallet}
+        isConnectedWallet={isConnectedWallet}
                       />
                     </>
                   );
@@ -784,7 +785,7 @@ if(address)
                       <div className="d-flex justify-content-between">
                         <div>
                           <p id="ethPrice" className="mb-0">
-                            {getFormattedNumber(ETHrewards, 2)} WETH
+                            {getFormattedNumber(ETHrewards, 4)} WETH
                           </p>
                           <p id="fiatPrice" className="mb-0">
                             {formattedNum(ethToUSD, true)}
@@ -952,6 +953,8 @@ NftStakeCheckListModal.propTypes = {
   onClaimAll: PropTypes.func,
   onUnstake: PropTypes.func,
   ETHrewards: PropTypes.number,
+  isConnectedWallet: PropTypes.bool,
+  connectedWallet: PropTypes.string
   
 };
 
