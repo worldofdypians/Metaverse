@@ -56,12 +56,7 @@ const NftMinting = () => {
   //Countdown
   const [countDownLeft, setCountDownLeft] = useState(59000);
 
-  const getTotalSupply = async () => {
-    let totalSupply = await window.latestMint();
-    totalSupply = parseInt(totalSupply) + 1;
 
-    setCawsMinted(totalSupply);
-  };
 
   async function getData(link) {
     try {
@@ -131,49 +126,18 @@ const NftMinting = () => {
   };
 
   useEffect(() => {
-    latestMint().then();
-    getTotalSupply().then();
-
     if (connectedWallet) {
       myNft().then();
-      // myStakes().then();
-      handleClaimAll().then();
-    }
-
-    const interval = setInterval(async () => {
-      if (connectedWallet) {
-        // await calculateCountdown().then();
-
-        myNft().then();
-        // myStakes().then();
-        handleClaimAll().then();
-      }
-      latestMint().then();
-      getTotalSupply().then();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [connectedWallet, EthRewards]);
-
-  useEffect(() => {
-    if (connectedWallet) {
       myStakes().then();
+      handleClaimAll().then();
+      calculateCountdown().then();
     }
-  }, [mystakes, connectedWallet]);
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      if (connectedWallet) {
-        calculateCountdown().then();
-      }
-    }, 1000);
-    return () => clearInterval(interval);
   }, [connectedWallet]);
+ 
 
   const calculateCountdown = async () => {
-    const address = await window.web3.eth?.getAccounts().then((data) => {
-      return data[0];
-    });
+    const address =  connectedWallet
 
     let staking_contract = await window.getContractNFT("NFTSTAKING");
     let finalDay = await staking_contract.methods
@@ -266,22 +230,6 @@ const NftMinting = () => {
     setOpenedNft(item);
   };
 
-  const latestMint = async () => {
-    let end = await window.latestMint();
-
-    let start = end - 7;
-
-    let latest = window.range(start, end);
-
-    let nfts = latest.map((nft) => window.getNft(nft));
-
-    nfts = await Promise.all(nfts);
-
-    nfts.reverse();
-
-    setLatestMintNft(nfts);
-  };
-
   const myNft = async () => {
     // let myNft = await window.myNftList(connectedWallet)
 
@@ -299,9 +247,7 @@ const NftMinting = () => {
   };
 
   const getStakesIds = async () => {
-    const address = await window.web3.eth?.getAccounts().then((data) => {
-      return data[0];
-    });
+    const address = connectedWallet
     let staking_contract = await window.getContractNFT("NFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
@@ -327,9 +273,7 @@ const NftMinting = () => {
   };
 
   const handleClaimAll = async () => {
-    const address = await window.web3.eth?.getAccounts().then((data) => {
-      return data[0];
-    });
+    const address = connectedWallet
     let myStakes = await getStakesIds();
     let calculateRewards = [];
     let result = 0;
@@ -345,7 +289,7 @@ const NftMinting = () => {
     let a = 0;
 
     for (let i = 0; i < calculateRewards.length; i++) {
-      a = await window.web3.utils.fromWei(calculateRewards[i], "ether");
+      a =  calculateRewards[i]/1e18;
 
       result = result + Number(a);
     }
@@ -360,13 +304,13 @@ const NftMinting = () => {
     setclaimAllStatus("Claiming all rewards, please wait...");
     await staking_contract.methods
       .claimRewards(myStakes)
-      .send()
+      .send({from: connectedWallet})
       .then(() => {
         setEthRewards(0);
         setclaimAllStatus("Claimed All Rewards!");
       })
       .catch((err) => {
-        // window.alertify.error(err?.message);
+        window.alertify.error(err?.message);
         setclaimAllStatus("An error occurred, please try again");
       });
   };
@@ -469,12 +413,12 @@ const NftMinting = () => {
           setshowStaked(false);
           setshowToStake(true);
         }}
-        onClaimAll={() => {
-          handleShowClaimAll();
-        }}
-        onUnstake={() => handleShowUnstake()}
+        onClaimAll={claimRewards}
+        onUnstake={handleUnstakeAll}
         ETHrewards={EthRewards}
         countDownLeft={countDownLeft}
+        connectedWallet={connectedWallet}
+        isConnectedWallet={isConnectedWallet}
       />
 
       <NftMintingHero smallTitle="SOCIETY" bigTitle="BENEFITS" />
@@ -482,6 +426,7 @@ const NftMinting = () => {
       <NewMintForm
         handleConnectWallet={handleConnectWallet}
         connectedWallet={connectedWallet}
+        isConnectedWallet={isConnectedWallet}
       />
 
       <MyNfts
@@ -491,6 +436,8 @@ const NftMinting = () => {
         label="Collection"
         smallTitle="MY"
         bigTitle="CAWS"
+        connectedWallet={connectedWallet}
+        isConnectedWallet={isConnectedWallet}
       />
       <MyStakes
         onItemClick={onUnstakeNft}
@@ -502,6 +449,8 @@ const NftMinting = () => {
         onStakeNFTClick={onStakCheckList}
         onClaimAllRewards={claimRewards}
         ETHrewards={EthRewards}
+        connectedWallet={connectedWallet}
+        isConnectedWallet={isConnectedWallet}
       />
     </div>
   );

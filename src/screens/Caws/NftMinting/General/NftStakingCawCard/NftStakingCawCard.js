@@ -7,7 +7,7 @@ import {formattedNum} from '../../../functions/formatUSD'
 import getFormattedNumber from "../../../functions/get-formatted-number";
 import './_nftStakeCawCard.scss'
 
-const NftStakingCawCard = ({ modalId, action, nft, id, isconnectedWallet }) => {
+const NftStakingCawCard = ({ modalId, action, nft, id, isConnectedWallet, connectedWallet }) => {
 
 
   const [EthRewards, setEthRewards] = useState(0);
@@ -19,9 +19,7 @@ const NftStakingCawCard = ({ modalId, action, nft, id, isconnectedWallet }) => {
   }
 
   const calculateReward = async (currentId) => {
-    const address = await window.web3.eth?.getAccounts().then((data) => {
-      return data[0];
-    });
+    const address = connectedWallet
 
     let calculateRewards;
     let staking_contract = await window.getContractNFT("NFTSTAKING");
@@ -36,7 +34,7 @@ const NftStakingCawCard = ({ modalId, action, nft, id, isconnectedWallet }) => {
       });
 
     // console.log(calculateRewards)
-    let a = await window.web3.utils.fromWei(calculateRewards, "ether");
+    let a = calculateRewards/1e18;
       const ethprice = await convertEthToUsd()
       setethToUSD(Number(ethprice) * Number(a))
 
@@ -46,21 +44,21 @@ const NftStakingCawCard = ({ modalId, action, nft, id, isconnectedWallet }) => {
   useEffect(() => {
     const interval = setInterval(() => {
      
-      if (isconnectedWallet) {
+      if (isConnectedWallet) {
         calculateReward(id).then();
          convertEthToUsd().then()
       }
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [EthRewards, isconnectedWallet]);
+  }, [isConnectedWallet, connectedWallet]);
 
   const handleClaim = async (id) => {
     let staking_contract = await window.getContractNFT("NFTSTAKING");
 
     await staking_contract.methods
       .claimRewards([id])
-      .send()
+      .send({from: connectedWallet})
       .then(() => {
         setEthRewards(0);
       })
@@ -103,7 +101,7 @@ const NftStakingCawCard = ({ modalId, action, nft, id, isconnectedWallet }) => {
       <div className="earnwrapper" style={{ margin: "auto" }}>
         <p style={{color: '#999999', fontSize: 12}}>Pending</p>
         <div>
-          <p id="ethPrice">{getFormattedNumber(EthRewards,2)} WETH</p>
+          <p id="ethPrice">{getFormattedNumber(EthRewards,4)} WETH</p>
           <p id="fiatPrice">{formattedNum(ethToUSD, true)}</p>
         </div>
         {/* <img src={EthLogo} alt="" style={{ width: 24, height: 24 }} /> */}
@@ -135,7 +133,8 @@ NftStakingCawCard.propTypes = {
   action: PropTypes.func,
   nft: PropTypes.object,
   id: PropTypes.number,
-  isconnectedWallet: PropTypes.bool,
+  isConnectedWallet: PropTypes.bool,
+  connectedWallet: PropTypes.string
 };
 
 export default NftStakingCawCard;

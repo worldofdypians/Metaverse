@@ -159,7 +159,7 @@ if(address)
         // window.alertify.error(err?.message);
       });
 
-    let a = await window.web3.utils.fromWei(calculateRewards, "ether");
+    let a =  calculateRewards/1e18;
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(a));
     setEthRewards(Number(a));
@@ -531,7 +531,7 @@ if(address)
                       <div className="d-flex justify-content-between">
                         <div>
                           <p id="ethPrice" className="mb-0">
-                            {getFormattedNumber(EthRewards, 2)} WETH
+                            {getFormattedNumber(EthRewards, 4)} WETH
                           </p>
                           <p id="fiatPrice" className="mb-0">
                             {formattedNum(ethToUSD, true)}
