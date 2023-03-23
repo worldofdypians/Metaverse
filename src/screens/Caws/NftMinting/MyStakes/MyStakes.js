@@ -82,11 +82,12 @@ const MyStakes = ({
   onStakeNFTClick,
   onClaimAllRewards,
   ETHrewards,
+  connectedWallet,
+  isConnectedWallet
 }) => {
   const [showAll, setsShowAll] = useState(false);
 
   const [id, setId] = useState(0);
-  const [isconnectedWallet, setisConnectedWallet] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
 
   const convertEthToUsd = async () => {
@@ -102,23 +103,15 @@ const MyStakes = ({
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(ETHrewards));
   };
-  const checkConnection = async () => {
-    let test = await window.web3.eth?.getAccounts().then((data) => {
-      data.length === 0
-        ? setisConnectedWallet(false)
-        : setisConnectedWallet(true);
-    });
-  };
+ 
+  useEffect(() => { 
 
-  useEffect(() => {
-    checkConnection().then();
-
-    if (isconnectedWallet) {
-      const interval = setInterval(() => {}, 5000);
+    if (isConnectedWallet) {
+    
       setUSDPrice().then();
-      return () => clearInterval(interval);
+      
     }
-  }, [checkConnection, id]);
+  }, [isConnectedWallet, id]);
 
   if (window.innerWidth < 768 && showAll) {
     settings = { ...settings, rows: 2, slidesPerRow: 2, slidesToShow: 1 };
@@ -138,7 +131,8 @@ const MyStakes = ({
               action={onItemClick}
               modalId="#NftUnstake"
               id={itemId}
-              isconnectedWallet={isconnectedWallet}
+              isConnectedWallet={isConnectedWallet}
+              connectedWallet={connectedWallet}
             />
           </div>
         );
@@ -181,7 +175,7 @@ const MyStakes = ({
                   style={{ height: 100 }}
                 />
                 <span id="staking">Staking</span>
-                {isconnectedWallet === true ? (
+                {isConnectedWallet === true ? (
                   <button className="stakeNowBtn" onClick={onStakeNFTClick}>
                     Stake NFT
                   </button>
@@ -194,18 +188,18 @@ const MyStakes = ({
                 className="startStake"
                 style={{
                   display:
-                    isconnectedWallet && numberOfNfts > 0 ? "none" : "flex",
+                    isConnectedWallet && numberOfNfts > 0 ? "none" : "flex",
                 }}
               >
                 <div className="startStake-text">
-                  <img src={isconnectedWallet === true ? StakeChart : Info} alt=''/>
+                  <img src={isConnectedWallet === true ? StakeChart : Info} alt=''/>
 
                   <p>
-                    {isconnectedWallet === true && numberOfNfts < 4
+                    {isConnectedWallet === true && numberOfNfts < 4
                       ? "Increase your CAWS benefits! Stake your NFTs and begin earning rewards in Ethereum."
-                      : isconnectedWallet === false
+                      : isConnectedWallet === false
                       ? "Please connect your wallet to view the NFTs you’ve staked."
-                      : isconnectedWallet === true && numberOfNfts > 1
+                      : isConnectedWallet === true && numberOfNfts > 1
                       ? ""
                       : ""}
                   </p>
@@ -213,12 +207,12 @@ const MyStakes = ({
               </div>{" "}
             </div>
             {showAll && renderCards()}
-            {!showAll && isconnectedWallet && numberOfNfts !== 0 && (
+            {!showAll && isConnectedWallet && numberOfNfts !== 0 && (
               <div className={["slider", showAll ? "d-none" : ""].join(" ")}>
                 <Slider {...settings}>{renderCards()}</Slider>
               </div>
             )}
-            {isconnectedWallet === true ? (
+            {isConnectedWallet === true ? (
               <div className="withdraw-wrapper">
                 <Tooltip title={"Total Rewards"} icon={'?'} color={"#1D91D0"} borderColor={"#fff"} padding={"2px 10px"}/>
                 <div className="upperSection">
@@ -228,7 +222,7 @@ const MyStakes = ({
                       <p>Pending</p>
                       <div>
                         <p id="ethPrice">
-                          {getFormattedNumber(ETHrewards, 2)} WETH
+                          {getFormattedNumber(ETHrewards, 4)} WETH
                         </p>
                         <p id="fiatPrice">{formattedNum(ethToUSD, true)}</p>
                       </div>
@@ -290,6 +284,8 @@ MyStakes.propTypes = {
   onStakeNFTClick: PropTypes.func,
   onClaimAllRewards: PropTypes.func,
   ETHrewards: PropTypes.number,
+  isConnectedWallet: PropTypes.bool,
+  connectedWallet: PropTypes.string
 };
 
 export default MyStakes;

@@ -12,24 +12,16 @@ const NftStakingCawChecklist = ({
   checklistItemID,
   onChange,
   countDownLeft,
-  // onNftCheckListClick,
+  isConnectedWallet, connectedWallet
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
   const [checkPassiveBtn, setcheckPassiveBtn] = useState(false);
 
-  const [isconnectedWallet, setisConnectedWallet] = useState(false);
   const [EthRewards, setEthRewards] = useState(0);
 
   const [ethToUSD, setethToUSD] = useState(0);
   const [loading, setloading] = useState(false);
-  const checkConnection = async () => {
-    let test = await window.web3.eth?.getAccounts().then((data) => {
-      data.length === 0
-        ? setisConnectedWallet(false)
-        : setisConnectedWallet(true);
-    });
-  };
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -41,10 +33,7 @@ const NftStakingCawChecklist = ({
   };
 
   const calculateReward = async (currentId) => {
-    const address = await window.web3.eth?.getAccounts().then((data) => {
-      return data[0];
-    });
-
+    const address =  connectedWallet
     let calculateRewards;
     let staking_contract = await window.getContractNFT("NFTSTAKING");
 
@@ -58,7 +47,7 @@ const NftStakingCawChecklist = ({
         // window.alertify.error(err?.message);
       });
 
-    let a = await window.web3.utils.fromWei(calculateRewards, "ether");
+    let a =  calculateRewards/1e18;
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(a));
     setEthRewards(Number(a));
@@ -96,9 +85,8 @@ const NftStakingCawChecklist = ({
       });
   };
 
-  useEffect(() => {
-    checkConnection().then();
-    if (isconnectedWallet) {
+  useEffect(() => { 
+    if (isConnectedWallet) {
       getStakesIds().then();
       calculateReward(checklistItemID).then();
 
@@ -106,7 +94,7 @@ const NftStakingCawChecklist = ({
         setcheckPassiveBtn(true);
       }
     }
-  }, [EthRewards, checklistItemID, isconnectedWallet, countDownLeft]);
+  }, [EthRewards, checklistItemID, isConnectedWallet, countDownLeft]);
 
   useEffect(() => {
     setCheckBtn(checked);
@@ -118,9 +106,7 @@ const NftStakingCawChecklist = ({
   }
 
   const getStakesIds = async () => {
-    const address = await window.web3.eth?.getAccounts().then((data) => {
-      return data[0];
-    });
+    const address = connectedWallet
     let staking_contract = await window.getContractNFT("NFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
@@ -259,7 +245,7 @@ const NftStakingCawChecklist = ({
                       <p id="earnedText">Pending</p>
                       <div>
                         <p id="ethPrice">
-                          {getFormattedNumber(EthRewards, 2)} WETH
+                          {getFormattedNumber(EthRewards, 5)} WETH
                         </p>
                         <p id="fiatPrice">{formattedNum(ethToUSD, true)}</p>
                       </div>
@@ -351,7 +337,8 @@ NftStakingCawChecklist.propTypes = {
   checked: PropTypes.bool,
   checklistItemID: PropTypes.number,
   onChange: PropTypes.func,
-  // onNftCheckListClick: PropTypes.func,
+  isConnectedWallet: PropTypes.bool,
+  connectedWallet: PropTypes.string,
   countDownLeft: PropTypes.any,
 };
 

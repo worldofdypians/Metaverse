@@ -62,21 +62,11 @@ const MyNfts = ({
   label,
   smallTitle,
   bigTitle,
+  connectedWallet,
+  isConnectedWallet
+
 }) => {
   const [showAll, setsShowAll] = useState(false);
-  const [isconnectedWallet, setisConnectedWallet] = useState(false);
-
-  const checkConnection = async () => {
-    let test = await window.web3.eth?.getAccounts().then((data) => {
-      data.length === 0
-        ? setisConnectedWallet(false)
-        : setisConnectedWallet(true);
-    });
-  };
-
-  useEffect(() => {
-    checkConnection().then();
-  }, [checkConnection]);
 
   if (window.innerWidth < 768 && showAll) {
     settings = { ...settings, rows: 2, slidesPerRow: 2, slidesToShow: 1 };
@@ -149,18 +139,18 @@ const MyNfts = ({
             </div>
             <div className="myCaws-info-text"  style={{
                   display:
-                    isconnectedWallet && numberOfNfts >= 1 ? "none" : "flex",
+                    isConnectedWallet && numberOfNfts >= 1 ? "none" : "flex",
                 }}>
               <p className="mycaws-status-text" style={{pointerEvents: 'none'}}>
                   {/* <Tooltip icon={'i'} color={'#939393'} borderColor={'#939393'} />
                    */}
                   <img src={Info} alt=''/>
 
-                {isconnectedWallet === true && numberOfNfts < 1
+                {isConnectedWallet === true && numberOfNfts < 1
                   ? "Your minted NFTs will be available here."
-                  : isconnectedWallet === false
+                  : isConnectedWallet === false
                   ? "Please connect your wallet in order to see your NFTs"
-                  : isconnectedWallet === true && numberOfNfts > 1
+                  : isConnectedWallet === true && numberOfNfts > 1
                   ? ""
                   : ""}
               </p>
@@ -184,6 +174,8 @@ MyNfts.propTypes = {
   label: PropTypes.string,
   smallTitle: PropTypes.string,
   bigTitle: PropTypes.string,
+  isConnectedWallet: PropTypes.bool,
+  connectedWallet: PropTypes.string
 };
 
 export default MyNfts;

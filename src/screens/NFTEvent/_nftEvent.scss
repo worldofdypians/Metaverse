@@ -5,10 +5,10 @@
   background-image: url("../../assets/newsAssets/newsBackground.webp");
   background-size: cover;
 
-  .news-header {
+  .newsevent-header {
     font-style: normal;
     font-weight: 800;
-    font-size: 32px;
+    font-size: 28px;
     line-height: 43px;
 
     color: #ffffff;
@@ -23,6 +23,70 @@
     }
     @media only screen and (max-width: 1160px) {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .stepsTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 42px;
+    color: #ffffff;
+  }
+
+  .stepscontainer {
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid #99f1ff;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(5.5px);
+  }
+
+  .timelinedot {
+    background: #26264f !important;
+    border: 2px solid #565891 !important;
+    width: 24px;
+    height: 24px;
+    margin: 6px 0px !important;
+  }
+
+  .timelinedot-completed{
+    background: #00FECF !important;
+    border: 2px solid #565891 !important;
+    width: 24px;
+    height: 24px;
+    margin: 6px 0px !important;
+  }
+
+  .timeline-line {
+    background-color: #565891 !important;
+    height: 20px;
+  }
+
+  .MuiTimelineItem-root {
+    min-height: 40px !important;
+  }
+
+  .MuiTimeline-root {
+    margin-bottom: 0 !important;
+  }
+
+  .content-title2 {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.018em;
+    color: #f7f7fc;
+  }
+
+  .discountwrapper {
+    position: relative;
+    top: 80px;
+
+    @media only screen and (max-width: 991px) {
+      top: auto;
     }
   }
 
@@ -322,16 +386,20 @@
   justify-content: center;
   align-items: center;
   width: 360px;
+
+  @media screen and (max-width: 991px) {
+    width: 100%;
+  }
+
 }
 
-
 .eventform-desc {
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-color: #FFFFFF;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
 }
 
 .create-land-title {
@@ -354,22 +422,53 @@ color: #FFFFFF;
 }
 
 .selectlang {
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 14px;
-text-align: right;
-letter-spacing: -0.018em;
-color: #FFFFFF;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 14px;
+  text-align: center;
+  letter-spacing: -0.018em;
+  color: #ffffff;
 }
 
 .flag {
   cursor: pointer;
   scale: 1.1;
+  border: 2px solid #171636;
 }
 
-.flag-active, .flag:hover {
-  border: 2px solid #09FBD3;
+.flag-active,
+.flag:hover {
+  border: 2px solid #09fbd3;
   border-radius: 2px;
+}
+
+.Mui-disabled {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+.count-number {
+  width: 40px;
+  height: 40px;
+  background: #7bd8af;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: -15px;
+}
+
+.nft-count {
+  font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+color: #080B2A;
+margin-bottom: 0 !important;
+}
+
+.nft-event-title{
+  @media screen and (max-width: 786px) {
+    font-size: 26px !important; 
+  }
 }
