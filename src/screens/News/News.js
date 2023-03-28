@@ -11,6 +11,9 @@ import validateEmail from "../../hooks/validateEmail";
 import modalClose from "../../assets/newsAssets/modalClose.svg";
 import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
 import OutsideClickHandler from "react-outside-click-handler";
+import MainNewsCard from "../../components/NewsCard/MainNewsCard";
+import AnnouncementSideCard from "../../components/NewsCard/AnnouncementSideCards";
+import NewsModal from "../../components/NewsCard/NewsModal";
 
 const theme = createTheme({
   palette: {
@@ -33,9 +36,13 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 
 const News = () => {
   const [news, setNews] = useState([]);
+  const [announcementsNews, setAnnouncementsNews] = useState([]);
+
   const [email, setEmail] = useState("");
   const [error, setError] = useState({});
   const [success, setSuccess] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [activeNews, setActiveNews] = useState([]);
 
   const fetchNews = async () => {
     const announcements = await axios
@@ -53,6 +60,7 @@ const News = () => {
       ...item,
       type: "announcement",
     }));
+
     const typeReleases = newReleases.map((item) => ({
       ...item,
       type: "new_release",
@@ -61,9 +69,20 @@ const News = () => {
     const datedNews = joinedNews.map((item) => {
       return { ...item, date: new Date(item.date) };
     });
+
+    const announcementsDatedNews = newAnnouncements.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
     const sortedNews = datedNews.sort(function (a, b) {
       return b.date - a.date;
     });
+    const sortedAnnouncementsNews = announcementsDatedNews.sort(function (
+      a,
+      b
+    ) {
+      return b.date - a.date;
+    });
+    setAnnouncementsNews(sortedAnnouncementsNews);
     setNews(sortedNews);
   };
 
@@ -79,17 +98,16 @@ const News = () => {
         axios
           .post("https://api3.dyp.finance/api/newsletter/insert", postEmail)
           .then((result) => {
-            if(result.data.status === 1){
-              setSuccess(true)
-            }else{
-              setSuccess(false)
-              setError({email: result.data.message})
+            if (result.data.status === 1) {
+              setSuccess(true);
+            } else {
+              setSuccess(false);
+              setError({ email: result.data.message });
             }
           })
           .catch(function (error) {
             console.error(error);
           });
-       
       }
     }
   };
@@ -97,10 +115,23 @@ const News = () => {
   useEffect(() => {
     fetchNews();
     window.scrollTo(0, 0);
-    document.title = 'News'
-
-
+    document.title = "News";
   }, []);
+
+  const handlemodalClick = (itemId, itemIndex) => {
+    setShowModal(true);
+    setActiveNews(announcementsNews[itemIndex]);
+  };
+
+  const handleSideAnnouncementClick = (itemId) => {
+    const objId = announcementsNews.find((obj) => obj.id === itemId);
+    if (objId) {
+      window.scrollTo(0, 0);
+      setShowModal(true);
+      setActiveNews(objId);
+    }
+  };
+
   return (
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
@@ -112,7 +143,81 @@ const News = () => {
                 new
               </h2>
             </h2>
-            {news.length > 0 ? (
+
+            {showModal === true ? (
+              <>
+                <NewsModal
+                  newsId={activeNews.id}
+                  bgImage={activeNews.image}
+                  title={activeNews.title}
+                  date={activeNews.date}
+                  content={activeNews.content}
+                  onModalClose={() => {
+                    setShowModal(false);
+                  }}
+                  otherAnnouncements={announcementsNews}
+                  onOtherNewsClick={handleSideAnnouncementClick}
+                />
+              </>
+            ) : (
+              <>
+                <div className="d-flex justify-content-between align-items-center p-0 gap-3 mb-5">
+                  {announcementsNews &&
+                    announcementsNews.length > 0 &&
+                    announcementsNews.slice(0, 1).map((item, index) => {
+                      return (
+                        <MainNewsCard
+                          key={index}
+                          title={item.title}
+                          newsImage={item.image}
+                          date={item.date}
+                          newsId={item.id}
+                          onShowModalClick={() => {
+                            handlemodalClick(item.id, index);
+                          }}
+                        />
+                      );
+                    })}
+                  <div className="announcement-side-wrapper">
+                    {announcementsNews &&
+                      announcementsNews.length > 0 &&
+                      announcementsNews.slice(1, 5).map((item, index) => {
+                        return (
+                          <AnnouncementSideCard
+                            key={index}
+                            title={item.title}
+                            bgImage={item.image}
+                            date={item.date}
+                            content={item.content}
+                            newsId={item.id}
+                            onShowModalClick={handleSideAnnouncementClick}
+                          />
+                        );
+                      })}{" "}
+                  </div>
+                </div>
+              </>
+            )}
+             <div className="d-grid news-grid px-0">
+            {showModal === false &&
+              announcementsNews &&
+              announcementsNews.length > 0 &&
+              announcementsNews
+                .slice(5, announcementsNews.length)
+                .map((item, index) => {
+                  return (
+                    <NewsCard
+                      title={item.title}
+                      content={item.content}
+                      image={item.image}
+                      date={item.date}
+                      newsId={item.id}
+                      onNewsClick={handleSideAnnouncementClick}
+                      key={index}
+                    />
+                  );
+                })}</div>
+            {/* {news.length > 0 ? (
               <div className="d-grid news-grid px-0">
                 {news.map((newsItem) => (
                   <NewsCard
@@ -124,7 +229,7 @@ const News = () => {
                   />
                 ))}
               </div>
-            ) : null}
+            ) : null} */}
           </div>
           <div className="newsletter-wrapper row mx-3 mx-lg-5 p-3">
             <div className="col-12 col-lg-6">
@@ -181,15 +286,20 @@ const News = () => {
       {success && (
         <OutsideClickHandler onOutsideClick={() => setSuccess(false)}>
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
-          <div className="d-flex w-100 justify-content-end">
-            <img src={modalClose} alt="close modal" onClick={() => setSuccess(false)} style={{cursor: 'pointer'}} />
+            <div className="d-flex w-100 justify-content-end">
+              <img
+                src={modalClose}
+                alt="close modal"
+                onClick={() => setSuccess(false)}
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+            <img src={newsLetterModal} alt="success" />
+            <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
+            <span className="newsletter-modal-span font-poppins">
+              You’ve subscribed to World of Dypians newsletter
+            </span>
           </div>
-          <img src={newsLetterModal} alt="success" />
-          <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
-          <span className="newsletter-modal-span font-poppins">
-            You’ve subscribed to World of Dypians newsletter
-          </span>
-        </div>
         </OutsideClickHandler>
       )}
     </>

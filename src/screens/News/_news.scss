@@ -15,14 +15,14 @@
   }
 
   .news-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
   }
 
-  .news-card {
+  .singlenews-card {
     background: #181636;
     border-radius: 8px;
-    min-height: 450px;
+    min-height: 400px;
     // height: 100%;
     justify-content: space-between;
     border: 2px solid #181636;
@@ -32,7 +32,7 @@
     // }
     .news-image {
       height: 172px;
-      width: 172px;
+      width: 100%;
       --mask: linear-gradient(-135deg, #0000 20px, #000 0);
       -webkit-mask: var(--mask);
       mask: var(--mask);
