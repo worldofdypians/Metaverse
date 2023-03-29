@@ -190,8 +190,12 @@ const News = () => {
   };
 
   const selectRelease = (id) => {
-    const firstIndex = releases.filter((item) => item.id === id);
-    setSelectedRelease(firstIndex[0]);
+    if (id === selectedRelease?.id) {
+      setSelectedRelease(null);
+    } else {
+      const firstIndex = releases.filter((item) => item.id === id);
+      setSelectedRelease(firstIndex[0]);
+    }
   };
 
   const next = () => {
@@ -206,12 +210,17 @@ const News = () => {
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex w-100 flex-column news-main-wrapper">
           <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
-            <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex align-items-center gap-2">
-              What's{" "}
-              <h2 className="mb-0" style={{ color: "#8c56ff" }}>
-                new
+            <div className="d-flex align-items-center justify-content-between w-100 px-0">
+              <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex align-items-center gap-2">
+                What's{" "}
+                <h2 className="mb-0" style={{ color: "#8c56ff" }}>
+                  new
+                </h2>
               </h2>
-            </h2>
+              <a href="#slider-row" className="linear-border">
+                <button className="btn outline-btn px-5">New Releases</button>
+              </a>
+            </div>
 
             {showModal === true ? (
               <>
@@ -302,7 +311,10 @@ const News = () => {
               </div>
             ) : null} */}
           </div>
-          <div className="row w-100  mx-0 news-container slider-row">
+          <div
+            className="row w-100  mx-0 news-container slider-row"
+            id="slider-row"
+          >
             <div className="d-flex flex-column flex-lg-row align-items-start gap-3 gap-lg-0 align-items-lg-center justify-content-between">
               <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
                 New{" "}
@@ -310,27 +322,26 @@ const News = () => {
                   Releases
                 </h2>
               </h2>
-            {windowSize.width < 1200 || releases.length > 4 ? 
-               <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
-               <img
-                 src={nextButton}
-                 className="prev-button"
-                 width={40}
-                 height={40}
-                 alt=""
-                 onClick={previous}
-               />
-               <img
-                 src={nextButton}
-                 className="next-button"
-                 width={40}
-                 height={40}
-                 alt=""
-                 onClick={next}
-               />
-             </div>
-             : null  
-          }
+              {windowSize.width < 1200 || releases.length > 4 ? (
+                <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
+                  <img
+                    src={nextButton}
+                    className="prev-button"
+                    width={40}
+                    height={40}
+                    alt=""
+                    onClick={previous}
+                  />
+                  <img
+                    src={nextButton}
+                    className="next-button"
+                    width={40}
+                    height={40}
+                    alt=""
+                    onClick={next}
+                  />
+                </div>
+              ) : null}
             </div>
 
             <Slider ref={(c) => (slider.current = c)} {...settings}>
@@ -345,6 +356,8 @@ const News = () => {
                   id={item.id}
                   newsId={item.id}
                   onNewsClick={selectRelease}
+                  cardType={"release"}
+                  releaseId={selectedRelease?.id}
                 />
               ))}
             </Slider>
