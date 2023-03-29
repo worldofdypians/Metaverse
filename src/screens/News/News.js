@@ -313,8 +313,9 @@ const News = () => {
                 />
               ))}
             </Slider>
+          </div>
             {selectedRelease && (
-              <div className="selected-release row py-4 mt-5">
+              <div className="selected-release mx-3 mx-lg-5 px-2 row py-4 ">
                 <div className="leftside col-6 d-flex flex-column gap-3">
                   <img
                     src={selectedRelease.image}
@@ -323,7 +324,7 @@ const News = () => {
                   />
                 </div>
                 <div className="col-6 rightside h-100">
-                  <div className="d-flex flex-column justify-content-between h-100">
+                  <div className="d-flex flex-column justify-content-between gap-5 h-100">
                     <div className="d-flex align-items-center justify-content-between">
                       <h6 className="selected-release-title font-organetto mb-0">
                         {selectedRelease.title}
@@ -348,8 +349,7 @@ const News = () => {
                 </div>
               </div>
             )}
-          </div>
-          <div className="newsletter-wrapper row mx-3 mx-lg-5 p-3">
+          <div className="newsletter-wrapper row mx-3 mx-lg-5 mb-5 p-3">
             <div className="col-12 col-lg-6">
               <div className="d-flex flex-column gap-3">
                 <img
