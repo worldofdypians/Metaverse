@@ -93,6 +93,8 @@ const News = () => {
   const [error, setError] = useState({});
   const [success, setSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [loadMore, setloadMore] = useState(false);
+
   const [activeNews, setActiveNews] = useState([]);
   const slider = useRef();
   const windowSize = useWindowSize();
@@ -209,9 +211,9 @@ const News = () => {
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex w-100 flex-column news-main-wrapper">
-          <div className="row w-100 px-3 px-lg-5 mx-0 pt-5 pt-lg-0 mt-5 mt-lg-0 news-container">
+          <div className="row w-100 px-3 px-lg-5 mx-0 pt-5 pt-lg-0 mt-5 mt-lg-0 news-container justify-content-center">
             <div className="d-flex flex-column flex-lg-row align-items-start mb-3 mb-lg-0 align-items-lg-center justify-content-between w-100 px-0">
-              <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex align-items-center gap-2">
+              <h2 className="news-header font-organetto px-0 py-3 pt-lg-5 d-flex align-items-center gap-2">
                 What's{" "}
                 <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
                   new
@@ -239,7 +241,7 @@ const News = () => {
               </>
             ) : (
               <>
-                <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center p-0 gap-3 mb-5 topnews-wrapper">
+                <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center p-0 gap-3 mb-3 topnews-wrapper">
                   {announcementsNews &&
                     announcementsNews.length > 0 &&
                     announcementsNews.slice(0, 1).map((item, index) => {
@@ -277,8 +279,21 @@ const News = () => {
                 </div>
               </>
             )}
-            <div className="d-grid news-grid px-0">
+            {loadMore === false &&
+                announcementsNews &&
+                announcementsNews.length && (
+              <button
+                className="loadmore-btn btn"
+                onClick={() => {
+                  setloadMore(true);
+                }}
+              >
+                More
+              </button>
+            )}
+            <div className="d-grid news-grid px-0 mt-3">
               {showModal === false &&
+                loadMore === true &&
                 announcementsNews &&
                 announcementsNews.length > 0 &&
                 announcementsNews
@@ -297,19 +312,6 @@ const News = () => {
                     );
                   })}
             </div>
-            {/* {news.length > 0 ? (
-              <div className="d-grid news-grid px-0">
-                {news.map((newsItem) => (
-                  <NewsCard
-                    type={newsItem.type}
-                    title={newsItem.title}
-                    content={newsItem.content}
-                    image={newsItem.image}
-                    date={newsItem.date}
-                  />
-                ))}
-              </div>
-            ) : null} */}
           </div>
           <div
             className="row w-100  mx-0 news-container slider-row"
