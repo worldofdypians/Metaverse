@@ -37,7 +37,9 @@ const NewsCard = ({
       >
         <div className="d-flex flex-column align-items-start justify-content-between gap-3">
           <div className="d-flex align-items-start w-100">
+            <div className="w-100 news-image-wrapper" >
             <img src={image} alt="news image" className="news-image" />
+            </div>
           </div>
           <div className="d-flex flex-column gap-3 w-100">
             <div className="d-flex align-items-center justify-content-between">

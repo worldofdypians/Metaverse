@@ -30,6 +30,14 @@
     // @media screen and (max-width: 1500px) {
     //   min-height: 500px;
     // }
+
+.news-image-wrapper{
+  --mask: linear-gradient(-135deg, #0000 20px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  overflow: hidden;
+}
+
     .news-image {
       height: 172px;
       width: 100%;
@@ -37,6 +45,11 @@
       -webkit-mask: var(--mask);
       mask: var(--mask);
       object-fit: cover;
+      transition: all .25s;
+    }
+
+    .news-image:hover{
+      transform: scale(1.2);
     }
 
     .announcement-tag {
