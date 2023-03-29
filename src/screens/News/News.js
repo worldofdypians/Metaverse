@@ -14,6 +14,9 @@ import OutsideClickHandler from "react-outside-click-handler";
 import MainNewsCard from "../../components/NewsCard/MainNewsCard";
 import AnnouncementSideCard from "../../components/NewsCard/AnnouncementSideCards";
 import NewsModal from "../../components/NewsCard/NewsModal";
+import Slider from "react-slick";
+import { useRef } from "react";
+import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 
 const theme = createTheme({
   palette: {
@@ -35,14 +38,61 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 }));
 
 const News = () => {
+  var settings = {
+    dots: false,
+    arrows: false,
+    infinite: true,
+    dotsClass: "button__bar slick-dots w-100",
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    autoplay: true,
+    responsive: [
+      {
+        breakpoint: 1440,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+          infinite: true,
+          autoplay: true,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          autoplay: true,
+          dots: false,
+        },
+      },
+    ],
+  };
+
+  var options = { year: "numeric", month: "short", day: "numeric" };
+
   const [news, setNews] = useState([]);
   const [announcementsNews, setAnnouncementsNews] = useState([]);
-
+  const [releases, setReleases] = useState([]);
+  const [selectedRelease, setSelectedRelease] = useState();
   const [email, setEmail] = useState("");
   const [error, setError] = useState({});
   const [success, setSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeNews, setActiveNews] = useState([]);
+  const slider = useRef();
 
   const fetchNews = async () => {
     const announcements = await axios
@@ -73,6 +123,9 @@ const News = () => {
     const announcementsDatedNews = newAnnouncements.map((item) => {
       return { ...item, date: new Date(item.date) };
     });
+    const datedReleasedNews = typeReleases.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
     const sortedNews = datedNews.sort(function (a, b) {
       return b.date - a.date;
     });
@@ -84,6 +137,7 @@ const News = () => {
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
     setNews(sortedNews);
+    setReleases(datedReleasedNews);
   };
 
   const subscribe = async (e) => {
@@ -130,6 +184,11 @@ const News = () => {
       setShowModal(true);
       setActiveNews(objId);
     }
+  };
+
+  const selectRelease = (id) => {
+    const firstIndex = releases.filter((item) => item.id === id);
+    setSelectedRelease(firstIndex[0]);
   };
 
   return (
@@ -199,25 +258,26 @@ const News = () => {
                 </div>
               </>
             )}
-             <div className="d-grid news-grid px-0">
-            {showModal === false &&
-              announcementsNews &&
-              announcementsNews.length > 0 &&
-              announcementsNews
-                .slice(5, announcementsNews.length)
-                .map((item, index) => {
-                  return (
-                    <NewsCard
-                      title={item.title}
-                      content={item.content}
-                      image={item.image}
-                      date={item.date}
-                      newsId={item.id}
-                      onNewsClick={handleSideAnnouncementClick}
-                      key={index}
-                    />
-                  );
-                })}</div>
+            <div className="d-grid news-grid px-0">
+              {showModal === false &&
+                announcementsNews &&
+                announcementsNews.length > 0 &&
+                announcementsNews
+                  .slice(5, announcementsNews.length)
+                  .map((item, index) => {
+                    return (
+                      <NewsCard
+                        title={item.title}
+                        content={item.content}
+                        image={item.image}
+                        date={item.date}
+                        newsId={item.id}
+                        onNewsClick={handleSideAnnouncementClick}
+                        key={index}
+                      />
+                    );
+                  })}
+            </div>
             {/* {news.length > 0 ? (
               <div className="d-grid news-grid px-0">
                 {news.map((newsItem) => (
@@ -231,6 +291,64 @@ const News = () => {
                 ))}
               </div>
             ) : null} */}
+          </div>
+          <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
+            <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex align-items-center gap-2">
+              New{" "}
+              <h2 className="mb-0" style={{ color: "#8c56ff" }}>
+                Releases
+              </h2>
+            </h2>
+            <Slider ref={(c) => (slider.current = c)} {...settings}>
+              {releases.map((item, index) => (
+                <NewsCard
+                  key={index}
+                  date={item.date}
+                  title={item.title}
+                  content={item.content}
+                  link={item.link}
+                  image={item.image}
+                  id={item.id}
+                  newsId={item.id}
+                  onNewsClick={selectRelease}
+                />
+              ))}
+            </Slider>
+            {selectedRelease && (
+              <div className="selected-release row py-4 mt-5">
+                <div className="leftside col-6 d-flex flex-column gap-3">
+                  <img
+                    src={selectedRelease.image}
+                    alt=""
+                    className="selected-release-image"
+                  />
+                </div>
+                <div className="col-6 rightside h-100">
+                  <div className="d-flex flex-column justify-content-between h-100">
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h6 className="selected-release-title font-organetto mb-0">
+                        {selectedRelease.title}
+                      </h6>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={calendarIcon} alt="calendar" />
+                        <span className="news-date font-poppins">
+                          {selectedRelease.date.toLocaleDateString(
+                            "en-US",
+                            options
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <p
+                      className="news-content font-poppins d-flex flex-column justify-content-center"
+                      dangerouslySetInnerHTML={{
+                        __html: selectedRelease.content,
+                      }}
+                    ></p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <div className="newsletter-wrapper row mx-3 mx-lg-5 p-3">
             <div className="col-12 col-lg-6">
