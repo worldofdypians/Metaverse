@@ -289,6 +289,8 @@
 .slider-row {
   padding-left: 2rem;
   padding-right: 2rem;
+  scroll-margin-top: 60px;
+  scroll-snap-margin-top: 60px;
   @media screen and (max-width: 786px) {
     padding-left: 1rem;
     padding-right: 1rem;
