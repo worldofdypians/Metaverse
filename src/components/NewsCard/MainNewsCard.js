@@ -17,7 +17,7 @@ const MainNewsCard = ({
     <div
       className={`col-xxl-7 col-lg-7 col-12 main-news-wrapper`}
       onClick={(e) => {
-        e.preventDefault();
+        // e.preventDefault();
         onShowModalClick();
       }}
     >
@@ -41,13 +41,9 @@ const MainNewsCard = ({
           />
         </div>
         <div className="d-flex justify-content-between gap-3 align-items-center">
-          <h2 className="mainNews-title update-title font-organetto m-0">
+          <h2 className="mainNews-title update-title font-organetto m-0 w-100">
             {`${title?.slice(0, 22)}...`}
           </h2>
-          <span className="mainNews-date">
-            <img src={calendarIcon} alt="calendar" />{" "}
-            {date.toLocaleDateString("en-US", options)}
-          </span>
         </div>
         <span
           className="announcement-side-content font-poppins gap-1 mb-0"
@@ -55,6 +51,10 @@ const MainNewsCard = ({
             __html: content.slice(0, 430),
           }}
         ></span>
+        <span className="mainNews-date" style={{alignSelf: 'flex-end'}}>
+          <img src={calendarIcon} alt="calendar" />{" "}
+          {date.toLocaleDateString("en-US", options)}
+        </span>
       </div>
     </div>
   );
