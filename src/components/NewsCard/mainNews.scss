@@ -168,6 +168,26 @@
   }
 }
 
+.loadmore-btn {
+  border-radius: 8px;
+  background: #7e5ab870;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 15px;
+  color: #fff;
+  padding: 10px;
+  outline: none !important;
+  width: 117px;
+  border: 1.5px solid #857dfa;
+  margin-top: 20px;
+}
+
+.loadmore-btn:hover {
+  background: linear-gradient(270deg,#7770e0,#3e3aa5,#554fd8,#7770e0);
+  color: #fff;
+
+}
+
 .leftcol {
   border-right: 2px solid #565891;
   padding-right: 1rem;

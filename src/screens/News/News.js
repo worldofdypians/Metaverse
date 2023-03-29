@@ -93,6 +93,8 @@ const News = () => {
   const [error, setError] = useState({});
   const [success, setSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [loadMore, setloadMore] = useState(false);
+
   const [activeNews, setActiveNews] = useState([]);
   const slider = useRef();
   const windowSize = useWindowSize();
@@ -205,8 +207,8 @@ const News = () => {
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex w-100 flex-column news-main-wrapper">
-          <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
-            <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex align-items-center gap-2">
+          <div className="row w-100 px-3 px-lg-5 mx-0 news-container justify-content-center">
+            <h2 className="news-header font-organetto px-0 py-3 pt-lg-5 d-flex align-items-center gap-2 pb-4">
               What's{" "}
               <h2 className="mb-0" style={{ color: "#8c56ff" }}>
                 new
@@ -230,7 +232,7 @@ const News = () => {
               </>
             ) : (
               <>
-                <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center p-0 gap-3 mb-5 topnews-wrapper">
+                <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center p-0 gap-3 mb-3 topnews-wrapper">
                   {announcementsNews &&
                     announcementsNews.length > 0 &&
                     announcementsNews.slice(0, 1).map((item, index) => {
@@ -268,8 +270,19 @@ const News = () => {
                 </div>
               </>
             )}
+            {loadMore === false && (
+              <button
+                className="loadmore-btn btn"
+                onClick={() => {
+                  setloadMore(true);
+                }}
+              >
+                More
+              </button>
+            )}
             <div className="d-grid news-grid px-0">
               {showModal === false &&
+                loadMore === true &&
                 announcementsNews &&
                 announcementsNews.length > 0 &&
                 announcementsNews
@@ -310,27 +323,26 @@ const News = () => {
                   Releases
                 </h2>
               </h2>
-            {windowSize.width < 1200 || releases.length > 4 ? 
-               <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
-               <img
-                 src={nextButton}
-                 className="prev-button"
-                 width={40}
-                 height={40}
-                 alt=""
-                 onClick={previous}
-               />
-               <img
-                 src={nextButton}
-                 className="next-button"
-                 width={40}
-                 height={40}
-                 alt=""
-                 onClick={next}
-               />
-             </div>
-             : null  
-          }
+              {windowSize.width < 1200 || releases.length > 4 ? (
+                <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
+                  <img
+                    src={nextButton}
+                    className="prev-button"
+                    width={40}
+                    height={40}
+                    alt=""
+                    onClick={previous}
+                  />
+                  <img
+                    src={nextButton}
+                    className="next-button"
+                    width={40}
+                    height={40}
+                    alt=""
+                    onClick={next}
+                  />
+                </div>
+              ) : null}
             </div>
 
             <Slider ref={(c) => (slider.current = c)} {...settings}>
