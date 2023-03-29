@@ -13,15 +13,16 @@ const AnnouncementSideCard = ({
 
   return (
     <div
-      className="d-flex flex-row gap-2 align-items-center"
+      className="d-flex flex-column gap-2 align-items-center announcement-card"
       style={{ cursor: "pointer" }}
       onClick={() => {
         onShowModalClick(newsId);
       }}
     >
-      <img src={bgImage} className="announcement-side-img" alt="" />
+      <div className="overflow-hidden w-100 side-img-wrapper">
+      <img src={bgImage} className="announcement-side-img" alt="" /></div>
       <div className="d-flex flex-column gap-2 justify-content-between w-100">
-        <span className="announcement-side-title font-poppins">{title}</span>
+        <span className="announcement-side-title font-poppins">{title?.slice(0, 35)}...</span>
         <div className="d-flex justify-content-between gap-2 align-items-center">
           <span
             className="announcement-side-content font-poppins d-flex gap-1 mb-0"
