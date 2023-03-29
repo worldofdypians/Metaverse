@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import "./mainNews.scss";
 
-const MainNewsCard = ({ newsImage, title, date, onShowModalClick, newsId }) => {
+const MainNewsCard = ({
+  newsImage,
+  title,
+  date,
+  onShowModalClick,
+  newsId,
+  content,
+}) => {
   const [bannerShadow, setBannerShadow] = useState(false);
   var options = { year: "numeric", month: "short", day: "numeric" };
 
@@ -16,7 +23,7 @@ const MainNewsCard = ({ newsImage, title, date, onShowModalClick, newsId }) => {
     >
       <div className="main-news-inner">
         <div
-          className="position-relative"
+          className="position-relative overflow-hidden"
           onMouseEnter={() => setBannerShadow(true)}
           onMouseLeave={() => setBannerShadow(false)}
         >
@@ -28,7 +35,9 @@ const MainNewsCard = ({ newsImage, title, date, onShowModalClick, newsId }) => {
           <img
             src={newsImage}
             alt="Image not found"
-            className={`mainNews-image`}
+            className={`mainNews-image ${
+              bannerShadow && "mainNews-image-hover"
+            }`}
           />
         </div>
         <div className="d-flex justify-content-between gap-3 align-items-center">
@@ -40,6 +49,12 @@ const MainNewsCard = ({ newsImage, title, date, onShowModalClick, newsId }) => {
             {date.toLocaleDateString("en-US", options)}
           </span>
         </div>
+        <span
+          className="announcement-side-content font-poppins gap-1 mb-0"
+          dangerouslySetInnerHTML={{
+            __html: content.slice(0, 430),
+          }}
+        ></span>
       </div>
     </div>
   );
