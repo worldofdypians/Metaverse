@@ -17,6 +17,8 @@ import NewsModal from "../../components/NewsCard/NewsModal";
 import Slider from "react-slick";
 import { useRef } from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
+import useWindowSize from "../../hooks/useWindowSize";
+import nextButton from "../../assets/landAssets/nextButton.svg";
 
 const theme = createTheme({
   palette: {
@@ -93,6 +95,7 @@ const News = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeNews, setActiveNews] = useState([]);
   const slider = useRef();
+  const windowSize = useWindowSize();
 
   const fetchNews = async () => {
     const announcements = await axios
@@ -189,6 +192,13 @@ const News = () => {
   const selectRelease = (id) => {
     const firstIndex = releases.filter((item) => item.id === id);
     setSelectedRelease(firstIndex[0]);
+  };
+
+  const next = () => {
+    slider.current.slickNext();
+  };
+  const previous = () => {
+    slider.current.slickPrev();
   };
 
   return (
@@ -292,13 +302,37 @@ const News = () => {
               </div>
             ) : null} */}
           </div>
-          <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
-            <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex align-items-center gap-2">
-              New{" "}
-              <h2 className="mb-0" style={{ color: "#8c56ff" }}>
-                Releases
+          <div className="row w-100  mx-0 news-container slider-row">
+            <div className="d-flex flex-column flex-lg-row align-items-start gap-3 gap-lg-0 align-items-lg-center justify-content-between">
+              <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
+                New{" "}
+                <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
+                  Releases
+                </h2>
               </h2>
-            </h2>
+            {windowSize.width < 1200 || releases.length > 4 ? 
+               <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
+               <img
+                 src={nextButton}
+                 className="prev-button"
+                 width={40}
+                 height={40}
+                 alt=""
+                 onClick={previous}
+               />
+               <img
+                 src={nextButton}
+                 className="next-button"
+                 width={40}
+                 height={40}
+                 alt=""
+                 onClick={next}
+               />
+             </div>
+             : null  
+          }
+            </div>
+
             <Slider ref={(c) => (slider.current = c)} {...settings}>
               {releases.map((item, index) => (
                 <NewsCard
@@ -315,41 +349,41 @@ const News = () => {
               ))}
             </Slider>
           </div>
-            {selectedRelease && (
-              <div className="selected-release mx-3 mx-lg-5 px-2 row py-4 ">
-                <div className="leftside col-6 d-flex flex-column gap-3">
-                  <img
-                    src={selectedRelease.image}
-                    alt=""
-                    className="selected-release-image"
-                  />
-                </div>
-                <div className="col-6 rightside h-100">
-                  <div className="d-flex flex-column justify-content-between gap-5 h-100">
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h6 className="selected-release-title font-organetto mb-0">
-                        {selectedRelease.title}
-                      </h6>
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={calendarIcon} alt="calendar" />
-                        <span className="news-date font-poppins">
-                          {selectedRelease.date.toLocaleDateString(
-                            "en-US",
-                            options
-                          )}
-                        </span>
-                      </div>
+          {selectedRelease && (
+            <div className="selected-release flex-column flex-xl-row gap-4 gap-lg-0 mx-3 mx-lg-5 px-2 row py-4">
+              <div className="leftside col-12 col-xl-6 d-flex flex-column gap-3">
+                <img
+                  src={selectedRelease.image}
+                  alt=""
+                  className="selected-release-image"
+                />
+              </div>
+              <div className="col-12 col-xl-6 rightside h-100">
+                <div className="d-flex flex-column justify-content-between gap-5 h-100">
+                  <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                    <h6 className="selected-release-title font-organetto mb-0">
+                      {selectedRelease.title}
+                    </h6>
+                    <div className="d-flex align-items-center gap-2">
+                      <img src={calendarIcon} alt="calendar" />
+                      <span className="news-date font-poppins">
+                        {selectedRelease.date.toLocaleDateString(
+                          "en-US",
+                          options
+                        )}
+                      </span>
                     </div>
-                    <p
-                      className="news-content font-poppins d-flex flex-column justify-content-center"
-                      dangerouslySetInnerHTML={{
-                        __html: selectedRelease.content,
-                      }}
-                    ></p>
                   </div>
+                  <p
+                    className="news-content font-poppins d-flex flex-column justify-content-center"
+                    dangerouslySetInnerHTML={{
+                      __html: selectedRelease.content,
+                    }}
+                  ></p>
                 </div>
               </div>
-            )}
+            </div>
+          )}
           <div className="newsletter-wrapper row mx-3 mx-lg-5 mb-5 p-3">
             <div className="col-12 col-lg-6">
               <div className="d-flex flex-column gap-3">
