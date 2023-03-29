@@ -161,7 +161,7 @@ const News = () => {
               </>
             ) : (
               <>
-                <div className="d-flex justify-content-between align-items-center p-0 gap-3 mb-5">
+                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between align-items-center p-0 gap-3 mb-5">
                   {announcementsNews &&
                     announcementsNews.length > 0 &&
                     announcementsNews.slice(0, 1).map((item, index) => {

@@ -8,7 +8,7 @@ const MainNewsCard = ({ newsImage, title, date, onShowModalClick, newsId }) => {
 
   return (
     <div
-      className={`col-7 main-news-wrapper`}
+      className={`col-xxl-7 col-lg-7 col-12 main-news-wrapper`}
       onClick={(e) => {
         e.preventDefault();
         onShowModalClick();
