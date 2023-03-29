@@ -49,7 +49,7 @@ const News = () => {
     slidesToShow: 4,
     slidesToScroll: 4,
     initialSlide: 0,
-    autoplay: true,
+    autoplay: false,
     responsive: [
       {
         breakpoint: 1440,
@@ -67,7 +67,7 @@ const News = () => {
           slidesToScroll: 2,
           initialSlide: 2,
           infinite: true,
-          autoplay: true,
+          autoplay: false,
         },
       },
       {
@@ -76,7 +76,7 @@ const News = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           infinite: true,
-          autoplay: true,
+          autoplay: false,
           dots: false,
         },
       },
@@ -209,11 +209,11 @@ const News = () => {
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex w-100 flex-column news-main-wrapper">
-          <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
-            <div className="d-flex align-items-center justify-content-between w-100 px-0">
+          <div className="row w-100 px-3 px-lg-5 mx-0 pt-5 pt-lg-0 mt-5 mt-lg-0 news-container">
+            <div className="d-flex flex-column flex-lg-row align-items-start mb-3 mb-lg-0 align-items-lg-center justify-content-between w-100 px-0">
               <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex align-items-center gap-2">
                 What's{" "}
-                <h2 className="mb-0" style={{ color: "#8c56ff" }}>
+                <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
                   new
                 </h2>
               </h2>
