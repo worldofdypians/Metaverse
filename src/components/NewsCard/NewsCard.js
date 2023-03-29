@@ -27,18 +27,18 @@ const NewsCard = ({
       }}
     >
       <div
-        className={`singlenews-card ${
-          showContent && "news-card-active"
-        } p-3 d-flex flex-column gap-3 ${
+        className={`singlenews-card p-3 d-flex flex-column gap-3 ${
           cardType === "release" && releaseId === newsId
             ? "news-card-active"
+            : cardType === "announcement" && showContent === true
+            ? "active-announcement"
             : null
-        }`}
+        } ${cardType === "release" && "release-card"}`}
       >
         <div className="d-flex flex-column align-items-start justify-content-between gap-3">
           <div className="d-flex align-items-start w-100">
-            <div className="w-100 news-image-wrapper" >
-            <img src={image} alt="news image" className="news-image" />
+            <div className="w-100 news-image-wrapper">
+              <img src={image} alt="news image" className="news-image" />
             </div>
           </div>
           <div className="d-flex flex-column gap-3 w-100">
@@ -65,9 +65,19 @@ const NewsCard = ({
           </div>
           {cardType === "release" ? (
             newsId === releaseId ? (
-              <span className="news-content font-poppins" style={{fontSize: '32px', color: '#d9fa86'}}>-</span>
+              <span
+                className="news-content font-poppins"
+                style={{ fontSize: "32px", color: "#d9fa86" }}
+              >
+                -
+              </span>
             ) : (
-              <span className="news-content font-poppins" style={{fontSize: '32px', color: '#d9fa86'}}>+</span>
+              <span
+                className="news-content font-poppins"
+                style={{ fontSize: "32px", color: "#d9fa86" }}
+              >
+                +
+              </span>
             )
           ) : null}
         </div>

@@ -48,9 +48,9 @@
       transition: all .25s;
     }
 
-    .news-image:hover{
-      transform: scale(1.2);
-    }
+    // .news-image:hover{
+      // transform: scale(1.2);
+    // }
 
     .announcement-tag {
       font-family: "Poppins";
@@ -138,6 +138,9 @@
   }
 
   .news-card-active {
+    border: 2px solid #d9fa86;
+  }
+  .release-card:hover {
     border: 2px solid #d9fa86;
   }
 
