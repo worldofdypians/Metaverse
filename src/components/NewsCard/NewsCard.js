@@ -27,7 +27,7 @@ const NewsCard = ({ newsId, image, title, content, date, onNewsClick }) => {
           <div className="d-flex flex-column gap-3 w-100">
             <div className="d-flex align-items-center justify-content-between">
               <div className="text-white font-organetto m-0">
-                {title.slice(0, 21)}
+                {title?.slice(0, 21)}
                 {dots}
               </div>
             </div>
@@ -36,13 +36,13 @@ const NewsCard = ({ newsId, image, title, content, date, onNewsClick }) => {
         <p
           className="news-content font-poppins d-flex flex-column justify-content-center"
           dangerouslySetInnerHTML={{
-            __html: content.slice(0, 96) + dots,
+            __html: content?.slice(0, 96) + dots,
           }}
         ></p>
         <div className="d-flex align-items-center gap-2">
           <img src={calendarIcon} alt="calendar" />
           <span className="news-date font-poppins">
-            {date.toLocaleDateString("en-US", options)}
+            {date?.toLocaleDateString("en-US", options)}
           </span>
         </div>
       </div>
