@@ -30,7 +30,7 @@ const NewsModal = ({
 
 
   return (
-    <div className="newsModal-wrapper d-flex flex-column flex-xxl-row flex-lg-row flex-md-row gap-3 mb-5">
+    <div className="newsModal-wrapper d-flex flex-column flex-xxl-row flex-lg-row gap-3 mb-5">
       <div className="col-xxl-7 col-lg-7 col-12">
         <div className="d-flex flex-column gap-3" ref={elementRef}>
           <div className="d-flex align-items-center gap-2 justify-content-between">
@@ -54,7 +54,7 @@ const NewsModal = ({
           ></p>
         </div>
       </div>
-      <div className="col-4">
+      <div className="col-xxl-4 col-lg-4 col-12">
         <div className="d-flex flex-column gap-3">
           {otherAnnouncements &&
             otherAnnouncements.length > 0 &&

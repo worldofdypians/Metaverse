@@ -219,10 +219,14 @@
   }
 }
 
-@media screen and (max-width: 786px) {
+@media only screen and (max-width: 991px) {
   .news-grid {
     grid-template-columns: auto !important;
   }
+}
+
+@media screen and (max-width: 786px) {
+
 
   .newsletter-content {
     width: 100% !important;
