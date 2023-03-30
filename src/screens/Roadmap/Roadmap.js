@@ -107,6 +107,12 @@ const Roadmap = () => {
         {
           title: "Multichain Integration",
           desc: "Incorporation of multiple chains providing users with optimal options and solutions.",
+          completed: true
+        },
+        {
+          title: "Addition and development of partnerships",
+          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
+          completed: true
         },
         {
           title: "CAWS NFT 3D rendering",
@@ -117,10 +123,7 @@ const Roadmap = () => {
           title: "Introducing the CAWS Timepiece NFT collection",
           desc: "The CAWS Timepiece NFT collection will provide users additional utility and perks in the World of Dypians Metaverse. CAWS owners will have the ability to mint CAWS Timepiece for free.",
         },
-        {
-          title: "Addition and development of partnerships",
-          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
-        },
+       
       ],
     },
     {
