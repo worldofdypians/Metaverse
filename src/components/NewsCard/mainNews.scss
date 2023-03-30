@@ -32,6 +32,9 @@
   width: 100%;
   object-fit: cover;
   transition: all 0.25s;
+  @media only screen and (max-width: 991px) {
+    height: auto;
+  }
 }
 .newsModal-wrapper {
   background: #181636;
@@ -42,6 +45,11 @@
 
 .left-col-image {
   height: 500px;
+
+  @media only screen and (max-width: 991px) {
+    height: auto;
+
+  }
 }
 
 .go-back-btn {
