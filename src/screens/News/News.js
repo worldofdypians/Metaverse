@@ -105,7 +105,7 @@ const News = () => {
         return res.data;
       });
     const newReleases = await axios
-      .get("https://api3.dyp.finance/api/new_releases")
+      .get("https://api3.dyp.finance/api/wod_releases")
       .then((res) => {
         return res.data;
       });

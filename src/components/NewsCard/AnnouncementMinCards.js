@@ -26,7 +26,7 @@ const AnnouncementMinCard = ({
           <span
             className="announcement-side-content font-poppins d-flex gap-1 mb-0"
             dangerouslySetInnerHTML={{
-              __html: content.slice(0, 30) + "...",
+              __html: content.slice(0, 130) + "...",
             }}
           ></span>
           <span className="mainNews-date">

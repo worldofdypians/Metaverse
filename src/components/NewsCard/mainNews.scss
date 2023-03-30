@@ -16,6 +16,9 @@
     .mainNews-title {
       font-size: 27px;
       cursor: pointer;
+      z-index: 3;
+      padding: 10px;
+      color: #000 !important;
       @media screen and (max-width: 500px) {
         font-size: 23px;
       }
@@ -50,7 +53,6 @@
 
   @media only screen and (max-width: 991px) {
     height: auto;
-
   }
 }
 
@@ -239,19 +241,21 @@
 
   p {
     margin-bottom: 0 !important;
-    span{
-  color: #f7f7fc !important;
-
+    span {
+      color: #f7f7fc !important;
     }
   }
 
-  span{
+  // p:empty {
+  //   display: none;
+  //   }
+
+  span {
     color: #f7f7fc !important;
-  
-      }
+  }
 }
 
-.ql-align-center{
+.ql-align-center {
   display: flex;
   justify-content: center;
 }
@@ -290,7 +294,6 @@
 .sys-req:hover {
   text-decoration: underline;
   color: #d9fa86;
-
 }
 
 .announcement-side-wrapper :hover {
