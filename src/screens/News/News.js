@@ -101,7 +101,7 @@ const News = () => {
 
   const fetchNews = async () => {
     const announcements = await axios
-      .get("https://api3.dyp.finance/api/announcements")
+      .get("https://api3.dyp.finance/api/wod_announcements")
       .then((res) => {
         return res.data;
       });
@@ -244,7 +244,7 @@ const News = () => {
               <>
                 <NewsModal
                   newsId={activeNews.id}
-                  bgImage={activeNews.image}
+                  bgImage={activeNews.image_second}
                   title={activeNews.title}
                   date={activeNews.date}
                   content={activeNews.content}
@@ -265,7 +265,7 @@ const News = () => {
                         <MainNewsCard
                           key={index}
                           title={item.title}
-                          newsImage={item.image}
+                          newsImage={item.image_second}
                           date={item.date}
                           newsId={item.id}
                           onShowModalClick={() => {
