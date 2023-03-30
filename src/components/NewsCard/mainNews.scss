@@ -130,6 +130,8 @@
 
 .featured-shadow-hover {
   box-shadow: 100px 123px 200px 0px rgb(0 0 0 / 75%) inset;
+  z-index: 2;
+  position: relative;
 }
 
 .announcement-side-img {
@@ -183,9 +185,8 @@
 }
 
 .loadmore-btn:hover {
-  background: linear-gradient(270deg,#7770e0,#3e3aa5,#554fd8,#7770e0);
+  background: linear-gradient(270deg, #7770e0, #3e3aa5, #554fd8, #7770e0);
   color: #fff;
-
 }
 
 .leftcol {
@@ -251,11 +252,32 @@
   padding: 20px;
 }
 
+.sys-req {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  color: #d9fa86;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.sys-req:hover {
+  text-decoration: underline;
+  color: #d9fa86;
+
+}
+
 .announcement-side-wrapper :hover {
   .announcement-side-title {
     text-decoration: underline;
   }
-  .announcement-side-img {
-    transform: scale(1.2);
-  }
+}
+.announcement-card:hover {
+  border: 2px solid #20bbca !important;
+}
+
+.active-announcement {
+  border: 2px solid #20bbca !important;
 }

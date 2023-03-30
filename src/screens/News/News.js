@@ -210,7 +210,7 @@ const News = () => {
   return (
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
-        <div className="d-flex w-100 flex-column news-main-wrapper">
+        <div className="d-flex w-100 flex-column news-main-wrapper gap-0">
           <div className="row w-100 px-3 px-lg-5 mx-0 pt-5 pt-lg-0 mt-5 mt-lg-0 news-container justify-content-center">
             <div className="d-flex flex-column flex-lg-row align-items-start mb-3 mb-lg-0 align-items-lg-center justify-content-between w-100 px-0">
               <h2 className="news-header font-organetto px-0 py-3 pt-lg-5 d-flex align-items-center gap-2">
@@ -219,9 +219,10 @@ const News = () => {
                   new
                 </h2>
               </h2>
-              <a href="#slider-row" className="linear-border">
-                <button className="btn outline-btn px-5">New Releases</button>
+              <a href="#slider-row" className="sys-req">
+                Releases
               </a>
+            
             </div>
 
             {showModal === true ? (
@@ -280,17 +281,17 @@ const News = () => {
               </>
             )}
             {loadMore === false &&
-                announcementsNews &&
-                announcementsNews.length && (
-              <button
-                className="loadmore-btn btn"
-                onClick={() => {
-                  setloadMore(true);
-                }}
-              >
-                More
-              </button>
-            )}
+              announcementsNews &&
+              announcementsNews.length && (
+                <button
+                  className="loadmore-btn btn"
+                  onClick={() => {
+                    setloadMore(true);
+                  }}
+                >
+                  More
+                </button>
+              )}
             <div className="d-grid news-grid px-0 mt-3">
               {showModal === false &&
                 loadMore === true &&
@@ -308,6 +309,7 @@ const News = () => {
                         newsId={item.id}
                         onNewsClick={handleSideAnnouncementClick}
                         key={index}
+                        cardType={"announcement"}
                       />
                     );
                   })}
@@ -319,7 +321,7 @@ const News = () => {
           >
             <div className="d-flex flex-column flex-lg-row align-items-start gap-3 gap-lg-0 align-items-lg-center justify-content-between">
               <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
-                New{" "}
+                
                 <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
                   Releases
                 </h2>
@@ -365,7 +367,7 @@ const News = () => {
             </Slider>
           </div>
           {selectedRelease && (
-            <div className="selected-release flex-column flex-xl-row gap-4 gap-lg-0 mx-3 mx-lg-5 px-2 row py-4">
+            <div className="selected-release news-card-active flex-column flex-xl-row gap-4 gap-lg-0 mx-3 mx-lg-5 px-2 row py-4 mt-5">
               <div className="leftside col-12 col-xl-6 d-flex flex-column gap-3">
                 <img
                   src={selectedRelease.image}
@@ -399,7 +401,10 @@ const News = () => {
               </div>
             </div>
           )}
-          <div className="newsletter-wrapper row mx-3 mx-lg-5 mb-5 p-3">
+          <div
+            className="newsletter-wrapper row mx-3 mx-lg-5 mb-5 p-3"
+            style={{ marginTop: 80 }}
+          >
             <div className="col-12 col-lg-6">
               <div className="d-flex flex-column gap-3">
                 <img

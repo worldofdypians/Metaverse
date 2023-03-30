@@ -22,11 +22,18 @@ const MainNewsCard = ({
       }}
     >
       <div className="main-news-inner">
+        <div className="d-flex justify-content-between gap-3 align-items-center">
+          <h2 className="mainNews-title update-title font-organetto m-0 w-100">
+            {`${title?.slice(0, 22)}...`}
+          </h2>
+        </div>
         <div
           className="position-relative overflow-hidden"
           onMouseEnter={() => setBannerShadow(true)}
           onMouseLeave={() => setBannerShadow(false)}
+          style={{borderRadius: 8}}
         >
+          {" "}
           <div
             className={`position-absolute featured-shadow w-100 ${
               bannerShadow && "featured-shadow-hover"
@@ -40,18 +47,13 @@ const MainNewsCard = ({
             }`}
           />
         </div>
-        <div className="d-flex justify-content-between gap-3 align-items-center">
-          <h2 className="mainNews-title update-title font-organetto m-0 w-100">
-            {`${title?.slice(0, 22)}...`}
-          </h2>
-        </div>
         <span
           className="announcement-side-content font-poppins gap-1 mb-0"
           dangerouslySetInnerHTML={{
             __html: content.slice(0, 430),
           }}
         ></span>
-        <span className="mainNews-date" style={{alignSelf: 'flex-end'}}>
+        <span className="mainNews-date" style={{ alignSelf: "flex-end" }}>
           <img src={calendarIcon} alt="calendar" />{" "}
           {date.toLocaleDateString("en-US", options)}
         </span>
