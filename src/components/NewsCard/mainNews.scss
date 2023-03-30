@@ -239,7 +239,21 @@
 
   p {
     margin-bottom: 0 !important;
+    span{
+  color: #f7f7fc !important;
+
+    }
   }
+
+  span{
+    color: #f7f7fc !important;
+  
+      }
+}
+
+.ql-align-center{
+  display: flex;
+  justify-content: center;
 }
 
 .announcement-side-wrapper {
