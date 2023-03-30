@@ -295,7 +295,7 @@ const News = () => {
                 </div>
               </>
             )}
-            {loadMore === false &&
+            {loadMore === false && showModal === false &&
               announcementsNews &&
               announcementsNews.length && (
                 <div className="col-xxl-5 col-lg-5 col-12 d-flex justify-content-center">
