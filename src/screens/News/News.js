@@ -210,6 +210,16 @@ const News = () => {
   const showAll = useRef();
   const releaseContent = useRef();
 
+  useEffect(() => {
+    if (selectedRelease) {
+      releaseContent.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [selectedRelease]);
+
   return (
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
@@ -322,7 +332,7 @@ const News = () => {
                     );
                   })}
             </div>
-            {loadMore === true &&
+            {loadMore === true && showModal === false &&
               announcementsNews &&
               announcementsNews.length && (
                 <button
@@ -377,12 +387,7 @@ const News = () => {
                   image={item.image}
                   id={item.id}
                   newsId={item.id}
-                  onNewsClick={(e) => {
-                    selectRelease(e);
-                    releaseContent.current?.scrollIntoView({
-                      block: "nearest",
-                    });
-                  }}
+                  onNewsClick={selectRelease}
                   cardType={"release"}
                   releaseId={selectedRelease?.id}
                 />
