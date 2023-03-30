@@ -31,6 +31,7 @@ const MainNewsCard = ({
           className="position-relative overflow-hidden"
           onMouseEnter={() => setBannerShadow(true)}
           onMouseLeave={() => setBannerShadow(false)}
+          style={{borderRadius: 8}}
         >
           {" "}
           <div

@@ -219,9 +219,10 @@ const News = () => {
                   new
                 </h2>
               </h2>
-              <a href="#slider-row" className="linear-border">
-                <button className="btn outline-btn px-5">New Releases</button>
+              <a href="#slider-row" className="sys-req">
+                Releases
               </a>
+            
             </div>
 
             {showModal === true ? (
@@ -320,7 +321,7 @@ const News = () => {
           >
             <div className="d-flex flex-column flex-lg-row align-items-start gap-3 gap-lg-0 align-items-lg-center justify-content-between">
               <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
-                New{" "}
+                
                 <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
                   Releases
                 </h2>
@@ -366,7 +367,7 @@ const News = () => {
             </Slider>
           </div>
           {selectedRelease && (
-            <div className="selected-release flex-column flex-xl-row gap-4 gap-lg-0 mx-3 mx-lg-5 px-2 row py-4 mt-5">
+            <div className="selected-release news-card-active flex-column flex-xl-row gap-4 gap-lg-0 mx-3 mx-lg-5 px-2 row py-4 mt-5">
               <div className="leftside col-12 col-xl-6 d-flex flex-column gap-3">
                 <img
                   src={selectedRelease.image}

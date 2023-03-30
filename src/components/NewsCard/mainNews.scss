@@ -252,6 +252,23 @@
   padding: 20px;
 }
 
+.sys-req {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  color: #d9fa86;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.sys-req:hover {
+  text-decoration: underline;
+  color: #d9fa86;
+
+}
+
 .announcement-side-wrapper :hover {
   .announcement-side-title {
     text-decoration: underline;
