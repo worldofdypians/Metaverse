@@ -85,7 +85,6 @@ const News = () => {
 
   var options = { year: "numeric", month: "short", day: "numeric" };
 
-  const [news, setNews] = useState([]);
   const [announcementsNews, setAnnouncementsNews] = useState([]);
   const [releases, setReleases] = useState([]);
   const [selectedRelease, setSelectedRelease] = useState();
@@ -120,19 +119,11 @@ const News = () => {
       ...item,
       type: "new_release",
     }));
-    const joinedNews = newAnnouncements.concat(typeReleases);
-    const datedNews = joinedNews.map((item) => {
-      return { ...item, date: new Date(item.date) };
-    });
-
     const announcementsDatedNews = newAnnouncements.map((item) => {
       return { ...item, date: new Date(item.date) };
     });
     const datedReleasedNews = typeReleases.map((item) => {
       return { ...item, date: new Date(item.date) };
-    });
-    const sortedNews = datedNews.sort(function (a, b) {
-      return b.date - a.date;
     });
     const sortedAnnouncementsNews = announcementsDatedNews.sort(function (
       a,
@@ -141,7 +132,7 @@ const News = () => {
       return b.date - a.date;
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
-    setNews(sortedNews);
+  
     setReleases(datedReleasedNews);
   };
 
@@ -295,7 +286,8 @@ const News = () => {
                 </div>
               </>
             )}
-            {loadMore === false && showModal === false &&
+            {loadMore === false &&
+              showModal === false &&
               announcementsNews &&
               announcementsNews.length && (
                 <div className="col-xxl-5 col-lg-5 col-12 d-flex justify-content-center">
@@ -332,7 +324,8 @@ const News = () => {
                     );
                   })}
             </div>
-            {loadMore === true && showModal === false &&
+            {loadMore === true &&
+              showModal === false &&
               announcementsNews &&
               announcementsNews.length && (
                 <button

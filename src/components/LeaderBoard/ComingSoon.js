@@ -109,7 +109,7 @@ const ComingSoon = ({ optionText, data }) => {
                   {getFormattedNumber(item.reward, 0)}
                 </td> */}
                 {/* <td className="playerReward col-2">$ {item.statValue}</td> */}
-                <td className="playerReward col-2">$ 0</td>
+                <td className="playerReward col-2">${getFormattedNumber(item.statValue,0)}</td>
               </tr>
             );
           })}
