@@ -31,6 +31,7 @@ const NewsModal = ({
     if (elementRef.current.clientHeight !== 0) {
       setHeight(elementRef.current.clientHeight);
     }
+    window.scrollTo(0,0)
   }, [newsId, content, elementRef.current?.clientHeight]);
 
   return (

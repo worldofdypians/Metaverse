@@ -46,12 +46,11 @@ const News = (props) => {
   var settings = {
     dots: false,
     arrows: false,
-    infinite: true,
+    infinite: false,
     dotsClass: "button__bar slick-dots w-100",
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
-    initialSlide: 0,
     autoplay: false,
     responsive: [
       {
@@ -59,7 +58,7 @@ const News = (props) => {
         settings: {
           slidesToShow: 4,
           slidesToScroll: 4,
-          infinite: true,
+          infinite: false,
           dots: false,
         },
       },
@@ -68,8 +67,7 @@ const News = (props) => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2,
-          infinite: true,
+          infinite: false,
           autoplay: false,
         },
       },
@@ -78,7 +76,7 @@ const News = (props) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          infinite: true,
+          infinite: false,
           autoplay: false,
           dots: false,
         },
@@ -300,7 +298,7 @@ const News = (props) => {
             className="row w-100 px-3 px-lg-5 mx-0 pt-5 pt-lg-0 mt-5 mt-lg-0 news-container"
             style={{ justifyContent: loadMore === true ? "center" : "end" }}
           >
-            <div className="d-flex flex-column flex-lg-row align-items-start mb-3 mb-lg-0 align-items-lg-center justify-content-between w-100 px-0">
+            <div className="d-flex  align-items-center mb-3 mb-lg-0 align-items-lg-center justify-content-between w-100 px-0">
               <h2 className="news-header font-organetto px-0 py-3 pt-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
                 What's{" "}
                 <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
