@@ -29,17 +29,21 @@
     }
   }
 }
+
 .mainNews-image {
-  height: 420px;
+  height: 500px;
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
   transition: all 0.25s;
+  aspect-ratio: 16/9;
   @media only screen and (max-width: 991px) {
     height: auto;
   }
 }
+
+
 .newsModal-wrapper {
   background: #181636;
   border: 2px solid #181636;
