@@ -121,18 +121,22 @@
       span {
         color: #DBD9FF !important;
 
-        img {
+        @media screen and (max-width: 991px) {
+           img {
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain;
+          }
+        }
+      }
+
+      @media screen and (max-width: 991px) {
+        span img {
           width: 100% !important;
           height: auto !important;
           object-fit: contain;
         }
       }
-
-      span img {
-          width: 100% !important;
-          height: auto !important;
-          object-fit: contain;
-        }
       
     }
 
@@ -223,24 +227,30 @@
   span {
     color: #ffffff !important;
 
-    img {
+    @media screen and (max-width: 991px) {
+       img {
+        width: 100% !important;
+        height: auto !important;
+        object-fit: contain;
+      }
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    span img {
       width: 100% !important;
       height: auto !important;
       object-fit: contain;
     }
   }
-
-  span img {
-      width: 100% !important;
-      height: auto !important;
-      object-fit: contain;
-    }
     
-    img {
+  @media screen and (max-width: 991px) {
+     img {
       width: 100% !important;
       height: auto !important;
       object-fit: contain;
     }
+  }
 }
 
 .success-modal {

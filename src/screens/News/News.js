@@ -96,10 +96,15 @@ const News = (props) => {
   const [success, setSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [loadMore, setloadMore] = useState(false);
-
+  const [count, setCount] = useState(2);
   const [activeNews, setActiveNews] = useState([]);
+  const [latestVersion, setLatestVersion] = useState();
   const slider = useRef();
   const windowSize = useWindowSize();
+  const [fullLenth, setFullLenth] = useState(false);
+  const [loadingMain, setLoadingMain] = useState(false);
+  const [loadingOther, setLoadingOther] = useState(false);
+
   const navigate = useNavigate();
 
   function handleGoBack() {
@@ -107,8 +112,9 @@ const News = (props) => {
   }
 
   const fetchNews = async () => {
+    setLoadingMain(true);
     const announcements = await axios
-      .get("https://api3.dyp.finance/api/wod_announcements")
+      .get("https://api3.dyp.finance/api/wod_announcements?page=1")
       .then((res) => {
         return res.data;
       });
@@ -124,6 +130,35 @@ const News = (props) => {
       return b.date - a.date;
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
+    setLoadingMain(false);
+
+  };
+  const fetchOtherNews = async () => {
+    if (fullLenth === false) {
+      setLoadingOther(true);
+      const announcements = await axios
+        .get(`https://api3.dyp.finance/api/wod_announcements?page=${count}`)
+        .then((res) => {
+          return res.data;
+        });
+
+      const announcementsDatedNews = announcements.map((item) => {
+        return { ...item, date: new Date(item.date) };
+      });
+
+      const sortedAnnouncementsNews = announcementsDatedNews.sort(function (
+        a,
+        b
+      ) {
+        return b.date - a.date;
+      });
+      setAnnouncementsNews((prev) => prev.concat(sortedAnnouncementsNews));
+      setCount((prev) => prev + 1);
+      setLoadingOther(false);
+      if (sortedAnnouncementsNews.length < 4) {
+        setFullLenth(true);
+      }
+    }
   };
 
   const fetchReleases = async () => {
@@ -138,6 +173,7 @@ const News = (props) => {
     });
 
     setReleases(datedReleasedNews);
+    setLatestVersion(datedReleasedNews[0]?.version);
   };
 
   const subscribe = async (e) => {
@@ -233,7 +269,7 @@ const News = (props) => {
                 </h2>
               </h2>
               <a href="#slider-row" className="sys-req">
-                Releases
+                Patch Notes ({latestVersion})
               </a>
             </div>
 
@@ -255,8 +291,15 @@ const News = (props) => {
               </>
             ) : (
               <>
-                <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center p-0 gap-3 mb-3 topnews-wrapper">
-                  {announcementsNews &&
+                {loadingMain === true ? (
+                  <div className="d-flex align-items-center justify-content-center">
+                    <div class="spinner-border text-info" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  </div>
+                ) : (
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center p-0 gap-3 mb-3 topnews-wrapper">
+                 {announcementsNews &&
                     announcementsNews.length > 0 &&
                     announcementsNews.slice(0, 1).map((item, index) => {
                       return (
@@ -285,17 +328,10 @@ const News = (props) => {
                       );
                     })}
                   <div className="announcement-side-wrapper col-xxl-5 col-lg-5 col-12 ">
-                    {announcementsNews &&
-                      announcementsNews.length > 0 &&
-                      announcementsNews.slice(1, 5).map((item, index) => {
-                        return (
-                          <NavLink
-                            to={`/news/:news_id?${item.title.replace(
-                              /\s/g,
-                              "-"
-                            )}`}
-                            style={{ textDecoration: "none" }}
-                          >
+                      {announcementsNews &&
+                        announcementsNews.length > 0 &&
+                        announcementsNews.slice(1, 5).map((item, index) => {
+                          return (
                             <AnnouncementSideCard
                               key={index}
                               title={item.title}
@@ -305,29 +341,14 @@ const News = (props) => {
                               newsId={item.id}
                               onShowModalClick={handleSideAnnouncementClick}
                             />
-                          </NavLink>
-                        );
-                      })}{" "}
+                          );
+                        })}{" "}
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             )}
-            {loadMore === false &&
-              showModal === false &&
-              announcementsNews &&
-              announcementsNews.length && (
-                <div className="col-xxl-5 col-lg-5 col-12 d-flex justify-content-center">
-                  <button
-                    className="loadmore-btn btn"
-                    onClick={() => {
-                      setloadMore(true);
-                      showAll.current?.scrollIntoView({ block: "nearest" });
-                    }}
-                  >
-                    More
-                  </button>
-                </div>
-              )}
+
             <div className="d-grid news-grid px-0 mt-3" ref={showAll}>
               {showModal === false &&
                 loadMore === true &&
@@ -355,7 +376,33 @@ const News = (props) => {
                     );
                   })}
             </div>
-            {loadMore === true &&
+            {fullLenth === false &&
+              showModal === false &&
+              announcementsNews &&
+              announcementsNews.length && (
+                <div className="col-xxl-12 col-lg-12 col-12 d-flex flex-column align-items-center gap-2 mt-2 justify-content-center">
+                  {loadingOther === true ? 
+                   <div className="d-flex align-items-center justify-content-center">
+                   <div class="spinner-border text-info" role="status">
+                   <span class="visually-hidden">Loading...</span>
+                 </div>
+                 </div>
+                  :
+                   null  
+                }
+                  <button
+                    className="loadmore-btn btn"
+                    onClick={() => {
+                      setloadMore(true);
+                      fetchOtherNews();
+                      showAll.current?.scrollIntoView({ block: "nearest" });
+                    }}
+                  >
+                    More
+                  </button>
+                </div>
+              )}
+            {/* {fullLenth === true &&
               showModal === false &&
               announcementsNews &&
               announcementsNews.length && (
@@ -368,15 +415,18 @@ const News = (props) => {
                 >
                   View less
                 </button>
-              )}
+              )} */}
           </div>
           <div
             className="row w-100  mx-0 news-container slider-row"
             id="slider-row"
           >
             <div className="d-flex flex-column flex-lg-row align-items-start gap-3 gap-lg-0 align-items-lg-center justify-content-between">
-              <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
-                Releases
+            <h2 className="news-header font-organetto px-0 py-3 pt-lg-5 d-flex align-items-center gap-2">
+                Patch{" "}
+                <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
+                  Notes
+                </h2>
               </h2>
               {windowSize.width > 786 && releases.length > 4 ? (
                 <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
