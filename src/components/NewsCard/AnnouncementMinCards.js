@@ -1,5 +1,6 @@
 import React from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const AnnouncementMinCard = ({
   bgImage,
@@ -8,8 +9,10 @@ const AnnouncementMinCard = ({
   content,
   onShowModalClick,
   newsId,
+  landscapeImg
 }) => {
   var options = { year: "numeric", month: "short", day: "numeric" };
+  const windowSize = useWindowSize()
 
   return (
     <div
@@ -17,9 +20,10 @@ const AnnouncementMinCard = ({
       style={{ cursor: "pointer" }}
       onClick={() => {
         onShowModalClick(newsId);
+        window.scrollTo(0,0);
       }}
     >
-      <img src={bgImage} className="announcement-min-img" alt="" />
+      <img src={ windowSize.width > 575 ? bgImage : landscapeImg} className="announcement-min-img" alt="" />
       <div className="d-flex flex-column gap-2 justify-content-between w-100">
         <span className="announcement-side-title font-poppins">{title.slice(0, 40) + "..."}</span>
         <div className="d-flex justify-content-between gap-2 align-items-center">

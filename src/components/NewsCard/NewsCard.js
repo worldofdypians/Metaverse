@@ -80,7 +80,7 @@ const NewsCard = ({
           <p
             className="news-content font-poppins d-flex flex-column justify-content-center"
             dangerouslySetInnerHTML={{
-              __html: content?.slice(0, 196) + dots,
+              __html: content?.slice(0, 140) + dots,
             }}
           ></p>
         )}
