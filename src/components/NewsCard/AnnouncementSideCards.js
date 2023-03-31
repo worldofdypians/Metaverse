@@ -1,5 +1,6 @@
 import React from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const AnnouncementSideCard = ({
   bgImage,
@@ -8,8 +9,10 @@ const AnnouncementSideCard = ({
   content,
   onShowModalClick,
   newsId,
+  imageSquare
 }) => {
   var options = { year: "numeric", month: "short", day: "numeric" };
+  const windowSize = useWindowSize()
 
   return (
     <div
@@ -20,7 +23,7 @@ const AnnouncementSideCard = ({
       }}
     >
       <div className="overflow-hidden w-100 side-img-wrapper">
-        <img src={bgImage} className="announcement-side-img" alt="" />
+        <img src={ windowSize.width > 1725 ? bgImage : windowSize.width < 1725 && windowSize.width>600 ? imageSquare : bgImage } className="announcement-side-img" alt="" />
       </div>
       <div className="d-flex flex-column gap-2 justify-content-between w-100">
       <span className="mainNews-date">

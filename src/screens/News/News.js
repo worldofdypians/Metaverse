@@ -388,6 +388,7 @@ const News = (props) => {
                                 key={index}
                                 title={item.title}
                                 bgImage={item.image_second}
+                                imageSquare={item.image}
                                 date={item.date}
                                 // content={item.content}
                                 newsId={item.id}
