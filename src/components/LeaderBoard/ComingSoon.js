@@ -90,10 +90,10 @@ const ComingSoon = ({ optionText, data }) => {
           {/* <th className="playerHeader">Gem Hits</th> */}
           <th className="playerHeader">Reward</th>
         </tr>
-        {data &&
+        {placeholderplayerData &&
           optionText === "genesis" &&
-          data.length > 0 &&
-          data.map((item, index) => {
+          placeholderplayerData.length > 0 &&
+          placeholderplayerData.map((item, index) => {
             return (
               <tr key={index} className={`playerInnerRow`}>
                 <td className="playerData col-2">
@@ -108,12 +108,14 @@ const ComingSoon = ({ optionText, data }) => {
                 {/* <td className="playerScore col-3">
                   {getFormattedNumber(item.reward, 0)}
                 </td> */}
-                {/* <td className="playerReward col-2">$ {item.statValue}</td> */}
-                <td className="playerReward col-2">${getFormattedNumber(item.statValue,0)}</td>
+                {/* <td className="playerReward col-2">${getFormattedNumber(item.statValue,0)}</td> */}
+                
+                <td className="playerReward col-2">$ 0</td>
               </tr>
             );
           })}
       </table>
+      <span className="statusText" style={{textAlign: 'left', paddingTop: 5}}>*Genesis leaderboard coming soon</span>
     </div>
   );
 };

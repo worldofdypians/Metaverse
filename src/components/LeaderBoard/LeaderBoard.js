@@ -357,17 +357,19 @@ const LeaderBoard = ({ username, userId }) => {
   ];
 
   const prevMonthlyPrizes = [
+    "2500",
     "1000",
     "500",
-    "300",
     "100",
-    "50",
-    "50",
-    "50",
-    "50",
-    "50",
-    "50",
+    "100",
+    "100",
+    "100",
+    "100",
+    "100",
+    "100",
   ];
+
+
 
   const [optionText, setOptionText] = useState("daily");
   const [dailyrecords, setRecords] = useState([]);
@@ -698,7 +700,7 @@ const LeaderBoard = ({ username, userId }) => {
               } optionText col-3`}
               onClick={() => {
                 handleOption("genesis");
-                fetchGenesisRecords();
+                // fetchGenesisRecords();
               }}
               style={{ width: "24%" }}
             >
