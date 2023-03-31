@@ -307,12 +307,12 @@
   }
 
   .selected-release-image {
-    aspect-ratio: 16/9;
+    aspect-ratio: 1/1;
     object-fit: cover;
     --mask: linear-gradient(-135deg, #0000 50px, #000 0);
     -webkit-mask: var(--mask);
     mask: var(--mask);
-    height: 100%;
+    // height: 100%;
   }
   .news-content {
     font-style: normal;
