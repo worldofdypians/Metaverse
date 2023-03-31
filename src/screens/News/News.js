@@ -381,7 +381,7 @@ const News = (props) => {
                               <AnnouncementSideCard
                                 key={index}
                                 title={item.title}
-                                bgImage={item.image}
+                                bgImage={item.image_second}
                                 date={item.date}
                                 // content={item.content}
                                 newsId={item.id}
@@ -415,7 +415,7 @@ const News = (props) => {
                         <NewsCard
                           title={item.title}
                           content={item.content}
-                          image={item.image}
+                          image={item.image_second}
                           date={item.date}
                           newsId={item.id}
                           onNewsClick={handleSideAnnouncementClick}
