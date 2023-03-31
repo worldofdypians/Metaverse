@@ -349,26 +349,28 @@ const News = () => {
               <h2 className="news-header font-organetto px-0 py-3 py-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
                 Releases
               </h2>
-              {windowSize.width < 1200 || releases.length > 4 ? (
+              {windowSize.width > 786 && releases.length > 4 ? (
                 <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
-                  <img
-                    src={nextButton}
-                    className="prev-button"
-                    width={40}
-                    height={40}
-                    alt=""
-                    onClick={previous}
-                  />
-                  <img
-                    src={nextButton}
-                    className="next-button"
-                    width={40}
-                    height={40}
-                    alt=""
-                    onClick={next}
-                  />
-                </div>
-              ) : null}
+                <img
+                  src={nextButton}
+                  className="prev-button"
+                  width={40}
+                  height={40}
+                  style={{opacity: '0.8'}}
+                  alt=""
+                  onClick={previous}
+                />
+                <img
+                  src={nextButton}
+                  className="next-button"
+                  width={40}
+                  height={40}
+                  style={{opacity: '0.8'}}
+                  alt=""
+                  onClick={next}
+                />
+              </div>
+              ) : null }
             </div>
 
             <Slider ref={(c) => (slider.current = c)} {...settings}>
@@ -388,6 +390,30 @@ const News = () => {
                 />
               ))}
             </Slider>
+            {windowSize.width < 786 && 
+           <div className="d-flex justify-content-end mt-3">
+             <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
+            <img
+              src={nextButton}
+              className="prev-button"
+              style={{opacity: '0.8'}}
+              width={40}
+              height={40}
+              alt=""
+              onClick={previous}
+            />
+            <img
+              src={nextButton}
+              className="next-button"
+              style={{opacity: '0.8'}}
+              width={40}
+              height={40}
+              alt=""
+              onClick={next}
+            />
+          </div>
+           </div>
+            }
           </div>
           {selectedRelease && (
             <div
