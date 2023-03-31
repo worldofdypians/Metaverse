@@ -156,6 +156,8 @@ const NewsModal = ({
                       key={index}
                       newsId={item.id}
                       onShowModalClick={onOtherNewsClick}
+                  landscapeImg={item.image_second}
+
                     />
                   </NavLink>
                 );
