@@ -69,7 +69,7 @@ const NewsCard = ({
           ) : null}
         </div>
             <div className="d-flex align-items-center justify-content-between">
-              <div className="text-white font-organetto m-0">
+              <div className="text-white font-organetto m-0" style={{fontSize: 14}}>
                 {cardType === "release" ? title : title?.slice(0, 42)}
                 {cardType !== "release" && title.length > 42 ? dots : ""}
               </div>
