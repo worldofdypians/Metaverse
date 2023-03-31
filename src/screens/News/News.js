@@ -50,8 +50,10 @@ const News = (props) => {
     dotsClass: "button__bar slick-dots w-100",
     slidesToShow: 4,
     slidesToScroll: 4,
+
     autoplay: true,
     initialSlide: 0,
+
     responsive: [
       {
         breakpoint: 1440,
@@ -61,6 +63,8 @@ const News = (props) => {
           infinite: false,
           initialSlide: 0,
           dots: false,
+    initialSlide: 0,
+
         },
       },
       {
@@ -69,7 +73,7 @@ const News = (props) => {
           slidesToShow: 2,
           slidesToScroll: 2,
           infinite: true,
-          autoplay: false,
+          autoplay: true,
           initialSlide: 0,
         },
       },
@@ -81,6 +85,7 @@ const News = (props) => {
           infinite: true,
           autoplay: true,
           dots: false,
+
           initialSlide: 0,
         },
       },
@@ -383,6 +388,7 @@ const News = (props) => {
                                 key={index}
                                 title={item.title}
                                 bgImage={item.image_second}
+                                imageSquare={item.image}
                                 date={item.date}
                                 // content={item.content}
                                 newsId={item.id}
@@ -548,7 +554,7 @@ const News = (props) => {
               ref={releaseContent}
               className="selected-release news-card-active flex-column flex-xl-row gap-4 gap-lg-0 mx-3 mx-lg-5 px-2 row py-4 mt-5"
             >
-              <div className="leftside col-12 col-xl-4 d-flex flex-column gap-3">
+              <div className="leftside col-12 col-xl-4 d-flex flex-column gap-3 justify-content-center">
                 <img
                   src={selectedRelease.image}
                   alt=""
