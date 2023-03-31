@@ -545,7 +545,7 @@ const News = (props) => {
               ref={releaseContent}
               className="selected-release news-card-active flex-column flex-xl-row gap-4 gap-lg-0 mx-3 mx-lg-5 px-2 row py-4 mt-5"
             >
-              <div className="leftside col-12 col-xl-4 d-flex flex-column gap-3">
+              <div className="leftside col-12 col-xl-4 d-flex flex-column gap-3 justify-content-center">
                 <img
                   src={selectedRelease.image}
                   alt=""
