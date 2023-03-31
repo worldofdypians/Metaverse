@@ -90,14 +90,14 @@ const ComingSoon = ({ optionText, data }) => {
           {/* <th className="playerHeader">Gem Hits</th> */}
           <th className="playerHeader">Reward</th>
         </tr>
-        {placeholderplayerData &&
+        {data &&
           optionText === "genesis" &&
-          placeholderplayerData.length > 0 &&
-          placeholderplayerData.map((item, index) => {
+          data.length > 0 &&
+          data.map((item, index) => {
             return (
               <tr key={index} className={`playerInnerRow`}>
                 <td className="playerData col-2">
-                  #{Number(item.position) + 1}
+                  #{Number(index) + 1}
                 </td>
                 <td className="playerName col-5">
                   <div className="position-relative">
@@ -108,14 +108,14 @@ const ComingSoon = ({ optionText, data }) => {
                 {/* <td className="playerScore col-3">
                   {getFormattedNumber(item.reward, 0)}
                 </td> */}
-                {/* <td className="playerReward col-2">${getFormattedNumber(item.statValue,0)}</td> */}
+                <td className="playerReward col-2">${getFormattedNumber(item.statValue,0)}</td>
                 
-                <td className="playerReward col-2">$ 0</td>
+                {/* <td className="playerReward col-2">$ 0</td> */}
               </tr>
             );
           })}
       </table>
-      <span className="statusText" style={{textAlign: 'left', paddingTop: 5}}>*Genesis leaderboard coming soon</span>
+      {/* <span className="statusText" style={{textAlign: 'left', paddingTop: 5}}>*Genesis leaderboard coming soon</span> */}
     </div>
   );
 };

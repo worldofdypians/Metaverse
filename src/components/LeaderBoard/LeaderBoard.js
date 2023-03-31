@@ -700,7 +700,7 @@ const LeaderBoard = ({ username, userId }) => {
               } optionText col-3`}
               onClick={() => {
                 handleOption("genesis");
-                // fetchGenesisRecords();
+                fetchGenesisRecords();
               }}
               style={{ width: "24%" }}
             >
@@ -711,7 +711,7 @@ const LeaderBoard = ({ username, userId }) => {
       </div>
       <div
         className="d-flex flex-column gap-2 tablewrapper"
-        style={{ height: optionText === "genesis" ? "388px" : "366px" }}
+        style={{ height: "366px" }}
       >
         {optionText !== "genesis" ? (
           <table className="playerTable">
