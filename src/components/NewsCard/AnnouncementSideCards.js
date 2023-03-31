@@ -13,7 +13,7 @@ const AnnouncementSideCard = ({
 
   return (
     <div
-      className="d-flex flex-column gap-2 align-items-center announcement-card"
+      className="d-flex flex-column gap-2 align-items-center announcement-card h-100"
       style={{ cursor: "pointer" }}
       onClick={() => {
         onShowModalClick(newsId);

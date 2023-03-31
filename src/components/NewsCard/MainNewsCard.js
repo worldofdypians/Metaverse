@@ -24,9 +24,7 @@ const MainNewsCard = ({
       }}
     >
       <div className="main-news-inner">
-        <div className="d-flex justify-content-between gap-3 align-items-center">
-        
-        </div>
+
         <div
           className="position-relative overflow-hidden"
           onMouseEnter={() => setBannerShadow(true)}
