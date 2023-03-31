@@ -23,7 +23,7 @@ const AnnouncementSideCard = ({
       }}
     >
       <div className="overflow-hidden w-100 side-img-wrapper">
-        <img src={ windowSize.width > 1725 ? bgImage : windowSize.width < 1725 && windowSize.width>600 ? imageSquare : bgImage } className="announcement-side-img" alt="" />
+        <img src={ windowSize.width > 1725 ? bgImage : windowSize.width < 1725 && windowSize.width>600 ? imageSquare : imageSquare } className="announcement-side-img" alt="" />
       </div>
       <div className="d-flex flex-column gap-2 justify-content-between w-100">
       <span className="mainNews-date">
