@@ -25,12 +25,14 @@ const NewsModal = ({
   var options = { year: "numeric", month: "short", day: "numeric" };
   const elementRef = useRef();
   const [height, setHeight] = useState(0);
+  const [tooltip, setTooltip] = useState(false);
 
   useEffect(() => {
     if (elementRef.current.clientHeight !== 0) {
       setHeight(elementRef.current.clientHeight);
     }
   }, [newsId, content, elementRef.current?.clientHeight]);
+
   return (
     <div className="newsModal-wrapper d-flex flex-column flex-xxl-row flex-lg-row gap-3 mb-5">
       <div className="col-xxl-7 col-lg-7 col-12 leftcol">
@@ -50,7 +52,7 @@ const NewsModal = ({
           </div>
           <h2 className="left-col-title font-organetto text-white">{title}</h2>
           <img src={bgImage} alt="" className="left-col-image py-3" />
-          <div className="news-bottom-wrapper mb-3 justify-content-between">
+          <div className="news-bottom-wrapper mb-3 justify-content-between position-relative">
             <div className="d-flex gap-3">
               <a
                 className="resp-sharing-button__link"
@@ -93,15 +95,24 @@ const NewsModal = ({
               <img
                 src={newsShare}
                 alt="share news"
-                onClick={() =>
+                style={{cursor: 'pointer'}}
+                onClick={() => {
                   navigator.clipboard.writeText(
                     `https://www.worldofdypians.com/news/${newsId}/${title.replace(
                       /\s/g,
                       "-"
                     )}`
-                  )
-                }
+                  );
+                  setTooltip(true);
+                  setTimeout(() => setTooltip(false), 1000);
+                }}
               />
+            </div>
+            <div
+              className={`tooltip-wrapper p-2 ${tooltip && "tooltip-active"}`}
+              style={{ top: '-20px', left: 150 }}
+            >
+              <p className="tooltip-content m-0">Copied!</p>
             </div>
           </div>
           <p
@@ -119,7 +130,7 @@ const NewsModal = ({
               .map((item, index) => {
                 return (
                   <NavLink
-                  to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
+                    to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                     style={{ textDecoration: "none" }}
                   >
                     <AnnouncementMinCard
