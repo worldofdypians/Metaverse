@@ -307,7 +307,7 @@
   }
 
   .selected-release-image {
-    aspect-ratio: 1/1;
+    aspect-ratio: 16/9;
     object-fit: cover;
     --mask: linear-gradient(-135deg, #0000 50px, #000 0);
     -webkit-mask: var(--mask);
