@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import "./mainNews.scss";
 import featuredShadow from './assets/featuredNewsShadow.png'
+import useWindowSize from "../../hooks/useWindowSize";
 
 const MainNewsCard = ({
   newsImage,
@@ -13,6 +14,8 @@ const MainNewsCard = ({
 }) => {
   const [bannerShadow, setBannerShadow] = useState(false);
   var options = { year: "numeric", month: "short", day: "numeric" };
+
+  const windowSize = useWindowSize();
 
   return (
     <div
@@ -57,7 +60,7 @@ const MainNewsCard = ({
         <span
           className="announcement-side-content font-poppins gap-1 mb-0"
           dangerouslySetInnerHTML={{
-            __html: content.slice(0, 430),
+            __html: content.slice(0, windowSize.width > 786 ? 430 : 215),
           }}
         ></span>
         <span className="mainNews-date" style={{ alignSelf: "flex-end" }}>
