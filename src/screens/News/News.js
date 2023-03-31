@@ -364,7 +364,7 @@ const News = (props) => {
                           </NavLink>
                         );
                       })}
-                    <div className="announcement-side-wrapper col-xxl-5 col-lg-5 col-12 ">
+                    <div className="announcement-side-wrapper col-xxl-5 col-lg-5 col-12">
                       {announcementsNews &&
                         announcementsNews.length > 0 &&
                         announcementsNews.slice(1, 5).map((item, index) => {
