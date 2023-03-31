@@ -46,12 +46,12 @@ const News = (props) => {
   var settings = {
     dots: false,
     arrows: false,
-    infinite: false,
+    infinite: true,
     dotsClass: "button__bar slick-dots w-100",
-    speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
-    autoplay: false,
+    autoplay: true,
+    initialSlide: 0,
     responsive: [
       {
         breakpoint: 1440,
@@ -59,6 +59,7 @@ const News = (props) => {
           slidesToShow: 4,
           slidesToScroll: 4,
           infinite: false,
+          initialSlide: 0,
           dots: false,
         },
       },
@@ -67,8 +68,9 @@ const News = (props) => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          infinite: false,
+          infinite: true,
           autoplay: false,
+          initialSlide: 0,
         },
       },
       {
@@ -76,9 +78,10 @@ const News = (props) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          infinite: false,
-          autoplay: false,
+          infinite: true,
+          autoplay: true,
           dots: false,
+          initialSlide: 0,
         },
       },
     ],
