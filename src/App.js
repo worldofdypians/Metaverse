@@ -24,6 +24,7 @@ import JoinBetaModal from "./components/JoinBetaModal/JoinBetaModal";
 import PartnerForm from "./screens/PartnerForm/PartnerForm";
 import NFTEvent from "./screens/NFTEvent/NFTEvent";
 import WalletModal from "./components/WalletModal/WalletModal";
+import { useParams } from "react-router-dom";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -45,7 +46,7 @@ function App() {
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
-  const [walletModal, setwalletModal] = useState(false)
+  const [walletModal, setwalletModal] = useState(false);
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -192,7 +193,6 @@ function App() {
     return myStakes;
   };
 
-  
   const myStakes = async () => {
     let myStakes = await getStakesIds();
     let stakes = myStakes.map((stake) => window.getLandNft(stake));
@@ -242,7 +242,7 @@ function App() {
         <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
-          <Route exact path="/news" element={<News />} />
+          <Route path="/news/:newsId?/:titleId?" element={<News />} />
           {/* <Route
             exact
             path="/nft-event"
@@ -327,7 +327,7 @@ function App() {
         />
       )}
 
-{walletModal === true && (
+      {walletModal === true && (
         <WalletModal
           show={walletModal}
           handleClose={() => {

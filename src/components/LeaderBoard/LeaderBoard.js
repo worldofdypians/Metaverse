@@ -330,11 +330,31 @@ const LeaderBoard = ({ username, userId }) => {
     "50",
   ];
 
-  const prevDailyPrizes = ["40", "20", "15", "10", "5", "5", "5", "5", "5", "5"];
+  const prevDailyPrizes = [
+    "40",
+    "20",
+    "15",
+    "10",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ];
 
-  const prevWeeklyPrizes = 
-    ["80", "40", "30", "20", "5", "5", "5", "5", "5", "5"]
-  
+  const prevWeeklyPrizes = [
+    "80",
+    "40",
+    "30",
+    "20",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ];
 
   const prevMonthlyPrizes = [
     "2500",
@@ -351,14 +371,10 @@ const LeaderBoard = ({ username, userId }) => {
 
 
 
-
-
   const [optionText, setOptionText] = useState("daily");
   const [dailyrecords, setRecords] = useState([]);
-  const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dailyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
-  const [userData, setUserData] = useState({});
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [dailyplayerData, setdailyplayerData] = useState([]);
   const [weeklyplayerData, setweeklyplayerData] = useState([]);
@@ -367,40 +383,26 @@ const LeaderBoard = ({ username, userId }) => {
   const [previousVersion, setpreviousVersion] = useState(0);
   const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
   const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
-  const [tooltip, setTooltip] = useState(false);
+  const [genesisData, setgenesisData] = useState([]);
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
-  const fetchDailyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
+  const fetchGenesisRecords = async () => {
+    const data2 = {
+      StatisticName: "GenesisLandRewards",
+      StartPosition: 0,
+      MaxResultsCount: 10,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
+    const result2 = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data2)
+      .catch((err) => {
+        console.log(err);
+      });
+    if (result2) {
+      setgenesisData(result2.data.data.leaderboard);
+      fillRecordsGenesis(result2.data.data.leaderboard);
     }
   };
 
@@ -410,7 +412,9 @@ const LeaderBoard = ({ username, userId }) => {
       StartPosition: 0,
       MaxResultsCount: 10,
     };
+
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+
     setpreviousVersion(parseInt(result.data.data.version));
     setRecords(result.data.data.leaderboard);
     fillRecords(result.data.data.leaderboard);
@@ -423,39 +427,7 @@ const LeaderBoard = ({ username, userId }) => {
 
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
-    }
-  };
-
-  const fetchWeeklyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "WeeklyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
+      // fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
 
@@ -476,41 +448,7 @@ const LeaderBoard = ({ username, userId }) => {
     }
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
-    }
-  };
-
-  const fetchMonthlyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
+      // fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
 
@@ -531,7 +469,7 @@ const LeaderBoard = ({ username, userId }) => {
     }
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+      // fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
   const label = { inputProps: { "aria-label": "Switch demo" } };
@@ -555,15 +493,32 @@ const LeaderBoard = ({ username, userId }) => {
   };
 
   const fillRecords = (itemData) => {
+      if (itemData.length === 0) {
+        setRecords(placeholderplayerData);
+      } else if (itemData.length < 10) {
+        const testArray = itemData;
+        const placeholderArray = placeholderplayerData.slice(
+          itemData.length,
+          10
+        );
+        const finalData = [...testArray, ...placeholderArray];
+        setRecords(finalData);
+      }
+  };
+
+  const fillRecordsGenesis = (itemData) => {
     if (itemData.length === 0) {
-      setRecords(placeholderplayerData);
+      setgenesisData(placeholderplayerData);
     } else if (itemData.length < 10) {
       const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const placeholderArray = placeholderplayerData.slice(
+        itemData.length,
+        10
+      );
       const finalData = [...testArray, ...placeholderArray];
-      setRecords(finalData);
+      setgenesisData(finalData);
     }
-  };
+  }
 
   const fetchPreviousWinners = async () => {
     const data = {
@@ -610,16 +565,13 @@ const LeaderBoard = ({ username, userId }) => {
     setmonthlyplayerData(result.data.data.leaderboard);
   };
 
-
-
-
   useEffect(() => {
     fetchDailyRecords();
   }, []);
 
-  useEffect(()=>{
-    handleOption(optionText)
-  },[inactiveBoard, optionText])
+  useEffect(() => {
+    handleOption(optionText);
+  }, [inactiveBoard, optionText]);
 
   useEffect(() => {
     if (inactiveBoard === true && optionText === "daily") {
@@ -647,28 +599,18 @@ const LeaderBoard = ({ username, userId }) => {
       <div className="nft-hover">
         <div className="d-flex flex-column align-items-center gap-4">
           <div className="nft-hover-wrapper d-flex flex-column align-items-center">
-            <div
-              className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0"
-            >
+            <div className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0">
               <a
                 href="https://opensea.io/collection/catsandwatchessocietycaws"
                 target="_blank"
               >
-                <img
-                  src={cawsBadge}
-                  alt=""
-                  className="opensea-badge"
-                />
+                <img src={cawsBadge} alt="" className="opensea-badge" />
               </a>
               <a
                 href="https://opensea.io/collection/worldofdypians"
                 target="_blank"
               >
-                <img
-                  src={genesisBadge}
-                  alt=""
-                  className="opensea-badge"
-                />
+                <img src={genesisBadge} alt="" className="opensea-badge" />
               </a>
             </div>
             <span
@@ -685,7 +627,6 @@ const LeaderBoard = ({ username, userId }) => {
         className={`font-organetto d-flex gap-1 align-items-center leaderboardTitle justify-content-between`}
       >
         Leaderboard
-       
       </h2>
       <div className="grandPrices-wrapper position-relative">
         <div className="d-flex flex-column gap-2">
@@ -759,6 +700,7 @@ const LeaderBoard = ({ username, userId }) => {
               } optionText col-3`}
               onClick={() => {
                 handleOption("genesis");
+                // fetchGenesisRecords();
               }}
               style={{ width: "24%" }}
             >
@@ -986,7 +928,7 @@ const LeaderBoard = ({ username, userId }) => {
               )}
           </table>
         ) : (
-          <ComingSoon optionText={optionText} />
+          <ComingSoon optionText={optionText} data={genesisData}/>
         )}
       </div>
       {/* {activePlayer === false &&
@@ -1016,7 +958,7 @@ const LeaderBoard = ({ username, userId }) => {
             <Switch
               {...label}
               onChange={() => {
-                setInactiveBoard(!inactiveBoard)
+                setInactiveBoard(!inactiveBoard);
               }}
             />
           </div>

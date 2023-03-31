@@ -3,7 +3,7 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import "./_leaderboard.scss";
 import playerAvatar from "./assets/userAvatar2.png";
 
-const ComingSoon = ({ optionText }) => {
+const ComingSoon = ({ optionText, data }) => {
   const placeholderplayerData = [
     {
       position: "0",
@@ -78,7 +78,6 @@ const ComingSoon = ({ optionText }) => {
     },
   ];
 
-
   return (
     <div
       className="d-flex flex-column position-relative"
@@ -109,14 +108,12 @@ const ComingSoon = ({ optionText }) => {
                 {/* <td className="playerScore col-3">
                   {getFormattedNumber(item.reward, 0)}
                 </td> */}
-                {/* <td className="playerReward col-2">$ {item.statValue}</td> */}
+                {/* <td className="playerReward col-2">${getFormattedNumber(item.statValue,0)}</td> */}
+                
                 <td className="playerReward col-2">$ 0</td>
-
               </tr>
             );
           })}
-
-      
       </table>
       <span className="statusText" style={{textAlign: 'left', paddingTop: 5}}>*Genesis leaderboard coming soon</span>
     </div>
