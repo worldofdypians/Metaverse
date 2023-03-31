@@ -17,6 +17,7 @@ const MainNewsCard = ({
   return (
     <div
       className={`main-news-wrapper`}
+      style={{background: 'none', border: 'none'}}
       onClick={(e) => {
         // e.preventDefault();
         onShowModalClick();

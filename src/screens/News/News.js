@@ -104,7 +104,7 @@ const News = (props) => {
   const [fullLenth, setFullLenth] = useState(false);
   const [loadingMain, setLoadingMain] = useState(false);
   const [loadingOther, setLoadingOther] = useState(false);
-
+  const [allNews, setAllNews] = useState([])
   const navigate = useNavigate();
 
   function handleGoBack() {
@@ -131,6 +131,26 @@ const News = (props) => {
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
     setLoadingMain(false);
+
+  };
+  const fetchAllNews = async () => {
+    const announcements = await axios
+      .get("https://api3.dyp.finance/api/wod_announcements")
+      .then((res) => {
+        return res.data;
+      });
+
+    const announcementsDatedNews = announcements.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
+
+    const sortedAnnouncementsNews = announcementsDatedNews.sort(function (
+      a,
+      b
+    ) {
+      return b.date - a.date;
+    });
+    setAllNews(sortedAnnouncementsNews);
 
   };
   const fetchOtherNews = async () => {
@@ -204,6 +224,7 @@ const News = (props) => {
 
   useEffect(() => {
     fetchNews();
+    fetchAllNews();
     fetchReleases();
     window.scrollTo(0, 0);
     document.title = "News";
@@ -285,7 +306,7 @@ const News = (props) => {
                     setShowModal(false);
                     handleGoBack();
                   }}
-                  otherAnnouncements={announcementsNews}
+                  otherAnnouncements={allNews}
                   onOtherNewsClick={handleSideAnnouncementClick}
                 />
               </>
@@ -304,10 +325,10 @@ const News = (props) => {
                     announcementsNews.slice(0, 1).map((item, index) => {
                       return (
                         <NavLink
-                          to={`/news/:news_id?${item.title.replace(
-                            /\s/g,
-                            "-"
-                          )}`}
+                        to={`/news/:news_id?${item.title.replace(
+                          /\s/g,
+                          "-"
+                        )}`}
                           className={
                             " col-xxl-7 col-lg-7 col-12 main-news-wrapper"
                           }
