@@ -21,7 +21,7 @@ const AnnouncementMinCard = ({
     >
       <img src={bgImage} className="announcement-min-img" alt="" />
       <div className="d-flex flex-column gap-2 justify-content-between w-100">
-        <span className="announcement-side-title font-poppins">{title.slice(0, 40) + "..."}</span>
+        <span className="announcement-side-title font-poppins">{title}</span>
         <div className="d-flex justify-content-between gap-2 align-items-center">
           <span
             className="announcement-side-content font-poppins d-flex gap-1 mb-0"
