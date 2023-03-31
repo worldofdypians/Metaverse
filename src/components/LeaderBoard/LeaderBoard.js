@@ -369,6 +369,8 @@ const LeaderBoard = ({ username, userId }) => {
     "100",
   ];
 
+
+
   const [optionText, setOptionText] = useState("daily");
   const [dailyrecords, setRecords] = useState([]);
   const [prizes, setPrizes] = useState(dailyPrizes);
@@ -698,7 +700,7 @@ const LeaderBoard = ({ username, userId }) => {
               } optionText col-3`}
               onClick={() => {
                 handleOption("genesis");
-                fetchGenesisRecords();
+                // fetchGenesisRecords();
               }}
               style={{ width: "24%" }}
             >

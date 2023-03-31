@@ -85,7 +85,6 @@ const News = () => {
 
   var options = { year: "numeric", month: "short", day: "numeric" };
 
-  const [news, setNews] = useState([]);
   const [announcementsNews, setAnnouncementsNews] = useState([]);
   const [releases, setReleases] = useState([]);
   const [selectedRelease, setSelectedRelease] = useState();
@@ -105,35 +104,12 @@ const News = () => {
       .then((res) => {
         return res.data;
       });
-    const newReleases = await axios
-      .get("https://api3.dyp.finance/api/new_releases")
-      .then((res) => {
-        return res.data;
-      });
 
-    const newAnnouncements = announcements.map((item) => ({
-      ...item,
-      type: "announcement",
-    }));
 
-    const typeReleases = newReleases.map((item) => ({
-      ...item,
-      type: "new_release",
-    }));
-    const joinedNews = newAnnouncements.concat(typeReleases);
-    const datedNews = joinedNews.map((item) => {
+    const announcementsDatedNews = announcements.map((item) => {
       return { ...item, date: new Date(item.date) };
     });
 
-    const announcementsDatedNews = newAnnouncements.map((item) => {
-      return { ...item, date: new Date(item.date) };
-    });
-    const datedReleasedNews = typeReleases.map((item) => {
-      return { ...item, date: new Date(item.date) };
-    });
-    const sortedNews = datedNews.sort(function (a, b) {
-      return b.date - a.date;
-    });
     const sortedAnnouncementsNews = announcementsDatedNews.sort(function (
       a,
       b
@@ -141,7 +117,21 @@ const News = () => {
       return b.date - a.date;
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
-    setNews(sortedNews);
+  
+  };
+
+  const fetchReleases = async () => {
+
+    const newReleases = await axios
+      .get("https://api3.dyp.finance/api/wod_releases")
+      .then((res) => {
+        return res.data;
+      });
+
+    const datedReleasedNews = newReleases.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
+
     setReleases(datedReleasedNews);
   };
 
@@ -173,6 +163,7 @@ const News = () => {
 
   useEffect(() => {
     fetchNews();
+    fetchReleases();
     window.scrollTo(0, 0);
     document.title = "News";
   }, []);
@@ -295,7 +286,8 @@ const News = () => {
                 </div>
               </>
             )}
-            {loadMore === false && showModal === false &&
+            {loadMore === false &&
+              showModal === false &&
               announcementsNews &&
               announcementsNews.length && (
                 <div className="col-xxl-5 col-lg-5 col-12 d-flex justify-content-center">
@@ -332,7 +324,8 @@ const News = () => {
                     );
                   })}
             </div>
-            {loadMore === true && showModal === false &&
+            {loadMore === true &&
+              showModal === false &&
               announcementsNews &&
               announcementsNews.length && (
                 <button

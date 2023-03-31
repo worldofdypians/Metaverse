@@ -16,8 +16,11 @@
     .mainNews-title {
       font-size: 27px;
       cursor: pointer;
+      z-index: 3;
+      padding: 10px;
       @media screen and (max-width: 500px) {
-        font-size: 23px;
+        font-size: 16px;
+        line-height: 25px !important;
       }
     }
     .mainNews-title:hover {
@@ -26,7 +29,7 @@
   }
 }
 .mainNews-image {
-  height: 397px;
+  height: 420px;
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
@@ -50,7 +53,6 @@
 
   @media only screen and (max-width: 991px) {
     height: auto;
-
   }
 }
 
@@ -131,6 +133,8 @@
   transition: all 0.25s;
   height: 101%;
   border-radius: 8px;
+  z-index: 2;
+
 }
 
 .mainNews-image-hover {
@@ -166,6 +170,12 @@
   cursor: pointer;
   object-fit: cover;
   transition: all 0.25s;
+
+  @media only screen and (max-width: 575px) {
+    width: 100%;
+    height: 130px;
+  }
+
 }
 
 .top-rated-news {
@@ -239,19 +249,21 @@
 
   p {
     margin-bottom: 0 !important;
-    span{
-  color: #f7f7fc !important;
-
+    span {
+      color: #f7f7fc !important;
     }
   }
 
-  span{
+  // p:empty {
+  //   display: none;
+  //   }
+
+  span {
     color: #f7f7fc !important;
-  
-      }
+  }
 }
 
-.ql-align-center{
+.ql-align-center {
   display: flex;
   justify-content: center;
 }
@@ -290,7 +302,6 @@
 .sys-req:hover {
   text-decoration: underline;
   color: #d9fa86;
-
 }
 
 .announcement-side-wrapper :hover {

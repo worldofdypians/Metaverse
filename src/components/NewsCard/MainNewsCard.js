@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import "./mainNews.scss";
+import featuredShadow from './assets/featuredNewsShadow.png'
 
 const MainNewsCard = ({
   newsImage,
@@ -23,22 +24,29 @@ const MainNewsCard = ({
     >
       <div className="main-news-inner">
         <div className="d-flex justify-content-between gap-3 align-items-center">
-          <h2 className="mainNews-title update-title font-organetto m-0 w-100">
-            {`${title?.slice(0, 22)}...`}
-          </h2>
+        
         </div>
         <div
           className="position-relative overflow-hidden"
           onMouseEnter={() => setBannerShadow(true)}
           onMouseLeave={() => setBannerShadow(false)}
           style={{borderRadius: 8}}
-        >
+        >  <h2 className="mainNews-title update-title font-organetto m-0 w-100 position-absolute">
+            {`${title?.slice(0, 24)}...`}
+          </h2>
           {" "}
-          <div
+          <img
+            src={featuredShadow}
+            alt=""
             className={`position-absolute featured-shadow w-100 ${
               bannerShadow && "featured-shadow-hover"
             }`}
-          ></div>
+          />
+          {/* <div
+            className={`position-absolute featured-shadow w-100 ${
+              bannerShadow && "featured-shadow-hover"
+            }`}
+          ></div> */}
           <img
             src={newsImage}
             alt="Image not found"
