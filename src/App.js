@@ -122,7 +122,6 @@ function App() {
     }
   };
 
-
   const handleConnectWallet = async () => {
     try {
       await window.connectWallet().then((data) => {
@@ -243,10 +242,7 @@ function App() {
         <Header handleSignUp={handleSignUp} />
         <MobileNavbar handleSignUp={handleSignUp} />
         <Routes>
-          <Route
-            path="/news/:news_id?"
-            element={<News />}
-          />
+          <Route path="/news/:newsId?/:titleId?" element={<News />} />
           {/* <Route
             exact
             path="/nft-event"

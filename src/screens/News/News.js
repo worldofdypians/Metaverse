@@ -106,7 +106,6 @@ const News = (props) => {
   const [loadingOther, setLoadingOther] = useState(false);
   const [allNews, setAllNews] = useState([])
   const navigate = useNavigate();
-
   function handleGoBack() {
     navigate("/news");
   }
@@ -131,7 +130,6 @@ const News = (props) => {
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
     setLoadingMain(false);
-
   };
   const fetchAllNews = async () => {
     const announcements = await axios
@@ -151,7 +149,6 @@ const News = (props) => {
       return b.date - a.date;
     });
     setAllNews(sortedAnnouncementsNews);
-
   };
   const fetchOtherNews = async () => {
     if (fullLenth === false) {
@@ -196,6 +193,19 @@ const News = (props) => {
     setLatestVersion(datedReleasedNews[0]?.version);
   };
 
+  const { newsId, titleId } = useParams();
+
+  const handleNewsWithParams = () => {
+    if (titleId) {
+      const objId = allNews.find((obj) => obj.id === newsId);
+
+      if (objId) {
+        setActiveNews(objId);
+        setShowModal(true);
+      }
+    }
+  };
+
   const subscribe = async (e) => {
     e.preventDefault();
     setError(validateEmail(email));
@@ -223,12 +233,15 @@ const News = (props) => {
   };
 
   useEffect(() => {
-    fetchNews();
-    fetchAllNews();
-    fetchReleases();
     window.scrollTo(0, 0);
     document.title = "News";
   }, []);
+
+  useEffect(() => {
+    fetchNews();
+    fetchReleases();
+    fetchAllNews();
+  }, [newsId]);
 
   const handlemodalClick = (itemId, itemIndex) => {
     setShowModal(true);
@@ -273,6 +286,11 @@ const News = (props) => {
     }
   }, [selectedRelease]);
 
+  useEffect(() => {
+    handleNewsWithParams();
+  }, [titleId, newsId, allNews.length]);
+
+  // console.log(titleId)
 
   return (
     <>
@@ -315,53 +333,61 @@ const News = (props) => {
                 {loadingMain === true ? (
                   <div className="d-flex align-items-center justify-content-center">
                     <div class="spinner-border text-info" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
                   </div>
                 ) : (
                   <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center p-0 gap-3 mb-3 topnews-wrapper">
-                 {announcementsNews &&
-                    announcementsNews.length > 0 &&
-                    announcementsNews.slice(0, 1).map((item, index) => {
-                      return (
-                        <NavLink
-                        to={`/news/:news_id?${item.title.replace(
-                          /\s/g,
-                          "-"
-                        )}`}
-                          className={
-                            " col-xxl-7 col-lg-7 col-12 main-news-wrapper"
-                          }
-                          style={{ textDecoration: "none" }}
-                        >
-                          <MainNewsCard
-                            key={index}
-                            title={item.title}
-                            newsImage={item.image_second}
-                            date={item.date}
-                            newsId={item.id}
-                            onShowModalClick={() => {
-                              handlemodalClick(item.id, index);
-                            }}
-                            content={item.content}
-                          />
-                        </NavLink>
-                      );
-                    })}
-                  <div className="announcement-side-wrapper col-xxl-5 col-lg-5 col-12 ">
+                    {announcementsNews &&
+                      announcementsNews.length > 0 &&
+                      announcementsNews.slice(0, 1).map((item, index) => {
+                        return (
+                          <NavLink
+                            to={`/news/${item.id}/${item.title.replace(
+                              /\s/g,
+                              "-"
+                            )}`}
+                            className={
+                              " col-xxl-7 col-lg-7 col-12 main-news-wrapper"
+                            }
+                            style={{ textDecoration: "none" }}
+                          >
+                            <MainNewsCard
+                              key={index}
+                              title={item.title}
+                              newsImage={item.image_second}
+                              date={item.date}
+                              newsId={item.id}
+                              onShowModalClick={() => {
+                                handlemodalClick(item.id, index);
+                              }}
+                              content={item.content}
+                            />
+                          </NavLink>
+                        );
+                      })}
+                    <div className="announcement-side-wrapper col-xxl-5 col-lg-5 col-12 ">
                       {announcementsNews &&
                         announcementsNews.length > 0 &&
                         announcementsNews.slice(1, 5).map((item, index) => {
                           return (
-                            <AnnouncementSideCard
-                              key={index}
-                              title={item.title}
-                              bgImage={item.image}
-                              date={item.date}
-                              // content={item.content}
-                              newsId={item.id}
-                              onShowModalClick={handleSideAnnouncementClick}
-                            />
+                            <NavLink
+                              to={`/news/${item.id}/${item.title.replace(
+                                /\s/g,
+                                "-"
+                              )}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <AnnouncementSideCard
+                                key={index}
+                                title={item.title}
+                                bgImage={item.image}
+                                date={item.date}
+                                // content={item.content}
+                                newsId={item.id}
+                                onShowModalClick={handleSideAnnouncementClick}
+                              />
+                            </NavLink>
                           );
                         })}{" "}
                     </div>
@@ -380,7 +406,10 @@ const News = (props) => {
                   .map((item, index) => {
                     return (
                       <NavLink
-                        to={`/news/:news_id?${item.title.replace(/\s/g, "-")}`}
+                        to={`/news/${item.id}/${item.title.replace(
+                          /\s/g,
+                          "-"
+                        )}`}
                         style={{ textDecoration: "none" }}
                       >
                         <NewsCard
@@ -402,15 +431,13 @@ const News = (props) => {
               announcementsNews &&
               announcementsNews.length && (
                 <div className="col-xxl-12 col-lg-12 col-12 d-flex flex-column align-items-center gap-2 mt-2 justify-content-center">
-                  {loadingOther === true ? 
-                   <div className="d-flex align-items-center justify-content-center">
-                   <div class="spinner-border text-info" role="status">
-                   <span class="visually-hidden">Loading...</span>
-                 </div>
-                 </div>
-                  :
-                   null  
-                }
+                  {loadingOther === true ? (
+                    <div className="d-flex align-items-center justify-content-center">
+                      <div class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  ) : null}
                   <button
                     className="loadmore-btn btn"
                     onClick={() => {
@@ -443,7 +470,7 @@ const News = (props) => {
             id="slider-row"
           >
             <div className="d-flex flex-column flex-lg-row align-items-start gap-3 gap-lg-0 align-items-lg-center justify-content-between">
-            <h2 className="news-header font-organetto px-0 py-3 pt-lg-5 d-flex align-items-center gap-2">
+              <h2 className="news-header font-organetto px-0 py-3 pt-lg-5 d-flex align-items-center gap-2">
                 Patch{" "}
                 <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
                   Notes

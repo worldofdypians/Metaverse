@@ -31,7 +31,6 @@ const NewsModal = ({
       setHeight(elementRef.current.clientHeight);
     }
   }, [newsId, content, elementRef.current?.clientHeight]);
-
   return (
     <div className="newsModal-wrapper d-flex flex-column flex-xxl-row flex-lg-row gap-3 mb-5">
       <div className="col-xxl-7 col-lg-7 col-12 leftcol">
@@ -55,7 +54,7 @@ const NewsModal = ({
             <div className="d-flex gap-3">
               <a
                 className="resp-sharing-button__link"
-                href={`https://twitter.com/intent/tweet/?text=${title}&url=${`https://www.worldofdypians.com/news/${title.replace(
+                href={`https://twitter.com/intent/tweet/?text=${title}&url=${`https://www.worldofdypians.com/news/${newsId}/${title.replace(
                   /\s/g,
                   "-"
                 )}`}`}
@@ -68,7 +67,7 @@ const NewsModal = ({
 
               <a
                 className="resp-sharing-button__link"
-                href={`https://reddit.com/submit/?&url=${`https://www.worldofdypians.com/news/${title.replace(
+                href={`https://reddit.com/submit/?&url=${`https://www.worldofdypians.com/news/${newsId}/${title.replace(
                   /\s/g,
                   "-"
                 )}`}&resubmit=true&title=${title}`}
@@ -81,7 +80,7 @@ const NewsModal = ({
 
               <a
                 className="resp-sharing-button__link"
-                href={`https://telegram.me/share/url?url=${`https://www.worldofdypians.com/news/${title.replace(
+                href={`https://telegram.me/share/url?url=${`https://www.worldofdypians.com/news/${newsId}/${title.replace(
                   /\s/g,
                   "-"
                 )}&text=${title}`}`}
@@ -96,7 +95,7 @@ const NewsModal = ({
                 alt="share news"
                 onClick={() =>
                   navigator.clipboard.writeText(
-                    `https://www.worldofdypians.com/news/${title.replace(
+                    `https://www.worldofdypians.com/news/${newsId}/${title.replace(
                       /\s/g,
                       "-"
                     )}`
@@ -120,7 +119,7 @@ const NewsModal = ({
               .map((item, index) => {
                 return (
                   <NavLink
-                    to={`/news/:news_id?${item.title.replace(/\s/g, "-")}`}
+                  to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                     style={{ textDecoration: "none" }}
                   >
                     <AnnouncementMinCard
