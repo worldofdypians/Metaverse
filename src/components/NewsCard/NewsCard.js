@@ -34,6 +34,7 @@ const NewsCard = ({
             ? "active-announcement"
             : null
         } ${cardType === "release" && "release-card"}`}
+        style={{minHeight: cardType === "release" && '300px', maxHeight: cardType === "release" && '300px'}}
       >
         <div className="d-flex flex-column align-items-start justify-content-between gap-3">
           <div className="d-flex align-items-start w-100">
@@ -42,21 +43,7 @@ const NewsCard = ({
             </div>
           </div>
           <div className="d-flex flex-column gap-3 w-100">
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="text-white font-organetto m-0">
-                {cardType === "release" ? title : title?.slice(0, 21)}
-                {cardType !== "release" && dots}
-              </div>
-            </div>
-          </div>
-        </div>
-        <p
-          className="news-content font-poppins d-flex flex-column justify-content-center"
-          dangerouslySetInnerHTML={{
-            __html: content?.slice(0, 196) + dots,
-          }}
-        ></p>
-        <div className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-2">
             <img src={calendarIcon} alt="calendar" />
             <span className="news-date font-poppins">
@@ -81,6 +68,23 @@ const NewsCard = ({
             )
           ) : null}
         </div>
+            <div className="d-flex align-items-center justify-content-between">
+              <div className="text-white font-organetto m-0">
+                {cardType === "release" ? title : title?.slice(0, 21)}
+                {cardType !== "release" && dots}
+              </div>
+            </div>
+          </div>
+        </div>
+        {cardType !== "release" && (
+          <p
+            className="news-content font-poppins d-flex flex-column justify-content-center"
+            dangerouslySetInnerHTML={{
+              __html: content?.slice(0, 196) + dots,
+            }}
+          ></p>
+        )}
+      
       </div>
     </div>
   );
