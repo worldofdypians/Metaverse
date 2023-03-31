@@ -211,6 +211,8 @@ const News = () => {
     }
   }, [selectedRelease]);
 
+  console.log(announcementsNews)
+
   return (
     <>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
@@ -276,7 +278,7 @@ const News = () => {
                             title={item.title}
                             bgImage={item.image}
                             date={item.date}
-                            content={item.content}
+                            // content={item.content}
                             newsId={item.id}
                             onShowModalClick={handleSideAnnouncementClick}
                           />
@@ -418,15 +420,15 @@ const News = () => {
               ref={releaseContent}
               className="selected-release news-card-active flex-column flex-xl-row gap-4 gap-lg-0 mx-3 mx-lg-5 px-2 row py-4 mt-5"
             >
-              <div className="leftside col-12 col-xl-6 d-flex flex-column gap-3">
+              <div className="leftside col-12 col-xl-4 d-flex flex-column gap-3">
                 <img
                   src={selectedRelease.image}
                   alt=""
                   className="selected-release-image"
                 />
               </div>
-              <div className="col-12 col-xl-6 rightside h-100">
-                <div className="d-flex flex-column justify-content-between gap-5 h-100">
+              <div className="col-12 col-xl-8 rightside h-100">
+                <div className="d-flex flex-column justify-content-between gap-3 h-100">
                   <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
                     <h6 className="selected-release-title font-organetto mb-0">
                       {selectedRelease.title}

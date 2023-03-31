@@ -32,7 +32,7 @@ const MainNewsCard = ({
           onMouseLeave={() => setBannerShadow(false)}
           style={{borderRadius: 8}}
         >  <h2 className="mainNews-title update-title font-organetto m-0 w-100 position-absolute">
-            {`${title?.slice(0, 24)}...`}
+            {title}
           </h2>
           {" "}
           <img
