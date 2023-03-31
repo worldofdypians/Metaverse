@@ -19,6 +19,9 @@ import { useRef } from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 import nextButton from "../../assets/landAssets/nextButton.svg";
+import { NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -39,7 +42,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const News = () => {
+const News = (props) => {
   var settings = {
     dots: false,
     arrows: false,
@@ -102,6 +105,12 @@ const News = () => {
   const [loadingMain, setLoadingMain] = useState(false);
   const [loadingOther, setLoadingOther] = useState(false);
 
+  const navigate = useNavigate();
+
+  function handleGoBack() {
+    navigate("/news");
+  }
+
   const fetchNews = async () => {
     setLoadingMain(true);
     const announcements = await axios
@@ -122,6 +131,7 @@ const News = () => {
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
     setLoadingMain(false);
+
   };
   const fetchOtherNews = async () => {
     if (fullLenth === false) {
@@ -242,7 +252,6 @@ const News = () => {
     }
   }, [selectedRelease]);
 
-  console.log(announcementsNews);
 
   return (
     <>
@@ -274,6 +283,7 @@ const News = () => {
                   content={activeNews.content}
                   onModalClose={() => {
                     setShowModal(false);
+                    handleGoBack();
                   }}
                   otherAnnouncements={announcementsNews}
                   onOtherNewsClick={handleSideAnnouncementClick}
@@ -289,10 +299,20 @@ const News = () => {
                   </div>
                 ) : (
                   <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between align-items-center p-0 gap-3 mb-3 topnews-wrapper">
-                    {announcementsNews &&
-                      announcementsNews.length > 0 &&
-                      announcementsNews.slice(0, 1).map((item, index) => {
-                        return (
+                 {announcementsNews &&
+                    announcementsNews.length > 0 &&
+                    announcementsNews.slice(0, 1).map((item, index) => {
+                      return (
+                        <NavLink
+                          to={`/news/:news_id?${item.title.replace(
+                            /\s/g,
+                            "-"
+                          )}`}
+                          className={
+                            " col-xxl-7 col-lg-7 col-12 main-news-wrapper"
+                          }
+                          style={{ textDecoration: "none" }}
+                        >
                           <MainNewsCard
                             key={index}
                             title={item.title}
@@ -304,9 +324,10 @@ const News = () => {
                             }}
                             content={item.content}
                           />
-                        );
-                      })}
-                    <div className="announcement-side-wrapper col-xxl-5 col-lg-5 col-12 ">
+                        </NavLink>
+                      );
+                    })}
+                  <div className="announcement-side-wrapper col-xxl-5 col-lg-5 col-12 ">
                       {announcementsNews &&
                         announcementsNews.length > 0 &&
                         announcementsNews.slice(1, 5).map((item, index) => {
@@ -337,16 +358,21 @@ const News = () => {
                   .slice(5, announcementsNews.length)
                   .map((item, index) => {
                     return (
-                      <NewsCard
-                        title={item.title}
-                        content={item.content}
-                        image={item.image}
-                        date={item.date}
-                        newsId={item.id}
-                        onNewsClick={handleSideAnnouncementClick}
-                        key={index}
-                        cardType={"announcement"}
-                      />
+                      <NavLink
+                        to={`/news/:news_id?${item.title.replace(/\s/g, "-")}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <NewsCard
+                          title={item.title}
+                          content={item.content}
+                          image={item.image}
+                          date={item.date}
+                          newsId={item.id}
+                          onNewsClick={handleSideAnnouncementClick}
+                          key={index}
+                          cardType={"announcement"}
+                        />
+                      </NavLink>
                     );
                   })}
             </div>
