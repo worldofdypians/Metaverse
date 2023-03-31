@@ -52,6 +52,7 @@ const News = (props) => {
     slidesToShow: 4,
     slidesToScroll: 4,
     autoplay: false,
+    initialSlide: 1,
     responsive: [
       {
         breakpoint: 1440,
@@ -60,6 +61,8 @@ const News = (props) => {
           slidesToScroll: 4,
           infinite: false,
           dots: false,
+    initialSlide: 1,
+
         },
       },
       {
@@ -69,6 +72,9 @@ const News = (props) => {
           slidesToScroll: 2,
           infinite: false,
           autoplay: false,
+
+    initialSlide: 1,
+
         },
       },
       {
@@ -79,6 +85,8 @@ const News = (props) => {
           infinite: false,
           autoplay: false,
           dots: false,
+    initialSlide: 1,
+
         },
       },
     ],
