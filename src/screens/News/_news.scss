@@ -119,7 +119,7 @@
         // margin-bottom: 0;
       }
       span {
-        color: #ffffff !important;
+        color: #DBD9FF !important;
 
         img {
           width: 100% !important;
@@ -291,6 +291,10 @@
     color: #ffffff;
   }
 
+  strong {
+    color: #ffffff !important;
+  }
+
   .selected-release-image {
     aspect-ratio: 16/9;
     object-fit: cover;
@@ -311,6 +315,7 @@
     p {
       color: #ffffff !important;
       // margin-bottom: 0;
+      font-weight: 400 !important;
     }
     span {
       color: #ffffff !important;
