@@ -19,6 +19,9 @@ import { useRef } from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 import nextButton from "../../assets/landAssets/nextButton.svg";
+import { NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -39,7 +42,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const News = () => {
+const News = (props) => {
   var settings = {
     dots: false,
     arrows: false,
@@ -97,6 +100,11 @@ const News = () => {
   const [activeNews, setActiveNews] = useState([]);
   const slider = useRef();
   const windowSize = useWindowSize();
+  const navigate = useNavigate();
+
+  function handleGoBack() {
+    navigate("/news");
+  }
 
   const fetchNews = async () => {
     const announcements = await axios
@@ -104,7 +112,6 @@ const News = () => {
       .then((res) => {
         return res.data;
       });
-
 
     const announcementsDatedNews = announcements.map((item) => {
       return { ...item, date: new Date(item.date) };
@@ -117,11 +124,9 @@ const News = () => {
       return b.date - a.date;
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
-  
   };
 
   const fetchReleases = async () => {
-
     const newReleases = await axios
       .get("https://api3.dyp.finance/api/wod_releases")
       .then((res) => {
@@ -211,7 +216,6 @@ const News = () => {
     }
   }, [selectedRelease]);
 
-  console.log(announcementsNews)
 
   return (
     <>
@@ -243,6 +247,7 @@ const News = () => {
                   content={activeNews.content}
                   onModalClose={() => {
                     setShowModal(false);
+                    handleGoBack();
                   }}
                   otherAnnouncements={announcementsNews}
                   onOtherNewsClick={handleSideAnnouncementClick}
@@ -255,17 +260,28 @@ const News = () => {
                     announcementsNews.length > 0 &&
                     announcementsNews.slice(0, 1).map((item, index) => {
                       return (
-                        <MainNewsCard
-                          key={index}
-                          title={item.title}
-                          newsImage={item.image_second}
-                          date={item.date}
-                          newsId={item.id}
-                          onShowModalClick={() => {
-                            handlemodalClick(item.id, index);
-                          }}
-                          content={item.content}
-                        />
+                        <NavLink
+                          to={`/news/:news_id?${item.title.replace(
+                            /\s/g,
+                            "-"
+                          )}`}
+                          className={
+                            " col-xxl-7 col-lg-7 col-12 main-news-wrapper"
+                          }
+                          style={{ textDecoration: "none" }}
+                        >
+                          <MainNewsCard
+                            key={index}
+                            title={item.title}
+                            newsImage={item.image_second}
+                            date={item.date}
+                            newsId={item.id}
+                            onShowModalClick={() => {
+                              handlemodalClick(item.id, index);
+                            }}
+                            content={item.content}
+                          />
+                        </NavLink>
                       );
                     })}
                   <div className="announcement-side-wrapper col-xxl-5 col-lg-5 col-12 ">
@@ -273,15 +289,23 @@ const News = () => {
                       announcementsNews.length > 0 &&
                       announcementsNews.slice(1, 5).map((item, index) => {
                         return (
-                          <AnnouncementSideCard
-                            key={index}
-                            title={item.title}
-                            bgImage={item.image}
-                            date={item.date}
-                            // content={item.content}
-                            newsId={item.id}
-                            onShowModalClick={handleSideAnnouncementClick}
-                          />
+                          <NavLink
+                            to={`/news/:news_id?${item.title.replace(
+                              /\s/g,
+                              "-"
+                            )}`}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <AnnouncementSideCard
+                              key={index}
+                              title={item.title}
+                              bgImage={item.image}
+                              date={item.date}
+                              // content={item.content}
+                              newsId={item.id}
+                              onShowModalClick={handleSideAnnouncementClick}
+                            />
+                          </NavLink>
                         );
                       })}{" "}
                   </div>
@@ -313,16 +337,21 @@ const News = () => {
                   .slice(5, announcementsNews.length)
                   .map((item, index) => {
                     return (
-                      <NewsCard
-                        title={item.title}
-                        content={item.content}
-                        image={item.image}
-                        date={item.date}
-                        newsId={item.id}
-                        onNewsClick={handleSideAnnouncementClick}
-                        key={index}
-                        cardType={"announcement"}
-                      />
+                      <NavLink
+                        to={`/news/:news_id?${item.title.replace(/\s/g, "-")}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <NewsCard
+                          title={item.title}
+                          content={item.content}
+                          image={item.image}
+                          date={item.date}
+                          newsId={item.id}
+                          onNewsClick={handleSideAnnouncementClick}
+                          key={index}
+                          cardType={"announcement"}
+                        />
+                      </NavLink>
                     );
                   })}
             </div>
@@ -351,26 +380,26 @@ const News = () => {
               </h2>
               {windowSize.width > 786 && releases.length > 4 ? (
                 <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
-                <img
-                  src={nextButton}
-                  className="prev-button"
-                  width={40}
-                  height={40}
-                  style={{opacity: '0.8'}}
-                  alt=""
-                  onClick={previous}
-                />
-                <img
-                  src={nextButton}
-                  className="next-button"
-                  width={40}
-                  height={40}
-                  style={{opacity: '0.8'}}
-                  alt=""
-                  onClick={next}
-                />
-              </div>
-              ) : null }
+                  <img
+                    src={nextButton}
+                    className="prev-button"
+                    width={40}
+                    height={40}
+                    style={{ opacity: "0.8" }}
+                    alt=""
+                    onClick={previous}
+                  />
+                  <img
+                    src={nextButton}
+                    className="next-button"
+                    width={40}
+                    height={40}
+                    style={{ opacity: "0.8" }}
+                    alt=""
+                    onClick={next}
+                  />
+                </div>
+              ) : null}
             </div>
 
             <Slider ref={(c) => (slider.current = c)} {...settings}>
@@ -390,30 +419,30 @@ const News = () => {
                 />
               ))}
             </Slider>
-            {windowSize.width < 786 && 
-           <div className="d-flex justify-content-end mt-3">
-             <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
-            <img
-              src={nextButton}
-              className="prev-button"
-              style={{opacity: '0.8'}}
-              width={40}
-              height={40}
-              alt=""
-              onClick={previous}
-            />
-            <img
-              src={nextButton}
-              className="next-button"
-              style={{opacity: '0.8'}}
-              width={40}
-              height={40}
-              alt=""
-              onClick={next}
-            />
-          </div>
-           </div>
-            }
+            {windowSize.width < 786 && (
+              <div className="d-flex justify-content-end mt-3">
+                <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
+                  <img
+                    src={nextButton}
+                    className="prev-button"
+                    style={{ opacity: "0.8" }}
+                    width={40}
+                    height={40}
+                    alt=""
+                    onClick={previous}
+                  />
+                  <img
+                    src={nextButton}
+                    className="next-button"
+                    style={{ opacity: "0.8" }}
+                    width={40}
+                    height={40}
+                    alt=""
+                    onClick={next}
+                  />
+                </div>
+              </div>
+            )}
           </div>
           {selectedRelease && (
             <div
