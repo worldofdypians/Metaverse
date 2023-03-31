@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import "./mainNews.scss";
+import featuredShadow from './assets/featuredNewsShadow.png'
 
 const MainNewsCard = ({
   newsImage,
@@ -34,11 +35,18 @@ const MainNewsCard = ({
             {`${title?.slice(0, 24)}...`}
           </h2>
           {" "}
-          <div
+          <img
+            src={featuredShadow}
+            alt=""
             className={`position-absolute featured-shadow w-100 ${
               bannerShadow && "featured-shadow-hover"
             }`}
-          ></div>
+          />
+          {/* <div
+            className={`position-absolute featured-shadow w-100 ${
+              bannerShadow && "featured-shadow-hover"
+            }`}
+          ></div> */}
           <img
             src={newsImage}
             alt="Image not found"

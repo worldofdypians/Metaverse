@@ -104,27 +104,12 @@ const News = () => {
       .then((res) => {
         return res.data;
       });
-    const newReleases = await axios
-      .get("https://api3.dyp.finance/api/wod_releases")
-      .then((res) => {
-        return res.data;
-      });
 
-    const newAnnouncements = announcements.map((item) => ({
-      ...item,
-      type: "announcement",
-    }));
 
-    const typeReleases = newReleases.map((item) => ({
-      ...item,
-      type: "new_release",
-    }));
-    const announcementsDatedNews = newAnnouncements.map((item) => {
+    const announcementsDatedNews = announcements.map((item) => {
       return { ...item, date: new Date(item.date) };
     });
-    const datedReleasedNews = typeReleases.map((item) => {
-      return { ...item, date: new Date(item.date) };
-    });
+
     const sortedAnnouncementsNews = announcementsDatedNews.sort(function (
       a,
       b
@@ -133,6 +118,20 @@ const News = () => {
     });
     setAnnouncementsNews(sortedAnnouncementsNews);
   
+  };
+
+  const fetchReleases = async () => {
+
+    const newReleases = await axios
+      .get("https://api3.dyp.finance/api/wod_releases")
+      .then((res) => {
+        return res.data;
+      });
+
+    const datedReleasedNews = newReleases.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
+
     setReleases(datedReleasedNews);
   };
 
@@ -164,6 +163,7 @@ const News = () => {
 
   useEffect(() => {
     fetchNews();
+    fetchReleases();
     window.scrollTo(0, 0);
     document.title = "News";
   }, []);
