@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import AnnouncementMinCard from "./AnnouncementMinCards";
 import "./mainNews.scss";
 import goBackArrow from "./assets/goBackArrow.svg";
+import goBackArrowBlack from "./assets/goBackArrowBlack.svg";
 import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import newsReddit from "./assets/newsReddit.svg";
 import newsShare from "./assets/newsShare.svg";
@@ -26,12 +27,26 @@ const NewsModal = ({
   const elementRef = useRef();
   const [height, setHeight] = useState(0);
   const [tooltip, setTooltip] = useState(false);
+  const [arrow, setArrow] = useState(false)
 
   useEffect(() => {
     if (elementRef.current.clientHeight !== 0) {
       setHeight(elementRef.current.clientHeight);
     }
+    window.scrollTo(0,0)
   }, [newsId, content, elementRef.current?.clientHeight]);
+
+  const backArrow = document.getElementById('backButton')
+
+  const setArrowWhite = () => {
+    setArrow(true)
+  }
+  const setArrowBlack = () => {
+    setArrow(false)
+  }
+
+  backArrow?.addEventListener('mouseenter', setArrowWhite)
+  backArrow?.addEventListener('mouseleave', setArrowBlack)
 
   return (
     <div className="newsModal-wrapper d-flex flex-column flex-xxl-row flex-lg-row gap-3 mb-5">
@@ -40,10 +55,10 @@ const NewsModal = ({
           <div className="d-flex align-items-center gap-2 justify-content-between">
             <button
               className="btn go-back-btn d-flex align-items-center gap-2"
+              id="backButton"
               onClick={onModalClose}
             >
-              <img src={goBackArrow} alt="goback" />
-              <span className="go-back-text">Go Back</span>
+              <img src={arrow === false ? goBackArrowBlack : goBackArrow} height={24} width={24} alt="goback" />
             </button>
             <span className="mainNews-date">
               <img src={calendarIcon} alt="calendar" />{" "}
