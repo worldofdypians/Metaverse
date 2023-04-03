@@ -24,7 +24,7 @@ import JoinBetaModal from "./components/JoinBetaModal/JoinBetaModal";
 import PartnerForm from "./screens/PartnerForm/PartnerForm";
 import NFTEvent from "./screens/NFTEvent/NFTEvent";
 import WalletModal from "./components/WalletModal/WalletModal";
-import { useParams } from "react-router-dom";
+import TimePiece from "./screens/Timepiece/Timepiece";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -269,6 +269,8 @@ function App() {
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
           <Route exact path="/build" element={<PartnerForm />} />
+          <Route exact path="/caws-timepiece" element={<TimePiece />} />
+
           <Route
             exact
             path="/join-beta"
