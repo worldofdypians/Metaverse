@@ -1,6 +1,7 @@
 import React from "react";
 import "./_cawssociety.scss";
 import cawsSecondBanner from "../../../assets/cawsSecondBanner.png";
+import { NavLink } from "react-router-dom";
 
 const CawsWorld = () => {
   return (
@@ -19,9 +20,11 @@ const CawsWorld = () => {
             platform. Finally, Timepiece NFTs will have access to the CAWS NFT
             staking pool generating real ETH rewards.
           </p>
-          {/* <div className="linear-border" style={{ width: "fit-content" }}>
-            <button className="btn filled-btn px-5">View more</button>
-          </div> */}
+          <div className="linear-border" style={{ width: "fit-content" }}>
+            <NavLink to="/caws-timepiece" className="btn filled-btn px-5">
+              View more
+            </NavLink>
+          </div>
         </div>
       </div>
       <div className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end">
