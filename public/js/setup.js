@@ -27594,11 +27594,17 @@ window.param = param;
 
 window.cached_contracts = Object.create(null);
 
-function getCoinbase() {
+async function getCoinbase() {
   if (window.WALLET_TYPE == "coin98") {
     return window.coinbase_address.toLowerCase();
   } else {
-    return window.web3.eth?.getCoinbase();
+    const coinbase = await window.ethereum.request({
+      method: "eth_accounts",
+    });
+    if (coinbase && coinbase.length > 0) {
+      window.coinbase_address = coinbase.pop();
+      return window.coinbase_address.toLowerCase();
+    }
   }
 }
 
