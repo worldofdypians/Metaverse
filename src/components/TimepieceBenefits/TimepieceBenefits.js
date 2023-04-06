@@ -22,7 +22,7 @@ const TimePieceBenefits = () => {
           </p>
         </div>
       </div>
-         <div className="col-12 col-lg-6 d-flex justify-content-center">
+         <div className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end">
         <img src={cawsFirstBanner} alt="caws banner" className="caws-banner" />
       </div>
     </div>
