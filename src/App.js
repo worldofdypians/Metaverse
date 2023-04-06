@@ -47,6 +47,11 @@ function App() {
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
+  const [mintloading, setmintloading] = useState("initial");
+  const [mintStatus, setmintStatus] = useState("");
+  const [textColor, settextColor] = useState("#fff");
+  const [finalCaws, setFinalCaws] = useState([]);
+
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -211,6 +216,91 @@ function App() {
     setCAWMystakes(stakes);
   };
 
+  const handleTimepieceMint = async (data) => {
+    if (isConnected) {
+      try {
+        //Check Whitelist
+        // let whitelist = await window.checkWhitelist(connectedWallet)
+        let whitelist = 1;
+        if (parseInt(whitelist) == 1) {
+          setmintloading("mint");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.landnft
+            .mintNFT(data.numberOfTokens, finalCaws)
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              // updateLandNft();
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+
+          // if (isNaN(Number(tokenId))) {
+          //   setmintloading("error");
+          //   setmintStatus("Invalid Token ID");
+          //   setTimeout(() => {
+          //     setmintloading("initial");
+          //     setmintStatus("");
+          //   }, 5000);
+          //   throw new Error("Invalid Token ID");
+          // }
+
+          if (tokenId) {
+            let getNftData = await window.getNft(tokenId);
+            setMyNFTsCreated(getNftData);
+          }
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    } else {
+      try {
+        handleConnectWallet();
+      } catch (e) {
+        window.alertify.error("No web3 detected! Please Install MetaMask!");
+      }
+    }
+  };
+
   const { ethereum } = window;
 
   if (window.ethereum) {
@@ -269,7 +359,24 @@ function App() {
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
           <Route exact path="/build" element={<PartnerForm />} />
-          <Route exact path="/caws-timepiece" element={<TimePiece />} />
+          <Route
+            exact
+            path="/caws-timepiece"
+            element={
+              <TimePiece
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+              />
+            }
+          />
 
           <Route
             exact
