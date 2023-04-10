@@ -32120,7 +32120,8 @@ const landWhitelist = [
   "0x0ad83a5061d32e9cd1319db2f1d44ff5c0c4e0db",
   "0x2ec28cb88fc8edd1db790023a06971dd7c779aac",
   "0xaef4c36af1523f00afd43dd76581fee659c529ad",
-  "0x8b967bba5996556180e4ec1ffae048df00c03582"
+  "0x8b967bba5996556180e4ec1ffae048df00c03582",
+    "0x812A2F2843c590a80E1c505F3d15520C5FBaeF04"
 ]
 
 window.checkWhitelistLand = function (address) {
