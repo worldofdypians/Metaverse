@@ -19,7 +19,7 @@ const Footer = () => {
     },
     {
       icon: "discord",
-      link: "https://discord.gg/dypcaws",
+      link: "https://discord.gg/worldofdypians",
     },
     {
       icon: "instagram",

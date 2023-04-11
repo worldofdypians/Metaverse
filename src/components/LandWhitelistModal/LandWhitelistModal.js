@@ -393,7 +393,7 @@ const LandWhitelistModal = ({
               }}
             >
               <a
-                href="https://discord.gg/dypcaws"
+                href="https://discord.gg/worldofdypians"
                 target="_blank"
                 rel="noreferrer"
                 className="btn outline-btn px-5 d-flex gap-1 align-items-center"
@@ -472,7 +472,7 @@ const LandWhitelistModal = ({
               }}
             >
               <a
-                href="https://discord.gg/dypcaws"
+                href="https://discord.gg/worldofdypians"
                 target="_blank"
                 rel="noreferrer"
                 className="btn outline-btn px-5 d-flex gap-1 align-items-center"
@@ -551,7 +551,7 @@ const LandWhitelistModal = ({
               }}
             >
               <a
-                href="https://discord.gg/dypcaws"
+                href="https://discord.gg/worldofdypians"
                 target="_blank"
                 rel="noreferrer"
                 className="btn outline-btn px-5 d-flex gap-1 align-items-center"
