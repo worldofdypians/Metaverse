@@ -3,7 +3,7 @@ import timepieceBanner1 from "./assets/timepieceBanner1.webp";
 
 const TimePieceSticker = () => {
   return (
-    <div className="row flex-column-reverse flex-lg-row px-3 px-lg-5 mt-5 caws-world-wrapper py-5 gap-4 gap-lg-0">
+    <div className="row flex-column-reverse flex-lg-row px-3 px-lg-5 mt-0 caws-world-wrapper py-5 gap-4 gap-lg-0">
       <div className="col-12 col-lg-6 d-flex align-items-center">
         <div className="d-flex flex-column gap-3">
           <div className="d-flex flex-column">

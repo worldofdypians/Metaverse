@@ -64,14 +64,24 @@ const TimePieceMint = ({
     }
   };
 
-  const convertEthToUsd = async () => {
-    const res = axios
-      .get("https://api.coinbase.com/v2/prices/ETH-USD/spot")
-      .then((data) => {
-        return data.data.data.amount;
-      });
-    return res;
-  };
+  const benefits = [
+    {
+      title: "Exclusive Access",
+      icon: "draft",
+    },
+    {
+      title: "Enhanced Interactions",
+      icon: "user",
+    },
+    {
+      title: "Special Rewards",
+      icon: "star",
+    },
+    {
+      title: "Expanded Functionality",
+      icon: "expand",
+    },
+  ];
 
   useEffect(() => {
     if (nftCount > 10) {
@@ -111,78 +121,38 @@ const TimePieceMint = ({
           </span>
         </h6>
         <span className="tiers-desc">
-          Mint your CAWS Timepiece NFT on a 1:1 ratio using your CAWS NFT. Enjoy
-          benefits within the metaverse.
+        Mint your CAWS Timepiece NFT for free using your original CAWS NFT and unlock exclusive metaverse benefits.{" "}
+   
         </span>
       </div>
-      <div className="col-12 col-md-12 col-xxl-8 mt-0 ">
+      <div className="col-12 col-md-12 col-xxl-8 mt-0 px-0" style={{overflowX: 'hidden'}}>
         <div
           className="p-4 mint-wrappernew d-flex flex-column gap-5 justify-content-center staking-height"
           style={{ minHeight: "463px" }}
         >
           <img
-            src={require("../../assets/landAssets/genesis-hero.png")}
+            src={require("./assets/timepiecehero.webp")}
             alt=""
             className="minthero d-none d-xl-flex d-lg-flex"
           />
-          <h6 className="newminttitle font-organetto">
-          Mint your nft  <span className="newminttitle-marked">now!</span>
+          <h6 className="newminttitle font-organetto position-relative">
+            Mint your Timepiece nft <br />
+            <span className="newminttitle-marked">now!</span>
           </h6>
           <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
-            <div className="d-flex align-items-center justify-content-between p-3 mint-types">
-              <div className="d-flex align-items-start gap-2">
-                {/* <img
-                    src={require(`./mintAssets/ethereumIcon.svg`).default}
-                    style={{ position: "relative", bottom: "3px" }}
-                    alt=""
-                  /> */}
-                <div className="d-flex flex-column">
-                  {/* <span className="type-title">Ethereum</span>
-                    <span className="type-desc">Chain</span> */}
+            <div className="mint-benefits-grid">
+              {benefits.map((item) => (
+                <div className="d-flex align-items-center gap-2">
+                  <img src={require(`./assets/${item.icon}.png`)} alt="" />
+                  <span className="mint-benefits-title">{item.title}</span>
                 </div>
-              </div>
-              <div className="d-flex align-items-start gap-2">
-                {/* <img
-                    src={require(`./mintAssets/genesisType.svg`).default}
-                    style={{ position: "relative", bottom: "3px" }}
-                    alt=""
-                  /> */}
-                <div className="d-flex flex-column">
-                  {/* <span className="type-title">Genesis</span>
-                    <span className="type-desc">Type</span> */}
-                </div>
-              </div>
-              <div className="d-flex align-items-start gap-2">
-                {/* <img
-                    src={require(`./mintAssets/dimensions.svg`).default}
-                    style={{ position: "relative", bottom: "3px" }}
-                    alt=""
-                  /> */}
-                <div className="d-flex flex-column">
-                  <div className="d-flex align-items-end gap-1">
-                    {/* <span className="type-title">125mx125m</span>
-                      <span className="dimensions-span">(15,625m2)</span> */}
-                  </div>
-                  {/* <span className="type-desc">Dimensions</span> */}
-                </div>
-              </div>
+              ))}
             </div>
-            {/* <div className="mint-benefits-grid">
-                {mintBenefits.map((item) => (
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={require(`./mintAssets/${item.icon}.svg`)}
-                      alt=""
-                    />
-                    <span className="mint-benefits-title">{item.title}</span>
-                  </div>
-                ))}
-              </div> */}
-            {/* <img
-                src={require("../../components/LandPopup/landPopup.webp")}
+            <img
+                src={require("./assets/timepiecepopup.webp")}
                 alt="land nft"
                 className="w-100 d-flex d-lg-none"
-              /> */}
+              />
           </div>
         </div>
       </div>

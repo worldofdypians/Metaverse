@@ -7,7 +7,7 @@
 
 .full-screen-main-hero {
   position: relative;
-  height: 78vh;
+  height: 76vh;
   .timepiece-title {
     font-style: normal;
     font-weight: 800;
@@ -15,17 +15,17 @@
     line-height: 43px;
     color: #ffffff;
   }
-  .timepiece-hero-desc{
+  .timepiece-hero-desc {
     font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }
 
-.full-screen-main-hero::before{
+.full-screen-main-hero::before {
   content: "";
   background-image: url("./assets/timePieceBanner.webp");
   background-size: cover;
@@ -34,9 +34,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  opacity: 0.9;
-  filter: blur(2px);
+  // opacity: 0.9;
+  // filter: blur(2px);
 }
+
 
 .news-main-wrapper {
   gap: 80px;
