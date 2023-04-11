@@ -1,46 +1,65 @@
 import React from "react";
-import "./_timepiecebenefits.scss";
-import timepieceBanner2 from "../../screens/Timepiece/assets/timepieceBanner2.png";
+import './_timepiecebenefits.scss'
 
-const TimePieceBenefits = () => {
+const TimepieceBenefits = () => {
+  const benefits = [
+    {
+      title: "Exclusive Access",
+      icon: "draft",
+      content:
+        "Enjoy exclusive access to new and exciting events within the World of Dypians Metaverse platform that are only accessible to Timepiece NFT holders.",
+    },
+    {
+      title: "Enhanced Interactions",
+      icon: "user",
+      content:
+        "Enhance your experience in the World of Dypians Metaverse platform by unlocking unique and exclusive activities that are only available to Timepiece NFT holders. Connect with other Dypians and enjoy enhanced interactions within the platform.",
+    },
+    {
+      title: "Special Rewards",
+      icon: "star",
+      content:
+        "Get rewarded for your participation in the World of Dypians Metaverse platform as a Timepiece NFT holder. Receive special rewards that may include tokens, collectibles, or other digital assets.",
+    },
+    {
+      title: "Expanded Functionality",
+      icon: "expand",
+      content:
+        "Timepiece NFTs will provide expanded functionality within the World of Dypians Metaverse platform. As a holder, you will be able to perform new actions and interactions that were previously unavailable.",
+    },
+  ];
+
   return (
-    <div className="row px-3 py-3 p-lg-5 mt-5 gap-4 gap-lg-0">
-      <div className="col-12 col-lg-4 d-flex justify-content-center">
-        <img src={timepieceBanner2} alt="caws banner" className="caws-banner" />
-      </div>
-      <div className="col-12 col-lg-8">
-        <div className="d-flex flex-column gap-3">
-        <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-0 gap-lg-2">
-            <h2 className="font-organetto caws-hero-title">All The</h2>
-            <h2
-              className="font-organetto caws-hero-title"
-              style={{ color: "#8C56FF" }}
-            >
-              Traits
-            </h2>
-          </div>
-          <p className="caws-hero-content">
-            Discover all the little details that make each cat as smug, cute and
-            adoptable as the other. You can easily discover their story and
-            personality by checking out their outfit, their expression - and of
-            course, what kind of watch they're into.
-          </p>
-          <p className="caws-hero-content">
-          We love all of our cats, but some of their watches make them stand out a bit more than others. We'll let you be the judge of that.
-          </p>
-          <div className="d-flex justify-content-end">
-          <a href="https://rarity.tools/catsandwatchessocietycaws" target="_blank" className="timepiece-border">
-            <button
-                className="btn timepiece-btn px-5"
-            >
-              Rarity Tools
-            </button>
-          </a>
+    <div className="caws-benefits-wrapper py-5  d-flex flex-column gap-5">
+      <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5">
+          <div className="col-12 ps-2 ps-lg-0">
+            <h6 className="land-hero-title font-organetto d-flex flex-column flex-lg-row gap-2">
+            Caws timepiece
+              <h6 className="land-hero-title" style={{ color: "#8c56ff" }}>
+                Benefits
+              </h6>
+            </h6>
+            <div className="caws-benefits-wrapper2 py-4">
+              {benefits.map((benefit, index) => (
+                <div className="d-flex align-items-start flex-column gap-2" key={index}>
+                  <img
+                    src={require(`./assets/${benefit.icon}.png`)}
+                    alt=""
+                    style={{height: 56}}
+                  />
+                  <div className="d-flex flex-column gap-2">
+                    <span className="benefits-title font-poppins">
+                      {benefit.title}
+                    </span>
+                    <p className="benefits-content">{benefit.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };
 
-export default TimePieceBenefits;
+export default TimepieceBenefits;

@@ -4,7 +4,8 @@ import timepieceBanner from "./assets/timePieceBanner.webp";
 import TimepieceHero from "./TimepieceHero";
 import TimePieceSticker from "./TimePieceSticker";
 import cawsBanner from "../../screens/Caws/assets/Nft/nft-main-image2.jpg";
-import TimePieceBenefits from "../../components/TimepieceBenefits/TimepieceBenefits";
+import TimePieceTraits from "../../components/TimepieceBenefits/TimepieceTraits";
+import TimepieceBenefits from "../../components/TimepieceBenefits/TimepieceBenefits";
 import TimePieceMint from "../../components/TimepieceMint/TimepieceMint";
 
 const TimePiece = ({
@@ -46,7 +47,8 @@ const TimePiece = ({
           textColor={textColor}
           handleMint={handleMint}
         />
-        <TimePieceBenefits />
+        <TimePieceTraits />
+        <TimepieceBenefits />
       </div>
     </div>
   );
