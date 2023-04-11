@@ -1,6 +1,6 @@
-import React from "react";
-import './_timepiece.scss'
-import timepieceBanner from "./assets/timePieceBanner.webp"
+import React, { useEffect } from "react";
+import "./_timepiece.scss";
+import timepieceBanner from "./assets/timePieceBanner.webp";
 import TimepieceHero from "./TimepieceHero";
 import TimePieceSticker from "./TimePieceSticker";
 import cawsBanner from "../../screens/Caws/assets/Nft/nft-main-image2.jpg";
@@ -20,9 +20,17 @@ const TimePiece = ({
   textColor,
   handleMint,
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "Timepiece";
+  }, []);
+
   return (
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
-     <div className="d-flex w-100 flex-column home-main-wrapper" style={{gap: 0, backgroundSize: 'cover'}}>
+      <div
+        className="d-flex w-100 flex-column home-main-wrapper"
+        style={{ gap: 0, backgroundSize: "cover" }}
+      >
         <TimepieceHero />
         <TimePieceSticker />
         <TimePieceMint
