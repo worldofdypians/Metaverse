@@ -15,7 +15,7 @@ const Discord = () => {
           <div className="d-flex flex-column flex-lg-row w-100 align-items-center justify-content-start gap-4 gap-lg-0">
            <div className="d-flex w-100 justify-content-start">
            <div className="linear-border">
-              <a className="btn filled-btn px-5" href='https://discord.gg/dypcaws' target={'_blank'} rel='noreferrer'>Join today</a>
+              <a className="btn filled-btn px-5" href='https://discord.gg/worldofdypians' target={'_blank'} rel='noreferrer'>Join today</a>
             </div>
            </div>
            <div className="d-flex w-100 justify-content-end justify-content-lg-start">

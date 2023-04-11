@@ -7,7 +7,7 @@ const CatSocietyRanking = () => {
     const [isConnected, setisConnected] = useState(false)
 
     const joinDiscord = () => {
-        window.open("https://discord.gg/dypcaws", "_blank");
+        window.open("https://discord.gg/worldofdypians", "_blank");
     }
 
     const handleWhitelistUpdate = async e => {
