@@ -39,7 +39,8 @@ const TimepieceBenefits = () => {
                 Benefits
               </h6>
             </h6>
-            <div className="caws-benefits-wrapper2 py-4">
+            <div className="row m-0 flex-column flex-xxl-row flex-lg-row justify-content-between">
+            <div className="caws-benefits-wrapper2 py-4 col-xxl-7 col-lg-7 col-12">
               {benefits.map((benefit, index) => (
                 <div className="d-flex align-items-start flex-column gap-2" key={index}>
                   <img
@@ -56,6 +57,13 @@ const TimepieceBenefits = () => {
                 </div>
               ))}
             </div>
+            <div className="col-xxl-4 col-lg-4 col-12 d-flex justify-content-center">
+            <img
+              src={require("./assets/scene.gif")}
+              className="timepiece-graphic timepiecewhite-gif"
+              alt="phone-graphics"
+            />
+            </div></div>
           </div>
         </div>
     </div>
