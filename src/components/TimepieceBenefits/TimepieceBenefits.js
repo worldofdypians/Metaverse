@@ -59,7 +59,7 @@ const TimepieceBenefits = () => {
             </div>
             <div className="col-xxl-4 col-lg-4 col-12 d-flex justify-content-center">
             <img
-              src={require("./assets/scene.gif")}
+              src={require("./assets/scene2.gif")}
               className="timepiece-graphic timepiecewhite-gif"
               alt="phone-graphics"
             />
