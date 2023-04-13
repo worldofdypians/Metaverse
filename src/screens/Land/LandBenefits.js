@@ -114,7 +114,7 @@ const LandBenefits = () => {
     },
     {
       title: "Business integration",
-      content: "Develop a business in a digital enviroment",
+      content: "Develop a business in a digital environment",
     },
   ];
 
