@@ -1204,6 +1204,25 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.timepiece-graphic {
+  max-height: 300px;
+  object-fit: contain;
+  margin: auto;
+  scale: 1.5;
+}
+
+@media screen and (max-width: 991px) {
+  .timepiecewhite-gif{
+      max-height: 250px !important;
+  }
+
+  .timepiece-graphic {
+    margin: auto;
+    scale: 1.3;
+    margin-top: 3rem;
+  }
+}
+
 @media screen and (max-width: 488px) {
   .land-bg {
     width: 100%;

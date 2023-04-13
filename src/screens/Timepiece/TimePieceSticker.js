@@ -21,8 +21,7 @@ const TimePieceSticker = () => {
             CAWS NFT will be able to mint a Timepiece NFT for FREE for each
             original CAWS NFT held. In Addition, the Timepiece NFTs will provide
             users additional utility and perks in the World of Dypians Metaverse
-            platform. Finally, Timepiece NFTs will have access to the CAWS NFT
-            staking pool generating real ETH rewards.
+            platform.
           </p>
         </div>
       </div>

@@ -290,11 +290,11 @@ const TimePieceMint = ({
           <hr className="mint-divider m-0" />
 
           <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
-            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between w-100">
-              <div className="d-flex align-items-center gap-2">
+            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-end w-100">
+              {/* <div className="d-flex align-items-center gap-2">
                 <img src={mintEthIcon} alt="ethereum" />
                 <span className="eth-price">Price: 4 ETH</span>
-              </div>
+              </div> */}
               <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
                 <div
                   className={
