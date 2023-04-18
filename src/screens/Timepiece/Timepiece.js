@@ -20,6 +20,8 @@ const TimePiece = ({
   nftName,
   textColor,
   handleMint,
+  cawsArray,
+  calculateCaws
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,6 +48,8 @@ const TimePiece = ({
           nftName={nftName}
           textColor={textColor}
           handleMint={handleMint}
+          cawsArray={cawsArray}
+          calculateCaws={calculateCaws}
         />
         <TimePieceTraits />
         <TimepieceBenefits />
