@@ -9,10 +9,10 @@ const AnnouncementSideCard = ({
   content,
   onShowModalClick,
   newsId,
-  imageSquare
+  imageSquare,
 }) => {
   var options = { year: "numeric", month: "short", day: "numeric" };
-  const windowSize = useWindowSize()
+  const windowSize = useWindowSize();
 
   return (
     <div
@@ -23,14 +23,27 @@ const AnnouncementSideCard = ({
       }}
     >
       <div className="overflow-hidden w-100 side-img-wrapper">
-        <img src={ windowSize.width > 1725 ? bgImage : windowSize.width < 1725 && windowSize.width>600 ? imageSquare : imageSquare } className="announcement-side-img" alt="" />
+        <img
+          src={
+            windowSize.width > 1725
+              ? bgImage
+              : windowSize.width < 1725 && windowSize.width > 600
+              ? imageSquare
+              : imageSquare
+          }
+          className="announcement-side-img"
+          alt=""
+        />
       </div>
       <div className="d-flex flex-column gap-2 justify-content-between w-100">
-      <span className="mainNews-date">
-            <img src={calendarIcon} width={20} height={20} alt="calendar" />
-            {date.toLocaleDateString("en-US", options)}
-          </span>
-        <span className="announcement-side-title font-poppins" style={{color: '#DBD9FF'}}>
+        <span className="mainNews-date">
+          <img src={calendarIcon} width={20} height={20} alt="calendar" />
+          {date.toLocaleDateString("en-US", options)}
+        </span>
+        <span
+          className="announcement-side-title font-poppins"
+          style={{ color: "#DBD9FF" }}
+        >
           {/* {title?.slice(0, 35)}... */}
           {title}
         </span>
@@ -46,7 +59,6 @@ const AnnouncementSideCard = ({
               }}
             ></span>
           )}
-         
         </div>
       </div>
     </div>
