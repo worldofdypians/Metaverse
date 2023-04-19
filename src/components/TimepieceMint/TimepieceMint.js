@@ -177,7 +177,8 @@ const TimePieceMint = ({
               <div
                 className={`genesis-wrapper ${
                   totalCreated > 0 ? "genesis-land" : "genesis-land-empty"
-                } d-flex justify-content-center align-items-center p-3 position-relative h-100`}
+                } d-flex justify-content-center align-items-center p-3 position-relative`}
+                style={{height: 312}}
               >
                 <img
                   src={dummyBadge}
@@ -235,8 +236,8 @@ const TimePieceMint = ({
             className="minthero d-none d-xl-flex d-lg-flex"
           />
           <h6 className="newminttitle font-organetto position-relative">
-            Mint your Timepiece nft <br />
-            <span className="newminttitle-marked">now!</span>
+            Mint your Timepiece <br />nft 
+            <span className="newminttitle-marked mx-2">now!</span>
           </h6>
           <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
             <div className="mint-benefits-grid">
@@ -247,11 +248,7 @@ const TimePieceMint = ({
                 </div>
               ))}
             </div>
-            <img
-              src={require("./assets/timepiecepopup.webp")}
-              alt="land nft"
-              className="w-100 d-flex d-lg-none"
-            />
+          
           </div>
         </div>
       </div>
@@ -417,7 +414,7 @@ const TimePieceMint = ({
               </span>
             )}
           <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
-            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-end w-100">
+            <div className="d-flex flex-column flex-lg-row align-items-center align-items-lg-center justify-content-xxl-end justify-content-lg-end justify-content-center w-100">
               <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
                 <div
                   className={
