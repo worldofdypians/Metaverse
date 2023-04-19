@@ -28,7 +28,7 @@ const TimepieceChecklistModal = ({
     width: windowSize.width < 500 ? "80%" : "55%",
     boxShadow: 24,
     p: 4,
-    overflow: "scroll",
+    overflow: "auto",
     height: "80%",
     borderRadius: "8px",
     overflowX: "hidden",

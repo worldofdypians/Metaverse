@@ -49,10 +49,10 @@ const TimepieceItem = ({
             />
             <p
               style={{
-                color: "#C0CBF7",
+                color: "#C0CBF7", fontSize: 14
               }}
             >
-              # {checklistItemID}
+              CAWS Timepiece {checklistItemID}
             </p>
             <div className="footer" style={{ flexDirection: "column" }}>
               <div className="d-flex w-100 justify-content-between align-baseline">

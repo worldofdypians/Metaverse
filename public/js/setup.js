@@ -1934,7 +1934,7 @@ window.config = {
   wod_caws_address: "0xd324a03bf17eee8d34a8843d094a76ff8f561e38",
 
   /* CAWS TIMEPIECE NFT */
-  caws_timepiece_address: "0x7719f6757bd18f430943cf0efe7debea17ad263c",
+  caws_timepiece_address: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
 
   /* MINT LANDNFT GOERLI */
   // landnft_address: "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc",
@@ -3119,13 +3119,11 @@ class WOD_CAWS {
 
 window.wod_caws = new WOD_CAWS();
 
-
-
 /**
  *
  * @param {"TOKEN" | "CAWS_TIMEPIECE" } key
  */
- async function getContractCawsTimepieceNFT(key) {
+async function getContractCawsTimepieceNFT(key) {
   let ABI = window[key + "_ABI"];
   let address = window.config[key.toLowerCase() + "_address"];
   if (!window.cached_contracts[key]) {
@@ -3159,7 +3157,6 @@ class CAWS_TIMEPIECE {
       "tokenOfOwnerByIndex",
       "tokenURI",
       "totalSupply",
-
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
         let contract = await getContractCawsTimepieceNFT(this.key);
@@ -3175,8 +3172,6 @@ class CAWS_TIMEPIECE {
         });
       };
     });
-
-  
   }
 
   async claimTimepiece(cawsArray) {
@@ -3186,13 +3181,14 @@ class CAWS_TIMEPIECE {
     });
   }
 
-
-
   async calculateTimepieceBalance(address) {
     let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
-    return await nft_contract.methods
-      .balanceOf(address)
-      .call();
+    return await nft_contract.methods.balanceOf(address).call();
+  }
+
+  async getTimepieceLatestMint() {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods.totalSupply().call();
   }
 
   async getCawsUsedinTimepiece(address) {
@@ -3205,11 +3201,12 @@ class CAWS_TIMEPIECE {
     return await nft_contract.methods.tokenURI(tokenId).call();
   }
 
-  async getCawsTimepieceTokenByIndex(address,tokenId) {
+  async getCawsTimepieceTokenByIndex(address, tokenId) {
     let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
-    return await nft_contract.methods.tokenOfOwnerByIndex(address,tokenId).call();
+    return await nft_contract.methods
+      .tokenOfOwnerByIndex(address, tokenId)
+      .call();
   }
-
 }
 
 window.caws_timepiece = new CAWS_TIMEPIECE();

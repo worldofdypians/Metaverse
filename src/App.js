@@ -423,13 +423,13 @@ function App() {
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
-      getTimepieceNftMinted();
     }
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
   useEffect(() => {
     if (isConnected === true && coinbase && chainId === 1) {
       checkCawsToUse();
+      getTimepieceNftMinted();
     }
   }, [
     myCAWNFTs.length,
