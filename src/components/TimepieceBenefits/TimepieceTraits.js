@@ -32,7 +32,7 @@ const TimePieceTraits = () => {
           </p>
           <div className="d-flex justify-content-end">
             <a
-              href="https://rarity.tools/catsandwatchessocietycaws"
+              href="https://rarity.tools"
               target="_blank"
               className="timepiece-border"
             >
