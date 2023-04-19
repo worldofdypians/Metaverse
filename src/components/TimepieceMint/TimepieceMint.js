@@ -150,7 +150,7 @@ const TimePieceMint = ({
   }, [coinbase, chainId, isConnected, totalCreated])
 
   return (
-    <div className="row justify-content-between align-items-center w-100 mx-0 px-3 py-3 p-lg-5">
+    <div className="row justify-content-between align-items-center w-100 mx-0 px-3 py-3 p-lg-5 gap-5 gap-lg-0">
       <div className="d-flex flex-column align-items-center justify-content-center gap-3 mb-4">
         <h6 className="land-tiers font-organetto d-flex flex-column flex-lg-row align-items-center">
           CAWS timepiece{" "}
