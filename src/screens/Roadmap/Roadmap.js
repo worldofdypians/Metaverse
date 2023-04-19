@@ -122,6 +122,8 @@ const Roadmap = () => {
         {
           title: "Introducing the CAWS Timepiece NFT collection",
           desc: "The CAWS Timepiece NFT collection will provide users additional utility and perks in the World of Dypians Metaverse. CAWS owners will have the ability to mint CAWS Timepiece for free.",
+          completed: true,
+        
         },
        
       ],
