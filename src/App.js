@@ -251,7 +251,9 @@ function App() {
   const checkCawsToUse = async () => {
     const testArray = [];
     const cawsArray = [...myCAWNFTs, ...myCAWstakes, ...myCawsWodStakesAll];
-    const nft_contract = await window.getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    const nft_contract = await window.getContractCawsTimepieceNFT(
+      "CAWS_TIMEPIECE"
+    );
 
     if (cawsArray.length > 0) {
       for (let i = 0; i < cawsArray.length; i++) {
@@ -267,8 +269,10 @@ function App() {
       }
 
       setcawsToUse(testArray);
-    setAllCawsForTimepieceMint(testArray)
-
+      setAllCawsForTimepieceMint(testArray);
+    } else if (cawsArray.length === 0) {
+      setcawsToUse([]);
+      setAllCawsForTimepieceMint([]);
     }
   };
 
@@ -288,10 +292,8 @@ function App() {
     } else if (data.numberOfTokens <= cawsToUse.length) {
       setLimit(data.numberOfTokens);
       setFinalCaws(cawsToUse.slice(0, data.numberOfTokens));
-      
     }
   };
-
 
   const handleTimepieceMint = async (data) => {
     if (isConnected) {
@@ -299,7 +301,7 @@ function App() {
         //Check Whitelist
         // let whitelist = await window.checkWhitelist(connectedWallet)
         let whitelist = 1;
-        
+
         if (parseInt(whitelist) === 1) {
           setmintloading("mint");
           // console.log(data,finalCaws, totalCawsDiscount);
@@ -399,13 +401,21 @@ function App() {
       myCAWNft();
       myNft();
     }
-  }, [isConnected, coinbase, chainId, currencyAmount]);
+  }, [isConnected, chainId, currencyAmount, coinbase]);
 
   useEffect(() => {
     if (isConnected === true && coinbase && chainId === 1) {
       checkCawsToUse();
     }
-  }, [myCAWNFTs.length, myCAWstakes.length, myCawsWodStakesAll.length, isConnected, coinbase, chainId,]);
+  }, [
+    myCAWNFTs.length,
+    myCAWstakes.length,
+    myCawsWodStakesAll.length,
+    allCawsForTimepieceMint.length,
+    isConnected,
+    chainId,
+    coinbase,
+  ]);
 
   function Redirect() {
     window.location.href = "https://account.worldofdypians.com/";
@@ -461,7 +471,6 @@ function App() {
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
-
               />
             }
           />
