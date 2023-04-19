@@ -37,7 +37,6 @@ const TimePiece = ({
     document.title = "Timepiece";
   }, []);
 
-  console.log(viewCollection)
   return (
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       {viewCollection === true && (

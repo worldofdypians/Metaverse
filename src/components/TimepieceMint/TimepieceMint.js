@@ -41,7 +41,7 @@ const TimePieceMint = ({
   const [grandPrice, setGrandPrice] = useState(0);
   const [discountprice, setdiscountprice] = useState(0);
   const [countdownFinished, setCountdownFinished] = useState(true);
-  const [whitelistCountdown, setwhitelistCountdown] = useState(false);
+  const [latestMintId, setlatestMintId] = useState(0);
 
   const handleCreate = () => {
     handleMint({
@@ -65,6 +65,11 @@ const TimePieceMint = ({
       setNftCount(nftCount - 1);
     }
   };
+
+  const getTimepieceLatestMint = async()=>{
+    const result = await window.caws_timepiece.getTimepieceLatestMint()
+    setlatestMintId(result-1);
+  }
 
   const benefits = [
     {
@@ -119,11 +124,13 @@ const TimePieceMint = ({
           setStatus("Switch to Ethereum Chain to continue minting.");
         }
         if (chainId === 1) {
+        
           setactiveButton(true);
           setStatus("");
         }
       }
     }
+      getTimepieceLatestMint()
   }, [isConnected, chainId, coinbase]);
 
 
@@ -256,9 +263,12 @@ const TimePieceMint = ({
         <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
           <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
             <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
-              <span className="create-land-title font-poppins ">
-                Mint your CAWS TimePiece NFT
-              </span>
+            <span className="land-name">
+            Available NFTs for mint:{" "}
+            <span className="addr-text" style={{ color: "rgb(123, 216, 176)" }}>
+              {cawsArray.length}
+            </span>
+          </span>
               {coinbase && chainId === 1 && status === "" ? (
                 <span
                   className="create-land-title font-poppins"
@@ -290,12 +300,7 @@ const TimePieceMint = ({
               )}
             </div>
           </div>
-          <span className="land-name">
-            Available CAWS NFTs to mint:{" "}
-            <span className="addr-text" style={{ color: "rgb(123, 216, 176)" }}>
-              {cawsArray.length}
-            </span>
-          </span>{" "}
+         
           <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
             <div className="d-flex flex-column gap-2 col-12 col-lg-6">
               <span className="land-name">
@@ -306,14 +311,21 @@ const TimePieceMint = ({
                   className="land-placeholder mb-0"
                   style={{ marginLeft: 11 }}
                 >
-                  {nftName === "" ? "" : `#CawsTimePiece`}
+                  {nftName === "" ? "" : `Caws Timepiece`}
                 </h6>
               </div>
             </div>
             <div className="d-flex flex-column gap-2 col-12 col-lg-6">
               <span className="land-name">
-                Description
+                Latest Mint
               </span>
+              <h6
+                  className="land-placeholder borderText"
+                  style={{ fontSize: "12px", paddingLeft: 14, lineHeight: '40px' }}
+                >
+                 # {latestMintId}
+                
+                  </h6>
             </div>
           </div>
           <hr className="mint-divider m-0" />
@@ -392,9 +404,9 @@ const TimePieceMint = ({
             {nftStatus}
           </span>
           <hr className="mint-divider m-0" />
-          {cawsArray.length > 0 && nftCount > 0 && (
+          {/* {cawsArray.length > 0 && nftCount > 0 && (
             <span className="land-name">
-              CAWS Timepiece NFTs left:{" "}
+              Number of CAWS NFTs left after minting:{" "}
               <span
                 className="addr-text"
                 style={{ color: "rgb(123, 216, 176)" }}
@@ -402,7 +414,8 @@ const TimePieceMint = ({
                 {cawsArray.length - nftCount}
               </span>
             </span>
-          )}  {mintStatus.length > 0 && (
+          )}  */}
+           {mintStatus.length > 0 && (
               <span style={{ color: textColor }}
                 className={
                   mintStatus.includes("Success")

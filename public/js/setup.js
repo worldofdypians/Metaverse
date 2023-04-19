@@ -3195,6 +3195,13 @@ class CAWS_TIMEPIECE {
       .call();
   }
 
+  async getTimepieceLatestMint() {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods
+      .totalSupply()
+      .call();
+  }
+
   async getCawsUsedinTimepiece(address) {
     let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
     return await nft_contract.methods.cawsUsed(address).call();
