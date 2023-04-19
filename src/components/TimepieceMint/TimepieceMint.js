@@ -140,6 +140,15 @@ const TimePieceMint = ({
     chainId, cawsArray.length
   ]);
 
+
+  useEffect(()=>{
+    if(coinbase && isConnected && chainId === 1) {
+      if(totalCreated > 0) {
+        setshowBadge(true)
+      }
+    }
+  }, [coinbase, chainId, isConnected, totalCreated])
+
   return (
     <div className="row justify-content-between align-items-center w-100 mx-0 px-3 py-3 p-lg-5">
       <div className="d-flex flex-column align-items-center justify-content-center gap-3 mb-4">
@@ -157,8 +166,63 @@ const TimePieceMint = ({
           unlock exclusive metaverse benefits.{" "}
         </span>
       </div>
-      <div
-        className="col-12 col-md-12 col-xxl-8 mt-0 px-0"
+        <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height-2">
+          <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
+            <div className="d-flex flex-column position-relative">
+              {showBadge && (
+                <div className="totalcreated">
+                  <span>{totalCreated}</span>
+                </div>
+              )}
+              <div
+                className={`genesis-wrapper ${
+                  totalCreated > 0 ? "genesis-land" : "genesis-land-empty"
+                } d-flex justify-content-center align-items-center p-3 position-relative h-100`}
+              >
+                <img
+                  src={dummyBadge}
+                  className="genesis-badge"
+                  style={{ visibility: "hidden" }}
+                  alt="badge"
+                />
+              </div>
+              <div
+                className="genesis-desc position-relative"
+                style={{ bottom: "5px" }}
+              >
+                <h6 className="font-organetto land-desc w-75">CAWS TIMEPIECE</h6>
+              </div>
+            </div>
+            <div
+              className={
+                isConnected === false ||
+                activeButton === false  ||
+                totalCreated === 0
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }
+            >
+              <button
+                className={`btn ${
+                  isConnected === false ||
+                  activeButton === false  ||
+                  totalCreated === 0
+                    ? "outline-btn-disabled"
+                    : "outline-btn"
+                } px-5 w-100`}
+                disabled={
+                  isConnected === false ||
+                  activeButton === false ||
+                  totalCreated === 0
+                }
+                onClick={handleViewCollection}
+              >
+                View collection
+              </button>
+            </div>
+          </div>
+        </div>
+      <div className="col-12 col-md-12 col-xxl-6 mt-0 px-0"
         style={{ overflowX: "hidden" }}
       >
         <div
