@@ -264,7 +264,7 @@ const TimePieceMint = ({
           <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
             <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
             <span className="land-name">
-            Available NFTs for mint:{" "}
+            Available NFTs to mint:{" "}
             <span className="addr-text" style={{ color: "rgb(123, 216, 176)" }}>
               {cawsArray.length}
             </span>
