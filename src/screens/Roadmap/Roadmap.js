@@ -14,6 +14,8 @@ import gameEvents from "./assets/gameEvents.png";
 import landMinting from "./assets/landMinting.png";
 import nextArrow from './assets/nextArrow.svg'
 import Slider from "react-slick";
+import timepieceRoadmap from './assets/timepieceRoadmap.webp'
+import wodPartnership from './assets/wodPartnership.webp'
 
 const Roadmap = () => {
   useEffect(() => {
@@ -276,6 +278,16 @@ const Roadmap = () => {
       title: "Genesis Land Whitelist",
       date: "Feb 2023",
       image: whitelistBanner,
+    },
+    {
+      title: "Genesis Land Launch",
+      date: "Feb 2023",
+      image: landMinting,
+    },
+    {
+      title: "Genesis Land Launch",
+      date: "Feb 2023",
+      image: landMinting,
     },
     {
       title: "Genesis Land Launch",
