@@ -115,15 +115,14 @@ const Roadmap = () => {
           completed: true
         },
         {
-          title: "CAWS NFT 3D rendering",
-          desc: "Users are able to create an in-game playable 3D version of their owned CAWS NFT.",
-        },
-
-        {
           title: "Introducing the CAWS Timepiece NFT collection",
           desc: "The CAWS Timepiece NFT collection will provide users additional utility and perks in the World of Dypians Metaverse. CAWS owners will have the ability to mint CAWS Timepiece for free.",
           completed: true,
         
+        },
+                {
+          title: "CAWS NFT 3D rendering",
+          desc: "Users are able to create an in-game playable 3D version of their owned CAWS NFT.",
         },
        
       ],
