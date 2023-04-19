@@ -12,15 +12,17 @@ import whitelistBanner from "./assets/whitelistBanner.webp";
 import cawsIntegration from "./assets/cawsIntegration.png";
 import gameEvents from "./assets/gameEvents.png";
 import landMinting from "./assets/landMinting.png";
-import nextArrow from './assets/nextArrow.svg'
+import nextArrow from "./assets/nextArrow.svg";
 import Slider from "react-slick";
+import timepieceRoadmap from "./assets/timepieceRoadmap.webp";
+import wodPartnership from "./assets/wodPartnership.webp";
+import multichainIntegration from "./assets/multichainIntegration.webp";
 
 const Roadmap = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Roadmap";
   }, []);
-
 
   var settings = {
     dots: true,
@@ -107,24 +109,23 @@ const Roadmap = () => {
         {
           title: "Multichain Integration",
           desc: "Incorporation of multiple chains providing users with optimal options and solutions.",
-          completed: true
+          completed: true,
         },
         {
           title: "Addition and development of partnerships",
           desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
-          completed: true
+          completed: true,
         },
+
         {
           title: "Introducing the CAWS Timepiece NFT collection",
           desc: "The CAWS Timepiece NFT collection will provide users additional utility and perks in the World of Dypians Metaverse. CAWS owners will have the ability to mint CAWS Timepiece for free.",
           completed: true,
-        
         },
-                {
+        {
           title: "CAWS NFT 3D rendering",
           desc: "Users are able to create an in-game playable 3D version of their owned CAWS NFT.",
         },
-       
       ],
     },
     {
@@ -272,7 +273,7 @@ const Roadmap = () => {
       title: "Leaderboard",
       date: "Feb 2023",
       image: leaderboardBanner,
-    }, 
+    },
     {
       title: "Genesis Land Whitelist",
       date: "Feb 2023",
@@ -283,7 +284,21 @@ const Roadmap = () => {
       date: "Feb 2023",
       image: landMinting,
     },
-   
+    {
+      title: "Multichain Integration",
+      date: "Apr 2023",
+      image: multichainIntegration,
+    },
+    {
+      title: "Addition and development of partnerships",
+      date: "Apr 2023",
+      image: wodPartnership,
+    },
+    {
+      title: "Introducing the CAWS Timepiece NFT collection",
+      date: "Apr 2023",
+      image: timepieceRoadmap,
+    },
   ];
   const slider = useRef();
 
@@ -293,7 +308,6 @@ const Roadmap = () => {
   const previous = () => {
     slider.current.slickPrev();
   };
-
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg">
@@ -318,80 +332,130 @@ const Roadmap = () => {
         </div>
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
           <div className="roadmap-grid px-3 px-lg-0">
-          <div className="d-flex flex-column align-items-center position-relative roadmap-slider-wrapper gap-3" style={{height: 'fit-content'}}>
-          <Slider ref={(c) => (slider.current = c)} {...settings}>
-              <div className="d-flex flex-column gap-3 ">
-              {mainUpdate.slice(0,3).map((item) => (
-                <div className="roadmap-main-update position-relative">
-                <img src={item.image} className="main-update-image" alt="" />
-                <div className="main-update-title-wrapper w-100">
-                  <span className="font-organetto main-update-date">
-                    {item.date}
-                  </span>
-                  <h6 className="main-update-title mb-0 font-organetto">
-                    {item.title}
-                  </h6>
+            <div
+              className="d-flex flex-column align-items-center position-relative roadmap-slider-wrapper gap-3"
+              style={{ height: "fit-content" }}
+            >
+              <Slider ref={(c) => (slider.current = c)} {...settings}>
+                <div className="d-flex flex-column gap-3">
+                  <div
+                    className="roadmap-main-update position-relative"
+                    style={{ visibility: "hidden" }}
+                  >
+                    <img src="" className="main-update-image" alt="" />
+                    <div className="main-update-title-wrapper w-100">
+                      <span className="font-organetto main-update-date">
+                        ..
+                      </span>
+                      <h6 className="main-update-title mb-0 font-organetto">
+                        ..
+                      </h6>
+                    </div>
+                  </div>
+                  <div
+                    className="roadmap-main-update position-relative"
+                    style={{ visibility: "hidden" }}
+                  >
+                    <img src="" className="main-update-image" alt="" />
+                    <div className="main-update-title-wrapper w-100">
+                      <span className="font-organetto main-update-date">
+                        ..
+                      </span>
+                      <h6 className="main-update-title mb-0 font-organetto">
+                        ..
+                      </h6>
+                    </div>
+                  </div>
+                  {mainUpdate.slice(0, 1).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-              ))}
+                <div className="d-flex flex-column gap-3">
+                  {mainUpdate.slice(1, 4).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  {mainUpdate.slice(4, 7).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  {mainUpdate.slice(7, mainUpdate.length).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Slider>
+              <img
+                src={nextArrow}
+                alt=""
+                className="prev-arrow"
+                onClick={previous}
+              />
+              <img
+                src={nextArrow}
+                alt=""
+                className="next-arrow"
+                onClick={next}
+              />
+              <h6 className="live-now-title font-organetto mt-4">Out Now!</h6>
             </div>
-              <div className="d-flex flex-column gap-3">
-              {mainUpdate.slice(3,6).map((item) => (
-                <div className="roadmap-main-update position-relative">
-                <img src={item.image} className="main-update-image" alt="" />
-                <div className="main-update-title-wrapper w-100">
-                  <span className="font-organetto main-update-date">
-                    {item.date}
-                  </span>
-                  <h6 className="main-update-title mb-0 font-organetto">
-                    {item.title}
-                  </h6>
-                </div>
-              </div>
-              ))}
-            </div>
-              <div className="d-flex flex-column gap-3">
-              <div className="roadmap-main-update position-relative" style={{visibility: 'hidden'}}>
-                <img src="" className="main-update-image" alt="" />
-                <div className="main-update-title-wrapper w-100">
-                  <span className="font-organetto main-update-date">
-                    ..
-                  </span>
-                  <h6 className="main-update-title mb-0 font-organetto">
-                    ..
-                  </h6>
-                </div>
-              </div>
-              <div className="roadmap-main-update position-relative" style={{visibility: 'hidden'}}>
-                <img src="" className="main-update-image" alt="" />
-                <div className="main-update-title-wrapper w-100">
-                  <span className="font-organetto main-update-date">
-                    ..
-                  </span>
-                  <h6 className="main-update-title mb-0 font-organetto">
-                    ..
-                  </h6>
-                </div>
-              </div>
-              {mainUpdate.slice(6, mainUpdate.length).map((item) => (
-                <div className="roadmap-main-update position-relative">
-                <img src={item.image} className="main-update-image" alt="" />
-                <div className="main-update-title-wrapper w-100">
-                  <span className="font-organetto main-update-date">
-                    {item.date}
-                  </span>
-                  <h6 className="main-update-title mb-0 font-organetto">
-                    {item.title}
-                  </h6>
-                </div>
-              </div>
-              ))}
-            </div>
-            </Slider>
-            <img src={nextArrow} alt="" className="prev-arrow" onClick={previous} />
-            <img src={nextArrow} alt="" className="next-arrow" onClick={next} />
-            <h6 className="live-now-title font-organetto mt-4">Out Now!</h6>
-          </div>
 
             {roadmapItems.map((item, index) => (
               <RoadmapCard
