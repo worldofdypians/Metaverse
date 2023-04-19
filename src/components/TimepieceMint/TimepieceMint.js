@@ -97,13 +97,16 @@ const TimePieceMint = ({
             setNftStatus("*50 NFT limit.");
           }, 3000);
         }
-        if (nftCount > 50 && cawsArray.length === 50) {
+       else if (nftCount > 50 && cawsArray.length === 50) {
           setNftStatus("*Exceeded mint limit of 10 NFTs.");
           setTimeout(() => {
             setNftCount(cawsArray.length);
             setNftStatus("*50 NFT limit.");
           }, 3000);
-        } else setNftStatus("*50 NFT limit.");
+        } else if (cawsArray.length > 0 && cawsArray.length >= nftCount) {
+          setNftStatus("*50 NFT limit.");
+          
+        };
       }
     }
   }, [nftCount, coinbase, cawsArray.length]);
@@ -328,7 +331,7 @@ const TimePieceMint = ({
             {nftStatus}
           </span>
           <hr className="mint-divider m-0" />
-          {cawsArray.length > 0 && (
+          {cawsArray.length > 0 && nftCount > 0 && (
             <span className="land-name" style={{ color: textColor }}>
               CAWS Timepiece NFTs left:{" "}
               <span
