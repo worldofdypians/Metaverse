@@ -250,7 +250,7 @@ const TimePieceMint = ({
             <div className="mint-benefits-grid">
               {benefits.map((item) => (
                 <div className="d-flex align-items-center gap-2">
-                  <img src={require(`./assets/${item.icon}.png`)} alt="" />
+                  <img src={require(`./assets/${item.icon}.png`)} alt="" style={{scale: item.icon === 'expand' ? '0.8' : '1'}}/>
                   <span className="mint-benefits-title">{item.title}</span>
                 </div>
               ))}
