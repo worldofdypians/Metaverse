@@ -304,6 +304,8 @@ function App() {
 
         if (parseInt(whitelist) === 1) {
           setmintloading("mint");
+          setmintStatus("Minting in progress...");
+              settextColor("rgb(123, 216, 176)");
           // console.log(data,finalCaws, totalCawsDiscount);
           let tokenId = await window.caws_timepiece
             .claimTimepiece(finalCaws)
@@ -320,6 +322,8 @@ function App() {
             .catch((e) => {
               console.error(e);
               setmintloading("error");
+              settextColor("#d87b7b");
+
               if (typeof e == "object" && e.message) {
                 setmintStatus(e.message);
               } else {

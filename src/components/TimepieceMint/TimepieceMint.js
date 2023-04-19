@@ -229,7 +229,7 @@ const TimePieceMint = ({
               )}
             </div>
           </div>
-          <span className="land-name" style={{ color: textColor }}>
+          <span className="land-name">
             Available CAWS NFTs to mint:{" "}
             <span className="addr-text" style={{ color: "rgb(123, 216, 176)" }}>
               {cawsArray.length}
@@ -237,7 +237,7 @@ const TimePieceMint = ({
           </span>{" "}
           <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
             <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-              <span className="land-name" style={{ color: textColor }}>
+              <span className="land-name">
                 Name
               </span>
               <div className="borderText borderText2" style={{ width: "100%" }}>
@@ -250,7 +250,7 @@ const TimePieceMint = ({
               </div>
             </div>
             <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-              <span className="land-name" style={{ color: textColor }}>
+              <span className="land-name">
                 Description
               </span>
             </div>
@@ -332,7 +332,7 @@ const TimePieceMint = ({
           </span>
           <hr className="mint-divider m-0" />
           {cawsArray.length > 0 && nftCount > 0 && (
-            <span className="land-name" style={{ color: textColor }}>
+            <span className="land-name">
               CAWS Timepiece NFTs left:{" "}
               <span
                 className="addr-text"
@@ -341,7 +341,17 @@ const TimePieceMint = ({
                 {cawsArray.length - nftCount}
               </span>
             </span>
-          )}
+          )}  {mintStatus.length > 0 && (
+              <span style={{ color: textColor }}
+                className={
+                  mintStatus.includes("Success")
+                    ? "mint-span-success"
+                    : "mint-span"
+                }
+              >
+                {mintStatus}
+              </span>
+            )}
           <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
             <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-end w-100">
               <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
@@ -430,6 +440,7 @@ const TimePieceMint = ({
                     )}
                   </button>
                 </div>
+              
               </div>
             </div>
           </div>
