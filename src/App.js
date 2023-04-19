@@ -313,7 +313,7 @@ function App() {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
-              // updateLandNft();
+              checkCawsToUse();
             })
             .catch((e) => {
               console.error(e);
