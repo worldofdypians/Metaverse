@@ -299,7 +299,6 @@ const Roadmap = () => {
       date: "Apr 2023",
       image: timepieceRoadmap,
     },
-   
   ];
   const slider = useRef();
 
@@ -339,7 +338,7 @@ const Roadmap = () => {
             >
               <Slider ref={(c) => (slider.current = c)} {...settings}>
                 <div className="d-flex flex-column gap-3">
-                <div
+                  <div
                     className="roadmap-main-update position-relative"
                     style={{ visibility: "hidden" }}
                   >
@@ -405,7 +404,6 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                 
                   {mainUpdate.slice(4, 7).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
@@ -425,7 +423,6 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  
                   {mainUpdate.slice(7, mainUpdate.length).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img

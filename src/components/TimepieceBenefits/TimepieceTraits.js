@@ -2,6 +2,7 @@ import React from "react";
 import "./_timepiecebenefits.scss";
 import timepieceBanner2 from "../../screens/Timepiece/assets/timepieceBanner2.png";
 import whitearrow from './assets/whitearrow.svg'
+import raritytools from './assets/raritytools.svg'
 
 const TimePieceTraits = () => {
   return (
@@ -35,8 +36,10 @@ const TimePieceTraits = () => {
               href="https://rarity.tools"
               target="_blank"
               className="timepiece-border"
+              style={{textDecoration: 'none'}}
             >
-              <button className="btn timepiece-btn px-5">
+              <button className="btn timepiece-btn px-5 d-flex align-items-center">
+                <img src={raritytools} alt='' className="mx-2"/>
                 Rarity Tools
               <img src={whitearrow} alt=''/>
               </button>

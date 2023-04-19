@@ -176,7 +176,7 @@ const TimePieceMint = ({
         <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height-2">
           <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
             <div className="d-flex flex-column position-relative">
-              {showBadge && (
+              {showBadge && totalCreated > 0 && (
                 <div className="totalcreated">
                   <span>{totalCreated}</span>
                 </div>
@@ -250,7 +250,7 @@ const TimePieceMint = ({
             <div className="mint-benefits-grid">
               {benefits.map((item) => (
                 <div className="d-flex align-items-center gap-2">
-                  <img src={require(`./assets/${item.icon}.png`)} alt="" />
+                  <img src={require(`./assets/${item.icon}.png`)} alt="" style={{scale: item.icon === 'expand' ? '0.8' : '1'}}/>
                   <span className="mint-benefits-title">{item.title}</span>
                 </div>
               ))}

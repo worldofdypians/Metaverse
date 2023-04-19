@@ -322,6 +322,11 @@ function App() {
       }
       settimepieceMetadata(metadataArray)
     }
+    else {
+      settimepieceMetadata(metadataArray)
+      setTotalTimepieceCreated(0)
+
+    }
   };
 
 
