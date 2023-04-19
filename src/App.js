@@ -25,6 +25,7 @@ import PartnerForm from "./screens/PartnerForm/PartnerForm";
 import NFTEvent from "./screens/NFTEvent/NFTEvent";
 import WalletModal from "./components/WalletModal/WalletModal";
 import TimePiece from "./screens/Timepiece/Timepiece";
+import axios from "axios";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -56,6 +57,9 @@ function App() {
   const [finalCaws, setFinalCaws] = useState([]);
   const [limit, setLimit] = useState(0);
   const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
+  const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0)
+  const [timepieceMetadata, settimepieceMetadata] = useState([])
+
 
   const handleRegister = () => {
     setShowWalletModal(true);
@@ -295,17 +299,42 @@ function App() {
     }
   };
 
+  const getTimepieceNftMinted = async () => {
+    const result = await window.caws_timepiece.calculateTimepieceBalance(
+      coinbase
+    );
+    setTotalTimepieceCreated(result)
+    let metadataArray = []
+    if (result && result > 0) {
+      for (let index = 0; index < result; index++) {
+        const tokenId =
+          +(await window.caws_timepiece.getCawsTimepieceTokenByIndex(
+            coinbase,
+            index
+          ));
+
+        const tokenMetaDataURI =
+          await window.caws_timepiece.getCawsTimepieceURI(tokenId);
+
+        const dataURI = await axios.get(tokenMetaDataURI)
+        metadataArray.push(dataURI.data)
+        
+      }
+      settimepieceMetadata(metadataArray)
+    }
+  };
+
+
   const handleTimepieceMint = async (data) => {
     if (isConnected) {
       try {
         //Check Whitelist
-        // let whitelist = await window.checkWhitelist(connectedWallet)
         let whitelist = 1;
 
         if (parseInt(whitelist) === 1) {
           setmintloading("mint");
           setmintStatus("Minting in progress...");
-              settextColor("rgb(123, 216, 176)");
+          settextColor("rgb(123, 216, 176)");
           // console.log(data,finalCaws, totalCawsDiscount);
           let tokenId = await window.caws_timepiece
             .claimTimepiece(finalCaws)
@@ -336,16 +365,6 @@ function App() {
                 setmintStatus("");
               }, 5000);
             });
-
-          // if (isNaN(Number(tokenId))) {
-          //   setmintloading("error");
-          //   setmintStatus("Invalid Token ID");
-          //   setTimeout(() => {
-          //     setmintloading("initial");
-          //     setmintStatus("");
-          //   }, 5000);
-          //   throw new Error("Invalid Token ID");
-          // }
 
           if (tokenId) {
             let getNftData = await window.getNft(tokenId);
@@ -404,6 +423,7 @@ function App() {
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
+      getTimepieceNftMinted();
     }
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
@@ -475,6 +495,8 @@ function App() {
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
               />
             }
           />

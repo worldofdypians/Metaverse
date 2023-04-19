@@ -3167,15 +3167,6 @@ class CAWS_TIMEPIECE {
       };
     });
 
-    ["approve"].forEach((fn_name) => {
-      this[fn_name] = async function (...args) {
-        let contract = await getContractCawsTimepieceNFT(this.key);
-        return await contract.methods[fn_name](...args).send({
-          from: await getCoinbase(),
-        });
-      };
-    });
-
     ["claimTimepiece"].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
         let contract = await getContractCawsTimepieceNFT(this.key);
@@ -3185,23 +3176,7 @@ class CAWS_TIMEPIECE {
       };
     });
 
-    ["setApprovalForAll"].forEach((fn_name) => {
-      this[fn_name] = async function (...args) {
-        let contract = await getContractCawsTimepieceNFT(this.key);
-        return await contract.methods[fn_name](...args).send({
-          from: await getCoinbase(),
-        });
-      };
-    });
-
-    ["withdraw"].forEach((fn_name) => {
-      this[fn_name] = async function (...args) {
-        let contract = await getContractCawsTimepieceNFT(this.key);
-        return await contract.methods[fn_name](...args).send({
-          from: await getCoinbase(),
-        });
-      };
-    });
+  
   }
 
   async claimTimepiece(cawsArray) {
@@ -3211,29 +3186,28 @@ class CAWS_TIMEPIECE {
     });
   }
 
-  //tbd timepiece
-  async approveTimepiece(cawsArray) {
-    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
-    return await nft_contract.methods
-      .claimRewards(cawsArray)
-      .send({ from: await getCoinbase() });
-  }
 
-  async timepieceSetApproval(address, approval) {
-    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
-    return await nft_contract.methods.setApprovalForAll(address, approval).send({ from: await getCoinbase() });
-  }
 
   async calculateTimepieceBalance(address) {
     let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
     return await nft_contract.methods
-      .balanceOf(address, tokenArray)
+      .balanceOf(address)
       .call();
   }
 
   async getCawsUsedinTimepiece(address) {
     let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
     return await nft_contract.methods.cawsUsed(address).call();
+  }
+
+  async getCawsTimepieceURI(tokenId) {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods.tokenURI(tokenId).call();
+  }
+
+  async getCawsTimepieceTokenByIndex(address,tokenId) {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods.tokenOfOwnerByIndex(address,tokenId).call();
   }
 
 }
