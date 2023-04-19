@@ -43,7 +43,7 @@ const TimepieceItem = ({
             className="sub-container"
           >
             <img
-              src={nft.image.replace("images", "thumbs")}
+              src={nft.image}
               className="nft-img"
               alt=""
             />
@@ -52,7 +52,7 @@ const TimepieceItem = ({
                 color: "#C0CBF7", fontSize: 14
               }}
             >
-              CAWS Timepiece {checklistItemID}
+              {String(nft.name)}
             </p>
             <div className="footer" style={{ flexDirection: "column" }}>
               <div className="d-flex w-100 justify-content-between align-baseline">
@@ -62,7 +62,7 @@ const TimepieceItem = ({
                     color: "#F7F7FC",
                   }}
                 >
-                  {String(nft.name)}
+                  {String(nft.name.slice(15,nft.name.length))}
                 </p>
                 
               </div>

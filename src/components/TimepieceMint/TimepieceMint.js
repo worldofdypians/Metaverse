@@ -176,7 +176,7 @@ const TimePieceMint = ({
         <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height-2">
           <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
             <div className="d-flex flex-column position-relative">
-              {showBadge && (
+              {showBadge && totalCreated > 0 && (
                 <div className="totalcreated">
                   <span>{totalCreated}</span>
                 </div>
