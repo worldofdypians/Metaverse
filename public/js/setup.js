@@ -1930,6 +1930,12 @@ window.config = {
   landnft_address: "0xcd60d912655281908ee557ce1add61e983385a03",
   landnftstake_address: "0x6821710b0d6e9e10acfd8433ad023f874ed782f1",
 
+  /* WOD CAWS NFT */
+  wod_caws_address: "0xd324a03bf17eee8d34a8843d094a76ff8f561e38",
+
+  /* CAWS TIMEPIECE NFT */
+  caws_timepiece_address: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+
   /* MINT LANDNFT GOERLI */
   // landnft_address: "0x1a6101ec1364cc1bb671a2be2a6c2fd0764b3dfc",
   // landnftstake_address: "0x428d702b625dc2a917d087679e5cf99bddbcdd13",
@@ -2969,6 +2975,241 @@ class LANDNFT {
     return time;
   }
 }
+
+/**
+ *
+ * @param {"TOKEN" | "WOD_CAWS" } key
+ */
+async function getContractWodCawsNFT(key) {
+  let ABI = window[key + "_ABI"];
+  let address = window.config[key.toLowerCase() + "_address"];
+  if (!window.cached_contracts[key]) {
+    window.web3 = new Web3(window.ethereum);
+    window.cached_contracts[key] = new window.web3.eth.Contract(
+      window.WOD_CAWS_ABI,
+      address,
+      {
+        from: await getCoinbase(),
+      }
+    );
+  }
+
+  return window.cached_contracts[key];
+}
+
+class WOD_CAWS {
+  constructor(key = "WOD_CAWS") {
+    this.key = key;
+    [
+      "LOCKUP_TIME",
+      "WoDcontractaddress",
+      "calculateReward",
+      "calculateRewards",
+      "depositsOf",
+      "depositsOfWoD",
+      "erc20Address",
+      "expiration",
+      "onERC721Received",
+      "owner",
+      "paused",
+      "rate",
+      "stakingDestinationAddress",
+      "stakingTime",
+    ].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractWodCawsNFT(this.key);
+        return await contract.methods[fn_name](...args).call();
+      };
+    });
+
+    ["deposit"].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractWodCawsNFT(this.key);
+        return await contract.methods[fn_name](...args).send({
+          from: await getCoinbase(),
+        });
+      };
+    });
+
+    ["claimRewards"].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractWodCawsNFT(this.key);
+        return await contract.methods[fn_name](...args).send({
+          from: await getCoinbase(),
+        });
+      };
+    });
+
+    ["withdraw"].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractWodCawsNFT(this.key);
+        return await contract.methods[fn_name](...args).send({
+          from: await getCoinbase(),
+        });
+      };
+    });
+
+    ["withdrawTokens"].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractWodCawsNFT(this.key);
+        return await contract.methods[fn_name](...args).send({
+          from: await getCoinbase(),
+        });
+      };
+    });
+  }
+
+  async depositWodCaws(cawsArray, landArray) {
+    const nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    let second = await nft_contract.methods.deposit(cawsArray, landArray).send({
+      from: await getCoinbase(),
+    });
+  }
+
+  async claimRewardsWodCaws(cawsArray) {
+    let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    return await nft_contract.methods
+      .claimRewards(cawsArray)
+      .send({ from: await getCoinbase() });
+  }
+
+  async withdrawWodCaws(cawsArray, landArray) {
+    let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    return await nft_contract.methods
+      .withdraw(cawsArray, landArray)
+      .send({ from: await getCoinbase() });
+  }
+
+  async calculateRewardWodCaws(address, tokenId) {
+    let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    return await nft_contract.methods.calculateReward(address, tokenId).call();
+  }
+
+  async calculateRewardsWodCaws(address, tokenArray) {
+    let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    return await nft_contract.methods
+      .calculateRewards(address, tokenArray)
+      .call();
+  }
+
+  async depositsOfCaws(address) {
+    let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    return await nft_contract.methods.depositsOf(address).call();
+  }
+
+  async depositsOfWod(address) {
+    let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    return await nft_contract.methods.depositsOfWoD(address).call();
+  }
+
+  async checkLockupTimeWodCaws() {
+    let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    const time = await nft_contract.methods.LOCKUP_TIME().call();
+
+    return time;
+  }
+
+  async checkStakingTimeWodCaws(address) {
+    let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    const stakingTime = await nft_contract.methods.stakingTime(address).call();
+
+    return stakingTime;
+  }
+}
+
+window.wod_caws = new WOD_CAWS();
+
+/**
+ *
+ * @param {"TOKEN" | "CAWS_TIMEPIECE" } key
+ */
+async function getContractCawsTimepieceNFT(key) {
+  let ABI = window[key + "_ABI"];
+  let address = window.config[key.toLowerCase() + "_address"];
+  if (!window.cached_contracts[key]) {
+    window.web3 = new Web3(window.ethereum);
+    window.cached_contracts[key] = new window.web3.eth.Contract(
+      window.CAWS_TIMEPIECE_ABI,
+      address,
+      {
+        from: await getCoinbase(),
+      }
+    );
+  }
+
+  return window.cached_contracts[key];
+}
+
+class CAWS_TIMEPIECE {
+  constructor(key = "CAWS_TIMEPIECE") {
+    this.key = key;
+    [
+      "MAX_TIMEPIECE",
+      "balanceOf",
+      "baseURI",
+      "cawsContract",
+      "cawsUsed",
+      "getApproved",
+      "isApprovedForAll",
+      "maxTimepieceClaim",
+      "name",
+      "tokenByIndex",
+      "tokenOfOwnerByIndex",
+      "tokenURI",
+      "totalSupply",
+    ].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractCawsTimepieceNFT(this.key);
+        return await contract.methods[fn_name](...args).call();
+      };
+    });
+
+    ["claimTimepiece"].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractCawsTimepieceNFT(this.key);
+        return await contract.methods[fn_name](...args).send({
+          from: await getCoinbase(),
+        });
+      };
+    });
+  }
+
+  async claimTimepiece(cawsArray) {
+    const nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    let second = await nft_contract.methods.claimTimepiece(cawsArray).send({
+      from: await getCoinbase(),
+    });
+  }
+
+  async calculateTimepieceBalance(address) {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods.balanceOf(address).call();
+  }
+
+  async getTimepieceLatestMint() {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods.totalSupply().call();
+  }
+
+  async getCawsUsedinTimepiece(address) {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods.cawsUsed(address).call();
+  }
+
+  async getCawsTimepieceURI(tokenId) {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods.tokenURI(tokenId).call();
+  }
+
+  async getCawsTimepieceTokenByIndex(address, tokenId) {
+    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    return await nft_contract.methods
+      .tokenOfOwnerByIndex(address, tokenId)
+      .call();
+  }
+}
+
+window.caws_timepiece = new CAWS_TIMEPIECE();
 
 window.landnft = new LANDNFT();
 
@@ -6596,6 +6837,733 @@ window.NFT_ABI = [
     name: "setStartingIndex",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "startingIndex",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "startingIndexBlock",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
+    name: "supportsInterface",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "index", type: "uint256" }],
+    name: "tokenByIndex",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "uint256", name: "index", type: "uint256" },
+    ],
+    name: "tokenOfOwnerByIndex",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    name: "tokenURI",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "transferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+window.WOD_CAWS_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_stakingDestinationAddress",
+        type: "address",
+      },
+      { internalType: "address", name: "_WoDcontractaddress", type: "address" },
+      { internalType: "uint256", name: "_rate", type: "uint256" },
+      { internalType: "uint256", name: "_expiration", type: "uint256" },
+      { internalType: "address", name: "_erc20Address", type: "address" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newExpiration",
+        type: "uint256",
+      },
+    ],
+    name: "ExpirationChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newLockTime",
+        type: "uint256",
+      },
+    ],
+    name: "LockTimeChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "Paused",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newRate",
+        type: "uint256",
+      },
+    ],
+    name: "RateChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "Unpaused",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "LOCKUP_TIME",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "WoDcontractaddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "_depositBlocks",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "account", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "calculateReward",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "account", type: "address" },
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+    ],
+    name: "calculateRewards",
+    outputs: [
+      { internalType: "uint256[]", name: "rewards", type: "uint256[]" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+    ],
+    name: "claimRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+      { internalType: "uint256[]", name: "tokenIdsWoD", type: "uint256[]" },
+    ],
+    name: "deposit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "depositsOf",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "depositsOfWoD",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+      { internalType: "uint256[]", name: "tokenIdsWoD", type: "uint256[]" },
+    ],
+    name: "emergencyWithdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "erc20Address",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "expiration",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: "bytes", name: "", type: "bytes" },
+    ],
+    name: "onERC721Received",
+    outputs: [{ internalType: "bytes4", name: "", type: "bytes4" }],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "pause",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "paused",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "rate",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_expiration", type: "uint256" }],
+    name: "setExpiration",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_lockTime", type: "uint256" }],
+    name: "setLockTime",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_rate", type: "uint256" }],
+    name: "setRate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakingDestinationAddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "stakingTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "unpause",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+      { internalType: "uint256[]", name: "tokenIdsWoD", type: "uint256[]" },
+    ],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+window.CAWS_TIMEPIECE_ABI = [
+  {
+    inputs: [
+      { internalType: "string", name: "name", type: "string" },
+      { internalType: "string", name: "symbol", type: "string" },
+      { internalType: "uint256", name: "maxNftSupply", type: "uint256" },
+      { internalType: "uint256", name: "saleStart", type: "uint256" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "approved",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "operator",
+        type: "address",
+      },
+      { indexed: false, internalType: "bool", name: "approved", type: "bool" },
+    ],
+    name: "ApprovalForAll",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "MAX_TIMEPIECE",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "REVEAL_TIMESTAMP",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "Timepiece_PROVENANCE",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "approve",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "baseURI",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "cawsContract",
+    outputs: [
+      { internalType: "contract CawsContract", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "cawsUsed",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+    ],
+    name: "claimTimepiece",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "emergencySetStartingIndexBlock",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "flipSaleState",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    name: "getApproved",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "operator", type: "address" },
+    ],
+    name: "isApprovedForAll",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "maxTimepieceClaim",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "nextOwnerToExplicitlySet",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    name: "ownerOf",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "safeTransferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "bytes", name: "_data", type: "bytes" },
+    ],
+    name: "safeTransferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "saleIsActive",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "operator", type: "address" },
+      { internalType: "bool", name: "approved", type: "bool" },
+    ],
+    name: "setApprovalForAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "tokenURI", type: "string" }],
+    name: "setBaseURI",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "string", name: "provenanceHash", type: "string" },
+    ],
+    name: "setProvenanceHash",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "revealTimeStamp", type: "uint256" },
+    ],
+    name: "setRevealTimestamp",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "setStartingIndex",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakeContractCAWS",
+    outputs: [
+      { internalType: "contract StakeContract", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakeContractWoD",
+    outputs: [
+      { internalType: "contract StakeContract", name: "", type: "address" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -30434,76 +31402,76 @@ window.checkWhitelistWod = function (address) {
 };
 
 const landWhitelist = [
-"0xb437a90e59785740a67fc5376180acc3b705edc4",
-"0xb4bd860f00df73559fa73df86ddb644f1a1c4ff3",
-"0xbd94fef81f1aee361adcaeac035c7eacbb8866fc",
-"0x0291a10ff53fedf62100c1051e93aa52544be85a",
-"0x6caa65efd794163141f7a0a44d6f93f3146e4dff",
-"0x13b8dacbed3be5709d6ff9639f185585b5258c9c",
-"0xe59455b7d61dba7d70db666a8930d4152400e9a6",
-"0xf1b4d55cf1d309e3c1914aa6025d90ffd24910f9",
-"0xa2b3bac969f034cc5df5a517a7f3660ae5c15bed",
-"0xc889fce92f9a29b29f8bd28050beca87afe594b9",
-"0x9912a0a767e06566b356cb17521b3e3c13ecb4ed",
-"0x2ce99f178daa9c3ac5a3ac86e22800c5bb011739",
-"0x2739b27a2b7da09e57e209f41753df6089da1b7e",
-"0xbfa3b43b735971b7f1a92028a975b44e1dfc157a",
-"0x3d0a87a9c3a31291e6952d4cb7b154f38a4bd63f",
-"0x8010b39a468fc2a05b7f213bdbdec8ac1b3cb24f",
-"0x9bd215c2530df574657510b2f991d5c326df7c50",
-"0x888147e9c6d943fc33ef8ac65d042c22c0a9ebf2",
-"0xa1f1b0daa0710b30f05194b12d0e1c47955032fe",
-"0xbb504f45adb368da44ccbb50f5142faa648c755b",
-"0xa8517fd6063c55256f9afbdbd3aa4e472ad1ac3c",
-"0xd732d553192277f48d591932d3f4ec7a405db191",
-"0x7990b8405160155d8e9cf27442680aea48b94747",
-"0x92a76b0c8af74ffbcb7e5917469f68bf5a33fa0f",
-"0xc2f2aa353e02b9590829319289556bdb3f02dee4",
-"0xfd7fef4c21fe27d06c419c126302051066a76b6a",
-"0x73b679f48dfa71e044b8eee478d22622dbdcb806",
-"0xc70c5488bd2eca4cd345007e14fa2e1cd45da711",
-"0x971560fe12837755b6ecb2c8c21effe8442325f3",
-"0x38c006dc41f3c2cd004b79c31bcd194b1c0e273d",
-"0x9a366ab27ca08138b7a73e47222b1cad29f5c783",
-"0x840e22d01aaea97b7bfad7089a994e427646ad2d",
-"0x827fb1efb4b247bf5297c25161920e77630954b6",
-"0x11a9550ae67fc85554933d26eec9715d01483018",
-"0x743bb8871ca88eb46cb87508ceaf9163e0633dd4",
-"0xf7daa481ca09b2818552c9c5d56d5cc88cf18047",
-"0x6310d0ad15c12a42d278e1234d3b087e140aeaa0",
-"0x5b70e4587a5fc8e35ebfe6548f2b3adb1724f02f",
-"0x5a3a549aea8be363d0cf797c53fb1d0932e2d17a",
-"0x4a437b6078cfb41bc599c4379a9d27259f1948df",
-"0xfb3cd59bc2f9d68c97a6e823cb1fc75ea96ead64",
-"0xfacfbb40f154b650206415163c401f3174febbc4",
-"0x4ea58393ffed8af72e3c0188de8fda3f8774fff6",
-"0x0ef5633ccf06ea7dd4d2031d4d2e958d6f97305f",
-"0x5dcff15a0e3ed0ffa1d143e0bc773af017834f56",
-"0x037237b1f278cf7e2c94ae93e9770d7aa8e3499b",
-"0x6d31ddc5fba308b3f4678c5e377ae10dfec8c5e1",
-"0x8fdf9a7cf1f761edd912eeddf8a0dccab6ae63d5",
-"0x5285638aa28e0c9e65807a80cd6e29f9427c25f4",
-"0x08bfde32b96088c9905582ff9e26af3452a4c3a3",
-"0xbc5e4b002af645d4790e6c5a358f865d89d97073",
-"0x8c999b813a7b5ca3852f814a63ea5621f2255da9",
-"0x4535f7043f42faf785c8deed1ef46b170eabc9f2",
-"0x3fdc5c80b0d5146c0911652806d7f9a4fa65c6ee",
-"0x293f89d437e0e076a01d15a6718d6d5d66223193",
-"0x9785e7b42e9d08c1e2e17f21c9c110576d520a09",
-"0x0ce02d3a89efa218cd0f486514cae77d74b88bee",
-"0x440cd0a093aad60b77ee56965cc60c2381652726",
-"0xa44AdcFeD2B09Cd13b97134Bc37dCC3Fe6964e5e",
-"0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
-"0xF4914F025b45798F634fBE638d33701FBff3274A",
-"0x170ff9ce71675ce4a1a6cbe72ba4431eedf71cd5",
-"0x781424EE37831c0693334Dd3CB5CB90a1A77E279",
-"0x3918bD07A8351eEfb46D8b3F5BC1CD3352363068",
-"0x2312D7126a0a87114D018E762dc6CAf8A74f04a8",
-"0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-"0xAF6a58AdEd7d46167957F071dD647519f1b3c964",
-"0xd732D553192277F48D591932D3f4Ec7A405db191",
-"0x2B838A5a2B8A2E80E965f1Fc9dFED63F1cC269Fd",
-"0x44601Ec1949110ae6ED02104f6a3eB327C8443C8",
+  "0xb437a90e59785740a67fc5376180acc3b705edc4",
+  "0xb4bd860f00df73559fa73df86ddb644f1a1c4ff3",
+  "0xbd94fef81f1aee361adcaeac035c7eacbb8866fc",
+  "0x0291a10ff53fedf62100c1051e93aa52544be85a",
+  "0x6caa65efd794163141f7a0a44d6f93f3146e4dff",
+  "0x13b8dacbed3be5709d6ff9639f185585b5258c9c",
+  "0xe59455b7d61dba7d70db666a8930d4152400e9a6",
+  "0xf1b4d55cf1d309e3c1914aa6025d90ffd24910f9",
+  "0xa2b3bac969f034cc5df5a517a7f3660ae5c15bed",
+  "0xc889fce92f9a29b29f8bd28050beca87afe594b9",
+  "0x9912a0a767e06566b356cb17521b3e3c13ecb4ed",
+  "0x2ce99f178daa9c3ac5a3ac86e22800c5bb011739",
+  "0x2739b27a2b7da09e57e209f41753df6089da1b7e",
+  "0xbfa3b43b735971b7f1a92028a975b44e1dfc157a",
+  "0x3d0a87a9c3a31291e6952d4cb7b154f38a4bd63f",
+  "0x8010b39a468fc2a05b7f213bdbdec8ac1b3cb24f",
+  "0x9bd215c2530df574657510b2f991d5c326df7c50",
+  "0x888147e9c6d943fc33ef8ac65d042c22c0a9ebf2",
+  "0xa1f1b0daa0710b30f05194b12d0e1c47955032fe",
+  "0xbb504f45adb368da44ccbb50f5142faa648c755b",
+  "0xa8517fd6063c55256f9afbdbd3aa4e472ad1ac3c",
+  "0xd732d553192277f48d591932d3f4ec7a405db191",
+  "0x7990b8405160155d8e9cf27442680aea48b94747",
+  "0x92a76b0c8af74ffbcb7e5917469f68bf5a33fa0f",
+  "0xc2f2aa353e02b9590829319289556bdb3f02dee4",
+  "0xfd7fef4c21fe27d06c419c126302051066a76b6a",
+  "0x73b679f48dfa71e044b8eee478d22622dbdcb806",
+  "0xc70c5488bd2eca4cd345007e14fa2e1cd45da711",
+  "0x971560fe12837755b6ecb2c8c21effe8442325f3",
+  "0x38c006dc41f3c2cd004b79c31bcd194b1c0e273d",
+  "0x9a366ab27ca08138b7a73e47222b1cad29f5c783",
+  "0x840e22d01aaea97b7bfad7089a994e427646ad2d",
+  "0x827fb1efb4b247bf5297c25161920e77630954b6",
+  "0x11a9550ae67fc85554933d26eec9715d01483018",
+  "0x743bb8871ca88eb46cb87508ceaf9163e0633dd4",
+  "0xf7daa481ca09b2818552c9c5d56d5cc88cf18047",
+  "0x6310d0ad15c12a42d278e1234d3b087e140aeaa0",
+  "0x5b70e4587a5fc8e35ebfe6548f2b3adb1724f02f",
+  "0x5a3a549aea8be363d0cf797c53fb1d0932e2d17a",
+  "0x4a437b6078cfb41bc599c4379a9d27259f1948df",
+  "0xfb3cd59bc2f9d68c97a6e823cb1fc75ea96ead64",
+  "0xfacfbb40f154b650206415163c401f3174febbc4",
+  "0x4ea58393ffed8af72e3c0188de8fda3f8774fff6",
+  "0x0ef5633ccf06ea7dd4d2031d4d2e958d6f97305f",
+  "0x5dcff15a0e3ed0ffa1d143e0bc773af017834f56",
+  "0x037237b1f278cf7e2c94ae93e9770d7aa8e3499b",
+  "0x6d31ddc5fba308b3f4678c5e377ae10dfec8c5e1",
+  "0x8fdf9a7cf1f761edd912eeddf8a0dccab6ae63d5",
+  "0x5285638aa28e0c9e65807a80cd6e29f9427c25f4",
+  "0x08bfde32b96088c9905582ff9e26af3452a4c3a3",
+  "0xbc5e4b002af645d4790e6c5a358f865d89d97073",
+  "0x8c999b813a7b5ca3852f814a63ea5621f2255da9",
+  "0x4535f7043f42faf785c8deed1ef46b170eabc9f2",
+  "0x3fdc5c80b0d5146c0911652806d7f9a4fa65c6ee",
+  "0x293f89d437e0e076a01d15a6718d6d5d66223193",
+  "0x9785e7b42e9d08c1e2e17f21c9c110576d520a09",
+  "0x0ce02d3a89efa218cd0f486514cae77d74b88bee",
+  "0x440cd0a093aad60b77ee56965cc60c2381652726",
+  "0xa44AdcFeD2B09Cd13b97134Bc37dCC3Fe6964e5e",
+  "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
+  "0xF4914F025b45798F634fBE638d33701FBff3274A",
+  "0x170ff9ce71675ce4a1a6cbe72ba4431eedf71cd5",
+  "0x781424EE37831c0693334Dd3CB5CB90a1A77E279",
+  "0x3918bD07A8351eEfb46D8b3F5BC1CD3352363068",
+  "0x2312D7126a0a87114D018E762dc6CAf8A74f04a8",
+  "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+  "0xAF6a58AdEd7d46167957F071dD647519f1b3c964",
+  "0xd732D553192277F48D591932D3f4Ec7A405db191",
+  "0x2B838A5a2B8A2E80E965f1Fc9dFED63F1cC269Fd",
+  "0x44601Ec1949110ae6ED02104f6a3eB327C8443C8",
   "0x92b8260899accb00a8094aba038ef48b17d42d31",
   "0xf4a7ff0b26d619c2a4f7a24549634198f147ecbc",
   "0x2dfecfb542983171b7b0f7466f74d4ad1e5e2072",
