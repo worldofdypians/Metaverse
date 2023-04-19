@@ -13,7 +13,7 @@ const TimepieceBenefits = () => {
       title: "Enhanced Interactions",
       icon: "user",
       content:
-        "Enhance your experience in the World of Dypians Metaverse platform by unlocking unique and exclusive activities that are only available to Timepiece NFT holders. Connect with other Dypians and enjoy enhanced interactions within the platform.",
+        "Experience enhanced interactions in the World of Dypians Metaverse platform by unlocking unique and exclusive activities that are only available to Timepiece NFT holders. Connect with other Dypians in new and exciting ways, and take your Metaverse experience to the next level.",
     },
     {
       title: "Special Rewards",
