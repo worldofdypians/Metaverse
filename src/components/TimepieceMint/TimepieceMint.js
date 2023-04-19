@@ -27,9 +27,11 @@ const TimePieceMint = ({
   chainId,
   nftName,
   textColor,
+  cawsArray,
+  calculateCaws,
 }) => {
   const [nftCount, setNftCount] = useState(1);
-  const [nftStatus, setNftStatus] = useState("*10 NFT limit");
+  const [nftStatus, setNftStatus] = useState("*50 NFT limit");
   const [status, setStatus] = useState("Connect your wallet.");
 
   const [showBadge, setshowBadge] = useState(false);
@@ -50,7 +52,7 @@ const TimePieceMint = ({
   const addNft = () => {
     if (nftCount === null) {
       setNftCount(1);
-    } else if (nftCount < 10) {
+    } else if (nftCount < cawsArray.length) {
       setNftCount(nftCount + 1);
     }
   };
@@ -84,14 +86,30 @@ const TimePieceMint = ({
   ];
 
   useEffect(() => {
-    if (nftCount > 10) {
-      setNftStatus("*Exceeded mint limit of 10 NFTs.");
-      setTimeout(() => {
-        setNftCount(10);
-        setNftStatus("*10 NFT limit.");
-      }, 3000);
+    if (coinbase && chainId === 1) {
+      if (cawsArray.length === 0) {
+        setNftStatus("*You are not holding any CAWS NFT.");
+      } else if (cawsArray.length > 0) {
+        if (cawsArray.length < nftCount && cawsArray.length > 0) {
+          setNftStatus("*You don't have enough CAWS NFTs.");
+          setTimeout(() => {
+            setNftCount(cawsArray.length);
+            setNftStatus("*50 NFT limit.");
+          }, 3000);
+        }
+       else if (nftCount > 50 && cawsArray.length === 50) {
+          setNftStatus("*Exceeded mint limit of 10 NFTs.");
+          setTimeout(() => {
+            setNftCount(cawsArray.length);
+            setNftStatus("*50 NFT limit.");
+          }, 3000);
+        } else if (cawsArray.length > 0 && cawsArray.length >= nftCount) {
+          setNftStatus("*50 NFT limit.");
+          
+        };
+      }
     }
-  }, [nftCount]);
+  }, [nftCount, coinbase, cawsArray.length]);
 
   useEffect(() => {
     if (isConnected) {
@@ -108,6 +126,20 @@ const TimePieceMint = ({
     }
   }, [isConnected, chainId, coinbase]);
 
+
+  useEffect(() => {
+    if (isConnected) {
+      calculateCaws({
+        numberOfTokens: parseInt(nftCount),
+      });
+    }
+  }, [
+    nftCount,
+    isConnected,
+    coinbase,
+    chainId, cawsArray.length
+  ]);
+
   return (
     <div className="row justify-content-between align-items-center w-100 mx-0 px-3 py-3 p-lg-5">
       <div className="d-flex flex-column align-items-center justify-content-center gap-3 mb-4">
@@ -121,11 +153,14 @@ const TimePieceMint = ({
           </span>
         </h6>
         <span className="tiers-desc">
-        Mint your CAWS Timepiece NFT for free using your original CAWS NFT and unlock exclusive metaverse benefits.{" "}
-   
+          Mint your CAWS Timepiece NFT for free using your original CAWS NFT and
+          unlock exclusive metaverse benefits.{" "}
         </span>
       </div>
-      <div className="col-12 col-md-12 col-xxl-8 mt-0 px-0" style={{overflowX: 'hidden'}}>
+      <div
+        className="col-12 col-md-12 col-xxl-8 mt-0 px-0"
+        style={{ overflowX: "hidden" }}
+      >
         <div
           className="p-4 mint-wrappernew d-flex flex-column gap-5 justify-content-center staking-height"
           style={{ minHeight: "463px" }}
@@ -149,15 +184,15 @@ const TimePieceMint = ({
               ))}
             </div>
             <img
-                src={require("./assets/timepiecepopup.webp")}
-                alt="land nft"
-                className="w-100 d-flex d-lg-none"
-              />
+              src={require("./assets/timepiecepopup.webp")}
+              alt="land nft"
+              className="w-100 d-flex d-lg-none"
+            />
           </div>
         </div>
       </div>
-      <div className="col-12 col-md-12 col-xxl-4 mt-5  mt-xxl-0">
-        <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height">
+      <div className="col-12 col-md-12 col-xxl-4 mt-0">
+        <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
           <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
             <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
               <span className="create-land-title font-poppins ">
@@ -194,9 +229,15 @@ const TimePieceMint = ({
               )}
             </div>
           </div>
-          <div className="d-flex mt-3 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
+          <span className="land-name">
+            Available CAWS NFTs to mint:{" "}
+            <span className="addr-text" style={{ color: "rgb(123, 216, 176)" }}>
+              {cawsArray.length}
+            </span>
+          </span>{" "}
+          <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
             <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-              <span className="land-name" style={{ color: textColor }}>
+              <span className="land-name">
                 Name
               </span>
               <div className="borderText borderText2" style={{ width: "100%" }}>
@@ -204,37 +245,30 @@ const TimePieceMint = ({
                   className="land-placeholder mb-0"
                   style={{ marginLeft: 11 }}
                 >
-                  {nftName === "" ? "" : `#${nftName}`}
+                  {nftName === "" ? "" : `#CawsTimePiece`}
                 </h6>
               </div>
             </div>
             <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-              <span className="land-name" style={{ color: textColor }}>
+              <span className="land-name">
                 Description
               </span>
             </div>
           </div>
           <hr className="mint-divider m-0" />
-          <div className="d-flex align-items-center justify-content-between pb-4 position-relative gap-3">
+          <div className="d-flex align-items-center justify-content-between position-relative gap-3">
             <div className="input-container position-relative col-8 col-lg-6">
               <input
                 type="number"
                 placeholder="Nr. of CAWS TimePiece NFT to create"
-                max={10}
+                max={cawsArray.length}
                 min={1}
                 className="land-input w-100"
                 value={parseInt(nftCount)}
                 onChange={(e) => setNftCount(parseInt(e.target.value))}
               />
-              <span
-                className="limit-span"
-                style={{
-                  color: nftStatus.includes("Exceeded") ? "#D87B7B" : "#FFFFFF",
-                }}
-              >
-                {nftStatus}
-              </span>
             </div>
+
             <div className="d-flex align-items-center gap-3">
               <img
                 src={
@@ -262,7 +296,7 @@ const TimePieceMint = ({
               />
               <img
                 src={
-                  nftCount < 10 &&
+                  nftCount < cawsArray.length &&
                   nftCount >= 1 &&
                   isConnected === true &&
                   activeButton === true &&
@@ -287,21 +321,50 @@ const TimePieceMint = ({
               />
             </div>
           </div>
+          <span
+            className="limit-span position-relative"
+            style={{
+              color: nftStatus.includes("Exceeded") ? "#D87B7B" : "#FFFFFF",
+              bottom: "auto",
+            }}
+          >
+            {nftStatus}
+          </span>
           <hr className="mint-divider m-0" />
-
+          {cawsArray.length > 0 && nftCount > 0 && (
+            <span className="land-name">
+              CAWS Timepiece NFTs left:{" "}
+              <span
+                className="addr-text"
+                style={{ color: "rgb(123, 216, 176)" }}
+              >
+                {cawsArray.length - nftCount}
+              </span>
+            </span>
+          )}  {mintStatus.length > 0 && (
+              <span style={{ color: textColor }}
+                className={
+                  mintStatus.includes("Success")
+                    ? "mint-span-success"
+                    : "mint-span"
+                }
+              >
+                {mintStatus}
+              </span>
+            )}
           <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
             <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-end w-100">
-              {/* <div className="d-flex align-items-center gap-2">
-                <img src={mintEthIcon} alt="ethereum" />
-                <span className="eth-price">Price: 4 ETH</span>
-              </div> */}
               <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
                 <div
                   className={
-                    (isConnected === true && chainId !== 1) ||
+                    (isConnected === true &&
+                      chainId !== 1 &&
+                      cawsArray.length === 0) ||
                     (status !== "Connect your wallet." && status !== "") ||
-                    countdownFinished === false ||
-                    mintloading === "error"
+                    mintloading === "error" ||
+                    (isConnected === true &&
+                      chainId === 1 &&
+                      cawsArray.length === 0)
                       ? "linear-border-disabled"
                       : "linear-border"
                   }
@@ -310,17 +373,19 @@ const TimePieceMint = ({
                     className={`btn ${
                       mintloading === "error"
                         ? "filled-error-btn"
-                        : (isConnected === true && chainId !== 1) ||
+                        : (isConnected === true &&
+                            chainId !== 1 &&
+                            cawsArray.length === 0) ||
                           (status !== "Connect your wallet." &&
                             status !== "") ||
-                          countdownFinished === false
+                          (isConnected === true &&
+                            chainId === 1 &&
+                            cawsArray.length === 0)
                         ? "outline-btn-disabled"
                         : "filled-btn"
                     }  px-4 w-100`}
                     onClick={() => {
-                      isConnected === true &&
-                      (chainId === 1 || chainId === 5) &&
-                      countdownFinished === true
+                      isConnected === true && chainId === 1
                         ? handleCreate()
                         : showWalletConnect();
                     }}
@@ -329,7 +394,9 @@ const TimePieceMint = ({
                       mintloading === "success" ||
                       (isConnected === true && chainId !== 1) ||
                       (status !== "Connect your wallet." && status !== "") ||
-                      countdownFinished === false
+                      (isConnected === true &&
+                        chainId === 1 &&
+                        cawsArray.length === 0)
                         ? true
                         : false
                     }
@@ -373,6 +440,7 @@ const TimePieceMint = ({
                     )}
                   </button>
                 </div>
+              
               </div>
             </div>
           </div>

@@ -40,8 +40,11 @@ function App() {
   const [showForms2, setShowForms2] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
+  const [cawsToUse, setcawsToUse] = useState([]);
 
   const [mystakes, setMystakes] = useState([]);
+  const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
+
   const [myCAWstakes, setCAWMystakes] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
@@ -51,6 +54,8 @@ function App() {
   const [mintStatus, setmintStatus] = useState("");
   const [textColor, settextColor] = useState("#fff");
   const [finalCaws, setFinalCaws] = useState([]);
+  const [limit, setLimit] = useState(0);
+  const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
 
   const handleRegister = () => {
     setShowWalletModal(true);
@@ -216,17 +221,94 @@ function App() {
     setCAWMystakes(stakes);
   };
 
+  const getStakesIdsCawsWod = async () => {
+    const address = coinbase;
+    let stakenft_cawsWod = [];
+    const allCawsStakes = await window.wod_caws
+      .depositsOf(address)
+      .then((result) => {
+        if (result.length > 0) {
+          for (let i = 0; i < result.length; i++)
+            stakenft_cawsWod.push(parseInt(result[i]));
+          return stakenft_cawsWod;
+        }
+      });
+
+    return allCawsStakes;
+  };
+
+  const getmyCawsWodStakes = async () => {
+    let myStakes = await getStakesIdsCawsWod();
+    if (myStakes && myStakes.length > 0) {
+      let stakes = myStakes.map((stake) => window.getNft(stake));
+
+      stakes = await Promise.all(stakes);
+      stakes.reverse();
+      setMyCawsWodStakes(stakes);
+    } else setMyCawsWodStakes([]);
+  };
+
+  const checkCawsToUse = async () => {
+    const testArray = [];
+    const cawsArray = [...myCAWNFTs, ...myCAWstakes, ...myCawsWodStakesAll];
+    const nft_contract = await window.getContractCawsTimepieceNFT(
+      "CAWS_TIMEPIECE"
+    );
+
+    if (cawsArray.length > 0) {
+      for (let i = 0; i < cawsArray.length; i++) {
+        const cawsId = parseInt(
+          cawsArray[i].name.slice(6, cawsArray[i].name.length)
+        );
+
+        const result = await nft_contract.methods.cawsUsed(cawsId).call();
+
+        if (result === false) {
+          testArray.push(cawsId);
+        }
+      }
+
+      setcawsToUse(testArray);
+      setAllCawsForTimepieceMint(testArray);
+    } else if (cawsArray.length === 0) {
+      setcawsToUse([]);
+      setAllCawsForTimepieceMint([]);
+    }
+  };
+
+  const calculateCaws = (data) => {
+    if (data.numberOfTokens === cawsToUse.length) {
+      setLimit(data.numberOfTokens);
+      setFinalCaws(cawsToUse);
+    } else if (
+      data.numberOfTokens >= cawsToUse.length &&
+      cawsToUse.length > 0
+    ) {
+      setLimit(cawsToUse.length);
+      setFinalCaws(cawsToUse);
+    } else if (cawsToUse.length === 0) {
+      setLimit(0);
+      setFinalCaws([]);
+    } else if (data.numberOfTokens <= cawsToUse.length) {
+      setLimit(data.numberOfTokens);
+      setFinalCaws(cawsToUse.slice(0, data.numberOfTokens));
+    }
+  };
+
   const handleTimepieceMint = async (data) => {
     if (isConnected) {
       try {
         //Check Whitelist
         // let whitelist = await window.checkWhitelist(connectedWallet)
         let whitelist = 1;
-        if (parseInt(whitelist) == 1) {
+
+        if (parseInt(whitelist) === 1) {
           setmintloading("mint");
+          setmintStatus("Minting in progress...");
+              settextColor("rgb(123, 216, 176)");
           // console.log(data,finalCaws, totalCawsDiscount);
-          let tokenId = await window.landnft
-            .mintNFT(data.numberOfTokens, finalCaws)
+          let tokenId = await window.caws_timepiece
+            .claimTimepiece(finalCaws)
             .then(() => {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
@@ -235,11 +317,13 @@ function App() {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
-              // updateLandNft();
+              checkCawsToUse();
             })
             .catch((e) => {
               console.error(e);
               setmintloading("error");
+              settextColor("#d87b7b");
+
               if (typeof e == "object" && e.message) {
                 setmintStatus(e.message);
               } else {
@@ -317,10 +401,25 @@ function App() {
     if (isConnected === true && coinbase && chainId === 1) {
       myCAWStakes();
       myStakes();
+      getmyCawsWodStakes();
       myCAWNft();
       myNft();
     }
-  }, [isConnected, coinbase, currencyAmount, chainId]);
+  }, [isConnected, chainId, currencyAmount, coinbase]);
+
+  useEffect(() => {
+    if (isConnected === true && coinbase && chainId === 1) {
+      checkCawsToUse();
+    }
+  }, [
+    myCAWNFTs.length,
+    myCAWstakes.length,
+    myCawsWodStakesAll.length,
+    allCawsForTimepieceMint.length,
+    isConnected,
+    chainId,
+    coinbase,
+  ]);
 
   function Redirect() {
     window.location.href = "https://account.worldofdypians.com/";
@@ -368,12 +467,14 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
                 chainId={chainId}
                 handleMint={handleTimepieceMint}
                 mintStatus={mintStatus}
                 textColor={textColor}
+                calculateCaws={calculateCaws}
               />
             }
           />
