@@ -229,14 +229,14 @@ if(address)
   const devicewidth = window.innerWidth;
   const style = {
     position: "absolute",
-    top: "60%",
+    top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "fit-content",
     boxShadow: 24,
     p: 4,
     overflow: "scroll",
-    height: "fit-content",
+    height: '93%',
     borderRadius: "8px",
     overflowX: "hidden",
   };
