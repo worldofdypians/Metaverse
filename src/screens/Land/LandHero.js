@@ -61,8 +61,7 @@ const LandHero = () => {
               platform. This genesis edition is limited to 1,000 minted NFTs,
               each of which represents a piece of virtual land. The minted land
               is located in a prime area within the game and provides players
-              with a wide range of benefits. The WOD Land Genesis edition is
-              currently available for minting on the Ethereum blockchain.
+              with a wide range of benefits. The WOD Land Genesis edition has fully minted out and is currently available on OpenSea.
             </p>
           </div>
           <div className="col-12 col-lg-6 pe-2 pe-lg-0 d-flex justify-content-center">
