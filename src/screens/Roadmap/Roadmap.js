@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./_roadmap.scss";
 import roadmapDummy from "./assets/roadmapDummy.png";
 import roadmapIndicator from "./assets/roadmapIndicator.svg";
@@ -250,44 +250,9 @@ const Roadmap = () => {
 
   const mainUpdate = [
     {
-      title: "Demo Launch",
-      date: "Dec 2022",
-      image: demoLaunch,
-    },
-    {
-      title: "Beta Tester Access",
-      date: "Dec 2022",
-      image: betaTesting,
-    },
-    {
-      title: "CAWS Integration",
-      date: "Jan 2023",
-      image: cawsIntegration,
-    },
-    {
-      title: "Special in-game events",
-      date: "Feb 2023",
-      image: gameEvents,
-    },
-    {
-      title: "Leaderboard",
-      date: "Feb 2023",
-      image: leaderboardBanner,
-    },
-    {
-      title: "Genesis Land Whitelist",
-      date: "Feb 2023",
-      image: whitelistBanner,
-    },
-    {
-      title: "Genesis Land Launch",
-      date: "Feb 2023",
-      image: landMinting,
-    },
-    {
-      title: "Multichain Integration",
+      title: "Introducing the CAWS Timepiece NFT collection",
       date: "Apr 2023",
-      image: multichainIntegration,
+      image: timepieceRoadmap,
     },
     {
       title: "Addition and development of partnerships",
@@ -295,9 +260,44 @@ const Roadmap = () => {
       image: wodPartnership,
     },
     {
-      title: "Introducing the CAWS Timepiece NFT collection",
+      title: "Multichain Integration",
       date: "Apr 2023",
-      image: timepieceRoadmap,
+      image: multichainIntegration,
+    },
+    {
+      title: "Genesis Land Launch",
+      date: "Feb 2023",
+      image: landMinting,
+    },
+    {
+      title: "Genesis Land Whitelist",
+      date: "Feb 2023",
+      image: whitelistBanner,
+    },
+    {
+      title: "Leaderboard",
+      date: "Feb 2023",
+      image: leaderboardBanner,
+    },
+    {
+      title: "Special in-game events",
+      date: "Feb 2023",
+      image: gameEvents,
+    },
+    {
+      title: "CAWS Integration",
+      date: "Jan 2023",
+      image: cawsIntegration,
+    },
+    {
+      title: "Beta Tester Access",
+      date: "Dec 2022",
+      image: betaTesting,
+    },
+    {
+      title: "Demo Launch",
+      date: "Dec 2022",
+      image: demoLaunch,
     },
   ];
   const slider = useRef();
@@ -308,6 +308,12 @@ const Roadmap = () => {
   const previous = () => {
     slider.current.slickPrev();
   };
+
+
+  useEffect(() => {
+    slider.current.innerSlider.slickGoTo(0);
+  }, [])
+  
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg">
@@ -338,7 +344,7 @@ const Roadmap = () => {
             >
               <Slider ref={(c) => (slider.current = c)} {...settings}>
                 <div className="d-flex flex-column gap-3">
-                  <div
+                  {/* <div
                     className="roadmap-main-update position-relative"
                     style={{ visibility: "hidden" }}
                   >
@@ -365,8 +371,8 @@ const Roadmap = () => {
                         ..
                       </h6>
                     </div>
-                  </div>
-                  {mainUpdate.slice(0, 1).map((item) => (
+                  </div> */}
+                  {mainUpdate.slice(0, 3).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}
@@ -385,7 +391,7 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  {mainUpdate.slice(1, 4).map((item) => (
+                  {mainUpdate.slice(3, 6).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}
@@ -404,7 +410,7 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  {mainUpdate.slice(4, 7).map((item) => (
+                  {mainUpdate.slice(6, 9).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}
@@ -423,7 +429,7 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  {mainUpdate.slice(7, mainUpdate.length).map((item) => (
+                  {mainUpdate.slice(9, mainUpdate.length).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}
