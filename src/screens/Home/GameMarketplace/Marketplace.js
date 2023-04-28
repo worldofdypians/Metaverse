@@ -48,7 +48,52 @@ const MarketPlace = () => {
     ],
   };
 
+  const mediaItems = [
+    "media1.webp",
+    "media2.webp",
+    "media3.webp",
+    "media4.webp",
+    "media5.webp",
+    "media6.webp",
+    "media7.webp",
+    "media8.webp",
+    "media9.webp",
+    "media10.webp",
+    "media11.webp",
+    "media12.webp",
+    "media13.webp",
+    "media14.webp",
+    "media15.webp",
+    "media16.webp",
+    "media17.webp",
+    "media18.webp",
+    "media19.webp",
+    "media20.webp",
+    "media21.webp",
+    "media22.webp",
+  ]
 
+
+  function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  } 
+
+
+  const shuffledMedia = shuffle(mediaItems)
   
   const firstMarquee = [
     "firstMedia.webp",
@@ -95,7 +140,7 @@ const MarketPlace = () => {
         // </div>
         <>
           <Marquee gradient={false} style={{ gap: "45px" }}>
-            {firstMarquee.map((item, index) => (
+            {shuffledMedia.slice(0, shuffledMedia.length / 2).map((item, index) => (
               <img
                 key={index}
                 src={require(`../../../assets/mediaAssets/${item}`)}
@@ -104,7 +149,7 @@ const MarketPlace = () => {
             ))}
           </Marquee>
           <Marquee gradient={false} style={{ gap: "45px" }} direction="right">
-            {second.map((item, index) => (
+            {shuffledMedia.slice(shuffledMedia.length / 2, shuffledMedia.length).map((item, index) => (
               <img
                 key={index}
                 src={require(`../../../assets/mediaAssets/${item}`)}
