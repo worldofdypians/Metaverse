@@ -160,15 +160,10 @@ const MarketPlace = () => {
         </>
       ) : (
         <Slider {...settings}>
-          <CawsItemCard hero={"firstMedia.webp"} />
-          <CawsItemCard hero={"secondMedia.webp"} />
-          <CawsItemCard hero={"thirdMedia.webp"} />
-          <CawsItemCard hero={"fourthMedia.webp"} />
-          <CawsItemCard hero={"fifthMedia.webp"} />
-          <CawsItemCard hero={"seventhMedia.webp"} />
-          <CawsItemCard hero={"eightMedia.webp"} />
-          <CawsItemCard hero={"ninthMedia.webp"} />
-          <CawsItemCard hero={"tenthMedia.webp"} />
+         {shuffledMedia.slice(0, 8).map((item, index) => (
+           <CawsItemCard hero={item} key={index} />
+           
+         ))}
         </Slider>
       )}
       <div className="d-flex w-100 align-items-center justify-content-center mt-5">
