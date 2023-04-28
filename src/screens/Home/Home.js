@@ -8,6 +8,7 @@ import CawsSociety from "./CawsSociety/CawsSociety";
 import CawsWorld from "./CawsSociety/CawsWorld";
 import Discord from "./Discord/Discord";
 import LandNft from "./LandNFT/LandNft";
+import Utilities from "./Utilities/Utilities";
 // import Partners from "./Partners/Partners";
 
 const Home = ({handleRegister, handleDownload}) => {
@@ -23,6 +24,7 @@ const Home = ({handleRegister, handleDownload}) => {
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex flex-column home-main-wrapper">
         <VideoWrapper handleRegister={handleRegister} handleDownload={handleDownload}/>
+        {/* <Utilities /> */}
         <ExplorerGrid />
         <LandNft />
         <CawsSociety content="The Cats and Watches Society (CAWS) NFT is a unique collection of
