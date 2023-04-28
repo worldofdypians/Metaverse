@@ -22,6 +22,21 @@
   
 }
 
+
+.goldenscore {
+  background: linear-gradient(180deg, #F3980F 0.44%, #FE5A51 100%) !important;
+  color: #fff !important;
+  text-align: center;
+  position: relative;
+}
+
+.goldenscore-inactive {
+  background: rgb(88 86 82 / 80%) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  text-align: center;
+  position: relative;
+}
+
 .grand-label{
   font-weight: 600;
 font-size: 21px;
@@ -208,7 +223,7 @@ color: #F7F7FF;
 
 .tablewrapper {
   height: 366px;
-  overflow-y: scroll;
+  // overflow-y: scroll;
 
   @media screen and (max-width: 1600px) {
     height: 250px !important;
