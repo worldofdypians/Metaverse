@@ -28,7 +28,7 @@ const Characters = () => {
               <img src={mage} alt="" />
             <div className="d-flex flex-column justify-content-start gap-5 character-info" style={{width: '34%'}}>
               <div className="d-flex flex-column gap-3">
-                <div className="character-title font-organetto">Sorcerer</div>
+                <div className="character-title font-organetto">Mage</div>
                 <div className="character-desc font-poppins">Harnessing the power of the elements, sorcerers utilize powerful spells to freeze and ignite their enemies into oblivion.</div>
               </div>
               <ul className="character-list p-3">
