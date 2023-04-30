@@ -723,25 +723,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
         </OutsideClickHandler>
       </h2>
       <div className="grandPrices-wrapper position-relative">
-        <div className="d-flex flex-column gap-2">
-          <div className="d-flex align-items-end gap-2 justify-content-between">
-            <div className="d-flex flex-column gap-3">
-              <span className="prizeitem">
-                <img src={price1} alt="" /> $7,000
-              </span>
-              <span className="prizeitem">
-                <img src={price2} alt="" /> $5,000
-              </span>
-              <span className="prizeitem" style={{ marginLeft: 5, gap: 14 }}>
-                <img src={price3} alt="" /> $3,000
-              </span>
-            </div>
-            <div className="d-flex flex-column align-items-center grand-prize">
-              <span className="grand-label">Grand prize</span>
-              <span className="winnersamount">$30,000</span>
-            </div>
-          </div>
-        </div>
+ 
       </div>
       <div className="d-flex align-items-center gap-1">
         <div className="optionsWrapper col-12">
@@ -958,7 +940,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +${prizes[index]}
+                        +$0
                       </td>
                     </tr>
                   );
@@ -1019,7 +1001,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +${prizes[index]}
+                        +$0
                       </td>
                     </tr>
                   );
@@ -1080,7 +1062,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +${prizes[index]}
+                        +$0
                       </td>
                     </tr>
                   );
