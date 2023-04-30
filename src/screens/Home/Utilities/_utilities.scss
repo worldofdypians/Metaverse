@@ -20,6 +20,7 @@
     font-size: 32px;
     line-height: 48px;
     color: #ffffff;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .utility-desc{
@@ -44,6 +45,36 @@
     width: 90%;
     opacity: 0;
     transform: translateY(300px);
+}
+
+.mainnet-card{
+ background-image: url('./assets/mainnet.webp');
+ background-size: 100% 100%;
+ transition: all .35s;
+}
+
+.stats-card{
+background-image: url('./assets/stats.webp');
+ background-size: 100% 100%;
+ transition: all .35s;
+}
+
+.integrations-card{
+background-image: url('./assets/nftIntegration.webp');
+ background-size: 100% 100%;
+ transition: all .35s;
+}
+
+.coins-card{
+background-image: url('./assets/utilities.webp');
+ background-size: 100% 100%;
+ transition: all .35s;
+}
+
+.events-card{
+background-image: url('./assets/premiumEvents.webp');
+ background-size: 100% 100%;
+ transition: all .35s;
 }
 
 
