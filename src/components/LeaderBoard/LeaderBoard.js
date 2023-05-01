@@ -306,6 +306,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
   const [genesisData, setgenesisData] = useState([]);
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
+  const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -324,6 +325,8 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
       });
     if (result2) {
       setgenesisData(result2.data.data.leaderboard);
+    setpreviousGenesisVersion(result2.data.data.version);
+
       fillRecordsGenesis(result2.data.data.leaderboard);
     }
 
@@ -582,6 +585,24 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     setdailyplayerData(result.data.data.leaderboard);
   };
 
+
+  const fetchGenesisPreviousWinners = async () => {
+    const data = {
+      StatisticName: "GenesisLandRewards",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+      Version: previousGenesisVersion - 1,
+    };
+    const result = await axios.post(
+      `${backendApi}/auth/GetLeaderboard?Version=-1`,
+      data
+    );
+    fillRecordsGenesis(result.data.data.leaderboard);
+
+    setgenesisData(result.data.data.leaderboard);
+  };
+
+
   const fetchPreviousWeeklyWinners = async () => {
     const data = {
       StatisticName: "WeeklyLeaderboard",
@@ -625,6 +646,10 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     if (inactiveBoard === true && optionText === "weekly") {
       fetchPreviousWeeklyWinners();
     }
+    if (inactiveBoard === true && optionText === "genesis") {
+      fetchGenesisPreviousWinners();
+    }
+
     if (inactiveBoard === true && optionText === "monthly") {
       fetchPreviousMonthlyWinners();
     }
