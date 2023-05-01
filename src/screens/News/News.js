@@ -46,10 +46,10 @@ const News = (props) => {
   var settings = {
     dots: false,
     arrows: false,
-    infinite: true,
+    infinite: false,
     dotsClass: "button__bar slick-dots w-100",
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 1,
 
     autoplay: true,
     initialSlide: 0,
@@ -59,7 +59,7 @@ const News = (props) => {
         breakpoint: 1440,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToScroll: 1,
           infinite: false,
           initialSlide: 0,
           dots: false,
@@ -71,7 +71,7 @@ const News = (props) => {
         breakpoint: 1200,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
           infinite: true,
           autoplay: true,
           initialSlide: 0,
@@ -239,6 +239,7 @@ const News = (props) => {
   };
 
   useEffect(() => {
+    slider.current.innerSlider.slickGoTo(0);
     window.scrollTo(0, 0);
     document.title = "News";
   }, []);
@@ -483,8 +484,7 @@ const News = (props) => {
                   Notes
                 </h2>
               </h2>
-              {windowSize.width > 786 && releases.length > 4 ? (
-                <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
+                <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0" style={{position: 'static'}}>
                   <img
                     src={nextButton}
                     className="prev-button"
@@ -504,7 +504,6 @@ const News = (props) => {
                     onClick={next}
                   />
                 </div>
-              ) : null}
             </div>
 
             <Slider ref={(c) => (slider.current = c)} {...settings}>
