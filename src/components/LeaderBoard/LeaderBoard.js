@@ -649,7 +649,9 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     if (inactiveBoard === true && optionText === "genesis") {
       fetchGenesisPreviousWinners();
     }
-
+    if(inactiveBoard === false && optionText === 'genesis') {
+      fetchGenesisRecords()
+    }
     if (inactiveBoard === true && optionText === "monthly") {
       fetchPreviousMonthlyWinners();
     }
