@@ -24,7 +24,7 @@ const Home = ({handleRegister, handleDownload}) => {
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex flex-column home-main-wrapper">
         <VideoWrapper handleRegister={handleRegister} handleDownload={handleDownload}/>
-        {/* <Utilities /> */}
+        <Utilities />
         <ExplorerGrid />
         <LandNft />
         <CawsSociety content="The Cats and Watches Society (CAWS) NFT is a unique collection of
