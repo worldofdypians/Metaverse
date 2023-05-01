@@ -65,41 +65,41 @@ const Utilities = () => {
 
   const partnerIcons = [
     {
-      image: 'chainlink.svg',
-      title: 'Chainlink'
+      image: "chainlink.svg",
+      title: "Chainlink",
     },
     {
-      image: 'coin98.svg',
-      title: 'Coin98'
+      image: "coin98.svg",
+      title: "Coin98",
     },
     {
-      image: 'gateio.svg',
-      title: 'Gate.io'
+      image: "gateio.svg",
+      title: "Gate.io",
     },
     {
-      image: 'mexc.svg',
-      title: 'Mexc'
+      image: "mexc.svg",
+      title: "Mexc",
     },
     {
-      image: 'bnb.svg',
-      title: 'BNB Chain'
+      image: "bnb.svg",
+      title: "BNB Chain",
     },
     {
-      image: 'es2.svg',
-      title: 'Easy2Stake'
+      image: "es2.svg",
+      title: "Easy2Stake",
     },
- 
+
     {
-      image: 'avalanche.svg',
-      title: 'Avalanche'
+      image: "avalanche.svg",
+      title: "Avalanche",
     },
-    '',
-    'coin98.svg',
-    'mexc.svg',
-    'bnb.svg',
-    'es2.svg',
-    'avalanche.svg'
-  ]
+    "",
+    "coin98.svg",
+    "mexc.svg",
+    "bnb.svg",
+    "es2.svg",
+    "avalanche.svg",
+  ];
 
   return (
     <div className="px-3 px-lg-5" id="utilities">
@@ -109,7 +109,7 @@ const Utilities = () => {
         </h2>
       </div>
       <div className="utilities-grid">
-        {utilities.slice(0,5).map((item, index) => (
+        {utilities.slice(0, 5).map((item, index) => (
           <div
             key={index}
             className={`${item.class} utility-card flex-column d-flex align-items-center justify-content-center p-4`}
@@ -132,55 +132,90 @@ const Utilities = () => {
           </div>
         ))}
         <div
-            className={`partners-card utility-card flex-column d-flex align-items-center justify-content-center p-4`}
-          >
-            <div className="utility-first d-flex align-items-center justify-content-center gap-2 flex-column">
-              {/* <img
+          className={`partners-card utility-card flex-column d-flex align-items-center justify-content-center p-4`}
+        >
+          <div className="utility-first d-flex align-items-center justify-content-center gap-2 flex-column">
+            {/* <img
                 src={require(`./assets/${item.image}`)}
                 style={{ width: "50px", height: "50px" }}
                 alt=""
               /> */}
-              <h6 className="utility-title">Who builds in WoD?</h6>
-            </div>
-            <div className="utility-desc-div">
-              <div className="d-flex flex-column align-items-center gap-0 gap-lg-2">
-                <h6 className="utility-title">Who builds in WoD?</h6>
-                <div className="d-flex align-items-center gap-4">
-                    <div className="d-flex flex-column align-items-center gap-2">
-                      <img  width={40} height={40} src={require(`./assets/chainlink.svg`).default} alt="" />
-                      <span className="utility-desc">Chainlink</span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center gap-2">
-                      <img  width={40} height={40} src={require(`./assets/coin98.svg`).default} alt="" />
-                      <span className="utility-desc">Coin98</span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center gap-2">
-                      <img  width={40} height={40} src={require(`./assets/gateio.svg`).default} alt="" />
-                      <span className="utility-desc">Gate.io</span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center gap-2">
-                      <img  width={40} height={40} src={require(`./assets/mexc.svg`).default} alt="" />
-                      <span className="utility-desc">Mexc</span>
-                    </div>
-                </div>
-                  <div className="d-flex align-items-center gap-3 mt-3">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                      <img  width={40} height={40} src={require(`./assets/kucoin.svg`).default} alt="" />
-                      <span className="utility-desc">KuCoin</span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center gap-2">
-                      <img  width={40} height={40} src={require(`./assets/es2.svg`).default} alt="" />
-                      <span className="utility-desc">Easy2Stake</span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center gap-2">
-                      <img  width={40} height={40} src={require(`./assets/avalanche.svg`).default} alt="" />
-                      <span className="utility-desc">Avalanche</span>
-                    </div>
-                  </div>
-              </div>
-              {/* <p className="utility-desc">{item.desc}</p> */}
-            </div>
+            <h6 className="utility-title">Who builds in WoD?</h6>
           </div>
+          <div className="utility-desc-div">
+            <div className="d-flex flex-column align-items-center gap-0 gap-lg-2">
+              <h6 className="utility-title">Who builds in WoD?</h6>
+              <div className="d-flex align-items-center gap-4">
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <img
+                    width={40}
+                    height={40}
+                    src={require(`./assets/chainlink.svg`).default}
+                    alt=""
+                  />
+                  <span className="utility-desc">Chainlink</span>
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <img
+                    width={40}
+                    height={40}
+                    src={require(`./assets/kucoin.svg`).default}
+                    alt=""
+                  />
+                  <span className="utility-desc">KuCoin</span>
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <img
+                    width={40}
+                    height={40}
+                    src={require(`./assets/coin98.svg`).default}
+                    alt=""
+                  />
+                  <span className="utility-desc">Coin98</span>
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <img
+                    width={40}
+                    height={40}
+                    src={require(`./assets/avalanche.svg`).default}
+                    alt=""
+                  />
+                  <span className="utility-desc">Avalanche</span>
+                </div>
+              </div>
+              <div className="d-flex align-items-center gap-3 mt-3">
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <img
+                    width={40}
+                    height={40}
+                    src={require(`./assets/gateio.svg`).default}
+                    alt=""
+                  />
+                  <span className="utility-desc">Gate.io</span>
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <img
+                    width={40}
+                    height={40}
+                    src={require(`./assets/mexc.svg`).default}
+                    alt=""
+                  />
+                  <span className="utility-desc">Mexc</span>
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <img
+                    width={40}
+                    height={40}
+                    src={require(`./assets/es2.svg`).default}
+                    alt=""
+                  />
+                  <span className="utility-desc">Easy2Stake</span>
+                </div>
+              </div>
+            </div>
+            {/* <p className="utility-desc">{item.desc}</p> */}
+          </div>
+        </div>
       </div>
     </div>
   );
