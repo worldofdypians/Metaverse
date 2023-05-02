@@ -125,6 +125,8 @@ const Roadmap = () => {
         {
           title: "CAWS NFT 3D rendering",
           desc: "Users are able to create an in-game playable 3D version of their owned CAWS NFT.",
+          completed: true,
+
         },
       ],
     },
