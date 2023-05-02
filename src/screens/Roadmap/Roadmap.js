@@ -17,6 +17,7 @@ import Slider from "react-slick";
 import timepieceRoadmap from "./assets/timepieceRoadmap.webp";
 import wodPartnership from "./assets/wodPartnership.webp";
 import multichainIntegration from "./assets/multichainIntegration.webp";
+import caws3d from './assets/caws3d.webp'
 
 const Roadmap = () => {
   useEffect(() => {
@@ -251,6 +252,11 @@ const Roadmap = () => {
   ];
 
   const mainUpdate = [
+    {
+      title: "Caws NFT 3D Rendering",
+      date: "May 2023",
+      image: caws3d,
+    },
     {
       title: "Introducing the CAWS Timepiece NFT collection",
       date: "Apr 2023",
