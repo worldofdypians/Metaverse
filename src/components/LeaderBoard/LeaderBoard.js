@@ -289,7 +289,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     "50",
   ];
 
-  const [optionText, setOptionText] = useState("daily");
+  const [optionText, setOptionText] = useState("genesis");
   const [dailyrecords, setRecords] = useState([]);
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dailyPrizes);
@@ -536,7 +536,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     if (item === "daily" && inactiveBoard === false) {
       setPrizes(dailyPrizes);
     } else if (item === "daily" && inactiveBoard === true) {
-      setPrizes(previous_dailyPrizes);
+      setPrizes(dailyPrizes);
     } else if (item === "weekly" && inactiveBoard === false) {
       setPrizes(weeklyPrizes);
     } else if (item === "weekly" && inactiveBoard === true) {
@@ -1089,7 +1089,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +$0
+                       +${dailyPrizesGolden[index]}
                       </td>
                     </tr>
                   );
