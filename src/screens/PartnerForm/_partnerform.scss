@@ -10,6 +10,19 @@
   }
 }
 
+.phone-image {
+  top: -85px;
+  right: 4%;
+  height: 125px;
+  width: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 4px solid white;
+
+  @media screen and (max-width: 991px) {
+    display: none;
+  }
+}
 
 .partner-title {
   font-weight: 800;
