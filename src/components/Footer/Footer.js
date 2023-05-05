@@ -62,12 +62,10 @@ const Footer = () => {
           <NavLink to="/privacy-policy" style={{ textDecoration: "none" }}>
             <span className="footer-link font-poppins">Privacy Policy</span>
           </NavLink>
-          <a
-            href="mailto:helpcenter@dypius.com"
-            className="footer-link font-poppins"
-          >
-            Contact Us
-          </a>
+          <NavLink to="/contact-us" style={{ textDecoration: "none" }}>
+            <span className="footer-link font-poppins"> Contact Us</span>
+          </NavLink>
+
           <NavLink to="/join-beta" style={{ textDecoration: "none" }}>
             <span className="footer-link font-poppins">Join Beta</span>
           </NavLink>

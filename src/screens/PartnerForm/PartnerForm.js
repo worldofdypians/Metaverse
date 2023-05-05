@@ -73,12 +73,10 @@ const StyledTextField = styled(TextField)({
 });
 
 const PartnerForm = () => {
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Build";
+    document.title = "Contact us";
   }, []);
-
 
   const initialValues = {
     name: "",
@@ -245,9 +243,8 @@ const PartnerForm = () => {
         description: businessValues.business_description,
         recaptcha: captchaToken,
         file: businessSelectedFile,
-
       };
-      
+
       if (
         businessValues.business_name !== "" &&
         businessValues.business_description !== "" &&
@@ -279,7 +276,7 @@ const PartnerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     setErrors(validateInfo(values, testArray.join()));
 
     if (Object.keys(validateInfo(values, testArray.join())).length === 0) {
@@ -294,7 +291,7 @@ const PartnerForm = () => {
         file: selectedFile,
         recaptcha: captchaToken,
       };
-      
+
       if (
         values.name !== "" &&
         values.description !== "" &&
@@ -325,36 +322,26 @@ const PartnerForm = () => {
   return (
     <div className="container-fluid d-flex pt-5 px-3 px-lg-0 align-items-center my-5 justify-content-center">
       <div className="partner-main-wrapper py-5 w-100 d-flex align-items-center flex-column gap-4">
-        <div className="d-flex flex-column">
-          <h6 className="partner-title font-organetto">
-            Create your own world
-          </h6>
-          <h6
-            className="partner-title font-organetto"
-            style={{ color: "#8C56FF" }}
-          >
-            The possibilties are endless.
-          </h6>
-        </div>
-        <p className="partner-desc">
-          The customization options in WoD allow you to express your creativity
-          and make a mark on the virtual world. With endless possibilities for
-          personalization, each player's experience in the WoD is truly
-          one-of-a-kind.
+        <div className="d-flex flex-column mb-4">
+          <h6 className="partner-title font-organetto d-flex gap-3 justify-content-center">Contact <h6 className="partner-title font-organetto" style={{color: 'rgb(140, 86, 255)'}}>Us</h6></h6>
+           <p className="partner-desc w-100">
+          Reach out to us anytime and we will happily answer all of your
+          inquiries.
         </p>
+        </div>
+       
         <div className=" col-12 mx-0 my-5 row gap-5 justify-content-around">
           <FormContainer
-            title="Business Form"
-            desc="Interested in collaborating with us? 
-          Please complete this short form."
-            onClick={() => {
-              setopenBusiness(!openBusiness);
-            }}
+            title="General Inquiry"
+            desc="Get immediate help and support for your inquiries."
             accordionState={openBusiness}
             collapse="collapseHelp"
             emailLink="mailto:helpcenter@dypius.com"
             email="helpcenter@dypius.com"
             image="business"
+            onClick={() => {
+              setopenBusiness(!openBusiness);
+            }}
           >
             <div
               id="collapseHelp"
@@ -366,7 +353,7 @@ const PartnerForm = () => {
                 className="gap-3 p-lg-3 d-flex flex-column"
                 style={{ height: "fit-content" }}
               >
-                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center justify-content-between gap-2">
+                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center justify-content-between gap-3">
                   <StyledTextField
                     error={businessErrors.business_name ? true : false}
                     size="small"
@@ -398,7 +385,7 @@ const PartnerForm = () => {
                   />
                 </div>
 
-                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center justify-content-between gap-2">
+                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center justify-content-between gap-3">
                   <StyledTextField
                     error={businessErrors.business_organization ? true : false}
                     size="small"
@@ -480,7 +467,7 @@ const PartnerForm = () => {
                           Other
                         </MenuItem>
                       </StyledTextField>
-                      <FormHelperText style={{color: '#d32f2f'}}>
+                      <FormHelperText style={{ color: "#d32f2f" }}>
                         {businessErrors.business_subject}
                       </FormHelperText>
                     </FormControl>
