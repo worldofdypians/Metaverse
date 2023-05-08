@@ -81,17 +81,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/build"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Build</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
+      
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/roadmap"
@@ -111,6 +101,17 @@ const MobileNavbar = ({ handleSignUp }) => {
             onClick={() => setOpenNavbar(false)}
           >
             <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
+            <img src={mobileArrow} alt="arrow" />{" "}
+          </NavLink>
+        </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <NavLink
+             to="/contact-us"
+            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+            style={{ textDecoration: "none" }}
+            onClick={() => setOpenNavbar(false)}
+          >
+            <h6 className="mobile-nav-link font-poppins mb-0">Contact us</h6>
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>

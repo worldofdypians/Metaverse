@@ -34,16 +34,7 @@ const Header = ({ handleSignUp }) => {
           >
             Land
           </NavLink>
-          <NavLink
-            to="/build"
-            className={({isActive}) =>
-              isActive
-                ? "nav-anchor font-poppins activenavlink"
-                : "nav-anchor font-poppins"
-            }
-          >
-            Build
-          </NavLink>
+
           <NavLink
             to="/roadmap"
             className={({isActive}) =>
@@ -63,6 +54,16 @@ const Header = ({ handleSignUp }) => {
             }
           >
             News
+          </NavLink>
+                    <NavLink
+            to="/contact-us"
+            className={({isActive}) =>
+              isActive
+                ? "nav-anchor font-poppins activenavlink"
+                : "nav-anchor font-poppins"
+            }
+          >
+            Contact us
           </NavLink>
           {/* <NavLink
             to="/nft-event"
