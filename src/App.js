@@ -483,7 +483,7 @@ function App() {
           <Route exact path="/roadmap" element={<Roadmap />} />
           <Route exact path="/explorer" element={<Explorer />} />
           <Route exact path="/stake" element={<NftMinting />} />
-          <Route exact path="/build" element={<PartnerForm />} />
+          <Route exact path="/contact-us" element={<PartnerForm />} />
           <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
           <Route
             exact
