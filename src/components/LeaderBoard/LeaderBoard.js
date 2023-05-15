@@ -540,7 +540,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     } else if (item === "weekly" && inactiveBoard === false) {
       setPrizes(weeklyPrizes);
     } else if (item === "weekly" && inactiveBoard === true) {
-      setPrizes(previous_weeklyPrizes);
+      setPrizes(weeklyPrizes);
     } else if (item === "monthly" && inactiveBoard === false) {
       setPrizes(monthlyPrizes);
     } else if (item === "monthly" && inactiveBoard === true) {
@@ -1028,7 +1028,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +$0
+                        +${getFormattedNumber(weeklyPrizesGolden[index],0)}
                       </td>
                     </tr>
                   );
