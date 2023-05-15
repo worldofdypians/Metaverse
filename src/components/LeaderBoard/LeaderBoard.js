@@ -1028,7 +1028,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +$0
+                        +${getFormattedNumber(weeklyPrizesGolden[index],0)}
                       </td>
                     </tr>
                   );
