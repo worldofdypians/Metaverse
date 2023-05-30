@@ -34,7 +34,16 @@ const Header = ({ handleSignUp }) => {
           >
             Land
           </NavLink>
-
+          <NavLink
+            to="/marketplace"
+            className={({isActive}) =>
+              isActive
+                ? "nav-anchor font-poppins activenavlink"
+                : "nav-anchor font-poppins"
+            }
+          >
+            Marketplace
+          </NavLink>
           <NavLink
             to="/roadmap"
             className={({isActive}) =>

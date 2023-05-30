@@ -27,6 +27,7 @@ import WalletModal from "./components/WalletModal/WalletModal";
 import TimePiece from "./screens/Timepiece/Timepiece";
 import axios from "axios";
 import Unsubscribe from "./screens/Unsubscribe/Unsubscribe";
+import Marketplace from "./screens/Marketplace/Marketplace";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -538,6 +539,7 @@ function App() {
           />
           <Route exact path="/terms-conditions" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route exact path="/marketplace" element={<Marketplace />} />
         </Routes>
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
         <ScrollTop />
