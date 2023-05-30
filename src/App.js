@@ -1,8 +1,27 @@
 import Home from "./screens/Home/Home";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./fonts/Organetto.ttf";
-import Web3 from "web3";
+import { Amplify } from "aws-amplify";
+import { ApolloProvider } from "@apollo/client";
+import "@aws-amplify/ui-react/styles.css";
+import awsExports from "./screens/Account/src/aws-exports";
+import "./screens/Account/src/App.css";
+
+import AuthProvider, {
+  useAuth,
+} from "./screens/Account/src/Utils.js/Auth/AuthDetails.js";
+import {
+  Auth,
+  ForgotPassword,
+  ResetPassword,
+} from "./screens/Account/src/Containers";
+import PlayerCreation from "./screens/Account/src/Containers/PlayerCreation/PlayerCreation.js";
+import client from "./screens/Account/src/apolloConfig.js";
+import Dashboard from "./screens/Account/src/Containers/Dashboard/Dashboard.js";
+import LandingScreen from "./screens/Account/src/Containers/LandingScreen/LandingScreen.js";
+import Web3Provider from "./screens/Account/src/Utils.js/Web3/Web3Provider.js";
+
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
@@ -59,9 +78,10 @@ function App() {
   const [finalCaws, setFinalCaws] = useState([]);
   const [limit, setLimit] = useState(0);
   const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
-  const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0)
-  const [timepieceMetadata, settimepieceMetadata] = useState([])
-
+  const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
+  const [timepieceMetadata, settimepieceMetadata] = useState([]);
+  const [fireAppcontent, setFireAppContent] = useState(false);
+  const [activeUser, setactiveUser] = useState(false);
 
   const handleRegister = () => {
     setShowWalletModal(true);
@@ -77,7 +97,11 @@ function App() {
   };
 
   const handleSignUp = () => {
-    setShowWalletModalRegister(true);
+    if (activeUser === true) {
+      setFireAppContent(true);
+    } else {
+      setShowWalletModalRegister(true);
+    }
   };
 
   const handleConnection = async () => {
@@ -305,8 +329,8 @@ function App() {
     const result = await window.caws_timepiece.calculateTimepieceBalance(
       coinbase
     );
-    setTotalTimepieceCreated(result)
-    let metadataArray = []
+    setTotalTimepieceCreated(result);
+    let metadataArray = [];
     if (result && result > 0) {
       for (let index = 0; index < result; index++) {
         const tokenId =
@@ -318,19 +342,15 @@ function App() {
         const tokenMetaDataURI =
           await window.caws_timepiece.getCawsTimepieceURI(tokenId);
 
-        const dataURI = await axios.get(tokenMetaDataURI)
-        metadataArray.push(dataURI.data)
-        
+        const dataURI = await axios.get(tokenMetaDataURI);
+        metadataArray.push(dataURI.data);
       }
-      settimepieceMetadata(metadataArray)
-    }
-    else {
-      settimepieceMetadata(metadataArray)
-      setTotalTimepieceCreated(0)
-
+      settimepieceMetadata(metadataArray);
+    } else {
+      settimepieceMetadata(metadataArray);
+      setTotalTimepieceCreated(0);
     }
   };
-
 
   const handleTimepieceMint = async (data) => {
     if (isConnected) {
@@ -411,11 +431,50 @@ function App() {
     }
   };
 
+  Amplify.configure(awsExports);
+
+  function UnAuthenticatedContent() {
+    setFireAppContent(false);
+
+    return (
+      <React.Fragment>
+        <Navigate to="/auth" />
+      </React.Fragment>
+    );
+  }
+
+  function AppContent() {
+    const { isLoading, isAuthenticated, playerId } = useAuth();
+    if (isLoading) {
+      return <LandingScreen />;
+    }
+
+    if (isAuthenticated) {
+      if (!playerId) {
+        setFireAppContent(false);
+        return (
+          <React.Fragment>
+            <Navigate to="/player" />
+          </React.Fragment>
+        );
+      }
+      setFireAppContent(false);
+
+      return (
+        <React.Fragment>
+          <Navigate to="/account" />
+        </React.Fragment>
+      );
+    }
+
+    return <UnAuthenticatedContent />;
+  }
+
   const { ethereum } = window;
 
-  if (window.ethereum) {
-    ethereum?.on("chainChanged", checkNetworkId);
-    ethereum?.on("accountsChanged", handleConnectWallet);
+  if (ethereum) {
+    ethereum.on("chainChanged", checkNetworkId);
+    ethereum.on("accountsChanged", handleConnectWallet);
   }
 
   useEffect(() => {
@@ -448,174 +507,202 @@ function App() {
     coinbase,
   ]);
 
-  function Redirect() {
-    window.location.href = "https://account.worldofdypians.com/";
-  }
+  // console.log(coinbase)
 
   return (
     <BrowserRouter>
-      <div className="container-fluid p-0 main-wrapper position-relative">
-        <Header handleSignUp={handleSignUp} />
-        <MobileNavbar handleSignUp={handleSignUp} />
-        <Routes>
-          <Route path="/news/:newsId?/:titleId?" element={<News />} />
-          {/* <Route
-            exact
-            path="/nft-event"
-            element={
-              <NFTEvent
-                coinbase={coinbase}
-                showWalletConnect={()=>{setwalletModal(true)}}
-              />
-            }
-          /> */}
+      <ApolloProvider client={client}>
+        <AuthProvider>
+          <Web3Provider>
+            <div className="container-fluid p-0 main-wrapper position-relative">
+              <Header handleSignUp={handleSignUp} />
+              <MobileNavbar handleSignUp={handleSignUp} />
+              <Routes>
+                <Route path="/news/:newsId?/:titleId?" element={<News />} />
+                <Route
+                  exact
+                  path="/"
+                  element={
+                    <Home
+                      handleRegister={handleRegister}
+                      handleDownload={handleDownload}
+                    />
+                  }
+                />
+                <Route exact path="/caws" element={<Caws />} />
+                <Route exact path="/roadmap" element={<Roadmap />} />
+                <Route exact path="/explorer" element={<Explorer />} />
+                <Route exact path="/stake" element={<NftMinting />} />
+                <Route exact path="/contact-us" element={<PartnerForm />} />
+                <Route
+                  exact
+                  path="/unsubscribe/:email"
+                  element={<Unsubscribe />}
+                />
+                <Route
+                  exact
+                  path="/caws-timepiece"
+                  element={
+                    <TimePiece
+                      coinbase={coinbase}
+                      showWalletConnect={() => {
+                        setwalletModal(true);
+                      }}
+                      cawsArray={allCawsForTimepieceMint}
+                      mintloading={mintloading}
+                      isConnected={isConnected}
+                      chainId={chainId}
+                      handleMint={handleTimepieceMint}
+                      mintStatus={mintStatus}
+                      textColor={textColor}
+                      calculateCaws={calculateCaws}
+                      totalCreated={totalTimepieceCreated}
+                      timepieceMetadata={timepieceMetadata}
+                    />
+                  }
+                />
 
-          <Route
-            exact
-            path="/"
-            element={
-              <Home
-                handleRegister={handleRegister}
-                handleDownload={handleDownload}
-              />
-            }
-          />
-          <Route exact path="/caws" element={<Caws />} />
-          <Route exact path="/roadmap" element={<Roadmap />} />
-          <Route exact path="/explorer" element={<Explorer />} />
-          <Route exact path="/stake" element={<NftMinting />} />
-          <Route exact path="/contact-us" element={<PartnerForm />} />
-          <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
-          <Route
-            exact
-            path="/caws-timepiece"
-            element={
-              <TimePiece
-                coinbase={coinbase}
-                showWalletConnect={() => {
-                  setwalletModal(true);
+                <Route
+                  exact
+                  path="/join-beta"
+                  element={
+                    <JoinBeta
+                      coinbase={coinbase}
+                      handleRegister={handleBetaRegister}
+                    />
+                  }
+                />
+
+                <Route exact path="/auth" element={<Auth />} />
+                <Route
+                  exact
+                  path="/forgotPassword"
+                  element={<ForgotPassword />}
+                />
+                <Route
+                  exact
+                  path="/ResetPassword"
+                  element={<ResetPassword />}
+                />
+                <Route exact path="/player" element={<PlayerCreation />} />
+                <Route exact path="/account" element={<Dashboard />} />
+
+                <Route
+                  exact
+                  path="/land"
+                  element={
+                    <Land
+                      handleConnectWallet={handleConnectWallet}
+                      coinbase={coinbase}
+                      isConnected={isConnected}
+                      handleRegister={handleRegister}
+                      chainId={chainId}
+                      showForms={showForms2}
+                      balance={currencyAmount}
+                    />
+                  }
+                />
+                <Route
+                  exact
+                  path="/terms-conditions"
+                  element={<TermsConditions />}
+                />
+                <Route
+                  exact
+                  path="/privacy-policy"
+                  element={<PrivacyPolicy />}
+                />
+                <Route exact path="/marketplace" element={<Marketplace />} />
+              </Routes>
+              {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
+              <ScrollTop />
+              <Footer />
+            </div>
+            {showWalletModal === true && (
+              <RegisterModal
+                open={showWalletModal}
+                onClose={() => {
+                  setShowWalletModal(false);
                 }}
-                cawsArray={allCawsForTimepieceMint}
-                mintloading={mintloading}
-                isConnected={isConnected}
-                chainId={chainId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                timepieceMetadata={timepieceMetadata}
-              />
-            }
-          />
-
-          <Route
-            exact
-            path="/join-beta"
-            element={
-              <JoinBeta
+                handleConnect={handleConnection}
                 coinbase={coinbase}
-                handleRegister={handleBetaRegister}
+                showForms={showForms}
               />
-            }
-          />
-
-          <Route exact path="/account" element={<Redirect />} />
-
-          <Route
-            exact
-            path="/land"
-            element={
-              <Land
-                handleConnectWallet={handleConnectWallet}
+            )}
+            {betaModal === true && (
+              <JoinBetaModal
+                open={betaModal}
+                onClose={() => {
+                  setBetaModal(false);
+                }}
+                handleConnect={handleConnection}
                 coinbase={coinbase}
-                isConnected={isConnected}
-                handleRegister={handleRegister}
-                chainId={chainId}
-                showForms={showForms2}
-                balance={currencyAmount}
+                showForms={showForms}
               />
-            }
-          />
-          <Route exact path="/terms-conditions" element={<TermsConditions />} />
-          <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route exact path="/marketplace" element={<Marketplace />} />
-        </Routes>
-        {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
-        <ScrollTop />
-        <Footer />
-      </div>
-      {showWalletModal === true && (
-        <RegisterModal
-          open={showWalletModal}
-          onClose={() => {
-            setShowWalletModal(false);
-          }}
-          handleConnect={handleConnection}
-          coinbase={coinbase}
-          showForms={showForms}
-        />
-      )}
-      {betaModal === true && (
-        <JoinBetaModal
-          open={betaModal}
-          onClose={() => {
-            setBetaModal(false);
-          }}
-          handleConnect={handleConnection}
-          coinbase={coinbase}
-          showForms={showForms}
-        />
-      )}
+            )}
 
-      {walletModal === true && (
-        <WalletModal
-          show={walletModal}
-          handleClose={() => {
-            setwalletModal(false);
-          }}
-          handleConnection={() => {
-            handleConnectWallet();
-          }}
-        />
-      )}
+            {walletModal === true && (
+              <WalletModal
+                show={walletModal}
+                handleClose={() => {
+                  setwalletModal(false);
+                }}
+                handleConnection={() => {
+                  handleConnectWallet();
+                }}
+              />
+            )}
 
-      {showWalletModalDownload === true && (
-        <CheckWhitelistModal
-          open={showWalletModalDownload}
-          onClose={() => {
-            setdownloadSelected(false);
-            setShowWalletModalDownload(false);
-          }}
-          handleConnect={handleConnection}
-          coinbase={coinbase}
-          showForms={showForms}
-          openRegister={handleRegister}
-          donwloadSelected={donwloadSelected}
-          cawsMinted={myCAWSNFTsCreated.length}
-          cawsStaked={myCAWSNFTsTotalStaked.length}
-          landMinted={myNFTs.length}
-          landStaked={mystakes.length}
-        />
-      )}
+            {showWalletModalDownload === true && (
+              <CheckWhitelistModal
+                open={showWalletModalDownload}
+                onClose={() => {
+                  setdownloadSelected(false);
+                  setShowWalletModalDownload(false);
+                }}
+                handleConnect={handleConnection}
+                coinbase={coinbase}
+                showForms={showForms}
+                openRegister={handleRegister}
+                donwloadSelected={donwloadSelected}
+                cawsMinted={myCAWSNFTsCreated.length}
+                cawsStaked={myCAWSNFTsTotalStaked.length}
+                landMinted={myNFTs.length}
+                landStaked={mystakes.length}
+                handleActiveUser={(value) => {
+                  setactiveUser(value);
+                }}
+              />
+            )}
 
-      {showWalletModalRegister === true && (
-        <CheckWhitelistModal
-          open={showWalletModalRegister}
-          onClose={() => {
-            setShowWalletModalRegister(false);
-          }}
-          handleConnect={handleConnection}
-          coinbase={coinbase}
-          showForms={showForms}
-          openRegister={handleRegister}
-          donwloadSelected={donwloadSelected}
-          cawsMinted={myCAWSNFTsCreated.length}
-          cawsStaked={myCAWSNFTsTotalStaked.length}
-          landMinted={myNFTs.length}
-          landStaked={mystakes.length}
-        />
-      )}
+            {fireAppcontent === true && <AppContent />}
+
+            {showWalletModalRegister === true && (
+              <CheckWhitelistModal
+                open={showWalletModalRegister}
+                onClose={() => {
+                  setShowWalletModalRegister(false);
+                }}
+                handleConnect={handleConnection}
+                coinbase={coinbase}
+                showForms={showForms}
+                openRegister={handleRegister}
+                donwloadSelected={donwloadSelected}
+                cawsMinted={myCAWSNFTsCreated.length}
+                cawsStaked={myCAWSNFTsTotalStaked.length}
+                landMinted={myNFTs.length}
+                landStaked={mystakes.length}
+                handleRedirect={() => {
+                  setFireAppContent(true);
+                }}
+                handleActiveUser={(value) => {
+                  setactiveUser(value);
+                }}
+              />
+            )}
+          </Web3Provider>
+        </AuthProvider>
+      </ApolloProvider>
     </BrowserRouter>
   );
 }

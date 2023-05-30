@@ -28567,8 +28567,9 @@ async function getCoinbase() {
     return window.coinbase_address.toLowerCase();
   } else {
     const coinbase = await window.ethereum.request({
-      method: "eth_accounts",
+      method: "eth_requestAccounts",
     });
+    console.log(coinbase);
     if (coinbase && coinbase.length > 0) {
       window.coinbase_address = coinbase.pop();
       return window.coinbase_address.toLowerCase();
@@ -31393,10 +31394,12 @@ const whitelistWod = [
 ];
 
 window.checkWhitelistWod = function (address) {
-  // console.log("CHECKCK")
+  console.log("address", address);
   let found = 0;
   for (let i of whitelistWod) {
-    if (address.toLowerCase() == i.toLowerCase()) found = 1;
+    if (address.toLowerCase() == i.toLowerCase()) {
+      found = 1;
+    };
   }
   return found;
 };
@@ -33089,7 +33092,7 @@ const landWhitelist = [
   "0x2ec28cb88fc8edd1db790023a06971dd7c779aac",
   "0xaef4c36af1523f00afd43dd76581fee659c529ad",
   "0x8b967bba5996556180e4ec1ffae048df00c03582",
-    "0x812A2F2843c590a80E1c505F3d15520C5FBaeF04",
+  "0x812A2F2843c590a80E1c505F3d15520C5FBaeF04",
   "0x09c9f4acd209bb388ee4dfae9f71d31d35f92cde",
   "0x97decd205cd3a6a2dc16e1c09c72ddb175aa0e25",
   "0xa5e444fa95bbb2f6b713b75e7f02d4b4ba7583b9",
@@ -33289,8 +33292,8 @@ const landWhitelist = [
   "0x235a31462d09fb8fbd07f71877ab5d903f763360",
   "0x8052a398480b5b80d52d3dad6fa842e5b671baae",
   "0x63d8654618eace1bbf3313b08599ad7f745e9854",
-  "0x3699ede0adee19d327c440cd344c11909bdd3d72"
-]
+  "0x3699ede0adee19d327c440cd344c11909bdd3d72",
+];
 
 window.checkWhitelistLand = function (address) {
   // console.log("CHECKCK")

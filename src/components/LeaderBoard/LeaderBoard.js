@@ -330,40 +330,40 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
       fillRecordsGenesis(result2.data.data.leaderboard);
     }
 
-    fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
+    // fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
   };
 
-  const fetchDailyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+  // const fetchDailyRecordsAroundPlayer = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "DailyLeaderboard",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   const result = await axios.post(
+  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //     data
+  //   );
+  //   setRecordsAroundPlayer(result.data.data.leaderboard);
+  //   var testArray = result.data.data.leaderboard.filter(
+  //     (item) => item.displayName === username
+  //   );
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
+  //   if (itemData.length > 0) {
+  //     var testArray2 = itemData.filter((item) => item.displayName === username);
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
-  };
+  //     if (testArray.length > 0 && testArray2.length > 0) {
+  //       setActivePlayer(true);
+  //     }
+  //     if (testArray.length > 0 && testArray2.length === 0) {
+  //       setActivePlayer(false);
+  //       setUserData(...testArray);
+  //     }
+  //   }
+  //   if (testArray.length > 0) {
+  //     setActivePlayer(false);
+  //     setUserData(...testArray);
+  //   }
+  // };
 
   const fetchDailyRecords = async () => {
     const data = {
@@ -384,41 +384,41 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
+      // fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
 
-  const fetchWeeklyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "WeeklyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+  // const fetchWeeklyRecordsAroundPlayer = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "WeeklyLeaderboard",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   const result = await axios.post(
+  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //     data
+  //   );
+  //   setRecordsAroundPlayer(result.data.data.leaderboard);
+  //   var testArray = result.data.data.leaderboard.filter(
+  //     (item) => item.displayName === username
+  //   );
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
+  //   if (itemData.length > 0) {
+  //     var testArray2 = itemData.filter((item) => item.displayName === username);
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
-  };
+  //     if (testArray.length > 0 && testArray2.length > 0) {
+  //       setActivePlayer(true);
+  //     }
+  //     if (testArray.length > 0 && testArray2.length === 0) {
+  //       setActivePlayer(false);
+  //       setUserData(...testArray);
+  //     }
+  //   }
+  //   if (testArray.length > 0) {
+  //     setActivePlayer(false);
+  //     setUserData(...testArray);
+  //   }
+  // };
 
   const fetchWeeklyRecords = async () => {
     const data = {
@@ -439,43 +439,43 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     }
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
+      // fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
 
-  const fetchMonthlyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
+  // const fetchMonthlyRecordsAroundPlayer = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "MonthlyLeaderboard",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   const result = await axios.post(
+  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //     data
+  //   );
+  //   setRecordsAroundPlayer(result.data.data.leaderboard);
 
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+  //   var testArray = result.data.data.leaderboard.filter(
+  //     (item) => item.displayName === username
+  //   );
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
+  //   if (itemData.length > 0) {
+  //     var testArray2 = itemData.filter((item) => item.displayName === username);
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
+  //     if (testArray.length > 0 && testArray2.length > 0) {
+  //       setActivePlayer(true);
+  //     }
 
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
-  };
+  //     if (testArray.length > 0 && testArray2.length === 0) {
+  //       setActivePlayer(false);
+  //       setUserData(...testArray);
+  //     }
+  //   }
+  //   if (testArray.length > 0) {
+  //     setActivePlayer(false);
+  //     setUserData(...testArray);
+  //   }
+  // };
 
   const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
     const data = {
@@ -526,7 +526,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+      // fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
   const label = { inputProps: { "aria-label": "Switch demo" } };

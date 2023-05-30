@@ -1,0 +1,12 @@
+.container {
+    padding: 0px 60px 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.playerCreationTitle {
+    font-size: 24;
+    color: white;
+    margin-top: 42;
+    margin-bottom: 42;
+}

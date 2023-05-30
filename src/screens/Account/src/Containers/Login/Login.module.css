@@ -1,0 +1,14 @@
+.container {
+    padding: 50px 60px 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.forgotPasswordText {
+    color: white;
+    font-family: 'poppins';
+    font-size: 18px;
+    align-self: flex-start;
+    text-decoration: none;
+    margin: 40px auto;
+}
