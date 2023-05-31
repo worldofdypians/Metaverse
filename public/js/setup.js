@@ -28567,9 +28567,9 @@ async function getCoinbase() {
     return window.coinbase_address.toLowerCase();
   } else {
     const coinbase = await window.ethereum.request({
-      method: "eth_requestAccounts",
+      method: "eth_accounts",
     });
-    console.log(coinbase);
+    
     if (coinbase && coinbase.length > 0) {
       window.coinbase_address = coinbase.pop();
       return window.coinbase_address.toLowerCase();
