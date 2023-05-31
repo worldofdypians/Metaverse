@@ -1,0 +1,94 @@
+.wallet-balance {
+  background: #242240;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif !important;
+
+  .wallet-wrapper {
+    background: linear-gradient(0deg, #2e2853, #2e2853),
+      linear-gradient(
+        112.83deg,
+        rgba(255, 255, 255, 0.47) 0%,
+        rgba(255, 255, 255, 0) 110.84%
+      );
+    cursor: pointer;  
+    border-radius: 6px;
+    .wallet-span {
+      font-weight: 600;
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: -0.018em;
+      color: #f7f7f7;
+      opacity: 0.8;
+
+    }
+
+    .wallet-address {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 18px;
+      letter-spacing: -0.018em;
+      color: #f7f7ff;
+    }
+  }
+
+  .multipe-wallet {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.018em;
+    color: #ffffff;
+  }
+
+  .dyp-wrapper {
+    background: linear-gradient(145deg, #7770e0 0%, #242240 86.92%);
+    border-radius: 6px;
+  }
+
+  .idyp-wrapper {
+    background: linear-gradient(145deg, #4ED5D2 0%, #242240 86.92%);
+    border-radius: 6px;
+  }
+
+  // .bnb-wrapper {
+  //   background: linear-gradient(90.83deg, #daaa0a 0.71%, #2e2853 65.22%);
+  //   border-radius: 6px;
+  // }
+
+  // .avax-wrapper {
+  //   background: linear-gradient(90.83deg, #df2d2e 0.71%, #2e2853 65.22%);
+  //   border-radius: 6px;
+  // }
+
+  .chain-title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    color: #f7f7fc;
+  }
+
+  .wallet-amount {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #ffffff;
+  }
+
+
+  .chain-icon{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -7px;
+    margin: auto;
+  }
+}
+
+.walletinfo {
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 15px;
+color: #F7F7FC;
+opacity: 0.8;
+}

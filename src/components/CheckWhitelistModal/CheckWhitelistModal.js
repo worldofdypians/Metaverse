@@ -24,6 +24,8 @@ const RegisterModal = ({
   cawsStaked,
   landMinted,
   landStaked,
+  handleRedirect,
+  handleActiveUser
 }) => {
   const windowSize = useWindowSize();
 
@@ -55,18 +57,30 @@ const RegisterModal = ({
 
   const [showOptions, setShowOptions] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
+  const [activeUser, setactiveUser] = useState(false);
+
   const [status, setStatus] = useState();
   const [nftresult, setResult] = useState(0);
 
   const checkData = async () => {
     if (coinbase) {
       let result = window.checkWhitelistWod(coinbase);
-    
+      console.log(result);
+
       if (result === 1 || nftresult > 0) {
+        setactiveUser(true)
+        handleActiveUser(true)
         if (donwloadSelected === true)
           window.location.href =
             "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing";
-        else window.location.href = "https://worldofdypians.com/account";
+        else {
+          handleRedirect();
+          onClose();
+        }
+      }
+      else {
+        setactiveUser(false)
+        handleActiveUser(false)
       }
     }
   };

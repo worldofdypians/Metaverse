@@ -1,0 +1,19 @@
+.text {
+  font-family: "Poppins" !important;
+  font-weight: 600 !important;
+  font-size: 24px !important;
+  color: #ffffff !important;
+  letter-spacing: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.button {
+  margin-left: 32px;
+}

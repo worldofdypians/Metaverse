@@ -1,0 +1,133 @@
+.user-cardBg {
+  background-color: transparent;
+  background-image: url("../../Images/userProfile/user-cardBg.png");
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 14px;
+  position: relative;
+  display: table;
+  font-family: 'Poppins', sans-serif !important;
+
+}
+
+.user-cardImg {
+  background-image: url("../../Images/userProfile/cave2.png"), linear-gradient(126.67deg, #181636 35.2%, #7133E5 191.04%);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.wallettitle {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 15px;
+}
+
+.walletAddr {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
+}
+
+.userAvatar {
+  width: 80px;
+  height: 80px;
+}
+
+.ranktitle {
+  color: rgba(247, 247, 247, 0.8);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: -0.018em;
+}
+
+.borderdiv {
+  border-bottom: 1px solid #757086;
+}
+
+.userRank {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  text-transform: capitalize;
+  color: #ffffff;
+}
+
+.usernametext {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.emailtext {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 15px;
+  color: #ffffff;
+}
+
+.blancetext {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: right;
+  letter-spacing: -0.018em;
+  color: #8c56ff;
+}
+
+.balancetext {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  color: #ffffff;
+}
+
+.copybtn {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 254, 207, 0.3),
+      rgba(0, 254, 207, 0.3)
+    ),
+    linear-gradient(
+      112.83deg,
+      rgba(255, 255, 255, 0.47) 0%,
+      rgba(255, 255, 255, 0) 110.84%
+    );
+  box-shadow: 0px 4px 12px rgba(0, 254, 207, 0.24);
+  backdrop-filter: blur(4px);
+  border-radius: 6px;
+  width: fit-content;
+  color: #fff;
+
+}
+
+.copybtninner {
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dypMedal {
+  top: -41px;
+  right: 30px;
+  width: 72px;
+  height: 68px;
+}
