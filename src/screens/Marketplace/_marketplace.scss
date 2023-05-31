@@ -1,0 +1,43 @@
+.collection-item{
+    width: fit-content;
+    background: lightgray;
+    border-radius: 20px;
+    transition: all .35s;
+    cursor: pointer;
+}
+
+.collection-title{
+    color: #000000 !important;
+    transition: all .35s;
+}
+
+.collection-header{
+    scroll-margin-top: 5rem;
+    color: #ffffff;
+}
+
+
+.collection-item:hover{
+    background: #554fd8;
+
+    .collection-title{
+        color: white !important;
+    }
+}
+
+.loader-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.collection-header{
+    scroll-margin-top: 6rem;
+}
+
+.item-cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }

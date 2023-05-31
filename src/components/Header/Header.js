@@ -2,8 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./_header.scss";
 import metaverse from "../../assets/navbarAssets/metaverse.svg";
+import { shortAddress } from "../../screens/Caws/functions/shortAddress";
+import person from "./assets/person.svg";
 
-const Header = ({ handleSignUp }) => {
+const Header = ({ handleSignUp, handleConnect, coinbase, avatar }) => {
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
@@ -13,7 +15,7 @@ const Header = ({ handleSignUp }) => {
           </NavLink>
           <NavLink
             to="/explorer"
-            className={({isActive}) =>
+            className={({ isActive }) =>
               isActive
                 ? "nav-anchor font-poppins activenavlink"
                 : "nav-anchor font-poppins"
@@ -23,10 +25,10 @@ const Header = ({ handleSignUp }) => {
           </NavLink>
           {/* <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a> */}
           {/* <div className="nav-anchor font-poppins">Roadmap</div> */}
-          
+
           <NavLink
             to="/land"
-            className={({isActive}) =>
+            className={({ isActive }) =>
               isActive
                 ? "nav-anchor font-poppins activenavlink"
                 : "nav-anchor font-poppins"
@@ -36,7 +38,7 @@ const Header = ({ handleSignUp }) => {
           </NavLink>
           <NavLink
             to="/marketplace"
-            className={({isActive}) =>
+            className={({ isActive }) =>
               isActive
                 ? "nav-anchor font-poppins activenavlink"
                 : "nav-anchor font-poppins"
@@ -46,7 +48,7 @@ const Header = ({ handleSignUp }) => {
           </NavLink>
           <NavLink
             to="/roadmap"
-            className={({isActive}) =>
+            className={({ isActive }) =>
               isActive
                 ? "nav-anchor font-poppins activenavlink"
                 : "nav-anchor font-poppins"
@@ -56,7 +58,7 @@ const Header = ({ handleSignUp }) => {
           </NavLink>
           <NavLink
             to="/news"
-            className={({isActive}) =>
+            className={({ isActive }) =>
               isActive
                 ? "nav-anchor font-poppins activenavlink"
                 : "nav-anchor font-poppins"
@@ -64,9 +66,9 @@ const Header = ({ handleSignUp }) => {
           >
             News
           </NavLink>
-                    <NavLink
+          <NavLink
             to="/contact-us"
-            className={({isActive}) =>
+            className={({ isActive }) =>
               isActive
                 ? "nav-anchor font-poppins activenavlink"
                 : "nav-anchor font-poppins"
@@ -86,15 +88,26 @@ const Header = ({ handleSignUp }) => {
           </NavLink> */}
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
-          <div className="linear-border">
-            <button
-                className="btn outline-btn px-5"
-                onClick={handleSignUp}
-            >
-              Account
-            </button>
-          </div>
-          
+          {!coinbase ? (
+            <div className="linear-border">
+              <button className="btn outline-btn px-5" onClick={handleConnect}>
+                Connect Wallet
+              </button>
+            </div>
+          ) : (
+            <div className="d-flex align-items-center gap-3">
+              <div className="linear-border">
+                <div className="btn outline-btn px-5">
+                  {shortAddress(coinbase)}
+                </div>
+              </div>
+              {avatar === null ? (
+                <img src={person} className="account-icon" alt="" />
+              ) : (
+                <img src={avatar} className="account-icon" alt="" />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

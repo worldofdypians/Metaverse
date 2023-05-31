@@ -37,7 +37,7 @@
     "react-router-dom": "^6.5.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
-    "react-spinners": "^0.13.7",
+    "react-spinners": "^0.13.8",
     "react-tooltip": "^5.13.1",
     "sass": "^1.57.0",
     "slick-carousel": "^1.8.1",

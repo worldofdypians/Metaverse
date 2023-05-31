@@ -47,6 +47,9 @@ import TimePiece from "./screens/Timepiece/Timepiece";
 import axios from "axios";
 import Unsubscribe from "./screens/Unsubscribe/Unsubscribe";
 import Marketplace from "./screens/Marketplace/Marketplace";
+import getListedNFTS from "./actions/Marketplace";
+import Nft from './screens/nft/index'
+
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -63,10 +66,10 @@ function App() {
   const [myNFTs, setMyNFTs] = useState([]);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
-
+  const [avatar, setAvatar] = useState(null);
   const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
-
+  const [listedNFTS, setListedNFTS] = useState([]);
   const [myCAWstakes, setCAWMystakes] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
@@ -78,11 +81,87 @@ function App() {
   const [finalCaws, setFinalCaws] = useState([]);
   const [limit, setLimit] = useState(0);
   const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
+  const [timepieceMetadata, settimepieceMetadata] = useState([])
+  const [username, setUsername] = useState("");
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
-  const [timepieceMetadata, settimepieceMetadata] = useState([]);
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
+  
+  const filter = async (filter, value) => {
+    console.log("filtering", filter, value);
 
+    if (value === "") {
+      setListedNFTS([]);
+
+      await getListedNFTS(0).then((NFTS) => setListedNFTS(NFTS));
+    } else if (value === "0") {
+      setListedNFTS([]);
+
+      await getListedNFTS(0, "", filter, "ETH").then((NFTS) =>
+        setListedNFTS(NFTS)
+      );
+    } else {
+      setListedNFTS([]);
+
+      await getListedNFTS(0, "", filter, "DYP").then((NFTS) =>
+        setListedNFTS(NFTS)
+      );
+    }
+  };
+
+  const sort = async (sort) => {
+    console.log("sorting", sort);
+
+    if (sort === "") {
+      setListedNFTS([]);
+
+      await getListedNFTS(0).then((NFTS) => setListedNFTS(NFTS));
+    } else {
+      setListedNFTS([]);
+
+      await getListedNFTS(0, sort).then((NFTS) => setListedNFTS(NFTS));
+    }
+  };
+
+  const fetchAvatar = async (coinbase) => {
+
+    const response = await fetch(
+      `https://api-image.dyp.finance/api/v1/avatar/${coinbase}`
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        if (data?.avatar) {
+          setAvatar(data.avatar);
+        } else {
+          setAvatar(null);
+        }
+      })
+      .catch(console.error);
+
+    return response;
+  };
+
+
+  const checkConnection = async () => {
+    await window.getCoinbase().then((data) => {
+      setCoinbase(data);
+      
+      fetchAvatar(data);
+      axios
+      .get(`https://api-image.dyp.finance/api/v1/username/${data}`)
+      .then((res) => {
+        if (res.data?.username) {
+          setUsername(res.data?.username);
+        } else {
+          setUsername("");
+        }
+      });
+    });
+   
+  };
+  
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -167,6 +246,7 @@ function App() {
       await window.connectWallet().then((data) => {
         setIsConnected(data);
       });
+      checkConnection();
 
       await window.getCoinbase().then((data) => {
         setCoinbase(data);
@@ -509,6 +589,16 @@ function App() {
 
   // console.log(coinbase)
 
+
+  const handleShowWalletModal = () => {
+    setwalletModal(true);
+  };
+
+
+  useEffect(() => {
+    getListedNFTS(0).then((NFTS) => setListedNFTS(NFTS));
+  }, []);
+
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -612,7 +702,9 @@ function App() {
                   path="/privacy-policy"
                   element={<PrivacyPolicy />}
                 />
-                <Route exact path="/marketplace" element={<Marketplace />} />
+                <Route exact path="/marketplace" element={<Marketplace  isConnected={isConnected}
+            handleConnect={handleShowWalletModal}
+          listedNFTS={listedNFTS}/>} />
               </Routes>
               {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
               <ScrollTop />

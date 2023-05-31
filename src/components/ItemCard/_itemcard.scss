@@ -1,0 +1,48 @@
+.item-wrapper {
+    background-color: rgb(255, 255, 255);
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px;
+    // padding-top: 15px;
+    padding-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.nft-img{
+    transition: all .20s;
+}
+
+
+
+
+.buy-nft-btn{
+    background-color: rgb(46, 142, 238);
+    border: none !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 0px 0px 12px 12px;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    position: absolute;
+    bottom: -40px;
+    transition: all .20s;
+
+}
+
+.nftimg-bg {
+    // background: url('https://mint.dyp.finance/thumbs/424.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    // height: 200px;
+}
+
+.item-wrapper:hover{
+.buy-nft-btn{
+    bottom: 0px;
+}
+.nft-img{
+    transform: scale(1.2);
+}
+}
