@@ -90,7 +90,7 @@ const Header = ({ handleSignUp, handleConnect, coinbase, avatar }) => {
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
           {!coinbase ? (
             <div className="linear-border">
-              <button className="btn outline-btn px-5" onClick={handleConnect}>
+              <button className="btn outline-btn px-5" onClick={handleSignUp}>
                 Connect Wallet
               </button>
             </div>

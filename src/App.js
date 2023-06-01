@@ -48,8 +48,7 @@ import axios from "axios";
 import Unsubscribe from "./screens/Unsubscribe/Unsubscribe";
 import Marketplace from "./screens/Marketplace/Marketplace";
 import getListedNFTS from "./actions/Marketplace";
-import Nft from './screens/nft/index'
-
+import Nft from "./screens/nft/index";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -81,12 +80,12 @@ function App() {
   const [finalCaws, setFinalCaws] = useState([]);
   const [limit, setLimit] = useState(0);
   const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
-  const [timepieceMetadata, settimepieceMetadata] = useState([])
+  const [timepieceMetadata, settimepieceMetadata] = useState([]);
   const [username, setUsername] = useState("");
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
-  
+
   const filter = async (filter, value) => {
     console.log("filtering", filter, value);
 
@@ -124,7 +123,6 @@ function App() {
   };
 
   const fetchAvatar = async (coinbase) => {
-
     const response = await fetch(
       `https://api-image.dyp.finance/api/v1/avatar/${coinbase}`
     )
@@ -143,25 +141,23 @@ function App() {
     return response;
   };
 
-
   const checkConnection = async () => {
     await window.getCoinbase().then((data) => {
       setCoinbase(data);
-      
+
       fetchAvatar(data);
       axios
-      .get(`https://api-image.dyp.finance/api/v1/username/${data}`)
-      .then((res) => {
-        if (res.data?.username) {
-          setUsername(res.data?.username);
-        } else {
-          setUsername("");
-        }
-      });
+        .get(`https://api-image.dyp.finance/api/v1/username/${data}`)
+        .then((res) => {
+          if (res.data?.username) {
+            setUsername(res.data?.username);
+          } else {
+            setUsername("");
+          }
+        });
     });
-   
   };
-  
+
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -589,11 +585,9 @@ function App() {
 
   // console.log(coinbase)
 
-
   const handleShowWalletModal = () => {
     setwalletModal(true);
   };
-
 
   useEffect(() => {
     getListedNFTS(0).then((NFTS) => setListedNFTS(NFTS));
@@ -605,7 +599,11 @@ function App() {
         <AuthProvider>
           <Web3Provider>
             <div className="container-fluid p-0 main-wrapper position-relative">
-              <Header handleSignUp={handleSignUp} />
+              <Header
+                handleSignUp={handleShowWalletModal}
+                coinbase={coinbase}
+                avatar={avatar}
+              />
               <MobileNavbar handleSignUp={handleSignUp} />
               <Routes>
                 <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -702,9 +700,17 @@ function App() {
                   path="/privacy-policy"
                   element={<PrivacyPolicy />}
                 />
-                <Route exact path="/marketplace" element={<Marketplace  isConnected={isConnected}
-            handleConnect={handleShowWalletModal}
-          listedNFTS={listedNFTS}/>} />
+                <Route
+                  exact
+                  path="/marketplace"
+                  element={
+                    <Marketplace
+                      isConnected={isConnected}
+                      handleConnect={handleShowWalletModal}
+                      listedNFTS={listedNFTS}
+                    />
+                  }
+                />
               </Routes>
               {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
               <ScrollTop />
