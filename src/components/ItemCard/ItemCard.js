@@ -65,9 +65,9 @@ const ItemCard = ({ nft, single, isConnected, showConnectWallet }) => {
           />
         </div>{" "}
       </a>
-      <div className="d-flex flex-column p-3">
+      <div className="d-flex flex-column gap-3 p-3">
         <span className="nft-name">CAWS #{nft.tokenId}</span>
-        <span className="nft-name">
+        <span className="nft-price">
           Price: {nft.price}{" "}
           <span className="nft-desc">
             {nft.payment_priceType === 0 ? "ETH" : "DYP"}
@@ -75,7 +75,7 @@ const ItemCard = ({ nft, single, isConnected, showConnectWallet }) => {
         </span>
       </div>
       <div className="buy-nft w-100">
-        <button
+        {/* <button
           className="buy-nft-btn w-100"
           style={{ paddingLeft: "20px", paddingRight: "20px" }}
           onClick={() => {
@@ -90,7 +90,7 @@ const ItemCard = ({ nft, single, isConnected, showConnectWallet }) => {
                 : "Buy"
               : "Buy"
             : "Connect wallet"}{" "}
-        </button>
+        </button> */}
       </div>
     </div>
   );
