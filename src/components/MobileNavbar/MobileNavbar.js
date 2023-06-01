@@ -30,7 +30,8 @@ const MobileNavbar = ({ handleSignUp }) => {
         id="mobileNavbar"
       >
         <NavLink to="/">
-        <img src={metaverse} alt="metaverse" width={126} /></NavLink>
+          <img src={metaverse} alt="metaverse" width={126} />
+        </NavLink>
         {openNavbar === false ? (
           <div className="linear-border" onClick={() => setOpenNavbar(true)}>
             <button
@@ -69,7 +70,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-        
+
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/land"
@@ -93,7 +94,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-      
+
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/roadmap"
@@ -116,9 +117,9 @@ const MobileNavbar = ({ handleSignUp }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
-             to="/contact-us"
+            to="/contact-us"
             className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
             style={{ textDecoration: "none" }}
             onClick={() => setOpenNavbar(false)}
@@ -141,13 +142,15 @@ const MobileNavbar = ({ handleSignUp }) => {
         <div className="w-100 d-flex align-items-center justify-content-center gap-3">
           <div className="linear-border">
             <button
-                className="btn outline-btn px-5"
-                onClick={()=>{setOpenNavbar(false); handleSignUp();}}
+              className="btn outline-btn px-5"
+              onClick={() => {
+                setOpenNavbar(false);
+                handleSignUp();
+              }}
             >
               Account
             </button>
           </div>
-          
         </div>
       </div>
     </>

@@ -61,10 +61,9 @@ const LandTiers = () => {
       </span>
       <div className="tiers-grid mt-5">
         {tiers.map((tier, index) => (
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column"  key={index}>
             <div
-              className={`genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative ${tier.title === "Genesis Land" && 'genesis-land'}`}
-              key={index}
+              className={`genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative ${tier.title === "Genesis Land" && 'genesis-land'}`}           
             >
               {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
               <img

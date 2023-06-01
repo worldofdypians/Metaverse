@@ -5,7 +5,7 @@ import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import person from "./assets/person.svg";
 
-const Header = ({ handleSignUp, handleConnect, coinbase, avatar }) => {
+const Header = ({ handleSignUp, handleRedirect, coinbase, avatar }) => {
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
@@ -102,9 +102,9 @@ const Header = ({ handleSignUp, handleConnect, coinbase, avatar }) => {
                 </div>
               </div>
               {avatar === null ? (
-                <img src={person} className="account-icon" alt="" />
+                <img src={person} className="account-icon" alt="" onClick={handleRedirect}/>
               ) : (
-                <img src={avatar} className="account-icon" alt="" />
+                <img src={avatar} className="account-icon" alt=""  onClick={handleRedirect}/>
               )}
             </div>
           )}

@@ -519,22 +519,27 @@ function App() {
     );
   }
 
-  function AppContent() {
+  const AppContent = () => {
     const { isLoading, isAuthenticated, playerId } = useAuth();
+    
+    useEffect(() => {
+      if (!isLoading || !isAuthenticated || !playerId) {
+        setFireAppContent(false);
+      }
+    }, [isLoading, isAuthenticated, playerId]);
+
     if (isLoading) {
       return <LandingScreen />;
     }
 
     if (isAuthenticated) {
       if (!playerId) {
-        setFireAppContent(false);
         return (
           <React.Fragment>
             <Navigate to="/player" />
           </React.Fragment>
         );
       }
-      setFireAppContent(false);
 
       return (
         <React.Fragment>
@@ -544,7 +549,7 @@ function App() {
     }
 
     return <UnAuthenticatedContent />;
-  }
+  };
 
   const { ethereum } = window;
 
@@ -603,6 +608,9 @@ function App() {
                 handleSignUp={handleShowWalletModal}
                 coinbase={coinbase}
                 avatar={avatar}
+                handleRedirect={() => {
+                  setFireAppContent(true);
+                }}
               />
               <MobileNavbar handleSignUp={handleSignUp} />
               <Routes>
