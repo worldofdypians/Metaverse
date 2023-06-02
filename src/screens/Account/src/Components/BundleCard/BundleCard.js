@@ -310,49 +310,29 @@ const BundleCard = ({
     handleRefreshCountdown();
   };
 
-  const increaseBundleRecursive = (result) => {
-    if (result - 4 <= 4) {
-      if (result - 4 === 1) {
-        setProgressValue(25);
-        setbundlesBought(1);
-      } else if (result - 4 === 2) {
-        setProgressValue(50);
-        setbundlesBought(2);
-      } else if (result - 4 === 3) {
-        setProgressValue(75);
-        setbundlesBought(3);
-      } else if (result - 4 === 4) {
-        setProgressValue(100);
-        setbundlesBought(4);
-      }
-    } else if (result - 4 > 4) {
-      increaseBundleRecursive(result);
-    }
-  };
-
   const increaseBundle = async () => {
-    const result = await dyp700_abi.methods
-      .getTotalDepositedTokens(coinbase)
-      .call();
+    const result = await axios.get(
+      `https://api3.dyp.finance/api/bundles/count/${coinbase}`
+    );
 
-    const result_formatted = result / 1e18;
-    if (result_formatted / 700 <= 4) {
-      if (parseInt(result_formatted / 700) === 1) {
+    const result_formatted = result.data.count;
+    if (result_formatted <= 4) {
+      if (parseInt(result_formatted) === 0) {
         setbundlesBought(1);
         setProgressValue(25);
-      } else if (parseInt(result_formatted / 700) === 2) {
+      } else if (parseInt(result_formatted) === 1) {
+        setbundlesBought(1);
+        setProgressValue(25);
+      } else if (parseInt(result_formatted) === 2) {
         setProgressValue(50);
         setbundlesBought(2);
-      } else if (parseInt(result_formatted / 700) === 3) {
+      } else if (parseInt(result_formatted) === 3) {
         setProgressValue(75);
         setbundlesBought(3);
-      } else if (parseInt(result_formatted / 700) === 4) {
+      } else if (parseInt(result_formatted) === 4) {
         setProgressValue(100);
         setbundlesBought(4);
       }
-    } else if (parseInt(result_formatted / 700) > 4) {
-      const result = parseInt(result_formatted / 700);
-      increaseBundleRecursive(result);
     }
   };
 
@@ -405,6 +385,17 @@ const BundleCard = ({
     setlastDayofBundleMilliseconds(expiringTime_miliseconds);
   };
 
+  const insertBundle = async () => {
+    const data = { address: coinbase };
+    const result = await axios
+      .post("https://api3.dyp.finance/api/bundles/insert", data)
+      .catch((e) => {
+        console.log(e);
+      });
+
+    console.log(result);
+  };
+
   const handleDeposit700 = async () => {
     setDepositState700("loading-deposit");
     setStatus700("Confirm to complete purchase");
@@ -420,9 +411,10 @@ const BundleCard = ({
         setDepositState700("success");
         setStatusColor700("#00FECF");
         getDypBalance();
-        increaseBundle();
         checkBundleDates();
         checkApproval700();
+        insertBundle();
+        increaseBundle();
       })
       .catch((e) => {
         setStatusColor700("#FE7A00");
@@ -507,9 +499,12 @@ const BundleCard = ({
     setcountdown3500(remainingTime);
   };
 
-  let oneJune = new Date("2023-06-01 11:11:00");
+  let oneJune = new Date("2023-06-01 11:11:00 GMT+02:00");
+  let oneJuly = new Date("2023-07-01 11:11:00 GMT+02:00");
+
   let today = new Date();
-  let twentyfivemay = new Date("2023-05-25 11:11:00");
+  let twentyfivemay = new Date("2023-05-25 11:11:00 GMT+02:00");
+  let twentyfivejune = new Date("2023-06-25 11:11:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -526,7 +521,6 @@ const BundleCard = ({
       .getTimeOfDeposit(coinbase)
       .call();
     const timeofDeposit_miliseconds = timeofDeposit * 1000;
-
 
     const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
       year: "numeric",
@@ -546,15 +540,15 @@ const BundleCard = ({
       .toString();
 
     if (today_date <= 25) {
-      if (week1.includes(today_date.toString()) && bundlesBought < 3) {
+      if (week1.includes(today_date.toString()) && bundlesBought <= 3) {
         setisAtlimit(false);
         handleRefreshCountdown700();
-      } else if (week1.includes(today_date.toString()) && bundlesBought >= 3) {
+      } else if (week1.includes(today_date.toString()) && bundlesBought > 3) {
         const remainingTime_day = bundleExpireDay;
         const remainingTime_miliseconds = bundleExpireMiliseconds;
 
         if (parseInt(remainingTime_day) >= 25) {
-          const additional_remainingTime_time = 32 - remainingTime_day;
+          const additional_remainingTime_time = 31 - remainingTime_day;
           const additional_remaining_time_timestamp =
             additional_remainingTime_time * 24 * 60 * 60 -
             lastDayofBundleHours * 60 * 60 -
@@ -578,7 +572,7 @@ const BundleCard = ({
       } else if (week2.includes(today_date.toString()) && bundlesBought >= 3) {
         const remainingTime2 = lastDayofBundle;
         if (parseInt(remainingTime2) >= 25) {
-          const additional_remainingTime_time2 = 32 - remainingTime2;
+          const additional_remainingTime_time2 = 31 - remainingTime2;
           const additional_remaining_time_timestamp2 =
             additional_remainingTime_time2 * 24 * 60 * 60 -
             lastDayofBundleHours * 60 * 60 -
@@ -605,7 +599,7 @@ const BundleCard = ({
         const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
         if (parseInt(remainingTime3) >= 25) {
-          const additional_remainingTime_time3 = 32 - remainingTime3;
+          const additional_remainingTime_time3 = 31 - remainingTime3;
           const additional_remaining_time_timestamp3 =
             additional_remainingTime_time3 * 24 * 60 * 60 -
             lastDayofBundleHours * 60 * 60 -
@@ -623,49 +617,62 @@ const BundleCard = ({
           );
           setStatusColor700("#FE7A00");
         }
-        // } else if (
-        //   week4.includes(today_date.toString())  ||
-        //   week5.includes(today_date.toString())
-        // ) {
-        //   const additional_time = 32 - lastDayofBundle;
-        //   const remainingTime_miliseconds3 = lastDayofBundleMilliseconds;
-
-        //   const additional_time_timestamp =
-        //     additional_time * 24 * 60 * 60 -
-        //     lastDayofBundleHours * 60 * 60 -
-        //     lastDayofBundleMinutes * 60;
-
-        //   const final =
-        //     Number(remainingTime_miliseconds3) +
-        //     Number(additional_time_timestamp * 1000);
-
-        //   setcountdown700(final);
-        //   handleSetAvailableTime(final);
-        //   setisAtlimit(true);
-        //   setStatus700(
-        //     "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-        //   );
-        //   setStatusColor700("#FE7A00");
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
         handleRefreshCountdown700();
         setisAtlimit(false);
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
+        if (today > oneJune && lastDayofBundleMilliseconds > 0) {
+          setisAtlimit(true);
+          setcountdown700(oneJuly.getTime());
+          handleSetAvailableTime(oneJuly.getTime());
+          setStatus700(
+            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          );
+          setStatusColor700("#FE7A00");
+        } else if (today > oneJune && lastDayofBundleMilliseconds == 0) {
+          setisAtlimit(true);
+          setcountdown700();
+          handleSetAvailableTime();
+          setStatus700(
+            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          );
+          setStatusColor700("#FE7A00");
+        } else if (today < oneJune && lastDayofBundleMilliseconds > 0) {
+          setisAtlimit(true);
+          setcountdown700(oneJuly.getTime());
+          handleSetAvailableTime(oneJuly.getTime());
+          setStatus700(
+            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          );
+          setStatusColor700("#FE7A00");
+        } else if (today < oneJune && lastDayofBundleMilliseconds == 0) {
+          setisAtlimit(true);
+          setcountdown700();
+          handleSetAvailableTime();
+          setStatus700(
+            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          );
+          setStatusColor700("#FE7A00");
+        }
+      }
+    } else if (today_date > 25) {
+      if (lastDayofBundleMilliseconds > 0) {
         setisAtlimit(true);
-        setcountdown700(oneJune.getTime());
-        handleSetAvailableTime(oneJune.getTime());
+        setcountdown700(oneJuly.getTime());
+        handleSetAvailableTime(oneJuly.getTime());
+        setStatus700(
+          "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+        );
+        setStatusColor700("#FE7A00");
+      } else {
+        setisAtlimit(true);
+        setcountdown700();
+        handleSetAvailableTime();
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
         );
         setStatusColor700("#FE7A00");
       }
-    } else if (today_date > 25) {
-      setisAtlimit(true);
-      setcountdown700(oneJune.getTime());
-      handleSetAvailableTime(oneJune.getTime());
-      setStatus700(
-        "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-      );
-      setStatusColor700("#FE7A00");
     }
   };
 
@@ -734,18 +741,18 @@ const BundleCard = ({
   }, [coinbase, chainId]);
 
   useEffect(() => {
-    if (bundlesBought === 4) {
+    if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
       setisAtlimit(true);
-      setcountdown700(oneJune.getTime());
-      handleSetAvailableTime(oneJune.getTime());
+      setcountdown700(oneJuly.getTime());
+      handleSetAvailableTime(oneJuly.getTime());
     }
   }, [bundlesBought, countdown700]);
 
   useEffect(() => {
-    if (today > twentyfivemay) {
+   if (today > twentyfivejune) {
       setisAtlimit(true);
     }
-  }, [today, oneJune]);
+  }, [today, oneJune, oneJuly]);
 
   const [tooltip, setTooltip] = useState(false);
 
@@ -769,7 +776,7 @@ const BundleCard = ({
             ? "bundlewrapper-critical"
             : "bundlewrapper"
         }  position-relative`}
-        style={{ minHeight: "465px" }}
+        style={{ minHeight: "400px" }}
       >
         <div
           className={`${
@@ -1138,14 +1145,18 @@ const BundleCard = ({
                   packageData.title === "Golden Pass" && (
                     <div
                       className={
-                        bundleState700 === "deposit" || checkWallet === false
+                        bundleState700 === "deposit" ||
+                        checkWallet === false ||
+                        isAtlimit == true
                           ? "linear-border-disabled"
                           : "linear-border"
                       }
                     >
                       <button
                         className={
-                          bundleState700 === "deposit" || checkWallet === false
+                          bundleState700 === "deposit" ||
+                          checkWallet === false ||
+                          isAtlimit == true
                             ? "btn outline-btn-disabled px-5"
                             : "btn filled-btn px-5"
                         }
@@ -1153,7 +1164,9 @@ const BundleCard = ({
                           handleApproval700();
                         }}
                         disabled={
-                          bundleState700 === "deposit" || checkWallet === false
+                          bundleState700 === "deposit" ||
+                          checkWallet === false ||
+                          isAtlimit == true
                             ? true
                             : false
                         }
@@ -1277,7 +1290,9 @@ const BundleCard = ({
                           ? bundleState700 === "deposit" && checkWallet === true
                             ? false
                             : true
-                          : isAtlimit === true || checkWallet === false
+                          : isAtlimit === true ||
+                            checkWallet === false ||
+                            bundleState700 !== "deposit"
                           ? true
                           : false
                       }
