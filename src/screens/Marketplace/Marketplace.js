@@ -9,6 +9,7 @@ import ethIcon from "./assets/ethIcon.svg";
 import bnbIcon from "./assets/bnbIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
 import CountUp from "react-countup";
+import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 
 const Marketplace = ({ listedNFTS, isConnected, handleConnect }) => {
   const override = {
@@ -32,36 +33,7 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect }) => {
 
   return (
     <div className="container-fluid d-flex justify-content-end p-0" style={{ minHeight: "72vh" }}>
-      <div className="marketplace-sidebar d-flex justify-content-center p-4">
-        <div className="d-flex flex-column gap-4">
-          <div className={`d-flex px-2 py-3 align-items-center gap-2 sidebar-item ${activeLink === "collections" && "sidebar-item-active"}`} onClick={() => setActiveLink("collections")}>
-              <img src={require(`./assets/dypIcon.svg`).default} style={{width: "20px", height: '20px'}} alt="" />
-            <span className={`sidebar-title ${activeLink === "collections" && "sidebar-title-active"}`}>Collections</span>
-          </div>
-         <div className="d-flex flex-column gap-3">
-         <div className={`d-flex px-2 py-3 align-items-center gap-2 sidebar-item ${activeLink === "wod" && "sidebar-item-active"}`} onClick={() => setActiveLink("wod")}>
-              <div className="icon-wrapper"></div>
-            <span className={`sidebar-title ${activeLink === "wod" && "sidebar-title-active"}`}>WoD Land</span>
-          </div>
-          <div className={`d-flex px-2 py-3 align-items-center gap-2 sidebar-item ${activeLink === "caws" && "sidebar-item-active"}`} onClick={() => setActiveLink("caws")}>
-              <div className="icon-wrapper"></div>
-            <span className={`sidebar-title ${activeLink === "caws" && "sidebar-title-active"}`}>CAWS</span>
-          </div>
-          <div className={`d-flex px-2 py-3 align-items-center gap-2 sidebar-item ${activeLink === "timepiece" && "sidebar-item-active"}`} onClick={() => setActiveLink("timepiece")}>
-              <div className="icon-wrapper"></div>
-            <span className={`sidebar-title ${activeLink === "timepiece" && "sidebar-title-active"}`}>CAWS Timepiece</span>
-          </div>
-         </div>
-          <div className={`d-flex px-2 py-3 align-items-center gap-2 sidebar-item ${activeLink === "events" && "sidebar-item-active"}`} onClick={() => setActiveLink("events")}>
-              <img src={require(`./assets/dypIcon.svg`).default} style={{width: "20px", height: '20px'}} alt="" />
-            <span className={`sidebar-title ${activeLink === "events" && "sidebar-title-active"}`}>Events</span>
-          </div>
-          <div className={`d-flex px-2 py-3 align-items-center gap-2 sidebar-item ${activeLink === "stake" && "sidebar-item-active"}`} onClick={() => setActiveLink("stake")}>
-              <img src={require(`./assets/dypIcon.svg`).default} style={{width: "20px", height: '20px'}} alt="" />
-            <span className={`sidebar-title ${activeLink === "stake" && "sidebar-title-active"}`}>Stake</span>
-          </div>
-        </div>
-      </div>
+     <MarketSidebar />
       <div className="container-nft pe-5 position-relative">
         <div className="main-wrapper py-4 w-100">
           <h6 className="nft-wrapper-title font-raleway">Overall status</h6>
@@ -91,6 +63,10 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect }) => {
               NFT's Sold
               </span>
             </div>
+          </div>
+          <h6 className="nft-wrapper-title font-raleway my-4">Active Events</h6>
+          <div className="nft-outer-wrapper d-flex align-items-center justify-content-around p-4">
+
           </div>
           <h6 className="nft-wrapper-title font-raleway mt-4">Top Sales</h6>
           <div className="d-flex align-items-center nft-outer-wrapper p-4 gap-4 my-4">

@@ -139,6 +139,7 @@
   border-radius: 16.3366px;
   cursor: pointer;
   transition: all 0.3s;
+  text-decoration: none !important;
 }
 
 .sidebar-item:hover {
@@ -158,4 +159,8 @@
     rgba(255, 255, 255, 0.21) -254.09%,
     rgba(255, 255, 255, 0) 99.84%
   );
+
+  .sidebar-title{
+    color: #ffffff !important;
+  }
 }
