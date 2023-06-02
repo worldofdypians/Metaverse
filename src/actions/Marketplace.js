@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const URL = 'https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1'
 
-const itemListedQuery = (sort = "", findBy = "", findValue = "") =>
+const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "") =>
 {
 
     if(sort === 'price_asc') {
@@ -138,6 +138,43 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "") =>
         `;
     }
 
+    // check if token id and nft address is already listed
+    if(findBy === 'nftAddress_tokenId') {
+        return `
+        {
+            itemListeds(where:{nftAddress:"${nft_address}", tokenId:"${findValue}"}) {
+            seller
+            nftAddress
+            tokenId
+            price
+            payment_priceType
+            payment_tokenAddress
+            blockNumber
+            blockTimestamp
+        }
+        }
+        `;
+    }
+
+    // get latest 20 recent  listed NFTS in 24 hours
+    if(findBy === 'recentListedNFTS') {
+        return `
+        {
+            itemListeds(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
+            seller
+            nftAddress
+            tokenId
+            price
+            payment_priceType
+            payment_tokenAddress
+            blockNumber
+            blockTimestamp
+        }
+        }
+        `;
+    }
+
+
     if(findBy === 'payment_priceType') {
 
         if (findValue === 'ETH') {
@@ -232,7 +269,7 @@ const singleItemQuery = (block) => {
         ` };
 
 
-const getListedNFTS = async (block = 0,  sort = "", findBy = "", findValue = "") => {
+const getListedNFTS = async (block = 0,  sort = "", findBy = "", findValue = "", nft_address = "") => {
 
     let listedItems  = [];
 
@@ -264,7 +301,7 @@ const getListedNFTS = async (block = 0,  sort = "", findBy = "", findValue = "")
                             return acc;
                         }, {});
 
-                        await axios.post(URL, {query: itemListedQuery(sort, findBy, findValue)})
+                        await axios.post(URL, {query: itemListedQuery(sort, findBy, findValue, nft_address)})
                             .then(async (result3) => {
                                 const itemListed = await result3.data.data.itemListeds;
                                 const latestStates = {};

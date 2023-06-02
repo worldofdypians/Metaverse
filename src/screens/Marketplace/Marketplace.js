@@ -11,13 +11,13 @@ import dypIcon from "./assets/dypIcon.svg";
 import CountUp from "react-countup";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 
-const Marketplace = ({ listedNFTS, isConnected, handleConnect }) => {
+const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, totalBoughtNFTSinETH, totalBoughtNFTSinDYP, latest20RecentListedNFTS,totalBoughtNFTSCount }) => {
   const override = {
     display: "block",
     margin: "auto",
     borderColor: "#554fd8",
   };
-
+  
   const [loading, setLoading] = useState(false);
   const [activeLink, setActiveLink] = useState("collections")
 
