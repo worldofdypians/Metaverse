@@ -49,6 +49,11 @@ import Unsubscribe from "./screens/Unsubscribe/Unsubscribe";
 import Marketplace from "./screens/Marketplace/Marketplace";
 import getListedNFTS from "./actions/Marketplace";
 import Nft from "./screens/nft/index";
+import CawsNFT from "./screens/Marketplace/MarketNFTs/CawsNFT";
+import WoDNFT from "./screens/Marketplace/MarketNFTs/WoDNFT";
+import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
+import MarketStake from "./screens/Marketplace/MarketStake";
+import MarketEvents from "./screens/Marketplace/MarketEvents";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -521,7 +526,7 @@ function App() {
 
   const AppContent = () => {
     const { isLoading, isAuthenticated, playerId } = useAuth();
-    
+
     useEffect(() => {
       if (!isLoading || !isAuthenticated || !playerId) {
         setFireAppContent(false);
@@ -713,6 +718,61 @@ function App() {
                   path="/marketplace"
                   element={
                     <Marketplace
+                      isConnected={isConnected}
+                      handleConnect={handleShowWalletModal}
+                      listedNFTS={listedNFTS}
+                    />
+                  }
+                />
+                <Route
+                  exact
+                  path="/marketplace/caws"
+                  element={
+                    <CawsNFT
+                      isConnected={isConnected}
+                      handleConnect={handleShowWalletModal}
+                      listedNFTS={listedNFTS}
+                    />
+                  }
+                />
+                <Route
+                  exact
+                  path="/marketplace/wod"
+                  element={
+                    <WoDNFT
+                      isConnected={isConnected}
+                      handleConnect={handleShowWalletModal}
+                      listedNFTS={listedNFTS}
+                    />
+                  }
+                />
+                <Route
+                  exact
+                  path="/marketplace/timepiece"
+                  element={
+                    <TimepieceNFT
+                      isConnected={isConnected}
+                      handleConnect={handleShowWalletModal}
+                      listedNFTS={listedNFTS}
+                    />
+                  }
+                />
+                <Route
+                  exact
+                  path="/marketplace/events"
+                  element={
+                    <MarketEvents
+                      isConnected={isConnected}
+                      handleConnect={handleShowWalletModal}
+                      listedNFTS={listedNFTS}
+                    />
+                  }
+                />
+                <Route
+                  exact
+                  path="/marketplace/stake"
+                  element={
+                    <MarketStake
                       isConnected={isConnected}
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
