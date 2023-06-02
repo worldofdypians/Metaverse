@@ -90,6 +90,12 @@ function App() {
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
+  const [listedNFTSCount, setListedNFTSCount] = useState(0);
+  const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
+  const [totalBoughtNFTS, setTotalBoughtNFTS] = useState([]);
+  const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
+  const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
+  const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
 
   const filter = async (filter, value) => {
     console.log("filtering", filter, value);
@@ -512,6 +518,40 @@ function App() {
     }
   };
 
+  const getBoughtNFTS = async () => {
+    let boughtItems = [];
+
+    const URL =
+      "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+
+    const itemBoughtQuery = `
+        {
+            itemBoughts {
+            nftAddress
+            tokenId
+            payment_priceType
+            price
+            buyer
+            blockNumber
+            blockTimestamp
+        }
+        }
+        `;
+
+    await axios
+      .post(URL, { query: itemBoughtQuery })
+      .then(async (result) => {
+        boughtItems = await result.data.data.itemBoughts;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log("boughtItems", boughtItems);
+
+    return boughtItems;
+  };
+
   Amplify.configure(awsExports);
 
   function UnAuthenticatedContent() {
@@ -600,7 +640,36 @@ function App() {
   };
 
   useEffect(() => {
-    getListedNFTS(0).then((NFTS) => setListedNFTS(NFTS));
+    getListedNFTS(0).then((NFTS) => {setListedNFTS(NFTS) ; setListedNFTSCount(NFTS.length) }) ;
+
+    getListedNFTS(0, "", "recentListedNFTS").then((NFTS) => setLatest20RecentListedNFTS(NFTS));
+
+    getBoughtNFTS().then((NFTS) =>
+    {
+        setTotalBoughtNFTS(NFTS)
+        setTotalBoughtNFTSCount(NFTS.length)
+
+        let totalBoughtNFTSinETH = 0;
+
+        let totalBoughtNFTSinDYP = 0;
+
+        for(let i = 0; i < NFTS.length; i++)
+        {
+            if(NFTS[i].payment_priceType === 0)
+            {
+                totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
+            }
+            else
+            {
+                totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
+            }
+        }
+
+        setTotalBoughtNFTSinETH(totalBoughtNFTSinETH);
+
+        setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
+    });
+
   }, []);
 
   return (
@@ -721,6 +790,11 @@ function App() {
                       isConnected={isConnected}
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
+                      totalListed={listedNFTSCount}
+                      totalBoughtNFTSinETH = {totalBoughtNFTSinETH / 1e18}
+                      totalBoughtNFTSinDYP = {totalBoughtNFTSinDYP  / 1e18}
+                      latest20RecentListedNFTS = {latest20RecentListedNFTS}
+                      totalBoughtNFTSCount={totalBoughtNFTSCount}
                     />
                   }
                 />
