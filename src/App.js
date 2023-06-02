@@ -765,6 +765,8 @@ function App() {
                       isConnected={isConnected}
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
+                      account={coinbase}
+                      chainId={chainId}
                     />
                   }
                 />
