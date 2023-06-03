@@ -291,10 +291,8 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
   const [optionText, setOptionText] = useState("genesis");
   const [dailyrecords, setRecords] = useState([]);
-  const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dailyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
-  const [userData, setUserData] = useState({});
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [dailyplayerData, setdailyplayerData] = useState([]);
   const [weeklyplayerData, setweeklyplayerData] = useState([]);
@@ -330,40 +328,8 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
       fillRecordsGenesis(result2.data.data.leaderboard);
     }
 
-    fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
   };
 
-  const fetchDailyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
-  };
 
   const fetchDailyRecords = async () => {
     const data = {
@@ -384,42 +350,10 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
 
-  const fetchWeeklyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "WeeklyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
-  };
-
+  
   const fetchWeeklyRecords = async () => {
     const data = {
       StatisticName: "WeeklyLeaderboard",
@@ -439,73 +373,10 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     }
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
 
-  const fetchMonthlyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
-  };
-
-  const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      } else if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    } else if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
-  };
+  
 
   const fetchMonthlyRecords = async () => {
     const data = {
@@ -526,7 +397,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
     if (testArray.length === 0) {
       setActivePlayer(false);
-      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+      
     }
   };
   const label = { inputProps: { "aria-label": "Switch demo" } };
