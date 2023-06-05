@@ -3,7 +3,7 @@ import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 
-const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS }) => {
+const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS, timepieceNFTS }) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -12,14 +12,14 @@ const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS }) => {
 
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (listedNFTS && listedNFTS.length === 0) {
+    if (timepieceNFTS && timepieceNFTS.length === 0) {
       setLoading(true);
     }
-    if (listedNFTS && listedNFTS.length > 0) {
+    if (timepieceNFTS && timepieceNFTS.length > 0) {
       setLoading(false);
     }
-    console.log(listedNFTS);
-  }, [listedNFTS]);
+    console.log(timepieceNFTS);
+  }, [timepieceNFTS]);
 
   return (
     <div
@@ -38,8 +38,8 @@ const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS }) => {
                 loading === false ? "item-cards-wrapper" : "loader-wrapper"
               }
             >
-              {listedNFTS && listedNFTS.length > 0 ? (
-                listedNFTS
+              {timepieceNFTS && timepieceNFTS.length > 0 ? (
+                timepieceNFTS
                   .slice(0, 5)
                   .map((nft) => (
                     <ItemCard

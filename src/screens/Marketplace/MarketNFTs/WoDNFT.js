@@ -3,7 +3,7 @@ import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 
-const WoDNFT = ({ isConnected, handleConnect, listedNFTS }) => {
+const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -12,14 +12,14 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS }) => {
 
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (listedNFTS && listedNFTS.length === 0) {
+    if (wodNFTS && wodNFTS.length === 0) {
       setLoading(true);
     }
-    if (listedNFTS && listedNFTS.length > 0) {
+    if (wodNFTS && wodNFTS.length > 0) {
       setLoading(false);
     }
-    console.log(listedNFTS);
-  }, [listedNFTS]);
+    console.log(wodNFTS);
+  }, [wodNFTS]);
 
   return (
     <div
@@ -38,8 +38,8 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS }) => {
                 loading === false ? "item-cards-wrapper" : "loader-wrapper"
               }
             >
-              {listedNFTS && listedNFTS.length > 0 ? (
-                listedNFTS
+              {wodNFTS && wodNFTS.length > 0 ? (
+                wodNFTS
                   .slice(0, 5)
                   .map((nft) => (
                     <ItemCard

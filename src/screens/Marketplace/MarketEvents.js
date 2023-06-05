@@ -7,8 +7,13 @@ import dypius from "../Account/src/Images/userProfile/dypius.svg";
 import dragonIcon from "../Account/src/Images/userProfile/dragonIcon.svg";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "../Account/src/Containers/Dashboard/Dashboard.schema";
+import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
+import { useLocation } from "react-router-dom";
+
 
 const MarketEvents = ({ account, chainId }) => {
+
+  const location = useLocation();
   const [dypBalance, setDypBalance] = useState();
   const [dypBalancebnb, setDypBalanceBnb] = useState();
   const [dypBalanceavax, setDypBalanceAvax] = useState();
@@ -17,7 +22,7 @@ const MarketEvents = ({ account, chainId }) => {
   const [idypBalancebnb, setiDypBalanceBnb] = useState();
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
   const [availableTime, setAvailableTime] = useState();
-  const [selectedPackage, setSelectedPackage] = useState("dyp");
+  const [selectedPackage, setSelectedPackage] = useState(location.state?.package ? location.state?.package : "dyp");
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -155,113 +160,116 @@ const MarketEvents = ({ account, chainId }) => {
   }, []);
 
   return (
-    <div className="d-flex flex-column gap-2 align-items-center my-4">
-      <div className="col-4">
-        <div className="d-flex align-items-start align-items-lg-center gap-2 gap-lg-2 w-100 justify-content-start">
-          <div className="d-flex flex-column align-items-center gap-2">
-            <div
-              className={`premium-package dyp-package ${
-                selectedPackage === "dyp" && "selected-premium"
-              } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-              onClick={() => setSelectedPackage("dyp")}
-            >
-              <img
-                src={dypius}
-                width={40}
-                height={40}
-                alt="premium package icon"
-                className="premium-package-icon"
-              />
+    <>
+      <MarketSidebar />
+      <div className="d-flex flex-column gap-2 align-items-center my-4" style={{minHeight: '72vh'}}>
+        <div className="col-6 d-flex gap-5">
+          <div className="packages-grid">
+            <div className="event-package d-flex flex-column align-items-center gap-2">
+              <div
+                className={`premium-package dyp-package ${
+                  selectedPackage === "dyp" && "selected-premium"
+                } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+                onClick={() => setSelectedPackage("dyp")}
+              >
+                <img
+                  src={dypius}
+                  width={40}
+                  height={40}
+                  alt="premium package icon"
+                  className="premium-package-icon"
+                />
+              </div>
+              <h6
+                className="bundleTitle mb-0 fw-normal text-center"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                Golden Pass
+              </h6>
             </div>
-            <h6
-              className="bundleTitle mb-0 fw-normal text-center"
-              style={{ fontSize: "14px", fontFamily: "Poppins" }}
-            >
-              Golden Pass
-            </h6>
-          </div>
-          <div className="d-flex flex-column align-items-center gap-2">
-            <div
-              className={`premium-package ${classes.idypicon} ${
-                selectedPackage === "idyp" && "selected-premium"
-              } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-              onClick={() => setSelectedPackage("idyp")}
-            ></div>
-            <h6
-              className="bundleTitle mb-0 fw-normal text-center"
-              style={{ fontSize: "14px", fontFamily: "Poppins" }}
-            >
-              Puzzle Madness
-            </h6>
-          </div>
-          <div className="d-flex flex-column align-items-center gap-2">
-            <div
-              className={`premium-package dragon-package ${
-                selectedPackage === "dragon" && "selected-premium"
-              } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-              onClick={() => setSelectedPackage("dragon")}
-            >
-              <img
-                src={dragonIcon}
-                width={40}
-                height={40}
-                alt="premium package icon"
-                className="premium-package-icon"
-              />
+            <div className="event-package d-flex flex-column align-items-center gap-2">
+              <div
+                className={`premium-package ${classes.idypicon} ${
+                  selectedPackage === "idyp" && "selected-premium"
+                } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+                onClick={() => setSelectedPackage("idyp")}
+              ></div>
+              <h6
+                className="bundleTitle mb-0 fw-normal text-center"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                Puzzle Madness
+              </h6>
             </div>
-            <h6
-              className="bundleTitle mb-0 fw-normal text-center"
-              style={{ fontSize: "14px", fontFamily: "Poppins" }}
-            >
-              Dragon Ruins
-            </h6>
-          </div>
+            <div className="event-package d-flex flex-column align-items-center gap-2">
+              <div
+                className={`premium-package dragon-package ${
+                  selectedPackage === "dragon" && "selected-premium"
+                } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+                onClick={() => setSelectedPackage("dragon")}
+              >
+                <img
+                  src={dragonIcon}
+                  width={40}
+                  height={40}
+                  alt="premium package icon"
+                  className="premium-package-icon"
+                />
+              </div>
+              <h6
+                className="bundleTitle mb-0 fw-normal text-center"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                Dragon Ruins
+              </h6>
+            </div>
 
-          <div className="d-flex flex-column align-items-center gap-2">
-            <div
-              className={`premium-package criticalhit-package ${
-                selectedPackage === "criticalHit" && "selected-premium"
-              } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-              onClick={() => setSelectedPackage("criticalHit")}
-            >
-              <img
-                src={dypius}
-                width={40}
-                height={40}
-                alt="premium package icon"
-                className="premium-package-icon"
-              />
+            <div className="event-package d-flex flex-column align-items-center gap-2">
+              <div
+                className={`premium-package criticalhit-package ${
+                  selectedPackage === "criticalHit" && "selected-premium"
+                } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+                onClick={() => setSelectedPackage("criticalHit")}
+              >
+                <img
+                  src={dypius}
+                  width={40}
+                  height={40}
+                  alt="premium package icon"
+                  className="premium-package-icon"
+                />
+              </div>
+              <h6
+                className="bundleTitle mb-0 fw-normal text-center"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                Critical Hit
+              </h6>
             </div>
-            <h6
-              className="bundleTitle mb-0 fw-normal text-center"
-              style={{ fontSize: "14px", fontFamily: "Poppins" }}
-            >
-              Critical Hit
-            </h6>
           </div>
+          <BundleCard
+            coinbase={account}
+            wallet={data?.getPlayer?.wallet?.publicAddress}
+            chainId={chainId}
+            getDypBalance={getDypBalance}
+            getiDypBalance={getDypBalance}
+            packageData={
+              selectedPackage === "dragon"
+                ? dragonData
+                : selectedPackage === "dyp"
+                ? dypPackageData
+                : selectedPackage === "criticalHit"
+                ? criticalHitPackageData
+                : iDypPackageData
+            }
+            handleSetAvailableTime={(value) => {
+              setAvailableTime(value);
+            }}
+            availableTime={availableTime}
+          />
         </div>
-        <BundleCard
-          coinbase={account}
-          wallet={data?.getPlayer?.wallet?.publicAddress}
-          chainId={chainId}
-          getDypBalance={getDypBalance}
-          getiDypBalance={getDypBalance}
-          packageData={
-            selectedPackage === "dragon"
-              ? dragonData
-              : selectedPackage === "dyp"
-              ? dypPackageData
-              : selectedPackage === "criticalHit"
-              ? criticalHitPackageData
-              : iDypPackageData
-          }
-          handleSetAvailableTime={(value) => {
-            setAvailableTime(value);
-          }}
-          availableTime={availableTime}
-        />
       </div>
-    </div>
+    </>
   );
 };
 

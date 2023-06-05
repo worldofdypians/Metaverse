@@ -37,9 +37,12 @@
 
 .item-cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 40px;
 
+  @media screen and (max-width: 1600px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
   @media screen and (max-width: 1500px) {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -52,10 +55,13 @@
   left: 0%;
   background: #080b2a;
   box-shadow: 4px 4px 20px 1px #340d60;
+  @media screen and (max-width: 1600px) {
+    width: 17%;
+  }
 }
 
 .nft-outer-wrapper {
-  background: rgba(46, 50, 60, 0.6);
+  background: rgba(22, 24, 54, 0.6);
   border-radius: 20px;
 }
 
@@ -124,14 +130,14 @@
   font-weight: 600;
   font-size: 16.3366px;
   line-height: 19px;
-  color: #8b8c91;
+  color: #B8B8E0;
 }
 
 .sidebar-title-active {
   font-weight: 600;
   font-size: 16.3366px;
   line-height: 19px;
-  color: #ffffff;
+  color: #F8F8FF;
 }
 
 .sidebar-item {
@@ -163,4 +169,30 @@
   .sidebar-title{
     color: #ffffff !important;
   }
+}
+
+.packages-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: fit-content;
+  margin-top: 2rem;
+}
+
+.event-package{
+  height: fit-content;
+}
+
+.sidebar-divider{
+  width: 100%;
+  height: 2px;
+  background: #525469;
+}
+
+.social-link{
+  font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 19px;
+color: #8B8C91;
+margin-bottom: 0px !important;
 }
