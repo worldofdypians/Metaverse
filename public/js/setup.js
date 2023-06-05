@@ -42,12 +42,16 @@ const LP_IDs = {
   ],
 };
 
-
 window.abi = {
   nft: {
     caws: [
       {
-        inputs: [],
+        inputs: [
+          { internalType: "string", name: "name", type: "string" },
+          { internalType: "string", name: "symbol", type: "string" },
+          { internalType: "uint256", name: "maxNftSupply", type: "uint256" },
+          { internalType: "uint256", name: "saleStart", type: "uint256" },
+        ],
         stateMutability: "nonpayable",
         type: "constructor",
       },
@@ -107,6 +111,25 @@ window.abi = {
           {
             indexed: true,
             internalType: "address",
+            name: "previousOwner",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "newOwner",
+            type: "address",
+          },
+        ],
+        name: "OwnershipTransferred",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
             name: "from",
             type: "address",
           },
@@ -127,30 +150,37 @@ window.abi = {
         type: "event",
       },
       {
-        anonymous: false,
-        inputs: [
-          {
-            indexed: true,
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
-        ],
-        name: "testminted",
-        type: "event",
+        inputs: [],
+        name: "CAWS_PROVENANCE",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "MAX_MINT",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "MAX_TIMEPIECE",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "REVEAL_TIMESTAMP",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
       },
       {
         inputs: [
-          {
-            internalType: "address",
-            name: "to",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
+          { internalType: "address", name: "to", type: "address" },
+          { internalType: "uint256", name: "tokenId", type: "uint256" },
         ],
         name: "approve",
         outputs: [],
@@ -158,182 +188,149 @@ window.abi = {
         type: "function",
       },
       {
-        inputs: [
-          {
-            internalType: "address",
-            name: "owner",
-            type: "address",
-          },
-        ],
+        inputs: [{ internalType: "address", name: "owner", type: "address" }],
         name: "balanceOf",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
-        ],
-        name: "getApproved",
-        outputs: [
-          {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
-        ],
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
         stateMutability: "view",
         type: "function",
       },
       {
         inputs: [],
-        name: "getTokenCounter",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
+        name: "baseURI",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
         stateMutability: "view",
         type: "function",
       },
       {
-        inputs: [
-          {
-            internalType: "address",
-            name: "owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "operator",
-            type: "address",
-          },
-        ],
-        name: "isApprovedForAll",
-        outputs: [
-          {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
-        ],
+        inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        name: "cawsUsed",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
         stateMutability: "view",
         type: "function",
       },
       {
         inputs: [],
-        name: "mintNft",
+        name: "emergencySetStartingIndexBlock",
         outputs: [],
         stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "flipSaleState",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+        name: "getApproved",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "owner", type: "address" },
+          { internalType: "address", name: "operator", type: "address" },
+        ],
+        name: "isApprovedForAll",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "maxtimepiecePurchase",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "uint256", name: "numberOfTokens", type: "uint256" },
+        ],
+        name: "mintCaws",
+        outputs: [],
+        stateMutability: "payable",
         type: "function",
       },
       {
         inputs: [],
         name: "name",
-        outputs: [
-          {
-            internalType: "string",
-            name: "",
-            type: "string",
-          },
-        ],
+        outputs: [{ internalType: "string", name: "", type: "string" }],
         stateMutability: "view",
         type: "function",
       },
       {
-        inputs: [
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
-        ],
+        inputs: [],
+        name: "nextOwnerToExplicitlySet",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "owner",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
         name: "ownerOf",
-        outputs: [
-          {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "renounceOwnership",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "reserveCaws",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "from", type: "address" },
+          { internalType: "address", name: "to", type: "address" },
+          { internalType: "uint256", name: "tokenId", type: "uint256" },
         ],
+        name: "safeTransferFrom",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "from", type: "address" },
+          { internalType: "address", name: "to", type: "address" },
+          { internalType: "uint256", name: "tokenId", type: "uint256" },
+          { internalType: "bytes", name: "_data", type: "bytes" },
+        ],
+        name: "safeTransferFrom",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "saleIsActive",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
         stateMutability: "view",
         type: "function",
       },
       {
         inputs: [
-          {
-            internalType: "address",
-            name: "from",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "to",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
-        ],
-        name: "safeTransferFrom",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-      },
-      {
-        inputs: [
-          {
-            internalType: "address",
-            name: "from",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "to",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
-          {
-            internalType: "bytes",
-            name: "data",
-            type: "bytes",
-          },
-        ],
-        name: "safeTransferFrom",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-      },
-      {
-        inputs: [
-          {
-            internalType: "address",
-            name: "operator",
-            type: "address",
-          },
-          {
-            internalType: "bool",
-            name: "approved",
-            type: "bool",
-          },
+          { internalType: "address", name: "operator", type: "address" },
+          { internalType: "bool", name: "approved", type: "bool" },
         ],
         name: "setApprovalForAll",
         outputs: [],
@@ -341,75 +338,128 @@ window.abi = {
         type: "function",
       },
       {
+        inputs: [{ internalType: "string", name: "tokenURI", type: "string" }],
+        name: "setBaseURI",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
         inputs: [
-          {
-            internalType: "bytes4",
-            name: "interfaceId",
-            type: "bytes4",
-          },
+          { internalType: "string", name: "provenanceHash", type: "string" },
+        ],
+        name: "setProvenanceHash",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "uint256", name: "revealTimeStamp", type: "uint256" },
+        ],
+        name: "setRevealTimestamp",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "setStartingIndex",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "startingIndex",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "startingIndexBlock",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "bytes4", name: "interfaceId", type: "bytes4" },
         ],
         name: "supportsInterface",
-        outputs: [
-          {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
-        ],
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
         stateMutability: "view",
         type: "function",
       },
       {
         inputs: [],
         name: "symbol",
-        outputs: [
-          {
-            internalType: "string",
-            name: "",
-            type: "string",
-          },
-        ],
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "timepiecePrice",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "uint256", name: "index", type: "uint256" }],
+        name: "tokenByIndex",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
         stateMutability: "view",
         type: "function",
       },
       {
         inputs: [
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
+          { internalType: "address", name: "owner", type: "address" },
+          { internalType: "uint256", name: "index", type: "uint256" },
         ],
+        name: "tokenOfOwnerByIndex",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
         name: "tokenURI",
-        outputs: [
-          {
-            internalType: "string",
-            name: "",
-            type: "string",
-          },
-        ],
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "totalSupply",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
         stateMutability: "view",
         type: "function",
       },
       {
         inputs: [
-          {
-            internalType: "address",
-            name: "from",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "to",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
+          { internalType: "address", name: "from", type: "address" },
+          { internalType: "address", name: "to", type: "address" },
+          { internalType: "uint256", name: "tokenId", type: "uint256" },
         ],
         name: "transferFrom",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "newOwner", type: "address" },
+        ],
+        name: "transferOwnership",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "withdraw",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
@@ -3870,7 +3920,6 @@ class VAULT_NEW {
 
 // ALL THE ADDRESSES IN CONFIG MUST BE LOWERCASE
 window.config = {
-  
   dyp_token_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   nft_marketplace_address: "0xfa7ecfb677af2eaa27fb03bd71fe60efc3d2ab17",
   nft_caws_address: "0xef7223b8177b34083bc6fc32055402b3255d03c6",
@@ -5686,7 +5735,6 @@ window.buyback_stakingbsc1_2 = new BUYBACK_STAKINGBSC("BUYBACK_STAKINGBSC1_2");
 window.BUYBACK_STAKINGBSC1_1_ABI = window.BUYBACK_STAKINGBSC1_1_ABI;
 window.BUYBACK_STAKINGBSC1_1_ABI = window.BUYBACK_STAKINGBSC1_2_ABI;
 
-
 window.buyNFT = async (price, nft_address, nft, priceType, priceAddress) => {
   console.log("priceType", [priceType, priceAddress]);
 
@@ -5881,8 +5929,6 @@ window.isApproved = async (token, type = "") => {
   return approved === window.config.nft_marketplace_address;
 };
 
-
-
 async function getTokenHolderBalanceAll(holder, token_address, network) {
   if (network == 1) {
     let tokenContract = new window.infuraWeb3.eth.Contract(
@@ -5939,7 +5985,7 @@ async function getNft(id) {
   );
 }
 
-const getMyNFTs = async (address, contract_nft, type = "") => {
+async function getMyNFTs(address, type, contract_nft) {
   let contract;
 
   if (type === "caws") {
@@ -5959,19 +6005,27 @@ const getMyNFTs = async (address, contract_nft, type = "") => {
 
   const balance = await contract.methods.balanceOf(address).call();
 
-  const tokens = await Promise.all(
-    range(0, balance - 1).map((i) =>
-      contract.methods.tokenOfOwnerByIndex(address, i).call()
-    )
-  );
-
-  const tokenURIs = await Promise.all(
-    tokens.map((tokenId) => contract.methods.tokenURI(tokenId).call())
-  );
+  let tokens = [];
+  for (let i = 0; i < balance; i++) {
+    await contract.methods
+      .tokenOfOwnerByIndex(address, i)
+      .call()
+      .then((data) => {
+        tokens.push(data);
+      });
+  }
+  let tokenURIs = [];
+  for (let tokenId = 0; tokenId < tokens; tokenId++) {
+    await contract.methods
+      .tokenURI(tokenId)
+      .call()
+      .then((data) => {
+        tokenURIs.push(data);
+      });
+  }
 
   return await Promise.all(tokenURIs.map((tokenURI) => window.$.get(tokenURI)));
-};
-
+}
 
 async function getLandNft(id) {
   return await window.$.get(
@@ -31214,7 +31268,7 @@ async function getCoinbase() {
     const coinbase = await window.ethereum.request({
       method: "eth_accounts",
     });
-    
+
     if (coinbase && coinbase.length > 0) {
       window.coinbase_address = coinbase.pop();
       return window.coinbase_address.toLowerCase();
@@ -34044,7 +34098,7 @@ window.checkWhitelistWod = function (address) {
   for (let i of whitelistWod) {
     if (address.toLowerCase() == i.toLowerCase()) {
       found = 1;
-    };
+    }
   }
   return found;
 };

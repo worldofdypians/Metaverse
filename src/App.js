@@ -96,7 +96,11 @@ function App() {
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
   const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
   const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
+  const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
 
+  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
+
+  const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const filter = async (filter, value) => {
     console.log("filtering", filter, value);
 
@@ -603,9 +607,46 @@ function App() {
     ethereum.on("accountsChanged", handleConnectWallet);
   }
 
+  const getMyNFTS = async (coinbase, type, address) => {
+    return await window.getMyNFTs(coinbase, type, address);
+  };
+  
+  const fetchAllMyNfts = async () => {
+    if (isConnected && coinbase) {
+      await window.getMyNFTs(coinbase, "caws", window.config.nft_caws_address)
+        .then((NFTS) => {
+          console.log(NFTS, 'caws');
+          setMyNFTSCaws(NFTS);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      getMyNFTS(coinbase, "timepiece", window.config.nft_timepiece_address)
+        .then((NFTS) => {
+          setMyNFTSTimepiece(NFTS);
+          console.log(NFTS, 'timepiece');
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      getMyNFTS(coinbase, "land", window.config.nft_land_address)
+        .then((NFTS) => {
+          setMyNFTSLand(NFTS);
+          console.log(NFTS, 'land');
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+    }
+  };
+
   useEffect(() => {
     checkNetworkId();
     getEthBalance();
+    fetchAllMyNfts();
   }, [isConnected, coinbase, currencyAmount, chainId]);
 
   useEffect(() => {
@@ -633,43 +674,40 @@ function App() {
     coinbase,
   ]);
 
-  // console.log(coinbase)
-
   const handleShowWalletModal = () => {
     setwalletModal(true);
   };
 
   useEffect(() => {
-    getListedNFTS(0).then((NFTS) => {setListedNFTS(NFTS) ; setListedNFTSCount(NFTS.length) }) ;
-
-    getListedNFTS(0, "", "recentListedNFTS").then((NFTS) => setLatest20RecentListedNFTS(NFTS));
-
-    getBoughtNFTS().then((NFTS) =>
-    {
-        setTotalBoughtNFTS(NFTS)
-        setTotalBoughtNFTSCount(NFTS.length)
-
-        let totalBoughtNFTSinETH = 0;
-
-        let totalBoughtNFTSinDYP = 0;
-
-        for(let i = 0; i < NFTS.length; i++)
-        {
-            if(NFTS[i].payment_priceType === 0)
-            {
-                totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
-            }
-            else
-            {
-                totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
-            }
-        }
-
-        setTotalBoughtNFTSinETH(totalBoughtNFTSinETH);
-
-        setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
+    getListedNFTS(0).then((NFTS) => {
+      setListedNFTS(NFTS);
+      setListedNFTSCount(NFTS.length);
     });
 
+    getListedNFTS(0, "", "recentListedNFTS").then((NFTS) =>
+      setLatest20RecentListedNFTS(NFTS)
+    );
+
+    getBoughtNFTS().then((NFTS) => {
+      setTotalBoughtNFTS(NFTS);
+      setTotalBoughtNFTSCount(NFTS.length);
+
+      let totalBoughtNFTSinETH = 0;
+
+      let totalBoughtNFTSinDYP = 0;
+
+      for (let i = 0; i < NFTS.length; i++) {
+        if (NFTS[i].payment_priceType === 0) {
+          totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
+        } else {
+          totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
+        }
+      }
+
+      setTotalBoughtNFTSinETH(totalBoughtNFTSinETH);
+
+      setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
+    });
   }, []);
 
   return (
@@ -755,7 +793,17 @@ function App() {
                   element={<ResetPassword />}
                 />
                 <Route exact path="/player" element={<PlayerCreation />} />
-                <Route exact path="/account" element={<Dashboard />} />
+                <Route
+                  exact
+                  path="/account"
+                  element={
+                    <Dashboard
+                      MyNFTSCaws={MyNFTSCaws}
+                      MyNFTSTimepiece={MyNFTSTimepiece}
+                      MyNFTSLand={MyNFTSLand}
+                    />
+                  }
+                />
 
                 <Route
                   exact
@@ -791,10 +839,13 @@ function App() {
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
                       totalListed={listedNFTSCount}
-                      totalBoughtNFTSinETH = {totalBoughtNFTSinETH / 1e18}
-                      totalBoughtNFTSinDYP = {totalBoughtNFTSinDYP  / 1e18}
-                      latest20RecentListedNFTS = {latest20RecentListedNFTS}
+                      totalBoughtNFTSinETH={totalBoughtNFTSinETH / 1e18}
+                      totalBoughtNFTSinDYP={totalBoughtNFTSinDYP / 1e18}
+                      latest20RecentListedNFTS={latest20RecentListedNFTS}
                       totalBoughtNFTSCount={totalBoughtNFTSCount}
+                      MyNFTSCaws={MyNFTSCaws}
+                      MyNFTSTimepiece={MyNFTSTimepiece}
+                      MyNFTSLand={MyNFTSLand}
                     />
                   }
                 />
