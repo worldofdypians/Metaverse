@@ -97,10 +97,12 @@ function App() {
   const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
   const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
-
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
-
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
+  const [cawsNFTS, setCawsNFTS] = useState([]);
+  const [timepiecesNFTS, setTimepiecesNFTS] = useState([]);
+  const [wodNFTS, setWodNFTS] = useState([]);
+
   const filter = async (filter, value) => {
     console.log("filtering", filter, value);
 
@@ -613,7 +615,7 @@ function App() {
   
   const fetchAllMyNfts = async () => {
     if (isConnected && coinbase) {
-      await window.getMyNFTs(coinbase, "caws", window.config.nft_caws_address)
+      getMyNFTS(coinbase, "caws", window.config.nft_caws_address)
         .then((NFTS) => {
           console.log(NFTS, 'caws');
           setMyNFTSCaws(NFTS);
@@ -678,7 +680,14 @@ function App() {
     setwalletModal(true);
   };
 
-  useEffect(() => {
+  const getallNfts = async()=>{
+    getListedNFTS(0, "", "nftAddress", window.config.nft_caws_address).then((NFTS) => setCawsNFTS(NFTS));
+
+    getListedNFTS(0, "", "nftAddress", window.config.nft_timepiece_address).then((NFTS) => setTimepiecesNFTS(NFTS));
+
+    getListedNFTS(0, "", "nftAddress", window.config.nft_land_address).then((NFTS) => setWodNFTS(NFTS));
+  
+
     getListedNFTS(0).then((NFTS) => {
       setListedNFTS(NFTS);
       setListedNFTSCount(NFTS.length);
@@ -708,6 +717,11 @@ function App() {
 
       setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
     });
+  
+  }
+
+  useEffect(() => {
+    getallNfts()
   }, []);
 
   return (
