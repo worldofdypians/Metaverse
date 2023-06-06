@@ -10,8 +10,13 @@ import bnbIcon from "./assets/bnbIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
 import CountUp from "react-countup";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
+import dypius from "../Account/src/Images/userProfile/dypius.svg";
+import dragonIcon from "../Account/src/Images/userProfile/dragonIcon.svg";
+import classes from "../Account/src/Containers/Dashboard/Dashboard.module.css";
 
-const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, totalBoughtNFTSinETH, totalBoughtNFTSinDYP, latest20RecentListedNFTS,totalBoughtNFTSCount }) => {
+
+
+const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, totalBoughtNFTSinETH, totalBoughtNFTSinDYP, latest20RecentListedNFTS,totalBoughtNFTSCount, topSales, recentSales }) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -29,7 +34,6 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, tota
     if (listedNFTS && listedNFTS.length > 0) {
       setLoading(false);
     }
-    console.log(listedNFTS);
   }, [listedNFTS]);
 
   return (
@@ -49,7 +53,7 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, tota
             <div className="d-flex flex-column align-items-center gap-2">
               {/* <h6 className="stats-amount font-raleway">1200 ETH</h6> */}
                 <div className="d-flex align-items-center gap-2">
-              <CountUp className="stats-amount font-raleway" duration={5} start={1000}  end={1200} decimal="," />
+              <CountUp className="stats-amount font-raleway" duration={5} start={(25 / 100) * totalBoughtNFTSinETH}  end={totalBoughtNFTSinETH} decimal="," />
                 <span className="stats-amount font-raleway">ETH</span>
                 </div>
               <span className="stats-details font-raleway">
@@ -58,7 +62,7 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, tota
             </div>
             <div className="d-flex flex-column align-items-center gap-2">
               {/* <h6 className="stats-amount font-raleway">17,256</h6> */}
-              <CountUp className="stats-amount font-raleway" duration={5} start={17000} end={17256} decimal="," />
+              <CountUp className="stats-amount font-raleway" duration={5} start={(25/100) * totalBoughtNFTSCount} end={totalBoughtNFTSCount} decimal="," />
 
               <span className="stats-details font-raleway">
               NFT's Sold
@@ -67,7 +71,74 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, tota
           </div>
           <h6 className="nft-wrapper-title font-raleway my-4">Active Events</h6>
           <div className="nft-outer-wrapper d-flex align-items-center justify-content-around p-4">
-
+          <NavLink to="/marketplace/events" state={{package: "dyp"}} className="d-flex flex-column align-items-center gap-2" style={{textDecoration: "none"}}>
+              <div
+                className={`premium-package dyp-package p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+              >
+                <img
+                  src={dypius}
+                  width={40}
+                  height={40}
+                  alt="premium package icon"
+                  className="premium-package-icon"
+                />
+              </div>
+              <h6
+                className="bundleTitle mb-0 fw-normal text-center"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                Golden Pass
+              </h6>
+            </NavLink>
+            <NavLink to="/marketplace/events" state={{package: "idyp"}} className="d-flex flex-column align-items-center gap-2" style={{textDecoration: "none"}}>
+              <div
+                className={`premium-package ${classes.idypicon}  p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+              ></div>
+              <h6
+                className="bundleTitle mb-0 fw-normal text-center"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                Puzzle Madness
+              </h6>
+            </NavLink>
+            <NavLink to="/marketplace/events" state={{package: "dragon"}} className="d-flex flex-column align-items-center gap-2" style={{textDecoration: "none"}}>
+              <div
+                className={`premium-package dragon-package  p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+              >
+                <img
+                  src={dragonIcon}
+                  width={40}
+                  height={40}
+                  alt="premium package icon"
+                  className="premium-package-icon"
+                />
+              </div>
+              <h6
+                className="bundleTitle mb-0 fw-normal text-center"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                Dragon Ruins
+              </h6>
+            </NavLink>
+            <NavLink to="/marketplace/events" state={{package: "criticalHit"}} className="d-flex flex-column align-items-center gap-2" style={{textDecoration: "none"}}>
+              <div
+                className={`premium-package criticalhit-package  p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+              >
+                <img
+                  src={dypius}
+                  width={40}
+                  height={40}
+                  alt="premium package icon"
+                  className="premium-package-icon"
+                />
+              </div>
+              <h6
+                className="bundleTitle mb-0 fw-normal text-center"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                Critical Hit
+              </h6>
+            </NavLink>
           </div>
           <h6 className="nft-wrapper-title font-raleway mt-4">Top Sales</h6>
           <div className="d-flex align-items-center nft-outer-wrapper p-4 gap-4 my-4">
@@ -76,8 +147,8 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, tota
                 loading === false ? "item-cards-wrapper" : "loader-wrapper"
               }
             >
-              {listedNFTS && listedNFTS.length > 0 ? (
-                listedNFTS.slice(0,5).map((nft) => (
+              {topSales && topSales.length > 0 ? (
+                topSales.map((nft) => (
                   <ItemCard
                     key={nft.id}
                     nft={nft}
@@ -103,8 +174,8 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, tota
                 loading === false ? "item-cards-wrapper" : "loader-wrapper"
               }
             >
-              {listedNFTS && listedNFTS.length > 0 ? (
-                listedNFTS.slice(0,5).map((nft) => (
+              {latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0 ? (
+                latest20RecentListedNFTS.map((nft) => (
                   <ItemCard
                     key={nft.id}
                     nft={nft}
@@ -130,8 +201,8 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, tota
                 loading === false ? "item-cards-wrapper" : "loader-wrapper"
               }
             >
-              {listedNFTS && listedNFTS.length > 0 ? (
-                listedNFTS.slice(0,5).map((nft) => (
+              {recentSales && recentSales.length > 0 ? (
+                recentSales.map((nft) => (
                   <ItemCard
                     key={nft.id}
                     nft={nft}

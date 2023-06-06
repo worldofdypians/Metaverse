@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
-const CawsNFT = ({ isConnected, handleConnect, listedNFTS }) => {
+const CawsNFT = ({ isConnected, handleConnect, listedNFTS, cawsNFTS }) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -11,14 +11,14 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS }) => {
 
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (listedNFTS && listedNFTS.length === 0) {
+    if (cawsNFTS && cawsNFTS.length === 0) {
       setLoading(true);
     }
-    if (listedNFTS && listedNFTS.length > 0) {
+    if (cawsNFTS && cawsNFTS.length > 0) {
       setLoading(false);
     }
-    console.log(listedNFTS);
-  }, [listedNFTS]);
+    console.log(cawsNFTS);
+  }, [cawsNFTS]);
 
   return (
     <div
@@ -37,8 +37,8 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS }) => {
                 loading === false ? "item-cards-wrapper" : "loader-wrapper"
               }
             >
-              {listedNFTS && listedNFTS.length > 0 ? (
-                listedNFTS
+              {cawsNFTS && cawsNFTS.length > 0 ? (
+                cawsNFTS
                   .slice(0, 5)
                   .map((nft) => (
                     <ItemCard

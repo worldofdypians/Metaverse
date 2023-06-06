@@ -96,12 +96,15 @@ function App() {
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
   const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
   const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
+  const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
+  const [top20BoughtByPriceAndPriceTypeETHNFTS, settop20BoughtByPriceAndPriceTypeETHNFTS] = useState([]);
+  const [top20BoughtByPriceAndPriceTypeDYPNFTS, settop20BoughtByPriceAndPriceTypeDYPNFTS] = useState([]);
+  const [cawsNFTS, setCawsNFTS] = useState([]);
+    const [timepiecesNFTS, setTimepiecesNFTS] = useState([]);
+    const [wodNFTS, setWodNFTS] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
-  const [cawsNFTS, setCawsNFTS] = useState([]);
-  const [timepiecesNFTS, setTimepiecesNFTS] = useState([]);
-  const [wodNFTS, setWodNFTS] = useState([]);
 
   const filter = async (filter, value) => {
     console.log("filtering", filter, value);
@@ -558,6 +561,75 @@ function App() {
     return boughtItems;
   };
 
+  const getLatest20BoughtNFTS = async () => {
+
+    let boughtItems = [];
+
+    const URL = "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+
+    const itemBoughtQuery = `
+        {
+            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
+            nftAddress
+            tokenId
+            payment_priceType
+            price
+            buyer
+            blockNumber
+            blockTimestamp
+        }
+        }
+        `;
+
+await axios.post(URL, {query: itemBoughtQuery})
+    .then(async (result) => {
+        boughtItems = await result.data.data.itemBoughts;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
+
+console.log("boughtItems", boughtItems);
+
+return boughtItems;
+}
+
+
+const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
+
+  let boughtItems = [];
+
+  const URL = "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+
+  const itemBoughtQuery = `
+      {
+          itemBoughts(first: 20, orderBy: price, orderDirection: desc, where: {payment_priceType: ${type}}) {
+          nftAddress
+          tokenId
+          payment_priceType
+          price
+          buyer
+          blockNumber
+          blockTimestamp
+      }
+      }
+      `;
+
+  await axios.post(URL, {query: itemBoughtQuery})
+      .then(async (result) => {
+          boughtItems = await result.data.data.itemBoughts;
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+
+  console.log("boughtItems", boughtItems);
+
+  return boughtItems;
+}
+
+
   Amplify.configure(awsExports);
 
   function UnAuthenticatedContent() {
@@ -717,13 +789,23 @@ function App() {
 
       setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
     });
+
+
+    
+    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
+
+    getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) => settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS));
+    getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) => settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS));
   
   }
 
-  useEffect(() => {
-    getallNfts()
-  }, []);
 
+  useEffect(()=>{
+     getallNfts()
+
+  },[]);
+
+  
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -857,6 +939,8 @@ function App() {
                       totalBoughtNFTSinDYP={totalBoughtNFTSinDYP / 1e18}
                       latest20RecentListedNFTS={latest20RecentListedNFTS}
                       totalBoughtNFTSCount={totalBoughtNFTSCount}
+                      recentSales={latest20BoughtNFTS}
+                      topSales={top20BoughtByPriceAndPriceTypeETHNFTS}
                       MyNFTSCaws={MyNFTSCaws}
                       MyNFTSTimepiece={MyNFTSTimepiece}
                       MyNFTSLand={MyNFTSLand}
@@ -871,6 +955,7 @@ function App() {
                       isConnected={isConnected}
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
+                      cawsNFTS={cawsNFTS}
                     />
                   }
                 />
@@ -882,6 +967,7 @@ function App() {
                       isConnected={isConnected}
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
+                      wodNFTS={wodNFTS}
                     />
                   }
                 />
@@ -893,6 +979,7 @@ function App() {
                       isConnected={isConnected}
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
+                      timepiecesNFTS={timepiecesNFTS}
                     />
                   }
                 />
