@@ -33,7 +33,7 @@ import goldenPass from "../../Components/BundleCard/assets/goldenPass.webp";
 
 import dypius from "../../Images/userProfile/dypius.svg";
 
-function Dashboard() {
+function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand }) {
   const { email, logout } = useAuth();
   const { account, connectedState, chainId } = useWeb3();
   const {
@@ -134,6 +134,7 @@ function Dashboard() {
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
   };
+  console.log(MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand)
 
   // const connectWallet = async () => {
   //   try {

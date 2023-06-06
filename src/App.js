@@ -102,6 +102,9 @@ function App() {
   const [cawsNFTS, setCawsNFTS] = useState([]);
     const [timepiecesNFTS, setTimepiecesNFTS] = useState([]);
     const [wodNFTS, setWodNFTS] = useState([]);
+  const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
+  const [MyNFTSLand, setMyNFTSLand] = useState([]);
 
   const filter = async (filter, value) => {
     console.log("filtering", filter, value);
@@ -678,9 +681,46 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
     ethereum.on("accountsChanged", handleConnectWallet);
   }
 
+  const getMyNFTS = async (coinbase, type, address) => {
+    return await window.getMyNFTs(coinbase, type, address);
+  };
+  
+  const fetchAllMyNfts = async () => {
+    if (isConnected && coinbase) {
+      getMyNFTS(coinbase, "caws", window.config.nft_caws_address)
+        .then((NFTS) => {
+          console.log(NFTS, 'caws');
+          setMyNFTSCaws(NFTS);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      getMyNFTS(coinbase, "timepiece", window.config.nft_timepiece_address)
+        .then((NFTS) => {
+          setMyNFTSTimepiece(NFTS);
+          console.log(NFTS, 'timepiece');
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      getMyNFTS(coinbase, "land", window.config.nft_land_address)
+        .then((NFTS) => {
+          setMyNFTSLand(NFTS);
+          console.log(NFTS, 'land');
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+    }
+  };
+
   useEffect(() => {
     checkNetworkId();
     getEthBalance();
+    fetchAllMyNfts();
   }, [isConnected, coinbase, currencyAmount, chainId]);
 
   useEffect(() => {
@@ -708,57 +748,64 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
     coinbase,
   ]);
 
-  // console.log(coinbase)
-
   const handleShowWalletModal = () => {
     setwalletModal(true);
   };
 
-  useEffect(() => {
-    getListedNFTS(0).then((NFTS) => {setListedNFTS(NFTS) ; setListedNFTSCount(NFTS.length) }) ;
+  const getallNfts = async()=>{
+    getListedNFTS(0, "", "nftAddress", window.config.nft_caws_address).then((NFTS) => setCawsNFTS(NFTS));
 
-    getListedNFTS(0, "", "recentListedNFTS").then((NFTS) => setLatest20RecentListedNFTS(NFTS));
+    getListedNFTS(0, "", "nftAddress", window.config.nft_timepiece_address).then((NFTS) => setTimepiecesNFTS(NFTS));
 
-    getBoughtNFTS().then((NFTS) =>
-    {
-        setTotalBoughtNFTS(NFTS)
-        setTotalBoughtNFTSCount(NFTS.length)
+    getListedNFTS(0, "", "nftAddress", window.config.nft_land_address).then((NFTS) => setWodNFTS(NFTS));
+  
 
-        let totalBoughtNFTSinETH = 0;
-
-        let totalBoughtNFTSinDYP = 0;
-
-        for(let i = 0; i < NFTS.length; i++)
-        {
-            if(NFTS[i].payment_priceType === 0)
-            {
-                totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
-            }
-            else
-            {
-                totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
-            }
-        }
-
-        setTotalBoughtNFTSinETH(totalBoughtNFTSinETH);
-
-        setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
+    getListedNFTS(0).then((NFTS) => {
+      setListedNFTS(NFTS);
+      setListedNFTSCount(NFTS.length);
     });
+
+    getListedNFTS(0, "", "recentListedNFTS").then((NFTS) =>
+      setLatest20RecentListedNFTS(NFTS)
+    );
+
+    getBoughtNFTS().then((NFTS) => {
+      setTotalBoughtNFTS(NFTS);
+      setTotalBoughtNFTSCount(NFTS.length);
+
+      let totalBoughtNFTSinETH = 0;
+
+      let totalBoughtNFTSinDYP = 0;
+
+      for (let i = 0; i < NFTS.length; i++) {
+        if (NFTS[i].payment_priceType === 0) {
+          totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
+        } else {
+          totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
+        }
+      }
+
+      setTotalBoughtNFTSinETH(totalBoughtNFTSinETH);
+
+      setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
+    });
+
 
     
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
 
     getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) => settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS));
     getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) => settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS));
+  
+  }
 
-    getListedNFTS(0, "", "nftAddress", window.config.nft_caws_address).then((NFTS) => setCawsNFTS(NFTS));
 
-    getListedNFTS(0, "", "nftAddress", window.config.nft_timepiece_address).then((NFTS) => setTimepiecesNFTS(NFTS));
+  useEffect(()=>{
+     getallNfts()
 
-    getListedNFTS(0, "", "nftAddress", window.config.nft_land_address).then((NFTS) => setWodNFTS(NFTS));
+  },[]);
 
-  }, []);
-
+  
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -842,7 +889,17 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
                   element={<ResetPassword />}
                 />
                 <Route exact path="/player" element={<PlayerCreation />} />
-                <Route exact path="/account" element={<Dashboard />} />
+                <Route
+                  exact
+                  path="/account"
+                  element={
+                    <Dashboard
+                      MyNFTSCaws={MyNFTSCaws}
+                      MyNFTSTimepiece={MyNFTSTimepiece}
+                      MyNFTSLand={MyNFTSLand}
+                    />
+                  }
+                />
 
                 <Route
                   exact
@@ -878,12 +935,15 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
                       totalListed={listedNFTSCount}
-                      totalBoughtNFTSinETH = {totalBoughtNFTSinETH / 1e18}
-                      totalBoughtNFTSinDYP = {totalBoughtNFTSinDYP  / 1e18}
-                      latest20RecentListedNFTS = {latest20RecentListedNFTS}
+                      totalBoughtNFTSinETH={totalBoughtNFTSinETH / 1e18}
+                      totalBoughtNFTSinDYP={totalBoughtNFTSinDYP / 1e18}
+                      latest20RecentListedNFTS={latest20RecentListedNFTS}
                       totalBoughtNFTSCount={totalBoughtNFTSCount}
                       recentSales={latest20BoughtNFTS}
                       topSales={top20BoughtByPriceAndPriceTypeETHNFTS}
+                      MyNFTSCaws={MyNFTSCaws}
+                      MyNFTSTimepiece={MyNFTSTimepiece}
+                      MyNFTSLand={MyNFTSLand}
                     />
                   }
                 />

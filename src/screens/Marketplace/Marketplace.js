@@ -26,6 +26,7 @@ const Marketplace = ({ listedNFTS, isConnected, handleConnect, totalListed, tota
   const [loading, setLoading] = useState(false);
   const [activeLink, setActiveLink] = useState("collections")
 
+
   useEffect(() => {
     if (listedNFTS && listedNFTS.length === 0) {
       setLoading(true);
