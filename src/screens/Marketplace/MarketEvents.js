@@ -9,11 +9,14 @@ import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "../Account/src/Containers/Dashboard/Dashboard.schema";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import { useLocation } from "react-router-dom";
+import useWindowSize from "../../hooks/useWindowSize";
+import MobileNav from "../../components/MobileNav/MobileNav";
 
 
 const MarketEvents = ({ account, chainId }) => {
 
   const location = useLocation();
+  const windowSize = useWindowSize();
   const [dypBalance, setDypBalance] = useState();
   const [dypBalancebnb, setDypBalanceBnb] = useState();
   const [dypBalanceavax, setDypBalanceAvax] = useState();
@@ -160,10 +163,11 @@ const MarketEvents = ({ account, chainId }) => {
   }, []);
 
   return (
-    <>
-      <MarketSidebar />
-      <div className="d-flex flex-column gap-2 align-items-center my-4" style={{minHeight: '72vh'}}>
-        <div className="col-6 d-flex gap-5">
+    <div className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0">
+           {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
+
+      <div className="container-nft d-flex flex-column gap-2 px-3 px-lg-5 my-4" style={{minHeight: '72vh'}}>
+        <div className={`${windowSize.width < 1470 ? 'col-12' : windowSize.width < 1700 ? "col-10" : "col-8"} d-flex flex-column flex-lg-row gap-5`}>
           <div className="packages-grid">
             <div className="event-package d-flex flex-column align-items-center gap-2">
               <div
@@ -223,7 +227,6 @@ const MarketEvents = ({ account, chainId }) => {
                 Dragon Ruins
               </h6>
             </div>
-
             <div className="event-package d-flex flex-column align-items-center gap-2">
               <div
                 className={`premium-package criticalhit-package ${
@@ -269,7 +272,7 @@ const MarketEvents = ({ account, chainId }) => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

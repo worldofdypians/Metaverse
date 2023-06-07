@@ -1,0 +1,68 @@
+.mobile-nav{
+    position: fixed;
+    bottom: 0;
+    background: #080b2a;
+    z-index: 7;
+    width: 100%;
+  box-shadow: 4px 4px 20px 1px #340d60;
+  
+}
+
+.mobile-link{
+  padding: 5px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: all .25s;
+}
+
+.active-mobile-link{
+  padding: 5px;
+  border-radius: 8px;
+  border: 2px solid #B8B8E0;
+}
+
+
+
+.mobile-nft-wrapper{
+  position: fixed;
+  bottom: -1000px;
+  z-index: 6;
+  transition: all .25s;
+}
+
+.mobile-nft-wrapper-active{
+  bottom: 59px;
+  box-shadow:0 0 0 1000px rgba(0,0,0,.50);
+  pointer-events: auto;
+}
+
+
+.nft-link{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+
+  h6{
+    color: #B8B8E0;
+    margin-bottom: 0;
+  }
+}
+.nft-link-active{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #B8B8E0;
+
+  h6{
+    color: #F8F8FF;
+    margin-bottom: 0;
+  }
+}
+

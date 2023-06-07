@@ -7,6 +7,8 @@
   overflow: hidden;
   background: #080b2a;
 
+  
+
   .footer-link {
     font-style: normal;
     font-weight: 400;
@@ -75,4 +77,10 @@
    width: 100% !important;
  }
 
+}
+
+@media screen and (max-width: 786px) {
+ .extra-padding{
+  padding-bottom: 50px;
+ }
 }

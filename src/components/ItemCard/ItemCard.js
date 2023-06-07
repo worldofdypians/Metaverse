@@ -53,7 +53,7 @@ const ItemCard = ({ nft, single, isConnected, showConnectWallet }) => {
   }, [nft.price]);
 
   return (
-    <div className="d-flex flex-column item-wrapper">
+    <div className="d-flex flex-column item-wrapper" style={{maxWidth: "100%"}}>
       {/* <div style={{ paddingLeft: "20px" }}>Seller: {nft.seller}</div> */}
       <a href={`/nft/${nft.blockTimestamp}`}>
         {" "}
