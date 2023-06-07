@@ -3,26 +3,25 @@ import { NavLink } from "react-router-dom";
 import twitterIcon from "./assets/twitterIcon.svg";
 import emailIcon from "./assets/emailIcon.svg";
 import discordIcon from "./assets/discordIcon.svg";
+import sidebarArrow from "./assets/sidebarArrow.svg";
 
 const MarketSidebar = () => {
   const [activeLink, setActiveLink] = useState("collections");
 
   return (
     <div className="marketplace-sidebar d-flex justify-content-center p-4">
-      <div className="d-flex flex-column" style={{ gap: "60px" }}>
-        <div className="d-flex flex-column gap-4">
+      <div className="d-flex flex-column w-100" style={{ gap: "60px" }}>
+        <div className="d-flex flex-column gap-2">
           <NavLink
             to="/marketplace"
             end
             className={({ isActive }) =>
               isActive
-                ? "d-flex px-2 py-3 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex px-2 py-3 align-items-center gap-2 sidebar-item"
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
             }
             children={({ isActive }) => {
-              const icon = isActive
-                ? "collectionsIconActive"
-                : "collectionsIcon";
+              const icon = isActive ? "homeIconActive" : "homeIcon";
               return (
                 <>
                   <img
@@ -30,19 +29,98 @@ const MarketSidebar = () => {
                     style={{ width: "20px", height: "20px" }}
                     alt=""
                   />
-                  <span className={`sidebar-title`}>Collctions</span>
+                  <span className={`sidebar-title`}>Home</span>
                 </>
               );
             }}
           />
-          <div className="d-flex flex-column gap-3">
+
+          <div class="accordion" id="accordionExample">
+            <div class="">
+              <h2 class="sidebar-item p-2 mb-0" id="headingOne">
+                <div
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={require(`./assets/collectionsIcon.svg`).default}
+                        style={{ width: "20px", height: "20px" }}
+                        alt=""
+                      />
+                      <h6 className="sidebar-title mb-0">Collections</h6>
+                    </div>
+                    <img
+                      src={sidebarArrow}
+                      style={{ position: "relative", right: "5px" }}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </h2>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to="/marketplace/caws"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <span className={`nft-sidebar-title`}>CAWS</span>
+                    </NavLink>
+                    <NavLink
+                      to="/marketplace/wod"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <span className={`nft-sidebar-title`}>WoD Land</span>
+                    </NavLink>
+
+                    <NavLink
+                      to="/marketplace/timepiece"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <span className={`nft-sidebar-title`}>
+                        CAWS Timepiece
+                      </span>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div className="d-flex flex-column gap-3">
             <NavLink
               to="/marketplace/caws"
               end
               className={({ isActive }) =>
                 isActive
-                  ? "d-flex px-2 py-3 align-items-center gap-2 sidebar-item sidebar-item-active"
-                  : "d-flex px-2 py-3 align-items-center gap-2 sidebar-item"
+                  ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                  : "d-flex p-2 align-items-center gap-2 sidebar-item"
               }
             >
               <div className="icon-wrapper"></div>
@@ -53,8 +131,8 @@ const MarketSidebar = () => {
               end
               className={({ isActive }) =>
                 isActive
-                  ? "d-flex px-2 py-3 align-items-center gap-2 sidebar-item sidebar-item-active"
-                  : "d-flex px-2 py-3 align-items-center gap-2 sidebar-item"
+                  ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                  : "d-flex p-2 align-items-center gap-2 sidebar-item"
               }
             >
               <div className="icon-wrapper"></div>
@@ -66,21 +144,21 @@ const MarketSidebar = () => {
               end
               className={({ isActive }) =>
                 isActive
-                  ? "d-flex px-2 py-3 align-items-center gap-2 sidebar-item sidebar-item-active"
-                  : "d-flex px-2 py-3 align-items-center gap-2 sidebar-item"
+                  ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                  : "d-flex p-2 align-items-center gap-2 sidebar-item"
               }
             >
               <div className="icon-wrapper"></div>
               <span className={`sidebar-title`}>CAWS Timepiece</span>
             </NavLink>
-          </div>
+          </div> */}
           <NavLink
             to="/marketplace/events"
             end
             className={({ isActive }) =>
               isActive
-                ? "d-flex px-2 py-3 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex px-2 py-3 align-items-center gap-2 sidebar-item"
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
             }
             children={({ isActive }) => {
               const icon = isActive ? "eventsIconActive" : "eventsIcon";
@@ -101,8 +179,8 @@ const MarketSidebar = () => {
             end
             className={({ isActive }) =>
               isActive
-                ? "d-flex px-2 py-3 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex px-2 py-3 align-items-center gap-2 sidebar-item"
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
             }
             children={({ isActive }) => {
               const icon = isActive ? "stakeIconActive" : "stakeIcon";

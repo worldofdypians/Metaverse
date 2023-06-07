@@ -40,8 +40,6 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 40px;
 
-  
-
   @media screen and (max-width: 1600px) {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -69,10 +67,35 @@
 }
 
 .nft-outer-wrapper {
-  background: rgba(22, 24, 54, 0.6);
-  border-radius: 20px;
-
+  position: relative;
+  z-index: 2;
+  
 }
+
+.nft-outer-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  padding: 20px;
+  border: 2px solid #41435A;
+  backdrop-filter: blur(13.3817px);
+
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+  filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 21.4107px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+}
+
 .nft-outer-wrapper-1 {
   background: rgba(22, 24, 54, 1);
   border-radius: 20px;
@@ -130,15 +153,15 @@
 
 .container-nft {
   width: 80%;
-  background-image: url('./assets//marketplaceBackground.png');
-  background-size: cover;
-  @media screen and (max-width: 786px ) {
+  background-image: url("./assets//marketplaceBackground.png");
+  background-size: 100% 100%;
+  @media screen and (max-width: 786px) {
     width: 100%;
     align-items: center !important;
   }
 }
 
-.slider-container{
+.slider-container {
   max-width: 100vw;
   width: 100%;
   overflow: hidden;
@@ -150,9 +173,10 @@
 }
 
 .sidebar-title {
-  font-weight: 600;
-  font-size: 16.3366px;
-  line-height: 19px;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 30px;
+  letter-spacing: 0.03em;
   color: #B8B8E0;
 }
 
@@ -160,7 +184,7 @@
   font-weight: 600;
   font-size: 16.3366px;
   line-height: 19px;
-  color: #F8F8FF;
+  color: #f8f8ff;
 }
 
 .sidebar-item {
@@ -178,7 +202,7 @@
     rgba(255, 255, 255, 0) 99.84%
   );
   .sidebar-title {
-    color: #ffffff;
+    color: #8C56FF;
   }
 }
 
@@ -189,104 +213,316 @@
     rgba(255, 255, 255, 0) 99.84%
   );
 
-  .sidebar-title{
-    color: #ffffff !important;
+  .sidebar-title {
+    color: #8C56FF !important;
   }
 }
 
-.packages-grid{
+.packages-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   height: fit-content;
   margin-top: 2rem;
 }
 
-.event-package{
+.event-package {
   height: fit-content;
 }
 
-.sidebar-divider{
+.sidebar-divider {
   width: 100%;
   height: 2px;
   background: #525469;
 }
 
-.social-link{
+.social-link {
   font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 19px;
-color: #8B8C91;
-margin-bottom: 0px !important;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 19px;
+  color: #8b8c91;
+  margin-bottom: 0px !important;
 }
 
-.events-wrapper{
+.events-wrapper {
   align-items: center;
-  @media screen and (max-width: 1600px)  {
+  @media screen and (max-width: 1600px) {
     align-items: end;
   }
 }
 
-.sales-number{
+.sales-number {
   line-height: 24px;
-    color: #777d86;
-    width: 12px;
+  color: #777d86;
+  width: 12px;
 }
 
-.nft-name-wrapper{
-  font-size: 14px;
-  line-height: 20px;
-  border-radius: 8px;
-  background-color: rgba(184, 184, 224, 0.6);
-  color: #F8F8FF;
-}
-
-.price-usd{
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  color: #F8F8FF;
-}
-.price-token{
+.nft-name-wrapper {
+  font-style: normal;
   font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    color: #B8B8E0;
-}
-.top-sales-card{
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all .25s;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ffffff;
 }
 
-.top-sales-card:hover{
-  background-color: rgba(184, 184, 224, 0.3);
-}
-
-.filter-wrapper{
-  border-radius: 8px;
-  transition: all .25s;
-  cursor: pointer;
-}
-
-.filter-wrapper-selected{
-  background-color: rgba(184, 184, 224, 0.6);
-  h6{
-    color: #F8F8FF;
-  }
-}
-
-.filter-wrapper:hover{
-  background-color: rgba(184, 184, 224, 0.3);
-  h6{
-    color: #F8F8FF;
-  }
-
-}
-
-.filter-title{
-  margin-bottom: 0;
-  color: #B8B8E0;
+.price-usd {
+  font-size: 14px;
   font-weight: 600;
+  line-height: 20px;
+  color: #f8f8ff;
+}
+.price-token {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #b8b8e0;
+}
+.top-sales-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  backdrop-filter: blur(26px);
+  /* Note: backdrop-filter has minimal browser support */
+  width: 90%;
+  border-radius: 20px;
+}
+
+// .top-sales-card:hover {
+//   background-color: rgba(184, 184, 224, 0.3);
+// }
+
+.filter-wrapper {
+  border-radius: 8px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.filter-wrapper-selected {
+  background-color: rgba(184, 184, 224, 0.6);
+  h6 {
+    color: #f8f8ff;
+  }
+}
+
+.filter-wrapper:hover {
+  background-color: rgba(184, 184, 224, 0.3);
+  h6 {
+    color: #f8f8ff;
+  }
+}
+
+.filter-title {
+  font-weight: 500;
   font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+  color: #e2e2e2;
+  transition: all 0.25;
+}
+
+.filter-title:hover {
+  color: #7bd8b0;
+}
+
+.filter-selected {
+  color: #7bd8b0 !important;
+}
+
+.top-eth {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #b8b8e0;
+  margin-bottom: 0;
+}
+
+.top-sales-rank {
+  right: -8%;
+  top: -10%;
+  background: rgba(250, 250, 250, 0.3);
+  padding: 5px;
+  border-radius: 8px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  span {
+    color: rgba(125, 217, 176, 0.9);
+    margin-bottom: 0;
+  }
+}
+
+.top-sale-time {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  /* identical to box height */
+  color: #b8b8e0;
+  bottom: -18%;
+}
+
+.stats-value {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 59px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 0;
+}
+
+.stats-desc {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 0;
+}
+.stats-container-1 {
+  background-image: url("./assets//statsBg1.png");
+  background-size: 100% 100%;
+  aspect-ratio: 1.89/1;
+}
+
+.stats-container-2 {
+  background-image: url("./assets//statsBg2.png");
+  background-size: 100% 100%;
+  aspect-ratio: 1.89/1;
+}
+.stats-container-3 {
+  background-image: url("./assets//statsBg3.png");
+  background-size: 100% 100%;
+  aspect-ratio: 1.89/1;
+}
+
+.first-box-blur {
+  width: 125.66px;
+  height: 166.08px;
+
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+  filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
+  backdrop-filter: blur(13.3817px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 21.4107px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 1;
+  border: 2px solid #41435A;
+  transition: all .25s;
+
+}
+
+.second-box-blur {
+  width: 125.66px;
+  height: 89.13px;
+
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+  filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
+  backdrop-filter: blur(13.3817px);
+  border-radius: 21.4107px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  position: absolute;
+  top: -20px;
+  left: -50px;
+  border: 2px solid #41435A;
+  transition: all .25s;
+
+}
+
+.blur-img {
+  filter: drop-shadow(16.058px 17.1286px 35.3276px rgba(0, 0, 0, 0.09));
+  border-radius: 16.058px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  width: 136.82px;
+  height: 144.9px;
+  position: absolute;
+  top: -10px;
+  left: -30px;
+}
+
+.blur-package-title {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ffffff;
+  position: absolute;
+  bottom: 8px;
+  transition: all .25s;
+
+}
+
+.package-blur{
+  transition: all .25s;
+}
+
+.package-blur:hover{
+  transform: translateY(-10px);
+
+  .first-box-blur{
+    border: 2px solid #7bd8b0;
+  }
+  .second-box-blur{
+    border: 2px solid #7bd8b0;
+  }
+
+  .blur-package-title{
+    color: #7bd8b0;
+  }
+}
+
+.market-banner-title{
+  font-style: normal;
+font-weight: 700;
+font-size: 36px;
+line-height: 130%;
+letter-spacing: 0.03em;
+text-transform: capitalize;
+color: #FFFFFF;
+}
+
+.market-banner-desc{
+  font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+letter-spacing: 0.03em;
+color: #FFFFFF;
+
+}
+
+.nft-sidebar-title{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.03em;
+  color: #B8B8E0;
+}
+
+
+.nft-active{
+  .nft-sidebar-title{
+    color: #8C56FF;
+  }
 }
