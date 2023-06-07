@@ -80,6 +80,7 @@ const Marketplace = ({
     ],
   };
 
+
   useEffect(() => {
     if (listedNFTS && listedNFTS.length === 0) {
       setLoading(true);
