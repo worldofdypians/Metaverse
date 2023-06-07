@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
+import useWindowSize from "../../../hooks/useWindowSize";
+import MobileNav from "../../../components/MobileNav/MobileNav";
 
 const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
   const override = {
@@ -10,6 +12,7 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
     borderColor: "#554fd8",
   };
 
+  const windowSize = useWindowSize();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (wodNFTS && wodNFTS.length === 0) {
@@ -26,7 +29,8 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
       className="container-fluid d-flex justify-content-end p-0"
       style={{ minHeight: "72vh" }}
     >
-      <MarketSidebar />
+      {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
+
       <div className="container-nft pe-5 position-relative">
         <div className="main-wrapper py-4 w-100">
           <h6 className="nft-wrapper-title font-raleway mt-4">
