@@ -21,6 +21,7 @@
     "ethers": "^5.7.2",
     "i18next": "^22.4.10",
     "i18next-browser-languagedetector": "^7.0.1",
+    "js-abbreviation-number": "^1.4.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "node-sass": "^8.0.0",
