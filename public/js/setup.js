@@ -5749,7 +5749,7 @@ window.buyNFT = async (price, nft_address, nft, priceType, priceAddress) => {
     .send({ from: await getCoinbase(), value: price });
 };
 
-window.approveBuy = async (amount) => {
+window.approveBuy = async (amount, type) => {
   const contract = new window.web3.eth.Contract(
     window.abi.token.dyp,
     window.config.dyp_token_address
@@ -5760,21 +5760,42 @@ window.approveBuy = async (amount) => {
     "window.config.nft_marketplace_address",
     window.config.nft_marketplace_address
   );
+  if(type === 'caws') {
 
-  await contract.methods
-    .approve(window.config.nft_marketplace_address, amount)
+    await contract.methods
+    .approve(window.config.nft_caws_address, amount)
     .send({ from: await getCoinbase() });
+  }
+
+  else if(type === 'timepiece') {
+    
+  await contract.methods
+  .approve(window.config.nft_timepiece_address, amount)
+  .send({ from: await getCoinbase() });
+  }
+
+  else if(type === 'wod') {
+    
+  await contract.methods
+  .approve(window.config.nft_land_address, amount)
+  .send({ from: await getCoinbase() });
+  }
+
 };
 
 window.isApprovedBuy = async (amount) => {
+ window.web3 = new Web3(window.ethereum);
+
   const contract = new window.web3.eth.Contract(
     window.abi.token.dyp,
     window.config.dyp_token_address
   );
 
+  const coinbase = await getCoinbase();
+
   const allowance = await contract.methods
     .allowance(
-      window.ethereum.selectedAddress,
+      coinbase,
       window.config.nft_marketplace_address
     )
     .call({ from: await getCoinbase() });
@@ -5986,8 +6007,25 @@ async function getNft(id) {
   );
 }
 
+async function getLandNft(id) {
+  return await window.$.get(
+    `https://mint.worldofdypians.com/metadata/${id}`
+  ).then((result) => {
+    return result;
+  });
+}
+
+async function getTimepieceNft(id) {
+  return await window.$.get(
+    `https://timepiece.worldofdypians.com/metadata/${id}`
+  ).then((result) => {
+    return result;
+  });
+}
+
 async function getMyNFTs(address, type, contract_nft) {
   let contract;
+  window.web3 = new Web3(window.ethereum)
 
   if (type === "caws") {
     contract = new window.web3.eth.Contract(window.abi.nft.caws, contract_nft);
@@ -6004,7 +6042,7 @@ async function getMyNFTs(address, type, contract_nft) {
     );
   }
 
-  const balance = await contract.methods.balanceOf(address).call();
+  const balance = await contract.methods.balanceOf(address).call().catch((e)=>{console.log(e)});
 
   let tokens = [];
   for (let i = 0; i < balance; i++) {
@@ -6013,28 +6051,23 @@ async function getMyNFTs(address, type, contract_nft) {
       .call()
       .then((data) => {
         tokens.push(data);
-      });
+      }).catch((e)=>{console.log(e)});
   }
   let tokenURIs = [];
-  for (let tokenId = 0; tokenId < tokens; tokenId++) {
-    await contract.methods
-      .tokenURI(tokenId)
+  for (let tokenId = 0; tokenId < tokens.length; tokenId++) {
+    
+    const result = await contract.methods
+      .tokenURI(parseInt(tokens[tokenId]))
       .call()
-      .then((data) => {
-        tokenURIs.push(data);
-      });
+      .catch((e)=>{console.log(e)});
+      console.log(result)
+      tokenURIs.push(result)
   }
-
+//  console.log(tokenURIs,tokens)
   return await Promise.all(tokenURIs.map((tokenURI) => window.$.get(tokenURI)));
 }
 
-async function getLandNft(id) {
-  return await window.$.get(
-    `https://mint.worldofdypians.com/metadata/${id}`
-  ).then((result) => {
-    return result;
-  });
-}
+
 
 async function myNftListContract(address) {
   let nft_contract = await getContractNFT("NFT");
