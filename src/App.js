@@ -794,7 +794,6 @@ function App() {
       "nftAddress",
       window.config.nft_timepiece_address
     ).then((NFTS) => {
-      console.log(NFTS);
       setTimepiecesNFTS(NFTS);
     });
 
