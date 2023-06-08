@@ -21,7 +21,7 @@ const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS, timepieceNFTS })
     if (timepieceNFTS && timepieceNFTS.length > 0) {
       setLoading(false);
     }
-    console.log(timepieceNFTS);
+ 
   }, [timepieceNFTS]);
 
   return (
@@ -51,6 +51,9 @@ const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS, timepieceNFTS })
                       nft={nft}
                       isConnected={isConnected}
                       showConnectWallet={handleConnect}
+                      isCaws={false}
+                      isTimepiece={true}
+                      isWod={false}
                     ></ItemCard>
                   ))
               ) : (

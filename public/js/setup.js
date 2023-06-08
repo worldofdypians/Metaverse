@@ -3923,6 +3923,7 @@ window.config = {
   dyp_token_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   nft_marketplace_address: "0xfa7ecfb677af2eaa27fb03bd71fe60efc3d2ab17",
   nft_caws_address: "0xef7223b8177b34083bc6fc32055402b3255d03c6",
+  nft_cawsold_address: '0xa22294eab566f64db0742bb3fe4e762f5f062f23',
   nft_timepiece_address: "0x6917d34310a03704727169451ca66307dad62a23",
   nft_land_address: "0x2519ab0e0a73e2108c1d6ba5af550ac3a220d8ab",
   cg_ids: {

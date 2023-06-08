@@ -687,14 +687,27 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
   
   const fetchAllMyNfts = async () => {
     if (isConnected && coinbase) {
+      let cawsNew=[];
+      let cawsOld=[]
+
       getMyNFTS(coinbase, "caws", window.config.nft_caws_address)
         .then((NFTS) => {
-          console.log(NFTS, 'caws');
-          setMyNFTSCaws(NFTS);
+          console.log(NFTS, 'caws new');
+          cawsNew.push(...NFTS)
         })
         .catch((e) => {
           console.error(e);
         });
+
+        getMyNFTS(coinbase, "caws", window.config.nft_cawsold_address)
+        .then((NFTS) => {
+          console.log(NFTS, 'caws old');
+          cawsOld.push(...NFTS)
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+console.log(cawsNew, cawsOld)
 
       getMyNFTS(coinbase, "timepiece", window.config.nft_timepiece_address)
         .then((NFTS) => {
@@ -753,9 +766,20 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
   };
 
   const getallNfts = async()=>{
-    getListedNFTS(0, "", "nftAddress", window.config.nft_caws_address).then((NFTS) => setCawsNFTS(NFTS));
+  
 
-    getListedNFTS(0, "", "nftAddress", window.config.nft_timepiece_address).then((NFTS) => setTimepiecesNFTS(NFTS));
+    const cawsNew = await getListedNFTS(0, "", "nftAddress", window.config.nft_caws_address).catch((e) => {
+        console.error(e);
+      });
+
+      const cawsOld = await  getListedNFTS(0, "", "nftAddress", window.config.nft_cawsold_address).catch((e) => {
+        console.error(e);
+      });
+
+      let totalCaws = [...cawsOld, ...cawsNew] 
+       setCawsNFTS(totalCaws)
+
+    getListedNFTS(0, "", "nftAddress", window.config.nft_timepiece_address).then((NFTS) =>{ console.log(NFTS); setTimepiecesNFTS(NFTS)});
 
     getListedNFTS(0, "", "nftAddress", window.config.nft_land_address).then((NFTS) => setWodNFTS(NFTS));
   
@@ -805,7 +829,6 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
 
   },[]);
 
-  
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -979,7 +1002,7 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
                       isConnected={isConnected}
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
-                      timepiecesNFTS={timepiecesNFTS}
+                      timepieceNFTS={timepiecesNFTS}
                     />
                   }
                 />

@@ -50,6 +50,9 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS, cawsNFTS }) => {
                       nft={nft}
                       isConnected={isConnected}
                       showConnectWallet={handleConnect}
+                      isCaws={true}
+                      isTimepiece={false}
+                      isWod={false}
                     ></ItemCard>
                   ))
               ) : (

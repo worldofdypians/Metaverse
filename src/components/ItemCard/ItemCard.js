@@ -9,7 +9,15 @@ function buy(nft) {
   };
 }
 
-const ItemCard = ({ nft, single, isConnected, showConnectWallet }) => {
+const ItemCard = ({
+  nft,
+  single,
+  isConnected,
+  showConnectWallet,
+  isCaws,
+  isTimepiece,
+  isWod,
+}) => {
   const [IsApprove, setIsApprove] = useState(false);
 
   const isApprovedBuy = async (amount) => {
@@ -63,17 +71,32 @@ const ItemCard = ({ nft, single, isConnected, showConnectWallet }) => {
         {" "}
         <div className="nftimg-bg position-relative">
           <div className="name-wrapper d-flex justify-content-center p-2">
-            <span className="nft-card-name">Cats And Watches Society</span>
+            <span className="nft-card-name">
+              {" "}
+              {isCaws
+                ? "Cats And Watches Society"
+                : isWod
+                ? "World of Dypians"
+                : "CAWS Timepiece"}{" "}
+            </span>
           </div>
           <img
             className="w-100 h-100 p-0 nft-img"
-            src={`https://mint.dyp.finance/thumbs/${nft.tokenId}.png`}
+            src={
+              isCaws
+                ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                : isWod
+                ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
+                : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
+            }
             alt=""
           />
         </div>{" "}
       </a>
       <div className="d-flex flex-column gap-2 position-relative p-3">
-        <span className="nft-name">CAWS #{nft.tokenId}</span>
+        <span className="nft-name">
+          {isCaws ? "CAWS" : isWod ? "Land" : "Timepiece"} #{nft.tokenId}
+        </span>
         <div className="d-flex align-items-center gap-1">
           {nft.payment_priceType === 0 ? (
             <img src={topEth} height={20} width={20} alt="" />
@@ -86,7 +109,12 @@ const ItemCard = ({ nft, single, isConnected, showConnectWallet }) => {
           </span>
         </div>
       </div>
-      <span className="position-absolute top-sale-time" style={{bottom: '-8%'}}>a few seconds ago</span>
+      <span
+        className="position-absolute top-sale-time"
+        style={{ bottom: "-8%" }}
+      >
+        a few seconds ago
+      </span>
     </div>
   );
 };
