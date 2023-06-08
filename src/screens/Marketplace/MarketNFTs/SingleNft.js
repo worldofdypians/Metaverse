@@ -42,6 +42,7 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
         setmetaData(result);
       }
     }
+    else console.log('no')
   };
 
   const isApprovedBuy = async (amount) => {
@@ -108,12 +109,17 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
   }, [nft.price]);
 
   useEffect(() => {
-    getMetaData();
-  }, [nft]);
+    // setTimeout(() => {
+      getMetaData();
+    // }, 3000);
+  }, [nft, isCaws, isTimepiece, isWod]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+
+  // console.log(metaData)
 
   return (
     <div
@@ -180,7 +186,7 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
                   #{nft.tokenId}
                 </h3>
                 <div className="price-wrapper p-3">
-                  <div className="d-flex flex-column gap-2">
+                  <div className="d-flex flex-column gap-2 align-items-center">
                     <span className="currentprice-txt">Current price</span>
                     <div className="d-flex gap-2 align-items-center">
                       <img
@@ -198,13 +204,14 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
                   </div>
                 </div>
                 <div className="d-flex justify-content-between gap-2 align-items-center">
-                  <div className="d-flex flex-column gap-2">
+                  <div className="d-flex flex-column gap-2 align-items-center">
                     <span className="owner-txt">Owner</span>
                     <a
                       href={`https://etherscan.io/address/${nft.seller}`}
                       target="_blank"
                       style={{ textDecoration: "none" }}
                       className="seller-addr"
+                      rel='noreferrer'
                     >
                       {nft.seller}
                     </a>
@@ -239,48 +246,48 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
                 <>
                   {" "}
                   <div className="d-flex gap-3 align-items-center justify-content-between">
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Background</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[0]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Tail</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[1]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Ears</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[2]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Body</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[3]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Clothes</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[4]?.value}</span>
                     </div>
                   </div>
                   <div className="trait-separator"></div>
                   <div className="d-flex gap-3 align-items-center justify-content-between">
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Eyes</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[5]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Mouth</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[6]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Hat</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[7]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Eyewear</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[8]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Watch</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[9]?.value}</span>
                     </div>
                   </div>
                 </>
@@ -288,53 +295,53 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
                 <>
                   {" "}
                   <div className="d-flex gap-3 align-items-center justify-content-between">
-                    <div className="d-flex flex-column gap-2">
-                      <span className="traittitle">Type</span>
-                      <span className="traitsubtitle">test</span>
+                    <div className="d-flex flex-column gap-2 align-items-center">
+                      <span className="traittitle">Tier</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[0]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Size</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[1]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Building</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[3]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Workbench</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[4]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">NPC - Attire</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[8]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Gemstone</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[9]?.value}</span>
                     </div>
                   </div>
                   <div className="trait-separator"></div>
 
                   <div className="d-flex gap-3 align-items-center justify-content-between">
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Artifacts</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[5]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">NPC</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[6]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">NPC - AI Powered</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[7]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Plot</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[10]?.value}</span>
                     </div>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Multi Functional Building</span>
-                      <span className="traitsubtitle">test</span>
+                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[2]?.value}</span>
                     </div>
                   </div>
                 </>

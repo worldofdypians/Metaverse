@@ -37,9 +37,9 @@ const MarketSidebar = () => {
             }}
           />
 
-          <div class="accordion" id="accordionExample">
-            <div class="">
-              <h2 class="sidebar-item p-2 mb-0" id="headingOne">
+          <div className="accordion" id="accordionExample">
+            <div className="">
+              <h2 className="sidebar-item p-2 mb-0" id="headingOne">
                 <div
                   data-bs-toggle="collapse"
                   data-bs-target="#collapseOne"
@@ -65,7 +65,7 @@ const MarketSidebar = () => {
               </h2>
               <div
                 id="collapseOne"
-                class={`accordion-collapse collapse ${
+                className={`accordion-collapse collapse ${
                   location.pathname.includes("caws") ||
                   location.pathname.includes("wod") ||
                   location.pathname.includes("timepiece")
@@ -75,7 +75,7 @@ const MarketSidebar = () => {
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
-                <div class="accordion-body">
+                <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
                       to="/marketplace/caws"
