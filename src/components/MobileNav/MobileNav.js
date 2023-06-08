@@ -3,6 +3,8 @@ import "./_mobilenav.scss";
 import { NavLink, useLocation } from "react-router-dom";
 import cawsLogo from '../../screens/Marketplace/assets/cawsLogo.png'
 import wodLogo from '../../screens/Marketplace/assets/wodLogo.png'
+import collectionsIcon from '../MarketSidebar/assets/collectionsIcon.svg'
+import collectionsIconActive from '../MarketSidebar/assets/collectionsIconActive.svg'
 import { useState } from "react";
 
 const MobileNav = () => {
@@ -12,6 +14,7 @@ const MobileNav = () => {
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#mobileNav");
   const bgmenu = document.querySelector("#bgmenu");
+  const location = useLocation()
 
 
   useEffect(() => {
@@ -35,7 +38,7 @@ const MobileNav = () => {
             isActive ? "active-mobile-link" : "mobile-link"
           }
           children={({ isActive }) => {
-            const icon = isActive ? "collectionsIconActive" : "collectionsIcon";
+            const icon = isActive ? "homeIconActive" : "homeIcon";
             return (
               <>
                 <img
@@ -46,9 +49,9 @@ const MobileNav = () => {
             );
           }}
         />
-        <div onClick={() => setOpenNav(!openNav)} className="mobile-link">
+        <div onClick={() => setOpenNav(!openNav)} className={`mobile-link ${location.pathname.includes("caws") || location.pathname.includes("caws") || location.pathname.includes("caws") ? "active-mobile-link" : null}`}>
           <img
-            src={cawsLogo}
+            src={location.pathname.includes("caws") || location.pathname.includes("caws") || location.pathname.includes("caws") ? collectionsIconActive : collectionsIcon} 
             width={22}
             height={22}
             alt=""

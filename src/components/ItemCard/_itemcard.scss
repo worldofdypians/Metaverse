@@ -7,18 +7,17 @@
   border: 1px solid #494b63;
   backdrop-filter: blur(26px);
   /* Note: backdrop-filter has minimal browser support */
-
+transition: all .35s;
   border-radius: 20px;
   // padding-top: 15px;
   // padding-bottom: 30px;
   position: relative;
-  background: #554fd8;
   cursor: pointer;
 }
 
 .nft-img {
   transition: all 0.2s;
-  border-radius: 20px;
+  border-radius: 20px 20px 0 0;
 
 }
 
@@ -90,11 +89,7 @@ color: #FFFFFF;
 z-index: 2;
 }
 
-// .item-wrapper:hover {
-//   .buy-nft-btn {
-//     bottom: 0px;
-//   }
-//   .nft-img {
-//     transform: scale(1.2);
-//   }
-// }
+.item-wrapper:hover {
+ background: #554fd8 !important;
+ 
+}

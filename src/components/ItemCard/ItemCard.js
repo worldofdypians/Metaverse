@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./_itemcard.scss";
 import topEth from "../../screens/Marketplace/assets/topEth.svg";
 import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
+import { useLocation } from "react-router-dom";
 
 function buy(nft) {
   return () => {
@@ -19,6 +20,7 @@ const ItemCard = ({
   isWod,
 }) => {
   const [IsApprove, setIsApprove] = useState(false);
+  const location = useLocation();
 
   const isApprovedBuy = async (amount) => {
     return await window.isApprovedBuy(amount);
@@ -109,12 +111,16 @@ const ItemCard = ({
           </span>
         </div>
       </div>
-      <span
-        className="position-absolute top-sale-time"
-        style={{ bottom: "-8%" }}
-      >
-        a few seconds ago
-      </span>
+      {location.pathname.includes("caws") ||
+      location.pathname.includes("wod") ||
+      location.pathname.includes("timepiece") ? null : (
+        <span
+          className="position-absolute top-sale-time"
+          style={{ bottom: "-8%" }}
+        >
+          a few seconds ago
+        </span>
+      )}
     </div>
   );
 };
