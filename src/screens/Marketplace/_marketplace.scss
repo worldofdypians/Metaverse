@@ -196,7 +196,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  z-index: 0;
+  z-index: -1;
   padding: 20px;
   border: 2px solid #41435a;
   backdrop-filter: blur(13.3817px);
@@ -763,4 +763,40 @@
   letter-spacing: 0.03em;
   text-transform: capitalize;
   color: #ffffff;
+}
+
+.nft-event-package {
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+  filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
+  backdrop-filter: blur(13.3817px);
+  border-radius: 21.4107px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  border: 2px solid #41435a;
+  cursor: pointer;
+  transition: all 0.35s;
+}
+
+.event-package-title {
+  color: #f8f8ff;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.nft-event-package:hover {
+  border: 2px solid #7bd8b0;
+  .event-package-title {
+    color: #7bd8b0;
+  }
+}
+
+.selected-event-package {
+  border: 2px solid #7bd8b0;
+  .event-package-title {
+    color: #7bd8b0 !important;
+  }
 }

@@ -11,6 +11,11 @@ import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import { useLocation } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
+import criticalHit from './assets/criticalHit.webp'
+import goldenPass from './assets/goldenPass.png'
+import puzzleMadness from './assets/puzzleMadness.png'
+import dragonPackage from '../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp'
+import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
 
 
 const MarketEvents = ({ account, chainId }) => {
@@ -167,9 +172,9 @@ const MarketEvents = ({ account, chainId }) => {
            {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
 
       <div className="container-nft d-flex flex-column gap-2 px-3 px-lg-5 my-4" style={{minHeight: '72vh'}}>
-        <div className={`${windowSize.width < 1470 ? 'col-12' : windowSize.width < 1700 ? "col-10" : "col-8"} d-flex flex-column flex-lg-row gap-5`}>
-          <div className="packages-grid">
-            <div className="event-package d-flex flex-column align-items-center gap-2">
+        <div className={`col-12 col-lg-10 col-xxl-8 d-flex flex-column gap-5`}>
+          <div className="row align-items-center">
+            {/* <div className="event-package d-flex flex-column align-items-center gap-2">
               <div
                 className={`premium-package dyp-package ${
                   selectedPackage === "dyp" && "selected-premium"
@@ -248,9 +253,35 @@ const MarketEvents = ({ account, chainId }) => {
               >
                 Critical Hit
               </h6>
+            </div> */}
+             <div className="col-12 col-md-6 col-lg-3">
+              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dragon" && "selected-event-package"}`} onClick={() => setSelectedPackage("dragon")}>
+                  <img src={dragonPackage} className="w-100" style={{borderRadius: '16px'}} alt="" />
+                  <span className="event-package-title">Dragon Ruins</span>
+              </div>
             </div>
+            <div className="col-12 col-md-6 col-lg-3">
+              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dyp" && "selected-event-package"}`} onClick={() => setSelectedPackage("dyp")}>
+                  <img src={goldenPass} className="w-100" style={{borderRadius: '16px'}} alt="" />
+                  <span className="event-package-title">Golden Pass</span>
+              </div>
+            </div>
+            <div className="col-12 col-md-6 col-lg-3">
+              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "idyp" && "selected-event-package"}`} onClick={() => setSelectedPackage("idyp")}>
+                  <img src={puzzleMadness} className="w-100" style={{borderRadius: '16px'}} alt="" />
+                  <span className="event-package-title">Puzzle Madness</span>
+              </div>
+            </div>
+           
+            <div className="col-12 col-md-6 col-lg-3">
+              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "criticalHit" && "selected-event-package"}`} onClick={() => setSelectedPackage("criticalHit")}>
+                  <img src={criticalHit} className="w-100" style={{borderRadius: '16px'}} alt="" />
+                  <span className="event-package-title">Critical Hit</span>
+              </div>
+            </div>
+
           </div>
-          <BundleCard
+          <NewBundleCard
             coinbase={account}
             wallet={data?.getPlayer?.wallet?.publicAddress}
             chainId={chainId}
