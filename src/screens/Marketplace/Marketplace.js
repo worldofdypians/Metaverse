@@ -273,7 +273,7 @@ const Marketplace = ({
               style={{ rowGap: "40px" }}
             >
               {listedNFTS && listedNFTS.length > 0 ? (
-                listedNFTS.map((nft, index) => (
+                listedNFTS.slice(0, 9).map((nft, index) => (
                   <div className="col-12 col-lg-4">
                     <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
                       <div className="position-absolute top-sales-rank">

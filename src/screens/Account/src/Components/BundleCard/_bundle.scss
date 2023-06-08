@@ -518,3 +518,40 @@ transition: all .25s;
 .slider-text-active{
   color: #4ED5D2 !important;
 }
+
+.new-bundle-title{
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+color: #B8B8E0;
+}
+
+.new-bundle-img{
+border-radius: 16.058px;
+transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+width: 40%;
+position: relative;
+left: -4%;
+}
+
+.new-bundle-benefits-title{
+font-weight: 500;
+font-size: 16px;
+line-height: 20px;
+color: #00FECF;
+
+}
+
+.new-benefits-item{
+border-radius: 8px;
+}
+
+.new-benefits-item:nth-child(even){
+  background: rgba(255,255,255, 0.1);
+}
+.new-benefit{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #B8B8E0;
+}
