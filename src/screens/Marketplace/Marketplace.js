@@ -17,9 +17,10 @@ import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import Slider from "react-slick";
 import topEth from "./assets/topEth.svg";
+import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
+
 import { abbreviateNumber } from "js-abbreviation-number";
 import nextArrow from "./assets/nextArrow.svg";
-
 
 const Marketplace = ({
   listedNFTS,
@@ -116,7 +117,7 @@ const Marketplace = ({
       setLoading(false);
     }
 
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, [listedNFTS]);
 
   return (
@@ -176,7 +177,9 @@ const Marketplace = ({
               </div>
             </div>
           </div>
-          <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">Active Events</h6>
+          <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
+            Active Events
+          </h6>
           <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-5 mx-2 mx-lg-0 position-relative">
             <NavLink
               to="/marketplace/events"
@@ -252,11 +255,8 @@ const Marketplace = ({
             </NavLink>
           </div>
           <div className="row mx-1 justify-content-center d-flex my-4 align-items-center nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4">
-          <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-
-              <h6 className="nft-wrapper-title font-raleway mb-0">
-                Top Sales
-              </h6>
+            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+              <h6 className="nft-wrapper-title font-raleway mb-0">Top Sales</h6>
               <div className="d-flex align-items-center gap-4">
                 <h6 className="filter-title filter-selected">All</h6>
                 <h6 className="filter-title">CAWS</h6>
@@ -274,36 +274,72 @@ const Marketplace = ({
             >
               {listedNFTS && listedNFTS.length > 0 ? (
                 listedNFTS.slice(0, 9).map((nft, index) => (
-                  <div className="col-12 col-lg-4">
-                    <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
-                      <div className="position-absolute top-sales-rank">
-                        <span>{index + 1}</span>
-                      </div>
-                      {/* <span className="sales-number">{index + 1}</span> */}
-                      <img
-                        src={`https://mint.dyp.finance/thumbs/${nft.tokenId}.png`}
-                        width={80}
-                        height={80}
-                        style={{ borderRadius: "8px" }}
-                        alt=""
-                      />
-                      <div className="d-flex flex-column gap-2">
-                        <h6 className="nft-name-wrapper mb-0 py-1 px-2">
-                          CAWS #{nft.tokenId}
-                        </h6>
-                        <div className="d-flex align-items-center gap-1">
-                          <img src={topEth} width={20} height={20} alt="" />
-                          <span className="top-eth">
-                            {" "}
-                            {nft.price}{" "}
-                            {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                          </span>
+                  <div className="col-12 col-lg-4" key={index}>
+                    <NavLink
+                      to={`/marketplace/nft/${nft.blockTimestamp}`}
+                      style={{ textDecoration: "none" }}
+                      state={{
+                        nft: nft,
+                        isCaws:
+                          nft.nftAddress === window.config.nft_caws_address ||
+                          nft.nftAddress === window.config.nft_cawsold_address,
+                        isTimepiece:
+                          nft.nftAddress ===
+                          window.config.nft_timepiece_address,
+                        isWod:
+                          nft.nftAddress === window.config.nft_land_address,
+                      }}
+                    >
+                      <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
+                        <div className="position-absolute top-sales-rank">
+                          <span>{index + 1}</span>
                         </div>
+                        {/* <span className="sales-number">{index + 1}</span> */}
+                        <img
+                          src={
+                            nft.nftAddress === window.config.nft_caws_address ||
+                            nft.nftAddress === window.config.nft_cawsold_address
+                              ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
+                              : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
+                          }
+                          width={80}
+                          height={80}
+                          style={{ borderRadius: "8px" }}
+                          alt=""
+                        />
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="nft-name-wrapper mb-0 py-1 px-2">
+                            {nft.nftAddress ===
+                              window.config.nft_caws_address ||
+                            nft.nftAddress === window.config.nft_cawsold_address
+                              ? "CAWS"
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? "Genesis Land"
+                              : "Timepiece"}{" "}
+                            #{nft.tokenId}
+                          </h6>
+                          <div className="d-flex align-items-center gap-1">
+                            {nft.payment_priceType === 0 ? (
+                              <img src={topEth} height={20} width={20} alt="" />
+                            ) : (
+                              <img src={topDyp} height={20} width={20} alt="" />
+                            )}
+                            <span className="top-eth">
+                              {" "}
+                              {nft.price}{" "}
+                              {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="position-absolute top-sale-time">
+                          a few seconds ago
+                        </span>
                       </div>
-                      <span className="position-absolute top-sale-time">
-                        a few seconds ago
-                      </span>
-                    </div>
+                    </NavLink>{" "}
                   </div>
                 ))
               ) : (
@@ -319,9 +355,15 @@ const Marketplace = ({
           </div>
 
           <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
-            <img src={nextArrow} width={40} height={40} onClick={firstNext} className="next-arrow-nft" alt="" />
+            <img
+              src={nextArrow}
+              width={40}
+              height={40}
+              onClick={firstNext}
+              className="next-arrow-nft"
+              alt=""
+            />
             <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-
               <h6 className="nft-wrapper-title font-raleway mb-0">
                 Recent Listings1
               </h6>
@@ -389,7 +431,14 @@ const Marketplace = ({
             )}
           </div>
           <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
-          <img src={nextArrow} width={40} height={40} onClick={secondNext} className="next-arrow-nft" alt="" />
+            <img
+              src={nextArrow}
+              width={40}
+              height={40}
+              onClick={secondNext}
+              className="next-arrow-nft"
+              alt=""
+            />
 
             <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
               <h6 className="nft-wrapper-title font-raleway mb-0">
