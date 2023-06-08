@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./_marketplace.scss";
 import { HashLoader } from "react-spinners";
 import wodLogo from "./assets/wodLogo.png";
@@ -18,6 +18,7 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import Slider from "react-slick";
 import topEth from "./assets/topEth.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
+import nextArrow from './assets/nextArrow.svg'
 
 const Marketplace = ({
   listedNFTS,
@@ -39,22 +40,47 @@ const Marketplace = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
-
+  const firstSlider = useRef()
+  const secondSlider = useRef()
   const [loading, setLoading] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
   const windowSize = useWindowSize();
 
+
+  const firstNext = () => {
+    firstSlider.current.slickNext();
+  };
+  const secondNext = () => {
+    secondSlider.current.slickNext();
+  };
+
   var settings = {
-    dots: true,
-    arrows: true,
+    dots: false,
+    arrows: false,
     dotsClass: "button__bar",
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 6,
+    slidesToScroll: 1,
     initialSlide: 0,
     beforeChange: (current, next) => setActiveSlide(next),
     afterChange: (current) => setActiveSlide2(current),
     responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          initialSlide: 0,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
@@ -124,46 +150,6 @@ const Marketplace = ({
           </div>
         </div>
         <div className="main-wrapper py-4 w-100">
-          {/* <h6 className="nft-wrapper-title font-raleway">Overall status</h6>
-          <div className="nft-outer-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-around p-5">
-            <div className="d-flex flex-column align-items-center gap-2">
-              <CountUp
-                className="stats-amount font-raleway"
-                duration={5}
-                start={65260200}
-                end={65268200}
-                decimal=","
-              />
-              <span className="stats-details font-raleway">
-                Total Transactions Ethereum & BNB chain
-              </span>
-            </div>
-            <div className="d-flex flex-column align-items-center gap-2">
-              <div className="d-flex align-items-center gap-2">
-                <CountUp
-                  className="stats-amount font-raleway"
-                  duration={5}
-                  start={(25 / 100) * abbreviateNumber(totalBoughtNFTSinETH)}
-                  end={abbreviateNumber(totalBoughtNFTSinETH)}
-                  decimal=","
-                />
-                {abbreviateNumber(totalBoughtNFTSinETH)}
-                <span className="stats-amount font-raleway">ETH</span>
-              </div>
-              <span className="stats-details font-raleway">Total Volume</span>
-            </div>
-            <div className="d-flex flex-column align-items-center gap-2">
-              <CountUp
-                className="stats-amount font-raleway"
-                duration={5}
-                start={(25 / 100) * totalBoughtNFTSCount}
-                end={totalBoughtNFTSCount}
-                decimal=","
-              />
-
-              <span className="stats-details font-raleway">NFT's Sold</span>
-            </div>
-          </div> */}
           <div className="row align-items-center">
             <div className="col-12 col-lg-4">
               <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
@@ -275,7 +261,6 @@ const Marketplace = ({
                 <h6 className="filter-title">TimePiece</h6>
               </div>
             </div>
-            {windowSize.width > 1600 ? (
               <div
                 className={
                   loading === false
@@ -328,40 +313,7 @@ const Marketplace = ({
                   />
                 )}
               </div>
-            ) : loading === false ? (
-              <div className="slider-container">
-                <Slider {...settings}>
-                  {listedNFTS &&
-                    listedNFTS.length > 0 &&
-                    listedNFTS.map((nft) => (
-                      <ItemCard
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={
-                          nft.nftAddress === window.config.nft_caws_address ||
-                          nft.nftAddress === window.config.nft_cawsold_address
-                        }
-                        isTimepiece={
-                          nft.nftAddress === window.config.nft_timepiece_address
-                        }
-                        isWod={
-                          nft.nftAddress === window.config.nft_land_address
-                        }
-                      ></ItemCard>
-                    ))}
-                </Slider>
-              </div>
-            ) : (
-              <HashLoader
-                color={"#554fd8"}
-                loading={loading}
-                cssOverride={override}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-            )}
+            
           </div>
 
           <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper p-5 gap-4 my-4">
@@ -376,41 +328,7 @@ const Marketplace = ({
                 <h6 className="filter-title">TimePiece</h6>
               </div>
             </div>
-            {windowSize.width > 1600 ? (
-              <div
-                className={
-                  loading === false ? "item-cards-wrapper" : "loader-wrapper"
-                }
-              >
-                {latest20RecentListedNFTS &&
-                latest20RecentListedNFTS.length > 0 ? (
-                  latest20RecentListedNFTS.map((nft) => (
-                    <ItemCard
-                      key={nft.id}
-                      nft={nft}
-                      isConnected={isConnected}
-                      showConnectWallet={handleConnect}
-                      isCaws={
-                        nft.nftAddress === window.config.nft_caws_address ||
-                        nft.nftAddress === window.config.nft_cawsold_address
-                      }
-                      isTimepiece={
-                        nft.nftAddress === window.config.nft_timepiece_address
-                      }
-                      isWod={nft.nftAddress === window.config.nft_land_address}
-                    ></ItemCard>
-                  ))
-                ) : (
-                  <HashLoader
-                    color={"#554fd8"}
-                    loading={loading}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
-                )}
-              </div>
-            ) : loading === false ? (
+            {loading === false ? (
               <div className="slider-container">
                 <Slider {...settings}>
                   {latest20RecentListedNFTS &&
@@ -459,40 +377,7 @@ const Marketplace = ({
                 <h6 className="filter-title">TimePiece</h6>
               </div>
             </div>
-            {windowSize.width > 1600 ? (
-              <div
-                className={
-                  loading === false ? "item-cards-wrapper" : "loader-wrapper"
-                }
-              >
-                {recentSales && recentSales.length > 0 ? (
-                  recentSales.map((nft) => (
-                    <ItemCard
-                      key={nft.id}
-                      nft={nft}
-                      isConnected={isConnected}
-                      showConnectWallet={handleConnect}
-                      isCaws={
-                        nft.nftAddress === window.config.nft_caws_address ||
-                        nft.nftAddress === window.config.nft_cawsold_address
-                      }
-                      isTimepiece={
-                        nft.nftAddress === window.config.nft_timepiece_address
-                      }
-                      isWod={nft.nftAddress === window.config.nft_land_address}
-                    ></ItemCard>
-                  ))
-                ) : (
-                  <HashLoader
-                    color={"#554fd8"}
-                    loading={loading}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
-                )}
-              </div>
-            ) : loading === false ? (
+            {loading === false ? (
               <div className="slider-container">
                 <Slider {...settings}>
                   {recentSales &&
@@ -529,53 +414,7 @@ const Marketplace = ({
               </div>
             )}
           </div>
-          {/* <div className="d-flex w-100 align-items-center justify-content-end">
-            <NavLink to="cats-and-watches-society">
-              <button className="btn home-hero-btn px-4 py-2">View All</button>
-            </NavLink>
-          </div> */}
 
-          {/* <div className="mx-0 row my-3">
-          <div className="col-12 col-lg-4">
-            <NavLink to="/timepiece" style={{color: 'inherit', textDecoration: 'none'}}>
-              <CollectionCard
-                title={"CAWS Timepiece"}
-                collectionName={"timepiece"}
-              />
-            </NavLink>
-          </div>
-          <div className="col-12 col-lg-4">
-            <NavLink to="/world-of-dypians" style={{color: 'inherit', textDecoration: 'none'}}>
-              <CollectionCard
-                title={"World of Dypians"}
-                collectionName={"wod"}
-              />
-            </NavLink>
-          </div>
-          <div className="col-12 col-lg-4">
-            <NavLink to="/cats-and-watches-society" style={{color: 'inherit', textDecoration: 'none'}}>
-              <CollectionCard
-                title={"Cats and Watches Society"}
-                collectionName={"caws"}
-              />
-            </NavLink>
-          </div>
-        </div> */}
-          {/* <div className={loading === false ? "item-cards-wrapper" : ""}>
-          {listedNFTS && listedNFTS.length > 0 ? (
-            listedNFTS.map((nft) => (
-              <ItemCard key={nft.id} nft={nft} isConnected={isConnected} showConnectWallet={handleConnect}></ItemCard>
-            ))
-          ) : (
-            <BounceLoader
-              color={"#554fd8"}
-              loading={loading}
-              cssOverride={override}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          )}
-        </div> */}
         </div>
       </div>
     </div>
