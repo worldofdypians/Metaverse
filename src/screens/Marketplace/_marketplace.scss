@@ -181,6 +181,10 @@
 
   border-radius: 21.4107px;
   transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+
+  @media screen and (max-width: 786px) {
+    transform: none !important;
+  }
 }
 
 .nft-outer-wrapper-1 {
@@ -374,11 +378,15 @@
   /* Note: backdrop-filter has minimal browser support */
   width: 90%;
   border-radius: 20px;
+  transition: all 0.35s;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
 }
 
-// .top-sales-card:hover {
-//   background-color: rgba(184, 184, 224, 0.3);
-// }
+.top-sales-card:hover {
+  background-color: #554fd8 !important;
+}
 
 .filter-wrapper {
   border-radius: 8px;
@@ -607,4 +615,122 @@
   .nft-sidebar-title {
     color: #8c56ff;
   }
+}
+
+.next-arrow-nft {
+  width: fit-content;
+  position: absolute;
+  right: -2%;
+  bottom: 45%;
+  z-index: 2;
+
+  cursor: pointer;
+  @media screen and (max-width: 786px) {
+    right: 0%;
+    bottom: 83%;
+  }
+}
+
+.nft-search-bar {
+  background: #2e304b;
+  border-radius: 12px;
+  border: none !important;
+  padding-left: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px !important;
+  line-height: 24px !important;
+  color: rgba(184, 184, 224, 0.7) !important;
+}
+
+.nft-search-bar:focus-visible {
+  border: none !important;
+  outline: none !important;
+}
+.nft-search-bar:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+.nft-search-bar::placeholder {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: rgba(184, 184, 224, 0.7);
+}
+
+.nft-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.nft-dropdown {
+  background: #2e304b;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 10px;
+}
+
+.nft-dropdown:hover {
+  background: #2e304b;
+}
+.nft-dropdown::after {
+  display: none !important;
+}
+
+.nft-dropdown-menu {
+  background: #2e304b;
+  border-radius: 12px;
+  margin-top: 5px;
+}
+
+.nft-dropdown-item {
+  padding: 7px;
+  border-radius: 12px;
+  cursor: pointer;
+
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #e2e2e2;
+  }
+}
+
+.nft-dropdown-item:hover {
+  background: linear-gradient(
+    269.74deg,
+    rgba(255, 255, 255, 0.21) -254.09%,
+    rgba(255, 255, 255, 0) 99.84%
+  );
+  span {
+    color: #8c56ff;
+  }
+}
+
+.nft-page-wrapper {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0px 4.3px 53px rgba(0, 7, 72, 0.12);
+  backdrop-filter: blur(13.38px);
+  border-radius: 40px;
+}
+
+.nft-page-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  text-transform: capitalize;
+  color: #ffffff;
 }

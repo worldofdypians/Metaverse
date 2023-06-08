@@ -4,8 +4,10 @@ import twitterIcon from "./assets/twitterIcon.svg";
 import emailIcon from "./assets/emailIcon.svg";
 import discordIcon from "./assets/discordIcon.svg";
 import sidebarArrow from "./assets/sidebarArrow.svg";
+import { useLocation } from "react-router-dom";
 
 const MarketSidebar = () => {
+  const location = useLocation();
   const [activeLink, setActiveLink] = useState("collections");
 
   return (
@@ -63,7 +65,13 @@ const MarketSidebar = () => {
               </h2>
               <div
                 id="collapseOne"
-                class="accordion-collapse collapse"
+                class={`accordion-collapse collapse ${
+                  location.pathname.includes("caws") ||
+                  location.pathname.includes("wod") ||
+                  location.pathname.includes("timepiece")
+                    ? "show"
+                    : null
+                }`}
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >

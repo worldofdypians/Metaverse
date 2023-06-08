@@ -20,6 +20,7 @@ import topEth from "./assets/topEth.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
 import nextArrow from "./assets/nextArrow.svg";
 
+
 const Marketplace = ({
   listedNFTS,
   isConnected,
@@ -114,6 +115,8 @@ const Marketplace = ({
     if (listedNFTS && listedNFTS.length > 0) {
       setLoading(false);
     }
+
+    window.scrollTo(0, 0)
   }, [listedNFTS]);
 
   return (
@@ -149,7 +152,7 @@ const Marketplace = ({
           </div>
         </div>
         <div className="main-wrapper py-4 w-100">
-          <div className="row align-items-center">
+          <div className="row gap-4 gap-lg-0 align-items-center">
             <div className="col-12 col-lg-4">
               <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
                 <h6 className="stats-value">{abbreviateNumber(65268200)}</h6>
@@ -173,12 +176,12 @@ const Marketplace = ({
               </div>
             </div>
           </div>
-          <h6 className="nft-wrapper-title font-raleway my-4">Active Events</h6>
-          <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around p-5 position-relative">
+          <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">Active Events</h6>
+          <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-5 mx-2 mx-lg-0 position-relative">
             <NavLink
               to="/marketplace/events"
               state={{ package: "dragon" }}
-              className="d-flex flex-column align-items-center gap-2 col-6 col-lg-3 position-relative"
+              className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
               style={{ textDecoration: "none" }}
             >
               <div className="position-relative package-blur">
@@ -196,7 +199,7 @@ const Marketplace = ({
             <NavLink
               to="/marketplace/events"
               state={{ package: "idyp" }}
-              className="d-flex flex-column align-items-center gap-2 col-6 col-lg-3 position-relative"
+              className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
               style={{ textDecoration: "none" }}
             >
               <div className="position-relative package-blur">
@@ -214,7 +217,7 @@ const Marketplace = ({
             <NavLink
               to="/marketplace/events"
               state={{ package: "dyp" }}
-              className="d-flex flex-column align-items-center gap-2 col-6 col-lg-3 position-relative"
+              className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
               style={{ textDecoration: "none" }}
             >
               <div className="position-relative package-blur">
@@ -232,7 +235,7 @@ const Marketplace = ({
             <NavLink
               to="/marketplace/events"
               state={{ package: "criticalHit" }}
-              className="d-flex flex-column align-items-center gap-2 col-6 col-lg-3 position-relative"
+              className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
               style={{ textDecoration: "none" }}
             >
               <div className="position-relative package-blur">
@@ -248,10 +251,11 @@ const Marketplace = ({
               </div>
             </NavLink>
           </div>
-          <div className="row mx-1 d-flex my-4 align-items-center nft-outer-wrapper p-5 gap-4 my-4">
-            <div className="d-flex align-items-center justify-content-between w-100 position-relative">
+          <div className="row mx-1 justify-content-center d-flex my-4 align-items-center nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4">
+          <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+
               <h6 className="nft-wrapper-title font-raleway mb-0">
-                Recent Listings
+                Top Sales
               </h6>
               <div className="d-flex align-items-center gap-4">
                 <h6 className="filter-title filter-selected">All</h6>
@@ -314,8 +318,10 @@ const Marketplace = ({
             </div>
           </div>
 
-          <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper p-5 gap-4 my-4">
-            <div className="d-flex align-items-center justify-content-between w-100 position-relative">
+          <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
+            <img src={nextArrow} width={40} height={40} onClick={firstNext} className="next-arrow-nft" alt="" />
+            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+
               <h6 className="nft-wrapper-title font-raleway mb-0">
                 Recent Listings1
               </h6>
@@ -328,7 +334,7 @@ const Marketplace = ({
             </div>
             {loading === false ? (
               <div className="slider-container">
-                <Slider {...settings}>
+                <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
                   {latest20RecentListedNFTS &&
                     latest20RecentListedNFTS.length > 0 &&
                     latest20RecentListedNFTS.map((nft, index) => (
@@ -382,10 +388,12 @@ const Marketplace = ({
               </div>
             )}
           </div>
-          <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper p-5 gap-4 my-4">
-            <div className="d-flex align-items-center justify-content-between w-100 position-relative">
+          <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
+          <img src={nextArrow} width={40} height={40} onClick={secondNext} className="next-arrow-nft" alt="" />
+
+            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
               <h6 className="nft-wrapper-title font-raleway mb-0">
-                Recent Listings
+                Recent Sales
               </h6>
               <div className="d-flex align-items-center gap-4">
                 <h6 className="filter-title filter-selected">All</h6>
