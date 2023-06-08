@@ -113,45 +113,6 @@ const MarketSidebar = () => {
               </div>
             </div>
           </div>
-          {/* <div className="d-flex flex-column gap-3">
-            <NavLink
-              to="/marketplace/caws"
-              end
-              className={({ isActive }) =>
-                isActive
-                  ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                  : "d-flex p-2 align-items-center gap-2 sidebar-item"
-              }
-            >
-              <div className="icon-wrapper"></div>
-              <span className={`sidebar-title`}>CAWS</span>
-            </NavLink>
-            <NavLink
-              to="/marketplace/wod"
-              end
-              className={({ isActive }) =>
-                isActive
-                  ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                  : "d-flex p-2 align-items-center gap-2 sidebar-item"
-              }
-            >
-              <div className="icon-wrapper"></div>
-              <span className={`sidebar-title`}>WoD Land</span>
-            </NavLink>
-
-            <NavLink
-              to="/marketplace/timepiece"
-              end
-              className={({ isActive }) =>
-                isActive
-                  ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                  : "d-flex p-2 align-items-center gap-2 sidebar-item"
-              }
-            >
-              <div className="icon-wrapper"></div>
-              <span className={`sidebar-title`}>CAWS Timepiece</span>
-            </NavLink>
-          </div> */}
           <NavLink
             to="/marketplace/events"
             end
@@ -196,27 +157,6 @@ const MarketSidebar = () => {
               );
             }}
           />
-        </div>
-        <div className="d-flex flex-column gap-3">
-          <span className="sidebar-divider"></span>
-          <a
-            href="https://twitter.com/worldofdypians"
-            target="_blank"
-            className="d-flex align-items-center gap-3"
-            style={{ textDecoration: "none" }}
-          >
-            <img src={twitterIcon} height={20} width={20} alt="" />
-            <h6 className="social-link">Follow Us</h6>
-          </a>
-          <a
-            href="https://t.me/worldofdypians"
-            target="_blank"
-            className="d-flex align-items-center gap-3"
-            style={{ textDecoration: "none" }}
-          >
-            <img src={discordIcon} height={20} width={20} alt="" />
-            <h6 className="social-link">Join our community</h6>
-          </a>
         </div>
       </div>
     </div>

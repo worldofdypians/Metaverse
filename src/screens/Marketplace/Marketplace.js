@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./_marketplace.scss";
 import { HashLoader } from "react-spinners";
 import wodLogo from "./assets/wodLogo.png";
@@ -18,6 +18,7 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import Slider from "react-slick";
 import topEth from "./assets/topEth.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
+import nextArrow from './assets/nextArrow.svg'
 
 const Marketplace = ({
   listedNFTS,
@@ -39,22 +40,47 @@ const Marketplace = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
-
+  const firstSlider = useRef()
+  const secondSlider = useRef()
   const [loading, setLoading] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
   const windowSize = useWindowSize();
 
+  
+  const firstNext = () => {
+    firstSlider.current.slickNext();
+  };
+  const secondNext = () => {
+    secondSlider.current.slickNext();
+  };
+
   var settings = {
-    dots: true,
-    arrows: true,
+    dots: false,
+    arrows: false,
     dotsClass: "button__bar",
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 6,
+    slidesToScroll: 1,
     initialSlide: 0,
     beforeChange: (current, next) => setActiveSlide(next),
     afterChange: (current) => setActiveSlide2(current),
     responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          initialSlide: 0,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
@@ -94,69 +120,36 @@ const Marketplace = ({
   return (
     <div
       className="container-fluid mt-5 mt-lg-0 d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-end p-0"
-      style={{ minHeight: "72vh", maxWidth: '2400px' }}
+      style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft px-3 px-lg-5 position-relative">
-          <div className="row justify-content-between align-items-center marketplace-banner my-5">
-            <div className="col-12 col-lg-5">
-              <h6 className="market-banner-title">
+        <div className="row justify-content-between align-items-center marketplace-banner my-5">
+          <div className="col-12 col-lg-5">
+            <h6 className="market-banner-title">
               Unlock the Extraordinary! Explore the World of Dypians
-              </h6>
-              <h6 className="market-banner-title" style={{color: "#8C56FF", lineHeight: '80%'}}>
+            </h6>
+            <h6
+              className="market-banner-title"
+              style={{ color: "#8C56FF", lineHeight: "80%" }}
+            >
               Game Shop!
-              </h6>
-              <div className="my-4">
+            </h6>
+            <div className="my-4">
               <span className="market-banner-desc my-4">
-              Discover the power of NFTs for a unique digital experience.
+                Discover the power of NFTs for a unique digital experience.
               </span>
-              </div>
-            </div>
-            <div className="col-12 col-lg-5">
-              <img src={require('./assets/marketMain.webp')} alt="" className="market-main w-100" />
             </div>
           </div>
+          <div className="col-12 col-lg-5">
+            <img
+              src={require("./assets/marketMain.webp")}
+              alt=""
+              className="market-main w-100"
+            />
+          </div>
+        </div>
         <div className="main-wrapper py-4 w-100">
-          {/* <h6 className="nft-wrapper-title font-raleway">Overall status</h6>
-          <div className="nft-outer-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-around p-5">
-            <div className="d-flex flex-column align-items-center gap-2">
-              <CountUp
-                className="stats-amount font-raleway"
-                duration={5}
-                start={65260200}
-                end={65268200}
-                decimal=","
-              />
-              <span className="stats-details font-raleway">
-                Total Transactions Ethereum & BNB chain
-              </span>
-            </div>
-            <div className="d-flex flex-column align-items-center gap-2">
-              <div className="d-flex align-items-center gap-2">
-                <CountUp
-                  className="stats-amount font-raleway"
-                  duration={5}
-                  start={(25 / 100) * abbreviateNumber(totalBoughtNFTSinETH)}
-                  end={abbreviateNumber(totalBoughtNFTSinETH)}
-                  decimal=","
-                />
-                {abbreviateNumber(totalBoughtNFTSinETH)}
-                <span className="stats-amount font-raleway">ETH</span>
-              </div>
-              <span className="stats-details font-raleway">Total Volume</span>
-            </div>
-            <div className="d-flex flex-column align-items-center gap-2">
-              <CountUp
-                className="stats-amount font-raleway"
-                duration={5}
-                start={(25 / 100) * totalBoughtNFTSCount}
-                end={totalBoughtNFTSCount}
-                decimal=","
-              />
-
-              <span className="stats-details font-raleway">NFT's Sold</span>
-            </div>
-          </div> */}
           <div className="row align-items-center">
             <div className="col-12 col-lg-4">
               <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
@@ -189,7 +182,6 @@ const Marketplace = ({
               className="d-flex flex-column align-items-center gap-2 col-6 col-lg-3 position-relative"
               style={{ textDecoration: "none" }}
             >
-            
               <div className="position-relative package-blur">
                 <div className="first-box-blur  d-flex align-items-end justify-content-center">
                   <span className="blur-package-title">Dragon Ruins</span>
@@ -269,86 +261,63 @@ const Marketplace = ({
                 <h6 className="filter-title">TimePiece</h6>
               </div>
             </div>
-            {windowSize.width > 1600 ? (
-              <div
-                className={
-                  loading === false
-                    ? "row align-items-center position-relative"
-                    : "loader-wrapper"
-                }
-                style={{ rowGap: "40px" }}
-              >
-                {listedNFTS && listedNFTS.length > 0 ? (
-                  listedNFTS.map((nft, index) => (
-                    <div className="col-12 col-lg-4">
-                      <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
-                        <div className="position-absolute top-sales-rank">
-                          <span>{index + 1}</span>
-                        </div>
-                        {/* <span className="sales-number">{index + 1}</span> */}
-                        <img
-                          src={`https://mint.dyp.finance/thumbs/${nft.tokenId}.png`}
-                          width={80}
-                          height={80}
-                          style={{ borderRadius: "8px" }}
-                          alt=""
-                        />
-                        <div className="d-flex flex-column gap-2">
-                          <h6 className="nft-name-wrapper mb-0 py-1 px-2">
-                            CAWS #{nft.tokenId}
-                          </h6>
-                          <div className="d-flex align-items-center gap-1">
-                            <img src={topEth} width={20} height={20} alt="" />
-                            <span className="top-eth">
-                              {" "}
-                              {nft.price}{" "}
-                              {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                            </span>
-                          </div>
-                        </div>
-                        <span className="position-absolute top-sale-time">
-                          a few seconds ago
-                        </span>
+
+            <div
+              className={
+                loading === false
+                  ? "row align-items-center position-relative"
+                  : "loader-wrapper"
+              }
+              style={{ rowGap: "40px" }}
+            >
+              {listedNFTS && listedNFTS.length > 0 ? (
+                listedNFTS.map((nft, index) => (
+                  <div className="col-12 col-lg-4">
+                    <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
+                      <div className="position-absolute top-sales-rank">
+                        <span>{index + 1}</span>
                       </div>
+                      {/* <span className="sales-number">{index + 1}</span> */}
+                      <img
+                        src={`https://mint.dyp.finance/thumbs/${nft.tokenId}.png`}
+                        width={80}
+                        height={80}
+                        style={{ borderRadius: "8px" }}
+                        alt=""
+                      />
+                      <div className="d-flex flex-column gap-2">
+                        <h6 className="nft-name-wrapper mb-0 py-1 px-2">
+                          CAWS #{nft.tokenId}
+                        </h6>
+                        <div className="d-flex align-items-center gap-1">
+                          <img src={topEth} width={20} height={20} alt="" />
+                          <span className="top-eth">
+                            {" "}
+                            {nft.price}{" "}
+                            {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="position-absolute top-sale-time">
+                        a few seconds ago
+                      </span>
                     </div>
-                  ))
-                ) : (
-                  <HashLoader
-                    color={"#554fd8"}
-                    loading={loading}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
-                )}
-              </div>
-            ) : loading === false ? (
-              <div className="slider-container">
-                <Slider {...settings}>
-                  {listedNFTS &&
-                    listedNFTS.length > 0 &&
-                    listedNFTS.map((nft) => (
-                      <ItemCard
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                      ></ItemCard>
-                    ))}
-                </Slider>
-              </div>
-            ) : (
-              <HashLoader
-                color={"#554fd8"}
-                loading={loading}
-                cssOverride={override}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-            )}
+                  </div>
+                ))
+              ) : (
+                <HashLoader
+                  color={"#554fd8"}
+                  loading={loading}
+                  cssOverride={override}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              )}
+            </div>
           </div>
 
-          <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper p-5 gap-4 my-4">
+          <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-5 gap-4 my-4">
+            <img src={nextArrow} onClick={secondNext} width={40} height={40} alt="" />
             <div className="d-flex align-items-center justify-content-between w-100 position-relative">
               <h6 className="nft-wrapper-title font-raleway mb-0">
                 Recent Listings
@@ -360,35 +329,9 @@ const Marketplace = ({
                 <h6 className="filter-title">TimePiece</h6>
               </div>
             </div>
-            {windowSize.width > 1600 ? (
-              <div
-                className={
-                  loading === false ? "item-cards-wrapper" : "loader-wrapper"
-                }
-              >
-                {latest20RecentListedNFTS &&
-                latest20RecentListedNFTS.length > 0 ? (
-                  latest20RecentListedNFTS.map((nft) => (
-                    <ItemCard
-                      key={nft.id}
-                      nft={nft}
-                      isConnected={isConnected}
-                      showConnectWallet={handleConnect}
-                    ></ItemCard>
-                  ))
-                ) : (
-                  <HashLoader
-                    color={"#554fd8"}
-                    loading={loading}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
-                )}
-              </div>
-            ) : loading === false ? (
+            {loading === false ? (
               <div className="slider-container">
-                <Slider {...settings}>
+                <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
                   {latest20RecentListedNFTS &&
                     latest20RecentListedNFTS.length > 0 &&
                     latest20RecentListedNFTS.map((nft) => (
@@ -425,37 +368,12 @@ const Marketplace = ({
                 <h6 className="filter-title">TimePiece</h6>
               </div>
             </div>
-            {windowSize.width > 1600 ? (
-              <div
-                className={
-                  loading === false ? "item-cards-wrapper" : "loader-wrapper"
-                }
-              >
-                {recentSales && recentSales.length > 0 ? (
-                  recentSales.map((nft) => (
-                    <ItemCard
-                      key={nft.id}
-                      nft={nft}
-                      isConnected={isConnected}
-                      showConnectWallet={handleConnect}
-                    ></ItemCard>
-                  ))
-                ) : (
-                  <HashLoader
-                    color={"#554fd8"}
-                    loading={loading}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
-                )}
-              </div>
-            ) : loading === false ? (
+            {loading === false ? (
               <div className="slider-container">
-                <Slider {...settings}>
-                  {recentSales &&
-                    recentSales.length > 0 &&
-                    recentSales.map((nft) => (
+                <Slider ref={(c) => (secondSlider.current = c)} {...settings}>
+                  {listedNFTS &&
+                    listedNFTS.length > 0 &&
+                    listedNFTS.map((nft) => (
                       <ItemCard
                         key={nft.id}
                         nft={nft}
@@ -477,53 +395,6 @@ const Marketplace = ({
               </div>
             )}
           </div>
-          {/* <div className="d-flex w-100 align-items-center justify-content-end">
-            <NavLink to="cats-and-watches-society">
-              <button className="btn home-hero-btn px-4 py-2">View All</button>
-            </NavLink>
-          </div> */}
-
-          {/* <div className="mx-0 row my-3">
-          <div className="col-12 col-lg-4">
-            <NavLink to="/timepiece" style={{color: 'inherit', textDecoration: 'none'}}>
-              <CollectionCard
-                title={"CAWS Timepiece"}
-                collectionName={"timepiece"}
-              />
-            </NavLink>
-          </div>
-          <div className="col-12 col-lg-4">
-            <NavLink to="/world-of-dypians" style={{color: 'inherit', textDecoration: 'none'}}>
-              <CollectionCard
-                title={"World of Dypians"}
-                collectionName={"wod"}
-              />
-            </NavLink>
-          </div>
-          <div className="col-12 col-lg-4">
-            <NavLink to="/cats-and-watches-society" style={{color: 'inherit', textDecoration: 'none'}}>
-              <CollectionCard
-                title={"Cats and Watches Society"}
-                collectionName={"caws"}
-              />
-            </NavLink>
-          </div>
-        </div> */}
-          {/* <div className={loading === false ? "item-cards-wrapper" : ""}>
-          {listedNFTS && listedNFTS.length > 0 ? (
-            listedNFTS.map((nft) => (
-              <ItemCard key={nft.id} nft={nft} isConnected={isConnected} showConnectWallet={handleConnect}></ItemCard>
-            ))
-          ) : (
-            <BounceLoader
-              color={"#554fd8"}
-              loading={loading}
-              cssOverride={override}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          )}
-        </div> */}
         </div>
       </div>
     </div>
