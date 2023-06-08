@@ -4,6 +4,7 @@ import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MobileNav from "../../../components/MobileNav/MobileNav";
+import { NavLink } from "react-router-dom";
 
 const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
   const override = {
@@ -43,9 +44,18 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
               }
             >
               {wodNFTS && wodNFTS.length > 0 ? (
-                wodNFTS
-                  .slice(0, 5)
-                  .map((nft) => (
+                wodNFTS.slice(0, 5).map((nft, index) => (
+                  <NavLink
+                    to={`/marketplace/nft/${nft.blockTimestamp}`}
+                    style={{ textDecoration: "none" }}
+                    key={index}
+                    state={{
+                      nft: nft,
+                      isCaws: false,
+                      isTimepiece: false,
+                      isWod: true,
+                    }}
+                  >
                     <ItemCard
                       key={nft.id}
                       nft={nft}
@@ -53,9 +63,9 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
                       showConnectWallet={handleConnect}
                       isCaws={false}
                       isTimepiece={false}
-                      isWod={true}
-                    ></ItemCard>
-                  ))
+                      isWod={true} />
+                  </NavLink>
+                ))
               ) : (
                 <HashLoader
                   color={"#554fd8"}

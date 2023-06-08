@@ -4,8 +4,14 @@ import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import useWindowSize from "../../../hooks/useWindowSize";
+import { NavLink } from "react-router-dom";
 
-const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS, timepieceNFTS }) => {
+const TimepieceNFT = ({
+  isConnected,
+  handleConnect,
+  listedNFTS,
+  timepieceNFTS,
+}) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -21,7 +27,6 @@ const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS, timepieceNFTS })
     if (timepieceNFTS && timepieceNFTS.length > 0) {
       setLoading(false);
     }
- 
   }, [timepieceNFTS]);
 
   return (
@@ -29,7 +34,7 @@ const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS, timepieceNFTS })
       className="container-fluid d-flex justify-content-end p-0"
       style={{ minHeight: "72vh" }}
     >
-            {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
+      {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
 
       <div className="container-nft pe-5 position-relative">
         <div className="main-wrapper py-4 w-100">
@@ -43,9 +48,18 @@ const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS, timepieceNFTS })
               }
             >
               {timepieceNFTS && timepieceNFTS.length > 0 ? (
-                timepieceNFTS
-                  .slice(0, 5)
-                  .map((nft) => (
+                timepieceNFTS.slice(0, 5).map((nft, index) => (
+                  <NavLink
+                    to={`/marketplace/nft/${nft.blockTimestamp}`}
+                    style={{ textDecoration: "none" }}
+                    key={index}
+                    state={{
+                      nft: nft,
+                      isCaws: false,
+                      isTimepiece: true,
+                      isWod: false,
+                    }}
+                  >
                     <ItemCard
                       key={nft.id}
                       nft={nft}
@@ -54,8 +68,9 @@ const TimepieceNFT = ({ isConnected, handleConnect, listedNFTS, timepieceNFTS })
                       isCaws={false}
                       isTimepiece={true}
                       isWod={false}
-                    ></ItemCard>
-                  ))
+                   />
+                  </NavLink>
+                ))
               ) : (
                 <HashLoader
                   color={"#554fd8"}
