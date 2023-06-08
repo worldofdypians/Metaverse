@@ -94,28 +94,35 @@ const Marketplace = ({
   return (
     <div
       className="container-fluid mt-5 mt-lg-0 d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-end p-0"
-      style={{ minHeight: "72vh", maxWidth: '2400px' }}
+      style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft px-3 px-lg-5 position-relative">
-          <div className="row justify-content-between align-items-center marketplace-banner my-5">
-            <div className="col-12 col-lg-5">
-              <h6 className="market-banner-title">
+        <div className="row justify-content-between align-items-center marketplace-banner my-5">
+          <div className="col-12 col-lg-5">
+            <h6 className="market-banner-title">
               Unlock the Extraordinary! Explore the World of Dypians
-              </h6>
-              <h6 className="market-banner-title" style={{color: "#8C56FF", lineHeight: '80%'}}>
+            </h6>
+            <h6
+              className="market-banner-title"
+              style={{ color: "#8C56FF", lineHeight: "80%" }}
+            >
               Game Shop!
-              </h6>
-              <div className="my-4">
+            </h6>
+            <div className="my-4">
               <span className="market-banner-desc my-4">
-              Discover the power of NFTs for a unique digital experience.
+                Discover the power of NFTs for a unique digital experience.
               </span>
-              </div>
-            </div>
-            <div className="col-12 col-lg-5">
-              <img src={require('./assets/marketMain.webp')} alt="" className="market-main w-100" />
             </div>
           </div>
+          <div className="col-12 col-lg-5">
+            <img
+              src={require("./assets/marketMain.webp")}
+              alt=""
+              className="market-main w-100"
+            />
+          </div>
+        </div>
         <div className="main-wrapper py-4 w-100">
           {/* <h6 className="nft-wrapper-title font-raleway">Overall status</h6>
           <div className="nft-outer-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-around p-5">
@@ -189,7 +196,6 @@ const Marketplace = ({
               className="d-flex flex-column align-items-center gap-2 col-6 col-lg-3 position-relative"
               style={{ textDecoration: "none" }}
             >
-            
               <div className="position-relative package-blur">
                 <div className="first-box-blur  d-flex align-items-end justify-content-center">
                   <span className="blur-package-title">Dragon Ruins</span>
@@ -333,6 +339,16 @@ const Marketplace = ({
                         nft={nft}
                         isConnected={isConnected}
                         showConnectWallet={handleConnect}
+                        isCaws={
+                          nft.nftAddress === window.config.nft_caws_address ||
+                          nft.nftAddress === window.config.nft_cawsold_address
+                        }
+                        isTimepiece={
+                          nft.nftAddress === window.config.nft_timepiece_address
+                        }
+                        isWod={
+                          nft.nftAddress === window.config.nft_land_address
+                        }
                       ></ItemCard>
                     ))}
                 </Slider>
@@ -374,6 +390,14 @@ const Marketplace = ({
                       nft={nft}
                       isConnected={isConnected}
                       showConnectWallet={handleConnect}
+                      isCaws={
+                        nft.nftAddress === window.config.nft_caws_address ||
+                        nft.nftAddress === window.config.nft_cawsold_address
+                      }
+                      isTimepiece={
+                        nft.nftAddress === window.config.nft_timepiece_address
+                      }
+                      isWod={nft.nftAddress === window.config.nft_land_address}
                     ></ItemCard>
                   ))
                 ) : (
@@ -397,6 +421,16 @@ const Marketplace = ({
                         nft={nft}
                         isConnected={isConnected}
                         showConnectWallet={handleConnect}
+                        isCaws={
+                          nft.nftAddress === window.config.nft_caws_address ||
+                          nft.nftAddress === window.config.nft_cawsold_address
+                        }
+                        isTimepiece={
+                          nft.nftAddress === window.config.nft_timepiece_address
+                        }
+                        isWod={
+                          nft.nftAddress === window.config.nft_land_address
+                        }
                       ></ItemCard>
                     ))}
                 </Slider>
@@ -438,6 +472,14 @@ const Marketplace = ({
                       nft={nft}
                       isConnected={isConnected}
                       showConnectWallet={handleConnect}
+                      isCaws={
+                        nft.nftAddress === window.config.nft_caws_address ||
+                        nft.nftAddress === window.config.nft_cawsold_address
+                      }
+                      isTimepiece={
+                        nft.nftAddress === window.config.nft_timepiece_address
+                      }
+                      isWod={nft.nftAddress === window.config.nft_land_address}
                     ></ItemCard>
                   ))
                 ) : (
@@ -461,6 +503,16 @@ const Marketplace = ({
                         nft={nft}
                         isConnected={isConnected}
                         showConnectWallet={handleConnect}
+                        isCaws={
+                          nft.nftAddress === window.config.nft_caws_address ||
+                          nft.nftAddress === window.config.nft_cawsold_address
+                        }
+                        isTimepiece={
+                          nft.nftAddress === window.config.nft_timepiece_address
+                        }
+                        isWod={
+                          nft.nftAddress === window.config.nft_land_address
+                        }
                       ></ItemCard>
                     ))}
                 </Slider>

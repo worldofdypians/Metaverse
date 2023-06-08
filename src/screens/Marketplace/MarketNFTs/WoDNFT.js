@@ -51,6 +51,9 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
                       nft={nft}
                       isConnected={isConnected}
                       showConnectWallet={handleConnect}
+                      isCaws={false}
+                      isTimepiece={false}
+                      isWod={true}
                     ></ItemCard>
                   ))
               ) : (
