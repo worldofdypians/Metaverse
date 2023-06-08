@@ -69,7 +69,6 @@ const ItemCard = ({
       className="d-flex flex-column item-wrapper position-relative"
       style={{ maxWidth: "100%" }}
     >
-      <a href={`/nft/${nft.blockTimestamp}`}>
         {" "}
         <div className="nftimg-bg position-relative">
           <div className="name-wrapper d-flex justify-content-center p-2">
@@ -94,10 +93,9 @@ const ItemCard = ({
             alt=""
           />
         </div>{" "}
-      </a>
       <div className="d-flex flex-column gap-2 position-relative p-3">
-        <span className="nft-name">
-          {isCaws ? "CAWS" : isWod ? "Land" : "Timepiece"} #{nft.tokenId}
+        <span className="nft-name" style={{ textDecoration: "none" }}>
+          {isCaws ? "CAWS" : isWod ? "Genesis Land" : "Timepiece"} #{nft.tokenId}
         </span>
         <div className="d-flex align-items-center gap-1">
           {nft.payment_priceType === 0 ? (
@@ -105,7 +103,7 @@ const ItemCard = ({
           ) : (
             <img src={topDyp} height={20} width={20} alt="" />
           )}
-          <span className="nft-price">
+          <span className="nft-price" style={{ textDecoration: "none" }}>
             {nft.price.slice(0, 5)}{" "}
             {nft.payment_priceType === 0 ? "ETH" : "DYP"}
           </span>

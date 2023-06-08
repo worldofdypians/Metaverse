@@ -54,6 +54,7 @@ import WoDNFT from "./screens/Marketplace/MarketNFTs/WoDNFT";
 import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
 import MarketStake from "./screens/Marketplace/MarketStake";
 import MarketEvents from "./screens/Marketplace/MarketEvents";
+import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -97,11 +98,17 @@ function App() {
   const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
   const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
-  const [top20BoughtByPriceAndPriceTypeETHNFTS, settop20BoughtByPriceAndPriceTypeETHNFTS] = useState([]);
-  const [top20BoughtByPriceAndPriceTypeDYPNFTS, settop20BoughtByPriceAndPriceTypeDYPNFTS] = useState([]);
+  const [
+    top20BoughtByPriceAndPriceTypeETHNFTS,
+    settop20BoughtByPriceAndPriceTypeETHNFTS,
+  ] = useState([]);
+  const [
+    top20BoughtByPriceAndPriceTypeDYPNFTS,
+    settop20BoughtByPriceAndPriceTypeDYPNFTS,
+  ] = useState([]);
   const [cawsNFTS, setCawsNFTS] = useState([]);
-    const [timepiecesNFTS, setTimepiecesNFTS] = useState([]);
-    const [wodNFTS, setWodNFTS] = useState([]);
+  const [timepiecesNFTS, setTimepiecesNFTS] = useState([]);
+  const [wodNFTS, setWodNFTS] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
@@ -562,10 +569,10 @@ function App() {
   };
 
   const getLatest20BoughtNFTS = async () => {
-
     let boughtItems = [];
 
-    const URL = "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+    const URL =
+      "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
 
     const itemBoughtQuery = `
         {
@@ -581,28 +588,27 @@ function App() {
         }
         `;
 
-await axios.post(URL, {query: itemBoughtQuery})
-    .then(async (result) => {
+    await axios
+      .post(URL, { query: itemBoughtQuery })
+      .then(async (result) => {
         boughtItems = await result.data.data.itemBoughts;
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
-    });
+      });
 
+    console.log("boughtItems", boughtItems);
 
-console.log("boughtItems", boughtItems);
+    return boughtItems;
+  };
 
-return boughtItems;
-}
+  const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
+    let boughtItems = [];
 
+    const URL =
+      "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
 
-const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
-
-  let boughtItems = [];
-
-  const URL = "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
-
-  const itemBoughtQuery = `
+    const itemBoughtQuery = `
       {
           itemBoughts(first: 20, orderBy: price, orderDirection: desc, where: {payment_priceType: ${type}}) {
           nftAddress
@@ -616,19 +622,19 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
       }
       `;
 
-  await axios.post(URL, {query: itemBoughtQuery})
+    await axios
+      .post(URL, { query: itemBoughtQuery })
       .then(async (result) => {
-          boughtItems = await result.data.data.itemBoughts;
+        boughtItems = await result.data.data.itemBoughts;
       })
       .catch((error) => {
-          console.log(error);
+        console.log(error);
       });
 
-  console.log("boughtItems", boughtItems);
+    console.log("boughtItems", boughtItems);
 
-  return boughtItems;
-}
-
+    return boughtItems;
+  };
 
   Amplify.configure(awsExports);
 
@@ -684,35 +690,31 @@ const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
   const getMyNFTS = async (coinbase, type, address) => {
     return await window.getMyNFTs(coinbase, type, address);
   };
-  
+
   const fetchAllMyNfts = async () => {
     if (isConnected && coinbase) {
-      let cawsNew=[];
-      let cawsOld=[]
+      const cawsNew = await getMyNFTS(
+        coinbase,
+        "caws",
+        window.config.nft_caws_address
+      ).catch((e) => {
+        console.error(e);
+      });
 
-      getMyNFTS(coinbase, "caws", window.config.nft_caws_address)
-        .then((NFTS) => {
-          console.log(NFTS, 'caws new');
-          cawsNew.push(...NFTS)
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      const cawsOld = await getMyNFTS(
+        coinbase,
+        "caws",
+        window.config.nft_cawsold_address
+      ).catch((e) => {
+        console.error(e);
+      });
 
-        getMyNFTS(coinbase, "caws", window.config.nft_cawsold_address)
-        .then((NFTS) => {
-          console.log(NFTS, 'caws old');
-          cawsOld.push(...NFTS)
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-console.log(cawsNew, cawsOld)
-
+      let mytotalCaws = [...cawsOld, ...cawsNew];
+      setMyNFTSCaws(mytotalCaws);
       getMyNFTS(coinbase, "timepiece", window.config.nft_timepiece_address)
         .then((NFTS) => {
           setMyNFTSTimepiece(NFTS);
-          console.log(NFTS, 'timepiece');
+          console.log(NFTS, "timepiece");
         })
         .catch((e) => {
           console.error(e);
@@ -721,12 +723,11 @@ console.log(cawsNew, cawsOld)
       getMyNFTS(coinbase, "land", window.config.nft_land_address)
         .then((NFTS) => {
           setMyNFTSLand(NFTS);
-          console.log(NFTS, 'land');
+          console.log(NFTS, "land");
         })
         .catch((e) => {
           console.error(e);
         });
-
     }
   };
 
@@ -765,24 +766,41 @@ console.log(cawsNew, cawsOld)
     setwalletModal(true);
   };
 
-  const getallNfts = async()=>{
-  
+  const getallNfts = async () => {
+    const cawsNew = await getListedNFTS(
+      0,
+      "",
+      "nftAddress",
+      window.config.nft_caws_address
+    ).catch((e) => {
+      console.error(e);
+    });
 
-    const cawsNew = await getListedNFTS(0, "", "nftAddress", window.config.nft_caws_address).catch((e) => {
-        console.error(e);
-      });
+    const cawsOld = await getListedNFTS(
+      0,
+      "",
+      "nftAddress",
+      window.config.nft_cawsold_address
+    ).catch((e) => {
+      console.error(e);
+    });
 
-      const cawsOld = await  getListedNFTS(0, "", "nftAddress", window.config.nft_cawsold_address).catch((e) => {
-        console.error(e);
-      });
+    let totalCaws = [...cawsOld, ...cawsNew];
+    setCawsNFTS(totalCaws);
 
-      let totalCaws = [...cawsOld, ...cawsNew] 
-       setCawsNFTS(totalCaws)
+    getListedNFTS(
+      0,
+      "",
+      "nftAddress",
+      window.config.nft_timepiece_address
+    ).then((NFTS) => {
+      console.log(NFTS);
+      setTimepiecesNFTS(NFTS);
+    });
 
-    getListedNFTS(0, "", "nftAddress", window.config.nft_timepiece_address).then((NFTS) =>{ console.log(NFTS); setTimepiecesNFTS(NFTS)});
-
-    getListedNFTS(0, "", "nftAddress", window.config.nft_land_address).then((NFTS) => setWodNFTS(NFTS));
-  
+    getListedNFTS(0, "", "nftAddress", window.config.nft_land_address).then(
+      (NFTS) => setWodNFTS(NFTS)
+    );
 
     getListedNFTS(0).then((NFTS) => {
       setListedNFTS(NFTS);
@@ -814,20 +832,19 @@ console.log(cawsNew, cawsOld)
       setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
     });
 
-
-    
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
 
-    getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) => settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS));
-    getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) => settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS));
-  
-  }
+    getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
+      settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
+    );
+    getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
+      settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
+    );
+  };
 
-
-  useEffect(()=>{
-     getallNfts()
-
-  },[]);
+  useEffect(() => {
+    getallNfts();
+  }, []);
 
   return (
     <BrowserRouter>
@@ -846,6 +863,20 @@ console.log(cawsNew, cawsOld)
               <MobileNavbar handleSignUp={handleSignUp} />
               <Routes>
                 <Route path="/news/:newsId?/:titleId?" element={<News />} />
+                <Route
+                  path="marketplace/nft/:nftId"
+                  element={
+                    <SingleNft
+                      coinbase={coinbase}
+                      showWalletConnect={() => {
+                        setwalletModal(true);
+                      }}
+                      isConnected={isConnected}
+                      chainId={chainId}
+                    />
+                  }
+                />
+
                 <Route
                   exact
                   path="/"

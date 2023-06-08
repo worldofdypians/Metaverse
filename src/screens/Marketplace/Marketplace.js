@@ -18,7 +18,7 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import Slider from "react-slick";
 import topEth from "./assets/topEth.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
-import nextArrow from './assets/nextArrow.svg'
+import nextArrow from "./assets/nextArrow.svg";
 
 
 const Marketplace = ({
@@ -41,12 +41,11 @@ const Marketplace = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
-  const firstSlider = useRef()
-  const secondSlider = useRef()
+  const firstSlider = useRef();
+  const secondSlider = useRef();
   const [loading, setLoading] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
   const windowSize = useWindowSize();
-
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -265,59 +264,58 @@ const Marketplace = ({
                 <h6 className="filter-title">TimePiece</h6>
               </div>
             </div>
-              <div
-                className={
-                  loading === false
-                    ? "row align-items-center position-relative"
-                    : "loader-wrapper"
-                }
-                style={{ rowGap: "40px" }}
-              >
-                {listedNFTS && listedNFTS.length > 0 ? (
-                  listedNFTS.slice(0, 9).map((nft, index) => (
-                    <div className="col-12 col-lg-4">
-                      <a href={`/nft/${nft.blockTimestamp}`} className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative" style={{textDecoration:'none'}}>
-                        <div className="position-absolute top-sales-rank">
-                          <span>{index + 1}</span>
+            <div
+              className={
+                loading === false
+                  ? "row align-items-center position-relative"
+                  : "loader-wrapper"
+              }
+              style={{ rowGap: "40px" }}
+            >
+              {listedNFTS && listedNFTS.length > 0 ? (
+                listedNFTS.map((nft, index) => (
+                  <div className="col-12 col-lg-4">
+                    <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
+                      <div className="position-absolute top-sales-rank">
+                        <span>{index + 1}</span>
+                      </div>
+                      {/* <span className="sales-number">{index + 1}</span> */}
+                      <img
+                        src={`https://mint.dyp.finance/thumbs/${nft.tokenId}.png`}
+                        width={80}
+                        height={80}
+                        style={{ borderRadius: "8px" }}
+                        alt=""
+                      />
+                      <div className="d-flex flex-column gap-2">
+                        <h6 className="nft-name-wrapper mb-0 py-1 px-2">
+                          CAWS #{nft.tokenId}
+                        </h6>
+                        <div className="d-flex align-items-center gap-1">
+                          <img src={topEth} width={20} height={20} alt="" />
+                          <span className="top-eth">
+                            {" "}
+                            {nft.price}{" "}
+                            {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                          </span>
                         </div>
-                        {/* <span className="sales-number">{index + 1}</span> */}
-                        <img
-                          src={`https://mint.dyp.finance/thumbs/${nft.tokenId}.png`}
-                          width={80}
-                          height={80}
-                          style={{ borderRadius: "8px" }}
-                          alt=""
-                        />
-                        <div className="d-flex flex-column gap-2">
-                          <h6 className="nft-name-wrapper mb-0 py-1 px-2">
-                            CAWS #{nft.tokenId}
-                          </h6>
-                          <div className="d-flex align-items-center gap-1">
-                            <img src={topEth} width={20} height={20} alt="" />
-                            <span className="top-eth">
-                              {" "}
-                              {nft.price}{" "}
-                              {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                            </span>
-                          </div>
-                        </div>
-                        <span className="position-absolute top-sale-time">
-                          a few seconds ago
-                        </span>
-                      </a>
+                      </div>
+                      <span className="position-absolute top-sale-time">
+                        a few seconds ago
+                      </span>
                     </div>
-                  ))
-                ) : (
-                  <HashLoader
-                    color={"#554fd8"}
-                    loading={loading}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
-                )}
-              </div>
-            
+                  </div>
+                ))
+              ) : (
+                <HashLoader
+                  color={"#554fd8"}
+                  loading={loading}
+                  cssOverride={override}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              )}
+            </div>
           </div>
 
           <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
@@ -325,7 +323,7 @@ const Marketplace = ({
             <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
 
               <h6 className="nft-wrapper-title font-raleway mb-0">
-                Recent Listings
+                Recent Listings1
               </h6>
               <div className="d-flex align-items-center gap-4">
                 <h6 className="filter-title filter-selected">All</h6>
@@ -339,23 +337,42 @@ const Marketplace = ({
                 <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
                   {latest20RecentListedNFTS &&
                     latest20RecentListedNFTS.length > 0 &&
-                    latest20RecentListedNFTS.map((nft) => (
-                      <ItemCard
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={
-                          nft.nftAddress === window.config.nft_caws_address ||
-                          nft.nftAddress === window.config.nft_cawsold_address
-                        }
-                        isTimepiece={
-                          nft.nftAddress === window.config.nft_timepiece_address
-                        }
-                        isWod={
-                          nft.nftAddress === window.config.nft_land_address
-                        }
-                      ></ItemCard>
+                    latest20RecentListedNFTS.map((nft, index) => (
+                      <NavLink
+                        to={`/marketplace/nft/${nft.blockTimestamp}`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                        state={{
+                          nft: nft,
+                          isCaws:
+                            nft.nftAddress === window.config.nft_caws_address ||
+                            nft.nftAddress ===
+                              window.config.nft_cawsold_address,
+                          isTimepiece:
+                            nft.nftAddress ===
+                            window.config.nft_timepiece_address,
+                          isWod:
+                            nft.nftAddress === window.config.nft_land_address,
+                        }}
+                      >
+                        <ItemCard
+                          key={nft.id}
+                          nft={nft}
+                          isConnected={isConnected}
+                          showConnectWallet={handleConnect}
+                          isCaws={
+                            nft.nftAddress === window.config.nft_caws_address ||
+                            nft.nftAddress === window.config.nft_cawsold_address
+                          }
+                          isTimepiece={
+                            nft.nftAddress ===
+                            window.config.nft_timepiece_address
+                          }
+                          isWod={
+                            nft.nftAddress === window.config.nft_land_address
+                          }
+                        />
+                      </NavLink>
                     ))}
                 </Slider>
               </div>
@@ -387,26 +404,45 @@ const Marketplace = ({
             </div>
             {loading === false ? (
               <div className="slider-container">
-                <Slider ref={(c) => (secondSlider.current = c)} {...settings}>
-                  {latest20RecentListedNFTS &&
-                    latest20RecentListedNFTS.length > 0 &&
-                    latest20RecentListedNFTS.map((nft) => (
-                      <ItemCard
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={
-                          nft.nftAddress === window.config.nft_caws_address ||
-                          nft.nftAddress === window.config.nft_cawsold_address
-                        }
-                        isTimepiece={
-                          nft.nftAddress === window.config.nft_timepiece_address
-                        }
-                        isWod={
-                          nft.nftAddress === window.config.nft_land_address
-                        }
-                      ></ItemCard>
+                <Slider {...settings}>
+                  {recentSales &&
+                    recentSales.length > 0 &&
+                    recentSales.map((nft, index) => (
+                      <NavLink
+                        to={`/marketplace/nft/${nft.blockTimestamp}`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                        state={{
+                          nft: nft,
+                          isCaws:
+                            nft.nftAddress === window.config.nft_caws_address ||
+                            nft.nftAddress ===
+                              window.config.nft_cawsold_address,
+                          isTimepiece:
+                            nft.nftAddress ===
+                            window.config.nft_timepiece_address,
+                          isWod:
+                            nft.nftAddress === window.config.nft_land_address,
+                        }}
+                      >
+                        <ItemCard
+                          key={nft.id}
+                          nft={nft}
+                          isConnected={isConnected}
+                          showConnectWallet={handleConnect}
+                          isCaws={
+                            nft.nftAddress === window.config.nft_caws_address ||
+                            nft.nftAddress === window.config.nft_cawsold_address
+                          }
+                          isTimepiece={
+                            nft.nftAddress ===
+                            window.config.nft_timepiece_address
+                          }
+                          isWod={
+                            nft.nftAddress === window.config.nft_land_address
+                          }
+                        />
+                      </NavLink>
                     ))}
                 </Slider>
               </div>
@@ -422,7 +458,6 @@ const Marketplace = ({
               </div>
             )}
           </div>
-
         </div>
       </div>
     </div>

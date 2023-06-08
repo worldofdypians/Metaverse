@@ -6,6 +6,8 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import searchIcon from "../assets/search.svg";
 import dropdownIcon from "../assets/dropdownIcon.svg";
+import { NavLink } from "react-router-dom";
+
 const CawsNFT = ({ isConnected, handleConnect, listedNFTS, cawsNFTS }) => {
   const override = {
     display: "block",
@@ -89,16 +91,28 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS, cawsNFTS }) => {
               }
             >
               {cawsNFTS && cawsNFTS.length > 0 ? (
-                cawsNFTS.map((nft) => (
-                  <ItemCard
-                    key={nft.id}
-                    nft={nft}
-                    isConnected={isConnected}
-                    showConnectWallet={handleConnect}
-                    isCaws={true}
-                    isTimepiece={false}
-                    isWod={false}
-                  ></ItemCard>
+                cawsNFTS.slice(0, 5).map((nft, index) => (
+                  <NavLink
+                    to={`/marketplace/nft/${nft.blockTimestamp}`}
+                    style={{ textDecoration: "none" }}
+                    key={index}
+                    state={{
+                      nft: nft,
+                      isCaws: true,
+                      isTimepiece: false,
+                      isWod: false,
+                    }}
+                  >
+                    <ItemCard
+                      key={nft.id}
+                      nft={nft}
+                      isConnected={isConnected}
+                      showConnectWallet={handleConnect}
+                      isCaws={true}
+                      isTimepiece={false}
+                      isWod={false}
+                   />
+                  </NavLink>
                 ))
               ) : (
                 <HashLoader

@@ -16,6 +16,94 @@
   color: #ffffff;
 }
 
+.nft-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #b8b8e0;
+}
+
+.price-wrapper {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 25px;
+}
+
+.currentprice-txt {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #b8b8e0;
+}
+
+.nft-price-eth {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 39px;
+  color: #ffffff;
+}
+
+.nft-price-usd {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #8c56ff;
+}
+
+.buyNftbtn {
+  background: linear-gradient(90deg, #7bd8af -10.16%, #d9fa86 129.3%);
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #080b2a;
+}
+
+.first-bigbox-blur {
+  left: 25px !important;
+  position: relative !important;
+  width: 281.94px !important;
+  height: 316.6px !important;
+  top: 20px !important;
+}
+
+.second-bigbox-blur {
+  width: 281.94px !important;
+  height: 199.98px !important;
+}
+
+.blur-img-big {
+  height: 325.1px !important;
+  width: 306.98px !important;
+}
+
+.owner-txt {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #b8b8e0;
+}
+
+.seller-addr {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #e2e2e2;
+}
+
+.single-item-info {
+  // width: fit-content;
+}
+
 .collection-item:hover {
   background: #554fd8;
 

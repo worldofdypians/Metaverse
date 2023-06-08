@@ -6,6 +6,7 @@ import MobileNav from "../../../components/MobileNav/MobileNav";
 import useWindowSize from "../../../hooks/useWindowSize";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import searchIcon from "../assets/search.svg";
+import { NavLink } from "react-router-dom";
 
 const TimepieceNFT = ({
   isConnected,
@@ -32,6 +33,11 @@ const TimepieceNFT = ({
     }
     window.scrollTo(0, 0);
   }, [timepieceNFTS]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
 
   return (
     <div
@@ -98,9 +104,18 @@ const TimepieceNFT = ({
               }
             >
               {timepieceNFTS && timepieceNFTS.length > 0 ? (
-                timepieceNFTS
-                  .slice(0, 5)
-                  .map((nft) => (
+                timepieceNFTS.slice(0, 5).map((nft, index) => (
+                  <NavLink
+                    to={`/marketplace/nft/${nft.blockTimestamp}`}
+                    style={{ textDecoration: "none" }}
+                    key={index}
+                    state={{
+                      nft: nft,
+                      isCaws: false,
+                      isTimepiece: true,
+                      isWod: false,
+                    }}
+                  >
                     <ItemCard
                       key={nft.id}
                       nft={nft}
@@ -109,8 +124,9 @@ const TimepieceNFT = ({
                       isCaws={false}
                       isTimepiece={true}
                       isWod={false}
-                    ></ItemCard>
-                  ))
+                   />
+                  </NavLink>
+                ))
               ) : (
                 <HashLoader
                   color={"#554fd8"}
