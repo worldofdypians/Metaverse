@@ -5,10 +5,10 @@ import idyp from "../../Images/userProfile/idyp.svg";
 import filledCircle from "../../Images/userProfile/filled-circlecheck.svg";
 import bnbChain from "../../Images/userProfile/bnbChain.svg";
 import dragon from "../../Images/userProfile/dragon.png";
-import dragonPackage from './assets/dragonPackageIcon.webp'
-import criticalHit from './assets/criticalHit.webp'
-import goldenPass from './assets/goldenPass.png'
-import puzzleMadness from './assets/puzzleMadness.png'
+import dragonPackage from "./assets/dragonPackageIcon.webp";
+import criticalHit from "./assets/criticalHit.webp";
+import goldenPass from "./assets/goldenPass.png";
+import puzzleMadness from "./assets/puzzleMadness.png";
 
 import {
   wod_abi,
@@ -754,7 +754,7 @@ const NewBundleCard = ({
   }, [bundlesBought, countdown700]);
 
   useEffect(() => {
-   if (today > twentyfivejune) {
+    if (today > twentyfivejune) {
       setisAtlimit(true);
     }
   }, [today, oneJune, oneJuly]);
@@ -1381,54 +1381,85 @@ const NewBundleCard = ({
     //       : statusCritical}
     //   </span>
     // </div>
-    <div className="row align-items-center">
-      <div className="col-12 col-lg-8">
-        <div className="nft-outer-wrapper p-3 p-lg-5">
+    <div className="row align-items-center py-5">
+      <div className="col-12 col-lg-7 h-100">
+        <div className="nft-outer-wrapper p-3 p-lg-5 h-100">
           <div className="d-flex align-items-center justify-content-between">
             <h6 className="new-bundle-title">Dragon Ruins</h6>
-            <img src={require('./assets/newTooltip.svg').default} alt="" />
+            <img src={require("./assets/newTooltip.svg").default} alt="" />
           </div>
           <div className="d-flex align-items-center justify-content-between">
-          <img src={dragonPackage} alt="" className="new-bundle-img" />
-          <div className="d-flex flex-column gap-2">
-            <div className="new-bundle-benefits-title">Benefits</div>
-            <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
-              <img src={require('./assets/newCheckmark.svg').default} alt="" />
-                <span className="new-benefit">Ability to fight a special creature</span>
-            </div>
-            <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
-              <img src={require('./assets/newCheckmark.svg').default} alt="" />
-                <span className="new-benefit">A chance to win an unique CAWS NFT</span>
-            </div>
-            <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
-              <img src={require('./assets/newCheckmark.svg').default} alt="" />
+            <img src={dragonPackage} alt="" className="new-bundle-img" />
+            <div className="d-flex flex-column gap-2">
+              <div className="new-bundle-benefits-title">Benefits</div>
+              <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
+                <img
+                  src={require("./assets/newCheckmark.svg").default}
+                  alt=""
+                />
+                <span className="new-benefit">
+                  Ability to fight a special creature
+                </span>
+              </div>
+              <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
+                <img
+                  src={require("./assets/newCheckmark.svg").default}
+                  alt=""
+                />
+                <span className="new-benefit">
+                  A chance to win an unique CAWS NFT
+                </span>
+              </div>
+              <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
+                <img
+                  src={require("./assets/newCheckmark.svg").default}
+                  alt=""
+                />
                 <span className="new-benefit">Score multiplier</span>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
-      <div className="col-12 col-lg-4 h-100">
-        <div className="nft-outer-wrapper p-3 p-lg-5 h-100">
-          <div className="d-flex flex-column h-100 gap-5">
-          <h6 className="new-bundle-title">
-            Purchase
-          </h6>
-          <div className="purchase-wrapper p-2">
-            <span className="purchase-price-title">
-              Event price
-            </span>
-            <div className="d-flex align-items-end gap-4">
-              <div className="d-flex align-items-center gap-2">
-              <img src={require('./assets/dypIcon.svg').default} width={30} height={30} alt="" />
-              <h6 className="purchase-price">50 DYP</h6>
+      <div className="col-12 col-lg-5 h-100">
+        <div className="nft-outer-wrapper py-3 px-3 py-lg-5 h-100">
+          <div className="d-flex flex-column h-100 justify-content-between gap-3">
+            <h6
+              className="new-bundle-title"
+              style={{ position: "relative", left: "20px" }}
+            >
+              Purchase
+            </h6>
+            <div className="d-flex flex-column gap-2">
+              <div className="purchase-wrapper p-3">
+                <span className="purchase-price-title">Event price</span>
+                <div className="d-flex align-items-center gap-4">
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={require("./assets/dypIcon.svg").default}
+                      width={30}
+                      height={30}
+                      alt=""
+                    />
+                    <h6 className="purchase-price mb-0">50 DYP</h6>
+                  </div>
+                  <span className="purchase-price-usd mb-0">$6.62</span>
+                </div>
               </div>
-              <span className="purchase-price-usd">
-                  $6.62
-              </span>
+              <span className="new-bnb-chain">Available only on BNB Chain</span>
             </div>
-          </div>
-          <span className="new-bnb-chain">Available only on BNB Chain</span>
+            <div className="d-flex flex-column align-items-center gap-2 position-relative" style={{left: '-20px'}}>
+            <div
+              className="d-flex align-items-center justify-content-center position-relative gap-3"
+            >
+              <button className="btn inactive-pill-btn py-2 px-4">Sign</button>
+              <button className="btn pill-btn py-2 px-4">Buy</button>
+            </div>
+            <div className="progress-bar" style={{width: '40%'}}>
+              <img src={sliderValue === 1 ? progress1 : progress2} alt="" />
+            </div>
+            </div>
+            
           </div>
         </div>
       </div>
