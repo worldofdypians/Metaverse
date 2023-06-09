@@ -142,6 +142,16 @@
   }
 }
 
+.errorbtn {
+  background: linear-gradient(to right, #cb2d3e, #ef473a);
+  color: white;
+}
+
+.successbtn {
+  background: linear-gradient(to right, #1d976c, #93f9b9);
+  color: white;
+}
+
 .loader-wrapper {
   width: 100%;
   display: flex;

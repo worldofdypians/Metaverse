@@ -13,6 +13,7 @@ const TimepieceNFT = ({
   handleConnect,
   listedNFTS,
   timepieceNFTS,
+  coinbase
 }) => {
   const override = {
     display: "block",
@@ -114,6 +115,8 @@ const TimepieceNFT = ({
                       isCaws: false,
                       isTimepiece: true,
                       isWod: false,
+                      isOwner: nft.seller?.toLowerCase() === coinbase?.toLowerCase()
+
                     }}
                   >
                     <ItemCard

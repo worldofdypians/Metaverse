@@ -32,6 +32,7 @@ const Marketplace = ({
   latest20RecentListedNFTS,
   totalBoughtNFTSCount,
   topSales,
+  coinbase,
   recentSales,
 }) => {
   const override = {
@@ -395,6 +396,7 @@ const Marketplace = ({
                             window.config.nft_timepiece_address,
                           isWod:
                             nft.nftAddress === window.config.nft_land_address,
+                          isOwner: nft.seller?.toLowerCase() === coinbase?.toLowerCase()
                         }}
                       >
                         <ItemCard
@@ -472,6 +474,8 @@ const Marketplace = ({
                             window.config.nft_timepiece_address,
                           isWod:
                             nft.nftAddress === window.config.nft_land_address,
+                          isOwner: nft.seller?.toLowerCase() === coinbase?.toLowerCase()
+
                         }}
                       >
                         <ItemCard

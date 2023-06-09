@@ -7,7 +7,13 @@ import topEth from "../assets/topEth.svg";
 import topDyp from "../assets/dypIcon.svg";
 import { useLocation } from "react-router-dom";
 
-const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
+const SingleNft = ({
+  coinbase,
+  showWalletConnect,
+  chainId,
+  isConnected,
+  handleSwitchChain,
+}) => {
   const windowSize = useWindowSize();
   const location = useLocation();
 
@@ -26,8 +32,13 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
   );
   const [IsApprove, setIsApprove] = useState(false);
   const [buttonText, setbuttonText] = useState("Approve");
+  const [buttonType, setbuttonType] = useState("buy");
+
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [metaData, setmetaData] = useState([]);
+  const [isOwner, setisOwner] = useState(
+    location.state?.isOwner ? location.state?.isOwner : false
+  );
 
   const getMetaData = async () => {
     if (nft) {
@@ -41,20 +52,23 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
         const result = await window.getTimepieceNft(nft.tokenId);
         setmetaData(result);
       }
-    }
-    else console.log('no')
+    } else console.log("no");
   };
 
   const isApprovedBuy = async (amount) => {
-    return await window.isApprovedBuy(amount);
+    const result = await window.isApprovedBuy(amount).catch((e) => {
+      console.error(e);
+    });
+
+    return result;
   };
 
   async function handleBuy(nft) {
     console.log("nft", nft);
-
+    setbuttonType("buy");
     const isApproved = await isApprovedBuy(nft.price);
 
-    if (isApproved) {
+    if (isApproved || nft.payment_priceType === 0) {
       setbuttonLoading(true);
       await window
         .buyNFT(
@@ -68,11 +82,12 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
           console.log("buyNFT", result);
           setbuttonLoading(false);
           setbuttonText("Success");
+          setbuttonType("sell");
         })
         .catch((e) => {
           setbuttonText("Failed");
           setbuttonLoading(false);
-
+          setbuttonType("buy");
           console.error(e);
         });
     } else {
@@ -81,6 +96,9 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
       await window
         .approveBuy(nft.price)
         .then((result) => {
+          setTimeout(() => {
+            setbuttonText("Buy");
+          }, 3000);
           console.log("approveBuy", result);
           setbuttonLoading(false);
           setbuttonText("Success");
@@ -88,38 +106,66 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
         .catch((e) => {
           console.error(e);
           setbuttonLoading(false);
-
           setbuttonText("Failed");
         });
     }
   }
+
+  const cancelNFT = (nftAddress, tokenId, type) => {
+    setbuttonType("sell");
+    setbuttonLoading(true);
+    return window
+      .cancelListNFT(nftAddress, tokenId, type)
+      .then((result) => {
+        setTimeout(() => {
+          setbuttonText("Cancel List");
+        }, 3000);
+        console.log("approveBuy", result);
+        setbuttonLoading(false);
+        setbuttonText("Success");
+        setbuttonType("sell");
+      })
+      .catch((e) => {
+        console.error(e);
+        setbuttonLoading(false);
+        setbuttonType("sell");
+        setbuttonText("Failed");
+      });
+  };
+
+  useEffect(() => {
+    if (isOwner === false) {
+      if (isConnected === true && nft.payment_priceType === 1) {
+        isApprovedBuy(nft.price).then((isApproved) => {
+          setIsApprove(isApproved);
+          if (isApproved === true) {
+            setbuttonText("Buy");
+          } else if (isApproved === false) {
+            setbuttonText("Approve");
+          }
+        });
+      }
+    } else {
+      setbuttonText("Cancel List");
+    }
+  }, [nft.price, isConnected]);
 
   useEffect(() => {
     if (isConnected === true && nft.payment_priceType === 1) {
       isApprovedBuy(nft.price).then((isApproved) => {
         console.log(isApproved);
         setIsApprove(isApproved);
-        if (isApproved === true) {
-          setbuttonText("Buy");
-        } else if (isApproved === false) {
-          setbuttonText("Approve");
-        }
       });
     }
-  }, [nft.price]);
+  }, [nft.price, isConnected]);
 
   useEffect(() => {
-    // setTimeout(() => {
-      getMetaData();
-    // }, 3000);
+    getMetaData();
   }, [nft, isCaws, isTimepiece, isWod]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-
-  // console.log(metaData)
 
   return (
     <div
@@ -211,28 +257,171 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
                       target="_blank"
                       style={{ textDecoration: "none" }}
                       className="seller-addr"
-                      rel='noreferrer'
+                      rel="noreferrer"
                     >
                       {nft.seller}
                     </a>
                   </div>
-                  <button
-                    className="btn buyNftbtn col-3 d-flex justify-content-center"
-                    onClick={() => {
-                      handleBuy(nft);
-                    }}
-                  >
-                    {buttonLoading === true ? (
-                      <div
-                        class="spinner-border spinner-border-sm text-light"
-                        role="status"
-                      >
-                        <span class="visually-hidden">Loading...</span>
-                      </div>
-                    ) : (
-                      <>{buttonText}</>
-                    )}
-                  </button>
+                  {isOwner === false && (
+                    <button
+                      disabled={
+                        buttonLoading === true || buttonText === "Failed"
+                          ? true
+                          : false
+                      }
+                      className={`btn  buyNftbtn col-3 d-flex justify-content-center ${
+                        buttonText === "Success"
+                          ? "successbtn"
+                          : buttonText === "Failed" ||
+                            (chainId !== 5 && chainId !== 1)
+                          ? "errorbtn"
+                          : null
+                      } d-flex justify-content-center align-items-center gap-2`}
+                      onClick={() => {
+                        isConnected === false
+                          ? showWalletConnect()
+                          : chainId !== 1 || chainId !== 5
+                          ? handleSwitchChain()
+                          : handleBuy(nft);
+                      }}
+                    >
+                      {buttonLoading &&
+                      isConnected &&
+                      coinbase &&
+                      (chainId === 1 || chainId === 5) ? (
+                        <div
+                          class="spinner-border spinner-border-sm text-light"
+                          role="status"
+                        >
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      ) : !buttonLoading &&
+                        !isConnected &&
+                        !coinbase &&
+                        (chainId === 1 || chainId === 5) ? (
+                        "Connect Wallet"
+                      ) : !buttonLoading &&
+                        isConnected &&
+                        coinbase &&
+                        chainId !== 1 &&
+                        chainId !== 5 ? (
+                        "Switch Network"
+                      ) : (
+                        <>{buttonText}</>
+                      )}
+                    </button>
+                  )}
+                  {isOwner === true &&
+                    buttonType ===
+                      "cancel-list" &&(
+                        <button
+                          disabled={
+                            buttonLoading === true || buttonText === "Failed"
+                              ? true
+                              : false
+                          }
+                          className={`btn  buyNftbtn col-3 d-flex justify-content-center ${
+                            buttonText === "Success"
+                              ? "successbtn"
+                              : buttonText === "Failed" ||
+                                (chainId !== 5 && chainId !== 1)
+                              ? "errorbtn"
+                              : null
+                          } d-flex justify-content-center align-items-center gap-2`}
+                          onClick={() => {
+                            isConnected === false
+                              ? showWalletConnect()
+                              : chainId !== 1 && chainId !== 5
+                              ? handleSwitchChain()
+                              : cancelNFT(
+                                  nft.nftAddress,
+                                  nft.tokenId,
+                                  nft.payment_priceType
+                                );
+                          }}
+                        >
+                          {buttonLoading &&
+                          isConnected &&
+                          coinbase &&
+                          (chainId === 1 || chainId === 5) ? (
+                            <div
+                              class="spinner-border spinner-border-sm text-light"
+                              role="status"
+                            >
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          ) : !buttonLoading &&
+                            !isConnected &&
+                            !coinbase &&
+                            (chainId === 1 || chainId === 5) ? (
+                            "Connect Wallet"
+                          ) : !buttonLoading &&
+                            isConnected &&
+                            coinbase &&
+                            chainId !== 1 &&
+                            chainId !== 5 ? (
+                            "Switch Network"
+                          ) : (
+                            <>{buttonText}</>
+                          )}
+                        </button>
+                      )}
+
+                  {isOwner === true &&
+                    buttonType ===
+                      "sell" && (
+                        <button
+                          disabled={
+                            buttonLoading === true || buttonText === "Failed"
+                              ? true
+                              : false
+                          }
+                          className={`btn  buyNftbtn col-3 d-flex justify-content-center ${
+                            buttonText === "Success"
+                              ? "successbtn"
+                              : buttonText === "Failed" ||
+                                (chainId !== 5 && chainId !== 1)
+                              ? "errorbtn"
+                              : null
+                          } d-flex justify-content-center align-items-center gap-2`}
+                          onClick={() => {
+                            isConnected === false
+                              ? showWalletConnect()
+                              : chainId !== 1 && chainId !== 5
+                              ? handleSwitchChain()
+                              : cancelNFT(
+                                  nft.nftAddress,
+                                  nft.tokenId,
+                                  nft.payment_priceType
+                                );
+                          }}
+                        >
+                          {buttonLoading &&
+                          isConnected &&
+                          coinbase &&
+                          (chainId === 1 || chainId === 5) ? (
+                            <div
+                              class="spinner-border spinner-border-sm text-light"
+                              role="status"
+                            >
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          ) : !buttonLoading &&
+                            !isConnected &&
+                            !coinbase &&
+                            (chainId === 1 || chainId === 5) ? (
+                            "Connect Wallet"
+                          ) : !buttonLoading &&
+                            isConnected &&
+                            coinbase &&
+                            chainId !== 1 &&
+                            chainId !== 5 ? (
+                            "Switch Network"
+                          ) : (
+                            <>{buttonText}</>
+                          )}
+                        </button>
+                      )}
                 </div>
               </div>
             </div>
@@ -248,46 +437,66 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
                   <div className="d-flex gap-3 align-items-center justify-content-between">
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Background</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[0]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[0]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Tail</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[1]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[1]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Ears</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[2]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[2]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Body</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[3]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[3]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Clothes</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[4]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[4]?.value}
+                      </span>
                     </div>
                   </div>
                   <div className="trait-separator"></div>
                   <div className="d-flex gap-3 align-items-center justify-content-between">
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Eyes</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[5]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[5]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Mouth</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[6]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[6]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Hat</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[7]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[7]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Eyewear</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[8]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[8]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Watch</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[9]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[9]?.value}
+                      </span>
                     </div>
                   </div>
                 </>
@@ -297,51 +506,74 @@ const SingleNft = ({ coinbase, showWalletConnect, chainId, isConnected }) => {
                   <div className="d-flex gap-3 align-items-center justify-content-between">
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Tier</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[0]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[0]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Size</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[1]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[1]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Building</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[3]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[3]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Workbench</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[4]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[4]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">NPC - Attire</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[8]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[8]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Gemstone</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[9]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[9]?.value}
+                      </span>
                     </div>
                   </div>
                   <div className="trait-separator"></div>
-
                   <div className="d-flex gap-3 align-items-center justify-content-between">
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Artifacts</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[5]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[5]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">NPC</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[6]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[6]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">NPC - AI Powered</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[7]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[7]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Plot</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[10]?.value}</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[10]?.value}
+                      </span>
                     </div>
                     <div className="d-flex flex-column gap-2 align-items-center">
-                      <span className="traittitle">Multi Functional Building</span>
-                      <span className="traitsubtitle">{metaData.attributes && metaData?.attributes[2]?.value}</span>
+                      <span className="traittitle">
+                        Multi Functional Building
+                      </span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[2]?.value}
+                      </span>
                     </div>
                   </div>
                 </>
