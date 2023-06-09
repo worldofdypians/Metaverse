@@ -102,7 +102,7 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS,coinbase }) =>
                       isCaws: false,
                       isTimepiece: false,
                       isWod: true,
-                      isOwner: nft.seller?.toLowerCase() === coinbase?.toLowerCase()
+                      isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
 
                     }}
                   >

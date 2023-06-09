@@ -1,12 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
-const URL = 'https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1'
+const URL =
+  "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
 
-const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "") =>
-{
-
-    if(sort === 'price_asc') {
-        return `{
+const itemListedQuery = (
+  sort = "",
+  findBy = "",
+  findValue = "",
+  nft_address = ""
+) => {
+  if (sort === "price_asc") {
+    return `{
       itemListeds(first: 1000, orderBy: price, orderDirection: asc) {
         seller
         nftAddress
@@ -18,12 +22,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         blockTimestamp
       }
     }`;
+  }
 
-    }
-
-    if(sort === 'price_desc') {
-
-        return `{
+  if (sort === "price_desc") {
+    return `{
       itemListeds(first: 1000, orderBy: price, orderDirection: desc) {
         seller
         nftAddress
@@ -35,11 +37,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         blockTimestamp
       }
     }`;
-    }
+  }
 
-    if(sort === 'time_asc') {
-
-        return `{
+  if (sort === "time_asc") {
+    return `{
       itemListeds(first: 1000, orderBy: blockTimestamp, orderDirection: asc) {
         seller
         nftAddress
@@ -51,11 +52,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         blockTimestamp
         }
       }`;
-    }
+  }
 
-    if(sort === 'time_desc') {
-
-        return `{
+  if (sort === "time_desc") {
+    return `{
       itemListeds(first: 1000, orderBy: blockTimestamp, orderDirection: desc) {
         seller
         nftAddress
@@ -68,11 +68,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
       }
       }
       `;
-    }
+  }
 
-    if(sort === 'payment_priceType_asc') {
-
-        return `{
+  if (sort === "payment_priceType_asc") {
+    return `{
       itemListeds(first: 1000, orderBy: payment_priceType, orderDirection: asc) {
         seller
         nftAddress
@@ -86,11 +85,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
       }
       
       `;
-    }
+  }
 
-    if(sort === 'payment_priceType_desc') {
-
-            return `{
+  if (sort === "payment_priceType_desc") {
+    return `{
         itemListeds(first: 1000, orderBy: payment_priceType, orderDirection: desc) {
             seller
             nftAddress
@@ -102,10 +100,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
             blockTimestamp
             }
         }`;
-    }
+  }
 
-    if(findBy === 'seller') {
-        return `
+  if (findBy === "seller") {
+    return `
         {
             itemListeds(where:{seller:"${findValue}"}) {
             seller
@@ -119,10 +117,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         }
         }
         `;
-    }
+  }
 
-    if(findBy === 'nftAddress') {
-        return `
+  if (findBy === "nftAddress") {
+    return `
         {
             itemListeds(where:{nftAddress:"${findValue}"}) {
             seller
@@ -136,11 +134,11 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         }
         }
         `;
-    }
+  }
 
-    // check if token id and nft address is already listed
-    if(findBy === 'nftAddress_tokenId') {
-        return `
+  // check if token id and nft address is already listed
+  if (findBy === "nftAddress_tokenId") {
+    return `
         {
             itemListeds(where:{nftAddress:"${nft_address}", tokenId:"${findValue}"}) {
             seller
@@ -154,11 +152,11 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         }
         }
         `;
-    }
+  }
 
-    // get latest 20 recent  listed NFTS in 24 hours
-    if(findBy === 'recentListedNFTS') {
-        return `
+  // get latest 20 recent  listed NFTS in 24 hours
+  if (findBy === "recentListedNFTS") {
+    return `
         {
             itemListeds(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
             seller
@@ -172,13 +170,11 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         }
         }
         `;
-    }
+  }
 
-
-    if(findBy === 'payment_priceType') {
-
-        if (findValue === 'ETH') {
-            return `
+  if (findBy === "payment_priceType") {
+    if (findValue === "ETH") {
+      return `
         {
             itemListeds(where:{payment_priceType:0}) {
             seller
@@ -192,10 +188,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         }
         }
         `;
-        }
+    }
 
-        if (findValue === 'DYP') {
-            return `
+    if (findValue === "DYP") {
+      return `
         {
             itemListeds(where:{payment_priceType:1}) {
             seller
@@ -209,11 +205,10 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         }
         }
         `;
-        }
     }
+  }
 
-
-    return `
+  return `
         {
             itemListeds(first: 1000) {
             seller
@@ -227,7 +222,7 @@ const itemListedQuery = (sort = "", findBy = "", findValue = "", nft_address = "
         }
         }
         `;
-}
+};
 
 const itemCanceledQuery = `
         {
@@ -252,7 +247,7 @@ const itemBoughtQuery = `
         `;
 
 const singleItemQuery = (block) => {
-    return `
+  return `
         {
             itemListeds(where:{blockTimestamp_in:[
             "${block}",
@@ -266,90 +261,108 @@ const singleItemQuery = (block) => {
             blockTimestamp
         }
         }
-        ` };
+        `;
+};
 
+const getListedNFTS = async (
+  block = 0,
+  sort = "",
+  findBy = "",
+  findValue = "",
+  nft_address = ""
+) => {
+  let listedItems = [];
 
-const getListedNFTS = async (block = 0,  sort = "", findBy = "", findValue = "", nft_address = "") => {
+  if (block === 0) {
+    await axios
+      .post(URL, { query: itemCanceledQuery })
+      .then(async (result1) => {
+        const canceledItems = await result1.data.data.itemCanceleds.reduce(
+          (acc, item) => {
+            const key = `${item.nftAddress}_${item.tokenId}`;
+            if (!acc[key] || acc[key].blockNumber < item.blockNumber) {
+              acc[key] = {
+                blockNumber: item.blockNumber,
+                blockTimestamp: item.blockTimestamp,
+              };
+            }
+            return acc;
+          },
+          {}
+        );
 
-    let listedItems  = [];
+        await axios
+          .post(URL, { query: itemBoughtQuery })
+          .then(async (result2) => {
+            const boughtItems = await result2.data.data.itemBoughts.reduce(
+              (acc, item) => {
+                const key = `${item.nftAddress}_${item.tokenId}`;
+                if (!acc[key] || acc[key].blockNumber < item.blockNumber) {
+                  acc[key] = {
+                    blockNumber: item.blockNumber,
+                    blockTimestamp: item.blockTimestamp,
+                  };
+                }
+                return acc;
+              },
+              {}
+            );
 
-    if(block === 0)
-    {
-        await axios.post(URL, { query: itemCanceledQuery })
-            .then(async (result1) => {
-                const canceledItems = await result1.data.data.itemCanceleds.reduce((acc, item) => {
-                    const key = `${item.nftAddress}_${item.tokenId}`;
-                    if (!acc[key] || acc[key].blockNumber < item.blockNumber) {
-                        acc[key] = {
-                            blockNumber: item.blockNumber,
-                            blockTimestamp: item.blockTimestamp
+            await axios
+              .post(URL, {
+                query: itemListedQuery(sort, findBy, findValue, nft_address),
+              })
+              .then(async (result3) => {
+                const itemListed = await result3.data.data?.itemListeds;
+                const latestStates = {};
+
+                itemListed && itemListed.forEach((item) => {
+                  const nftAddress = item.nftAddress;
+                  const tokenId = item.tokenId;
+                  const key = `${nftAddress}_${tokenId}`;
+
+                  if (
+                    !canceledItems[key] ||
+                    canceledItems[key].blockNumber < item.blockNumber
+                  ) {
+                    if (
+                      !boughtItems[key] ||
+                      boughtItems[key].blockNumber < item.blockNumber
+                    ) {
+                      if (
+                        !latestStates[key] ||
+                        latestStates[key].blockNumber < item.blockNumber
+                      ) {
+                        latestStates[key] = {
+                          seller: item.seller,
+                          nftAddress: item.nftAddress,
+                          tokenId: item.tokenId,
+                          price: item.price,
+                          payment_priceType: item.payment_priceType,
+                          payment_tokenAddress: item.payment_tokenAddress,
+                          blockNumber: item.blockNumber,
+                          blockTimestamp: item.blockTimestamp,
                         };
+                      }
                     }
-                    return acc;
-                }, {});
+                  }
+                });
 
-                await axios.post(URL, {query: itemBoughtQuery})
-                    .then(async (result2) => {
-                        const boughtItems = await result2.data.data.itemBoughts.reduce((acc, item) => {
-                            const key = `${item.nftAddress}_${item.tokenId}`;
-                            if (!acc[key] || acc[key].blockNumber < item.blockNumber) {
-                                acc[key] = {
-                                    blockNumber: item.blockNumber,
-                                    blockTimestamp: item.blockTimestamp
-                                };
-                            }
-                            return acc;
-                        }, {});
-
-                        await axios.post(URL, {query: itemListedQuery(sort, findBy, findValue, nft_address)})
-                            .then(async (result3) => {
-                                const itemListed = await result3.data.data.itemListeds;
-                                const latestStates = {};
-
-                                itemListed.forEach((item) => {
-                                    const nftAddress = item.nftAddress;
-                                    const tokenId = item.tokenId;
-                                    const key = `${nftAddress}_${tokenId}`;
-
-                                    if (!canceledItems[key] || canceledItems[key].blockNumber < item.blockNumber) {
-                                        if (!boughtItems[key] || boughtItems[key].blockNumber < item.blockNumber) {
-                                            if (!latestStates[key] || latestStates[key].blockNumber < item.blockNumber) {
-                                                latestStates[key] = {
-                                                    seller: item.seller,
-                                                    nftAddress: item.nftAddress,
-                                                    tokenId: item.tokenId,
-                                                    price: item.price,
-                                                    payment_priceType: item.payment_priceType,
-                                                    payment_tokenAddress: item.payment_tokenAddress,
-                                                    blockNumber: item.blockNumber,
-                                                    blockTimestamp: item.blockTimestamp
-                                                };
-                                            }
-                                        }
-                                    }
-                                });
-
-                                return listedItems = Object.values(latestStates);
-                            });
-                    });
-            });
-
-
-        return listedItems;
-    }
-    else
-    {
-        await axios.post(URL, {query: singleItemQuery(block)})
-            .then(async (result3) =>
-            {
-                listedItems = Object.values(result3.data.data.itemListeds);
-
-            } );
-    }
+                return (listedItems = Object.values(latestStates));
+              });
+          });
+      });
 
     return listedItems;
-}
+  } else {
+    await axios
+      .post(URL, { query: singleItemQuery(block) })
+      .then(async (result3) => {
+        listedItems = Object.values(result3.data.data.itemListeds);
+      });
+  }
 
-
+  return listedItems;
+};
 
 export default getListedNFTS;

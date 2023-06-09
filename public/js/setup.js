@@ -5794,7 +5794,41 @@ window.isApprovedBuy = async (amount) => {
   return Number(allowance) >= Number(amount);
 };
 
-window.approveNFT = async (token, type = "") => {
+
+window.isApproved = async (token, type = "") =>
+{
+    let contract;
+
+    if(type === "timepiece")
+    {
+        contract =  new window.web3.eth.Contract(
+            window.abi.nft.timepiece,
+            window.config.nft_timepiece_address
+        );
+    }
+    else if(type === "land")
+    {
+        contract = new window.web3.eth.Contract(
+            window.abi.nft.land,
+            window.config.nft_land_address
+        );
+    }
+    else
+    {
+        contract = new window.web3.eth.Contract(
+            window.abi.nft.caws,
+            window.config.nft_caws_address
+        );
+    }
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address;
+}
+
+window.approveNFT = async (token, type)=> {
   let contract;
 
   if (type === "timepiece") {
@@ -5813,10 +5847,11 @@ window.approveNFT = async (token, type = "") => {
       window.config.nft_caws_address
     );
   }
+const coinbase = await getCoinbase()
 
   await contract.methods
     .approve(window.config.nft_marketplace_address, token)
-    .send({ from: await getCoinbase() });
+    .send({ from: coinbase });
 
   console.log("approved", token);
 };
@@ -5845,6 +5880,7 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType) => {
 window.updateListingNFT = async (token, price, priceType, type) => {
   let nft_address, price_nft, price_address;
 
+
   if (type === "timepiece") {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
@@ -5853,12 +5889,12 @@ window.updateListingNFT = async (token, price, priceType, type) => {
     nft_address = window.config.nft_caws_address;
   }
 
-  if (priceType === "eth") {
+  if (priceType === 0) {
     price_nft = 0;
     price_address = "0x0000000000000000000000000000000000000000";
   }
 
-  if (priceType === "dyp") {
+  if (priceType === 1) {
     price_nft = 1;
     price_address = window.config.dyp_token_address;
   }
@@ -5867,6 +5903,9 @@ window.updateListingNFT = async (token, price, priceType, type) => {
     window.abi.marketplace,
     window.config.nft_marketplace_address
   );
+
+  console.log(nft_address, token, price, [price_nft, price_address])
+
 
   await marketplace.methods
     .updateListing(nft_address, token, price, [price_nft, price_address])
@@ -5884,12 +5923,12 @@ window.listNFT = async (token, price, priceType, type = "") => {
     nft_address = window.config.nft_caws_address;
   }
 
-  if (priceType === "eth") {
+  if (priceType === 0) {
     price_nft = 0;
     price_address = "0x0000000000000000000000000000000000000000";
   }
 
-  if (priceType === "dyp") {
+  if (priceType === 1) {
     price_nft = 1;
     price_address = window.config.dyp_token_address;
   }

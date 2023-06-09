@@ -102,7 +102,7 @@ import { NavLink } from "react-router-dom";
                       isCaws: true,
                       isTimepiece: false,
                       isWod: false,
-                      isOwner: nft.seller?.toLowerCase() === coinbase?.toLowerCase()
+                      isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
 
                     }}
                   >

@@ -115,7 +115,7 @@ const TimepieceNFT = ({
                       isCaws: false,
                       isTimepiece: true,
                       isWod: false,
-                      isOwner: nft.seller?.toLowerCase() === coinbase?.toLowerCase()
+                      isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
 
                     }}
                   >

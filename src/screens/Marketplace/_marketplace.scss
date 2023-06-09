@@ -16,6 +16,42 @@
   color: #ffffff;
 }
 
+.currencyWrapper {
+  background: #1d203c;
+  border: 1px solid #82daab;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  height: 34px;
+
+  .nft-price-eth {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.currencyWrapper-inactive {
+  background: #1d203c;
+  border: 1px solid #43455d;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  height: 34px;
+
+  .nft-price-eth {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.checkicons {
+  left: -8px;
+}
+
 .nft-title {
   font-style: normal;
   font-weight: 700;
@@ -129,7 +165,7 @@
 
 .trait-separator {
   height: 1px;
-  background:#B8B8E0;
+  background: #b8b8e0;
   margin-top: 20px;
   margin-bottom: 20px;
 }

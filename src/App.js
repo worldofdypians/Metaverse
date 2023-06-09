@@ -821,7 +821,7 @@ function App() {
     ).catch((e) => {
       console.error(e);
     });
-
+    
     const cawsOld = await getListedNFTS(
       0,
       "",

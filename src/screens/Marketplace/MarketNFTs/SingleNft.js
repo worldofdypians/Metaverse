@@ -6,6 +6,59 @@ import "../_marketplace.scss";
 import topEth from "../assets/topEth.svg";
 import topDyp from "../assets/dypIcon.svg";
 import { useLocation } from "react-router-dom";
+import getListedNFTS from "../../../actions/Marketplace";
+import checkActive from "../assets/checked.svg";
+import checkPassive from "../assets/empty.svg";
+import TextField from "@mui/material/TextField";
+import styled from "styled-components";
+import { shortAddress } from "../../Caws/functions/shortAddress";
+
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#fff",
+    fontFamily: "Poppins",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#fff",
+    fontFamily: "Poppins",
+    zIndex: "2",
+  },
+  "& .MuiFormHelperText-root": {
+    fontFamily: "Poppins",
+  },
+  "& .MuiSelect-select": {
+    color: "#fff",
+    fontFamily: "Poppins",
+    zIndex: "1",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#AAA5EB",
+    fontFamily: "Poppins",
+    color: "#fff",
+    background: "#272450",
+    borderRadius: "8px",
+  },
+  "& .MuiOutlinedInput-input": {
+    zIndex: "1",
+    color: "#fff",
+    fontFamily: "Poppins",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#AAA5EB",
+      fontFamily: "Poppins",
+      background: "#272450",
+      borderRadius: "8px",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#AAA5EB",
+      fontFamily: "Poppins",
+      color: "#fff",
+      background: "#272450",
+      borderRadius: "8px",
+    },
+  },
+});
 
 const SingleNft = ({
   coinbase,
@@ -32,13 +85,20 @@ const SingleNft = ({
   );
   const [IsApprove, setIsApprove] = useState(false);
   const [buttonText, setbuttonText] = useState("Approve");
-  const [buttonType, setbuttonType] = useState("buy");
+  const [IsListed, setIsListed] = useState(false);
 
   const [buttonLoading, setbuttonLoading] = useState(false);
+  const [purchaseStatus, setPurchaseStatus] = useState("");
+  const [purchaseColor, setPurchaseColor] = useState("");
+  const [priceType, setPriceType] = useState(0);
+  const [nftPrice, setNftPrice] = useState(1);
+
   const [metaData, setmetaData] = useState([]);
   const [isOwner, setisOwner] = useState(
     location.state?.isOwner ? location.state?.isOwner : false
   );
+
+  console.log(isOwner, IsListed, coinbase);
 
   const getMetaData = async () => {
     if (nft) {
@@ -63,9 +123,61 @@ const SingleNft = ({
     return result;
   };
 
+  async function isApprovedNFT(nft, type) {
+    const result = window.isApproved(nft, type).catch((e) => {
+      console.error(e);
+    });
+    return result;
+  }
+
+  const handleSell = async (tokenId, nftPrice, priceType, type) => {
+    console.log("nft", nft);
+    const isApproved = await isApprovedNFT(tokenId, type);
+
+    if (isApproved) {
+      setbuttonLoading(true);
+      await window
+        .listNFT(tokenId, nftPrice, priceType, type)
+        .then((result) => {
+          console.log("buyNFT", result);
+          setbuttonLoading(false);
+          setbuttonText("Success");
+          setPurchaseStatus("Successfully purchased!");
+          setPurchaseColor("Successfully purchased!");
+          setTimeout(() => {
+            setPurchaseStatus("Successfully purchased!");
+            setPurchaseColor("Successfully purchased!");
+            // setbuttonText("Buy");
+          }, 5000);
+        })
+        .catch((e) => {
+          setbuttonText("Failed");
+          setbuttonLoading(false);
+          console.error(e);
+        });
+    } else {
+      setbuttonLoading(true);
+      
+      await window
+        .approveNFT(tokenId, type)
+        .then((result) => {
+          setTimeout(() => {
+            setbuttonText("Sell");
+          }, 3000);
+          console.log("approveBuy", result);
+          setbuttonLoading(false);
+          setbuttonText("Success");
+        })
+        .catch((e) => {
+          console.error(e);
+          setbuttonLoading(false);
+          setbuttonText("Failed");
+        });
+    }
+  };
+
   async function handleBuy(nft) {
     console.log("nft", nft);
-    setbuttonType("buy");
     const isApproved = await isApprovedBuy(nft.price);
 
     if (isApproved || nft.payment_priceType === 0) {
@@ -82,12 +194,17 @@ const SingleNft = ({
           console.log("buyNFT", result);
           setbuttonLoading(false);
           setbuttonText("Success");
-          setbuttonType("sell");
+          setPurchaseStatus("Successfully purchased!");
+          setPurchaseColor("Successfully purchased!");
+          setTimeout(() => {
+            setPurchaseStatus("Successfully purchased!");
+            setPurchaseColor("Successfully purchased!");
+            setbuttonText("Buy");
+          }, 5000);
         })
         .catch((e) => {
           setbuttonText("Failed");
           setbuttonLoading(false);
-          setbuttonType("buy");
           console.error(e);
         });
     } else {
@@ -112,7 +229,6 @@ const SingleNft = ({
   }
 
   const cancelNFT = (nftAddress, tokenId, type) => {
-    setbuttonType("sell");
     setbuttonLoading(true);
     return window
       .cancelListNFT(nftAddress, tokenId, type)
@@ -123,19 +239,43 @@ const SingleNft = ({
         console.log("approveBuy", result);
         setbuttonLoading(false);
         setbuttonText("Success");
-        setbuttonType("sell");
       })
       .catch((e) => {
         console.error(e);
         setbuttonLoading(false);
-        setbuttonType("sell");
         setbuttonText("Failed");
       });
   };
 
+  async function updateListing(nft, price, priceType, type) {
+    return await window.updateListingNFT(nft, price, priceType, type);
+  }
+
+  async function isListedNFT(nft, type, details = false) {
+    let nft_address;
+
+    if (type === "timepiece") {
+      nft_address = window.config.nft_timepiece_address;
+    } else if (type === "land") {
+      nft_address = window.config.nft_land_address;
+    } else {
+      nft_address = window.config.nft_caws_address;
+    }
+
+    const listedNFTS = await getListedNFTS(
+      0,
+      "",
+      "nftAddress_tokenId",
+      nft.tokenId,
+      nft_address
+    );
+
+    return listedNFTS.length > 0;
+  }
+
   useEffect(() => {
     if (isOwner === false) {
-      if (isConnected === true && nft.payment_priceType === 1) {
+      if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
         isApprovedBuy(nft.price).then((isApproved) => {
           setIsApprove(isApproved);
           if (isApproved === true) {
@@ -144,11 +284,16 @@ const SingleNft = ({
             setbuttonText("Approve");
           }
         });
+      } else if (!IsListed) {
+        isApprovedNFT(
+          nft.tokenId,
+          isCaws ? "caws" : isWod ? "land" : "timepiece"
+        ).then((isApproved) => setIsApprove(isApproved));
+      } else {
+        setbuttonText("Buy");
       }
-    } else {
-      setbuttonText("Cancel List");
     }
-  }, [nft.price, isConnected]);
+  }, [nft.price, isConnected, isOwner]);
 
   useEffect(() => {
     if (isConnected === true && nft.payment_priceType === 1) {
@@ -157,10 +302,30 @@ const SingleNft = ({
         setIsApprove(isApproved);
       });
     }
-  }, [nft.price, isConnected]);
+
+    if (coinbase === undefined) {
+      setisOwner(false);
+    }
+  }, [nft.price, isConnected, isOwner, IsListed]);
 
   useEffect(() => {
     getMetaData();
+
+    if (isCaws) {
+      isListedNFT(nft, "caws").then((isListed) => {
+        setIsListed(isListed);
+      });
+    }
+    if (isTimepiece) {
+      isListedNFT(nft, "timepiece").then((isListed) => {
+        setIsListed(isListed);
+      });
+    }
+    if (isWod) {
+      isListedNFT(nft, "land").then((isListed) => {
+        setIsListed(isListed);
+      });
+    }
   }, [nft, isCaws, isTimepiece, isWod]);
 
   useEffect(() => {
@@ -231,38 +396,264 @@ const SingleNft = ({
                   {isCaws ? "CAWS" : isWod ? "Genesis Land" : "CAWS Timepiece"}{" "}
                   #{nft.tokenId}
                 </h3>
-                <div className="price-wrapper p-3">
-                  <div className="d-flex flex-column gap-2 align-items-center">
-                    <span className="currentprice-txt">Current price</span>
-                    <div className="d-flex gap-2 align-items-center">
-                      <img
-                        src={nft.payment_priceType === 0 ? topEth : topDyp}
-                        alt=""
-                        height={30}
-                        width={30}
-                      />
-                      <span className="nft-price-eth">
-                        {nft.price}{" "}
-                        {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
-                      </span>
-                      <span className="nft-price-usd">$956.62</span>
+                {!isOwner && IsListed && (
+                  <div className="price-wrapper p-3">
+                    <div className="d-flex flex-column gap-2 align-items-center">
+                      <span className="currentprice-txt">Current price</span>
+                      <div className="d-flex gap-2 align-items-center">
+                        <img
+                          src={nft.payment_priceType === 0 ? topEth : topDyp}
+                          alt=""
+                          height={30}
+                          width={30}
+                        />
+                        <span className="nft-price-eth">
+                          {nft.price}{" "}
+                          {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+                        </span>
+                        <span className="nft-price-usd">$956.62</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
+                {!isOwner && !IsListed && (
+                  <div className="price-wrapper p-3">
+                    <div className="d-flex flex-column gap-2 align-items-center">
+                      <span className="currentprice-txt">Current price</span>
+                      <div className="d-flex gap-2 align-items-center">
+                        <img
+                          src={nft.payment_priceType === 0 ? topEth : topDyp}
+                          alt=""
+                          height={30}
+                          width={30}
+                        />
+                        <span className="nft-price-eth">
+                          {nft.price}{" "}
+                          {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+                        </span>
+                        <span className="nft-price-usd">$956.62</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {isOwner && IsListed && (
+                  <div className="d-flex align-items-center gap-2 justify-content-between">
+                    <div className="price-wrapper p-3 col-6">
+                      <div className="d-flex flex-column gap-2 align-items-center">
+                        <span
+                          className="currentprice-txt"
+                          style={{ alignSelf: "baseline" }}
+                        >
+                          Listing price
+                        </span>
+                        <div className="d-flex gap-2 align-items-center">
+                          <img
+                            src={priceType === 0 ? topEth : topDyp}
+                            alt=""
+                            height={30}
+                            width={30}
+                          />
+                          <span className="nft-price-eth gap-3 d-flex">
+                            <StyledTextField
+                              error={nftPrice === "" ? true : false}
+                              size="small"
+                              label="Price"
+                              id="price"
+                              name="price"
+                              value={nftPrice}
+                              required
+                              onChange={(e) => {
+                                setNftPrice(e.target.value);
+                              }}
+                              sx={{ width: "50%" }}
+                            />
+                            {priceType === 0 ? "ETH" : "DYP"}{" "}
+                          </span>
+                          <span className="nft-price-usd">$---</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="price-wrapper p-3 col-5">
+                      <div className="d-flex flex-column gap-2 align-items-center">
+                        <span className="currentprice-txt">
+                          Choose currency
+                        </span>
+                        <div className="d-flex flex-row justify-content-around w-100 gap-2">
+                          <div
+                            className={`d-flex gap-2 align-items-center position-relative ${
+                              priceType === 0
+                                ? "currencyWrapper"
+                                : "currencyWrapper-inactive"
+                            } `}
+                            onClick={() => {
+                              setPriceType(0);
+                            }}
+                          >
+                            <img
+                              src={priceType === 0 ? checkActive : checkPassive}
+                              alt=""
+                              className={"position-absolute checkicons"}
+                            />
+                            <span className="nft-price-eth">
+                              <img src={topEth} alt="" height={20} width={20} />
+                              ETH
+                            </span>
+                          </div>
+
+                          <div
+                            className={`d-flex gap-2 align-items-center position-relative ${
+                              priceType === 1
+                                ? "currencyWrapper"
+                                : "currencyWrapper-inactive"
+                            } `}
+                            onClick={() => {
+                              setPriceType(1);
+                            }}
+                          >
+                            <img
+                              src={
+                                priceType === 0
+                                  ? checkPassive
+                                  : priceType === 1
+                                  ? checkActive
+                                  : checkPassive
+                              }
+                              alt=""
+                              className={"position-absolute checkicons"}
+                            />
+                            <span className="nft-price-eth">
+                              <img src={topDyp} alt="" height={20} width={20} />
+                              DYP
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {isOwner && !IsListed && (
+                  <div className="d-flex align-items-center gap-2 justify-content-between">
+                    <div className="price-wrapper p-3 col-6">
+                      <div className="d-flex flex-column gap-2 align-items-center">
+                        <span
+                          className="currentprice-txt"
+                          style={{ alignSelf: "baseline" }}
+                        >
+                          Listing price
+                        </span>
+                        <div className="d-flex gap-2 align-items-center">
+                          <img
+                            src={priceType === 0 ? topEth : topDyp}
+                            alt=""
+                            height={30}
+                            width={30}
+                          />
+                          <span className="nft-price-eth gap-3 d-flex">
+                            <StyledTextField
+                              error={nftPrice === "" ? true : false}
+                              size="small"
+                              label="Price"
+                              id="price"
+                              name="price"
+                              value={nftPrice}
+                              required
+                              onChange={(e) => {
+                                setNftPrice(e.target.value);
+                              }}
+                              sx={{ width: "50%" }}
+                            />
+                            {priceType === 0 ? "ETH" : "DYP"}{" "}
+                          </span>
+                          <span className="nft-price-usd">$---</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="price-wrapper p-3 col-5">
+                      <div className="d-flex flex-column gap-2 align-items-center">
+                        <span className="currentprice-txt">
+                          Choose currency
+                        </span>
+                        <div className="d-flex flex-row justify-content-around w-100 gap-2">
+                          <div
+                            className={`d-flex gap-2 align-items-center position-relative ${
+                              priceType === 0
+                                ? "currencyWrapper"
+                                : "currencyWrapper-inactive"
+                            } `}
+                            onClick={() => {
+                              setPriceType(0);
+                            }}
+                          >
+                            <img
+                              src={priceType === 0 ? checkActive : checkPassive}
+                              alt=""
+                              className={"position-absolute checkicons"}
+                            />
+                            <span className="nft-price-eth">
+                              <img src={topEth} alt="" height={20} width={20} />
+                              ETH
+                            </span>
+                          </div>
+
+                          <div
+                            className={`d-flex gap-2 align-items-center position-relative ${
+                              priceType === 1
+                                ? "currencyWrapper"
+                                : "currencyWrapper-inactive"
+                            } `}
+                            onClick={() => {
+                              setPriceType(1);
+                            }}
+                          >
+                            <img
+                              src={
+                                priceType === 0
+                                  ? checkPassive
+                                  : priceType === 1
+                                  ? checkActive
+                                  : checkPassive
+                              }
+                              alt=""
+                              className={"position-absolute checkicons"}
+                            />
+                            <span className="nft-price-eth">
+                              <img src={topDyp} alt="" height={20} width={20} />
+                              DYP
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="d-flex justify-content-between gap-2 align-items-center">
                   <div className="d-flex flex-column gap-2 align-items-center">
-                    <span className="owner-txt">Owner</span>
-                    <a
-                      href={`https://etherscan.io/address/${nft.seller}`}
-                      target="_blank"
-                      style={{ textDecoration: "none" }}
-                      className="seller-addr"
-                      rel="noreferrer"
-                    >
-                      {nft.seller}
-                    </a>
+                    <span className="owner-txt">
+                      {nft.seller ? "Seller" : "Buyer"}
+                    </span>
+                    {nft.seller ? (
+                      <a
+                        href={`https://etherscan.io/address/${nft.seller}`}
+                        target="_blank"
+                        style={{ textDecoration: "none" }}
+                        className="seller-addr"
+                        rel="noreferrer"
+                      >
+                        {shortAddress(nft.seller)}
+                      </a>
+                    ) : (
+                      <a
+                        href={`https://etherscan.io/address/${nft.buyer}`}
+                        target="_blank"
+                        style={{ textDecoration: "none" }}
+                        className="seller-addr"
+                        rel="noreferrer"
+                      >
+                        {shortAddress(nft.buyer)}
+                      </a>
+                    )}
                   </div>
-                  {isOwner === false && (
+                  {!isOwner && IsListed && (
                     <button
                       disabled={
                         buttonLoading === true || buttonText === "Failed"
@@ -280,7 +671,7 @@ const SingleNft = ({
                       onClick={() => {
                         isConnected === false
                           ? showWalletConnect()
-                          : chainId !== 1 || chainId !== 5
+                          : chainId !== 1 && chainId !== 5
                           ? handleSwitchChain()
                           : handleBuy(nft);
                       }}
@@ -311,16 +702,68 @@ const SingleNft = ({
                       )}
                     </button>
                   )}
-                  {isOwner === true &&
-                    buttonType ===
-                      "cancel-list" &&(
+                  {isOwner && IsListed && (
+                    <div className="d-flex gap-2 align-items-center">
+                      <button
+                        disabled={
+                          buttonLoading === true || buttonText === "Failed"
+                            ? true
+                            : false
+                        }
+                        className={`btn  buyNftbtn d-flex justify-content-center ${
+                          buttonText === "Success"
+                            ? "successbtn"
+                            : buttonText === "Failed" ||
+                              (chainId !== 5 && chainId !== 1)
+                            ? "errorbtn"
+                            : null
+                        } d-flex justify-content-center align-items-center gap-2`}
+                        onClick={() => {
+                          isConnected === false
+                            ? showWalletConnect()
+                            : chainId !== 1 && chainId !== 5
+                            ? handleSwitchChain()
+                            : updateListing(
+                                nft.tokenId,
+                                nftPrice,
+                                priceType,
+                                isCaws ? "caws" : isWod ? "land" : "timepiece"
+                              );
+                        }}
+                      >
+                        {buttonLoading &&
+                        isConnected &&
+                        coinbase &&
+                        (chainId === 1 || chainId === 5) ? (
+                          <div
+                            class="spinner-border spinner-border-sm text-light"
+                            role="status"
+                          >
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        ) : !buttonLoading &&
+                          !isConnected &&
+                          !coinbase &&
+                          (chainId === 1 || chainId === 5) ? (
+                          "Connect Wallet"
+                        ) : !buttonLoading &&
+                          isConnected &&
+                          coinbase &&
+                          chainId !== 1 &&
+                          chainId !== 5 ? (
+                          "Switch Network"
+                        ) : (
+                          "Update"
+                        )}
+                      </button>
+                      {isConnected && (
                         <button
                           disabled={
                             buttonLoading === true || buttonText === "Failed"
                               ? true
                               : false
                           }
-                          className={`btn  buyNftbtn col-3 d-flex justify-content-center ${
+                          className={`btn  buyNftbtn d-flex justify-content-center ${
                             buttonText === "Success"
                               ? "successbtn"
                               : buttonText === "Failed" ||
@@ -362,66 +805,67 @@ const SingleNft = ({
                             chainId !== 5 ? (
                             "Switch Network"
                           ) : (
-                            <>{buttonText}</>
+                            "Remove"
                           )}
                         </button>
                       )}
+                    </div>
+                  )}
 
-                  {isOwner === true &&
-                    buttonType ===
-                      "sell" && (
-                        <button
-                          disabled={
-                            buttonLoading === true || buttonText === "Failed"
-                              ? true
-                              : false
-                          }
-                          className={`btn  buyNftbtn col-3 d-flex justify-content-center ${
-                            buttonText === "Success"
-                              ? "successbtn"
-                              : buttonText === "Failed" ||
-                                (chainId !== 5 && chainId !== 1)
-                              ? "errorbtn"
-                              : null
-                          } d-flex justify-content-center align-items-center gap-2`}
-                          onClick={() => {
-                            isConnected === false
-                              ? showWalletConnect()
-                              : chainId !== 1 && chainId !== 5
-                              ? handleSwitchChain()
-                              : cancelNFT(
-                                  nft.nftAddress,
-                                  nft.tokenId,
-                                  nft.payment_priceType
-                                );
-                          }}
+                  {isOwner && !IsListed && (
+                    <button
+                      disabled={
+                        buttonLoading === true || buttonText === "Failed"
+                          ? true
+                          : false
+                      }
+                      className={`btn  buyNftbtn col-3 d-flex justify-content-center ${
+                        buttonText === "Success"
+                          ? "successbtn"
+                          : buttonText === "Failed" ||
+                            (chainId !== 5 && chainId !== 1)
+                          ? "errorbtn"
+                          : null
+                      } d-flex justify-content-center align-items-center gap-2`}
+                      onClick={() => {
+                        isConnected === false
+                          ? showWalletConnect()
+                          : chainId !== 1 && chainId !== 5
+                          ? handleSwitchChain()
+                          : handleSell(
+                              nft.tokenId,
+                              nftPrice,
+                              priceType,
+                              isCaws ? "caws" : isWod ? "land" : "timepiece"
+                            );
+                      }}
+                    >
+                      {buttonLoading &&
+                      isConnected &&
+                      coinbase &&
+                      (chainId === 1 || chainId === 5) ? (
+                        <div
+                          class="spinner-border spinner-border-sm text-light"
+                          role="status"
                         >
-                          {buttonLoading &&
-                          isConnected &&
-                          coinbase &&
-                          (chainId === 1 || chainId === 5) ? (
-                            <div
-                              class="spinner-border spinner-border-sm text-light"
-                              role="status"
-                            >
-                              <span class="visually-hidden">Loading...</span>
-                            </div>
-                          ) : !buttonLoading &&
-                            !isConnected &&
-                            !coinbase &&
-                            (chainId === 1 || chainId === 5) ? (
-                            "Connect Wallet"
-                          ) : !buttonLoading &&
-                            isConnected &&
-                            coinbase &&
-                            chainId !== 1 &&
-                            chainId !== 5 ? (
-                            "Switch Network"
-                          ) : (
-                            <>{buttonText}</>
-                          )}
-                        </button>
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      ) : !buttonLoading &&
+                        !isConnected &&
+                        !coinbase &&
+                        (chainId === 1 || chainId === 5) ? (
+                        "Connect Wallet"
+                      ) : !buttonLoading &&
+                        isConnected &&
+                        coinbase &&
+                        chainId !== 1 &&
+                        chainId !== 5 ? (
+                        "Switch Network"
+                      ) : (
+                        <>Approve to sell</>
                       )}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
