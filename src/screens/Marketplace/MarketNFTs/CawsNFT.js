@@ -8,7 +8,8 @@ import searchIcon from "../assets/search.svg";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import { NavLink } from "react-router-dom";
 
-const CawsNFT = ({ isConnected, handleConnect, listedNFTS, cawsNFTS }) => {
+  
+  const CawsNFT = ({ isConnected, handleConnect, listedNFTS, cawsNFTS,coinbase }) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -101,6 +102,8 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS, cawsNFTS }) => {
                       isCaws: true,
                       isTimepiece: false,
                       isWod: false,
+                      isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
+
                     }}
                   >
                     <ItemCard

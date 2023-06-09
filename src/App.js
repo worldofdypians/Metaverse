@@ -113,6 +113,42 @@ function App() {
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
 
+  const handleSwitchChain = async () => {
+    const { ethereum } = window;
+    const ETHPARAMS = {
+      chainId: "0x1", // A 0x-prefixed hexadecimal string
+      chainName: "Ethereum Mainnet",
+      nativeCurrency: {
+        name: "Ethereum",
+        symbol: "ETH", // 2-6 characters long
+        decimals: 18,
+      },
+      rpcUrls: ["https://mainnet.infura.io/v3/"],
+      blockExplorerUrls: ["https://etherscan.io"],
+    };
+
+    try {
+      await ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x1" }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      console.log(switchError, "switch");
+      if (switchError.code === 4902) {
+        try {
+          await ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [ETHPARAMS],
+          });
+        } catch (addError) {
+          console.log(addError);
+        }
+      }
+      // handle other "switch" errors
+    }
+  };
+
   const filter = async (filter, value) => {
     console.log("filtering", filter, value);
 
@@ -687,47 +723,57 @@ function App() {
     ethereum.on("accountsChanged", handleConnectWallet);
   }
 
-  const getMyNFTS = async (coinbase, type, address) => {
-    return await window.getMyNFTs(coinbase, type, address);
+  // const fetchAllMyNfts = async () => {
+  //   if (isConnected && coinbase) {
+  //     const cawsNew = await getMyNFTSCaws(
+  //       coinbase,
+  //       window.config.nft_caws_address
+  //     ).catch((e) => {
+  //       console.error(e);
+  //     });
+
+  //     const cawsOld = await getMyNFTSCaws(
+  //       coinbase,
+  //       window.config.nft_cawsold_address
+  //     ).catch((e) => {
+  //       console.error(e);
+  //     });
+
+  //     let mytotalCaws = [...cawsOld, ...cawsNew];
+  //     setMyNFTSCaws(mytotalCaws);
+  //    getMyNFTSTimepiece(
+  //       coinbase,
+  //       window.config.nft_timepiece_address
+  //     ).then((NFTS) => {
+  //       setMyNFTSTimepiece(NFTS);
+  //       console.log(NFTS, "timepiece");
+  //     }).catch((e) => {
+  //       console.error(e);
+  //     });
+
+  //     const land_nft = await getMyNFTSLAND(
+  //       coinbase,
+  //       window.config.nft_land_address
+  //     ).then((NFTS) => {
+  //       setMyNFTSLand(NFTS);
+  //       console.log(NFTS, "land");
+  //     }).catch((e) => {
+  //       console.error(e);
+  //     });
+  //   }
+  // };
+
+  const getMyNFTS = async (coinbase, type) => {
+    return await window.getMyNFTs(coinbase, type);
   };
 
   const fetchAllMyNfts = async () => {
     if (isConnected && coinbase) {
-      const cawsNew = await getMyNFTS(
-        coinbase,
-        "caws",
-        window.config.nft_caws_address
-      ).catch((e) => {
-        console.error(e);
-      });
+      getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
 
-      const cawsOld = await getMyNFTS(
-        coinbase,
-        "caws",
-        window.config.nft_cawsold_address
-      ).catch((e) => {
-        console.error(e);
-      });
+      getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
 
-      let mytotalCaws = [...cawsOld, ...cawsNew];
-      setMyNFTSCaws(mytotalCaws);
-      getMyNFTS(coinbase, "timepiece", window.config.nft_timepiece_address)
-        .then((NFTS) => {
-          setMyNFTSTimepiece(NFTS);
-          console.log(NFTS, "timepiece");
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-
-      getMyNFTS(coinbase, "land", window.config.nft_land_address)
-        .then((NFTS) => {
-          setMyNFTSLand(NFTS);
-          console.log(NFTS, "land");
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
     }
   };
 
@@ -775,7 +821,7 @@ function App() {
     ).catch((e) => {
       console.error(e);
     });
-
+    
     const cawsOld = await getListedNFTS(
       0,
       "",
@@ -785,8 +831,23 @@ function App() {
       console.error(e);
     });
 
-    let totalCaws = [...cawsOld, ...cawsNew];
-    setCawsNFTS(totalCaws);
+    if (cawsOld.length === 0 && cawsNew.length === 0) {
+      setCawsNFTS([]);
+    }
+    if (cawsOld.length !== 0 && cawsNew.length === 0) {
+      let totalCaws = [...cawsOld];
+      setCawsNFTS(totalCaws);
+    }
+
+    if (cawsOld.length === 0 && cawsNew.length !== 0) {
+      let totalCaws = [...cawsNew];
+      setCawsNFTS(totalCaws);
+    }
+
+    if (cawsOld.length !== 0 && cawsNew.length !== 0) {
+      let totalCaws = [...cawsOld, ...cawsNew];
+      setCawsNFTS(totalCaws);
+    }
 
     getListedNFTS(
       0,
@@ -845,6 +906,7 @@ function App() {
     getallNfts();
   }, []);
 
+
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -872,6 +934,7 @@ function App() {
                       }}
                       isConnected={isConnected}
                       chainId={chainId}
+                      handleSwitchChain={handleSwitchChain}
                     />
                   }
                 />
@@ -984,6 +1047,7 @@ function App() {
                   path="/marketplace"
                   element={
                     <Marketplace
+                      coinbase={coinbase}
                       isConnected={isConnected}
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
@@ -1009,6 +1073,7 @@ function App() {
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
                       cawsNFTS={cawsNFTS}
+                      coinbase={coinbase}
                     />
                   }
                 />
@@ -1021,6 +1086,7 @@ function App() {
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
                       wodNFTS={wodNFTS}
+                      coinbase={coinbase}
                     />
                   }
                 />
@@ -1033,6 +1099,7 @@ function App() {
                       handleConnect={handleShowWalletModal}
                       listedNFTS={listedNFTS}
                       timepieceNFTS={timepiecesNFTS}
+                      coinbase={coinbase}
                     />
                   }
                 />

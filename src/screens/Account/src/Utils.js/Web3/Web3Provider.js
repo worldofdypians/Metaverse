@@ -17,24 +17,24 @@ function Web3Provider({ children }) {
   const [depositTokens, setDepositTokens] = useState();
 
   const getDypBalance = async () => {
-    const [account] = await window.ethereum.request({
-      method: "eth_requestAccounts",
-    });
-    const web3eth = new Web3(
-      "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
-    );
+    // const [account] = await window.ethereum.request({
+    //   method: "eth_requestAccounts",
+    // });
+    // const web3eth = new Web3(
+    //   "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
+    // );
 
-    if (account !== undefined) {
-      const contract = erc20_abi;
+    // if (account !== undefined) {
+    //   const contract = erc20_abi;
 
-      const bal1 = await contract.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3eth.utils.fromWei(data, "ether");
-        });
-      setDypBalance(bal1);
-    }
+    //   const bal1 = await contract.methods
+    //     .balanceOf(account)
+    //     .call()
+    //     .then((data) => {
+    //       return web3eth.utils.fromWei(data, "ether");
+    //     });
+      setDypBalance();
+    // }
   };
 
   const checkIsConnected = async () => {

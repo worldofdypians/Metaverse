@@ -32,6 +32,7 @@ const Marketplace = ({
   latest20RecentListedNFTS,
   totalBoughtNFTSCount,
   topSales,
+  coinbase,
   recentSales,
 }) => {
   const override = {
@@ -119,6 +120,8 @@ const Marketplace = ({
 
     window.scrollTo(0, 0);
   }, [listedNFTS]);
+
+  console.log(listedNFTS);
 
   return (
     <div
@@ -288,6 +291,8 @@ const Marketplace = ({
                           window.config.nft_timepiece_address,
                         isWod:
                           nft.nftAddress === window.config.nft_land_address,
+                        isOwner:
+                          nft.seller?.toLowerCase() === coinbase?.toLowerCase(),
                       }}
                     >
                       <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
@@ -365,7 +370,7 @@ const Marketplace = ({
             />
             <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
               <h6 className="nft-wrapper-title font-raleway mb-0">
-                Recent Listings1
+                Recent Listings
               </h6>
               <div className="d-flex align-items-center gap-4">
                 <h6 className="filter-title filter-selected">All</h6>
@@ -395,6 +400,9 @@ const Marketplace = ({
                             window.config.nft_timepiece_address,
                           isWod:
                             nft.nftAddress === window.config.nft_land_address,
+                          isOwner:
+                            nft.seller?.toLowerCase() ===
+                            coinbase?.toLowerCase(),
                         }}
                       >
                         <ItemCard
@@ -472,6 +480,9 @@ const Marketplace = ({
                             window.config.nft_timepiece_address,
                           isWod:
                             nft.nftAddress === window.config.nft_land_address,
+                          isOwner:
+                            nft.buyer?.toLowerCase() ===
+                            coinbase?.toLowerCase(),
                         }}
                       >
                         <ItemCard

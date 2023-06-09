@@ -8,7 +8,7 @@ import dropdownIcon from "../assets/dropdownIcon.svg";
 import searchIcon from "../assets/search.svg";
 import { NavLink } from "react-router-dom";
 
-const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
+const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS,coinbase }) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -102,6 +102,8 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS }) => {
                       isCaws: false,
                       isTimepiece: false,
                       isWod: true,
+                      isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
+
                     }}
                   >
                     <ItemCard
