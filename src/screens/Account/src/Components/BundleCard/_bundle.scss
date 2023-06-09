@@ -523,6 +523,10 @@ input[type="range"]:focus::-ms-fill-upper {
   width: 40%;
   position: relative;
   left: -4%;
+  @media screen and (max-width: 786px) {
+    transform: none !important;
+    left: 0;
+  }
 }
 
 .new-bundle-benefits-title {
@@ -595,9 +599,12 @@ input[type="range"]:focus::-ms-fill-upper {
   color: #080b2a;
 }
 
-.inactive-pill-btn:hover{
+.inactive-pill-btn:hover {
   background: #c4c4c4 !important;
-  
+}
+
+.inactive-pill-btn:disabled {
+  background: #c4c4c4 !important;
 }
 
 .pill-btn {
@@ -607,4 +614,103 @@ input[type="range"]:focus::-ms-fill-upper {
   font-size: 16px;
   line-height: 20px;
   color: #080b2a;
+}
+
+.purple-pill {
+  background: linear-gradient(90deg, #1829bd -10.16%, #a420e2 129.3%);
+  border-radius: 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #f7f7ff;
+}
+.purple-pill:hover {
+  color: #f7f7ff;
+}
+
+.custom-height {
+  height: 100%;
+  @media screen and (max-width: 995px) {
+    height: fit-content;
+  }
+}
+
+.new-timer-description {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #b8b8e0;
+}
+
+.new-button-wrapper {
+  left: -20px;
+  @media screen and (max-width: 786px) {
+    left: 0;
+  }
+}
+.purchase-bundle-title {
+  position: relative;
+  left: 20px;
+  @media screen and (max-width: 786px) {
+    left: 0;
+  }
+}
+
+.new-bundles-bought-count {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0px 4.3px 53px rgba(0, 7, 72, 0.12);
+  backdrop-filter: blur(13.38px);
+  border-radius: 10px;
+}
+
+.new-bought-bundles {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #b8b8e0;
+}
+
+.available-time-wrapper {
+  width: 33%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+.new-tooltip-content-wrapper {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0px 4.3px 53px rgba(0, 7, 72, 0.12);
+  backdrop-filter: blur(13.38px);
+  border-radius: 10px;
+  position: absolute;
+  width: 150px;
+  right: 10%;
+  top: -250%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .25s;
+}
+
+.new-tooltip-wrapper{
+  cursor: pointer;
+
+}
+
+.new-tooltip-wrapper:hover{
+  .new-tooltip-content-wrapper{
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+
+.new-tooltip-content {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #b8b8e0;
 }

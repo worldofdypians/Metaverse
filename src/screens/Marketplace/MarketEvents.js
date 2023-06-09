@@ -34,6 +34,7 @@ const MarketEvents = ({ account, chainId }) => {
 
   const dragonData = {
     title: "Dragon Ruins",
+    image: "dragonPackageIcon.webp",
     benefits: [
       "Ability to fight a special creature",
       "A chance to win an unique CAWS NFT",
@@ -45,6 +46,7 @@ const MarketEvents = ({ account, chainId }) => {
 
   const iDypPackageData = {
     title: "Puzzle Madness",
+    image: "puzzleMadness.png",
     benefits: [
       "Enhance your puzzle-solving skills",
       "Ability to earn high value rewards",
@@ -55,6 +57,7 @@ const MarketEvents = ({ account, chainId }) => {
   };
   const dypPackageData = {
     title: "Golden Pass",
+    image: "goldenPass.png",
     benefits: [
       "Double your rewards",
       "Compete and climb higher in the rankings",
@@ -66,6 +69,7 @@ const MarketEvents = ({ account, chainId }) => {
 
   const criticalHitPackageData = {
     title: "Critical Hit",
+    image: "criticalHit.webp",
     benefits: [
       "Exclusive access for Genesis Land NFT owners",
       "Opportunity to win rewards",
@@ -171,9 +175,12 @@ const MarketEvents = ({ account, chainId }) => {
     <div className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0">
            {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
 
-      <div className="container-nft d-flex flex-column gap-2 px-3 px-lg-5 my-4" style={{minHeight: '72vh'}}>
-        <div className={`col-12 col-lg-10 col-xxl-8 d-flex flex-column gap-5`}>
-          <div className="row align-items-center">
+      <div className="container-nft d-flex flex-column gap-2 px-3 px-lg-5 my-4" style={{minHeight: '72vh', backgroundSize: 'cover'}}>
+        <div className={`col-12 col-lg-12 ${windowSize.width < 1650 ? 'col-xxl-10' : 'col-xxl-8'}  d-flex flex-column gap-3`}>
+        <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
+            World of Dypians <span style={{color: '#8c56ff'}}>Events</span> 
+          </h6>
+          <div className="new-packages-grid">
             {/* <div className="event-package d-flex flex-column align-items-center gap-2">
               <div
                 className={`premium-package dyp-package ${
@@ -254,26 +261,26 @@ const MarketEvents = ({ account, chainId }) => {
                 Critical Hit
               </h6>
             </div> */}
-             <div className="col-6 col-md-6 col-lg-3">
+             <div className="">
               <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dragon" && "selected-event-package"}`} onClick={() => setSelectedPackage("dragon")}>
                   <img src={dragonPackage} className="w-100" style={{borderRadius: '16px'}} alt="" />
                   <span className="event-package-title">Dragon Ruins</span>
               </div>
             </div>
-            <div className="col-6 col-md-6 col-lg-3">
+            <div className="">
               <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dyp" && "selected-event-package"}`} onClick={() => setSelectedPackage("dyp")}>
                   <img src={goldenPass} className="w-100" style={{borderRadius: '16px'}} alt="" />
                   <span className="event-package-title">Golden Pass</span>
               </div>
             </div>
-            <div className="col-6 col-md-6 col-lg-3">
+            <div className="">
               <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "idyp" && "selected-event-package"}`} onClick={() => setSelectedPackage("idyp")}>
                   <img src={puzzleMadness} className="w-100" style={{borderRadius: '16px'}} alt="" />
                   <span className="event-package-title">Puzzle Madness</span>
               </div>
             </div>
            
-            <div className="col-6 col-md-6 col-lg-3">
+            <div className="">
               <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "criticalHit" && "selected-event-package"}`} onClick={() => setSelectedPackage("criticalHit")}>
                   <img src={criticalHit} className="w-100" style={{borderRadius: '16px'}} alt="" />
                   <span className="event-package-title">Critical Hit</span>

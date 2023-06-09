@@ -218,6 +218,18 @@
   }
 }
 
+.new-packages-grid{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 40px;
+
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+ 
+}
+
 .marketplace-sidebar {
   width: 13%;
   position: fixed;
@@ -258,7 +270,7 @@
   border-radius: 21.4107px;
   transform: matrix(1, 0, -0.18, 0.98, 0, 0);
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 995px) {
     transform: none !important;
   }
 }
@@ -824,6 +836,9 @@
   border: 2px solid #41435a;
   cursor: pointer;
   transition: all 0.35s;
+  @media screen and (max-width: 786px) {
+    transform: none !important;
+  }
 }
 
 .event-package-title {
@@ -831,6 +846,9 @@
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
+  @media screen and (max-width: 400px) {
+    font-size: 17px;
+  }
 }
 
 .nft-event-package:hover {

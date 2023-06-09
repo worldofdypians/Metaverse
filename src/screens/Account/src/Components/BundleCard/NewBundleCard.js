@@ -9,7 +9,7 @@ import dragonPackage from "./assets/dragonPackageIcon.webp";
 import criticalHit from "./assets/criticalHit.webp";
 import goldenPass from "./assets/goldenPass.png";
 import puzzleMadness from "./assets/puzzleMadness.png";
-
+import "react-circular-progressbar/dist/styles.css";
 import {
   wod_abi,
   token_abi,
@@ -29,21 +29,23 @@ import progress2 from "./assets/progress2.svg";
 import axios from "axios";
 import opensea from "./assets/opensea.svg";
 import Slider from "rc-slider";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import useWindowSize from "../../../../../hooks/useWindowSize";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
-    <div className="timer-wrapper d-flex align-items-start gap-3 justify-content-center">
-      <div className="d-flex flex-column gap-1">
+    <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
+      <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time">{hours < 10 ? "0" + hours : hours}</h6>
         <span className="days">Hours</span>
       </div>
       <h6 className="mint-time">:</h6>
-      <div className="d-flex flex-column gap-1">
+      <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time">{minutes < 10 ? "0" + minutes : minutes}</h6>
         <span className="days">minutes</span>
       </div>
       <h6 className="mint-time">:</h6>
-      <div className="d-flex flex-column gap-1">
+      <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time">{seconds < 10 ? "0" + seconds : seconds}</h6>
         <span className="days">seconds</span>
       </div>
@@ -53,19 +55,19 @@ const renderer = ({ hours, minutes, seconds }) => {
 
 const renderer700 = ({ days, hours, minutes, seconds }) => {
   return (
-    <div className="timer-wrapper d-flex align-items-start gap-3 justify-content-center">
-      <div className="d-flex flex-column gap-1">
+    <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
+      <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time">{days < 10 ? "0" + days : days}</h6>
         <span className="days">Days</span>
       </div>
       <h6 className="mint-time">:</h6>
 
-      <div className="d-flex flex-column gap-1">
+      <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time">{hours < 10 ? "0" + hours : hours}</h6>
         <span className="days">Hours</span>
       </div>
       <h6 className="mint-time">:</h6>
-      <div className="d-flex flex-column gap-1">
+      <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time">{minutes < 10 ? "0" + minutes : minutes}</h6>
         <span className="days">minutes</span>
       </div>
@@ -101,7 +103,7 @@ const NewBundleCard = ({
     "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
   );
   const [statusCritical, setStatusCritical] = useState("");
-
+const windowSize = useWindowSize()
   const [statusColor, setStatusColor] = useState("#FE7A00");
   const [statusColor700, setStatusColor700] = useState("#FE7A00");
   const [statusColor3500, setStatusColor3500] = useState("#FE7A00");
@@ -966,7 +968,7 @@ const NewBundleCard = ({
     //               </div>
     //             )}
     //           {packageData.title === "Golden Pass" && (
-    //             <div className="d-flex flex-column gap-3">
+    //             <div className="d-flex flex-column gap-3 available-time-wrapper">
     //               <div className="slider-text-wrapper w-100 d-flex align-items-center justify-content-between mt-2">
     //                 <span
     //                   className={`slider-text ${
@@ -1381,89 +1383,484 @@ const NewBundleCard = ({
     //       : statusCritical}
     //   </span>
     // </div>
-    <div className="row align-items-center py-5">
-      <div className="col-12 col-lg-7 h-100">
-        <div className="nft-outer-wrapper p-3 p-lg-5 h-100">
-          <div className="d-flex align-items-center justify-content-between">
-            <h6 className="new-bundle-title">Dragon Ruins</h6>
-            <img src={require("./assets/newTooltip.svg").default} alt="" />
-          </div>
-          <div className="d-flex align-items-center justify-content-between">
-            <img src={dragonPackage} alt="" className="new-bundle-img" />
-            <div className="d-flex flex-column gap-2">
-              <div className="new-bundle-benefits-title">Benefits</div>
-              <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
-                <img
-                  src={require("./assets/newCheckmark.svg").default}
-                  alt=""
-                />
-                <span className="new-benefit">
-                  Ability to fight a special creature
-                </span>
-              </div>
-              <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
-                <img
-                  src={require("./assets/newCheckmark.svg").default}
-                  alt=""
-                />
-                <span className="new-benefit">
-                  A chance to win an unique CAWS NFT
-                </span>
-              </div>
-              <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
-                <img
-                  src={require("./assets/newCheckmark.svg").default}
-                  alt=""
-                />
-                <span className="new-benefit">Score multiplier</span>
-              </div>
+    <>
+      <div className="row align-items-center gap-4 gap-lg-0">
+        <div className="col-12 col-lg-7 custom-height">
+          <div className="nft-outer-wrapper p-3 p-lg-5 custom-height">
+            <div className="d-flex align-items-center justify-content-between">
+              <h6 className="new-bundle-title">{packageData.title}</h6>
+              <a href={packageData.link} target="_blank">
+                <img src={require("./assets/newTooltip.svg").default} alt="" />
+              </a>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 col-lg-5 h-100">
-        <div className="nft-outer-wrapper py-3 px-3 py-lg-5 h-100">
-          <div className="d-flex flex-column h-100 justify-content-between gap-3">
-            <h6
-              className="new-bundle-title"
-              style={{ position: "relative", left: "20px" }}
-            >
-              Purchase
-            </h6>
-            <div className="d-flex flex-column gap-2">
-              <div className="purchase-wrapper p-3">
-                <span className="purchase-price-title">Event price</span>
-                <div className="d-flex align-items-center gap-4">
-                  <div className="d-flex align-items-center gap-2">
+            <div className="d-flex align-items-center justify-content-between gap-3 gap-lg-0">
+              <img
+                src={require(`./assets/${packageData.image}`)}
+                alt=""
+                className="new-bundle-img"
+              />
+              <div className="d-flex flex-column gap-2">
+                <div className="new-bundle-benefits-title">Benefits</div>
+
+                {packageData.benefits.map((item) => (
+                  <div className="p-2 new-benefits-item d-flex align-items-center gap-2">
                     <img
-                      src={require("./assets/dypIcon.svg").default}
-                      width={30}
-                      height={30}
+                      src={require("./assets/newCheckmark.svg").default}
                       alt=""
                     />
-                    <h6 className="purchase-price mb-0">50 DYP</h6>
+                    <span className="new-benefit">{item}</span>
                   </div>
-                  <span className="purchase-price-usd mb-0">$6.62</span>
-                </div>
+                ))}
               </div>
-              <span className="new-bnb-chain">Available only on BNB Chain</span>
             </div>
-            <div className="d-flex flex-column align-items-center gap-2 position-relative" style={{left: '-20px'}}>
-            <div
-              className="d-flex align-items-center justify-content-center position-relative gap-3"
-            >
-              <button className="btn inactive-pill-btn py-2 px-4">Sign</button>
-              <button className="btn pill-btn py-2 px-4">Buy</button>
+          </div>
+        </div>
+        <div className="col-12 col-lg-5 custom-height">
+          <div className="nft-outer-wrapper py-3 px-3 py-lg-5 custom-height">
+            <div className="d-flex flex-column custom-height justify-content-between gap-3">
+              {packageData.title === "Critical Hit" ? (
+                <div className="d-flex flex-column align-items-center gap-4">
+                  <div
+                    className="position-relative package-blur"
+                    style={{ pointerEvents: "none" }}
+                  >
+                    <div className="first-box-blur d-flex align-items-end justify-content-center"></div>
+                    <div className="second-box-blur"></div>
+                    <img
+                      src={require("./assets/newGenesis.png")}
+                      alt=""
+                      className="blur-img"
+                    />
+                  </div>
+                  <a
+                    className="btn purple-pill"
+                    href="https://opensea.io/collection/worldofdypians"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Buy Genesis Land
+                  </a>
+                </div>
+              ) : (
+                <>
+                  <h6 className="new-bundle-title purchase-bundle-title">
+                    Purchase
+                  </h6>
+                  <div className="d-flex flex-column gap-2">
+                    <div className="purchase-wrapper p-3">
+                      <span className="purchase-price-title">Event price</span>
+                      <div className="d-flex align-items-center gap-4">
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={
+                              packageData.title === "Puzzle Madness"
+                                ? idyp
+                                : dypius
+                            }
+                            width={30}
+                            height={30}
+                            alt=""
+                          />
+                          <h6 className="purchase-price mb-0">
+                            {packageData.price}
+                          </h6>
+                        </div>
+                        <span className="purchase-price-usd mb-0">$6.62</span>
+                      </div>
+                    </div>
+                    <span className="new-bnb-chain">
+                      Available only on BNB Chain
+                    </span>
+                  </div>
+                </>
+              )}
+              <div
+                className={` ${
+                  packageData.title === "Critical Hit" ? "d-none" : "d-flex"
+                }  flex-column align-items-center gap-2 position-relative.new-button-wrapper`}
+              >
+                <div className="d-flex align-items-center justify-content-center position-relative gap-3">
+                  {showApproval === true &&
+                    packageData.title === "Dragon Ruins" && (
+                      <>
+                        <button
+                          disabled={
+                            bundleState === "deposit" || checkWallet === false
+                              ? true
+                              : false
+                          }
+                          className={`btn ${
+                            bundleState === "deposit" || checkWallet === false
+                              ? "inactive-pill-btn"
+                              : "pill-btn"
+                          }  py-2 px-4`}
+                          onClick={() => {
+                            handleApproval();
+                          }}
+                        >
+                          {bundleState === "loading" ? (
+                            <CircularProgress
+                              size={20}
+                              style={{ alignSelf: "center", margin: "auto" }}
+                            />
+                          ) : (
+                            "Sign"
+                          )}
+                        </button>
+                      </>
+                    )}
+                  {packageData.title === "Dragon Ruins" && (
+                    <>
+                      <button
+                        disabled={
+                          bundleState === "deposit" && checkWallet === true
+                            ? false
+                            : true
+                        }
+                        className={`btn ${
+                          bundleState === "deposit" ||
+                          (showApproval === false && checkWallet === true)
+                            ? "pill-btn"
+                            : "inactive-pill-btn"
+                        }  py-2 px-4`}
+                        onClick={() => {
+                          handleDeposit();
+                        }}
+                      >
+                        {depositState === "loading-deposit" ? (
+                          <CircularProgress
+                            size={20}
+                            style={{ alignSelf: "center", margin: "auto" }}
+                          />
+                        ) : (
+                          "Buy"
+                        )}
+                      </button>
+                    </>
+                  )}
+                  {showApproval700 === true &&
+                    packageData.title === "Golden Pass" && (
+                      <>
+                        <button
+                          disabled={
+                            bundleState700 === "deposit" ||
+                            checkWallet === false ||
+                            isAtlimit == true
+                              ? true
+                              : false
+                          }
+                          className={`btn ${
+                            bundleState700 === "deposit" ||
+                            checkWallet === false ||
+                            isAtlimit == true
+                              ? "inactive-pill-btn"
+                              : "pill-btn"
+                          }  py-2 px-4`}
+                          onClick={() => {
+                            handleApproval700();
+                          }}
+                        >
+                          {bundleState700 === "loading" ? (
+                            <CircularProgress
+                              size={20}
+                              style={{ alignSelf: "center", margin: "auto" }}
+                            />
+                          ) : (
+                            "Sign"
+                          )}
+                        </button>
+                      </>
+                    )}
+                  {packageData.title === "Golden Pass" && (
+                    <>
+                      <button
+                        disabled={
+                          packageData.title !== "Golden Pass"
+                            ? bundleState700 === "deposit" &&
+                              checkWallet === true
+                              ? false
+                              : true
+                            : isAtlimit === true ||
+                              checkWallet === false ||
+                              bundleState700 !== "deposit"
+                            ? true
+                            : false
+                        }
+                        className={`btn ${
+                          (bundleState700 === "deposit" ||
+                            showApproval700 === false) &&
+                          checkWallet === true &&
+                          isAtlimit === false
+                            ? "pill-btn"
+                            : "inactive-pill-btn"
+                        }  py-2 px-4`}
+                        onClick={() => {
+                          handleDeposit700();
+                        }}
+                      >
+                        {depositState === "loading-deposit" ? (
+                          <CircularProgress
+                            size={20}
+                            style={{ alignSelf: "center", margin: "auto" }}
+                          />
+                        ) : (
+                          "Buy"
+                        )}
+                      </button>
+                    </>
+                  )}
+                  {showApproval3500 === true &&
+                    packageData.title === "Puzzle Madness" && (
+                      <>
+                        <button
+                          disabled={
+                            bundleState3500 === "deposit" ||
+                            checkWallet === false
+                              ? true
+                              : false
+                          }
+                          className={`btn ${
+                            bundleState3500 === "deposit" ||
+                            checkWallet === false
+                              ? "inactive-pill-btn"
+                              : "pill-btn"
+                          }  py-2 px-4`}
+                          onClick={() => {
+                            handleApproval3500();
+                          }}
+                        >
+                          {bundleState3500 === "loading" ? (
+                            <CircularProgress
+                              size={20}
+                              style={{ alignSelf: "center", margin: "auto" }}
+                            />
+                          ) : (
+                            "Sign"
+                          )}
+                        </button>
+                      </>
+                    )}
+                  {packageData.title === "Puzzle Madness" && (
+                    <>
+                      <button
+                        disabled={
+                          bundleState3500 === "deposit" && checkWallet === true
+                            ? false
+                            : true
+                        }
+                        className={`btn ${
+                          (bundleState3500 === "deposit" ||
+                            showApproval3500 === false) &&
+                          checkWallet === true
+                            ? "pill-btn"
+                            : "inactive-pill-btn"
+                        }  py-2 px-4`}
+                        onClick={() => {
+                          handleDeposit3500();
+                        }}
+                      >
+                        {depositState3500 === "loading-deposit" ? (
+                          <CircularProgress
+                            size={20}
+                            style={{ alignSelf: "center", margin: "auto" }}
+                          />
+                        ) : (
+                          "Buy"
+                        )}
+                      </button>
+                    </>
+                  )}
+                </div>
+                {showApproval === true &&
+                  packageData.title === "Dragon Ruins" && (
+                    <div className="progress-bar">
+                      <img
+                        src={sliderValue === 1 ? progress1 : progress2}
+                        alt=""
+                      />
+                    </div>
+                  )}
+                {showApproval3500 === true &&
+                  packageData.title === "Puzzle Madness" && (
+                    <div className="progress-bar">
+                      <img
+                        src={sliderValue3500 === 1 ? progress1 : progress2}
+                        alt=""
+                      />
+                    </div>
+                  )}
+                {showApproval700 === true &&
+                  packageData.title === "Golden Pass" && (
+                    <div className="progress-bar">
+                      <img
+                        src={sliderValue700 === 1 ? progress1 : progress2}
+                        alt=""
+                      />
+                    </div>
+                  )}
+              </div>
             </div>
-            <div className="progress-bar" style={{width: '40%'}}>
-              <img src={sliderValue === 1 ? progress1 : progress2} alt="" />
-            </div>
-            </div>
-            
           </div>
         </div>
       </div>
-    </div>
+      <span
+        className="statusText"
+        style={{
+          color:
+            packageData.title === "Dragon Ruins"
+              ? statusColor
+              : packageData.title === "Puzzle Madness"
+              ? statusColor3500
+              : statusColor700,
+        }}
+      >
+        {packageData.title === "Dragon Ruins"
+          ? status
+          : packageData.title === "Puzzle Madness"
+          ? status3500
+          : packageData.title === "Golden Pass"
+          ? status700
+          : statusCritical}
+      </span>
+      {countdown !== 0 && countdown && packageData.title === "Dragon Ruins" && (
+        <div className="col-12">
+          <div className="nft-outer-wrapper p-3 p-lg-5">
+            <div className="d-flex w-100 flex-column flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between">
+              <div className="d-flex flex-column gap-3 available-time-wrapper">
+                <div className="d-flex align-items-center gap-3">
+                  <div
+                    className="new-bundle-title"
+                    style={{ fontSize: "18px" }}
+                  >
+                    Available Time Remaining
+                  </div>
+                  <div className="position-relative new-tooltip-wrapper "><img
+                    src={require("./assets/newTooltip.svg").default}
+                    alt=""
+                  />
+                  <div className="new-tooltip-content-wrapper p-2 d-flex align-items-center justify-content-center">
+                    <p className="new-tooltip-content mb-0">Additional bundles can be purchased to extend your usage time.</p>
+                  </div>
+                  </div>
+                </div>
+                <span className="new-timer-description ">
+                  Use in-game{" "}
+                  <img src={require("./assets/syncIcon.svg").default} alt="" />{" "}
+                  sync button every time you purchase a bundle
+                </span>
+              </div>
+              <Countdown
+                date={Number(countdown) * 1000}
+                renderer={renderer}
+                onComplete={() => {
+                  setcountdown();
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      {countdown3500 !== "0" &&
+        countdown3500 &&
+        packageData.title === "Puzzle Madness" && (
+          <div className="col-12">
+            <div className="nft-outer-wrapper p-3 p-lg-5">
+              <div className="d-flex w-100 flex-column flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between">
+                <div className="d-flex flex-column gap-3 available-time-wrapper">
+                  <div className="d-flex align-items-center gap-3">
+                    <div
+                      className="new-bundle-title"
+                      style={{ fontSize: "18px" }}
+                    >
+                      Available Time Remaining
+                    </div>
+                    <div className="position-relative new-tooltip-wrapper "><img
+                    src={require("./assets/newTooltip.svg").default}
+                    alt=""
+                  />
+                  <div className="new-tooltip-content-wrapper p-2 d-flex align-items-center justify-content-center">
+                    <p className="new-tooltip-content mb-0">Additional bundles can be purchased to extend your usage time.</p>
+                  </div>
+                  </div>
+                  </div>
+                  <span className="new-timer-description ">
+                    Use in-game{" "}
+                    <img
+                      src={require("./assets/syncIcon.svg").default}
+                      alt=""
+                    />{" "}
+                    sync button every time you purchase a bundle
+                  </span>
+                </div>
+                <Countdown
+                  date={Number(countdown3500) * 1000}
+                  renderer={renderer}
+                  onComplete={() => {
+                    setcountdown3500();
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      {packageData.title === "Golden Pass" && (
+        <div className="col-12">
+          <div className="nft-outer-wrapper p-3 p-lg-5">
+            <div className="d-flex w-100 flex-column flex-lg-row gap-4 align-items-center justify-content-between">
+              <div className="d-flex flex-column gap-3  available-time-wrapper">
+                <div className="d-flex align-items-center gap-3">
+                  <div
+                    className="new-bundle-title"
+                    style={{ fontSize: "18px" }}
+                  >
+                    Purchased Bundles
+                  </div>
+                  {/* <img src={require("./assets/newTooltip.svg").default} alt="" /> */}
+                </div>
+                <span className="new-timer-description" style={{width: windowSize.width < 786 ? '100%' : '120%'}}>
+                  The Golden Pass bundle is available for 7 days and can be
+                  purchased up to 4 times
+                </span>
+              </div>
+              <div className="d-flex flex-column align-items-center gap-2">
+                <div style={{ width: 75, height: 75 }}>
+                  <CircularProgressbar
+                    value={progressValue}
+                    text={`${progressValue}%`}
+                    styles={buildStyles({
+                      rotation: 0.25,
+                      strokeLinecap: "butt",
+                      textSize: "24px",
+                      pathTransitionDuration: 0.5,
+                      pathColor: `#84DBAA`,
+                      textColor: "#B7B7DF",
+                      trailColor: "#B8B8E0",
+                      backgroundColor: "#3e98c7",
+                    })}
+                  />
+                </div>
+                <div className="new-bundles-bought-count d-flex align-items-center justify-content-center p-2">
+                  <span className="new-bought-bundles">
+                    {bundlesBought} purchased bundles
+                  </span>
+                </div>
+              </div>
+              {countdown700 !== 0 && countdown700 && (
+                <Countdown
+                  date={Number(countdown700)}
+                  renderer={renderer700}
+                  onComplete={() => {
+                    setcountdown700();
+                    handleSetAvailableTime();
+                    setisAtlimit(false);
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
