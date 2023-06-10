@@ -112,9 +112,7 @@ const TimepieceNFT = ({
                     key={index}
                     state={{
                       nft: nft,
-                      isCaws: false,
-                      isTimepiece: true,
-                      isWod: false,
+                      type: 'timepiece',
                       isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
 
                     }}

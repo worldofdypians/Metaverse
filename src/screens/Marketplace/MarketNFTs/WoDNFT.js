@@ -99,9 +99,7 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS,coinbase }) =>
                     key={index}
                     state={{
                       nft: nft,
-                      isCaws: false,
-                      isTimepiece: false,
-                      isWod: true,
+                      type: 'land',
                       isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
 
                     }}

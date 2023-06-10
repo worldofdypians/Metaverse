@@ -34,6 +34,7 @@ const Marketplace = ({
   topSales,
   coinbase,
   recentSales,
+  nftCount,
 }) => {
   const override = {
     display: "block",
@@ -119,9 +120,7 @@ const Marketplace = ({
     }
 
     window.scrollTo(0, 0);
-  }, [listedNFTS]);
-
-  console.log(listedNFTS);
+  }, [listedNFTS, nftCount]);
 
   return (
     <div
@@ -283,14 +282,16 @@ const Marketplace = ({
                       style={{ textDecoration: "none" }}
                       state={{
                         nft: nft,
-                        isCaws:
-                          nft.nftAddress === window.config.nft_caws_address ||
-                          nft.nftAddress === window.config.nft_cawsold_address,
-                        isTimepiece:
-                          nft.nftAddress ===
-                          window.config.nft_timepiece_address,
-                        isWod:
-                          nft.nftAddress === window.config.nft_land_address,
+                        type:
+                          nft.nftAddress === window.config.nft_caws_address
+                            ? "caws"
+                            : nft.nftAddress ===
+                              window.config.nft_cawsold_address
+                            ? "cawsold"
+                            : nft.nftAddress ===
+                              window.config.nft_timepiece_address
+                            ? "timepiece"
+                            : "land",
                         isOwner:
                           nft.seller?.toLowerCase() === coinbase?.toLowerCase(),
                       }}
@@ -391,15 +392,16 @@ const Marketplace = ({
                         key={index}
                         state={{
                           nft: nft,
-                          isCaws:
-                            nft.nftAddress === window.config.nft_caws_address ||
-                            nft.nftAddress ===
-                              window.config.nft_cawsold_address,
-                          isTimepiece:
-                            nft.nftAddress ===
-                            window.config.nft_timepiece_address,
-                          isWod:
-                            nft.nftAddress === window.config.nft_land_address,
+                          type:
+                          nft.nftAddress === window.config.nft_caws_address
+                            ? "caws"
+                            : nft.nftAddress ===
+                              window.config.nft_cawsold_address
+                            ? "cawsold"
+                            : nft.nftAddress ===
+                              window.config.nft_timepiece_address
+                            ? "timepiece"
+                            : "land",
                           isOwner:
                             nft.seller?.toLowerCase() ===
                             coinbase?.toLowerCase(),
@@ -471,15 +473,16 @@ const Marketplace = ({
                         key={index}
                         state={{
                           nft: nft,
-                          isCaws:
-                            nft.nftAddress === window.config.nft_caws_address ||
-                            nft.nftAddress ===
-                              window.config.nft_cawsold_address,
-                          isTimepiece:
-                            nft.nftAddress ===
-                            window.config.nft_timepiece_address,
-                          isWod:
-                            nft.nftAddress === window.config.nft_land_address,
+                          type:
+                          nft.nftAddress === window.config.nft_caws_address
+                            ? "caws"
+                            : nft.nftAddress ===
+                              window.config.nft_cawsold_address
+                            ? "cawsold"
+                            : nft.nftAddress ===
+                              window.config.nft_timepiece_address
+                            ? "timepiece"
+                            : "land",
                           isOwner:
                             nft.buyer?.toLowerCase() ===
                             coinbase?.toLowerCase(),

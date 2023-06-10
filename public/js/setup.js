@@ -5794,66 +5794,101 @@ window.isApprovedBuy = async (amount) => {
   return Number(allowance) >= Number(amount);
 };
 
-
-window.isApproved = async (token, type = "") =>
-{
-    let contract;
-
-    if(type === "timepiece")
-    {
-        contract =  new window.web3.eth.Contract(
-            window.abi.nft.timepiece,
-            window.config.nft_timepiece_address
-        );
-    }
-    else if(type === "land")
-    {
-        contract = new window.web3.eth.Contract(
-            window.abi.nft.land,
-            window.config.nft_land_address
-        );
-    }
-    else
-    {
-        contract = new window.web3.eth.Contract(
-            window.abi.nft.caws,
-            window.config.nft_caws_address
-        );
-    }
+window.isApproved = async (token, type) => {
+console.log(token, type)
+  if (type === "timepiece") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.timepiece,
+      window.config.nft_timepiece_address
+    );
 
     let approved = await contract.methods.getApproved(token).call();
 
     approved = approved.toLowerCase();
 
     return approved === window.config.nft_marketplace_address;
-}
-
-window.approveNFT = async (token, type)=> {
-  let contract;
-
-  if (type === "timepiece") {
-    contract = new window.web3.eth.Contract(
-      window.abi.nft.timepiece,
-      window.config.nft_timepiece_address
-    );
   } else if (type === "land") {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.land,
       window.config.nft_land_address
     );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address;
+  } else if (type === "cawsold") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.caws,
+      window.config.nft_cawsold_address
+    );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address;
   } else {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.caws,
       window.config.nft_caws_address
     );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address;
   }
-const coinbase = await getCoinbase()
+};
 
-  await contract.methods
-    .approve(window.config.nft_marketplace_address, token)
-    .send({ from: coinbase });
+window.approveNFT = async (token, type) => {
+  console.log(token, type);
+  const coinbase = await getCoinbase();
 
-  console.log("approved", token);
+  if (type === "timepiece") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.timepiece,
+      window.config.nft_timepiece_address
+    );
+
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, token)
+      .send({ from: coinbase });
+
+    console.log("approved timepiece", token);
+  } else if (type === "land") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.land,
+      window.config.nft_land_address
+    );
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, token)
+      .send({ from: coinbase });
+
+    console.log("approved land", token);
+  } else if (type === "cawsold") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.caws,
+      window.config.nft_cawsold_address
+    );
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, token)
+      .send({ from: coinbase });
+
+    console.log("approved land", token);
+  } else {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.caws,
+      window.config.nft_caws_address
+    );
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, token)
+      .send({ from: coinbase });
+
+    console.log("approved", token);
+  }
 };
 
 window.cancelListNFT = async (nftAddress, tokenId, priceType) => {
@@ -5880,11 +5915,12 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType) => {
 window.updateListingNFT = async (token, price, priceType, type) => {
   let nft_address, price_nft, price_address;
 
-
   if (type === "timepiece") {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
     nft_address = window.config.nft_land_address;
+  } else if (type === "cawsold") {
+    nft_address = window.config.nft_cawsold_address;
   } else {
     nft_address = window.config.nft_caws_address;
   }
@@ -5904,8 +5940,7 @@ window.updateListingNFT = async (token, price, priceType, type) => {
     window.config.nft_marketplace_address
   );
 
-  console.log(nft_address, token, price, [price_nft, price_address])
-
+  console.log(nft_address, token, price, [price_nft, price_address]);
 
   await marketplace.methods
     .updateListing(nft_address, token, price, [price_nft, price_address])
@@ -5919,6 +5954,8 @@ window.listNFT = async (token, price, priceType, type = "") => {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
     nft_address = window.config.nft_land_address;
+  } else if (type === "cawsold") {
+    nft_address = window.config.nft_cawsold_address;
   } else {
     nft_address = window.config.nft_caws_address;
   }
@@ -5954,31 +5991,52 @@ window.listNFT = async (token, price, priceType, type = "") => {
     .send({ from: window.ethereum.selectedAddress });
 };
 
-window.isApproved = async (token, type = "") => {
-  let contract;
-
+window.isApproved = async (token, type) => {
+  window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.timepiece,
       window.config.nft_timepiece_address
     );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address.toLowerCase();
   } else if (type === "land") {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.land,
       window.config.nft_land_address
     );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address.toLowerCase();
+  } else if (type === "cawsold") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.caws,
+      window.config.nft_cawsold_address
+    );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address.toLowerCase();
   } else {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.caws,
       window.config.nft_caws_address
     );
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address.toLowerCase();
   }
-
-  let approved = await contract.methods.getApproved(token).call();
-
-  approved = approved.toLowerCase();
-
-  return approved === window.config.nft_marketplace_address;
 };
 
 async function getTokenHolderBalanceAll(holder, token_address, network) {
@@ -6053,133 +6111,9 @@ async function getTimepieceNft(id) {
   });
 }
 
-// async function getMyNFTsCAWS(address, contract_nft) {
-//   let contract;
-//   window.web3 = new Web3(window.ethereum);
-//   let tokenURIsCaws = [];
-
-//     contract = new window.web3.eth.Contract(window.abi.nft.caws, contract_nft);
-//     const balance = await contract.methods
-//       .balanceOf(address)
-//       .call()
-//       .catch((e) => {
-//         console.log(e);
-//       });
-
-//       console.log(balance)
-
-//     let tokens = [];
-//     for (let i = 0; i < balance; i++) {
-//       await contract.methods
-//         .tokenOfOwnerByIndex(address, i)
-//         .call()
-//         .then((data) => {
-//           tokens.push(data);
-//         })
-//         .catch((e) => {
-//           console.log(e);
-//         });
-//     }
-
-//     for (let tokenId = 0; tokenId < tokens.length; tokenId++) {
-//       const result = await getNft(parseInt(tokens[tokenId]));
-//       // console.log(result);
-//       tokenURIsCaws.push(result);
-//     }
-
-//   console.log(tokenURIsCaws);
-//   //  console.log(tokenURIs,tokens)
-//   return await Promise.all(
-//     tokenURIsCaws.map((tokenURI) => window.$.get(tokenURI))
-//   );
-// }
-
-// async function getMyNFTsLAND(address, contract_nft) {
-//   let contract;
-//   window.web3 = new Web3(window.ethereum);
-//   let tokenURIsWod = [];
-
-//     contract = new window.web3.eth.Contract(window.abi.nft.wod, contract_nft);
-//     const balance = await contract.methods
-//       .balanceOf(address)
-//       .call()
-//       .catch((e) => {
-//         console.log(e);
-//       });
-
-//       console.log(balance)
-//     let tokens = [];
-//     for (let i = 0; i < balance; i++) {
-//       await contract.methods
-//         .tokenOfOwnerByIndex(address, i)
-//         .call()
-//         .then((data) => {
-//           tokens.push(data);
-//         })
-//         .catch((e) => {
-//           console.log(e);
-//         });
-//     }
-
-//     for (let tokenId = 0; tokenId < tokens.length; tokenId++) {
-//       const result = await getLandNft(parseInt(tokens[tokenId]));
-//       // console.log(result);
-//       tokenURIsWod.push(result);
-//     }
-
-//   console.log(tokenURIsWod);
-//   //  console.log(tokenURIs,tokens)
-//   return await Promise.all(
-//     tokenURIsWod.map((tokenURI) => window.$.get(tokenURI))
-//   );
-// }
-
-// async function getMyNFTsTimepiece(address, contract_nft) {
-//   let contract;
-//   window.web3 = new Web3(window.ethereum);
-//   let tokenURIsTimepiece = [];
-
-//     contract = new window.web3.eth.Contract(
-//       window.abi.nft.timepiece,
-//       contract_nft
-//     );
-
-//     const balance = await contract.methods
-//       .balanceOf(address)
-//       .call()
-//       .catch((e) => {
-//         console.log(e);
-//       });
-
-//     let tokens = [];
-//     for (let i = 0; i < balance; i++) {
-//       await contract.methods
-//         .tokenOfOwnerByIndex(address, i)
-//         .call()
-//         .then((data) => {
-//           tokens.push(data);
-//         })
-//         .catch((e) => {
-//           console.log(e);
-//         });
-//     }
-
-//     for (let tokenId = 0; tokenId < tokens.length; tokenId++) {
-//       const result = await getTimepieceNft(parseInt(tokens[tokenId]));
-//       // console.log(result);
-//       tokenURIsTimepiece.push(result);
-//     }
-
-//   console.log(tokenURIsTimepiece);
-//   //  console.log(tokenURIs,tokens)
-//   return await Promise.all(
-//     tokenURIsTimepiece.map((tokenURI) => window.$.get(tokenURI))
-//   );
-// }
-
 async function getMyNFTs(address, type = "") {
   let contract;
-  window.web3 = new Web3(window.ethereum)
+  window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     contract = await new window.web3.eth.Contract(
       window.abi.nft.timepiece,
