@@ -912,7 +912,6 @@ function App() {
     getallNfts();
   }, [nftCount]);
 
-
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -941,7 +940,7 @@ function App() {
                       isConnected={isConnected}
                       chainId={chainId}
                       handleSwitchChain={handleSwitchChain}
-          handleRefreshList={handleRefreshList}
+          handleRefreshListing={handleRefreshList}
           nftCount={nftCount}
 
                     />

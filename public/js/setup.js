@@ -5794,59 +5794,101 @@ window.isApprovedBuy = async (amount) => {
   return Number(allowance) >= Number(amount);
 };
 
-window.isApproved = async (token, type = "") => {
-  let contract;
-
+window.isApproved = async (token, type) => {
+console.log(token, type)
   if (type === "timepiece") {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.timepiece,
       window.config.nft_timepiece_address
     );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address;
   } else if (type === "land") {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.land,
       window.config.nft_land_address
     );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address;
+  } else if (type === "cawsold") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.caws,
+      window.config.nft_cawsold_address
+    );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address;
   } else {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.caws,
       window.config.nft_caws_address
     );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address;
   }
-
-  let approved = await contract.methods.getApproved(token).call();
-
-  approved = approved.toLowerCase();
-
-  return approved === window.config.nft_marketplace_address;
 };
 
 window.approveNFT = async (token, type) => {
-  let contract;
+  console.log(token, type);
+  const coinbase = await getCoinbase();
 
   if (type === "timepiece") {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.timepiece,
       window.config.nft_timepiece_address
     );
+
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, token)
+      .send({ from: coinbase });
+
+    console.log("approved timepiece", token);
   } else if (type === "land") {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.land,
       window.config.nft_land_address
     );
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, token)
+      .send({ from: coinbase });
+
+    console.log("approved land", token);
+  } else if (type === "cawsold") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.caws,
+      window.config.nft_cawsold_address
+    );
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, token)
+      .send({ from: coinbase });
+
+    console.log("approved land", token);
   } else {
-    contract = new window.web3.eth.Contract(
+    let contract = new window.web3.eth.Contract(
       window.abi.nft.caws,
       window.config.nft_caws_address
     );
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, token)
+      .send({ from: coinbase });
+
+    console.log("approved", token);
   }
-  const coinbase = await getCoinbase();
-
-  await contract.methods
-    .approve(window.config.nft_marketplace_address, token)
-    .send({ from: coinbase });
-
-  console.log("approved", token);
 };
 
 window.cancelListNFT = async (nftAddress, tokenId, priceType) => {
@@ -5877,6 +5919,8 @@ window.updateListingNFT = async (token, price, priceType, type) => {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
     nft_address = window.config.nft_land_address;
+  } else if (type === "cawsold") {
+    nft_address = window.config.nft_cawsold_address;
   } else {
     nft_address = window.config.nft_caws_address;
   }
@@ -5910,6 +5954,8 @@ window.listNFT = async (token, price, priceType, type = "") => {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
     nft_address = window.config.nft_land_address;
+  } else if (type === "cawsold") {
+    nft_address = window.config.nft_cawsold_address;
   } else {
     nft_address = window.config.nft_caws_address;
   }
@@ -5946,7 +5992,7 @@ window.listNFT = async (token, price, priceType, type = "") => {
 };
 
 window.isApproved = async (token, type) => {
-  window.web3 = new Web3(window.ethereum)
+  window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     let contract = new window.web3.eth.Contract(
       window.abi.nft.timepiece,
@@ -5962,6 +6008,17 @@ window.isApproved = async (token, type) => {
     let contract = new window.web3.eth.Contract(
       window.abi.nft.land,
       window.config.nft_land_address
+    );
+
+    let approved = await contract.methods.getApproved(token).call();
+
+    approved = approved.toLowerCase();
+
+    return approved === window.config.nft_marketplace_address.toLowerCase();
+  } else if (type === "cawsold") {
+    let contract = new window.web3.eth.Contract(
+      window.abi.nft.caws,
+      window.config.nft_cawsold_address
     );
 
     let approved = await contract.methods.getApproved(token).call();
@@ -6053,8 +6110,6 @@ async function getTimepieceNft(id) {
     return result;
   });
 }
-
-
 
 async function getMyNFTs(address, type = "") {
   let contract;

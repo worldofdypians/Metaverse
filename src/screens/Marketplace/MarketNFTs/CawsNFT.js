@@ -99,9 +99,16 @@ import { NavLink } from "react-router-dom";
                     key={index}
                     state={{
                       nft: nft,
-                      isCaws: true,
-                      isTimepiece: false,
-                      isWod: false,
+                      type:
+                          nft.nftAddress === window.config.nft_caws_address
+                            ? "caws"
+                            : nft.nftAddress ===
+                              window.config.nft_cawsold_address
+                            ? "cawsold"
+                            : nft.nftAddress ===
+                              window.config.nft_timepiece_address
+                            ? "timepiece"
+                            : "land",
                       isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
 
                     }}

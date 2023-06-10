@@ -66,8 +66,8 @@ const SingleNft = ({
   chainId,
   isConnected,
   handleSwitchChain,
-  handleRefreshList,
   nftCount,
+  handleRefreshListing,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -76,15 +76,10 @@ const SingleNft = ({
     location.state?.nft ? location.state?.nft : []
   );
 
-  const [isCaws, setisCaws] = useState(
-    location.state?.isCaws ? location.state?.isCaws : false
+  const [type, setType] = useState(
+    location.state?.type ? location.state?.type : false
   );
-  const [isWod, setisWod] = useState(
-    location.state?.isWod ? location.state?.isWod : false
-  );
-  const [isTimepiece, setisTimepiece] = useState(
-    location.state?.isTimepiece ? location.state?.isTimepiece : false
-  );
+
   const [IsApprove, setIsApprove] = useState(false);
   const [buttonText, setbuttonText] = useState("Approve");
   const [IsListed, setIsListed] = useState(false);
@@ -110,17 +105,17 @@ const SingleNft = ({
     location.state?.isOwner ? location.state?.isOwner : false
   );
 
-  console.log(isOwner, IsListed, coinbase, nft);
+  // console.log("nft", nft, IsApprove);
 
   const getMetaData = async () => {
     if (nft) {
-      if (isCaws) {
+      if (type === "caws" || type === "cawsold") {
         const result = await window.getNft(nft.tokenId);
         setmetaData(result);
-      } else if (isWod) {
+      } else if (type === "land") {
         const result = await window.getLandNft(nft.tokenId);
         setmetaData(result);
-      } else if (isTimepiece) {
+      } else if (type === "timepiece") {
         const result = await window.getTimepieceNft(nft.tokenId);
         setmetaData(result);
       }
@@ -136,17 +131,47 @@ const SingleNft = ({
   };
 
   async function isApprovedNFT(nft, type) {
+    console.log("isapprovednft", nft, type);
     const result = window.isApproved(nft, type).catch((e) => {
       console.error(e);
     });
     return result;
   }
 
+  const handleRefreshList = async (type, tokenId) => {
+    let nft_address;
+
+    if (type === "timepiece") {
+      nft_address = window.config.nft_timepiece_address;
+    } else if (type === "land") {
+      nft_address = window.config.nft_land_address;
+    } else if (type === "cawsold") {
+      nft_address = window.config.nft_cawsold_address;
+    } else {
+      nft_address = window.config.nft_caws_address;
+    }
+
+    const listedNFT = await getListedNFTS(
+      0,
+      "",
+      "nftAddress_tokenId",
+      tokenId,
+      nft_address
+    );
+
+    console.log(listedNFT);
+
+    if (listedNFT && listedNFT.length > 0) {
+      setNft(...listedNFT);
+    }
+  };
+
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
     console.log("nft", nft);
     const isApproved = await isApprovedNFT(tokenId, type);
 
     if (isApproved) {
+      console.log("selling");
       setsellLoading(true);
       setsellStatus("sell");
       setPurchaseStatus("Selling nft in progress...");
@@ -155,7 +180,8 @@ const SingleNft = ({
       await window
         .listNFT(tokenId, nftPrice, priceType, type)
         .then((result) => {
-          handleRefreshList();
+          handleRefreshList(type, tokenId);
+          handleRefreshListing();
           setsellLoading(false);
           setsellStatus("success");
           setPurchaseStatus("Successfully approved!");
@@ -179,6 +205,8 @@ const SingleNft = ({
           console.error(e);
         });
     } else {
+      console.log("approve selling");
+
       setsellLoading(true);
       setsellStatus("approve");
       setPurchaseStatus("Approving nft selling in progress...");
@@ -219,6 +247,8 @@ const SingleNft = ({
     const isApproved = await isApprovedBuy(nft.price);
 
     if (isApproved || nft.payment_priceType === 0) {
+      console.log("buying");
+
       setbuyLoading(true);
       setbuyStatus("buy");
       setPurchaseStatus("Buying nft in progress...");
@@ -236,7 +266,8 @@ const SingleNft = ({
           setbuyStatus("success");
           setPurchaseStatus("Successfully purchased!");
           setPurchaseColor("#00FECF");
-          handleRefreshList();
+          handleRefreshList(type, nft.tokenId);
+          handleRefreshListing();
           setTimeout(() => {
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
@@ -256,6 +287,8 @@ const SingleNft = ({
           console.error(e);
         });
     } else {
+      console.log("approve buying");
+
       setbuyStatus("approve");
       setbuyLoading(true);
       setPurchaseStatus("Approving in progress...");
@@ -293,6 +326,8 @@ const SingleNft = ({
     setcancelStatus("cancel");
     setPurchaseColor("#00FECF");
     setPurchaseStatus("Unlisting your nft...");
+    console.log("cancelling");
+
     return window
       .cancelListNFT(nftAddress, tokenId, type)
       .then((result) => {
@@ -301,8 +336,8 @@ const SingleNft = ({
           setPurchaseColor("#00FECF");
           setPurchaseStatus("");
         }, 3000);
-        handleRefreshList();
-
+        // handleRefreshList(type, tokenId);
+        handleRefreshListing();
         setcancelLoading(false);
         setcancelStatus("success");
         setPurchaseColor("#00FECF");
@@ -327,6 +362,8 @@ const SingleNft = ({
     setPurchaseStatus("Price is being updated...");
     setupdateLoading(true);
     setupdateStatus("update");
+    console.log("updating");
+
     return await window
       .updateListingNFT(nft, price, priceType, type)
       .then((result) => {
@@ -335,7 +372,8 @@ const SingleNft = ({
           setPurchaseStatus("");
           setupdateStatus("");
         }, 3000);
-        handleRefreshList();
+        handleRefreshList(type, nft);
+        handleRefreshListing();
         setPurchaseColor("#00FECF");
         setPurchaseStatus("Price updated successfully.");
         setupdateLoading(false);
@@ -362,6 +400,8 @@ const SingleNft = ({
       nft_address = window.config.nft_timepiece_address;
     } else if (type === "land") {
       nft_address = window.config.nft_land_address;
+    } else if (type === "cawsold") {
+      nft_address = window.config.nft_cawsold_address;
     } else {
       nft_address = window.config.nft_caws_address;
     }
@@ -389,10 +429,7 @@ const SingleNft = ({
           }
         });
       } else if (!IsListed) {
-        isApprovedNFT(
-          nft.tokenId,
-          isCaws ? "caws" : isWod ? "land" : "timepiece"
-        ).then((isApproved) => {
+        isApprovedNFT(nft.tokenId, type).then((isApproved) => {
           if (isApproved === true) {
             setsellStatus("sell");
           } else if (isApproved === false) {
@@ -429,22 +466,12 @@ const SingleNft = ({
   useEffect(() => {
     getMetaData();
 
-    if (isCaws) {
-      isListedNFT(nft, "caws").then((isListed) => {
+    if (type) {
+      isListedNFT(nft, type).then((isListed) => {
         setIsListed(isListed);
       });
     }
-    if (isTimepiece) {
-      isListedNFT(nft, "timepiece").then((isListed) => {
-        setIsListed(isListed);
-      });
-    }
-    if (isWod) {
-      isListedNFT(nft, "land").then((isListed) => {
-        setIsListed(isListed);
-      });
-    }
-  }, [nft, isCaws, isTimepiece, isWod]);
+  }, [nft, type, nftCount]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -453,6 +480,10 @@ const SingleNft = ({
   useEffect(() => {
     if (nft) {
       setNft(nft);
+
+      if (nft.nftAddress === window.config.nft_cawsold_address) {
+        setType("cawsold");
+      }
     }
   }, [nftCount]);
 
@@ -465,7 +496,7 @@ const SingleNft = ({
 
       <div className="container-nft pe-5 position-relative">
         <div className="main-wrapper py-4 w-100">
-          {isWod ? (
+          {type === "land" ? (
             <>
               <h6 className="market-banner-title">World of Dypians</h6>
               <h6
@@ -475,7 +506,7 @@ const SingleNft = ({
                 Land
               </h6>
             </>
-          ) : isCaws ? (
+          ) : type === "caws" || type === "cawsold" ? (
             <>
               <h6 className="market-banner-title">Cats and Watches Society</h6>
               <h6
@@ -504,9 +535,11 @@ const SingleNft = ({
                 <img
                   className="blur-img blur-img-big"
                   src={
-                    isCaws
+                    type === "caws"
                       ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
-                      : isWod
+                      : type === "cawsold"
+                      ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                      : type === "land"
                       ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
                       : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
                   }
@@ -515,12 +548,12 @@ const SingleNft = ({
               </div>
             </div>
             <div className="d-flex flex-column gap-3 col-lg-6  ">
-              <div className="d-flex align-items-center flex-column nft-outer-wrapperp-4 gap-2 my-4 single-item-info">
+              <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
                   <h3 className="nft-title">
-                    {isCaws
+                    {type === "caws" || type === "cawsold"
                       ? "CAWS"
-                      : isWod
+                      : type === "land"
                       ? "Genesis Land"
                       : "CAWS Timepiece"}{" "}
                     #{nft.tokenId}
@@ -892,7 +925,7 @@ const SingleNft = ({
                                   nft.tokenId,
                                   nftPrice,
                                   priceType,
-                                  isCaws ? "caws" : isWod ? "land" : "timepiece"
+                                  type
                                 );
                           }}
                         >
@@ -986,7 +1019,7 @@ const SingleNft = ({
                                 nft.tokenId,
                                 nftPrice,
                                 priceType,
-                                isCaws ? "caws" : isWod ? "land" : "timepiece"
+                                type
                               );
                         }}
                       >
@@ -1039,9 +1072,8 @@ const SingleNft = ({
           <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
             <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
               <h3 className="traits-text">Traits</h3>
-              {isCaws || isTimepiece ? (
+              {type === "caws" || type === "cawsold" || type === "timepiece" ? (
                 <>
-                  {" "}
                   <div className="d-flex gap-3 align-items-center justify-content-between">
                     <div className="d-flex flex-column gap-2 align-items-center">
                       <span className="traittitle">Background</span>
