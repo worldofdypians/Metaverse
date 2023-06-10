@@ -34,6 +34,7 @@ const Marketplace = ({
   topSales,
   coinbase,
   recentSales,
+  nftCount
 }) => {
   const override = {
     display: "block",
@@ -119,9 +120,9 @@ const Marketplace = ({
     }
 
     window.scrollTo(0, 0);
-  }, [listedNFTS]);
+  }, [listedNFTS,nftCount]);
 
-  console.log(listedNFTS);
+  console.log(listedNFTS)
 
   return (
     <div
@@ -291,8 +292,6 @@ const Marketplace = ({
                           window.config.nft_timepiece_address,
                         isWod:
                           nft.nftAddress === window.config.nft_land_address,
-                        isOwner:
-                          nft.seller?.toLowerCase() === coinbase?.toLowerCase(),
                       }}
                     >
                       <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
@@ -402,7 +401,7 @@ const Marketplace = ({
                             nft.nftAddress === window.config.nft_land_address,
                           isOwner:
                             nft.seller?.toLowerCase() ===
-                            coinbase?.toLowerCase(),
+                              coinbase?.toLowerCase() 
                         }}
                       >
                         <ItemCard
@@ -482,7 +481,7 @@ const Marketplace = ({
                             nft.nftAddress === window.config.nft_land_address,
                           isOwner:
                             nft.buyer?.toLowerCase() ===
-                            coinbase?.toLowerCase(),
+                              coinbase?.toLowerCase(),
                         }}
                       >
                         <ItemCard

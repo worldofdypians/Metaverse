@@ -112,6 +112,8 @@ function App() {
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
+  const [nftCount, setNftCount] = useState(1);
+
 
   const handleSwitchChain = async () => {
     const { ethereum } = window;
@@ -812,6 +814,10 @@ function App() {
     setwalletModal(true);
   };
 
+  const handleRefreshList = ()=>{
+    setNftCount(nftCount+1)
+  }
+
   const getallNfts = async () => {
     const cawsNew = await getListedNFTS(
       0,
@@ -904,7 +910,7 @@ function App() {
 
   useEffect(() => {
     getallNfts();
-  }, []);
+  }, [nftCount]);
 
 
   return (
@@ -935,6 +941,9 @@ function App() {
                       isConnected={isConnected}
                       chainId={chainId}
                       handleSwitchChain={handleSwitchChain}
+          handleRefreshList={handleRefreshList}
+          nftCount={nftCount}
+
                     />
                   }
                 />
@@ -1061,6 +1070,7 @@ function App() {
                       MyNFTSCaws={MyNFTSCaws}
                       MyNFTSTimepiece={MyNFTSTimepiece}
                       MyNFTSLand={MyNFTSLand}
+                      nftCount={nftCount}
                     />
                   }
                 />
