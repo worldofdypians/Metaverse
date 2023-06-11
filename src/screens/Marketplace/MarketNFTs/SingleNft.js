@@ -12,6 +12,7 @@ import checkPassive from "../assets/empty.svg";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { shortAddress } from "../../Caws/functions/shortAddress";
+import Toast from "../../../components/Toast/Toast";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -99,6 +100,10 @@ const SingleNft = ({
   const [purchaseColor, setPurchaseColor] = useState("#00FECF");
   const [priceType, setPriceType] = useState(0);
   const [nftPrice, setNftPrice] = useState(1);
+  const [showToast, setShowToast] = useState(false);
+  const [toastTitle, setToastTitle] = useState('');
+
+
 
   const [metaData, setmetaData] = useState([]);
   const [isOwner, setisOwner] = useState(
@@ -184,8 +189,10 @@ const SingleNft = ({
           handleRefreshListing();
           setsellLoading(false);
           setsellStatus("success");
-          setPurchaseStatus("Successfully approved!");
+          setPurchaseStatus("Successfully sold!");
           setPurchaseColor("#00FECF");
+          setShowToast(true);
+          setToastTitle("Successfully sold!");
           setTimeout(() => {
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
@@ -265,6 +272,8 @@ const SingleNft = ({
           setbuyLoading(true);
           setbuyStatus("success");
           setPurchaseStatus("Successfully purchased!");
+          setShowToast(true);
+          setToastTitle("Successfully purchased!");
           setPurchaseColor("#00FECF");
           handleRefreshList(type, nft.tokenId);
           handleRefreshListing();
@@ -372,6 +381,8 @@ const SingleNft = ({
           setPurchaseStatus("");
           setupdateStatus("");
         }, 3000);
+        setShowToast(true);
+        setToastTitle("Successfully updated!");
         handleRefreshList(type, nft);
         handleRefreshListing();
         setPurchaseColor("#00FECF");
@@ -495,6 +506,7 @@ const SingleNft = ({
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
 
       <div className="container-nft pe-5 position-relative">
+        <Toast showToast={showToast} title={toastTitle} />
         <div className="main-wrapper py-4 w-100">
           {type === "land" ? (
             <>
