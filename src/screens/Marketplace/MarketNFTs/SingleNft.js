@@ -13,6 +13,8 @@ import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { shortAddress } from "../../Caws/functions/shortAddress";
 import Toast from "../../../components/Toast/Toast";
+import axios from "axios";
+import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -101,16 +103,33 @@ const SingleNft = ({
   const [priceType, setPriceType] = useState(0);
   const [nftPrice, setNftPrice] = useState(1);
   const [showToast, setShowToast] = useState(false);
-  const [toastTitle, setToastTitle] = useState('');
-
-
+  const [toastTitle, setToastTitle] = useState("");
 
   const [metaData, setmetaData] = useState([]);
   const [isOwner, setisOwner] = useState(
     location.state?.isOwner ? location.state?.isOwner : false
   );
+  const [dyptokenData, setDypTokenData] = useState(0);
+  const [ethtokenData, setEthTokenData] = useState(0);
+  const [priceUSD, setpriceUsd] = useState(0);
 
   // console.log("nft", nft, IsApprove);
+
+  const getTokenData = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_eth_v2")
+      .then((data) => {
+        const propertyDyp = Object.entries(
+          data.data.the_graph_eth_v2.token_data
+        );
+        setDypTokenData(propertyDyp[0][1].token_price_usd);
+
+        const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
+
+        setEthTokenData(propertyETH);
+      });
+  };
+
 
   const getMetaData = async () => {
     if (nft) {
@@ -486,6 +505,7 @@ const SingleNft = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getTokenData();
   }, []);
 
   useEffect(() => {
@@ -505,41 +525,47 @@ const SingleNft = ({
     >
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
 
-      <div className="container-nft pe-5 position-relative">
+      <div className="container-nft pe-xxl-5 pe-lg-5 position-relative">
         <Toast showToast={showToast} title={toastTitle} />
-        <div className="main-wrapper py-4 w-100">
+        <div className="main-wrapper py-4 w-100 mt-5 mt-xxl-0 mt-lg-0">
           {type === "land" ? (
             <>
-              <h6 className="market-banner-title">World of Dypians</h6>
-              <h6
-                className="market-banner-title"
-                style={{ color: "#8C56FF", lineHeight: "80%" }}
-              >
-                Land
+              <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                World of Dypians{" "}
+                <h6
+                  className="market-banner-title m-0"
+                  style={{ color: "#8C56FF", lineHeight: "80%" }}
+                >
+                  Land
+                </h6>
               </h6>
             </>
           ) : type === "caws" || type === "cawsold" ? (
             <>
-              <h6 className="market-banner-title">Cats and Watches Society</h6>
-              <h6
-                className="market-banner-title"
-                style={{ color: "#8C56FF", lineHeight: "80%" }}
-              >
-                (CAWS)
+              <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                Cats and Watches Society{" "}
+                <h6
+                  className="market-banner-title m-0"
+                  style={{ color: "#8C56FF", lineHeight: "80%" }}
+                >
+                  (CAWS)
+                </h6>
               </h6>
             </>
           ) : (
             <>
-              <h6 className="market-banner-title">CAWS</h6>
-              <h6
-                className="market-banner-title"
-                style={{ color: "#8C56FF", lineHeight: "80%" }}
-              >
-                Timepiece
+              <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                CAWS{" "}
+                <h6
+                  className="market-banner-title m-0"
+                  style={{ color: "#8C56FF", lineHeight: "80%" }}
+                >
+                  Timepiece
+                </h6>
               </h6>
             </>
           )}
-          <div className="d-flex align-items-center justify-content-around my-5">
+          <div className="d-flex flex-column gap-4 flex-xxl-row flex-lg-row align-items-center justify-content-around mt-5 px-3">
             <div className="d-flex flex-column align-items-center gap-2 col-6 col-lg-3 position-relative">
               <div className="position-relative package-blur">
                 <div className="first-box-blur first-bigbox-blur d-flex align-items-end justify-content-center"></div>
@@ -559,7 +585,7 @@ const SingleNft = ({
                 />
               </div>
             </div>
-            <div className="d-flex flex-column gap-3 col-lg-6  ">
+            <div className="d-flex flex-column gap-3 col-lg-7">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
                   <h3 className="nft-title">
@@ -587,13 +613,21 @@ const SingleNft = ({
                           {nft.price}{" "}
                           {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                         </span>
-                        <span className="nft-price-usd">$956.62</span>
+                        <span className="nft-price-usd">
+                          $
+                          {getFormattedNumber(
+                            nft.payment_priceType === 0
+                              ? ethtokenData * nft.price
+                              : dyptokenData * nft.price,
+                            2
+                          )}
+                        </span>
                       </div>
                     </div>
                   )}
                   {!isOwner && IsListed && (
                     <div className="price-wrapper p-3">
-                      <div className="d-flex flex-column gap-2 align-items-center">
+                      <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                         <span className="currentprice-txt">Current price</span>
                         <div className="d-flex gap-2 align-items-center">
                           <img
@@ -606,14 +640,22 @@ const SingleNft = ({
                             {nft.price}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                           </span>
-                          <span className="nft-price-usd">$956.62</span>
+                          <span className="nft-price-usd">
+                            $
+                            {getFormattedNumber(
+                            nft.payment_priceType === 0
+                              ? ethtokenData * nft.price
+                              : dyptokenData * nft.price,
+                            2
+                          )}
+                          </span>
                         </div>
                       </div>
                     </div>
                   )}
                   {!isOwner && !IsListed && (
                     <div className="price-wrapper p-3">
-                      <div className="d-flex flex-column gap-2 align-items-center">
+                      <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                         <span className="currentprice-txt">Current price</span>
                         <div className="d-flex gap-2 align-items-center">
                           <img
@@ -626,15 +668,23 @@ const SingleNft = ({
                             {nft.price}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                           </span>
-                          <span className="nft-price-usd">$956.62</span>
+                          <span className="nft-price-usd">
+                            $
+                            {getFormattedNumber(
+                            nft.payment_priceType === 0
+                              ? ethtokenData * nft.price
+                              : dyptokenData * nft.price,
+                            2
+                          )}
+                          </span>
                         </div>
                       </div>
                     </div>
                   )}
                   {isOwner && IsListed && (
-                    <div className="d-flex align-items-center gap-2 justify-content-between">
-                      <div className="price-wrapper p-3 col-6">
-                        <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
+                      <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
+                        <div className="d-flex w-100 justify-content-between flex-column gap-2">
                           <span
                             className="currentprice-txt"
                             style={{ alignSelf: "baseline" }}
@@ -652,7 +702,7 @@ const SingleNft = ({
                               <StyledTextField
                                 error={nftPrice === "" ? true : false}
                                 size="small"
-                                label="Price"
+                                // label="Price"
                                 id="price"
                                 name="price"
                                 value={nftPrice}
@@ -661,16 +711,23 @@ const SingleNft = ({
                                 onChange={(e) => {
                                   setNftPrice(e.target.value);
                                 }}
-                                sx={{ width: "50%" }}
+                                sx={{ width: "120px" }}
                               />
                               {priceType === 0 ? "ETH" : "DYP"}{" "}
                             </span>
-                            <span className="nft-price-usd">$---</span>
+                            <span className="nft-price-usd">
+                              ${getFormattedNumber(
+                            priceType === 0
+                              ? ethtokenData * nftPrice
+                              : dyptokenData * nftPrice,
+                            2
+                          )}
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div className="price-wrapper p-3 col-5">
-                        <div className="d-flex flex-column gap-2 align-items-center">
+                      <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
+                        <div className="d-flex w-100 justify-content-between flex-column gap-2 align-items-center">
                           <span className="currentprice-txt">
                             Choose currency
                           </span>
@@ -740,9 +797,9 @@ const SingleNft = ({
                     </div>
                   )}
                   {isOwner && !IsListed && (
-                    <div className="d-flex align-items-center gap-2 justify-content-between">
-                      <div className="price-wrapper p-3 col-6">
-                        <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
+                      <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
+                        <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                           <span
                             className="currentprice-txt"
                             style={{ alignSelf: "baseline" }}
@@ -772,12 +829,19 @@ const SingleNft = ({
                               />
                               {priceType === 0 ? "ETH" : "DYP"}{" "}
                             </span>
-                            <span className="nft-price-usd">$---</span>
+                            <span className="nft-price-usd">
+                              ${getFormattedNumber(
+                            priceType === 0
+                              ? ethtokenData * nftPrice
+                              : dyptokenData * nftPrice,
+                            2
+                          )}
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div className="price-wrapper p-3 col-5">
-                        <div className="d-flex flex-column gap-2 align-items-center">
+                      <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
+                        <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                           <span className="currentprice-txt">
                             Choose currency
                           </span>
@@ -846,10 +910,10 @@ const SingleNft = ({
                       </div>
                     </div>
                   )}
-                  <div className="d-flex justify-content-between gap-2 align-items-center">
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
+                    <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="owner-txt">
-                        {nft.seller ? "Seller" : "Buyer"}
+                        {nft.seller ? "Seller:" : "Buyer:"}
                       </span>
                       {nft.seller ? (
                         <a
@@ -880,7 +944,7 @@ const SingleNft = ({
                             ? true
                             : false
                         }
-                        className={`btn  buyNftbtn col-3 d-flex justify-content-center ${
+                        className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
                           buyStatus === "success"
                             ? "successbtn"
                             : buyStatus === "failed" ||
@@ -904,9 +968,9 @@ const SingleNft = ({
                         ) : !buyloading && chainId !== 1 && chainId !== 5 ? (
                           "Switch Network"
                         ) : buyStatus === "buy" ? (
-                          "Buy"
+                          "Buy nft"
                         ) : buyStatus === "approve" || buyStatus === "" ? (
-                          "Approve"
+                          "Approve buy"
                         ) : buyStatus === "success" ? (
                           "Success"
                         ) : (
@@ -915,14 +979,14 @@ const SingleNft = ({
                       </button>
                     )}
                     {isOwner && IsListed && coinbase && isConnected && (
-                      <div className="d-flex gap-2 align-items-center">
+                      <div className="d-flex gap-2 col-lg-5 col-xxl-5 align-items-center">
                         <button
                           disabled={
                             updateLoading === true || updateStatus === "failed"
                               ? true
                               : false
                           }
-                          className={`btn  buyNftbtn col-6 d-flex justify-content-center ${
+                          className={`btn buyNftbtn col-lg-6 col-xxl-6 d-flex justify-content-center ${
                             updateStatus === "success"
                               ? "successbtn"
                               : updateStatus === "failed" ||
@@ -963,19 +1027,12 @@ const SingleNft = ({
                         </button>
 
                         <button
-                          disabled={
-                            cancelLoading === true || cancelStatus === "failed"
-                              ? true
-                              : false
-                          }
-                          className={`btn  buyNftbtn col-6 d-flex justify-content-center ${
-                            cancelStatus === "success"
-                              ? "successbtn"
-                              : cancelStatus === "failed" ||
-                                (chainId !== 5 && chainId !== 1)
-                              ? "errorbtn"
-                              : null
-                          } d-flex justify-content-center align-items-center gap-2`}
+                          // disabled={
+                          //   cancelLoading === true || cancelStatus === "failed"
+                          //     ? true
+                          //     : false
+                          // }
+                          className={`unlistbtn col-lg-6 col-xxl-6 d-flex justify-content-center d-flex justify-content-center align-items-center gap-2`}
                           onClick={() => {
                             chainId !== 1 && chainId !== 5
                               ? handleSwitchChain()
@@ -1016,7 +1073,7 @@ const SingleNft = ({
                             ? true
                             : false
                         }
-                        className={`btn  buyNftbtn col-3 d-flex justify-content-center ${
+                        className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
                           sellStatus === "success"
                             ? "successbtn"
                             : sellStatus === "failed" ||
@@ -1049,7 +1106,7 @@ const SingleNft = ({
                         ) : sellStatus === "success" ? (
                           "Success"
                         ) : sellStatus === "approve" || sellStatus === "" ? (
-                          "Approve"
+                          "Approve sell"
                         ) : (
                           "Failed"
                         )}
@@ -1080,38 +1137,38 @@ const SingleNft = ({
             </div>
           </div>
         </div>
-        <div>
+        <div className="px-2">
           <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
             <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
               <h3 className="traits-text">Traits</h3>
               {type === "caws" || type === "cawsold" || type === "timepiece" ? (
                 <>
-                  <div className="d-flex gap-3 align-items-center justify-content-between">
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                    <div className="d-flex flex-row flex-xxl-column flex-lg-column gap-2 align-items-center justify-content-between w-100">
                       <span className="traittitle">Background</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[0]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Tail</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[1]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Ears</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[2]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Body</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[3]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Clothes</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[4]?.value}
@@ -1119,32 +1176,32 @@ const SingleNft = ({
                     </div>
                   </div>
                   <div className="trait-separator"></div>
-                  <div className="d-flex gap-3 align-items-center justify-content-between">
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Eyes</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[5]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Mouth</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[6]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Hat</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[7]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Eyewear</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[8]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Watch</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[9]?.value}
@@ -1155,38 +1212,38 @@ const SingleNft = ({
               ) : (
                 <>
                   {" "}
-                  <div className="d-flex gap-3 align-items-center justify-content-between">
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Tier</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[0]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Size</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[1]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Building</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[3]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Workbench</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[4]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">NPC - Attire</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[8]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Gemstone</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[9]?.value}
@@ -1194,32 +1251,32 @@ const SingleNft = ({
                     </div>
                   </div>
                   <div className="trait-separator"></div>
-                  <div className="d-flex gap-3 align-items-center justify-content-between">
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Artifacts</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[5]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">NPC</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[6]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">NPC - AI Powered</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[7]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">Plot</span>
                       <span className="traitsubtitle">
                         {metaData.attributes && metaData?.attributes[10]?.value}
                       </span>
                     </div>
-                    <div className="d-flex flex-column gap-2 align-items-center">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                       <span className="traittitle">
                         Multi Functional Building
                       </span>

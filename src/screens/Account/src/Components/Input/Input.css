@@ -39,14 +39,14 @@ textarea,
     line-height: 30px;
 }
 
-textarea:focus,
+/* textarea:focus,
 input:focus {
     color: white;
     font-size: 20px;
     font-family: Poppins;
     line-height: 30px;
 
-}
+} */
 
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
