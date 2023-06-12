@@ -616,6 +616,15 @@ input[type="range"]:focus::-ms-fill-upper {
   color: #080b2a;
 }
 
+.rewards-btn {
+  background: linear-gradient(90deg, #5e54a0 -10.16%, #00fecf 129.3%);
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #080b2a;
+}
+
 .purple-pill {
   background: linear-gradient(90deg, #1829bd -10.16%, #a420e2 129.3%);
   border-radius: 20px;
@@ -691,21 +700,19 @@ input[type="range"]:focus::-ms-fill-upper {
   top: -250%;
   opacity: 0;
   visibility: hidden;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
-.new-tooltip-wrapper{
+.new-tooltip-wrapper {
   cursor: pointer;
-
 }
 
-.new-tooltip-wrapper:hover{
-  .new-tooltip-content-wrapper{
+.new-tooltip-wrapper:hover {
+  .new-tooltip-content-wrapper {
     visibility: visible;
     opacity: 1;
   }
 }
-
 
 .new-tooltip-content {
   font-style: normal;
