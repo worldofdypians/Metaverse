@@ -1,16 +1,16 @@
 .wallet-balance {
-  background: #242240;
+  // background: #242240;
   border-radius: 8px;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 
   .wallet-wrapper {
-    background: linear-gradient(0deg, #2e2853, #2e2853),
-      linear-gradient(
-        112.83deg,
-        rgba(255, 255, 255, 0.47) 0%,
-        rgba(255, 255, 255, 0) 110.84%
-      );
-    cursor: pointer;  
+    // background: linear-gradient(0deg, #2e2853, #2e2853),
+    //   linear-gradient(
+    //     112.83deg,
+    //     rgba(255, 255, 255, 0.47) 0%,
+    //     rgba(255, 255, 255, 0) 110.84%
+    //   );
+    cursor: pointer;
     border-radius: 6px;
     .wallet-span {
       font-weight: 600;
@@ -19,7 +19,6 @@
       letter-spacing: -0.018em;
       color: #f7f7f7;
       opacity: 0.8;
-
     }
 
     .wallet-address {
@@ -45,7 +44,7 @@
   }
 
   .idyp-wrapper {
-    background: linear-gradient(145deg, #4ED5D2 0%, #242240 86.92%);
+    background: linear-gradient(145deg, #4ed5d2 0%, #242240 86.92%);
     border-radius: 6px;
   }
 
@@ -73,8 +72,7 @@
     color: #ffffff;
   }
 
-
-  .chain-icon{
+  .chain-icon {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -84,11 +82,37 @@
 }
 
 .walletinfo {
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 10px;
-line-height: 15px;
-color: #F7F7FC;
-opacity: 0.8;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 15px;
+  color: #f7f7fc;
+  opacity: 0.8;
+}
+
+.orangesection {
+  background: linear-gradient(114.11deg, #faa525 3.05%, #c13509 97.98%);
+  border-radius: 6px;
+  padding: 10px;
+  width: fit-content;
+  height: 23px;
+  display: flex;
+  align-items: center;
+
+  span {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 9px;
+    line-height: 11px;
+    color: #ffffff;
+  }
+}
+
+.explore-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 45px;
+  color: #ffffff;
 }
