@@ -26,7 +26,8 @@ import { NavLink } from "react-router-dom";
     if (cawsNFTS && cawsNFTS.length > 0) {
       setLoading(false);
     }
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    console.log(cawsNFTS);
 
   }, [cawsNFTS]);
 
