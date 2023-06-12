@@ -38,16 +38,6 @@
     color: #ffffff;
   }
 
-  .dyp-wrapper {
-    background: linear-gradient(145deg, #7770e0 0%, #242240 86.92%);
-    border-radius: 6px;
-  }
-
-  .idyp-wrapper {
-    background: linear-gradient(145deg, #4ed5d2 0%, #242240 86.92%);
-    border-radius: 6px;
-  }
-
   // .bnb-wrapper {
   //   background: linear-gradient(90.83deg, #daaa0a 0.71%, #2e2853 65.22%);
   //   border-radius: 6px;
@@ -63,21 +53,6 @@
     font-size: 12px;
     line-height: 20px;
     color: #f7f7fc;
-  }
-
-  .wallet-amount {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 21px;
-    color: #ffffff;
-  }
-
-  .chain-icon {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -7px;
-    margin: auto;
   }
 }
 
@@ -115,4 +90,66 @@
   font-size: 32px;
   line-height: 45px;
   color: #ffffff;
+}
+
+.bal-txt {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #b8b8e0;
+}
+
+.dyp-wrapper,
+.idyp-wrapper {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 25px;
+}
+
+.wallet-amount {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+.chain-icon {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  width: 16px;
+  height: 16px;
+}
+
+.balancewrapper3 {
+  margin: 0 1rem;
+}
+
+.globaltext {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #b5ccd4;
+}
+
+.genesistext {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffb802;
+}
+
+.genesisimg {
+  height: 70px;
+  scale: 1.3;
 }

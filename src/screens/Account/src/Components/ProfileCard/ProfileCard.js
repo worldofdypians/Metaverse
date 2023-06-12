@@ -131,8 +131,10 @@ const ProfileCard = ({
   const [tooltip, setTooltip] = useState(false);
 
   return (
+    <div className="container-nft pe-xxl-5 pe-lg-5 position-relative" style={{background: 'none', margin: 'auto'}}>
+    <div className="main-wrapper py-4 w-100 mt-5 mt-xxl-0 mt-lg-0">
     <div className="d-flex justify-content-center gap-5">
-      <div className="position-relative col-lg-2 col-xxl-2">
+      <div className="position-relative col-lg-3 col-xxl-3">
         <div className="user-cardImg">
           <div className="d-flex flex-column justify-content-between gap-2">
             <div className="d-flex gap-2 justify-content-between align-items-center">
@@ -255,7 +257,7 @@ const ProfileCard = ({
         </div>
         <img src={dypMedal} alt="" className="position-absolute dypMedal" />
       </div>
-      <div className="explorebanner col-lg-4 col-xxl-4 position-relative">
+      <div className="explorebanner col-lg-5 col-xxl-5 position-relative">
         <div className="d-flex flex-column gap-3">
           <div className="orangesection">
             <span>World of Dypians</span>
@@ -266,7 +268,7 @@ const ProfileCard = ({
         </div>
         <img src={player} alt='' className="position-absolute playerimg" />
       </div>
-    </div>
+    </div></div></div>
   );
 };
 
