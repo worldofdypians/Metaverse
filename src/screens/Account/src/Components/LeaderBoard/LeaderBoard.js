@@ -688,7 +688,7 @@ const LeaderBoard = ({
       <h2
         className={`font-organetto d-flex gap-1 align-items-center  leaderboardTitle justify-content-between`}
       >
-        Leaderboard
+        <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
         <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
           <div className="d-flex align-items-center gap-2 position-relative">
             <img

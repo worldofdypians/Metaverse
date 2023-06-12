@@ -33,9 +33,16 @@ import goldenPass from "../../Components/BundleCard/assets/goldenPass.webp";
 
 import dypius from "../../Images/userProfile/dypius.svg";
 
-function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand, account, isConnected, chainId }) {
+function Dashboard({
+  MyNFTSCaws,
+  MyNFTSTimepiece,
+  MyNFTSLand,
+  account,
+  isConnected,
+  chainId,
+}) {
   const { email, logout } = useAuth();
-  
+
   const {
     data,
     refetch: refetchPlayer,
@@ -134,7 +141,7 @@ function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand, account, isConnect
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
   };
-  console.log(MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand)
+  console.log(MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand);
 
   // const connectWallet = async () => {
   //   try {
@@ -448,20 +455,12 @@ function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand, account, isConnect
                 "d-flex flex-column gap-4 justify-content-center align-items-center"
               }
               style={{
-                marginBottom: 32,
+                marginTop: 80,
               }}
             >
               <div
-                className={`col-12 col-lg-12 col-xxl-3 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
+                className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
               >
-                <h2
-                  className={`font-organetto d-flex gap-1 align-items-center mt-5 mt-lg-0 ${classes.playerProfileTitle}`}
-                >
-                  MY
-                  <mark className={`font-organetto  ${classes.exploreTag}`}>
-                    Profile
-                  </mark>
-                </h2>
                 <ProfileCard
                   email={email}
                   username={data?.getPlayer?.displayName}
@@ -469,6 +468,11 @@ function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand, account, isConnect
                   userId={data?.getPlayer?.playerId}
                   balance={dypBalancebnb}
                   availableTime={availableTime}
+                  isVerified={data?.getPlayer?.wallet}
+                  coinbase={account}
+                  handleShowWalletPopup={() => {
+                    setshowWalletModal(true);
+                  }}
                 />
                 <WalletBalance
                   address={data?.getPlayer?.wallet?.publicAddress}

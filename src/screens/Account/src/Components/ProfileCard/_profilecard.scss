@@ -1,22 +1,25 @@
 .user-cardBg {
-  background-color: transparent;
-  background-image: url("../../Images/userProfile/user-cardBg.png");
+  // background-color: transparent;
+  // background-image: url("../../Images/userProfile/user-cardBg.png");
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   padding: 14px;
   position: relative;
   display: table;
-  font-family: 'Poppins', sans-serif !important;
-
+  font-family: "Poppins", sans-serif !important;
 }
 
 .user-cardImg {
-  background-image: url("../../Images/userProfile/cave2.png"), linear-gradient(126.67deg, #181636 35.2%, #7133E5 191.04%);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(33, 36, 64, 0.15) 100%
+  );
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 8px;
+  border-radius: 20px;
   padding: 20px;
 }
 
@@ -114,7 +117,6 @@
   border-radius: 6px;
   width: fit-content;
   color: #fff;
-
 }
 
 .copybtninner {
@@ -126,8 +128,25 @@
 }
 
 .dypMedal {
-  top: -41px;
-  right: 30px;
+  top: -30px;
+  right: 0px;
   width: 72px;
   height: 68px;
+}
+
+.explorebanner {
+  padding: 20px;
+  border-radius: 20px;
+  background: url("./assets/explorebg.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.playerimg {
+  width: 396px;
+  height: 361px;
+  bottom: 0;
+  object-fit: contain;
+  right: -80px;
 }
