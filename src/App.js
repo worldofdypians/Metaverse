@@ -877,7 +877,6 @@ function App() {
     <BrowserRouter>
       <ApolloProvider client={client}>
         <AuthProvider>
-          <Web3Provider>
             <div className="container-fluid p-0 main-wrapper position-relative">
               <Header
                 handleSignUp={handleShowWalletModal}
@@ -982,6 +981,10 @@ function App() {
                       MyNFTSCaws={MyNFTSCaws}
                       MyNFTSTimepiece={MyNFTSTimepiece}
                       MyNFTSLand={MyNFTSLand}
+                      account={coinbase}
+                isConnected={isConnected}
+                chainId={chainId}
+
                     />
                   }
                 />
@@ -1184,7 +1187,6 @@ function App() {
                 }}
               />
             )}
-          </Web3Provider>
         </AuthProvider>
       </ApolloProvider>
     </BrowserRouter>

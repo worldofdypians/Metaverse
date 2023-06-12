@@ -66,7 +66,7 @@ function Auth() {
   if (isAuthenticated) {
     return (
       <Navigate 
-        to={ "/"}
+        to={ "/account"}
       />
     );
   }
