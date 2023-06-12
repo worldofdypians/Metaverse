@@ -30,7 +30,8 @@ import dragonIcon from "../../Images/userProfile/dragonIcon.svg";
 import idyp from "../../Images/userProfile/idyp.svg";
 import fistIcon from "../../Images/userProfile/Icon.png";
 import goldenPass from "../../Components/BundleCard/assets/goldenPass.webp";
-
+import MobileNav from '../../../../../components/MobileNav/MobileNav'
+import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import dypius from "../../Images/userProfile/dypius.svg";
 
 function Dashboard({
@@ -66,52 +67,8 @@ function Dashboard({
   const [showWalletModal, setshowWalletModal] = useState(false);
   const [stakes, setStakes] = useState([]);
   const [landstakes, setLandStakes] = useState([]);
-  const [optionText, setOptionText] = useState("daily");
-  const [selectedPackage, setSelectedPackage] = useState("dyp");
+  
   const [availableTime, setAvailableTime] = useState();
-
-  const dragonData = {
-    title: "Dragon Ruins",
-    benefits: [
-      "Ability to fight a special creature",
-      "A chance to win an unique CAWS NFT",
-      "Score multiplier",
-    ],
-    price: "50 DYP",
-    link: "https://www.worldofdypians.com/news/644a3089aa4deb26fe4dac90/Dragon-Ruins-Event",
-  };
-
-  const iDypPackageData = {
-    title: "Puzzle Madness",
-    benefits: [
-      "Enhance your puzzle-solving skills",
-      "Ability to earn high value rewards",
-      "Compete against other players on the leaderboard",
-    ],
-    price: "3,500 iDYP",
-    link: "https://www.worldofdypians.com/news/644ce83e7f931ac9706b515e/Puzzle-Madness-Event",
-  };
-  const dypPackageData = {
-    title: "Golden Pass",
-    benefits: [
-      "Double your rewards",
-      "Compete and climb higher in the rankings",
-      "Unlock unique rewards during the event",
-    ],
-    price: "700 DYP",
-    link: "https://www.worldofdypians.com/news/644e343627cca74b2d4a60b1/Golden-Pass-Event",
-  };
-
-  const criticalHitPackageData = {
-    title: "Critical Hit",
-    benefits: [
-      "Exclusive access for Genesis Land NFT owners",
-      "Opportunity to win rewards",
-      "Regular and ongoing events",
-    ],
-    price: "700 DYP",
-    link: "https://www.worldofdypians.com/news/6426dc2bb15f9e51ad8bd4e6/Critical-Hit-Event",
-  };
 
   const getStakes = async () => {
     const stakeArray = await cawsStakeContract.methods
@@ -414,6 +371,11 @@ function Dashboard({
   // console.log(showWalletModal);
 
   return (
+    <div
+    className="container-fluid d-flex justify-content-end p-0"
+    style={{ minHeight: "72vh" }}
+  >
+    {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
     <LoginWrapper
       style={{
         backgroundSize: "cover",
@@ -427,19 +389,7 @@ function Dashboard({
       }}
       img={dashboardBackground}
     >
-      {/* <div
-        className="linear-border"
-        style={{
-          marginTop: 32,
-          alignSelf: "flex-end",
-          marginRight: 32,
-          width: "fit-content",
-        }}
-      >
-        <button className="btn filled-btn px-5" onClick={logout}>
-          Log Out
-        </button>
-      </div> */}
+      
       {loadingPlayer ? (
         <>
           <CircularProgress
@@ -488,6 +438,8 @@ function Dashboard({
                   handleShowWalletPopup={() => {
                     setshowWalletModal(true);
                   }}
+                  userId={data?.getPlayer?.playerId}
+                  username={data?.getPlayer?.displayName}
                 />
               </div>
 
@@ -758,6 +710,8 @@ function Dashboard({
       )}
       {/* <ErrorAlert error={connectedState?.error} /> */}
     </LoginWrapper>
+    </div>
+  
   );
 }
 
