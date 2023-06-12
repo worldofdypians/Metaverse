@@ -121,7 +121,6 @@
   width: 281.94px !important;
   height: 199.98px !important;
 
-
   @media only screen and (max-width: 991px) {
     transform: none !important;
   }
@@ -198,11 +197,13 @@
 }
 
 .errorbtn {
-  background: linear-gradient(90deg, #FFAC45 -10.16%, #FF6232 129.3%);
+  background: linear-gradient(90deg, #ffac45 -10.16%, #ff6232 129.3%);
   color: white !important;
 }
 
-.unlistbtn, .unlistbtn:hover, .unlistbtn:focus {
+.unlistbtn,
+.unlistbtn:hover,
+.unlistbtn:focus {
   background: transparent;
   outline: none;
   border: none;
@@ -213,7 +214,7 @@
   display: flex;
   align-items: center;
   text-decoration-line: underline;
-  color: #FF6232;
+  color: #ff6232;
 }
 
 .successbtn {
@@ -251,16 +252,15 @@
   }
 }
 
-.new-packages-grid{
+.new-packages-grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 40px;
 
   @media screen and (max-width: 786px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
- 
 }
 
 .marketplace-sidebar {
@@ -896,4 +896,84 @@
   .event-package-title {
     color: #7bd8b0 !important;
   }
+}
+
+.market-stake-banner-wrapper {
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(33, 36, 64, 0.15) 100%
+  );
+  backdrop-filter: blur(13px);
+  border-radius: 20px;
+}
+
+.market-stake-stat {
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 44px;
+  color: #ffffff;
+}
+
+.market-stake-stat-desc {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.caws-wod-stake-wrapper {
+  background-image: url("./assets/cawsWodBanner1.png");
+  background-size: 100% 100%;
+  min-height: 300px;
+}
+.wod-stake-wrapper {
+  background-image: url("./assets/wodBanner1.png");
+  background-size: 100% 100%;
+  min-height: 300px;
+}
+
+.market-stake-title {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: #ffffff;
+}
+
+.market-stake-desc {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  width: 75%;
+}
+
+.tvl-wrapper {
+  background-image: url("./assets/tvlBg.png");
+  background-size: 100% 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  top: 0;
+  margin: auto;
+  width: 250.35px;
+  height: 234.72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.market-stake-tvl {
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 49px;
+  color: #ffffff;
+  position: relative;
 }
