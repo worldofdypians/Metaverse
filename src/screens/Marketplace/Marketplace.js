@@ -264,7 +264,7 @@ const Marketplace = ({
                 <h6 className="filter-title filter-selected">All</h6>
                 <h6 className="filter-title">CAWS</h6>
                 <h6 className="filter-title">WoD</h6>
-                <h6 className="filter-title">TimePiece</h6>
+                <h6 className="filter-title">Timepiece</h6>
               </div>
             </div>
             <div
@@ -378,7 +378,7 @@ const Marketplace = ({
                 <h6 className="filter-title filter-selected">All</h6>
                 <h6 className="filter-title">CAWS</h6>
                 <h6 className="filter-title">WoD</h6>
-                <h6 className="filter-title">TimePiece</h6>
+                <h6 className="filter-title">Timepiece</h6>
               </div>
             </div>
             {loading === false ? (
@@ -459,7 +459,7 @@ const Marketplace = ({
                 <h6 className="filter-title filter-selected">All</h6>
                 <h6 className="filter-title">CAWS</h6>
                 <h6 className="filter-title">WoD</h6>
-                <h6 className="filter-title">TimePiece</h6>
+                <h6 className="filter-title">Timepiece</h6>
               </div>
             </div>
             {loading === false ? (

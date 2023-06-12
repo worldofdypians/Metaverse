@@ -33,9 +33,9 @@ import goldenPass from "../../Components/BundleCard/assets/goldenPass.webp";
 
 import dypius from "../../Images/userProfile/dypius.svg";
 
-function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand }) {
+function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand, account, isConnected, chainId }) {
   const { email, logout } = useAuth();
-  const { account, connectedState, chainId } = useWeb3();
+  
   const {
     data,
     refetch: refetchPlayer,
@@ -445,7 +445,7 @@ function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand }) {
           <div className={"home-main-wrapper"}>
             <div
               className={
-                "d-flex flex-column flex-lg-column flex-xxl-row  gap-4 justify-content-center justify-content-xxl-between justify-content-lg-between"
+                "d-flex flex-column gap-4 justify-content-center align-items-center"
               }
               style={{
                 marginBottom: 32,
@@ -486,13 +486,8 @@ function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand }) {
                   }}
                 />
               </div>
-              {/* <div className={classes.containerCurrency}>
-              <p className={classes.text}>Currency</p>
-              <CurrencyList name={"ETH"} price={walletBalance} />
-              <RedeemTransaction refetchPlayer={refetchPlayer} />
-            </div> */}
 
-              <div className="d-flex flex-column align-items-center w-100">
+              {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
                   <h2
                     className={`font-organetto d-flex flex-column flex-xl-row gap-1 align-items-center m-0 bundleTitle`}
@@ -500,70 +495,7 @@ function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand }) {
                     Premium
                     <mark className={`font-organetto bundletag`}>events</mark>
                   </h2>
-                  {/* <div className="d-flex align-items-center justify-content-between w-100">
-                    <div
-                      className={"linear-border"}
-                      style={{ width: "fit-content" }}
-                    >
-                      <a
-                        href="https://opensea.io/collection/worldofdypians"
-                        target="_blank"
-                        rel="noreferrer"
-                        className={"btn filled-btn px-5"}
-                      >
-                        Premium Bundle #1
-                      </a>
-                    </div>
-                    <div
-                      className={"linear-border"}
-                      style={{ width: "fit-content" }}
-                    >
-                      <a
-                        href="https://opensea.io/collection/worldofdypians"
-                        target="_blank"
-                        rel="noreferrer"
-                        className={"btn outline-btn px-5"}
-                      >
-                        Premium Bundle #2
-                      </a>
-                    </div>
-                  </div> */}
-                  {/* <div className="d-flex align-items-center gap-1">
-                    <div className="optionsWrapper col-12">
-                      <div
-                        className="d-flex gap-1 align-items-center justify-content-between"
-                        style={{ height: 38 }}
-                      >
-                        <span
-                          className={`${
-                            optionText === "daily" && "otheroptionsActive"
-                          } optionText col-6`}
-                          style={{
-                            width: "50%",
-                          }}
-                          onClick={() => {
-                            setOptionText("daily");
-                          }}
-                        >
-                          Premium bundle #1
-                        </span>
-                        <span
-                          className={`${
-                            optionText === "weekly" && "otheroptionsActive"
-                          } optionText col-6`}
-                          style={{
-                            width: "50%",
-                          }}
-                          onClick={() => {
-                            setOptionText("weekly");
-
-                          }}
-                        >
-                          Premium bundle #2
-                        </span>
-                      </div>
-                    </div>
-                  </div> */}
+              
                 </div>
                 <div className="d-flex align-items-start align-items-lg-center gap-2 gap-lg-2 w-100 justify-content-start">
                   <div className="d-flex flex-column align-items-center gap-2">
@@ -670,7 +602,7 @@ function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand }) {
                   }}
                   availableTime={availableTime}
                 />
-              </div>
+              </div> */}
 
               <LeaderBoard
                 username={data?.getPlayer?.displayName}
@@ -820,7 +752,7 @@ function Dashboard({ MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand }) {
           stakes={landstakes}
         />
       )}
-      <ErrorAlert error={connectedState?.error} />
+      {/* <ErrorAlert error={connectedState?.error} /> */}
     </LoginWrapper>
   );
 }

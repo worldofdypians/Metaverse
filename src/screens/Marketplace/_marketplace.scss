@@ -63,6 +63,9 @@
 .price-wrapper {
   background: rgba(0, 0, 0, 0.12);
   border-radius: 25px;
+  @media only screen and (max-width: 991px) {
+    width: 100%;
+  }
 }
 
 .currentprice-txt {
@@ -108,16 +111,29 @@
   width: 281.94px !important;
   height: 316.6px !important;
   top: 20px !important;
+
+  @media only screen and (max-width: 991px) {
+    transform: none !important;
+  }
 }
 
 .second-bigbox-blur {
   width: 281.94px !important;
   height: 199.98px !important;
+
+
+  @media only screen and (max-width: 991px) {
+    transform: none !important;
+  }
 }
 
 .blur-img-big {
   height: 325.1px !important;
   width: 306.98px !important;
+
+  @media only screen and (max-width: 991px) {
+    transform: none !important;
+  }
 }
 
 .owner-txt {
@@ -161,6 +177,9 @@
   font-size: 16px;
   line-height: 20px;
   color: #e2e2e2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .trait-separator {
@@ -179,8 +198,22 @@
 }
 
 .errorbtn {
-  background: linear-gradient(to right, #cb2d3e, #ef473a);
-  color: white;
+  background: linear-gradient(90deg, #FFAC45 -10.16%, #FF6232 129.3%);
+  color: white !important;
+}
+
+.unlistbtn, .unlistbtn:hover, .unlistbtn:focus {
+  background: transparent;
+  outline: none;
+  border: none;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-decoration-line: underline;
+  color: #FF6232;
 }
 
 .successbtn {

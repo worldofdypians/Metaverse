@@ -725,45 +725,6 @@ function App() {
     ethereum.on("accountsChanged", handleConnectWallet);
   }
 
-  // const fetchAllMyNfts = async () => {
-  //   if (isConnected && coinbase) {
-  //     const cawsNew = await getMyNFTSCaws(
-  //       coinbase,
-  //       window.config.nft_caws_address
-  //     ).catch((e) => {
-  //       console.error(e);
-  //     });
-
-  //     const cawsOld = await getMyNFTSCaws(
-  //       coinbase,
-  //       window.config.nft_cawsold_address
-  //     ).catch((e) => {
-  //       console.error(e);
-  //     });
-
-  //     let mytotalCaws = [...cawsOld, ...cawsNew];
-  //     setMyNFTSCaws(mytotalCaws);
-  //    getMyNFTSTimepiece(
-  //       coinbase,
-  //       window.config.nft_timepiece_address
-  //     ).then((NFTS) => {
-  //       setMyNFTSTimepiece(NFTS);
-  //       console.log(NFTS, "timepiece");
-  //     }).catch((e) => {
-  //       console.error(e);
-  //     });
-
-  //     const land_nft = await getMyNFTSLAND(
-  //       coinbase,
-  //       window.config.nft_land_address
-  //     ).then((NFTS) => {
-  //       setMyNFTSLand(NFTS);
-  //       console.log(NFTS, "land");
-  //     }).catch((e) => {
-  //       console.error(e);
-  //     });
-  //   }
-  // };
 
   const getMyNFTS = async (coinbase, type) => {
     return await window.getMyNFTs(coinbase, type);
@@ -837,20 +798,20 @@ function App() {
       console.error(e);
     });
 
-    if (cawsOld.length === 0 && cawsNew.length === 0) {
+    if (cawsOld && cawsNew && cawsOld.length === 0 && cawsNew.length === 0) {
       setCawsNFTS([]);
     }
-    if (cawsOld.length !== 0 && cawsNew.length === 0) {
+    if (cawsOld && cawsNew && cawsOld.length !== 0 && cawsNew.length === 0) {
       let totalCaws = [...cawsOld];
       setCawsNFTS(totalCaws);
     }
 
-    if (cawsOld.length === 0 && cawsNew.length !== 0) {
+    if (cawsOld && cawsNew && cawsOld.length === 0 && cawsNew.length !== 0) {
       let totalCaws = [...cawsNew];
       setCawsNFTS(totalCaws);
     }
 
-    if (cawsOld.length !== 0 && cawsNew.length !== 0) {
+    if (cawsOld && cawsNew && cawsOld.length !== 0 && cawsNew.length !== 0) {
       let totalCaws = [...cawsOld, ...cawsNew];
       setCawsNFTS(totalCaws);
     }
@@ -916,7 +877,6 @@ function App() {
     <BrowserRouter>
       <ApolloProvider client={client}>
         <AuthProvider>
-          <Web3Provider>
             <div className="container-fluid p-0 main-wrapper position-relative">
               <Header
                 handleSignUp={handleShowWalletModal}
@@ -1021,6 +981,10 @@ function App() {
                       MyNFTSCaws={MyNFTSCaws}
                       MyNFTSTimepiece={MyNFTSTimepiece}
                       MyNFTSLand={MyNFTSLand}
+                      account={coinbase}
+                isConnected={isConnected}
+                chainId={chainId}
+
                     />
                   }
                 />
@@ -1223,7 +1187,6 @@ function App() {
                 }}
               />
             )}
-          </Web3Provider>
         </AuthProvider>
       </ApolloProvider>
     </BrowserRouter>

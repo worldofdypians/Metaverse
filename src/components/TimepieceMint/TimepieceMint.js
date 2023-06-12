@@ -333,7 +333,7 @@ const TimePieceMint = ({
             <div className="input-container position-relative col-8 col-lg-6">
               <input
                 type="number"
-                placeholder="Nr. of CAWS TimePiece NFT to create"
+                placeholder="Nr. of CAWS Timepiece NFT to create"
                 max={cawsArray.length}
                 min={1}
                 className="land-input w-100"
