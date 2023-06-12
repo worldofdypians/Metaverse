@@ -61,6 +61,7 @@ const Marketplace = ({
     dots: false,
     arrows: false,
     dotsClass: "button__bar",
+    infinite: false,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 1,
@@ -463,7 +464,7 @@ const Marketplace = ({
             </div>
             {loading === false ? (
               <div className="slider-container">
-                <Slider {...settings}>
+                <Slider ref={(c) => (secondSlider.current = c)} {...settings}>
                   {recentSales &&
                     recentSales.length > 0 &&
                     recentSales.map((nft, index) => (
