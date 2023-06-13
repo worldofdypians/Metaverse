@@ -10,7 +10,6 @@ import globalRank from "./assets/globalRank.svg";
 import genesisImg from "./assets/genesisRank.svg";
 import axios from "axios";
 
-
 const WalletBalance = ({
   dypBalance,
   address,
@@ -26,13 +25,16 @@ const WalletBalance = ({
   userId,
   username,
 }) => {
-  
-
-
-    const [userRank, setUserRank] = useState("");
+  const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
- const [dailyrecords, setRecords] = useState([]);
+  const [dailyrecords, setRecords] = useState([]);
 
+  const [dyptokenData, setDypTokenData] = useState([]);
+  const [idyptokenData, setIDypTokenData] = useState([]);
+  const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
+  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
+  const [idyptokenDataAvax, setIDypTokenDataAvax] = useState([]);
+  const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
 
   const fetchMonthlyRecordsAroundPlayer = async () => {
     const data = {
@@ -52,10 +54,7 @@ const WalletBalance = ({
     setUserRank(testArray[0].position);
   };
 
-
-
-
-    const fetchGenesisAroundPlayer = async () => {
+  const fetchGenesisAroundPlayer = async () => {
     const data = {
       StatisticName: "GenesisLandRewards",
       MaxResultsCount: 6,
@@ -73,11 +72,60 @@ const WalletBalance = ({
     setGenesisRank(testArray[0].position);
   };
 
+  const getTokenData = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_eth_v2")
+      .then((data) => {
+        const propertyDyp = Object.entries(
+          data.data.the_graph_eth_v2.token_data
+        );
+        setDypTokenData(propertyDyp[0][1].token_price_usd);
 
+        const propertyIDyp = Object.entries(
+          data.data.the_graph_eth_v2.token_data
+        );
+        setIDypTokenData(propertyIDyp[1][1].token_price_usd);
+      });
+  };
 
-   useEffect(() => {
-  fetchMonthlyRecordsAroundPlayer();
-  fetchGenesisAroundPlayer();
+  const getTokenDatabnb = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
+      .then((data) => {
+        const propertyDyp = Object.entries(
+          data.data.the_graph_bsc_v2.token_data
+        );
+        setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
+
+        const propertyIDyp = Object.entries(
+          data.data.the_graph_bsc_v2.token_data
+        );
+        setIDypTokenDatabnb(propertyIDyp[1][1].token_price_usd);
+      });
+  };
+
+  const getTokenDataavax = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_avax_v2")
+      .then((data) => {
+        const propertyDyp = Object.entries(
+          data.data.the_graph_avax_v2.token_data
+        );
+        setDypTokenDataAvax(propertyDyp[0][1].token_price_usd);
+
+        const propertyIDyp = Object.entries(
+          data.data.the_graph_avax_v2.token_data
+        );
+        setIDypTokenDataAvax(propertyIDyp[1][1].token_price_usd);
+      });
+  };
+
+  useEffect(() => {
+    fetchMonthlyRecordsAroundPlayer();
+    fetchGenesisAroundPlayer();
+    getTokenData();
+    getTokenDataavax();
+    getTokenDatabnb();
   }, []);
 
   return (
@@ -86,25 +134,25 @@ const WalletBalance = ({
       style={{ background: "none", margin: "auto" }}
     >
       <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center">
-        
-          <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative col-lg-3">
+        <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative col-lg-3">
           <h5 className="bal-txt px-4">My Rankings</h5>
           <div className="d-flex gap-3 justify-content-evenly">
             <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
-              <img src={globalRank} alt=''/>
-              <span className="globaltext" style={{fontSize: 12}}>#{userRank + 1}</span>
+              <img src={globalRank} alt="" />
+              <span className="globaltext" style={{ fontSize: 12 }}>
+                #{userRank + 1}
+              </span>
               <span className="globaltext">Global</span>
             </div>
             <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
-              <img src={genesisImg} alt='' className="genesisimg"/>
-              <span className="genesistext" style={{fontSize: 12}}>#{genesisRank + 1}</span>
+              <img src={genesisImg} alt="" className="genesisimg" />
+              <span className="genesistext" style={{ fontSize: 12 }}>
+                #{genesisRank + 1}
+              </span>
               <span className="genesistext">Genesis</span>
             </div>
-
           </div>
-
-          </div>
-      
+        </div>
 
         <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative col-lg-5">
           <h5 className="bal-txt px-4">My Balance</h5>
@@ -117,7 +165,7 @@ const WalletBalance = ({
                     {getFormattedNumber(dypBalance, 2)} DYP
                   </h6>
                 </div>
-                <span className="nft-price-usd">$22</span>
+                <span className="nft-price-usd">${getFormattedNumber(dypBalance * dyptokenData, 2)}</span>
                 <img src={ethIcon} alt="" className="chain-icon" />
               </div>
               <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative">
@@ -127,8 +175,10 @@ const WalletBalance = ({
                     {getFormattedNumber(dypBalancebnb, 2)} DYP
                   </h6>
                 </div>
-                <span className="nft-price-usd">$22</span>
-                
+                <span className="nft-price-usd">
+                  ${getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
+                </span>
+
                 <img src={bnbIcon} alt="" className="chain-icon" />
               </div>
               <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative">
@@ -138,7 +188,9 @@ const WalletBalance = ({
                     {getFormattedNumber(dypBalanceavax, 2)} DYP
                   </h6>
                 </div>
-                <span className="nft-price-usd">$22</span>
+                <span className="nft-price-usd">
+                  ${getFormattedNumber(dypBalanceavax * dyptokenDataAvax, 2)}
+                </span>
 
                 <img src={avaxIcon} alt="" className="chain-icon" />
               </div>
@@ -157,7 +209,9 @@ const WalletBalance = ({
                     {getFormattedNumber(idypBalance, 2)} iDYP
                   </h6>
                 </div>
-                <span className="nft-price-usd">$22</span>
+                <span className="nft-price-usd">
+                  ${getFormattedNumber(idypBalance * idyptokenData, 2)}
+                </span>
 
                 <img src={ethIcon} alt="" className="chain-icon" />
               </div>
@@ -173,7 +227,9 @@ const WalletBalance = ({
                     {getFormattedNumber(idypBalancebnb, 2)} iDYP
                   </h6>
                 </div>
-                <span className="nft-price-usd">$22</span>
+                <span className="nft-price-usd">
+                  ${getFormattedNumber(idypBalancebnb * idyptokenDatabnb, 2)}
+                </span>
 
                 <img src={bnbIcon} alt="" className="chain-icon" />
               </div>
@@ -189,7 +245,9 @@ const WalletBalance = ({
                     {getFormattedNumber(idypBalanceavax, 2)} iDYP
                   </h6>
                 </div>
-                <span className="nft-price-usd">$22</span>
+                <span className="nft-price-usd">
+                  ${getFormattedNumber(idypBalanceavax * idyptokenDataAvax, 2)}
+                </span>
 
                 <img src={avaxIcon} alt="" className="chain-icon" />
               </div>
@@ -197,7 +255,7 @@ const WalletBalance = ({
           </div>
         </div>
       </div>
-        </div>
+    </div>
   );
 };
 

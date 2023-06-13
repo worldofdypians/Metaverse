@@ -258,7 +258,7 @@ const ProfileCard = ({
         <img src={dypMedal} alt="" className="position-absolute dypMedal" />
       </div>
       <div className="explorebanner col-lg-5 col-xxl-5 position-relative">
-        <div className="d-flex flex-column gap-3">
+        <div className="d-flex flex-column gap-2">
           <div className="orangesection">
             <span>World of Dypians</span>
           </div>

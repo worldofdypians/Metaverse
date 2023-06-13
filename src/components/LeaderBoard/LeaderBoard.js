@@ -825,7 +825,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                 {optionText !== "genesis" && (
                   <th className="playerHeader text-center">Reward</th>
                 )}
-                <th className="playerHeader text-center">Pass Reward</th>
+                <th className="playerHeader text-center">Golden Pass</th>
               </tr>
 
               {dailyrecords &&
@@ -1190,12 +1190,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
               }}
             />
           </div>
-          <span className="previous-desc mb-0">
-            {optionText === "genesis"
-              ? "Display previous monthly Genesis ranking results."
-              : `Display previous ${optionText} ranking results. The scores from
-              previous rankings will be accumulated towards the grand prize.`}
-          </span>
+          
         </div>
       </div>
     </div>

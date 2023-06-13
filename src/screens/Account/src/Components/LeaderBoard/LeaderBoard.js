@@ -16,6 +16,13 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { dyp700_abi } from "../../web3";
 import Countdown from "react-countdown";
 
+import winner from "./assets/winner.png";
+import first from "./assets/first.svg";
+import second from "./assets/second.svg";
+import third from "./assets/third.svg";
+import star from "./assets/star.svg";
+import playerImg from "./assets/playerimg.png";
+
 const renderer = ({ hours, minutes, seconds }) => {
   return (
     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
@@ -672,24 +679,29 @@ const LeaderBoard = ({
   }, [availableTime]);
 
   return (
-    <div className="d-flex flex-column gap-3 col-xxl-4 col-lg-12 col-12 leaderboard-wrapper">
-      <div className="d-none">
-        {availableTime !== "0" && availableTime && (
-          <Countdown
-            date={availableTime}
-            renderer={renderer}
-            onComplete={() => {
-              setcountdown();
-              setisActive(false);
-            }}
-          />
-        )}
-      </div>
-      <h2
-        className={`font-organetto d-flex gap-1 align-items-center  leaderboardTitle justify-content-between`}
-      >
-        <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
-        <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+    <div
+      className="container-nft pe-xxl-5 pe-lg-5 position-relative"
+      style={{ background: "none", margin: "auto" }}
+    >
+      <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-end">
+        <div className="d-flex flex-column gap-3 col-xxl-4 col-lg-5 col-12 leaderboard-wrapper">
+          <div className="d-none">
+            {availableTime !== "0" && availableTime && (
+              <Countdown
+                date={availableTime}
+                renderer={renderer}
+                onComplete={() => {
+                  setcountdown();
+                  setisActive(false);
+                }}
+              />
+            )}
+          </div>
+          <h2
+            className={`font-organetto d-flex gap-1 align-items-center  leaderboardTitle gap-2`}
+          >
+            <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
+            {/* <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
           <div className="d-flex align-items-center gap-2 position-relative">
             <img
               src={tooltipIcon}
@@ -716,512 +728,727 @@ const LeaderBoard = ({
               </p>
             </div>
           </div>
-        </OutsideClickHandler>
-      </h2>
-      <div className="grandPrices-wrapper">
-        {/* <div className="d-flex flex-column gap-2">
+        </OutsideClickHandler> */}
+          </h2>
+          {/*  <div className="grandPrices-wrapper">
+        <div className="d-flex flex-column gap-2">
           <div className="d-flex align-items-end gap-2 justify-content-between">
           </div>
-        </div> */}
-      </div>
-      <div className="d-flex align-items-center gap-1">
-        <div className="optionsWrapper col-12">
-          <div
-            className="d-flex gap-1 align-items-center justify-content-between"
-            style={{ height: 38 }}
-          >
-            <span
-              className={`${
-                optionText === "genesis" && "optiongenesis"
-              } optionText col-3`}
-              onClick={() => {
-                handleOption("genesis");
-                fetchGenesisRecords();
-              }}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
-            >
-              Genesis
-            </span>
-            <span
-              className={`${
-                optionText === "daily" && "otheroptionsActive"
-              } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
-              onClick={() => {
-                handleOption("daily");
-                fetchDailyRecords();
-              }}
-            >
-              Daily
-            </span>
-            <span
-              className={`${
-                optionText === "weekly" && "otheroptionsActive"
-              } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
-              onClick={() => {
-                handleOption("weekly");
-                fetchWeeklyRecords();
-              }}
-            >
-              Weekly
-            </span>
-            <span
-              className={`${
-                optionText === "monthly" && "otheroptionsActive"
-              } optionText col-3`}
-              style={{ width: "24%" }}
-              onClick={() => {
-                handleOption("monthly");
-                fetchMonthlyRecords();
-              }}
-            >
-              Monthly
-            </span>
+        </div> 
+      </div>*/}
+          <div className="d-flex align-items-center gap-1">
+            <div className="optionsWrapper col-12">
+              <div
+                className="d-flex gap-1 align-items-center justify-content-between"
+                style={{ height: 38 }}
+              >
+                <span
+                  className={`${
+                    optionText === "genesis" && "optiongenesis"
+                  } optionText col-3`}
+                  onClick={() => {
+                    handleOption("genesis");
+                    fetchGenesisRecords();
+                  }}
+                  style={{ width: "24%" }}
+                >
+                  Genesis
+                </span>
+                <span
+                  className={`${
+                    optionText === "daily" && "otheroptionsActive"
+                  } optionText col-3`}
+                  style={{ width: "24%" }}
+                  onClick={() => {
+                    handleOption("daily");
+                    fetchDailyRecords();
+                  }}
+                >
+                  Daily
+                </span>
+                <span
+                  className={`${
+                    optionText === "weekly" && "otheroptionsActive"
+                  } optionText col-3`}
+                  style={{ width: "24%" }}
+                  onClick={() => {
+                    handleOption("weekly");
+                    fetchWeeklyRecords();
+                  }}
+                >
+                  Weekly
+                </span>
+                <span
+                  className={`${
+                    optionText === "monthly" && "otheroptionsActive"
+                  } optionText col-3`}
+                  style={{ width: "24%" }}
+                  onClick={() => {
+                    handleOption("monthly");
+                    fetchMonthlyRecords();
+                  }}
+                >
+                  Monthly
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div
-        className="d-flex flex-column gap-2 tablewrapper"
-        style={{ height: "366px" }}
-      >
-        {optionText !== "genesis" ? (
-          <table className="playerTable">
-            <tbody>
-              <tr className="playerRow">
-                <th className="playerHeader">Rank</th>
-                <th className="playerHeader">Player</th>
-                {optionText !== "genesis" && (
-                  <th className="playerHeader text-center">Score</th>
-                )}
-                {optionText !== "genesis" && (
-                  <th className="playerHeader text-center">Reward</th>
-                )}
-                <th className="playerHeader text-center">Pass Reward</th>
-              </tr>
+          <div
+            className="d-flex flex-column gap-2 tablewrapper"
+            style={{ height: optionText === "genesis" ? "345px" : "366px" }}
+          >
+            {optionText !== "genesis" ? (
+              <table className="playerTable">
+                <tbody>
+                  <tr className="playerRow">
+                    <th className="playerHeader">Rank</th>
+                    <th className="playerHeader">Player</th>
+                    {optionText !== "genesis" && (
+                      <th className="playerHeader text-center">Score</th>
+                    )}
+                    {optionText !== "genesis" && (
+                      <th className="playerHeader text-center">Reward</th>
+                    )}
+                    <th className="playerHeader text-center">Golden Pass</th>
+                  </tr>
 
-              {dailyrecords &&
-                inactiveBoard === false &&
-                dailyrecords.length > 0 &&
-                dailyrecords.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
+                  {dailyrecords &&
+                    inactiveBoard === false &&
+                    dailyrecords.length > 0 &&
+                    dailyrecords.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1">
+                            {playerData[index].position}
+                          </td>
+                          <td className="playerName col-5">
+                            {availableTime !== "0" &&
+                            availableTime &&
+                            availableTime !== undefined &&
+                            item.displayName === username ? (
+                              <div className="position-relative">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span> {item.displayName}</span>
+                              </div>
+                            ) : (
+                              <div className="position-relative">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName}
+                              </div>
+                            )}
+                          </td>
+                          {optionText !== "genesis" ? (
+                            <td className="playerScore col-2 text-center">
+                              {getFormattedNumber(item.statValue, 0)}
+                            </td>
+                          ) : (
+                            <td className="playerScore col-2 text-center">
+                              {getFormattedNumber(item.statValue, 0)}
+                            </td>
+                          )}
+
+                          {optionText !== "genesis" && (
+                            <td
+                              className={`playerReward text-center col-2 ${
+                                availableTime !== "0" &&
+                                availableTime &&
+                                availableTime !== undefined &&
+                                username === item.displayName
+                                  ? "goldenscore"
+                                  : "playerReward"
+                              }`}
+                            >
+                              ${getFormattedNumber(prizes[index], 0)}
+                            </td>
+                          )}
+                          <td
+                            className={`playerScore col-2 ${
+                              availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive"
+                            }`}
+                          >
+                            +$
+                            {getFormattedNumber(
+                              optionText === "daily"
+                                ? dailyPrizesGolden[index]
+                                : optionText === "monthly"
+                                ? monthlyPrizesGolden[index]
+                                : optionText === "weekly"
+                                ? weeklyPrizesGolden[index]
+                                : prizes[index],
+                              0
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                  {monthlyplayerData &&
+                    inactiveBoard === true &&
+                    optionText === "monthly" &&
+                    monthlyplayerData.length > 0 &&
+                    monthlyplayerData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1">
+                            #{Number(item.position) + 1}
+                          </td>
+                          <td className="playerName col-5">
+                            {availableTime !== "0" &&
+                            availableTime &&
+                            availableTime !== undefined &&
+                            item.displayName === username ? (
+                              <div className="position-relative">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span> {item.displayName}</span>
+                              </div>
+                            ) : (
+                              <div className="position-relative">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2  text-center">
+                            {" "}
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 ${
+                              availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${prizes[index]}
+                          </td>
+                          <td
+                            className={`playerReward col-2 ${
+                              availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive"
+                            }`}
+                          >
+                            +$0
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                  {weeklyplayerData &&
+                    inactiveBoard === true &&
+                    optionText === "weekly" &&
+                    weeklyplayerData.length > 0 &&
+                    weeklyplayerData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1">
+                            #{item.position + 1}
+                          </td>
+                          <td className="playerName col-5">
+                            {availableTime !== "0" &&
+                            availableTime &&
+                            availableTime !== undefined &&
+                            item.displayName === username ? (
+                              <div className="position-relative">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span> {item.displayName}</span>
+                              </div>
+                            ) : (
+                              <div className="position-relative">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 ${
+                              availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${prizes[index]}
+                          </td>
+                          <td
+                            className={`playerReward col-2 ${
+                              availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive"
+                            }`}
+                          >
+                            +${getFormattedNumber(weeklyPrizesGolden[index], 0)}
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                  {dailyplayerData &&
+                    inactiveBoard === true &&
+                    optionText === "daily" &&
+                    dailyplayerData.length > 0 &&
+                    dailyplayerData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1">
+                            #{item.position + 1}
+                          </td>
+                          <td className="playerName col-5">
+                            {availableTime !== "0" &&
+                            availableTime &&
+                            availableTime !== undefined &&
+                            item.displayName === username ? (
+                              <div className="position-relative">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span> {item.displayName}</span>
+                              </div>
+                            ) : (
+                              <div className="position-relative">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 ${
+                              availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${prizes[index]}
+                          </td>
+                          <td
+                            className={`playerReward col-2 ${
+                              availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive"
+                            }`}
+                          >
+                            +${dailyPrizesGolden[index]}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  {inactiveBoard === true &&
+                    ((dailyplayerData.length === 0 && optionText === "daily") ||
+                      (weeklyplayerData.length === 0 &&
+                        optionText === "weekly") ||
+                      (monthlyplayerData.length === 0 &&
+                        optionText === "monthly")) &&
+                    optionText !== "genesis" && (
+                      <CircularProgress
+                        size={20}
+                        style={{ alignSelf: "center", margin: "auto" }}
+                      />
+                    )}
+                </tbody>
+              </table>
+            ) : (
+              <ComingSoon
+                optionText={optionText}
+                data={genesisData}
+                username={username}
+                inactiveBoard={inactiveBoard}
+              />
+            )}
+          </div>
+
+          {activePlayer === false &&
+            inactiveBoard === false &&
+            optionText !== "genesis" && (
+              <table className="playerTable" style={{ marginTop: "-33px" }}>
+                <tbody>
+                  <tr className={`playerInnerRow-inactive`}>
+                    <td
+                      className={`playerData ${
+                        optionText === "genesis" ? "col-2" : "col-1"
                       }`}
                     >
-                      <td className="playerData col-1">
-                        {playerData[index].position}
-                      </td>
-                      <td className="playerName col-5">
+                      #{userData.position + 1}
+                    </td>
+                    <td className="playerName col-5">
+                      <div className="position-relative">
                         {availableTime !== "0" &&
                         availableTime &&
-                        availableTime !== undefined &&
-                        item.displayName === username ? (
+                        availableTime !== undefined ? (
                           <div className="position-relative">
                             <img
                               src={premiumAvatar}
                               alt=""
                               className="playerAvatar"
                             />
-                            <span> {item.displayName}</span>
+                            <img
+                              src={premiumStar}
+                              alt=""
+                              className="premium-star"
+                            />
+                            <span> {userData.displayName}</span>
                           </div>
                         ) : (
-                          <div className="position-relative">
+                          <>
                             <img
                               src={playerAvatar}
                               alt=""
                               className="playerAvatar"
-                            />{" "}
-                            {item.displayName}
-                          </div>
+                            />
+                            {userData.displayName}
+                          </>
                         )}
+                      </div>
+                    </td>
+                    {optionText !== "genesis" && (
+                      <td className="playerScore col-2 text-center">
+                        {getFormattedNumber(userData.statValue, 0)}
                       </td>
-                      {optionText !== "genesis" ? (
-                        <td className="playerScore col-2 text-center">
-                          {getFormattedNumber(item.statValue, 0)}
-                        </td>
-                      ) : (
-                        <td className="playerScore col-2 text-center">
-                          {getFormattedNumber(item.statValue, 0)}
-                        </td>
-                      )}
-
-                      {optionText !== "genesis" && (
-                        <td
-                          className={`playerReward text-center col-2 ${
-                            availableTime !== "0" &&
-                            availableTime &&
-                            availableTime !== undefined &&
-                            username === item.displayName
-                              ? "goldenscore"
-                              : "playerReward"
-                          }`}
-                        >
-                          ${getFormattedNumber(prizes[index], 0)}
-                        </td>
-                      )}
+                    )}
+                    <td
+                      className={`playerReward text-center ${
+                        availableTime !== "0" &&
+                        availableTime &&
+                        availableTime !== undefined &&
+                        username === userData.displayName
+                          ? "goldenscore"
+                          : "playerReward"
+                      } col-2 ${optionText !== "genesis" && "text-center"} `}
+                    >
+                      $
+                      {optionText === "genesis"
+                        ? getFormattedNumber(userData.statValue, 0)
+                        : "0"}{" "}
+                    </td>
+                    {optionText !== "genesis" && (
                       <td
                         className={`playerScore col-2 ${
                           availableTime !== "0" &&
                           availableTime &&
                           availableTime !== undefined &&
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "goldenscore-inactive"
-                        }`}
-                      >
-                        +$
-                        {getFormattedNumber(
-                          optionText === "daily"
-                            ? dailyPrizesGolden[index]
-                            : optionText === "monthly"
-                            ? monthlyPrizesGolden[index]
-                            : optionText === "weekly"
-                            ? weeklyPrizesGolden[index]
-                            : prizes[index],
-                          0
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-
-              {monthlyplayerData &&
-                inactiveBoard === true &&
-                optionText === "monthly" &&
-                monthlyplayerData.length > 0 &&
-                monthlyplayerData.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1">
-                        #{Number(item.position) + 1}
-                      </td>
-                      <td className="playerName col-5">
-                        {availableTime !== "0" &&
-                        availableTime &&
-                        availableTime !== undefined &&
-                        item.displayName === username ? (
-                          <div className="position-relative">
-                            <img
-                              src={premiumAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />
-                            <span> {item.displayName}</span>
-                          </div>
-                        ) : (
-                          <div className="position-relative">
-                            <img
-                              src={playerAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />{" "}
-                            {item.displayName}
-                          </div>
-                        )}
-                      </td>
-                      <td className="playerScore col-2  text-center">
-                        {" "}
-                        {getFormattedNumber(item.statValue, 0)}
-                      </td>
-                      <td
-                        className={`playerReward text-center col-2 ${
-                          availableTime !== "0" &&
-                          availableTime &&
-                          availableTime !== undefined &&
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                      >
-                        ${prizes[index]}
-                      </td>
-                      <td
-                        className={`playerReward col-2 ${
-                          availableTime !== "0" &&
-                          availableTime &&
-                          availableTime !== undefined &&
-                          username === item.displayName
+                          username === userData.displayName
                             ? "goldenscore"
                             : "goldenscore-inactive"
                         }`}
                       >
                         +$0
                       </td>
-                    </tr>
-                  );
-                })}
-
-              {weeklyplayerData &&
-                inactiveBoard === true &&
-                optionText === "weekly" &&
-                weeklyplayerData.length > 0 &&
-                weeklyplayerData.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1">#{item.position + 1}</td>
-                      <td className="playerName col-5">
-                        {availableTime !== "0" &&
-                        availableTime &&
-                        availableTime !== undefined &&
-                        item.displayName === username ? (
-                          <div className="position-relative">
-                            <img
-                              src={premiumAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />
-                            <span> {item.displayName}</span>
-                          </div>
-                        ) : (
-                          <div className="position-relative">
-                            <img
-                              src={playerAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />{" "}
-                            {item.displayName}
-                          </div>
-                        )}
-                      </td>
-                      <td className="playerScore col-2 text-center">
-                        {getFormattedNumber(item.statValue, 0)}
-                      </td>
-                      <td
-                        className={`playerReward text-center col-2 ${
-                          availableTime !== "0" &&
-                          availableTime &&
-                          availableTime !== undefined &&
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                      >
-                        ${prizes[index]}
-                      </td>
-                      <td
-                        className={`playerReward col-2 ${
-                          availableTime !== "0" &&
-                          availableTime &&
-                          availableTime !== undefined &&
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "goldenscore-inactive"
-                        }`}
-                      >
-                        +${getFormattedNumber(weeklyPrizesGolden[index], 0)}
-                      </td>
-                    </tr>
-                  );
-                })}
-
-              {dailyplayerData &&
-                inactiveBoard === true &&
-                optionText === "daily" &&
-                dailyplayerData.length > 0 &&
-                dailyplayerData.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1">#{item.position + 1}</td>
-                      <td className="playerName col-5">
-                        {availableTime !== "0" &&
-                        availableTime &&
-                        availableTime !== undefined &&
-                        item.displayName === username ? (
-                          <div className="position-relative">
-                            <img
-                              src={premiumAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />
-                            <span> {item.displayName}</span>
-                          </div>
-                        ) : (
-                          <div className="position-relative">
-                            <img
-                              src={playerAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />{" "}
-                            {item.displayName}
-                          </div>
-                        )}
-                      </td>
-                      <td className="playerScore col-2 text-center">
-                        {getFormattedNumber(item.statValue, 0)}
-                      </td>
-                      <td
-                        className={`playerReward text-center col-2 ${
-                          availableTime !== "0" &&
-                          availableTime &&
-                          availableTime !== undefined &&
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                      >
-                        ${prizes[index]}
-                      </td>
-                      <td
-                        className={`playerReward col-2 ${
-                          availableTime !== "0" &&
-                          availableTime &&
-                          availableTime !== undefined &&
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "goldenscore-inactive"
-                        }`}
-                      >
-                        +${dailyPrizesGolden[index]}
-                      </td>
-                    </tr>
-                  );
-                })}
-              {inactiveBoard === true &&
-                ((dailyplayerData.length === 0 && optionText === "daily") ||
-                  (weeklyplayerData.length === 0 && optionText === "weekly") ||
-                  (monthlyplayerData.length === 0 &&
-                    optionText === "monthly")) &&
-                optionText !== "genesis" && (
-                  <CircularProgress
-                    size={20}
-                    style={{ alignSelf: "center", margin: "auto" }}
-                  />
-                )}
-            </tbody>
-          </table>
-        ) : (
-          <ComingSoon
-            optionText={optionText}
-            data={genesisData}
-            username={username}
-          />
-        )}
-      </div>
-
-      {activePlayer === false &&
-        inactiveBoard === false &&
-        optionText !== "genesis" && (
-          <table className="playerTable" style={{ marginTop: "-33px" }}>
-            <tbody>
-              <tr className={`playerInnerRow-inactive`}>
-                <td
-                  className={`playerData ${
-                    optionText === "genesis" ? "col-2" : "col-1"
-                  }`}
-                >
-                  #{userData.position + 1}
-                </td>
-                <td className="playerName col-5">
-                  <div className="position-relative">
-                    {availableTime !== "0" &&
-                    availableTime &&
-                    availableTime !== undefined ? (
-                      <div className="position-relative">
-                        <img
-                          src={premiumAvatar}
-                          alt=""
-                          className="playerAvatar"
-                        />
-                        <img
-                          src={premiumStar}
-                          alt=""
-                          className="premium-star"
-                        />
-                        <span> {userData.displayName}</span>
-                      </div>
-                    ) : (
-                      <>
-                        <img
-                          src={playerAvatar}
-                          alt=""
-                          className="playerAvatar"
-                        />
-                        {userData.displayName}
-                      </>
                     )}
-                  </div>
-                </td>
-                {optionText !== "genesis" && (
-                  <td className="playerScore col-2 text-center">
-                    {getFormattedNumber(userData.statValue, 0)}
-                  </td>
-                )}
-                <td
-                  className={`playerReward text-center ${
-                    availableTime !== "0" &&
-                    availableTime &&
-                    availableTime !== undefined &&
-                    username === userData.displayName
-                      ? "goldenscore"
-                      : "playerReward"
-                  } col-2 ${optionText !== "genesis" && "text-center"} `}
-                >
-                  $
-                  {optionText === "genesis"
-                    ? getFormattedNumber(userData.statValue, 0)
-                    : "0"}{" "}
-                </td>
-                {optionText !== "genesis" && (
-                  <td
-                    className={`playerScore col-2 ${
-                      availableTime !== "0" &&
-                      availableTime &&
-                      availableTime !== undefined &&
-                      username === userData.displayName
-                        ? "goldenscore"
-                        : "goldenscore-inactive"
-                    }`}
-                  >
-                    +$0
-                  </td>
-                )}
-              </tr>
-            </tbody>
-          </table>
-        )}
-      <div className="optionsWrapper p-2">
-        <div className="d-flex flex-column">
-          <div className="d-flex justify-content-between gap-2 align-items-center">
-            <span className="viewWinners">View previous winners</span>
-            <Switch
-              {...label}
-              onChange={() => {
-                setInactiveBoard(!inactiveBoard);
-              }}
-            />
+                  </tr>
+                </tbody>
+              </table>
+            )}
+          <div className="optionsWrapper2 p-2">
+            <div className="d-flex flex-column">
+              <div className="d-flex justify-content-between gap-2 align-items-center">
+                <span className="viewWinners">View previous winners</span>
+                <Switch
+                  {...label}
+                  onChange={() => {
+                    setInactiveBoard(!inactiveBoard);
+                  }}
+                />
+              </div>
+            </div>
           </div>
-          <span className="previous-desc mb-0">
-            {optionText === "genesis"
-              ? "Display previous monthly Genesis ranking results."
-              : `Display previous ${optionText} ranking results. The scores from
-              previous rankings will be accumulated towards the grand prize.`}
-          </span>
+        </div>
+        <div className="d-flex flex-column gap-3 col-xxl-4 col-lg-5 col-12 medal-wrapper align-items-center justify-content-center position-relative">
+          <div
+            className="d-flex justify-content-center w-100 position-relative medalinnerwrapper"
+          >
+            <div className="secondaryplayer-wrapper col-3">
+              <div className="position-relative d-flex h-100 flex-column justify-content-end gap-2 align-items-center">
+                <img
+                  src={playerImg}
+                  alt=""
+                  className="position-absolute playersimg"
+                />
+                <img
+                  src={second}
+                  alt=""
+                  className="position-absolute placeimg"
+                />
+                <div className="d-flex flex-column h-100 justify-content-between">
+                  <div className="d-flex flex-column gap-2 m-auto align-items-center">
+                    <span className="playersname">
+                      {optionText === "daily"
+                        ? dailyrecords[1]?.displayName
+                        : optionText === "weekly"
+                        ? dailyrecords[1]?.displayName
+                        : optionText === "monthly"
+                        ? dailyrecords[1]?.displayName
+                        : genesisData[1]?.displayName}
+                    </span>
+                    <span className="playersreward">
+                      $
+                      {optionText === "daily"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[1]?.displayName
+                              ? parseInt(prizes[1]) +
+                                  parseInt(dailyPrizesGolden[1])
+                              : parseInt(prizes[1]),
+                            0
+                          )
+                        : optionText === "weekly"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[1]?.displayName
+                              ? parseInt(prizes[1]) +
+                                  parseInt(weeklyPrizesGolden[1])
+                              : parseInt(prizes[1]),
+                            0
+                          )
+                        : optionText === "monthly"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[1]?.displayName
+                              ? parseInt(prizes[1]) +
+                                  parseInt(monthlyPrizesGolden[1])
+                              : parseInt(prizes[1]),
+                            0
+                          )
+                        : getFormattedNumber(genesisData[1]?.statValue, 0)}
+                    </span>
+                  </div>
+                  {optionText !== "genesis" && (
+                    <span className="playerscore">
+                      {getFormattedNumber(dailyrecords[1]?.statValue, 0)} Points
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="mainplayer-wrapper col-3">
+              <div className="position-relative d-flex h-100 flex-column justify-content-end gap-2 align-items-center">
+                <img
+                  src={winner}
+                  alt=""
+                  className="position-absolute winnerimg"
+                />
+                <img
+                  src={first}
+                  alt=""
+                  className="position-absolute placeimg"
+                />
+                <div className="d-flex flex-column h-100 justify-content-between">
+                  <div className="d-flex flex-column gap-2 m-auto align-items-center">
+                    <span className="playersname">
+                      {optionText === "daily"
+                        ? dailyrecords[0]?.displayName
+                        : optionText === "weekly"
+                        ? dailyrecords[0]?.displayName
+                        : optionText === "monthly"
+                        ? dailyrecords[0]?.displayName
+                        : genesisData[0]?.displayName}
+                    </span>
+                    <span className="winnersreward">
+                      $
+                      {optionText === "daily"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[0]?.displayName
+                              ? parseInt(prizes[0]) +
+                                  parseInt(dailyPrizesGolden[0])
+                              : parseInt(prizes[0]),
+                            0
+                          )
+                        : optionText === "weekly"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[0]?.displayName
+                              ? parseInt(prizes[0]) +
+                                  parseInt(weeklyPrizesGolden[0])
+                              : parseInt(prizes[0]),
+                            0
+                          )
+                        : optionText === "monthly"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[0]?.displayName
+                              ? parseInt(prizes[0]) +
+                                  parseInt(monthlyPrizesGolden[0])
+                              : parseInt(prizes[0]),
+                            0
+                          )
+                        : getFormattedNumber(genesisData[0]?.statValue, 0)}
+                    </span>
+                  </div>
+                  {optionText !== "genesis" && (
+                    <span className="playerscore">
+                      {getFormattedNumber(dailyrecords[0]?.statValue, 0)} Points
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="thirdplayer-wrapper col-3">
+              <div className="position-relative d-flex h-100 flex-column justify-content-end gap-2 align-items-center">
+                <img
+                  src={playerImg}
+                  alt=""
+                  className="position-absolute playersimg"
+                />
+                <img
+                  src={third}
+                  alt=""
+                  className="position-absolute placeimg"
+                />
+                <div className="d-flex flex-column h-100 justify-content-between">
+                  <div className="d-flex flex-column gap-2 m-auto align-items-center">
+                    <span className="playersname">
+                      {optionText === "daily"
+                        ? dailyrecords[2]?.displayName
+                        : optionText === "weekly"
+                        ? dailyrecords[2]?.displayName
+                        : optionText === "monthly"
+                        ? dailyrecords[2]?.displayName
+                        : genesisData[2]?.displayName}
+                    </span>
+                    <span className="playersreward">
+                      $
+                      {optionText === "daily"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[2]?.displayName
+                              ? parseInt(prizes[2]) +
+                                  parseInt(dailyPrizesGolden[2])
+                              : parseInt(prizes[2]),
+                            0
+                          )
+                        : optionText === "weekly"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[2]?.displayName
+                              ? parseInt(prizes[2]) +
+                                  parseInt(weeklyPrizesGolden[2])
+                              : parseInt(prizes[2]),
+                            0
+                          )
+                        : optionText === "monthly"
+                        ? getFormattedNumber(
+                            availableTime !== "0" &&
+                              availableTime &&
+                              availableTime !== undefined &&
+                              username === dailyrecords[2]?.displayName
+                              ? parseInt(prizes[2]) +
+                                  parseInt(monthlyPrizesGolden[2])
+                              : parseInt(prizes[2]),
+                            0
+                          )
+                        : getFormattedNumber(genesisData[2]?.statValue, 0)}
+                    </span>
+                  </div>
+                  {optionText !== "genesis" && (
+                    <span className="playerscore">
+                      {getFormattedNumber(dailyrecords[2]?.statValue, 0)} Points
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
