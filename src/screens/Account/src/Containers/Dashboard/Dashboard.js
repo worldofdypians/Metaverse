@@ -378,7 +378,7 @@ function Dashboard({
     {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
     <LoginWrapper
       style={{
-        backgroundSize: "cover",
+        backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
         justifyContent: "normal",
         alignItems: "normal",
@@ -568,7 +568,7 @@ function Dashboard({
                 availableTime={availableTime}
               />
             </div>
-            <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
+            {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
               <div className={"home-main-wrapper nftBigWrapper"}>
                 <h2
                   className={`font-organetto d-flex gap-1 align-items-center m-0 bundleTitle`}
@@ -636,10 +636,7 @@ function Dashboard({
                   <div className="d-flex gap-5 align-items-end flex-column flex-xxl-row flex-lg-row flex-md-row contentwrapper">
                     {renderGenesisItems()}
 
-                    {/* <a
-                      href="https://www.worldofdypians.com/land"
-                      target={"_blank"}
-                    > */}
+               
                     {tokensState?.landItems?.length > 0 ? (
                       <div
                         className={"linear-border nftGridItem"}
@@ -669,11 +666,10 @@ function Dashboard({
                         </a>
                       </div>
                     )}
-                    {/* </a> */}
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       )}

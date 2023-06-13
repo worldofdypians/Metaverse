@@ -3,7 +3,7 @@ import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import "./_leaderboard.scss";
 import playerAvatar from "../../Images/userProfile/userAvatar2.png";
 
-const ComingSoon = ({ optionText, data, username }) => {
+const ComingSoon = ({ optionText, data, username, inactiveBoard }) => {
   const placeholderplayerData = [
     {
       position: "0",
@@ -98,7 +98,7 @@ const ComingSoon = ({ optionText, data, username }) => {
           data.map((item, index) => {
             return (
               <tr key={index} className={`playerInnerRow  ${
-                item.displayName === username
+                item.displayName === username || inactiveBoard === true
                   ? "playerInnerRow-inactive"
                   : null
               }`}>

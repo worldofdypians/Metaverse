@@ -1,7 +1,6 @@
-.leaderboard-wrapper{
-  font-family: 'Poppins', sans-serif !important;
+.leaderboard-wrapper {
+  font-family: "Poppins", sans-serif !important;
 }
-
 
 .leaderboardTitle {
   font-style: normal;
@@ -43,7 +42,7 @@
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.018em;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .winnersamount {
@@ -51,16 +50,16 @@
   font-size: 32px;
   line-height: 48px;
   letter-spacing: -0.018em;
-  color: #FF9FC9;
+  color: #ff9fc9;
   text-shadow: 0px 4px 4px rgba(36, 34, 64, 0.26);
-  background: linear-gradient(242.68deg, #2D106B 11.53%, #1B0C44 103.68%);
+  background: linear-gradient(242.68deg, #2d106b 11.53%, #1b0c44 103.68%);
   padding: 3px 10px;
 }
 
 .winnerwrapper {
-  background: linear-gradient(210.54deg, #E36EFF -3.77%, #6A21F7 85.1%);
-border-radius: 6px;
-padding: 5px
+  background: linear-gradient(210.54deg, #e36eff -3.77%, #6a21f7 85.1%);
+  border-radius: 6px;
+  padding: 5px;
 }
 
 .playerTable {
@@ -70,17 +69,19 @@ padding: 5px
 
 .playerData {
   padding: 0 10px;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 400;
   font-size: 14px;
-  line-height: 21px;
+  line-height: 17px;
   letter-spacing: -0.018em;
   color: #ffffff;
 }
 
 .playerHeader {
+  font-style: normal;
   font-weight: 600;
   font-size: 10px;
-  line-height: 15px;
+  line-height: 12px;
   letter-spacing: -0.018em;
   color: #f7f7ff;
   position: sticky;
@@ -91,19 +92,19 @@ padding: 5px
 
 .optionText {
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 15px;
   line-height: 18px;
-  letter-spacing: -0.018em;
-  color: #f7f7ff;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   cursor: pointer;
   width: 80px;
 }
 
-.optionText:hover, .activeoption {
-  color: #09F3D2;
+.optionText:hover,
+.activeoption {
+  color: #09f3d2;
 }
 
 .optionTextGolden {
@@ -112,14 +113,13 @@ padding: 5px
   font-size: 12px;
   line-height: 18px;
   letter-spacing: -0.018em;
-  color: #F7F7FF;
+  color: #f7f7ff;
   display: flex;
   justify-content: center;
-  
 }
 
 .goldenscore {
-  background: linear-gradient(0deg, #7344B3 0.27%, #20BBCA 99.74%) !important;
+  background: linear-gradient(0deg, #7344b3 0.27%, #20bbca 99.74%) !important;
   color: #fff !important;
   text-align: center;
   position: relative;
@@ -134,40 +134,36 @@ padding: 5px
 // }
 
 .goldenscore-inactive {
-  background: rgb(88 86 82 / 80%) !important;
-  color: rgba(255, 255, 255, 0.5) !important;
+  // background: rgb(88 86 82 / 80%) !important;
+  color: #48465e !important;
   text-align: center;
   position: relative;
-
 }
 
 .activeoptiongolden {
-  color: #F7F7FF;
+  color: #f7f7ff;
   font-size: 14px;
-  
-  }
-
+}
 
 .viewWinners {
   font-weight: 400;
-font-size: 12px;
-line-height: 18px;
-letter-spacing: -0.018em;
-color: #F7F7FF;
-
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
 }
 
-.previous-desc{
+.previous-desc {
   font-weight: 400;
-font-size: 10px;
-line-height: 15px;
-letter-spacing: -0.018em;
-color: #F7F7FF;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
 }
 
 .optionsWrapper {
-  background: #242240;
-  border-radius: 8px;
+  background: #1e2237;
+  border-radius: 12px;
   padding: 2px;
 }
 
@@ -177,25 +173,26 @@ color: #F7F7FF;
 }
 
 .playerInnerRow {
-  background: #242240;
-
+  background: #181b38;
   border-bottom: 1px solid #757086;
 }
 
-.playerInnerRow-inactive{
-  background: #223B40;
+.playerInnerRow-inactive {
+  background: rgba(0, 254, 207, 0.1);
+  .goldenscore-inactive {
+    color: #09f3d2 !important;
+  }
 }
 
 .playerAvatar {
   width: 30px;
   height: 30px;
 }
-.premium-star{
+.premium-star {
   position: absolute;
   width: 12px;
   height: 12px;
   left: 0;
-  
 }
 
 .playerReward {
@@ -214,36 +211,130 @@ color: #F7F7FF;
 }
 
 .playerName {
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 400;
   font-size: 14px;
-  line-height: 21px;
+  line-height: 17px;
   letter-spacing: -0.018em;
   color: #f7f7ff;
 }
 
 .tablewrapper {
   height: 366px;
-  overflow: scroll;
+  overflow-y: auto;
+}
+
+.medal-wrapper {
+  background: url("./assets/medalbg.svg");
+  background-position: center -62px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 20px;
+  height: 475px;
+  border-radius: 20px;
+  border: 1px solid #4C4E64;
+}
+
+.medalinnerwrapper {
+  top: -40px;
+  height: 120px;
+}
+
+.secondaryplayer-wrapper {
+  background: #181b38;
+  border-radius: 12px;
+  padding: 10px;
+  margin-right: -8px;
+}
+
+.thirdplayer-wrapper {
+  background: #181b38;
+  border-radius: 12px;
+  padding: 10px;
+  margin-left: -8px;
+}
+
+.mainplayer-wrapper {
+  background: #20223e;
+  border-radius: 30px 30px 0px 0px;
+  padding: 10px;
+  position: relative;
+  top: -45px;
+  height: 165px;
+}
+
+.winnerimg {
+  height: 113px;
+  bottom: 127px;
+  left: 4px;
+}
+
+.playersname {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+
+.winnersreward {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  color: #f3900d;
+}
+
+.playerscore {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 8px;
+  line-height: 10px;
+  text-align: center;
+  color: #b8b8e0;
+}
+
+.playersimg {
+  height: 68px;
+  bottom: 85px;
+  left: 11px;
+}
+.playersreward {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  color: #02f9d0;
+}
+
+.placeimg {
+  top: 5px;
+  left: 35px;
 }
 
 .optiongenesis {
-  background: linear-gradient(90.31deg, #F1B14B 0.27%, #DC5738 99.74%);
-border-radius: 8px;
-padding: 10px;
-cursor: pointer;
+  // background: linear-gradient(90.31deg, #F1B14B 0.27%, #DC5738 99.74%);
+  border-radius: 0px;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #09f3d2 !important;
+  color: #09f3d2;
 }
 
 .otheroptionsActive {
-  background: linear-gradient(90.31deg, #7344B3 0.27%, #20BBCA 99.74%);;
+  // background: linear-gradient(90.31deg, #7344B3 0.27%, #20BBCA 99.74%);
   // font-weight: bold;
   padding: 10px;
-  border-radius: 8px;
-  
-  }
+  border-radius: 0px;
+  border-bottom: 1px solid #09f3d2 !important;
+  color: #09f3d2;
+}
 
 .comingsoon {
   filter: blur(3px);
-  
 }
 .watermark {
   color: #fff;
@@ -266,45 +357,42 @@ cursor: pointer;
   // }
 
   @media only screen and (max-width: 500px) {
-      width: 253px;
-      font-size: 20px;
+    width: 253px;
+    font-size: 20px;
+  }
+}
 
-  }
-  }
+.tooltip-wrapper {
+  background: #3b217b;
+  box-shadow: 0px 6px 9px rgba(0, 0, 0, 0.16);
+  border-radius: 6px;
+  position: absolute;
+  top: 100%;
+  z-index: 4;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.25s;
+}
 
+.tooltip-active {
+  opacity: 1;
+  visibility: visible;
+}
 
-  .tooltip-wrapper {
-    background: #3b217b;
-    box-shadow: 0px 6px 9px rgba(0, 0, 0, 0.16);
-    border-radius: 6px;
-    position: absolute;
-    top: 100%;
-    z-index: 4;
-    visibility: hidden;
-    opacity: 0;
-    transition: all .25s;
-  }
-  
-  .tooltip-active{
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  .tooltip-content {
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 16px;
-    color: #ffffff;
-    font-family: 'Poppins';
-  }
+.tooltip-content {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
+  color: #ffffff;
+  font-family: "Poppins";
+}
 
-  .statusText {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 21px;
-    text-align: center;
-    letter-spacing: -0.018em;
-    color: #FE7A00;
-  }
-  
+.statusText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  letter-spacing: -0.018em;
+  color: #fe7a00;
+}
