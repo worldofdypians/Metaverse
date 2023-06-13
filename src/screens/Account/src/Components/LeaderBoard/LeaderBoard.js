@@ -1259,9 +1259,9 @@ const LeaderBoard = ({
                       {optionText === "daily"
                         ? dailyrecords[1]?.displayName
                         : optionText === "weekly"
-                        ? weeklyplayerData[1]?.displayName
+                        ? dailyrecords[1]?.displayName
                         : optionText === "monthly"
-                        ? monthlyplayerData[1]?.displayName
+                        ? dailyrecords[1]?.displayName
                         : genesisData[1]?.displayName}
                     </span>
                     <span className="playersreward">
@@ -1397,9 +1397,9 @@ const LeaderBoard = ({
                       {optionText === "daily"
                         ? dailyrecords[2]?.displayName
                         : optionText === "weekly"
-                        ? weeklyplayerData[2]?.displayName
+                        ? dailyrecords[2]?.displayName
                         : optionText === "monthly"
-                        ? monthlyplayerData[2]?.displayName
+                        ? dailyrecords[2]?.displayName
                         : genesisData[2]?.displayName}
                     </span>
                     <span className="playersreward">
