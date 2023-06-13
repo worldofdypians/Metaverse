@@ -264,6 +264,7 @@ const singleItemQuery = (block) => {
         `;
 };
 
+
 const getListedNFTS = async (
   block = 0,
   sort = "",

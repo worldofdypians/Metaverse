@@ -3,9 +3,33 @@ import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import marketStakeBanner from "./assets/marketStakeBanner.webp";
+import StakeModal from "../../components/StakeModal/StakeModal";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const MarketStake = () => {
   const windowSize = useWindowSize();
+
+  const [nftModal, setNftModal] = useState(false)
+  const html = document.querySelector("html");
+
+
+  const onModalClose = () => {
+    setNftModal(false)
+  }
+
+  useEffect(() => {
+
+    if(nftModal){
+      html.classList.add("hidescroll");
+
+    }else{
+      html.classList.remove("hidescroll");
+    }
+   
+  }, [nftModal])
+  
+
   return (
     <div
       className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
@@ -13,9 +37,10 @@ const MarketStake = () => {
     >
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
       <div
-        className="container-nft d-flex flex-column gap-2 px-3 px-lg-5 my-4"
+        className="container-nft d-flex flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
         style={{ minHeight: "72vh", backgroundSize: "cover" }}
       >
+        {nftModal && <StakeModal onModalClose={onModalClose} />}
         <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
           World of Dypians <span style={{ color: "#8c56ff" }}>Events</span>
         </h6>
@@ -63,7 +88,7 @@ const MarketStake = () => {
                       earning now!
                     </span>
                     <div className="d-flex align-items-center gap-3">
-                      <button className="btn pill-btn px-4 py-2">Deposit</button>
+                      <button className="btn pill-btn px-4 py-2" onClick={() => setNftModal(true)}>Deposit</button>
                       <button className="btn rewards-btn px-4 py-2">Rewards</button>
                     </div>
                   </div>
