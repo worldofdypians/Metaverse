@@ -113,7 +113,7 @@ const SingleNft = ({
   const [ethtokenData, setEthTokenData] = useState(0);
   const [priceUSD, setpriceUsd] = useState(0);
 
-  // console.log("nft", nft, IsApprove);
+  console.log("nft", nft, IsListed);
 
   const getTokenData = async () => {
     await axios
@@ -390,7 +390,7 @@ const SingleNft = ({
     setPurchaseStatus("Price is being updated...");
     setupdateLoading(true);
     setupdateStatus("update");
-    console.log("updating");
+    console.log("updating", nft, price, priceType, type);
 
     return await window
       .updateListingNFT(nft, price, priceType, type)

@@ -91,7 +91,6 @@ const TimepieceNFT = ({
     window.scrollTo(0, 0);
   }, []);
 
-
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
@@ -200,20 +199,20 @@ const TimepieceNFT = ({
                     key={index}
                     state={{
                       nft: nft,
-                      type: 'timepiece',
-                      isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
-
+                      type: "timepiece",
+                      isOwner:
+                        nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
+                        nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
                     }}
                   >
                     <ItemCard
-                      key={nft.id}
                       nft={nft}
                       isConnected={isConnected}
                       showConnectWallet={handleConnect}
                       isCaws={false}
                       isTimepiece={true}
                       isWod={false}
-                   />
+                    />
                   </NavLink>
                 ))
               ) : (

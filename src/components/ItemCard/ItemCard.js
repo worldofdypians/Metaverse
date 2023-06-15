@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./_itemcard.scss";
 import topEth from "../../screens/Marketplace/assets/topEth.svg";
 import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
-import { useLocation } from "react-router-dom";
+import favActive from "../../screens/Marketplace/assets/favActive.svg";
+import favInactive from "../../screens/Marketplace/assets/favInactive.svg";
+import axios from "axios";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 const ItemCard = ({
   nft,
@@ -13,7 +16,6 @@ const ItemCard = ({
   isTimepiece,
   isWod,
 }) => {
-  
   const getRelativeTime = (nftTimestamp) => {
     const date = new Date();
     const timestamp = date.getTime();
@@ -22,7 +24,7 @@ const ItemCard = ({
     const oldTimestamp = nftTimestamp;
     const difference = seconds - oldTimestamp;
     let output = ``;
-    
+
     if (difference < 60) {
       // Less than a minute has passed:
       output = `${difference} seconds ago`;
@@ -44,6 +46,33 @@ const ItemCard = ({
     }
     return output;
   };
+  const [dyptokenData, setDypTokenData] = useState(0);
+  const [ethtokenData, setEthTokenData] = useState(0);
+  const [isFavorite, setisFavorite] = useState(false);
+
+  const getTokenData = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_eth_v2")
+      .then((data) => {
+        const propertyDyp = Object.entries(
+          data.data.the_graph_eth_v2.token_data
+        );
+        setDypTokenData(propertyDyp[0][1].token_price_usd);
+
+        const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
+
+        setEthTokenData(propertyETH);
+      });
+  };
+
+  const handleFavorite = async (nftToken) => {
+    setisFavorite(true);
+  };
+
+  useEffect(() => {
+    getTokenData();
+  }, []);
+
   return (
     <div className="d-flex flex-column position-relative gap-1">
       <div className="item-wrapper" style={{ maxWidth: "100%" }}>
@@ -67,16 +96,36 @@ const ItemCard = ({
           />
         </div>
         <div className="d-flex flex-column gap-2 position-relative p-3">
-          <div className="d-flex align-items-center gap-1">
+          <div className="d-flex gap-2 justify-content-between">
+            <div className="d-flex gap-2">
             {nft.payment_priceType === 0 ? (
               <img src={topEth} height={20} width={20} alt="" />
             ) : (
               <img src={topDyp} height={20} width={20} alt="" />
             )}
-            <span className="nft-price" style={{ textDecoration: "none" }}>
-              {nft.price.slice(0, 5)}{" "}
-              {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-            </span>
+            <div className="d-flex flex-column">
+              <span className="nft-price" style={{ textDecoration: "none" }}>
+                {nft.price.slice(0, 5)}{" "}
+                {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+              </span>
+              <span className="nft-price-usd" style={{color: '#7DD9AF'}}>
+                $
+                {getFormattedNumber(
+                  nft.payment_priceType === 0
+                    ? ethtokenData * nft.price
+                    : dyptokenData * nft.price,
+                  2
+                )}
+              </span>
+            </div></div>
+            <img
+              src={isFavorite ? favActive : favInactive}
+              onClick={() => {
+                handleFavorite(nft?.tokenId);
+              }}
+              alt=""
+              className="favorite"
+            />
           </div>
         </div>
       </div>

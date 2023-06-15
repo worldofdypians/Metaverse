@@ -209,7 +209,7 @@ const Marketplace = ({
     const oldTimestamp = nftTimestamp;
     const difference = seconds - oldTimestamp;
     let output = ``;
-    
+
     if (difference < 60) {
       // Less than a minute has passed:
       output = `${difference} seconds ago`;
@@ -229,11 +229,11 @@ const Marketplace = ({
       // More than a year has passed:
       output = `${Math.floor((difference / 31449600).toFixed())} years ago`;
     }
-   return output
+    return output;
   };
 
   useEffect(() => {
-    setTopSold(topSales);
+   setTopSold(topSales);
     setRecentListed(latest20RecentListedNFTS);
     setRecentSalesFilter(recentSales);
     if (topSales && topSales.length === 0) {
@@ -254,8 +254,7 @@ const Marketplace = ({
     if (recentSales && recentSales.length > 0) {
       setLoadingRecentSales(false);
     }
-    console.log(topSold);
-  }, [listedNFTS, nftCount]);
+  }, [listedNFTS, nftCount, topSales, latest20RecentListedNFTS]);
 
   useEffect(() => {
     getAllData();
@@ -292,12 +291,9 @@ const Marketplace = ({
       setTopSold(topSales);
     }
     // setTimeout => {
-      setLoadingTopSales(false);
+    setLoadingTopSales(false);
     // }, 1000);
   };
-
-
-
 
   const filterRecentListings = (filter) => {
     setLoadingRecentListings(true);
@@ -330,8 +326,6 @@ const Marketplace = ({
     }, 1000);
   };
 
-
-
   const filterRecentSales = (filter) => {
     setLoadingRecentSales(true);
     if (filter === "caws") {
@@ -362,6 +356,11 @@ const Marketplace = ({
       setLoadingRecentSales(false);
     }, 1000);
   };
+
+  useEffect(() => {
+    setRecentSalesFilter("all");
+    setRecentSold(recentSales);
+  }, [recentSales]);
 
   return (
     <div
@@ -539,7 +538,7 @@ const Marketplace = ({
               }
               style={{ rowGap: "40px" }}
             >
-              {topSold || topSold.length > 0 ? (
+              {topSold && topSold.length > 0 ? (
                 topSold.slice(0, 9).map((nft, index) => (
                   <div className="col-12 col-lg-4" key={index}>
                     <NavLink
@@ -547,18 +546,10 @@ const Marketplace = ({
                       style={{ textDecoration: "none" }}
                       state={{
                         nft: nft,
-                        type:
-                          nft.nftAddress === window.config.nft_caws_address
-                            ? "caws"
-                            : nft.nftAddress ===
-                              window.config.nft_cawsold_address
-                            ? "cawsold"
-                            : nft.nftAddress ===
-                              window.config.nft_timepiece_address
-                            ? "timepiece"
-                            : "land",
+                        type: nft.type,
                         isOwner:
-                          nft.seller?.toLowerCase() === coinbase?.toLowerCase(),
+                          nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                        chain: nft.chain,
                       }}
                     >
                       <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
@@ -568,11 +559,9 @@ const Marketplace = ({
                         {/* <span className="sales-number">{index + 1}</span> */}
                         <img
                           src={
-                            nft.nftAddress === window.config.nft_caws_address ||
-                            nft.nftAddress === window.config.nft_cawsold_address
+                            nft.type === "caws" || nft.type === "cawsold"
                               ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
-                              : nft.nftAddress ===
-                                window.config.nft_land_address
+                              : nft.type === "land"
                               ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
                               : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
                           }
@@ -583,12 +572,9 @@ const Marketplace = ({
                         />
                         <div className="d-flex flex-column gap-2">
                           <h6 className="nft-name-wrapper mb-0 py-1 px-2">
-                            {nft.nftAddress ===
-                              window.config.nft_caws_address ||
-                            nft.nftAddress === window.config.nft_cawsold_address
+                            {nft.type === "caws" || nft.type === "cawsold"
                               ? "CAWS"
-                              : nft.nftAddress ===
-                                window.config.nft_land_address
+                              : nft.type === "land"
                               ? "Genesis Land"
                               : "Timepiece"}{" "}
                             #{nft.tokenId}
@@ -695,19 +681,11 @@ const Marketplace = ({
                         key={index}
                         state={{
                           nft: nft,
-                          type:
-                            nft.nftAddress === window.config.nft_caws_address
-                              ? "caws"
-                              : nft.nftAddress ===
-                                window.config.nft_cawsold_address
-                              ? "cawsold"
-                              : nft.nftAddress ===
-                                window.config.nft_timepiece_address
-                              ? "timepiece"
-                              : "land",
+                          type: nft.type,
                           isOwner:
                             nft.seller?.toLowerCase() ===
                             coinbase?.toLowerCase(),
+                          chain: nft.chain,
                         }}
                       >
                         <ItemCard
@@ -715,17 +693,9 @@ const Marketplace = ({
                           nft={nft}
                           isConnected={isConnected}
                           showConnectWallet={handleConnect}
-                          isCaws={
-                            nft.nftAddress === window.config.nft_caws_address ||
-                            nft.nftAddress === window.config.nft_cawsold_address
-                          }
-                          isTimepiece={
-                            nft.nftAddress ===
-                            window.config.nft_timepiece_address
-                          }
-                          isWod={
-                            nft.nftAddress === window.config.nft_land_address
-                          }
+                          isCaws={nft.type === "caws" || nft.type === "cawsold"}
+                          isTimepiece={nft.type === "timepiece"}
+                          isWod={nft.type === "land"}
                         />
                       </NavLink>
                     ))}
@@ -814,19 +784,11 @@ const Marketplace = ({
                         key={index}
                         state={{
                           nft: nft,
-                          type:
-                            nft.nftAddress === window.config.nft_caws_address
-                              ? "caws"
-                              : nft.nftAddress ===
-                                window.config.nft_cawsold_address
-                              ? "cawsold"
-                              : nft.nftAddress ===
-                                window.config.nft_timepiece_address
-                              ? "timepiece"
-                              : "land",
+                          type: nft.type,
                           isOwner:
                             nft.buyer?.toLowerCase() ===
                             coinbase?.toLowerCase(),
+                          chain: nft.chain,
                         }}
                       >
                         <ItemCard
@@ -834,17 +796,9 @@ const Marketplace = ({
                           nft={nft}
                           isConnected={isConnected}
                           showConnectWallet={handleConnect}
-                          isCaws={
-                            nft.nftAddress === window.config.nft_caws_address ||
-                            nft.nftAddress === window.config.nft_cawsold_address
-                          }
-                          isTimepiece={
-                            nft.nftAddress ===
-                            window.config.nft_timepiece_address
-                          }
-                          isWod={
-                            nft.nftAddress === window.config.nft_land_address
-                          }
+                          isCaws={nft.type === "caws" || nft.type === "cawsold"}
+                          isTimepiece={nft.type === "timepiece"}
+                          isWod={nft.type === "land"}
                         />
                       </NavLink>
                     ))}

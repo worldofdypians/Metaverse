@@ -110,6 +110,16 @@ const getCawsNfts = async () => {
   return cawsNFTs;
 };
 
+
+const getCawsOldNfts = async () => {
+  await getAllNfts();
+  const cawsNFTs = await convertAndFilterNFTs(
+    all_listed_nfts,
+    "0xa22294eab566f64db0742bb3fe4e762f5f062f23"
+  );
+  return cawsNFTs;
+};
+
 const getWodNfts = async () => {
   await getAllNfts();
   const wodNFTs = await convertAndFilterNFTs(
@@ -128,4 +138,4 @@ const getTimepieceNfts = async () => {
   return tpNFTs;
 };
 
-export { getCawsNfts, getWodNfts, getTimepieceNfts };
+export { getCawsNfts, getCawsOldNfts,  getWodNfts, getTimepieceNfts };
