@@ -54,9 +54,34 @@ const filterNFTsByAddress = (nfts, address) => {
 
 let all_listed_nfts;
 const getAllNfts = async () => {
-  await getListedNFTS(0, "", "", "", "").then((data) => {
-    all_listed_nfts = data;
+ const result =  await getListedNFTS(0, "", "", "", "");
+ const convertedNFTs = [];
+
+ if(result) {
+  const conversionPromises = result.map(async (nft) => {
+    if (nft.nftAddress === window.config.nft_caws_address) {
+      nft.type = "caws";
+      nft.chain = 1;
+      convertedNFTs.push(nft);
+    }
+    else if (nft.nftAddress === window.config.nft_cawsold_address) {
+      nft.type = "cawsold";
+      nft.chain = 1;
+      convertedNFTs.push(nft);
+    } else if (nft.nftAddress === window.config.nft_land_address) {
+      nft.type = "land";
+      nft.chain = 1;
+      convertedNFTs.push(nft);
+    } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+      nft.type = "timepiece";
+      nft.chain = 1;
+      convertedNFTs.push(nft);
+    }
   });
+  await Promise.all(conversionPromises);
+  all_listed_nfts = convertedNFTs;
+ }
+
 };
 
 const convertAndFilterNFTs = async (nfts, nftAddress) => {
@@ -74,6 +99,7 @@ const convertAndFilterNFTs = async (nfts, nftAddress) => {
   }
   return convertedNFTs;
 };
+
 
 const getCawsNfts = async () => {
   await getAllNfts();

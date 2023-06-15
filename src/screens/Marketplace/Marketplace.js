@@ -50,8 +50,8 @@ const Marketplace = ({
   const [loading, setLoading] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
   const windowSize = useWindowSize();
-  const [totalTx, setTotalTx] = useState(0)
-  const [totalvolume, setTotalVolume] = useState(0)
+  const [totalTx, setTotalTx] = useState(0);
+  const [totalvolume, setTotalVolume] = useState(0);
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -69,7 +69,9 @@ const Marketplace = ({
     slidesToShow: 6,
     slidesToScroll: 1,
     initialSlide: 0,
-    beforeChange: (current, next) => {  setActiveSlide(next); },
+    beforeChange: (current, next) => {
+      setActiveSlide(next);
+    },
     afterChange: (current) => console.log(current),
     responsive: [
       {
@@ -115,14 +117,49 @@ const Marketplace = ({
     ],
   };
 
-  const getAllData = async()=>{
-    const result = await axios.get('https://api.worldofdypians.com/api/totalTXs');
-    const result2 = await axios.get('https://api.worldofdypians.com/api/totalVolumes')
-    if(result.data && result2.data) {
-      setTotalTx(result.data)
-      setTotalVolume(result2.data)
+  const getAllData = async () => {
+    const result = await axios.get(
+      "https://api.worldofdypians.com/api/totalTXs"
+    );
+    const result2 = await axios.get(
+      "https://api.worldofdypians.com/api/totalVolumes"
+    );
+    if (result.data && result2.data) {
+      setTotalTx(result.data);
+      setTotalVolume(result2.data);
     }
-  }
+  };
+
+  const getRelativeTime = (nftTimestamp) => {
+    const date = new Date();
+    const timestamp = date.getTime();
+
+    const seconds = Math.floor(timestamp / 1000);
+    const oldTimestamp = nftTimestamp;
+    const difference = seconds - oldTimestamp;
+    let output = ``;
+    
+    if (difference < 60) {
+      // Less than a minute has passed:
+      output = `${difference} seconds ago`;
+    } else if (difference < 3600) {
+      // Less than an hour has passed:
+      output = `${Math.floor((difference / 60).toFixed())} minutes ago`;
+    } else if (difference < 86400) {
+      // Less than a day has passed:
+      output = `${Math.floor((difference / 3600).toFixed())} hours ago`;
+    } else if (difference < 2620800) {
+      // Less than a month has passed:
+      output = `${Math.floor((difference / 86400).toFixed())} days ago`;
+    } else if (difference < 31449600) {
+      // Less than a year has passed:
+      output = `${Math.floor((difference / 2620800).toFixed())} months ago`;
+    } else {
+      // More than a year has passed:
+      output = `${Math.floor((difference / 31449600).toFixed())} years ago`;
+    }
+   return output
+  };
 
   useEffect(() => {
     if (listedNFTS && listedNFTS.length === 0) {
@@ -131,13 +168,12 @@ const Marketplace = ({
     if (listedNFTS && listedNFTS.length > 0) {
       setLoading(false);
     }
-
   }, [listedNFTS, nftCount]);
 
-  useEffect(()=>{
-    getAllData()
+  useEffect(() => {
+    getAllData(); 
     window.scrollTo(0, 0);
-  },[])
+  }, []);
 
   return (
     <div
@@ -181,17 +217,13 @@ const Marketplace = ({
             </div>
             <div className="col-12 col-lg-4">
               <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
-                <h6 className="stats-value">
-                  {abbreviateNumber(totalvolume)}
-                </h6>
+                <h6 className="stats-value">{abbreviateNumber(totalvolume)}</h6>
                 <span className="stats-desc">Total Volume (USD)</span>
               </div>
             </div>
             <div className="col-12 col-lg-4">
               <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
-                <h6 className="stats-value">
-                  {abbreviateNumber(11000)}
-                </h6>
+                <h6 className="stats-value">{abbreviateNumber(11000)}</h6>
                 <span className="stats-desc">Sold NFTs</span>
               </div>
             </div>
@@ -279,7 +311,7 @@ const Marketplace = ({
               <div className="d-flex align-items-center gap-4">
                 <h6 className="filter-title filter-selected">All</h6>
                 <h6 className="filter-title">CAWS</h6>
-                <h6 className="filter-title">WoD</h6>
+                <h6 className="filter-title">Land</h6>
                 <h6 className="filter-title">Timepiece</h6>
               </div>
             </div>
@@ -359,7 +391,7 @@ const Marketplace = ({
                           </div>
                         </div>
                         <span className="position-absolute top-sale-time">
-                          a few seconds ago
+                          {getRelativeTime(nft.blockTimestamp)}
                         </span>
                       </div>
                     </NavLink>{" "}
@@ -393,7 +425,7 @@ const Marketplace = ({
               <div className="d-flex align-items-center gap-4">
                 <h6 className="filter-title filter-selected">All</h6>
                 <h6 className="filter-title">CAWS</h6>
-                <h6 className="filter-title">WoD</h6>
+                <h6 className="filter-title">Land</h6>
                 <h6 className="filter-title">Timepiece</h6>
               </div>
             </div>
@@ -410,15 +442,15 @@ const Marketplace = ({
                         state={{
                           nft: nft,
                           type:
-                          nft.nftAddress === window.config.nft_caws_address
-                            ? "caws"
-                            : nft.nftAddress ===
-                              window.config.nft_cawsold_address
-                            ? "cawsold"
-                            : nft.nftAddress ===
-                              window.config.nft_timepiece_address
-                            ? "timepiece"
-                            : "land",
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "caws"
+                              : nft.nftAddress ===
+                                window.config.nft_cawsold_address
+                              ? "cawsold"
+                              : nft.nftAddress ===
+                                window.config.nft_timepiece_address
+                              ? "timepiece"
+                              : "land",
                           isOwner:
                             nft.seller?.toLowerCase() ===
                             coinbase?.toLowerCase(),
@@ -474,7 +506,7 @@ const Marketplace = ({
               <div className="d-flex align-items-center gap-4">
                 <h6 className="filter-title filter-selected">All</h6>
                 <h6 className="filter-title">CAWS</h6>
-                <h6 className="filter-title">WoD</h6>
+                <h6 className="filter-title">Land</h6>
                 <h6 className="filter-title">Timepiece</h6>
               </div>
             </div>
@@ -491,15 +523,15 @@ const Marketplace = ({
                         state={{
                           nft: nft,
                           type:
-                          nft.nftAddress === window.config.nft_caws_address
-                            ? "caws"
-                            : nft.nftAddress ===
-                              window.config.nft_cawsold_address
-                            ? "cawsold"
-                            : nft.nftAddress ===
-                              window.config.nft_timepiece_address
-                            ? "timepiece"
-                            : "land",
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "caws"
+                              : nft.nftAddress ===
+                                window.config.nft_cawsold_address
+                              ? "cawsold"
+                              : nft.nftAddress ===
+                                window.config.nft_timepiece_address
+                              ? "timepiece"
+                              : "land",
                           isOwner:
                             nft.buyer?.toLowerCase() ===
                             coinbase?.toLowerCase(),
