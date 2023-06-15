@@ -45,19 +45,34 @@ const Marketplace = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
+  const [recentListed, setRecentListed] = useState(latest20RecentListedNFTS);
+  const [recentSold, setRecentSold] = useState(recentSales);
+  const [topSold, setTopSold] = useState(topSales);
+  const [topSalesFilter, setTopSalesFilter] = useState("all");
+  const [recentListingsFilter, setRecentListingsFilter] = useState("all");
+  const [recentSalesFilter, setRecentSalesFilter] = useState("all");
   const firstSlider = useRef();
   const secondSlider = useRef();
-  const [loading, setLoading] = useState(false);
+  const [loadingTopSales, setLoadingTopSales] = useState(false);
+  const [loadingRecentSales, setLoadingRecentSales] = useState(false);
+  const [loadingRecentListings, setLoadingRecentListings] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
   const windowSize = useWindowSize();
-  const [totalTx, setTotalTx] = useState(0)
-  const [totalvolume, setTotalVolume] = useState(0)
+  const [totalTx, setTotalTx] = useState(0);
+  const [totalvolume, setTotalVolume] = useState(0);
 
   const firstNext = () => {
     firstSlider.current.slickNext();
   };
   const secondNext = () => {
     secondSlider.current.slickNext();
+  };
+  const firstPrev = () => {
+    firstSlider.current.slickPrev();
+    console.log("hello");
+  };
+  const secondPrev = () => {
+    secondSlider.current.slickPrev();
   };
 
   var settings = {
@@ -69,8 +84,66 @@ const Marketplace = ({
     slidesToShow: 6,
     slidesToScroll: 1,
     initialSlide: 0,
-    beforeChange: (current, next) => {  setActiveSlide(next); },
-    afterChange: (current) => console.log(current),
+    beforeChange: (current, next) => {
+      setActiveSlide(next);
+    },
+    afterChange: (current) => setActiveSlide(current),
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
+  var settings2 = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    beforeChange: (current, next) => {
+      setActiveSlide2(next);
+    },
+    afterChange: (current) => setActiveSlide2(current),
     responsive: [
       {
         breakpoint: 1600,
@@ -115,29 +188,149 @@ const Marketplace = ({
     ],
   };
 
-  const getAllData = async()=>{
-    const result = await axios.get('https://api.worldofdypians.com/api/totalTXs');
-    const result2 = await axios.get('https://api.worldofdypians.com/api/totalVolumes')
-    if(result.data && result2.data) {
-      setTotalTx(result.data)
-      setTotalVolume(result2.data)
+  const getAllData = async () => {
+    const result = await axios.get(
+      "https://api.worldofdypians.com/api/totalTXs"
+    );
+    const result2 = await axios.get(
+      "https://api.worldofdypians.com/api/totalVolumes"
+    );
+    if (result.data && result2.data) {
+      setTotalTx(result.data);
+      setTotalVolume(result2.data);
     }
-  }
+  };
 
   useEffect(() => {
-    if (listedNFTS && listedNFTS.length === 0) {
-      setLoading(true);
+    setTopSold(topSales);
+    setRecentListed(latest20RecentListedNFTS);
+    setRecentSalesFilter(recentSales);
+    if (topSales && topSales.length === 0) {
+      setLoadingTopSales(true);
     }
-    if (listedNFTS && listedNFTS.length > 0) {
-      setLoading(false);
+    if (topSales && topSales.length > 0) {
+      setLoadingTopSales(false);
     }
-
+    if (latest20RecentListedNFTS && latest20RecentListedNFTS.length === 0) {
+      setLoadingRecentListings(true);
+    }
+    if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
+      setLoadingRecentListings(false);
+    }
+    if (recentSales && recentSales.length === 0) {
+      setLoadingRecentSales(true);
+    }
+    if (recentSales && recentSales.length > 0) {
+      setLoadingRecentSales(false);
+    }
+    console.log(topSold);
   }, [listedNFTS, nftCount]);
 
-  useEffect(()=>{
-    getAllData()
+  useEffect(() => {
+    getAllData();
     window.scrollTo(0, 0);
-  },[])
+  }, []);
+
+  const filterTopSales = (filter) => {
+    setLoadingTopSales(true);
+    if (filter === "caws") {
+      setTopSalesFilter("caws");
+      let cawsFilter = topSales.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_caws_address ||
+          item.nftAddress === window.config.nft_cawsold_address
+      );
+      setTopSold(cawsFilter);
+    } else if (filter === "land") {
+      setTopSalesFilter("land");
+
+      let wodFilter = topSales.filter(
+        (item) => item.nftAddress === window.config.nft_land_address
+      );
+      setTopSold(wodFilter);
+    } else if (filter === "timepiece") {
+      setTopSalesFilter("timepiece");
+
+      let timepieceFilter = topSales.filter(
+        (item) => item.nftAddress === window.config.nft_timepiece_address
+      );
+      setTopSold(timepieceFilter);
+    } else if (filter === "all") {
+      setTopSalesFilter("all");
+
+      setTopSold(topSales);
+    }
+    // setTimeout => {
+      setLoadingTopSales(false);
+    // }, 1000);
+  };
+
+
+
+
+  const filterRecentListings = (filter) => {
+    setLoadingRecentListings(true);
+    if (filter === "caws") {
+      setRecentListingsFilter("caws");
+      let cawsFilter = latest20RecentListedNFTS.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_caws_address ||
+          item.nftAddress === window.config.nft_cawsold_address
+      );
+      setRecentListed(cawsFilter);
+    } else if (filter === "land") {
+      setRecentListingsFilter("land");
+      let wodFilter = latest20RecentListedNFTS.filter(
+        (item) => item.nftAddress === window.config.nft_land_address
+      );
+      setRecentListed(wodFilter);
+    } else if (filter === "timepiece") {
+      setRecentListingsFilter("timepiece");
+      let timepieceFilter = latest20RecentListedNFTS.filter(
+        (item) => item.nftAddress === window.config.nft_timepiece_address
+      );
+      setRecentListed(timepieceFilter);
+    } else if (filter === "all") {
+      setRecentListingsFilter("all");
+      setRecentListed(latest20RecentListedNFTS);
+    }
+    setTimeout(() => {
+      setLoadingRecentListings(false);
+    }, 1000);
+  };
+
+
+
+  const filterRecentSales = (filter) => {
+    setLoadingRecentSales(true);
+    if (filter === "caws") {
+      setRecentSalesFilter("caws");
+      let cawsFilter = recentSales.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_caws_address ||
+          item.nftAddress === window.config.nft_cawsold_address
+      );
+      setRecentSold(cawsFilter);
+    } else if (filter === "land") {
+      setRecentSalesFilter("land");
+      let wodFilter = recentSales.filter(
+        (item) => item.nftAddress === window.config.nft_land_address
+      );
+      setRecentSold(wodFilter);
+    } else if (filter === "timepiece") {
+      setRecentSalesFilter("timepiece");
+      let timepieceFilter = recentSales.filter(
+        (item) => item.nftAddress === window.config.nft_timepiece_address
+      );
+      setRecentSold(timepieceFilter);
+    } else if (filter === "all") {
+      setRecentSalesFilter("all");
+      setRecentSold(recentSales);
+    }
+    setTimeout(() => {
+      setLoadingRecentSales(false);
+    }, 1000);
+  };
 
   return (
     <div
@@ -181,17 +374,13 @@ const Marketplace = ({
             </div>
             <div className="col-12 col-lg-4">
               <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
-                <h6 className="stats-value">
-                  {abbreviateNumber(totalvolume)}
-                </h6>
+                <h6 className="stats-value">{abbreviateNumber(totalvolume)}</h6>
                 <span className="stats-desc">Total Volume (USD)</span>
               </div>
             </div>
             <div className="col-12 col-lg-4">
               <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
-                <h6 className="stats-value">
-                  {abbreviateNumber(11000)}
-                </h6>
+                <h6 className="stats-value">{abbreviateNumber(11000)}</h6>
                 <span className="stats-desc">Sold NFTs</span>
               </div>
             </div>
@@ -277,22 +466,50 @@ const Marketplace = ({
             <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
               <h6 className="nft-wrapper-title font-raleway mb-0">Top Sales</h6>
               <div className="d-flex align-items-center gap-4">
-                <h6 className="filter-title filter-selected">All</h6>
-                <h6 className="filter-title">CAWS</h6>
-                <h6 className="filter-title">WoD</h6>
-                <h6 className="filter-title">Timepiece</h6>
+                <h6
+                  className={`filter-title ${
+                    topSalesFilter === "all" && "filter-selected"
+                  }`}
+                  onClick={() => filterTopSales("all")}
+                >
+                  All
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    topSalesFilter === "caws" && "filter-selected"
+                  }`}
+                  onClick={() => filterTopSales("caws")}
+                >
+                  CAWS
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    topSalesFilter === "land" && "filter-selected"
+                  }`}
+                  onClick={() => filterTopSales("land")}
+                >
+                  Land
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    topSalesFilter === "timepiece" && "filter-selected"
+                  }`}
+                  onClick={() => filterTopSales("timepiece")}
+                >
+                  Timepiece
+                </h6>
               </div>
             </div>
             <div
               className={
-                loading === false
+                loadingTopSales === false
                   ? "row align-items-center position-relative"
                   : "loader-wrapper"
               }
               style={{ rowGap: "40px" }}
             >
-              {listedNFTS && listedNFTS.length > 0 ? (
-                listedNFTS.slice(0, 9).map((nft, index) => (
+              {topSold || topSold.length > 0 ? (
+                topSold.slice(0, 9).map((nft, index) => (
                   <div className="col-12 col-lg-4" key={index}>
                     <NavLink
                       to={`/marketplace/nft/${nft.blockTimestamp}`}
@@ -368,7 +585,7 @@ const Marketplace = ({
               ) : (
                 <HashLoader
                   color={"#554fd8"}
-                  loading={loading}
+                  loading={loadingTopSales}
                   cssOverride={override}
                   aria-label="Loading Spinner"
                   data-testid="loader"
@@ -378,6 +595,16 @@ const Marketplace = ({
           </div>
 
           <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
+            {activeSlide > 0 && (
+              <img
+                src={nextArrow}
+                width={40}
+                height={40}
+                onClick={firstPrev}
+                className="prev-arrow-nft"
+                alt=""
+              />
+            )}
             <img
               src={nextArrow}
               width={40}
@@ -391,18 +618,46 @@ const Marketplace = ({
                 Recent Listings
               </h6>
               <div className="d-flex align-items-center gap-4">
-                <h6 className="filter-title filter-selected">All</h6>
-                <h6 className="filter-title">CAWS</h6>
-                <h6 className="filter-title">WoD</h6>
-                <h6 className="filter-title">Timepiece</h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "all" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("all")}
+                >
+                  All
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "caws" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("caws")}
+                >
+                  CAWS
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "land" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("land")}
+                >
+                  Land
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "timepiece" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("timepiece")}
+                >
+                  Timepiece
+                </h6>
               </div>
             </div>
-            {loading === false ? (
+            {loadingRecentListings === false ? (
               <div className="slider-container">
                 <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                  {latest20RecentListedNFTS &&
-                    latest20RecentListedNFTS.length > 0 &&
-                    latest20RecentListedNFTS.map((nft, index) => (
+                  {recentListed &&
+                    recentListed.length > 0 &&
+                    recentListed.map((nft, index) => (
                       <NavLink
                         to={`/marketplace/nft/${nft.blockTimestamp}`}
                         style={{ textDecoration: "none" }}
@@ -410,15 +665,15 @@ const Marketplace = ({
                         state={{
                           nft: nft,
                           type:
-                          nft.nftAddress === window.config.nft_caws_address
-                            ? "caws"
-                            : nft.nftAddress ===
-                              window.config.nft_cawsold_address
-                            ? "cawsold"
-                            : nft.nftAddress ===
-                              window.config.nft_timepiece_address
-                            ? "timepiece"
-                            : "land",
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "caws"
+                              : nft.nftAddress ===
+                                window.config.nft_cawsold_address
+                              ? "cawsold"
+                              : nft.nftAddress ===
+                                window.config.nft_timepiece_address
+                              ? "timepiece"
+                              : "land",
                           isOwner:
                             nft.seller?.toLowerCase() ===
                             coinbase?.toLowerCase(),
@@ -449,7 +704,7 @@ const Marketplace = ({
               <div className="loader-wrapper">
                 <HashLoader
                   color={"#554fd8"}
-                  loading={loading}
+                  loading={loadingRecentListings}
                   cssOverride={override}
                   aria-label="Loading Spinner"
                   data-testid="loader"
@@ -458,6 +713,16 @@ const Marketplace = ({
             )}
           </div>
           <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
+            {activeSlide2 > 0 && (
+              <img
+                src={nextArrow}
+                width={40}
+                height={40}
+                onClick={secondPrev}
+                className="prev-arrow-nft"
+                alt=""
+              />
+            )}
             <img
               src={nextArrow}
               width={40}
@@ -472,18 +737,46 @@ const Marketplace = ({
                 Recent Sales
               </h6>
               <div className="d-flex align-items-center gap-4">
-                <h6 className="filter-title filter-selected">All</h6>
-                <h6 className="filter-title">CAWS</h6>
-                <h6 className="filter-title">WoD</h6>
-                <h6 className="filter-title">Timepiece</h6>
+                <h6
+                  className={`filter-title ${
+                    recentSalesFilter === "all" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentSales("all")}
+                >
+                  All
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentSalesFilter === "caws" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentSales("caws")}
+                >
+                  CAWS
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentSalesFilter === "land" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentSales("land")}
+                >
+                  Land
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentSalesFilter === "timepiece" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentSales("timepiece")}
+                >
+                  Timepiece
+                </h6>
               </div>
             </div>
-            {loading === false ? (
+            {loadingRecentSales === false ? (
               <div className="slider-container">
-                <Slider ref={(c) => (secondSlider.current = c)} {...settings}>
-                  {recentSales &&
-                    recentSales.length > 0 &&
-                    recentSales.map((nft, index) => (
+                <Slider ref={(c) => (secondSlider.current = c)} {...settings2}>
+                  {recentSold &&
+                    recentSold.length > 0 &&
+                    recentSold.map((nft, index) => (
                       <NavLink
                         to={`/marketplace/nft/${nft.blockTimestamp}`}
                         style={{ textDecoration: "none" }}
@@ -491,15 +784,15 @@ const Marketplace = ({
                         state={{
                           nft: nft,
                           type:
-                          nft.nftAddress === window.config.nft_caws_address
-                            ? "caws"
-                            : nft.nftAddress ===
-                              window.config.nft_cawsold_address
-                            ? "cawsold"
-                            : nft.nftAddress ===
-                              window.config.nft_timepiece_address
-                            ? "timepiece"
-                            : "land",
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "caws"
+                              : nft.nftAddress ===
+                                window.config.nft_cawsold_address
+                              ? "cawsold"
+                              : nft.nftAddress ===
+                                window.config.nft_timepiece_address
+                              ? "timepiece"
+                              : "land",
                           isOwner:
                             nft.buyer?.toLowerCase() ===
                             coinbase?.toLowerCase(),
@@ -530,7 +823,7 @@ const Marketplace = ({
               <div className="loader-wrapper">
                 <HashLoader
                   color={"#554fd8"}
-                  loading={loading}
+                  loading={loadingRecentSales}
                   cssOverride={override}
                   aria-label="Loading Spinner"
                   data-testid="loader"

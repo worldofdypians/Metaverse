@@ -748,8 +748,21 @@
 
   cursor: pointer;
   @media screen and (max-width: 786px) {
-    right: 0%;
-    bottom: 83%;
+    right: -3%;
+    bottom: 40%;
+  }
+}
+.prev-arrow-nft {
+  width: fit-content;
+  position: absolute;
+  left: -2%;
+  bottom: 45%;
+  z-index: 2;
+transform: rotate(180deg);
+  cursor: pointer;
+  @media screen and (max-width: 786px) {
+    left: -3%;
+    bottom: 40%;
   }
 }
 

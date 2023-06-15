@@ -21,44 +21,44 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS, coinbase }) => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [filterTitle, setFilterTitle] = useState("Sort");
-
+  const [initialNfts, setInitialNfts] = useState([])
   const [cawsNFTS, setCawsNFTS] = useState([]);
 
   const sortNfts = (sortValue) => {
  
     if (sortValue === "htl") {
-      let htl = cawsNFTS.sort((a, b) => {
+      let htl = initialNfts.sort((a, b) => {
         return b.priceUSD - a.priceUSD;
       });
       setCawsNFTS(htl);
     } else if (sortValue === "lth") {
-      let lth = cawsNFTS.sort((a, b) => {
+      let lth = initialNfts.sort((a, b) => {
         return a.priceUSD - b.priceUSD;
       });
       setCawsNFTS(lth);
     } else if (sortValue === "lto") {
-      let lto = cawsNFTS.sort((a, b) => {
+      let lto = initialNfts.sort((a, b) => {
         return b.date - a.date;
       });
       setCawsNFTS(lto);
     } else if (sortValue === "otl") {
-      let otl = cawsNFTS.sort((a, b) => {
+      let otl = initialNfts.sort((a, b) => {
         return a.date - b.date;
       });
       setCawsNFTS(otl);
     } else if (sortValue === "dyp") {
-      let dyp = cawsNFTS.filter((nft) => {
+      let dyp = initialNfts.filter((nft) => {
         return nft.payment_priceType !== 0;
       });
       setCawsNFTS(dyp);
     } else if (sortValue === "eth") {
-      let eth = cawsNFTS.filter((nft) => {
+      let eth = initialNfts.filter((nft) => {
         return nft.payment_priceType !== 1;
       });
       setCawsNFTS(eth);
     }
 
-    console.log(cawsNFTS);
+    console.log(cawsNFTS.length);
   };
 
   useEffect(() => {
@@ -68,6 +68,7 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS, coinbase }) => {
         return { ...nft, date: date };
       });
       setCawsNFTS(datedNfts);
+      setInitialNfts(datedNfts)
     });
   }, []);
 
