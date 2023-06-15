@@ -7,8 +7,9 @@ import MobileNav from "../../../components/MobileNav/MobileNav";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import searchIcon from "../assets/search.svg";
 import { NavLink } from "react-router-dom";
+import { getWodNfts } from "../../../actions/convertUsd";
 
-const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS,coinbase }) => {
+const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -18,17 +19,67 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS,coinbase }) =>
   const windowSize = useWindowSize();
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [filterTitle, setFilterTitle] = useState("Sort")
+  const [initialNfts, setInitialNfts] = useState([])
+  const [landNfts, setLandNfts] = useState([])
+
+   const sortNfts = (sortValue) => {
+ 
+    if (sortValue === "htl") {
+      let htl = initialNfts.sort((a, b) => {
+        return b.priceUSD - a.priceUSD;
+      });
+      setLandNfts(htl);
+    } else if (sortValue === "lth") {
+      let lth = initialNfts.sort((a, b) => {
+        return a.priceUSD - b.priceUSD;
+      });
+      setLandNfts(lth);
+    } else if (sortValue === "lto") {
+      let lto = initialNfts.sort((a, b) => {
+        return b.date - a.date;
+      });
+      setLandNfts(lto);
+    } else if (sortValue === "otl") {
+      let otl = initialNfts.sort((a, b) => {
+        return a.date - b.date;
+      });
+      setLandNfts(otl);
+    } else if (sortValue === "dyp") {
+      let dyp = initialNfts.filter((nft) => {
+        return nft.payment_priceType !== 0;
+      });
+      setLandNfts(dyp);
+    } else if (sortValue === "eth") {
+      let eth = initialNfts.filter((nft) => {
+        return nft.payment_priceType !== 1;
+      });
+      setLandNfts(eth);
+    }
+  };
 
   useEffect(() => {
-    if (wodNFTS && wodNFTS.length === 0) {
+    getWodNfts().then((nfts) => {
+      let datedNfts = nfts.map((nft) => {
+        let date = new Date(nft.blockTimestamp * 1000);
+        return { ...nft, date: date };
+      });
+      setLandNfts(datedNfts);
+      setInitialNfts(datedNfts)
+    });
+  }, []);
+
+
+  useEffect(() => {
+    if (landNfts && landNfts.length === 0) {
       setLoading(true);
     }
-    if (wodNFTS && wodNFTS.length > 0) {
+    if (landNfts && landNfts.length > 0) {
       setLoading(false);
     }
     window.scrollTo(0, 0)
 
-  }, [wodNFTS]);
+  }, [landNfts]);
 
   return (
     <div
@@ -60,26 +111,62 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS,coinbase }) =>
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Sort
+                {filterTitle}
                 <img src={dropdownIcon} alt="" />
               </button>
               <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Price low to high");
+                    sortNfts("lth");
+                  }}
+                >
                   <span>Price low to high</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Price high to low");
+                    sortNfts("htl");
+                  }}
+                >
                   <span>Price high to low</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Oldest to newest");
+                    sortNfts("otl");
+                  }}
+                >
                   <span>Oldest to newest</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Newest To Oldest");
+                    sortNfts("lto");
+                  }}
+                >
                   <span>Newest To Oldest</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Price: ETH");
+                    sortNfts("eth");
+                  }}
+                >
                   <span>Price: ETH</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Price: DYP");
+                    sortNfts("dyp");
+                  }}
+                >
                   <span>Price: DYP</span>
                 </li>
               </ul>
@@ -91,8 +178,8 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS, wodNFTS,coinbase }) =>
                 loading === false ? "item-cards-wrapper" : "loader-wrapper"
               }
             >
-              {wodNFTS && wodNFTS.length > 0 ? (
-                wodNFTS.slice(0, 5).map((nft, index) => (
+              {landNfts && landNfts.length > 0 ? (
+                landNfts.slice(0, 5).map((nft, index) => (
                   <NavLink
                     to={`/marketplace/nft/${nft.blockTimestamp}`}
                     style={{ textDecoration: "none" }}

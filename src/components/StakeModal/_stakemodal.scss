@@ -12,6 +12,12 @@
   z-index: 9999;
   box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
   pointer-events: auto;
+  @media screen and (max-width: 1600px) {
+    width: 75%;
+  }
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
 }
 
 .stake-modal-title {
@@ -145,13 +151,21 @@
 }
 
 .modal-scroll {
-  height: 400px;
+  height: 300px;
   overflow: scroll;
+
+  @media screen and (max-width: 786px) {
+    height: 180px;
+  }
 }
 
 .selected-nfts-wrapper {
   border-radius: 10px;
   border: 2px solid #494b63;
+  width: 25%;
+  @media screen and (max-width: 786px) {
+    width: 50%;
+  }
 }
 .selected-nfts-span {
   font-weight: 400;

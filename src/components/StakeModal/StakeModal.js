@@ -58,13 +58,13 @@ const StakeModal = ({ onModalClose }) => {
         <div className="col-12 col-lg-6">
           <div className="nft-modal-grid">
             <div className="nft-modal-card">
-              <div className="d-flex flex-column">
+              <div className="d-flex flex-column h-100">
                 {/* <div className="empty-img-wrapper d-flex align-items-center justify-content-center p-4 w-100"> */}
                 <div className="position-relative">
                   <img src={fullWod} className="full-image" alt="" />
                 </div>
                 {/* </div> */}
-                <div className="full-card-info p-2 w-100">
+                <div className="full-card-info p-2 w-100 h-100">
                   <div className="d-flex align-items-center w-100 h-100 justify-content-between">
                     <span className="modal-nft-title">Genesis #652</span>
                     <Checkbox
@@ -103,7 +103,7 @@ const StakeModal = ({ onModalClose }) => {
         </span>
       </div>
       <div className="mt-3 d-flex align-items-end justify-content-between">
-        <div className="selected-nfts-wrapper w-25 p-3">
+        <div className="selected-nfts-wrapper p-3">
           <div className="d-flex align-items-center justify-content-between">
             <span className="selected-nfts-span mb-2">Selected NFTs:</span>
             <img src={greenInfo} alt="" />
