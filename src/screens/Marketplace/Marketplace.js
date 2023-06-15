@@ -21,6 +21,7 @@ import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
 
 import { abbreviateNumber } from "js-abbreviation-number";
 import nextArrow from "./assets/nextArrow.svg";
+import axios from "axios";
 
 const Marketplace = ({
   listedNFTS,
@@ -49,6 +50,8 @@ const Marketplace = ({
   const [loading, setLoading] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
   const windowSize = useWindowSize();
+  const [totalTx, setTotalTx] = useState(0)
+  const [totalvolume, setTotalVolume] = useState(0)
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -112,6 +115,15 @@ const Marketplace = ({
     ],
   };
 
+  const getAllData = async()=>{
+    const result = await axios.get('https://api.worldofdypians.com/api/totalTXs');
+    const result2 = await axios.get('https://api.worldofdypians.com/api/totalVolumes')
+    if(result.data && result2.data) {
+      setTotalTx(result.data)
+      setTotalVolume(result2.data)
+    }
+  }
+
   useEffect(() => {
     if (listedNFTS && listedNFTS.length === 0) {
       setLoading(true);
@@ -119,9 +131,13 @@ const Marketplace = ({
     if (listedNFTS && listedNFTS.length > 0) {
       setLoading(false);
     }
-    window.scrollTo(0, 0);
+
   }, [listedNFTS, nftCount]);
 
+  useEffect(()=>{
+    getAllData()
+    window.scrollTo(0, 0);
+  },[])
 
   return (
     <div
@@ -159,22 +175,22 @@ const Marketplace = ({
           <div className="row gap-4 gap-lg-0 align-items-center">
             <div className="col-12 col-lg-4">
               <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
-                <h6 className="stats-value">{abbreviateNumber(65268200)}</h6>
+                <h6 className="stats-value">{abbreviateNumber(totalTx)}</h6>
                 <span className="stats-desc">Total on-chain transactions</span>
               </div>
             </div>
             <div className="col-12 col-lg-4">
               <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
                 <h6 className="stats-value">
-                  {abbreviateNumber(totalBoughtNFTSinETH)}
+                  {abbreviateNumber(totalvolume)}
                 </h6>
-                <span className="stats-desc">Total Volume (ETH)</span>
+                <span className="stats-desc">Total Volume (USD)</span>
               </div>
             </div>
             <div className="col-12 col-lg-4">
               <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
                 <h6 className="stats-value">
-                  {abbreviateNumber(totalBoughtNFTSCount)}
+                  {abbreviateNumber(11000)}
                 </h6>
                 <span className="stats-desc">Sold NFTs</span>
               </div>

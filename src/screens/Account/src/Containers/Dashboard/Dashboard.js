@@ -30,7 +30,7 @@ import dragonIcon from "../../Images/userProfile/dragonIcon.svg";
 import idyp from "../../Images/userProfile/idyp.svg";
 import fistIcon from "../../Images/userProfile/Icon.png";
 import goldenPass from "../../Components/BundleCard/assets/goldenPass.webp";
-import MobileNav from '../../../../../components/MobileNav/MobileNav'
+import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import dypius from "../../Images/userProfile/dypius.svg";
 
@@ -67,7 +67,7 @@ function Dashboard({
   const [showWalletModal, setshowWalletModal] = useState(false);
   const [stakes, setStakes] = useState([]);
   const [landstakes, setLandStakes] = useState([]);
-  
+
   const [availableTime, setAvailableTime] = useState();
 
   const getStakes = async () => {
@@ -207,6 +207,10 @@ function Dashboard({
     onPress: connectWallet,
     loading: loadingVerify || loadingGenerateNonce,
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const renderItems = () => {
     if (
@@ -372,78 +376,77 @@ function Dashboard({
 
   return (
     <div
-    className="container-fluid d-flex justify-content-end p-0"
-    style={{ minHeight: "72vh" }}
-  >
-    {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
-    <LoginWrapper
-      style={{
-        backgroundSize: "100% 100%",
-        backgroundRepeat: "no-repeat",
-        justifyContent: "normal",
-        alignItems: "normal",
-        flexDirection: "column",
-        gap: "30px",
-        height: "auto",
-        minHeight: "100%",
-      }}
-      img={dashboardBackground}
+      className="container-fluid d-flex justify-content-end p-0"
+      style={{ minHeight: "72vh" }}
     >
-      
-      {loadingPlayer ? (
-        <>
-          <CircularProgress
-            size={80}
-            style={{ alignSelf: "center", margin: "auto" }}
-          />
-        </>
-      ) : (
-        <div className="container-fluid">
-          <div className={"home-main-wrapper"}>
-            <div
-              className={
-                "d-flex flex-column gap-4 justify-content-center align-items-center"
-              }
-              style={{
-                marginTop: 80,
-              }}
-            >
+      {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
+      <LoginWrapper
+        style={{
+          backgroundSize: "100% 100%",
+          backgroundRepeat: "no-repeat",
+          justifyContent: "normal",
+          alignItems: "normal",
+          flexDirection: "column",
+          gap: "30px",
+          height: "auto",
+          minHeight: "100%",
+        }}
+        img={dashboardBackground}
+      >
+        {loadingPlayer ? (
+          <>
+            <CircularProgress
+              size={80}
+              style={{ alignSelf: "center", margin: "auto" }}
+            />
+          </>
+        ) : (
+          <div className="container-fluid">
+            <div className={"home-main-wrapper"}>
               <div
-                className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
+                className={
+                  "d-flex flex-column gap-4 justify-content-center align-items-center"
+                }
+                style={{
+                  marginTop: 80,
+                }}
               >
-                <ProfileCard
-                  email={email}
-                  username={data?.getPlayer?.displayName}
-                  address={data?.getPlayer?.wallet?.publicAddress}
-                  userId={data?.getPlayer?.playerId}
-                  balance={dypBalancebnb}
-                  availableTime={availableTime}
-                  isVerified={data?.getPlayer?.wallet}
-                  coinbase={account}
-                  handleShowWalletPopup={() => {
-                    setshowWalletModal(true);
-                  }}
-                />
-                <WalletBalance
-                  address={data?.getPlayer?.wallet?.publicAddress}
-                  coinbase={account}
-                  isVerified={data?.getPlayer?.wallet}
-                  // handleConnectWallet={connectWallet}
-                  dypBalance={dypBalance}
-                  dypBalancebnb={dypBalancebnb}
-                  dypBalanceavax={dypBalanceavax}
-                  idypBalance={idypBalance}
-                  idypBalancebnb={idypBalancebnb}
-                  idypBalanceavax={idypBalanceavax}
-                  handleShowWalletPopup={() => {
-                    setshowWalletModal(true);
-                  }}
-                  userId={data?.getPlayer?.playerId}
-                  username={data?.getPlayer?.displayName}
-                />
-              </div>
+                <div
+                  className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
+                >
+                  <ProfileCard
+                    email={email}
+                    username={data?.getPlayer?.displayName}
+                    address={data?.getPlayer?.wallet?.publicAddress}
+                    userId={data?.getPlayer?.playerId}
+                    balance={dypBalancebnb}
+                    availableTime={availableTime}
+                    isVerified={data?.getPlayer?.wallet}
+                    coinbase={account}
+                    handleShowWalletPopup={() => {
+                      setshowWalletModal(true);
+                    }}
+                  />
+                  <WalletBalance
+                    address={data?.getPlayer?.wallet?.publicAddress}
+                    coinbase={account}
+                    isVerified={data?.getPlayer?.wallet}
+                    // handleConnectWallet={connectWallet}
+                    dypBalance={dypBalance}
+                    dypBalancebnb={dypBalancebnb}
+                    dypBalanceavax={dypBalanceavax}
+                    idypBalance={idypBalance}
+                    idypBalancebnb={idypBalancebnb}
+                    idypBalanceavax={idypBalanceavax}
+                    handleShowWalletPopup={() => {
+                      setshowWalletModal(true);
+                    }}
+                    userId={data?.getPlayer?.playerId}
+                    username={data?.getPlayer?.displayName}
+                  />
+                </div>
 
-              {/* <div className="d-flex flex-column align-items-center w-100">
+                {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
                   <h2
                     className={`font-organetto d-flex flex-column flex-xl-row gap-1 align-items-center m-0 bundleTitle`}
@@ -560,15 +563,15 @@ function Dashboard({
                 />
               </div> */}
 
-              <LeaderBoard
-                username={data?.getPlayer?.displayName}
-                userId={data?.getPlayer?.playerId}
-                dypBalancebnb={dypBalancebnb}
-                address={data?.getPlayer?.wallet?.publicAddress}
-                availableTime={availableTime}
-              />
-            </div>
-            {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
+                <LeaderBoard
+                  username={data?.getPlayer?.displayName}
+                  userId={data?.getPlayer?.playerId}
+                  dypBalancebnb={dypBalancebnb}
+                  address={data?.getPlayer?.wallet?.publicAddress}
+                  availableTime={availableTime}
+                />
+              </div>
+              {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
               <div className={"home-main-wrapper nftBigWrapper"}>
                 <h2
                   className={`font-organetto d-flex gap-1 align-items-center m-0 bundleTitle`}
@@ -670,44 +673,45 @@ function Dashboard({
                 </div>
               </div>
             </div> */}
+            </div>
           </div>
-        </div>
-      )}
-      {showChecklistModal === true && (
-        <ChecklistModal
-          show={showChecklistModal}
-          handleClose={() => {
-            setshowChecklistModal(false);
-          }}
-          cawsitem={tokensState?.items?.length > 0 && tokensState.items}
-          stakes={stakes}
-        />
-      )}
+        )}
+        {showChecklistModal === true && (
+          <ChecklistModal
+            show={showChecklistModal}
+            handleClose={() => {
+              setshowChecklistModal(false);
+            }}
+            cawsitem={tokensState?.items?.length > 0 && tokensState.items}
+            stakes={stakes}
+          />
+        )}
 
-      {showWalletModal === true && (
-        <WalletModal
-          show={showWalletModal}
-          handleClose={() => {
-            setshowWalletModal(false);
-          }}
-          handleConnection={connectWallet}
-        />
-      )}
+        {showWalletModal === true && (
+          <WalletModal
+            show={showWalletModal}
+            handleClose={() => {
+              setshowWalletModal(false);
+            }}
+            handleConnection={connectWallet}
+          />
+        )}
 
-      {showChecklistLandNftModal === true && (
-        <ChecklistLandNftModal
-          show={showChecklistLandNftModal}
-          handleClose={() => {
-            setshowChecklistLandNftModal(false);
-          }}
-          cawsitem={tokensState?.landItems?.length > 0 && tokensState.landItems}
-          stakes={landstakes}
-        />
-      )}
-      {/* <ErrorAlert error={connectedState?.error} /> */}
-    </LoginWrapper>
+        {showChecklistLandNftModal === true && (
+          <ChecklistLandNftModal
+            show={showChecklistLandNftModal}
+            handleClose={() => {
+              setshowChecklistLandNftModal(false);
+            }}
+            cawsitem={
+              tokensState?.landItems?.length > 0 && tokensState.landItems
+            }
+            stakes={landstakes}
+          />
+        )}
+        {/* <ErrorAlert error={connectedState?.error} /> */}
+      </LoginWrapper>
     </div>
-  
   );
 }
 
