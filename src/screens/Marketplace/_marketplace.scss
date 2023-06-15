@@ -940,12 +940,22 @@ transform: rotate(180deg);
 .caws-wod-stake-wrapper {
   background-image: url("./assets/cawsWodBanner1.png");
   background-size: 100% 100%;
-  min-height: 300px;
+  aspect-ratio: 4.52/1;
+
+  @media screen and (max-width: 786px) {
+    aspect-ratio: 0.63/1;
+    background-image: url('./assets/cawsWodBannerMobile.png');
+  }
 }
 .wod-stake-wrapper {
   background-image: url("./assets/wodBanner1.png");
   background-size: 100% 100%;
-  min-height: 300px;
+  aspect-ratio: 4.52/1;
+  
+  @media screen and (max-width: 786px) {
+    aspect-ratio: 0.63/1;
+    background-image: url('./assets/wodBannerMobile.png');
+  }
 }
 
 .market-stake-title {
@@ -955,6 +965,9 @@ transform: rotate(180deg);
   line-height: 24px;
   letter-spacing: 0.005em;
   color: #ffffff;
+  @media screen and (max-width: 380px) {
+    font-size: 17px;
+  }
 }
 
 .market-stake-desc {
@@ -965,6 +978,10 @@ transform: rotate(180deg);
   align-items: center;
   color: #ffffff;
   width: 75%;
+
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
 }
 
 .tvl-wrapper {
@@ -981,6 +998,7 @@ transform: rotate(180deg);
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
 
 }
 

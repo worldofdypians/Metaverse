@@ -2,7 +2,7 @@ import React from "react";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
-import marketStakeBanner from "./assets/marketStakeBanner.webp";
+import marketStakeBanner from "./assets/marketStakeBanner2.webp";
 import StakeModal from "../../components/StakeModal/StakeModal";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -55,30 +55,30 @@ const MarketStake = () => {
           </h6>
           <div className="row w-100 m-0 mt-4">
             <div className="col-12 px-0">
-              <div className="market-stake-banner-wrapper d-flex align-items-center justify-content-around p-4">
-                <div className="d-flex flex-column align-items-center gap-1">
-                  <h6 className="market-stake-stat">$432K+</h6>
+              <div className="market-stake-banner-wrapper d-flex flex-column flex-lg-row align-items-center gap-3 gap-lg-0 justify-content-around p-4">
+                <div className="d-flex flex-column align-items-center gap-0 gap-lg-1">
+                  <h6 className="market-stake-stat mb-0">$432K+</h6>
                   <span className="market-stake-stat-desc">
                     Total Value Locked (TVL)
                   </span>
                 </div>
-                <div className="d-flex flex-column align-items-center gap-1">
-                  <h6 className="market-stake-stat">$1.2K+</h6>
+                <div className="d-flex flex-column align-items-center gap-0 gap-lg-1">
+                  <h6 className="market-stake-stat mb-0">$1.2K+</h6>
                   <span className="market-stake-stat-desc">
                     Total Staked NFTs
                   </span>
                 </div>
-                <div className="d-flex flex-column align-items-center gap-1">
-                  <h6 className="market-stake-stat">$18.5M+</h6>
+                <div className="d-flex flex-column align-items-center gap-0 gap-lg-1">
+                  <h6 className="market-stake-stat mb-0">$18.5M+</h6>
                   <span className="market-stake-stat-desc">Paid Rewards</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="row w-100 m-0 mt-5">
+          <div className="row w-100  m-0 mt-5">
             <div className="col-12 px-0">
-              <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-5">
-                <div className="d-flex align-items-center justify-content-between w-100 position-relative">
+              <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                   <div className="d-flex flex-column gap-4">
                     <h6 className="market-stake-title">
                       World of Dypians Land and Caws
@@ -104,8 +104,8 @@ const MarketStake = () => {
           </div>
           <div className="row w-100 m-0 mt-5">
             <div className="col-12 px-0">
-              <div className="wod-stake-wrapper d-flex align-items-center w-100 p-5">
-                <div className="d-flex align-items-center justify-content-between w-100 position-relative">
+              <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                   <div className="d-flex flex-column gap-4">
                     <h6 className="market-stake-title">
                       World of Dypians Land

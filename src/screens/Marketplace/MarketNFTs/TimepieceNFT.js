@@ -7,13 +7,14 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import searchIcon from "../assets/search.svg";
 import { NavLink } from "react-router-dom";
+import { getTimepieceNfts } from "../../../actions/convertUsd";
+
 
 const TimepieceNFT = ({
   isConnected,
   handleConnect,
   listedNFTS,
-  timepieceNFTS,
-  coinbase,
+  coinbase
 }) => {
   const override = {
     display: "block",
@@ -24,6 +25,57 @@ const TimepieceNFT = ({
 
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+    const [filterTitle, setFilterTitle] = useState("Sort");
+  const [initialNfts, setInitialNfts] = useState([])
+  const [timepieceNFTS, setTimepieceNFTS] = useState([])
+   const sortNfts = (sortValue) => {
+ 
+    if (sortValue === "htl") {
+      let htl = initialNfts.sort((a, b) => {
+        return b.priceUSD - a.priceUSD;
+      });
+      setTimepieceNFTS(htl);
+    } else if (sortValue === "lth") {
+      let lth = initialNfts.sort((a, b) => {
+        return a.priceUSD - b.priceUSD;
+      });
+      setTimepieceNFTS(lth);
+    } else if (sortValue === "lto") {
+      let lto = initialNfts.sort((a, b) => {
+        return b.date - a.date;
+      });
+      setTimepieceNFTS(lto);
+    } else if (sortValue === "otl") {
+      let otl = initialNfts.sort((a, b) => {
+        return a.date - b.date;
+      });
+      setTimepieceNFTS(otl);
+    } else if (sortValue === "dyp") {
+      let dyp = initialNfts.filter((nft) => {
+        return nft.payment_priceType !== 0;
+      });
+      setTimepieceNFTS(dyp);
+    } else if (sortValue === "eth") {
+      let eth = initialNfts.filter((nft) => {
+        return nft.payment_priceType !== 1;
+      });
+      setTimepieceNFTS(eth);
+    }
+
+  };
+
+
+   useEffect(() => {
+    getTimepieceNfts().then((nfts) => {
+      let datedNfts = nfts.map((nft) => {
+        let date = new Date(nft.blockTimestamp * 1000);
+        return { ...nft, date: date };
+      });
+      setTimepieceNFTS(datedNfts);
+      setInitialNfts(datedNfts)
+    });
+  }, []);
+
 
   useEffect(() => {
     if (timepieceNFTS && timepieceNFTS.length === 0) {
@@ -72,26 +124,62 @@ const TimepieceNFT = ({
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Sort
+                {filterTitle}
                 <img src={dropdownIcon} alt="" />
               </button>
               <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Price low to high");
+                    sortNfts("lth");
+                  }}
+                >
                   <span>Price low to high</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Price high to low");
+                    sortNfts("htl");
+                  }}
+                >
                   <span>Price high to low</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Oldest to newest");
+                    sortNfts("otl");
+                  }}
+                >
                   <span>Oldest to newest</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Newest To Oldest");
+                    sortNfts("lto");
+                  }}
+                >
                   <span>Newest To Oldest</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Price: ETH");
+                    sortNfts("eth");
+                  }}
+                >
                   <span>Price: ETH</span>
                 </li>
-                <li className="nft-dropdown-item">
+                <li
+                  className="nft-dropdown-item"
+                  onClick={() => {
+                    setFilterTitle("Price: DYP");
+                    sortNfts("dyp");
+                  }}
+                >
                   <span>Price: DYP</span>
                 </li>
               </ul>
