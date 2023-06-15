@@ -201,6 +201,37 @@ const Marketplace = ({
     }
   };
 
+  const getRelativeTime = (nftTimestamp) => {
+    const date = new Date();
+    const timestamp = date.getTime();
+
+    const seconds = Math.floor(timestamp / 1000);
+    const oldTimestamp = nftTimestamp;
+    const difference = seconds - oldTimestamp;
+    let output = ``;
+    
+    if (difference < 60) {
+      // Less than a minute has passed:
+      output = `${difference} seconds ago`;
+    } else if (difference < 3600) {
+      // Less than an hour has passed:
+      output = `${Math.floor((difference / 60).toFixed())} minutes ago`;
+    } else if (difference < 86400) {
+      // Less than a day has passed:
+      output = `${Math.floor((difference / 3600).toFixed())} hours ago`;
+    } else if (difference < 2620800) {
+      // Less than a month has passed:
+      output = `${Math.floor((difference / 86400).toFixed())} days ago`;
+    } else if (difference < 31449600) {
+      // Less than a year has passed:
+      output = `${Math.floor((difference / 2620800).toFixed())} months ago`;
+    } else {
+      // More than a year has passed:
+      output = `${Math.floor((difference / 31449600).toFixed())} years ago`;
+    }
+   return output
+  };
+
   useEffect(() => {
     setTopSold(topSales);
     setRecentListed(latest20RecentListedNFTS);
@@ -576,7 +607,7 @@ const Marketplace = ({
                           </div>
                         </div>
                         <span className="position-absolute top-sale-time">
-                          a few seconds ago
+                          {getRelativeTime(nft.blockTimestamp)}
                         </span>
                       </div>
                     </NavLink>{" "}
