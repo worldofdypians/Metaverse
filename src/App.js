@@ -1129,7 +1129,7 @@ function App() {
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
-                    wodNFTS={wodNFTS}
+                    wodListed={wodNFTS}
                     coinbase={coinbase}
                   />
                 }
@@ -1142,7 +1142,7 @@ function App() {
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
-                    timepieceNFTS={timepiecesNFTS}
+                    timepieceListed={timepiecesNFTS}
                     coinbase={coinbase}
                   />
                 }

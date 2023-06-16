@@ -9,12 +9,12 @@ import searchIcon from "../assets/search.svg";
 import { NavLink } from "react-router-dom";
 import { getTimepieceNfts } from "../../../actions/convertUsd";
 
-
 const TimepieceNFT = ({
   isConnected,
   handleConnect,
   listedNFTS,
-  coinbase
+  coinbase,
+  timepieceListed,
 }) => {
   const override = {
     display: "block",
@@ -25,11 +25,11 @@ const TimepieceNFT = ({
 
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-    const [filterTitle, setFilterTitle] = useState("Sort");
-  const [initialNfts, setInitialNfts] = useState([])
-  const [timepieceNFTS, setTimepieceNFTS] = useState([])
-   const sortNfts = (sortValue) => {
- 
+  const [filterTitle, setFilterTitle] = useState("Sort");
+  const [initialNfts, setInitialNfts] = useState([]);
+  const [timepieceNFTS, setTimepieceNFTS] = useState([]);
+
+  const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
       let htl = initialNfts.sort((a, b) => {
         return b.priceUSD - a.priceUSD;
@@ -61,21 +61,22 @@ const TimepieceNFT = ({
       });
       setTimepieceNFTS(eth);
     }
-
   };
 
-
-   useEffect(() => {
-    getTimepieceNfts().then((nfts) => {
-      let datedNfts = nfts.map((nft) => {
+  const fetchInitialTimepiece = async () => {
+    if (timepieceListed && timepieceListed.length > 0) {
+      let datedNfts = timepieceListed.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
       setTimepieceNFTS(datedNfts);
-      setInitialNfts(datedNfts)
-    });
-  }, []);
+      setInitialNfts(datedNfts);
+    }
+  };
 
+  useEffect(() => {
+    fetchInitialTimepiece();
+  }, []);
 
   useEffect(() => {
     if (timepieceNFTS && timepieceNFTS.length === 0) {
@@ -106,16 +107,7 @@ const TimepieceNFT = ({
           <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
             CAWS <span style={{ color: "#8c56ff" }}>Timepiece</span>
           </h6>
-          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
-            <div className="position-relative">
-              <img src={searchIcon} className="nft-search-icon" alt="" />
-              <input
-                type="text"
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search here"
-                className="nft-search-bar"
-              />
-            </div>
+          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-end">
             <div class="dropdown" style={{ width: "200px" }}>
               <button
                 class="btn btn-secondary nft-dropdown w-100
@@ -192,7 +184,7 @@ const TimepieceNFT = ({
               }
             >
               {timepieceNFTS && timepieceNFTS.length > 0 ? (
-                timepieceNFTS.slice(0, 5).map((nft, index) => (
+                timepieceNFTS.map((nft, index) => (
                   <NavLink
                     to={`/marketplace/nft/${nft.blockTimestamp}`}
                     style={{ textDecoration: "none" }}
@@ -203,6 +195,8 @@ const TimepieceNFT = ({
                       isOwner:
                         nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
                         nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                        chain: nft.chain,
+
                     }}
                   >
                     <ItemCard
