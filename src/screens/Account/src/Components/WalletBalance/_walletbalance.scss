@@ -153,3 +153,54 @@
   height: 70px;
   scale: 1.3;
 }
+
+.account-nft-sort {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #e2e2e2;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.nft-sort-selected {
+  color: #00fecf;
+}
+
+.account-nft-sort:hover {
+  color: #00fecf;
+}
+
+.account-card-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+}
+
+.account-nft-card {
+  background: #252743;
+  backdrop-filter: blur(26px);
+  border-radius: 10px;
+}
+
+.account-nft-title {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #b8b8e0;
+}
+
+.account-nft-type {
+  font-weight: 500;
+  font-size: 8px;
+  line-height: 10px;
+  color: #ffffff;
+}
+
+.account-view-all {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 10px;
+  color: #7dd9af;
+  margin-bottom: 0;
+}
