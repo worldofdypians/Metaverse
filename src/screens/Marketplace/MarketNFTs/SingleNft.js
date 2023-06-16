@@ -130,7 +130,6 @@ const SingleNft = ({
       });
   };
 
-
   const getMetaData = async () => {
     if (nft) {
       if (type === "caws" || type === "cawsold") {
@@ -643,11 +642,11 @@ const SingleNft = ({
                           <span className="nft-price-usd">
                             $
                             {getFormattedNumber(
-                            nft.payment_priceType === 0
-                              ? ethtokenData * nft.price
-                              : dyptokenData * nft.price,
-                            2
-                          )}
+                              nft.payment_priceType === 0
+                                ? ethtokenData * nft.price
+                                : dyptokenData * nft.price,
+                              2
+                            )}
                           </span>
                         </div>
                       </div>
@@ -671,11 +670,11 @@ const SingleNft = ({
                           <span className="nft-price-usd">
                             $
                             {getFormattedNumber(
-                            nft.payment_priceType === 0
-                              ? ethtokenData * nft.price
-                              : dyptokenData * nft.price,
-                            2
-                          )}
+                              nft.payment_priceType === 0
+                                ? ethtokenData * nft.price
+                                : dyptokenData * nft.price,
+                              2
+                            )}
                           </span>
                         </div>
                       </div>
@@ -716,12 +715,13 @@ const SingleNft = ({
                               {priceType === 0 ? "ETH" : "DYP"}{" "}
                             </span>
                             <span className="nft-price-usd">
-                              ${getFormattedNumber(
-                            priceType === 0
-                              ? ethtokenData * nftPrice
-                              : dyptokenData * nftPrice,
-                            2
-                          )}
+                              $
+                              {getFormattedNumber(
+                                priceType === 0
+                                  ? ethtokenData * nftPrice
+                                  : dyptokenData * nftPrice,
+                                2
+                              )}
                             </span>
                           </div>
                         </div>
@@ -830,12 +830,13 @@ const SingleNft = ({
                               {priceType === 0 ? "ETH" : "DYP"}{" "}
                             </span>
                             <span className="nft-price-usd">
-                              ${getFormattedNumber(
-                            priceType === 0
-                              ? ethtokenData * nftPrice
-                              : dyptokenData * nftPrice,
-                            2
-                          )}
+                              $
+                              {getFormattedNumber(
+                                priceType === 0
+                                  ? ethtokenData * nftPrice
+                                  : dyptokenData * nftPrice,
+                                2
+                              )}
                             </span>
                           </div>
                         </div>

@@ -676,7 +676,7 @@ function App() {
     await axios
       .post(URL, { query: itemBoughtQuery })
       .then(async (result) => {
-        console.log(result.data.data.itemBoughts)
+        console.log(result.data.data.itemBoughts);
         boughtItems = await result.data.data.itemBoughts;
       })
       .catch((error) => {
@@ -953,7 +953,7 @@ function App() {
     getallNfts();
     getOtherNfts();
   }, [nftCount]);
-  
+
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -1116,7 +1116,7 @@ function App() {
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
-                    cawsNFTS={cawsNFTS}
+                    cawsListed={cawsNFTS}
                     coinbase={coinbase}
                   />
                 }

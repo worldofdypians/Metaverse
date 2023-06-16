@@ -6039,6 +6039,42 @@ window.isApproved = async (token, type) => {
   }
 };
 
+
+async function getFavoritesETH2() {
+  return JSON.parse(localStorage.getItem("favoritesETH") || `[]`);
+}
+async function isFavoriteETH2(pairId) {
+  let favorites = await getFavoritesETH2();
+  return favorites.some((f) => {
+    if (f == pairId) {
+      return true;
+    }
+    return false;
+  });
+}
+
+
+
+async function toggleFavoriteETH2(pair) {
+  if (!pair) return false;
+  let favorites = await getFavoritesETH2();
+  let foundIndex;
+  if (
+    favorites.some((f, i) => {
+      if (f == pair) {
+        foundIndex = i;
+        return true;
+      }
+      return false;
+    })
+  ) {
+    favorites.splice(foundIndex, 1);
+  } else {
+    favorites.push(pair);
+  }
+  localStorage.setItem("favoritesETH", JSON.stringify(favorites, null, 4));
+}
+
 async function getTokenHolderBalanceAll(holder, token_address, network) {
   if (network == 1) {
     let tokenContract = new window.infuraWeb3.eth.Contract(

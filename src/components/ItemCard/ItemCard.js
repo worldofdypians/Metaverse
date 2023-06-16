@@ -6,6 +6,7 @@ import favActive from "../../screens/Marketplace/assets/favActive.svg";
 import favInactive from "../../screens/Marketplace/assets/favInactive.svg";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import _ from "lodash";
 
 const ItemCard = ({
   nft,
@@ -65,13 +66,60 @@ const ItemCard = ({
       });
   };
 
-  const handleFavorite = async (nftToken) => {
-    setisFavorite(true);
+  const checkFavorite = async (pairId) => {
+    let favorites = await window.getFavoritesETH2();
+    return favorites.some((f) => {
+      if (_.isEqual(f, pairId)) {
+        return true;
+      }
+      return false;
+    });
+  };
+
+  const getAllFavs = async (pairId) => {
+    let favorites = await window.getFavoritesETH2();
+    
+    for(let i =0; i< favorites.length; i++)  {
+      if (_.isEqual(favorites[i], pairId)) {
+        setisFavorite(true);
+      }
+     
+    }
+  };
+
+  const toggleFavoriteETH = async (pair) => {
+    if (!pair) return false;
+    let favorites = await window.getFavoritesETH2();
+    let foundIndex;
+    if (
+      favorites.some((f, i) => {
+        if (_.isEqual(f, pair)) {
+          foundIndex = i;
+          return true;
+        }
+        return false;
+      })
+    ) {
+      favorites.splice(foundIndex, 1);
+    } else {
+      favorites.push(pair);
+    }
+    localStorage.setItem("favoritesETH", JSON.stringify(favorites, null, 4));
+  };
+
+  const handleFavorite = async (nft) => {
+    await toggleFavoriteETH(nft);
+    const isFav = await checkFavorite(nft);
+    setisFavorite(isFav);
   };
 
   useEffect(() => {
     getTokenData();
   }, []);
+
+  useEffect(() => {
+    getAllFavs(nft);
+  }, [nft]);
 
   return (
     <div className="d-flex flex-column position-relative gap-1">
@@ -98,30 +146,33 @@ const ItemCard = ({
         <div className="d-flex flex-column gap-2 position-relative p-3">
           <div className="d-flex gap-2 justify-content-between">
             <div className="d-flex gap-2">
-            {nft.payment_priceType === 0 ? (
-              <img src={topEth} height={20} width={20} alt="" />
-            ) : (
-              <img src={topDyp} height={20} width={20} alt="" />
-            )}
-            <div className="d-flex flex-column">
-              <span className="nft-price" style={{ textDecoration: "none" }}>
-                {nft.price.slice(0, 5)}{" "}
-                {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-              </span>
-              <span className="nft-price-usd" style={{color: '#7DD9AF'}}>
-                $
-                {getFormattedNumber(
-                  nft.payment_priceType === 0
-                    ? ethtokenData * nft.price
-                    : dyptokenData * nft.price,
-                  2
-                )}
-              </span>
-            </div></div>
+              {nft.payment_priceType === 0 ? (
+                <img src={topEth} height={20} width={20} alt="" />
+              ) : (
+                <img src={topDyp} height={20} width={20} alt="" />
+              )}
+              <div className="d-flex flex-column">
+                <span className="nft-price" style={{ textDecoration: "none" }}>
+                  {nft.price.slice(0, 5)}{" "}
+                  {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                </span>
+                <span className="nft-price-usd" style={{ color: "#7DD9AF" }}>
+                  $
+                  {getFormattedNumber(
+                    nft.payment_priceType === 0
+                      ? ethtokenData * nft.price
+                      : dyptokenData * nft.price,
+                    2
+                  )}
+                </span>
+              </div>
+            </div>
             <img
               src={isFavorite ? favActive : favInactive}
-              onClick={() => {
-                handleFavorite(nft?.tokenId);
+              onClick={(e) => {
+                handleFavorite(nft);
+                e.preventDefault();
+                e.stopPropagation();
               }}
               alt=""
               className="favorite"
