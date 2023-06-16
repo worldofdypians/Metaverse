@@ -78,12 +78,19 @@ const ItemCard = ({
 
   const getAllFavs = async (pairId) => {
     let favorites = await window.getFavoritesETH2();
-    
-    for(let i =0; i< favorites.length; i++)  {
-      if (_.isEqual(favorites[i], pairId)) {
+
+    for (let i = 0; i < favorites.length; i++) {
+      // console.log(favorites[i], pairId);
+
+      if (
+        favorites[i].nftAddress === pairId.nftAddress &&
+        favorites[i].tokenId === pairId.tokenId &&
+        ((favorites[i].seller && favorites[i].seller === pairId.seller) ||
+          (favorites[i].buyer && favorites[i].buyer === pairId.buyer)) &&
+        favorites[i].price === pairId.price
+      ) {
         setisFavorite(true);
       }
-     
     }
   };
 
@@ -91,9 +98,16 @@ const ItemCard = ({
     if (!pair) return false;
     let favorites = await window.getFavoritesETH2();
     let foundIndex;
+
     if (
       favorites.some((f, i) => {
-        if (_.isEqual(f, pair)) {
+        if (
+          f.nftAddress === pair.nftAddress &&
+          f.tokenId === pair.tokenId &&
+          ((f.seller && f.seller === pair.seller) ||
+            (f.buyer && f.buyer === pair.buyer)) &&
+          f.price === pair.price
+        ) {
           foundIndex = i;
           return true;
         }
@@ -101,8 +115,10 @@ const ItemCard = ({
       })
     ) {
       favorites.splice(foundIndex, 1);
+      setisFavorite(false);
     } else {
       favorites.push(pair);
+      setisFavorite(true);
     }
     localStorage.setItem("favoritesETH", JSON.stringify(favorites, null, 4));
   };
