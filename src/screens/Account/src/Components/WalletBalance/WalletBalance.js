@@ -9,6 +9,7 @@ import idyp from "../../Images/userProfile/idyp.svg";
 import globalRank from "./assets/globalRank.svg";
 import genesisImg from "./assets/genesisRank.svg";
 import axios from "axios";
+import viewAllArrow from './assets/viewAllArrow.svg'
 
 const WalletBalance = ({
   dypBalance,
@@ -24,6 +25,9 @@ const WalletBalance = ({
   idypBalanceavax,
   userId,
   username,
+  listedNFTS,
+  onOpenNfts,
+  showNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -152,8 +156,33 @@ const WalletBalance = ({
         </div>
 
         <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative col-lg-7">
-          <h5 className="bal-txt px-4">My Balance</h5>
-          <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-3 balancewrapper3">
+          <div className="d-flex align-items-center gap-3 px-3 py-2">
+            <h6 className="account-nft-sort nft-sort-selected">Balance</h6>
+            <h6 className="account-nft-sort">Collected</h6>
+            <h6 className="account-nft-sort">Favorites</h6>
+            <h6 className="account-nft-sort">Listed</h6>
+            <h6 className="account-nft-sort">Staked</h6>
+          </div>
+          <div className="row px-3">
+            {listedNFTS.slice(0,6).map((item) => (
+              <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+              <div className="account-nft-card w-100 d-flex align-items-center gap-4">
+                  <img src="https://mint.dyp.finance/thumbs/6.png" alt="" className="account-card-img" />
+                  <div className="d-flex flex-column align-items-center justify-content-center">
+                    <h6 className="account-nft-title">Genesis #256</h6>
+                    <span className="account-nft-type">World of Dypians Land</span>
+                  </div>
+              </div>
+            </div>
+            ))}
+          </div>
+          <div className="row w-100 justify-content-center">
+          <div className="d-flex align-items-center justify-content-center gap-2" onClick={onOpenNfts} style={{cursor: 'pointer', width: 'fit-content'}}>
+              <span className="account-view-all">{showNfts ? "View Less" : "View All"}</span>
+              <img src={viewAllArrow} style={{rotate: showNfts ? "0deg" : '180deg'}} alt="" />
+          </div>
+          </div>
+          {/* <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-3 balancewrapper3">
             <div className="d-flex flex-column gap-2 col-lg-6">
               <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative">
                 <div className="d-flex align-items-center gap-2">
@@ -249,7 +278,7 @@ const WalletBalance = ({
                 <img src={avaxIcon} alt="" className="chain-icon" />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
   );

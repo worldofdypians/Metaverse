@@ -1054,12 +1054,15 @@ function App() {
                 path="/account"
                 element={
                   <Dashboard
+                  coinbase={coinbase}
+                  listedNFTS={listedNFTS}
                     MyNFTSCaws={MyNFTSCaws}
                     MyNFTSTimepiece={MyNFTSTimepiece}
                     MyNFTSLand={MyNFTSLand}
                     account={coinbase}
                     isConnected={isConnected}
                     chainId={chainId}
+                    handleConnect={handleConnection}
                   />
                 }
               />
