@@ -368,7 +368,8 @@ const Marketplace = ({
       style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
-      <div className="container-nft px-3 px-lg-5 position-relative">
+      <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
+        <div className="container-lg mx-0">
         <div className="row justify-content-between align-items-center marketplace-banner my-5">
           <div className="col-12 col-lg-5">
             <h6 className="market-banner-title">
@@ -816,6 +817,7 @@ const Marketplace = ({
               </div>
             )}
           </div>
+        </div>
         </div>
       </div>
     </div>

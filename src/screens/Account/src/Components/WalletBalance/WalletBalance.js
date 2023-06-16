@@ -129,12 +129,9 @@ const WalletBalance = ({
   }, []);
 
   return (
-    <div
-      className="container-nft pe-xxl-5 pe-lg-5 position-relative"
-      style={{ background: "none", margin: "auto" }}
-    >
+  
       <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center">
-        <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative col-lg-3">
+        <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative col-lg-5">
           <h5 className="bal-txt px-4">My Rankings</h5>
           <div className="d-flex gap-3 justify-content-evenly">
             <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
@@ -154,7 +151,7 @@ const WalletBalance = ({
           </div>
         </div>
 
-        <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative col-lg-5">
+        <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative col-lg-7">
           <h5 className="bal-txt px-4">My Balance</h5>
           <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-3 balancewrapper3">
             <div className="d-flex flex-column gap-2 col-lg-6">
@@ -255,7 +252,6 @@ const WalletBalance = ({
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
