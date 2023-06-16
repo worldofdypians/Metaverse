@@ -125,8 +125,6 @@ const ItemCard = ({
 
   const handleFavorite = async (nft) => {
     await toggleFavoriteETH(nft);
-    const isFav = await checkFavorite(nft);
-    setisFavorite(isFav);
   };
 
   useEffect(() => {
@@ -135,7 +133,7 @@ const ItemCard = ({
 
   useEffect(() => {
     getAllFavs(nft);
-  }, [nft]);
+  }, [nft, isFavorite]);
 
   return (
     <div className="d-flex flex-column position-relative gap-1">

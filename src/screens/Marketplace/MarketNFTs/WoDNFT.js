@@ -9,7 +9,13 @@ import searchIcon from "../assets/search.svg";
 import { NavLink } from "react-router-dom";
 import { getWodNfts } from "../../../actions/convertUsd";
 
-const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
+const WoDNFT = ({
+  isConnected,
+  handleConnect,
+  listedNFTS,
+  coinbase,
+  wodListed,
+}) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -19,12 +25,11 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
   const windowSize = useWindowSize();
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [filterTitle, setFilterTitle] = useState("Sort")
-  const [initialNfts, setInitialNfts] = useState([])
-  const [landNfts, setLandNfts] = useState([])
+  const [filterTitle, setFilterTitle] = useState("Sort");
+  const [initialNfts, setInitialNfts] = useState([]);
+  const [landNfts, setLandNfts] = useState([]);
 
-   const sortNfts = (sortValue) => {
- 
+  const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
       let htl = initialNfts.sort((a, b) => {
         return b.priceUSD - a.priceUSD;
@@ -58,17 +63,20 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
     }
   };
 
-  useEffect(() => {
-    getWodNfts().then((nfts) => {
-      let datedNfts = nfts.map((nft) => {
+  const fetchInitialWod = async () => {
+    if (wodListed && wodListed.length > 0) {
+      let datedNfts = wodListed.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
       setLandNfts(datedNfts);
-      setInitialNfts(datedNfts)
-    });
-  }, []);
+      setInitialNfts(datedNfts);
+    }
+  };
 
+  useEffect(() => {
+    fetchInitialWod();
+  }, []);
 
   useEffect(() => {
     if (landNfts && landNfts.length === 0) {
@@ -77,8 +85,7 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
     if (landNfts && landNfts.length > 0) {
       setLoading(false);
     }
-    window.scrollTo(0, 0)
-
+    window.scrollTo(0, 0);
   }, [landNfts]);
 
   return (
@@ -88,21 +95,15 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
     >
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
 
-      <div className="container-nft  d-flex  align-items-start pe-0 pe-lg-5 position-relative" style={{backgroundSize: 'cover'}}>
+      <div
+        className="container-nft  d-flex  align-items-start pe-0 pe-lg-5 position-relative"
+        style={{ backgroundSize: "cover" }}
+      >
         <div className="container-lg mx-0">
           <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
             World of Dypians <span style={{ color: "#8c56ff" }}>Land</span>
           </h6>
-          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
-            <div className="position-relative">
-              <img src={searchIcon} className="nft-search-icon" alt="" />
-              <input
-                type="text"
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search here"
-                className="nft-search-bar"
-              />
-            </div>
+          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-end">
             <div class="dropdown" style={{ width: "200px" }}>
               <button
                 class="btn btn-secondary nft-dropdown w-100
@@ -186,8 +187,11 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
                     key={index}
                     state={{
                       nft: nft,
-                      type: 'land',
-                      isOwner: (nft.seller?.toLowerCase() === coinbase?.toLowerCase()) || (nft.buyer?.toLowerCase() === coinbase?.toLowerCase())
+                      type: "land",
+                      isOwner:
+                        nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
+                        nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                        chain: nft.chain,
 
                     }}
                   >
@@ -198,7 +202,8 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
                       showConnectWallet={handleConnect}
                       isCaws={false}
                       isTimepiece={false}
-                      isWod={true} />
+                      isWod={true}
+                    />
                   </NavLink>
                 ))
               ) : (
