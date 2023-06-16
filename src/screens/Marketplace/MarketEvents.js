@@ -175,8 +175,9 @@ const MarketEvents = ({ account, chainId }) => {
     <div className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0">
            {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
 
-      <div className="container-nft d-flex flex-column gap-2 px-3 px-lg-5 my-4" style={{minHeight: '72vh', backgroundSize: 'cover'}}>
-        <div className={`col-12 col-lg-12 ${windowSize.width < 1650 ? 'col-xxl-10' : 'col-xxl-8'}  d-flex flex-column gap-3`}>
+      <div className="container-nft align-items-start justify-content-start d-flex flex-column gap-2 px-3 px-lg-5 my-4" style={{minHeight: '72vh', backgroundSize: 'cover'}}>
+        <div className="container-lg mx-0">
+        <div className={`col-12 col-lg-12 ${windowSize.width < 1650 ? 'col-xxl-10' : 'col-xxl-10'}  d-flex flex-column gap-3`}>
         <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
             World of Dypians <span style={{color: '#8c56ff'}}>Events</span> 
           </h6>
@@ -308,6 +309,7 @@ const MarketEvents = ({ account, chainId }) => {
             }}
             availableTime={availableTime}
           />
+        </div>
         </div>
       </div>
     </div>

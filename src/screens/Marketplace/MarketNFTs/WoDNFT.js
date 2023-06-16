@@ -89,7 +89,7 @@ const WoDNFT = ({ isConnected, handleConnect, listedNFTS ,coinbase }) => {
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
 
       <div className="container-nft  d-flex  align-items-start pe-0 pe-lg-5 position-relative" style={{backgroundSize: 'cover'}}>
-        <div className="main-wrapper  mx-4 mx-lg-0 py-4 w-100">
+        <div className="container-lg mx-0">
           <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
             World of Dypians <span style={{ color: "#8c56ff" }}>Land</span>
           </h6>

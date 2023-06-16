@@ -679,12 +679,9 @@ const LeaderBoard = ({
   }, [availableTime]);
 
   return (
-    <div
-      className="container-nft pe-xxl-5 pe-lg-5 position-relative"
-      style={{ background: "none", margin: "auto" }}
-    >
+ 
       <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-end">
-        <div className="d-flex flex-column gap-3 col-xxl-4 col-lg-5 col-12 leaderboard-wrapper">
+        <div className="d-flex flex-column gap-3 col-xxl-6 col-lg-6 col-12 leaderboard-wrapper">
           <div className="d-none">
             {availableTime !== "0" && availableTime && (
               <Countdown
@@ -1237,7 +1234,7 @@ const LeaderBoard = ({
             </div>
           </div>
         </div>
-        <div className="d-flex flex-column gap-3 col-xxl-4 col-lg-5 col-12 medal-wrapper align-items-center justify-content-center position-relative">
+        <div className="d-flex flex-column gap-3 col-xxl-6 col-lg-6 col-12 medal-wrapper align-items-center justify-content-center position-relative">
           <div
             className="d-flex justify-content-center w-100 position-relative medalinnerwrapper"
           >
@@ -1451,7 +1448,6 @@ const LeaderBoard = ({
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

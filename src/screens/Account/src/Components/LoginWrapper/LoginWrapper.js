@@ -6,10 +6,10 @@ import classes from './LoginWrapper.module.css'
 function LoginWrapper({ img, children, style }) {
   return (
     <div
-      style={{
-        backgroundImage: `url(${img})`,
-        ...style
-      }}
+      // style={{
+      //   backgroundImage: `url(${img})`,
+      //   ...style
+      // }}
       className={classes.container}
     >
       {children}
@@ -25,7 +25,7 @@ LoginWrapper.propTypes = {
 };
 
 LoginWrapper.defaultProps = {
-  img: loginBackground,
+  // img: loginBackground,
 };
 
 export default LoginWrapper;

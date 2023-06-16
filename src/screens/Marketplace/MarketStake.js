@@ -37,9 +37,10 @@ const MarketStake = () => {
     >
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
       <div
-        className="container-nft d-flex flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
+        className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
         style={{ minHeight: "72vh", backgroundSize: "cover" }}
       >
+        <div className="container-lg mx-0">
         {nftModal && <StakeModal onModalClose={onModalClose} />}
         <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
           World of Dypians <span style={{ color: "#8c56ff" }}>Events</span>
@@ -129,6 +130,7 @@ const MarketStake = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
