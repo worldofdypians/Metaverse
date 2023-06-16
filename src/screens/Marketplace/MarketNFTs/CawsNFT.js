@@ -24,7 +24,7 @@ const CawsNFT = ({
 
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [filterTitle, setFilterTitle] = useState("Sort");
+  const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [cawsNFTS, setCawsNFTS] = useState([]);
 
@@ -63,7 +63,6 @@ const CawsNFT = ({
 
     console.log(cawsNFTS.length);
   };
-  
 
   const fetchInitialCaws = async () => {
     if (cawsListed && cawsListed.length > 0) {
@@ -86,6 +85,7 @@ const CawsNFT = ({
     }
     if (cawsNFTS && cawsNFTS.length > 0) {
       setLoading(false);
+      sortNfts("lth");
     }
     window.scrollTo(0, 0);
   }, [cawsNFTS]);
@@ -106,7 +106,6 @@ const CawsNFT = ({
             Cats And Watches <span style={{ color: "#8c56ff" }}>Society</span>
           </h6>
           <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-end">
-            
             <div class="dropdown" style={{ width: "200px" }}>
               <button
                 class="btn btn-secondary nft-dropdown w-100
@@ -194,7 +193,7 @@ const CawsNFT = ({
                       isOwner:
                         nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
                         nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                        chain: nft.chain,
+                      chain: nft.chain,
                     }}
                   >
                     <ItemCard

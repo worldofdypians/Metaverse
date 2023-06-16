@@ -25,7 +25,7 @@ const TimepieceNFT = ({
 
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [filterTitle, setFilterTitle] = useState("Sort");
+  const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [timepieceNFTS, setTimepieceNFTS] = useState([]);
 
@@ -84,6 +84,7 @@ const TimepieceNFT = ({
     }
     if (timepieceNFTS && timepieceNFTS.length > 0) {
       setLoading(false);
+      sortNfts("lth");
     }
     window.scrollTo(0, 0);
   }, [timepieceNFTS]);
@@ -195,8 +196,7 @@ const TimepieceNFT = ({
                       isOwner:
                         nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
                         nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                        chain: nft.chain,
-
+                      chain: nft.chain,
                     }}
                   >
                     <ItemCard

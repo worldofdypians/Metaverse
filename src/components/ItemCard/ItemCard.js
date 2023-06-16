@@ -7,6 +7,7 @@ import favInactive from "../../screens/Marketplace/assets/favInactive.svg";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import _ from "lodash";
+import { useLocation } from "react-router-dom";
 
 const ItemCard = ({
   nft,
@@ -51,6 +52,8 @@ const ItemCard = ({
   const [ethtokenData, setEthTokenData] = useState(0);
   const [isFavorite, setisFavorite] = useState(false);
 
+  const location = useLocation();
+
   const getTokenData = async () => {
     await axios
       .get("https://api.dyp.finance/api/the_graph_eth_v2")
@@ -64,16 +67,6 @@ const ItemCard = ({
 
         setEthTokenData(propertyETH);
       });
-  };
-
-  const checkFavorite = async (pairId) => {
-    let favorites = await window.getFavoritesETH2();
-    return favorites.some((f) => {
-      if (_.isEqual(f, pairId)) {
-        return true;
-      }
-      return false;
-    });
   };
 
   const getAllFavs = async (pairId) => {
@@ -157,9 +150,9 @@ const ItemCard = ({
             alt=""
           />
         </div>
-        <div className="d-flex flex-column gap-2 position-relative p-3">
-          <div className="d-flex gap-2 justify-content-between">
-            <div className="d-flex gap-2">
+        <div className="d-flex flex-column gap-2 position-relative p-3 topwrapper">
+          <div className="d-flex gap-2 justify-content-between middlewrapper">
+            <div className="d-flex gap-2 m-0 middlewrapper">
               {nft.payment_priceType === 0 ? (
                 <img src={topEth} height={20} width={20} alt="" />
               ) : (
@@ -176,7 +169,7 @@ const ItemCard = ({
                     nft.payment_priceType === 0
                       ? ethtokenData * nft.price
                       : dyptokenData * nft.price,
-                    2
+                    0
                   )}
                 </span>
               </div>
@@ -193,13 +186,42 @@ const ItemCard = ({
             />
           </div>
         </div>
+        {location.pathname.includes("/marketplace/caws") &&
+          location.pathname.includes("/marketplace/wod") &&
+          location.pathname.includes("/marketplace/timepiece") && (
+            <div className="buy-nft w-100">
+              <button
+                className="buy-nft-btn w-100"
+                style={{ paddingLeft: "20px", paddingRight: "20px" }}
+                onClick={() => {
+                  // isConnected === true ? handleBuy(nft) : showConnectWallet();
+                }}
+              >
+                {" "}
+                {
+                  // isConnected === true
+                  //   ? nft.payment_priceType === 1
+                  //     ? !IsApprove
+                  //       ? "Approve"
+                  //       : "Buy"
+                  //     : "Buy"
+                  //   :
+                  "Connect wallet"
+                }{" "}
+              </button>
+            </div>
+          )}
       </div>
-      <span
-        className="position-relative top-sale-time"
-        style={{ bottom: "-8%" }}
-      >
-        {getRelativeTime(nft.blockTimestamp)}
-      </span>
+      {!location.pathname.includes("/marketplace/caws") &&
+        !location.pathname.includes("/marketplace/wod") &&
+        !location.pathname.includes("/marketplace/timepiece") && (
+          <span
+            className="position-relative top-sale-time"
+            style={{ bottom: "-8%" }}
+          >
+            {getRelativeTime(nft.blockTimestamp)}
+          </span>
+        )}
     </div>
   );
 };

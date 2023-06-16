@@ -688,6 +688,7 @@ const Marketplace = ({
                             coinbase?.toLowerCase(),
                           chain: nft.chain,
                         }}
+                        
                       >
                         <ItemCard
                           key={nft.id}
