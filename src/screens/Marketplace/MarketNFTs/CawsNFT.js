@@ -8,7 +8,6 @@ import searchIcon from "../assets/search.svg";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import { NavLink } from "react-router-dom";
 
-
 const CawsNFT = ({
   isConnected,
   handleConnect,
@@ -64,6 +63,7 @@ const CawsNFT = ({
 
     console.log(cawsNFTS.length);
   };
+  
 
   const fetchInitialCaws = async () => {
     if (cawsListed && cawsListed.length > 0) {
@@ -105,16 +105,8 @@ const CawsNFT = ({
           <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
             Cats And Watches <span style={{ color: "#8c56ff" }}>Society</span>
           </h6>
-          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
-            <div className="position-relative">
-              <img src={searchIcon} className="nft-search-icon" alt="" />
-              <input
-                type="text"
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search here"
-                className="nft-search-bar"
-              />
-            </div>
+          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-end">
+            
             <div class="dropdown" style={{ width: "200px" }}>
               <button
                 class="btn btn-secondary nft-dropdown w-100
@@ -198,18 +190,11 @@ const CawsNFT = ({
                     key={index}
                     state={{
                       nft: nft,
-                      type:
-                        nft.nftAddress === window.config.nft_caws_address
-                          ? "caws"
-                          : nft.nftAddress === window.config.nft_cawsold_address
-                          ? "cawsold"
-                          : nft.nftAddress ===
-                            window.config.nft_timepiece_address
-                          ? "timepiece"
-                          : "land",
+                      type: nft.type,
                       isOwner:
                         nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
                         nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                        chain: nft.chain,
                     }}
                   >
                     <ItemCard
