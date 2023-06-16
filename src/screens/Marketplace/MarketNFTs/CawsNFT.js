@@ -7,10 +7,15 @@ import MobileNav from "../../../components/MobileNav/MobileNav";
 import searchIcon from "../assets/search.svg";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import { NavLink } from "react-router-dom";
-import convertListedNFTsToUSD from "../../../actions/convertUsd";
-import { getCawsNfts } from "../../../actions/convertUsd";
 
-const CawsNFT = ({ isConnected, handleConnect, listedNFTS, coinbase }) => {
+
+const CawsNFT = ({
+  isConnected,
+  handleConnect,
+  listedNFTS,
+  coinbase,
+  cawsListed,
+}) => {
   const override = {
     display: "block",
     margin: "auto",
@@ -21,11 +26,10 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS, coinbase }) => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [filterTitle, setFilterTitle] = useState("Sort");
-  const [initialNfts, setInitialNfts] = useState([])
+  const [initialNfts, setInitialNfts] = useState([]);
   const [cawsNFTS, setCawsNFTS] = useState([]);
 
   const sortNfts = (sortValue) => {
- 
     if (sortValue === "htl") {
       let htl = initialNfts.sort((a, b) => {
         return b.priceUSD - a.priceUSD;
@@ -61,15 +65,19 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS, coinbase }) => {
     console.log(cawsNFTS.length);
   };
 
-  useEffect(() => {
-    getCawsNfts().then((nfts) => {
-      let datedNfts = nfts.map((nft) => {
+  const fetchInitialCaws = async () => {
+    if (cawsListed && cawsListed.length > 0) {
+      let datedNfts = cawsListed.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
       setCawsNFTS(datedNfts);
-      setInitialNfts(datedNfts)
-    });
+      setInitialNfts(datedNfts);
+    }
+  };
+
+  useEffect(() => {
+    fetchInitialCaws();
   }, []);
 
   useEffect(() => {
@@ -183,7 +191,7 @@ const CawsNFT = ({ isConnected, handleConnect, listedNFTS, coinbase }) => {
               }
             >
               {cawsNFTS && cawsNFTS.length > 0 ? (
-                cawsNFTS.slice(0, 5).map((nft, index) => (
+                cawsNFTS.map((nft, index) => (
                   <NavLink
                     to={`/marketplace/nft/${nft.blockTimestamp}`}
                     style={{ textDecoration: "none" }}

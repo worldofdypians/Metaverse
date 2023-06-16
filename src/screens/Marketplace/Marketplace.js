@@ -233,7 +233,7 @@ const Marketplace = ({
   };
 
   useEffect(() => {
-   setTopSold(topSales);
+    setTopSold(topSales);
     setRecentListed(latest20RecentListedNFTS);
     setRecentSalesFilter(recentSales);
     if (topSales && topSales.length === 0) {
