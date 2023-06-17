@@ -8,6 +8,7 @@ import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import _ from "lodash";
 import { useLocation } from "react-router-dom";
+import Toast from "../../components/Toast/Toast";
 
 const ItemCard = ({
   nft,
@@ -17,7 +18,58 @@ const ItemCard = ({
   isCaws,
   isTimepiece,
   isWod,
+  coinbase,
 }) => {
+  const [dyptokenData, setDypTokenData] = useState(0);
+  const [ethtokenData, setEthTokenData] = useState(0);
+  const [isFavorite, setisFavorite] = useState(false);
+  const [isOwner, setisOwner] = useState(false);
+  const [IsApprove, setIsApprove] = useState(false);
+  const [buttonTxt, setbuttonTxt] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [toastTitle, setToastTitle] = useState("");
+
+  const location = useLocation();
+
+  const checkOwner = (nftItem) => {
+    if (coinbase === undefined) {
+      setisOwner(false);
+    } else if (coinbase) {
+      if (
+        nftItem.seller &&
+        nftItem.seller.toLowerCase() === coinbase.toLowerCase()
+      ) {
+        setisOwner(true);
+      }
+
+      if (
+        nftItem.buyer &&
+        nftItem.buyer.toLowerCase() === coinbase.toLowerCase()
+      ) {
+        setisOwner(true);
+      }
+    }
+  };
+
+
+  const isApprovedBuy = async (amount) => {
+    const result = await window.isApprovedBuy(amount).catch((e) => {
+      console.error(e);
+    });
+
+    return result;
+  };
+
+  const checkapprove = async (nftItem) => {
+    if (isConnected === true && nftItem.payment_priceType === 1) {
+      isApprovedBuy(nftItem.price).then((isApproved) => {
+        console.log(isApproved);
+        setbuttonTxt(isApproved ? "Buy" : "Approve");
+        setIsApprove(isApproved);
+      });
+    }
+  };
+
   const getRelativeTime = (nftTimestamp) => {
     const date = new Date();
     const timestamp = date.getTime();
@@ -48,11 +100,6 @@ const ItemCard = ({
     }
     return output;
   };
-  const [dyptokenData, setDypTokenData] = useState(0);
-  const [ethtokenData, setEthTokenData] = useState(0);
-  const [isFavorite, setisFavorite] = useState(false);
-
-  const location = useLocation();
 
   const getTokenData = async () => {
     await axios
@@ -120,16 +167,57 @@ const ItemCard = ({
     await toggleFavoriteETH(nft);
   };
 
+  async function handleBuy(nft) {
+    console.log("nft", nft);
+    const isApproved = await isApprovedBuy(nft.price);
+
+    if (isApproved || nft.payment_priceType === 0) {
+      setbuttonTxt("Buy");
+
+      console.log("buying");
+      await window
+        .buyNFT(
+          nft.price,
+          nft.nftAddress,
+          nft.tokenId,
+          nft.payment_priceType,
+          nft.payment_tokenAddress
+        )
+        .then((result) => {
+          console.log("buyNFT", result);
+          setShowToast(true);
+          setToastTitle("Successfully purchased!");
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    } else {
+      setbuttonTxt("Approve");
+
+      console.log("approve buying");
+      await window
+        .approveBuy(nft.price)
+        .then((result) => {})
+        .catch((e) => {
+          console.error(e);
+        });
+    }
+  }
+
   useEffect(() => {
     getTokenData();
   }, []);
 
   useEffect(() => {
     getAllFavs(nft);
-  }, [nft, isFavorite]);
+    checkOwner(nft);
+    checkapprove(nft);
+  }, [nft, isFavorite, coinbase]);
 
   return (
     <div className="d-flex flex-column position-relative gap-1">
+        <Toast showToast={showToast} title={toastTitle} />
+
       <div className="item-wrapper" style={{ maxWidth: "100%" }}>
         <div className="nftimg-bg position-relative">
           <div className="name-wrapper d-flex justify-content-center p-2">
@@ -150,9 +238,23 @@ const ItemCard = ({
             alt=""
           />
         </div>
-        <div className="d-flex flex-column gap-2 position-relative p-3 topwrapper">
-          <div className="d-flex gap-2 justify-content-between middlewrapper">
-            <div className="d-flex gap-2 m-0 middlewrapper">
+        <div
+          className={`d-flex flex-column gap-2 position-relative p-3 ${
+            (location.pathname.includes("/marketplace/caws") ||
+              location.pathname.includes("/marketplace/wod") ||
+              location.pathname.includes("/marketplace/timepiece")) &&
+            "topwrapper"
+          }`}
+        >
+          <div
+            className={`d-flex gap-2 justify-content-between ${
+              (location.pathname.includes("/marketplace/caws") ||
+                location.pathname.includes("/marketplace/wod") ||
+                location.pathname.includes("/marketplace/timepiece")) &&
+              "middlewrapper"
+            }`}
+          >
+            <div className={`d-flex gap-2 m-0`}>
               {nft.payment_priceType === 0 ? (
                 <img src={topEth} height={20} width={20} alt="" />
               ) : (
@@ -163,7 +265,15 @@ const ItemCard = ({
                   {nft.price.slice(0, 5)}{" "}
                   {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                 </span>
-                <span className="nft-price-usd" style={{ color: "#7DD9AF" }}>
+                <span
+                  className={`nft-price-usd  ${
+                    (location.pathname.includes("/marketplace/caws") ||
+                      location.pathname.includes("/marketplace/wod") ||
+                      location.pathname.includes("/marketplace/timepiece")) &&
+                    "nft-price-usdhover"
+                  } `}
+                  style={{ color: "#7DD9AF" }}
+                >
                   $
                   {getFormattedNumber(
                     nft.payment_priceType === 0
@@ -182,35 +292,47 @@ const ItemCard = ({
                 e.stopPropagation();
               }}
               alt=""
-              className="favorite"
+              className={`${
+                (location.pathname.includes("/marketplace/caws") ||
+                  location.pathname.includes("/marketplace/wod") ||
+                  location.pathname.includes("/marketplace/timepiece")) &&
+                "favoritehover"
+              } `}
             />
           </div>
         </div>
-        {location.pathname.includes("/marketplace/caws") &&
-          location.pathname.includes("/marketplace/wod") &&
-          location.pathname.includes("/marketplace/timepiece") && (
-            <div className="buy-nft w-100">
-              <button
-                className="buy-nft-btn w-100"
-                style={{ paddingLeft: "20px", paddingRight: "20px" }}
-                onClick={() => {
-                  // isConnected === true ? handleBuy(nft) : showConnectWallet();
-                }}
-              >
-                {" "}
-                {
-                  // isConnected === true
-                  //   ? nft.payment_priceType === 1
-                  //     ? !IsApprove
-                  //       ? "Approve"
-                  //       : "Buy"
-                  //     : "Buy"
-                  //   :
-                  "Connect wallet"
-                }{" "}
-              </button>
-            </div>
-          )}
+        {(location.pathname.includes("/marketplace/caws") ||
+          location.pathname.includes("/marketplace/wod") ||
+          location.pathname.includes("/marketplace/timepiece")) && (
+          <div className="buy-nft w-100">
+            <button
+              className="buy-nft-btn w-100"
+              style={{ paddingLeft: "20px", paddingRight: "20px" }}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                isConnected === true
+                  ? !isOwner
+                    ? handleBuy(nft)
+                    : console.log("owner")
+                  : showConnectWallet();
+              }}
+            >
+              {" "}
+              {isConnected === true ? (
+                nft.payment_priceType === 1 && !isOwner ? (
+                  <>{buttonTxt}</>
+                ) : nft.payment_priceType === 1 && isOwner ? (
+                  "Owner"
+                ) : (
+                  "Buy"
+                )
+              ) : (
+                "Connect wallet"
+              )}{" "}
+            </button>
+          </div>
+        )}
       </div>
       {!location.pathname.includes("/marketplace/caws") &&
         !location.pathname.includes("/marketplace/wod") &&

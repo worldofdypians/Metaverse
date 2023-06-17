@@ -13,7 +13,7 @@ const Toast = ({ title, showToast }) => {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 6000);
       toast(title, {
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,

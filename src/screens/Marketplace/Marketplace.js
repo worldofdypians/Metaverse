@@ -698,6 +698,8 @@ const Marketplace = ({
                           isCaws={nft.type === "caws" || nft.type === "cawsold"}
                           isTimepiece={nft.type === "timepiece"}
                           isWod={nft.type === "land"}
+                          coinbase={coinbase}
+
                         />
                       </NavLink>
                     ))}
@@ -801,6 +803,8 @@ const Marketplace = ({
                           isCaws={nft.type === "caws" || nft.type === "cawsold"}
                           isTimepiece={nft.type === "timepiece"}
                           isWod={nft.type === "land"}
+                          coinbase={coinbase}
+
                         />
                       </NavLink>
                     ))}

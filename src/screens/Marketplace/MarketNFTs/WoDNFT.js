@@ -204,6 +204,8 @@ const WoDNFT = ({
                       isCaws={false}
                       isTimepiece={false}
                       isWod={true}
+                      coinbase={coinbase}
+
                     />
                   </NavLink>
                 ))
