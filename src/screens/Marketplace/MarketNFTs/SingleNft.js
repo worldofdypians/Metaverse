@@ -572,9 +572,7 @@ const SingleNft = ({
                 <img
                   className="blur-img blur-img-big"
                   src={
-                    type === "caws"
-                      ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
-                      : type === "cawsold"
+                    type === "caws" || type === "cawsold"
                       ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
                       : type === "land"
                       ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
