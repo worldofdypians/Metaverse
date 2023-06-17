@@ -102,7 +102,7 @@
 
 .dyp-wrapper,
 .idyp-wrapper {
-  background: rgba(0, 0, 0, 0.2);
+  background: #252743;
   border-radius: 25px;
 }
 
@@ -154,6 +154,32 @@
   scale: 1.3;
 }
 
+.eth-chain-text {
+  color: #5871d2;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.bnb-chain-text {
+  color: #D9A908;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+
+.avax-chain-text {
+  color: #DF2C2D;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+
 .account-nft-sort {
   font-weight: 500;
   font-size: 16px;
@@ -161,6 +187,15 @@
   color: #e2e2e2;
   transition: all 0.25s;
   cursor: pointer;
+}
+
+.balanceseparator {
+  height: 1px;
+  background: #E2E2E2;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+  border-radius: 500px;
 }
 
 .nft-sort-selected {
