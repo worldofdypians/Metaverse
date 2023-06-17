@@ -2,8 +2,8 @@
   background: #252743 !important;
   border: 1px solid #494b63;
   backdrop-filter: blur(26px);
- overflow: hidden;
-transition: all .35s;
+  overflow: hidden;
+  transition: all 0.35s;
   border-radius: 20px;
   // padding-top: 15px;
   // padding-bottom: 30px;
@@ -14,12 +14,11 @@ transition: all .35s;
 .nft-img {
   transition: all 0.2s;
   border-radius: 20px 20px 0 0;
-
 }
 
 .buy-nft-btn {
   // background-color: rgb(46, 142, 238);
-  background: #12688F;
+  background: #12688f;
   border: none !important;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -30,7 +29,7 @@ transition: all .35s;
   position: absolute;
   bottom: -40px;
   transition: all 0.2s;
-  color: #EEEDFF;
+  color: #eeedff;
   height: 28px;
 }
 
@@ -75,39 +74,45 @@ transition: all .35s;
   border-radius: 0px;
 }
 
-.nft-card-name{
+.nft-card-name {
   font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 15px;
-display: flex;
-align-items: center;
-text-align: center;
-color: #FFFFFF;
-z-index: 2;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  z-index: 2;
 }
 
-
-.item-wrapper:hover{
+.item-wrapper:hover {
   background: rgba(103, 67, 124, 0.35) !important;
 
   .topwrapper {
     padding-top: 10px !important;
   }
 
+  .favoritehover {
+    position: relative;
+    top: -3px;
+    scale: 0.9;
+  }
+
+  .nft-price-usdhover {
+    visibility: hidden;
+    line-height: 8px;
+  }
+
   .middlewrapper {
     align-items: center;
-    margin-bottom: 17px;
+    margin-bottom: 6px;
   }
 
-  .nft-price-usd {
-    display: none;
+  .buy-nft-btn {
+    bottom: 0px;
   }
-
-  .buy-nft-btn{
-      bottom: 0px;
+  .nft-img {
+    transform: scale(1.1);
   }
-  .nft-img{
-      transform: scale(1.1);
-  }
-  }
+}

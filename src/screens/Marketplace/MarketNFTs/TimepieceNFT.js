@@ -206,6 +206,8 @@ const TimepieceNFT = ({
                       isCaws={false}
                       isTimepiece={true}
                       isWod={false}
+                      coinbase={coinbase}
+
                     />
                   </NavLink>
                 ))
