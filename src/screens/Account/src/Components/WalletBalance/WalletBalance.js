@@ -11,6 +11,8 @@ import genesisImg from "./assets/genesisRank.svg";
 import axios from "axios";
 import viewAllArrow from "./assets/viewAllArrow.svg";
 import { NavLink } from "react-router-dom";
+import getListedNFTS from "../../../../../actions/Marketplace";
+import { HashLoader } from "react-spinners";
 
 const WalletBalance = ({
   dypBalance,
@@ -29,6 +31,8 @@ const WalletBalance = ({
   listedNFTS,
   onOpenNfts,
   showNfts,
+  landStaked,
+  myCawsWodStakes
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -42,6 +46,13 @@ const WalletBalance = ({
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
   const [filterTitle, setFilterTitle] = useState("Balance");
   const [nftItems, setNftItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const override = {
+    display: "block",
+    margin: "auto",
+    borderColor: "#554fd8",
+  };
 
   const sortNfts = (sortValue) => {
     if (sortValue === "balance") {
@@ -50,13 +61,56 @@ const WalletBalance = ({
       setFilterTitle("Collected");
     } else if (sortValue === "favorites") {
       setFilterTitle("Favorites");
+      getAllFavs();
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     } else if (sortValue === "listed") {
       setFilterTitle("Listed");
+      setLoading(true);
+      getCollected();
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     } else if (sortValue === "staked") {
       setFilterTitle("Staked");
+      setLoading(true);
+      getStakes();
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     } else if (sortValue === "eth") {
       setFilterTitle("");
     }
+  };
+
+  const getCollected = async () => {
+    let finalItems = [];
+
+    const listedNFTS = await getListedNFTS(0, "", "seller", address, "");
+    listedNFTS &&
+      listedNFTS.length > 0 &&
+      listedNFTS.map((nft) => {
+        if (nft.nftAddress === window.config.nft_caws_address) {
+          nft.type = "caws";
+          nft.chain = 1;
+          finalItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
+          nft.type = "cawsold";
+          nft.chain = 1;
+          finalItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_land_address) {
+          nft.type = "land";
+          nft.chain = 1;
+          finalItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+          nft.type = "timepiece";
+          nft.chain = 1;
+          finalItems.push(nft);
+        }
+      });
+    setNftItems(finalItems);
   };
 
   const getAllFavs = async () => {
@@ -65,6 +119,30 @@ const WalletBalance = ({
       setNftItems(favorites);
     } else setNftItems([]);
   };
+
+  const getStakes = ()=>{
+    if(coinbase) {
+      let total =[]
+      if(landStaked.length === 0 && myCawsWodStakes.length === 0 ) {
+        setNftItems([])
+      }
+
+      else if(landStaked.length === 0 && myCawsWodStakes.length !== 0 ) {
+      total = [...myCawsWodStakes];
+        setNftItems(total)
+      }
+      else if(landStaked.length !== 0 && myCawsWodStakes.length === 0 ) {
+      total = [...landStaked];
+        setNftItems(total)
+      }
+      else if(landStaked.length !== 0 && myCawsWodStakes.length !== 0 ) {
+        total = [...landStaked, ...myCawsWodStakes]
+        setNftItems(total)
+      }
+      // const allstakes = [...landStaked, ...myCawsWodStakes]
+      console.log(total)
+    }
+  }
 
   const fetchMonthlyRecordsAroundPlayer = async () => {
     const data = {
@@ -234,36 +312,15 @@ const WalletBalance = ({
             Staked
           </h6>
         </div>
-        {filterTitle === "Collected" && (
-          <div className="row px-3">
-            {listedNFTS.slice(0, 6).map((item) => (
-              <div className="col-12 col-lg-6 col-xxl-4 mb-3">
-                <div className="account-nft-card w-100 d-flex align-items-center gap-4">
-                  <img
-                    src="https://mint.dyp.finance/thumbs/6.png"
-                    alt=""
-                    className="account-card-img"
-                  />
-                  <div className="d-flex flex-column align-items-center justify-content-center">
-                    <h6 className="account-nft-title">Genesis #256</h6>
-                    <span className="account-nft-type">
-                      World of Dypians Land
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
 
-        {filterTitle === "Favorites" && (
+        {filterTitle === "Favorites" && loading === false && (
           <div className="row px-3">
             {nftItems.slice(0, 6).map((item, index) => (
               <NavLink
                 key={index}
                 to={`/marketplace/nft/${item.blockTimestamp}`}
                 style={{ textDecoration: "none" }}
-                className='col-12 col-lg-6 col-xxl-4 mb-3'
+                className="col-12 col-lg-6 col-xxl-4 mb-3"
                 state={{
                   nft: item,
                   type: item.type,
@@ -312,7 +369,61 @@ const WalletBalance = ({
           </div>
         )}
 
-        {filterTitle === "Balance" && (
+        {filterTitle === "Listed" && loading === false && (
+          <div className="row px-3">
+            {nftItems.slice(0, 6).map((item, index) => (
+              <NavLink
+                key={index}
+                to={`/marketplace/nft/${item.blockTimestamp}`}
+                style={{ textDecoration: "none" }}
+                className="col-12 col-lg-6 col-xxl-4 mb-3"
+                state={{
+                  nft: item,
+                  type: item.type,
+                  isOwner:
+                    item.seller &&
+                    item.seller.toLowerCase() === coinbase?.toLowerCase(),
+                  chain: item.chain,
+                }}
+              >
+                <div className="">
+                  <div className="account-nft-card w-100 d-flex align-items-center gap-4">
+                    <img
+                      src={
+                        item.type === "caws" || item.type === "cawsold"
+                          ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
+                          : item.type === "land"
+                          ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
+                          : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
+                      }
+                      alt=""
+                      className="account-card-img"
+                    />
+                    <div className="d-flex flex-column align-items-center justify-content-center">
+                      <h6 className="account-nft-title">
+                        {item.type === "caws" || item.type === "cawsold"
+                          ? "CAWS"
+                          : item.type === "land"
+                          ? "Genesis Land"
+                          : "CAWS Timepiece"}{" "}
+                        #{item.tokenId}
+                      </h6>
+                      <span className="account-nft-type">
+                        {item.type === "caws" || item.type === "cawsold"
+                          ? "CAWS"
+                          : item.type === "land"
+                          ? "Genesis Land"
+                          : "Timepiece"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </NavLink>
+            ))}
+          </div>
+        )}
+
+        {filterTitle === "Balance" && loading === false && (
           <div className="d-flex flex-column align-items-center gap-3 balancewrapper3">
             <div className="d-flex gap-2 col-lg-12 justify-content-between">
               <div className="d-flex py-2 align-items-center gap-2 position-relative col-lg-3">
@@ -418,7 +529,7 @@ const WalletBalance = ({
           </div>
         )}
 
-        {filterTitle !== "Balance" && (
+        {filterTitle !== "Balance" && loading === false && nftItems.length > 6 &&  (
           <div className="row w-100 justify-content-center">
             <div
               className="d-flex align-items-center justify-content-center gap-2"
@@ -434,6 +545,18 @@ const WalletBalance = ({
                 alt=""
               />
             </div>
+          </div>
+        )}
+
+        {loading === true && (
+          <div className="loader-wrapper">
+            <HashLoader
+              color={"#554fd8"}
+              loading={loading}
+              cssOverride={override}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
           </div>
         )}
       </div>
