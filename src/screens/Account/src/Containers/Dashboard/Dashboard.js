@@ -50,7 +50,9 @@ function Dashboard({
   isConnected,
   chainId,
   coinbase,
-  handleConnect
+  handleConnect,
+  myCawsWodStakes,
+  landStaked
 }) {
   const { email, logout } = useAuth();
 
@@ -536,6 +538,8 @@ function Dashboard({
                         }}
                         userId={data?.getPlayer?.playerId}
                         username={data?.getPlayer?.displayName}
+                        myCawsWodStakes={myCawsWodStakes}
+                        landStaked={landStaked}
                       />
                     </div>
                         {showNfts && 

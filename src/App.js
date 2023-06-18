@@ -1059,6 +1059,8 @@ function App() {
                     MyNFTSCaws={MyNFTSCaws}
                     MyNFTSTimepiece={MyNFTSTimepiece}
                     MyNFTSLand={MyNFTSLand}
+                    myCawsWodStakes={myCawsWodStakesAll}
+              landStaked={mystakes}
                     account={coinbase}
                     isConnected={isConnected}
                     chainId={chainId}
