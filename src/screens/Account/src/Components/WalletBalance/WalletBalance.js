@@ -32,7 +32,12 @@ const WalletBalance = ({
   onOpenNfts,
   showNfts,
   landStaked,
-  myCawsWodStakes
+  myCawsWodStakes,
+  myCawsCollected,
+  myCawsOldCollected,
+  myLandCollected,
+  myTimepieceCollected,
+  myBoughtNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -69,7 +74,7 @@ const WalletBalance = ({
     } else if (sortValue === "listed") {
       setFilterTitle("Listed");
       setLoading(true);
-      getCollected();
+      getListed();
       setTimeout(() => {
         setLoading(false);
       }, 2000);
@@ -85,7 +90,7 @@ const WalletBalance = ({
     }
   };
 
-  const getCollected = async () => {
+  const getListed = async () => {
     let finalItems = [];
 
     const listedNFTS = await getListedNFTS(0, "", "seller", address, "");
@@ -113,6 +118,115 @@ const WalletBalance = ({
     setNftItems(finalItems);
   };
 
+  const getCollected = async () => {
+    var finalTimepieceArray = [];
+    let finalLandArray = [];
+    let finalCawsOldArray = [];
+    let finalCawsArray = [];
+    let finalCollection = [];
+
+    if (myTimepieceCollected && myTimepieceCollected.length > 0) {
+      for (let i = 0; i < myTimepieceCollected.length; i++) {
+        const result = await getListedNFTS(
+          0,
+          "",
+          "nftAddress_tokenId",
+          myTimepieceCollected[i],
+          window.config.nft_timepiece_address
+        );
+
+        if (result.length === 0) {
+          console.log(myTimepieceCollected[i]);
+          finalTimepieceArray.push({
+            nftAddress: window.config.nft_timepiece_address,
+            buyer: address,
+            tokenId: myTimepieceCollected[i],
+            type: "timepiece",
+            chain: 1,
+          });
+        }
+      }
+
+      console.log("timepiece", finalTimepieceArray);
+    }
+
+    if (myLandCollected && myLandCollected.length > 0) {
+      for (let i = 0; i < myLandCollected.length; i++) {
+        const result = await getListedNFTS(
+          0,
+          "",
+          "nftAddress_tokenId",
+          myLandCollected[i],
+          window.config.nft_land_address
+        );
+        if (result.length === 0) {
+          finalLandArray.push({
+            nftAddress: window.config.nft_land_address,
+            buyer: address,
+            tokenId: myLandCollected[i],
+            type: "land",
+            chain: 1,
+          });
+        }
+      }
+
+      console.log("land", finalLandArray);
+    }
+
+    if (myCawsCollected && myCawsCollected.length > 0) {
+      for (let i = 0; i < myCawsCollected.length; i++) {
+        const result = await getListedNFTS(
+          0,
+          "",
+          "nftAddress_tokenId",
+          myCawsCollected[i],
+          window.config.nft_caws_address
+        );
+        if (result.length === 0) {
+          finalCawsArray.push({
+            nftAddress: window.config.nft_caws_address,
+            buyer: address,
+            tokenId: myCawsCollected[i],
+            type: "caws",
+            chain: 1,
+          });
+        }
+      }
+
+      console.log("caws", finalCawsArray);
+    }
+
+    if (myCawsOldCollected && myCawsOldCollected.length > 0) {
+      for (let i = 0; i < myCawsOldCollected.length; i++) {
+        const result = await getListedNFTS(
+          0,
+          "",
+          "nftAddress_tokenId",
+          myCawsOldCollected[i],
+          window.config.nft_cawsold_address
+        );
+        if (result.length === 0) {
+          finalCawsOldArray.push({
+            nftAddress: window.config.nft_cawsold_address,
+            buyer: address,
+            tokenId: myCawsOldCollected[i],
+            type: "cawsold",
+            chain: 1,
+          });
+        }
+      }
+
+      console.log("cawsold", finalCawsOldArray);
+    }
+    finalCollection = [
+      ...finalTimepieceArray,
+      ...finalLandArray,
+      ...finalCawsOldArray,
+      ...finalCawsArray,
+    ];
+    setNftItems(finalCollection);
+  };
+
   const getAllFavs = async () => {
     let favorites = await window.getFavoritesETH2();
     if (favorites && favorites.length > 0) {
@@ -120,29 +234,25 @@ const WalletBalance = ({
     } else setNftItems([]);
   };
 
-  const getStakes = ()=>{
-    if(coinbase) {
-      let total =[]
-      if(landStaked.length === 0 && myCawsWodStakes.length === 0 ) {
-        setNftItems([])
-      }
-
-      else if(landStaked.length === 0 && myCawsWodStakes.length !== 0 ) {
-      total = [...myCawsWodStakes];
-        setNftItems(total)
-      }
-      else if(landStaked.length !== 0 && myCawsWodStakes.length === 0 ) {
-      total = [...landStaked];
-        setNftItems(total)
-      }
-      else if(landStaked.length !== 0 && myCawsWodStakes.length !== 0 ) {
-        total = [...landStaked, ...myCawsWodStakes]
-        setNftItems(total)
+  const getStakes = () => {
+    if (coinbase) {
+      let total = [];
+      if (landStaked.length === 0 && myCawsWodStakes.length === 0) {
+        setNftItems([]);
+      } else if (landStaked.length === 0 && myCawsWodStakes.length !== 0) {
+        total = [...myCawsWodStakes];
+        setNftItems(total);
+      } else if (landStaked.length !== 0 && myCawsWodStakes.length === 0) {
+        total = [...landStaked];
+        setNftItems(total);
+      } else if (landStaked.length !== 0 && myCawsWodStakes.length !== 0) {
+        total = [...landStaked, ...myCawsWodStakes];
+        setNftItems(total);
       }
       // const allstakes = [...landStaked, ...myCawsWodStakes]
-      console.log(total)
+      console.log(total);
     }
-  }
+  };
 
   const fetchMonthlyRecordsAroundPlayer = async () => {
     const data = {
@@ -236,6 +346,10 @@ const WalletBalance = ({
     getTokenDatabnb();
     getAllFavs();
   }, []);
+
+  useEffect(() => {
+    getCollected();
+  }, [myTimepieceCollected]);
 
   return (
     <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center">
@@ -424,7 +538,7 @@ const WalletBalance = ({
         )}
 
         {filterTitle === "Balance" && loading === false && (
-          <div className="d-flex flex-column align-items-center gap-3 balancewrapper3">
+          <div className="d-flex flex-column align-items-center balancewrapper3">
             <div className="d-flex gap-2 col-lg-12 justify-content-between">
               <div className="d-flex py-2 align-items-center gap-2 position-relative col-lg-3">
                 <img src={ethIcon} alt="" className="" />
@@ -529,24 +643,26 @@ const WalletBalance = ({
           </div>
         )}
 
-        {filterTitle !== "Balance" && loading === false && nftItems.length > 6 &&  (
-          <div className="row w-100 justify-content-center">
-            <div
-              className="d-flex align-items-center justify-content-center gap-2"
-              onClick={onOpenNfts}
-              style={{ cursor: "pointer", width: "fit-content" }}
-            >
-              <span className="account-view-all">
-                {showNfts ? "View Less" : "View All"}
-              </span>
-              <img
-                src={viewAllArrow}
-                style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                alt=""
-              />
+        {filterTitle !== "Balance" &&
+          loading === false &&
+          nftItems.length > 6 && (
+            <div className="row w-100 justify-content-center">
+              <div
+                className="d-flex align-items-center justify-content-center gap-2"
+                onClick={onOpenNfts}
+                style={{ cursor: "pointer", width: "fit-content" }}
+              >
+                <span className="account-view-all">
+                  {showNfts ? "View Less" : "View All"}
+                </span>
+                <img
+                  src={viewAllArrow}
+                  style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                  alt=""
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
         {loading === true && (
           <div className="loader-wrapper">
