@@ -681,7 +681,7 @@ const LeaderBoard = ({
   return (
  
       <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-end">
-        <div className="row w-100">
+        <div className="row w-100 align-items-end">
         <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 leaderboard-wrapper">
           <div className="d-none">
             {availableTime !== "0" && availableTime && (

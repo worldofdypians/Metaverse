@@ -166,7 +166,7 @@ const MarketSidebar = () => {
             }}
           />
         </div>
-        <div className="sidebar-links d-flex flex-column gap-2">
+        {/* <div className="sidebar-links d-flex flex-column gap-2">
           <span className="links-divider"></span>
           <a href="https://twitter.com/worldofdypians" target="_blank" className="d-flex align-items-center gap-2">
             <img src={twitterIcon} alt="" />
@@ -180,7 +180,7 @@ const MarketSidebar = () => {
               Join Discord
             </span>
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );
