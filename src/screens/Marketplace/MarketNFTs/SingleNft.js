@@ -182,7 +182,7 @@ const SingleNft = ({
       nft_address
     );
 
-    console.log(listedNFT);
+    console.log('test', listedNFT);
 
     if (listedNFT && listedNFT.length > 0) {
       setNft(...listedNFT);
@@ -287,15 +287,16 @@ const SingleNft = ({
         )
         .then((result) => {
           console.log("buyNFT", result);
-          setbuyLoading(true);
+          setbuyLoading(false);
           setbuyStatus("success");
           setPurchaseStatus("Successfully purchased!");
           setShowToast(true);
           setToastTitle("Successfully purchased!");
           setPurchaseColor("#00FECF");
-          handleRefreshList(type, nft.tokenId);
+          handleRefreshList(nft.type, nft.tokenId);
           handleRefreshListing();
           setTimeout(() => {
+            
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
             setbuyStatus("");
@@ -440,7 +441,7 @@ const SingleNft = ({
       "",
       "nftAddress_tokenId",
       nft.tokenId,
-      nft_address
+      nft.nftAddress
     );
 
     return listedNFTS.length > 0;
@@ -450,12 +451,13 @@ const SingleNft = ({
     if (isOwner === false) {
       if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
         isApprovedBuy(nft.price).then((isApproved) => {
-          setIsApprove(isApproved);
+          console.log(isApproved);
           if (isApproved === true) {
             setbuyStatus("buy");
           } else if (isApproved === false) {
             setbuyStatus("approve");
           }
+          setIsApprove(isApproved);
         });
       } else if (!IsListed) {
         isApprovedNFT(nft.tokenId, type).then((isApproved) => {
@@ -469,7 +471,7 @@ const SingleNft = ({
         setbuyStatus("buy");
       }
     }
-  }, [nft.price, isConnected, isOwner]);
+  }, [nft.price, isConnected, IsListed, isOwner]);
 
   useEffect(() => {
     if (isConnected === true && nft.payment_priceType === 1) {
@@ -482,13 +484,15 @@ const SingleNft = ({
     if (coinbase === undefined) {
       setisOwner(false);
     } else if (coinbase) {
+      console.log(nft.seller, coinbase)
       if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
       }
 
-      if (nft.buyer && nft.buyer.toLowerCase() === coinbase.toLowerCase()) {
+      else if (nft.buyer && nft.buyer.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
       }
+      else setisOwner(false);
     }
   }, [nft.price, isConnected, isOwner, IsListed, coinbase]);
 
@@ -959,10 +963,10 @@ const SingleNft = ({
                       >
                         {buyloading && (chainId === 1 || chainId === 5) ? (
                           <div
-                            class="spinner-border spinner-border-sm text-light"
+                          className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : !buyloading && chainId !== 1 && chainId !== 5 ? (
                           "Switch Network"
@@ -1006,10 +1010,10 @@ const SingleNft = ({
                         >
                           {updateLoading && (chainId === 1 || chainId === 5) ? (
                             <div
-                              class="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                               role="status"
                             >
-                              <span class="visually-hidden">Loading...</span>
+                              <span className="visually-hidden">Loading...</span>
                             </div>
                           ) : !updateLoading &&
                             chainId !== 1 &&
@@ -1044,10 +1048,10 @@ const SingleNft = ({
                         >
                           {cancelLoading && (chainId === 1 || chainId === 5) ? (
                             <div
-                              class="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                               role="status"
                             >
-                              <span class="visually-hidden">Loading...</span>
+                              <span className="visually-hidden">Loading...</span>
                             </div>
                           ) : !cancelLoading &&
                             chainId !== 1 &&
@@ -1093,10 +1097,10 @@ const SingleNft = ({
                       >
                         {sellLoading && (chainId === 1 || chainId === 5) ? (
                           <div
-                            class="spinner-border spinner-border-sm text-light"
+                          className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : !sellLoading && chainId !== 1 && chainId !== 5 ? (
                           "Switch Network"
