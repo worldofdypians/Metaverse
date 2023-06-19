@@ -681,7 +681,8 @@ const LeaderBoard = ({
   return (
  
       <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-end">
-        <div className="d-flex flex-column gap-3 col-xxl-6 col-lg-6 col-12 leaderboard-wrapper">
+        <div className="row w-100">
+        <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 leaderboard-wrapper">
           <div className="d-none">
             {availableTime !== "0" && availableTime && (
               <Countdown
@@ -695,7 +696,7 @@ const LeaderBoard = ({
             )}
           </div>
           <h2
-            className={`font-organetto d-flex gap-1 align-items-center  leaderboardTitle gap-2`}
+            className={`font-organetto d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
           >
             <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
             {/* <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
@@ -1234,7 +1235,7 @@ const LeaderBoard = ({
             </div>
           </div>
         </div>
-        <div className="d-flex flex-column gap-3 col-xxl-6 col-lg-6 col-12 medal-wrapper align-items-center justify-content-center position-relative">
+        <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 medal-wrapper align-items-center justify-content-center position-relative">
           <div
             className="d-flex justify-content-center w-100 position-relative medalinnerwrapper"
           >
@@ -1446,6 +1447,7 @@ const LeaderBoard = ({
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
   );

@@ -149,4 +149,8 @@
   bottom: 0;
   object-fit: contain;
   right: -80px;
+
+  @media screen and (max-width: 786px) {
+    display: none;
+  }
 }

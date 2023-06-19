@@ -12,8 +12,8 @@ const MarketSidebar = () => {
 
   return (
     <div className="marketplace-sidebar d-flex justify-content-center p-4">
-      <div className="d-flex flex-column w-100" style={{ gap: "60px" }}>
-        <div className="d-flex flex-column gap-2">
+      <div className="d-flex flex-column justify-content-between w-100" >
+        <div className="d-flex flex-column  gap-2">
           <NavLink
             to="/marketplace"
             end
@@ -165,6 +165,21 @@ const MarketSidebar = () => {
               );
             }}
           />
+        </div>
+        <div className="sidebar-links d-flex flex-column gap-2">
+          <span className="links-divider"></span>
+          <a href="https://twitter.com/worldofdypians" target="_blank" className="d-flex align-items-center gap-2">
+            <img src={twitterIcon} alt="" />
+            <span className="sidebar-link">
+              Follow Us
+            </span>
+          </a>
+          <a href="https://discord.gg/worldofdypians" target="_blank" className="d-flex align-items-center gap-2">
+            <img src={discordIcon} alt="" />
+            <span className="sidebar-link">
+              Join Discord
+            </span>
+          </a>
         </div>
       </div>
     </div>
