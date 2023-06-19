@@ -559,7 +559,7 @@ function Dashboard({
                 />
               </>
             ) : (
-              <div className="container-fluid">
+              <div className="container-fluid px-0 px-lg-3">
                 <div className={""}>
                   <div
                     className={

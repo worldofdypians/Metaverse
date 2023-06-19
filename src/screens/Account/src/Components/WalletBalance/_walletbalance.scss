@@ -239,3 +239,24 @@
   color: #7dd9af;
   margin-bottom: 0;
 }
+
+.rankings-outer-wrapper{
+  height: 100%;
+  @media screen and (max-width: 786px) {
+    height: fit-content;
+  }
+}
+.rankings-wrapper{
+  height: 100%;
+  @media screen and (max-width: 786px) {
+    height: fit-content;
+  }
+}
+
+.account-nft-sort-wrapper{
+  width: 100%;
+
+  @media screen and (max-width: 786px) {
+    overflow-x: scroll ;
+  }
+}
