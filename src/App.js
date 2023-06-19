@@ -954,6 +954,17 @@ function App() {
     getOtherNfts();
   }, [nftCount]);
 
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (window.ethereum.isConnected() === true) {
+  //       checkConnection();
+  //       setIsConnected(true);
+  //     } else setIsConnected(false);
+  //   }
+  // },[window.ethereum]);
+
+  // console.log(window.ethereum.isConnected(), coinbase, isConnected)
+
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
@@ -1054,13 +1065,7 @@ function App() {
                 path="/account"
                 element={
                   <Dashboard
-                  coinbase={coinbase}
-                  listedNFTS={listedNFTS}
-                    MyNFTSCaws={MyNFTSCaws}
-                    MyNFTSTimepiece={MyNFTSTimepiece}
-                    MyNFTSLand={MyNFTSLand}
-                    myCawsWodStakes={myCawsWodStakesAll}
-              landStaked={mystakes}
+                    coinbase={coinbase}
                     account={coinbase}
                     isConnected={isConnected}
                     chainId={chainId}

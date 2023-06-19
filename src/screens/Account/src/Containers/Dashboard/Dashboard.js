@@ -35,24 +35,21 @@ import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar
 import dypius from "../../Images/userProfile/dypius.svg";
 import Slider from "react-slick";
 import { NavLink } from "react-router-dom";
-import topEth from '../../../../Marketplace/assets/topEth.svg'
-import topDyp from '../../../../Marketplace/assets/topDyp.svg'
-import nextArrow from '../../../../Marketplace/assets/nextArrow.svg'
+import topEth from "../../../../Marketplace/assets/topEth.svg";
+import topDyp from "../../../../Marketplace/assets/topDyp.svg";
+import nextArrow from "../../../../Marketplace/assets/nextArrow.svg";
 import { HashLoader } from "react-spinners";
 import ItemCard from "../../../../../components/ItemCard/ItemCard";
+import getListedNFTS from "../../../../../actions/Marketplace";
 
 function Dashboard({
-  listedNFTS,
-  MyNFTSCaws,
-  MyNFTSTimepiece,
-  MyNFTSLand,
   account,
   isConnected,
   chainId,
   coinbase,
   handleConnect,
   myCawsWodStakes,
-  landStaked
+  landStaked,
 }) {
   const { email, logout } = useAuth();
 
@@ -78,19 +75,27 @@ function Dashboard({
   const [dypBalance, setDypBalance] = useState();
   const [dypBalancebnb, setDypBalanceBnb] = useState();
   const [dypBalanceavax, setDypBalanceAvax] = useState();
-  const [activeSlide, setActiveSlide] = useState()
+  const [activeSlide, setActiveSlide] = useState();
   const [idypBalance, setiDypBalance] = useState();
   const [idypBalancebnb, setiDypBalanceBnb] = useState();
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
-  const [showNfts, setShowNfts] = useState(false)
+  const [showNfts, setShowNfts] = useState(false);
   const [showWalletModal, setshowWalletModal] = useState(false);
   const [stakes, setStakes] = useState([]);
   const [landstakes, setLandStakes] = useState([]);
 
+  const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+  const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
+
+  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
+  const [MyNFTSLand, setMyNFTSLand] = useState([]);
+  const [listedNFTS, setListedNFTS] = useState([]);
+  const [myBoughtNfts, setmyBoughtNfts] = useState([]);
+
   const [availableTime, setAvailableTime] = useState();
 
-   var settings = {
+  var settings = {
     dots: false,
     arrows: false,
     dotsClass: "button__bar",
@@ -147,15 +152,14 @@ function Dashboard({
     ],
   };
 
+  const onOpenNfts = () => {
+    setShowNfts(!showNfts);
+  };
 
- const onOpenNfts = () => {
-    setShowNfts(!showNfts)
-  }
-
-   const firstNext = () => {
+  const firstNext = () => {
     firstSlider.current.slickNext();
   };
- const firstPrev = () => {
+  const firstPrev = () => {
     firstSlider.current.slickPrev();
     console.log("hello");
   };
@@ -181,14 +185,12 @@ function Dashboard({
 
   const getTokens = async () => {
     try {
-      //data?.getPlayer?.wallet?.publicAddress
       const res = await getWalletTokens(data?.getPlayer?.wallet?.publicAddress);
       setTokensState(res);
     } catch (error) {
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
   };
-  console.log(MyNFTSCaws, MyNFTSTimepiece, MyNFTSLand);
 
   // const connectWallet = async () => {
   //   try {
@@ -270,25 +272,68 @@ function Dashboard({
     }
   };
 
-  useEffect(() => {
-    if (dataVerify?.verifyWallet) {
-      refetchPlayer();
-    }
-  }, [dataVerify]);
+  const getMyNFTS = async (coinbase, type) => {
+    return await window.getMyNFTs(coinbase, type);
+  };
 
-  useEffect(() => {
-    if (dataNonce?.generateWalletNonce) {
-      signWalletPublicAddress();
-    }
-  }, [dataNonce]);
-
-  useEffect(() => {
+  //todo
+  const fetchAllMyNfts = async () => {
     if (data?.getPlayer?.wallet?.publicAddress) {
-      getTokens();
-      getStakes();
-      getLandStakes();
+      getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "caws").then((NFTS) =>
+        setMyNFTSCaws(NFTS)
+      );
+
+      getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "cawsold").then(
+        (NFTS) => {
+          if(NFTS)
+          {setMyNFTSCawsOld(NFTS);}
+        }
+      );
+
+      getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "timepiece").then(
+        (NFTS) => setMyNFTSTimepiece(NFTS)
+      );
+
+      getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "land").then((NFTS) =>
+        setMyNFTSLand(NFTS)
+      );
     }
-  }, [data?.getPlayer?.wallet?.publicAddress]);
+  };
+
+  const getOtherNfts = async () => {
+    let finalboughtItems1 = [];
+
+    const listedNFTS = await getListedNFTS(
+      0,
+      "",
+      "buyer",
+      data?.getPlayer?.wallet?.publicAddress,
+      ""
+    );
+    listedNFTS &&
+      listedNFTS.length > 0 &&
+      listedNFTS.map((nft) => {
+        if (nft.nftAddress === window.config.nft_caws_address) {
+          nft.type = "caws";
+          nft.chain = 1;
+          finalboughtItems1.push(nft);
+        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
+          nft.type = "cawsold";
+          nft.chain = 1;
+          finalboughtItems1.push(nft);
+        } else if (nft.nftAddress === window.config.nft_land_address) {
+          nft.type = "land";
+          nft.chain = 1;
+          finalboughtItems1.push(nft);
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+          nft.type = "timepiece";
+          nft.chain = 1;
+          finalboughtItems1.push(nft);
+        }
+      });
+    setmyBoughtNfts(finalboughtItems1);
+    setListedNFTS(finalboughtItems1);
+  };
 
   const windowSize = useWindowSize();
 
@@ -297,10 +342,6 @@ function Dashboard({
     onPress: connectWallet,
     loading: loadingVerify || loadingGenerateNonce,
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const renderItems = () => {
     if (
@@ -459,15 +500,40 @@ function Dashboard({
   };
 
   useEffect(() => {
+    if (dataVerify?.verifyWallet) {
+      refetchPlayer();
+    }
+  }, [dataVerify]);
+
+  useEffect(() => {
+    if (dataNonce?.generateWalletNonce) {
+      signWalletPublicAddress();
+    }
+  }, [dataNonce]);
+
+  useEffect(() => {
+    if (data?.getPlayer?.wallet?.publicAddress) {
+      fetchAllMyNfts();
+      getTokens();
+      getStakes();
+      getLandStakes();
+    }
+  }, [data?.getPlayer?.wallet?.publicAddress]);
+
+  useEffect(() => {
+    getOtherNfts();
     getDypBalance();
   }, [account]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   // console.log(showWalletModal);
 
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
-      style={{ minHeight: "72vh", maxWidth: "2400px", overflow:'hidden' }}
+      style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
@@ -520,8 +586,9 @@ function Dashboard({
                         }}
                       />
                       <WalletBalance
-                      onOpenNfts={onOpenNfts}
+                        onOpenNfts={onOpenNfts}
                         listedNFTS={listedNFTS}
+                        myBoughtNfts={myBoughtNfts}
                         address={data?.getPlayer?.wallet?.publicAddress}
                         coinbase={account}
                         isVerified={data?.getPlayer?.wallet}
@@ -538,103 +605,95 @@ function Dashboard({
                         }}
                         userId={data?.getPlayer?.playerId}
                         username={data?.getPlayer?.displayName}
-                        myCawsWodStakes={myCawsWodStakes}
-                        landStaked={landStaked}
+                        myCawsCollected={MyNFTSCaws}
+                        myCawsOldCollected={MyNFTSCawsOld}
+                        myLandCollected={MyNFTSLand}
+                        myTimepieceCollected={MyNFTSTimepiece}
                       />
                     </div>
-                        {showNfts && 
-                              <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 w-100">
-                              {activeSlide > 0 && (
-                                <img
-                                  src={nextArrow}
-                                  width={40}
-                                  height={40}
-                                  onClick={firstPrev}
-                                  className="prev-arrow-nft"
-                                  alt=""
-                                />
-                              )}
-                              <img
-                                src={nextArrow}
-                                width={40}
-                                height={40}
-                                onClick={firstNext}
-                                className="next-arrow-nft"
-                                alt=""
-                              />
-                              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-                                <h6 className="nft-wrapper-title font-raleway mb-0">
-                                  Recent Listings
-                                </h6>
-                                <div className="d-flex align-items-center gap-4">
-                                  <h6
-                                    className={`filter-title `}
+                    {showNfts && (
+                      <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 w-100">
+                        {activeSlide > 0 && (
+                          <img
+                            src={nextArrow}
+                            width={40}
+                            height={40}
+                            onClick={firstPrev}
+                            className="prev-arrow-nft"
+                            alt=""
+                          />
+                        )}
+                        <img
+                          src={nextArrow}
+                          width={40}
+                          height={40}
+                          onClick={firstNext}
+                          className="next-arrow-nft"
+                          alt=""
+                        />
+                        <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+                          <h6 className="nft-wrapper-title font-raleway mb-0">
+                            Recent Listings
+                          </h6>
+                          <div className="d-flex align-items-center gap-4">
+                            <h6 className={`filter-title `}>All</h6>
+                            <h6 className={`filter-title `}>CAWS</h6>
+                            <h6 className={`filter-title `}>Land</h6>
+                            <h6 className={`filter-title `}>Timepiece</h6>
+                          </div>
+                        </div>
+                        {loadingRecentListings === false ? (
+                          <div className="slider-container">
+                            <Slider
+                              ref={(c) => (firstSlider.current = c)}
+                              {...settings}
+                            >
+                              {listedNFTS &&
+                                listedNFTS.length > 0 &&
+                                listedNFTS.map((nft, index) => (
+                                  <NavLink
+                                    to={`/marketplace/nft/${nft.blockTimestamp}`}
+                                    style={{ textDecoration: "none" }}
+                                    key={index}
+                                    state={{
+                                      nft: nft,
+                                      type: nft.type,
+                                      isOwner:
+                                        nft.seller?.toLowerCase() ===
+                                        coinbase?.toLowerCase(),
+                                      chain: nft.chain,
+                                    }}
                                   >
-                                    All
-                                  </h6>
-                                  <h6
-                                    className={`filter-title `}
-                                  >
-                                    CAWS
-                                  </h6>
-                                  <h6
-                                    className={`filter-title `}
-                                  >
-                                    Land
-                                  </h6>
-                                  <h6
-                                    className={`filter-title `}
-                                  >
-                                    Timepiece
-                                  </h6>
-                                </div>
-                              </div>
-                              {loadingRecentListings === false ? (
-                                <div className="slider-container">
-                                  <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                                    {listedNFTS &&
-                                      listedNFTS.length > 0 &&
-                                      listedNFTS.map((nft, index) => (
-                                        <NavLink
-                                          to={`/marketplace/nft/${nft.blockTimestamp}`}
-                                          style={{ textDecoration: "none" }}
-                                          key={index}
-                                          state={{
-                                            nft: nft,
-                                            type: nft.type,
-                                            isOwner:
-                                              nft.seller?.toLowerCase() ===
-                                              coinbase?.toLowerCase(),
-                                            chain: nft.chain,
-                                          }}
-                                        >
-                                          <ItemCard
-                                            key={nft.id}
-                                            nft={nft}
-                                            isConnected={isConnected}
-                                            showConnectWallet={handleConnect}
-                                            isCaws={nft.type === "caws" || nft.type === "cawsold"}
-                                            isTimepiece={nft.type === "timepiece"}
-                                            isWod={nft.type === "land"}
-                                            coinbase={coinbase}
-                                          />
-                                        </NavLink>
-                                      ))}
-                                  </Slider>
-                                </div>
-                              ) : (
-                                <div className="loader-wrapper">
-                                  <HashLoader
-                                    color={"#554fd8"}
-                                    loading={loadingRecentListings}
-                                    cssOverride={override}
-                                    aria-label="Loading Spinner"
-                                    data-testid="loader"
-                                  />
-                                </div>
-                              )}
-                            </div>
-                        }
+                                    <ItemCard
+                                      key={nft.id}
+                                      nft={nft}
+                                      isConnected={isConnected}
+                                      showConnectWallet={handleConnect}
+                                      isCaws={
+                                        nft.type === "caws" ||
+                                        nft.type === "cawsold"
+                                      }
+                                      isTimepiece={nft.type === "timepiece"}
+                                      isWod={nft.type === "land"}
+                                      coinbase={coinbase}
+                                    />
+                                  </NavLink>
+                                ))}
+                            </Slider>
+                          </div>
+                        ) : (
+                          <div className="loader-wrapper">
+                            <HashLoader
+                              color={"#554fd8"}
+                              loading={loadingRecentListings}
+                              cssOverride={override}
+                              aria-label="Loading Spinner"
+                              data-testid="loader"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
                   <h2
