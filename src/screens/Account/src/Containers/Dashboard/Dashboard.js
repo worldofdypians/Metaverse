@@ -33,7 +33,6 @@ import goldenPass from "../../Components/BundleCard/assets/goldenPass.webp";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import dypius from "../../Images/userProfile/dypius.svg";
-import Slider from "react-slick";
 import { NavLink } from "react-router-dom";
 import topEth from "../../../../Marketplace/assets/topEth.svg";
 import topDyp from "../../../../Marketplace/assets/topDyp.svg";
@@ -75,7 +74,6 @@ function Dashboard({
   const [dypBalance, setDypBalance] = useState();
   const [dypBalancebnb, setDypBalanceBnb] = useState();
   const [dypBalanceavax, setDypBalanceAvax] = useState();
-  const [activeSlide, setActiveSlide] = useState();
   const [idypBalance, setiDypBalance] = useState();
   const [idypBalancebnb, setiDypBalanceBnb] = useState();
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
@@ -95,74 +93,10 @@ function Dashboard({
 
   const [availableTime, setAvailableTime] = useState();
 
-  var settings = {
-    dots: false,
-    arrows: false,
-    dotsClass: "button__bar",
-    infinite: false,
-    speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    beforeChange: (current, next) => {
-      setActiveSlide(next);
-    },
-    afterChange: (current) => setActiveSlide(current),
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1500,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
-
   const onOpenNfts = () => {
     setShowNfts(!showNfts);
   };
 
-  const firstNext = () => {
-    firstSlider.current.slickNext();
-  };
-  const firstPrev = () => {
-    firstSlider.current.slickPrev();
-    console.log("hello");
-  };
 
   const getStakes = async () => {
     const stakeArray = await cawsStakeContract.methods
@@ -611,89 +545,7 @@ function Dashboard({
                         myTimepieceCollected={MyNFTSTimepiece}
                       />
                     </div>
-                    {showNfts && (
-                      <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 w-100">
-                        {activeSlide > 0 && (
-                          <img
-                            src={nextArrow}
-                            width={40}
-                            height={40}
-                            onClick={firstPrev}
-                            className="prev-arrow-nft"
-                            alt=""
-                          />
-                        )}
-                        <img
-                          src={nextArrow}
-                          width={40}
-                          height={40}
-                          onClick={firstNext}
-                          className="next-arrow-nft"
-                          alt=""
-                        />
-                        <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-                          <h6 className="nft-wrapper-title font-raleway mb-0">
-                            Recent Listings
-                          </h6>
-                          <div className="d-flex align-items-center gap-4">
-                            <h6 className={`filter-title `}>All</h6>
-                            <h6 className={`filter-title `}>CAWS</h6>
-                            <h6 className={`filter-title `}>Land</h6>
-                            <h6 className={`filter-title `}>Timepiece</h6>
-                          </div>
-                        </div>
-                        {loadingRecentListings === false ? (
-                          <div className="slider-container">
-                            <Slider
-                              ref={(c) => (firstSlider.current = c)}
-                              {...settings}
-                            >
-                              {listedNFTS &&
-                                listedNFTS.length > 0 &&
-                                listedNFTS.map((nft, index) => (
-                                  <NavLink
-                                    to={`/marketplace/nft/${nft.blockTimestamp}`}
-                                    style={{ textDecoration: "none" }}
-                                    key={index}
-                                    state={{
-                                      nft: nft,
-                                      type: nft.type,
-                                      isOwner:
-                                        nft.seller?.toLowerCase() ===
-                                        coinbase?.toLowerCase(),
-                                      chain: nft.chain,
-                                    }}
-                                  >
-                                    <ItemCard
-                                      key={nft.id}
-                                      nft={nft}
-                                      isConnected={isConnected}
-                                      showConnectWallet={handleConnect}
-                                      isCaws={
-                                        nft.type === "caws" ||
-                                        nft.type === "cawsold"
-                                      }
-                                      isTimepiece={nft.type === "timepiece"}
-                                      isWod={nft.type === "land"}
-                                      coinbase={coinbase}
-                                    />
-                                  </NavLink>
-                                ))}
-                            </Slider>
-                          </div>
-                        ) : (
-                          <div className="loader-wrapper">
-                            <HashLoader
-                              color={"#554fd8"}
-                              loading={loadingRecentListings}
-                              cssOverride={override}
-                              aria-label="Loading Spinner"
-                              data-testid="loader"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    )}
+                  
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
                   <h2

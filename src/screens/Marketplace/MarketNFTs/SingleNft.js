@@ -113,7 +113,7 @@ const SingleNft = ({
   const [ethtokenData, setEthTokenData] = useState(0);
   const [priceUSD, setpriceUsd] = useState(0);
 
-  console.log("nft", nft, IsListed);
+  console.log("nft", nft, IsListed, isOwner);
 
   const getTokenData = async () => {
     await axios
@@ -182,7 +182,7 @@ const SingleNft = ({
       nft_address
     );
 
-    console.log('test', listedNFT);
+    console.log("test", listedNFT);
 
     if (listedNFT && listedNFT.length > 0) {
       setNft(...listedNFT);
@@ -296,7 +296,6 @@ const SingleNft = ({
           handleRefreshList(nft.type, nft.tokenId);
           handleRefreshListing();
           setTimeout(() => {
-            
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
             setbuyStatus("");
@@ -484,15 +483,15 @@ const SingleNft = ({
     if (coinbase === undefined) {
       setisOwner(false);
     } else if (coinbase) {
-      console.log(nft.seller, coinbase)
+      console.log(nft.seller, coinbase);
       if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
-      }
-
-      else if (nft.buyer && nft.buyer.toLowerCase() === coinbase.toLowerCase()) {
+      } else if (
+        nft.buyer &&
+        nft.buyer.toLowerCase() === coinbase.toLowerCase()
+      ) {
         setisOwner(true);
-      }
-      else setisOwner(false);
+      } else setisOwner(false);
     }
   }, [nft.price, isConnected, isOwner, IsListed, coinbase]);
 
@@ -513,6 +512,7 @@ const SingleNft = ({
 
   useEffect(() => {
     if (nft) {
+      handleRefreshList(nft.type, nft.tokenId);
       setNft(nft);
 
       if (nft.nftAddress === window.config.nft_cawsold_address) {
@@ -963,7 +963,7 @@ const SingleNft = ({
                       >
                         {buyloading && (chainId === 1 || chainId === 5) ? (
                           <div
-                          className="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
                             <span className="visually-hidden">Loading...</span>
@@ -1010,10 +1010,12 @@ const SingleNft = ({
                         >
                           {updateLoading && (chainId === 1 || chainId === 5) ? (
                             <div
-                            className="spinner-border spinner-border-sm text-light"
+                              className="spinner-border spinner-border-sm text-light"
                               role="status"
                             >
-                              <span className="visually-hidden">Loading...</span>
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
                             </div>
                           ) : !updateLoading &&
                             chainId !== 1 &&
@@ -1048,10 +1050,12 @@ const SingleNft = ({
                         >
                           {cancelLoading && (chainId === 1 || chainId === 5) ? (
                             <div
-                            className="spinner-border spinner-border-sm text-light"
+                              className="spinner-border spinner-border-sm text-light"
                               role="status"
                             >
-                              <span className="visually-hidden">Loading...</span>
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
                             </div>
                           ) : !cancelLoading &&
                             chainId !== 1 &&
@@ -1097,7 +1101,7 @@ const SingleNft = ({
                       >
                         {sellLoading && (chainId === 1 || chainId === 5) ? (
                           <div
-                          className="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
                             <span className="visually-hidden">Loading...</span>
