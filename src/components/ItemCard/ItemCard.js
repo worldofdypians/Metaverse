@@ -10,6 +10,7 @@ import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import Toast from "../../components/Toast/Toast";
 
+
 const ItemCard = ({
   nft,
   single,
@@ -28,6 +29,7 @@ const ItemCard = ({
   const [buttonTxt, setbuttonTxt] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastTitle, setToastTitle] = useState("");
+  
 
   const location = useLocation();
 
@@ -50,7 +52,6 @@ const ItemCard = ({
       }
     }
   };
-
 
   const isApprovedBuy = async (amount) => {
     const result = await window.isApprovedBuy(amount).catch((e) => {
@@ -197,13 +198,16 @@ const ItemCard = ({
       console.log("approve buying");
       await window
         .approveBuy(nft.price)
-        .then((result) => {})
+        .then((result) => {
+          setbuttonTxt("Buy");
+        })
         .catch((e) => {
           console.error(e);
         });
     }
   }
 
+  
   useEffect(() => {
     getTokenData();
   }, []);
@@ -214,17 +218,28 @@ const ItemCard = ({
     checkapprove(nft);
   }, [nft, isFavorite, coinbase]);
 
+
   return (
     <div className="d-flex flex-column position-relative gap-1">
-        <Toast showToast={showToast} title={toastTitle} />
+      <Toast showToast={showToast} title={toastTitle} />
 
       <div className="item-wrapper" style={{ maxWidth: "100%" }}>
         <div className="nftimg-bg position-relative">
           <div className="name-wrapper d-flex justify-content-center p-2">
-            <span className="nft-card-name">
-              {isCaws ? "CAWS" : isWod ? "Genesis Land" : "Timepiece"} #
-              {nft.tokenId}
-            </span>
+            {!location.pathname.includes("/account") ? (
+              <span className="nft-card-name">
+                {isCaws ? "CAWS" : isWod ? "Genesis Land" : "Timepiece"} #
+                {nft.tokenId}
+              </span>
+            ) : (
+              <span className="nft-card-name">
+                {isCaws
+                  ? "Cats and Watches Society"
+                  : isWod
+                  ? "Genesis Land"
+                  : "Caws Timepiece"}
+              </span>
+            )}
           </div>
           <img
             className="w-100 h-100 p-0 nft-img"
@@ -254,36 +269,46 @@ const ItemCard = ({
               "middlewrapper"
             }`}
           >
-            <div className={`d-flex gap-2 m-0`}>
-              {nft.payment_priceType === 0 ? (
-                <img src={topEth} height={20} width={20} alt="" />
-              ) : (
-                <img src={topDyp} height={20} width={20} alt="" />
-              )}
-              <div className="d-flex flex-column">
-                <span className="nft-price" style={{ textDecoration: "none" }}>
-                  {nft.price.slice(0, 5)}{" "}
-                  {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                </span>
-                <span
-                  className={`nft-price-usd  ${
-                    (location.pathname.includes("/marketplace/caws") ||
-                      location.pathname.includes("/marketplace/wod") ||
-                      location.pathname.includes("/marketplace/timepiece")) &&
-                    "nft-price-usdhover"
-                  } `}
-                  style={{ color: "#7DD9AF" }}
-                >
-                  $
-                  {getFormattedNumber(
-                    nft.payment_priceType === 0
-                      ? ethtokenData * nft.price
-                      : dyptokenData * nft.price,
-                    0
-                  )}
-                </span>
+            {!location.pathname.includes("/account") ? (
+              <div className={`d-flex gap-2 m-0`}>
+                {nft.payment_priceType === 0 ? (
+                  <img src={topEth} height={20} width={20} alt="" />
+                ) : (
+                  <img src={topDyp} height={20} width={20} alt="" />
+                )}
+                <div className="d-flex flex-column">
+                  <span
+                    className="nft-price"
+                    style={{ textDecoration: "none" }}
+                  >
+                    {nft.price?.slice(0, 5)}{" "}
+                    {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                  </span>
+                  <span
+                    className={`nft-price-usd  ${
+                      (location.pathname.includes("/marketplace/caws") ||
+                        location.pathname.includes("/marketplace/wod") ||
+                        location.pathname.includes("/marketplace/timepiece")) &&
+                      "nft-price-usdhover"
+                    } `}
+                    style={{ color: "#7DD9AF" }}
+                  >
+                    $
+                    {getFormattedNumber(
+                      nft.payment_priceType === 0
+                        ? ethtokenData * nft.price
+                        : dyptokenData * nft.price,
+                      0
+                    )}
+                  </span>
+                </div>
               </div>
-            </div>
+            ) : (
+              <span className="nft-card-name">
+                {isCaws ? "CAWS" : isWod ? "Genesis Land" : "Timepiece"} #
+                {nft.tokenId}
+              </span>
+            )}
             <img
               src={isFavorite ? favActive : favInactive}
               onClick={(e) => {
@@ -309,8 +334,8 @@ const ItemCard = ({
               className="buy-nft-btn w-100"
               style={{ paddingLeft: "20px", paddingRight: "20px" }}
               onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
+                !isOwner && e.preventDefault();
+                !isOwner && e.stopPropagation();
                 isConnected === true
                   ? !isOwner
                     ? handleBuy(nft)
@@ -323,7 +348,7 @@ const ItemCard = ({
                 nft.payment_priceType === 1 && !isOwner ? (
                   <>{buttonTxt}</>
                 ) : nft.payment_priceType === 1 && isOwner ? (
-                  "Owner"
+                  "View details"
                 ) : (
                   "Buy"
                 )
@@ -336,7 +361,8 @@ const ItemCard = ({
       </div>
       {!location.pathname.includes("/marketplace/caws") &&
         !location.pathname.includes("/marketplace/wod") &&
-        !location.pathname.includes("/marketplace/timepiece") && (
+        !location.pathname.includes("/marketplace/timepiece") &&
+        !location.pathname.includes("/account") && (
           <span
             className="position-relative top-sale-time"
             style={{ bottom: "-8%" }}

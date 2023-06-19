@@ -40,11 +40,14 @@ const WalletBalance = ({
   myTimepieceCollected,
   myBoughtNfts,
   isConnected,
-  handleConnect
+  handleConnect,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
   const [dailyrecords, setRecords] = useState([]);
+  const [recentListingsFilter, setRecentListingsFilter] = useState("all");
+  const [collectedItemsFiltered, setcollectedItemsFiltered] = useState([]);
+  const [favItemsFiltered, setfavItemsFiltered] = useState([]);
 
   const [dyptokenData, setDypTokenData] = useState([]);
   const [idyptokenData, setIDypTokenData] = useState([]);
@@ -54,6 +57,8 @@ const WalletBalance = ({
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
   const [filterTitle, setFilterTitle] = useState("Balance");
   const [nftItems, setNftItems] = useState([]);
+  const [favoriteItems, setfavoriteItems] = useState([]);
+
   const [collectedItems, setcollectedItems] = useState([]);
   const [showNfts, setShowNfts] = useState(false);
   const [activeSlide, setActiveSlide] = useState();
@@ -97,6 +102,65 @@ const WalletBalance = ({
     } else if (sortValue === "eth") {
       setFilterTitle("");
     }
+  };
+
+  const filterRecentListings = (filter) => {
+    setLoadingRecentListings(true);
+    if (filterTitle === "Collected") {
+      if (filter === "caws") {
+        setRecentListingsFilter("caws");
+        let cawsFilter = collectedItems.filter(
+          (item) =>
+            item.nftAddress === window.config.nft_caws_address ||
+            item.nftAddress === window.config.nft_cawsold_address
+        );
+        setcollectedItemsFiltered(cawsFilter);
+      } else if (filter === "land") {
+        setRecentListingsFilter("land");
+        let wodFilter = collectedItems.filter(
+          (item) => item.nftAddress === window.config.nft_land_address
+        );
+        setcollectedItemsFiltered(wodFilter);
+      } else if (filter === "timepiece") {
+        setRecentListingsFilter("timepiece");
+        let timepieceFilter = collectedItems.filter(
+          (item) => item.nftAddress === window.config.nft_timepiece_address
+        );
+        setcollectedItemsFiltered(timepieceFilter);
+      } else if (filter === "all") {
+        setRecentListingsFilter("all");
+        setcollectedItemsFiltered(collectedItems);
+      }
+    }
+    if (filterTitle === "Favorites") {
+      if (filter === "caws") {
+        setRecentListingsFilter("caws");
+        let cawsFilter = favoriteItems.filter(
+          (item) =>
+            item.nftAddress === window.config.nft_caws_address ||
+            item.nftAddress === window.config.nft_cawsold_address
+        );
+        setfavItemsFiltered(cawsFilter);
+      } else if (filter === "land") {
+        setRecentListingsFilter("land");
+        let wodFilter = favoriteItems.filter(
+          (item) => item.nftAddress === window.config.nft_land_address
+        );
+        setfavItemsFiltered(wodFilter);
+      } else if (filter === "timepiece") {
+        setRecentListingsFilter("timepiece");
+        let timepieceFilter = favoriteItems.filter(
+          (item) => item.nftAddress === window.config.nft_timepiece_address
+        );
+        setfavItemsFiltered(timepieceFilter);
+      } else if (filter === "all") {
+        setRecentListingsFilter("all");
+        setcollectedItemsFiltered(favoriteItems);
+      }
+    }
+    setTimeout(() => {
+      setLoadingRecentListings(false);
+    }, 1000);
   };
 
   const getListed = async () => {
@@ -194,13 +258,18 @@ const WalletBalance = ({
     ];
 
     setcollectedItems(finalCollection);
+    setcollectedItemsFiltered(finalCollection);
   };
 
   const getAllFavs = async () => {
     let favorites = await window.getFavoritesETH2();
     if (favorites && favorites.length > 0) {
-      setNftItems(favorites);
-    } else setNftItems([]);
+      setfavoriteItems(favorites);
+      setfavItemsFiltered(favorites);
+    } else {
+      setfavoriteItems([]);
+      setfavItemsFiltered([]);
+    }
   };
 
   const getStakes = () => {
@@ -307,7 +376,6 @@ const WalletBalance = ({
       });
   };
 
-  
   var settings = {
     dots: false,
     arrows: false,
@@ -365,15 +433,12 @@ const WalletBalance = ({
     ],
   };
 
-
-  
   const firstNext = () => {
     firstSlider.current.slickNext();
   };
   const firstPrev = () => {
     firstSlider.current.slickPrev();
   };
-
 
   useEffect(() => {
     fetchMonthlyRecordsAroundPlayer();
@@ -469,7 +534,7 @@ const WalletBalance = ({
 
             {filterTitle === "Favorites" && loading === false && (
               <div className="row px-3">
-                {nftItems.slice(0, 6).map((item, index) => (
+                {favoriteItems.slice(0, 6).map((item, index) => (
                   <NavLink
                     key={index}
                     to={`/marketplace/nft/${item.blockTimestamp}`}
@@ -524,6 +589,7 @@ const WalletBalance = ({
                 ))}
               </div>
             )}
+
             {filterTitle === "Collected" && loading === false && (
               <div className="row px-3">
                 {collectedItems.slice(0, 6).map((item, index) => (
@@ -767,11 +833,15 @@ const WalletBalance = ({
 
             {filterTitle !== "Balance" &&
               loading === false &&
-              (nftItems.length > 6 || collectedItems.length > 6) && (
+              (nftItems.length > 6 ||
+                collectedItems.length > 6 ||
+                favoriteItems.length > 6) && (
                 <div className="row w-100 justify-content-center">
                   <div
                     className="d-flex align-items-center justify-content-center gap-2"
-                    onClick={()=>{setShowNfts(!showNfts)}}
+                    onClick={() => {
+                      setShowNfts(!showNfts);
+                    }}
                     style={{ cursor: "pointer", width: "fit-content" }}
                   >
                     <span className="account-view-all">
@@ -801,7 +871,7 @@ const WalletBalance = ({
         </div>
       </div>
       {showNfts && (
-        <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 w-100">
+        <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-11">
           {activeSlide > 0 && (
             <img
               src={nextArrow}
@@ -820,23 +890,85 @@ const WalletBalance = ({
             className="next-arrow-nft"
             alt=""
           />
-          <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-            <h6 className="nft-wrapper-title font-raleway mb-0">
-              Recent Listings
-            </h6>
+          <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-end w-100 position-relative">
             <div className="d-flex align-items-center gap-4">
-              <h6 className={`filter-title `}>All</h6>
-              <h6 className={`filter-title `}>CAWS</h6>
-              <h6 className={`filter-title `}>Land</h6>
-              <h6 className={`filter-title `}>Timepiece</h6>
+              <h6
+                className={`filter-title ${
+                  recentListingsFilter === "all" && "filter-selected"
+                }`}
+                onClick={() => filterRecentListings("all")}
+              >
+                All
+              </h6>
+              <h6
+                className={`filter-title ${
+                  recentListingsFilter === "caws" && "filter-selected"
+                }`}
+                onClick={() => filterRecentListings("caws")}
+              >
+                CAWS
+              </h6>
+              <h6
+                className={`filter-title ${
+                  recentListingsFilter === "land" && "filter-selected"
+                }`}
+                onClick={() => filterRecentListings("land")}
+              >
+                Land
+              </h6>
+              <h6
+                className={`filter-title ${
+                  recentListingsFilter === "timepiece" && "filter-selected"
+                }`}
+                onClick={() => filterRecentListings("timepiece")}
+              >
+                Timepiece
+              </h6>
             </div>
           </div>
-          {loadingRecentListings === false ? (
+          {loadingRecentListings === false && filterTitle === "Collected" ? (
             <div className="slider-container">
               <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                {listedNFTS &&
-                  listedNFTS.length > 0 &&
-                  listedNFTS.map((nft, index) => (
+                {collectedItemsFiltered &&
+                  collectedItemsFiltered.length > 0 &&
+                  collectedItemsFiltered.map((nft, index) => (
+                    <NavLink
+                      to={`/marketplace/nft/${index}`}
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                      state={{
+                        nft: nft,
+                        type: nft.type,
+                        isOwner:
+                          (nft.buyer &&
+                            nft.buyer.toLowerCase() ===
+                              address?.toLowerCase()) ||
+                          (nft.seller &&
+                            nft.seller.toLowerCase() ===
+                              address?.toLowerCase()),
+                        chain: nft.chain,
+                      }}
+                    >
+                      <ItemCard
+                        key={nft.id}
+                        nft={nft}
+                        isConnected={isConnected}
+                        showConnectWallet={handleConnect}
+                        isCaws={nft.type === "caws" || nft.type === "cawsold"}
+                        isTimepiece={nft.type === "timepiece"}
+                        isWod={nft.type === "land"}
+                        coinbase={coinbase}
+                      />
+                    </NavLink>
+                  ))}
+              </Slider>
+            </div>
+          ) : loadingRecentListings === false && filterTitle === "Favorites" ? (
+            <div className="slider-container">
+              <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
+                {favItemsFiltered &&
+                  favItemsFiltered.length > 0 &&
+                  favItemsFiltered.map((nft, index) => (
                     <NavLink
                       to={`/marketplace/nft/${nft.blockTimestamp}`}
                       style={{ textDecoration: "none" }}
@@ -845,7 +977,12 @@ const WalletBalance = ({
                         nft: nft,
                         type: nft.type,
                         isOwner:
-                          nft.seller?.toLowerCase() === coinbase?.toLowerCase(),
+                          (nft.buyer &&
+                            nft.buyer.toLowerCase() ===
+                              address?.toLowerCase()) ||
+                          (nft.seller &&
+                            nft.seller.toLowerCase() ===
+                              address?.toLowerCase()),
                         chain: nft.chain,
                       }}
                     >
