@@ -41,6 +41,8 @@ const WalletBalance = ({
   myBoughtNfts,
   isConnected,
   handleConnect,
+  ethTokenData,
+  dypTokenData
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -950,6 +952,8 @@ const WalletBalance = ({
                       }}
                     >
                       <ItemCard
+                       ethTokenData={ethTokenData}
+                       dypTokenData={dypTokenData}
                         key={nft.id}
                         nft={nft}
                         isConnected={isConnected}
@@ -987,6 +991,8 @@ const WalletBalance = ({
                       }}
                     >
                       <ItemCard
+                       ethTokenData={ethTokenData}
+                       dypTokenData={dypTokenData}
                         key={nft.id}
                         nft={nft}
                         isConnected={isConnected}

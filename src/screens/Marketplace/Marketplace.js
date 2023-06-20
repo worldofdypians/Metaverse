@@ -36,6 +36,8 @@ const Marketplace = ({
   coinbase,
   recentSales,
   nftCount,
+  ethTokenData,
+  dypTokenData,
 }) => {
   const override = {
     display: "block",
@@ -60,6 +62,9 @@ const Marketplace = ({
   const windowSize = useWindowSize();
   const [totalTx, setTotalTx] = useState(0);
   const [totalvolume, setTotalVolume] = useState(0);
+  
+
+
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -691,6 +696,8 @@ const Marketplace = ({
                         
                       >
                         <ItemCard
+                         ethTokenData={ethTokenData}
+                         dypTokenData={dypTokenData}
                           key={nft.id}
                           nft={nft}
                           isConnected={isConnected}
@@ -796,6 +803,8 @@ const Marketplace = ({
                         }}
                       >
                         <ItemCard
+                         ethTokenData={ethTokenData}
+                         dypTokenData={dypTokenData}
                           key={nft.id}
                           nft={nft}
                           isConnected={isConnected}
