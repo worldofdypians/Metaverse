@@ -628,16 +628,16 @@ const WalletBalance = ({
                             {item.type === "caws" || item.type === "cawsold"
                               ? "CAWS"
                               : item.type === "land"
-                              ? "Genesis Land"
-                              : "CAWS Timepiece"}{" "}
+                              ? "Genesis"
+                              : "Timepiece"}{" "}
                             #{item.tokenId}
                           </h6>
                           <span className="account-nft-type">
                             {item.type === "caws" || item.type === "cawsold"
                               ? "CAWS"
                               : item.type === "land"
-                              ? "Genesis Land"
-                              : "Timepiece"}
+                              ? "Land"
+                              : "CAWS Timepiece"}
                           </span>
                         </div>
                       </div>
