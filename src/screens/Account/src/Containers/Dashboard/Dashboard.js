@@ -85,6 +85,8 @@ function Dashboard({
 
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
+  const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
+  const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
 
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
@@ -97,7 +99,6 @@ function Dashboard({
     setShowNfts(!showNfts);
   };
 
-
   const getStakes = async () => {
     const stakeArray = await cawsStakeContract.methods
       .depositsOf(data?.getPlayer?.wallet?.publicAddress)
@@ -109,13 +110,113 @@ function Dashboard({
     const stakeArray = await landNftStake_contract.methods
       .depositsOf(data?.getPlayer?.wallet?.publicAddress)
       .call();
-    setLandStakes(stakeArray);
+    // setLandStakes(stakeArray);
   };
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
     useMutation(VERIFY_WALLET);
+  //land only stakes
+  const getStakesIdsWod = async () => {
+    const address = coinbase;
+    let stakenft_cawsWod = [];
+    const infura_web3 = window.infuraWeb3;
+    let staking_contract = new infura_web3.eth.Contract(
+      window.LANDSTAKING_ABI,
+      window.config.landnftstake_address
+    );
+
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft_cawsWod.push(parseInt(result[i]));
+        return stakenft_cawsWod;
+      });
+      
+    return myStakes;
+  };
+
+  const getmyWodStakes = async () => {
+    let myStakes = await getStakesIdsWod();
+    if (myStakes && myStakes.length > 0) {
+      let stakes = myStakes.map((stake) => window.getNft(stake));
+
+      stakes = await Promise.all(stakes);
+
+      stakes.reverse();
+      setLandStakes(stakes);
+    } else setLandStakes([]);
+  };
+
+  const getCawsStakesIdsCawsWod = async () => {
+    const address = coinbase;
+    let stakenft_cawsWod = [];
+    const infura_web3 = window.infuraWeb3;
+    let staking_contract = new infura_web3.eth.Contract(
+      window.WOD_CAWS_ABI,
+      window.config.wod_caws_address
+    );
+
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft_cawsWod.push(parseInt(result[i]));
+        return stakenft_cawsWod;
+      });
+      
+    return myStakes;
+
+  };
+
+  const getWodStakesIdsCawsWod = async () => {
+    const address = coinbase;
+    let stakenft_cawsWod = [];
+    const infura_web3 = window.infuraWeb3;
+    let staking_contract = new infura_web3.eth.Contract(
+      window.WOD_CAWS_ABI,
+      window.config.wod_caws_address
+    );
+    
+    let myStakes = await staking_contract.methods
+      .depositsOfWoD(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft_cawsWod.push(parseInt(result[i]));
+        return stakenft_cawsWod;
+      });
+
+    return myStakes;
+  };
+
+  const getmyCawsWodStakes = async () => {
+    let myCawsStakes = await getCawsStakesIdsCawsWod();
+    
+    let myWodStakes = await getWodStakesIdsCawsWod();
+    
+
+    if (myCawsStakes && myCawsStakes.length > 0) {
+      let stakes = myCawsStakes.map((stake) => window.getNft(stake));
+      let landstakes = myWodStakes.map((stake) => window.getLandNft(stake));
+
+      stakes = await Promise.all(stakes);
+      landstakes = await Promise.all(landstakes);
+
+      stakes.reverse();
+      landstakes.reverse();
+
+      setMyCawsWodStakes(stakes);
+      setmyWodWodStakesAll(landstakes);
+    } else {
+      setMyCawsWodStakes([]);
+      setmyWodWodStakesAll([]);
+    }
+  };
 
   const getTokens = async () => {
     try {
@@ -219,8 +320,9 @@ function Dashboard({
 
       getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "cawsold").then(
         (NFTS) => {
-          if(NFTS)
-          {setMyNFTSCawsOld(NFTS);}
+          if (NFTS) {
+            setMyNFTSCawsOld(NFTS);
+          }
         }
       );
 
@@ -451,8 +553,12 @@ function Dashboard({
       getTokens();
       getStakes();
       getLandStakes();
+      if (coinbase) {
+        getmyCawsWodStakes();
+        getmyWodStakes();
+      }
     }
-  }, [data?.getPlayer?.wallet?.publicAddress]);
+  }, [data?.getPlayer?.wallet?.publicAddress, coinbase]);
 
   useEffect(() => {
     getOtherNfts();
@@ -543,9 +649,12 @@ function Dashboard({
                         myCawsOldCollected={MyNFTSCawsOld}
                         myLandCollected={MyNFTSLand}
                         myTimepieceCollected={MyNFTSTimepiece}
+                        landStaked={landstakes}
+                        myCawsWodStakes={myCawsWodStakesAll}
+                        myWodWodStakes={myWodWodStakesAll}
                       />
                     </div>
-                  
+
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
                   <h2
