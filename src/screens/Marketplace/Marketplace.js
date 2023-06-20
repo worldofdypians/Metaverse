@@ -62,9 +62,6 @@ const Marketplace = ({
   const windowSize = useWindowSize();
   const [totalTx, setTotalTx] = useState(0);
   const [totalvolume, setTotalVolume] = useState(0);
-  
-
-
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -200,6 +197,7 @@ const Marketplace = ({
     const result2 = await axios.get(
       "https://api.worldofdypians.com/api/totalVolumes"
     );
+
     if (result.data && result2.data) {
       setTotalTx(result.data);
       setTotalVolume(result2.data);
@@ -362,6 +360,22 @@ const Marketplace = ({
     }, 1000);
   };
 
+  async function updateViewCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch('https://api.worldofdypians.com/nft-view', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tokenId, nftAddress }),
+      });
+      const data = await response.json();
+      console.log(`Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`);
+    } catch (error) {
+      console.error('Error updating view count:', error);
+    }
+  }
+
   useEffect(() => {
     setRecentSalesFilter("all");
     setRecentSold(recentSales);
@@ -375,424 +389,188 @@ const Marketplace = ({
       {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
         <div className="container-lg mx-0">
-        <div className="row justify-content-between align-items-center marketplace-banner my-5">
-          <div className="col-12 col-lg-5">
-            <h6 className="market-banner-title">
-              Unlock the Extraordinary! Explore the World of Dypians
+          <div className="row justify-content-between align-items-center marketplace-banner my-5">
+            <div className="col-12 col-lg-5">
+              <h6 className="market-banner-title">
+                Unlock the Extraordinary! Explore the World of Dypians <mark className="p-0"
+                style={{ color: "#8C56FF", lineHeight: "80%", background: 'transparent' }}
+              >
+                Game Shop!
+              </mark>
+              </h6>
+             
+              <div className="my-4">
+                <span className="market-banner-desc my-4">
+                  Discover the power of NFTs for a unique digital experience.
+                </span>
+              </div>
+            </div>
+            <div className="col-12 col-lg-5">
+              <img
+                src={require("./assets/marketMain.webp")}
+                alt=""
+                className="market-main w-100"
+              />
+            </div>
+          </div>
+          <div className="main-wrapper py-4 w-100">
+            <div className="row gap-4 gap-lg-0 align-items-center">
+              <div className="col-12 col-lg-4">
+                <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
+                  <h6 className="stats-value">
+                    {abbreviateNumber(totalTx, 3)}
+                  </h6>
+                  <span className="stats-desc">
+                    Total on-chain transactions
+                  </span>
+                </div>
+              </div>
+              <div className="col-12 col-lg-4">
+                <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
+                  <h6 className="stats-value">
+                    {abbreviateNumber(totalvolume, 3)}
+                  </h6>
+                  <span className="stats-desc">Total Volume (USD)</span>
+                </div>
+              </div>
+              <div className="col-12 col-lg-4">
+                <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
+                  <h6 className="stats-value">{abbreviateNumber(11000)}</h6>
+                  <span className="stats-desc">Sold NFTs</span>
+                </div>
+              </div>
+            </div>
+            <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
+              Active Events
             </h6>
-            <h6
-              className="market-banner-title"
-              style={{ color: "#8C56FF", lineHeight: "80%" }}
-            >
-              Game Shop!
-            </h6>
-            <div className="my-4">
-              <span className="market-banner-desc my-4">
-                Discover the power of NFTs for a unique digital experience.
-              </span>
-            </div>
-          </div>
-          <div className="col-12 col-lg-5">
-            <img
-              src={require("./assets/marketMain.webp")}
-              alt=""
-              className="market-main w-100"
-            />
-          </div>
-        </div>
-        <div className="main-wrapper py-4 w-100">
-          <div className="row gap-4 gap-lg-0 align-items-center">
-            <div className="col-12 col-lg-4">
-              <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
-                <h6 className="stats-value">{abbreviateNumber(totalTx)}</h6>
-                <span className="stats-desc">Total on-chain transactions</span>
-              </div>
-            </div>
-            <div className="col-12 col-lg-4">
-              <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
-                <h6 className="stats-value">{abbreviateNumber(totalvolume)}</h6>
-                <span className="stats-desc">Total Volume (USD)</span>
-              </div>
-            </div>
-            <div className="col-12 col-lg-4">
-              <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
-                <h6 className="stats-value">{abbreviateNumber(11000)}</h6>
-                <span className="stats-desc">Sold NFTs</span>
-              </div>
-            </div>
-          </div>
-          <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
-            Active Events
-          </h6>
-          <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-5 mx-2 mx-lg-0 position-relative">
-            <NavLink
-              to="/marketplace/events"
-              state={{ package: "dragon" }}
-              className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
-              style={{ textDecoration: "none" }}
-            >
-              <div className="position-relative package-blur">
-                <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                  <span className="blur-package-title">Dragon Ruins</span>
-                </div>
-                <div className="second-box-blur"></div>
-                <img
-                  src={require("../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp")}
-                  alt=""
-                  className="blur-img"
-                />
-              </div>
-            </NavLink>
-            <NavLink
-              to="/marketplace/events"
-              state={{ package: "idyp" }}
-              className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
-              style={{ textDecoration: "none" }}
-            >
-              <div className="position-relative package-blur">
-                <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                  <span className="blur-package-title">Puzzle Madness</span>
-                </div>
-                <div className="second-box-blur"></div>
-                <img
-                  src={require("./assets/puzzleMadness.png")}
-                  alt=""
-                  className="blur-img"
-                />
-              </div>
-            </NavLink>
-            <NavLink
-              to="/marketplace/events"
-              state={{ package: "dyp" }}
-              className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
-              style={{ textDecoration: "none" }}
-            >
-              <div className="position-relative package-blur">
-                <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                  <span className="blur-package-title">Golden Pass</span>
-                </div>
-                <div className="second-box-blur"></div>
-                <img
-                  src={require("./assets/goldenPass.png")}
-                  alt=""
-                  className="blur-img"
-                />
-              </div>
-            </NavLink>
-            <NavLink
-              to="/marketplace/events"
-              state={{ package: "criticalHit" }}
-              className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
-              style={{ textDecoration: "none" }}
-            >
-              <div className="position-relative package-blur">
-                <div className="first-box-blur d-flex align-items-end justify-content-center">
-                  <span className="blur-package-title">Critical Hit</span>
-                </div>
-                <div className="second-box-blur"></div>
-                <img
-                  src={require("./assets/criticalHit.webp")}
-                  alt=""
-                  className="blur-img"
-                />
-              </div>
-            </NavLink>
-          </div>
-          <div className="row mx-1 justify-content-center d-flex my-4 align-items-center nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4">
-            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-              <h6 className="nft-wrapper-title font-raleway mb-0">Top Sales</h6>
-              <div className="d-flex align-items-center gap-4">
-                <h6
-                  className={`filter-title ${
-                    topSalesFilter === "all" && "filter-selected"
-                  }`}
-                  onClick={() => filterTopSales("all")}
-                >
-                  All
-                </h6>
-                <h6
-                  className={`filter-title ${
-                    topSalesFilter === "caws" && "filter-selected"
-                  }`}
-                  onClick={() => filterTopSales("caws")}
-                >
-                  CAWS
-                </h6>
-                <h6
-                  className={`filter-title ${
-                    topSalesFilter === "land" && "filter-selected"
-                  }`}
-                  onClick={() => filterTopSales("land")}
-                >
-                  Land
-                </h6>
-                <h6
-                  className={`filter-title ${
-                    topSalesFilter === "timepiece" && "filter-selected"
-                  }`}
-                  onClick={() => filterTopSales("timepiece")}
-                >
-                  Timepiece
-                </h6>
-              </div>
-            </div>
-            <div
-              className={
-                loadingTopSales === false
-                  ? "row align-items-center position-relative"
-                  : "loader-wrapper"
-              }
-              style={{ rowGap: "40px" }}
-            >
-              {topSold && topSold.length > 0 ? (
-                topSold.slice(0, 9).map((nft, index) => (
-                  <div className="col-12 col-lg-4" key={index}>
-                    <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp}`}
-                      style={{ textDecoration: "none" }}
-                      state={{
-                        nft: nft,
-                        type: nft.type,
-                        isOwner:
-                          nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                        chain: nft.chain,
-                      }}
-                    >
-                      <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
-                        <div className="position-absolute top-sales-rank">
-                          <span>{index + 1}</span>
-                        </div>
-                        {/* <span className="sales-number">{index + 1}</span> */}
-                        <img
-                          src={
-                            nft.type === "caws" || nft.type === "cawsold"
-                              ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
-                              : nft.type === "land"
-                              ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
-                              : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
-                          }
-                          width={80}
-                          height={80}
-                          style={{ borderRadius: "8px" }}
-                          alt=""
-                        />
-                        <div className="d-flex flex-column gap-2">
-                          <h6 className="nft-name-wrapper mb-0 py-1 px-2">
-                            {nft.type === "caws" || nft.type === "cawsold"
-                              ? "CAWS"
-                              : nft.type === "land"
-                              ? "Genesis Land"
-                              : "Timepiece"}{" "}
-                            #{nft.tokenId}
-                          </h6>
-                          <div className="d-flex align-items-center gap-1">
-                            {nft.payment_priceType === 0 ? (
-                              <img src={topEth} height={20} width={20} alt="" />
-                            ) : (
-                              <img src={topDyp} height={20} width={20} alt="" />
-                            )}
-                            <span className="top-eth">
-                              {" "}
-                              {nft.price}{" "}
-                              {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                            </span>
-                          </div>
-                        </div>
-                        <span className="position-absolute top-sale-time">
-                          {getRelativeTime(nft.blockTimestamp)}
-                        </span>
-                      </div>
-                    </NavLink>{" "}
+            <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-5 mx-2 mx-lg-0 position-relative">
+              <NavLink
+                to="/marketplace/events"
+                state={{ package: "dragon" }}
+                className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                style={{ textDecoration: "none" }}
+              >
+                <div className="position-relative package-blur">
+                  <div className="first-box-blur  d-flex align-items-end justify-content-center">
+                    <span className="blur-package-title">Dragon Ruins</span>
                   </div>
-                ))
-              ) : (
-                <HashLoader
-                  color={"#554fd8"}
-                  loading={loadingTopSales}
-                  cssOverride={override}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              )}
+                  <div className="second-box-blur"></div>
+                  <img
+                    src={require("../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp")}
+                    alt=""
+                    className="blur-img"
+                  />
+                </div>
+              </NavLink>
+              <NavLink
+                to="/marketplace/events"
+                state={{ package: "idyp" }}
+                className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                style={{ textDecoration: "none" }}
+              >
+                <div className="position-relative package-blur">
+                  <div className="first-box-blur  d-flex align-items-end justify-content-center">
+                    <span className="blur-package-title">Puzzle Madness</span>
+                  </div>
+                  <div className="second-box-blur"></div>
+                  <img
+                    src={require("./assets/puzzleMadness.png")}
+                    alt=""
+                    className="blur-img"
+                  />
+                </div>
+              </NavLink>
+              <NavLink
+                to="/marketplace/events"
+                state={{ package: "dyp" }}
+                className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                style={{ textDecoration: "none" }}
+              >
+                <div className="position-relative package-blur">
+                  <div className="first-box-blur  d-flex align-items-end justify-content-center">
+                    <span className="blur-package-title">Golden Pass</span>
+                  </div>
+                  <div className="second-box-blur"></div>
+                  <img
+                    src={require("./assets/goldenPass.png")}
+                    alt=""
+                    className="blur-img"
+                  />
+                </div>
+              </NavLink>
+              <NavLink
+                to="/marketplace/events"
+                state={{ package: "criticalHit" }}
+                className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                style={{ textDecoration: "none" }}
+              >
+                <div className="position-relative package-blur">
+                  <div className="first-box-blur d-flex align-items-end justify-content-center">
+                    <span className="blur-package-title">Critical Hit</span>
+                  </div>
+                  <div className="second-box-blur"></div>
+                  <img
+                    src={require("./assets/criticalHit.webp")}
+                    alt=""
+                    className="blur-img"
+                  />
+                </div>
+              </NavLink>
             </div>
-          </div>
-
-          <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
-            {activeSlide > 0 && (
-              <img
-                src={nextArrow}
-                width={40}
-                height={40}
-                onClick={firstPrev}
-                className="prev-arrow-nft"
-                alt=""
-              />
-            )}
-            <img
-              src={nextArrow}
-              width={40}
-              height={40}
-              onClick={firstNext}
-              className="next-arrow-nft"
-              alt=""
-            />
-            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-              <h6 className="nft-wrapper-title font-raleway mb-0">
-                Recent Listings
-              </h6>
-              <div className="d-flex align-items-center gap-4">
-                <h6
-                  className={`filter-title ${
-                    recentListingsFilter === "all" && "filter-selected"
-                  }`}
-                  onClick={() => filterRecentListings("all")}
-                >
-                  All
+            <div className="row mx-1 justify-content-center d-flex my-4 align-items-center nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4">
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+                <h6 className="nft-wrapper-title font-raleway mb-0">
+                  Top Sales
                 </h6>
-                <h6
-                  className={`filter-title ${
-                    recentListingsFilter === "caws" && "filter-selected"
-                  }`}
-                  onClick={() => filterRecentListings("caws")}
-                >
-                  CAWS
-                </h6>
-                <h6
-                  className={`filter-title ${
-                    recentListingsFilter === "land" && "filter-selected"
-                  }`}
-                  onClick={() => filterRecentListings("land")}
-                >
-                  Land
-                </h6>
-                <h6
-                  className={`filter-title ${
-                    recentListingsFilter === "timepiece" && "filter-selected"
-                  }`}
-                  onClick={() => filterRecentListings("timepiece")}
-                >
-                  Timepiece
-                </h6>
+                <div className="d-flex align-items-center gap-4">
+                  <h6
+                    className={`filter-title ${
+                      topSalesFilter === "all" && "filter-selected"
+                    }`}
+                    onClick={() => filterTopSales("all")}
+                  >
+                    All
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      topSalesFilter === "caws" && "filter-selected"
+                    }`}
+                    onClick={() => filterTopSales("caws")}
+                  >
+                    CAWS
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      topSalesFilter === "land" && "filter-selected"
+                    }`}
+                    onClick={() => filterTopSales("land")}
+                  >
+                    Land
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      topSalesFilter === "timepiece" && "filter-selected"
+                    }`}
+                    onClick={() => filterTopSales("timepiece")}
+                  >
+                    Timepiece
+                  </h6>
+                </div>
               </div>
-            </div>
-            {loadingRecentListings === false ? (
-              <div className="slider-container">
-                <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                  {recentListed &&
-                    recentListed.length > 0 &&
-                    recentListed.map((nft, index) => (
+              <div
+                className={
+                  loadingTopSales === false
+                    ? "row align-items-center position-relative"
+                    : "loader-wrapper"
+                }
+                style={{ rowGap: "40px" }}
+              >
+                {topSold && topSold.length > 0 ? (
+                  topSold.slice(0, 9).map((nft, index) => (
+                    <div className="col-12 col-lg-4" key={index}>
                       <NavLink
                         to={`/marketplace/nft/${nft.blockTimestamp}`}
                         style={{ textDecoration: "none" }}
-                        key={index}
-                        state={{
-                          nft: nft,
-                          type: nft.type,
-                          isOwner:
-                            nft.seller?.toLowerCase() ===
-                            coinbase?.toLowerCase(),
-                          chain: nft.chain,
-                        }}
-                        
-                      >
-                        <ItemCard
-                         ethTokenData={ethTokenData}
-                         dypTokenData={dypTokenData}
-                          key={nft.id}
-                          nft={nft}
-                          isConnected={isConnected}
-                          showConnectWallet={handleConnect}
-                          isCaws={nft.type === "caws" || nft.type === "cawsold"}
-                          isTimepiece={nft.type === "timepiece"}
-                          isWod={nft.type === "land"}
-                          coinbase={coinbase}
-
-                        />
-                      </NavLink>
-                    ))}
-                </Slider>
-              </div>
-            ) : (
-              <div className="loader-wrapper">
-                <HashLoader
-                  color={"#554fd8"}
-                  loading={loadingRecentListings}
-                  cssOverride={override}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            )}
-          </div>
-          <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
-            {activeSlide2 > 0 && (
-              <img
-                src={nextArrow}
-                width={40}
-                height={40}
-                onClick={secondPrev}
-                className="prev-arrow-nft"
-                alt=""
-              />
-            )}
-            <img
-              src={nextArrow}
-              width={40}
-              height={40}
-              onClick={secondNext}
-              className="next-arrow-nft"
-              alt=""
-            />
-
-            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-              <h6 className="nft-wrapper-title font-raleway mb-0">
-                Recent Sales
-              </h6>
-              <div className="d-flex align-items-center gap-4">
-                <h6
-                  className={`filter-title ${
-                    recentSalesFilter === "all" && "filter-selected"
-                  }`}
-                  onClick={() => filterRecentSales("all")}
-                >
-                  All
-                </h6>
-                <h6
-                  className={`filter-title ${
-                    recentSalesFilter === "caws" && "filter-selected"
-                  }`}
-                  onClick={() => filterRecentSales("caws")}
-                >
-                  CAWS
-                </h6>
-                <h6
-                  className={`filter-title ${
-                    recentSalesFilter === "land" && "filter-selected"
-                  }`}
-                  onClick={() => filterRecentSales("land")}
-                >
-                  Land
-                </h6>
-                <h6
-                  className={`filter-title ${
-                    recentSalesFilter === "timepiece" && "filter-selected"
-                  }`}
-                  onClick={() => filterRecentSales("timepiece")}
-                >
-                  Timepiece
-                </h6>
-              </div>
-            </div>
-            {loadingRecentSales === false ? (
-              <div className="slider-container">
-                <Slider ref={(c) => (secondSlider.current = c)} {...settings2}>
-                  {recentSold &&
-                    recentSold.length > 0 &&
-                    recentSold.map((nft, index) => (
-                      <NavLink
-                        to={`/marketplace/nft/${nft.blockTimestamp}`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
                         state={{
                           nft: nft,
                           type: nft.type,
@@ -801,37 +579,300 @@ const Marketplace = ({
                             coinbase?.toLowerCase(),
                           chain: nft.chain,
                         }}
-                      >
-                        <ItemCard
-                         ethTokenData={ethTokenData}
-                         dypTokenData={dypTokenData}
-                          key={nft.id}
-                          nft={nft}
-                          isConnected={isConnected}
-                          showConnectWallet={handleConnect}
-                          isCaws={nft.type === "caws" || nft.type === "cawsold"}
-                          isTimepiece={nft.type === "timepiece"}
-                          isWod={nft.type === "land"}
-                          coinbase={coinbase}
+                        onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
 
-                        />
-                      </NavLink>
-                    ))}
-                </Slider>
+                      >
+                        <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
+                          <div className="position-absolute top-sales-rank">
+                            <span>{index + 1}</span>
+                          </div>
+                          {/* <span className="sales-number">{index + 1}</span> */}
+                          <img
+                            src={
+                              nft.type === "caws" || nft.type === "cawsold"
+                                ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                : nft.type === "land"
+                                ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
+                            }
+                            width={80}
+                            height={80}
+                            style={{ borderRadius: "8px" }}
+                            alt=""
+                          />
+                          <div className="d-flex flex-column gap-2">
+                            <h6 className="nft-name-wrapper mb-0 py-1 px-2">
+                              {nft.type === "caws" || nft.type === "cawsold"
+                                ? "CAWS"
+                                : nft.type === "land"
+                                ? "Genesis Land"
+                                : "Timepiece"}{" "}
+                              #{nft.tokenId}
+                            </h6>
+                            <div className="d-flex align-items-center gap-1">
+                              {nft.payment_priceType === 0 ? (
+                                <img
+                                  src={topEth}
+                                  height={20}
+                                  width={20}
+                                  alt=""
+                                />
+                              ) : (
+                                <img
+                                  src={topDyp}
+                                  height={20}
+                                  width={20}
+                                  alt=""
+                                />
+                              )}
+                              <span className="top-eth">
+                                {" "}
+                                {nft.price}{" "}
+                                {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="position-absolute top-sale-time">
+                            {getRelativeTime(nft.blockTimestamp)}
+                          </span>
+                        </div>
+                      </NavLink>{" "}
+                    </div>
+                  ))
+                ) : (
+                  <HashLoader
+                    color={"#554fd8"}
+                    loading={loadingTopSales}
+                    cssOverride={override}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                )}
               </div>
-            ) : (
-              <div className="loader-wrapper">
-                <HashLoader
-                  color={"#554fd8"}
-                  loading={loadingRecentSales}
-                  cssOverride={override}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
+            </div>
+
+            <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
+              {activeSlide > 0 && (
+                <img
+                  src={nextArrow}
+                  width={40}
+                  height={40}
+                  onClick={firstPrev}
+                  className="prev-arrow-nft"
+                  alt=""
                 />
+              )}
+              <img
+                src={nextArrow}
+                width={40}
+                height={40}
+                onClick={firstNext}
+                className="next-arrow-nft"
+                alt=""
+              />
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+                <h6 className="nft-wrapper-title font-raleway mb-0">
+                  Recent Listings
+                </h6>
+                <div className="d-flex align-items-center gap-4">
+                  <h6
+                    className={`filter-title ${
+                      recentListingsFilter === "all" && "filter-selected"
+                    }`}
+                    onClick={() => filterRecentListings("all")}
+                  >
+                    All
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      recentListingsFilter === "caws" && "filter-selected"
+                    }`}
+                    onClick={() => filterRecentListings("caws")}
+                  >
+                    CAWS
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      recentListingsFilter === "land" && "filter-selected"
+                    }`}
+                    onClick={() => filterRecentListings("land")}
+                  >
+                    Land
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      recentListingsFilter === "timepiece" && "filter-selected"
+                    }`}
+                    onClick={() => filterRecentListings("timepiece")}
+                  >
+                    Timepiece
+                  </h6>
+                </div>
               </div>
-            )}
+              {loadingRecentListings === false ? (
+                <div className="slider-container">
+                  <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
+                    {recentListed &&
+                      recentListed.length > 0 &&
+                      recentListed.map((nft, index) => (
+                        <NavLink
+                          to={`/marketplace/nft/${nft.blockTimestamp}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: nft.type,
+                            isOwner:
+                              nft.seller?.toLowerCase() ===
+                              coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={
+                              nft.type === "caws" || nft.type === "cawsold"
+                            }
+                            isTimepiece={nft.type === "timepiece"}
+                            isWod={nft.type === "land"}
+                            coinbase={coinbase}
+                          />
+                        </NavLink>
+                      ))}
+                  </Slider>
+                </div>
+              ) : (
+                <div className="loader-wrapper">
+                  <HashLoader
+                    color={"#554fd8"}
+                    loading={loadingRecentListings}
+                    cssOverride={override}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </div>
+              )}
+            </div>
+            <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
+              {activeSlide2 > 0 && (
+                <img
+                  src={nextArrow}
+                  width={40}
+                  height={40}
+                  onClick={secondPrev}
+                  className="prev-arrow-nft"
+                  alt=""
+                />
+              )}
+              <img
+                src={nextArrow}
+                width={40}
+                height={40}
+                onClick={secondNext}
+                className="next-arrow-nft"
+                alt=""
+              />
+
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+                <h6 className="nft-wrapper-title font-raleway mb-0">
+                  Recent Sales
+                </h6>
+                <div className="d-flex align-items-center gap-4">
+                  <h6
+                    className={`filter-title ${
+                      recentSalesFilter === "all" && "filter-selected"
+                    }`}
+                    onClick={() => filterRecentSales("all")}
+                  >
+                    All
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      recentSalesFilter === "caws" && "filter-selected"
+                    }`}
+                    onClick={() => filterRecentSales("caws")}
+                  >
+                    CAWS
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      recentSalesFilter === "land" && "filter-selected"
+                    }`}
+                    onClick={() => filterRecentSales("land")}
+                  >
+                    Land
+                  </h6>
+                  <h6
+                    className={`filter-title ${
+                      recentSalesFilter === "timepiece" && "filter-selected"
+                    }`}
+                    onClick={() => filterRecentSales("timepiece")}
+                  >
+                    Timepiece
+                  </h6>
+                </div>
+              </div>
+              {loadingRecentSales === false ? (
+                <div className="slider-container">
+                  <Slider
+                    ref={(c) => (secondSlider.current = c)}
+                    {...settings2}
+                  >
+                    {recentSold &&
+                      recentSold.length > 0 &&
+                      recentSold.map((nft, index) => (
+                        <NavLink
+                          to={`/marketplace/nft/${nft.blockTimestamp}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: nft.type,
+                            isOwner:
+                              nft.buyer?.toLowerCase() ===
+                              coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
+
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={
+                              nft.type === "caws" || nft.type === "cawsold"
+                            }
+                            isTimepiece={nft.type === "timepiece"}
+                            isWod={nft.type === "land"}
+                            coinbase={coinbase}
+                          />
+                        </NavLink>
+                      ))}
+                  </Slider>
+                </div>
+              ) : (
+                <div className="loader-wrapper">
+                  <HashLoader
+                    color={"#554fd8"}
+                    loading={loadingRecentSales}
+                    cssOverride={override}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

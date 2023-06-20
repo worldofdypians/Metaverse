@@ -15,6 +15,9 @@ import { shortAddress } from "../../Caws/functions/shortAddress";
 import Toast from "../../../components/Toast/Toast";
 import axios from "axios";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
+import eye from "../assets/eye.svg";
+import heart from "../assets/heart.svg";
+import ethIcon from "../assets/ethIcon.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -111,9 +114,9 @@ const SingleNft = ({
   );
   const [dyptokenData, setDypTokenData] = useState(0);
   const [ethtokenData, setEthTokenData] = useState(0);
-  const [priceUSD, setpriceUsd] = useState(0);
+  const [viewCount, setViewCount] = useState(0);
 
-  console.log("nft", nft, IsListed, isOwner);
+  // console.log("nft", nft, IsListed, isOwner);
 
   const getTokenData = async () => {
     await axios
@@ -446,6 +449,35 @@ const SingleNft = ({
     return listedNFTS.length > 0;
   }
 
+  //to get the favorites count
+  function getFavoritesCount(tokenId, nftAddress) {
+    return fetch(
+      `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(`Favorites count ${data.favorites}`);
+      })
+      .catch((error) => {
+        console.error("Error retrieving favorites count:", error);
+      });
+  }
+
+  //to get the viewcount
+  async function getViewCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch(
+        `https://api.worldofdypians.com/nft-view/${tokenId}/${nftAddress}`
+      );
+      const data = await response.json();
+      setViewCount(data.count);
+
+      console.log(`View count  ${data.count}`);
+    } catch (error) {
+      console.error("Error retrieving view count:", error);
+    }
+  }
+
   useEffect(() => {
     if (isOwner === false) {
       if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
@@ -475,7 +507,7 @@ const SingleNft = ({
   useEffect(() => {
     if (isConnected === true && nft.payment_priceType === 1) {
       isApprovedBuy(nft.price).then((isApproved) => {
-        console.log(isApproved);
+        // console.log(isApproved);
         setIsApprove(isApproved);
       });
     }
@@ -483,7 +515,6 @@ const SingleNft = ({
     if (coinbase === undefined) {
       setisOwner(false);
     } else if (coinbase) {
-      console.log(nft.seller, coinbase);
       if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
       } else if (
@@ -512,6 +543,8 @@ const SingleNft = ({
 
   useEffect(() => {
     if (nft) {
+      getViewCount(nft.tokenId, nft.nftAddress);
+
       handleRefreshList(nft.type, nft.tokenId);
       setNft(nft);
 
@@ -586,7 +619,24 @@ const SingleNft = ({
                 />
               </div>
             </div>
-            <div className="d-flex flex-column gap-3 col-lg-7">
+            <div className="d-flex flex-column gap-2 col-lg-7">
+              <div
+                className="d-flex align-items-center gap-2 px-4"
+                style={{
+                  color: purchaseColor,
+                }}
+              >
+                <span className="seller-addr d-flex gap-1 align-items-center">
+                  <img src={ethIcon} alt="" /> Ethereum
+                </span>
+                <span className="seller-addr d-flex gap-1 align-items-center">
+                  <img src={eye} alt="" /> {viewCount} views
+                </span>
+                <span className="seller-addr d-flex gap-1 align-items-center">
+                  <img src={heart} alt="" /> tbd favorites
+                </span>
+
+              </div>
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
                   <h3 className="nft-title">
@@ -713,6 +763,11 @@ const SingleNft = ({
                                   setNftPrice(e.target.value);
                                 }}
                                 sx={{ width: "120px" }}
+                                inputProps={{
+                                  inputMode: "numeric",
+                                  pattern: "[0-9]*",
+                                  max: 10,
+                                }}
                               />
                               {priceType === 0 ? "ETH" : "DYP"}{" "}
                             </span>
@@ -823,11 +878,17 @@ const SingleNft = ({
                                 id="price"
                                 name="price"
                                 value={nftPrice}
+                                type="number"
                                 required
                                 onChange={(e) => {
                                   setNftPrice(e.target.value);
                                 }}
-                                sx={{ width: "50%" }}
+                                sx={{ width: "120px" }}
+                                inputProps={{
+                                  inputMode: "numeric",
+                                  pattern: "[0-9]*",
+                                  max: 10,
+                                }}
                               />
                               {priceType === 0 ? "ETH" : "DYP"}{" "}
                             </span>

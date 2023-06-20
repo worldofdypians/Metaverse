@@ -204,7 +204,7 @@ const ItemCard = ({
     checkapprove(nft);
   }, [nft, isFavorite, coinbase]);
 
-  console.log(nft, "nft");
+  
 
 
   return (
