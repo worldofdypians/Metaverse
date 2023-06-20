@@ -27,9 +27,9 @@ const getDypPrice = async () => {
     });
 };
 
+ getDypPrice();
+ getEthPrice();
 const convertToUSD = async (price, payment_priceType) => {
-  await getDypPrice();
-  await getEthPrice();
 
   if (payment_priceType === 0) {
     const ethPrice = price * eth_Price;

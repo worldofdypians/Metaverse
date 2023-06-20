@@ -49,6 +49,8 @@ function Dashboard({
   handleConnect,
   myCawsWodStakes,
   landStaked,
+  ethTokenData,
+  dypTokenData,
 }) {
   const { email, logout } = useAuth();
 
@@ -626,6 +628,8 @@ function Dashboard({
                         }}
                       />
                       <WalletBalance
+                       ethTokenData={ethTokenData}
+                       dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
                         listedNFTS={listedNFTS}
                         myBoughtNfts={myBoughtNfts}

@@ -20,9 +20,10 @@ const ItemCard = ({
   isTimepiece,
   isWod,
   coinbase,
+  ethTokenData,
+  dypTokenData
 }) => {
-  const [dyptokenData, setDypTokenData] = useState(0);
-  const [ethtokenData, setEthTokenData] = useState(0);
+  
   const [isFavorite, setisFavorite] = useState(false);
   const [isOwner, setisOwner] = useState(false);
   const [IsApprove, setIsApprove] = useState(false);
@@ -102,20 +103,7 @@ const ItemCard = ({
     return output;
   };
 
-  const getTokenData = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_eth_v2")
-      .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_eth_v2.token_data
-        );
-        setDypTokenData(propertyDyp[0][1].token_price_usd);
 
-        const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
-
-        setEthTokenData(propertyETH);
-      });
-  };
 
   const getAllFavs = async (pairId) => {
     let favorites = await window.getFavoritesETH2();
@@ -208,15 +196,15 @@ const ItemCard = ({
   }
 
   
-  useEffect(() => {
-    getTokenData();
-  }, []);
+
 
   useEffect(() => {
     getAllFavs(nft);
     checkOwner(nft);
     checkapprove(nft);
   }, [nft, isFavorite, coinbase]);
+
+  console.log(nft, "nft");
 
 
   return (
@@ -296,8 +284,8 @@ const ItemCard = ({
                     $
                     {getFormattedNumber(
                       nft.payment_priceType === 0
-                        ? ethtokenData * nft.price
-                        : dyptokenData * nft.price,
+                        ? ethTokenData * nft.price
+                        : dypTokenData * nft.price,
                       0
                     )}
                   </span>

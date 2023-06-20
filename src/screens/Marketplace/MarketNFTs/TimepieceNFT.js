@@ -15,6 +15,8 @@ const TimepieceNFT = ({
   listedNFTS,
   coinbase,
   timepieceListed,
+  ethTokenData,
+  dypTokenData,
 }) => {
   const override = {
     display: "block",
@@ -200,6 +202,8 @@ const TimepieceNFT = ({
                     }}
                   >
                     <ItemCard
+                     ethTokenData={ethTokenData}
+                     dypTokenData={dypTokenData}
                       nft={nft}
                       isConnected={isConnected}
                       showConnectWallet={handleConnect}

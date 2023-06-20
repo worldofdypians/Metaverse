@@ -14,6 +14,8 @@ const CawsNFT = ({
   listedNFTS,
   coinbase,
   cawsListed,
+  ethTokenData,
+  dypTokenData,
 }) => {
   const override = {
     display: "block",
@@ -197,6 +199,8 @@ const CawsNFT = ({
                     }}
                   >
                     <ItemCard
+                     ethTokenData={ethTokenData}
+                     dypTokenData={dypTokenData}
                       key={nft.id}
                       nft={nft}
                       isConnected={isConnected}

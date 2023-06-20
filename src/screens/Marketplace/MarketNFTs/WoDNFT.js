@@ -15,6 +15,8 @@ const WoDNFT = ({
   listedNFTS,
   coinbase,
   wodListed,
+  ethTokenData,
+  dypTokenData,
 }) => {
   const override = {
     display: "block",
@@ -197,6 +199,8 @@ const WoDNFT = ({
                     }}
                   >
                     <ItemCard
+                     ethTokenData={ethTokenData}
+                     dypTokenData={dypTokenData}
                       key={nft.id}
                       nft={nft}
                       isConnected={isConnected}
