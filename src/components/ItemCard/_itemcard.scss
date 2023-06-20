@@ -33,6 +33,13 @@
   height: 28px;
 }
 
+.cawsimg {
+  --mask: linear-gradient(-284deg,#0000 93px,#000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  margin-left: -155px;
+}
+
 .nft-name {
   font-style: normal;
   font-weight: 500;

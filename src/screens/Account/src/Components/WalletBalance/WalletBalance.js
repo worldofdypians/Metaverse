@@ -16,6 +16,7 @@ import { HashLoader } from "react-spinners";
 import nextArrow from "../../../../Marketplace/assets/nextArrow.svg";
 import Slider from "react-slick";
 import ItemCard from "../../../../../components/ItemCard/ItemCard";
+import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
 
 const WalletBalance = ({
   dypBalance,
@@ -34,6 +35,7 @@ const WalletBalance = ({
   listedNFTS,
   landStaked,
   myCawsWodStakes,
+  myWodWodStakes,
   myCawsCollected,
   myCawsOldCollected,
   myLandCollected,
@@ -44,12 +46,18 @@ const WalletBalance = ({
   ethTokenData,
   dypTokenData
 }) => {
+  
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
   const [dailyrecords, setRecords] = useState([]);
   const [recentListingsFilter, setRecentListingsFilter] = useState("all");
   const [collectedItemsFiltered, setcollectedItemsFiltered] = useState([]);
+
   const [favItemsFiltered, setfavItemsFiltered] = useState([]);
+  const [favoriteItems, setfavoriteItems] = useState([]);
+
+  const [listedItemsFiltered, setlistedItemsFiltered] = useState([]);
+  const [listedItems, setlistedItems] = useState([]);
 
   const [dyptokenData, setDypTokenData] = useState([]);
   const [idyptokenData, setIDypTokenData] = useState([]);
@@ -59,7 +67,6 @@ const WalletBalance = ({
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
   const [filterTitle, setFilterTitle] = useState("Balance");
   const [nftItems, setNftItems] = useState([]);
-  const [favoriteItems, setfavoriteItems] = useState([]);
 
   const [collectedItems, setcollectedItems] = useState([]);
   const [showNfts, setShowNfts] = useState(false);
@@ -97,7 +104,7 @@ const WalletBalance = ({
     } else if (sortValue === "staked") {
       setFilterTitle("Staked");
       setLoading(true);
-      getStakes();
+      // getStakes();
       setTimeout(() => {
         setLoading(false);
       }, 2000);
@@ -160,6 +167,41 @@ const WalletBalance = ({
         setcollectedItemsFiltered(favoriteItems);
       }
     }
+    if (filterTitle === "Listed") {
+      if (filter === "caws") {
+        setRecentListingsFilter("caws");
+        let cawsFilter = listedItems.filter(
+          (item) =>
+            item.nftAddress === window.config.nft_caws_address ||
+            item.nftAddress === window.config.nft_cawsold_address
+        );
+        setlistedItemsFiltered(cawsFilter);
+      } else if (filter === "land") {
+        setRecentListingsFilter("land");
+        let wodFilter = listedItems.filter(
+          (item) => item.nftAddress === window.config.nft_land_address
+        );
+        setlistedItemsFiltered(wodFilter);
+      } else if (filter === "timepiece") {
+        setRecentListingsFilter("timepiece");
+        let timepieceFilter = listedItems.filter(
+          (item) => item.nftAddress === window.config.nft_timepiece_address
+        );
+        setlistedItemsFiltered(timepieceFilter);
+      } else if (filter === "all") {
+        setRecentListingsFilter("all");
+        setcollectedItemsFiltered(listedItems);
+      }
+    }
+    if (filterTitle === "Staked") {
+      if (filter === "land") {
+        setRecentListingsFilter("land");
+      } else if (filter === "cawswod") {
+        setRecentListingsFilter("cawswod");
+      } else if (filter === "all") {
+        setRecentListingsFilter("all");
+      }
+    }
     setTimeout(() => {
       setLoadingRecentListings(false);
     }, 1000);
@@ -190,7 +232,8 @@ const WalletBalance = ({
           finalItems.push(nft);
         }
       });
-    setNftItems(finalItems);
+    setlistedItems(finalItems);
+    setlistedItemsFiltered(finalItems);
   };
 
   const getCollected = async () => {
@@ -211,7 +254,6 @@ const WalletBalance = ({
         });
       }
 
-      console.log("timepiece", finalTimepieceArray);
     }
 
     if (myLandCollected && myLandCollected.length > 0) {
@@ -224,7 +266,6 @@ const WalletBalance = ({
           chain: 1,
         });
       }
-      console.log("land", finalLandArray);
     }
 
     if (myCawsCollected && myCawsCollected.length > 0) {
@@ -250,7 +291,6 @@ const WalletBalance = ({
         });
       }
 
-      console.log("cawsold", finalCawsOldArray);
     }
     finalCollection = [
       ...finalTimepieceArray,
@@ -271,26 +311,6 @@ const WalletBalance = ({
     } else {
       setfavoriteItems([]);
       setfavItemsFiltered([]);
-    }
-  };
-
-  const getStakes = () => {
-    if (coinbase) {
-      let total = [];
-      if (landStaked.length === 0 && myCawsWodStakes.length === 0) {
-        setNftItems([]);
-      } else if (landStaked.length === 0 && myCawsWodStakes.length !== 0) {
-        total = [...myCawsWodStakes];
-        setNftItems(total);
-      } else if (landStaked.length !== 0 && myCawsWodStakes.length === 0) {
-        total = [...landStaked];
-        setNftItems(total);
-      } else if (landStaked.length !== 0 && myCawsWodStakes.length !== 0) {
-        total = [...landStaked, ...myCawsWodStakes];
-        setNftItems(total);
-      }
-      // const allstakes = [...landStaked, ...myCawsWodStakes]
-      console.log(total);
     }
   };
 
@@ -442,6 +462,12 @@ const WalletBalance = ({
     firstSlider.current.slickPrev();
   };
 
+  const getTwonfts = () => {
+    const allnft = [...myCawsWodStakes, ...landStaked];
+    setNftItems(allnft);
+  };
+
+
   useEffect(() => {
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
@@ -454,6 +480,10 @@ const WalletBalance = ({
   useEffect(() => {
     getCollected();
   }, [myTimepieceCollected]);
+
+  useEffect(() => {
+    getTwonfts();
+  }, [landStaked, myCawsWodStakes]);
 
   return (
     <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center">
@@ -649,9 +679,86 @@ const WalletBalance = ({
               </div>
             )}
 
+            {filterTitle === "Staked" && loading === false && (
+              <div className="row px-3">
+                {landStaked &&
+                  landStaked.length > 0 &&
+                  landStaked.slice(0, 6).map((item, index) => (
+                    <NavLink
+                      key={index}
+                      to={`/marketplace/stake`}
+                      style={{ textDecoration: "none" }}
+                      className="col-12 col-lg-6 col-xxl-6 mb-3"
+                    >
+                      <div className="">
+                        <div className="account-nft-card w-100 d-flex align-items-center gap-4">
+                          <img
+                            src={`https://mint.worldofdypians.com/thumbs/${item.name?.slice(
+                              1,
+                              landStaked[index].name?.length
+                            )}.png`}
+                            alt=""
+                            className="account-card-img"
+                          />
+                          <div className="d-flex flex-column align-items-center justify-content-center">
+                            <h6 className="account-nft-title">
+                              {"Genesis"} {item.name}
+                            </h6>
+                            <span className="account-nft-type">{"Land"}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </NavLink>
+                  ))}
+                {myCawsWodStakes &&
+                  myCawsWodStakes.length > 0 &&
+                  myCawsWodStakes.slice(0, 6).map((item, index) => (
+                    <NavLink
+                      key={index}
+                      to={`/marketplace/stake`}
+                      style={{ textDecoration: "none" }}
+                      className="col-12 col-lg-6 col-xxl-6 mb-3"
+                    >
+                      <div className="">
+                        <div className="account-nft-card w-100 d-flex align-items-center gap-4">
+                          <div className="d-flex">
+                            <img
+                              src={`https://mint.worldofdypians.com/thumbs/${myWodWodStakes[
+                                index
+                              ].name?.slice(
+                                1,
+                                myWodWodStakes[index].name?.length
+                              )}.png`}
+                              alt=""
+                              className="account-card-img"
+                            />
+                            <img
+                              src={`https://mint.dyp.finance/thumbs/${item.name?.slice(
+                                6,
+                                item.name?.length
+                              )}.png`}
+                              alt=""
+                              className="account-card-img"
+                            />
+                          </div>
+                          <div className="d-flex flex-column align-items-center justify-content-center">
+                            <h6 className="account-nft-title">
+                              Land {myWodWodStakes[index].name} x {item.name}
+                            </h6>
+                            <span className="account-nft-type">
+                              Land x Caws
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </NavLink>
+                  ))}
+              </div>
+            )}
+
             {filterTitle === "Listed" && loading === false && (
               <div className="row px-3">
-                {nftItems.slice(0, 6).map((item, index) => (
+                {listedItems.slice(0, 6).map((item, index) => (
                   <NavLink
                     key={index}
                     to={`/marketplace/nft/${item.blockTimestamp}`}
@@ -835,9 +942,11 @@ const WalletBalance = ({
 
             {filterTitle !== "Balance" &&
               loading === false &&
-              (nftItems.length > 6 ||
-                collectedItems.length > 6 ||
-                favoriteItems.length > 6) && (
+              ((filterTitle === "Collected" && collectedItems.length > 6) ||
+                (filterTitle === "Listed" && listedItems.length > 6) ||
+                (filterTitle === "Staked" &&
+                  myCawsWodStakes.length + landStaked.length > 1) ||
+                (filterTitle === "Favorites" && favoriteItems.length > 6)) && (
                 <div className="row w-100 justify-content-center">
                   <div
                     className="d-flex align-items-center justify-content-center gap-2"
@@ -893,40 +1002,69 @@ const WalletBalance = ({
             alt=""
           />
           <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-end w-100 position-relative">
-            <div className="d-flex align-items-center gap-4">
-              <h6
-                className={`filter-title ${
-                  recentListingsFilter === "all" && "filter-selected"
-                }`}
-                onClick={() => filterRecentListings("all")}
-              >
-                All
-              </h6>
-              <h6
-                className={`filter-title ${
-                  recentListingsFilter === "caws" && "filter-selected"
-                }`}
-                onClick={() => filterRecentListings("caws")}
-              >
-                CAWS
-              </h6>
-              <h6
-                className={`filter-title ${
-                  recentListingsFilter === "land" && "filter-selected"
-                }`}
-                onClick={() => filterRecentListings("land")}
-              >
-                Land
-              </h6>
-              <h6
-                className={`filter-title ${
-                  recentListingsFilter === "timepiece" && "filter-selected"
-                }`}
-                onClick={() => filterRecentListings("timepiece")}
-              >
-                Timepiece
-              </h6>
-            </div>
+            {filterTitle !== "Staked" ? (
+              <div className="d-flex align-items-center gap-4">
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "all" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("all")}
+                >
+                  All
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "caws" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("caws")}
+                >
+                  CAWS
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "land" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("land")}
+                >
+                  Land
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "timepiece" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("timepiece")}
+                >
+                  Timepiece
+                </h6>
+              </div>
+            ) : (
+              <div className="d-flex align-items-center gap-4">
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "all" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("all")}
+                >
+                  All
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "cawswod" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("cawswod")}
+                >
+                  Land+CAWS
+                </h6>
+                <h6
+                  className={`filter-title ${
+                    recentListingsFilter === "land" && "filter-selected"
+                  }`}
+                  onClick={() => filterRecentListings("land")}
+                >
+                  Land
+                </h6>
+              </div>
+            )}
           </div>
           {loadingRecentListings === false && filterTitle === "Collected" ? (
             <div className="slider-container">
@@ -1004,6 +1142,93 @@ const WalletBalance = ({
                       />
                     </NavLink>
                   ))}
+              </Slider>
+            </div>
+          ) : loadingRecentListings === false && filterTitle === "Listed" ? (
+            <div className="slider-container">
+              <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
+                {listedItemsFiltered &&
+                  listedItemsFiltered.length > 0 &&
+                  listedItemsFiltered.map((nft, index) => (
+                    <NavLink
+                      to={`/marketplace/nft/${nft.blockTimestamp}`}
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                      state={{
+                        nft: nft,
+                        type: nft.type,
+                        isOwner:
+                          (nft.buyer &&
+                            nft.buyer.toLowerCase() ===
+                              address?.toLowerCase()) ||
+                          (nft.seller &&
+                            nft.seller.toLowerCase() ===
+                              address?.toLowerCase()),
+                        chain: nft.chain,
+                      }}
+                    >
+                      <ItemCard
+                        key={nft.id}
+                        nft={nft}
+                        isConnected={isConnected}
+                        showConnectWallet={handleConnect}
+                        isCaws={nft.type === "caws" || nft.type === "cawsold"}
+                        isTimepiece={nft.type === "timepiece"}
+                        isWod={nft.type === "land"}
+                        coinbase={coinbase}
+                      />
+                    </NavLink>
+                  ))}
+              </Slider>
+            </div>
+          ) : loadingRecentListings === false && filterTitle === "Staked" ? (
+            <div className="slider-container">
+              <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
+                {recentListingsFilter === "cawswod"
+                  ? myCawsWodStakes &&
+                    myCawsWodStakes.length > 0 &&
+                    myCawsWodStakes.map((nft, index) => (
+                      <NavLink
+                        to={`/marketplace/stake`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                      >
+                        <CawsWodItem
+                          cawsImg={nft.image}
+                          wodImg={myWodWodStakes[index].image}
+                          cawsName={nft.name}
+                          wodName={myWodWodStakes[index].name}
+                        />
+                      </NavLink>
+                    ))
+                  : recentListingsFilter === "land"
+                  ? landStaked &&
+                    landStaked.length > 0 &&
+                    landStaked.map((nft, index) => (
+                      <NavLink
+                        to={`/marketplace/stake`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                      >
+                        <CawsWodItem wodImg={nft.image} wodName={nft.name} />
+                      </NavLink>
+                    ))
+                  : nftItems &&
+                    nftItems.length > 0 &&
+                    nftItems.map((nft, index) => (
+                      <NavLink
+                        to={`/marketplace/stake`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                      >
+                        <CawsWodItem
+                          cawsImg={nft?.name.includes("CAWS") && nft?.image}
+                          wodImg={myWodWodStakes[index]?.image ?? nft?.image}
+                          cawsName={nft?.name.includes("CAWS") && nft?.name}
+                          wodName={myWodWodStakes[index]?.name ?? nft?.name}
+                        />
+                      </NavLink>
+                    ))}
               </Slider>
             </div>
           ) : (
