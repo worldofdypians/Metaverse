@@ -297,10 +297,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                       <button className="btn rewards-btn px-4 py-2" onClick={()=>{setRewardModal(true)}} >Rewards</button>
                     </div>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-0 gap-lg-1">
-                    <h6 className="market-stake-stat mb-0">$18.5M+</h6>
-                    <span className="market-stake-stat-desc">Paid Rewards</span>
-                  </div>
+                  <div className="tvl-wrapper">
+                      <h6 className="market-stake-tvl">$38.6K+</h6>
+                    </div>
                 </div>
               </div>
             </div>
