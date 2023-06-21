@@ -86,7 +86,7 @@ const WoDNFT = ({
     }
     if (landNfts && landNfts.length > 0) {
       setLoading(false);
-      sortNfts('lth')
+      sortNfts("lth");
     }
     window.scrollTo(0, 0);
   }, [landNfts]);
@@ -103,10 +103,10 @@ const WoDNFT = ({
         style={{ backgroundSize: "cover" }}
       >
         <div className="container-lg mx-0">
-          <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
+          <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">
             World of Dypians <span style={{ color: "#8c56ff" }}>Land</span>
           </h6>
-          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-end">
+          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-start justify-content-lg-end">
             <div class="dropdown" style={{ width: "200px" }}>
               <button
                 class="btn btn-secondary nft-dropdown w-100
@@ -194,13 +194,12 @@ const WoDNFT = ({
                       isOwner:
                         nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
                         nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                        chain: nft.chain,
-
+                      chain: nft.chain,
                     }}
                   >
                     <ItemCard
-                     ethTokenData={ethTokenData}
-                     dypTokenData={dypTokenData}
+                      ethTokenData={ethTokenData}
+                      dypTokenData={dypTokenData}
                       key={nft.id}
                       nft={nft}
                       isConnected={isConnected}
@@ -209,7 +208,6 @@ const WoDNFT = ({
                       isTimepiece={false}
                       isWod={true}
                       coinbase={coinbase}
-
                     />
                   </NavLink>
                 ))
@@ -223,6 +221,11 @@ const WoDNFT = ({
                 />
               )}
             </div>
+          </div>
+          <div className="d-flex justify-content-center w-100">
+            <button className="btn py-2 px-3 nft-load-more-btn">
+              Load more
+            </button>
           </div>
         </div>
       </div>

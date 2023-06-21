@@ -22,6 +22,7 @@ import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
 import nextArrow from "./assets/nextArrow.svg";
 import axios from "axios";
+import getFormattedNumber from "../Caws/functions/get-formatted-number";
 
 const Marketplace = ({
   listedNFTS,
@@ -362,17 +363,19 @@ const Marketplace = ({
 
   async function updateViewCount(tokenId, nftAddress) {
     try {
-      const response = await fetch('https://api.worldofdypians.com/nft-view', {
-        method: 'POST',
+      const response = await fetch("https://api.worldofdypians.com/nft-view", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ tokenId, nftAddress }),
       });
       const data = await response.json();
-      console.log(`Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`);
+      console.log(
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+      );
     } catch (error) {
-      console.error('Error updating view count:', error);
+      console.error("Error updating view count:", error);
     }
   }
 
@@ -392,13 +395,19 @@ const Marketplace = ({
           <div className="row justify-content-between align-items-center marketplace-banner my-5">
             <div className="col-12 col-lg-5">
               <h6 className="market-banner-title">
-                Unlock the Extraordinary! Explore the World of Dypians <mark className="p-0"
-                style={{ color: "#8C56FF", lineHeight: "80%", background: 'transparent' }}
-              >
-                Game Shop!
-              </mark>
+                Unlock the Extraordinary! Explore the World of Dypians{" "}
+                <mark
+                  className="p-0"
+                  style={{
+                    color: "#8C56FF",
+                    lineHeight: "80%",
+                    background: "transparent",
+                  }}
+                >
+                  Game Shop!
+                </mark>
               </h6>
-             
+
               <div className="my-4">
                 <span className="market-banner-desc my-4">
                   Discover the power of NFTs for a unique digital experience.
@@ -418,7 +427,10 @@ const Marketplace = ({
               <div className="col-12 col-lg-4">
                 <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
-                    {abbreviateNumber(totalTx, 3)}
+                    {getFormattedNumber(totalTx).slice(
+                      0,
+                      getFormattedNumber(totalTx).length - 3
+                    )}
                   </h6>
                   <span className="stats-desc">
                     Total on-chain transactions
@@ -428,14 +440,20 @@ const Marketplace = ({
               <div className="col-12 col-lg-4">
                 <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
-                    {abbreviateNumber(totalvolume, 3)}
+                    {abbreviateNumber(totalvolume)}+
                   </h6>
                   <span className="stats-desc">Total Volume (USD)</span>
                 </div>
               </div>
               <div className="col-12 col-lg-4">
                 <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
-                  <h6 className="stats-value">{abbreviateNumber(11000)}</h6>
+                  <h6 className="stats-value">
+                    {" "}
+                    {getFormattedNumber(11000).slice(
+                      0,
+                      getFormattedNumber(11000).length - 3
+                    )}
+                  </h6>
                   <span className="stats-desc">Sold NFTs</span>
                 </div>
               </div>
@@ -579,8 +597,9 @@ const Marketplace = ({
                             coinbase?.toLowerCase(),
                           chain: nft.chain,
                         }}
-                        onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
-
+                        onClick={() => {
+                          updateViewCount(nft.tokenId, nft.nftAddress);
+                        }}
                       >
                         <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
                           <div className="position-absolute top-sales-rank">
@@ -727,7 +746,9 @@ const Marketplace = ({
                               coinbase?.toLowerCase(),
                             chain: nft.chain,
                           }}
-                          onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
+                          onClick={() => {
+                            updateViewCount(nft.tokenId, nft.nftAddress);
+                          }}
                         >
                           <ItemCard
                             ethTokenData={ethTokenData}
@@ -839,8 +860,9 @@ const Marketplace = ({
                               coinbase?.toLowerCase(),
                             chain: nft.chain,
                           }}
-                          onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
-
+                          onClick={() => {
+                            updateViewCount(nft.tokenId, nft.nftAddress);
+                          }}
                         >
                           <ItemCard
                             ethTokenData={ethTokenData}

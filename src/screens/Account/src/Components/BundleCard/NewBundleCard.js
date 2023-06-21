@@ -31,6 +31,7 @@ import opensea from "./assets/opensea.svg";
 import Slider from "rc-slider";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import useWindowSize from "../../../../../hooks/useWindowSize";
+import { NavLink } from "react-router-dom";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -1432,14 +1433,14 @@ const windowSize = useWindowSize()
                       className="blur-img"
                     />
                   </div>
-                  <a
+                  <NavLink
                     className="btn purple-pill"
-                    href="https://opensea.io/collection/worldofdypians"
-                    target="_blank"
+                    to="/marketplace/wod"
+                    
                     rel="noreferrer"
                   >
                     Buy Genesis Land
-                  </a>
+                  </NavLink>
                 </div>
               ) : (
                 <>
@@ -1468,9 +1469,12 @@ const windowSize = useWindowSize()
                         <span className="purchase-price-usd mb-0">$6.62</span>
                       </div>
                     </div>
-                    <span className="new-bnb-chain">
+                   <div className="d-flex align-items-center gap-2">
+                   <span className="new-bnb-chain">
                       Available only on BNB Chain
                     </span>
+                    <img src={require('./assets/bnbIcon.svg').default} alt="" />
+                   </div>
                   </div>
                 </>
               )}
@@ -1712,6 +1716,7 @@ const windowSize = useWindowSize()
               : packageData.title === "Puzzle Madness"
               ? statusColor3500
               : statusColor700,
+              width: 'fit-content'
         }}
       >
         {packageData.title === "Dragon Ruins"
@@ -1811,7 +1816,6 @@ const windowSize = useWindowSize()
                 <div className="d-flex align-items-center gap-3">
                   <div
                     className="new-bundle-title"
-                    style={{ fontSize: "18px" }}
                   >
                     Purchased Bundles
                   </div>
@@ -1825,6 +1829,7 @@ const windowSize = useWindowSize()
               <div className="d-flex flex-column align-items-center gap-2">
                 <div style={{ width: 75, height: 75 }}>
                   <CircularProgressbar
+                  counterClockwise={true}
                     value={progressValue}
                     text={`${progressValue}%`}
                     styles={buildStyles({
