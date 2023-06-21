@@ -1210,7 +1210,8 @@ function App() {
                   <MarketStake
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
-                    listedNFTS={listedNFTS}
+                    chainId={chainId}
+                    coinbase={coinbase}
                   />
                 }
               />

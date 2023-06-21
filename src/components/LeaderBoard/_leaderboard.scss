@@ -306,6 +306,25 @@ border: 1px solid #4C4E64;
   transition: all 0.25s;
 }
 
+.tooltip-wrapper2 {
+  background: #43455D;
+  box-shadow: 0px 4.3px 53px rgba(0, 7, 72, 0.12);
+  border-radius: 10px;
+  position: absolute;
+  top: 100%;
+  z-index: 4;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.25s;
+}
+
+.tooltip-content2 {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #B8B8E0;
+}
+
 .tooltip-active {
   opacity: 1;
   visibility: visible;
