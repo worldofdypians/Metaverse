@@ -63,6 +63,7 @@ const Marketplace = ({
   const windowSize = useWindowSize();
   const [totalTx, setTotalTx] = useState(0);
   const [totalvolume, setTotalVolume] = useState(0);
+  const [sliderCut, setSliderCut] = useState();
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -384,6 +385,20 @@ const Marketplace = ({
     setRecentSold(recentSales);
   }, [recentSales]);
 
+  useEffect(() => {
+    if (windowSize.width > 1600) {
+      setSliderCut(6);
+    } else if (windowSize.width > 1500) {
+      setSliderCut(5);
+    } else if (windowSize.width > 1024) {
+      setSliderCut(4);
+    } else if (windowSize.width > 600) {
+      setSliderCut(3);
+    } else if (windowSize.width > 480) {
+      setSliderCut(2);
+    }
+  }, [windowSize.width]);
+
   return (
     <div
       className="container-fluid mt-5 mt-lg-0 d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-end p-0"
@@ -681,14 +696,16 @@ const Marketplace = ({
                   alt=""
                 />
               )}
-              <img
-                src={nextArrow}
-                width={40}
-                height={40}
-                onClick={firstNext}
-                className="next-arrow-nft"
-                alt=""
-              />
+              {recentListed.length > sliderCut && (
+                <img
+                  src={nextArrow}
+                  width={40}
+                  height={40}
+                  onClick={firstNext}
+                  className="next-arrow-nft"
+                  alt=""
+                />
+              )}
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <h6 className="nft-wrapper-title font-raleway mb-0">
                   Recent Listings
@@ -791,14 +808,16 @@ const Marketplace = ({
                   alt=""
                 />
               )}
-              <img
-                src={nextArrow}
-                width={40}
-                height={40}
-                onClick={secondNext}
-                className="next-arrow-nft"
-                alt=""
-              />
+               {recentSold.length > sliderCut && (
+                <img
+                  src={nextArrow}
+                  width={40}
+                  height={40}
+                  onClick={secondNext}
+                  className="next-arrow-nft"
+                  alt=""
+                />
+              )}
 
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <h6 className="nft-wrapper-title font-raleway mb-0">
