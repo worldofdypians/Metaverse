@@ -44,7 +44,7 @@ const Header = ({ handleSignUp, handleRedirect, coinbase, avatar }) => {
                 : "nav-anchor font-poppins"
             }
           >
-            Marketplace
+            Shop
           </NavLink>
           <NavLink
             to="/roadmap"

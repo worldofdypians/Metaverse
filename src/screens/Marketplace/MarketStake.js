@@ -29,6 +29,11 @@ const MarketStake = () => {
    
   }, [nftModal])
   
+  useEffect(() => {
+    window.scrollTo(0,0)
+  
+  }, [])
+  
 
   return (
     <div
@@ -48,7 +53,7 @@ const MarketStake = () => {
         <div className="row">
           <div className="col-12 ">
             <div className="market-stake-banner-wrapper d-flex align-items-center justify-content-center p-4">
-              <img src={marketStakeBanner} className="w-50" alt="" />
+              <img src={marketStakeBanner} className="market-stake-banner" alt="" />
             </div>
           </div>
           <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
@@ -81,13 +86,15 @@ const MarketStake = () => {
               <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
                 <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                   <div className="d-flex flex-column gap-4">
-                    <h6 className="market-stake-title">
-                      World of Dypians Land and Caws
+                  <div className="d-flex flex-column gap-2">
+                  <h6 className="market-stake-title">
+                      World of Dypians Land & CAWS
                     </h6>
                     <span className="market-stake-desc">
                       Make the most of your Land assets with WoD Staking. Start
                       earning now!
                     </span>
+                  </div>
                     <div className="d-flex align-items-center gap-3">
                       <button className="btn pill-btn px-4 py-2" onClick={() => setNftModal(true)}>Deposit</button>
                       <button className="btn rewards-btn px-4 py-2">Rewards</button>
@@ -108,6 +115,7 @@ const MarketStake = () => {
               <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
                 <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                   <div className="d-flex flex-column gap-4">
+                    <div className="d-flex flex-column gap-2">
                     <h6 className="market-stake-title">
                       World of Dypians Land
                     </h6>
@@ -115,6 +123,7 @@ const MarketStake = () => {
                       Make the most of your Land assets with WoD Staking. Start
                       earning now!
                     </span>
+                    </div>
                     <div className="d-flex align-items-center gap-3">
                       <button className="btn pill-btn px-4 py-2">Deposit</button>
                       <button className="btn rewards-btn px-4 py-2">Rewards</button>

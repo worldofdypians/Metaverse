@@ -77,6 +77,18 @@ const MarketSidebar = () => {
               >
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
+                  <NavLink
+                      to="/marketplace/wod"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <span className={`nft-sidebar-title`}>Land</span>
+                    </NavLink>
                     <NavLink
                       to="/marketplace/caws"
                       end
@@ -89,18 +101,7 @@ const MarketSidebar = () => {
                       <div className="icon-wrapper"></div>
                       <span className={`nft-sidebar-title`}>CAWS</span>
                     </NavLink>
-                    <NavLink
-                      to="/marketplace/wod"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
-                      }
-                    >
-                      <div className="icon-wrapper"></div>
-                      <span className={`nft-sidebar-title`}>WoD Land</span>
-                    </NavLink>
+                  
 
                     <NavLink
                       to="/marketplace/timepiece"
@@ -161,6 +162,32 @@ const MarketSidebar = () => {
                     alt=""
                   />
                   <span className={`sidebar-title`}>Stake</span>
+                </>
+              );
+            }}
+          />
+          <NavLink
+          style={{pointerEvents: 'none'}}
+            to="/marketplace/mint"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "mintIconActive" : "mintIcon";
+              return (
+                <>
+                  <img
+                    src={require(`./assets/${icon}.svg`)}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>Mint</span>
+                  <div className="mint-inactive-wrapper">
+                  <span className="mint-inactive">Comming Soon</span>
+                  </div>
                 </>
               );
             }}

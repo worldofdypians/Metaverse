@@ -30,7 +30,7 @@ const MarketEvents = ({ account, chainId }) => {
   const [idypBalancebnb, setiDypBalanceBnb] = useState();
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
   const [availableTime, setAvailableTime] = useState();
-  const [selectedPackage, setSelectedPackage] = useState(location.state?.package ? location.state?.package : "dyp");
+  const [selectedPackage, setSelectedPackage] = useState(location.state?.package ? location.state?.package : "dragon");
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -262,18 +262,19 @@ const MarketEvents = ({ account, chainId }) => {
                 Critical Hit
               </h6>
             </div> */}
+               <div className="">
+              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dragon" && "selected-event-package"}`} onClick={() => setSelectedPackage("dragon")}>
+                  <img src={dragonPackage} className="w-100" style={{borderRadius: '16px'}} alt="" />
+                  <span className="event-package-title">Dragon Ruins</span>
+              </div>
+            </div>
             <div className="">
               <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dyp" && "selected-event-package"}`} onClick={() => setSelectedPackage("dyp")}>
                   <img src={goldenPass} className="w-100" style={{borderRadius: '16px'}} alt="" />
                   <span className="event-package-title">Golden Pass</span>
               </div>
             </div>
-             <div className="">
-              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dragon" && "selected-event-package"}`} onClick={() => setSelectedPackage("dragon")}>
-                  <img src={dragonPackage} className="w-100" style={{borderRadius: '16px'}} alt="" />
-                  <span className="event-package-title">Dragon Ruins</span>
-              </div>
-            </div>
+          
             <div className="">
               <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "idyp" && "selected-event-package"}`} onClick={() => setSelectedPackage("idyp")}>
                   <img src={puzzleMadness} className="w-100" style={{borderRadius: '16px'}} alt="" />

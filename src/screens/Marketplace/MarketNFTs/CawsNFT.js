@@ -104,10 +104,10 @@ const CawsNFT = ({
         style={{ backgroundSize: "cover" }}
       >
         <div className="container-lg mx-0">
-          <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
-            Cats And Watches <span style={{ color: "#8c56ff" }}>Society</span>
+          <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">
+            Cats And Watches Society <span style={{ color: "#8c56ff" }}>(CAWS)</span>
           </h6>
-          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-end">
+          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-start justify-content-lg-end">
             <div class="dropdown" style={{ width: "200px" }}>
               <button
                 class="btn btn-secondary nft-dropdown w-100
@@ -184,7 +184,8 @@ const CawsNFT = ({
               }
             >
               {cawsNFTS && cawsNFTS.length > 0 ? (
-                cawsNFTS.map((nft, index) => (
+                <>
+               {   cawsNFTS.map((nft, index) => (
                   <NavLink
                     to={`/marketplace/nft/${nft.blockTimestamp}`}
                     style={{ textDecoration: "none" }}
@@ -212,7 +213,9 @@ const CawsNFT = ({
 
                     />
                   </NavLink>
-                ))
+                ))}
+                 
+                </>
               ) : (
                 <HashLoader
                   color={"#554fd8"}
@@ -224,6 +227,9 @@ const CawsNFT = ({
               )}
             </div>
           </div>
+               <div className="d-flex justify-content-center w-100">
+                  <button className="btn py-2 px-3 nft-load-more-btn">Load more</button>
+                  </div>
         </div>
       </div>
     </div>
