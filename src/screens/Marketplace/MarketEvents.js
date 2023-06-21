@@ -169,11 +169,13 @@ const MarketEvents = ({ account, chainId }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Events'
+
   }, []);
 
   return (
     <div className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0">
-           {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
+           {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
       <div className="container-nft align-items-start justify-content-start d-flex flex-column gap-2 px-3 px-lg-5 my-4" style={{minHeight: '72vh', backgroundSize: 'cover'}}>
         <div className="container-lg mx-0">

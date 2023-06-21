@@ -20,6 +20,51 @@
   }
 }
 
+.landimg2 {
+  margin-left: -60px;
+}
+
+.container2 {
+  border-radius: 20px;
+}
+
+.imgcontainer {
+  border-radius: 20px 20px 0px 0px;
+  overflow: hidden;
+}
+
+.earn-checklist-container2 {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+#earnedText2 {
+  color: #b8b8e0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.rewardtxtCawswod {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.withdrawbtn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cawsimg2 {
+  --mask: linear-gradient(-284deg, #0000 138px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  margin-left: -165px;
+}
+
 .stake-modal-title {
   font-weight: 700;
   font-size: 32px;
@@ -74,12 +119,25 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
+  @media only screen and (max-width: 691px) {
+    grid-template-columns: repeat(1, 1fr);
+    place-items: center;
+  }
 }
 
 .nft-modal-grid2 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+
+  @media only screen and (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (max-width: 540px) {
+    grid-template-columns: repeat(1, 1fr);
+    place-items: center;
+  }
 }
 
 .nft-modal-card {
