@@ -100,7 +100,7 @@ const TimepieceNFT = ({
       className="container-fluid d-flex justify-content-end p-0"
       style={{ minHeight: "72vh" }}
     >
-      {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
+      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
       <div
         className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./_stakemodal.scss";
 import xmark from "./assets/xmark.svg";
 import { Checkbox } from "@mui/material";
-import EmptyWodCard from "./EmptyWodCard";
 import EmptyCawsWod from "./EmptyCawsWod";
 import greenInfo from "./assets/greenInfo.svg";
 import cawsTag from "./assets/cawsTag.svg";
@@ -11,6 +10,8 @@ import fullWod from "./assets/fullWod.png";
 import axios from "axios";
 import CawsWodNftChecklist from "./CawsWodNftChecklist";
 import ethIcon from "./assets/ethIcon.svg";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 
 const RewardsModal = ({
   onModalClose,
@@ -24,6 +25,7 @@ const RewardsModal = ({
   onDepositComplete,
   ETHrewards,
   finalUsd,
+  onClaimAll,
 }) => {
   const [checkUnstakebtn, setCheckUnstakeBtn] = useState(false);
   const [status, setStatus] = useState("");
@@ -214,7 +216,7 @@ const RewardsModal = ({
         <div className="col-12">
           <div className="nft-modal-grid2">
             {cawsStakes.length === 0 ? (
-              [...Array(devicewidth < 500 ? 1 : 4)].map((item, id) => {
+              [...Array(devicewidth < 500 ? 2 : 4)].map((item, id) => {
                 return <EmptyCawsWod key={id} />;
               })
             ) : cawsStakes.length === 1 ? (
@@ -278,10 +280,10 @@ const RewardsModal = ({
                   ...Array(
                     devicewidth < 500
                       ? 1
-                      : Math.abs(2 - parseInt(cawsStakes.length))
+                      : Math.abs(4 - parseInt(cawsStakes.length))
                   ),
                 ].map((item, id) => {
-                  return <EmptyWodCard key={id} />;
+                  return <EmptyCawsWod key={id} />;
                 })}
               </>
             ) : (
@@ -353,40 +355,122 @@ const RewardsModal = ({
           from the staking pool.
         </span>
       </div>
-      <div className="mt-3 d-flex align-items-end justify-content-between">
-        <div className="selected-nfts-wrapper2 p-3">
-          <div className="d-flex align-items-center justify-content-between">
+      <div className="mt-3 d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between gap-5">
+        <div className="d-flex flex-column gap-2 justify-content-center align-items-center w-100 w-xxl-50 w-lg-50 w-md-50">
+          <div className="selected-nfts-wrapper2 p-3 w-100">
             <span className="selected-nfts-span mb-2">Total Earned</span>
-          </div>
-          <div className="d-flex gap-2 justify-content-between">
-            <div className="d-flex align-items-center gap-1">
-              <img src={ethIcon} alt="" style={{ width: 30, height: 30 }} />
-              <span className="selected-nfts-amount2">{ETHrewards} ETH</span>
-            </div>
-            <div className="d-flex align-items-center gap-1">
-              <span className="nft-price-usd">${finalUsd}</span>
-            </div>
-          </div>
-        </div>
 
-        <div className="selected-nfts-wrapper2 p-3">
-          <div className="d-flex align-items-center justify-content-between">
-            <span className="selected-nfts-span mb-2">In stake NFTs</span>
-          </div>
-          <div className="d-flex gap-2 justify-content-between">
-            <div className="d-flex align-items-center gap-1">
-              <img src={wodTag} alt="" />
-              <span className="selected-nfts-amount">
-                {landStakes.length} Wod Land
-              </span>
-            </div>
-            <div className="d-flex align-items-center gap-1">
-              <img src={cawsTag} alt="" />
-              <span className="selected-nfts-amount">
-                {cawsStakes.length} CAWS
-              </span>
+            <div className="d-flex gap-2 justify-content-between">
+              <div className="d-flex align-items-center gap-1">
+                <img src={ethIcon} alt="" style={{ width: 30, height: 30 }} />
+                <span className="selected-nfts-amount2">
+                  {getFormattedNumber(ETHrewards, 3)} ETH
+                </span>
+              </div>
+              <div className="d-flex align-items-center gap-1">
+                <span className="nft-price-usd">
+                  {formattedNum(finalUsd, true)}
+                </span>
+              </div>
             </div>
           </div>
+          <button
+            className={`pill-btn ${
+              ETHrewards == 0 && "disabled-approve-btn"
+            } mb-1 w-100 p-2`}
+            onClick={() => {
+              checkUnstakebtn === true && selectNftIds.length === nftItem.length
+                ? onClaimAll()
+                : checkUnstakebtn === true && selectNftIds.length === 0
+                ? onEmptyState()
+                : selectNftIds.length !== 0 &&
+                  selectNftIds.length < nftItem.length
+                ? handleClaim(selectNftIds)
+                : onClaimAll();
+            }}
+            style={{
+              pointerEvents: ETHrewards == 0 ? "none" : "auto",
+            }}
+          >
+            {loadingClaim ? (
+              <>
+                <div
+                  className="spinner-border "
+                  role="status"
+                  style={{ height: "1.5rem", width: "1.5rem" }}
+                ></div>
+              </>
+            ) : (
+              "Claim selected"
+            )}
+          </button>
+        </div>
+        <div className="d-flex flex-column gap-2 justify-content-center align-items-center w-100 w-xxl-50 w-lg-50 w-md-50">
+          <div className="gap-3 selected-nfts-wrapper2 p-3 w-100 d-flex flex-column">
+            <div className="d-flex align-items-center justify-content-between">
+              <span className="selected-nfts-span mb-2">In stake NFTs</span>
+            </div>
+            <div className="d-flex gap-2 justify-content-between">
+              <div className="d-flex align-items-center gap-1">
+                <img src={wodTag} alt="" />
+                <span className="selected-nfts-amount">
+                  {landStakes.length} Wod Land
+                </span>
+              </div>
+              <div className="d-flex align-items-center gap-1">
+                <img src={cawsTag} alt="" />
+                <span className="selected-nfts-amount">
+                  {cawsStakes.length} CAWS
+                </span>
+              </div>
+            </div>
+          </div>
+          <button
+            className={` ${
+              (getApprovedNfts(selectNftIds).length !== 0 &&
+                getApprovedNfts(selectNftIds).length < 51 &&
+                nftItem.length !== 0) ||
+              checkUnstakebtn === true
+                ? "withdrawbtn"
+                : "disabled-approve-btn"
+            } w-100 p-2`}
+            onClick={() => {
+              checkUnstakebtn === true &&
+              getApprovedNfts(selectNftIds).length === nftItem.length &&
+              getApprovedNfts(selectNftIds).length < 51
+                ? handleUnstake()
+                : (checkUnstakebtn === true &&
+                    getApprovedNfts(selectNftIds).length === 0) ||
+                  getApprovedNfts(selectNftIds).length > 50
+                ? onEmptyState()
+                : getApprovedNfts(selectNftIds).length !== 0 &&
+                  getApprovedNfts(selectNftIds).length < nftItem.length
+                ? handleUnstake()
+                : handleUnstake();
+            }}
+            style={{
+              pointerEvents:
+                getApprovedNfts(selectNftIds).length !== 0
+                  ? "auto"
+                  : nftItem.length !== 0 &&
+                    checkUnstakebtn === true &&
+                    getApprovedNfts(selectNftIds).length === 0
+                  ? "auto"
+                  : "none",
+            }}
+          >
+            {loadingWithdraw ? (
+              <>
+                <div
+                  className="spinner-border "
+                  role="status"
+                  style={{ height: "1.5rem", width: "1.5rem" }}
+                ></div>
+              </>
+            ) : (
+              "Unstake"
+            )}
+          </button>
         </div>
       </div>
     </div>

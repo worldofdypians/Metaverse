@@ -200,8 +200,11 @@ const Marketplace = ({
       "https://api.worldofdypians.com/api/totalVolumes"
     );
 
-    if (result.data && result2.data) {
+    if (result.data) {
       setTotalTx(result.data);
+    }
+
+    if (result2.data) {
       setTotalVolume(result2.data);
     }
   };
@@ -264,7 +267,9 @@ const Marketplace = ({
   useEffect(() => {
     getAllData();
     window.scrollTo(0, 0);
+    document.title = 'Shop'
   }, []);
+
 
   const filterTopSales = (filter) => {
     setLoadingTopSales(true);
@@ -404,7 +409,7 @@ const Marketplace = ({
       className="container-fluid mt-5 mt-lg-0 d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-end p-0"
       style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
-      {windowSize.width < 786 ? <MobileNav /> : <MarketSidebar />}
+      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
         <div className="container-lg mx-0">
           <div className="row justify-content-between align-items-center marketplace-banner my-5">
@@ -808,7 +813,7 @@ const Marketplace = ({
                   alt=""
                 />
               )}
-               {recentSold.length > sliderCut && (
+              {recentSold.length > sliderCut && (
                 <img
                   src={nextArrow}
                   width={40}

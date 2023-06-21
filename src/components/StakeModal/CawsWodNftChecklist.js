@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Web3 from "web3";
+import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 import PropTypes from "prop-types";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import weth from "./assets/weth.svg";
+import "./_stakemodal.scss";
 
 const CawsWodNftChecklist = ({
   modalId,
@@ -75,7 +76,6 @@ const CawsWodNftChecklist = ({
 
     await window.wod_caws
       .withdrawWodCaws([itemId], [landId])
-      .send()
       .then(() => {
         setcheckPassiveBtn(false);
         setloading(false);
@@ -138,16 +138,16 @@ const CawsWodNftChecklist = ({
   };
 
   return (
-    <>
+    <div className="d-flex flex-column gap-2">
       <div
-        className="nft-caw-card sub-container p-0"
+        className="nft-caw-card sub-container p-0 container2 m-0"
         data-toggle="modal"
         data-target={modalId}
         onClick={() => {
           handleCawClick(checklistItemID);
         }}
         style={{
-          width: 270,
+          width: 243,
           border: isStake
             ? checked === true
               ? Unstakebtn === true
@@ -162,24 +162,24 @@ const CawsWodNftChecklist = ({
         }}
       >
         <div
-          className="elevated-stake-container"
+          className="elevated-stake-container d-flex flex-column gap-1 p-0"
           style={{
             background: "transparent",
-            display: "flex",
-            flexDirection: "column",
-            gap: 5,
           }}
         >
-          <div className="sub-container p-0" style={{ boxShadow: "none" }}>
-            <div className="d-flex align-items-center">
+          <div
+            className="sub-container p-0 container2 "
+            style={{ boxShadow: "none" }}
+          >
+            <div className="d-flex align-items-center imgcontainer">
               <img
-                src={nft.image.replace("images", "thumbs")}
-                className="nft-coins"
+                src={landNft?.image?.replace("images", "thumbs")}
+                className="p-0 nft-img  w-100 h-100 landimg2"
                 alt=""
               />
               <img
-                src={landNft?.image?.replace("images", "thumbs")}
-                className="nft-coins"
+                src={nft.image.replace("images", "thumbs")}
+                className="p-0 nft-img  w-100 h-100 cawsimg2"
                 alt=""
               />
             </div>
@@ -190,15 +190,16 @@ const CawsWodNftChecklist = ({
             >
               {/* {nft.name} x WoD {landNft.name} */}
             </p>
-            <div className="d-flex" style={{ flexDirection: "column" }}>
-              <div className="d-flex w-100 justify-content-between align-baseline">
+            <div className="d-flex flex-column">
+              <div className="d-flex w-100 justify-content-between align-baseline p-2">
                 <p
                   className="nft-id"
                   style={{
-                    color: "var(--black-nft)",
+                    color: "#B8B8E0",
                   }}
                 >
-                  {nft?.name} x WoD {landNft?.name}
+                  WoD Land {landNft?.name} <br />
+                  {nft?.name}
                 </p>
                 {isStake ? (
                   <>
@@ -228,108 +229,73 @@ const CawsWodNftChecklist = ({
                   </>
                 )}
               </div>
-
-              <>
-                <div
-                  className="earn-checklist-container d-block mb-0 p-0 w-100"
-                  style={{ boxShadow: "none", borderTop: "none" }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <p id="earnedText" color="#C0C9FF">
-                      Earned
-                    </p>
-                    <h6
-                      className="rewardstxtCaws d-flex align-items-center gap-2 mb-2"
-                      style={{ fontSize: 16 }}
-                    >
-                      <img
-                        src={weth}
-                        alt=""
-                        style={{ height: 20, width: 20 }}
-                      />{" "}
-                      {getFormattedNumber(EthRewards, 6)} WETH
-                    </h6>
-
-                    {/* <div>
-                        <p id="ethPrice">
-                          {getFormattedNumber(EthRewards, 2)}ETH
-                        </p>
-                        <p id="fiatPrice">{formattedNum(ethToUSD, true)}</p>
-                      </div> */}
-                    {/* <img
-                        src={EthLogo}
-                        alt=""
-                        style={{ width: 24, height: 24 }}
-                      /> */}
-                  </div>{" "}
-                </div>
-                <button
-                  className="claim-rewards-btn-countdown mb-1"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClaim(checklistItemID);
-                  }}
-                  style={{
-                    pointerEvents: EthRewards == 0 ? "none" : "auto",
-                    borderColor: EthRewards == 0 ? "#14142A" : "#857DFA",
-                    color: EthRewards == 0 ? "#C0C9FF" : "#857DFA",
-                    background: EthRewards == 0 ? "#14142A" : "#312F69",
-                    padding: 5,
-                    borderRadius: 8,
-                    width: "100%",
-                  }}
-                >
-                  {loadingClaim ? (
-                    <>
-                      <div
-                        className="spinner-border "
-                        role="status"
-                        style={{ height: "1.5rem", width: "1.5rem" }}
-                      ></div>
-                    </>
-                  ) : (
-                    "Claim reward"
-                  )}
-                </button>
-              </>
             </div>
           </div>
-          <>
-            <button
-              className="checkbox-button"
-              onClick={() => {
-                handleUnstake(checklistItemID, landlistItemID);
-              }}
-              style={{
-                background:
-                  checkPassiveBtn === true
-                    ? "linear-gradient(90.74deg, #7770E0 0%, #554FD8 100%)"
-                    : "#14142A",
-                pointerEvents: checkPassiveBtn === true ? "auto" : "none",
-              }}
-            >
-              {loading ? (
-                <>
-                  <div
-                    className="spinner-border "
-                    role="status"
-                    style={{ height: "1.5rem", width: "1.5rem" }}
-                  ></div>
-                </>
-              ) : (
-                "Unstake"
-              )}
-            </button>
-          </>
         </div>
       </div>
-    </>
+
+      <div className="earn-checklist-container2 d-block mb-0 py-2 px-3 w-100">
+        <div className="d-flex flex-column justify-content-between">
+          <p id="earnedText2" className="m-0">Earned</p>
+          <div className="d-flex gap-2 align-items-center justify-content-between">
+            <h6
+              className="rewardtxtCawswod d-flex align-items-center gap-2 m-0"
+              style={{ fontSize: 16 }}
+            >
+              <img src={weth} alt="" style={{ height: 20, width: 20 }} />{" "}
+              {getFormattedNumber(EthRewards, 3)} WETH
+            </h6>
+            <span className="nft-price-usd">{formattedNum(ethToUSD, true)}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="d-flex align-items-center gap-2 justify-content-between">
+        <button
+          className={ `pill-btn ${EthRewards == 0 && 'disabled-approve-btn'} mb-1 w-100 p-2`}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClaim(checklistItemID);
+          }}
+          style={{
+            pointerEvents: EthRewards == 0 ? "none" : "auto",
+          }}
+        >
+          {loadingClaim ? (
+            <>
+              <div
+                className="spinner-border "
+                role="status"
+                style={{ height: "1.5rem", width: "1.5rem" }}
+              ></div>
+            </>
+          ) : (
+            "Claim"
+          )}
+        </button>
+        <button
+          className={` ${Unstakebtn ? 'withdrawbtn' : 'disabled-approve-btn'} w-100 p-2`}
+          onClick={() => {
+            handleUnstake(checklistItemID, landlistItemID);
+          }}
+          style={{
+            pointerEvents: Unstakebtn === true ? "auto" : "none",
+          }}
+        >
+          {loading ? (
+            <>
+              <div
+                className="spinner-border "
+                role="status"
+                style={{ height: "1.5rem", width: "1.5rem" }}
+              ></div>
+            </>
+          ) : (
+            "Unstake"
+          )}
+        </button>
+      </div>
+    </div>
   );
 };
 CawsWodNftChecklist.propTypes = {
