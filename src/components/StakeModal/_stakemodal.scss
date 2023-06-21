@@ -76,6 +76,12 @@
   gap: 12px;
 }
 
+.nft-modal-grid2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
 .nft-modal-card {
   border-radius: 20px;
 }
@@ -167,7 +173,24 @@
   border-radius: 10px;
   border: 2px solid #494b63;
   width: 25%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
+    width: 50%;
+  }
+}
+
+.selected-nfts-amount2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  color: #ffffff;
+  line-height: 39px;
+}
+
+.selected-nfts-wrapper2 {
+  border-radius: 10px;
+  border: 2px solid #494b63;
+  width: 35%;
+  @media screen and (max-width: 991px) {
     width: 50%;
   }
 }

@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import marketStakeBanner from "./assets/marketStakeBanner2.webp";
 import StakeModal from "../../components/StakeModal/StakeModal";
-import { useState } from "react";
-import { useEffect } from "react";
+import RewardsModal from "../../components/StakeModal/RewardsModal"; 
+import axios from "axios";
+
 
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const windowSize = useWindowSize();
@@ -14,9 +15,13 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [myNFTs, setMyNFTs] = useState([]);
   const [myLandNFTs, setMyLandNFTs] = useState([]);
   const [nftModal, setNftModal] = useState(false);
+  const [rewardModal, setRewardModal] = useState(false);
+
   const [newStakes, setnewStakes] = useState(0);
   const [approvedNfts, setApprovedNfts] = useState([]);
   const [approvedLandNfts, setApprovedLandNfts] = useState([]);
+  const [EthRewards, setEthRewards] = useState(0);
+  const [ethToUSD, setethToUSD] = useState(0);
 
   const html = document.querySelector("html");
 
@@ -115,6 +120,60 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       });
   };
 
+  
+  const convertEthToUsd = async () => {
+    const res = axios
+      .get("https://api.coinbase.com/v2/prices/ETH-USD/spot")
+      .then((data) => {
+        return data.data.data.amount;
+      });
+    return res;
+  };
+
+
+  const setUSDPrice = async () => {
+    const ethprice = await convertEthToUsd();
+    setethToUSD(Number(ethprice) * Number(EthRewards));
+  };
+
+  
+  const calculateAllRewards = async () => {
+    let myStakes = await getStakesIds();
+    let result = 0;
+
+    if (coinbase !== null) {
+      if (myStakes.length > 0) {
+        let rewards = await window.wod_caws
+          .calculateRewardsWodCaws(coinbase, myStakes)
+          .then((data) => {
+            return data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        let finalReward = 0;
+        for (let i = 0; i < rewards.length; i++) {
+          finalReward = rewards[i] / 1e18;
+          result = result + Number(finalReward);
+        }
+      }
+    }
+    setEthRewards(result);
+  };
+
+
+  
+  const claimRewards = async () => {
+    let myStakes = await getStakesIds();
+    // setclaimAllStatus("Claiming all rewards, please wait...");
+    await window.wod_caws
+      .claimRewardsWodCaws(myStakes)
+      .then(() => {
+        setEthRewards(0);
+      })
+      .catch((err) => {});
+  };
+
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);
     return data;
@@ -129,7 +188,22 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     setNftModal(false);
   };
 
+  
+  const onRewardModalClose = () => {
+    setRewardModal(false);
+  };
+
+  
   useEffect(() => {
+    if (isConnected) {
+      setUSDPrice();
+    }
+  }, [isConnected, EthRewards]);
+
+
+
+  useEffect(() => {
+    calculateAllRewards()
     myNft();
     myStakes();
     myLandNft();
@@ -141,13 +215,13 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   }, []);
 
   useEffect(() => {
-    if (nftModal) {
+    if (nftModal || rewardModal) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
    
-  }, [nftModal])
+  }, [nftModal, rewardModal])
   
   useEffect(() => {
     window.scrollTo(0,0)
@@ -178,6 +252,21 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               onDepositComplete={() => refreshStakes()}
             />
           )}
+          {rewardModal && (
+            <RewardsModal
+              onModalClose={onRewardModalClose}
+              getApprovedNfts={getApprovedNfts}
+              getApprovedLandNfts={getApprovedLandNfts}
+              landStakes={myLandstakes}
+              cawsStakes={mystakes}
+              nftItem={mystakes}
+              isConnected={isConnected}
+              coinbase={coinbase}
+              onDepositComplete={() => refreshStakes()}
+              ETHrewards={EthRewards}
+              finalUsd={ethToUSD}
+            />
+          )}
           <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
             World of Dypians{" "}
             <span style={{ color: "#8c56ff" }}>NFT Staking</span>
@@ -205,7 +294,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                   </div>
                     <div className="d-flex align-items-center gap-3">
                       <button className="btn pill-btn px-4 py-2" onClick={() => setNftModal(true)}>Deposit</button>
-                      <button className="btn rewards-btn px-4 py-2">Rewards</button>
+                      <button className="btn rewards-btn px-4 py-2" onClick={()=>{setRewardModal(true)}} >Rewards</button>
                     </div>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-0 gap-lg-1">
@@ -242,35 +331,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                 </div>
               </div>
             </div>
-            <div className="row w-100 m-0 mt-5">
-              <div className="col-12 px-0">
-                <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
-                  <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                    <div className="d-flex flex-column gap-4">
-                      <h6 className="market-stake-title">
-                        World of Dypians Land
-                      </h6>
-                      <span className="market-stake-desc">
-                        Make the most of your Land assets with WoD Staking.
-                        Start earning now!
-                      </span>
-                      <div className="d-flex align-items-center gap-3">
-                        <button className="btn pill-btn px-4 py-2">
-                          Deposit
-                        </button>
-                        <button className="btn rewards-btn px-4 py-2 text-white">
-                          Rewards
-                        </button>
-                      </div>
-                    </div>
-                    <div className="tvl-wrapper">
-                      <h6 className="market-stake-tvl">$38.6K+</h6>
-                    </div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
