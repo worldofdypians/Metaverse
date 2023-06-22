@@ -79,6 +79,8 @@ const CawsNFT = ({
 
   useEffect(() => {
     fetchInitialCaws();
+    sortNfts("lth");
+    
   }, []);
 
   useEffect(() => {
@@ -87,7 +89,6 @@ const CawsNFT = ({
     }
     if (cawsNFTS && cawsNFTS.length > 0) {
       setLoading(false);
-      sortNfts("lth");
     }
     window.scrollTo(0, 0);
   }, [cawsNFTS]);

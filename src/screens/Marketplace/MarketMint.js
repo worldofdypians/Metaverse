@@ -183,12 +183,13 @@ const MarketMint = ({
         className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
         style={{ minHeight: "72vh", backgroundSize: "cover" }}
       >
-        <div className="container-lg mx-0">
+        <div className="container-lg mx-0 px-0">
         <div className="row justify-content-between align-items-center w-100 mx-0 px-3 py-3 p-lg-0 gap-5 gap-lg-0">
         <div className="row align-items-center mb-5">
         <div className="col-12 col-lg-7">
           <div className="d-flex flex-column gap-2">
-          <h6 className="market-mint-title d-flex flex-column gap-2 flex-lg-row align-items-center">
+          <h6 className="market-mint-title d-flex
+           gap-2 flex-lg-row align-items-center">
           NFT{" "}
           <span
             className="market-mint-title"
@@ -202,7 +203,7 @@ const MarketMint = ({
           </p>
         </div>          
         </div>
-        <div className="col-12 col-lg-5">
+        <div className="col-12 col-lg-5 d-flex justify-content-center justify-content-lg-end">
           <img src={marketMintBanner} alt="" className="w-75" />
         </div>
         </div>
