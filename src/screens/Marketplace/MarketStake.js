@@ -6,6 +6,7 @@ import marketStakeBanner from "./assets/marketStakeBanner2.webp";
 import StakeModal from "../../components/StakeModal/StakeModal";
 import RewardsModal from "../../components/StakeModal/RewardsModal";
 import axios from "axios";
+import { abbreviateNumber } from "js-abbreviation-number";
 
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const windowSize = useWindowSize();
@@ -21,8 +22,22 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [approvedLandNfts, setApprovedLandNfts] = useState([]);
   const [EthRewards, setEthRewards] = useState(0);
   const [ethToUSD, setethToUSD] = useState(0);
+  const [landtvl, setlandTvl] = useState(0);
+  const [cawslandTvl, setCawsLandtvl] = useState(0);
 
   const html = document.querySelector("html");
+
+  const fetchTvl = async () => {
+    const result = await axios.get(
+      `https://api.dyp.finance/api/get_staking_info_eth`
+    );
+    if (result) {
+      const resultLand = result.data.stakingInfoLAND[0].tvl_usd;
+      const resultcawsWod = result.data.stakinginfoCAWSLAND[0].tvl_usd;
+      setlandTvl(resultLand);
+      setCawsLandtvl(resultcawsWod);
+    }
+  };
 
   const myNft = async () => {
     let myNft = await window.myNftListContract(coinbase);
@@ -36,10 +51,10 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       setMyNFTs(nfts);
     } else setMyNFTs([]);
   };
-  
+
   const getStakesIds = async () => {
     let stakenft = [];
-   
+
     if (coinbase && isConnected && chainId === 1) {
       const allCawsStakes = await window.wod_caws
         .depositsOf(coinbase)
@@ -204,6 +219,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Stake";
+    fetchTvl();
   }, []);
 
   useEffect(() => {
@@ -213,9 +229,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       html.classList.remove("hidescroll");
     }
   }, [nftModal, rewardModal]);
-
-
-  
 
   return (
     <div
@@ -302,7 +315,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                     </div>
                   </div>
                   <div className="tvl-wrapper">
-                    <h6 className="market-stake-tvl">$38.6K+</h6>
+                    <h6 className="market-stake-tvl">
+                      ${abbreviateNumber(cawslandTvl)}+
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -331,7 +346,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                       </button>
                     </div>
                     <div className="tvl-wrapper">
-                      <h6 className="market-stake-tvl">$38.6K+</h6>
+                      <h6 className="market-stake-tvl">
+                        ${abbreviateNumber(landtvl)}+
+                      </h6>
                     </div>
                     <div></div>
                   </div>
