@@ -5,6 +5,7 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import marketStakeBanner from "./assets/marketStakeBanner2.webp";
 import StakeModal from "../../components/StakeModal/StakeModal";
 import RewardsModal from "../../components/StakeModal/RewardsModal";
+import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import axios from "axios";
 import { abbreviateNumber } from "js-abbreviation-number";
 
@@ -17,13 +18,21 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [myLandNFTs, setMyLandNFTs] = useState([]);
   const [nftModal, setNftModal] = useState(false);
   const [rewardModal, setRewardModal] = useState(false);
+  const [landStakeModal, setlandStakeModal] = useState(false);
+  const [landunStakeModal, setlandunStakeModal] = useState(false);
 
   const [newStakes, setnewStakes] = useState(0);
   const [approvedNfts, setApprovedNfts] = useState([]);
+  const [approvedLandPoolNfts, setApprovedLandPoolNfts] = useState([]);
+
   const [approvedWodNfts, setApprovedWodNfts] = useState([]);
   const [approvedLandNfts, setApprovedLandNfts] = useState([]);
   const [EthRewards, setEthRewards] = useState(0);
+  const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
+
   const [ethToUSD, setethToUSD] = useState(0);
+  const [ethToUSDLandPool, setethToUSDLandPool] = useState(0);
+
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
 
@@ -123,23 +132,20 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     } else setMyLandNFTs([]);
   };
 
-
-  
-
   const getStakesIdsLandPool = async () => {
     if (coinbase && isConnected && chainId === 1) {
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
-    let stakenft = [];
-    let myStakes = await staking_contract.methods
-      .depositsOf(coinbase)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft.push(parseInt(result[i]));
-        return stakenft;
-      });
+      let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(coinbase)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
 
-    return myStakes;
+      return myStakes;
     }
   };
 
@@ -150,8 +156,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     stakes.reverse();
     setMystakesLandPool(stakes);
   };
-
-
 
   const refreshStakes = () => {
     setnewStakes(newStakes + 1);
@@ -180,6 +184,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const setUSDPrice = async () => {
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(EthRewards));
+    setethToUSDLandPool(Number(ethprice) * Number(EthRewardsLandPool))
   };
 
   const calculateAllRewards = async () => {
@@ -206,6 +211,30 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     setEthRewards(result);
   };
 
+  const calculateAllRewardsLandPool = async () => {
+    let myStakes = await getStakesIdsLandPool();
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+    if (coinbase !== null) {
+      if (myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(coinbase, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setEthRewardsLandPool(result);
+  };
+
   const claimRewards = async () => {
     let myStakes = await getStakesIds();
     // setclaimAllStatus("Claiming all rewards, please wait...");
@@ -214,11 +243,29 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       .then(() => {
         setEthRewards(0);
       })
-      .catch((err) => {});
+      .catch((err) => { });
+  };
+
+  const claimRewardsLandPool = async () => {
+    let myStakes = await getStakesIdsLandPool();
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+
+    await staking_contract.methods
+      .claimRewards(myStakes)
+      .send()
+      .then(() => {
+        setEthRewards(0);
+      })
+      .catch((err) => { console.log(err) });
   };
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);
+    return data;
+  };
+
+  const getApprovedLandPoolsNfts = (data) => {
+    setApprovedLandPoolNfts(data);
     return data;
   };
 
@@ -235,6 +282,14 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     setRewardModal(false);
   };
 
+  const onLandStakeModalClose = () => {
+    setlandStakeModal(false);
+  };
+
+  const onLandunStakeModalClose = () => {
+    setlandunStakeModal(false);
+  };
+
   useEffect(() => {
     if (isConnected) {
       setUSDPrice();
@@ -243,11 +298,12 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
 
   useEffect(() => {
     calculateAllRewards();
+    calculateAllRewardsLandPool()
     myNft();
     myStakes();
     myLandNft();
     myLandStakes();
-    myStakesLandPool()
+    myStakesLandPool();
   }, [isConnected, coinbase, newStakes]);
 
   useEffect(() => {
@@ -257,12 +313,12 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   }, []);
 
   useEffect(() => {
-    if (nftModal || rewardModal) {
+    if (nftModal || rewardModal || landStakeModal || landunStakeModal) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [nftModal, rewardModal]);
+  }, [nftModal, rewardModal, landStakeModal, landunStakeModal]);
 
   return (
     <div
@@ -306,6 +362,37 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               }}
             />
           )}
+          {landStakeModal && (
+            <StakeLandModal
+              onModalClose={onLandStakeModalClose}
+              getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
+              nftItem={myLandNFTs}
+              isConnected={isConnected}
+              coinbase={coinbase}
+              onDepositComplete={() => refreshStakes()}
+              onClaimAll={() => {
+                claimRewards();
+              }}
+              isStake={false}
+            />
+          )}
+
+          {landunStakeModal && (
+            <StakeLandModal
+              onModalClose={onLandunStakeModalClose}
+              getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
+              nftItem={mystakesLandPool}
+              isConnected={isConnected}
+              coinbase={coinbase}
+              onDepositComplete={() => refreshStakes()}
+              ETHrewards={EthRewardsLandPool}
+              finalUsd={ethToUSDLandPool}
+              onClaimAll={() => {
+                claimRewardsLandPool();
+              }}
+              isStake={true}
+            />
+          )}
           <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
             World of Dypians{" "}
             <span style={{ color: "#8c56ff" }}>NFT Staking</span>
@@ -327,8 +414,8 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                         World of Dypians Land & CAWS
                       </h6>
                       <span className="market-stake-desc">
-                        Make the most of your Land assets with WoD Staking.
-                        Start earning now!
+                        Combine your Land and CAWS NFTs to earn daily ETH
+                        rewards.
                       </span>
                     </div>
                     <div className="d-flex align-items-center gap-3">
@@ -367,15 +454,24 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                         World of Dypians Land
                       </h6>
                       <span className="market-stake-desc">
-                        Make the most of your Land assets with WoD Staking.
-                        Start earning now!
+                        Stake your Genesis Land NFTs to earn daily ETH rewards.
                       </span>
                     </div>
                     <div className="d-flex align-items-center gap-3">
-                      <button className="btn pill-btn px-4 py-2">
+                      <button
+                        className="btn pill-btn px-4 py-2"
+                        onClick={() => {
+                          setlandStakeModal(true);
+                        }}
+                      >
                         Deposit
                       </button>
-                      <button className="btn rewards-btn px-4 py-2">
+                      <button
+                        className="btn rewards-btn px-4 py-2"
+                        onClick={() => {
+                          setlandunStakeModal(true);
+                        }}
+                      >
                         Rewards
                       </button>
                     </div>

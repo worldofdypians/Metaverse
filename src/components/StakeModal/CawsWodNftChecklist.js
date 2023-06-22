@@ -243,7 +243,7 @@ const CawsWodNftChecklist = ({
               style={{ fontSize: 16 }}
             >
               <img src={weth} alt="" style={{ height: 20, width: 20 }} />{" "}
-              {getFormattedNumber(EthRewards, 3)} WETH
+              {getFormattedNumber(EthRewards, 3)} ETH
             </h6>
             <span className="nft-price-usd">{formattedNum(ethToUSD, true)}</span>
           </div>
