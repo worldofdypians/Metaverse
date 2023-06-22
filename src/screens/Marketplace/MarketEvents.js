@@ -34,7 +34,7 @@ const MarketEvents = ({ account, chainId }) => {
 
   const dragonData = {
     title: "Dragon Ruins",
-    image: "dragonPackageIcon.webp",
+    image: "newDragon.png",
     benefits: [
       "Ability to fight a special creature",
       "A chance to win an unique CAWS NFT",
@@ -46,7 +46,7 @@ const MarketEvents = ({ account, chainId }) => {
 
   const iDypPackageData = {
     title: "Puzzle Madness",
-    image: "puzzleMadness.png",
+    image: "newPuzzleMadness.png",
     benefits: [
       "Enhance your puzzle-solving skills",
       "Ability to earn high value rewards",
@@ -57,7 +57,7 @@ const MarketEvents = ({ account, chainId }) => {
   };
   const dypPackageData = {
     title: "Golden Pass",
-    image: "goldenPass.png",
+    image: "newGoldenPass.png",
     benefits: [
       "Double your rewards",
       "Compete and climb higher in the rankings",
@@ -69,7 +69,7 @@ const MarketEvents = ({ account, chainId }) => {
 
   const criticalHitPackageData = {
     title: "Critical Hit",
-    image: "criticalHit.webp",
+    image: "newCriticalHit.png",
     benefits: [
       "Exclusive access for Genesis Land NFT owners",
       "Opportunity to win rewards",

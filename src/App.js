@@ -61,6 +61,7 @@ import {
   getWodNfts,
   getTimepieceNfts,
 } from "./actions/convertUsd";
+import MarketMint from "./screens/Marketplace/MarketMint";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -1001,7 +1002,13 @@ function App() {
                 setFireAppContent(true);
               }}
             />
-            <MobileNavbar handleSignUp={handleSignUp} />
+            <MobileNavbar 
+           handleSignUp={handleShowWalletModal}
+           coinbase={coinbase}
+           avatar={avatar}
+           handleRedirect={() => {
+             setFireAppContent(true);
+           }} />
             <Routes>
               <Route path="/news/:newsId?/:titleId?" element={<News />} />
               <Route
@@ -1212,6 +1219,28 @@ function App() {
                     handleConnect={handleShowWalletModal}
                     chainId={chainId}
                     coinbase={coinbase}
+                  />
+                }
+              />
+              <Route
+                exact
+                path="/marketplace/mint"
+                element={
+                  <MarketMint
+                  coinbase={coinbase}
+                    showWalletConnect={() => {
+                      setwalletModal(true);
+                    }}
+                    cawsArray={allCawsForTimepieceMint}
+                    mintloading={mintloading}
+                    isConnected={isConnected}
+                    chainId={chainId}
+                    handleMint={handleTimepieceMint}
+                    mintStatus={mintStatus}
+                    textColor={textColor}
+                    calculateCaws={calculateCaws}
+                    totalCreated={totalTimepieceCreated}
+                    timepieceMetadata={timepieceMetadata}
                   />
                 }
               />
