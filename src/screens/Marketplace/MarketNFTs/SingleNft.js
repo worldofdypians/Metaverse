@@ -115,6 +115,7 @@ const SingleNft = ({
   const [dyptokenData, setDypTokenData] = useState(0);
   const [ethtokenData, setEthTokenData] = useState(0);
   const [viewCount, setViewCount] = useState(0);
+  const [favCount, setfavCount] = useState(0);
 
   // console.log("nft", nft, IsListed, isOwner);
 
@@ -450,17 +451,21 @@ const SingleNft = ({
   }
 
   //to get the favorites count
-  function getFavoritesCount(tokenId, nftAddress) {
-    return fetch(
-      `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(`Favorites count ${data.favorites}`);
-      })
-      .catch((error) => {
-        console.error("Error retrieving favorites count:", error);
-      });
+  async function getFavoritesCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch(
+        `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`
+      );
+      if (!response.ok) {
+        throw new Error("Error fetching NFT favorites");
+      }
+      const data = await response.json();
+      setfavCount(data.favoritesCount);
+      return data.favoritesCount;
+    } catch (error) {
+      console.error("Error fetching NFT favorites:", error);
+      throw error;
+    }
   }
 
   //to get the viewcount
@@ -544,7 +549,7 @@ const SingleNft = ({
   useEffect(() => {
     if (nft) {
       getViewCount(nft.tokenId, nft.nftAddress);
-
+      getFavoritesCount(nft.tokenId, nft.nftAddress);
       handleRefreshList(nft.type, nft.tokenId);
       setNft(nft);
 
@@ -633,9 +638,8 @@ const SingleNft = ({
                   <img src={eye} alt="" /> {viewCount} views
                 </span>
                 <span className="seller-addr d-flex gap-1 align-items-center">
-                  <img src={heart} alt="" /> tbd favorites
+                  <img src={heart} alt="" /> {favCount} favorites
                 </span>
-
               </div>
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">

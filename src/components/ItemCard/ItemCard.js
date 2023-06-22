@@ -10,7 +10,6 @@ import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import Toast from "../../components/Toast/Toast";
 
-
 const ItemCard = ({
   nft,
   single,
@@ -21,16 +20,15 @@ const ItemCard = ({
   isWod,
   coinbase,
   ethTokenData,
-  dypTokenData
+  dypTokenData,
+  isFavorite,
+  onFavorite,
 }) => {
-  
-  const [isFavorite, setisFavorite] = useState(false);
   const [isOwner, setisOwner] = useState(false);
   const [IsApprove, setIsApprove] = useState(false);
   const [buttonTxt, setbuttonTxt] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastTitle, setToastTitle] = useState("");
-  
 
   const location = useLocation();
 
@@ -103,57 +101,76 @@ const ItemCard = ({
     return output;
   };
 
-
-
-  const getAllFavs = async (pairId) => {
-    let favorites = await window.getFavoritesETH2();
-
-    for (let i = 0; i < favorites.length; i++) {
-      // console.log(favorites[i], pairId);
-
-      if (
-        favorites[i].nftAddress === pairId.nftAddress &&
-        favorites[i].tokenId === pairId.tokenId &&
-        ((favorites[i].seller && favorites[i].seller === pairId.seller) ||
-          (favorites[i].buyer && favorites[i].buyer === pairId.buyer)) &&
-        favorites[i].price === pairId.price
-      ) {
-        setisFavorite(true);
-      }
-    }
-  };
-
-  const toggleFavoriteETH = async (pair) => {
-    if (!pair) return false;
-    let favorites = await window.getFavoritesETH2();
-    let foundIndex;
-
-    if (
-      favorites.some((f, i) => {
-        if (
-          f.nftAddress === pair.nftAddress &&
-          f.tokenId === pair.tokenId &&
-          ((f.seller && f.seller === pair.seller) ||
-            (f.buyer && f.buyer === pair.buyer)) &&
-          f.price === pair.price
-        ) {
-          foundIndex = i;
-          return true;
+  async function addNFTToUserFavorites(userId, tokenId, nftAddress) {
+    try {
+      const response = await fetch(
+        `https://api.worldofdypians.com/user-favorites/${userId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ tokenId, nftAddress }),
         }
-        return false;
-      })
-    ) {
-      favorites.splice(foundIndex, 1);
-      setisFavorite(false);
-    } else {
-      favorites.push(pair);
-      setisFavorite(true);
+      );
+      if (!response.ok) {
+        console.log(response);
+        throw new Error("Error adding NFT to user favorites");
+      }
+      const data = await response.json();
+      onFavorite();
+      return data.favorites;
+    } catch (error) {
+      console.log(error);
+
+      console.error("Error adding NFT to user favorites:", error);
+      throw error;
     }
-    localStorage.setItem("favoritesETH", JSON.stringify(favorites, null, 4));
-  };
+  }
+
+  async function deleteNFTFromUserFavorites(userId, tokenId, nftAddress) {
+    fetch(
+      `https://api.worldofdypians.com/user-favorites/${userId}/${tokenId}/${nftAddress}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((response) => {
+        if (response.ok || response.status === 204 || response.status === 404) {
+          // NFT removed successfully or was not found (404)
+          console.log("NFT removed from favorites");
+          onFavorite();
+        } else {
+          // Handle other status codes as errors
+          console.error(
+            "Failed to remove NFT from favorites. Status:",
+            response.status
+          );
+        }
+      })
+      .catch((error) => {
+        // Handle network or fetch error
+        console.error("Error removing NFT from favorites:", error);
+      });
+  }
 
   const handleFavorite = async (nft) => {
-    await toggleFavoriteETH(nft);
+    if (isConnected) {
+      if (isFavorite === true) {
+        await deleteNFTFromUserFavorites(
+          coinbase,
+          parseInt(nft.tokenId),
+          nft.nftAddress
+        );
+      }
+      if (!isFavorite) {
+        await addNFTToUserFavorites(
+          coinbase,
+          parseInt(nft.tokenId),
+          nft.nftAddress
+        );
+      }
+    } else showConnectWallet();
   };
 
   async function handleBuy(nft) {
@@ -195,17 +212,17 @@ const ItemCard = ({
     }
   }
 
-  
-
-
   useEffect(() => {
-    getAllFavs(nft);
+    // getAllFavs(nft);
     checkOwner(nft);
-    checkapprove(nft);
+    if (
+      location.pathname.includes("/marketplace/caws") ||
+      location.pathname.includes("/marketplace/wod") ||
+      location.pathname.includes("/marketplace/timepiece")
+    ) {
+      checkapprove(nft);
+    }
   }, [nft, isFavorite, coinbase]);
-
-  
-
 
   return (
     <div className="d-flex flex-column position-relative gap-1">

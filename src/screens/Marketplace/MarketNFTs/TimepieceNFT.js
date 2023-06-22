@@ -30,6 +30,8 @@ const TimepieceNFT = ({
   const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [timepieceNFTS, setTimepieceNFTS] = useState([]);
+  const [favItems, setfavItems] = useState(0);
+  const [favorites, setFavorites] = useState([]);
 
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -75,6 +77,39 @@ const TimepieceNFT = ({
       setInitialNfts(datedNfts);
     }
   };
+
+  async function fetchUserFavorites(userId) {
+    let address = userId;
+    if (userId === null || userId === undefined) {
+      if (window.ethereum && window.ethereum.selectedAddress) {
+        address = window.ethereum.selectedAddress;
+      }
+    }
+    try {
+      const response = await fetch(
+        `https://api.worldofdypians.com/user-favorites/${address}`
+      );
+      if (!response.ok) {
+        throw new Error("Error fetching user favorites");
+      }
+      const data = await response.json();
+      console.log(data.favorites);
+
+      setFavorites(data.favorites);
+      return data.favorites;
+    } catch (error) {
+      console.error("Error fetching user favorites:", error);
+      throw error;
+    }
+  }
+
+  const updateFavs = () => {
+    setfavItems(favItems + 1);
+  };
+
+  useEffect(() => {
+    fetchUserFavorites(coinbase);
+  }, [coinbase, favItems]);
 
   useEffect(() => {
     fetchInitialTimepiece();
@@ -202,8 +237,8 @@ const TimepieceNFT = ({
                     }}
                   >
                     <ItemCard
-                     ethTokenData={ethTokenData}
-                     dypTokenData={dypTokenData}
+                      ethTokenData={ethTokenData}
+                      dypTokenData={dypTokenData}
                       nft={nft}
                       isConnected={isConnected}
                       showConnectWallet={handleConnect}
@@ -211,7 +246,18 @@ const TimepieceNFT = ({
                       isTimepiece={true}
                       isWod={false}
                       coinbase={coinbase}
-
+                      isFavorite={
+                        favorites.length > 0
+                          ? favorites.find(
+                              (obj) =>
+                                obj.nftAddress === nft.nftAddress &&
+                                obj.tokenId === nft.tokenId
+                            )
+                            ? true
+                            : false
+                          : false
+                      }
+                      onFavorite={updateFavs}
                     />
                   </NavLink>
                 ))
@@ -227,8 +273,10 @@ const TimepieceNFT = ({
             </div>
           </div>
           <div className="d-flex justify-content-center w-100">
-                  <button className="btn py-2 px-3 nft-load-more-btn">Load more</button>
-                  </div>
+            <button className="btn py-2 px-3 nft-load-more-btn">
+              Load more
+            </button>
+          </div>
         </div>
       </div>
     </div>
