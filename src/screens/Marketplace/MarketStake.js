@@ -11,6 +11,7 @@ import { abbreviateNumber } from "js-abbreviation-number";
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
+  const [mystakesLandPool, setMystakesLandPool] = useState([]);
   const [myLandstakes, setMyLandstakes] = useState([]);
   const [myNFTs, setMyNFTs] = useState([]);
   const [myLandNFTs, setMyLandNFTs] = useState([]);
@@ -19,6 +20,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
 
   const [newStakes, setnewStakes] = useState(0);
   const [approvedNfts, setApprovedNfts] = useState([]);
+  const [approvedWodNfts, setApprovedWodNfts] = useState([]);
   const [approvedLandNfts, setApprovedLandNfts] = useState([]);
   const [EthRewards, setEthRewards] = useState(0);
   const [ethToUSD, setethToUSD] = useState(0);
@@ -107,6 +109,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       setMyLandstakes(stakes);
     } else setMyLandstakes([]);
   };
+
   const myLandNft = async () => {
     let myNft = await window.myNftLandListContract(coinbase);
 
@@ -119,6 +122,36 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       setMyLandNFTs(nfts);
     } else setMyLandNFTs([]);
   };
+
+
+  
+
+  const getStakesIdsLandPool = async () => {
+    if (coinbase && isConnected && chainId === 1) {
+    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(coinbase)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+    }
+  };
+
+  const myStakesLandPool = async () => {
+    let myStakes = await getStakesIdsLandPool();
+    let stakes = myStakes.map((stake) => window.getLandNft(stake));
+    stakes = await Promise.all(stakes);
+    stakes.reverse();
+    setMystakesLandPool(stakes);
+  };
+
+
 
   const refreshStakes = () => {
     setnewStakes(newStakes + 1);
@@ -214,6 +247,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     myStakes();
     myLandNft();
     myLandStakes();
+    myStakesLandPool()
   }, [isConnected, coinbase, newStakes]);
 
   useEffect(() => {

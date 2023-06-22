@@ -29,21 +29,16 @@ const StakeLandModal = ({
   const [showStaked, setshowStaked] = useState(false);
   const [checkbtn, setCheckBtn] = useState(false);
   const [checkUnstakebtn, setCheckUnstakeBtn] = useState(false);
-  const [checkLandbtn, setCheckLandBtn] = useState(false);
   const [status, setStatus] = useState("");
   const [loading, setloading] = useState(false);
   const [loadingdeposit, setloadingdeposit] = useState(false);
   const [showClaim, setshowClaim] = useState(false);
   const [loadingClaim, setloadingClaim] = useState(false);
-  const [showApprove, setshowApprove] = useState(true);
-
+  const [showApprove, setshowApprove] = useState(true); 
   const [checknft, setchecknft] = useState(false);
-  const [showCawsApprove, setshowCawsApprove] = useState(true);
-  const [showLandApprove, setshowLandApprove] = useState(true);
   const [val, setVal] = useState("");
   const [color, setColor] = useState("#F13227");
   const [selectNftIds, setSelectedNftIds] = useState([]);
-  const [selectNftLandIds, setSelectedNftLandIds] = useState([]);
   const [tooltip, setTooltip] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
 
