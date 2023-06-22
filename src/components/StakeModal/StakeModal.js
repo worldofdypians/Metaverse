@@ -272,9 +272,7 @@ const StakeModal = ({
         A list of your NFT collection that can be added and removed from the
         staking pools
       </span>
-      <div className="d-flex align-items-center justify-content-center">
-        <button className="btn nft-stake-btn mt-3 p-2">To stake</button>
-      </div>
+      
       <span className="d-flex my-3 market-stake-divider"></span>
       <div className="d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center ">
@@ -598,7 +596,7 @@ const StakeModal = ({
               </p>
             </div>
           </div>
-          <div className="d-flex flex-column gap-2">
+          <div className="d-flex align-items-center justify-content-between gap-2">
             <div className="d-flex align-items-center gap-1">
               <img src={wodTag} alt="" />
               <span className="selected-nfts-amount">

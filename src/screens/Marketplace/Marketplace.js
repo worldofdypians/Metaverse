@@ -272,7 +272,7 @@ const Marketplace = ({
   useEffect(() => {
     getAllData();
     window.scrollTo(0, 0);
-    document.title = "Shop";
+    document.title = "Marketplace";
   }, []);
 
   const filterTopSales = (filter) => {
@@ -419,7 +419,7 @@ const Marketplace = ({
           <div className="row justify-content-between align-items-center marketplace-banner my-5">
             <div className="col-12 col-lg-5">
               <h6 className="market-banner-title">
-                Unlock the Extraordinary! Explore the World of Dypians{" "}
+                 Explore the World of Dypians{" "}
                 <mark
                   className="p-0"
                   style={{
@@ -464,7 +464,8 @@ const Marketplace = ({
               <div className="col-12 col-lg-4">
                 <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
-                    {abbreviateNumber(totalvolume)}+
+                    {/* {abbreviateNumber(totalvolume,4)}+ */}
+                    ${getFormattedNumber(totalvolume,0)}
                   </h6>
                   <span className="stats-desc">Total Volume (USD)</span>
                 </div>
