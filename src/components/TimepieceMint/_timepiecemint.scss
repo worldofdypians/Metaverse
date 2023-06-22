@@ -376,6 +376,11 @@
   }
 }
 
+.market-mint-bg {
+  background-image: url("./assets/timepiecehero1.png");
+  background-size: 100% 100%;
+}
+
 // .mint-wrappernew::before {
 //   content: "";
 //   position: absolute;
@@ -1212,8 +1217,8 @@ input::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 991px) {
-  .timepiecewhite-gif{
-      max-height: 250px !important;
+  .timepiecewhite-gif {
+    max-height: 250px !important;
   }
 
   .timepiece-graphic {
@@ -1263,4 +1268,19 @@ input::-webkit-inner-spin-button {
   font-size: 12px;
   line-height: 18px;
   color: #b8b8b8;
+}
+
+.market-mint-title {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: 1.08px;
+  text-transform: capitalize;
+}
+
+.market-mint-desc {
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.48px;
 }
