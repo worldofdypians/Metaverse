@@ -65,6 +65,8 @@ const Marketplace = ({
   const [totalTx, setTotalTx] = useState(0);
   const [totalvolume, setTotalVolume] = useState(0);
   const [sliderCut, setSliderCut] = useState();
+  const [showFirstNext, setShowFirstNext] = useState(false);
+  const [showSecondNext, setShowSecondNext] = useState(false);
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -91,6 +93,7 @@ const Marketplace = ({
     initialSlide: 0,
     beforeChange: (current, next) => {
       setActiveSlide(next);
+      setShowFirstNext(current);
     },
     afterChange: (current) => setActiveSlide(current),
     responsive: [
@@ -147,6 +150,7 @@ const Marketplace = ({
     initialSlide: 0,
     beforeChange: (current, next) => {
       setActiveSlide2(next);
+      setShowSecondNext(current);
     },
     afterChange: (current) => setActiveSlide2(current),
     responsive: [
@@ -268,9 +272,8 @@ const Marketplace = ({
   useEffect(() => {
     getAllData();
     window.scrollTo(0, 0);
-    document.title = 'Shop'
+    document.title = "Shop";
   }, []);
-
 
   const filterTopSales = (filter) => {
     setLoadingTopSales(true);
@@ -702,16 +705,18 @@ const Marketplace = ({
                   alt=""
                 />
               )}
-              {recentListed.length > sliderCut && (
-                <img
-                  src={nextArrow}
-                  width={40}
-                  height={40}
-                  onClick={firstNext}
-                  className="next-arrow-nft"
-                  alt=""
-                />
-              )}
+              {showFirstNext === activeSlide
+                ? null
+                : recentListed.length > sliderCut && (
+                    <img
+                      src={nextArrow}
+                      width={40}
+                      height={40}
+                      onClick={firstNext}
+                      className="next-arrow-nft"
+                      alt=""
+                    />
+                  )}
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <h6 className="nft-wrapper-title font-raleway mb-0">
                   Recent Listings
@@ -814,16 +819,18 @@ const Marketplace = ({
                   alt=""
                 />
               )}
-              {recentSold.length > sliderCut && (
-                <img
-                  src={nextArrow}
-                  width={40}
-                  height={40}
-                  onClick={secondNext}
-                  className="next-arrow-nft"
-                  alt=""
-                />
-              )}
+              {showSecondNext === activeSlide2
+                ? null
+                : recentSold.length > sliderCut && (
+                    <img
+                      src={nextArrow}
+                      width={40}
+                      height={40}
+                      onClick={secondNext}
+                      className="next-arrow-nft"
+                      alt=""
+                    />
+                  )}
 
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <h6 className="nft-wrapper-title font-raleway mb-0">
