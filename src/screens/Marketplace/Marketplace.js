@@ -23,6 +23,7 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import nextArrow from "./assets/nextArrow.svg";
 import axios from "axios";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 
 const Marketplace = ({
   listedNFTS,
