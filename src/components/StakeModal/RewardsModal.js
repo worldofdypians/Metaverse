@@ -181,9 +181,7 @@ const RewardsModal = ({
         A list of your NFT collection that can be added and removed from the
         staking pools
       </span>
-      <div className="d-flex align-items-center justify-content-center">
-        <button className="btn nft-stake-btn mt-3 p-2">Staked</button>
-      </div>
+      
       <span className="d-flex my-3 market-stake-divider"></span>
       <div className="d-flex align-items-center justify-content-end">
         <div className="d-flex align-items-center ">

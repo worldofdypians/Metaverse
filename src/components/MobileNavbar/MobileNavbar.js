@@ -90,7 +90,7 @@ const MobileNavbar = ({ handleSignUp }) => {
             style={{ textDecoration: "none" }}
             onClick={() => setOpenNavbar(false)}
           >
-            <h6 className="mobile-nav-link font-poppins mb-0">Shop</h6>
+            <h6 className="mobile-nav-link font-poppins mb-0">Marketplace</h6>
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>

@@ -186,7 +186,7 @@ const MarketSidebar = () => {
                   />
                   <span className={`sidebar-title`}>Mint</span>
                   <div className="mint-inactive-wrapper">
-                  <span className="mint-inactive">Comming Soon</span>
+                  <span className="mint-inactive">Coming Soon</span>
                   </div>
                 </>
               );
