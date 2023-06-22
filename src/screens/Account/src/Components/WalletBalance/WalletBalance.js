@@ -487,7 +487,7 @@ const WalletBalance = ({
   }, [landStaked, myCawsWodStakes]);
 
   return (
-    <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center">
+    <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
       <div className="row w-100 gap-5 gap-lg-0">
         <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5">
           <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-2 position-relative">

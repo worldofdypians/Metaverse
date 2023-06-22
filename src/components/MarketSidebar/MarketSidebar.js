@@ -12,7 +12,7 @@ const MarketSidebar = () => {
 
   return (
     <div className="marketplace-sidebar d-flex justify-content-center p-4">
-      <div className="d-flex flex-column justify-content-between w-100" >
+      <div className="d-flex flex-column justify-content-between w-100">
         <div className="d-flex flex-column  gap-2">
           <NavLink
             to="/marketplace"
@@ -77,7 +77,7 @@ const MarketSidebar = () => {
               >
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
-                  <NavLink
+                    <NavLink
                       to="/marketplace/wod"
                       end
                       className={({ isActive }) =>
@@ -101,7 +101,6 @@ const MarketSidebar = () => {
                       <div className="icon-wrapper"></div>
                       <span className={`nft-sidebar-title`}>CAWS</span>
                     </NavLink>
-                  
 
                     <NavLink
                       to="/marketplace/timepiece"
@@ -167,7 +166,6 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-          style={{pointerEvents: 'none'}}
             to="/marketplace/mint"
             end
             className={({ isActive }) =>
@@ -185,9 +183,6 @@ const MarketSidebar = () => {
                     alt=""
                   />
                   <span className={`sidebar-title`}>Mint</span>
-                  <div className="mint-inactive-wrapper">
-                  <span className="mint-inactive">Coming Soon</span>
-                  </div>
                 </>
               );
             }}
