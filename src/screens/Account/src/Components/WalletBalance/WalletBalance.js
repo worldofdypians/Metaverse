@@ -466,6 +466,7 @@ const WalletBalance = ({
     setNftItems(allnft);
   };
 
+
   useEffect(() => {
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();

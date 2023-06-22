@@ -67,6 +67,8 @@ const Marketplace = ({
   const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
+  const [favItems, setfavItems] = useState(0);
+  const [favorites, setFavorites] = useState([]);
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -275,6 +277,14 @@ const Marketplace = ({
     document.title = "Marketplace";
   }, []);
 
+  const updateFavs = () => {
+    setfavItems(favItems + 1);
+  };
+
+  useEffect(() => {
+    fetchUserFavorites(coinbase);
+  }, [coinbase, favItems]);
+
   const filterTopSales = (filter) => {
     setLoadingTopSales(true);
     if (filter === "caws") {
@@ -389,6 +399,31 @@ const Marketplace = ({
     }
   }
 
+  async function fetchUserFavorites(userId) {
+    let address = userId;
+    if (userId === null || userId === undefined) {
+      if (window.ethereum && window.ethereum.selectedAddress) {
+        address = window.ethereum.selectedAddress;
+      }
+    }
+    try {
+      const response = await fetch(
+        `https://api.worldofdypians.com/user-favorites/${address}`
+      );
+      if (!response.ok) {
+        throw new Error("Error fetching user favorites");
+      }
+      const data = await response.json();
+      console.log(data.favorites);
+
+      setFavorites(data.favorites);
+      return data.favorites;
+    } catch (error) {
+      console.error("Error fetching user favorites:", error);
+      throw error;
+    }
+  }
+
   useEffect(() => {
     setRecentSalesFilter("all");
     setRecentSold(recentSales);
@@ -419,7 +454,7 @@ const Marketplace = ({
           <div className="row justify-content-between align-items-center marketplace-banner my-5">
             <div className="col-12 col-lg-5">
               <h6 className="market-banner-title">
-                 Explore the World of Dypians{" "}
+                Explore the World of Dypians{" "}
                 <mark
                   className="p-0"
                   style={{
@@ -464,8 +499,8 @@ const Marketplace = ({
               <div className="col-12 col-lg-4">
                 <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
-                    {/* {abbreviateNumber(totalvolume,4)}+ */}
-                    ${getFormattedNumber(totalvolume,0)}
+                    {/* {abbreviateNumber(totalvolume,4)}+ */}$
+                    {getFormattedNumber(totalvolume, 0)}
                   </h6>
                   <span className="stats-desc">Total Volume (USD)</span>
                 </div>
@@ -792,6 +827,18 @@ const Marketplace = ({
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}
                             coinbase={coinbase}
+                            isFavorite={
+                              favorites.length > 0
+                                ? favorites.find(
+                                    (obj) =>
+                                      obj.nftAddress === nft.nftAddress &&
+                                      obj.tokenId === nft.tokenId
+                                  )
+                                  ? true
+                                  : false
+                                : false
+                            }
+                            onFavorite={updateFavs}
                           />
                         </NavLink>
                       ))}
@@ -910,6 +957,18 @@ const Marketplace = ({
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}
                             coinbase={coinbase}
+                            isFavorite={
+                              favorites.length > 0
+                                ? favorites.find(
+                                    (obj) =>
+                                      obj.nftAddress === nft.nftAddress &&
+                                      obj.tokenId === nft.tokenId
+                                  )
+                                  ? true
+                                  : false
+                                : false
+                            }
+                            onFavorite={updateFavs}
                           />
                         </NavLink>
                       ))}

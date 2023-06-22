@@ -29,6 +29,8 @@ const CawsNFT = ({
   const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [cawsNFTS, setCawsNFTS] = useState([]);
+  const [favItems, setfavItems] = useState(0);
+  const [favorites, setFavorites] = useState([]);
 
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -77,6 +79,40 @@ const CawsNFT = ({
     }
   };
 
+  
+  async function fetchUserFavorites(userId) {
+    let address = userId;
+    if (userId === null || userId === undefined) {
+      if (window.ethereum && window.ethereum.selectedAddress) {
+        address = window.ethereum.selectedAddress;
+      }
+    }
+    try {
+      const response = await fetch(
+        `https://api.worldofdypians.com/user-favorites/${address}`
+      );
+      if (!response.ok) {
+        throw new Error("Error fetching user favorites");
+      }
+      const data = await response.json();
+      console.log(data.favorites);
+
+      setFavorites(data.favorites);
+      return data.favorites;
+    } catch (error) {
+      console.error("Error fetching user favorites:", error);
+      throw error;
+    }
+  }
+  
+  const updateFavs = () => {
+    setfavItems(favItems + 1);
+  };
+  
+  useEffect(() => {
+    fetchUserFavorites(coinbase);
+  }, [coinbase, favItems]);
+
   useEffect(() => {
     fetchInitialCaws();
     sortNfts("lth");
@@ -106,7 +142,8 @@ const CawsNFT = ({
       >
         <div className="container-lg mx-0">
           <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">
-            Cats And Watches Society <span style={{ color: "#8c56ff" }}>(CAWS)</span>
+            Cats And Watches Society{" "}
+            <span style={{ color: "#8c56ff" }}>(CAWS)</span>
           </h6>
           <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-start justify-content-lg-end">
             <div class="dropdown" style={{ width: "200px" }}>
@@ -186,36 +223,47 @@ const CawsNFT = ({
             >
               {cawsNFTS && cawsNFTS.length > 0 ? (
                 <>
-               {   cawsNFTS.map((nft, index) => (
-                  <NavLink
-                    to={`/marketplace/nft/${nft.blockTimestamp}`}
-                    style={{ textDecoration: "none" }}
-                    key={index}
-                    state={{
-                      nft: nft,
-                      type: nft.type,
-                      isOwner:
-                        nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
-                        nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                      chain: nft.chain,
-                    }}
-                  >
-                    <ItemCard
-                     ethTokenData={ethTokenData}
-                     dypTokenData={dypTokenData}
-                      key={nft.id}
-                      nft={nft}
-                      isConnected={isConnected}
-                      showConnectWallet={handleConnect}
-                      isCaws={true}
-                      isTimepiece={false}
-                      isWod={false}
-                      coinbase={coinbase}
-
-                    />
-                  </NavLink>
-                ))}
-                 
+                  {cawsNFTS.map((nft, index) => (
+                    <NavLink
+                      to={`/marketplace/nft/${nft.blockTimestamp}`}
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                      state={{
+                        nft: nft,
+                        type: nft.type,
+                        isOwner:
+                          nft.seller?.toLowerCase() ===
+                            coinbase?.toLowerCase() ||
+                          nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                        chain: nft.chain,
+                      }}
+                    >
+                      <ItemCard
+                        ethTokenData={ethTokenData}
+                        dypTokenData={dypTokenData}
+                        key={nft.id}
+                        nft={nft}
+                        isConnected={isConnected}
+                        showConnectWallet={handleConnect}
+                        isCaws={true}
+                        isTimepiece={false}
+                        isWod={false}
+                        coinbase={coinbase}
+                        isFavorite={
+                          favorites.length > 0
+                            ? favorites.find(
+                                (obj) =>
+                                  obj.nftAddress === nft.nftAddress &&
+                                  obj.tokenId === nft.tokenId
+                              )
+                              ? true
+                              : false
+                            : false
+                        }
+                        onFavorite={updateFavs}
+                      />
+                    </NavLink>
+                  ))}
                 </>
               ) : (
                 <HashLoader
@@ -228,9 +276,11 @@ const CawsNFT = ({
               )}
             </div>
           </div>
-               <div className="d-flex justify-content-center w-100">
-                  <button className="btn py-2 px-3 nft-load-more-btn">Load more</button>
-                  </div>
+          <div className="d-flex justify-content-center w-100">
+            <button className="btn py-2 px-3 nft-load-more-btn">
+              Load more
+            </button>
+          </div>
         </div>
       </div>
     </div>

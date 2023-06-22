@@ -120,9 +120,8 @@ function App() {
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [nftCount, setNftCount] = useState(1);
-  const [dypTokenData, setDypTokenData] = useState()
-  const [ethTokenData, setEthTokenData] = useState()
-
+  const [dypTokenData, setDypTokenData] = useState();
+  const [ethTokenData, setEthTokenData] = useState();
 
   const getTokenData = async () => {
     await axios
@@ -695,7 +694,7 @@ function App() {
     await axios
       .post(URL, { query: itemBoughtQuery })
       .then(async (result) => {
-        console.log(result.data.data.itemBoughts);
+        // console.log(result.data.data.itemBoughts);
         boughtItems = await result.data.data.itemBoughts;
       })
       .catch((error) => {
@@ -721,7 +720,7 @@ function App() {
           finalboughtItems.push(nft);
         }
       });
-    console.log("boughtItems2", finalboughtItems);
+    // console.log("boughtItems2", finalboughtItems);
 
     return finalboughtItems;
   };
@@ -798,7 +797,7 @@ function App() {
 
     return (
       <React.Fragment>
-        <Navigate to="/auth" />
+        <Navigate to="/account" />
       </React.Fragment>
     );
   }
@@ -970,8 +969,7 @@ function App() {
 
   useEffect(() => {
     getTokenData();
-  }, [])
-  
+  }, []);
 
   useEffect(() => {
     getallNfts();
@@ -1095,8 +1093,8 @@ function App() {
                 path="/account"
                 element={
                   <Dashboard
-                  ethTokenData={ethTokenData}
-                  dypTokenData={dypTokenData}
+                    ethTokenData={ethTokenData}
+                    dypTokenData={dypTokenData}
                     coinbase={coinbase}
                     account={coinbase}
                     isConnected={isConnected}
@@ -1132,8 +1130,8 @@ function App() {
                 path="/marketplace"
                 element={
                   <Marketplace
-                  ethTokenData={ethTokenData}
-                  dypTokenData={dypTokenData}
+                    ethTokenData={ethTokenData}
+                    dypTokenData={dypTokenData}
                     coinbase={coinbase}
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
@@ -1157,8 +1155,8 @@ function App() {
                 path="/marketplace/caws"
                 element={
                   <CawsNFT
-                  ethTokenData={ethTokenData}
-                  dypTokenData={dypTokenData}
+                    ethTokenData={ethTokenData}
+                    dypTokenData={dypTokenData}
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
@@ -1172,8 +1170,8 @@ function App() {
                 path="/marketplace/wod"
                 element={
                   <WoDNFT
-                  ethTokenData={ethTokenData}
-                  dypTokenData={dypTokenData}
+                    ethTokenData={ethTokenData}
+                    dypTokenData={dypTokenData}
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
@@ -1187,8 +1185,8 @@ function App() {
                 path="/marketplace/timepiece"
                 element={
                   <TimepieceNFT
-                  ethTokenData={ethTokenData}
-                  dypTokenData={dypTokenData}
+                    ethTokenData={ethTokenData}
+                    dypTokenData={dypTokenData}
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
