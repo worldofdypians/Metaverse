@@ -111,14 +111,35 @@ const MobileNav = () => {
             );
           }}
         />
-        <div className="mobile-link" onClick={() => setOpenMint(!openMint)}>
-          <img
-            src={require(`../MarketSidebar/assets/mintIcon.svg`).default}
-            alt=""
-          />
-        </div>
+        <NavLink
+          to="/marketplace/mint"
+          end
+          className={({ isActive }) =>
+            isActive ? "active-mobile-link" : "mobile-link"
+          }
+          children={({ isActive }) => {
+            const icon = isActive ? "mintIconActive" : "mintIcon";
+            return (
+              <>
+                <img
+                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                  alt=""
+                />
+              </>
+            );
+          }}
+        />
+        {/* <div className="mobile-link" onClick={() => setOpenMint(!openMint)}>
+          <img src={require(`../MarketSidebar/assets/mintIcon.svg`).default} alt="" />
+        </div> */}
       </div>
-      <OutsideClickHandler onOutsideClick={() => setOpenMint(false)}>
+        {/* <OutsideClickHandler onOutsideClick={() => setOpenMint(false)}>
+        <div id="bgmenu1" className={` ${openMint && 'comming-soon-mint-active'} d-flex align-items-center justify-content-center px-3 py-2 comming-soon-mint`}>
+        <h6 className="comming-soon-mint-text">Comming Soon</h6>
+      </div>
+        </OutsideClickHandler> */}
+      
+        <OutsideClickHandler onOutsideClick={() => setOpenNav(false)}>
         <div
           id="bgmenu1"
           className={` ${

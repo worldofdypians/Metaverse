@@ -113,6 +113,8 @@ const WoDNFT = ({
 
   useEffect(() => {
     fetchInitialWod();
+    sortNfts("lth");
+
   }, []);
 
   useEffect(() => {
@@ -121,7 +123,6 @@ const WoDNFT = ({
     }
     if (landNfts && landNfts.length > 0) {
       setLoading(false);
-      sortNfts("lth");
     }
     window.scrollTo(0, 0);
   }, [landNfts]);

@@ -113,6 +113,8 @@ const TimepieceNFT = ({
 
   useEffect(() => {
     fetchInitialTimepiece();
+    sortNfts("lth");
+
   }, []);
 
   useEffect(() => {
@@ -121,7 +123,6 @@ const TimepieceNFT = ({
     }
     if (timepieceNFTS && timepieceNFTS.length > 0) {
       setLoading(false);
-      sortNfts("lth");
     }
     window.scrollTo(0, 0);
   }, [timepieceNFTS]);
