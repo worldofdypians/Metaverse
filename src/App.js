@@ -1001,7 +1001,13 @@ function App() {
                 setFireAppContent(true);
               }}
             />
-            <MobileNavbar handleSignUp={handleSignUp} />
+            <MobileNavbar 
+           handleSignUp={handleShowWalletModal}
+           coinbase={coinbase}
+           avatar={avatar}
+           handleRedirect={() => {
+             setFireAppContent(true);
+           }} />
             <Routes>
               <Route path="/news/:newsId?/:titleId?" element={<News />} />
               <Route

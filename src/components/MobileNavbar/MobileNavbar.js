@@ -4,8 +4,10 @@ import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import mobileArrow from "../../assets/navbarAssets/mobileArrow.svg";
 import xMark from "../../assets/navbarAssets/xMark.svg";
 import { NavLink } from "react-router-dom";
+import { shortAddress } from "../../screens/Caws/functions/shortAddress";
+import person from '../Header/assets/person.svg'
 
-const MobileNavbar = ({ handleSignUp }) => {
+const MobileNavbar = ({ handleSignUp, handleRedirect,coinbase, avatar }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
 
   const bgmenu = document.querySelector("#bgmenu");
@@ -140,17 +142,35 @@ const MobileNavbar = ({ handleSignUp }) => {
           </NavLink>
         </div> */}
         <div className="w-100 d-flex align-items-center justify-content-center gap-3">
-          <div className="linear-border">
-            <button
-              className="btn outline-btn px-5"
-              onClick={() => {
-                setOpenNavbar(false);
+         {!coinbase ? (
+            <div className="linear-border">
+              <button className="btn outline-btn px-5" onClick={() => {
                 handleSignUp();
-              }}
-            >
-              Account
-            </button>
-          </div>
+                setOpenNavbar(false);
+              }}>
+                Connect Wallet
+              </button>
+            </div>
+          ) : (
+            <div className="d-flex align-items-center gap-3">
+              <div className="linear-border">
+                <div className="btn outline-btn px-5">
+                  {shortAddress(coinbase)}
+                </div>
+              </div>
+              {avatar === null ? (
+                <img src={person} className="account-icon" alt="" onClick={() => {
+                  handleRedirect();
+                  setOpenNavbar(false);
+                }}/>
+              ) : (
+                <img src={avatar} className="account-icon" alt=""  onClick={() => {
+                  handleRedirect();
+                  setOpenNavbar(false);
+                }}/>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
