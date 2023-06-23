@@ -416,7 +416,7 @@
     rgba(255, 255, 255, 0) 99.84%
   );
   .sidebar-title {
-    color: #FF6232;
+    color: #ff6232;
   }
 }
 
@@ -428,7 +428,7 @@
   );
 
   .sidebar-title {
-    color: #FF6232;
+    color: #ff6232;
   }
 }
 
@@ -546,6 +546,34 @@
 
 .filter-selected {
   color: #7bd8b0 !important;
+}
+
+.time-filter-title {
+  color: #e2e2e2;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.25s;
+}
+
+.time-filter-title:hover {
+  color: #ff6232;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+}
+
+.time-filter-selected {
+  color: #ff6232 !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
 }
 
 .top-eth {
@@ -736,7 +764,7 @@
 
 .nft-active {
   .nft-sidebar-title {
-    color: #FF6232;
+    color: #ff6232;
   }
 }
 
@@ -1018,13 +1046,11 @@
   align-items: center;
   pointer-events: none;
 
-  
   @media screen and (max-width: 786px) {
     scale: 0.8;
     bottom: 30px;
     top: -80px;
   }
-  
 }
 
 .market-stake-tvl {
@@ -1085,4 +1111,138 @@
   line-height: 20px;
   width: fit-content;
   color: #eeedff;
+}
+
+.package-popup-wrapper{
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+
+}
+
+.dragon-popup{
+  background-image: url("./assets/dragonPopup.png");
+}
+
+.golden-pass-popup{
+  background-image: url("./assets/goldenPassPopup.png");
+}
+
+.puzzle-madness-popup{
+  background-image: url("./assets/puzzleMadnessPopup.png");
+}
+
+.critical-hit-popup{
+  background-image: url("./assets/criticalHitPopup.png");
+}
+
+.package-popup {
+  pointer-events: auto !important;
+  z-index: 9999;
+  width: 750px;
+  height: 80%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  aspect-ratio: 0.76/1;
+  background-size: 100% 100%;
+  z-index: 9999;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+
+  @media screen and (max-width: 800px) {
+    width: 95%;
+    height: 80%;
+  }
+}
+
+
+
+.package-popup-title-wrapper{
+  margin-top: 150px;
+  margin-bottom: 10px;
+}
+.package-popup-content {
+  max-height: 70%;
+  overflow-y: scroll;
+}
+
+.package-popup-title {
+  color: #f7f7fc;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.package-popup-desc {
+  color: #c0cbf7;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.popup-secondary-title {
+  color: #c0cbf7;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+.new-stake-tab{
+color: #fff;
+text-align: center;
+font-size: 16px;
+font-weight: 500;
+  border-radius: 8px;
+transition: all .25s;
+cursor: pointer;
+}
+
+.new-stake-tab:hover{
+background: #252743;
+color: #00FECF;
+}
+
+.stake-tab-active{
+background: #252743;
+color: #00FECF;
+}
+
+.new-stake-divider{
+  height: 1px;
+  background: rgba(184, 184, 224, 1);
+  display: flex;
+}
+
+.new-stake-info-wrapper{
+  border-radius: 20px;
+background: linear-gradient(0deg, rgba(255, 255, 255, 0.15) 0%, rgba(33, 36, 64, 0.15) 100%);
+backdrop-filter: blur(13px);
+}
+
+.new-stake-info{
+color: #FFF;
+text-align: center;
+font-size: 36px;
+font-weight: 800;
+margin-bottom: 0;
+}
+
+.new-stake-desc{
+color: #FFF;
+text-align: center;
+font-size: 16px;
+font-weight: 500;
+}
+
+.upcoming-stake{
+  color: #F7F7FC;
+text-align: center;
+font-size: 24px;
+font-weight: 700;
+}
+
+.upcoming-stake-desc{
+  color: #C0CBF7;
+text-align: center;
+font-size: 16px;
+font-weight: 300;
 }

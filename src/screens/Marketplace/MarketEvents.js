@@ -11,15 +11,19 @@ import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import { useLocation } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
-import criticalHit from './assets/criticalHit.webp'
-import goldenPass from './assets/goldenPass.png'
-import puzzleMadness from './assets/puzzleMadness.png'
-import dragonPackage from '../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp'
+import criticalHit from "./assets/criticalHit.webp";
+import goldenPass from "./assets/goldenPass.png";
+import puzzleMadness from "./assets/puzzleMadness.png";
+import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp";
 import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
 
 
+import DragonPopup from "../../components/PackagePopups/DragonPopup";
+import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
+import PuzzleMadnessPopup from "../../components/PackagePopups/PuzzleMadnessPopup";
+import CriticalHitPopup from "../../components/PackagePopups/CriticalHitPopup";
+import OutsideClickHandler from "react-outside-click-handler";
 const MarketEvents = ({ account, chainId }) => {
-
   const location = useLocation();
   const windowSize = useWindowSize();
   const [dypBalance, setDypBalance] = useState();
@@ -30,7 +34,12 @@ const MarketEvents = ({ account, chainId }) => {
   const [idypBalancebnb, setiDypBalanceBnb] = useState();
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
   const [availableTime, setAvailableTime] = useState();
-  const [selectedPackage, setSelectedPackage] = useState(location.state?.package ? location.state?.package : "dragon");
+  const [selectedPackage, setSelectedPackage] = useState(
+    location.state?.package ? location.state?.package : "dragon"
+  );
+
+  const [popup, setPopup] = useState(false)
+  const [packagePopup, setPackagePopup] = useState("")
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -166,156 +175,169 @@ const MarketEvents = ({ account, chainId }) => {
       setiDypBalanceAvax(bal3_idyp);
     }
   };
+  
+  const onOpenPopup = (item) => {
+    setPopup(true)
+    setPackagePopup(item)
+  } 
+  const onClosePopup = () => {
+    setPopup(false)
+    setPackagePopup("")
+    console.log("hello");
+  } 
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Events'
-
+    document.title = "Events";
   }, []);
 
+  const html = document.querySelector("html");
+  const bgmenu = document.querySelector("#bgmenu");
+  useEffect(() => {
+    
+    if (popup === true ) {
+      html.classList.add("hidescroll");
+      bgmenu.style.pointerEvents = "auto";
+    } else {
+      // Enable scroll
+      html.classList.remove("hidescroll");
+    }
+  }, [popup])
+  
+
   return (
-    <div className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0">
-           {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+    <>
+      <div className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0">
+        {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
-      <div className="container-nft align-items-start justify-content-start d-flex flex-column gap-2 px-3 px-lg-5 my-4" style={{minHeight: '72vh', backgroundSize: 'cover'}}>
-        <div className="container-lg mx-0">
-        <div className={`col-12 col-lg-12 ${windowSize.width < 1650 ? 'col-xxl-10' : 'col-xxl-10'}  d-flex flex-column gap-3`}>
-        <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
-            World of Dypians <span style={{color: '#8c56ff'}}>Events</span> 
-          </h6>
-          <div className="new-packages-grid">
-            {/* <div className="event-package d-flex flex-column align-items-center gap-2">
-              <div
-                className={`premium-package dyp-package ${
-                  selectedPackage === "dyp" && "selected-premium"
-                } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-                onClick={() => setSelectedPackage("dyp")}
-              >
-                <img
-                  src={dypius}
-                  width={40}
-                  height={40}
-                  alt="premium package icon"
-                  className="premium-package-icon"
-                />
-              </div>
-              <h6
-                className="bundleTitle mb-0 fw-normal text-center"
-                style={{ fontSize: "14px", fontFamily: "Poppins" }}
-              >
-                Golden Pass
+        <div
+          className="container-nft align-items-start justify-content-start d-flex flex-column gap-2 px-3 px-lg-5 my-4"
+          style={{ minHeight: "72vh", backgroundSize: "cover" }}
+        >
+          <div className="container-lg mx-0">
+            <div
+              className={`col-12 col-lg-12 ${
+                windowSize.width < 1650 ? "col-xxl-10" : "col-xxl-10"
+              }  d-flex flex-column gap-3`}
+            >
+              <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
+                World of Dypians{" "}
+                <span style={{ color: "#8c56ff" }}>Events</span>
               </h6>
-            </div>
-            <div className="event-package d-flex flex-column align-items-center gap-2">
-              <div
-                className={`premium-package ${classes.idypicon} ${
-                  selectedPackage === "idyp" && "selected-premium"
-                } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-                onClick={() => setSelectedPackage("idyp")}
-              ></div>
-              <h6
-                className="bundleTitle mb-0 fw-normal text-center"
-                style={{ fontSize: "14px", fontFamily: "Poppins" }}
-              >
-                Puzzle Madness
-              </h6>
-            </div>
-            <div className="event-package d-flex flex-column align-items-center gap-2">
-              <div
-                className={`premium-package dragon-package ${
-                  selectedPackage === "dragon" && "selected-premium"
-                } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-                onClick={() => setSelectedPackage("dragon")}
-              >
-                <img
-                  src={dragonIcon}
-                  width={40}
-                  height={40}
-                  alt="premium package icon"
-                  className="premium-package-icon"
-                />
-              </div>
-              <h6
-                className="bundleTitle mb-0 fw-normal text-center"
-                style={{ fontSize: "14px", fontFamily: "Poppins" }}
-              >
-                Dragon Ruins
-              </h6>
-            </div>
-            <div className="event-package d-flex flex-column align-items-center gap-2">
-              <div
-                className={`premium-package criticalhit-package ${
-                  selectedPackage === "criticalHit" && "selected-premium"
-                } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-                onClick={() => setSelectedPackage("criticalHit")}
-              >
-                <img
-                  src={dypius}
-                  width={40}
-                  height={40}
-                  alt="premium package icon"
-                  className="premium-package-icon"
-                />
-              </div>
-              <h6
-                className="bundleTitle mb-0 fw-normal text-center"
-                style={{ fontSize: "14px", fontFamily: "Poppins" }}
-              >
-                Critical Hit
-              </h6>
-            </div> */}
-               <div className="">
-              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dragon" && "selected-event-package"}`} onClick={() => setSelectedPackage("dragon")}>
-                  <img src={dragonPackage} className="w-100" style={{borderRadius: '16px'}} alt="" />
-                  <span className="event-package-title">Dragon Ruins</span>
-              </div>
-            </div>
-            <div className="">
-              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "dyp" && "selected-event-package"}`} onClick={() => setSelectedPackage("dyp")}>
-                  <img src={goldenPass} className="w-100" style={{borderRadius: '16px'}} alt="" />
-                  <span className="event-package-title">Golden Pass</span>
-              </div>
-            </div>
-          
-            <div className="">
-              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "idyp" && "selected-event-package"}`} onClick={() => setSelectedPackage("idyp")}>
-                  <img src={puzzleMadness} className="w-100" style={{borderRadius: '16px'}} alt="" />
-                  <span className="event-package-title">Puzzle Madness</span>
-              </div>
-            </div>
-           
-            <div className="">
-              <div className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${selectedPackage === "criticalHit" && "selected-event-package"}`} onClick={() => setSelectedPackage("criticalHit")}>
-                  <img src={criticalHit} className="w-100" style={{borderRadius: '16px'}} alt="" />
-                  <span className="event-package-title">Critical Hit</span>
-              </div>
-            </div>
+              <div className="new-packages-grid">
+               
+                <div className="">
+                  <div
+                    className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                      selectedPackage === "dragon" && "selected-event-package"
+                    }`}
+                    onClick={() => setSelectedPackage("dragon")}
+                  >
+                    <img
+                      src={dragonPackage}
+                      className="w-100"
+                      style={{ borderRadius: "16px" }}
+                      alt=""
+                    />
+                    <span className="event-package-title">Dragon Ruins</span>
+                  </div>
+                </div>
+                <div className="">
+                  <div
+                    className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                      selectedPackage === "dyp" && "selected-event-package"
+                    }`}
+                    onClick={() => setSelectedPackage("dyp")}
+                  >
+                    <img
+                      src={goldenPass}
+                      className="w-100"
+                      style={{ borderRadius: "16px" }}
+                      alt=""
+                    />
+                    <span className="event-package-title">Golden Pass</span>
+                  </div>
+                </div>
 
+                <div className="">
+                  <div
+                    className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                      selectedPackage === "idyp" && "selected-event-package"
+                    }`}
+                    onClick={() => setSelectedPackage("idyp")}
+                  >
+                    <img
+                      src={puzzleMadness}
+                      className="w-100"
+                      style={{ borderRadius: "16px" }}
+                      alt=""
+                    />
+                    <span className="event-package-title">Puzzle Madness</span>
+                  </div>
+                </div>
+
+                <div className="">
+                  <div
+                    className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                      selectedPackage === "criticalHit" &&
+                      "selected-event-package"
+                    }`}
+                    onClick={() => setSelectedPackage("criticalHit")}
+                  >
+                    <img
+                      src={criticalHit}
+                      className="w-100"
+                      style={{ borderRadius: "16px" }}
+                      alt=""
+                    />
+                    <span className="event-package-title">Critical Hit</span>
+                  </div>
+                </div>
+              </div>
+              <NewBundleCard
+              onOpenPopup={onOpenPopup}
+                coinbase={account}
+                wallet={data?.getPlayer?.wallet?.publicAddress}
+                chainId={chainId}
+                getDypBalance={getDypBalance}
+                getiDypBalance={getDypBalance}
+                packageData={
+                  selectedPackage === "dragon"
+                    ? dragonData
+                    : selectedPackage === "dyp"
+                    ? dypPackageData
+                    : selectedPackage === "criticalHit"
+                    ? criticalHitPackageData
+                    : iDypPackageData
+                }
+                handleSetAvailableTime={(value) => {
+                  setAvailableTime(value);
+                }}
+                availableTime={availableTime}
+              />
+            </div>
           </div>
-          <NewBundleCard
-            coinbase={account}
-            wallet={data?.getPlayer?.wallet?.publicAddress}
-            chainId={chainId}
-            getDypBalance={getDypBalance}
-            getiDypBalance={getDypBalance}
-            packageData={
-              selectedPackage === "dragon"
-                ? dragonData
-                : selectedPackage === "dyp"
-                ? dypPackageData
-                : selectedPackage === "criticalHit"
-                ? criticalHitPackageData
-                : iDypPackageData
-            }
-            handleSetAvailableTime={(value) => {
-              setAvailableTime(value);
-            }}
-            availableTime={availableTime}
-          />
-        </div>
         </div>
       </div>
-    </div>
+       <OutsideClickHandler onOutsideClick={() => {
+        setPopup(false);
+        setPackagePopup("")
+       }}>
+
+        {popup && packagePopup === "dragon" &&
+          <DragonPopup onClosePopup={onClosePopup} />
+        }
+        {popup && packagePopup === "goldenpass" &&
+          <GoldenPassPopup onClosePopup={onClosePopup} />
+        }
+        {popup && packagePopup === "puzzlemadness" &&
+          <PuzzleMadnessPopup onClosePopup={onClosePopup} />
+        }
+        {popup && packagePopup === "criticalhit" &&
+          <CriticalHitPopup onClosePopup={onClosePopup} />
+        }
+       </OutsideClickHandler>
+    </>
   );
 };
 
