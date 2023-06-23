@@ -40,6 +40,7 @@ import nextArrow from "../../../../Marketplace/assets/nextArrow.svg";
 import { HashLoader } from "react-spinners";
 import ItemCard from "../../../../../components/ItemCard/ItemCard";
 import getListedNFTS from "../../../../../actions/Marketplace";
+import axios from "axios";
 
 function Dashboard({
   account,
@@ -98,6 +99,7 @@ function Dashboard({
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
+  const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
 
   const [availableTime, setAvailableTime] = useState();
 
@@ -597,6 +599,61 @@ function Dashboard({
     }
   }
 
+  const getLatest20BoughtNFTS = async () => {
+    let boughtItems = [];
+    let finalboughtItems = [];
+
+    const URL =
+      "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+
+    const itemBoughtQuery = `
+        {
+            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
+            nftAddress
+            tokenId
+            payment_priceType
+            price
+            buyer
+            blockNumber
+            blockTimestamp
+        }
+        }
+        `;
+
+    await axios
+      .post(URL, { query: itemBoughtQuery })
+      .then(async (result) => {
+        boughtItems = await result.data.data.itemBoughts;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // console.log("boughtItems", boughtItems);
+
+    boughtItems &&
+      boughtItems.map((nft) => {
+        if (nft.nftAddress === window.config.nft_caws_address) {
+          nft.type = "caws";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
+          nft.type = "cawsold";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_land_address) {
+          nft.type = "land";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+          nft.type = "timepiece";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        }
+      });
+    return finalboughtItems;
+  };
+
   useEffect(() => {
     fetchUserFavorites(
       data?.getPlayer?.wallet && email
@@ -632,6 +689,7 @@ function Dashboard({
 
   useEffect(() => {
     getOtherNfts();
+    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
     getDypBalance();
   }, [account, email, data?.getPlayer?.wallet]);
 
@@ -726,6 +784,7 @@ function Dashboard({
                         landStaked={landstakes}
                         myCawsWodStakes={myCawsWodStakesAll}
                         myWodWodStakes={myWodWodStakesAll}
+                        latestBoughtNFTS={latest20BoughtNFTS}
                       />
                     </div>
 
