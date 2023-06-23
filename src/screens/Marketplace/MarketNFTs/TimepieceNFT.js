@@ -14,7 +14,6 @@ const TimepieceNFT = ({
   handleConnect,
   listedNFTS,
   coinbase,
-  timepieceListed,
   ethTokenData,
   dypTokenData,
 }) => {
@@ -68,8 +67,9 @@ const TimepieceNFT = ({
   };
 
   const fetchInitialTimepiece = async () => {
-    if (timepieceListed && timepieceListed.length > 0) {
-      let datedNfts = timepieceListed.map((nft) => {
+    const timepiecenfts = await getTimepieceNfts() 
+    if (timepiecenfts && timepiecenfts.length > 0) {
+      let datedNfts = timepiecenfts.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
@@ -79,27 +79,23 @@ const TimepieceNFT = ({
   };
 
   async function fetchUserFavorites(userId) {
-    let address = userId;
-    if (userId === null || userId === undefined) {
-      if (window.ethereum && window.ethereum.selectedAddress) {
-        address = window.ethereum.selectedAddress;
-      }
-    }
-    try {
-      const response = await fetch(
-        `https://api.worldofdypians.com/user-favorites/${address}`
-      );
-      if (!response.ok) {
-        throw new Error("Error fetching user favorites");
-      }
-      const data = await response.json();
-      console.log(data.favorites);
+    if (userId !== undefined && userId !== null) {
+      try {
+        const response = await fetch(
+          `https://api.worldofdypians.com/user-favorites/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching user favorites");
+        }
+        const data = await response.json();
+        // console.log(data.favorites);
 
-      setFavorites(data.favorites);
-      return data.favorites;
-    } catch (error) {
-      console.error("Error fetching user favorites:", error);
-      throw error;
+        setFavorites(data.favorites);
+        return data.favorites;
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+        throw error;
+      }
     }
   }
 
@@ -113,8 +109,6 @@ const TimepieceNFT = ({
 
   useEffect(() => {
     fetchInitialTimepiece();
-    sortNfts("lth");
-
   }, []);
 
   useEffect(() => {
@@ -124,8 +118,8 @@ const TimepieceNFT = ({
     if (timepieceNFTS && timepieceNFTS.length > 0) {
       setLoading(false);
     }
-    window.scrollTo(0, 0);
-  }, [timepieceNFTS]);
+    sortNfts("lth");
+    }, [timepieceNFTS]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

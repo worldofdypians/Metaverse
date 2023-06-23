@@ -264,7 +264,6 @@ const singleItemQuery = (block) => {
         `;
 };
 
-
 const getListedNFTS = async (
   block = 0,
   sort = "",
@@ -317,37 +316,38 @@ const getListedNFTS = async (
                 const itemListed = await result3.data.data?.itemListeds;
                 const latestStates = {};
 
-                itemListed && itemListed.forEach((item) => {
-                  const nftAddress = item.nftAddress;
-                  const tokenId = item.tokenId;
-                  const key = `${nftAddress}_${tokenId}`;
+                itemListed &&
+                  itemListed.forEach((item) => {
+                    const nftAddress = item.nftAddress;
+                    const tokenId = item.tokenId;
+                    const key = `${nftAddress}_${tokenId}`;
 
-                  if (
-                    !canceledItems[key] ||
-                    canceledItems[key].blockNumber < item.blockNumber
-                  ) {
                     if (
-                      !boughtItems[key] ||
-                      boughtItems[key].blockNumber < item.blockNumber
+                      !canceledItems[key] ||
+                      canceledItems[key].blockNumber < item.blockNumber
                     ) {
                       if (
-                        !latestStates[key] ||
-                        latestStates[key].blockNumber < item.blockNumber
+                        !boughtItems[key] ||
+                        boughtItems[key].blockNumber < item.blockNumber
                       ) {
-                        latestStates[key] = {
-                          seller: item.seller,
-                          nftAddress: item.nftAddress,
-                          tokenId: item.tokenId,
-                          price: item.price,
-                          payment_priceType: item.payment_priceType,
-                          payment_tokenAddress: item.payment_tokenAddress,
-                          blockNumber: item.blockNumber,
-                          blockTimestamp: item.blockTimestamp,
-                        };
+                        if (
+                          !latestStates[key] ||
+                          latestStates[key].blockNumber < item.blockNumber
+                        ) {
+                          latestStates[key] = {
+                            seller: item.seller,
+                            nftAddress: item.nftAddress,
+                            tokenId: item.tokenId,
+                            price: item.price,
+                            payment_priceType: item.payment_priceType,
+                            payment_tokenAddress: item.payment_tokenAddress,
+                            blockNumber: item.blockNumber,
+                            blockTimestamp: item.blockTimestamp,
+                          };
+                        }
                       }
                     }
-                  }
-                });
+                  });
 
                 return (listedItems = Object.values(latestStates));
               });

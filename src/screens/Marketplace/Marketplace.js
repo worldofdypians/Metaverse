@@ -400,27 +400,23 @@ const Marketplace = ({
   }
 
   async function fetchUserFavorites(userId) {
-    let address = userId;
-    if (userId === null || userId === undefined) {
-      if (window.ethereum && window.ethereum.selectedAddress) {
-        address = window.ethereum.selectedAddress;
-      }
-    }
-    try {
-      const response = await fetch(
-        `https://api.worldofdypians.com/user-favorites/${address}`
-      );
-      if (!response.ok) {
-        throw new Error("Error fetching user favorites");
-      }
-      const data = await response.json();
-      console.log(data.favorites);
+    if (userId !== undefined && userId !== null) {
+      try {
+        const response = await fetch(
+          `https://api.worldofdypians.com/user-favorites/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching user favorites");
+        }
+        const data = await response.json();
+        // console.log(data.favorites);
 
-      setFavorites(data.favorites);
-      return data.favorites;
-    } catch (error) {
-      console.error("Error fetching user favorites:", error);
-      throw error;
+        setFavorites(data.favorites);
+        return data.favorites;
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+        throw error;
+      }
     }
   }
 

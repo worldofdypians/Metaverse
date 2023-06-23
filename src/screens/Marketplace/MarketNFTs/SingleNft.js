@@ -117,7 +117,7 @@ const SingleNft = ({
   const [viewCount, setViewCount] = useState(0);
   const [favCount, setfavCount] = useState(0);
 
-  // console.log("nft", nft, IsListed, isOwner);
+  console.log("nft", nft, IsListed, isOwner);
 
   const getTokenData = async () => {
     await axios
@@ -557,7 +557,7 @@ const SingleNft = ({
         setType("cawsold");
       }
     }
-  }, [nftCount]);
+  }, [nftCount,nft]);
 
   return (
     <div

@@ -17,8 +17,8 @@ import nextArrow from "../../../../Marketplace/assets/nextArrow.svg";
 import Slider from "react-slick";
 import ItemCard from "../../../../../components/ItemCard/ItemCard";
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
-import accountEmptyCaws from './assets/accountEmptyCaws.svg'
-import accountEmptyLand from './assets/accountEmptyLand.svg'
+import accountEmptyCaws from "./assets/accountEmptyCaws.svg";
+import accountEmptyLand from "./assets/accountEmptyLand.svg";
 
 const WalletBalance = ({
   dypBalance,
@@ -27,6 +27,7 @@ const WalletBalance = ({
   dypBalancebnb,
   dypBalanceavax,
   isVerified,
+  email,
   // handleConnectWallet,
   handleShowWalletPopup,
   idypBalance,
@@ -47,6 +48,7 @@ const WalletBalance = ({
   handleConnect,
   ethTokenData,
   dypTokenData,
+  favoritesArray,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -303,32 +305,63 @@ const WalletBalance = ({
   };
 
   const getAllFavs = async () => {
-    let favorites = await window.getFavoritesETH2();
-    if (favorites && favorites.length > 0) {
-      setfavoriteItems(favorites);
-      setfavItemsFiltered(favorites);
+    let listedFavs = [];
+    let obj = { tokenId: "", nftAddress: "", type: "", chainId: "", buyer: "" };
+    if (favoritesArray && favoritesArray.length > 0) {
+      favoritesArray.map(async (item) => {
+        const result = await getListedNFTS(
+          0,
+          "",
+          "nftAddress_tokenId",
+          item.tokenId,
+          item.nftAddress
+        );
+        if (result && result.length > 0) {
+          listedFavs.push(...result);
+        } else {
+          listedFavs.push({
+            tokenId: item.tokenId,
+            nftAddress: item.nftAddress,
+            type:
+              item.nftAddress === window.config.nft_caws_address
+                ? "caws"
+                : item.nftAddress === window.config.nft_cawsold_address
+                ? "cawsold"
+                : item.nftAddress === window.config.nft_land_address
+                ? "land"
+                : "timepiece",
+            chainId: 1,
+            buyer: isVerified && email ? address : coinbase,
+          });
+        }
+
+        console.log(listedFavs);
+      });
+      setfavoriteItems(listedFavs);
+      setfavItemsFiltered(listedFavs);
     } else {
       setfavoriteItems([]);
       setfavItemsFiltered([]);
     }
   };
-
   const fetchMonthlyRecordsAroundPlayer = async () => {
     const data = {
       StatisticName: "MonthlyLeaderboard",
       MaxResultsCount: 6,
       PlayerId: userId,
     };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecords(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+    if (userId) {
+      const result = await axios.post(
+        `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setRecords(result.data.data.leaderboard);
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    setUserRank(testArray[0].position);
+      setUserRank(testArray[0].position);
+    }
   };
 
   const fetchGenesisAroundPlayer = async () => {
@@ -337,16 +370,18 @@ const WalletBalance = ({
       MaxResultsCount: 6,
       PlayerId: userId,
     };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
+    if (userId) {
+      const result = await axios.post(
+        `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    setGenesisRank(testArray[0].position);
+      setGenesisRank(testArray[0].position);
+    }
   };
 
   const getTokenData = async () => {
@@ -466,15 +501,17 @@ const WalletBalance = ({
     setNftItems(allnft);
   };
 
-
   useEffect(() => {
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
     getTokenData();
     getTokenDataavax();
     getTokenDatabnb();
-    getAllFavs();
   }, []);
+
+  useEffect(() => {
+    getAllFavs();
+  }, [favoritesArray]);
 
   const emptyArray = [1, 2, 3, 4, 5, 6];
 
@@ -496,14 +533,14 @@ const WalletBalance = ({
               <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
                 <img src={globalRank} alt="" />
                 <span className="globaltext" style={{ fontSize: 12 }}>
-                  #{userRank + 1}
+                  #{isVerified && email ? userRank + 1 : 0}
                 </span>
                 <span className="globaltext">Global</span>
               </div>
               <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
                 <img src={genesisImg} alt="" className="genesisimg" />
                 <span className="genesistext" style={{ fontSize: 12 }}>
-                  #{genesisRank + 1}
+                  #{isVerified && email ? genesisRank + 1 : 0}
                 </span>
                 <span className="genesistext">Genesis</span>
               </div>
@@ -570,20 +607,18 @@ const WalletBalance = ({
                 {favoriteItems.slice(0, 6).map((item, index) => (
                   <NavLink
                     key={index}
-                    to={`/marketplace/nft/${item.blockTimestamp}`}
+                    to={`/marketplace/nft/${item.blockTimestamp ?? index}`}
                     style={{ textDecoration: "none" }}
                     className="col-12 col-lg-6 col-xxl-4 mb-3"
                     state={{
                       nft: item,
                       type: item.type,
                       isOwner:
-                        (item.buyer &&
-                          item.buyer.toLowerCase() ===
-                            coinbase?.toLowerCase()) ||
-                        (item.seller &&
-                          item.seller.toLowerCase() ===
-                            coinbase?.toLowerCase()),
-                      chain: item.chain,
+                        isVerified && email
+                          ? item.buyer?.toLowerCase() === address?.toLowerCase()
+                          : item.buyer?.toLowerCase() ===
+                            coinbase?.toLowerCase(),
+                      chain: 1,
                     }}
                   >
                     <div className="">
@@ -621,31 +656,40 @@ const WalletBalance = ({
                   </NavLink>
                 ))}
                 {favoriteItems.length < 6 &&
-                emptyArray.slice(0, 6 - favoriteItems.length).map((item, index) => (
-                  <NavLink
-                  key={index}
-                  to={`/marketplace`}
-                  style={{ textDecoration: "none" }}
-                  className="col-12 col-lg-6 col-xxl-4 mb-3"
-                 
-                >
-                  <div className="">
-                    <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                      <img
-                        src={index % 2 !== 0 ? accountEmptyCaws : accountEmptyLand}
-                        alt=""
-                        className="account-card-img"
-                      />
-                      <div className="d-flex flex-column align-items-start justify-content-center">
-                      <span className="account-nft-type" style={{width: '80%'}}>
-                         {index % 2 !== 0 ? "Get your CAWS NFT from the WoD Game Shop" : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </NavLink>
-                ))
-                }
+                  emptyArray
+                    .slice(0, 6 - favoriteItems.length)
+                    .map((item, index) => (
+                      <NavLink
+                        key={index}
+                        to={`/marketplace`}
+                        style={{ textDecoration: "none" }}
+                        className="col-12 col-lg-6 col-xxl-4 mb-3"
+                      >
+                        <div className="">
+                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                            <img
+                              src={
+                                index % 2 !== 0
+                                  ? accountEmptyCaws
+                                  : accountEmptyLand
+                              }
+                              alt=""
+                              className="account-card-img"
+                            />
+                            <div className="d-flex flex-column align-items-start justify-content-center">
+                              <span
+                                className="account-nft-type"
+                                style={{ width: "80%" }}
+                              >
+                                {index % 2 !== 0
+                                  ? "Get your CAWS NFT from the WoD Game Shop"
+                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </NavLink>
+                    ))}
               </div>
             )}
 
@@ -704,32 +748,40 @@ const WalletBalance = ({
                   </NavLink>
                 ))}
                 {collectedItems.length < 6 &&
-                emptyArray.slice(0, 6 - collectedItems.length).map((item, index) => (
-                  <NavLink
-                  key={index}
-                  to={`/marketplace`}
-                  style={{ textDecoration: "none" }}
-                  className="col-12 col-lg-6 col-xxl-4 mb-3"
-                 
-                >
-                  <div className="">
-                    <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                      <img
-                        src={index % 2 !== 0 ? accountEmptyCaws : accountEmptyLand}
-                        alt=""
-                        className="account-card-img"
-                      />
-                      <div className="d-flex flex-column align-items-start justify-content-center">
-                      <span className="account-nft-type" style={{width: '80%'}}>
-
-                         {index % 2 !== 0 ? "Get your CAWS NFT from the WoD Game Shop" : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </NavLink>
-                ))
-                }
+                  emptyArray
+                    .slice(0, 6 - collectedItems.length)
+                    .map((item, index) => (
+                      <NavLink
+                        key={index}
+                        to={`/marketplace`}
+                        style={{ textDecoration: "none" }}
+                        className="col-12 col-lg-6 col-xxl-4 mb-3"
+                      >
+                        <div className="">
+                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                            <img
+                              src={
+                                index % 2 !== 0
+                                  ? accountEmptyCaws
+                                  : accountEmptyLand
+                              }
+                              alt=""
+                              className="account-card-img"
+                            />
+                            <div className="d-flex flex-column align-items-start justify-content-center">
+                              <span
+                                className="account-nft-type"
+                                style={{ width: "80%" }}
+                              >
+                                {index % 2 !== 0
+                                  ? "Get your CAWS NFT from the WoD Game Shop"
+                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </NavLink>
+                    ))}
               </div>
             )}
 
@@ -807,39 +859,43 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                      {myCawsWodStakes.length +landStaked.length < 6 &&
-                emptyArray.slice(0, 6 - myCawsWodStakes.length + landStaked.length).map((item, index) => (
-                  <NavLink
-                  key={index}
-                  to={`/marketplace`}
-                  style={{ textDecoration: "none" }}
-                  className="col-12 col-lg-6 col-xxl-6 mb-3"
-                 
-                >
-                  <div className="">
-                    <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                      <div className="d-flex align-items-center">
-                      <img
-                        src={accountEmptyLand}
-                        alt=""
-                        className="account-card-img"
-                      />
-                      <img
-                        src={accountEmptyCaws}
-                        alt=""
-                        className="account-card-img"
-                      />
-                      </div>
-                      <div className="d-flex flex-column align-items-start justify-content-center">
-                        <span className="account-nft-type" style={{width: '80%'}}>
-                         Get your CAWS NFT & Land NFT from the WoD Game Shop
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </NavLink>
-                ))
-                }
+                {myCawsWodStakes.length + landStaked.length < 6 &&
+                  emptyArray
+                    .slice(0, 6 - myCawsWodStakes.length + landStaked.length)
+                    .map((item, index) => (
+                      <NavLink
+                        key={index}
+                        to={`/marketplace`}
+                        style={{ textDecoration: "none" }}
+                        className="col-12 col-lg-6 col-xxl-6 mb-3"
+                      >
+                        <div className="">
+                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                            <div className="d-flex align-items-center">
+                              <img
+                                src={accountEmptyLand}
+                                alt=""
+                                className="account-card-img"
+                              />
+                              <img
+                                src={accountEmptyCaws}
+                                alt=""
+                                className="account-card-img"
+                              />
+                            </div>
+                            <div className="d-flex flex-column align-items-start justify-content-center">
+                              <span
+                                className="account-nft-type"
+                                style={{ width: "80%" }}
+                              >
+                                Get your CAWS NFT & Land NFT from the WoD Game
+                                Shop
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </NavLink>
+                    ))}
               </div>
             )}
 
@@ -895,31 +951,40 @@ const WalletBalance = ({
                   </NavLink>
                 ))}
                 {listedItems.length < 6 &&
-                emptyArray.slice(0, 6 - listedItems.length).map((item, index) => (
-                  <NavLink
-                  key={index}
-                  to={`/marketplace`}
-                  style={{ textDecoration: "none" }}
-                  className="col-12 col-lg-6 col-xxl-4 mb-3"
-                 
-                >
-                  <div className="">
-                    <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                      <img
-                        src={index % 2 !== 0 ? accountEmptyCaws : accountEmptyLand}
-                        alt=""
-                        className="account-card-img"
-                      />
-                      <div className="d-flex flex-column align-items-start justify-content-center">
-                      <span className="account-nft-type" style={{width: '80%'}}>
-                         {index % 2 !== 0 ? "Get your CAWS NFT from the WoD Game Shop" : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </NavLink>
-                ))
-                }
+                  emptyArray
+                    .slice(0, 6 - listedItems.length)
+                    .map((item, index) => (
+                      <NavLink
+                        key={index}
+                        to={`/marketplace`}
+                        style={{ textDecoration: "none" }}
+                        className="col-12 col-lg-6 col-xxl-4 mb-3"
+                      >
+                        <div className="">
+                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                            <img
+                              src={
+                                index % 2 !== 0
+                                  ? accountEmptyCaws
+                                  : accountEmptyLand
+                              }
+                              alt=""
+                              className="account-card-img"
+                            />
+                            <div className="d-flex flex-column align-items-start justify-content-center">
+                              <span
+                                className="account-nft-type"
+                                style={{ width: "80%" }}
+                              >
+                                {index % 2 !== 0
+                                  ? "Get your CAWS NFT from the WoD Game Shop"
+                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </NavLink>
+                    ))}
               </div>
             )}
 
@@ -934,7 +999,7 @@ const WalletBalance = ({
                     <div className="d-flex align-items-center gap-2">
                       <img src={dypIcon} alt="dyp" className="dyp-icon" />
                       <h6 className="wallet-amount mb-0">
-                        {getFormattedNumber(dypBalance, 2)} DYP
+                        {getFormattedNumber(dypBalance, 2)}
                       </h6>
                     </div>
                     <span
@@ -953,7 +1018,7 @@ const WalletBalance = ({
                         style={{ height: 16, width: 16 }}
                       />
                       <h6 className="wallet-amount mb-0">
-                        {getFormattedNumber(idypBalance, 2)} iDYP
+                        {getFormattedNumber(idypBalance, 2)}
                       </h6>
                     </div>
                     <span
@@ -974,7 +1039,7 @@ const WalletBalance = ({
                     <div className="d-flex align-items-center gap-2">
                       <img src={dypIcon} alt="dyp" className="dyp-icon" />
                       <h6 className="wallet-amount mb-0">
-                        {getFormattedNumber(dypBalancebnb, 2)} DYP
+                        {getFormattedNumber(dypBalancebnb, 2)}
                       </h6>
                     </div>
                     <span
@@ -993,7 +1058,7 @@ const WalletBalance = ({
                         style={{ height: 16, width: 16 }}
                       />
                       <h6 className="wallet-amount mb-0">
-                        {getFormattedNumber(idypBalancebnb, 2)} iDYP
+                        {getFormattedNumber(idypBalancebnb, 2)}
                       </h6>
                     </div>
                     <span
@@ -1015,7 +1080,7 @@ const WalletBalance = ({
                     <div className="d-flex align-items-center gap-2">
                       <img src={dypIcon} alt="dyp" className="dyp-icon" />
                       <h6 className="wallet-amount mb-0">
-                        {getFormattedNumber(dypBalanceavax, 2)} DYP
+                        {getFormattedNumber(dypBalanceavax, 2)}
                       </h6>
                     </div>
                     <span
@@ -1035,7 +1100,7 @@ const WalletBalance = ({
                         style={{ height: 16, width: 16 }}
                       />
                       <h6 className="wallet-amount mb-0">
-                        {getFormattedNumber(idypBalanceavax, 2)} iDYP
+                        {getFormattedNumber(idypBalanceavax, 2)}
                       </h6>
                     </div>
                     <span
@@ -1225,32 +1290,37 @@ const WalletBalance = ({
                   favItemsFiltered.length > 0 &&
                   favItemsFiltered.map((nft, index) => (
                     <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp}`}
+                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
                       style={{ textDecoration: "none" }}
                       key={index}
                       state={{
                         nft: nft,
                         type: nft.type,
                         isOwner:
-                          (nft.buyer &&
-                            nft.buyer.toLowerCase() ===
-                              address?.toLowerCase()) ||
-                          (nft.seller &&
-                            nft.seller.toLowerCase() ===
-                              address?.toLowerCase()),
-                        chain: nft.chain,
+                          isVerified && email && nft.buyer
+                            ? nft.buyer?.toLowerCase() ===
+                              address?.toLowerCase()
+                            : nft.buyer?.toLowerCase() ===
+                              coinbase?.toLowerCase(),
+                        chain: 1,
                       }}
                     >
                       <ItemCard
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
-                        key={nft.id}
                         nft={nft}
                         isConnected={isConnected}
                         showConnectWallet={handleConnect}
-                        isCaws={nft.type === "caws" || nft.type === "cawsold"}
-                        isTimepiece={nft.type === "timepiece"}
-                        isWod={nft.type === "land"}
+                        isCaws={
+                          nft.nftAddress === window.config.nft_caws_address ||
+                          nft.nftAddress === window.config.nft_cawsold_address
+                        }
+                        isTimepiece={
+                          nft.nftAddress === window.config.nft_timepiece_address
+                        }
+                        isWod={
+                          nft.nftAddress === window.config.nft_land_address
+                        }
                         coinbase={coinbase}
                       />
                     </NavLink>

@@ -62,11 +62,14 @@ import {
   getTimepieceNfts,
 } from "./actions/convertUsd";
 import MarketMint from "./screens/Marketplace/MarketMint";
+import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showWalletModalDownload, setShowWalletModalDownload] = useState(false);
   const [showWalletModalRegister, setShowWalletModalRegister] = useState(false);
+  const [showWalletModalRegister2, setShowWalletModalRegister2] = useState(false);
+
   const [betaModal, setBetaModal] = useState(false);
   const [donwloadSelected, setdownloadSelected] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
@@ -803,8 +806,7 @@ function App() {
   }
 
   const AppContent = () => {
-    const { isLoading, isAuthenticated, playerId } = useAuth();
-
+    const { isLoading, isAuthenticated, playerId } = useAuth(); 
     useEffect(() => {
       if (!isLoading || !isAuthenticated || !playerId) {
         setFireAppContent(false);
@@ -1100,6 +1102,7 @@ function App() {
                     isConnected={isConnected}
                     chainId={chainId}
                     handleConnect={handleConnection}
+                    onSigninClick={()=>{setShowWalletModalRegister2(true)}} 
                   />
                 }
               />
@@ -1160,7 +1163,6 @@ function App() {
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
-                    cawsListed={cawsNFTS}
                     coinbase={coinbase}
                   />
                 }
@@ -1175,7 +1177,6 @@ function App() {
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
-                    wodListed={wodNFTS}
                     coinbase={coinbase}
                   />
                 }
@@ -1190,7 +1191,6 @@ function App() {
                     isConnected={isConnected}
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
-                    timepieceListed={timepiecesNFTS}
                     coinbase={coinbase}
                   />
                 }
@@ -1311,6 +1311,30 @@ function App() {
               open={showWalletModalRegister}
               onClose={() => {
                 setShowWalletModalRegister(false);
+              }}
+              handleConnect={handleConnection}
+              coinbase={coinbase}
+              showForms={showForms}
+              openRegister={handleRegister}
+              donwloadSelected={donwloadSelected}
+              cawsMinted={myCAWSNFTsCreated.length}
+              cawsStaked={myCAWSNFTsTotalStaked.length}
+              landMinted={myNFTs.length}
+              landStaked={mystakes.length}
+              handleRedirect={() => {
+                setFireAppContent(true);
+              }}
+              handleActiveUser={(value) => {
+                setactiveUser(value);
+              }}
+            />
+          )}
+
+{showWalletModalRegister2 === true && (
+            <CheckAuthUserModal
+              open={showWalletModalRegister2}
+              onClose={() => {
+                setShowWalletModalRegister2(false);
               }}
               handleConnect={handleConnection}
               coinbase={coinbase}

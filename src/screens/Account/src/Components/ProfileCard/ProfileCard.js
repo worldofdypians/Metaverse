@@ -14,8 +14,11 @@ import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import walletImg from "../../Images/userProfile/wallet.svg";
 import copyIcon from "../WalletBalance/assets/copyIcon.svg";
 import walletIcon from "../WalletBalance/assets/walletIcon.svg";
-import circleArrow from "../../Images/userProfile/arrow-circle.svg";
+import greenarrow from "./assets/greenarrow.svg";
+import logouticon from "./assets/logout.svg";
 import player from "./assets/explorePlayer.png";
+import greenInfo from "./assets/greenInfo.svg";
+import OutsideClickHandler from "react-outside-click-handler";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -49,6 +52,8 @@ const ProfileCard = ({
   isVerified,
   handleShowWalletPopup,
   coinbase,
+  onSigninClick,
+  onLogoutClick,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -129,155 +134,217 @@ const ProfileCard = ({
 
   const windowSize = useWindowSize();
   const [tooltip, setTooltip] = useState(false);
+  const [tooltip2, setTooltip2] = useState(false);
 
   return (
-    
-      <div className="main-wrapper py-4 w-100">
-        <div className="row justify-content-center gap-5 gap-lg-0">
-          <div className="position-relative px-0 px-lg-3 col-12 col-lg-5 col-xxl-5">
-            <div className="user-cardImg">
-              <div className="d-flex flex-column justify-content-between gap-2">
-                <div className="d-flex gap-2 justify-content-between align-items-center">
-                  <div className="d-flex align-items-center gap-2">
-                    {/* <img
-                src={availableTime !== "0" && availableTime && availableTime!==undefined ? goldenAvatar : defaultAvatar}
-                alt=""
-                className="userAvatar"
-              /> */}
-                    <img src={defaultAvatar} alt="" className="userAvatar" />
-
+    <div className="main-wrapper py-4 w-100">
+      <div className="row justify-content-center gap-5 gap-lg-0">
+        <div className="position-relative px-0 px-lg-3 col-12 col-lg-5 col-xxl-5">
+          <div className="user-cardImg">
+            <div className="d-flex flex-column justify-content-between gap-2">
+              <div className="d-flex gap-2 justify-content-between align-items-center">
+                <div className="d-flex align-items-center gap-2">
+                  <img src={defaultAvatar} alt="" className="userAvatar" />
+                  {isVerified && email ? (
                     <div className="d-flex flex-column gap-1">
                       <span className="usernametext font-organetto">
                         {username}
                       </span>
                       <span className="emailtext">{email}</span>
                     </div>
-                  </div>
-                  {/* {availableTime !== "0" && availableTime && availableTime!==undefined && (
-              <Countdown
-                date={availableTime}
-                renderer={renderer}
-                onComplete={() => {
-                  setcountdown();
-                  setisActive(false);
-                }}
-              />
-            )} */}
-
-                  {/* <div className="d-flex flex-column gap-1">
-              <div className="d-flex flex-column align-items-center gap-1">
-                <span className="userRank">#{userRank + 1}</span>
-                <span className="ranktitle">Global rank</span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-1">
-                <span className="userRank" style={{ color: "#F1B14B" }}>
-                  #{genesisRank + 1}
-                </span>
-                <span
-                  className="ranktitle"
-                  style={{ color: "rgba(241, 177, 75, 0.8)" }}
-                >
-                  Genesis rank
-                </span>
-              </div>
-            </div> */}
-                </div>
-                <div className="wallet-balance d-flex flex-column gap-2 position-relative">
-                  {isVerified === false || !address ? (
-                    <div
-                      className="walletconnectBtn w-100"
-                      onClick={handleShowWalletPopup}
-                    >
-                      <div className="d-flex gap-2 justify-content-between align-items-center">
-                        <div className="d-flex gap-2 align-items-center">
-                          <img src={walletImg} alt="" />
-                          <div className="d-flex flex-column">
-                            <span className="firsttitle">Connect wallet</span>
-                            <span className="secondTitle">
-                              Link your wallet
-                            </span>
-                          </div>
-                        </div>
-                        <img src={circleArrow} alt="" />
-                      </div>
-                    </div>
                   ) : (
-                    <>
-                      <Clipboard
-                        component="div"
-                        data-event="click"
-                        data-for={id}
-                        data-tip="Copied To Clipboard!"
-                        data-clipboard-text={address}
-                        className="wallet-wrapper d-flex align-items-center gap-2"
+                    <div className="d-flex flex-column gap-1">
+                      <span className="usernametext font-organetto">
+                        Start your journey now!
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="wallet-balance d-flex flex-column gap-2 position-relative">
+                <>
+                  <Clipboard
+                    component="div"
+                    data-event="click"
+                    data-for={id}
+                    data-tip="Copied To Clipboard!"
+                    data-clipboard-text={address}
+                    className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
+                  >
+                    <img src={walletIcon} alt="" className="wallet-icon" />
+                    <div className="d-flex flex-column">
+                      <span className="wallet-span d-flex align-items-center gap-2">
+                        Wallet address{" "}
+                        <OutsideClickHandler
+                          onOutsideClick={() => {
+                            setTooltip2(false);
+                          }}
+                        >
+                          <img
+                            src={greenInfo}
+                            alt=""
+                            className="tooltipicon"
+                            onClick={() => {
+                              setTooltip2(true);
+                              setTooltip(false);
+                            }}
+                          />
+                        </OutsideClickHandler>
+                        <div
+                          className={`tooltip-wrapper2 p-2 col-7 ${
+                            tooltip2 && "tooltip-active"
+                          }`}
+                          style={{ top: "-30px" }}
+                        >
+                          <p className="tooltip-content2 m-0">
+                            You can select a maximum of 50 WoD Land and CAWS
+                            NFTs
+                          </p>
+                        </div>{" "}
+                      </span>
+                      <div
+                        className="d-flex align-items-center gap-2"
                         onClick={() => {
                           setTooltip(true);
                           setTimeout(() => setTooltip(false), 1000);
                         }}
                       >
-                        <img src={walletIcon} alt="" className="wallet-icon" />
-                        <div className="d-flex flex-column">
-                          <span className="wallet-span">Wallet address</span>
-                          <div className="d-flex align-items-center gap-2">
-                            <span className="wallet-address">
-                              {shortAddress(address)}
-                            </span>
-                            <img
-                              src={copyIcon}
-                              alt="copy"
-                              className="copy-icon"
-                            />
-                          </div>
-                        </div>
-                      </Clipboard>
-                      <div
-                        className={`tooltip-wrapper p-2 ${
-                          tooltip && "tooltip-active"
-                        }`}
-                        style={{ top: "auto", right: 0 }}
-                      >
-                        <p className="tooltip-content m-0">Copied!</p>
+                        <span className="wallet-address">
+                          {shortAddress(
+                            isVerified && email ? address : coinbase
+                          )}
+                        </span>
+                        <img src={copyIcon} alt="copy" className="copy-icon" />
                       </div>
-                    </>
-                  )}
-                  {!address ? (
-                    <span className="walletinfo">
-                      *Note that once you link a wallet to your profile, it
-                      cannot be changed.
+                    </div>
+                  </Clipboard>
+                  <div
+                    className={`tooltip-wrapper p-2 ${
+                      tooltip && "tooltip-active"
+                    }`}
+                    style={{ top: "auto", right: 0 }}
+                  >
+                    <p className="tooltip-content m-0">Copied!</p>
+                  </div>
+                </>
+                {!isVerified || !address || !email ? (
+                  // <div
+                  //   className="walletconnectBtn w-100"
+                  //   onClick={handleShowWalletPopup}
+                  // >
+                  //   <div className="d-flex gap-2 justify-content-between align-items-center">
+                  //     <div className="d-flex gap-2 align-items-center">
+                  //       <img src={walletImg} alt="" />
+                  //       <div className="d-flex flex-column">
+                  //         <span className="firsttitle">Connect wallet</span>
+                  //         <span className="secondTitle">Link your wallet</span>
+                  //       </div>
+                  //     </div>
+                  //     <img src={circleArrow} alt="" />
+                  //   </div>
+                  // </div>
+                  <div
+                    className="d-flex align-self-end align-items-center"
+                    onClick={onSigninClick}
+                    role="button"
+                    style={{ width: "fit-content" }}
+                  >
+                    <span className="signintext">
+                      Sign in <img src={greenarrow} alt="" />
                     </span>
-                  ) : (
-                    <span className="walletinfo">
-                      *This wallet is associated to your profile and cannot be
-                      changed.
+                  </div>
+                ) : (
+                  <div
+                    className="d-flex align-self-end align-items-center"
+                    onClick={onLogoutClick}
+                    role="button"
+                    style={{ width: "fit-content" }}
+                  >
+                    <span className="logouttext">
+                      <img src={logouticon} alt="" /> Log Out
                     </span>
-                  )}
-                </div>
-                {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
+                  </div>
+                )}
+
+                {/* : 
+                 (
+                  <>
+                     <Clipboard
+                  //     component="div"
+                  //     data-event="click"
+                  //     data-for={id}
+                  //     data-tip="Copied To Clipboard!"
+                  //     data-clipboard-text={address}
+                  //     className="wallet-wrapper d-flex align-items-center gap-2"
+                  //     onClick={() => {
+                  //       setTooltip(true);
+                  //       setTimeout(() => setTooltip(false), 1000);
+                  //     }}
+                  //   >
+                  //     <img src={walletIcon} alt="" className="wallet-icon" />
+                  //     <div className="d-flex flex-column">
+                  //       <span className="wallet-span">Wallet address</span>
+                  //       <div className="d-flex align-items-center gap-2">
+                  //         <span className="wallet-address">
+                  //           {shortAddress(address)}
+                  //         </span>
+                  //         <img
+                  //           src={copyIcon}
+                  //           alt="copy"
+                  //           className="copy-icon"
+                  //         />
+                  //       </div>
+                  //     </div>
+                    </Clipboard>
+                    <div
+                      className={`tooltip-wrapper p-2 ${
+                        tooltip && "tooltip-active"
+                      }`}
+                      style={{ top: "auto", right: 0 }}
+                    >
+                      <p className="tooltip-content m-0">Copied!</p>
+                    </div>
+                  </>
+                ) */}
+
+                {/* {!address ? (
+                  <span className="walletinfo">
+                    *Note that once you link a wallet to your profile, it cannot
+                    be changed.
+                  </span>
+                ) : (
+                  <span className="walletinfo">
+                    *This wallet is associated to your profile and cannot be
+                    changed.
+                  </span>
+                )} */}
+              </div>
+              {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
             <div className="d-flex flex-column">
             <span className="emailtext" style={{color: '#ffbf00'}}>*Golden Pass</span>
             <span className="emailtext" style={{color: '#00FECF'}}>{remainingTime} (GMT + 2)</span>
 
             </div>
           )} */}
-              </div>
             </div>
-            <img src={dypMedal} alt="" className="position-absolute dypMedal" />
           </div>
-          <div className="explorebanner col-12 col-lg-7 col-xxl-7 position-relative">
-            <div className="d-flex flex-column gap-2">
-              <div className="orangesection">
-                <span>World of Dypians</span>
-              </div>
-              <div className="col-lg-7 col-xxl-7">
-                <h5 className="explore-title">
-                  Explore an exciting digital world
-                </h5>
-              </div>
+          <img src={dypMedal} alt="" className="position-absolute dypMedal" />
+        </div>
+        <div className="explorebanner col-12 col-lg-7 col-xxl-7 position-relative">
+          <div className="d-flex flex-column gap-2">
+            <div className="orangesection">
+              <span>World of Dypians</span>
             </div>
-            <img src={player} alt="" className="position-absolute playerimg" />
+            <div className="col-lg-7 col-xxl-7">
+              <h5 className="explore-title">
+                Explore an exciting digital world
+              </h5>
+            </div>
           </div>
+          <img src={player} alt="" className="position-absolute playerimg" />
         </div>
       </div>
+    </div>
   );
 };
 
