@@ -51,6 +51,8 @@ function Dashboard({
   landStaked,
   ethTokenData,
   dypTokenData,
+  onSigninClick,
+  onLogoutClick,
 }) {
   const { email, logout } = useAuth();
 
@@ -67,6 +69,7 @@ function Dashboard({
   } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
+
   const [tokensState, setTokensState] = useState({});
   const [showChecklistModal, setshowChecklistModal] = useState(false);
   const [showChecklistLandNftModal, setshowChecklistLandNftModal] =
@@ -84,6 +87,7 @@ function Dashboard({
   const [showWalletModal, setshowWalletModal] = useState(false);
   const [stakes, setStakes] = useState([]);
   const [landstakes, setLandStakes] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
@@ -137,7 +141,7 @@ function Dashboard({
           stakenft_cawsWod.push(parseInt(result[i]));
         return stakenft_cawsWod;
       });
-      
+
     return myStakes;
   };
 
@@ -170,9 +174,8 @@ function Dashboard({
           stakenft_cawsWod.push(parseInt(result[i]));
         return stakenft_cawsWod;
       });
-      
-    return myStakes;
 
+    return myStakes;
   };
 
   const getWodStakesIdsCawsWod = async () => {
@@ -183,7 +186,7 @@ function Dashboard({
       window.WOD_CAWS_ABI,
       window.config.wod_caws_address
     );
-    
+
     let myStakes = await staking_contract.methods
       .depositsOfWoD(address)
       .call()
@@ -198,9 +201,8 @@ function Dashboard({
 
   const getmyCawsWodStakes = async () => {
     let myCawsStakes = await getCawsStakesIdsCawsWod();
-    
+
     let myWodStakes = await getWodStakesIdsCawsWod();
-    
 
     if (myCawsStakes && myCawsStakes.length > 0) {
       let stakes = myCawsStakes.map((stake) => window.getNft(stake));
@@ -316,25 +318,37 @@ function Dashboard({
   //todo
   const fetchAllMyNfts = async () => {
     if (data?.getPlayer?.wallet?.publicAddress) {
-      getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "caws").then((NFTS) =>
-        setMyNFTSCaws(NFTS)
-      );
+      getMyNFTS(
+        data?.getPlayer?.wallet && email
+          ? data?.getPlayer?.wallet?.publicAddress
+          : account,
+        "caws"
+      ).then((NFTS) => setMyNFTSCaws(NFTS));
 
-      getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "cawsold").then(
-        (NFTS) => {
-          if (NFTS) {
-            setMyNFTSCawsOld(NFTS);
-          }
+      getMyNFTS(
+        data?.getPlayer?.wallet && email
+          ? data?.getPlayer?.wallet?.publicAddress
+          : account,
+        "cawsold"
+      ).then((NFTS) => {
+        if (NFTS) {
+          setMyNFTSCawsOld(NFTS);
         }
-      );
+      });
 
-      getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "timepiece").then(
-        (NFTS) => setMyNFTSTimepiece(NFTS)
-      );
+      getMyNFTS(
+        data?.getPlayer?.wallet && email
+          ? data?.getPlayer?.wallet?.publicAddress
+          : account,
+        "timepiece"
+      ).then((NFTS) => setMyNFTSTimepiece(NFTS));
 
-      getMyNFTS(data?.getPlayer?.wallet?.publicAddress, "land").then((NFTS) =>
-        setMyNFTSLand(NFTS)
-      );
+      getMyNFTS(
+        data?.getPlayer?.wallet && email
+          ? data?.getPlayer?.wallet?.publicAddress
+          : account,
+        "land"
+      ).then((NFTS) => setMyNFTSLand(NFTS));
     }
   };
 
@@ -345,7 +359,9 @@ function Dashboard({
       0,
       "",
       "buyer",
-      data?.getPlayer?.wallet?.publicAddress,
+      data?.getPlayer?.wallet && email
+        ? data?.getPlayer?.wallet?.publicAddress
+        : account,
       ""
     );
     listedNFTS &&
@@ -486,9 +502,12 @@ function Dashboard({
         ERC20_ABI,
         token_addressIDYP
       );
-
       const bal1 = await contract1.methods
-        .balanceOf(account)
+        .balanceOf(
+          data?.getPlayer?.wallet && email
+            ? data?.getPlayer?.wallet?.publicAddress
+            : account
+        )
         .call()
         .then((data) => {
           return web3eth.utils.fromWei(data, "ether");
@@ -496,7 +515,11 @@ function Dashboard({
       setDypBalance(bal1);
 
       const bal2 = await contract2.methods
-        .balanceOf(account)
+        .balanceOf(
+          data?.getPlayer?.wallet && email
+            ? data?.getPlayer?.wallet?.publicAddress
+            : account
+        )
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -504,7 +527,11 @@ function Dashboard({
       setDypBalanceBnb(bal2);
 
       const bal3 = await contract3.methods
-        .balanceOf(account)
+        .balanceOf(
+          data?.getPlayer?.wallet && email
+            ? data?.getPlayer?.wallet?.publicAddress
+            : account
+        )
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -512,7 +539,11 @@ function Dashboard({
       setDypBalanceAvax(bal3);
 
       const bal1_idyp = await contract1_idyp.methods
-        .balanceOf(account)
+        .balanceOf(
+          data?.getPlayer?.wallet && email
+            ? data?.getPlayer?.wallet?.publicAddress
+            : account
+        )
         .call()
         .then((data) => {
           return web3eth.utils.fromWei(data, "ether");
@@ -520,7 +551,11 @@ function Dashboard({
       setiDypBalance(bal1_idyp);
 
       const bal2_idyp = await contract2_idyp.methods
-        .balanceOf(account)
+        .balanceOf(
+          data?.getPlayer?.wallet && email
+            ? data?.getPlayer?.wallet?.publicAddress
+            : account
+        )
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -528,7 +563,11 @@ function Dashboard({
       setiDypBalanceBnb(bal2_idyp);
 
       const bal3_idyp = await contract3_idyp.methods
-        .balanceOf(account)
+        .balanceOf(
+          data?.getPlayer?.wallet && email
+            ? data?.getPlayer?.wallet?.publicAddress
+            : account
+        )
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -536,6 +575,35 @@ function Dashboard({
       setiDypBalanceAvax(bal3_idyp);
     }
   };
+
+  async function fetchUserFavorites(userId) {
+    if (userId !== undefined && userId !== null) {
+      try {
+        const response = await fetch(
+          `https://api.worldofdypians.com/user-favorites/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching user favorites");
+        }
+        const data = await response.json();
+        // console.log(data.favorites);
+
+        setFavorites(data.favorites);
+        return data.favorites;
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+        throw error;
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchUserFavorites(
+      data?.getPlayer?.wallet && email
+        ? data?.getPlayer?.wallet?.publicAddress
+        : account
+    );
+  }, [account, email, data?.getPlayer?.wallet]);
 
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
@@ -565,12 +633,11 @@ function Dashboard({
   useEffect(() => {
     getOtherNfts();
     getDypBalance();
-  }, [account]);
+  }, [account, email, data?.getPlayer?.wallet]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  // console.log(showWalletModal);
 
   return (
     <div
@@ -626,17 +693,19 @@ function Dashboard({
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
+                        onSigninClick={onSigninClick}
+                        onLogoutClick={logout}
                       />
                       <WalletBalance
-                       ethTokenData={ethTokenData}
-                       dypTokenData={dypTokenData}
+                        ethTokenData={ethTokenData}
+                        dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
                         listedNFTS={listedNFTS}
                         myBoughtNfts={myBoughtNfts}
                         address={data?.getPlayer?.wallet?.publicAddress}
                         coinbase={account}
                         isVerified={data?.getPlayer?.wallet}
-                        // handleConnectWallet={connectWallet}
+                        favoritesArray={favorites}
                         dypBalance={dypBalance}
                         dypBalancebnb={dypBalancebnb}
                         dypBalanceavax={dypBalanceavax}
@@ -647,6 +716,7 @@ function Dashboard({
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
+                        email={email}
                         userId={data?.getPlayer?.playerId}
                         username={data?.getPlayer?.displayName}
                         myCawsCollected={MyNFTSCaws}

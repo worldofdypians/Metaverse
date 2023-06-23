@@ -14,7 +14,6 @@ const WoDNFT = ({
   handleConnect,
   listedNFTS,
   coinbase,
-  wodListed,
   ethTokenData,
   dypTokenData,
 }) => {
@@ -68,8 +67,10 @@ const WoDNFT = ({
   };
 
   const fetchInitialWod = async () => {
-    if (wodListed && wodListed.length > 0) {
-      let datedNfts = wodListed.map((nft) => {
+    const landarray = await getWodNfts()
+    
+    if (landarray && landarray.length > 0) {
+      let datedNfts = landarray.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
@@ -79,27 +80,23 @@ const WoDNFT = ({
   };
 
   async function fetchUserFavorites(userId) {
-    let address = userId;
-    if (userId === null || userId === undefined) {
-      if (window.ethereum && window.ethereum.selectedAddress) {
-        address = window.ethereum.selectedAddress;
-      }
-    }
-    try {
-      const response = await fetch(
-        `https://api.worldofdypians.com/user-favorites/${address}`
-      );
-      if (!response.ok) {
-        throw new Error("Error fetching user favorites");
-      }
-      const data = await response.json();
-      console.log(data.favorites);
+    if (userId !== undefined && userId !== null) {
+      try {
+        const response = await fetch(
+          `https://api.worldofdypians.com/user-favorites/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching user favorites");
+        }
+        const data = await response.json();
+        // console.log(data.favorites);
 
-      setFavorites(data.favorites);
-      return data.favorites;
-    } catch (error) {
-      console.error("Error fetching user favorites:", error);
-      throw error;
+        setFavorites(data.favorites);
+        return data.favorites;
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+        throw error;
+      }
     }
   }
 

@@ -7,13 +7,14 @@ import MobileNav from "../../../components/MobileNav/MobileNav";
 import searchIcon from "../assets/search.svg";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import { NavLink } from "react-router-dom";
+import { getCawsNfts, getCawsOldNfts } from "../../../actions/convertUsd";
+
 
 const CawsNFT = ({
   isConnected,
   handleConnect,
   listedNFTS,
   coinbase,
-  cawsListed,
   ethTokenData,
   dypTokenData,
 }) => {
@@ -65,12 +66,14 @@ const CawsNFT = ({
       setCawsNFTS(eth);
     }
 
-    console.log(cawsNFTS.length);
   };
 
   const fetchInitialCaws = async () => {
-    if (cawsListed && cawsListed.length > 0) {
-      let datedNfts = cawsListed.map((nft) => {
+    const cawsnew = await getCawsNfts()
+    const cawsold = await getCawsOldNfts() 
+    const finalArray = [...cawsnew, ...cawsold]
+    if (finalArray && finalArray.length > 0) {
+      let datedNfts = finalArray.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
@@ -81,27 +84,23 @@ const CawsNFT = ({
 
   
   async function fetchUserFavorites(userId) {
-    let address = userId;
-    if (userId === null || userId === undefined) {
-      if (window.ethereum && window.ethereum.selectedAddress) {
-        address = window.ethereum.selectedAddress;
-      }
-    }
-    try {
-      const response = await fetch(
-        `https://api.worldofdypians.com/user-favorites/${address}`
-      );
-      if (!response.ok) {
-        throw new Error("Error fetching user favorites");
-      }
-      const data = await response.json();
-      console.log(data.favorites);
+    if (userId !== undefined && userId !== null) {
+      try {
+        const response = await fetch(
+          `https://api.worldofdypians.com/user-favorites/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching user favorites");
+        }
+        const data = await response.json();
+        // console.log(data.favorites);
 
-      setFavorites(data.favorites);
-      return data.favorites;
-    } catch (error) {
-      console.error("Error fetching user favorites:", error);
-      throw error;
+        setFavorites(data.favorites);
+        return data.favorites;
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+        throw error;
+      }
     }
   }
   
@@ -115,8 +114,7 @@ const CawsNFT = ({
 
   useEffect(() => {
     fetchInitialCaws();
-    sortNfts("lth");
-    
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -126,7 +124,7 @@ const CawsNFT = ({
     if (cawsNFTS && cawsNFTS.length > 0) {
       setLoading(false);
     }
-    window.scrollTo(0, 0);
+    sortNfts("lth");
   }, [cawsNFTS]);
 
   return (

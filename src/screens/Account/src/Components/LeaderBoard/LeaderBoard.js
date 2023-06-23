@@ -344,29 +344,33 @@ const LeaderBoard = ({
       MaxResultsCount: 6,
       PlayerId: userId,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setRecordsAroundPlayer(result.data.data.leaderboard);
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
+      if (itemData.length > 0) {
+        var testArray2 = itemData.filter(
+          (item) => item.displayName === username
+        );
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayer(true);
+        }
+        if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayer(false);
+          setUserData(...testArray);
+        }
       }
-      if (testArray.length > 0 && testArray2.length === 0) {
+      if (testArray.length > 0) {
         setActivePlayer(false);
         setUserData(...testArray);
       }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
     }
   };
 
@@ -399,29 +403,33 @@ const LeaderBoard = ({
       MaxResultsCount: 6,
       PlayerId: userId,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setRecordsAroundPlayer(result.data.data.leaderboard);
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
+      if (itemData.length > 0) {
+        var testArray2 = itemData.filter(
+          (item) => item.displayName === username
+        );
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayer(true);
+        }
+        if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayer(false);
+          setUserData(...testArray);
+        }
       }
-      if (testArray.length > 0 && testArray2.length === 0) {
+      if (testArray.length > 0) {
         setActivePlayer(false);
         setUserData(...testArray);
       }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
     }
   };
 
@@ -454,31 +462,35 @@ const LeaderBoard = ({
       MaxResultsCount: 6,
       PlayerId: userId,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setRecordsAroundPlayer(result.data.data.leaderboard);
 
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
+      if (itemData.length > 0) {
+        var testArray2 = itemData.filter(
+          (item) => item.displayName === username
+        );
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayer(true);
+        }
+
+        if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayer(false);
+          setUserData(...testArray);
+        }
       }
-
-      if (testArray.length > 0 && testArray2.length === 0) {
+      if (testArray.length > 0) {
         setActivePlayer(false);
         setUserData(...testArray);
       }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
     }
   };
 
@@ -488,27 +500,31 @@ const LeaderBoard = ({
       MaxResultsCount: 6,
       PlayerId: userId,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
+      if (itemData.length > 0) {
+        var testArray2 = itemData.filter(
+          (item) => item.displayName === username
+        );
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      } else if (testArray.length > 0 && testArray2.length === 0) {
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayer(true);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayer(false);
+          setUserData(...testArray);
+        }
+      } else if (testArray.length > 0) {
         setActivePlayer(false);
         setUserData(...testArray);
       }
-    } else if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
     }
   };
 
@@ -679,9 +695,8 @@ const LeaderBoard = ({
   }, [availableTime]);
 
   return (
- 
-      <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-end">
-        <div className="row w-100 align-items-end">
+    <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-end">
+      <div className="row w-100 align-items-end">
         <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 leaderboard-wrapper">
           <div className="d-none">
             {availableTime !== "0" && availableTime && (
@@ -1236,9 +1251,7 @@ const LeaderBoard = ({
           </div>
         </div>
         <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 medal-wrapper align-items-center justify-content-center position-relative">
-          <div
-            className="d-flex justify-content-center w-100 position-relative medalinnerwrapper"
-          >
+          <div className="d-flex justify-content-center w-100 position-relative medalinnerwrapper">
             <div className="secondaryplayer-wrapper col-3">
               <div className="position-relative d-flex h-100 flex-column justify-content-end gap-2 align-items-center">
                 <img
@@ -1448,8 +1461,8 @@ const LeaderBoard = ({
             </div>
           </div>
         </div>
-        </div>
       </div>
+    </div>
   );
 };
 
