@@ -1185,3 +1185,64 @@
   font-weight: 700;
 }
 
+
+.new-stake-tab{
+color: #fff;
+text-align: center;
+font-size: 16px;
+font-weight: 500;
+  border-radius: 8px;
+transition: all .25s;
+cursor: pointer;
+}
+
+.new-stake-tab:hover{
+background: #252743;
+color: #00FECF;
+}
+
+.stake-tab-active{
+background: #252743;
+color: #00FECF;
+}
+
+.new-stake-divider{
+  height: 1px;
+  background: rgba(184, 184, 224, 1);
+  display: flex;
+}
+
+.new-stake-info-wrapper{
+  border-radius: 20px;
+background: linear-gradient(0deg, rgba(255, 255, 255, 0.15) 0%, rgba(33, 36, 64, 0.15) 100%);
+backdrop-filter: blur(13px);
+}
+
+.new-stake-info{
+color: #FFF;
+text-align: center;
+font-size: 36px;
+font-weight: 800;
+margin-bottom: 0;
+}
+
+.new-stake-desc{
+color: #FFF;
+text-align: center;
+font-size: 16px;
+font-weight: 500;
+}
+
+.upcoming-stake{
+  color: #F7F7FC;
+text-align: center;
+font-size: 24px;
+font-weight: 700;
+}
+
+.upcoming-stake-desc{
+  color: #C0CBF7;
+text-align: center;
+font-size: 16px;
+font-weight: 300;
+}

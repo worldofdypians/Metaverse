@@ -35,6 +35,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
+  const [activeTab, setActiveTab] = useState("live")
 
   const html = document.querySelector("html");
 
@@ -394,14 +395,36 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
             />
           )}
           <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
-            World of Dypians{" "}
-            <span style={{ color: "#8c56ff" }}>NFT Staking</span>
+            NFT{" "}
+            <span style={{ color: "#8c56ff" }}> Staking</span>
           </h6>
-          <div className="row">
-            <div className="col-12 ">
-              <div className="market-stake-banner-wrapper d-flex align-items-center justify-content-center p-4">
-                <img src={marketStakeBanner} className="w-50" alt="" />
-              </div>
+          <div className="d-flex w-100 align-items-center justify-content-center gap-4">
+            <h6 className={`new-stake-tab ${activeTab === "live" && "stake-tab-active"} px-3 py-2`} onClick={() => setActiveTab("live")}>Live</h6>
+            <h6 className={`new-stake-tab ${activeTab === "upcoming" && "stake-tab-active"} px-3 py-2`} onClick={() => setActiveTab("upcoming")}>Upcoming</h6>
+            <h6 className={`new-stake-tab ${activeTab === "past" && "stake-tab-active"} px-3 py-2`} onClick={() => setActiveTab("past")}>Past</h6>
+          </div>
+          <span className="w-100 new-stake-divider mt-3 mb-5">
+          </span>
+        {activeTab === "live" &&
+        <>
+          <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-4 d-flex align-items-center justify-content-around">
+            <div className="d-flex flex-column align-items-center gap-2">
+              <h6 className="new-stake-info">$432K+</h6>
+              <span className="new-stake-desc">
+                Total Value Locked (TVL)
+              </span>
+            </div>
+            <div className="d-flex flex-column align-items-center gap-2">
+              <h6 className="new-stake-info">$1.2K+</h6>
+              <span className="new-stake-desc">
+                Total Staked NFTs
+              </span>
+            </div>
+            <div className="d-flex flex-column align-items-center gap-2">
+              <h6 className="new-stake-info">$18.5M+</h6>
+              <span className="new-stake-desc">
+                Paid Rewards
+              </span>
             </div>
           </div>
           <div className="row w-100  m-0 mt-5">
@@ -486,6 +509,66 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               </div>
             </div>
           </div>
+        </>
+        }
+        {activeTab === "upcoming" &&
+         <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+         <div className="d-flex flex-column align-items-center gap-2">
+           <h6 className="upcoming-stake">Staking pools are coming...</h6>
+           <span className="upcoming-stake-desc">
+           Check back soon!
+           </span>
+         </div>
+       
+       </div>
+        }
+        {activeTab === "past" &&
+        <div className="row w-100 m-0 mt-5">
+        <div className="col-12 px-0">
+          <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+            <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+              <div className="d-flex flex-column gap-4">
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="market-stake-title">
+                    Cats and Watches Society
+                  </h6>
+                  <h6 className="market-stake-title">
+                    CAWS
+                  </h6>
+                  <span className="market-stake-desc">
+                    Stake your Genesis Land NFTs to earn daily ETH rewards.
+                  </span>
+                </div>
+                <div className="d-flex align-items-center gap-3">
+                  <button
+                    className="btn pill-btn px-4 py-2"
+                    onClick={() => {
+                      setlandStakeModal(true);
+                    }}
+                  >
+                    Deposit
+                  </button>
+                  <button
+                    className="btn rewards-btn px-4 py-2"
+                    onClick={() => {
+                      setlandunStakeModal(true);
+                    }}
+                  >
+                    Rewards
+                  </button>
+                </div>
+                <div className="tvl-wrapper">
+                  <h6 className="market-stake-tvl">
+                    ${abbreviateNumber(landtvl)}+
+                  </h6>
+                </div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        }
         </div>
       </div>
     </div>
