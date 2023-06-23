@@ -597,12 +597,13 @@ const Marketplace = ({
             </div>
             <div className="row mx-1 justify-content-center d-flex my-4 align-items-center nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4">
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-                <h6 className="nft-wrapper-title font-raleway mb-0">
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-4">
+              <h6 className="nft-wrapper-title font-raleway mb-0">
                   Top Sales
                 </h6>
-                <div className="d-flex align-items-center gap-4">
+                <div className="d-flex  align-items-center gap-4">
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title mb-0 ${
                       topSalesFilter === "all" && "filter-selected"
                     }`}
                     onClick={() => filterTopSales("all")}
@@ -610,7 +611,7 @@ const Marketplace = ({
                     All
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title mb-0 ${
                       topSalesFilter === "caws" && "filter-selected"
                     }`}
                     onClick={() => filterTopSales("caws")}
@@ -618,7 +619,7 @@ const Marketplace = ({
                     CAWS
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title mb-0 ${
                       topSalesFilter === "land" && "filter-selected"
                     }`}
                     onClick={() => filterTopSales("land")}
@@ -626,13 +627,41 @@ const Marketplace = ({
                     Land
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title mb-0 ${
                       topSalesFilter === "timepiece" && "filter-selected"
                     }`}
                     onClick={() => filterTopSales("timepiece")}
                   >
                     Timepiece
                   </h6>
+                </div>
+              </div>
+              <div className="d-flex align-items-center gap-4">
+                  <h6
+                    className={`time-filter-title px-2 py-1 mb-0 ${
+                      topSalesFilter === "all" && "time-filter-selected"
+                    }`}
+                    // onClick={() => filterTopSales("all")}
+                  >
+                    24H
+                  </h6>
+                  <h6
+                    className={`time-filter-title px-2 py-1 mb-0 ${
+                      topSalesFilter === "caws" && "time-filter-selected"
+                    }`}
+                    // onClick={() => filterTopSales("caws")}
+                  >
+                    7D
+                  </h6>
+                  <h6
+                    className={`time-filter-title px-2 py-1 mb-0 ${
+                      topSalesFilter === "land" && "time-filter-selected"
+                    }`}
+                    // onClick={() => filterTopSales("land")}
+                  >
+                    30D
+                  </h6>
+               
                 </div>
               </div>
               <div
@@ -662,9 +691,9 @@ const Marketplace = ({
                         }}
                       >
                         <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
-                          <div className="position-absolute top-sales-rank">
+                          {/* <div className="position-absolute top-sales-rank">
                             <span>{index + 1}</span>
-                          </div>
+                          </div> */}
                           {/* <span className="sales-number">{index + 1}</span> */}
                           <img
                             src={
