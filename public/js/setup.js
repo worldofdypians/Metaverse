@@ -5782,9 +5782,10 @@ async function getTimepieceNft(id) {
 
 async function getMyNFTs(address, type = "") {
   let contract;
-  window.web3 = new Web3(window.ethereum);
+  const infuraweb3 = window.infuraWeb3
+  // window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
-    contract = await new window.web3.eth.Contract(
+    contract = await new infuraweb3.eth.Contract(
       window.TIMEPIECE_ABI,
       window.config.nft_timepiece_address
     );
@@ -5798,7 +5799,7 @@ async function getMyNFTs(address, type = "") {
 
     return tokens;
   } else if (type === "land") {
-    contract = await new window.web3.eth.Contract(
+    contract = await new infuraweb3.eth.Contract(
       window.WOD_ABI,
       window.config.nft_land_address
     );
@@ -5813,7 +5814,7 @@ async function getMyNFTs(address, type = "") {
 
     return tokens;
   } else if (type === "cawsold") {
-    contract = await new window.web3.eth.Contract(
+    contract = await new infuraweb3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
     );
@@ -5833,7 +5834,7 @@ async function getMyNFTs(address, type = "") {
 
     return tokens;
   } else {
-    contract = await new window.web3.eth.Contract(
+    contract = await new infuraweb3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
     );
@@ -33908,7 +33909,6 @@ const whitelistWod = [
 ];
 
 window.checkWhitelistWod = function (address) {
-  console.log("address", address);
   let found = 0;
   for (let i of whitelistWod) {
     if (address.toLowerCase() == i.toLowerCase()) {

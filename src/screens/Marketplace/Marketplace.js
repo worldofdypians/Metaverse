@@ -320,6 +320,7 @@ const Marketplace = ({
   };
 
   const filterRecentListings = (filter) => {
+    console.log(latest20RecentListedNFTS)
     setLoadingRecentListings(true);
     if (filter === "caws") {
       setRecentListingsFilter("caws");

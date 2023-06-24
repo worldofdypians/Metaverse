@@ -76,8 +76,8 @@ function Web3Provider({ children }) {
 
   ethereum?.on("chainChanged", checkIsConnected);
   ethereum?.on("accountsChanged", checkIsConnected);
-  ethereum?.on("connect", checkIsConnected);
-  ethereum?.on("disconnect", checkIsConnected);
+  // ethereum?.on("connect", checkIsConnected);
+  // ethereum?.on("disconnect", checkIsConnected);
 
   const getDepositedTokens = async () => {
     if (chainId === 56) {

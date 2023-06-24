@@ -48,19 +48,14 @@ import axios from "axios";
 import Unsubscribe from "./screens/Unsubscribe/Unsubscribe";
 import Marketplace from "./screens/Marketplace/Marketplace";
 import getListedNFTS from "./actions/Marketplace";
-import Nft from "./screens/nft/index";
+
 import CawsNFT from "./screens/Marketplace/MarketNFTs/CawsNFT";
 import WoDNFT from "./screens/Marketplace/MarketNFTs/WoDNFT";
 import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
 import MarketStake from "./screens/Marketplace/MarketStake";
 import MarketEvents from "./screens/Marketplace/MarketEvents";
 import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
-import {
-  getCawsNfts,
-  getCawsOldNfts,
-  getWodNfts,
-  getTimepieceNfts,
-} from "./actions/convertUsd";
+
 import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 
@@ -68,7 +63,8 @@ function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showWalletModalDownload, setShowWalletModalDownload] = useState(false);
   const [showWalletModalRegister, setShowWalletModalRegister] = useState(false);
-  const [showWalletModalRegister2, setShowWalletModalRegister2] = useState(false);
+  const [showWalletModalRegister2, setShowWalletModalRegister2] =
+    useState(false);
 
   const [betaModal, setBetaModal] = useState(false);
   const [donwloadSelected, setdownloadSelected] = useState(false);
@@ -85,6 +81,9 @@ function App() {
   const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
+  const [listedNFTS2, setListedNFTS2] = useState([]);
+  const [recentListedNFTS2, setrecentListedNFTS2] = useState([]);
+
   const [myCAWstakes, setCAWMystakes] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
@@ -112,16 +111,7 @@ function App() {
     top20BoughtByPriceAndPriceTypeETHNFTS,
     settop20BoughtByPriceAndPriceTypeETHNFTS,
   ] = useState([]);
-  const [
-    top20BoughtByPriceAndPriceTypeDYPNFTS,
-    settop20BoughtByPriceAndPriceTypeDYPNFTS,
-  ] = useState([]);
-  const [cawsNFTS, setCawsNFTS] = useState([]);
-  const [timepiecesNFTS, setTimepiecesNFTS] = useState([]);
-  const [wodNFTS, setWodNFTS] = useState([]);
-  const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
-  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
-  const [MyNFTSLand, setMyNFTSLand] = useState([]);
+
   const [nftCount, setNftCount] = useState(1);
   const [dypTokenData, setDypTokenData] = useState();
   const [ethTokenData, setEthTokenData] = useState();
@@ -728,17 +718,30 @@ function App() {
     return finalboughtItems;
   };
 
-  const getOtherNfts = async () => {
-    let finalboughtItems1 = [];
-    let finalboughtItems2 = [];
-
+  const getListedNfts2 = async () => {
     const listednfts = await getListedNFTS(0).catch((e) => {
       console.log(e);
     });
+    setListedNFTS2(listednfts);
 
-    listednfts &&
-      listednfts.length > 0 &&
-      listednfts.map((nft) => {
+    const recentListedNFTS = await getListedNFTS(
+      0,
+      "",
+      "recentListedNFTS"
+    ).catch((e) => {
+      console.log(e);
+    });
+    setrecentListedNFTS2(recentListedNFTS);
+  };
+
+  const getOtherNfts = async () => {
+    let finalboughtItems1 = [];
+    let finalboughtItems2 = [];
+    
+
+    listedNFTS2 &&
+      listedNFTS2.length > 0 &&
+      listedNFTS2.map((nft) => {
         if (nft.nftAddress === window.config.nft_caws_address) {
           nft.type = "caws";
           nft.chain = 1;
@@ -761,17 +764,9 @@ function App() {
     setListedNFTS(finalboughtItems1);
     setListedNFTSCount(finalboughtItems1.length);
 
-    const recentListedNFTS = await getListedNFTS(
-      0,
-      "",
-      "recentListedNFTS"
-    ).catch((e) => {
-      console.log(e);
-    });
-
-    recentListedNFTS &&
-      recentListedNFTS.length > 0 &&
-      recentListedNFTS.map((nft) => {
+    recentListedNFTS2 &&
+      recentListedNFTS2.length > 0 &&
+      recentListedNFTS2.map((nft) => {
         if (nft.nftAddress === window.config.nft_caws_address) {
           nft.type = "caws";
           nft.chain = 1;
@@ -806,7 +801,7 @@ function App() {
   }
 
   const AppContent = () => {
-    const { isLoading, isAuthenticated, playerId } = useAuth(); 
+    const { isLoading, isAuthenticated, playerId } = useAuth();
     useEffect(() => {
       if (!isLoading || !isAuthenticated || !playerId) {
         setFireAppContent(false);
@@ -843,25 +838,9 @@ function App() {
     ethereum.on("accountsChanged", handleConnectWallet);
   }
 
-  const getMyNFTS = async (coinbase, type) => {
-    return await window.getMyNFTs(coinbase, type);
-  };
-
-  //todo
-  const fetchAllMyNfts = async () => {
-    if (isConnected && coinbase) {
-      getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
-
-      getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
-
-      getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
-    }
-  };
-
   useEffect(() => {
     checkNetworkId();
     getEthBalance();
-    fetchAllMyNfts();
   }, [isConnected, coinbase, currencyAmount, chainId]);
 
   useEffect(() => {
@@ -898,46 +877,6 @@ function App() {
   };
 
   const getallNfts = async () => {
-    const cawsNew = await getCawsNfts().catch((e) => {
-      console.error(e);
-    });
-
-    const cawsOld = await getCawsOldNfts().catch((e) => {
-      console.error(e);
-    });
-
-    if (cawsOld && cawsNew && cawsOld.length === 0 && cawsNew.length === 0) {
-      setCawsNFTS([]);
-    }
-    if (cawsOld && cawsNew && cawsOld.length !== 0 && cawsNew.length === 0) {
-      let totalCaws = [...cawsOld];
-      setCawsNFTS(totalCaws);
-    }
-
-    if (cawsOld && cawsNew && cawsOld.length === 0 && cawsNew.length !== 0) {
-      let totalCaws = [...cawsNew];
-      setCawsNFTS(totalCaws);
-    }
-
-    if (cawsOld && cawsNew && cawsOld.length !== 0 && cawsNew.length !== 0) {
-      let totalCaws = [...cawsOld, ...cawsNew];
-      setCawsNFTS(totalCaws);
-    }
-
-    getTimepieceNfts()
-      .then((NFTS) => {
-        setTimepiecesNFTS(NFTS);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-
-    getWodNfts()
-      .then((NFTS) => setWodNFTS(NFTS))
-      .catch((e) => {
-        console.error(e);
-      });
-
     getBoughtNFTS().then((NFTS) => {
       setTotalBoughtNFTS(NFTS);
       setTotalBoughtNFTSCount(NFTS.length);
@@ -971,12 +910,17 @@ function App() {
 
   useEffect(() => {
     getTokenData();
+    getallNfts();
   }, []);
 
   useEffect(() => {
-    getallNfts();
-    getOtherNfts();
+    // getallNfts();
+    getListedNfts2();
   }, [nftCount]);
+
+  useEffect(() => {
+    getOtherNfts();
+  }, [listedNFTS2.length, recentListedNFTS2.length]);
 
   // useEffect(() => {
   //   if (window.ethereum) {
@@ -993,7 +937,7 @@ function App() {
     <BrowserRouter>
       <ApolloProvider client={client}>
         <AuthProvider>
-          <div className="container-fluid p-0 main-wrapper position-relative">
+          <div className="container-fluid p-0 main-wrapper h-100 position-relative overflow-auto">
             <Header
               handleSignUp={handleShowWalletModal}
               coinbase={coinbase}
@@ -1002,13 +946,14 @@ function App() {
                 setFireAppContent(true);
               }}
             />
-            <MobileNavbar 
-           handleSignUp={handleShowWalletModal}
-           coinbase={coinbase}
-           avatar={avatar}
-           handleRedirect={() => {
-             setFireAppContent(true);
-           }} />
+            <MobileNavbar
+              handleSignUp={handleShowWalletModal}
+              coinbase={coinbase}
+              avatar={avatar}
+              handleRedirect={() => {
+                setFireAppContent(true);
+              }}
+            />
             <Routes>
               <Route path="/news/:newsId?/:titleId?" element={<News />} />
               <Route
@@ -1090,6 +1035,7 @@ function App() {
               />
               <Route exact path="/ResetPassword" element={<ResetPassword />} />
               <Route exact path="/player" element={<PlayerCreation />} />
+
               <Route
                 exact
                 path="/account"
@@ -1102,7 +1048,9 @@ function App() {
                     isConnected={isConnected}
                     chainId={chainId}
                     handleConnect={handleConnection}
-                    onSigninClick={()=>{setShowWalletModalRegister2(true)}} 
+                    onSigninClick={() => {
+                      setShowWalletModalRegister2(true);
+                    }}
                   />
                 }
               />
@@ -1146,9 +1094,6 @@ function App() {
                     totalBoughtNFTSCount={totalBoughtNFTSCount}
                     recentSales={latest20BoughtNFTS}
                     topSales={top20BoughtByPriceAndPriceTypeETHNFTS}
-                    MyNFTSCaws={MyNFTSCaws}
-                    MyNFTSTimepiece={MyNFTSTimepiece}
-                    MyNFTSLand={MyNFTSLand}
                     nftCount={nftCount}
                   />
                 }
@@ -1225,7 +1170,7 @@ function App() {
                 path="/marketplace/mint"
                 element={
                   <MarketMint
-                  coinbase={coinbase}
+                    coinbase={coinbase}
                     showWalletConnect={() => {
                       setwalletModal(true);
                     }}
@@ -1330,7 +1275,7 @@ function App() {
             />
           )}
 
-{showWalletModalRegister2 === true && (
+          {showWalletModalRegister2 === true && (
             <CheckAuthUserModal
               open={showWalletModalRegister2}
               onClose={() => {

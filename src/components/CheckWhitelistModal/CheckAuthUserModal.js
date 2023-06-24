@@ -75,7 +75,7 @@ const CheckAuthUserModal = ({
   const checkData = async () => {
     if (coinbase) {
       let result = window.checkWhitelistWod(coinbase);
-      console.log(result);
+ 
 
       if (result === 1 || nftresult > 0) {
         setactiveUser(true);

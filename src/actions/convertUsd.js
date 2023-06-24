@@ -2,6 +2,7 @@ import getListedNFTS from "./Marketplace";
 
 let eth_Price;
 let dyp_Price;
+let listedNftResult = [];
 
 const getEthPrice = async () => {
   await fetch(
@@ -27,10 +28,21 @@ const getDypPrice = async () => {
     });
 };
 
- getDypPrice();
- getEthPrice();
-const convertToUSD = async (price, payment_priceType) => {
+const getListedNftResult = async () => {
+  const result = await getListedNFTS(0, "", "", "", "").catch((e) => {
+    console.log(e);
+  });
+  if (result) {
+    listedNftResult = result;
+    return listedNftResult;
+  }
+};
 
+getDypPrice();
+getEthPrice();
+getListedNftResult();
+
+const convertToUSD = async (price, payment_priceType) => {
   if (payment_priceType === 0) {
     const ethPrice = price * eth_Price;
     return ethPrice.toFixed(5);
@@ -54,34 +66,33 @@ const filterNFTsByAddress = (nfts, address) => {
 
 let all_listed_nfts;
 const getAllNfts = async () => {
- const result =  await getListedNFTS(0, "", "", "", "");
- const convertedNFTs = [];
+  const result = listedNftResult;
+  const convertedNFTs = [];
 
- if(result) {
-  const conversionPromises = result.map(async (nft) => {
-    if (nft.nftAddress === window.config.nft_caws_address) {
-      nft.type = "caws";
-      nft.chain = 1;
-      convertedNFTs.push(nft);
-    }
-    else if (nft.nftAddress === window.config.nft_cawsold_address) {
-      nft.type = "cawsold";
-      nft.chain = 1;
-      convertedNFTs.push(nft);
-    } else if (nft.nftAddress === window.config.nft_land_address) {
-      nft.type = "land";
-      nft.chain = 1;
-      convertedNFTs.push(nft);
-    } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-      nft.type = "timepiece";
-      nft.chain = 1;
-      convertedNFTs.push(nft);
-    }
-  });
-  await Promise.all(conversionPromises);
-  all_listed_nfts = convertedNFTs;
- }
-
+  if (result) {
+    const conversionPromises = result.map(async (nft) => {
+      if (nft.nftAddress === window.config.nft_caws_address) {
+        nft.type = "caws";
+        nft.chain = 1;
+        convertedNFTs.push(nft);
+      } else if (nft.nftAddress === window.config.nft_cawsold_address) {
+        nft.type = "cawsold";
+        nft.chain = 1;
+        convertedNFTs.push(nft);
+      } else if (nft.nftAddress === window.config.nft_land_address) {
+        nft.type = "land";
+        nft.chain = 1;
+        convertedNFTs.push(nft);
+      } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        nft.type = "timepiece";
+        nft.chain = 1;
+        convertedNFTs.push(nft);
+      }
+    });
+    await Promise.all(conversionPromises);
+    all_listed_nfts = convertedNFTs;
+    return convertedNFTs;
+  }
 };
 
 const convertAndFilterNFTs = async (nfts, nftAddress) => {
@@ -100,22 +111,20 @@ const convertAndFilterNFTs = async (nfts, nftAddress) => {
   return convertedNFTs;
 };
 
-
 const getCawsNfts = async () => {
   await getAllNfts();
   const cawsNFTs = await convertAndFilterNFTs(
     all_listed_nfts,
-    "0xef7223b8177b34083bc6fc32055402b3255d03c6"
+    window.config.nft_caws_address
   );
   return cawsNFTs;
 };
-
 
 const getCawsOldNfts = async () => {
   await getAllNfts();
   const cawsNFTs = await convertAndFilterNFTs(
     all_listed_nfts,
-    "0xa22294eab566f64db0742bb3fe4e762f5f062f23"
+    window.config.nft_cawsold_address
   );
   return cawsNFTs;
 };
@@ -124,7 +133,7 @@ const getWodNfts = async () => {
   await getAllNfts();
   const wodNFTs = await convertAndFilterNFTs(
     all_listed_nfts,
-    "0x2519ab0e0a73e2108c1d6ba5af550ac3a220d8ab"
+    window.config.nft_land_address
   );
   return wodNFTs;
 };
@@ -133,9 +142,15 @@ const getTimepieceNfts = async () => {
   await getAllNfts();
   const tpNFTs = await convertAndFilterNFTs(
     all_listed_nfts,
-    "0x6917d34310a03704727169451ca66307dad62a23"
+    window.config.nft_timepiece_address
   );
   return tpNFTs;
 };
 
-export { getCawsNfts, getCawsOldNfts,  getWodNfts, getTimepieceNfts };
+export {
+  getCawsNfts,
+  getCawsOldNfts,
+  getWodNfts,
+  getTimepieceNfts,
+  getAllNfts,
+};

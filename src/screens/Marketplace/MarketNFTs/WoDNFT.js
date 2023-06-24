@@ -100,6 +100,26 @@ const WoDNFT = ({
     }
   }
 
+
+
+  async function updateViewCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch("https://api.worldofdypians.com/nft-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokenId, nftAddress }),
+      });
+      const data = await response.json();
+      console.log(
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+      );
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  }
+
   const updateFavs = () => {
     setfavItems(favItems + 1);
   };
@@ -228,6 +248,9 @@ const WoDNFT = ({
                         nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
                         nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
                       chain: nft.chain,
+                    }}
+                    onClick={() => {
+                      updateViewCount(nft.tokenId, nft.nftAddress);
                     }}
                   >
                     <ItemCard

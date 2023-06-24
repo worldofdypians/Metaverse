@@ -12,6 +12,7 @@ import axios from "axios";
 import viewAllArrow from "./assets/viewAllArrow.svg";
 import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
+import { getAllNfts } from "../../../../../actions/convertUsd";
 import { HashLoader } from "react-spinners";
 import nextArrow from "../../../../Marketplace/assets/nextArrow.svg";
 import Slider from "react-slick";
@@ -49,6 +50,7 @@ const WalletBalance = ({
   ethTokenData,
   dypTokenData,
   favoritesArray,
+  latestBoughtNFTS,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -76,6 +78,7 @@ const WalletBalance = ({
   const [activeSlide, setActiveSlide] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
+  const [allListed, setAllListed] = useState([]);
 
   const firstSlider = useRef();
 
@@ -83,6 +86,11 @@ const WalletBalance = ({
     display: "block",
     margin: "auto",
     borderColor: "#554fd8",
+  };
+
+  const getAllnftsListed = async () => {
+    const result = await getAllNfts();
+    setAllListed(result);
   };
 
   const sortNfts = (sortValue) => {
@@ -213,7 +221,13 @@ const WalletBalance = ({
   const getListed = async () => {
     let finalItems = [];
 
-    const listedNFTS = await getListedNFTS(0, "", "seller", address, "");
+    const listedNFTS = await getListedNFTS(
+      0,
+      "",
+      "seller",
+      isVerified && email ? address : coinbase,
+      ""
+    );
     listedNFTS &&
       listedNFTS.length > 0 &&
       listedNFTS.map((nft) => {
@@ -304,38 +318,45 @@ const WalletBalance = ({
     setcollectedItemsFiltered(finalCollection);
   };
 
+  async function updateViewCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch("https://api.worldofdypians.com/nft-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokenId, nftAddress }),
+      });
+      const data = await response.json();
+      console.log(
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+      );
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  }
+
   const getAllFavs = async () => {
     let listedFavs = [];
-    let obj = { tokenId: "", nftAddress: "", type: "", chainId: "", buyer: "" };
+
     if (favoritesArray && favoritesArray.length > 0) {
       favoritesArray.map(async (item) => {
-        const result = await getListedNFTS(
-          0,
-          "",
-          "nftAddress_tokenId",
-          item.tokenId,
-          item.nftAddress
+        const result = allListed.find(
+          (obj) =>
+            obj.nftAddress === item.nftAddress && obj.tokenId === item.tokenId
         );
-        if (result && result.length > 0) {
-          listedFavs.push(...result);
-        } else {
-          listedFavs.push({
-            tokenId: item.tokenId,
-            nftAddress: item.nftAddress,
-            type:
-              item.nftAddress === window.config.nft_caws_address
-                ? "caws"
-                : item.nftAddress === window.config.nft_cawsold_address
-                ? "cawsold"
-                : item.nftAddress === window.config.nft_land_address
-                ? "land"
-                : "timepiece",
-            chainId: 1,
-            buyer: isVerified && email ? address : coinbase,
-          });
-        }
 
-        console.log(listedFavs);
+        if (result) {
+          listedFavs.push(result);
+        } else {
+          const result2 = latestBoughtNFTS.find(
+            (obj) =>
+              obj.nftAddress === item.nftAddress && obj.tokenId === item.tokenId
+          );
+          if (result2) {
+            listedFavs.push(result2);
+          }
+        }
       });
       setfavoriteItems(listedFavs);
       setfavItemsFiltered(listedFavs);
@@ -344,6 +365,7 @@ const WalletBalance = ({
       setfavItemsFiltered([]);
     }
   };
+
   const fetchMonthlyRecordsAroundPlayer = async () => {
     const data = {
       StatisticName: "MonthlyLeaderboard",
@@ -507,11 +529,12 @@ const WalletBalance = ({
     getTokenData();
     getTokenDataavax();
     getTokenDatabnb();
+    getAllnftsListed();
   }, []);
 
   useEffect(() => {
     getAllFavs();
-  }, [favoritesArray]);
+  }, [favoritesArray, latestBoughtNFTS]);
 
   const emptyArray = [1, 2, 3, 4, 5, 6];
 
@@ -612,22 +635,43 @@ const WalletBalance = ({
                     className="col-12 col-lg-6 col-xxl-4 mb-3"
                     state={{
                       nft: item,
-                      type: item.type,
+                      type:
+                        item.type ??
+                        item.nftAddress === window.config.nft_cawsold_address
+                          ? "cawsold"
+                          : item.nftAddress === window.config.nft_caws_address
+                          ? "caws"
+                          : item.nftAddress === window.config.nft_land_address
+                          ? "land"
+                          : "timepiece",
                       isOwner:
                         isVerified && email
-                          ? item.buyer?.toLowerCase() === address?.toLowerCase()
-                          : item.buyer?.toLowerCase() ===
-                            coinbase?.toLowerCase(),
+                          ? item.buyer
+                            ? item.buyer?.toLowerCase() ===
+                              address?.toLowerCase()
+                              ? item.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase()
+                              : item.seller?.toLowerCase() ===
+                                address?.toLowerCase()
+                            : item.seller?.toLowerCase() ===
+                              coinbase?.toLowerCase()
+                          : false,
                       chain: 1,
+                    }}
+                    onClick={() => {
+                      updateViewCount(item.tokenId, item.nftAddress);
                     }}
                   >
                     <div className="">
                       <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                         <img
                           src={
-                            item.type === "caws" || item.type === "cawsold"
+                            item.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            item.nftAddress === window.config.nft_caws_address
                               ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
-                              : item.type === "land"
+                              : item.nftAddress ===
+                                window.config.nft_land_address
                               ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
                               : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
                           }
@@ -636,17 +680,23 @@ const WalletBalance = ({
                         />
                         <div className="d-flex flex-column align-items-center justify-content-center">
                           <h6 className="account-nft-title">
-                            {item.type === "caws" || item.type === "cawsold"
+                            {item.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            item.nftAddress === window.config.nft_caws_address
                               ? "CAWS"
-                              : item.type === "land"
+                              : item.nftAddress ===
+                                window.config.nft_land_address
                               ? "Genesis Land"
                               : "CAWS Timepiece"}{" "}
                             #{item.tokenId}
                           </h6>
                           <span className="account-nft-type">
-                            {item.type === "caws" || item.type === "cawsold"
+                            {item.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            item.nftAddress === window.config.nft_caws_address
                               ? "CAWS"
-                              : item.type === "land"
+                              : item.nftAddress ===
+                                window.config.nft_land_address
                               ? "Genesis Land"
                               : "Timepiece"}
                           </span>
@@ -711,6 +761,9 @@ const WalletBalance = ({
                         (item.seller &&
                           item.seller.toLowerCase() === address?.toLowerCase()),
                       chain: item.chain,
+                    }}
+                    onClick={() => {
+                      updateViewCount(item.tokenId, item.nftAddress);
                     }}
                   >
                     <div className="">
@@ -914,6 +967,9 @@ const WalletBalance = ({
                         item.seller &&
                         item.seller.toLowerCase() === coinbase?.toLowerCase(),
                       chain: item.chain,
+                    }}
+                    onClick={() => {
+                      updateViewCount(item.tokenId, item.nftAddress);
                     }}
                   >
                     <div className="">
@@ -1266,6 +1322,9 @@ const WalletBalance = ({
                               address?.toLowerCase()),
                         chain: nft.chain,
                       }}
+                      onClick={() => {
+                        updateViewCount(nft.tokenId, nft.nftAddress);
+                      }}
                     >
                       <ItemCard
                         ethTokenData={ethTokenData}
@@ -1295,14 +1354,31 @@ const WalletBalance = ({
                       key={index}
                       state={{
                         nft: nft,
-                        type: nft.type,
+                        type:
+                          nft.type ??
+                          nft.nftAddress === window.config.nft_cawsold_address
+                            ? "cawsold"
+                            : nft.nftAddress === window.config.nft_caws_address
+                            ? "caws"
+                            : nft.nftAddress === window.config.nft_land_address
+                            ? "land"
+                            : "timepiece",
                         isOwner:
-                          isVerified && email && nft.buyer
-                            ? nft.buyer?.toLowerCase() ===
-                              address?.toLowerCase()
-                            : nft.buyer?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
+                          isVerified && email
+                            ? nft.buyer
+                              ? nft.buyer?.toLowerCase() ===
+                                address?.toLowerCase()
+                                ? nft.buyer?.toLowerCase() ===
+                                  coinbase?.toLowerCase()
+                                : nft.seller?.toLowerCase() ===
+                                  address?.toLowerCase()
+                              : nft.seller?.toLowerCase() ===
+                                coinbase?.toLowerCase()
+                            : false,
                         chain: 1,
+                      }}
+                      onClick={() => {
+                        updateViewCount(nft.tokenId, nft.nftAddress);
                       }}
                     >
                       <ItemCard
@@ -1348,6 +1424,9 @@ const WalletBalance = ({
                             nft.seller.toLowerCase() ===
                               address?.toLowerCase()),
                         chain: nft.chain,
+                      }}
+                      onClick={() => {
+                        updateViewCount(nft.tokenId, nft.nftAddress);
                       }}
                     >
                       <ItemCard

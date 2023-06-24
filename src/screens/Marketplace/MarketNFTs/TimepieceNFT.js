@@ -67,7 +67,8 @@ const TimepieceNFT = ({
   };
 
   const fetchInitialTimepiece = async () => {
-    const timepiecenfts = await getTimepieceNfts() 
+    const timepiecenfts = await getTimepieceNfts();
+    console.log(timepiecenfts)
     if (timepiecenfts && timepiecenfts.length > 0) {
       let datedNfts = timepiecenfts.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
@@ -103,6 +104,24 @@ const TimepieceNFT = ({
     setfavItems(favItems + 1);
   };
 
+  async function updateViewCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch("https://api.worldofdypians.com/nft-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokenId, nftAddress }),
+      });
+      const data = await response.json();
+      console.log(
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+      );
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  }
+
   useEffect(() => {
     fetchUserFavorites(coinbase);
   }, [coinbase, favItems]);
@@ -119,7 +138,7 @@ const TimepieceNFT = ({
       setLoading(false);
     }
     sortNfts("lth");
-    }, [timepieceNFTS]);
+  }, [timepieceNFTS]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -229,6 +248,9 @@ const TimepieceNFT = ({
                         nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
                         nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
                       chain: nft.chain,
+                    }}
+                    onClick={() => {
+                      updateViewCount(nft.tokenId, nft.nftAddress);
                     }}
                   >
                     <ItemCard
