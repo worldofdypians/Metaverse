@@ -67,7 +67,8 @@ const TimepieceNFT = ({
   };
 
   const fetchInitialTimepiece = async () => {
-    const timepiecenfts = await getTimepieceNfts() 
+    const timepiecenfts = await getTimepieceNfts();
+    console.log(timepiecenfts)
     if (timepiecenfts && timepiecenfts.length > 0) {
       let datedNfts = timepiecenfts.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
@@ -103,7 +104,6 @@ const TimepieceNFT = ({
     setfavItems(favItems + 1);
   };
 
-
   async function updateViewCount(tokenId, nftAddress) {
     try {
       const response = await fetch("https://api.worldofdypians.com/nft-view", {
@@ -138,7 +138,7 @@ const TimepieceNFT = ({
       setLoading(false);
     }
     sortNfts("lth");
-    }, [timepieceNFTS]);
+  }, [timepieceNFTS]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

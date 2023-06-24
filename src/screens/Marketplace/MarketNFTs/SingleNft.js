@@ -18,6 +18,9 @@ import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import eye from "../assets/eye.svg";
 import heart from "../assets/heart.svg";
 import ethIcon from "../assets/ethIcon.svg";
+import { GET_PLAYER } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
+import { useQuery } from "@apollo/client";
+import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -116,8 +119,17 @@ const SingleNft = ({
   const [ethtokenData, setEthTokenData] = useState(0);
   const [viewCount, setViewCount] = useState(0);
   const [favCount, setfavCount] = useState(0);
+  const { email, logout } = useAuth();
 
-  console.log("nft", nft, IsListed, isOwner);
+  // console.log("nft", nft, IsListed, isOwner);
+
+  const {
+    data,
+    refetch: refetchPlayer,
+    loading: loadingPlayer,
+  } = useQuery(GET_PLAYER, {
+    fetchPolicy: "network-only",
+  });
 
   const getTokenData = async () => {
     await axios
@@ -427,18 +439,7 @@ const SingleNft = ({
   }
 
   async function isListedNFT(nft, type, details = false) {
-    let nft_address;
-
-    if (type === "timepiece") {
-      nft_address = window.config.nft_timepiece_address;
-    } else if (type === "land") {
-      nft_address = window.config.nft_land_address;
-    } else if (type === "cawsold") {
-      nft_address = window.config.nft_cawsold_address;
-    } else {
-      nft_address = window.config.nft_caws_address;
-    }
-
+ 
     const listedNFTS = await getListedNFTS(
       0,
       "",
@@ -519,7 +520,21 @@ const SingleNft = ({
 
     if (coinbase === undefined) {
       setisOwner(false);
-    } else if (coinbase) {
+    } else if (data?.getPlayer?.wallet && email && coinbase) {
+      if (
+        nft.seller &&
+        nft.seller.toLowerCase() ===
+          data?.getPlayer?.wallet?.publicAddress.toLowerCase()
+      ) {
+        setisOwner(true);
+      } else if (
+        nft.buyer &&
+        nft.buyer.toLowerCase() ===
+          data?.getPlayer?.wallet?.publicAddress.toLowerCase()
+      ) {
+        setisOwner(true);
+      }
+    } else if (coinbase && !data?.getPlayer?.wallet && !email) {
       if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
       } else if (
@@ -537,7 +552,10 @@ const SingleNft = ({
     if (type) {
       isListedNFT(nft, type).then((isListed) => {
         setIsListed(isListed);
+
       });
+      handleRefreshList(type, nft.tokenId);
+
     }
   }, [nft, type, nftCount]);
 
@@ -550,14 +568,13 @@ const SingleNft = ({
     if (nft) {
       getViewCount(nft.tokenId, nft.nftAddress);
       getFavoritesCount(nft.tokenId, nft.nftAddress);
-      handleRefreshList(nft.type, nft.tokenId);
       setNft(nft);
 
       if (nft.nftAddress === window.config.nft_cawsold_address) {
         setType("cawsold");
       }
     }
-  }, [nftCount,nft]);
+  }, [nftCount, nft]);
 
   return (
     <div
@@ -980,9 +997,7 @@ const SingleNft = ({
                   )}
                   <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
                     <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                      <span className="owner-txt">
-                        {nft.seller ? "Seller:" : "Buyer:"}
-                      </span>
+                      <span className="owner-txt">Owner:</span>
                       {nft.seller ? (
                         <a
                           href={`https://etherscan.io/address/${nft.seller}`}

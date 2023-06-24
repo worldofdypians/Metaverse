@@ -12,6 +12,7 @@ import axios from "axios";
 import viewAllArrow from "./assets/viewAllArrow.svg";
 import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
+import { getAllNfts } from "../../../../../actions/convertUsd";
 import { HashLoader } from "react-spinners";
 import nextArrow from "../../../../Marketplace/assets/nextArrow.svg";
 import Slider from "react-slick";
@@ -77,6 +78,7 @@ const WalletBalance = ({
   const [activeSlide, setActiveSlide] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
+  const [allListed, setAllListed] = useState([]);
 
   const firstSlider = useRef();
 
@@ -84,6 +86,11 @@ const WalletBalance = ({
     display: "block",
     margin: "auto",
     borderColor: "#554fd8",
+  };
+
+  const getAllnftsListed = async () => {
+    const result = await getAllNfts();
+    setAllListed(result);
   };
 
   const sortNfts = (sortValue) => {
@@ -214,7 +221,13 @@ const WalletBalance = ({
   const getListed = async () => {
     let finalItems = [];
 
-    const listedNFTS = await getListedNFTS(0, "", "seller", address, "");
+    const listedNFTS = await getListedNFTS(
+      0,
+      "",
+      "seller",
+      isVerified && email ? address : coinbase,
+      ""
+    );
     listedNFTS &&
       listedNFTS.length > 0 &&
       listedNFTS.map((nft) => {
@@ -305,7 +318,6 @@ const WalletBalance = ({
     setcollectedItemsFiltered(finalCollection);
   };
 
-
   async function updateViewCount(tokenId, nftAddress) {
     try {
       const response = await fetch("https://api.worldofdypians.com/nft-view", {
@@ -324,21 +336,18 @@ const WalletBalance = ({
     }
   }
 
-
   const getAllFavs = async () => {
     let listedFavs = [];
 
     if (favoritesArray && favoritesArray.length > 0) {
       favoritesArray.map(async (item) => {
-        const result = await getListedNFTS(
-          0,
-          "",
-          "nftAddress_tokenId",
-          item.tokenId,
-          item.nftAddress
+        const result = allListed.find(
+          (obj) =>
+            obj.nftAddress === item.nftAddress && obj.tokenId === item.tokenId
         );
-        if (result && result.length > 0) {
-          listedFavs.push(...result);
+
+        if (result) {
+          listedFavs.push(result);
         } else {
           const result2 = latestBoughtNFTS.find(
             (obj) =>
@@ -520,6 +529,7 @@ const WalletBalance = ({
     getTokenData();
     getTokenDataavax();
     getTokenDatabnb();
+    getAllnftsListed();
   }, []);
 
   useEffect(() => {
@@ -648,15 +658,20 @@ const WalletBalance = ({
                           : false,
                       chain: 1,
                     }}
-                    onClick={()=>{updateViewCount(item.tokenId, item.nftAddress)}}
+                    onClick={() => {
+                      updateViewCount(item.tokenId, item.nftAddress);
+                    }}
                   >
                     <div className="">
                       <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                         <img
                           src={
-                            item.nftAddress === window.config.nft_cawsold_address || item.nftAddress === window.config.nft_caws_address
+                            item.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            item.nftAddress === window.config.nft_caws_address
                               ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
-                              : item.nftAddress === window.config.nft_land_address
+                              : item.nftAddress ===
+                                window.config.nft_land_address
                               ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
                               : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
                           }
@@ -665,17 +680,23 @@ const WalletBalance = ({
                         />
                         <div className="d-flex flex-column align-items-center justify-content-center">
                           <h6 className="account-nft-title">
-                            {item.nftAddress === window.config.nft_cawsold_address  || item.nftAddress === window.config.nft_caws_address
+                            {item.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            item.nftAddress === window.config.nft_caws_address
                               ? "CAWS"
-                              : item.nftAddress === window.config.nft_land_address
+                              : item.nftAddress ===
+                                window.config.nft_land_address
                               ? "Genesis Land"
                               : "CAWS Timepiece"}{" "}
                             #{item.tokenId}
                           </h6>
                           <span className="account-nft-type">
-                            {item.nftAddress === window.config.nft_cawsold_address  || item.nftAddress === window.config.nft_caws_address
+                            {item.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            item.nftAddress === window.config.nft_caws_address
                               ? "CAWS"
-                              : item.nftAddress === window.config.nft_land_address
+                              : item.nftAddress ===
+                                window.config.nft_land_address
                               ? "Genesis Land"
                               : "Timepiece"}
                           </span>
@@ -740,10 +761,10 @@ const WalletBalance = ({
                         (item.seller &&
                           item.seller.toLowerCase() === address?.toLowerCase()),
                       chain: item.chain,
-
                     }}
-                    onClick={()=>{updateViewCount(item.tokenId, item.nftAddress)}}
-
+                    onClick={() => {
+                      updateViewCount(item.tokenId, item.nftAddress);
+                    }}
                   >
                     <div className="">
                       <div className="account-nft-card w-100 d-flex align-items-center gap-3">
@@ -947,8 +968,9 @@ const WalletBalance = ({
                         item.seller.toLowerCase() === coinbase?.toLowerCase(),
                       chain: item.chain,
                     }}
-                    onClick={()=>{updateViewCount(item.tokenId, item.nftAddress)}}
-
+                    onClick={() => {
+                      updateViewCount(item.tokenId, item.nftAddress);
+                    }}
                   >
                     <div className="">
                       <div className="account-nft-card w-100 d-flex align-items-center gap-3">
@@ -1300,8 +1322,9 @@ const WalletBalance = ({
                               address?.toLowerCase()),
                         chain: nft.chain,
                       }}
-                    onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
-
+                      onClick={() => {
+                        updateViewCount(nft.tokenId, nft.nftAddress);
+                      }}
                     >
                       <ItemCard
                         ethTokenData={ethTokenData}
@@ -1337,8 +1360,7 @@ const WalletBalance = ({
                             ? "cawsold"
                             : nft.nftAddress === window.config.nft_caws_address
                             ? "caws"
-                            : nft.nftAddress ===
-                              window.config.nft_land_address
+                            : nft.nftAddress === window.config.nft_land_address
                             ? "land"
                             : "timepiece",
                         isOwner:
@@ -1355,8 +1377,9 @@ const WalletBalance = ({
                             : false,
                         chain: 1,
                       }}
-                    onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
-
+                      onClick={() => {
+                        updateViewCount(nft.tokenId, nft.nftAddress);
+                      }}
                     >
                       <ItemCard
                         ethTokenData={ethTokenData}
@@ -1402,8 +1425,9 @@ const WalletBalance = ({
                               address?.toLowerCase()),
                         chain: nft.chain,
                       }}
-                    onClick={()=>{updateViewCount(nft.tokenId, nft.nftAddress)}}
-
+                      onClick={() => {
+                        updateViewCount(nft.tokenId, nft.nftAddress);
+                      }}
                     >
                       <ItemCard
                         key={nft.id}

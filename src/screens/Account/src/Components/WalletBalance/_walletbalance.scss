@@ -13,7 +13,7 @@
     cursor: pointer;
     border-radius: 6px;
     .wallet-span {
-      color: #00FECF;
+      color: #00fecf;
       font-size: 10px;
       font-weight: 500;
       letter-spacing: -0.18px;
@@ -161,22 +161,20 @@
 }
 
 .bnb-chain-text {
-  color: #D9A908;
+  color: #d9a908;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
 }
-
 
 .avax-chain-text {
-  color: #DF2C2D;
+  color: #df2c2d;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
 }
-
 
 .account-nft-sort {
   font-weight: 500;
@@ -189,7 +187,7 @@
 
 .balanceseparator {
   height: 1px;
-  background: #E2E2E2;
+  background: #e2e2e2;
   margin-top: 5px;
   margin-bottom: 5px;
   width: 100%;
@@ -209,9 +207,6 @@
   height: 60px;
   border-radius: 10px;
 }
-
-
-
 
 .account-nft-card {
   background: #252743;
@@ -241,23 +236,23 @@
   margin-bottom: 0;
 }
 
-.rankings-outer-wrapper{
-  height: 100%;
+.rankings-outer-wrapper {
+  height: auto;
   @media screen and (max-width: 786px) {
     height: fit-content;
   }
 }
-.rankings-wrapper{
+.rankings-wrapper {
   height: 100%;
   @media screen and (max-width: 786px) {
     height: fit-content;
   }
 }
 
-.account-nft-sort-wrapper{
+.account-nft-sort-wrapper {
   width: 100%;
 
   @media screen and (max-width: 786px) {
-    overflow-x: scroll ;
+    overflow-x: scroll;
   }
 }

@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import { dashboardBackground } from "../../Themes/Images";
 import { GENERATE_NONCE, GET_PLAYER, VERIFY_WALLET } from "./Dashboard.schema";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
-import { useWeb3 } from "../../Utils.js/Web3/Web3Provider";
+
 import { getWalletTokens } from "../../web3/tmp";
 import { CircularProgress, Grid } from "@mui/material";
 import { Cart, LoginWrapper, ErrorAlert, Button } from "../../Components";
@@ -13,10 +13,10 @@ import LandCart from "../../Components/Cart/LandCart";
 import EmptyCard from "../../Components/Cart/EmptyCard";
 import classes from "./Dashboard.module.css";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
-import BundleCard from "../../Components/BundleCard/BundleCard";
+
 import LeaderBoard from "../../Components/LeaderBoard/LeaderBoard";
 import WalletBalance from "../../Components/WalletBalance/WalletBalance";
-import ethereum from "../../Images/eth.svg";
+
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import ChecklistModal from "../../Components/ChecklistModal/ChecklistModal";
 import ChecklistLandNftModal from "../../Components/ChecklistModal/ChecklistLandNftModal";
@@ -25,22 +25,13 @@ import Web3 from "web3";
 import { ERC20_ABI } from "../../web3/abis";
 import _ from "lodash";
 import WalletModal from "../../Components/WalletModal/WalletModal";
-import { cawsStakeContract, landNftStake_contract } from "../../web3";
-import dragonIcon from "../../Images/userProfile/dragonIcon.svg";
-import idyp from "../../Images/userProfile/idyp.svg";
-import fistIcon from "../../Images/userProfile/Icon.png";
-import goldenPass from "../../Components/BundleCard/assets/goldenPass.webp";
+
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
-import dypius from "../../Images/userProfile/dypius.svg";
-import { NavLink } from "react-router-dom";
-import topEth from "../../../../Marketplace/assets/topEth.svg";
-import topDyp from "../../../../Marketplace/assets/topDyp.svg";
-import nextArrow from "../../../../Marketplace/assets/nextArrow.svg";
-import { HashLoader } from "react-spinners";
-import ItemCard from "../../../../../components/ItemCard/ItemCard";
+
 import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Dashboard({
   account,
@@ -103,22 +94,11 @@ function Dashboard({
 
   const [availableTime, setAvailableTime] = useState();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const onOpenNfts = () => {
     setShowNfts(!showNfts);
-  };
-
-  const getStakes = async () => {
-    const stakeArray = await cawsStakeContract.methods
-      .depositsOf(data?.getPlayer?.wallet?.publicAddress)
-      .call();
-    setStakes(stakeArray);
-  };
-
-  const getLandStakes = async () => {
-    const stakeArray = await landNftStake_contract.methods
-      .depositsOf(data?.getPlayer?.wallet?.publicAddress)
-      .call();
-    // setLandStakes(stakeArray);
   };
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
@@ -655,14 +635,6 @@ function Dashboard({
   };
 
   useEffect(() => {
-    fetchUserFavorites(
-      data?.getPlayer?.wallet && email
-        ? data?.getPlayer?.wallet?.publicAddress
-        : account
-    );
-  }, [account, email, data?.getPlayer?.wallet]);
-
-  useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
     }
@@ -677,9 +649,9 @@ function Dashboard({
   useEffect(() => {
     if (data?.getPlayer?.wallet?.publicAddress) {
       fetchAllMyNfts();
-      getTokens();
-      getStakes();
-      getLandStakes();
+      // getTokens();
+      // getStakes();
+      // getLandStakes();
       if (coinbase) {
         getmyCawsWodStakes();
         getmyWodStakes();
@@ -691,12 +663,23 @@ function Dashboard({
     getOtherNfts();
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
     getDypBalance();
+    fetchUserFavorites(
+      data?.getPlayer?.wallet && email
+        ? data?.getPlayer?.wallet?.publicAddress
+        : account
+    );
   }, [account, email, data?.getPlayer?.wallet]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    if (!isConnected && !coinbase && location.pathname === "/account") {
+      navigate("/");
+    }
+  }, [isConnected, coinbase]);
+  
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"

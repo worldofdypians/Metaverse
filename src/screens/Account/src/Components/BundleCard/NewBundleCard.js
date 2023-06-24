@@ -768,7 +768,7 @@ const windowSize = useWindowSize()
   return (
    
     <>
-      <div className="row align-items-center gap-4 gap-lg-0">
+      <div className="row m-0 align-items-center gap-4 gap-lg-0">
         <div className="col-12 col-lg-7 custom-height">
           <div className="nft-outer-wrapper p-3 p-lg-5 custom-height">
             <div className="d-flex align-items-center justify-content-between">
