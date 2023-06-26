@@ -573,11 +573,14 @@ const SingleNft = ({
     }
   }, [nftCount, nft]);
 
-  useEffect(()=>{
-    if(purchaseStatus === "" && !data?.getPlayer?.wallet && !email) {
-      setPurchaseColor('#FF6232')
+  useEffect(() => {
+    if (
+      (purchaseStatus === "" && !data?.getPlayer?.wallet && !email) ||
+      (coinbase && coinbase !== data?.getPlayer?.wallet?.publicAddress)
+    ) {
+      setPurchaseColor("#FF6232");
     }
-  },[purchaseStatus, data])
+  }, [purchaseStatus, data]);
 
   return (
     <div
@@ -1222,7 +1225,11 @@ const SingleNft = ({
                   color: purchaseColor,
                 }}
               >
-                {purchaseStatus === "" && !data?.getPlayer?.wallet && !email && coinbase
+                {(purchaseStatus === "" &&
+                  !data?.getPlayer?.wallet &&
+                  !email) ||
+                (coinbase &&
+                  coinbase !== data?.getPlayer?.wallet?.publicAddress)
                   ? "By interacting with the NFTs I understand that I am not using the wallet associated to my game profile"
                   : purchaseStatus}
               </span>
