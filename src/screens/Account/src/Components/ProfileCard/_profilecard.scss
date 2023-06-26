@@ -23,6 +23,61 @@
   padding: 20px;
 }
 
+.user-cardImg-active {
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(118, 15, 90, 0.03) 0%,
+    rgba(33, 36, 64, 0.15) 100%
+  );
+  padding: 20px;
+}
+
+.sync-wrapper {
+  border-radius: 10px;
+  background: rgba(237, 130, 37, 0.08);
+}
+
+.sync-txt {
+  color: #fff;
+  font-size: 8px;
+}
+
+.syncbtn {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  padding: 5px 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  border: none;
+}
+
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.syncicon {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
+
 .wallettitle {
   font-style: normal;
   font-weight: 600;
@@ -145,7 +200,13 @@
 
 .signintext {
   color: #82daac;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.signintext:hover,
+.logouttext:hover {
+  text-decoration: underline;
 }
 
 .logouttext {

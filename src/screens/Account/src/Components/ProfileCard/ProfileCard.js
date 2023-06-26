@@ -3,22 +3,18 @@ import React, { useEffect, useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import "./_profilecard.scss";
 import defaultAvatar from "../../Images/userProfile/default-avatar.png";
-import goldenAvatar from "../../Images/userProfile/premiumAvatar2.png";
-import { dyp700_abi } from "../../web3";
 // import Countdown from "react-countdown";
 import dypMedal from "../../Images/userProfile/dyp-medal.svg";
-import axios from "axios";
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
 import Clipboard from "react-clipboard.js";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
-import walletImg from "../../Images/userProfile/wallet.svg";
 import copyIcon from "../WalletBalance/assets/copyIcon.svg";
 import walletIcon from "../WalletBalance/assets/walletIcon.svg";
 import greenarrow from "./assets/greenarrow.svg";
 import logouticon from "./assets/logout.svg";
 import player from "./assets/explorePlayer.png";
-import greenInfo from "./assets/greenInfo.svg";
-import OutsideClickHandler from "react-outside-click-handler";
+import triangle from "./assets/triangle.svg";
+import sync from "./assets/sync.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -54,6 +50,8 @@ const ProfileCard = ({
   coinbase,
   onSigninClick,
   onLogoutClick,
+  onSyncClick,
+  syncStatus,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -140,7 +138,11 @@ const ProfileCard = ({
     <div className="main-wrapper py-4 w-100">
       <div className="row justify-content-center gap-5 gap-lg-0">
         <div className="position-relative px-0 px-lg-3 col-12 col-lg-5 col-xxl-5">
-          <div className="user-cardImg">
+          <div
+            className={
+              isVerified && email ? "user-cardImg-active" : "user-cardImg"
+            }
+          >
             <div className="d-flex flex-column justify-content-between gap-2">
               <div className="d-flex gap-2 justify-content-between align-items-center">
                 <div className="d-flex align-items-center gap-2">
@@ -174,33 +176,9 @@ const ProfileCard = ({
                     <img src={walletIcon} alt="" className="wallet-icon" />
                     <div className="d-flex flex-column">
                       <span className="wallet-span d-flex align-items-center gap-2">
-                        Wallet address{" "}
-                        <OutsideClickHandler
-                          onOutsideClick={() => {
-                            setTooltip2(false);
-                          }}
-                        >
-                          <img
-                            src={greenInfo}
-                            alt=""
-                            className="tooltipicon"
-                            onClick={() => {
-                              setTooltip2(true);
-                              setTooltip(false);
-                            }}
-                          />
-                        </OutsideClickHandler>
-                        <div
-                          className={`tooltip-wrapper2 p-2 col-7 ${
-                            tooltip2 && "tooltip-active"
-                          }`}
-                          style={{ top: "-30px" }}
-                        >
-                          <p className="tooltip-content2 m-0">
-                          *This wallet is associated to your game account and cannot be changed.
-                          </p>
-                        </div>{" "}
+                        Wallet address
                       </span>
+
                       <div
                         className="d-flex align-items-center gap-2"
                         onClick={() => {
@@ -217,6 +195,33 @@ const ProfileCard = ({
                       </div>
                     </div>
                   </Clipboard>
+                  {address &&
+                    coinbase &&
+                    address.toLowerCase() === coinbase.toLowerCase() && (
+                      <p className="walletassoc-txt m-0">
+                        *This wallet is associated to your game account.
+                      </p>
+                    )}
+                  {address &&
+                    email &&
+                    coinbase &&
+                    syncStatus !== "" &&
+                    address.toLowerCase() !== coinbase.toLowerCase() && (
+                      <div className="sync-wrapper p-3">
+                        <div className="d-flex gap-2 align-items-center">
+                          <img
+                            src={triangle}
+                            alt=""
+                            style={{ width: "21px", height: "20px" }}
+                          />
+                          <span className="sync-txt">
+                            Your gaming account is not linked to the wallet you
+                            connected. To update the game wallet address, press
+                            the synchronize button.
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   <div
                     className={`tooltip-wrapper p-2 ${
                       tooltip && "tooltip-active"
@@ -255,11 +260,53 @@ const ProfileCard = ({
                 ) : (
                   <div
                     className="d-flex align-self-end align-items-center"
-                    onClick={onLogoutClick}
-                    role="button"
-                    style={{ width: "fit-content" }}
+                    style={{
+                      width:
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() !== coinbase.toLowerCase()
+                          ? "100%"
+                          : "fit-content",
+                      justifyContent:
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() !== coinbase.toLowerCase()
+                          ? "space-between"
+                          : "",
+                    }}
                   >
-                    <span className="logouttext">
+                    {address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address.toLowerCase() !== coinbase.toLowerCase() && (
+                        <button
+                          className="d-flex align-items-center gap-1 syncbtn"
+                          onClick={onSyncClick}
+                        >
+                          <img
+                            src={sync}
+                            alt=""
+                            className={syncStatus === "loading" && "syncicon"}
+                          />{" "}
+                          {syncStatus === "initial"
+                            ? "Synchronize"
+                            : syncStatus === "loading"
+                            ? "Synchronising..."
+                            : syncStatus === "success"
+                            ? "Success"
+                            : "Error"}
+                        </button>
+                      )}
+                    <span
+                      className="logouttext"
+                      onClick={onLogoutClick}
+                      role="button"
+                    >
                       <img src={logouticon} alt="" /> Log Out
                     </span>
                   </div>

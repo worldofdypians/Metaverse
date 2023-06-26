@@ -208,6 +208,63 @@ const SingleNft = ({
     }
   };
 
+  const getLatestBoughtNFT = async () => {
+    let boughtItems = [];
+    let finalboughtItems = [];
+
+    const URL =
+      "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+
+    const itemBoughtQuery = `
+        {
+            itemBoughts(first: 1, orderBy: blockTimestamp, orderDirection: desc) {
+            nftAddress
+            tokenId
+            payment_priceType
+            price
+            buyer
+            blockNumber
+            blockTimestamp
+        }
+        }
+        `;
+
+    await axios
+      .post(URL, { query: itemBoughtQuery })
+      .then(async (result) => {
+        boughtItems = await result.data.data.itemBoughts;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // console.log("boughtItems", boughtItems);
+    console.log("boughtItems", boughtItems);
+
+    boughtItems &&
+      boughtItems.map((nft) => {
+        if (nft.nftAddress === window.config.nft_caws_address) {
+          nft.type = "caws";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
+          nft.type = "cawsold";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_land_address) {
+          nft.type = "land";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+          nft.type = "timepiece";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        }
+      });
+
+    setNft(...finalboughtItems);
+  };
+
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
     console.log("nft", nft);
     const isApproved = await isApprovedNFT(tokenId, type);
@@ -292,6 +349,7 @@ const SingleNft = ({
 
     if (isApproved || nft.payment_priceType === 0) {
       console.log("buying");
+      setPurchaseColor("#00FECF");
 
       setbuyLoading(true);
       setbuyStatus("buy");
@@ -312,12 +370,13 @@ const SingleNft = ({
           setShowToast(true);
           setToastTitle("Successfully purchased!");
           setPurchaseColor("#00FECF");
-          handleRefreshList(nft.type, nft.tokenId);
-          handleRefreshListing();
+
           setTimeout(() => {
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
             setbuyStatus("");
+            getLatestBoughtNFT();
+            handleRefreshListing();
           }, 3000);
         })
         .catch((e) => {
@@ -350,16 +409,16 @@ const SingleNft = ({
           setbuyStatus("success");
           setbuyLoading(false);
           setPurchaseStatus("Successfully approved");
-          setPurchaseColor("#FF6232");
+          setPurchaseColor("#00FECF");
         })
         .catch((e) => {
           console.error(e);
+          setbuyStatus("failed");
           setTimeout(() => {
             setbuyStatus("approve");
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
           }, 3000);
-          setbuyStatus("failed");
           setbuyLoading(false);
           setPurchaseStatus(e?.message);
           setPurchaseColor("#FF6232");
@@ -523,7 +582,7 @@ const SingleNft = ({
         setbuyStatus("buy");
       }
     }
-  }, [nft.price, isConnected, IsListed, isOwner]);
+  }, [nft.price, isConnected, IsListed, isOwner, coinbase]);
 
   useEffect(() => {
     if (isConnected === true && nft.payment_priceType === 1) {
@@ -535,30 +594,45 @@ const SingleNft = ({
 
     if (coinbase === undefined) {
       setisOwner(false);
-    } else if (data?.getPlayer?.wallet && email && coinbase) {
-      if (
-        nft.seller &&
-        nft.seller.toLowerCase() ===
-          data?.getPlayer?.wallet?.publicAddress.toLowerCase()
-      ) {
-        setisOwner(true);
-      } else if (
-        nft.buyer &&
-        nft.buyer.toLowerCase() ===
-          data?.getPlayer?.wallet?.publicAddress.toLowerCase()
-      ) {
-        setisOwner(true);
-      }
-    } else if (coinbase && !data?.getPlayer?.wallet && !email) {
+    } else if (coinbase) {
       if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
       } else if (
         nft.buyer &&
+        coinbase &&
         nft.buyer.toLowerCase() === coinbase.toLowerCase()
       ) {
         setisOwner(true);
-      } else setisOwner(false);
+      }
     }
+
+    // else if (data?.getPlayer?.wallet && email && coinbase) {
+    //   if (
+    //     nft.seller &&
+    //     nft.seller.toLowerCase() ===
+    //       data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
+    //   ) {
+    //     setisOwner(true);
+    //   } else
+
+    //   if (
+    //     nft.buyer &&
+    //     nft.buyer.toLowerCase() ===
+    //       data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
+    //   ) {
+    //     setisOwner(true);
+    //   }
+    // }
+    // else if (coinbase && !data?.getPlayer?.wallet && !email) {
+    //   if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
+    //     setisOwner(true);
+    //   } else if (
+    //     nft.buyer &&
+    //     nft.buyer.toLowerCase() === coinbase.toLowerCase()
+    //   ) {
+    //     setisOwner(true);
+    //   } else setisOwner(false);
+    // }
   }, [nft.price, isConnected, isOwner, IsListed, coinbase]);
 
   useEffect(() => {
@@ -588,10 +662,20 @@ const SingleNft = ({
     }
   }, [nftCount, nft]);
 
+  // useEffect(() => {
+  //   if (buyStatus === "success") {
+  //     getLatestBoughtNFT();
+  //   }
+  // }, [buyStatus]);
+
   useEffect(() => {
     if (
-      (purchaseStatus === "" && !data?.getPlayer?.wallet && !email) ||
-      (coinbase && coinbase !== data?.getPlayer?.wallet?.publicAddress)
+      purchaseStatus === "" &&
+      data?.getPlayer?.wallet &&
+      coinbase &&
+      email &&
+      coinbase.toLowerCase() !==
+        data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
     ) {
       setPurchaseColor("#FF6232");
     }
@@ -1254,11 +1338,12 @@ const SingleNft = ({
                   color: purchaseColor,
                 }}
               >
-                {(purchaseStatus === "" &&
-                  !data?.getPlayer?.wallet &&
-                  !email) ||
-                (coinbase &&
-                  coinbase !== data?.getPlayer?.wallet?.publicAddress)
+                {purchaseStatus === "" &&
+                data?.getPlayer?.wallet &&
+                email &&
+                coinbase &&
+                coinbase.toLowerCase() !==
+                  data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
                   ? "By interacting with the NFTs I understand that I am not using the wallet associated to my game profile"
                   : purchaseStatus}
               </span>
