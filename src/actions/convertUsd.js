@@ -40,7 +40,6 @@ const getListedNftResult = async () => {
 
 getDypPrice();
 getEthPrice();
-getListedNftResult();
 
 const convertToUSD = async (price, payment_priceType) => {
   if (payment_priceType === 0) {
@@ -66,7 +65,9 @@ const filterNFTsByAddress = (nfts, address) => {
 
 let all_listed_nfts;
 const getAllNfts = async () => {
+  await getListedNftResult();
   const result = listedNftResult;
+  console.log("result", listedNftResult);
   const convertedNFTs = [];
 
   if (result) {

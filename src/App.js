@@ -737,8 +737,6 @@ function App() {
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
     let finalboughtItems2 = [];
-    
-
     listedNFTS2 &&
       listedNFTS2.length > 0 &&
       listedNFTS2.map((nft) => {
@@ -840,8 +838,7 @@ function App() {
 
   useEffect(() => {
     checkNetworkId();
-    getEthBalance();
-  }, [isConnected, coinbase, currencyAmount, chainId]);
+  }, [isConnected, coinbase, chainId]);
 
   useEffect(() => {
     if (isConnected === true && coinbase && chainId === 1) {
