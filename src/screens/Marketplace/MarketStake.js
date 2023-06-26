@@ -36,6 +36,8 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
   const [activeTab, setActiveTab] = useState("live")
+  const [totalRewards, setTotalRewards] = useState(0)
+  const [totalLocked, setTotalLocked] = useState(0)
 
   const html = document.querySelector("html");
 
@@ -50,6 +52,24 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       setCawsLandtvl(resultcawsWod);
     }
   };
+  const fetchTotalLocked = async () => {
+    const result = await axios.get(
+      `https://api.worldofdypians.com/api/lockedNFTs`
+    );
+    if (result) {
+    setTotalLocked(result.data)
+    }
+  };
+  const fetchTotalRewars = async () => {
+    const result = await axios.get(
+      `https://api.worldofdypians.com/api/stakeRewards`
+    );
+    if (result) {
+    setTotalRewards(result.data)
+    }
+  };
+
+
 
   const myNft = async () => {
     let myNft = await window.myNftListContract(coinbase);
@@ -305,6 +325,8 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     myLandNft();
     myLandStakes();
     myStakesLandPool();
+    fetchTotalLocked();
+    fetchTotalRewars();
   }, [isConnected, coinbase, newStakes]);
 
   useEffect(() => {
@@ -324,7 +346,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   return (
     <div
       className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
-      style={{ minHeight: "72vh" }}
+      style={{ minHeight: "72vh", maxWidth: '2400px' }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div
@@ -409,19 +431,19 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
         <>
           <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-4 d-flex align-items-center justify-content-around">
             <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">$432K+</h6>
+              <h6 className="new-stake-info">${abbreviateNumber(landtvl + cawslandTvl)}+</h6>
               <span className="new-stake-desc">
                 Total Value Locked (TVL)
               </span>
             </div>
             <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">$1.2K+</h6>
+              <h6 className="new-stake-info">{abbreviateNumber(totalLocked)}+</h6>
               <span className="new-stake-desc">
                 Total Staked NFTs
               </span>
             </div>
             <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">$18.5M+</h6>
+              <h6 className="new-stake-info">${abbreviateNumber(totalRewards)}+</h6>
               <span className="new-stake-desc">
                 Paid Rewards
               </span>
@@ -525,7 +547,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
         {activeTab === "past" &&
         <div className="row w-100 m-0 mt-5">
         <div className="col-12 px-0">
-          <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+          <div className="caws-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
             <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
               <div className="d-flex flex-column gap-4">
                 <div className="d-flex flex-column gap-2">
@@ -533,13 +555,13 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                     Cats and Watches Society
                   </h6>
                   <h6 className="market-stake-title">
-                    CAWS
+                    (CAWS)
                   </h6>
                   <span className="market-stake-desc">
-                    Stake your Genesis Land NFTs to earn daily ETH rewards.
+                    Stake your CAWS NFTs to earn daily ETH rewards.
                   </span>
                 </div>
-                <div className="d-flex align-items-center gap-3">
+                {/* <div className="d-flex align-items-center gap-3">
                   <button
                     className="btn pill-btn px-4 py-2"
                     onClick={() => {
@@ -556,10 +578,10 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                   >
                     Rewards
                   </button>
-                </div>
+                </div> */}
                 <div className="tvl-wrapper">
                   <h6 className="market-stake-tvl">
-                    ${abbreviateNumber(landtvl)}+
+                    ${abbreviateNumber(75300)}+
                   </h6>
                 </div>
                 <div></div>

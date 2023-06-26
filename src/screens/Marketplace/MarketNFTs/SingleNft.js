@@ -677,6 +677,25 @@ const SingleNft = ({
                   {isOwner && IsListed && (
                     <div className="d-flex gap-2 align-items-center">
                       <span className="currentprice-txt">Current price</span>
+                      <StyledTextField
+                                error={nftPrice === "" ? true : false}
+                                size="small"
+                                // label="Price"
+                                id="price"
+                                name="price"
+                                value={nftPrice}
+                                type="number"
+                                required
+                                onChange={(e) => {
+                                  setNftPrice(e.target.value);
+                                }}
+                                sx={{ width: "120px" }}
+                                inputProps={{
+                                  inputMode: "numeric",
+                                  pattern: "[0-9]*",
+                                  max: 10,
+                                }}
+                              />
                       <div className="d-flex gap-2 align-items-center">
                         <img
                           src={nft.payment_priceType === 0 ? topEth : topDyp}

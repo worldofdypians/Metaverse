@@ -550,7 +550,7 @@ const WalletBalance = ({
     <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
       <div className="row w-100 gap-5 gap-lg-0">
         <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5">
-          <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-2 position-relative">
+          <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
             <h5 className="bal-txt px-4">My Rankings</h5>
             <div className="d-flex gap-3 justify-content-evenly">
               <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
@@ -571,7 +571,7 @@ const WalletBalance = ({
           </div>
         </div>
         <div className="col-12 px-0 px-lg-3 col-lg-7">
-          <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative ">
+          <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
             <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2">
               <h6
                 className={`account-nft-sort ${
@@ -842,7 +842,7 @@ const WalletBalance = ({
               <div className="row px-3">
                 {landStaked &&
                   landStaked.length > 0 &&
-                  landStaked.slice(0, 6).map((item, index) => (
+                  landStaked.slice(0, 4).map((item, index) => (
                     <NavLink
                       key={index}
                       to={`/marketplace/stake`}
@@ -871,7 +871,7 @@ const WalletBalance = ({
                   ))}
                 {myCawsWodStakes &&
                   myCawsWodStakes.length > 0 &&
-                  myCawsWodStakes.slice(0, 6).map((item, index) => (
+                  myCawsWodStakes.slice(0, 4).map((item, index) => (
                     <NavLink
                       key={index}
                       to={`/marketplace/stake`}
@@ -914,7 +914,7 @@ const WalletBalance = ({
                   ))}
                 {myCawsWodStakes.length + landStaked.length < 6 &&
                   emptyArray
-                    .slice(0, 6 - myCawsWodStakes.length + landStaked.length)
+                    .slice(0, 4 - myCawsWodStakes.length + landStaked.length)
                     .map((item, index) => (
                       <NavLink
                         key={index}

@@ -1006,6 +1006,16 @@
     background-image: url("./assets/wodBannerMobile.png");
   }
 }
+.caws-stake-wrapper {
+  background-image: url("./assets/cawsBanner1.png");
+  background-size: 100% 100%;
+  aspect-ratio: 4.52/1;
+
+  @media screen and (max-width: 786px) {
+    aspect-ratio: 0.63/1;
+    background-image: url("./assets/cawsBannerMobile.png");
+  }
+}
 
 .market-stake-title {
   font-style: normal;
@@ -1249,3 +1259,194 @@
   font-size: 16px;
   font-weight: 300;
 }
+
+
+.past-caws-mint{
+  background-image: url('./assets/pastCawsMintBg.png');
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url('./assets/landMintMobile.png');
+    aspect-ratio: 1/1;
+  }
+}
+.past-land-mint{
+  background-image: url('./assets/pastLandMintBg.png');
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url('./assets/cawsMintMobile.png');
+    aspect-ratio: 1/1;
+  }
+}
+
+.sold-out-tag{
+  border-radius: 20px;
+background: linear-gradient(90deg, #830E47 0%, #5065C3 100%);
+backdrop-filter: blur(13px);
+display: flex;
+align-items: center;
+justify-content: center;
+width: fit-content;
+position: absolute;
+top: -10px;
+left: 15px;
+
+}
+
+.sold-out-span{
+  color: #FFF;
+text-align: center;
+font-size: 10px;
+font-weight: 600;
+}
+
+
+.past-mint-title{
+  color: #FFF;
+font-size: 16px;
+font-weight: 800;
+letter-spacing: 0.08px;
+}
+
+.past-caws-mint-amount{
+  color: #FF6232;
+text-align: center;
+font-size: 40px;
+font-weight: 800;
+}
+
+.past-land-mint-amount{
+  color: #00FECF;
+text-align: center;
+font-size: 40px;
+font-weight: 800;
+}
+
+.past-caws-mint-desc{
+  color: #FFF;
+text-align: center;
+font-size: 12px;
+font-weight: 500;
+}
+
+.past-content-wrapper{
+  width: 40%;
+  height: 100%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    height: 40%;
+  }
+}
+
+.custom-height-2{
+  height: 250px;
+  @media screen and (max-width: 1024px) {
+    height: fit-content;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
