@@ -17,7 +17,6 @@ import puzzleMadness from "./assets/puzzleMadness.png";
 import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp";
 import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
 
-
 import DragonPopup from "../../components/PackagePopups/DragonPopup";
 import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
 import PuzzleMadnessPopup from "../../components/PackagePopups/PuzzleMadnessPopup";
@@ -38,8 +37,8 @@ const MarketEvents = ({ account, chainId }) => {
     location.state?.package ? location.state?.package : "dragon"
   );
 
-  const [popup, setPopup] = useState(false)
-  const [packagePopup, setPackagePopup] = useState("")
+  const [popup, setPopup] = useState(false);
+  const [packagePopup, setPackagePopup] = useState("");
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -51,6 +50,7 @@ const MarketEvents = ({ account, chainId }) => {
     ],
     price: "50 DYP",
     link: "https://www.worldofdypians.com/news/644a3089aa4deb26fe4dac90/Dragon-Ruins-Event",
+    background: "newDragonBg.webp",
   };
 
   const iDypPackageData = {
@@ -63,6 +63,7 @@ const MarketEvents = ({ account, chainId }) => {
     ],
     price: "3,500 iDYP",
     link: "https://www.worldofdypians.com/news/644ce83e7f931ac9706b515e/Puzzle-Madness-Event",
+    background: "newPuzzleBg.webp",
   };
   const dypPackageData = {
     title: "Golden Pass",
@@ -74,6 +75,7 @@ const MarketEvents = ({ account, chainId }) => {
     ],
     price: "700 DYP",
     link: "https://www.worldofdypians.com/news/644e343627cca74b2d4a60b1/Golden-Pass-Event",
+    background: "newGoldenBg.webp",
   };
 
   const criticalHitPackageData = {
@@ -86,6 +88,7 @@ const MarketEvents = ({ account, chainId }) => {
     ],
     price: "700 DYP",
     link: "https://www.worldofdypians.com/news/6426dc2bb15f9e51ad8bd4e6/Critical-Hit-Event",
+    background: "newCriticalBg.webp",
   };
 
   const {
@@ -175,16 +178,16 @@ const MarketEvents = ({ account, chainId }) => {
       setiDypBalanceAvax(bal3_idyp);
     }
   };
-  
+
   const onOpenPopup = (item) => {
-    setPopup(true)
-    setPackagePopup(item)
-  } 
+    setPopup(true);
+    setPackagePopup(item);
+  };
   const onClosePopup = () => {
-    setPopup(false)
-    setPackagePopup("")
+    setPopup(false);
+    setPackagePopup("");
     console.log("hello");
-  } 
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -194,22 +197,20 @@ const MarketEvents = ({ account, chainId }) => {
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#bgmenu");
   useEffect(() => {
-    
-    if (popup === true ) {
+    if (popup === true) {
       html.classList.add("hidescroll");
       bgmenu.style.pointerEvents = "auto";
     } else {
       // Enable scroll
       html.classList.remove("hidescroll");
     }
-  }, [popup])
-  
+  }, [popup]);
 
   return (
     <>
-      <div className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
-      style={{ minHeight: "72vh", maxWidth: '2400px' }}
-      
+      <div
+        className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
+        style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
@@ -224,81 +225,84 @@ const MarketEvents = ({ account, chainId }) => {
               }  d-flex flex-column gap-3`}
             >
               <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
-                World of Dypians{" "}
-                <span style={{ color: "#8c56ff" }}>Events</span>
+                Event
+                <span style={{ color: "#8c56ff" }}> Center</span>
               </h6>
-              <div className="new-packages-grid">
-               
-                <div className="">
-                  <div
-                    className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                      selectedPackage === "dragon" && "selected-event-package"
-                    }`}
-                    onClick={() => setSelectedPackage("dragon")}
-                  >
-                    <img
-                      src={dragonPackage}
-                      className="w-100"
-                      style={{ borderRadius: "16px" }}
-                      alt=""
-                    />
-                    <span className="event-package-title">Dragon Ruins</span>
+              <div className="d-flex justify-content-center">
+                <div className="new-packages-grid">
+                  <div className="">
+                    <div
+                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                        selectedPackage === "dragon" && "selected-event-package"
+                      }`}
+                      onClick={() => setSelectedPackage("dragon")}
+                    >
+                      <img
+                        src={dragonPackage}
+                        className="w-100"
+                        style={{ borderRadius: "16px" }}
+                        alt=""
+                      />
+                      <span className="event-package-title">Dragon Ruins</span>
+                    </div>
                   </div>
-                </div>
-                <div className="">
-                  <div
-                    className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                      selectedPackage === "dyp" && "selected-event-package"
-                    }`}
-                    onClick={() => setSelectedPackage("dyp")}
-                  >
-                    <img
-                      src={goldenPass}
-                      className="w-100"
-                      style={{ borderRadius: "16px" }}
-                      alt=""
-                    />
-                    <span className="event-package-title">Golden Pass</span>
+                  <div className="">
+                    <div
+                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                        selectedPackage === "dyp" && "selected-event-package"
+                      }`}
+                      onClick={() => setSelectedPackage("dyp")}
+                    >
+                      <img
+                        src={goldenPass}
+                        className="w-100"
+                        style={{ borderRadius: "16px" }}
+                        alt=""
+                      />
+                      <span className="event-package-title">Golden Pass</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="">
-                  <div
-                    className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                      selectedPackage === "idyp" && "selected-event-package"
-                    }`}
-                    onClick={() => setSelectedPackage("idyp")}
-                  >
-                    <img
-                      src={puzzleMadness}
-                      className="w-100"
-                      style={{ borderRadius: "16px" }}
-                      alt=""
-                    />
-                    <span className="event-package-title">Puzzle Madness</span>
+                  <div className="">
+                    <div
+                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                        selectedPackage === "idyp" && "selected-event-package"
+                      }`}
+                      onClick={() => setSelectedPackage("idyp")}
+                    >
+                      <img
+                        src={puzzleMadness}
+                        className="w-100"
+                        style={{ borderRadius: "16px" }}
+                        alt=""
+                      />
+                      <span className="event-package-title">
+                        Puzzle Madness
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="">
-                  <div
-                    className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                      selectedPackage === "criticalHit" &&
-                      "selected-event-package"
-                    }`}
-                    onClick={() => setSelectedPackage("criticalHit")}
-                  >
-                    <img
-                      src={criticalHit}
-                      className="w-100"
-                      style={{ borderRadius: "16px" }}
-                      alt=""
-                    />
-                    <span className="event-package-title">Critical Hit</span>
+                  <div className="">
+                    <div
+                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                        selectedPackage === "criticalHit" &&
+                        "selected-event-package"
+                      }`}
+                      onClick={() => setSelectedPackage("criticalHit")}
+                    >
+                      <img
+                        src={criticalHit}
+                        className="w-100"
+                        style={{ borderRadius: "16px" }}
+                        alt=""
+                      />
+                      <span className="event-package-title">Critical Hit</span>
+                    </div>
                   </div>
                 </div>
               </div>
               <NewBundleCard
-              onOpenPopup={onOpenPopup}
+                onOpenPopup={onOpenPopup}
                 coinbase={account}
                 wallet={data?.getPlayer?.wallet?.publicAddress}
                 chainId={chainId}
@@ -322,24 +326,25 @@ const MarketEvents = ({ account, chainId }) => {
           </div>
         </div>
       </div>
-       <OutsideClickHandler onOutsideClick={() => {
-        setPopup(false);
-        setPackagePopup("")
-       }}>
-
-        {popup && packagePopup === "dragon" &&
+      <OutsideClickHandler
+        onOutsideClick={() => {
+          setPopup(false);
+          setPackagePopup("");
+        }}
+      >
+        {popup && packagePopup === "dragon" && (
           <DragonPopup onClosePopup={onClosePopup} />
-        }
-        {popup && packagePopup === "goldenpass" &&
+        )}
+        {popup && packagePopup === "goldenpass" && (
           <GoldenPassPopup onClosePopup={onClosePopup} />
-        }
-        {popup && packagePopup === "puzzlemadness" &&
+        )}
+        {popup && packagePopup === "puzzlemadness" && (
           <PuzzleMadnessPopup onClosePopup={onClosePopup} />
-        }
-        {popup && packagePopup === "criticalhit" &&
+        )}
+        {popup && packagePopup === "criticalhit" && (
           <CriticalHitPopup onClosePopup={onClosePopup} />
-        }
-       </OutsideClickHandler>
+        )}
+      </OutsideClickHandler>
     </>
   );
 };

@@ -520,11 +520,12 @@ input[type="range"]:focus::-ms-fill-upper {
 .new-bundle-img {
   border-radius: 16.058px;
   transform: matrix(1, 0, -0.18, 0.98, 0, 0);
-  width: 40%;
+  max-width: 200px;
   position: relative;
   left: -4%;
   @media screen and (max-width: 786px) {
     transform: none !important;
+    max-width: 40%;
     left: 0;
   }
 }
@@ -639,7 +640,7 @@ input[type="range"]:focus::-ms-fill-upper {
 }
 
 .custom-height {
-  height: 350px;
+  height: 315px;
   @media screen and (max-width: 995px) {
     height: fit-content;
   }

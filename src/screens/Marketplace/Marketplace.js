@@ -20,7 +20,7 @@ import topEth from "./assets/topEth.svg";
 import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
 
 import { abbreviateNumber } from "js-abbreviation-number";
-import nextArrow from "./assets/nextArrow.svg";
+import nextArrow from "./assets/nextArrow1.svg";
 import axios from "axios";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
@@ -89,7 +89,7 @@ const Marketplace = ({
     arrows: false,
     dotsClass: "button__bar",
     infinite: false,
-    speed: 500,
+    speed: 300,
     slidesToShow: 6,
     slidesToScroll: 1,
     initialSlide: 0,
@@ -146,7 +146,7 @@ const Marketplace = ({
     arrows: false,
     dotsClass: "button__bar",
     infinite: false,
-    speed: 500,
+    speed: 300,
     slidesToShow: 6,
     slidesToScroll: 1,
     initialSlide: 0,
@@ -472,7 +472,7 @@ const Marketplace = ({
             </div>
             <div className="col-12 col-lg-5">
               <img
-                src={require("./assets/marketMain.webp")}
+                src={require("./assets/marketMain1.webp")}
                 alt=""
                 className="market-main w-100"
               />
@@ -635,24 +635,24 @@ const Marketplace = ({
                 </div>
                 <div className="d-flex align-items-center gap-4">
                   <h6
-                    className={`time-filter-title px-2 py-1 mb-0 ${
-                      topSalesFilter === "all" && "time-filter-selected"
+                    className={`filter-title px-2 py-1 mb-0 ${
+                      topSalesFilter === "all" && "filter-selected"
                     }`}
                     // onClick={() => filterTopSales("all")}
                   >
                     24H
                   </h6>
                   <h6
-                    className={`time-filter-title px-2 py-1 mb-0 ${
-                      topSalesFilter === "caws" && "time-filter-selected"
+                    className={`filter-title px-2 py-1 mb-0 ${
+                      topSalesFilter === "caws" && "filter-selected"
                     }`}
                     // onClick={() => filterTopSales("caws")}
                   >
                     7D
                   </h6>
                   <h6
-                    className={`time-filter-title px-2 py-1 mb-0 ${
-                      topSalesFilter === "land" && "time-filter-selected"
+                    className={`filter-title px-2 py-1 mb-0 ${
+                      topSalesFilter === "land" && "filter-selected"
                     }`}
                     // onClick={() => filterTopSales("land")}
                   >
@@ -723,7 +723,8 @@ const Marketplace = ({
                                   style={{
                                     color: "#7DD9AF",
                                     whiteSpace: "nowrap",
-                                    textOverflow: "ellipsis", textAlign: 'end'
+                                    textOverflow: "ellipsis",
+                                    textAlign: "end",
                                   }}
                                 >
                                   $
@@ -739,7 +740,8 @@ const Marketplace = ({
                                   style={{
                                     fontSize: 10,
                                     whiteSpace: "nowrap",
-                                    textOverflow: "ellipsis", textAlign: 'end'
+                                    textOverflow: "ellipsis",
+                                    textAlign: "end",
                                   }}
                                 >
                                   {nft.payment_priceType === 0 ? (
@@ -789,26 +791,20 @@ const Marketplace = ({
 
             <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
               {activeSlide > 0 && (
-                <img
-                  src={nextArrow}
-                  width={40}
-                  height={40}
+                  <div className="prev-arrow-nft"
                   onClick={firstPrev}
-                  className="prev-arrow-nft"
-                  alt=""
-                />
+                   >
+                    <img src={nextArrow} alt="" />
+                   </div>
               )}
               {showFirstNext === activeSlide
                 ? null
                 : recentListed.length > sliderCut && (
-                    <img
-                      src={nextArrow}
-                      width={40}
-                      height={40}
-                      onClick={firstNext}
-                      className="next-arrow-nft"
-                      alt=""
-                    />
+                   <div className="next-arrow-nft"
+                  onClick={firstNext}
+                   >
+                    <img src={nextArrow} alt="" />
+                   </div>
                   )}
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <h6 className="nft-wrapper-title font-raleway mb-0">
@@ -915,26 +911,24 @@ const Marketplace = ({
             </div>
             <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
               {activeSlide2 > 0 && (
-                <img
-                  src={nextArrow}
-                  width={40}
-                  height={40}
-                  onClick={secondPrev}
-                  className="prev-arrow-nft"
-                  alt=""
-                />
+                <div className="prev-arrow-nft" onClick={secondPrev}>
+                  <img src={nextArrow} alt="" />
+                </div>
               )}
               {showSecondNext === activeSlide2
                 ? null
                 : recentSold.length > sliderCut && (
-                    <img
-                      src={nextArrow}
-                      width={40}
-                      height={40}
-                      onClick={secondNext}
-                      className="next-arrow-nft"
-                      alt=""
-                    />
+                    // <img
+                    //   src={nextArrow}
+                    //   width={40}
+                    //   height={40}
+                    //   onClick={secondNext}
+                    //   className="next-arrow-nft"
+                    //   alt=""
+                    // />
+                    <div className="next-arrow-nft" onClick={secondNext}>
+                      <img src={nextArrow} alt="" />
+                    </div>
                   )}
 
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">

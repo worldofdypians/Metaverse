@@ -770,22 +770,23 @@ const windowSize = useWindowSize()
     <>
       <div className="row m-0 align-items-center gap-4 gap-lg-0">
         <div className="col-12 col-lg-7 custom-height">
-          <div className="nft-outer-wrapper p-3 p-lg-5 custom-height">
-            <div className="d-flex align-items-center justify-content-between">
-              <h6 className="new-bundle-title">{packageData.title}</h6>
+          <div className="nft-outer-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height position-relative">
+            <img src={require(`../../../../Marketplace/assets/${packageData.background}`)} alt="" className="dragon-test-bg" />
+            <div className="d-flex align-items-center justify-content-between mb-3 mb-lg-5">
+              <h6 className="new-bundle-title mb-0">{packageData.title}</h6>
               <div style={{cursor: 'pointer'}}  onClick={() => {
                 onOpenPopup(packageData.title === "Dragon Ruins" ? "dragon" : packageData.title === "Puzzle Madness" ? "puzzlemadness" : packageData.title === "Golden Pass" ? "goldenpass" : "criticalhit")
               }} target="_blank">
-                <img src={require("./assets/newTooltip.svg").default} alt="" />
+                <img src={require("./assets/eventsTooltip.svg").default} alt="" />
               </div>
             </div>
-            <div className="d-flex align-items-center justify-content-between gap-3 gap-lg-0">
-              <img
+            <div className="d-flex align-items-center gap-3">
+              {/* <img
                 src={require(`./assets/${packageData.image}`)}
                 alt=""
                 className="new-bundle-img"
-              />
-              <div className="d-flex flex-column gap-2">
+              /> */}
+              <div className="d-flex flex-column gap-2 w-50">
                 <div className="new-bundle-benefits-title">Benefits</div>
 
                 {packageData.benefits.map((item) => (
@@ -802,10 +803,10 @@ const windowSize = useWindowSize()
           </div>
         </div>
         <div className="col-12 col-lg-5 custom-height">
-          <div className="nft-outer-wrapper py-3 px-3 py-lg-5 custom-height">
+          <div className="nft-outer-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height">
             <div className="d-flex flex-column custom-height justify-content-start gap-3">
               {packageData.title === "Critical Hit" ? (
-                <div className="d-flex flex-column align-items-center gap-4">
+                <div className="d-flex flex-column align-items-center gap-4 position-relative" style={{top: '30px'}}>
                   <div
                     className="position-relative package-blur"
                     style={{ pointerEvents: "none" }}
