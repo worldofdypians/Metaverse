@@ -1025,7 +1025,7 @@ function App() {
                 }
               />
 
-              <Route exact path="/auth" element={<Auth />} />
+              <Route exact path="/auth" element={<Auth isConnected={isConnected} coinbase={coinbase} />} />
               <Route
                 exact
                 path="/forgotPassword"

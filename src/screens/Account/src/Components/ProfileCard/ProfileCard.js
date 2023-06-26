@@ -197,8 +197,7 @@ const ProfileCard = ({
                           style={{ top: "-30px" }}
                         >
                           <p className="tooltip-content2 m-0">
-                            You can select a maximum of 50 WoD Land and CAWS
-                            NFTs
+                          *This wallet is associated to your game account and cannot be changed.
                           </p>
                         </div>{" "}
                       </span>

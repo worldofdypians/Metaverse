@@ -299,7 +299,7 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
-    if (data?.getPlayer?.wallet?.publicAddress) {
+    if (data?.getPlayer?.wallet?.publicAddress || account) {
       getMyNFTS(
         data?.getPlayer?.wallet && email
           ? data?.getPlayer?.wallet?.publicAddress
@@ -647,7 +647,7 @@ function Dashboard({
   }, [dataNonce]);
 
   useEffect(() => {
-    if (data?.getPlayer?.wallet?.publicAddress) {
+
       fetchAllMyNfts();
       // getTokens();
       // getStakes();
@@ -656,8 +656,7 @@ function Dashboard({
         getmyCawsWodStakes();
         getmyWodStakes();
       }
-    }
-  }, [data?.getPlayer?.wallet?.publicAddress, coinbase]);
+  }, [email, data?.getPlayer?.wallet?.publicAddress, coinbase, chainId]);
 
   useEffect(() => {
     getOtherNfts();
@@ -675,11 +674,11 @@ function Dashboard({
   }, []);
 
   useEffect(() => {
-    if (!isConnected && !coinbase && location.pathname === "/account") {
+    if (!isConnected && !coinbase && location.pathname === "/account" ) {
       navigate("/");
     }
   }, [isConnected, coinbase]);
-  
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
