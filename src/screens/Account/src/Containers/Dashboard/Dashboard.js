@@ -93,6 +93,7 @@ function Dashboard({
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
 
   const [availableTime, setAvailableTime] = useState();
+  const [syncStatus, setsyncStatus] = useState("initial");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -226,12 +227,6 @@ function Dashboard({
   // };
 
   async function connectWallet() {
-    // function onConnect() {
-    //   if (!isConnectedOneTime) {
-    //     window.isConnectedOneTime = true;
-    //     window.oneTimeConnectionEvents.forEach((fn) => fn());
-    //   }
-    // }
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       try {
@@ -252,13 +247,7 @@ function Dashboard({
             coinbase_address = data[0];
           });
         // window.coinbase_address = coinbase_address.pop();
-        await generateNonce({
-          variables: {
-            publicAddress: coinbase_address,
-          },
-        }).then(() => {
-          setshowWalletModal(false);
-        });
+
         return true;
       } catch (e) {
         console.error(e);
@@ -287,8 +276,36 @@ function Dashboard({
           publicAddress: account,
           signature: signature,
         },
+      }).then(() => {
+        setsyncStatus("success");
+
+        setTimeout(() => {
+          setsyncStatus("initial");
+        }, 5000);
       });
     } catch (error) {
+      setsyncStatus("error");
+      setTimeout(() => {
+        setsyncStatus("initial");
+      }, 3000);
+
+      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+    }
+  };
+
+  const handleSync = async () => {
+    setsyncStatus("loading");
+    try {
+      await generateNonce({
+        variables: {
+          publicAddress: account,
+        },
+      });
+    } catch (error) {
+      setsyncStatus("error");
+      setTimeout(() => {
+        setsyncStatus("initial");
+      }, 3000);
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
   };
@@ -647,15 +664,23 @@ function Dashboard({
   }, [dataNonce]);
 
   useEffect(() => {
-
-      fetchAllMyNfts();
-      // getTokens();
-      // getStakes();
-      // getLandStakes();
-      if (coinbase) {
-        getmyCawsWodStakes();
-        getmyWodStakes();
-      }
+    if (
+      coinbase &&
+      data?.getPlayer?.wallet?.publicAddress &&
+      email &&
+      coinbase.toLowerCase() ===
+        data?.getPlayer?.wallet?.publicAddress.toLowerCase()
+    ) {
+      setsyncStatus("initial");
+    }
+    fetchAllMyNfts();
+    // getTokens();
+    // getStakes();
+    // getLandStakes();
+    if (coinbase) {
+      getmyCawsWodStakes();
+      getmyWodStakes();
+    }
   }, [email, data?.getPlayer?.wallet?.publicAddress, coinbase, chainId]);
 
   useEffect(() => {
@@ -674,7 +699,7 @@ function Dashboard({
   }, []);
 
   useEffect(() => {
-    if (!isConnected && !coinbase && location.pathname === "/account" ) {
+    if (!isConnected && !coinbase && location.pathname === "/account") {
       navigate("/");
     }
   }, [isConnected, coinbase]);
@@ -735,6 +760,8 @@ function Dashboard({
                         }}
                         onSigninClick={onSigninClick}
                         onLogoutClick={logout}
+                        onSyncClick={handleSync}
+                        syncStatus={syncStatus}
                       />
                       <WalletBalance
                         ethTokenData={ethTokenData}

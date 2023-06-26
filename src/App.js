@@ -102,7 +102,7 @@ function App() {
   const [activeUser, setactiveUser] = useState(false);
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
-  const [totalBoughtNFTS, setTotalBoughtNFTS] = useState([]);
+  
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
   const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
   const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
@@ -112,7 +112,10 @@ function App() {
     settop20BoughtByPriceAndPriceTypeETHNFTS,
   ] = useState([]);
 
-  const [top20BoughtByPriceAndPriceTypeDYPNFTS, settop20BoughtByPriceAndPriceTypeDYPNFTS] = useState([]);
+  const [
+    top20BoughtByPriceAndPriceTypeDYPNFTS,
+    settop20BoughtByPriceAndPriceTypeDYPNFTS,
+  ] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
   const [dypTokenData, setDypTokenData] = useState();
@@ -665,6 +668,9 @@ function App() {
     return finalboughtItems;
   };
 
+  const handleRefreshList = () => {
+    setNftCount(nftCount + 1);
+  };
   const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
     let boughtItems = [];
     let finalboughtItems = [];
@@ -688,7 +694,7 @@ function App() {
 
     await axios
       .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => { 
+      .then(async (result) => {
         boughtItems = await result.data.data.itemBoughts;
       })
       .catch((error) => {
@@ -832,10 +838,15 @@ function App() {
 
   const { ethereum } = window;
 
-  if (ethereum) {
-    ethereum.on("chainChanged", checkNetworkId);
-    ethereum.on("accountsChanged", handleConnectWallet);
-  }
+  ethereum.on("chainChanged", handleRefreshList);
+  ethereum.on("accountsChanged", handleRefreshList);
+
+  useEffect(() => {
+    if (ethereum) {
+      ethereum.on("chainChanged", checkNetworkId);
+      ethereum.on("accountsChanged", handleConnection);
+    }
+  }, [ethereum, nftCount]);
 
   useEffect(() => {
     checkNetworkId();
@@ -870,13 +881,8 @@ function App() {
     setwalletModal(true);
   };
 
-  const handleRefreshList = () => {
-    setNftCount(nftCount + 1);
-  };
-
   const getallNfts = async () => {
     getBoughtNFTS().then((NFTS) => {
-      setTotalBoughtNFTS(NFTS);
       setTotalBoughtNFTSCount(NFTS.length);
 
       let totalBoughtNFTSinETH = 0;
@@ -909,7 +915,7 @@ function App() {
   useEffect(() => {
     getTokenData();
     getallNfts();
-  }, []);
+  }, [nftCount]);
 
   useEffect(() => {
     // getallNfts();
@@ -918,7 +924,7 @@ function App() {
 
   useEffect(() => {
     getOtherNfts();
-  }, [listedNFTS2.length, recentListedNFTS2.length]);
+  }, [listedNFTS2, recentListedNFTS2]);
 
   // useEffect(() => {
   //   if (window.ethereum) {
@@ -1025,7 +1031,11 @@ function App() {
                 }
               />
 
-              <Route exact path="/auth" element={<Auth isConnected={isConnected} coinbase={coinbase} />} />
+              <Route
+                exact
+                path="/auth"
+                element={<Auth isConnected={isConnected} coinbase={coinbase} />}
+              />
               <Route
                 exact
                 path="/forgotPassword"
@@ -1091,7 +1101,10 @@ function App() {
                     latest20RecentListedNFTS={latest20RecentListedNFTS}
                     totalBoughtNFTSCount={totalBoughtNFTSCount}
                     recentSales={latest20BoughtNFTS}
-                    topSales={[...top20BoughtByPriceAndPriceTypeETHNFTS, ...top20BoughtByPriceAndPriceTypeDYPNFTS]}
+                    topSales={[
+                      ...top20BoughtByPriceAndPriceTypeETHNFTS,
+                      ...top20BoughtByPriceAndPriceTypeDYPNFTS,
+                    ]}
                     nftCount={nftCount}
                   />
                 }

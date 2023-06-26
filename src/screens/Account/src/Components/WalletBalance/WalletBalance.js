@@ -552,7 +552,7 @@ const WalletBalance = ({
         <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5">
           <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
             <h5 className="bal-txt px-4">My Rankings</h5>
-            <div className="d-flex gap-3 justify-content-evenly">
+            <div className={`d-flex gap-3 justify-content-evenly ${!isVerified && !email && 'blurrystate' }`}>
               <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
                 <img src={globalRank} alt="" />
                 <span className="globaltext" style={{ fontSize: 12 }}>
@@ -631,7 +631,10 @@ const WalletBalance = ({
             </div>
 
             {filterTitle === "Favorites" && loading === false && (
-              <div className="row px-3" style={{margin: favoriteItems.length === 0 ? 'auto' : 0}}>
+              <div
+                className="row px-3"
+                style={{ margin: favoriteItems.length === 0 ? "auto" : 0 }}
+              >
                 {favoriteItems.length > 0 &&
                   favoriteItems.slice(0, 6).map((item, index) => (
                     <NavLink
@@ -712,7 +715,7 @@ const WalletBalance = ({
                     </NavLink>
                   ))}
                 {favoriteItems.length === 0 && (
-                  <span className="seller-addr" style={{textAlign: 'center'}}>
+                  <span className="seller-addr" style={{ textAlign: "center" }}>
                     You don't have any favorite NFTs
                   </span>
                 )}
@@ -861,7 +864,15 @@ const WalletBalance = ({
             )}
 
             {filterTitle === "Staked" && loading === false && (
-              <div className="row px-3" style={{margin:myCawsWodStakes.length === 0 && landStaked.length === 0 ? 'auto' : 0 }}>
+              <div
+                className="row px-3"
+                style={{
+                  margin:
+                    myCawsWodStakes.length === 0 && landStaked.length === 0
+                      ? "auto"
+                      : 0,
+                }}
+              >
                 {landStaked &&
                   landStaked.length > 0 &&
                   landStaked.slice(0, 4).map((item, index) => (
@@ -935,7 +946,9 @@ const WalletBalance = ({
                     </NavLink>
                   ))}
                 {myCawsWodStakes.length === 0 && landStaked.length === 0 && (
-                  <span className="seller-addr" style={{textAlign: 'center'}}>You have no nfts staked</span>
+                  <span className="seller-addr" style={{ textAlign: "center" }}>
+                    You have no nfts staked
+                  </span>
                 )}
 
                 {/* {myCawsWodStakes.length + landStaked.length < 6 &&
@@ -979,7 +992,10 @@ const WalletBalance = ({
             )}
 
             {filterTitle === "Listed" && loading === false && (
-              <div className="row px-3" style={{margin: listedItems.length === 0 ? 'auto' : 0}}>
+              <div
+                className="row px-3"
+                style={{ margin: listedItems.length === 0 ? "auto" : 0 }}
+              >
                 {listedItems.length > 0 &&
                   listedItems.slice(0, 6).map((item, index) => (
                     <NavLink
@@ -1034,7 +1050,7 @@ const WalletBalance = ({
                     </NavLink>
                   ))}
                 {listedItems.length === 0 && (
-                  <span className="seller-addr" style={{textAlign: 'center'}}>
+                  <span className="seller-addr" style={{ textAlign: "center" }}>
                     You don't have any NFTs listed
                   </span>
                 )}
