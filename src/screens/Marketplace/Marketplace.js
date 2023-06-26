@@ -320,7 +320,7 @@ const Marketplace = ({
   };
 
   const filterRecentListings = (filter) => {
-    console.log(latest20RecentListedNFTS)
+    console.log(latest20RecentListedNFTS);
     setLoadingRecentListings(true);
     if (filter === "caws") {
       setRecentListingsFilter("caws");
@@ -448,7 +448,7 @@ const Marketplace = ({
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
         <div className="container-lg mx-0">
-          <div className="row justify-content-between align-items-center marketplace-banner my-5">
+          <div className="row justify-content-between align-items-center marketplace-banner">
             <div className="col-12 col-lg-5">
               <h6 className="market-banner-title">
                 Explore the World of Dypians{" "}
@@ -466,7 +466,7 @@ const Marketplace = ({
 
               <div className="my-4">
                 <span className="market-banner-desc my-4">
-                  Discover the power of NFTs for a unique digital experience.
+                  Discover the power of NFTs for a unique digital experience
                 </span>
               </div>
             </div>
@@ -478,7 +478,7 @@ const Marketplace = ({
               />
             </div>
           </div>
-          <div className="main-wrapper py-4 w-100">
+          <div className="main-wrapper w-100">
             <div className="row gap-4 gap-lg-0 align-items-center">
               <div className="col-12 col-lg-4">
                 <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
@@ -594,46 +594,46 @@ const Marketplace = ({
             </div>
             <div className="row mx-1 justify-content-center d-flex my-4 align-items-center nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4">
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-4">
-              <h6 className="nft-wrapper-title font-raleway mb-0">
-                  Top Sales
-                </h6>
-                <div className="d-flex  align-items-center gap-4">
-                  <h6
-                    className={`filter-title mb-0 ${
-                      topSalesFilter === "all" && "filter-selected"
-                    }`}
-                    onClick={() => filterTopSales("all")}
-                  >
-                    All
+                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-4">
+                  <h6 className="nft-wrapper-title font-raleway mb-0">
+                    Top Sales
                   </h6>
-                  <h6
-                    className={`filter-title mb-0 ${
-                      topSalesFilter === "caws" && "filter-selected"
-                    }`}
-                    onClick={() => filterTopSales("caws")}
-                  >
-                    CAWS
-                  </h6>
-                  <h6
-                    className={`filter-title mb-0 ${
-                      topSalesFilter === "land" && "filter-selected"
-                    }`}
-                    onClick={() => filterTopSales("land")}
-                  >
-                    Land
-                  </h6>
-                  <h6
-                    className={`filter-title mb-0 ${
-                      topSalesFilter === "timepiece" && "filter-selected"
-                    }`}
-                    onClick={() => filterTopSales("timepiece")}
-                  >
-                    Timepiece
-                  </h6>
+                  <div className="d-flex  align-items-center gap-4">
+                    <h6
+                      className={`filter-title mb-0 ${
+                        topSalesFilter === "all" && "filter-selected"
+                      }`}
+                      onClick={() => filterTopSales("all")}
+                    >
+                      All
+                    </h6>
+                    <h6
+                      className={`filter-title mb-0 ${
+                        topSalesFilter === "caws" && "filter-selected"
+                      }`}
+                      onClick={() => filterTopSales("caws")}
+                    >
+                      CAWS
+                    </h6>
+                    <h6
+                      className={`filter-title mb-0 ${
+                        topSalesFilter === "land" && "filter-selected"
+                      }`}
+                      onClick={() => filterTopSales("land")}
+                    >
+                      Land
+                    </h6>
+                    <h6
+                      className={`filter-title mb-0 ${
+                        topSalesFilter === "timepiece" && "filter-selected"
+                      }`}
+                      onClick={() => filterTopSales("timepiece")}
+                    >
+                      Timepiece
+                    </h6>
+                  </div>
                 </div>
-              </div>
-              <div className="d-flex align-items-center gap-4">
+                <div className="d-flex align-items-center gap-4">
                   <h6
                     className={`time-filter-title px-2 py-1 mb-0 ${
                       topSalesFilter === "all" && "time-filter-selected"
@@ -658,7 +658,6 @@ const Marketplace = ({
                   >
                     30D
                   </h6>
-               
                 </div>
               </div>
               <div
@@ -667,7 +666,7 @@ const Marketplace = ({
                     ? "row align-items-center position-relative"
                     : "loader-wrapper"
                 }
-                style={{ rowGap: "40px" }}
+                style={{ rowGap: "22px" }}
               >
                 {topSold && topSold.length > 0 ? (
                   topSold.slice(0, 9).map((nft, index) => (
@@ -700,13 +699,16 @@ const Marketplace = ({
                                 ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
                                 : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
                             }
-                            width={80}
-                            height={80}
-                            style={{ borderRadius: "8px" }}
+                            width={40}
+                            height={40}
+                            style={{ borderRadius: "10px" }}
                             alt=""
                           />
-                          <div className="d-flex flex-column gap-2">
-                            <h6 className="nft-name-wrapper mb-0 py-1 px-2">
+                          <div className="d-flex justify-content-between gap-2 col-10">
+                            <h6
+                              className="nft-name-wrapper mb-0 py-1 px-2"
+                              style={{ fontSize: 14 }}
+                            >
                               {nft.type === "caws" || nft.type === "cawsold"
                                 ? "CAWS"
                                 : nft.type === "land"
@@ -714,30 +716,59 @@ const Marketplace = ({
                                 : "Timepiece"}{" "}
                               #{nft.tokenId}
                             </h6>
-                            <div className="d-flex align-items-center gap-1">
-                              {nft.payment_priceType === 0 ? (
-                                <img
-                                  src={topEth}
-                                  height={20}
-                                  width={20}
-                                  alt=""
-                                />
-                              ) : (
-                                <img
-                                  src={topDyp}
-                                  height={20}
-                                  width={20}
-                                  alt=""
-                                />
-                              )}
-                              <span className="top-eth">
-                                {" "}
-                                {nft.price}{" "}
-                                {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                              </span>
+                            <div className="d-flex align-items-center gap-1 col-5 justify-content-end">
+                              <div className="d-flex flex-column col-9 ">
+                                <span
+                                  className="nft-price-usd overflow-hidden"
+                                  style={{
+                                    color: "#7DD9AF",
+                                    whiteSpace: "nowrap",
+                                    textOverflow: "ellipsis", textAlign: 'end'
+                                  }}
+                                >
+                                  $
+                                  {getFormattedNumber(
+                                    nft.payment_priceType === 0
+                                      ? ethTokenData * nft.price
+                                      : dypTokenData * nft.price,
+                                    0
+                                  )}
+                                </span>{" "}
+                                <span
+                                  className="top-eth overflow-hidden"
+                                  style={{
+                                    fontSize: 10,
+                                    whiteSpace: "nowrap",
+                                    textOverflow: "ellipsis", textAlign: 'end'
+                                  }}
+                                >
+                                  {nft.payment_priceType === 0 ? (
+                                    <img
+                                      src={topEth}
+                                      height={12}
+                                      width={12}
+                                      alt=""
+                                      className="mx-1"
+                                    />
+                                  ) : (
+                                    <img
+                                      src={topDyp}
+                                      height={12}
+                                      width={12}
+                                      alt=""
+                                      className="mx-1"
+                                    />
+                                  )}
+                                  {getFormattedNumber(nft.price, 0)}{" "}
+                                  {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                                </span>
+                              </div>
                             </div>
                           </div>
-                          <span className="position-absolute top-sale-time">
+                          <span
+                            className="position-absolute top-sale-time"
+                            style={{ bottom: "-20%" }}
+                          >
                             {getRelativeTime(nft.blockTimestamp)}
                           </span>
                         </div>

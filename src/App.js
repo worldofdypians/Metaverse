@@ -112,6 +112,8 @@ function App() {
     settop20BoughtByPriceAndPriceTypeETHNFTS,
   ] = useState([]);
 
+  const [top20BoughtByPriceAndPriceTypeDYPNFTS, settop20BoughtByPriceAndPriceTypeDYPNFTS] = useState([]);
+
   const [nftCount, setNftCount] = useState(1);
   const [dypTokenData, setDypTokenData] = useState();
   const [ethTokenData, setEthTokenData] = useState();
@@ -686,8 +688,7 @@ function App() {
 
     await axios
       .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        // console.log(result.data.data.itemBoughts);
+      .then(async (result) => { 
         boughtItems = await result.data.data.itemBoughts;
       })
       .catch((error) => {
@@ -900,9 +901,9 @@ function App() {
     getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
       settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
     );
-    // getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
-    //   settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
-    // );
+    getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
+      settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
+    );
   };
 
   useEffect(() => {
@@ -1090,7 +1091,7 @@ function App() {
                     latest20RecentListedNFTS={latest20RecentListedNFTS}
                     totalBoughtNFTSCount={totalBoughtNFTSCount}
                     recentSales={latest20BoughtNFTS}
-                    topSales={top20BoughtByPriceAndPriceTypeETHNFTS}
+                    topSales={[...top20BoughtByPriceAndPriceTypeETHNFTS, ...top20BoughtByPriceAndPriceTypeDYPNFTS]}
                     nftCount={nftCount}
                   />
                 }
