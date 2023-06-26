@@ -255,11 +255,13 @@
 .new-packages-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
+  gap: 15px;
+  width: 50%;
 
   @media screen and (max-width: 786px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    width: 100%;
   }
 }
 
@@ -277,10 +279,30 @@
   }
 }
 
+.dragon-test-bg{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 99.3%;
+  height: 98%;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  border-radius: 21.4107px;
+  z-index: -1;
+
+  @media screen and (max-width: 995px) {
+    transform: none;
+  }
+}
+
 .nft-outer-wrapper {
   position: relative;
   z-index: 2;
 }
+
+
 
 .nft-outer-wrapper::before {
   content: "";
@@ -368,7 +390,7 @@
 .container-nft {
   width: 80%;
   background-image: url("./assets//marketplaceBackground.png");
-  background-size: 100% 100%;
+  background-size: cover;
   @media screen and (max-width: 991px) {
     width: 100%;
     align-items: center !important;
@@ -772,17 +794,28 @@
 }
 
 .next-arrow-nft {
-  width: fit-content;
   position: absolute;
   right: -2%;
   bottom: 45%;
   z-index: 2;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(18, 21, 50, 1);
+  border-radius: 50%;
+  border: 2px solid rgba(238, 237, 255, 1);
+  transition: all .2s;
   cursor: pointer;
   @media screen and (max-width: 786px) {
     right: -3%;
     bottom: 40%;
   }
+}
+
+.next-arrow-nft:hover{
+  background: rgba(37, 39, 67, 1);
 }
 .prev-arrow-nft {
   width: fit-content;
@@ -790,12 +823,25 @@
   left: -2%;
   bottom: 45%;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(18, 21, 50, 1);
+  border-radius: 50%;
+  border: 2px solid rgba(238, 237, 255, 1);
+  transition: all .2s;
   transform: rotate(180deg);
   cursor: pointer;
   @media screen and (max-width: 786px) {
     left: -3%;
     bottom: 40%;
   }
+}
+
+.prev-arrow-nft:hover{
+  background: rgba(37, 39, 67, 1);
 }
 
 .nft-search-bar {
@@ -934,7 +980,7 @@
 .event-package-title {
   color: #f8f8ff;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 10px;
   line-height: 24px;
   @media screen and (max-width: 786px) {
     font-size: 15px;
@@ -1124,6 +1170,13 @@
   line-height: 20px;
   width: fit-content;
   color: #eeedff;
+  transition: all .25s;
+}
+
+.nft-load-more-btn:hover{
+  color: rgba(255, 255, 255, 1);
+  background: rgba(238, 237, 255, 0.15);
+
 }
 
 .package-popup-wrapper {
@@ -1131,19 +1184,19 @@
 }
 
 .dragon-popup {
-  background-image: url("./assets/dragonPopup.png");
+  background-image: url("./assets/dragonPopup.webp");
 }
 
 .golden-pass-popup {
-  background-image: url("./assets/goldenPassPopup.png");
+  background-image: url("./assets/goldenPassPopup.webp");
 }
 
 .puzzle-madness-popup {
-  background-image: url("./assets/puzzleMadnessPopup.png");
+  background-image: url("./assets/puzzleMadnessPopup.webp");
 }
 
 .critical-hit-popup {
-  background-image: url("./assets/criticalHitPopup.png");
+  background-image: url("./assets/criticalHitPopup.webp");
 }
 
 .package-popup {
@@ -1295,7 +1348,7 @@ align-items: center;
 justify-content: center;
 width: fit-content;
 position: absolute;
-top: -10px;
+top: -15px;
 left: 15px;
 
 }
@@ -1303,7 +1356,7 @@ left: 15px;
 .sold-out-span{
   color: #FFF;
 text-align: center;
-font-size: 10px;
+font-size: 13px;
 font-weight: 600;
 }
 
