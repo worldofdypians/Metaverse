@@ -1,8 +1,8 @@
 import getListedNFTS from "./Marketplace";
-
 let eth_Price;
 let dyp_Price;
 let listedNftResult = [];
+let all_listed_nfts;
 
 const getEthPrice = async () => {
   await fetch(
@@ -32,14 +32,13 @@ const getListedNftResult = async () => {
   const result = await getListedNFTS(0, "", "", "", "").catch((e) => {
     console.log(e);
   });
-  if (result) {
-    listedNftResult = result;
-    return listedNftResult;
-  }
+
+  return result;
 };
 
 getDypPrice();
 getEthPrice();
+
 
 const convertToUSD = async (price, payment_priceType) => {
   if (payment_priceType === 0) {
@@ -63,13 +62,9 @@ const filterNFTsByAddress = (nfts, address) => {
   );
 };
 
-let all_listed_nfts;
 const getAllNfts = async () => {
-  await getListedNftResult();
-  const result = listedNftResult;
-  console.log("result", listedNftResult);
+  const result = await getListedNftResult();
   const convertedNFTs = [];
-
   if (result) {
     const conversionPromises = result.map(async (nft) => {
       if (nft.nftAddress === window.config.nft_caws_address) {

@@ -148,8 +148,11 @@ const SingleNft = ({
 
   const getMetaData = async () => {
     if (nft) {
+      console.log(nft);
       if (type === "caws" || type === "cawsold") {
         const result = await window.getNft(nft.tokenId);
+        console.log(result);
+
         setmetaData(result);
       } else if (type === "land") {
         const result = await window.getLandNft(nft.tokenId);
@@ -483,6 +486,18 @@ const SingleNft = ({
     }
   }
 
+  const handlepricechange = (newprice) => {
+    if (Number(newprice) > 100 && priceType === 0) {
+      setNftPrice(100);
+    } else if (Number(newprice) <= 100 && priceType === 0) {
+      setNftPrice(newprice);
+    } else if (Number(newprice) > 100000 && priceType === 1) {
+      setNftPrice(100000);
+    } else if (Number(newprice) <= 100000 && priceType === 1) {
+      setNftPrice(newprice);
+    }
+  };
+
   useEffect(() => {
     if (isOwner === false) {
       if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
@@ -496,6 +511,7 @@ const SingleNft = ({
           setIsApprove(isApproved);
         });
       } else if (!IsListed) {
+        console.log(nft);
         isApprovedNFT(nft.tokenId, type).then((isApproved) => {
           if (isApproved === true) {
             setsellStatus("sell");
@@ -546,9 +562,8 @@ const SingleNft = ({
   }, [nft.price, isConnected, isOwner, IsListed, coinbase]);
 
   useEffect(() => {
-    getMetaData();
-
     if (type) {
+      getMetaData();
       isListedNFT(nft, type).then((isListed) => {
         setIsListed(isListed);
       });
@@ -677,25 +692,24 @@ const SingleNft = ({
                   {isOwner && IsListed && (
                     <div className="d-flex gap-2 align-items-center">
                       <span className="currentprice-txt">Current price</span>
-                      <StyledTextField
-                                error={nftPrice === "" ? true : false}
-                                size="small"
-                                // label="Price"
-                                id="price"
-                                name="price"
-                                value={nftPrice}
-                                type="number"
-                                required
-                                onChange={(e) => {
-                                  setNftPrice(e.target.value);
-                                }}
-                                sx={{ width: "120px" }}
-                                inputProps={{
-                                  inputMode: "numeric",
-                                  pattern: "[0-9]*",
-                                  max: 10,
-                                }}
-                              />
+                      {/* <StyledTextField
+                        error={nftPrice === "" ? true : false}
+                        size="small"
+                        id="price"
+                        name="price"
+                        value={nftPrice}
+                        type="number"
+                        required
+                        onChange={(e) => {
+                          setNftPrice(e.target.value);
+                        }}
+                        sx={{ width: "120px" }}
+                        inputProps={{
+                          inputMode: "numeric",
+                          pattern: "[0-9]*",
+                          max: 10,
+                        }}
+                      /> */}
                       <div className="d-flex gap-2 align-items-center">
                         <img
                           src={nft.payment_priceType === 0 ? topEth : topDyp}
@@ -806,13 +820,11 @@ const SingleNft = ({
                                 type="number"
                                 required
                                 onChange={(e) => {
-                                  setNftPrice(e.target.value);
+                                  handlepricechange(e.target.value);
                                 }}
                                 sx={{ width: "120px" }}
                                 inputProps={{
                                   inputMode: "numeric",
-                                  pattern: "[0-9]*",
-                                  max: 10,
                                 }}
                               />
                               {priceType === 0 ? "ETH" : "DYP"}{" "}
@@ -927,13 +939,11 @@ const SingleNft = ({
                                 type="number"
                                 required
                                 onChange={(e) => {
-                                  setNftPrice(e.target.value);
+                                  handlepricechange(e.target.value);
                                 }}
                                 sx={{ width: "120px" }}
                                 inputProps={{
                                   inputMode: "numeric",
-                                  pattern: "[0-9]*",
-                                  max: 10,
                                 }}
                               />
                               {priceType === 0 ? "ETH" : "DYP"}{" "}
@@ -1076,7 +1086,7 @@ const SingleNft = ({
                         ) : !buyloading && chainId !== 1 && chainId !== 5 ? (
                           "Switch Network"
                         ) : buyStatus === "buy" ? (
-                          "Buy nft"
+                          "Buy"
                         ) : buyStatus === "approve" || buyStatus === "" ? (
                           "Approve buy"
                         ) : buyStatus === "success" ? (
@@ -1259,7 +1269,75 @@ const SingleNft = ({
           <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
             <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
               <h3 className="traits-text">Traits</h3>
-              {type === "caws" || type === "cawsold" || type === "timepiece" ? (
+              {type === "caws" || type === "cawsold" ? (
+                <>
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                    <div className="d-flex flex-row flex-xxl-column flex-lg-column gap-2 align-items-center justify-content-between w-100">
+                      <span className="traittitle">Background</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[0]?.value}
+                      </span>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Tail</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[1]?.value}
+                      </span>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Ears</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[2]?.value}
+                      </span>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Body</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[3]?.value}
+                      </span>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Clothes</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[4]?.value}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="trait-separator"></div>
+                  <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Eyes</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[6]?.value}
+                      </span>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Mouth</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[7]?.value}
+                      </span>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Hat</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[8]?.value}
+                      </span>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Eyewear</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[9]?.value}
+                      </span>
+                    </div>
+                    <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                      <span className="traittitle">Watch</span>
+                      <span className="traitsubtitle">
+                        {metaData.attributes && metaData?.attributes[5]?.value}
+                      </span>
+                    </div>
+                  </div>
+                </>
+              ) : type === "timepiece" ? (
                 <>
                   <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
                     <div className="d-flex flex-row flex-xxl-column flex-lg-column gap-2 align-items-center justify-content-between w-100">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { LoginCard } from "../../Components/LoginCard";
 import LoginWrapper from "../../Components/LoginWrapper/LoginWrapper";
 import { styled } from "@mui/material/styles";
@@ -6,10 +6,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Login from "../Login/Login";
 import SingUp from "../SingUp/SingUp";
-import { Navigate  } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import ErrorAlert from "../../Components/ErrorAlert/ErrorAlert";
-
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -48,8 +49,11 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   })
 );
 
-function Auth() {
+function Auth({ isConnected, coinbase }) {
   const { isAuthenticated, loginError, setLoginValues } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [value, setValue] = React.useState(0);
 
@@ -63,12 +67,14 @@ function Auth() {
     });
   };
 
+  useEffect(() => {
+    if (!isConnected && !coinbase && location.pathname === "/auth") {
+      navigate("/");
+    }
+  }, [isConnected, coinbase]);
+
   if (isAuthenticated) {
-    return (
-      <Navigate 
-        to={ "/account"}
-      />
-    );
+    return <Navigate to={"/account"} />;
   }
   return (
     <>
