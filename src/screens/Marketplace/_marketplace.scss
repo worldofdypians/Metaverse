@@ -638,18 +638,21 @@
 .stats-container-1 {
   background-image: url("./assets//statsBg1.png");
   background-size: 100% 100%;
-  aspect-ratio: 1.89/1;
+  // aspect-ratio: 1.89/1;
+  min-height: 140px;
 }
 
 .stats-container-2 {
   background-image: url("./assets//statsBg2.png");
   background-size: 100% 100%;
-  aspect-ratio: 1.89/1;
+  // aspect-ratio: 1.89/1;
+  min-height: 140px;
 }
 .stats-container-3 {
   background-image: url("./assets//statsBg3.png");
   background-size: 100% 100%;
-  aspect-ratio: 1.89/1;
+  // aspect-ratio: 1.89/1;
+  min-height: 140px;
 }
 
 .first-box-blur {
@@ -1113,24 +1116,23 @@
   color: #eeedff;
 }
 
-.package-popup-wrapper{
+.package-popup-wrapper {
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
-
 }
 
-.dragon-popup{
+.dragon-popup {
   background-image: url("./assets/dragonPopup.png");
 }
 
-.golden-pass-popup{
+.golden-pass-popup {
   background-image: url("./assets/goldenPassPopup.png");
 }
 
-.puzzle-madness-popup{
+.puzzle-madness-popup {
   background-image: url("./assets/puzzleMadnessPopup.png");
 }
 
-.critical-hit-popup{
+.critical-hit-popup {
   background-image: url("./assets/criticalHitPopup.png");
 }
 
@@ -1156,9 +1158,7 @@
   }
 }
 
-
-
-.package-popup-title-wrapper{
+.package-popup-title-wrapper {
   margin-top: 150px;
   margin-bottom: 10px;
 }
@@ -1185,64 +1185,67 @@
   font-weight: 700;
 }
 
-
-.new-stake-tab{
-color: #fff;
-text-align: center;
-font-size: 16px;
-font-weight: 500;
+.new-stake-tab {
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
   border-radius: 8px;
-transition: all .25s;
-cursor: pointer;
+  transition: all 0.25s;
+  cursor: pointer;
 }
 
-.new-stake-tab:hover{
-background: #252743;
-color: #00FECF;
+.new-stake-tab:hover {
+  background: #252743;
+  color: #00fecf;
 }
 
-.stake-tab-active{
-background: #252743;
-color: #00FECF;
+.stake-tab-active {
+  background: #252743;
+  color: #00fecf;
 }
 
-.new-stake-divider{
+.new-stake-divider {
   height: 1px;
   background: rgba(184, 184, 224, 1);
   display: flex;
 }
 
-.new-stake-info-wrapper{
+.new-stake-info-wrapper {
   border-radius: 20px;
-background: linear-gradient(0deg, rgba(255, 255, 255, 0.15) 0%, rgba(33, 36, 64, 0.15) 100%);
-backdrop-filter: blur(13px);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(33, 36, 64, 0.15) 100%
+  );
+  backdrop-filter: blur(13px);
 }
 
-.new-stake-info{
-color: #FFF;
-text-align: center;
-font-size: 36px;
-font-weight: 800;
-margin-bottom: 0;
+.new-stake-info {
+  color: #fff;
+  text-align: center;
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 0;
 }
 
-.new-stake-desc{
-color: #FFF;
-text-align: center;
-font-size: 16px;
-font-weight: 500;
+.new-stake-desc {
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
 }
 
-.upcoming-stake{
-  color: #F7F7FC;
-text-align: center;
-font-size: 24px;
-font-weight: 700;
+.upcoming-stake {
+  color: #f7f7fc;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.upcoming-stake-desc{
-  color: #C0CBF7;
-text-align: center;
-font-size: 16px;
-font-weight: 300;
+.upcoming-stake-desc {
+  color: #c0cbf7;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 300;
 }
