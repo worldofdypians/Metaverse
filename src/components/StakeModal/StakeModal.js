@@ -600,7 +600,7 @@ const StakeModal = ({
             <div className="d-flex align-items-center gap-1">
               <img src={wodTag} alt="" />
               <span className="selected-nfts-amount">
-                {getApprovedLandNfts(selectNftLandIds).length} Wod Land
+                {getApprovedLandNfts(selectNftLandIds).length} WOD Land
               </span>
             </div>
             <div className="d-flex align-items-center gap-1">

@@ -803,7 +803,7 @@ const windowSize = useWindowSize()
         </div>
         <div className="col-12 col-lg-5 custom-height">
           <div className="nft-outer-wrapper py-3 px-3 py-lg-5 custom-height">
-            <div className="d-flex flex-column custom-height justify-content-between gap-3">
+            <div className="d-flex flex-column custom-height justify-content-start gap-3">
               {packageData.title === "Critical Hit" ? (
                 <div className="d-flex flex-column align-items-center gap-4">
                   <div

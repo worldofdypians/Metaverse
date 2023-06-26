@@ -412,7 +412,7 @@ const RewardsModal = ({
               <div className="d-flex align-items-center gap-1">
                 <img src={wodTag} alt="" />
                 <span className="selected-nfts-amount">
-                  {landStakes.length} Wod Land
+                  {landStakes.length} WOD Land
                 </span>
               </div>
               <div className="d-flex align-items-center gap-1">
