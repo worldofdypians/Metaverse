@@ -140,7 +140,7 @@ const ProfileCard = ({
         <div className="position-relative px-0 px-lg-3 col-12 col-lg-5 col-xxl-5">
           <div
             className={
-              isVerified && email ? "user-cardImg-active" : "user-cardImg"
+            "user-cardImg"
             }
           >
             <div className="d-flex flex-column justify-content-between gap-2">

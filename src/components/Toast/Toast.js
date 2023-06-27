@@ -31,7 +31,7 @@ const Toast = ({ title, showToast }) => {
         <Confetti width={windowSize.width} height={windowSize.height} />
       )}
 
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -42,7 +42,7 @@ const Toast = ({ title, showToast }) => {
         draggable
         pauseOnHover
         theme="light"
-      />
+      /> */}
     </div>
   );
 };

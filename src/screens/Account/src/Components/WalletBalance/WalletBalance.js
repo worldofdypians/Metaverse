@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
 import { getAllNfts } from "../../../../../actions/convertUsd";
 import { HashLoader } from "react-spinners";
-import nextArrow from "../../../../Marketplace/assets/nextArrow.svg";
+import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import Slider from "react-slick";
 import ItemCard from "../../../../../components/ItemCard/ItemCard";
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
@@ -264,7 +264,13 @@ const WalletBalance = ({
       for (let i = 0; i < myTimepieceCollected.length; i++) {
         finalTimepieceArray.push({
           nftAddress: window.config.nft_timepiece_address,
-          buyer: address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
           tokenId: myTimepieceCollected[i],
           type: "timepiece",
           chain: 1,
@@ -276,7 +282,13 @@ const WalletBalance = ({
       for (let i = 0; i < myLandCollected.length; i++) {
         finalLandArray.push({
           nftAddress: window.config.nft_land_address,
-          buyer: address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
           tokenId: myLandCollected[i],
           type: "land",
           chain: 1,
@@ -288,7 +300,13 @@ const WalletBalance = ({
       for (let i = 0; i < myCawsCollected.length; i++) {
         finalCawsArray.push({
           nftAddress: window.config.nft_caws_address,
-          buyer: address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
           tokenId: myCawsCollected[i],
           type: "caws",
           chain: 1,
@@ -300,7 +318,13 @@ const WalletBalance = ({
       for (let i = 0; i < myCawsOldCollected.length; i++) {
         finalCawsOldArray.push({
           nftAddress: window.config.nft_cawsold_address,
-          buyer: address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
           tokenId: myCawsOldCollected[i],
           type: "cawsold",
           chain: 1,
@@ -552,18 +576,32 @@ const WalletBalance = ({
         <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5">
           <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
             <h5 className="bal-txt px-4">My Rankings</h5>
-            <div className={`d-flex gap-3 justify-content-evenly ${!isVerified && !email && 'blurrystate' }`}>
+            <div className={`d-flex gap-3 justify-content-evenly `}>
               <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
                 <img src={globalRank} alt="" />
                 <span className="globaltext" style={{ fontSize: 12 }}>
-                  #{isVerified && email ? userRank + 1 : 0}
+                  #
+                  {isVerified &&
+                  email &&
+                  address &&
+                  coinbase &&
+                  address.toLowerCase() === coinbase.toLowerCase()
+                    ? userRank + 1
+                    : "N/A"}
                 </span>
                 <span className="globaltext">Global</span>
               </div>
               <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
                 <img src={genesisImg} alt="" className="genesisimg" />
                 <span className="genesistext" style={{ fontSize: 12 }}>
-                  #{isVerified && email ? genesisRank + 1 : 0}
+                  #
+                  {isVerified &&
+                  email &&
+                  address &&
+                  coinbase &&
+                  address.toLowerCase() === coinbase.toLowerCase()
+                    ? genesisRank + 1
+                    : "N/A"}
                 </span>
                 <span className="genesistext">Genesis</span>
               </div>
@@ -776,10 +814,10 @@ const WalletBalance = ({
                         isOwner:
                           (item.buyer &&
                             item.buyer.toLowerCase() ===
-                              address?.toLowerCase()) ||
+                              coinbase?.toLowerCase()) ||
                           (item.seller &&
                             item.seller.toLowerCase() ===
-                              address?.toLowerCase()),
+                              coinbase?.toLowerCase()),
                         chain: item.chain,
                       }}
                       onClick={() => {
@@ -1369,10 +1407,10 @@ const WalletBalance = ({
                         isOwner:
                           (nft.buyer &&
                             nft.buyer.toLowerCase() ===
-                              address?.toLowerCase()) ||
+                              coinbase?.toLowerCase()) ||
                           (nft.seller &&
                             nft.seller.toLowerCase() ===
-                              address?.toLowerCase()),
+                              coinbase?.toLowerCase()),
                         chain: nft.chain,
                       }}
                       onClick={() => {
@@ -1416,18 +1454,26 @@ const WalletBalance = ({
                             : nft.nftAddress === window.config.nft_land_address
                             ? "land"
                             : "timepiece",
+                        // isOwner:
+                        //   isVerified && email
+                        //     ? nft.buyer
+                        //       ? nft.buyer?.toLowerCase() ===
+                        //         address?.toLowerCase()
+                        //         ? nft.buyer?.toLowerCase() ===
+                        //           coinbase?.toLowerCase()
+                        //         : nft.seller?.toLowerCase() ===
+                        //           address?.toLowerCase()
+                        //       : nft.seller?.toLowerCase() ===
+                        //         coinbase?.toLowerCase()
+                        //     : false,
                         isOwner:
-                          isVerified && email
-                            ? nft.buyer
-                              ? nft.buyer?.toLowerCase() ===
-                                address?.toLowerCase()
-                                ? nft.buyer?.toLowerCase() ===
-                                  coinbase?.toLowerCase()
-                                : nft.seller?.toLowerCase() ===
-                                  address?.toLowerCase()
-                              : nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase()
-                            : false,
+                          (nft.buyer &&
+                            nft.buyer.toLowerCase() ===
+                              coinbase?.toLowerCase()) ||
+                          (nft.seller &&
+                            nft.seller.toLowerCase() ===
+                              coinbase?.toLowerCase()),
+                        chain: nft.chain,
                         chain: 1,
                       }}
                       onClick={() => {
@@ -1472,10 +1518,10 @@ const WalletBalance = ({
                         isOwner:
                           (nft.buyer &&
                             nft.buyer.toLowerCase() ===
-                              address?.toLowerCase()) ||
+                              coinbase?.toLowerCase()) ||
                           (nft.seller &&
                             nft.seller.toLowerCase() ===
-                              address?.toLowerCase()),
+                              coinbase?.toLowerCase()),
                         chain: nft.chain,
                       }}
                       onClick={() => {

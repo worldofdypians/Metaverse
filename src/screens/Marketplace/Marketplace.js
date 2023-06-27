@@ -730,8 +730,8 @@ const Marketplace = ({
                                   $
                                   {getFormattedNumber(
                                     nft.payment_priceType === 0
-                                      ? ethTokenData * nft.price
-                                      : dypTokenData * nft.price,
+                                      ? ethTokenData * (nft.price/1e18)
+                                      : dypTokenData * (nft.price/1e18),
                                     0
                                   )}
                                 </span>{" "}
@@ -761,7 +761,7 @@ const Marketplace = ({
                                       className="mx-1"
                                     />
                                   )}
-                                  {getFormattedNumber(nft.price, 0)}{" "}
+                                  {getFormattedNumber((nft.price/1e18), 0)}{" "}
                                   {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                                 </span>
                               </div>
