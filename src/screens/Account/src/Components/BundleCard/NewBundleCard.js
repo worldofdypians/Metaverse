@@ -10,6 +10,7 @@ import criticalHit from "./assets/criticalHit.webp";
 import goldenPass from "./assets/goldenPass.png";
 import puzzleMadness from "./assets/puzzleMadness.png";
 import "react-circular-progressbar/dist/styles.css";
+import newLandTooltip from './assets/newLandTooltip.svg'
 import {
   wod_abi,
   token_abi,
@@ -777,7 +778,7 @@ const windowSize = useWindowSize()
               <div style={{cursor: 'pointer'}}  onClick={() => {
                 onOpenPopup(packageData.title === "Dragon Ruins" ? "dragon" : packageData.title === "Puzzle Madness" ? "puzzlemadness" : packageData.title === "Golden Pass" ? "goldenpass" : "criticalhit")
               }} target="_blank">
-                <img src={require("./assets/eventsTooltip.svg").default} alt="" />
+                <img src={newLandTooltip} width={30} height={30} alt="" />
               </div>
             </div>
             <div className="d-flex align-items-center gap-3">

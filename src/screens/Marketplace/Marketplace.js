@@ -24,6 +24,7 @@ import nextArrow from "./assets/nextArrow1.svg";
 import axios from "axios";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
+import moment from "moment";
 
 const Marketplace = ({
   listedNFTS,
@@ -70,6 +71,9 @@ const Marketplace = ({
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
 
+
+ 
+
   const firstNext = () => {
     firstSlider.current.slickNext();
   };
@@ -83,6 +87,8 @@ const Marketplace = ({
   const secondPrev = () => {
     secondSlider.current.slickPrev();
   };
+
+  
 
   var settings = {
     dots: false,
@@ -281,43 +287,78 @@ const Marketplace = ({
     setfavItems(favItems + 1);
   };
 
+
   useEffect(() => {
     fetchUserFavorites(coinbase);
+    // filterByDate("day")
   }, [coinbase, favItems]);
 
-  const filterTopSales = (filter) => {
+  var today = moment();
+  var hours = moment().subtract(1, 'days')
+  var week = moment().subtract(7, 'days')
+  var month = moment().subtract(30, 'days')
+  const [topSalesDate, setTopSalesDate] = useState("24h")
+
+
+
+  const filterTopSales = () => {
     setLoadingTopSales(true);
-    if (filter === "caws") {
+    let datedSales = topSales.map((item) => {
+      return {...item, date: new Date(parseInt(item.blockTimestamp * 1000))}
+    })
+
+    let filteredDateSales;
+    if(topSalesDate === "24h"){
+      filteredDateSales = datedSales.filter(function(item){
+            return item.date > hours._d && item.date < today._d
+          })
+    }else if(topSalesDate === "week"){
+      filteredDateSales = datedSales.filter(function(item){
+        return item.date > week._d && item.date < today._d
+      })
+    }else if(topSalesDate === "month"){
+      filteredDateSales = datedSales.filter(function(item){
+        return item.date > month._d && item.date < today._d
+      })
+    }
+
+    if (topSalesFilter === "caws") {
       setTopSalesFilter("caws");
-      let cawsFilter = topSales.filter(
+      let cawsFilter = filteredDateSales.filter(
         (item) =>
           item.nftAddress === window.config.nft_caws_address ||
           item.nftAddress === window.config.nft_cawsold_address
       );
       setTopSold(cawsFilter);
-    } else if (filter === "land") {
+    } else if (topSalesFilter === "land") {
       setTopSalesFilter("land");
 
-      let wodFilter = topSales.filter(
+      let wodFilter = filteredDateSales.filter(
         (item) => item.nftAddress === window.config.nft_land_address
       );
       setTopSold(wodFilter);
-    } else if (filter === "timepiece") {
+    } else if (topSalesFilter === "timepiece") {
       setTopSalesFilter("timepiece");
 
-      let timepieceFilter = topSales.filter(
+      let timepieceFilter = filteredDateSales.filter(
         (item) => item.nftAddress === window.config.nft_timepiece_address
       );
       setTopSold(timepieceFilter);
-    } else if (filter === "all") {
+    } else if (topSalesFilter === "all") {
       setTopSalesFilter("all");
 
-      setTopSold(topSales);
+      setTopSold(filteredDateSales);
     }
     // setTimeout => {
     setLoadingTopSales(false);
     // }, 1000);
   };
+
+
+  useEffect(() => {
+   filterTopSales()
+  }, [topSalesFilter, topSalesDate])
+  
 
   const filterRecentListings = (filter) => {
     console.log(latest20RecentListedNFTS);
@@ -381,6 +422,8 @@ const Marketplace = ({
       setLoadingRecentSales(false);
     }, 1000);
   };
+
+ 
 
   async function updateViewCount(tokenId, nftAddress) {
     try {
@@ -603,7 +646,7 @@ const Marketplace = ({
                       className={`filter-title mb-0 ${
                         topSalesFilter === "all" && "filter-selected"
                       }`}
-                      onClick={() => filterTopSales("all")}
+                      onClick={() => setTopSalesFilter("all")}
                     >
                       All
                     </h6>
@@ -611,7 +654,7 @@ const Marketplace = ({
                       className={`filter-title mb-0 ${
                         topSalesFilter === "caws" && "filter-selected"
                       }`}
-                      onClick={() => filterTopSales("caws")}
+                      onClick={() => setTopSalesFilter("caws")}
                     >
                       CAWS
                     </h6>
@@ -619,7 +662,7 @@ const Marketplace = ({
                       className={`filter-title mb-0 ${
                         topSalesFilter === "land" && "filter-selected"
                       }`}
-                      onClick={() => filterTopSales("land")}
+                      onClick={() => setTopSalesFilter("land")}
                     >
                       Land
                     </h6>
@@ -627,7 +670,7 @@ const Marketplace = ({
                       className={`filter-title mb-0 ${
                         topSalesFilter === "timepiece" && "filter-selected"
                       }`}
-                      onClick={() => filterTopSales("timepiece")}
+                      onClick={() => setTopSalesFilter("timepiece")}
                     >
                       Timepiece
                     </h6>
@@ -636,25 +679,25 @@ const Marketplace = ({
                 <div className="d-flex align-items-center gap-4">
                   <h6
                     className={`filter-title px-2 py-1 mb-0 ${
-                      topSalesFilter === "all" && "filter-selected"
+                      topSalesDate === "24h" && "filter-selected"
                     }`}
-                    // onClick={() => filterTopSales("all")}
+                    onClick={() => setTopSalesDate("24h")}
                   >
                     24H
                   </h6>
                   <h6
                     className={`filter-title px-2 py-1 mb-0 ${
-                      topSalesFilter === "caws" && "filter-selected"
+                      topSalesDate === "week" && "filter-selected"
                     }`}
-                    // onClick={() => filterTopSales("caws")}
+                    onClick={() => setTopSalesDate("week")}
                   >
                     7D
                   </h6>
                   <h6
                     className={`filter-title px-2 py-1 mb-0 ${
-                      topSalesFilter === "land" && "filter-selected"
+                      topSalesDate === "month" && "filter-selected"
                     }`}
-                    // onClick={() => filterTopSales("land")}
+                    onClick={() => setTopSalesDate("month")}
                   >
                     30D
                   </h6>
