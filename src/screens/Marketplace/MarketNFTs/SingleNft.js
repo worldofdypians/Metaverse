@@ -279,13 +279,13 @@ const SingleNft = ({
       await window
         .listNFT(tokenId, nftPrice, priceType, type)
         .then((result) => {
-          handleRefreshList(type, tokenId);
-          handleRefreshListing();
           setsellLoading(false);
           setsellStatus("success");
           setPurchaseStatus("Successfully sold!");
           setPurchaseColor("#00FECF");
           setShowToast(true);
+          handleRefreshList(type, tokenId);
+          handleRefreshListing();
           setToastTitle("Successfully sold!");
           setTimeout(() => {
             setPurchaseStatus("");

@@ -924,7 +924,7 @@ function App() {
 
   useEffect(() => {
     getOtherNfts();
-  }, [listedNFTS2, recentListedNFTS2]);
+  }, [listedNFTS2.length, recentListedNFTS2.length]);
 
   // useEffect(() => {
   //   if (window.ethereum) {
