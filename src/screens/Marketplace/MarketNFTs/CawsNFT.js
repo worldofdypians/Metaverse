@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
@@ -8,7 +8,6 @@ import searchIcon from "../assets/search.svg";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import { NavLink } from "react-router-dom";
 import { getCawsNfts, getCawsOldNfts } from "../../../actions/convertUsd";
-
 
 const CawsNFT = ({
   isConnected,
@@ -32,6 +31,11 @@ const CawsNFT = ({
   const [cawsNFTS, setCawsNFTS] = useState([]);
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
+  const [next, setNext] = useState(newsPerRow);
+  const newsPerRow = 30;
+  const allCaws = 10000;
+
+  const listInnerRef = useRef();
 
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -65,16 +69,15 @@ const CawsNFT = ({
       });
       setCawsNFTS(eth);
     }
-
   };
 
   const fetchInitialCaws = async () => {
-    const cawsnew = await getCawsNfts()
-    const cawsold = await getCawsOldNfts() 
-    const finalArray = [...cawsnew, ...cawsold]
+    const cawsnew = await getCawsNfts();
+    const cawsold = await getCawsOldNfts();
+    const finalArray = [...cawsnew, ...cawsold];
     if (finalArray && finalArray.length > 0) {
       let datedNfts = finalArray.map((nft) => {
-        let date = new Date(nft.blockTimestamp * 1000);
+        let date = new Date(nft?.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
       setCawsNFTS(datedNfts);
@@ -82,7 +85,20 @@ const CawsNFT = ({
     }
   };
 
-  
+  const getCawsCollection = async () => {
+    const finalArray = [];
+    for (let i = 0; i < allCaws; i++) {
+      finalArray.push({
+        nftAddress: window.config.nft_address,
+        buyer: "",
+        tokenId: i,
+        type: "caws",
+        chain: 1,
+      });
+    }
+    // setInitialNfts(finalArray);
+  };
+
   async function fetchUserFavorites(userId) {
     if (userId !== undefined && userId !== null) {
       try {
@@ -104,7 +120,6 @@ const CawsNFT = ({
     }
   }
 
-
   async function updateViewCount(tokenId, nftAddress) {
     try {
       const response = await fetch("https://api.worldofdypians.com/nft-view", {
@@ -122,11 +137,33 @@ const CawsNFT = ({
       console.error("Error updating view count:", error);
     }
   }
-  
+
+  const loadMore = () => {
+    setNext(next + newsPerRow);
+  };
+
+  const onScroll = () => {
+    const wrappedElement = document.getElementById("header");
+    if (wrappedElement) {
+      const isBottom =
+        wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
+      if (isBottom) {
+        if (next < allCaws) {
+          loadMore();
+        }
+        document.removeEventListener("scroll", onScroll);
+      }
+    }
+  };
+
   const updateFavs = () => {
     setfavItems(favItems + 1);
   };
-  
+
+  useEffect(() => {
+    document.addEventListener("scroll", onScroll);
+  });
+
   useEffect(() => {
     fetchUserFavorites(coinbase);
   }, [coinbase, favItems]);
@@ -134,6 +171,7 @@ const CawsNFT = ({
   useEffect(() => {
     fetchInitialCaws();
     window.scrollTo(0, 0);
+    getCawsCollection();
   }, []);
 
   useEffect(() => {
@@ -145,12 +183,10 @@ const CawsNFT = ({
     }
     sortNfts("lth");
   }, [cawsNFTS]);
-
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
-      style={{ minHeight: "72vh", maxWidth: '2400px' }}
-
+      style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
@@ -297,13 +333,18 @@ const CawsNFT = ({
               )}
             </div>
           </div>
-          {!loading &&
-          <div className="d-flex justify-content-center w-100">
-          <button className="btn py-2 px-3 nft-load-more-btn">
-            Load more
-          </button>
-        </div>
-          }
+          {!loading && (
+            <div
+              className="d-flex justify-content-center w-100"
+              id="header"
+              onScroll={onScroll}
+              ref={listInnerRef}
+            >
+              <button className="btn py-2 px-3 nft-load-more-btn">
+                Load more
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

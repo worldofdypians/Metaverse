@@ -924,7 +924,7 @@ function App() {
 
   useEffect(() => {
     getOtherNfts();
-  }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount, latest20RecentListedNFTS]);
+  }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
  
 
   // useEffect(() => {

@@ -122,7 +122,7 @@ const SingleNft = ({
   const [favCount, setfavCount] = useState(0);
   const { email, logout } = useAuth();
 
-  // console.log("nft", nft, IsListed, isOwner);
+  // console.log("IsListed isOwner", IsListed, isOwner);
 
   const {
     data,
@@ -168,6 +168,7 @@ const SingleNft = ({
     const result = await window.isApprovedBuy(amount).catch((e) => {
       console.error(e);
     });
+
 
     return result;
   };
@@ -275,7 +276,7 @@ const SingleNft = ({
       console.log("selling");
       setsellLoading(true);
       setsellStatus("sell");
-      setPurchaseStatus("Selling nft in progress...");
+      setPurchaseStatus("Listing NFT in progress...");
       setPurchaseColor("#00FECF");
 
       await window
@@ -283,12 +284,11 @@ const SingleNft = ({
         .then((result) => {
           setsellLoading(false);
           setsellStatus("success");
-          setPurchaseStatus("Successfully sold!");
+          setPurchaseStatus("NFT successfully listed!");
           setPurchaseColor("#00FECF");
           setShowToast(true);
           handleRefreshList(type, tokenId);
           handleRefreshListing();
-          setToastTitle("Successfully sold!");
           setTimeout(() => {
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
@@ -312,7 +312,7 @@ const SingleNft = ({
 
       setsellLoading(true);
       setsellStatus("approve");
-      setPurchaseStatus("Approving nft selling in progress...");
+      setPurchaseStatus("Approving NFT for listing in progress..");
       setPurchaseColor("#00FECF");
 
       await window
@@ -346,9 +346,7 @@ const SingleNft = ({
   };
 
   async function handleBuy(nft) {
-    console.log("nft", nft);
     const isApproved = await isApprovedBuy(nft.price);
-    const newPrice = new BigNumber(nft.price * 1e18).toFixed();
 
     if (isApproved || nft.payment_priceType === 0) {
       console.log("buying", nft.price);
@@ -356,7 +354,7 @@ const SingleNft = ({
 
       setbuyLoading(true);
       setbuyStatus("buy");
-      setPurchaseStatus("Buying nft in progress...");
+      setPurchaseStatus("Buying NFT in progress..");
       await window
         .buyNFT(
           nft.price,
@@ -378,7 +376,7 @@ const SingleNft = ({
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
             setbuyStatus("");
-            getLatestBoughtNFT();
+            handleRefreshList(type, nft);
             handleRefreshListing();
           }, 3000);
         })
@@ -403,7 +401,7 @@ const SingleNft = ({
       setPurchaseColor("#00FECF");
       await window
         .approveBuy(nft.price)
-        .then((result) => {
+        .then(() => {
           setTimeout(() => {
             setbuyStatus("buy");
             setPurchaseStatus("");
@@ -520,9 +518,10 @@ const SingleNft = ({
   //to get the favorites count
   async function getFavoritesCount(tokenId, nftAddress) {
     try {
-      const response = await fetch(
+      const response = axios.get(
         `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`
       );
+      console.log(response);
       if (!response.ok) {
         throw new Error("Error fetching NFT favorites");
       }
@@ -563,7 +562,7 @@ const SingleNft = ({
   };
 
   useEffect(() => {
-    if (isOwner === false) {
+    // if (isOwner === false) {
       if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
         isApprovedBuy(nft.price).then((isApproved) => {
           console.log(isApproved);
@@ -586,8 +585,8 @@ const SingleNft = ({
       } else {
         setbuyStatus("buy");
       }
-    }
-  }, [nft.price, isConnected, IsListed, isOwner, coinbase]);
+    // }
+  }, [nft.price, isConnected, IsListed, isOwner, coinbase, nftCount]);
 
   useEffect(() => {
     if (isConnected === true && nft.payment_priceType === 1) {
@@ -680,7 +679,7 @@ const SingleNft = ({
       coinbase &&
       email &&
       coinbase.toLowerCase() !==
-        data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
+      data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
     ) {
       setPurchaseColor("#FF6232");
     }
@@ -744,8 +743,8 @@ const SingleNft = ({
                     type === "caws" || type === "cawsold"
                       ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
                       : type === "land"
-                      ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
-                      : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
+                        ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
+                        : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
                   }
                   alt=""
                 />
@@ -774,8 +773,8 @@ const SingleNft = ({
                     {type === "caws" || type === "cawsold"
                       ? "CAWS"
                       : type === "land"
-                      ? "Genesis Land"
-                      : "CAWS Timepiece"}{" "}
+                        ? "Genesis Land"
+                        : "CAWS Timepiece"}{" "}
                     #{nft.tokenId}
                   </h3>
                   {isOwner && IsListed && (
@@ -937,11 +936,10 @@ const SingleNft = ({
                           </span>
                           <div className="d-flex flex-row justify-content-around w-100 gap-2">
                             <div
-                              className={`d-flex gap-2 align-items-center position-relative ${
-                                priceType === 0
+                              className={`d-flex gap-2 align-items-center position-relative ${priceType === 0
                                   ? "currencyWrapper"
                                   : "currencyWrapper-inactive"
-                              } `}
+                                } `}
                               onClick={() => {
                                 setPriceType(0);
                               }}
@@ -965,11 +963,10 @@ const SingleNft = ({
                             </div>
 
                             <div
-                              className={`d-flex gap-2 align-items-center position-relative ${
-                                priceType === 1
+                              className={`d-flex gap-2 align-items-center position-relative ${priceType === 1
                                   ? "currencyWrapper"
                                   : "currencyWrapper-inactive"
-                              } `}
+                                } `}
                               onClick={() => {
                                 setPriceType(1);
                               }}
@@ -979,8 +976,8 @@ const SingleNft = ({
                                   priceType === 0
                                     ? checkPassive
                                     : priceType === 1
-                                    ? checkActive
-                                    : checkPassive
+                                      ? checkActive
+                                      : checkPassive
                                 }
                                 alt=""
                                 className={"position-absolute checkicons"}
@@ -1055,11 +1052,10 @@ const SingleNft = ({
                           </span>
                           <div className="d-flex flex-row justify-content-around w-100 gap-2">
                             <div
-                              className={`d-flex gap-2 align-items-center position-relative ${
-                                priceType === 0
+                              className={`d-flex gap-2 align-items-center position-relative ${priceType === 0
                                   ? "currencyWrapper"
                                   : "currencyWrapper-inactive"
-                              } `}
+                                } `}
                               onClick={() => {
                                 setPriceType(0);
                               }}
@@ -1083,11 +1079,10 @@ const SingleNft = ({
                             </div>
 
                             <div
-                              className={`d-flex gap-2 align-items-center position-relative ${
-                                priceType === 1
+                              className={`d-flex gap-2 align-items-center position-relative ${priceType === 1
                                   ? "currencyWrapper"
                                   : "currencyWrapper-inactive"
-                              } `}
+                                } `}
                               onClick={() => {
                                 setPriceType(1);
                               }}
@@ -1097,8 +1092,8 @@ const SingleNft = ({
                                   priceType === 0
                                     ? checkPassive
                                     : priceType === 1
-                                    ? checkActive
-                                    : checkPassive
+                                      ? checkActive
+                                      : checkPassive
                                 }
                                 alt=""
                                 className={"position-absolute checkicons"}
@@ -1150,14 +1145,13 @@ const SingleNft = ({
                             ? true
                             : false
                         }
-                        className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
-                          buyStatus === "success"
+                        className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${buyStatus === "success"
                             ? "successbtn"
                             : buyStatus === "failed" ||
                               (chainId !== 5 && chainId !== 1)
-                            ? "errorbtn"
-                            : null
-                        } d-flex justify-content-center align-items-center gap-2`}
+                              ? "errorbtn"
+                              : null
+                          } d-flex justify-content-center align-items-center gap-2`}
                         onClick={() => {
                           chainId !== 1 && chainId !== 5
                             ? handleSwitchChain()
@@ -1192,23 +1186,22 @@ const SingleNft = ({
                               ? true
                               : false
                           }
-                          className={`btn buyNftbtn col-lg-6 col-xxl-6 d-flex justify-content-center ${
-                            updateStatus === "success"
+                          className={`btn buyNftbtn col-lg-6 col-xxl-6 d-flex justify-content-center ${updateStatus === "success"
                               ? "successbtn"
                               : updateStatus === "failed" ||
                                 (chainId !== 5 && chainId !== 1)
-                              ? "errorbtn"
-                              : null
-                          } d-flex justify-content-center align-items-center gap-2`}
+                                ? "errorbtn"
+                                : null
+                            } d-flex justify-content-center align-items-center gap-2`}
                           onClick={() => {
                             chainId !== 1 && chainId !== 5
                               ? handleSwitchChain()
                               : updateListing(
-                                  nft.tokenId,
-                                  nftPrice,
-                                  priceType,
-                                  type
-                                );
+                                nft.tokenId,
+                                nftPrice,
+                                priceType,
+                                type
+                              );
                           }}
                         >
                           {updateLoading && (chainId === 1 || chainId === 5) ? (
@@ -1245,10 +1238,10 @@ const SingleNft = ({
                             chainId !== 1 && chainId !== 5
                               ? handleSwitchChain()
                               : cancelNFT(
-                                  nft.nftAddress,
-                                  nft.tokenId,
-                                  nft.payment_priceType
-                                );
+                                nft.nftAddress,
+                                nft.tokenId,
+                                nft.payment_priceType
+                              );
                           }}
                         >
                           {cancelLoading && (chainId === 1 || chainId === 5) ? (
@@ -1283,23 +1276,22 @@ const SingleNft = ({
                             ? true
                             : false
                         }
-                        className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
-                          sellStatus === "success"
+                        className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${sellStatus === "success"
                             ? "successbtn"
                             : sellStatus === "failed" ||
                               (chainId !== 5 && chainId !== 1)
-                            ? "errorbtn"
-                            : null
-                        } d-flex justify-content-center align-items-center gap-2`}
+                              ? "errorbtn"
+                              : null
+                          } d-flex justify-content-center align-items-center gap-2`}
                         onClick={() => {
                           chainId !== 1 && chainId !== 5
                             ? handleSwitchChain()
                             : handleSell(
-                                nft.tokenId,
-                                nftPrice,
-                                priceType,
-                                type
-                              );
+                              nft.tokenId,
+                              nftPrice,
+                              priceType,
+                              type
+                            );
                         }}
                       >
                         {sellLoading && (chainId === 1 || chainId === 5) ? (
@@ -1343,10 +1335,10 @@ const SingleNft = ({
                 }}
               >
                 {purchaseStatus === "" &&
-                data?.getPlayer?.wallet &&
-                email &&
-                coinbase &&
-                coinbase.toLowerCase() !==
+                  data?.getPlayer?.wallet &&
+                  email &&
+                  coinbase &&
+                  coinbase.toLowerCase() !==
                   data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
                   ? "By interacting with the NFTs I understand that I am not using the wallet associated to my game profile"
                   : purchaseStatus}

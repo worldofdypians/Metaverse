@@ -5384,9 +5384,16 @@ window.buyNFT = async (
     window.config.nft_marketplace_address
   );
 
-  await marketplace.methods
+  if(priceType === 1) {
+    await marketplace.methods
+    .buyItem(0, nft_address, tokenId, [priceType, priceAddress])
+    .send({ from: await getCoinbase()});
+  }
+  else if(priceType === 0) {
+    await marketplace.methods
     .buyItem(nft_address, tokenId, [priceType, priceAddress])
     .send({ from: await getCoinbase(), value: price });
+  }
 };
 
 window.approveBuy = async (amount) => {
