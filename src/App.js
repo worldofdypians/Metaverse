@@ -102,7 +102,7 @@ function App() {
   const [activeUser, setactiveUser] = useState(false);
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
-  
+
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
   const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
   const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
@@ -924,7 +924,7 @@ function App() {
 
   useEffect(() => {
     getOtherNfts();
-  }, [listedNFTS2.length, recentListedNFTS2.length]);
+  }, [listedNFTS2?.length, recentListedNFTS2?.length, chainId]);
 
   // useEffect(() => {
   //   if (window.ethereum) {

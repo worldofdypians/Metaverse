@@ -141,7 +141,15 @@ function Dashboard({
   };
 
   const getCawsStakesIdsCawsWod = async () => {
-    const address = coinbase;
+    const address =
+      data?.getPlayer?.wallet &&
+      email &&
+      coinbase &&
+      data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+        coinbase.toLowerCase()
+        ? data?.getPlayer?.wallet?.publicAddress
+        : coinbase;
+
     let stakenft_cawsWod = [];
     const infura_web3 = window.infuraWeb3;
     let staking_contract = new infura_web3.eth.Contract(
@@ -162,7 +170,14 @@ function Dashboard({
   };
 
   const getWodStakesIdsCawsWod = async () => {
-    const address = coinbase;
+    const address =
+      data?.getPlayer?.wallet &&
+      email &&
+      coinbase &&
+      data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+        coinbase.toLowerCase()
+        ? data?.getPlayer?.wallet?.publicAddress
+        : coinbase;
     let stakenft_cawsWod = [];
     const infura_web3 = window.infuraWeb3;
     let staking_contract = new infura_web3.eth.Contract(
@@ -314,20 +329,29 @@ function Dashboard({
     return await window.getMyNFTs(coinbase, type);
   };
 
+ 
   //todo
   const fetchAllMyNfts = async () => {
     if (data?.getPlayer?.wallet?.publicAddress || account) {
       getMyNFTS(
-        data?.getPlayer?.wallet && email
+        data?.getPlayer?.wallet &&
+          email &&
+          coinbase &&
+          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+            coinbase.toLowerCase()
           ? data?.getPlayer?.wallet?.publicAddress
-          : account,
+          : coinbase,
         "caws"
       ).then((NFTS) => setMyNFTSCaws(NFTS));
 
       getMyNFTS(
-        data?.getPlayer?.wallet && email
+        data?.getPlayer?.wallet &&
+          email &&
+          coinbase &&
+          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+            coinbase.toLowerCase()
           ? data?.getPlayer?.wallet?.publicAddress
-          : account,
+          : coinbase,
         "cawsold"
       ).then((NFTS) => {
         if (NFTS) {
@@ -336,16 +360,24 @@ function Dashboard({
       });
 
       getMyNFTS(
-        data?.getPlayer?.wallet && email
+        data?.getPlayer?.wallet &&
+          email &&
+          coinbase &&
+          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+            coinbase.toLowerCase()
           ? data?.getPlayer?.wallet?.publicAddress
-          : account,
+          : coinbase,
         "timepiece"
       ).then((NFTS) => setMyNFTSTimepiece(NFTS));
 
       getMyNFTS(
-        data?.getPlayer?.wallet && email
+        data?.getPlayer?.wallet &&
+          email &&
+          coinbase &&
+          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+            coinbase.toLowerCase()
           ? data?.getPlayer?.wallet?.publicAddress
-          : account,
+          : coinbase,
         "land"
       ).then((NFTS) => setMyNFTSLand(NFTS));
     }
@@ -358,9 +390,13 @@ function Dashboard({
       0,
       "",
       "buyer",
-      data?.getPlayer?.wallet && email
+      data?.getPlayer?.wallet &&
+        email &&
+        coinbase &&
+        data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+          coinbase.toLowerCase()
         ? data?.getPlayer?.wallet?.publicAddress
-        : account,
+        : coinbase,
       ""
     );
     listedNFTS &&
@@ -503,9 +539,13 @@ function Dashboard({
       );
       const bal1 = await contract1.methods
         .balanceOf(
-          data?.getPlayer?.wallet && email
+          data?.getPlayer?.wallet &&
+            email &&
+            coinbase &&
+            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+              coinbase.toLowerCase()
             ? data?.getPlayer?.wallet?.publicAddress
-            : account
+            : coinbase
         )
         .call()
         .then((data) => {
@@ -515,9 +555,13 @@ function Dashboard({
 
       const bal2 = await contract2.methods
         .balanceOf(
-          data?.getPlayer?.wallet && email
+          data?.getPlayer?.wallet &&
+            email &&
+            coinbase &&
+            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+              coinbase.toLowerCase()
             ? data?.getPlayer?.wallet?.publicAddress
-            : account
+            : coinbase
         )
         .call()
         .then((data) => {
@@ -527,9 +571,13 @@ function Dashboard({
 
       const bal3 = await contract3.methods
         .balanceOf(
-          data?.getPlayer?.wallet && email
+          data?.getPlayer?.wallet &&
+            email &&
+            coinbase &&
+            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+              coinbase.toLowerCase()
             ? data?.getPlayer?.wallet?.publicAddress
-            : account
+            : coinbase
         )
         .call()
         .then((data) => {
@@ -551,9 +599,13 @@ function Dashboard({
 
       const bal2_idyp = await contract2_idyp.methods
         .balanceOf(
-          data?.getPlayer?.wallet && email
+          data?.getPlayer?.wallet &&
+            email &&
+            coinbase &&
+            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+              coinbase.toLowerCase()
             ? data?.getPlayer?.wallet?.publicAddress
-            : account
+            : coinbase
         )
         .call()
         .then((data) => {
@@ -563,9 +615,13 @@ function Dashboard({
 
       const bal3_idyp = await contract3_idyp.methods
         .balanceOf(
-          data?.getPlayer?.wallet && email
+          data?.getPlayer?.wallet &&
+            email &&
+            coinbase &&
+            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+              coinbase.toLowerCase()
             ? data?.getPlayer?.wallet?.publicAddress
-            : account
+            : coinbase
         )
         .call()
         .then((data) => {

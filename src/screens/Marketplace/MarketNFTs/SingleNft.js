@@ -80,6 +80,7 @@ const SingleNft = ({
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
+  const { BigNumber } = window;
 
   const [nft, setNft] = useState(
     location.state?.nft ? location.state?.nft : []
@@ -148,7 +149,6 @@ const SingleNft = ({
 
   const getMetaData = async () => {
     if (nft) {
-      console.log(nft);
       if (type === "caws" || type === "cawsold") {
         const result = await window.getNft(nft.tokenId);
         console.log(result);
@@ -262,13 +262,15 @@ const SingleNft = ({
         }
       });
 
-    setNft(...finalboughtItems);
+    const test = [...finalboughtItems];
+    console.log(test);
+
+    setNft(test);
   };
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
-    console.log("nft", nft);
     const isApproved = await isApprovedNFT(tokenId, type);
-
+    const newPrice = new BigNumber(nftPrice * 1e18);
     if (isApproved) {
       console.log("selling");
       setsellLoading(true);
@@ -277,7 +279,7 @@ const SingleNft = ({
       setPurchaseColor("#00FECF");
 
       await window
-        .listNFT(tokenId, nftPrice, priceType, type)
+        .listNFT(tokenId, newPrice, priceType, type)
         .then((result) => {
           setsellLoading(false);
           setsellStatus("success");
@@ -346,9 +348,10 @@ const SingleNft = ({
   async function handleBuy(nft) {
     console.log("nft", nft);
     const isApproved = await isApprovedBuy(nft.price);
+    const newPrice = new BigNumber(nft.price * 1e18).toFixed();
 
     if (isApproved || nft.payment_priceType === 0) {
-      console.log("buying");
+      console.log("buying", nft.price);
       setPurchaseColor("#00FECF");
 
       setbuyLoading(true);
@@ -463,6 +466,8 @@ const SingleNft = ({
   };
 
   async function updateListing(nft, price, priceType, type) {
+    const newPrice = new BigNumber(price * 1e18).toFixed();
+
     setPurchaseColor("#00FECF");
     setPurchaseStatus("Price is being updated...");
     setupdateLoading(true);
@@ -470,7 +475,7 @@ const SingleNft = ({
     console.log("updating", nft, price, priceType, type);
 
     return await window
-      .updateListingNFT(nft, price, priceType, type)
+      .updateListingNFT(nft, newPrice, priceType, type)
       .then((result) => {
         setTimeout(() => {
           setPurchaseColor("#00FECF");
@@ -805,15 +810,15 @@ const SingleNft = ({
                           className="nft-price-eth"
                           style={{ fontSize: 15, lineHeight: "20px" }}
                         >
-                          {nft.price}{" "}
-                          {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+                          {getFormattedNumber(nft.price / 1e18, 0)}
+                          {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                         </span>
                         <span className="nft-price-usd">
                           $
                           {getFormattedNumber(
                             nft.payment_priceType === 0
-                              ? ethtokenData * nft.price
-                              : dyptokenData * nft.price,
+                              ? ethtokenData * (nft.price / 1e18)
+                              : dyptokenData * (nft.price / 1e18),
                             2
                           )}
                         </span>
@@ -832,15 +837,15 @@ const SingleNft = ({
                             width={30}
                           />
                           <span className="nft-price-eth">
-                            {nft.price}{" "}
+                            {getFormattedNumber(nft.price / 1e18, 0)}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                           </span>
                           <span className="nft-price-usd">
                             $
                             {getFormattedNumber(
                               nft.payment_priceType === 0
-                                ? ethtokenData * nft.price
-                                : dyptokenData * nft.price,
+                                ? ethtokenData * (nft.price / 1e18)
+                                : dyptokenData * (nft.price / 1e18),
                               2
                             )}
                           </span>
@@ -860,15 +865,15 @@ const SingleNft = ({
                             width={30}
                           />
                           <span className="nft-price-eth">
-                            {nft.price}{" "}
+                            {getFormattedNumber(nft.price / 1e18, 0)}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                           </span>
                           <span className="nft-price-usd">
                             $
                             {getFormattedNumber(
                               nft.payment_priceType === 0
-                                ? ethtokenData * nft.price
-                                : dyptokenData * nft.price,
+                                ? ethtokenData * (nft.price / 1e18)
+                                : dyptokenData * (nft.price / 1e18),
                               2
                             )}
                           </span>
@@ -1016,7 +1021,6 @@ const SingleNft = ({
                               <StyledTextField
                                 error={nftPrice === "" ? true : false}
                                 size="small"
-                                label="Price"
                                 id="price"
                                 name="price"
                                 value={nftPrice}
