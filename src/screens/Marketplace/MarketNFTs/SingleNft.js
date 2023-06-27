@@ -472,7 +472,7 @@ const SingleNft = ({
     setPurchaseStatus("Price is being updated...");
     setupdateLoading(true);
     setupdateStatus("update");
-    console.log("updating", nft, price, priceType, type);
+    console.log("updating", nft, newPrice, priceType, type);
 
     return await window
       .updateListingNFT(nft, newPrice, priceType, type)
@@ -648,7 +648,7 @@ const SingleNft = ({
       });
       handleRefreshList(type, nft.tokenId);
     }
-  }, [nft, type, nftCount]);
+  }, [type, nftCount]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

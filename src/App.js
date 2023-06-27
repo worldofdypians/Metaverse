@@ -920,11 +920,12 @@ function App() {
   useEffect(() => {
     // getallNfts();
     getListedNfts2();
-  }, [nftCount]);
+  }, [nftCount,listedNFTS2?.length]);
 
   useEffect(() => {
     getOtherNfts();
-  }, [listedNFTS2?.length, recentListedNFTS2?.length, chainId]);
+  }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount, latest20RecentListedNFTS]);
+ 
 
   // useEffect(() => {
   //   if (window.ethereum) {
