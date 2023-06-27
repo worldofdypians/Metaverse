@@ -196,10 +196,11 @@ const MarketMint = ({
         </div>
         </div> */}
 
-              <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
+              <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
                 NFT <span style={{ color: "#8c56ff" }}> Minting</span>
               </h6>
-              <div className="d-flex w-100 align-items-center justify-content-center gap-4">
+            <div className="d-flex flex-column">
+            <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                 <h6
                   className={`new-stake-tab ${
                     activeTab === "live" && "stake-tab-active"
@@ -226,6 +227,7 @@ const MarketMint = ({
                 </h6>
               </div>
               <span className="w-100 new-stake-divider mt-3 mb-5"></span>
+            </div>
 
               {activeTab === "live" && (
                 <>

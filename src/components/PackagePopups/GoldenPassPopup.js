@@ -1,13 +1,21 @@
 import React from "react";
 import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
+import popupLinear from './assets/popupLinear.png'
+import goldenPopup from './assets/goldenPopup.webp'
+
 
 const GoldenPassPopup = ({onClosePopup}) => {
   return (
     <div className="package-popup-wrapper">
-      <div className="package-popup golden-pass-popup p-4 p-lg-5">
-        <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between">
-          <div className="package-popup-title">Golden Pass</div>
-          <img src={popupXmark} style={{cursor: 'pointer'}} onClick={onClosePopup} alt="" />
+      <div className="package-popup golden-pass-popup px-4 py-5 py-lg-5 px-lg-5">
+         <img src={popupLinear} alt="" className="popup-linear" />
+          <div className="position-relative mb-3">
+          <img src={goldenPopup} alt="" style={{width: "100%"}} />
+        <img src={popupXmark} className="popup-closer" onClick={onClosePopup} alt="" />
+
+          </div>
+        <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between mb-2">
+          <div className="package-popup-title mb-0">Golden Pass</div>
         </div>
         <div className="package-popup-content p-1">
           <p className="package-popup-desc mt-3">

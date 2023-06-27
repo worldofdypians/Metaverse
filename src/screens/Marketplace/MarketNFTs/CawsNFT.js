@@ -297,11 +297,13 @@ const CawsNFT = ({
               )}
             </div>
           </div>
+          {!loading &&
           <div className="d-flex justify-content-center w-100">
-            <button className="btn py-2 px-3 nft-load-more-btn">
-              Load more
-            </button>
-          </div>
+          <button className="btn py-2 px-3 nft-load-more-btn">
+            Load more
+          </button>
+        </div>
+          }
         </div>
       </div>
     </div>
