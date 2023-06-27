@@ -4,15 +4,22 @@ import deer from "../../screens/Marketplace/assets/deer.svg";
 import wolf from "../../screens/Marketplace/assets/wolf.svg";
 import bear from "../../screens/Marketplace/assets/bear.svg";
 import dragon from "../../screens/Marketplace/assets/dragon.svg";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
+import popupXmark from "./assets/popupXmark.svg";
+import popupLinear from './assets/popupLinear.png'
+import dragonPopup from './assets/dragonPopup.webp'
+
 
 const DragonPopup = ({onClosePopup}) => {
   return (
     <div id="bgmenu" className="package-popup-wrapper">
-     <div className="package-popup dragon-popup p-4 p-lg-5">
-         <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between">
-        <div className="package-popup-title">Dragon Ruins</div>
-        <img src={popupXmark} style={{cursor: 'pointer'}} onClick={onClosePopup} alt="" />
+      <img src={popupLinear} alt="" className="popup-linear" />
+     <div className="package-popup dragon-popup px-4 py-5 py-lg-5 px-lg-5">
+          <div className="position-relative mb-3">
+          <img src={dragonPopup} alt="" style={{width: "100%"}} />
+        <img src={popupXmark} className="popup-closer" onClick={onClosePopup} alt="" />
+          </div>
+         <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between mb-2">
+        <div className="package-popup-title mb-0">Dragon Ruins</div>
       </div>
       <div className="package-popup-content p-1">
         <p className="package-popup-desc mt-3">

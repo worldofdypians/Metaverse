@@ -416,7 +416,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               isStake={true}
             />
           )}
-          <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
+          <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
             NFT{" "}
             <span style={{ color: "#8c56ff" }}> Staking</span>
           </h6>
@@ -547,19 +547,33 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
         {activeTab === "past" &&
         <div className="row w-100 m-0 mt-5">
         <div className="col-12 px-0">
-          <div className="caws-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+          <div className="caws-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5 position-relative">
+            <div className="expired-caws-tag px-3 py-1">
+              <span className="expired-caws-span">Expired</span>
+            </div>
             <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
               <div className="d-flex flex-column gap-4">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="market-stake-title">
                     Cats and Watches Society
                   </h6>
-                  <h6 className="market-stake-title">
-                    (CAWS)
-                  </h6>
                   <span className="market-stake-desc">
                     Stake your CAWS NFTs to earn daily ETH rewards.
                   </span>
+                  {/* <div className="d-flex align-items-center justify-content-between">
+                    <div className="past-caws-info-wrapper d-flex flex-column align-items-center px-3 py-2" style={{width: '30%'}}>
+                      <h6 className="past-caws-info-value">50%</h6>
+                      <span className="past-caws-info">APR</span>
+                    </div>
+                    <div className="past-caws-info-wrapper d-flex flex-column align-items-center px-3 py-2" style={{width: '30%'}}>
+                      <h6 className="past-caws-info-value">ETH</h6>
+                      <span className="past-caws-info">Rewards</span>
+                    </div>
+                    <div className="past-caws-info-wrapper d-flex flex-column align-items-center px-3 py-2" style={{width: '30%'}}>
+                      <h6 className="past-caws-info-value">No Lock</h6>
+                      <span className="past-caws-info">Lock Time</span>
+                    </div>
+                  </div> */}
                 </div>
                 {/* <div className="d-flex align-items-center gap-3">
                   <button
@@ -579,12 +593,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                     Rewards
                   </button>
                 </div> */}
-                <div className="tvl-wrapper">
-                  <h6 className="market-stake-tvl">
-                    ${abbreviateNumber(75300)}+
-                  </h6>
-                </div>
-                <div></div>
+               
               </div>
             </div>
           </div>

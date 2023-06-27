@@ -1,15 +1,25 @@
 import React from "react";
 import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
-import cawsPopupBanner from "../../screens/Marketplace/assets/cawsPopupBanner.png"
+import cawsPopupBanner from "../../screens/Marketplace/assets/cawsPopupBanner.png";
+import popupLinear from "./assets/popupLinear.png";
+import puzzlePopup from "./assets/puzzlePopup.webp";
 
-
-const PuzzleMadnessPopup = ({onClosePopup}) => {
+const PuzzleMadnessPopup = ({ onClosePopup }) => {
   return (
     <div className="package-popup-wrapper">
-      <div className="package-popup puzzle-madness-popup p-4 p-lg-5">
-        <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between">
-          <h6 className="package-popup-title">Puzzle Madness</h6>
-          <img src={popupXmark} style={{cursor: 'pointer'}} onClick={onClosePopup} alt="" />
+      <div className="package-popup puzzle-madness-popup  px-4 py-5 py-lg-5 px-lg-5">
+        <img src={popupLinear} alt="" className="popup-linear" />
+        <div className="position-relative mb-3">
+          <img src={puzzlePopup} alt="" style={{ width: "100%" }} />
+          <img
+            src={popupXmark}
+            className="popup-closer"
+            onClick={onClosePopup}
+            alt=""
+          />
+        </div>
+        <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between mb-2">
+          <h6 className="package-popup-title mb-0">Puzzle Madness</h6>
         </div>
         <div className="package-popup-content p-1">
           <p className="package-popup-desc mt-3">

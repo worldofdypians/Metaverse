@@ -1,14 +1,25 @@
 import React from "react";
 import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
 import criticalPopupBanner from "../../screens/Marketplace/assets/criticalPopupBanner.png";
+import popupLinear from "./assets/popupLinear.png";
+import criticalPopup from "./assets/criticalPopup.webp";
 
-const CriticalHitPopup = ({onClosePopup}) => {
+const CriticalHitPopup = ({ onClosePopup }) => {
   return (
     <div className="package-popup-wrapper">
-      <div className="package-popup critical-hit-popup p-4 p-lg-5">
-        <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between">
-          <h6 className="package-popup-title">Critical Hit Event</h6>
-          <img src={popupXmark} style={{cursor: 'pointer'}} onClick={onClosePopup} alt="" />
+      <div className="package-popup critical-hit-popup  px-4 py-5 py-lg-5 px-lg-5">
+        <img src={popupLinear} alt="" className="popup-linear" />
+        <div className="position-relative mb-3">
+          <img src={criticalPopup} alt="" style={{ width: "100%" }} />
+          <img
+            src={popupXmark}
+            className="popup-closer"
+            onClick={onClosePopup}
+            alt=""
+          />
+        </div>
+        <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between mb-2">
+          <h6 className="package-popup-title mb-0">Critical Hit Event</h6>
         </div>
         <div className="package-popup-content p-1">
           <p className="package-popup-desc mt-3">
@@ -74,7 +85,10 @@ const CriticalHitPopup = ({onClosePopup}) => {
           <p className="package-popup-desc mt-3">
             It's important to note that the rewards in BNB tokens will be
             distributed monthly, and you can destroy the Gem once per day.
-            Players will have the opportunity to hit the Gem once  <span style={{ fontWeight: "500", color: "#FF6232" }}>every 24 hours, starting at 00:00 UTC. </span>
+            Players will have the opportunity to hit the Gem once{" "}
+            <span style={{ fontWeight: "500", color: "#FF6232" }}>
+              every 24 hours, starting at 00:00 UTC.{" "}
+            </span>
           </p>
           <p className="package-popup-desc mt-3">
             The Critical Hit event offers a special leaderboard that displays

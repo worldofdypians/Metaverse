@@ -770,7 +770,7 @@ const windowSize = useWindowSize()
     <>
       <div className="row m-0 align-items-center gap-4 gap-lg-0">
         <div className="col-12 col-lg-7 custom-height">
-          <div className="nft-outer-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height position-relative">
+          <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height position-relative">
             <img src={require(`../../../../Marketplace/assets/${packageData.background}`)} alt="" className="dragon-test-bg" />
             <div className="d-flex align-items-center justify-content-between mb-3 mb-lg-5">
               <h6 className="new-bundle-title mb-0">{packageData.title}</h6>
@@ -803,7 +803,7 @@ const windowSize = useWindowSize()
           </div>
         </div>
         <div className="col-12 col-lg-5 custom-height">
-          <div className="nft-outer-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height">
+          <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height">
             <div className="d-flex flex-column custom-height justify-content-start gap-3">
               {packageData.title === "Critical Hit" ? (
                 <div className="d-flex flex-column align-items-center gap-4 position-relative" style={{top: '30px'}}>
@@ -1115,7 +1115,7 @@ const windowSize = useWindowSize()
       </span>
       {countdown !== 0 && countdown && packageData.title === "Dragon Ruins" && (
         <div className="col-12">
-          <div className="nft-outer-wrapper p-3 p-lg-5">
+          <div className="nft-outer-wrapper new-bundle-wrapper p-3 p-lg-5">
             <div className="d-flex w-100 flex-column flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between">
               <div className="d-flex flex-column gap-3 available-time-wrapper">
                 <div className="d-flex align-items-center gap-3">
@@ -1155,7 +1155,7 @@ const windowSize = useWindowSize()
         countdown3500 &&
         packageData.title === "Puzzle Madness" && (
           <div className="col-12">
-            <div className="nft-outer-wrapper p-3 p-lg-5">
+            <div className="nft-outer-wrapper  new-bundle-wrapper p-3 p-lg-5">
               <div className="d-flex w-100 flex-column flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between">
                 <div className="d-flex flex-column gap-3 available-time-wrapper">
                   <div className="d-flex align-items-center gap-3">
@@ -1196,7 +1196,7 @@ const windowSize = useWindowSize()
         )}
       {packageData.title === "Golden Pass" && (
         <div className="col-12">
-          <div className="nft-outer-wrapper p-3 p-lg-5">
+          <div className="nft-outer-wrapper new-bundle-wrapper p-3 p-lg-5">
             <div className="d-flex w-100 flex-column flex-lg-row gap-4 align-items-center justify-content-between">
               <div className="d-flex flex-column gap-3  available-time-wrapper">
                 <div className="d-flex align-items-center gap-3">

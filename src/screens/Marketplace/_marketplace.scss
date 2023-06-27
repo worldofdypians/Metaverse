@@ -331,6 +331,40 @@
     transform: none !important;
   }
 }
+.new-bundle-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+
+
+.new-bundle-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  padding: 20px;
+  border: 2px solid #00FECF;
+  backdrop-filter: blur(13.3817px);
+
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+  filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 21.4107px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+
+  @media screen and (max-width: 995px) {
+    transform: none !important;
+  }
+}
 
 .nft-outer-wrapper-1 {
   background: rgba(22, 24, 54, 1);
@@ -749,14 +783,14 @@
   transform: translateY(-10px);
 
   .first-box-blur {
-    border: 2px solid #7bd8b0;
+    border: 2px solid #00FECF;
   }
   .second-box-blur {
-    border: 2px solid #7bd8b0;
+    border: 2px solid #00FECF;
   }
 
   .blur-package-title {
-    color: #7bd8b0;
+    color: #00FECF;
   }
 }
 
@@ -988,16 +1022,16 @@
 }
 
 .nft-event-package:hover {
-  border: 2px solid #7bd8b0;
+  border: 2px solid #00FECF;
   .event-package-title {
-    color: #7bd8b0;
+    color: #00FECF;
   }
 }
 
 .selected-event-package {
-  border: 2px solid #7bd8b0;
+  border: 2px solid #00FECF;
   .event-package-title {
-    color: #7bd8b0 !important;
+    color: #00FECF !important;
   }
 }
 
@@ -1058,7 +1092,7 @@
   aspect-ratio: 4.52/1;
 
   @media screen and (max-width: 786px) {
-    aspect-ratio: 0.63/1;
+    aspect-ratio: 1.03/1;
     background-image: url("./assets/cawsBannerMobile.png");
   }
 }
@@ -1070,8 +1104,9 @@
   line-height: 24px;
   letter-spacing: 0.005em;
   color: #ffffff;
-  @media screen and (max-width: 380px) {
-    font-size: 17px;
+  @media screen and (max-width: 786px) {
+    font-size: 15px;
+    margin-bottom: 0;
   }
 }
 
@@ -1184,19 +1219,19 @@
 }
 
 .dragon-popup {
-  background-image: url("./assets/dragonPopup.webp");
+  // background-image: url("./assets/dragonPopup.webp");
 }
 
 .golden-pass-popup {
-  background-image: url("./assets/goldenPassPopup.webp");
+  // background-image: url("./assets/goldenPassPopup.webp");
 }
 
 .puzzle-madness-popup {
-  background-image: url("./assets/puzzleMadnessPopup.webp");
+  // background-image: url("./assets/puzzleMadnessPopup.webp");
 }
 
 .critical-hit-popup {
-  background-image: url("./assets/criticalHitPopup.webp");
+  // background-image: url("./assets/criticalHitPopup.webp");
 }
 
 .package-popup {
@@ -1212,8 +1247,9 @@
   margin: auto;
   aspect-ratio: 0.76/1;
   background-size: 100% 100%;
-  z-index: 9999;
+  z-index: 99;
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  background: rgba(26, 28, 57, 1);
 
   @media screen and (max-width: 800px) {
     width: 95%;
@@ -1221,13 +1257,34 @@
   }
 }
 
-.package-popup-title-wrapper {
-  margin-top: 150px;
-  margin-bottom: 10px;
+.popup-linear{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  height: 82%;
+  width: 765px;
+  z-index: 101;
+  aspect-ratio: 0.76/1;
+  filter:drop-shadow(0 0 0 1000px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+  @media screen and (max-width: 800px) {
+    width: 95%;
+  }
 }
+
+// .package-popup-title-wrapper {
+//   margin-top: 150px;
+//   margin-bottom: 10px;
+// }
 .package-popup-content {
-  max-height: 70%;
+  max-height: 60%;
   overflow-y: scroll;
+  @media screen and (max-width: 800px) {
+    max-height: 75%;
+  }
 }
 
 .package-popup-title {
@@ -1403,6 +1460,41 @@ font-weight: 500;
   @media screen and (max-width: 1024px) {
     height: fit-content;
   }
+}
+
+
+
+.popup-closer{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.expired-caws-tag{
+  border-radius: 20px;
+  background: linear-gradient(90deg, #D88028 0%, #A41F29 100%);
+  backdrop-filter: blur(13px);
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  @media screen and (max-width: 786px) {
+  right: 10px;
+  left: auto;    
+
+  }
+}
+
+.expired-caws-span{
+  color: #FFF;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 0;
 }
 
 

@@ -39,6 +39,8 @@ const MarketEvents = ({ account, chainId }) => {
 
   const [popup, setPopup] = useState(false);
   const [packagePopup, setPackagePopup] = useState("");
+  const [activeTab, setActiveTab] = useState("live");
+
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -220,16 +222,46 @@ const MarketEvents = ({ account, chainId }) => {
         >
           <div className="container-lg mx-0">
             <div
-              className={`col-12 col-lg-12 ${
-                windowSize.width < 1650 ? "col-xxl-10" : "col-xxl-10"
-              }  d-flex flex-column gap-3`}
+              className={`col-12 col-lg-12`}
             >
-              <h6 className="nft-page-title font-raleway mt-5 mt-lg-4">
+              <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
                 Event
                 <span style={{ color: "#8c56ff" }}> Center</span>
               </h6>
-              <div className="d-flex justify-content-center">
-                <div className="new-packages-grid">
+                <div className="d-flex flex-column">
+            <div className="d-flex w-100 align-items-center justify-content-center gap-4">
+                <h6
+                  className={`new-stake-tab ${
+                    activeTab === "live" && "stake-tab-active"
+                  } px-3 py-2`}
+                  onClick={() => setActiveTab("live")}
+                >
+                  Live
+                </h6>
+                <h6
+                  className={`new-stake-tab ${
+                    activeTab === "upcoming" && "stake-tab-active"
+                  } px-3 py-2`}
+                  onClick={() => setActiveTab("upcoming")}
+                >
+                  Upcoming
+                </h6>
+                <h6
+                  className={`new-stake-tab ${
+                    activeTab === "past" && "stake-tab-active"
+                  } px-3 py-2`}
+                  onClick={() => setActiveTab("past")}
+                >
+                  Past
+                </h6>
+              </div>
+              <span className="w-100 new-stake-divider mt-3 mb-5"></span>
+            </div>
+
+             {activeTab === "live" && 
+            <>
+             <div className="d-flex justify-content-center">
+                <div className="new-packages-grid mb-3">
                   <div className="">
                     <div
                       className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
@@ -322,6 +354,28 @@ const MarketEvents = ({ account, chainId }) => {
                 }}
                 availableTime={availableTime}
               />
+            </>
+             }
+             {activeTab === "upcoming" &&
+         <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+         <div className="d-flex flex-column align-items-center gap-2">
+           <h6 className="upcoming-stake">New events are coming...</h6>
+           <span className="upcoming-stake-desc">
+           Check back soon!
+           </span>
+         </div>
+       
+       </div>
+        }
+        {activeTab === "past" &&
+         <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+         <div className="d-flex flex-column align-items-center gap-2">
+           <h6 className="upcoming-stake">There are no previous events!</h6>
+            
+         </div>
+       
+       </div>
+        }
             </div>
           </div>
         </div>
