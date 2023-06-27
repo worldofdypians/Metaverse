@@ -5245,6 +5245,7 @@ class CAWS_TIMEPIECE {
       "MAX_TIMEPIECE",
       "balanceOf",
       "baseURI",
+      "ownerOf",
       "cawsContract",
       "cawsUsed",
       "getApproved",
@@ -5384,15 +5385,14 @@ window.buyNFT = async (
     window.config.nft_marketplace_address
   );
 
-  if(priceType === 1) {
+  if (priceType === 1) {
     await marketplace.methods
-    .buyItem(0, nft_address, tokenId, [priceType, priceAddress])
-    .send({ from: await getCoinbase()});
-  }
-  else if(priceType === 0) {
+      .buyItem(0, nft_address, tokenId, [priceType, priceAddress])
+      .send({ from: await getCoinbase() });
+  } else if (priceType === 0) {
     await marketplace.methods
-    .buyItem(nft_address, tokenId, [priceType, priceAddress])
-    .send({ from: await getCoinbase(), value: price });
+      .buyItem(nft_address, tokenId, [priceType, priceAddress])
+      .send({ from: await getCoinbase(), value: price });
   }
 };
 
@@ -5789,7 +5789,7 @@ async function getTimepieceNft(id) {
 
 async function getMyNFTs(address, type = "") {
   let contract;
-  const infuraweb3 = new Web3(window.ethereum)
+  const infuraweb3 = new Web3(window.ethereum);
   // window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     contract = await new infuraweb3.eth.Contract(

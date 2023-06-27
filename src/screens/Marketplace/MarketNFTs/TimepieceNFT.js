@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
@@ -31,6 +31,11 @@ const TimepieceNFT = ({
   const [timepieceNFTS, setTimepieceNFTS] = useState([]);
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
+  const [next, setNext] = useState(0);
+
+  const listInnerRef = useRef();
+  const nftsPerRow = 30;
+  const allTimepiece = 256;
 
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -66,16 +71,42 @@ const TimepieceNFT = ({
     }
   };
 
+  const getTimepieceCollection = async () => {
+    const finalArray = [];
+    for (let i = next; i < next + nftsPerRow; i++) {
+      const owner = await window.caws_timepiece.ownerOf(i).catch((e) => {
+        console.log(e);
+      });
+
+      finalArray.push({
+        nftAddress: window.config.caws_timepiece_address,
+        buyer: owner,
+        tokenId: i.toString(),
+        type: "timepiece",
+        chain: 1,
+      });
+    }
+    return finalArray;
+  };
+
   const fetchInitialTimepiece = async () => {
     const timepiecenfts = await getTimepieceNfts();
-    console.log(timepiecenfts)
+    const collectionItems = await getTimepieceCollection();
+
     if (timepiecenfts && timepiecenfts.length > 0) {
       let datedNfts = timepiecenfts.map((nft) => {
         let date = new Date(nft.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
-      setTimepieceNFTS(datedNfts);
-      setInitialNfts(datedNfts);
+
+      const uniqueArray = collectionItems.filter(
+        ({ tokenId: id1 }) => !datedNfts.some(({ tokenId: id2 }) => id2 === id1)
+      );
+
+      const finalUnique = [...datedNfts, ...uniqueArray];
+
+      setTimepieceNFTS(finalUnique);
+      setInitialNfts(finalUnique);
     }
   };
 
@@ -122,6 +153,30 @@ const TimepieceNFT = ({
     }
   }
 
+  const loadMore = () => {
+    setLoading(true);
+    setNext(next + nftsPerRow);
+    getTimepieceCollection();
+  };
+
+  const onScroll = () => {
+    const wrappedElement = document.getElementById("header");
+    if (wrappedElement) {
+      const isBottom =
+        wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
+      if (isBottom) {
+        if (next < allTimepiece) {
+          loadMore();
+        }
+        document.removeEventListener("scroll", onScroll);
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("scroll", onScroll);
+  });
+
   useEffect(() => {
     fetchUserFavorites(coinbase);
   }, [coinbase, favItems]);
@@ -147,8 +202,7 @@ const TimepieceNFT = ({
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
-      style={{ minHeight: "72vh", maxWidth: '2400px' }}
-
+      style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
@@ -230,16 +284,21 @@ const TimepieceNFT = ({
               </ul>
             </div>
           </div>
-          <div className="d-flex align-items-center nft-page-wrapper p-4 gap-4 my-4">
+          <div
+            className="d-flex align-items-center nft-page-wrapper p-4 gap-4 my-4"
+            id="header"
+            onScroll={onScroll}
+            ref={listInnerRef}
+          >
             <div
               className={
-                loading === false ? "item-cards-wrapper" : "loader-wrapper"
+                loading === false || timepieceNFTS.length > 0 ? "item-cards-wrapper" : "loader-wrapper"
               }
             >
-              {timepieceNFTS && timepieceNFTS.length > 0 ? (
+              {timepieceNFTS && timepieceNFTS.length > 0 && (
                 timepieceNFTS.map((nft, index) => (
                   <NavLink
-                    to={`/marketplace/nft/${nft.blockTimestamp}`}
+                    to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
                     style={{ textDecoration: "none" }}
                     key={index}
                     state={{
@@ -279,7 +338,9 @@ const TimepieceNFT = ({
                     />
                   </NavLink>
                 ))
-              ) : (
+              )}
+              
+              {loading === true && (
                 <HashLoader
                   color={"#554fd8"}
                   loading={loading}
@@ -290,13 +351,13 @@ const TimepieceNFT = ({
               )}
             </div>
           </div>
-          {!loading && 
-          <div className="d-flex justify-content-center w-100">
-          <button className="btn py-2 px-3 nft-load-more-btn">
-            Load more
-          </button>
-        </div>
-          }
+          {!loading && next < allTimepiece && (
+            <div className="d-flex justify-content-center w-100">
+              <button className="btn py-2 px-3 nft-load-more-btn" onClick={() => loadMore()}>
+                Load more
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
