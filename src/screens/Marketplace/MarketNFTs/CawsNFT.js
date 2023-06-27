@@ -23,6 +23,8 @@ const CawsNFT = ({
     borderColor: "#554fd8",
   };
   const windowSize = useWindowSize();
+  const nftsPerRow = 30;
+  const allCaws = 10000;
 
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -31,9 +33,7 @@ const CawsNFT = ({
   const [cawsNFTS, setCawsNFTS] = useState([]);
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
-  const [next, setNext] = useState(newsPerRow);
-  const newsPerRow = 30;
-  const allCaws = 10000;
+  const [next, setNext] = useState(0);
 
   const listInnerRef = useRef();
 
@@ -71,32 +71,51 @@ const CawsNFT = ({
     }
   };
 
+  const getCawsCollection = async () => {
+    const finalArray = [];
+    for (let i = next; i < next + nftsPerRow; i++) {
+      const owner = await window.nft.ownerOf(i).catch((e) => {
+        console.log(e);
+      });
+
+      finalArray.push({
+        nftAddress: window.config.nft_address,
+        buyer: owner,
+        tokenId: i.toString(),
+        type: "caws",
+        chain: 1,
+      });
+    }
+
+    // console.log("finalArray", finalArray);
+
+    return finalArray;
+  };
+
   const fetchInitialCaws = async () => {
     const cawsnew = await getCawsNfts();
     const cawsold = await getCawsOldNfts();
     const finalArray = [...cawsnew, ...cawsold];
+
+    const collectionItems = await getCawsCollection();
+    // console.log(collectionItems);
     if (finalArray && finalArray.length > 0) {
       let datedNfts = finalArray.map((nft) => {
         let date = new Date(nft?.blockTimestamp * 1000);
         return { ...nft, date: date };
       });
-      setCawsNFTS(datedNfts);
-      setInitialNfts(datedNfts);
-    }
-  };
 
-  const getCawsCollection = async () => {
-    const finalArray = [];
-    for (let i = 0; i < allCaws; i++) {
-      finalArray.push({
-        nftAddress: window.config.nft_address,
-        buyer: "",
-        tokenId: i,
-        type: "caws",
-        chain: 1,
-      });
+      const uniqueArray = collectionItems.filter(
+        ({ tokenId: id1 }) => !datedNfts.some(({ tokenId: id2 }) => id2 === id1)
+      );
+
+      const finalUnique = [...datedNfts, ...uniqueArray];
+      // console.log("finalUnique", finalUnique);
+
+      setCawsNFTS(finalUnique);
+      setInitialNfts(finalUnique);
+      setLoading(false);
     }
-    // setInitialNfts(finalArray);
   };
 
   async function fetchUserFavorites(userId) {
@@ -139,11 +158,16 @@ const CawsNFT = ({
   }
 
   const loadMore = () => {
-    setNext(next + newsPerRow);
+    setNext(next + nftsPerRow);
+    setLoading(true);
+    getCawsCollection();
+    console.log("loaded");
   };
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
+    console.log(wrappedElement);
+
     if (wrappedElement) {
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
@@ -169,10 +193,12 @@ const CawsNFT = ({
   }, [coinbase, favItems]);
 
   useEffect(() => {
-    fetchInitialCaws();
     window.scrollTo(0, 0);
-    getCawsCollection();
   }, []);
+
+  useEffect(() => {
+    fetchInitialCaws();
+  }, [next]);
 
   useEffect(() => {
     if (cawsNFTS && cawsNFTS.length === 0) {
@@ -193,6 +219,9 @@ const CawsNFT = ({
       <div
         className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
         style={{ backgroundSize: "cover" }}
+        id="header"
+        onScroll={onScroll}
+        ref={listInnerRef}
       >
         <div className="container-lg mx-0">
           <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">
@@ -272,14 +301,16 @@ const CawsNFT = ({
           <div className="d-flex align-items-center nft-page-wrapper p-4 gap-4 my-4">
             <div
               className={
-                loading === false ? "item-cards-wrapper" : "loader-wrapper"
+                loading === false || cawsNFTS.length > 0
+                  ? "item-cards-wrapper"
+                  : "loader-wrapper"
               }
             >
-              {cawsNFTS && cawsNFTS.length > 0 ? (
+              {cawsNFTS && cawsNFTS.length > 0 && (
                 <>
                   {cawsNFTS.map((nft, index) => (
                     <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp}`}
+                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
                       style={{ textDecoration: "none" }}
                       key={index}
                       state={{
@@ -322,7 +353,9 @@ const CawsNFT = ({
                     </NavLink>
                   ))}
                 </>
-              ) : (
+              )}
+
+              {loading === true && (
                 <HashLoader
                   color={"#554fd8"}
                   loading={loading}
@@ -333,14 +366,12 @@ const CawsNFT = ({
               )}
             </div>
           </div>
-          {!loading && (
-            <div
-              className="d-flex justify-content-center w-100"
-              id="header"
-              onScroll={onScroll}
-              ref={listInnerRef}
-            >
-              <button className="btn py-2 px-3 nft-load-more-btn">
+          {!loading && next < allCaws && (
+            <div className="d-flex justify-content-center w-100">
+              <button
+                className="btn py-2 px-3 nft-load-more-btn"
+                onClick={() => loadMore()}
+              >
                 Load more
               </button>
             </div>

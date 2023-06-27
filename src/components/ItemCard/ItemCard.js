@@ -272,7 +272,7 @@ const ItemCard = ({
                 location.pathname.includes("/marketplace/wod") ||
                 location.pathname.includes("/marketplace/timepiece")) &&
               "middlewrapper"
-            }`}
+            } ${!nft.price && "invisible"} `}
           >
             {!location.pathname.includes("/account") ? (
               <div className={`d-flex gap-2 m-0`}>
@@ -333,36 +333,37 @@ const ItemCard = ({
         </div>
         {(location.pathname.includes("/marketplace/caws") ||
           location.pathname.includes("/marketplace/wod") ||
-          location.pathname.includes("/marketplace/timepiece")) && (
-          <div className="buy-nft w-100">
-            <button
-              className="buy-nft-btn w-100"
-              style={{ paddingLeft: "20px", paddingRight: "20px" }}
-              onClick={(e) => {
-                !isOwner && e.preventDefault();
-                !isOwner && e.stopPropagation();
-                isConnected === true
-                  ? !isOwner
-                    ? handleBuy(nft)
-                    : console.log("owner")
-                  : showConnectWallet();
-              }}
-            >
-              {" "}
-              {isConnected === true ? (
-                nft.payment_priceType === 1 && !isOwner ? (
-                  <>{buttonTxt}</>
-                ) : nft.payment_priceType === 1 && isOwner ? (
-                  "View details"
+          location.pathname.includes("/marketplace/timepiece")) &&
+          nft.price !== undefined && (
+            <div className="buy-nft w-100">
+              <button
+                className="buy-nft-btn w-100"
+                style={{ paddingLeft: "20px", paddingRight: "20px" }}
+                onClick={(e) => {
+                  !isOwner && e.preventDefault();
+                  !isOwner && e.stopPropagation();
+                  isConnected === true
+                    ? !isOwner
+                      ? handleBuy(nft)
+                      : console.log("owner")
+                    : showConnectWallet();
+                }}
+              >
+                {" "}
+                {isConnected === true ? (
+                  nft.payment_priceType === 1 && !isOwner ? (
+                    <>{buttonTxt}</>
+                  ) : nft.payment_priceType === 1 && isOwner ? (
+                    "View details"
+                  ) : (
+                    "Buy"
+                  )
                 ) : (
-                  "Buy"
-                )
-              ) : (
-                "Connect wallet"
-              )}{" "}
-            </button>
-          </div>
-        )}
+                  "Connect wallet"
+                )}{" "}
+              </button>
+            </div>
+          )}
       </div>
       {!location.pathname.includes("/marketplace/caws") &&
         !location.pathname.includes("/marketplace/wod") &&
