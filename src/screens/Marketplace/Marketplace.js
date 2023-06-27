@@ -468,7 +468,7 @@ const Marketplace = ({
     setRecentSalesFilter("all");
     setRecentSold(recentSales);
   }, [recentSales]);
-
+ 
   useEffect(() => {
     if (windowSize.width > 1600) {
       setSliderCut(6);
@@ -773,8 +773,8 @@ const Marketplace = ({
                                   $
                                   {getFormattedNumber(
                                     nft.payment_priceType === 0
-                                      ? ethTokenData * (nft.price/1e18)
-                                      : dypTokenData * (nft.price/1e18),
+                                      ? ethTokenData * (nft.price / 1e18)
+                                      : dypTokenData * (nft.price / 1e18),
                                     0
                                   )}
                                 </span>{" "}
@@ -804,7 +804,7 @@ const Marketplace = ({
                                       className="mx-1"
                                     />
                                   )}
-                                  {getFormattedNumber((nft.price/1e18), 0)}{" "}
+                                  {getFormattedNumber(nft.price / 1e18, 0)}{" "}
                                   {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                                 </span>
                               </div>
@@ -834,20 +834,16 @@ const Marketplace = ({
 
             <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
               {activeSlide > 0 && (
-                  <div className="prev-arrow-nft"
-                  onClick={firstPrev}
-                   >
-                    <img src={nextArrow} alt="" />
-                   </div>
+                <div className="prev-arrow-nft" onClick={firstPrev}>
+                  <img src={nextArrow} alt="" />
+                </div>
               )}
               {showFirstNext === activeSlide
                 ? null
                 : recentListed.length > sliderCut && (
-                   <div className="next-arrow-nft"
-                  onClick={firstNext}
-                   >
-                    <img src={nextArrow} alt="" />
-                   </div>
+                    <div className="next-arrow-nft" onClick={firstNext}>
+                      <img src={nextArrow} alt="" />
+                    </div>
                   )}
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <h6 className="nft-wrapper-title font-raleway mb-0">

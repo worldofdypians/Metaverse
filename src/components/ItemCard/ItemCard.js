@@ -286,7 +286,7 @@ const ItemCard = ({
                     className="nft-price"
                     style={{ textDecoration: "none" }}
                   >
-                    {getFormattedNumber((nft.price/1e18), 0)}{" "}
+                    {getFormattedNumber(nft.price / 1e18, 0)}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                   </span>
                   <span
@@ -301,8 +301,8 @@ const ItemCard = ({
                     $
                     {getFormattedNumber(
                       nft.payment_priceType === 0
-                        ? ethTokenData * (nft.price/1e18)
-                        : dypTokenData * (nft.price/1e18),
+                        ? ethTokenData * (nft.price / 1e18)
+                        : dypTokenData * (nft.price / 1e18),
                       0
                     )}
                   </span>
