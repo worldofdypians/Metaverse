@@ -264,15 +264,16 @@ const CawsNFT = ({
       <div
         className="container-fluid d-flex justify-content-end p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
+         id="header"
+          onScroll={onScroll}
+          ref={listInnerRef}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
           className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
-          id="header"
-          onScroll={onScroll}
-          ref={listInnerRef}
+         
         >
           <div className="container-lg mx-0">
             <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">

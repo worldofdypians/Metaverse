@@ -329,10 +329,9 @@ function Dashboard({
     return await window.getMyNFTs(coinbase, type);
   };
 
- 
   //todo
   const fetchAllMyNfts = async () => {
-    if (data?.getPlayer?.wallet?.publicAddress || account) {
+    if (data?.getPlayer?.wallet?.publicAddress || coinbase) {
       getMyNFTS(
         data?.getPlayer?.wallet &&
           email &&
