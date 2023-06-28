@@ -8,6 +8,11 @@ import searchIcon from "../assets/search.svg";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import { NavLink } from "react-router-dom";
 import { getCawsNfts, getCawsOldNfts } from "../../../actions/convertUsd";
+import "./_filters.scss";
+import filtersXmark from "./filtersXmark.svg";
+import axios from "axios";
+import { Checkbox } from "@mui/material";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const CawsNFT = ({
   isConnected,
@@ -34,11 +39,29 @@ const CawsNFT = ({
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const [next, setNext] = useState(0);
+  const [filters, setFilters] = useState([]);
   const [paginatedData, setpaginatedData] = useState([]);
   const [finalData, setfinalData] = useState([]);
   const [allCawsNfts, setAllcaws] = useState([]);
 
   const listInnerRef = useRef();
+  const [openTraits, setOpenTraits] = useState(false);
+  const [categoryIndex, setCategoryIndex] = useState(0);
+
+  const fetchFilters = async () => {
+    await axios
+      .get(
+        "https://api.opensea.io/api/v1/collection/catsandwatchessocietycaws",
+        {
+          headers: {
+            "X-API-KEY": "b132fcc52ab540f0b13a319bf57b34f0",
+          },
+        }
+      )
+      .then((res) => {
+        setFilters(res.data.collection.traits);
+      });
+  };
 
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -182,7 +205,7 @@ const CawsNFT = ({
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
-    console.log(wrappedElement)
+    console.log(wrappedElement);
     if (wrappedElement) {
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
@@ -211,6 +234,7 @@ const CawsNFT = ({
     window.scrollTo(0, 0);
     getCawsCollection();
     getListedCaws();
+    fetchFilters();
     fetchInitialCaws();
   }, []);
 
@@ -231,93 +255,99 @@ const CawsNFT = ({
     }
     sortNfts("lth");
   }, [cawsNFTS]);
-  return (
-    <div
-      className="container-fluid d-flex justify-content-end p-0"
-      style={{ minHeight: "72vh", maxWidth: "2400px" }}
-    >
-      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
+  console.log(filters);
+
+  return (
+    <>
       <div
-        className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
-        style={{ backgroundSize: "cover" }}
-        id="header"
-        onScroll={onScroll}
-        ref={listInnerRef}
+        className="container-fluid d-flex justify-content-end p-0"
+        style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
-        <div className="container-lg mx-0">
-          <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">
-            Cats And Watches Society{" "}
-            <span style={{ color: "#8c56ff" }}>(CAWS)</span>
-          </h6>
-          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-start justify-content-lg-end">
-            <div class="dropdown" style={{ width: "200px" }}>
-              <button
-                class="btn btn-secondary nft-dropdown w-100
+        {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+
+        <div
+          className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
+          style={{ backgroundSize: "cover" }}
+          id="header"
+          onScroll={onScroll}
+          ref={listInnerRef}
+        >
+          <div className="container-lg mx-0">
+            <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">
+              Cats And Watches Society{" "}
+              <span style={{ color: "#8c56ff" }}>(CAWS)</span>
+              <button onClick={() => setOpenTraits(!openTraits)}>open</button>
+            </h6>
+            <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-start justify-content-lg-end">
+              <div class="dropdown" style={{ width: "200px" }}>
+                <button
+                  class="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                {filterTitle}
-                <img src={dropdownIcon} alt="" />
-              </button>
-              <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Price low to high");
-                    sortNfts("lth");
-                  }}
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                  <span>Price low to high</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Price high to low");
-                    sortNfts("htl");
-                  }}
-                >
-                  <span>Price high to low</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Oldest to newest");
-                    sortNfts("otl");
-                  }}
-                >
-                  <span>Oldest to newest</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Newest To Oldest");
-                    sortNfts("lto");
-                  }}
-                >
-                  <span>Newest To Oldest</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Price: ETH");
-                    sortNfts("eth");
-                  }}
-                >
-                  <span>Price: ETH</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Price: DYP");
-                    sortNfts("dyp");
-                  }}
-                >
-                  <span>Price: DYP</span>
-                </li>
-              </ul>
+                  {filterTitle}
+                  <img src={dropdownIcon} alt="" />
+                </button>
+                <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Price low to high");
+                      sortNfts("lth");
+                    }}
+                  >
+                    <span>Price low to high</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Price high to low");
+                      sortNfts("htl");
+                    }}
+                  >
+                    <span>Price high to low</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Oldest to newest");
+                      sortNfts("otl");
+                    }}
+                  >
+                    <span>Oldest to newest</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Newest To Oldest");
+                      sortNfts("lto");
+                    }}
+                  >
+                    <span>Newest To Oldest</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Price: ETH");
+                      sortNfts("eth");
+                    }}
+                  >
+                    <span>Price: ETH</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Price: DYP");
+                      sortNfts("dyp");
+                    }}
+                  >
+                    <span>Price: DYP</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
@@ -341,8 +371,9 @@ const CawsNFT = ({
                           type: nft.type,
                           isOwner:
                             nft.seller?.toLowerCase() ===
-                            coinbase?.toLowerCase() ||
-                            nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                              coinbase?.toLowerCase() ||
+                            nft.buyer?.toLowerCase() ===
+                              coinbase?.toLowerCase(),
                           chain: nft.chain,
                         }}
                         onClick={() => {
@@ -363,10 +394,10 @@ const CawsNFT = ({
                           isFavorite={
                             favorites.length > 0
                               ? favorites.find(
-                                (obj) =>
-                                  obj.nftAddress === nft.nftAddress &&
-                                  obj.tokenId === nft.tokenId
-                              )
+                                  (obj) =>
+                                    obj.nftAddress === nft.nftAddress &&
+                                    obj.tokenId === nft.tokenId
+                                )
                                 ? true
                                 : false
                               : false
@@ -408,10 +439,77 @@ const CawsNFT = ({
                 <></>
               )}
             </div>
-            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      <OutsideClickHandler onOutsideClick={() => setOpenTraits(false)}>
+        <div
+          className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xxl-5 ${
+            openTraits && "filters-active"
+          } p-4`}
+        >
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <h6 className="filters-title mb-0">Filters</h6>
+            <img
+              src={filtersXmark}
+              style={{ cursor: "pointer" }}
+              onClick={() => setOpenTraits(false)}
+              alt=""
+            />
+          </div>
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <span className="select-category mb-0">Select Category</span>
+            <span className="clear-all mb-0">Clear all</span>
+          </div>
+          <div className="filter-tabs d-flex align-items-center justify-content-start gap-4">
+            {filters &&
+              Object.entries(filters).map(([key, value], i) => (
+                <div
+                  className={`filter-tab px-2 py-1 d-flex align-items-center ${
+                    categoryIndex === i && "filter-tab-active"
+                  }`}
+                  onClick={() => setCategoryIndex(i)}
+                  key={i}
+                >
+                  <h6 className="filter-tab-title mb-0">
+                    {key} ({Object.keys(value)?.length})
+                  </h6>
+                </div>
+              ))}
+          </div>
+          <span className="filters-divider my-4"></span>
+          <div
+            className="row align-items-center traits-wrapper"
+            style={{ rowGap: "20px" }}
+          >
+            {Object.values(filters)[categoryIndex] &&
+              Object.values(filters) &&
+              Object.entries(Object.values(filters)[categoryIndex]).map(
+                ([key, value], i) => (
+                  // <span key={i}>{key} ({value})</span>
+                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
+                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
+                      <div className="d-flex align-items-center">
+                        <Checkbox
+                          sx={{
+                            color: "#8E97CD",
+                            "&.Mui-checked": {
+                              color: "#82DAAB",
+                            },
+                          }}
+                        />
+                        <span className="trait-title mb-0">{key}</span>
+                      </div>
+                      <span className="trait-amount mb-0">{value}</span>
+                    </div>
+                  </div>
+                )
+              )}
+          </div>
+        </div>
+      </OutsideClickHandler>
+    </>
   );
 };
 
