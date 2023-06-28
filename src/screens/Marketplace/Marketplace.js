@@ -804,7 +804,7 @@ const Marketplace = ({
                                       className="mx-1"
                                     />
                                   )}
-                                  {getFormattedNumber(nft.price / 1e18, 0)}{" "}
+                                  {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}{" "}
                                   {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                                 </span>
                               </div>
