@@ -740,7 +740,7 @@ const Marketplace = ({
                                 ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
                                 : nft.type === "land"
                                 ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                             }
                             width={40}
                             height={40}

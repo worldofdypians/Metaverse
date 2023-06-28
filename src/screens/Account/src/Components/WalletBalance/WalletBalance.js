@@ -720,7 +720,7 @@ const WalletBalance = ({
                                 : item.nftAddress ===
                                   window.config.nft_land_address
                                 ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs150/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"
@@ -832,7 +832,7 @@ const WalletBalance = ({
                                 ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
                                 : item.type === "land"
                                 ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs150/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"
@@ -1061,7 +1061,7 @@ const WalletBalance = ({
                                 ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
                                 : item.type === "land"
                                 ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs150/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"
