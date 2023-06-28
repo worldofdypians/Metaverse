@@ -257,6 +257,7 @@ const CawsNFT = ({
     getListedCaws();
     fetchFilters();
     fetchInitialCaws();
+    document.title = "CAWS NFT";
   }, []);
 
   useEffect(() => {
@@ -277,20 +278,22 @@ const CawsNFT = ({
     sortNfts("lth");
   }, [cawsNFTS]);
 
+  // console.log(filters);
+
   return (
     <>
       <div
         className="container-fluid d-flex justify-content-end p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
+        id="header"
+        onScroll={onScroll}
+        ref={listInnerRef}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
-          className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
+          className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
-          id="header"
-          onScroll={onScroll}
-          ref={listInnerRef}
         >
           <div className="container-lg mx-0 position-relative">
             <div className="row align-items-center justify-content-between mt-4">
@@ -408,7 +411,7 @@ const CawsNFT = ({
               </div>
             </div>
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
-              <div className="d-flex align-items-center p-4 gap-4">
+              <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
                 <div
                   className={
                     loading === false || cawsNFTS.length > 0

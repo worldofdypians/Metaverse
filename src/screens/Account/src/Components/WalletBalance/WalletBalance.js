@@ -235,11 +235,7 @@ const WalletBalance = ({
           nft.type = "caws";
           nft.chain = 1;
           finalItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-          nft.type = "cawsold";
-          nft.chain = 1;
-          finalItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
+        }  else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalItems.push(nft);
@@ -314,27 +310,10 @@ const WalletBalance = ({
       }
     }
 
-    if (myCawsOldCollected && myCawsOldCollected.length > 0) {
-      for (let i = 0; i < myCawsOldCollected.length; i++) {
-        finalCawsOldArray.push({
-          nftAddress: window.config.nft_cawsold_address,
-          buyer:
-            isVerified &&
-            email &&
-            coinbase &&
-            address?.toLowerCase() === coinbase.toLowerCase()
-              ? address
-              : coinbase,
-          tokenId: myCawsOldCollected[i],
-          type: "cawsold",
-          chain: 1,
-        });
-      }
-    }
+ 
     finalCollection = [
       ...finalTimepieceArray,
       ...finalLandArray,
-      ...finalCawsOldArray,
       ...finalCawsArray,
     ];
 
@@ -684,9 +663,7 @@ const WalletBalance = ({
                         nft: item,
                         type:
                           item.type ??
-                          item.nftAddress === window.config.nft_cawsold_address
-                            ? "cawsold"
-                            : item.nftAddress === window.config.nft_caws_address
+                           item.nftAddress === window.config.nft_caws_address
                             ? "caws"
                             : item.nftAddress === window.config.nft_land_address
                             ? "land"
@@ -719,8 +696,8 @@ const WalletBalance = ({
                                 ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
                                 : item.nftAddress ===
                                   window.config.nft_land_address
-                                ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
+                                ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"
@@ -828,18 +805,18 @@ const WalletBalance = ({
                         <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                           <img
                             src={
-                              item.type === "caws" || item.type === "cawsold"
+                              item.type === "caws" 
                                 ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
                                 : item.type === "land"
-                                ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
+                                ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"
                           />
                           <div className="d-flex flex-column align-items-center justify-content-center">
                             <h6 className="account-nft-title">
-                              {item.type === "caws" || item.type === "cawsold"
+                              {item.type === "caws"
                                 ? "CAWS"
                                 : item.type === "land"
                                 ? "Genesis"
@@ -847,7 +824,7 @@ const WalletBalance = ({
                               #{item.tokenId}
                             </h6>
                             <span className="account-nft-type">
-                              {item.type === "caws" || item.type === "cawsold"
+                              {item.type === "caws" 
                                 ? "CAWS"
                                 : item.type === "land"
                                 ? "Land"
@@ -923,7 +900,7 @@ const WalletBalance = ({
                       <div className="">
                         <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                           <img
-                            src={`https://mint.worldofdypians.com/thumbs/${item.name?.slice(
+                            src={`https://mint.worldofdypians.com/thumbs50/${item.name?.slice(
                               1,
                               landStaked[index].name?.length
                             )}.png`}
@@ -953,7 +930,7 @@ const WalletBalance = ({
                         <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                           <div className="d-flex">
                             <img
-                              src={`https://mint.worldofdypians.com/thumbs/${myWodWodStakes[
+                              src={`https://mint.worldofdypians.com/thumbs50/${myWodWodStakes[
                                 index
                               ].name?.slice(
                                 1,
@@ -1057,18 +1034,18 @@ const WalletBalance = ({
                         <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                           <img
                             src={
-                              item.type === "caws" || item.type === "cawsold"
+                              item.type === "caws" 
                                 ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
                                 : item.type === "land"
-                                ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/images/${item.tokenId}.png`
+                                ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"
                           />
                           <div className="d-flex flex-column align-items-center justify-content-center">
                             <h6 className="account-nft-title">
-                              {item.type === "caws" || item.type === "cawsold"
+                              {item.type === "caws" 
                                 ? "CAWS"
                                 : item.type === "land"
                                 ? "Genesis Land"
@@ -1076,7 +1053,7 @@ const WalletBalance = ({
                               #{item.tokenId}
                             </h6>
                             <span className="account-nft-type">
-                              {item.type === "caws" || item.type === "cawsold"
+                              {item.type === "caws" 
                                 ? "CAWS"
                                 : item.type === "land"
                                 ? "Genesis Land"
@@ -1424,7 +1401,7 @@ const WalletBalance = ({
                         nft={nft}
                         isConnected={isConnected}
                         showConnectWallet={handleConnect}
-                        isCaws={nft.type === "caws" || nft.type === "cawsold"}
+                        isCaws={nft.type === "caws"}
                         isTimepiece={nft.type === "timepiece"}
                         isWod={nft.type === "land"}
                         coinbase={coinbase}
@@ -1447,9 +1424,7 @@ const WalletBalance = ({
                         nft: nft,
                         type:
                           nft.type ??
-                          nft.nftAddress === window.config.nft_cawsold_address
-                            ? "cawsold"
-                            : nft.nftAddress === window.config.nft_caws_address
+                          nft.nftAddress === window.config.nft_caws_address
                             ? "caws"
                             : nft.nftAddress === window.config.nft_land_address
                             ? "land"
@@ -1533,7 +1508,7 @@ const WalletBalance = ({
                         nft={nft}
                         isConnected={isConnected}
                         showConnectWallet={handleConnect}
-                        isCaws={nft.type === "caws" || nft.type === "cawsold"}
+                        isCaws={nft.type === "caws"}
                         isTimepiece={nft.type === "timepiece"}
                         isWod={nft.type === "land"}
                         coinbase={coinbase}

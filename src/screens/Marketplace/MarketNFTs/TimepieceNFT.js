@@ -212,6 +212,8 @@ const TimepieceNFT = ({
     window.scrollTo(0, 0);
     getTimepieceCollection();
     getListedTimepiece();
+    document.title = "Timepiece NFT";
+
     fetchInitialTimepiece();
   }, []);
 
@@ -320,7 +322,7 @@ const TimepieceNFT = ({
           </div>
           <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
             <div
-              className="d-flex align-items-center p-4 gap-4"
+              className="d-flex align-items-center p-4 gap-4 justify-content-center"
               id="header"
               onScroll={onScroll}
               ref={listInnerRef}

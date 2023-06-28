@@ -736,11 +736,11 @@ const Marketplace = ({
                           {/* <span className="sales-number">{index + 1}</span> */}
                           <img
                             src={
-                              nft.type === "caws" || nft.type === "cawsold"
+                              nft.type === "caws"
                                 ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
                                 : nft.type === "land"
-                                ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
+                                ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                             }
                             width={40}
                             height={40}
@@ -752,7 +752,7 @@ const Marketplace = ({
                               className="nft-name-wrapper mb-0 py-1 px-2"
                               style={{ fontSize: 14 }}
                             >
-                              {nft.type === "caws" || nft.type === "cawsold"
+                              {nft.type === "caws"
                                 ? "CAWS"
                                 : nft.type === "land"
                                 ? "Genesis Land"
@@ -804,7 +804,7 @@ const Marketplace = ({
                                       className="mx-1"
                                     />
                                   )}
-                                  {getFormattedNumber(nft.price / 1e18, 0)}{" "}
+                                  {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}{" "}
                                   {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                                 </span>
                               </div>
@@ -914,7 +914,7 @@ const Marketplace = ({
                             isConnected={isConnected}
                             showConnectWallet={handleConnect}
                             isCaws={
-                              nft.type === "caws" || nft.type === "cawsold"
+                              nft.type === "caws"
                             }
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}
@@ -1042,7 +1042,7 @@ const Marketplace = ({
                             isConnected={isConnected}
                             showConnectWallet={handleConnect}
                             isCaws={
-                              nft.type === "caws" || nft.type === "cawsold"
+                              nft.type === "caws"
                             }
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}

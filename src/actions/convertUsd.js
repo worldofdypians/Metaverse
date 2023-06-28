@@ -1,7 +1,6 @@
 import getListedNFTS from "./Marketplace";
 let eth_Price;
 let dyp_Price;
-let listedNftResult = [];
 let all_listed_nfts;
 
 const getEthPrice = async () => {
@@ -71,11 +70,7 @@ const getAllNfts = async () => {
         nft.type = "caws";
         nft.chain = 1;
         convertedNFTs.push(nft);
-      } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-        nft.type = "cawsold";
-        nft.chain = 1;
-        convertedNFTs.push(nft);
-      } else if (nft.nftAddress === window.config.nft_land_address) {
+      }  else if (nft.nftAddress === window.config.nft_land_address) {
         nft.type = "land";
         nft.chain = 1;
         convertedNFTs.push(nft);

@@ -149,7 +149,7 @@ const SingleNft = ({
 
   const getMetaData = async () => {
     if (nft) {
-      if (type === "caws" || type === "cawsold") {
+      if (type === "caws") {
         const result = await window.getNft(nft.tokenId);
         console.log(result);
 
@@ -187,9 +187,7 @@ const SingleNft = ({
       nft_address = window.config.nft_timepiece_address;
     } else if (type === "land") {
       nft_address = window.config.nft_land_address;
-    } else if (type === "cawsold") {
-      nft_address = window.config.nft_cawsold_address;
-    } else {
+    }  else {
       nft_address = window.config.nft_caws_address;
     }
 
@@ -247,10 +245,6 @@ const SingleNft = ({
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-          nft.type = "cawsold";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
@@ -270,7 +264,8 @@ const SingleNft = ({
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
     const isApproved = await isApprovedNFT(tokenId, type);
-    const newPrice = new BigNumber(nftPrice * 1e18);
+    const newPrice = new BigNumber(nftPrice * 1e18).toFixed();
+    console.log(newPrice)
     if (isApproved) {
       console.log("selling");
       setsellLoading(true);
@@ -658,10 +653,6 @@ const SingleNft = ({
     if (nft) {
       getFavoritesCount(nft.tokenId, nft.nftAddress);
       setNft(nft);
-
-      if (nft.nftAddress === window.config.nft_cawsold_address) {
-        setType("cawsold");
-      }
     }
   }, [nftCount, nft]);
 
@@ -706,7 +697,7 @@ const SingleNft = ({
                 </h6>
               </h6>
             </>
-          ) : type === "caws" || type === "cawsold" ? (
+          ) : type === "caws" ? (
             <>
               <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                 Cats and Watches Society{" "}
@@ -739,7 +730,7 @@ const SingleNft = ({
                 <img
                   className="blur-img blur-img-big"
                   src={
-                    type === "caws" || type === "cawsold"
+                    type === "caws"
                       ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
                       : type === "land"
                       ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
@@ -769,7 +760,7 @@ const SingleNft = ({
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
                   <h3 className="nft-title">
-                    {type === "caws" || type === "cawsold"
+                    {type === "caws"
                       ? "CAWS"
                       : type === "land"
                       ? "Genesis Land"
@@ -808,7 +799,7 @@ const SingleNft = ({
                           className="nft-price-eth"
                           style={{ fontSize: 15, lineHeight: "20px" }}
                         >
-                          {getFormattedNumber(nft.price / 1e18, 0)}
+                          {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}
                           {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                         </span>
                         <span className="nft-price-usd">
@@ -835,7 +826,7 @@ const SingleNft = ({
                             width={30}
                           />
                           <span className="nft-price-eth">
-                            {getFormattedNumber(nft.price / 1e18, 0)}{" "}
+                            {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                           </span>
                           <span className="nft-price-usd">
@@ -863,7 +854,7 @@ const SingleNft = ({
                             width={30}
                           />
                           <span className="nft-price-eth">
-                            {getFormattedNumber(nft.price / 1e18, 0)}{" "}
+                            {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                           </span>
                           <span className="nft-price-usd">
@@ -1386,7 +1377,7 @@ const SingleNft = ({
           <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
             <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
               <h3 className="traits-text">Traits</h3>
-              {type === "caws" || type === "cawsold" ? (
+              {type === "caws" ? (
                 <>
                   <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
                     <div className="d-flex flex-row flex-xxl-column flex-lg-column gap-2 align-items-center justify-content-between w-100">

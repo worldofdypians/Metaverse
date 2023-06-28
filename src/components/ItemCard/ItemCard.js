@@ -252,8 +252,8 @@ const ItemCard = ({
               isCaws
                 ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
                 : isWod
-                ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
-                : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
+                ? `https://mint.worldofdypians.com/thumbs150/${nft.tokenId}.png`
+                : `https://timepiece.worldofdypians.com/thumbs150/${nft.tokenId}.png`
             }
             alt=""
           />
@@ -286,7 +286,7 @@ const ItemCard = ({
                     className="nft-price"
                     style={{ textDecoration: "none" }}
                   >
-                    {getFormattedNumber(nft.price / 1e18, 0)}{" "}
+                    {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                   </span>
                   <span
