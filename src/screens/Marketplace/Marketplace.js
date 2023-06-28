@@ -736,7 +736,7 @@ const Marketplace = ({
                           {/* <span className="sales-number">{index + 1}</span> */}
                           <img
                             src={
-                              nft.type === "caws" || nft.type === "cawsold"
+                              nft.type === "caws"
                                 ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
                                 : nft.type === "land"
                                 ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -752,7 +752,7 @@ const Marketplace = ({
                               className="nft-name-wrapper mb-0 py-1 px-2"
                               style={{ fontSize: 14 }}
                             >
-                              {nft.type === "caws" || nft.type === "cawsold"
+                              {nft.type === "caws"
                                 ? "CAWS"
                                 : nft.type === "land"
                                 ? "Genesis Land"
@@ -914,7 +914,7 @@ const Marketplace = ({
                             isConnected={isConnected}
                             showConnectWallet={handleConnect}
                             isCaws={
-                              nft.type === "caws" || nft.type === "cawsold"
+                              nft.type === "caws"
                             }
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}
@@ -1042,7 +1042,7 @@ const Marketplace = ({
                             isConnected={isConnected}
                             showConnectWallet={handleConnect}
                             isCaws={
-                              nft.type === "caws" || nft.type === "cawsold"
+                              nft.type === "caws"
                             }
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}

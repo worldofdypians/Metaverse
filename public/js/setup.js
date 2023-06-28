@@ -3367,18 +3367,8 @@ window.isApproved = async (token, type) => {
     approved = approved.toLowerCase();
 
     return approved === window.config.nft_marketplace_address;
-  } else if (type === "cawsold") {
-    let contract = new window.web3.eth.Contract(
-      window.CAWS_ABI,
-      window.config.nft_cawsold_address
-    );
-
-    let approved = await contract.methods.getApproved(token).call();
-
-    approved = approved.toLowerCase();
-
-    return approved === window.config.nft_marketplace_address;
-  } else {
+  }
+   else {
     let contract = new window.web3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
@@ -3419,17 +3409,8 @@ window.approveNFT = async (token, type) => {
       .send({ from: coinbase });
 
     console.log("approved land", token);
-  } else if (type === "cawsold") {
-    let contract = new window.web3.eth.Contract(
-      window.CAWS_ABI,
-      window.config.nft_cawsold_address
-    );
-    await contract.methods
-      .approve(window.config.nft_marketplace_address, token)
-      .send({ from: coinbase });
-
-    console.log("approved cawsold", token);
-  } else {
+  } 
+   else {
     let contract = new window.web3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
@@ -3470,9 +3451,8 @@ window.updateListingNFT = async (token, price, priceType, type) => {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
     nft_address = window.config.nft_land_address;
-  } else if (type === "cawsold") {
-    nft_address = window.config.nft_cawsold_address;
-  } else {
+  } 
+   else {
     nft_address = window.config.nft_caws_address;
   }
 
@@ -3505,9 +3485,8 @@ window.listNFT = async (token, price, priceType, type = "") => {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
     nft_address = window.config.nft_land_address;
-  } else if (type === "cawsold") {
-    nft_address = window.config.nft_cawsold_address;
-  } else {
+  } 
+   else {
     nft_address = window.config.nft_caws_address;
   }
 
@@ -3566,18 +3545,8 @@ window.isApproved = async (token, type) => {
     approved = approved.toLowerCase();
 
     return approved === window.config.nft_marketplace_address.toLowerCase();
-  } else if (type === "cawsold") {
-    let contract = new window.web3.eth.Contract(
-      window.CAWS_ABI,
-      window.config.nft_cawsold_address
-    );
-
-    let approved = await contract.methods.getApproved(token).call();
-
-    approved = approved.toLowerCase();
-
-    return approved === window.config.nft_marketplace_address.toLowerCase();
-  } else {
+  } 
+   else {
     let contract = new window.web3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
@@ -3728,27 +3697,8 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
-  } else if (type === "cawsold") {
-    contract = await new infuraweb3.eth.Contract(
-      window.CAWS_ABI,
-      window.config.nft_caws_address
-    );
-
-    const balance = await contract.methods.balanceOf(address).call();
-
-    const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods
-          .tokenOfOwnerByIndex(address, i)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          })
-      )
-    );
-
-    return tokens;
-  } else {
+  }
+   else {
     contract = await new infuraweb3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address

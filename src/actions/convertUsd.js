@@ -70,11 +70,7 @@ const getAllNfts = async () => {
         nft.type = "caws";
         nft.chain = 1;
         convertedNFTs.push(nft);
-      } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-        nft.type = "cawsold";
-        nft.chain = 1;
-        convertedNFTs.push(nft);
-      } else if (nft.nftAddress === window.config.nft_land_address) {
+      }  else if (nft.nftAddress === window.config.nft_land_address) {
         nft.type = "land";
         nft.chain = 1;
         convertedNFTs.push(nft);

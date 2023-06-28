@@ -593,11 +593,8 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-          nft.type = "cawsold";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
+        } 
+         else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -651,11 +648,8 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-          nft.type = "cawsold";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
+        } 
+         else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -706,11 +700,7 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-          nft.type = "cawsold";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
+        }   else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -751,11 +741,7 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-          nft.type = "cawsold";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
+        }  else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems1.push(nft);
@@ -776,11 +762,7 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems2.push(nft);
-        } else if (nft.nftAddress === window.config.nft_cawsold_address) {
-          nft.type = "cawsold";
-          nft.chain = 1;
-          finalboughtItems2.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
+        }   else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems2.push(nft);

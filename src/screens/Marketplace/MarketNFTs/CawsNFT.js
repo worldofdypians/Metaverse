@@ -257,23 +257,22 @@ const CawsNFT = ({
     sortNfts("lth");
   }, [cawsNFTS]);
 
-  console.log(filters);
+  // console.log(filters);
 
   return (
     <>
       <div
         className="container-fluid d-flex justify-content-end p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
-         id="header"
-          onScroll={onScroll}
-          ref={listInnerRef}
+        id="header"
+        onScroll={onScroll}
+        ref={listInnerRef}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
           className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
-         
         >
           <div className="container-lg mx-0">
             <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">
@@ -351,65 +350,84 @@ const CawsNFT = ({
                 </ul>
               </div>
             </div>
-       
-          <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
-            <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
-              <div
-                className={
-                  loading === false || cawsNFTS.length > 0
-                    ? "item-cards-wrapper"
-                    : "loader-wrapper"
-                }
-              >
-                {cawsNFTS && cawsNFTS.length > 0 ? (
-                  <>
-                    {cawsNFTS.map((nft, index) => (
-                      <NavLink
-                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                        state={{
-                          nft: nft,
-                          type: nft.type,
-                          isOwner:
-                            nft.seller?.toLowerCase() ===
-                              coinbase?.toLowerCase() ||
-                            nft.buyer?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
-                          chain: nft.chain,
-                        }}
-                        onClick={() => {
-                          updateViewCount(nft.tokenId, nft.nftAddress);
-                        }}
-                      >
-                        <ItemCard
-                          ethTokenData={ethTokenData}
-                          dypTokenData={dypTokenData}
-                          key={nft.id}
-                          nft={nft}
-                          isConnected={isConnected}
-                          showConnectWallet={handleConnect}
-                          isCaws={true}
-                          isTimepiece={false}
-                          isWod={false}
-                          coinbase={coinbase}
-                          isFavorite={
-                            favorites.length > 0
-                              ? favorites.find(
-                                  (obj) =>
-                                    obj.nftAddress === nft.nftAddress &&
-                                    obj.tokenId === nft.tokenId
-                                )
-                                ? true
+            <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
+              <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
+                <div
+                  className={
+                    loading === false || cawsNFTS.length > 0
+                      ? "item-cards-wrapper"
+                      : "loader-wrapper"
+                  }
+                >
+                  {cawsNFTS && cawsNFTS.length > 0 ? (
+                    <>
+                      {cawsNFTS.map((nft, index) => (
+                        <NavLink
+                          to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: nft.type,
+                            isOwner:
+                              nft.seller?.toLowerCase() ===
+                                coinbase?.toLowerCase() ||
+                              nft.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={() => {
+                            updateViewCount(nft.tokenId, nft.nftAddress);
+                          }}
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={true}
+                            isTimepiece={false}
+                            isWod={false}
+                            coinbase={coinbase}
+                            isFavorite={
+                              favorites.length > 0
+                                ? favorites.find(
+                                    (obj) =>
+                                      obj.nftAddress === nft.nftAddress &&
+                                      obj.tokenId === nft.tokenId
+                                  )
+                                  ? true
+                                  : false
                                 : false
-                              : false
-                          }
-                          onFavorite={updateFavs}
-                        />
-                      </NavLink>
-                    ))}
-                  </>
-                ) : (
+                            }
+                            onFavorite={updateFavs}
+                          />
+                        </NavLink>
+                      ))}
+                    </>
+                  ) : (
+                    <HashLoader
+                      color={"#554fd8"}
+                      loading={loading}
+                      cssOverride={override}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-center w-100">
+                {!loading && next < allCaws ? (
+                  <button
+                    className="btn py-2 px-3 nft-load-more-btn"
+                    onClick={() => loadMore()}
+                  >
+                    Load more
+                  </button>
+                ) : loading && next < allCaws && cawsNFTS.length > 0 ? (
                   <HashLoader
                     color={"#554fd8"}
                     loading={loading}
@@ -417,31 +435,12 @@ const CawsNFT = ({
                     aria-label="Loading Spinner"
                     data-testid="loader"
                   />
+                ) : (
+                  <></>
                 )}
               </div>
-            </div>
-
-            <div className="d-flex justify-content-center w-100">
-              {!loading && next < allCaws ? (
-                <button
-                  className="btn py-2 px-3 nft-load-more-btn"
-                  onClick={() => loadMore()}
-                >
-                  Load more
-                </button>
-              ) : loading && next < allCaws && cawsNFTS.length > 0 ? (
-                <HashLoader
-                  color={"#554fd8"}
-                  loading={loading}
-                  cssOverride={override}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>   </div>
+            </div>{" "}
+          </div>
         </div>
       </div>
 
