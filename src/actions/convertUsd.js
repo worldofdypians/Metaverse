@@ -1,7 +1,6 @@
 import getListedNFTS from "./Marketplace";
 let eth_Price;
 let dyp_Price;
-let listedNftResult = [];
 let all_listed_nfts;
 
 const getEthPrice = async () => {

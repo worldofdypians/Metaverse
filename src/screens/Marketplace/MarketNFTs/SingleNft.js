@@ -270,7 +270,8 @@ const SingleNft = ({
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
     const isApproved = await isApprovedNFT(tokenId, type);
-    const newPrice = new BigNumber(nftPrice * 1e18);
+    const newPrice = new BigNumber(nftPrice * 1e18).toFixed();
+    console.log(newPrice)
     if (isApproved) {
       console.log("selling");
       setsellLoading(true);

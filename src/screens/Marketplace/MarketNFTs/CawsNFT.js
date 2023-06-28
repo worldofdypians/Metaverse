@@ -267,7 +267,7 @@ const CawsNFT = ({
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
-          className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
+          className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
           id="header"
           onScroll={onScroll}
