@@ -719,8 +719,8 @@ const WalletBalance = ({
                                 ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
                                 : item.nftAddress ===
                                   window.config.nft_land_address
-                                ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/thumbs150/${item.tokenId}.png`
+                                ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"
@@ -831,8 +831,8 @@ const WalletBalance = ({
                               item.type === "caws" || item.type === "cawsold"
                                 ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
                                 : item.type === "land"
-                                ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/thumbs150/${item.tokenId}.png`
+                                ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"
@@ -923,7 +923,7 @@ const WalletBalance = ({
                       <div className="">
                         <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                           <img
-                            src={`https://mint.worldofdypians.com/thumbs/${item.name?.slice(
+                            src={`https://mint.worldofdypians.com/thumbs50/${item.name?.slice(
                               1,
                               landStaked[index].name?.length
                             )}.png`}
@@ -953,7 +953,7 @@ const WalletBalance = ({
                         <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                           <div className="d-flex">
                             <img
-                              src={`https://mint.worldofdypians.com/thumbs/${myWodWodStakes[
+                              src={`https://mint.worldofdypians.com/thumbs50/${myWodWodStakes[
                                 index
                               ].name?.slice(
                                 1,
@@ -1060,8 +1060,8 @@ const WalletBalance = ({
                               item.type === "caws" || item.type === "cawsold"
                                 ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
                                 : item.type === "land"
-                                ? `https://mint.worldofdypians.com/thumbs/${item.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/thumbs150/${item.tokenId}.png`
+                                ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                             }
                             alt=""
                             className="account-card-img"

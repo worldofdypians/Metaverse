@@ -3286,7 +3286,7 @@ window.buyNFT = async (
   priceType,
   priceAddress
 ) => {
-  console.log("priceType", nft_address, tokenId, [priceType, priceAddress]);
+  console.log("priceType", price, nft_address, tokenId, [priceType, priceAddress]);
 
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
@@ -3295,8 +3295,8 @@ window.buyNFT = async (
 
   if (priceType === 1) {
     await marketplace.methods
-      .buyItem(0, nft_address, tokenId, [priceType, priceAddress])
-      .send({ from: await getCoinbase() });
+    .buyItem(nft_address, tokenId, [priceType, priceAddress])
+    .send({ from: await getCoinbase(), value: 0 });
   } else if (priceType === 0) {
     await marketplace.methods
       .buyItem(nft_address, tokenId, [priceType, priceAddress])

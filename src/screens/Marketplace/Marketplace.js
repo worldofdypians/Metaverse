@@ -739,7 +739,7 @@ const Marketplace = ({
                               nft.type === "caws" || nft.type === "cawsold"
                                 ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
                                 : nft.type === "land"
-                                ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
+                                ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                             }
                             width={40}

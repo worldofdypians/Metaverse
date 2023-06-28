@@ -838,8 +838,8 @@ function App() {
 
   const { ethereum } = window;
 
-  ethereum.on("chainChanged", handleRefreshList);
-  ethereum.on("accountsChanged", handleRefreshList);
+  ethereum?.on("chainChanged", handleRefreshList);
+  ethereum?.on("accountsChanged", handleRefreshList);
 
   useEffect(() => {
     if (ethereum) {
