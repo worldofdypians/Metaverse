@@ -449,6 +449,16 @@ const CawsNFT = ({
                               nft.buyer?.toLowerCase() ===
                                 coinbase?.toLowerCase(),
                             chain: nft.chain,
+                            isFavorite:
+                            favorites.length > 0
+                              ? favorites.find(
+                                  (obj) =>
+                                    obj.nftAddress === nft.nftAddress &&
+                                    obj.tokenId === nft.tokenId
+                                )
+                                ? true
+                                : false
+                              : false,
                           }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
