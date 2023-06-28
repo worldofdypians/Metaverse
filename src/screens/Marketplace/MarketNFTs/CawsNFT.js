@@ -14,7 +14,6 @@ import axios from "axios";
 import { Checkbox } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 
-
 const CawsNFT = ({
   isConnected,
   handleConnect,
@@ -29,7 +28,7 @@ const CawsNFT = ({
     borderColor: "#554fd8",
   };
   const windowSize = useWindowSize();
-  const nftsPerRow = 30;
+  const nftsPerRow = 18;
   const allCaws = 10000;
 
   const [loading, setLoading] = useState(false);
@@ -41,9 +40,13 @@ const CawsNFT = ({
   const [favorites, setFavorites] = useState([]);
   const [next, setNext] = useState(0);
   const [filters, setFilters] = useState([]);
+  const [paginatedData, setpaginatedData] = useState([]);
+  const [finalData, setfinalData] = useState([]);
+  const [allCawsNfts, setAllcaws] = useState([]);
+
   const listInnerRef = useRef();
-  const [openTraits, setOpenTraits] = useState(false)
-  const [categoryIndex, setCategoryIndex] = useState(0)
+  const [openTraits, setOpenTraits] = useState(false);
+  const [categoryIndex, setCategoryIndex] = useState(0);
 
   const fetchFilters = async () => {
     await axios
@@ -94,9 +97,35 @@ const CawsNFT = ({
     }
   };
 
+  const getListedCaws = async () => {
+    const cawsnew = await getCawsNfts().catch((e) => {
+      console.error(e);
+    });
+    const cawsold = await getCawsOldNfts().catch((e) => {
+      console.error(e);
+    });
+    const cawsArray = [...cawsnew, ...cawsold];
+
+    if (cawsArray && cawsArray.length > 0) {
+      let datedNfts = cawsArray.map((nft) => {
+        let date = new Date(nft?.blockTimestamp * 1000);
+        return { ...nft, date: date };
+      });
+
+      setAllcaws(datedNfts);
+    }
+  };
+
   const getCawsCollection = async () => {
-    const finalArray = [];
-    for (let i = next; i < next + nftsPerRow; i++) {
+    let finalArray = [];
+    let paginatedArray = paginatedData;
+
+    console.log(next);
+    for (
+      let i = next;
+      i < nftsPerRow + next && next + nftsPerRow < allCaws;
+      i++
+    ) {
       const owner = await window.nft.ownerOf(i).catch((e) => {
         console.log(e);
       });
@@ -110,35 +139,24 @@ const CawsNFT = ({
       });
     }
 
-    // console.log("finalArray", finalArray);
+    const finaldata = [...paginatedArray, ...finalArray];
 
-    return finalArray;
+    setpaginatedData(finaldata);
+
+    setfinalData(finaldata);
+    return finaldata;
   };
 
   const fetchInitialCaws = async () => {
-    const cawsnew = await getCawsNfts();
-    const cawsold = await getCawsOldNfts();
-    const finalArray = [...cawsnew, ...cawsold];
-
-    const collectionItems = await getCawsCollection();
-    // console.log(collectionItems);
-    if (finalArray && finalArray.length > 0) {
-      let datedNfts = finalArray.map((nft) => {
-        let date = new Date(nft?.blockTimestamp * 1000);
-        return { ...nft, date: date };
-      });
-
-      const uniqueArray = collectionItems.filter(
-        ({ tokenId: id1 }) => !datedNfts.some(({ tokenId: id2 }) => id2 === id1)
-      );
-
-      const finalUnique = [...datedNfts, ...uniqueArray];
-      // console.log("finalUnique", finalUnique);
-
-      setCawsNFTS(finalUnique);
-      setInitialNfts(finalUnique);
-      setLoading(false);
-    }
+    const cawsArray = allCawsNfts;
+    const collectionItems = finalData;
+    const uniqueArray = collectionItems.filter(
+      ({ tokenId: id1 }) => !cawsArray.some(({ tokenId: id2 }) => id2 === id1)
+    );
+    const finalUnique = [...cawsArray, ...uniqueArray];
+    setCawsNFTS(finalUnique);
+    setInitialNfts(finalUnique);
+    setLoading(false);
   };
 
   async function fetchUserFavorites(userId) {
@@ -183,14 +201,11 @@ const CawsNFT = ({
   const loadMore = () => {
     setNext(next + nftsPerRow);
     setLoading(true);
-    getCawsCollection();
-    console.log("loaded");
   };
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
     console.log(wrappedElement);
-
     if (wrappedElement) {
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
@@ -217,12 +232,19 @@ const CawsNFT = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getCawsCollection();
+    getListedCaws();
+    fetchFilters();
+    fetchInitialCaws();
   }, []);
 
   useEffect(() => {
-    fetchInitialCaws();
-    fetchFilters();
+    getCawsCollection();
   }, [next]);
+
+  useEffect(() => {
+    fetchInitialCaws();
+  }, [paginatedData]);
 
   useEffect(() => {
     if (cawsNFTS && cawsNFTS.length === 0) {
@@ -234,8 +256,7 @@ const CawsNFT = ({
     sortNfts("lth");
   }, [cawsNFTS]);
 
-  console.log(filters)
-
+  console.log(filters);
 
   return (
     <>
@@ -328,7 +349,9 @@ const CawsNFT = ({
                 </ul>
               </div>
             </div>
-            <div className="d-flex align-items-center nft-page-wrapper p-4 gap-4 my-4">
+          </div>
+          <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
+            <div className="d-flex align-items-center p-4 gap-4">
               <div
                 className={
                   loading === false || cawsNFTS.length > 0
@@ -336,7 +359,7 @@ const CawsNFT = ({
                     : "loader-wrapper"
                 }
               >
-                {cawsNFTS && cawsNFTS.length > 0 && (
+                {cawsNFTS && cawsNFTS.length > 0 ? (
                   <>
                     {cawsNFTS.map((nft, index) => (
                       <NavLink
@@ -384,9 +407,7 @@ const CawsNFT = ({
                       </NavLink>
                     ))}
                   </>
-                )}
-
-                {loading === true && (
+                ) : (
                   <HashLoader
                     color={"#554fd8"}
                     loading={loading}
@@ -397,58 +418,96 @@ const CawsNFT = ({
                 )}
               </div>
             </div>
-            {!loading && next < allCaws && (
-              <div className="d-flex justify-content-center w-100">
+
+            <div className="d-flex justify-content-center w-100">
+              {!loading && next < allCaws ? (
                 <button
                   className="btn py-2 px-3 nft-load-more-btn"
                   onClick={() => loadMore()}
                 >
                   Load more
                 </button>
-              </div>
-            )}
+              ) : loading && next < allCaws && cawsNFTS.length > 0 ? (
+                <HashLoader
+                  color={"#554fd8"}
+                  loading={loading}
+                  cssOverride={override}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
+        </div>
       </div>
-      </div>
+
       <OutsideClickHandler onOutsideClick={() => setOpenTraits(false)}>
-      <div className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xxl-5 ${openTraits && "filters-active"} p-4`}>
-      <div className="d-flex align-items-center justify-content-between mb-4">
-        <h6 className="filters-title mb-0">Filters</h6>
-        <img src={filtersXmark} style={{cursor: 'pointer'}} onClick={() => setOpenTraits(false)} alt="" />
-      </div>
-      <div className="d-flex align-items-center justify-content-between mb-4">
-        <span className="select-category mb-0">Select Category</span>
-        <span className="clear-all mb-0">Clear all</span>
-      </div>
-      <div className="filter-tabs d-flex align-items-center justify-content-start gap-4">
-        {filters &&
-        Object.entries(filters).map(([key, value], i) => (
-          <div className={`filter-tab px-2 py-1 d-flex align-items-center ${categoryIndex === i && "filter-tab-active"}`} onClick={() => setCategoryIndex(i)} key={i}>
-            <h6 className="filter-tab-title mb-0">{key} ({Object.keys(value)?.length})</h6>
+        <div
+          className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xxl-5 ${
+            openTraits && "filters-active"
+          } p-4`}
+        >
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <h6 className="filters-title mb-0">Filters</h6>
+            <img
+              src={filtersXmark}
+              style={{ cursor: "pointer" }}
+              onClick={() => setOpenTraits(false)}
+              alt=""
+            />
           </div>
-        ))}
-      </div>
-      <span className="filters-divider my-4"></span>
-        <div className="row align-items-center traits-wrapper" style={{rowGap: '20px'}}>
-          {Object.values(filters)[categoryIndex] && Object.values(filters) && Object.entries(Object.values(filters)[categoryIndex]).map(([key, value], i) => (
-            // <span key={i}>{key} ({value})</span>
-            <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-              <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-              <div className="d-flex align-items-center">
-                <Checkbox  sx={{
-              color: "#8E97CD",
-              "&.Mui-checked": {
-                color: "#82DAAB",
-              },
-            }} />
-                <span className="trait-title mb-0">{key}</span>
-              </div>
-              <span className="trait-amount mb-0">{value}</span>
-            </div>
-            </div>
-          ))}
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <span className="select-category mb-0">Select Category</span>
+            <span className="clear-all mb-0">Clear all</span>
           </div>
-    </div>
+          <div className="filter-tabs d-flex align-items-center justify-content-start gap-4">
+            {filters &&
+              Object.entries(filters).map(([key, value], i) => (
+                <div
+                  className={`filter-tab px-2 py-1 d-flex align-items-center ${
+                    categoryIndex === i && "filter-tab-active"
+                  }`}
+                  onClick={() => setCategoryIndex(i)}
+                  key={i}
+                >
+                  <h6 className="filter-tab-title mb-0">
+                    {key} ({Object.keys(value)?.length})
+                  </h6>
+                </div>
+              ))}
+          </div>
+          <span className="filters-divider my-4"></span>
+          <div
+            className="row align-items-center traits-wrapper"
+            style={{ rowGap: "20px" }}
+          >
+            {Object.values(filters)[categoryIndex] &&
+              Object.values(filters) &&
+              Object.entries(Object.values(filters)[categoryIndex]).map(
+                ([key, value], i) => (
+                  // <span key={i}>{key} ({value})</span>
+                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
+                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
+                      <div className="d-flex align-items-center">
+                        <Checkbox
+                          sx={{
+                            color: "#8E97CD",
+                            "&.Mui-checked": {
+                              color: "#82DAAB",
+                            },
+                          }}
+                        />
+                        <span className="trait-title mb-0">{key}</span>
+                      </div>
+                      <span className="trait-amount mb-0">{value}</span>
+                    </div>
+                  </div>
+                )
+              )}
+          </div>
+        </div>
       </OutsideClickHandler>
     </>
   );

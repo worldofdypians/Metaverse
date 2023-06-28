@@ -32,9 +32,12 @@ const WoDNFT = ({
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const [next, setNext] = useState(0);
+  const [paginatedData, setpaginatedData] = useState([]);
+  const [finalData, setfinalData] = useState([]);
+  const [allwodNfts, setAllwod] = useState([]);
 
   const listInnerRef = useRef();
-  const nftsPerRow = 30;
+  const nftsPerRow = 18;
   const allLandpiece = 999;
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -70,9 +73,33 @@ const WoDNFT = ({
     }
   };
 
+  const getListedWod = async () => {
+    const wod = await getWodNfts().catch((e) => {
+      console.error(e);
+    });
+
+    const wodArray = [...wod];
+
+    if (wodArray && wodArray.length > 0) {
+      let datedNfts = wodArray.map((nft) => {
+        let date = new Date(nft?.blockTimestamp * 1000);
+        return { ...nft, date: date };
+      });
+
+      setAllwod(datedNfts);
+    }
+  };
+
   const getWodCollection = async () => {
-    const finalArray = [];
-    for (let i = next; i < next + nftsPerRow; i++) {
+    let finalArray = [];
+    let paginatedArray = paginatedData;
+
+    console.log(next);
+    for (
+      let i = next;
+      i < next + nftsPerRow && next + nftsPerRow < allLandpiece;
+      i++
+    ) {
       const owner = await window.landnft.ownerOf(i).catch((e) => {
         console.log(e);
       });
@@ -85,30 +112,28 @@ const WoDNFT = ({
         chain: 1,
       });
     }
-    return finalArray;
+    const finaldata = [...paginatedArray, ...finalArray];
+
+    setpaginatedData(finaldata);
+
+    setfinalData(finaldata);
+    return finaldata;
   };
 
   const fetchInitialWod = async () => {
-    const landarray = await getWodNfts();
-    const collectionItems = await getWodCollection();
+    const wodArray = allwodNfts;
 
-    if (landarray && landarray.length > 0) {
-      let datedNfts = landarray.map((nft) => {
-        let date = new Date(nft.blockTimestamp * 1000);
-        return { ...nft, date: date };
-      });
+    const collectionItems = finalData;
 
-      const uniqueArray = collectionItems.filter(
-        ({ tokenId: id1 }) => !datedNfts.some(({ tokenId: id2 }) => id2 === id1)
-      );
+    const uniqueArray = collectionItems.filter(
+      ({ tokenId: id1 }) => !wodArray.some(({ tokenId: id2 }) => id2 === id1)
+    );
 
-      const finalUnique = [...datedNfts, ...uniqueArray];
+    const finalUnique = [...wodArray, ...uniqueArray];
 
-      setLandNfts(finalUnique);
-      setInitialNfts(finalUnique);
-      setLoading(false);
-
-    }
+    setLandNfts(finalUnique);
+    setInitialNfts(finalUnique);
+    setLoading(false);
   };
 
   async function fetchUserFavorites(userId) {
@@ -156,8 +181,7 @@ const WoDNFT = ({
 
   const loadMore = () => {
     setLoading(true);
-    setNext(next + nftsPerRow);
-    getWodCollection();
+    setNext(next + 12);
   };
 
   const onScroll = () => {
@@ -187,8 +211,19 @@ const WoDNFT = ({
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    getWodCollection();
+    getListedWod();
     fetchInitialWod();
+  }, []);
+
+  useEffect(() => {
+    getWodCollection();
   }, [next]);
+
+  useEffect(() => {
+    fetchInitialWod();
+  }, [paginatedData]);
 
   useEffect(() => {
     if (landNfts && landNfts.length === 0) {
@@ -197,7 +232,6 @@ const WoDNFT = ({
     if (landNfts && landNfts.length > 0) {
       setLoading(false);
     }
-    window.scrollTo(0, 0);
   }, [landNfts]);
 
   return (
@@ -285,66 +319,85 @@ const WoDNFT = ({
               </ul>
             </div>
           </div>
-          <div
-            className="d-flex align-items-center nft-page-wrapper p-4 gap-4 my-4"
-            id="header"
-            onScroll={onScroll}
-            ref={listInnerRef}
-          >
+          <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
             <div
-              className={
-                loading === false || landNfts.length > 0
-                  ? "item-cards-wrapper"
-                  : "loader-wrapper"
-              }
+              className="d-flex align-items-center p-4 gap-4"
+              id="header"
+              onScroll={onScroll}
+              ref={listInnerRef}
             >
-              {landNfts &&
-                landNfts.length > 0 &&
-                landNfts.map((nft, index) => (
-                  <NavLink
-                    to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                    style={{ textDecoration: "none" }}
-                    key={index}
-                    state={{
-                      nft: nft,
-                      type: "land",
-                      isOwner:
-                        nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
-                        nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                      chain: nft.chain,
-                    }}
-                    onClick={() => {
-                      updateViewCount(nft.tokenId, nft.nftAddress);
-                    }}
-                  >
-                    <ItemCard
-                      ethTokenData={ethTokenData}
-                      dypTokenData={dypTokenData}
-                      key={nft.id}
-                      nft={nft}
-                      isConnected={isConnected}
-                      showConnectWallet={handleConnect}
-                      isCaws={false}
-                      isTimepiece={false}
-                      isWod={true}
-                      coinbase={coinbase}
-                      isFavorite={
-                        favorites.length > 0
-                          ? favorites.find(
-                              (obj) =>
-                                obj.nftAddress === nft.nftAddress &&
-                                obj.tokenId === nft.tokenId
-                            )
-                            ? true
+              <div
+                className={
+                  loading === false || landNfts.length > 0
+                    ? "item-cards-wrapper"
+                    : "loader-wrapper"
+                }
+              >
+                {landNfts && landNfts.length > 0 ? (
+                  landNfts.map((nft, index) => (
+                    <NavLink
+                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                      state={{
+                        nft: nft,
+                        type: "land",
+                        isOwner:
+                          nft.seller?.toLowerCase() ===
+                            coinbase?.toLowerCase() ||
+                          nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                        chain: nft.chain,
+                      }}
+                      onClick={() => {
+                        updateViewCount(nft.tokenId, nft.nftAddress);
+                      }}
+                    >
+                      <ItemCard
+                        ethTokenData={ethTokenData}
+                        dypTokenData={dypTokenData}
+                        key={nft.id}
+                        nft={nft}
+                        isConnected={isConnected}
+                        showConnectWallet={handleConnect}
+                        isCaws={false}
+                        isTimepiece={false}
+                        isWod={true}
+                        coinbase={coinbase}
+                        isFavorite={
+                          favorites.length > 0
+                            ? favorites.find(
+                                (obj) =>
+                                  obj.nftAddress === nft.nftAddress &&
+                                  obj.tokenId === nft.tokenId
+                              )
+                              ? true
+                              : false
                             : false
-                          : false
-                      }
-                      onFavorite={updateFavs}
-                    />
-                  </NavLink>
-                ))}
-
-              {loading === true && (
+                        }
+                        onFavorite={updateFavs}
+                      />
+                    </NavLink>
+                  ))
+                ) : (
+                  <HashLoader
+                    color={"#554fd8"}
+                    loading={loading}
+                    cssOverride={override}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                )}
+              </div>
+            </div>
+            <div className="d-flex justify-content-center w-100">
+              {!loading && next < allLandpiece ? (
+                <button
+                  className="btn py-2 px-3 nft-load-more-btn"
+                  onClick={() => loadMore()}
+                >
+                  Load more
+                </button>
+              ) : loading && next < allLandpiece && landNfts.length > 0 ? (
                 <HashLoader
                   color={"#554fd8"}
                   loading={loading}
@@ -352,19 +405,11 @@ const WoDNFT = ({
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
+              ) : (
+                <></>
               )}
             </div>
           </div>
-          {!loading && next < allLandpiece && (
-            <div className="d-flex justify-content-center w-100">
-              <button
-                className="btn py-2 px-3 nft-load-more-btn"
-                onClick={() => loadMore()}
-              >
-                Load more
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>

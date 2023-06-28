@@ -32,9 +32,12 @@ const TimepieceNFT = ({
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const [next, setNext] = useState(0);
+  const [paginatedData, setpaginatedData] = useState([]);
+  const [finalData, setfinalData] = useState([]);
+  const [alltimepieceNfts, setAlltimepiece] = useState([]);
 
   const listInnerRef = useRef();
-  const nftsPerRow = 30;
+  const nftsPerRow = 18;
   const allTimepiece = 256;
 
   const sortNfts = (sortValue) => {
@@ -71,9 +74,33 @@ const TimepieceNFT = ({
     }
   };
 
+  const getListedTimepiece = async () => {
+    const timepiece = await getTimepieceNfts().catch((e) => {
+      console.error(e);
+    });
+
+    const timepieceArray = [...timepiece];
+
+    if (timepieceArray && timepieceArray.length > 0) {
+      let datedNfts = timepieceArray.map((nft) => {
+        let date = new Date(nft?.blockTimestamp * 1000);
+        return { ...nft, date: date };
+      });
+
+      setAlltimepiece(datedNfts);
+    }
+  };
+
   const getTimepieceCollection = async () => {
-    const finalArray = [];
-    for (let i = next; i < next + nftsPerRow; i++) {
+    let finalArray = [];
+    let paginatedArray = paginatedData;
+
+    console.log(next);
+    for (
+      let i = next;
+      i < next + nftsPerRow && next + nftsPerRow < allTimepiece;
+      i++
+    ) {
       const owner = await window.caws_timepiece.ownerOf(i).catch((e) => {
         console.log(e);
       });
@@ -86,28 +113,29 @@ const TimepieceNFT = ({
         chain: 1,
       });
     }
-    return finalArray;
+    const finaldata = [...paginatedArray, ...finalArray];
+
+    setpaginatedData(finaldata);
+
+    setfinalData(finaldata);
+    return finaldata;
   };
 
   const fetchInitialTimepiece = async () => {
-    const timepiecenfts = await getTimepieceNfts();
-    const collectionItems = await getTimepieceCollection();
+    const timepieceArray = alltimepieceNfts;
 
-    if (timepiecenfts && timepiecenfts.length > 0) {
-      let datedNfts = timepiecenfts.map((nft) => {
-        let date = new Date(nft.blockTimestamp * 1000);
-        return { ...nft, date: date };
-      });
+    const collectionItems = finalData;
 
-      const uniqueArray = collectionItems.filter(
-        ({ tokenId: id1 }) => !datedNfts.some(({ tokenId: id2 }) => id2 === id1)
-      );
+    const uniqueArray = collectionItems.filter(
+      ({ tokenId: id1 }) =>
+        !timepieceArray.some(({ tokenId: id2 }) => id2 === id1)
+    );
 
-      const finalUnique = [...datedNfts, ...uniqueArray];
+    const finalUnique = [...timepieceArray, ...uniqueArray];
 
-      setTimepieceNFTS(finalUnique);
-      setInitialNfts(finalUnique);
-    }
+    setTimepieceNFTS(finalUnique);
+    setInitialNfts(finalUnique);
+    setLoading(false);
   };
 
   async function fetchUserFavorites(userId) {
@@ -156,7 +184,6 @@ const TimepieceNFT = ({
   const loadMore = () => {
     setLoading(true);
     setNext(next + nftsPerRow);
-    getTimepieceCollection();
   };
 
   const onScroll = () => {
@@ -182,8 +209,19 @@ const TimepieceNFT = ({
   }, [coinbase, favItems]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    getTimepieceCollection();
+    getListedTimepiece();
     fetchInitialTimepiece();
   }, []);
+
+  useEffect(() => {
+    getTimepieceCollection();
+  }, [next]);
+
+  useEffect(() => {
+    fetchInitialTimepiece();
+  }, [paginatedData]);
 
   useEffect(() => {
     if (timepieceNFTS && timepieceNFTS.length === 0) {
@@ -194,10 +232,6 @@ const TimepieceNFT = ({
     }
     sortNfts("lth");
   }, [timepieceNFTS]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <div
@@ -284,63 +318,84 @@ const TimepieceNFT = ({
               </ul>
             </div>
           </div>
-          <div
-            className="d-flex align-items-center nft-page-wrapper p-4 gap-4 my-4"
-            id="header"
-            onScroll={onScroll}
-            ref={listInnerRef}
-          >
+          <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
             <div
-              className={
-                loading === false || timepieceNFTS.length > 0 ? "item-cards-wrapper" : "loader-wrapper"
-              }
+              className="d-flex align-items-center p-4 gap-4"
+              id="header"
+              onScroll={onScroll}
+              ref={listInnerRef}
             >
-              {timepieceNFTS && timepieceNFTS.length > 0 && (
-                timepieceNFTS.map((nft, index) => (
-                  <NavLink
-                    to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                    style={{ textDecoration: "none" }}
-                    key={index}
-                    state={{
-                      nft: nft,
-                      type: "timepiece",
-                      isOwner:
-                        nft.seller?.toLowerCase() === coinbase?.toLowerCase() ||
-                        nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                      chain: nft.chain,
-                    }}
-                    onClick={() => {
-                      updateViewCount(nft.tokenId, nft.nftAddress);
-                    }}
-                  >
-                    <ItemCard
-                      ethTokenData={ethTokenData}
-                      dypTokenData={dypTokenData}
-                      nft={nft}
-                      isConnected={isConnected}
-                      showConnectWallet={handleConnect}
-                      isCaws={false}
-                      isTimepiece={true}
-                      isWod={false}
-                      coinbase={coinbase}
-                      isFavorite={
-                        favorites.length > 0
-                          ? favorites.find(
-                              (obj) =>
-                                obj.nftAddress === nft.nftAddress &&
-                                obj.tokenId === nft.tokenId
-                            )
-                            ? true
+              <div
+                className={
+                  loading === false || timepieceNFTS.length > 0
+                    ? "item-cards-wrapper"
+                    : "loader-wrapper"
+                }
+              >
+                {timepieceNFTS && timepieceNFTS.length > 0 ? (
+                  timepieceNFTS.map((nft, index) => (
+                    <NavLink
+                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                      state={{
+                        nft: nft,
+                        type: "timepiece",
+                        isOwner:
+                          nft.seller?.toLowerCase() ===
+                            coinbase?.toLowerCase() ||
+                          nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                        chain: nft.chain,
+                      }}
+                      onClick={() => {
+                        updateViewCount(nft.tokenId, nft.nftAddress);
+                      }}
+                    >
+                      <ItemCard
+                        ethTokenData={ethTokenData}
+                        dypTokenData={dypTokenData}
+                        nft={nft}
+                        isConnected={isConnected}
+                        showConnectWallet={handleConnect}
+                        isCaws={false}
+                        isTimepiece={true}
+                        isWod={false}
+                        coinbase={coinbase}
+                        isFavorite={
+                          favorites.length > 0
+                            ? favorites.find(
+                                (obj) =>
+                                  obj.nftAddress === nft.nftAddress &&
+                                  obj.tokenId === nft.tokenId
+                              )
+                              ? true
+                              : false
                             : false
-                          : false
-                      }
-                      onFavorite={updateFavs}
-                    />
-                  </NavLink>
-                ))
-              )}
-              
-              {loading === true && (
+                        }
+                        onFavorite={updateFavs}
+                      />
+                    </NavLink>
+                  ))
+                ) : (
+                  <HashLoader
+                    color={"#554fd8"}
+                    loading={loading}
+                    cssOverride={override}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                )}
+              </div>
+            </div>
+            <div className="d-flex justify-content-center w-100">
+              {!loading && next < allTimepiece ? (
+                <button
+                  className="btn py-2 px-3 nft-load-more-btn"
+                  onClick={() => loadMore()}
+                >
+                  Load more
+                </button>
+              ) : loading && next < allTimepiece && timepieceNFTS.length > 0 ? (
                 <HashLoader
                   color={"#554fd8"}
                   loading={loading}
@@ -348,16 +403,11 @@ const TimepieceNFT = ({
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
+              ) : (
+                <></>
               )}
             </div>
           </div>
-          {!loading && next < allTimepiece && (
-            <div className="d-flex justify-content-center w-100">
-              <button className="btn py-2 px-3 nft-load-more-btn" onClick={() => loadMore()}>
-                Load more
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>

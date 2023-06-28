@@ -562,7 +562,7 @@ function App() {
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+      "https://api.studio.thegraph.com/query/46190/dypius-marketplace/version/latest";
 
     const itemBoughtQuery = `
         {
@@ -618,7 +618,7 @@ function App() {
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+      "https://api.studio.thegraph.com/query/46190/dypius-marketplace/version/latest";
 
     const itemBoughtQuery = `
         {
@@ -676,7 +676,7 @@ function App() {
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+      "https://api.studio.thegraph.com/query/46190/dypius-marketplace/version/latest";
 
     const itemBoughtQuery = `
       {
