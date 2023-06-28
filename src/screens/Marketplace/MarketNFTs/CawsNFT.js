@@ -349,7 +349,7 @@ const CawsNFT = ({
                 </ul>
               </div>
             </div>
-          </div>
+       
           <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
             <div className="d-flex align-items-center p-4 gap-4">
               <div
@@ -439,7 +439,7 @@ const CawsNFT = ({
                 <></>
               )}
             </div>
-          </div>
+          </div>   </div>
         </div>
       </div>
 
