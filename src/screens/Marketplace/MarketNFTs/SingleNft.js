@@ -21,6 +21,8 @@ import ethIcon from "../assets/ethIcon.svg";
 import { GET_PLAYER } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import { useQuery } from "@apollo/client";
 import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
+import favActive from "./assets/favActive.svg";
+import favInactive from "./assets/favInactive.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -88,6 +90,10 @@ const SingleNft = ({
 
   const [type, setType] = useState(
     location.state?.type ? location.state?.type : false
+  );
+
+  const [isFavorite, setisFavorite] = useState(
+    location.state?.isFavorite ? location.state.isFavorite : false
   );
 
   const [IsApprove, setIsApprove] = useState(false);
@@ -187,7 +193,7 @@ const SingleNft = ({
       nft_address = window.config.nft_timepiece_address;
     } else if (type === "land") {
       nft_address = window.config.nft_land_address;
-    }  else {
+    } else {
       nft_address = window.config.nft_caws_address;
     }
 
@@ -265,7 +271,7 @@ const SingleNft = ({
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
     const isApproved = await isApprovedNFT(tokenId, type);
     const newPrice = new BigNumber(nftPrice * 1e18).toFixed();
-    console.log(newPrice)
+    console.log(newPrice);
     if (isApproved) {
       console.log("selling");
       setsellLoading(true);
@@ -337,6 +343,79 @@ const SingleNft = ({
           console.log(e);
         });
     }
+  };
+
+  async function addNFTToUserFavorites(userId, tokenId, nftAddress) {
+    try {
+      const response = await fetch(
+        `https://api.worldofdypians.com/user-favorites/${userId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ tokenId, nftAddress }),
+        }
+      );
+      if (!response.ok) {
+        console.log(response);
+        throw new Error("Error adding NFT to user favorites");
+      }
+      const data = await response.json();
+      handleRefreshList();
+      return data.favorites;
+    } catch (error) {
+      console.log(error);
+
+      console.error("Error adding NFT to user favorites:", error);
+      throw error;
+    }
+  }
+
+  async function deleteNFTFromUserFavorites(userId, tokenId, nftAddress) {
+    fetch(
+      `https://api.worldofdypians.com/user-favorites/${userId}/${tokenId}/${nftAddress}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((response) => {
+        if (response.ok || response.status === 204 || response.status === 404) {
+          // NFT removed successfully or was not found (404)
+          console.log("NFT removed from favorites");
+          handleRefreshList();
+        } else {
+          // Handle other status codes as errors
+          console.error(
+            "Failed to remove NFT from favorites. Status:",
+            response.status
+          );
+        }
+      })
+      .catch((error) => {
+        // Handle network or fetch error
+        console.error("Error removing NFT from favorites:", error);
+      });
+  }
+
+  const handleFavorite = async (nft) => {
+    console.log(isFavorite, 'test')
+    if (isConnected) {
+      if (isFavorite === true) {
+        await deleteNFTFromUserFavorites(
+          coinbase,
+          parseInt(nft.tokenId),
+          nft.nftAddress
+        );
+      }
+      if (!isFavorite) {
+        await addNFTToUserFavorites(
+          coinbase,
+          parseInt(nft.tokenId),
+          nft.nftAddress
+        );
+      }
+    } else showWalletConnect();
   };
 
   async function handleBuy(nft) {
@@ -512,16 +591,18 @@ const SingleNft = ({
   //to get the favorites count
   async function getFavoritesCount(tokenId, nftAddress) {
     try {
-      const response = axios.get(
+      const data = await axios.get(
         `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`
       );
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Error fetching NFT favorites");
+
+      // if (!response.ok) {
+      //   throw new Error("Error fetching NFT favorites");
+      // }
+      if(data.data && data.data.favoritesCount) {
+         setfavCount(data.data.favoritesCount);
       }
-      const data = await response.json();
-      setfavCount(data.favoritesCount);
-      return data.favoritesCount;
+     
+      return data.data.favoritesCount;
     } catch (error) {
       console.error("Error fetching NFT favorites:", error);
       throw error;
@@ -759,13 +840,20 @@ const SingleNft = ({
               </div>
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
-                  <h3 className="nft-title">
+                  <h3 className="nft-title d-flex align-items-center justify-content-between">
                     {type === "caws"
                       ? "CAWS"
                       : type === "land"
                       ? "Genesis Land"
                       : "CAWS Timepiece"}{" "}
                     #{nft.tokenId}
+                    <img
+                      src={isFavorite ? favActive : favInactive}
+                      onClick={() => {
+                        handleFavorite(nft);
+                      }}
+                      alt=""
+                    />
                   </h3>
                   {isOwner && IsListed && (
                     <div className="d-flex gap-2 align-items-center">
@@ -799,7 +887,10 @@ const SingleNft = ({
                           className="nft-price-eth"
                           style={{ fontSize: 15, lineHeight: "20px" }}
                         >
-                          {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}
+                          {getFormattedNumber(
+                            nft.price / 1e18,
+                            nft.payment_priceType === 0 ? 3 : 0
+                          )}
                           {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                         </span>
                         <span className="nft-price-usd">
@@ -826,7 +917,10 @@ const SingleNft = ({
                             width={30}
                           />
                           <span className="nft-price-eth">
-                            {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}{" "}
+                            {getFormattedNumber(
+                              nft.price / 1e18,
+                              nft.payment_priceType === 0 ? 3 : 0
+                            )}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                           </span>
                           <span className="nft-price-usd">
@@ -854,7 +948,10 @@ const SingleNft = ({
                             width={30}
                           />
                           <span className="nft-price-eth">
-                            {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}{" "}
+                            {getFormattedNumber(
+                              nft.price / 1e18,
+                              nft.payment_priceType === 0 ? 3 : 0
+                            )}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                           </span>
                           <span className="nft-price-usd">

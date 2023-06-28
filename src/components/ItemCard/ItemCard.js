@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./_itemcard.scss";
-import topEth from "../../screens/Marketplace/assets/topEth.svg";
-import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
-import favActive from "../../screens/Marketplace/assets/favActive.svg";
-import favInactive from "../../screens/Marketplace/assets/favInactive.svg";
+
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import Toast from "../../components/Toast/Toast";
+import ethgrayLogo from './assets/ethgrayLogo.svg'
 
 const ItemCard = ({
   nft,
@@ -229,7 +227,8 @@ const ItemCard = ({
       <Toast showToast={showToast} title={toastTitle} />
 
       <div className="item-wrapper" style={{ maxWidth: "100%" }}>
-        <div className="nftimg-bg position-relative">
+      
+         <div className="nftimg-bg position-relative">
           <div className="name-wrapper d-flex justify-content-center p-2">
             {!location.pathname.includes("/account") ? (
               <span className="nft-card-name">
@@ -246,6 +245,7 @@ const ItemCard = ({
               </span>
             )}
           </div>
+          <img src={ethgrayLogo} alt='' className="ethgraylogo position-absolute" />
           <img
             className="w-100 h-100 p-0 nft-img"
             src={
@@ -276,17 +276,20 @@ const ItemCard = ({
           >
             {!location.pathname.includes("/account") ? (
               <div className={`d-flex gap-2 m-0`}>
-                {nft.payment_priceType === 0 ? (
+                {/* {nft.payment_priceType === 0 ? (
                   <img src={topEth} height={20} width={20} alt="" />
                 ) : (
                   <img src={topDyp} height={20} width={20} alt="" />
-                )}
-                <div className="d-flex flex-column">
+                )} */}
+                <div className="d-flex align-items-center gap-1">
                   <span
                     className="nft-price"
                     style={{ textDecoration: "none" }}
                   >
-                    {getFormattedNumber(nft.price / 1e18, nft.payment_priceType === 0 ? 3 : 0)}{" "}
+                    {getFormattedNumber(
+                      nft.price / 1e18,
+                      nft.payment_priceType === 0 ? 3 : 0
+                    )}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                   </span>
                   <span
@@ -314,7 +317,7 @@ const ItemCard = ({
                 {nft.tokenId}
               </span>
             )}
-            <img
+            {/* <img
               src={isFavorite ? favActive : favInactive}
               onClick={(e) => {
                 handleFavorite(nft);
@@ -328,7 +331,7 @@ const ItemCard = ({
                   location.pathname.includes("/marketplace/timepiece")) &&
                 "favoritehover"
               } `}
-            />
+            /> */}
           </div>
         </div>
         {(location.pathname.includes("/marketplace/caws") ||
@@ -361,6 +364,19 @@ const ItemCard = ({
                 ) : (
                   "Connect wallet"
                 )}{" "}
+              </button>
+            </div>
+          )}
+        {(location.pathname.includes("/marketplace/caws") ||
+          location.pathname.includes("/marketplace/wod") ||
+          location.pathname.includes("/marketplace/timepiece")) &&
+          !nft.price && (
+            <div className="buy-nft w-100">
+              <button
+                className="view-nft-btn w-100"
+                style={{ paddingLeft: "20px", paddingRight: "20px" }}
+              >
+                View details
               </button>
             </div>
           )}

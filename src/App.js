@@ -593,8 +593,7 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        } 
-         else if (nft.nftAddress === window.config.nft_land_address) {
+        } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -648,8 +647,7 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        } 
-         else if (nft.nftAddress === window.config.nft_land_address) {
+        } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -700,7 +698,7 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        }   else if (nft.nftAddress === window.config.nft_land_address) {
+        } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -716,24 +714,29 @@ function App() {
   };
 
   const getListedNfts2 = async () => {
-    const listednfts = await getListedNFTS(0).catch((e) => {
-      console.log(e);
-    });
-    setListedNFTS2(listednfts);
+    getListedNFTS(0)
+      .then((data) => {
+        // console.log(data);
+        setListedNFTS2(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
-    const recentListedNFTS = await getListedNFTS(
-      0,
-      "",
-      "recentListedNFTS"
-    ).catch((e) => {
-      console.log(e);
-    });
-    setrecentListedNFTS2(recentListedNFTS);
+    getListedNFTS(0, "", "recentListedNFTS")
+      .then((data) => {
+        // console.log(data);
+        setrecentListedNFTS2(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
     let finalboughtItems2 = [];
+
     listedNFTS2 &&
       listedNFTS2.length > 0 &&
       listedNFTS2.map((nft) => {
@@ -741,7 +744,7 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems1.push(nft);
-        }  else if (nft.nftAddress === window.config.nft_land_address) {
+        } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems1.push(nft);
@@ -762,7 +765,7 @@ function App() {
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems2.push(nft);
-        }   else if (nft.nftAddress === window.config.nft_land_address) {
+        } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems2.push(nft);
@@ -771,7 +774,7 @@ function App() {
           nft.chain = 1;
           finalboughtItems2.push(nft);
         }
-      });
+      }); 
     setLatest20RecentListedNFTS(finalboughtItems2);
   };
 
@@ -896,18 +899,20 @@ function App() {
 
   useEffect(() => {
     getTokenData();
-    getallNfts();
+    getListedNfts2();
   }, [nftCount]);
 
   useEffect(() => {
-    // getallNfts();
     getListedNfts2();
-  }, [nftCount,listedNFTS2?.length]);
+  }, [recentListedNFTS2?.length, listedNFTS2?.length]);
 
   useEffect(() => {
-    getOtherNfts();
-  }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
- 
+    const interval = setInterval(() => {
+      getOtherNfts();
+      getallNfts();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [recentListedNFTS2?.length, listedNFTS2?.length]);
 
   // useEffect(() => {
   //   if (window.ethereum) {

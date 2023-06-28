@@ -30,11 +30,29 @@
   bottom: -40px;
   transition: all 0.2s;
   color: #eeedff;
+  height: 23px;
+}
+
+.view-nft-btn {
+  // background-color: rgb(46, 142, 238);
+  border-radius: 0px 0px 20px 20px;
+  background: rgba(21, 23, 53, 0.7);
+  border: none !important;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 12px;
+  position: absolute;
+  bottom: -40px;
+  transition: all 0.2s;
+  color: #eeedff;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
   height: 28px;
 }
 
 .cawsimg {
-  --mask: linear-gradient(-284deg,#0000 93px,#000 0);
+  --mask: linear-gradient(-284deg, #0000 93px, #000 0);
   -webkit-mask: var(--mask);
   mask: var(--mask);
   margin-left: -155px;
@@ -54,7 +72,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-  color: #ffffff;
+  color: #EEEDFF;
   margin-bottom: 0;
 }
 
@@ -93,11 +111,22 @@
   z-index: 2;
 }
 
+.ethgraylogo {
+  visibility: hidden;
+  top: 10px;
+  left: 10px;
+}
+
 .item-wrapper:hover {
   background: rgba(103, 67, 124, 0.35) !important;
-
+  .ethgraylogo {
+    visibility: visible;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+  }
   .topwrapper {
-    padding-top: 10px !important;
+    padding-top: 7px !important;
   }
 
   .favoritehover {
@@ -113,10 +142,11 @@
 
   .middlewrapper {
     align-items: center;
-    margin-bottom: 6px;
+    margin-bottom: 9px;
   }
 
-  .buy-nft-btn {
+  .buy-nft-btn,
+  .view-nft-btn {
     bottom: 0px;
   }
   .nft-img {

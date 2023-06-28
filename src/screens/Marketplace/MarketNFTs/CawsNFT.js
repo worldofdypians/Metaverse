@@ -13,9 +13,9 @@ import filtersXmark from "./assets/filtersXmark.svg";
 import axios from "axios";
 import { Checkbox } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
-import traitIcon from './assets/traitIcon.svg'
-import priceIcon from './assets/priceIcon.svg'
-import filterIcon from './assets/filterIcon.svg'
+import traitIcon from "./assets/traitIcon.svg";
+import priceIcon from "./assets/priceIcon.svg";
+import filterIcon from "./assets/filterIcon.svg";
 
 const CawsNFT = ({
   isConnected,
@@ -305,9 +305,10 @@ const CawsNFT = ({
                   </h6>
                   <p className="collection-desc">
                     The Timepiece NFTs offer different benefits in Metaverse
-                    like: <b>Exclusive Access</b> to new and exciting events, <b>Enhanced
-                    Interactions</b> with available activities, <b>Expanded
-                    Functionality</b> on performing new actions, and earn multiple
+                    like: <b>Exclusive Access</b> to new and exciting events,{" "}
+                    <b>Enhanced Interactions</b> with available activities,{" "}
+                    <b>Expanded Functionality</b> on performing new actions, and
+                    earn multiple
                     <b>Rewards</b>.
                   </p>
                   <NavLink>
@@ -323,8 +324,11 @@ const CawsNFT = ({
                 />
               </div>
             </div>
-            <div className="filters-container d-flex align-items-center justify-content-between mt-4 p-3 position-relative" style={{zIndex: 2}}>
-            <div class="dropdown" style={{ width: "200px" }}>
+            <div
+              className="filters-container d-flex align-items-center justify-content-between mt-4 p-3 position-relative"
+              style={{ zIndex: 2 }}
+            >
+              <div class="dropdown" style={{ width: "200px" }}>
                 <button
                   class="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
@@ -396,17 +400,20 @@ const CawsNFT = ({
                 </ul>
               </div>
               <div className="d-flex align-items-center gap-5">
-                <div className="filter-nav d-flex align-items-center gap-2" style={{cursor: 'pointer'}}>
+                <div
+                  className="filter-nav d-flex align-items-center gap-2"
+                  style={{ cursor: "pointer" }}
+                >
                   <img src={priceIcon} alt="" />
-                  <h6 className="filter-nav-title mb-0">
-                    Price
-                  </h6>
+                  <h6 className="filter-nav-title mb-0">Price</h6>
                 </div>
-                <div className="filter-nav d-flex align-items-center gap-2" onClick={() => setOpenTraits(true)} style={{cursor: 'pointer'}}>
+                <div
+                  className="filter-nav d-flex align-items-center gap-2"
+                  onClick={() => setOpenTraits(true)}
+                  style={{ cursor: "pointer" }}
+                >
                   <img src={traitIcon} alt="" />
-                  <h6 className="filter-nav-title mb-0">
-                    Traits
-                  </h6>
+                  <h6 className="filter-nav-title mb-0">Traits</h6>
                 </div>
               </div>
             </div>
@@ -435,6 +442,16 @@ const CawsNFT = ({
                               nft.buyer?.toLowerCase() ===
                                 coinbase?.toLowerCase(),
                             chain: nft.chain,
+                            isFavorite:
+                            favorites.length > 0
+                              ? favorites.find(
+                                  (obj) =>
+                                    obj.nftAddress === nft.nftAddress &&
+                                    obj.tokenId === nft.tokenId
+                                )
+                                ? true
+                                : false
+                              : false,
                           }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
