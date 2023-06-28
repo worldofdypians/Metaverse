@@ -99,3 +99,22 @@ letter-spacing: -0.18px;
     max-height: 65vh;
     overflow-y: scroll;
 }
+
+.collection-desc{
+    color: #FFF;
+font-size: 16px;
+letter-spacing: 0.48px;
+}
+
+.filters-container{
+    border-radius: 20px;
+background: rgba(37, 39, 67, 0.45);
+box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
+backdrop-filter: blur(13.380000114440918px);
+}
+
+.filter-nav-title{
+    font-size: 16px;
+font-weight: 500;
+color: rgba(238, 237, 255, 1);
+}
