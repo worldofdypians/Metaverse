@@ -16,6 +16,11 @@ import OutsideClickHandler from "react-outside-click-handler";
 import traitIcon from "./assets/traitIcon.svg";
 import priceIcon from "./assets/priceIcon.svg";
 import filterIcon from "./assets/filterIcon.svg";
+import ethIcon from "./assets/ethIcon.svg";
+import dypIcon from "./assets/dypIcon.svg";
+import emptyCheck from "./assets/emptyCheck.svg";
+import fullCheck from "./assets/fullCheck.svg";
+import FilterCard from "./FilterCard";
 
 const CawsNFT = ({
   isConnected,
@@ -325,7 +330,7 @@ const CawsNFT = ({
               </div>
             </div>
             <div
-              className="filters-container d-flex align-items-center justify-content-between mt-4 p-3 position-relative"
+              className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
               style={{ zIndex: 2 }}
             >
               <div class="dropdown" style={{ width: "200px" }}>
@@ -346,29 +351,11 @@ const CawsNFT = ({
                   <li
                     className="nft-dropdown-item"
                     onClick={() => {
-                      setFilterTitle("Price low to high");
-                      sortNfts("lth");
-                    }}
-                  >
-                    <span>Price low to high</span>
-                  </li>
-                  <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
-                      setFilterTitle("Price high to low");
-                      sortNfts("htl");
-                    }}
-                  >
-                    <span>Price high to low</span>
-                  </li>
-                  <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
                       setFilterTitle("Oldest to newest");
                       sortNfts("otl");
                     }}
                   >
-                    <span>Oldest to newest</span>
+                    <span>Recently listed</span>
                   </li>
                   <li
                     className="nft-dropdown-item"
@@ -377,9 +364,9 @@ const CawsNFT = ({
                       sortNfts("lto");
                     }}
                   >
-                    <span>Newest To Oldest</span>
+                    <span>Recently sold</span>
                   </li>
-                  <li
+                  {/* <li
                     className="nft-dropdown-item"
                     onClick={() => {
                       setFilterTitle("Price: ETH");
@@ -396,7 +383,27 @@ const CawsNFT = ({
                     }}
                   >
                     <span>Price: DYP</span>
-                  </li>
+                  </li> */}
+                  <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
+                    <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-3">
+                      <img
+                        src={emptyCheck}
+                        alt=""
+                        className="collection-price-check"
+                      />
+                      <img src={ethIcon} width={12} height={12} alt="" />
+                      <span className="collection-price-span mb-0">ETH</span>
+                    </div>
+                    <div className="collection-price position-relative d-flex align-items-center gap-1 py-1 px-3">
+                      <img
+                        src={emptyCheck}
+                        alt=""
+                        className="collection-price-check"
+                      />
+                      <img src={dypIcon} width={12} height={12} alt="" />
+                      <span className="collection-price-span mb-0">DYP</span>
+                    </div>
+                  </div>
                 </ul>
               </div>
               <div className="d-flex align-items-center gap-5">
@@ -566,362 +573,15 @@ const CawsNFT = ({
           </div>
           <span className="filters-divider my-4"></span>
           <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 0 && "d-none"
-            }`}
+            className={`row align-items-center traits-wrapper `}
             style={{ rowGap: "20px" }}
           >
-            {Object.values(filters)[0] &&
+            {Object.values(filters)[categoryIndex] &&
               Object.values(filters) &&
-              Object.entries(Object.values(filters)[0]).map(
+              Object.entries(Object.values(filters)[categoryIndex]).map(
                 ([key, value], i) => (
                   // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[0][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 1 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[1] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[1]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[1][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 2 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[2] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[2]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[2][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 3 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[3] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[3]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[3][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 4 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[4] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[4]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[4][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 5 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[5] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[5]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[5][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 6 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[6] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[6]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[6][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 7 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[7] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[7]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[7][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 8 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[8] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[8]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[8][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-          <div
-            className={`row align-items-center traits-wrapper ${
-              categoryIndex !== 9 && "d-none"
-            }`}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[9] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[9]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
-                    <div className="trait-wrapper d-flex align-items-center justify-content-between  px-2">
-                      <div className="d-flex align-items-center">
-                        <Checkbox
-                          onChange={() =>
-                            addProducts({
-                              key: Object.entries(filters)[9][0],
-                              value: key,
-                            })
-                          }
-                          sx={{
-                            color: "#8E97CD",
-                            "&.Mui-checked": {
-                              color: "#82DAAB",
-                            },
-                          }}
-                        />
-                        <span className="trait-title mb-0">{key}</span>
-                      </div>
-                      <span className="trait-amount mb-0">{value}</span>
-                    </div>
-                  </div>
+                  <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} />
                 )
               )}
           </div>
