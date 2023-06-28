@@ -29,6 +29,7 @@ const CawsNFT = ({
   coinbase,
   ethTokenData,
   dypTokenData,
+  cawsBought,
 }) => {
   const override = {
     display: "block",
@@ -55,6 +56,8 @@ const CawsNFT = ({
   const [openTraits, setOpenTraits] = useState(false);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState([]);
+
+  
 
   const addProducts = (product) => {
     let testarr = selectedFilters;
@@ -127,10 +130,9 @@ const CawsNFT = ({
     const cawsnew = await getCawsNfts().catch((e) => {
       console.error(e);
     });
-    const cawsold = await getCawsOldNfts().catch((e) => {
-      console.error(e);
-    });
-    const cawsArray = [...cawsnew, ...cawsold];
+
+    const cawsArray = [...cawsnew, ...cawsBought];
+    
 
     if (cawsArray && cawsArray.length > 0) {
       let datedNfts = cawsArray.map((nft) => {
@@ -231,7 +233,7 @@ const CawsNFT = ({
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
-    console.log(wrappedElement);
+
     if (wrappedElement) {
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
@@ -286,13 +288,15 @@ const CawsNFT = ({
   // console.log(filters);
 
   return (
-    <>
+    <div
+      id="header"
+      onScroll={onScroll}
+      ref={listInnerRef}
+      style={{ overflow: "scroll" }}
+    >
       <div
         className="container-fluid d-flex justify-content-end p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
-        id="header"
-        onScroll={onScroll}
-        ref={listInnerRef}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
@@ -449,16 +453,6 @@ const CawsNFT = ({
                               nft.buyer?.toLowerCase() ===
                                 coinbase?.toLowerCase(),
                             chain: nft.chain,
-                            isFavorite:
-                            favorites.length > 0
-                              ? favorites.find(
-                                  (obj) =>
-                                    obj.nftAddress === nft.nftAddress &&
-                                    obj.tokenId === nft.tokenId
-                                )
-                                ? true
-                                : false
-                              : false,
                           }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
@@ -475,18 +469,7 @@ const CawsNFT = ({
                             isTimepiece={false}
                             isWod={false}
                             coinbase={coinbase}
-                            isFavorite={
-                              favorites.length > 0
-                                ? favorites.find(
-                                    (obj) =>
-                                      obj.nftAddress === nft.nftAddress &&
-                                      obj.tokenId === nft.tokenId
-                                  )
-                                  ? true
-                                  : false
-                                : false
-                            }
-                            onFavorite={updateFavs}
+                            lastSale={nft.buyer ? true : false}
                           />
                         </NavLink>
                       ))}
@@ -581,13 +564,20 @@ const CawsNFT = ({
               Object.entries(Object.values(filters)[categoryIndex]).map(
                 ([key, value], i) => (
                   // <span key={i}>{key} ({value})</span>
-                  <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} />
+                  <FilterCard
+                    title={key}
+                    value={value}
+                    categoryIndex={categoryIndex}
+                    filters={filters}
+                    addProducts={addProducts}
+                    selectedFilters={selectedFilters}
+                  />
                 )
               )}
           </div>
         </div>
       </OutsideClickHandler>
-    </>
+    </div>
   );
 };
 

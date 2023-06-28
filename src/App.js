@@ -120,6 +120,10 @@ function App() {
   const [nftCount, setNftCount] = useState(1);
   const [dypTokenData, setDypTokenData] = useState();
   const [ethTokenData, setEthTokenData] = useState();
+  const [favorites, setFavorites] = useState([]);
+  const [cawsBought, setCawsBought] = useState([]);
+  const [timepieceBought, setTimepieceBought] = useState([]);
+  const [landBought, setLandBought] = useState([]);
 
   const getTokenData = async () => {
     await axios
@@ -774,7 +778,7 @@ function App() {
           nft.chain = 1;
           finalboughtItems2.push(nft);
         }
-      }); 
+      });
     setLatest20RecentListedNFTS(finalboughtItems2);
   };
 
@@ -886,7 +890,72 @@ function App() {
 
       setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
     });
+  };
 
+  async function fetchUserFavorites(userId) {
+    if (userId !== undefined && userId !== null) {
+      try {
+        const response = await fetch(
+          `https://api.worldofdypians.com/user-favorites/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching user favorites");
+        }
+        const data = await response.json();
+        console.log(data.favorites);
+
+        setFavorites(data.favorites);
+        return data.favorites;
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+        throw error;
+      }
+    }
+  }
+
+  const getCawsSold = async () => {
+    const allSold = await getLatest20BoughtNFTS();
+
+    if (allSold && allSold.length > 0) {
+      let cawsFilter = allSold.filter(
+        (item) => item.nftAddress === window.config.nft_caws_address
+      );
+      let uniqueCaws = cawsFilter.filter(
+        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+      );
+
+
+      let wodFilter = allSold.filter(
+        (item) => item.nftAddress === window.config.nft_land_address
+      );
+      let uniqueWod = wodFilter.filter(
+        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+      );
+
+      let timepieceFilter = allSold.filter(
+        (item) => item.nftAddress === window.config.nft_timepiece_address
+      );
+
+
+      let uniqueTimepiece = timepieceFilter.filter(
+        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+      );
+      
+      setCawsBought(uniqueCaws);
+      setLandBought(uniqueWod);
+      setTimepieceBought(uniqueTimepiece);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserFavorites(coinbase);
+    // filterByDate("day")
+  }, [coinbase, nftCount]);
+
+  useEffect(() => {
+    getTokenData();
+    getListedNfts2();
+    getCawsSold();
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
 
     getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
@@ -895,16 +964,11 @@ function App() {
     getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
       settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
     );
-  };
-
-  useEffect(() => {
-    getTokenData();
-    getListedNfts2();
   }, [nftCount]);
 
   useEffect(() => {
     getListedNfts2();
-  }, [recentListedNFTS2?.length, listedNFTS2?.length]);
+  }, [recentListedNFTS2?.length, listedNFTS2?.length, nftCount]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -912,7 +976,7 @@ function App() {
       getallNfts();
     }, 3000);
     return () => clearInterval(interval);
-  }, [recentListedNFTS2?.length, listedNFTS2?.length]);
+  }, [recentListedNFTS2?.length, listedNFTS2?.length, nftCount]);
 
   // useEffect(() => {
   //   if (window.ethereum) {
@@ -961,6 +1025,7 @@ function App() {
                     handleSwitchChain={handleSwitchChain}
                     handleRefreshListing={handleRefreshList}
                     nftCount={nftCount}
+                    favorites={favorites}
                   />
                 }
               />
@@ -1108,6 +1173,7 @@ function App() {
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
                     coinbase={coinbase}
+                    cawsBought={cawsBought}
                   />
                 }
               />
@@ -1122,6 +1188,7 @@ function App() {
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
                     coinbase={coinbase}
+                    landBought={landBought}
                   />
                 }
               />
@@ -1136,6 +1203,7 @@ function App() {
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
                     coinbase={coinbase}
+                    timepieceBought={timepieceBought}
                   />
                 }
               />

@@ -21,6 +21,9 @@ const ItemCard = ({
   dypTokenData,
   isFavorite,
   onFavorite,
+  // lastSold, 
+  // isLatestSale,
+  // isListed
 }) => {
   const [isOwner, setisOwner] = useState(false);
   const [IsApprove, setIsApprove] = useState(false);
@@ -337,7 +340,7 @@ const ItemCard = ({
         {(location.pathname.includes("/marketplace/caws") ||
           location.pathname.includes("/marketplace/wod") ||
           location.pathname.includes("/marketplace/timepiece")) &&
-          nft.price !== undefined && (
+          nft.price !== undefined   && (
             <div className="buy-nft w-100">
               <button
                 className="buy-nft-btn w-100"
@@ -370,7 +373,7 @@ const ItemCard = ({
         {(location.pathname.includes("/marketplace/caws") ||
           location.pathname.includes("/marketplace/wod") ||
           location.pathname.includes("/marketplace/timepiece")) &&
-          !nft.price && (
+         !nft?.price && (
             <div className="buy-nft w-100">
               <button
                 className="view-nft-btn w-100"

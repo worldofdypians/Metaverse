@@ -16,6 +16,7 @@ const TimepieceNFT = ({
   coinbase,
   ethTokenData,
   dypTokenData,
+  timepieceBought,
 }) => {
   const override = {
     display: "block",
@@ -29,8 +30,7 @@ const TimepieceNFT = ({
   const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [timepieceNFTS, setTimepieceNFTS] = useState([]);
-  const [favItems, setfavItems] = useState(0);
-  const [favorites, setFavorites] = useState([]);
+
   const [next, setNext] = useState(0);
   const [paginatedData, setpaginatedData] = useState([]);
   const [finalData, setfinalData] = useState([]);
@@ -39,6 +39,8 @@ const TimepieceNFT = ({
   const listInnerRef = useRef();
   const nftsPerRow = 18;
   const allTimepiece = 256;
+
+  // console.log(timepieceBought)
 
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -73,6 +75,55 @@ const TimepieceNFT = ({
       setTimepieceNFTS(eth);
     }
   };
+
+  // const getListedTimepiece = async () => {
+  //   const timepiece = await getTimepieceNfts().catch((e) => {
+  //     console.error(e);
+  //   });
+  //   console.log(timepieceBought);
+  //   const timepieceArray = [...timepiece, ...timepieceBought];
+  //   const timepieceArray2 = [...timepiece];
+
+  //   let uniqueTimepiece = timepieceArray.filter(
+  //     (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+  //   );
+
+  //   if (uniqueTimepiece && uniqueTimepiece.length > 0) {
+  //     let datedNfts = uniqueTimepiece.map((nft, index) => {
+        
+  //       if (nft.tokenId == timepieceArray2[index]?.tokenId) {
+  //         let date = new Date(nft?.blockTimestamp * 1000);
+
+  //         return {
+  //           ...nft,
+  //           date: date,
+  //           isListed: true,
+  //           isLatestSale: true,
+  //           LastSold: timepieceArray2[index]?.price,
+  //         };
+  //       } else if (
+  //         nft.tokenId != timepieceArray2[index]?.tokenId &&
+  //         nft?.buyer
+  //       ) {
+  //         let date = new Date(nft?.blockTimestamp * 1000);
+
+  //         return {
+  //           ...nft,
+  //           date: date,
+  //           isListed: false,
+  //           isLatestSale: true,
+  //           LastSold: nft?.price,
+  //         };
+  //       }
+  //     });
+
+  //     // console.log(datedNfts);
+
+  //     setAlltimepiece(datedNfts);
+      
+
+  //   }
+  // };
 
   const getListedTimepiece = async () => {
     const timepiece = await getTimepieceNfts().catch((e) => {
@@ -111,6 +162,7 @@ const TimepieceNFT = ({
         tokenId: i.toString(),
         type: "timepiece",
         chain: 1,
+        isListed: false,
       });
     }
     const finaldata = [...paginatedArray, ...finalArray];
@@ -122,45 +174,18 @@ const TimepieceNFT = ({
   };
 
   const fetchInitialTimepiece = async () => {
-    const timepieceArray = alltimepieceNfts;
-
     const collectionItems = finalData;
 
     const uniqueArray = collectionItems.filter(
       ({ tokenId: id1 }) =>
-        !timepieceArray.some(({ tokenId: id2 }) => id2 === id1)
+        !alltimepieceNfts.some(({ tokenId: id2 }) => id2 === id1)
     );
 
-    const finalUnique = [...timepieceArray, ...uniqueArray];
+    const finalUnique = [...alltimepieceNfts, ...uniqueArray];
 
     setTimepieceNFTS(finalUnique);
     setInitialNfts(finalUnique);
     setLoading(false);
-  };
-
-  async function fetchUserFavorites(userId) {
-    if (userId !== undefined && userId !== null) {
-      try {
-        const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`
-        );
-        if (!response.ok) {
-          throw new Error("Error fetching user favorites");
-        }
-        const data = await response.json();
-        // console.log(data.favorites);
-
-        setFavorites(data.favorites);
-        return data.favorites;
-      } catch (error) {
-        console.error("Error fetching user favorites:", error);
-        throw error;
-      }
-    }
-  }
-
-  const updateFavs = () => {
-    setfavItems(favItems + 1);
   };
 
   async function updateViewCount(tokenId, nftAddress) {
@@ -205,17 +230,19 @@ const TimepieceNFT = ({
   });
 
   useEffect(() => {
-    fetchUserFavorites(coinbase);
-  }, [coinbase, favItems]);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
     getTimepieceCollection();
-    getListedTimepiece();
     document.title = "Timepiece NFT";
-
     fetchInitialTimepiece();
   }, []);
+
+  useEffect(() => {
+    if (timepieceBought) {
+      getListedTimepiece();
+    }
+  }, [timepieceBought]);
+
+
 
   useEffect(() => {
     getTimepieceCollection();
@@ -225,6 +252,7 @@ const TimepieceNFT = ({
     fetchInitialTimepiece();
   }, [paginatedData]);
 
+  
   useEffect(() => {
     if (timepieceNFTS && timepieceNFTS.length === 0) {
       setLoading(true);
@@ -348,16 +376,6 @@ const TimepieceNFT = ({
                             coinbase?.toLowerCase() ||
                           nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
                         chain: nft.chain,
-                        isFavorite:
-                            favorites.length > 0
-                              ? favorites.find(
-                                  (obj) =>
-                                    obj.nftAddress === nft.nftAddress &&
-                                    obj.tokenId === nft.tokenId
-                                )
-                                ? true
-                                : false
-                              : false,
                       }}
                       onClick={() => {
                         updateViewCount(nft.tokenId, nft.nftAddress);
@@ -373,18 +391,9 @@ const TimepieceNFT = ({
                         isTimepiece={true}
                         isWod={false}
                         coinbase={coinbase}
-                        isFavorite={
-                          favorites.length > 0
-                            ? favorites.find(
-                                (obj) =>
-                                  obj.nftAddress === nft.nftAddress &&
-                                  obj.tokenId === nft.tokenId
-                              )
-                              ? true
-                              : false
-                            : false
-                        }
-                        onFavorite={updateFavs}
+                        // lastSold={nft.LastSold}
+                        // isLatestSale={nft.isLatestSale}
+                        // isListed={nft.isListed}
                       />
                     </NavLink>
                   ))

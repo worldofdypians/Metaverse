@@ -69,7 +69,6 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
-  const [favorites, setFavorites] = useState([]);
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -286,11 +285,6 @@ const Marketplace = ({
     updateFavs();
   }, [nftCount]);
 
-  useEffect(() => {
-    fetchUserFavorites(coinbase);
-    // filterByDate("day")
-  }, [coinbase, favItems]);
-
   var today = moment();
   var hours = moment().subtract(1, "days");
   var week = moment().subtract(7, "days");
@@ -355,7 +349,7 @@ const Marketplace = ({
   }, [topSalesFilter, topSalesDate]);
 
   const filterRecentListings = (filter) => {
-    console.log(latest20RecentListedNFTS);
+    
     setLoadingRecentListings(true);
     if (filter === "caws") {
       setRecentListingsFilter("caws");
@@ -432,27 +426,6 @@ const Marketplace = ({
       );
     } catch (error) {
       console.error("Error updating view count:", error);
-    }
-  }
-
-  async function fetchUserFavorites(userId) {
-    if (userId !== undefined && userId !== null) {
-      try {
-        const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`
-        );
-        if (!response.ok) {
-          throw new Error("Error fetching user favorites");
-        }
-        const data = await response.json();
-        // console.log(data.favorites);
-
-        setFavorites(data.favorites);
-        return data.favorites;
-      } catch (error) {
-        console.error("Error fetching user favorites:", error);
-        throw error;
-      }
     }
   }
 
@@ -716,16 +689,6 @@ const Marketplace = ({
                             nft.buyer?.toLowerCase() ===
                             coinbase?.toLowerCase(),
                           chain: nft.chain,
-                          isFavorite:
-                            favorites.length > 0
-                              ? favorites.find(
-                                  (obj) =>
-                                    obj.nftAddress === nft.nftAddress &&
-                                    obj.tokenId === nft.tokenId
-                                )
-                                ? true
-                                : false
-                              : false,
                         }}
                         onClick={() => {
                           updateViewCount(nft.tokenId, nft.nftAddress);
@@ -906,16 +869,7 @@ const Marketplace = ({
                               nft.seller?.toLowerCase() ===
                               coinbase?.toLowerCase(),
                             chain: nft.chain,
-                            isFavorite:
-                              favorites.length > 0
-                                ? favorites.find(
-                                    (obj) =>
-                                      obj.nftAddress === nft.nftAddress &&
-                                      obj.tokenId === nft.tokenId
-                                  )
-                                  ? true
-                                  : false
-                                : false,
+                           
                           }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
@@ -932,18 +886,6 @@ const Marketplace = ({
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}
                             coinbase={coinbase}
-                            isFavorite={
-                              favorites.length > 0
-                                ? favorites.find(
-                                    (obj) =>
-                                      obj.nftAddress === nft.nftAddress &&
-                                      obj.tokenId === nft.tokenId
-                                  )
-                                  ? true
-                                  : false
-                                : false
-                            }
-                            onFavorite={updateFavs}
                           />
                         </NavLink>
                       ))}
@@ -1042,16 +984,7 @@ const Marketplace = ({
                               nft.buyer?.toLowerCase() ===
                               coinbase?.toLowerCase(),
                             chain: nft.chain,
-                            isFavorite:
-                              favorites.length > 0
-                                ? favorites.find(
-                                    (obj) =>
-                                      obj.nftAddress === nft.nftAddress &&
-                                      obj.tokenId === nft.tokenId
-                                  )
-                                  ? true
-                                  : false
-                                : false,
+                            
                           }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
@@ -1068,17 +1001,7 @@ const Marketplace = ({
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}
                             coinbase={coinbase}
-                            isFavorite={
-                              favorites.length > 0
-                                ? favorites.find(
-                                    (obj) =>
-                                      obj.nftAddress === nft.nftAddress &&
-                                      obj.tokenId === nft.tokenId
-                                  )
-                                  ? true
-                                  : false
-                                : false
-                            }
+                           
                             onFavorite={updateFavs}
                           />
                         </NavLink>
