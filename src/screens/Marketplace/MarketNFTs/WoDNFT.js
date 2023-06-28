@@ -215,6 +215,8 @@ const WoDNFT = ({
     getWodCollection();
     getListedWod();
     fetchInitialWod();
+    document.title = "Genesis Land NFT";
+
   }, []);
 
   useEffect(() => {

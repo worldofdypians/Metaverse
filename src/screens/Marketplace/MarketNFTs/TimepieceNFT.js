@@ -212,6 +212,8 @@ const TimepieceNFT = ({
     window.scrollTo(0, 0);
     getTimepieceCollection();
     getListedTimepiece();
+    document.title = "Timepiece NFT";
+
     fetchInitialTimepiece();
   }, []);
 

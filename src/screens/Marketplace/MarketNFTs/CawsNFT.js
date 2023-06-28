@@ -236,6 +236,7 @@ const CawsNFT = ({
     getListedCaws();
     fetchFilters();
     fetchInitialCaws();
+    document.title = "CAWS NFT";
   }, []);
 
   useEffect(() => {
