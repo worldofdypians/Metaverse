@@ -79,6 +79,8 @@ white-space: nowrap;
 .trait-wrapper{
     border-radius: 8px;
 background: #2F314D;
+border: 1px solid #2F314D;
+transform: border .25s;
 }
 
 .trait-title{
@@ -86,7 +88,30 @@ background: #2F314D;
 font-size: 10px;
 letter-spacing: -0.18px;
 text-transform: capitalize;
+transform: border .25s;
 }
+
+
+.trait-wrapper:hover{
+    border-radius: 8px;
+    border: 1px solid #50F9DF;
+    background: linear-gradient(180deg, rgba(178, 254, 151, 0.08) 0%, rgba(255, 255, 255, 0.00) 100%);
+    .trait-title{
+        color: rgba(80, 249, 223, 1);
+    }
+}
+
+
+.trait-wrapper-active{
+    border-radius: 8px;
+border: 1px solid #50F9DF;
+background: linear-gradient(180deg, rgba(178, 254, 151, 0.08) 0%, rgba(255, 255, 255, 0.00) 100%);
+.trait-title{
+    color: rgba(80, 249, 223, 1);
+}
+}
+
+
 
 .trait-amount{
     color: #50F9DF;
@@ -117,4 +142,36 @@ backdrop-filter: blur(13.380000114440918px);
     font-size: 16px;
 font-weight: 500;
 color: rgba(238, 237, 255, 1);
+}
+
+.collection-price{
+border-radius: 12px;
+border: 1px solid #43455D;
+background: #312A4D;
+cursor: pointer;
+transition: all .25s;
+}
+
+
+.collection-price:hover{
+border: 1px solid #11FED2;
+.collection-price-span{
+    color: rgba(238, 237, 255, 1);
+}
+}
+
+.collection-price-span{
+font-size: 14px;
+font-weight: 500;
+color: rgba(238, 237, 255, 1);
+}
+
+.collection-price-check{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -8px;
+    margin: auto;
 }

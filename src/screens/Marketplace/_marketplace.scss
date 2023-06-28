@@ -919,12 +919,13 @@
 }
 
 .nft-dropdown {
-  background: #252743;
+  background: #252743 !important;
   border-radius: 12px;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
   padding: 10px;
+  border: none !important;
 }
 
 .nft-dropdown:hover {
@@ -946,22 +947,17 @@
   cursor: pointer;
 
   span {
-    font-style: normal;
+    color: #EFEEFF;
+    font-size: 14px;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 20px;
-    color: #e2e2e2;
+    color: rgba(239, 238, 255, 1);
   }
 }
 
 .nft-dropdown-item:hover {
-  background: linear-gradient(
-    269.74deg,
-    rgba(255, 255, 255, 0.21) -254.09%,
-    rgba(255, 255, 255, 0) 99.84%
-  );
+background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0.00) 100%);
   span {
-    color: #8c56ff;
+    color: rgba(17, 254, 210, 1);
   }
 }
 
