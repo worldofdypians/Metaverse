@@ -23,7 +23,7 @@ const CawsNFT = ({
     borderColor: "#554fd8",
   };
   const windowSize = useWindowSize();
-  const nftsPerRow = 30;
+  const nftsPerRow = 18;
   const allCaws = 10000;
 
   const [loading, setLoading] = useState(false);
@@ -34,6 +34,9 @@ const CawsNFT = ({
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const [next, setNext] = useState(0);
+  const [paginatedData, setpaginatedData] = useState([]);
+  const [finalData, setfinalData] = useState([]);
+  const [allCawsNfts, setAllcaws] = useState([]);
 
   const listInnerRef = useRef();
 
@@ -71,9 +74,35 @@ const CawsNFT = ({
     }
   };
 
+  const getListedCaws = async () => {
+    const cawsnew = await getCawsNfts().catch((e) => {
+      console.error(e);
+    });
+    const cawsold = await getCawsOldNfts().catch((e) => {
+      console.error(e);
+    });
+    const cawsArray = [...cawsnew, ...cawsold];
+
+    if (cawsArray && cawsArray.length > 0) {
+      let datedNfts = cawsArray.map((nft) => {
+        let date = new Date(nft?.blockTimestamp * 1000);
+        return { ...nft, date: date };
+      });
+
+      setAllcaws(datedNfts);
+    }
+  };
+
   const getCawsCollection = async () => {
-    const finalArray = [];
-    for (let i = next; i < next + nftsPerRow; i++) {
+    let finalArray = [];
+    let paginatedArray = paginatedData;
+
+    console.log(next);
+    for (
+      let i = next;
+      i < nftsPerRow + next && next + nftsPerRow < allCaws;
+      i++
+    ) {
       const owner = await window.nft.ownerOf(i).catch((e) => {
         console.log(e);
       });
@@ -87,35 +116,24 @@ const CawsNFT = ({
       });
     }
 
-    // console.log("finalArray", finalArray);
+    const finaldata = [...paginatedArray, ...finalArray];
 
-    return finalArray;
+    setpaginatedData(finaldata);
+
+    setfinalData(finaldata);
+    return finaldata;
   };
 
   const fetchInitialCaws = async () => {
-    const cawsnew = await getCawsNfts();
-    const cawsold = await getCawsOldNfts();
-    const finalArray = [...cawsnew, ...cawsold];
-
-    const collectionItems = await getCawsCollection();
-    // console.log(collectionItems);
-    if (finalArray && finalArray.length > 0) {
-      let datedNfts = finalArray.map((nft) => {
-        let date = new Date(nft?.blockTimestamp * 1000);
-        return { ...nft, date: date };
-      });
-
-      const uniqueArray = collectionItems.filter(
-        ({ tokenId: id1 }) => !datedNfts.some(({ tokenId: id2 }) => id2 === id1)
-      );
-
-      const finalUnique = [...datedNfts, ...uniqueArray];
-      // console.log("finalUnique", finalUnique);
-
-      setCawsNFTS(finalUnique);
-      setInitialNfts(finalUnique);
-      setLoading(false);
-    }
+    const cawsArray = allCawsNfts;
+    const collectionItems = finalData;
+    const uniqueArray = collectionItems.filter(
+      ({ tokenId: id1 }) => !cawsArray.some(({ tokenId: id2 }) => id2 === id1)
+    );
+    const finalUnique = [...cawsArray, ...uniqueArray];
+    setCawsNFTS(finalUnique);
+    setInitialNfts(finalUnique);
+    setLoading(false);
   };
 
   async function fetchUserFavorites(userId) {
@@ -160,14 +178,11 @@ const CawsNFT = ({
   const loadMore = () => {
     setNext(next + nftsPerRow);
     setLoading(true);
-    getCawsCollection();
-    console.log("loaded");
   };
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
-    console.log(wrappedElement);
-
+    console.log(wrappedElement)
     if (wrappedElement) {
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
@@ -194,11 +209,18 @@ const CawsNFT = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getCawsCollection();
+    getListedCaws();
+    fetchInitialCaws();
   }, []);
 
   useEffect(() => {
-    fetchInitialCaws();
+    getCawsCollection();
   }, [next]);
+
+  useEffect(() => {
+    fetchInitialCaws();
+  }, [paginatedData]);
 
   useEffect(() => {
     if (cawsNFTS && cawsNFTS.length === 0) {
@@ -298,64 +320,83 @@ const CawsNFT = ({
               </ul>
             </div>
           </div>
-          <div className="d-flex align-items-center nft-page-wrapper p-4 gap-4 my-4">
-            <div
-              className={
-                loading === false || cawsNFTS.length > 0
-                  ? "item-cards-wrapper"
-                  : "loader-wrapper"
-              }
-            >
-              {cawsNFTS && cawsNFTS.length > 0 && (
-                <>
-                  {cawsNFTS.map((nft, index) => (
-                    <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                      style={{ textDecoration: "none" }}
-                      key={index}
-                      state={{
-                        nft: nft,
-                        type: nft.type,
-                        isOwner:
-                          nft.seller?.toLowerCase() ===
+          <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
+            <div className="d-flex align-items-center p-4 gap-4">
+              <div
+                className={
+                  loading === false || cawsNFTS.length > 0
+                    ? "item-cards-wrapper"
+                    : "loader-wrapper"
+                }
+              >
+                {cawsNFTS && cawsNFTS.length > 0 ? (
+                  <>
+                    {cawsNFTS.map((nft, index) => (
+                      <NavLink
+                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                        state={{
+                          nft: nft,
+                          type: nft.type,
+                          isOwner:
+                            nft.seller?.toLowerCase() ===
                             coinbase?.toLowerCase() ||
-                          nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                        chain: nft.chain,
-                      }}
-                      onClick={() => {
-                        updateViewCount(nft.tokenId, nft.nftAddress);
-                      }}
-                    >
-                      <ItemCard
-                        ethTokenData={ethTokenData}
-                        dypTokenData={dypTokenData}
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={true}
-                        isTimepiece={false}
-                        isWod={false}
-                        coinbase={coinbase}
-                        isFavorite={
-                          favorites.length > 0
-                            ? favorites.find(
+                            nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
+                          chain: nft.chain,
+                        }}
+                        onClick={() => {
+                          updateViewCount(nft.tokenId, nft.nftAddress);
+                        }}
+                      >
+                        <ItemCard
+                          ethTokenData={ethTokenData}
+                          dypTokenData={dypTokenData}
+                          key={nft.id}
+                          nft={nft}
+                          isConnected={isConnected}
+                          showConnectWallet={handleConnect}
+                          isCaws={true}
+                          isTimepiece={false}
+                          isWod={false}
+                          coinbase={coinbase}
+                          isFavorite={
+                            favorites.length > 0
+                              ? favorites.find(
                                 (obj) =>
                                   obj.nftAddress === nft.nftAddress &&
                                   obj.tokenId === nft.tokenId
                               )
-                              ? true
+                                ? true
+                                : false
                               : false
-                            : false
-                        }
-                        onFavorite={updateFavs}
-                      />
-                    </NavLink>
-                  ))}
-                </>
-              )}
+                          }
+                          onFavorite={updateFavs}
+                        />
+                      </NavLink>
+                    ))}
+                  </>
+                ) : (
+                  <HashLoader
+                    color={"#554fd8"}
+                    loading={loading}
+                    cssOverride={override}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                )}
+              </div>
+            </div>
 
-              {loading === true && (
+            <div className="d-flex justify-content-center w-100">
+              {!loading && next < allCaws ? (
+                <button
+                  className="btn py-2 px-3 nft-load-more-btn"
+                  onClick={() => loadMore()}
+                >
+                  Load more
+                </button>
+              ) : loading && next < allCaws && cawsNFTS.length > 0 ? (
                 <HashLoader
                   color={"#554fd8"}
                   loading={loading}
@@ -363,19 +404,11 @@ const CawsNFT = ({
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
+              ) : (
+                <></>
               )}
             </div>
-          </div>
-          {!loading && next < allCaws && (
-            <div className="d-flex justify-content-center w-100">
-              <button
-                className="btn py-2 px-3 nft-load-more-btn"
-                onClick={() => loadMore()}
-              >
-                Load more
-              </button>
             </div>
-          )}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const URL =
-  "https://api.studio.thegraph.com/query/46190/marketplace-dypius/v0.0.1";
+  "https://api.studio.thegraph.com/query/46190/dypius-marketplace/version/latest";
 
 const itemListedQuery = (
   sort = "",
