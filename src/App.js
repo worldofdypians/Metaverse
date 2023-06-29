@@ -1188,7 +1188,7 @@ function App() {
                     handleConnect={handleShowWalletModal}
                     listedNFTS={listedNFTS}
                     coinbase={coinbase}
-                    landBought={landBought}
+                    wodBought={landBought}
                   />
                 }
               />

@@ -45,8 +45,7 @@ const CawsNFT = ({
   const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [cawsNFTS, setCawsNFTS] = useState([]);
-  const [favItems, setfavItems] = useState(0);
-  const [favorites, setFavorites] = useState([]);
+
   const [next, setNext] = useState(0);
   const [filters, setFilters] = useState([]);
   const [paginatedData, setpaginatedData] = useState([]);
@@ -56,8 +55,6 @@ const CawsNFT = ({
   const [openTraits, setOpenTraits] = useState(false);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState([]);
-
-  
 
   const addProducts = (product) => {
     let testarr = selectedFilters;
@@ -127,17 +124,42 @@ const CawsNFT = ({
   };
 
   const getListedCaws = async () => {
-    const cawsnew = await getCawsNfts().catch((e) => {
+    const caws = await getCawsNfts().catch((e) => {
       console.error(e);
     });
 
-    const cawsArray = [...cawsnew, ...cawsBought];
-    
+    const cawsArray = [...caws, ...cawsBought];
+    const cawsArray2 = [...caws];
 
-    if (cawsArray && cawsArray.length > 0) {
-      let datedNfts = cawsArray.map((nft) => {
-        let date = new Date(nft?.blockTimestamp * 1000);
-        return { ...nft, date: date };
+    let uniquecaws = cawsArray.filter(
+      (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+    );
+
+    if (uniquecaws && uniquecaws.length > 0) {
+      let datedNfts = uniquecaws.map((nft, index) => {
+        if (nft.tokenId == cawsArray2[index]?.tokenId) {
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: true,
+            isLatestSale: true,
+            LastSold: cawsArray2[index]?.price,
+            soldPriceType: cawsArray2[index]?.payment_priceType,
+          };
+        } else if (nft.tokenId != cawsArray2[index]?.tokenId && nft?.buyer) {
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: false,
+            isLatestSale: true,
+            LastSold: nft?.price,
+            soldPriceType: nft.payment_priceType,
+          };
+        }
       });
 
       setAllcaws(datedNfts);
@@ -148,7 +170,6 @@ const CawsNFT = ({
     let finalArray = [];
     let paginatedArray = paginatedData;
 
-    console.log(next);
     for (
       let i = next;
       i < nftsPerRow + next && next + nftsPerRow < allCaws;
@@ -176,37 +197,15 @@ const CawsNFT = ({
   };
 
   const fetchInitialCaws = async () => {
-    const cawsArray = allCawsNfts;
     const collectionItems = finalData;
     const uniqueArray = collectionItems.filter(
-      ({ tokenId: id1 }) => !cawsArray.some(({ tokenId: id2 }) => id2 === id1)
+      ({ tokenId: id1 }) => !allCawsNfts.some(({ tokenId: id2 }) => id2 === id1)
     );
-    const finalUnique = [...cawsArray, ...uniqueArray];
+    const finalUnique = [...allCawsNfts, ...uniqueArray];
     setCawsNFTS(finalUnique);
     setInitialNfts(finalUnique);
     setLoading(false);
   };
-
-  async function fetchUserFavorites(userId) {
-    if (userId !== undefined && userId !== null) {
-      try {
-        const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`
-        );
-        if (!response.ok) {
-          throw new Error("Error fetching user favorites");
-        }
-        const data = await response.json();
-        // console.log(data.favorites);
-
-        setFavorites(data.favorites);
-        return data.favorites;
-      } catch (error) {
-        console.error("Error fetching user favorites:", error);
-        throw error;
-      }
-    }
-  }
 
   async function updateViewCount(tokenId, nftAddress) {
     try {
@@ -246,35 +245,32 @@ const CawsNFT = ({
     }
   };
 
-  const updateFavs = () => {
-    setfavItems(favItems + 1);
-  };
-
   useEffect(() => {
     document.addEventListener("scroll", onScroll);
   });
 
   useEffect(() => {
-    fetchUserFavorites(coinbase);
-  }, [coinbase, favItems]);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
     getCawsCollection();
-    getListedCaws();
     fetchFilters();
-    fetchInitialCaws();
     document.title = "CAWS NFT";
   }, []);
+
+  useEffect(() => {
+    if (cawsBought) {
+      getListedCaws();
+    }
+  }, [cawsBought]);
 
   useEffect(() => {
     getCawsCollection();
   }, [next]);
 
   useEffect(() => {
-    fetchInitialCaws();
-  }, [paginatedData]);
-
+    if (cawsBought && allCawsNfts.length > 0 && finalData.length > 0) {
+      fetchInitialCaws();
+    }
+  }, [allCawsNfts.length, finalData.length, cawsBought]);
   useEffect(() => {
     if (cawsNFTS && cawsNFTS.length === 0) {
       setLoading(true);
@@ -470,6 +466,10 @@ const CawsNFT = ({
                             isWod={false}
                             coinbase={coinbase}
                             lastSale={nft.buyer ? true : false}
+                            lastSold={nft.LastSold}
+                            isLatestSale={nft.isLatestSale}
+                            isListed={nft.isListed}
+                            soldPriceType={nft.soldPriceType}
                           />
                         </NavLink>
                       ))}

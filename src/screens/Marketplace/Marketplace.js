@@ -886,6 +886,7 @@ const Marketplace = ({
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}
                             coinbase={coinbase}
+                            isListed={true}
                           />
                         </NavLink>
                       ))}
@@ -1001,7 +1002,7 @@ const Marketplace = ({
                             isTimepiece={nft.type === "timepiece"}
                             isWod={nft.type === "land"}
                             coinbase={coinbase}
-                           
+                            isListed={true}
                             onFavorite={updateFavs}
                           />
                         </NavLink>

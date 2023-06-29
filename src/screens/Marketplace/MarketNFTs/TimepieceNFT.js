@@ -76,66 +76,46 @@ const TimepieceNFT = ({
     }
   };
 
-  // const getListedTimepiece = async () => {
-  //   const timepiece = await getTimepieceNfts().catch((e) => {
-  //     console.error(e);
-  //   });
-  //   console.log(timepieceBought);
-  //   const timepieceArray = [...timepiece, ...timepieceBought];
-  //   const timepieceArray2 = [...timepiece];
-
-  //   let uniqueTimepiece = timepieceArray.filter(
-  //     (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
-  //   );
-
-  //   if (uniqueTimepiece && uniqueTimepiece.length > 0) {
-  //     let datedNfts = uniqueTimepiece.map((nft, index) => {
-        
-  //       if (nft.tokenId == timepieceArray2[index]?.tokenId) {
-  //         let date = new Date(nft?.blockTimestamp * 1000);
-
-  //         return {
-  //           ...nft,
-  //           date: date,
-  //           isListed: true,
-  //           isLatestSale: true,
-  //           LastSold: timepieceArray2[index]?.price,
-  //         };
-  //       } else if (
-  //         nft.tokenId != timepieceArray2[index]?.tokenId &&
-  //         nft?.buyer
-  //       ) {
-  //         let date = new Date(nft?.blockTimestamp * 1000);
-
-  //         return {
-  //           ...nft,
-  //           date: date,
-  //           isListed: false,
-  //           isLatestSale: true,
-  //           LastSold: nft?.price,
-  //         };
-  //       }
-  //     });
-
-  //     // console.log(datedNfts);
-
-  //     setAlltimepiece(datedNfts);
-      
-
-  //   }
-  // };
-
   const getListedTimepiece = async () => {
     const timepiece = await getTimepieceNfts().catch((e) => {
       console.error(e);
     });
 
-    const timepieceArray = [...timepiece];
+    const timepieceArray = [...timepiece, ...timepieceBought];
+    const timepieceArray2 = [...timepiece];
 
-    if (timepieceArray && timepieceArray.length > 0) {
-      let datedNfts = timepieceArray.map((nft) => {
-        let date = new Date(nft?.blockTimestamp * 1000);
-        return { ...nft, date: date };
+    let uniqueTimepiece = timepieceArray.filter(
+      (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+    );
+
+    if (uniqueTimepiece && uniqueTimepiece.length > 0) {
+      let datedNfts = uniqueTimepiece.map((nft, index) => {
+        if (nft.tokenId == timepieceArray2[index]?.tokenId) {
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: true,
+            isLatestSale: true,
+            LastSold: timepieceArray2[index]?.price,
+            soldPriceType: timepieceArray2[index]?.payment_priceType,
+          };
+        } else if (
+          nft.tokenId != timepieceArray2[index]?.tokenId &&
+          nft?.buyer
+        ) {
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: false,
+            isLatestSale: true,
+            LastSold: nft?.price,
+            soldPriceType: nft.payment_priceType,
+          };
+        }
       });
 
       setAlltimepiece(datedNfts);
@@ -146,7 +126,6 @@ const TimepieceNFT = ({
     let finalArray = [];
     let paginatedArray = paginatedData;
 
-    console.log(next);
     for (
       let i = next;
       i < next + nftsPerRow && next + nftsPerRow < allTimepiece;
@@ -233,7 +212,6 @@ const TimepieceNFT = ({
     window.scrollTo(0, 0);
     getTimepieceCollection();
     document.title = "Timepiece NFT";
-    fetchInitialTimepiece();
   }, []);
 
   useEffect(() => {
@@ -242,17 +220,20 @@ const TimepieceNFT = ({
     }
   }, [timepieceBought]);
 
-
+  useEffect(() => {
+    if (
+      timepieceBought &&
+      alltimepieceNfts.length > 0 &&
+      finalData.length > 0
+    ) {
+      fetchInitialTimepiece();
+    }
+  }, [alltimepieceNfts.length, finalData.length, timepieceBought]);
 
   useEffect(() => {
     getTimepieceCollection();
   }, [next]);
 
-  useEffect(() => {
-    fetchInitialTimepiece();
-  }, [paginatedData]);
-
-  
   useEffect(() => {
     if (timepieceNFTS && timepieceNFTS.length === 0) {
       setLoading(true);
@@ -391,9 +372,10 @@ const TimepieceNFT = ({
                         isTimepiece={true}
                         isWod={false}
                         coinbase={coinbase}
-                        // lastSold={nft.LastSold}
-                        // isLatestSale={nft.isLatestSale}
-                        // isListed={nft.isListed}
+                        lastSold={nft.LastSold}
+                        isLatestSale={nft.isLatestSale}
+                        isListed={nft.isListed}
+                        soldPriceType={nft.soldPriceType}
                       />
                     </NavLink>
                   ))
