@@ -765,7 +765,8 @@ const SingleNft = ({
 
       <div className="container-nft pe-xxl-5 pe-lg-5 position-relative">
         <Toast showToast={showToast} title={toastTitle} />
-        <div className="main-wrapper py-4 w-100 mt-5 mt-xxl-0 mt-lg-0">
+       <div className="container-lg mx-0">
+       <div className="main-wrapper py-4 w-100 mt-5 mt-xxl-0 mt-lg-0">
           {type === "land" ? (
             <>
               <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -1691,6 +1692,7 @@ const SingleNft = ({
             </div>
           </div>
         </div>
+       </div>
       </div>
     </div>
   );

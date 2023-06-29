@@ -175,3 +175,48 @@ color: rgba(238, 237, 255, 1);
     left: -8px;
     margin: auto;
 }
+
+.selected-traits-wrapper{
+    flex-wrap: wrap;
+}
+
+.selected-trait-item{
+    border-radius: 8px;
+border: 1px solid rgba(239, 238, 255, 0.20);
+background: #252743;
+}
+
+.selected-trait-key{
+    color: #EEEDFF;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.selected-trait-value{
+    color: rgba(17, 254, 210, 1);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.clear-all-btn{
+    border-radius: 8px;
+border: 1px solid rgba(239, 238, 255, 0.40);
+background: #151735;
+color: #EEEDFF;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.clear-all-btn:hover{
+color: #EEEDFF;
+border: 1px solid rgba(239, 238, 255, 0.40);
+background: #151735;
+}

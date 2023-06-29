@@ -21,6 +21,7 @@ import dypIcon from "./assets/dypIcon.svg";
 import emptyCheck from "./assets/emptyCheck.svg";
 import fullCheck from "./assets/fullCheck.svg";
 import FilterCard from "./FilterCard";
+import traitXmark from './assets/traitXmark.svg'
 
 const CawsNFT = ({
   isConnected,
@@ -55,6 +56,7 @@ const CawsNFT = ({
   const [openTraits, setOpenTraits] = useState(false);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [count, setCount] = useState(0)
 
   const addProducts = (product) => {
     let testarr = selectedFilters;
@@ -64,7 +66,6 @@ const CawsNFT = ({
         firstIndex = index;
       }
     });
-    console.log(firstIndex, "Index");
     if (firstIndex !== null) {
       testarr.splice(firstIndex, 1);
       setSelectedFilters(testarr);
@@ -72,8 +73,14 @@ const CawsNFT = ({
       testarr.push(product);
       setSelectedFilters(testarr);
     }
-    console.log(selectedFilters);
+    setCount(count + 1)
   };
+
+  const removeTrait = (trait) => {
+   setSelectedFilters((current) => current.filter((item) => item.value !== trait))
+   setCount(count + 1)
+  }
+
   const fetchFilters = async () => {
     await axios
       .get(
@@ -155,6 +162,7 @@ const CawsNFT = ({
       const owner = await window.nft.ownerOf(i).catch((e) => {
         console.log(e);
       });
+      const attributes = await window.getNft(i)
 
       finalArray.push({
         nftAddress: window.config.nft_address,
@@ -162,7 +170,10 @@ const CawsNFT = ({
         tokenId: i.toString(),
         type: "caws",
         chain: 1,
+        attributes: attributes.attributes
+        
       });
+      console.log(finalArray, "finalarray")
     }
 
     const finaldata = [...paginatedArray, ...finalArray];
@@ -313,8 +324,7 @@ const CawsNFT = ({
                     like: <b>Exclusive Access</b> to new and exciting events,{" "}
                     <b>Enhanced Interactions</b> with available activities,{" "}
                     <b>Expanded Functionality</b> on performing new actions, and
-                    earn multiple
-                    <b>Rewards</b>.
+                    earn multiple <b>Rewards</b>.
                   </p>
                   <NavLink>
                     <button className="btn pill-btn">Explore</button>
@@ -424,6 +434,23 @@ const CawsNFT = ({
                 </div>
               </div>
             </div>
+                <div className="selected-traits-wrapper d-flex align-items-center my-4 gap-2">
+                 {selectedFilters.map((item, index) => (
+                   <div className="selected-trait-item d-flex align-items-center p-2 gap-4" key={index}>
+                   <div className="d-flex align-items-center gap-1">
+                     <span className="selected-trait-key">{item.key} :</span>
+                     <span className="selected-trait-value">{item.value}</span>
+                   </div>
+                     <img src={traitXmark} style={{cursor: 'pointer'}} onClick={() => removeTrait(item.value)} alt="" />
+                 </div>
+                 ))}
+                  {selectedFilters.length > 0 && 
+                  <button className="btn clear-all-btn p-2" onClick={() => {
+                    setSelectedFilters([])
+                    setCount(0)
+                  }}>Clear all</button>
+                  }
+                </div>
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
               <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
                 <div
@@ -549,7 +576,8 @@ const CawsNFT = ({
               className="clear-all mb-0"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                window.location.reload();
+                setSelectedFilters([]);
+                setCount(0)
               }}
             >
               Clear all
@@ -572,19 +600,177 @@ const CawsNFT = ({
               ))}
           </div>
           <span className="filters-divider my-4"></span>
-          <div
-            className={`row align-items-center traits-wrapper `}
-            style={{ rowGap: "20px" }}
-          >
-            {Object.values(filters)[categoryIndex] &&
-              Object.values(filters) &&
-              Object.entries(Object.values(filters)[categoryIndex]).map(
-                ([key, value], i) => (
-                  // <span key={i}>{key} ({value})</span>
-                  <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} />
-                )
-              )}
-          </div>
+         {categoryIndex === 0 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[0] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[0]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 1 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[1] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[1]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 2 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[2] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[2]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 3 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[3] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[3]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 4 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[4] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[4]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 5 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[5] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[5]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 6 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[6] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[6]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 7 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[7] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[7]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 8 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[8] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[8]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         {categoryIndex === 9 ? 
+         <div
+         className={`row align-items-center traits-wrapper `}
+         style={{ rowGap: "20px" }}
+       >
+         {Object.values(filters)[9] &&
+           Object.values(filters) &&
+           Object.entries(Object.values(filters)[9]).map(
+             ([key, value], i) => (
+               // <span key={i}>{key} ({value})</span>
+               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
+             )
+           )}
+       </div>
+       :
+       null 
+        }
+         
         </div>
       </OutsideClickHandler>
     </>
