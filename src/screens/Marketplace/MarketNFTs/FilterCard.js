@@ -6,15 +6,15 @@ const FilterCard = ({filters, categoryIndex, title, value, addProducts, selected
 
     const [selected, setSelected] = useState(false)
 
-    const isFound = selectedFilters.some(element => {
-      if(element.key === Object.entries(filters)[categoryIndex][0] && element.value === title){
-        return true
-      }
-      return false
-    })
+    // const isFound = selectedFilters[categoryIndex].value.some(element => {
+    //   if(element === title){
+    //     return true
+    //   }
+    //   return false
+    // })
 
     useEffect(() => {
-      if(isFound){
+      if(selectedFilters[categoryIndex]?.value?.includes(title)){
         setSelected(true)
       }else{
         setSelected(false)
@@ -30,10 +30,7 @@ const FilterCard = ({filters, categoryIndex, title, value, addProducts, selected
       style={{height: "40px", cursor: 'pointer'}}
       onClick={() =>{
 
-          addProducts({
-            key: Object.entries(filters)[categoryIndex][0],
-            value: title,
-          });
+          addProducts(title, categoryIndex);
           // setSelected(!selected)
       }
       }

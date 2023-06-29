@@ -11,10 +11,10 @@ import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import { useLocation } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
-import criticalHit from "./assets/criticalHit.webp";
-import goldenPass from "./assets/goldenPass.png";
-import puzzleMadness from "./assets/puzzleMadness.png";
-import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp";
+import criticalHit from "../Marketplace/MarketNFTs/assets/criticalHit2.webp";
+import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
+import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
+import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
 import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
 
 import DragonPopup from "../../components/PackagePopups/DragonPopup";

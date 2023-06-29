@@ -480,7 +480,7 @@ const Marketplace = ({
             </div>
             <div className="col-12 col-lg-5">
               <img
-                src={require("./assets/marketMain1.webp")}
+                src={require("./assets/marketMain2.webp")}
                 alt=""
                 className="market-main w-100"
               />

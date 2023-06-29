@@ -8,6 +8,19 @@ import dropdownIcon from "../assets/dropdownIcon.svg";
 import searchIcon from "../assets/search.svg";
 import { NavLink } from "react-router-dom";
 import { getWodNfts } from "../../../actions/convertUsd";
+import OutsideClickHandler from "react-outside-click-handler";
+import traitIcon from "./assets/traitIcon.svg";
+import priceIcon from "./assets/priceIcon.svg";
+import filterIcon from "./assets/filterIcon.svg";
+import ethIcon from "./assets/ethIcon.svg";
+import dypIcon from "./assets/dypIcon.svg";
+import emptyCheck from "./assets/emptyCheck.svg";
+import fullCheck from "./assets/fullCheck.svg";
+import FilterCard from "./FilterCard";
+import traitXmark from "./assets/traitXmark.svg";
+import filtersXmark from "./assets/filtersXmark.svg";
+import axios from "axios";
+
 
 const WoDNFT = ({
   isConnected,
@@ -36,10 +49,60 @@ const WoDNFT = ({
   const [paginatedData, setpaginatedData] = useState([]);
   const [finalData, setfinalData] = useState([]);
   const [allwodNfts, setAllwod] = useState([]);
+  const [openTraits, setOpenTraits] = useState(false)
+  const [filters, setFilters] = useState([])
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [count, setCount] = useState(0);
+  const [categoryIndex, setCategoryIndex] = useState(0)
+
 
   const listInnerRef = useRef();
   const nftsPerRow = 18;
   const allLandpiece = 999;
+
+
+  const addProducts = (product) => {
+    let testarr = selectedFilters;
+    let firstIndex = null;
+    testarr.map((item, index) => {
+      if (item.key === product.key && item.value === product.value) {
+        firstIndex = index;
+      }
+    });
+    if (firstIndex !== null) {
+      testarr.splice(firstIndex, 1);
+      setSelectedFilters(testarr);
+    } else {
+      testarr.push(product);
+      setSelectedFilters(testarr);
+    }
+    setCount(count + 1);
+
+  };
+
+  const fetchFilters = async () => {
+    await axios
+      .get(
+        "https://api.opensea.io/api/v1/collection/worldofdypians",
+        {
+          headers: {
+            "X-API-KEY": "b132fcc52ab540f0b13a319bf57b34f0",
+          },
+        }
+      )
+      .then((res) => {
+        setFilters(res.data.collection.traits);
+      });
+  };
+
+  const removeTrait = (trait) => {
+    setSelectedFilters((current) =>
+      current.filter((item) => item.value !== trait)
+    );
+    setCount(count + 1);
+  };
+
+
 
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -222,7 +285,9 @@ const WoDNFT = ({
   }, [allwodNfts.length, finalData.length, wodBought]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getWodCollection();
+    fetchFilters();
   }, [next]);
 
   useEffect(() => {
@@ -235,6 +300,7 @@ const WoDNFT = ({
   }, [landNfts]);
 
   return (
+    <>
     <div
       className="container-fluid d-flex justify-content-end p-0"
       style={{ minHeight: "72vh", maxWidth: "2400px" }}
@@ -245,80 +311,157 @@ const WoDNFT = ({
         className="container-nft  d-flex  align-items-start px-3 px-lg-5 position-relative"
         style={{ backgroundSize: "cover" }}
       >
-        <div className="container-lg mx-0">
-          <h6 className="nft-page-title font-raleway  pt-4 pt-lg-0 mt-5 mt-lg-4">
-            World of Dypians <span style={{ color: "#8c56ff" }}>Land</span>
-          </h6>
-          <div className="d-flex mt-5 mb-3 flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-start justify-content-lg-end">
-            <div class="dropdown" style={{ width: "200px" }}>
-              <button
-                class="btn btn-secondary nft-dropdown w-100
-                 d-flex align-items-center justify-content-between dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                {filterTitle}
-                <img src={dropdownIcon} alt="" />
-              </button>
-              <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Price low to high");
-                    sortNfts("lth");
-                  }}
-                >
-                  <span>Price low to high</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Price high to low");
-                    sortNfts("htl");
-                  }}
-                >
-                  <span>Price high to low</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Oldest to newest");
-                    sortNfts("otl");
-                  }}
-                >
-                  <span>Oldest to newest</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Newest To Oldest");
-                    sortNfts("lto");
-                  }}
-                >
-                  <span>Newest To Oldest</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Price: ETH");
-                    sortNfts("eth");
-                  }}
-                >
-                  <span>Price: ETH</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Price: DYP");
-                    sortNfts("dyp");
-                  }}
-                >
-                  <span>Price: DYP</span>
-                </li>
-              </ul>
+        <div className="container-lg mx-0 position-relative">
+          <div className="row align-items-center justify-content-between mt-4">
+            <div className="col-12 col-lg-6">
+              <div className="d-flex flex-column gap-3">
+                <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                  Genesis <span style={{ color: "#8c56ff" }}>Land</span>
+                </h6>
+                <p className="collection-desc">
+                  The Genesis Land offers <b>Access</b> to the metaverse, <b>Ownership</b> to
+                  land in WoD, participate on different <b>on-chain Events,</b> have a
+                  dedicated <b> NFT Staking Pool,</b> ranking on <b>Leaderboard</b>, and earn
+                  multiple <b>Rewards</b> by playing the game.
+                </p>
+                <NavLink>
+                  <button className="btn pill-btn">Explore</button>
+                </NavLink>
+              </div>
+            </div>
+            <div className="col-12 col-lg-4">
+              <img
+                src={require("./assets/landCollectionBanner.webp")}
+                className="w-100"
+                alt=""
+              />
             </div>
           </div>
+          <div
+              className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
+              style={{ zIndex: 2 }}
+            >
+              <div class="dropdown" style={{ width: "200px" }}>
+                <button
+                  class="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={filterIcon} alt="" />
+                    <h6 className="filter-nav-title mb-0">Filter</h6>
+                  </div>
+                  <img src={dropdownIcon} alt="" />
+                </button>
+                <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Oldest to newest");
+                      sortNfts("otl");
+                    }}
+                  >
+                    <span>Recently listed</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Newest To Oldest");
+                      sortNfts("lto");
+                    }}
+                  >
+                    <span>Recently sold</span>
+                  </li>
+                  {/* <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Price: ETH");
+                      sortNfts("eth");
+                    }}
+                  >
+                    <span>Price: ETH</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Price: DYP");
+                      sortNfts("dyp");
+                    }}
+                  >
+                    <span>Price: DYP</span>
+                  </li> */}
+                  <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
+                    <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-3">
+                      <img
+                        src={emptyCheck}
+                        alt=""
+                        className="collection-price-check"
+                      />
+                      <img src={ethIcon} width={12} height={12} alt="" />
+                      <span className="collection-price-span mb-0">ETH</span>
+                    </div>
+                    <div className="collection-price position-relative d-flex align-items-center gap-1 py-1 px-3">
+                      <img
+                        src={emptyCheck}
+                        alt=""
+                        className="collection-price-check"
+                      />
+                      <img src={dypIcon} width={12} height={12} alt="" />
+                      <span className="collection-price-span mb-0">DYP</span>
+                    </div>
+                  </div>
+                </ul>
+              </div>
+              <div className="d-flex align-items-center gap-5">
+                <div
+                  className="filter-nav d-flex align-items-center gap-2"
+                  style={{ cursor: "pointer" }}
+                >
+                  <img src={priceIcon} alt="" />
+                  <h6 className="filter-nav-title mb-0">Price</h6>
+                </div>
+                <div
+                  className="filter-nav d-flex align-items-center gap-2"
+                  onClick={() => setOpenTraits(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img src={traitIcon} alt="" />
+                  <h6 className="filter-nav-title mb-0">Traits</h6>
+                </div>
+              </div>
+            </div>
+            <div className="selected-traits-wrapper d-flex align-items-center my-4 gap-2">
+              {selectedFilters.map((item, index) => (
+                <div
+                  className="selected-trait-item d-flex align-items-center p-2 gap-4"
+                  key={index}
+                >
+                  <div className="d-flex align-items-center gap-1">
+                    <span className="selected-trait-key">{item.key} :</span>
+                    <span className="selected-trait-value">{item.value}</span>
+                  </div>
+                  <img
+                    src={traitXmark}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => removeTrait(item.value)}
+                    alt=""
+                  />
+                </div>
+              ))}
+              {selectedFilters.length > 0 && (
+                <button
+                  className="btn clear-all-btn p-2"
+                  onClick={() => {
+                    setSelectedFilters([]);
+                    setCount(0);
+                  }}
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
           <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
             <div
               className="d-flex align-items-center p-4 gap-4 justify-content-center"
@@ -406,6 +549,307 @@ const WoDNFT = ({
         </div>
       </div>
     </div>
+    <OutsideClickHandler onOutsideClick={() => setOpenTraits(false)}>
+    <div
+      className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xxl-5 ${
+        openTraits && "filters-active"
+      } p-4`}
+    >
+      <div className="d-flex align-items-center justify-content-between mb-4">
+        <h6 className="filters-title mb-0">Filters</h6>
+        <img
+          src={filtersXmark}
+          style={{ cursor: "pointer" }}
+          onClick={() => setOpenTraits(false)}
+          alt=""
+        />
+      </div>
+      <div className="d-flex align-items-center justify-content-between mb-4">
+        <span className="select-category mb-0">Select Category</span>
+        <span
+          className="clear-all mb-0"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            setSelectedFilters([]);
+            setCount(0);
+          }}
+        >
+          Clear all
+        </span>
+      </div>
+      <div className="filter-tabs d-flex align-items-center justify-content-start gap-4">
+        {filters &&
+          Object.entries(filters).map(([key, value], i) => (
+            <div
+              className={`filter-tab px-2 py-1 d-flex align-items-center ${
+                categoryIndex === i && "filter-tab-active"
+              }`}
+              onClick={() => setCategoryIndex(i)}
+              key={i}
+            >
+              <h6 className="filter-tab-title mb-0">
+                {key} ({Object.keys(value)?.length})
+              </h6>
+            </div>
+          ))}
+      </div>
+      <span className="filters-divider my-4"></span>
+      {categoryIndex === 0 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[0] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[0]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 1 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[1] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[1]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 2 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[2] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[2]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 3 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[3] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[3]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 4 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[4] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[4]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 5 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[5] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[5]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 6 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[6] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[6]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 7 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[7] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[7]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 8 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[8] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[8]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 9 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[9] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[9]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+      {categoryIndex === 10 ? (
+        <div
+          className={`row align-items-center traits-wrapper `}
+          style={{ rowGap: "20px" }}
+        >
+          {Object.values(filters)[10] &&
+            Object.values(filters) &&
+            Object.entries(Object.values(filters)[10]).map(
+              ([key, value], i) => (
+                // <span key={i}>{key} ({value})</span>
+                <FilterCard
+                  title={key}
+                  value={value}
+                  categoryIndex={categoryIndex}
+                  filters={filters}
+                  addProducts={addProducts}
+                  selectedFilters={selectedFilters}
+                  count={count}
+                />
+              )
+            )}
+        </div>
+      ) : null}
+    </div>
+  </OutsideClickHandler>
+    </>
   );
 };
 
