@@ -333,34 +333,31 @@ function Dashboard({
   const fetchAllMyNfts = async () => {
     if (data?.getPlayer?.wallet?.publicAddress || coinbase) {
       getMyNFTS(
-        data?.getPlayer?.wallet &&
-          email &&
-          coinbase &&
-          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+        email
+          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
             coinbase.toLowerCase()
-          ? data?.getPlayer?.wallet?.publicAddress
+            ? data?.getPlayer?.wallet?.publicAddress
+            : coinbase
           : coinbase,
         "caws"
       ).then((NFTS) => setMyNFTSCaws(NFTS));
 
       getMyNFTS(
-        data?.getPlayer?.wallet &&
-          email &&
-          coinbase &&
-          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+        email
+          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
             coinbase.toLowerCase()
-          ? data?.getPlayer?.wallet?.publicAddress
+            ? data?.getPlayer?.wallet?.publicAddress
+            : coinbase
           : coinbase,
         "timepiece"
       ).then((NFTS) => setMyNFTSTimepiece(NFTS));
 
       getMyNFTS(
-        data?.getPlayer?.wallet &&
-          email &&
-          coinbase &&
-          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+        email
+          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
             coinbase.toLowerCase()
-          ? data?.getPlayer?.wallet?.publicAddress
+            ? data?.getPlayer?.wallet?.publicAddress
+            : coinbase
           : coinbase,
         "land"
       ).then((NFTS) => setMyNFTSLand(NFTS));
@@ -698,12 +695,7 @@ function Dashboard({
   useEffect(() => {
     if (coinbase || (data?.getPlayer?.wallet?.publicAddress && email)) {
       setsyncStatus("initial");
-    }
-    fetchAllMyNfts();
-    // getTokens();
-    // getStakes();
-    // getLandStakes();
-    if (coinbase) {
+      fetchAllMyNfts();
       getmyCawsWodStakes();
       getmyWodStakes();
     }
