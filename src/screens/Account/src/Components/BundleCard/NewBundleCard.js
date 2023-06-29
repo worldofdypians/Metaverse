@@ -815,7 +815,7 @@ const windowSize = useWindowSize()
                     <div className="first-box-blur d-flex align-items-end justify-content-center"></div>
                     <div className="second-box-blur"></div>
                     <img
-                      src={require("./assets/newGenesis.png")}
+                      src={require("./assets/newGenesis.webp")}
                       alt=""
                       className="blur-img"
                     />

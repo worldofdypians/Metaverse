@@ -431,19 +431,19 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
         <>
           <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-4 d-flex align-items-center justify-content-around">
             <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">${abbreviateNumber(landtvl + cawslandTvl)}+</h6>
+              <h6 className="new-stake-info">${abbreviateNumber(landtvl + cawslandTvl)}</h6>
               <span className="new-stake-desc">
                 Total Value Locked (TVL)
               </span>
             </div>
             <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">{abbreviateNumber(totalLocked)}+</h6>
+              <h6 className="new-stake-info">{abbreviateNumber(totalLocked)}</h6>
               <span className="new-stake-desc">
                 Total Staked NFTs
               </span>
             </div>
             <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">${abbreviateNumber(totalRewards)}+</h6>
+              <h6 className="new-stake-info">${abbreviateNumber(totalRewards)}</h6>
               <span className="new-stake-desc">
                 Paid Rewards
               </span>
@@ -482,7 +482,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                   </div>
                   <div className="tvl-wrapper">
                     <h6 className="market-stake-tvl">
-                      ${abbreviateNumber(cawslandTvl)}+
+                      ${abbreviateNumber(cawslandTvl)}
                     </h6>
                   </div>
                 </div>
@@ -522,7 +522,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                     </div>
                     <div className="tvl-wrapper">
                       <h6 className="market-stake-tvl">
-                        ${abbreviateNumber(landtvl)}+
+                        ${abbreviateNumber(landtvl)}
                       </h6>
                     </div>
                     <div></div>
