@@ -339,29 +339,11 @@ const WalletBalance = ({
   }
 
   const getAllFavs = async () => {
-    let listedFavs = [];
-
     if (favoritesArray && favoritesArray.length > 0) {
-      favoritesArray.map(async (item) => {
-        const result = allListed.find(
-          (obj) =>
-            obj.nftAddress === item.nftAddress && obj.tokenId === item.tokenId
-        );
-
-        if (result) {
-          listedFavs.push(result);
-        } else {
-          const result2 = latestBoughtNFTS.find(
-            (obj) =>
-              obj.nftAddress === item.nftAddress && obj.tokenId === item.tokenId
-          );
-          if (result2) {
-            listedFavs.push(result2);
-          }
-        }
-      });
-      setfavoriteItems(listedFavs);
-      setfavItemsFiltered(listedFavs);
+      const unique =  [...new Set(favoritesArray.map((item) =>  {}))]
+      console.log(unique, favoritesArray);
+      setfavoriteItems(favoritesArray);
+      setfavItemsFiltered(favoritesArray);
     } else {
       setfavoriteItems([]);
       setfavItemsFiltered([]);
@@ -655,13 +637,12 @@ const WalletBalance = ({
                   favoriteItems.slice(0, 6).map((item, index) => (
                     <NavLink
                       key={index}
-                      to={`/marketplace/nft/${item.blockTimestamp ?? index}`}
+                      to={`/marketplace/nft/${index}`}
                       style={{ textDecoration: "none" }}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
                       state={{
                         nft: item,
                         type:
-                          item.type ??
                           item.nftAddress === window.config.nft_caws_address
                             ? "caws"
                             : item.nftAddress === window.config.nft_land_address

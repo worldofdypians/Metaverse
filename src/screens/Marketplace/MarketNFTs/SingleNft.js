@@ -79,6 +79,7 @@ const SingleNft = ({
   handleSwitchChain,
   nftCount,
   handleRefreshListing,
+  favorites,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -90,10 +91,6 @@ const SingleNft = ({
 
   const [type, setType] = useState(
     location.state?.type ? location.state?.type : false
-  );
-
-  const [isFavorite, setisFavorite] = useState(
-    location.state?.isFavorite ? location.state.isFavorite : false
   );
 
   const [IsApprove, setIsApprove] = useState(false);
@@ -127,6 +124,8 @@ const SingleNft = ({
   const [viewCount, setViewCount] = useState(0);
   const [favCount, setfavCount] = useState(0);
   const { email, logout } = useAuth();
+
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // console.log("IsListed isOwner", IsListed, isOwner);
 
@@ -265,7 +264,7 @@ const SingleNft = ({
     const test = [...finalboughtItems];
     console.log(test);
 
-    setNft(test);
+    setNft(...finalboughtItems);
   };
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
@@ -362,7 +361,7 @@ const SingleNft = ({
         throw new Error("Error adding NFT to user favorites");
       }
       const data = await response.json();
-      handleRefreshList();
+      handleRefreshListing();
       return data.favorites;
     } catch (error) {
       console.log(error);
@@ -383,7 +382,7 @@ const SingleNft = ({
         if (response.ok || response.status === 204 || response.status === 404) {
           // NFT removed successfully or was not found (404)
           console.log("NFT removed from favorites");
-          handleRefreshList();
+          handleRefreshListing();
         } else {
           // Handle other status codes as errors
           console.error(
@@ -399,7 +398,6 @@ const SingleNft = ({
   }
 
   const handleFavorite = async (nft) => {
-    console.log(isFavorite, 'test')
     if (isConnected) {
       if (isFavorite === true) {
         await deleteNFTFromUserFavorites(
@@ -451,6 +449,7 @@ const SingleNft = ({
             setbuyStatus("");
             handleRefreshList(type, nft);
             handleRefreshListing();
+            getLatestBoughtNFT();
           }, 3000);
         })
         .catch((e) => {
@@ -598,10 +597,10 @@ const SingleNft = ({
       // if (!response.ok) {
       //   throw new Error("Error fetching NFT favorites");
       // }
-      if(data.data && data.data.favoritesCount) {
-         setfavCount(data.data.favoritesCount);
+      if (data.data && data.data.favoritesCount) {
+        setfavCount(data.data.favoritesCount);
       }
-     
+
       return data.data.favoritesCount;
     } catch (error) {
       console.error("Error fetching NFT favorites:", error);
@@ -735,13 +734,30 @@ const SingleNft = ({
       getFavoritesCount(nft.tokenId, nft.nftAddress);
       setNft(nft);
     }
-  }, [nftCount, nft]);
+  }, [nftCount, nft, isFavorite]);
 
   // useEffect(() => {
   //   if (buyStatus === "success") {
   //     getLatestBoughtNFT();
   //   }
   // }, [buyStatus]);
+
+  useEffect(() => {
+    if (nft) {
+      if (favorites && favorites.length > 0) {
+        const favobj = favorites.find(
+          (obj) =>
+            obj.nftAddress === nft.nftAddress && obj.tokenId === nft.tokenId
+        );
+
+        console.log(favobj);
+
+        if (favobj !== undefined) {
+          setIsFavorite(true);
+        } else setIsFavorite(false);
+      }
+    }
+  }, [nft, nftCount, favCount]);
 
   useEffect(() => {
     if (

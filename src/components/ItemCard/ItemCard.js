@@ -6,7 +6,7 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import Toast from "../../components/Toast/Toast";
-import ethgrayLogo from './assets/ethgrayLogo.svg'
+import ethgrayLogo from "./assets/ethgrayLogo.svg";
 
 const ItemCard = ({
   nft,
@@ -21,6 +21,10 @@ const ItemCard = ({
   dypTokenData,
   isFavorite,
   onFavorite,
+  lastSold,
+  isLatestSale,
+  isListed,
+  soldPriceType,
 }) => {
   const [isOwner, setisOwner] = useState(false);
   const [IsApprove, setIsApprove] = useState(false);
@@ -227,8 +231,7 @@ const ItemCard = ({
       <Toast showToast={showToast} title={toastTitle} />
 
       <div className="item-wrapper" style={{ maxWidth: "100%" }}>
-      
-         <div className="nftimg-bg position-relative">
+        <div className="nftimg-bg position-relative">
           <div className="name-wrapper d-flex justify-content-center p-2">
             {!location.pathname.includes("/account") ? (
               <span className="nft-card-name">
@@ -245,7 +248,11 @@ const ItemCard = ({
               </span>
             )}
           </div>
-          <img src={ethgrayLogo} alt='' className="ethgraylogo position-absolute" />
+          <img
+            src={ethgrayLogo}
+            alt=""
+            className="ethgraylogo position-absolute"
+          />
           <img
             className="w-100 h-100 p-0 nft-img"
             src={
@@ -272,7 +279,7 @@ const ItemCard = ({
                 location.pathname.includes("/marketplace/wod") ||
                 location.pathname.includes("/marketplace/timepiece")) &&
               "middlewrapper"
-            } ${!nft.price && "invisible"} `}
+            } ${!isListed && "invisible"} `}
           >
             {!location.pathname.includes("/account") ? (
               <div className={`d-flex gap-2 m-0`}>
@@ -298,7 +305,7 @@ const ItemCard = ({
                         location.pathname.includes("/marketplace/wod") ||
                         location.pathname.includes("/marketplace/timepiece")) &&
                       "nft-price-usdhover"
-                    } `}
+                    } ${!isListed && "nft-price-usdhover2"}`}
                     style={{ color: "#7DD9AF" }}
                   >
                     $
@@ -333,11 +340,28 @@ const ItemCard = ({
               } `}
             /> */}
           </div>
+          {lastSold && (
+            <div
+              className={`d-flex align-items-center position-relative ${
+                !isListed && "lastsoldwrapper"
+              }`}
+              style={{ bottom: isListed ? 0 : 15, height: 0 }}
+            >
+              <span className="lastsold">
+                Last Sale:{" "}
+                {getFormattedNumber(
+                  lastSold / 1e18,
+                  nft.soldPriceType === 0 ? 2 : 0
+                )}{" "}
+                {nft.soldPriceType === 0 ? "ETH" : "DYP"}
+              </span>
+            </div>
+          )}
         </div>
         {(location.pathname.includes("/marketplace/caws") ||
           location.pathname.includes("/marketplace/wod") ||
           location.pathname.includes("/marketplace/timepiece")) &&
-          nft.price !== undefined && (
+          isListed && (
             <div className="buy-nft w-100">
               <button
                 className="buy-nft-btn w-100"
@@ -370,7 +394,7 @@ const ItemCard = ({
         {(location.pathname.includes("/marketplace/caws") ||
           location.pathname.includes("/marketplace/wod") ||
           location.pathname.includes("/marketplace/timepiece")) &&
-          !nft.price && (
+          !isListed && (
             <div className="buy-nft w-100">
               <button
                 className="view-nft-btn w-100"

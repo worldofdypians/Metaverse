@@ -21,7 +21,7 @@ import dypIcon from "./assets/dypIcon.svg";
 import emptyCheck from "./assets/emptyCheck.svg";
 import fullCheck from "./assets/fullCheck.svg";
 import FilterCard from "./FilterCard";
-import traitXmark from './assets/traitXmark.svg'
+import traitXmark from "./assets/traitXmark.svg";
 
 const CawsNFT = ({
   isConnected,
@@ -30,6 +30,7 @@ const CawsNFT = ({
   coinbase,
   ethTokenData,
   dypTokenData,
+  cawsBought,
 }) => {
   const override = {
     display: "block",
@@ -45,8 +46,7 @@ const CawsNFT = ({
   const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [cawsNFTS, setCawsNFTS] = useState([]);
-  const [favItems, setfavItems] = useState(0);
-  const [favorites, setFavorites] = useState([]);
+
   const [next, setNext] = useState(0);
   const [filters, setFilters] = useState([]);
   const [paginatedData, setpaginatedData] = useState([]);
@@ -56,7 +56,7 @@ const CawsNFT = ({
   const [openTraits, setOpenTraits] = useState(false);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   const addProducts = (product) => {
     let testarr = selectedFilters;
@@ -73,13 +73,15 @@ const CawsNFT = ({
       testarr.push(product);
       setSelectedFilters(testarr);
     }
-    setCount(count + 1)
+    setCount(count + 1);
   };
 
   const removeTrait = (trait) => {
-   setSelectedFilters((current) => current.filter((item) => item.value !== trait))
-   setCount(count + 1)
-  }
+    setSelectedFilters((current) =>
+      current.filter((item) => item.value !== trait)
+    );
+    setCount(count + 1);
+  };
 
   const fetchFilters = async () => {
     await axios
@@ -131,18 +133,42 @@ const CawsNFT = ({
   };
 
   const getListedCaws = async () => {
-    const cawsnew = await getCawsNfts().catch((e) => {
+    const caws = await getCawsNfts().catch((e) => {
       console.error(e);
     });
-    const cawsold = await getCawsOldNfts().catch((e) => {
-      console.error(e);
-    });
-    const cawsArray = [...cawsnew, ...cawsold];
 
-    if (cawsArray && cawsArray.length > 0) {
-      let datedNfts = cawsArray.map((nft) => {
-        let date = new Date(nft?.blockTimestamp * 1000);
-        return { ...nft, date: date };
+    const cawsArray = [...caws, ...cawsBought];
+    const cawsArray2 = [...caws];
+
+    let uniquecaws = cawsArray.filter(
+      (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+    );
+
+    if (uniquecaws && uniquecaws.length > 0) {
+      let datedNfts = uniquecaws.map((nft, index) => {
+        if (nft.tokenId == cawsArray2[index]?.tokenId) {
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: true,
+            isLatestSale: true,
+            LastSold: cawsArray2[index]?.price,
+            soldPriceType: cawsArray2[index]?.payment_priceType,
+          };
+        } else if (nft.tokenId != cawsArray2[index]?.tokenId && nft?.buyer) {
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: false,
+            isLatestSale: true,
+            LastSold: nft?.price,
+            soldPriceType: nft.payment_priceType,
+          };
+        }
       });
 
       setAllcaws(datedNfts);
@@ -153,7 +179,6 @@ const CawsNFT = ({
     let finalArray = [];
     let paginatedArray = paginatedData;
 
-    console.log(next);
     for (
       let i = next;
       i < nftsPerRow + next && next + nftsPerRow < allCaws;
@@ -162,7 +187,7 @@ const CawsNFT = ({
       const owner = await window.nft.ownerOf(i).catch((e) => {
         console.log(e);
       });
-      const attributes = await window.getNft(i)
+      const attributes = await window.getNft(i);
 
       finalArray.push({
         nftAddress: window.config.nft_address,
@@ -170,10 +195,9 @@ const CawsNFT = ({
         tokenId: i.toString(),
         type: "caws",
         chain: 1,
-        attributes: attributes.attributes
-        
+        attributes: attributes.attributes,
       });
-      console.log(finalArray, "finalarray")
+      console.log(finalArray, "finalarray");
     }
 
     const finaldata = [...paginatedArray, ...finalArray];
@@ -185,37 +209,15 @@ const CawsNFT = ({
   };
 
   const fetchInitialCaws = async () => {
-    const cawsArray = allCawsNfts;
     const collectionItems = finalData;
     const uniqueArray = collectionItems.filter(
-      ({ tokenId: id1 }) => !cawsArray.some(({ tokenId: id2 }) => id2 === id1)
+      ({ tokenId: id1 }) => !allCawsNfts.some(({ tokenId: id2 }) => id2 === id1)
     );
-    const finalUnique = [...cawsArray, ...uniqueArray];
+    const finalUnique = [...allCawsNfts, ...uniqueArray];
     setCawsNFTS(finalUnique);
     setInitialNfts(finalUnique);
     setLoading(false);
   };
-
-  async function fetchUserFavorites(userId) {
-    if (userId !== undefined && userId !== null) {
-      try {
-        const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`
-        );
-        if (!response.ok) {
-          throw new Error("Error fetching user favorites");
-        }
-        const data = await response.json();
-        // console.log(data.favorites);
-
-        setFavorites(data.favorites);
-        return data.favorites;
-      } catch (error) {
-        console.error("Error fetching user favorites:", error);
-        throw error;
-      }
-    }
-  }
 
   async function updateViewCount(tokenId, nftAddress) {
     try {
@@ -242,7 +244,7 @@ const CawsNFT = ({
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
-    console.log(wrappedElement);
+
     if (wrappedElement) {
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
@@ -255,35 +257,32 @@ const CawsNFT = ({
     }
   };
 
-  const updateFavs = () => {
-    setfavItems(favItems + 1);
-  };
-
   useEffect(() => {
     document.addEventListener("scroll", onScroll);
   });
 
   useEffect(() => {
-    fetchUserFavorites(coinbase);
-  }, [coinbase, favItems]);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
     getCawsCollection();
-    getListedCaws();
     fetchFilters();
-    fetchInitialCaws();
     document.title = "CAWS NFT";
   }, []);
+
+  useEffect(() => {
+    if (cawsBought) {
+      getListedCaws();
+    }
+  }, [cawsBought]);
 
   useEffect(() => {
     getCawsCollection();
   }, [next]);
 
   useEffect(() => {
-    fetchInitialCaws();
-  }, [paginatedData]);
-
+    if (cawsBought && allCawsNfts.length > 0 && finalData.length > 0) {
+      fetchInitialCaws();
+    }
+  }, [allCawsNfts.length, finalData.length, cawsBought]);
   useEffect(() => {
     if (cawsNFTS && cawsNFTS.length === 0) {
       setLoading(true);
@@ -297,13 +296,15 @@ const CawsNFT = ({
   // console.log(filters);
 
   return (
-    <>
+    <div
+      id="header"
+      onScroll={onScroll}
+      ref={listInnerRef}
+      style={{ overflow: "scroll" }}
+    >
       <div
         className="container-fluid d-flex justify-content-end p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
-        id="header"
-        onScroll={onScroll}
-        ref={listInnerRef}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
@@ -434,23 +435,36 @@ const CawsNFT = ({
                 </div>
               </div>
             </div>
-                <div className="selected-traits-wrapper d-flex align-items-center my-4 gap-2">
-                 {selectedFilters.map((item, index) => (
-                   <div className="selected-trait-item d-flex align-items-center p-2 gap-4" key={index}>
-                   <div className="d-flex align-items-center gap-1">
-                     <span className="selected-trait-key">{item.key} :</span>
-                     <span className="selected-trait-value">{item.value}</span>
-                   </div>
-                     <img src={traitXmark} style={{cursor: 'pointer'}} onClick={() => removeTrait(item.value)} alt="" />
-                 </div>
-                 ))}
-                  {selectedFilters.length > 0 && 
-                  <button className="btn clear-all-btn p-2" onClick={() => {
-                    setSelectedFilters([])
-                    setCount(0)
-                  }}>Clear all</button>
-                  }
+            <div className="selected-traits-wrapper d-flex align-items-center my-4 gap-2">
+              {selectedFilters.map((item, index) => (
+                <div
+                  className="selected-trait-item d-flex align-items-center p-2 gap-4"
+                  key={index}
+                >
+                  <div className="d-flex align-items-center gap-1">
+                    <span className="selected-trait-key">{item.key} :</span>
+                    <span className="selected-trait-value">{item.value}</span>
+                  </div>
+                  <img
+                    src={traitXmark}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => removeTrait(item.value)}
+                    alt=""
+                  />
                 </div>
+              ))}
+              {selectedFilters.length > 0 && (
+                <button
+                  className="btn clear-all-btn p-2"
+                  onClick={() => {
+                    setSelectedFilters([]);
+                    setCount(0);
+                  }}
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
               <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
                 <div
@@ -476,16 +490,6 @@ const CawsNFT = ({
                               nft.buyer?.toLowerCase() ===
                                 coinbase?.toLowerCase(),
                             chain: nft.chain,
-                            isFavorite:
-                            favorites.length > 0
-                              ? favorites.find(
-                                  (obj) =>
-                                    obj.nftAddress === nft.nftAddress &&
-                                    obj.tokenId === nft.tokenId
-                                )
-                                ? true
-                                : false
-                              : false,
                           }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
@@ -502,18 +506,11 @@ const CawsNFT = ({
                             isTimepiece={false}
                             isWod={false}
                             coinbase={coinbase}
-                            isFavorite={
-                              favorites.length > 0
-                                ? favorites.find(
-                                    (obj) =>
-                                      obj.nftAddress === nft.nftAddress &&
-                                      obj.tokenId === nft.tokenId
-                                  )
-                                  ? true
-                                  : false
-                                : false
-                            }
-                            onFavorite={updateFavs}
+                            lastSale={nft.buyer ? true : false}
+                            lastSold={nft.LastSold}
+                            isLatestSale={nft.isLatestSale}
+                            isListed={nft.isListed}
+                            soldPriceType={nft.soldPriceType}
                           />
                         </NavLink>
                       ))}
@@ -577,7 +574,7 @@ const CawsNFT = ({
               style={{ cursor: "pointer" }}
               onClick={() => {
                 setSelectedFilters([]);
-                setCount(0)
+                setCount(0);
               }}
             >
               Clear all
@@ -600,180 +597,239 @@ const CawsNFT = ({
               ))}
           </div>
           <span className="filters-divider my-4"></span>
-         {categoryIndex === 0 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[0] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[0]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 1 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[1] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[1]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 2 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[2] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[2]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 3 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[3] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[3]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 4 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[4] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[4]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 5 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[5] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[5]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 6 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[6] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[6]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 7 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[7] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[7]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 8 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[8] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[8]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         {categoryIndex === 9 ? 
-         <div
-         className={`row align-items-center traits-wrapper `}
-         style={{ rowGap: "20px" }}
-       >
-         {Object.values(filters)[9] &&
-           Object.values(filters) &&
-           Object.entries(Object.values(filters)[9]).map(
-             ([key, value], i) => (
-               // <span key={i}>{key} ({value})</span>
-               <FilterCard title={key} value={value} categoryIndex={categoryIndex} filters={filters} addProducts={addProducts}  selectedFilters={selectedFilters} count={count} />
-             )
-           )}
-       </div>
-       :
-       null 
-        }
-         
+          {categoryIndex === 0 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[0] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[0]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 1 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[1] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[1]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 2 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[2] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[2]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 3 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[3] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[3]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 4 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[4] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[4]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 5 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[5] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[5]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 6 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[6] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[6]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 7 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[7] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[7]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 8 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[8] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[8]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 9 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[9] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[9]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
         </div>
       </OutsideClickHandler>
-    </>
+    </div>
   );
 };
 

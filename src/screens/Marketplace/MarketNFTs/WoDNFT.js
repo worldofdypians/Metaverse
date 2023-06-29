@@ -16,6 +16,7 @@ const WoDNFT = ({
   coinbase,
   ethTokenData,
   dypTokenData,
+  wodBought,
 }) => {
   const override = {
     display: "block",
@@ -39,6 +40,7 @@ const WoDNFT = ({
   const listInnerRef = useRef();
   const nftsPerRow = 18;
   const allLandpiece = 999;
+
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
       let htl = initialNfts.sort((a, b) => {
@@ -78,12 +80,38 @@ const WoDNFT = ({
       console.error(e);
     });
 
-    const wodArray = [...wod];
+    const wodArray = [...wod, ...wodBought];
+    const wodArray2 = [...wod];
 
-    if (wodArray && wodArray.length > 0) {
-      let datedNfts = wodArray.map((nft) => {
-        let date = new Date(nft?.blockTimestamp * 1000);
-        return { ...nft, date: date };
+    let uniquewod = wodArray.filter(
+      (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+    );
+
+    if (uniquewod && uniquewod.length > 0) {
+      let datedNfts = uniquewod.map((nft, index) => {
+        if (nft.tokenId == wodArray2[index]?.tokenId) {
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: true,
+            isLatestSale: true,
+            LastSold: wodArray2[index]?.price,
+            soldPriceType: wodArray2[index]?.payment_priceType,
+          };
+        } else if (nft.tokenId != wodArray2[index]?.tokenId && nft?.buyer) {
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: false,
+            isLatestSale: true,
+            LastSold: nft?.price,
+            soldPriceType: nft.payment_priceType,
+          };
+        }
       });
 
       setAllwod(datedNfts);
@@ -94,7 +122,6 @@ const WoDNFT = ({
     let finalArray = [];
     let paginatedArray = paginatedData;
 
-    console.log(next);
     for (
       let i = next;
       i < next + nftsPerRow && next + nftsPerRow < allLandpiece;
@@ -121,41 +148,15 @@ const WoDNFT = ({
   };
 
   const fetchInitialWod = async () => {
-    const wodArray = allwodNfts;
-
     const collectionItems = finalData;
-
     const uniqueArray = collectionItems.filter(
-      ({ tokenId: id1 }) => !wodArray.some(({ tokenId: id2 }) => id2 === id1)
+      ({ tokenId: id1 }) => !allwodNfts.some(({ tokenId: id2 }) => id2 === id1)
     );
-
-    const finalUnique = [...wodArray, ...uniqueArray];
-
+    const finalUnique = [...allwodNfts, ...uniqueArray];
     setLandNfts(finalUnique);
     setInitialNfts(finalUnique);
     setLoading(false);
   };
-
-  async function fetchUserFavorites(userId) {
-    if (userId !== undefined && userId !== null) {
-      try {
-        const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`
-        );
-        if (!response.ok) {
-          throw new Error("Error fetching user favorites");
-        }
-        const data = await response.json();
-        // console.log(data.favorites);
-
-        setFavorites(data.favorites);
-        return data.favorites;
-      } catch (error) {
-        console.error("Error fetching user favorites:", error);
-        throw error;
-      }
-    }
-  }
 
   async function updateViewCount(tokenId, nftAddress) {
     try {
@@ -174,10 +175,6 @@ const WoDNFT = ({
       console.error("Error updating view count:", error);
     }
   }
-
-  const updateFavs = () => {
-    setfavItems(favItems + 1);
-  };
 
   const loadMore = () => {
     setLoading(true);
@@ -203,28 +200,30 @@ const WoDNFT = ({
   });
 
   useEffect(() => {
-    fetchUserFavorites(coinbase);
-  }, [coinbase, favItems]);
-
-  useEffect(() => {
     sortNfts("lth");
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getWodCollection();
-    getListedWod();
-    fetchInitialWod();
     document.title = "Genesis Land NFT";
   }, []);
 
   useEffect(() => {
-    getWodCollection();
-  }, [next]);
+    if (wodBought) {
+      getListedWod();
+    }
+  }, [wodBought]);
 
   useEffect(() => {
-    fetchInitialWod();
-  }, [paginatedData]);
+    // if (wodBought && allwodNfts.length > 0 && finalData.length > 0) {
+      fetchInitialWod();
+    // }
+  }, [allwodNfts.length, finalData.length, wodBought]);
+
+  useEffect(() => {
+    getWodCollection();
+  }, [next]);
 
   useEffect(() => {
     if (landNfts && landNfts.length === 0) {
@@ -348,16 +347,6 @@ const WoDNFT = ({
                             coinbase?.toLowerCase() ||
                           nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
                         chain: nft.chain,
-                        isFavorite:
-                          favorites.length > 0
-                            ? favorites.find(
-                                (obj) =>
-                                  obj.nftAddress === nft.nftAddress &&
-                                  obj.tokenId === nft.tokenId
-                              )
-                              ? true
-                              : false
-                            : false,
                       }}
                       onClick={() => {
                         updateViewCount(nft.tokenId, nft.nftAddress);
@@ -374,18 +363,11 @@ const WoDNFT = ({
                         isTimepiece={false}
                         isWod={true}
                         coinbase={coinbase}
-                        isFavorite={
-                          favorites.length > 0
-                            ? favorites.find(
-                                (obj) =>
-                                  obj.nftAddress === nft.nftAddress &&
-                                  obj.tokenId === nft.tokenId
-                              )
-                              ? true
-                              : false
-                            : false
-                        }
-                        onFavorite={updateFavs}
+                        lastSale={nft.buyer ? true : false}
+                        lastSold={nft.LastSold}
+                        isLatestSale={nft.isLatestSale}
+                        isListed={nft.isListed}
+                        soldPriceType={nft.soldPriceType}
                       />
                     </NavLink>
                   ))

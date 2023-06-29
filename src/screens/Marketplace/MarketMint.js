@@ -156,7 +156,7 @@ const MarketMint = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Timepiece";
+    document.title = "Timepiece Mint";
   }, []);
 
   return (

@@ -72,7 +72,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-  color: #EEEDFF;
+  color: #eeedff;
   margin-bottom: 0;
 }
 
@@ -89,11 +89,7 @@
   width: 100%;
   position: absolute;
   bottom: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.15) 100%
-  );
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(26px);
   z-index: 1;
   border-radius: 0px;
@@ -111,6 +107,14 @@
   z-index: 2;
 }
 
+.lastsold {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  color: #eeedff;
+}
+
 .ethgraylogo {
   visibility: hidden;
   top: 10px;
@@ -126,7 +130,11 @@
     z-index: 1;
   }
   .topwrapper {
-    padding-top: 7px !important;
+    padding-top: 11px !important;
+  }
+
+  .lastsoldwrapper {
+    bottom: 23px !important
   }
 
   .favoritehover {
@@ -136,13 +144,18 @@
   }
 
   .nft-price-usdhover {
+    visibility: visible;
+    line-height: 8px;
+  }
+
+  .nft-price-usdhover2 {
     visibility: hidden;
     line-height: 8px;
   }
 
   .middlewrapper {
     align-items: center;
-    margin-bottom: 9px;
+    margin-bottom: 5px;
   }
 
   .buy-nft-btn,
