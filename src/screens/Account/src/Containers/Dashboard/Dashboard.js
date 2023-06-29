@@ -707,8 +707,11 @@ function Dashboard({
     getDypBalance();
     fetchUserFavorites(
       data?.getPlayer?.wallet && email
-        ? data?.getPlayer?.wallet?.publicAddress
-        : account
+        ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+          coinbase.toLowerCase()
+          ? data?.getPlayer?.wallet?.publicAddress
+          : coinbase
+        : coinbase
     );
   }, [account, email, data?.getPlayer?.wallet]);
 

@@ -301,43 +301,50 @@ const WoDNFT = ({
 
   return (
     <>
-    <div
-      className="container-fluid d-flex justify-content-end p-0"
-      style={{ minHeight: "72vh", maxWidth: "2400px" }}
-    >
-      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-
       <div
-        className="container-nft  d-flex  align-items-start px-3 px-lg-5 position-relative"
-        style={{ backgroundSize: "cover" }}
+        className="container-fluid d-flex justify-content-end p-0"
+        style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
-        <div className="container-lg mx-0 position-relative">
-          <div className="row align-items-center justify-content-between mt-4">
-            <div className="col-12 col-lg-6">
-              <div className="d-flex flex-column gap-3">
-                <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
-                  Genesis <span style={{ color: "#8c56ff" }}>Land</span>
-                </h6>
-                <p className="collection-desc">
-                  The Genesis Land offers <b>Access</b> to the metaverse, <b>Ownership</b> to
-                  land in WoD, participate on different <b>on-chain Events,</b> have a
-                  dedicated <b> NFT Staking Pool,</b> ranking on <b>Leaderboard</b>, and earn
-                  multiple <b>Rewards</b> by playing the game.
-                </p>
-                <NavLink>
-                  <button className="btn pill-btn">Explore</button>
-                </NavLink>
+        {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+
+        <div
+          className="container-nft  d-flex  align-items-start px-3 px-lg-5 position-relative"
+          style={{ backgroundSize: "cover" }}
+        >
+          <div className="container-lg mx-0 position-relative">
+            <div className="row align-items-center justify-content-between mt-4">
+              <div className="col-12 col-lg-6">
+                <div className="d-flex flex-column gap-3">
+                  <div className="d-flex gap-3 justify-content-between align-items-baseline">
+                    <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                      Genesis <span style={{ color: "#8c56ff" }}>Land</span>
+                    </h6>
+                    <span className="totalsupplytxt">
+                      1000
+                      <mark className="text-white bg-transparent">Lands</mark>{" "}
+                    </span>
+                  </div>
+                  <p className="collection-desc">
+                    The Genesis Land offers <b>Access</b> to the metaverse,{" "}
+                    <b>Ownership</b> to land in WoD, participate on different{" "}
+                    <b>on-chain Events,</b> have a dedicated{" "}
+                    <b> NFT Staking Pool,</b> ranking on <b>Leaderboard</b>, and
+                    earn multiple <b>Rewards</b> by playing the game.
+                  </p>
+                  <NavLink>
+                    <button className="btn pill-btn">Explore</button>
+                  </NavLink>
+                </div>
+              </div>
+              <div className="col-12 col-lg-4">
+                <img
+                  src={require("./assets/landCollectionBanner.webp")}
+                  className="w-100"
+                  alt=""
+                />
               </div>
             </div>
-            <div className="col-12 col-lg-4">
-              <img
-                src={require("./assets/landCollectionBanner.webp")}
-                className="w-100"
-                alt=""
-              />
-            </div>
-          </div>
-          <div
+            <div
               className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
               style={{ zIndex: 2 }}
             >
@@ -462,59 +469,79 @@ const WoDNFT = ({
                 </button>
               )}
             </div>
-          <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
-            <div
-              className="d-flex align-items-center p-4 gap-4 justify-content-center"
-              id="header"
-              onScroll={onScroll}
-              ref={listInnerRef}
-            >
+            <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
               <div
-                className={
-                  loading === false || landNfts.length > 0
-                    ? "item-cards-wrapper"
-                    : "loader-wrapper"
-                }
+                className="d-flex align-items-center p-4 gap-4 justify-content-center"
+                id="header"
+                onScroll={onScroll}
+                ref={listInnerRef}
               >
-                {landNfts && landNfts.length > 0 ? (
-                  landNfts.map((nft, index) => (
-                    <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                      style={{ textDecoration: "none" }}
-                      key={index}
-                      state={{
-                        nft: nft,
-                        type: "land",
-                        isOwner:
-                          nft.seller?.toLowerCase() ===
-                            coinbase?.toLowerCase() ||
-                          nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                        chain: nft.chain,
-                      }}
-                      onClick={() => {
-                        updateViewCount(nft.tokenId, nft.nftAddress);
-                      }}
-                    >
-                      <ItemCard
-                        ethTokenData={ethTokenData}
-                        dypTokenData={dypTokenData}
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={false}
-                        isTimepiece={false}
-                        isWod={true}
-                        coinbase={coinbase}
-                        lastSale={nft.buyer ? true : false}
-                        lastSold={nft.LastSold}
-                        isLatestSale={nft.isLatestSale}
-                        isListed={nft.isListed}
-                        soldPriceType={nft.soldPriceType}
-                      />
-                    </NavLink>
-                  ))
-                ) : (
+                <div
+                  className={
+                    loading === false || landNfts.length > 0
+                      ? "item-cards-wrapper"
+                      : "loader-wrapper"
+                  }
+                >
+                  {landNfts && landNfts.length > 0 ? (
+                    landNfts.map((nft, index) => (
+                      <NavLink
+                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                        state={{
+                          nft: nft,
+                          type: "land",
+                          isOwner:
+                            nft.seller?.toLowerCase() ===
+                              coinbase?.toLowerCase() ||
+                            nft.buyer?.toLowerCase() ===
+                              coinbase?.toLowerCase(),
+                          chain: nft.chain,
+                        }}
+                        onClick={() => {
+                          updateViewCount(nft.tokenId, nft.nftAddress);
+                        }}
+                      >
+                        <ItemCard
+                          ethTokenData={ethTokenData}
+                          dypTokenData={dypTokenData}
+                          key={nft.id}
+                          nft={nft}
+                          isConnected={isConnected}
+                          showConnectWallet={handleConnect}
+                          isCaws={false}
+                          isTimepiece={false}
+                          isWod={true}
+                          coinbase={coinbase}
+                          lastSale={nft.buyer ? true : false}
+                          lastSold={nft.LastSold}
+                          isLatestSale={nft.isLatestSale}
+                          isListed={nft.isListed}
+                          soldPriceType={nft.soldPriceType}
+                        />
+                      </NavLink>
+                    ))
+                  ) : (
+                    <HashLoader
+                      color={"#554fd8"}
+                      loading={loading}
+                      cssOverride={override}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="d-flex justify-content-center w-100">
+                {!loading && next < allLandpiece ? (
+                  <button
+                    className="btn py-2 px-3 nft-load-more-btn"
+                    onClick={() => loadMore()}
+                  >
+                    Load more
+                  </button>
+                ) : loading && next < allLandpiece && landNfts.length > 0 ? (
                   <HashLoader
                     color={"#554fd8"}
                     loading={loading}
@@ -522,333 +549,314 @@ const WoDNFT = ({
                     aria-label="Loading Spinner"
                     data-testid="loader"
                   />
+                ) : (
+                  <></>
                 )}
               </div>
-            </div>
-            <div className="d-flex justify-content-center w-100">
-              {!loading && next < allLandpiece ? (
-                <button
-                  className="btn py-2 px-3 nft-load-more-btn"
-                  onClick={() => loadMore()}
-                >
-                  Load more
-                </button>
-              ) : loading && next < allLandpiece && landNfts.length > 0 ? (
-                <HashLoader
-                  color={"#554fd8"}
-                  loading={loading}
-                  cssOverride={override}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              ) : (
-                <></>
-              )}
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <OutsideClickHandler onOutsideClick={() => setOpenTraits(false)}>
-    <div
-      className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xxl-5 ${
-        openTraits && "filters-active"
-      } p-4`}
-    >
-      <div className="d-flex align-items-center justify-content-between mb-4">
-        <h6 className="filters-title mb-0">Filters</h6>
-        <img
-          src={filtersXmark}
-          style={{ cursor: "pointer" }}
-          onClick={() => setOpenTraits(false)}
-          alt=""
-        />
-      </div>
-      <div className="d-flex align-items-center justify-content-between mb-4">
-        <span className="select-category mb-0">Select Category</span>
-        <span
-          className="clear-all mb-0"
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            setSelectedFilters([]);
-            setCount(0);
-          }}
+      <OutsideClickHandler onOutsideClick={() => setOpenTraits(false)}>
+        <div
+          className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xxl-5 ${
+            openTraits && "filters-active"
+          } p-4`}
         >
-          Clear all
-        </span>
-      </div>
-      <div className="filter-tabs d-flex align-items-center justify-content-start gap-4">
-        {filters &&
-          Object.entries(filters).map(([key, value], i) => (
-            <div
-              className={`filter-tab px-2 py-1 d-flex align-items-center ${
-                categoryIndex === i && "filter-tab-active"
-              }`}
-              onClick={() => setCategoryIndex(i)}
-              key={i}
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <h6 className="filters-title mb-0">Filters</h6>
+            <img
+              src={filtersXmark}
+              style={{ cursor: "pointer" }}
+              onClick={() => setOpenTraits(false)}
+              alt=""
+            />
+          </div>
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <span className="select-category mb-0">Select Category</span>
+            <span
+              className="clear-all mb-0"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setSelectedFilters([]);
+                setCount(0);
+              }}
             >
-              <h6 className="filter-tab-title mb-0">
-                {key} ({Object.keys(value)?.length})
-              </h6>
+              Clear all
+            </span>
+          </div>
+          <div className="filter-tabs d-flex align-items-center justify-content-start gap-4">
+            {filters &&
+              Object.entries(filters).map(([key, value], i) => (
+                <div
+                  className={`filter-tab px-2 py-1 d-flex align-items-center ${
+                    categoryIndex === i && "filter-tab-active"
+                  }`}
+                  onClick={() => setCategoryIndex(i)}
+                  key={i}
+                >
+                  <h6 className="filter-tab-title mb-0">
+                    {key} ({Object.keys(value)?.length})
+                  </h6>
+                </div>
+              ))}
+          </div>
+          <span className="filters-divider my-4"></span>
+          {categoryIndex === 0 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[0] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[0]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
             </div>
-          ))}
-      </div>
-      <span className="filters-divider my-4"></span>
-      {categoryIndex === 0 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[0] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[0]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
+          ) : null}
+          {categoryIndex === 1 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[1] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[1]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 2 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[2] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[2]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 3 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[3] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[3]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 4 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[4] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[4]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 5 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[5] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[5]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 6 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[6] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[6]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 7 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[7] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[7]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 8 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[8] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[8]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 9 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[9] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[9]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
+          {categoryIndex === 10 ? (
+            <div
+              className={`row align-items-center traits-wrapper `}
+              style={{ rowGap: "20px" }}
+            >
+              {Object.values(filters)[10] &&
+                Object.values(filters) &&
+                Object.entries(Object.values(filters)[10]).map(
+                  ([key, value], i) => (
+                    // <span key={i}>{key} ({value})</span>
+                    <FilterCard
+                      title={key}
+                      value={value}
+                      categoryIndex={categoryIndex}
+                      filters={filters}
+                      addProducts={addProducts}
+                      selectedFilters={selectedFilters}
+                      count={count}
+                    />
+                  )
+                )}
+            </div>
+          ) : null}
         </div>
-      ) : null}
-      {categoryIndex === 1 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[1] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[1]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 2 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[2] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[2]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 3 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[3] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[3]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 4 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[4] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[4]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 5 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[5] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[5]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 6 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[6] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[6]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 7 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[7] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[7]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 8 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[8] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[8]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 9 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[9] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[9]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-      {categoryIndex === 10 ? (
-        <div
-          className={`row align-items-center traits-wrapper `}
-          style={{ rowGap: "20px" }}
-        >
-          {Object.values(filters)[10] &&
-            Object.values(filters) &&
-            Object.entries(Object.values(filters)[10]).map(
-              ([key, value], i) => (
-                // <span key={i}>{key} ({value})</span>
-                <FilterCard
-                  title={key}
-                  value={value}
-                  categoryIndex={categoryIndex}
-                  filters={filters}
-                  addProducts={addProducts}
-                  selectedFilters={selectedFilters}
-                  count={count}
-                />
-              )
-            )}
-        </div>
-      ) : null}
-    </div>
-  </OutsideClickHandler>
+      </OutsideClickHandler>
     </>
   );
 };

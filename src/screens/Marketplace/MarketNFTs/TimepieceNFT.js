@@ -56,12 +56,27 @@ const TimepieceNFT = ({
   const [filteredCaws, setFilteredCaws] = useState([]);
   const [testFinal, setTestFinal] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [totalSupply, settotalSupply] = useState(311);
 
   const listInnerRef = useRef();
   const nftsPerRow = 18;
-  const allTimepiece = 256;
 
-  // console.log(timepieceBought)
+  const getTotalSupply = async () => {
+    const infura_web3 = window.infuraWeb3;
+    let timepiece_contract = new infura_web3.eth.Contract(
+      window.CAWS_TIMEPIECE_ABI,
+      window.config.nft_timepiece_address
+    );
+
+    const result = await timepiece_contract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    settotalSupply(parseInt(result));
+  };
 
   const addProducts = (product, category) => {
     let testarr = selectedFilters[category].value;
@@ -90,18 +105,14 @@ const TimepieceNFT = ({
 
   const fetchFilters = async () => {
     await axios
-      .get(
-        "https://api.opensea.io/api/v1/collection/cawstimepiece",
-        {
-          headers: {
-            "X-API-KEY": "b132fcc52ab540f0b13a319bf57b34f0",
-          },
-        }
-      )
+      .get("https://api.opensea.io/api/v1/collection/cawstimepiece", {
+        headers: {
+          "X-API-KEY": "b132fcc52ab540f0b13a319bf57b34f0",
+        },
+      })
       .then((res) => {
         setFilters(res.data.collection.traits);
         console.log(Object.entries(res.data.collection.traits), "wodtraits");
-
       });
   };
 
@@ -191,7 +202,7 @@ const TimepieceNFT = ({
 
     for (
       let i = next;
-      i < next + nftsPerRow && next + nftsPerRow < allTimepiece;
+      i < next + nftsPerRow && next + nftsPerRow < totalSupply;
       i++
     ) {
       const owner = await window.caws_timepiece.ownerOf(i).catch((e) => {
@@ -259,7 +270,7 @@ const TimepieceNFT = ({
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
       if (isBottom) {
-        if (next < allTimepiece) {
+        if (next < totalSupply) {
           loadMore();
         }
         document.removeEventListener("scroll", onScroll);
@@ -273,8 +284,8 @@ const TimepieceNFT = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getTimepieceCollection();
     document.title = "Timepiece NFT";
+    getTotalSupply();
   }, []);
 
   useEffect(() => {
@@ -294,7 +305,6 @@ const TimepieceNFT = ({
   }, [alltimepieceNfts.length, finalData.length, timepieceBought]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     getTimepieceCollection();
     fetchFilters();
   }, [next]);
@@ -310,81 +320,91 @@ const TimepieceNFT = ({
   }, [timepieceNFTS]);
 
   return (
-  <>
-    <div
-      className="container-fluid d-flex justify-content-end p-0"
-      style={{ minHeight: "72vh", maxWidth: "2400px" }}
-    >
-      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-
+    <>
       <div
-        className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
-        style={{ backgroundSize: "cover" }}
+        className="container-fluid d-flex justify-content-end p-0"
+        style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
-        <div className="container-lg mx-0 position-relative">
-          <div className="row align-items-center justify-content-between mt-4">
-            <div className="col-12 col-lg-6">
-              <div className="d-flex flex-column gap-3">
-                <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
-                  CAWS <span style={{ color: "#8c56ff" }}>Timepiece</span>
-                </h6>
-                <p className="collection-desc">
-                  The Timepiece NFTs offer different benefits in Metaverse like:
-                  <b>Exclusive Access</b> to new and exciting events, <b>Enhanced
-                  Interactions</b> with available activities, <b>Expanded Functionality</b>
-                  on performing new actions, and earn multiple <b>Rewards.</b>
-                </p>
-                <NavLink>
-                  <button className="btn pill-btn">Explore</button>
-                </NavLink>
+        {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+
+        <div
+          className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
+          style={{ backgroundSize: "cover" }}
+        >
+          <div className="container-lg mx-0 position-relative">
+            <div className="row align-items-center justify-content-between mt-4">
+              <div className="col-12 col-lg-6">
+                <div className="d-flex flex-column gap-3">
+                  <div className="d-flex gap-3 align-items-baseline justify-content-between">
+                    <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                      CAWS <span style={{ color: "#8c56ff" }}>Timepiece</span>
+                    </h6>
+                    <span className="totalsupplytxt">
+                      {totalSupply}{" "}
+                      <mark className="text-white bg-transparent">
+                        Timepiece
+                      </mark>{" "}
+                    </span>
+                  </div>
+                  <p className="collection-desc">
+                    The Timepiece NFTs offer different benefits in Metaverse
+                    like:
+                    <b>Exclusive Access</b> to new and exciting events,{" "}
+                    <b>Enhanced Interactions</b> with available activities,{" "}
+                    <b>Expanded Functionality</b>
+                    on performing new actions, and earn multiple <b>Rewards.</b>
+                  </p>
+                  <NavLink>
+                    <button className="btn pill-btn">Explore</button>
+                  </NavLink>
+                </div>
+              </div>
+              <div className="col-12 col-lg-4">
+                <img
+                  src={require("./assets/timepieceCollectionBanner.webp")}
+                  className="w-100"
+                  alt=""
+                />
               </div>
             </div>
-            <div className="col-12 col-lg-4">
-              <img
-                src={require("./assets/timepieceCollectionBanner.webp")}
-                className="w-100"
-                alt=""
-              />
-            </div>
-          </div>
-          <div
-            className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
-            style={{ zIndex: 2 }}
-          >
-            <div class="dropdown" style={{ width: "200px" }}>
-              <button
-                class="btn btn-secondary nft-dropdown w-100
+            <div
+              className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
+              style={{ zIndex: 2 }}
+            >
+              <div class="dropdown" style={{ width: "200px" }}>
+                <button
+                  class="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <div className="d-flex align-items-center gap-2">
-                  <img src={filterIcon} alt="" />
-                  <h6 className="filter-nav-title mb-0">Filter</h6>
-                </div>
-                <img src={dropdownIcon} alt="" />
-              </button>
-              <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Oldest to newest");
-                    sortNfts("otl");
-                  }}
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                  <span>Recently listed</span>
-                </li>
-                <li
-                  className="nft-dropdown-item"
-                  onClick={() => {
-                    setFilterTitle("Newest To Oldest");
-                    sortNfts("lto");
-                  }}
-                >
-                  <span>Recently sold</span>
-                </li>
-                {/* <li
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={filterIcon} alt="" />
+                    <h6 className="filter-nav-title mb-0">Filter</h6>
+                  </div>
+                  <img src={dropdownIcon} alt="" />
+                </button>
+                <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Oldest to newest");
+                      sortNfts("otl");
+                    }}
+                  >
+                    <span>Recently listed</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Newest To Oldest");
+                      sortNfts("lto");
+                    }}
+                  >
+                    <span>Recently sold</span>
+                  </li>
+                  {/* <li
                     className="nft-dropdown-item"
                     onClick={() => {
                       setFilterTitle("Price: ETH");
@@ -402,127 +422,149 @@ const TimepieceNFT = ({
                   >
                     <span>Price: DYP</span>
                   </li> */}
-                <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
-                  <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-3">
-                    <img
-                      src={emptyCheck}
-                      alt=""
-                      className="collection-price-check"
-                    />
-                    <img src={ethIcon} width={12} height={12} alt="" />
-                    <span className="collection-price-span mb-0">ETH</span>
-                  </div>
-                  <div className="collection-price position-relative d-flex align-items-center gap-1 py-1 px-3">
-                    <img
-                      src={emptyCheck}
-                      alt=""
-                      className="collection-price-check"
-                    />
-                    <img src={dypIcon} width={12} height={12} alt="" />
-                    <span className="collection-price-span mb-0">DYP</span>
-                  </div>
-                </div>
-              </ul>
-            </div>
-            <div className="d-flex align-items-center gap-5">
-              <div
-                className="filter-nav d-flex align-items-center gap-2"
-                style={{ cursor: "pointer" }}
-              >
-                <img src={priceIcon} alt="" />
-                <h6 className="filter-nav-title mb-0">Price</h6>
-              </div>
-              <div
-                className="filter-nav d-flex align-items-center gap-2"
-                onClick={() => setOpenTraits(true)}
-                style={{ cursor: "pointer" }}
-              >
-                <img src={traitIcon} alt="" />
-                <h6 className="filter-nav-title mb-0">Traits</h6>
-              </div>
-            </div>
-          </div>
-          <div className="selected-traits-wrapper d-flex align-items-center my-4 gap-2">
-            {selectedFilters.map((item, index) => (
-              <div
-                className="selected-trait-item d-flex align-items-center p-2 gap-4"
-                key={index}
-              >
-                <div className="d-flex align-items-center gap-1">
-                  <span className="selected-trait-key">{item.key} :</span>
-                  <span className="selected-trait-value">{item.value}</span>
-                </div>
-                <img
-                  src={traitXmark}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => removeTrait(item.value)}
-                  alt=""
-                />
-              </div>
-            ))}
-            {selectedFilters.length > 0 && (
-              <button
-                className="btn clear-all-btn p-2"
-                onClick={() => {
-                  setSelectedFilters([]);
-                  setCount(0);
-                }}
-              >
-                Clear all
-              </button>
-            )}
-          </div>
-          <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
-            <div
-              className="d-flex align-items-center p-4 gap-4 justify-content-center"
-              id="header"
-              onScroll={onScroll}
-              ref={listInnerRef}
-            >
-              <div
-                className={
-                  loading === false || timepieceNFTS.length > 0
-                    ? "item-cards-wrapper"
-                    : "loader-wrapper"
-                }
-              >
-                {timepieceNFTS && timepieceNFTS.length > 0 ? (
-                  timepieceNFTS.map((nft, index) => (
-                    <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                      style={{ textDecoration: "none" }}
-                      key={index}
-                      state={{
-                        nft: nft,
-                        type: "timepiece",
-                        isOwner:
-                          nft.seller?.toLowerCase() ===
-                            coinbase?.toLowerCase() ||
-                          nft.buyer?.toLowerCase() === coinbase?.toLowerCase(),
-                        chain: nft.chain,
-                      }}
-                      onClick={() => {
-                        updateViewCount(nft.tokenId, nft.nftAddress);
-                      }}
-                    >
-                      <ItemCard
-                        ethTokenData={ethTokenData}
-                        dypTokenData={dypTokenData}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={false}
-                        isTimepiece={true}
-                        isWod={false}
-                        coinbase={coinbase}
-                        lastSold={nft.LastSold}
-                        isLatestSale={nft.isLatestSale}
-                        isListed={nft.isListed}
-                        soldPriceType={nft.soldPriceType}
+                  <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
+                    <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-3">
+                      <img
+                        src={emptyCheck}
+                        alt=""
+                        className="collection-price-check"
                       />
-                    </NavLink>
-                  ))
-                ) : (
+                      <img src={ethIcon} width={12} height={12} alt="" />
+                      <span className="collection-price-span mb-0">ETH</span>
+                    </div>
+                    <div className="collection-price position-relative d-flex align-items-center gap-1 py-1 px-3">
+                      <img
+                        src={emptyCheck}
+                        alt=""
+                        className="collection-price-check"
+                      />
+                      <img src={dypIcon} width={12} height={12} alt="" />
+                      <span className="collection-price-span mb-0">DYP</span>
+                    </div>
+                  </div>
+                </ul>
+              </div>
+              <div className="d-flex align-items-center gap-5">
+                <div
+                  className="filter-nav d-flex align-items-center gap-2"
+                  style={{ cursor: "pointer" }}
+                >
+                  <img src={priceIcon} alt="" />
+                  <h6 className="filter-nav-title mb-0">Price</h6>
+                </div>
+                <div
+                  className="filter-nav d-flex align-items-center gap-2"
+                  onClick={() => setOpenTraits(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img src={traitIcon} alt="" />
+                  <h6 className="filter-nav-title mb-0">Traits</h6>
+                </div>
+              </div>
+            </div>
+            <div className="selected-traits-wrapper d-flex align-items-center my-4 gap-2">
+              {selectedFilters.map((item, index) => (
+                <div
+                  className="selected-trait-item d-flex align-items-center p-2 gap-4"
+                  key={index}
+                >
+                  <div className="d-flex align-items-center gap-1">
+                    <span className="selected-trait-key">{item.key} :</span>
+                    <span className="selected-trait-value">{item.value}</span>
+                  </div>
+                  <img
+                    src={traitXmark}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => removeTrait(item.value)}
+                    alt=""
+                  />
+                </div>
+              ))}
+              {selectedFilters.length > 0 && (
+                <button
+                  className="btn clear-all-btn p-2"
+                  onClick={() => {
+                    setSelectedFilters([]);
+                    setCount(0);
+                  }}
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+            <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
+              <div
+                className="d-flex align-items-center p-4 gap-4 justify-content-center"
+                id="header"
+                onScroll={onScroll}
+                ref={listInnerRef}
+              >
+                <div
+                  className={
+                    loading === false || timepieceNFTS.length > 0
+                      ? "item-cards-wrapper"
+                      : "loader-wrapper"
+                  }
+                >
+                  {timepieceNFTS && timepieceNFTS.length > 0 ? (
+                    timepieceNFTS.map((nft, index) => (
+                      <NavLink
+                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                        state={{
+                          nft: nft,
+                          type: "timepiece",
+                          isOwner:
+                            nft.seller?.toLowerCase() ===
+                              coinbase?.toLowerCase() ||
+                            nft.buyer?.toLowerCase() ===
+                              coinbase?.toLowerCase(),
+                          chain: nft.chain,
+                        }}
+                        onClick={() => {
+                          updateViewCount(nft.tokenId, nft.nftAddress);
+                        }}
+                      >
+                        <ItemCard
+                          ethTokenData={ethTokenData}
+                          dypTokenData={dypTokenData}
+                          nft={nft}
+                          isConnected={isConnected}
+                          showConnectWallet={handleConnect}
+                          isCaws={false}
+                          isTimepiece={true}
+                          isWod={false}
+                          coinbase={coinbase}
+                          lastSold={nft.LastSold}
+                          isLatestSale={nft.isLatestSale}
+                          isListed={nft.isListed}
+                          soldPriceType={nft.soldPriceType}
+                        />
+                      </NavLink>
+                    ))
+                  ) : (
+                    <HashLoader
+                      color={"#554fd8"}
+                      loading={loading}
+                      cssOverride={override}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="d-flex justify-content-center w-100">
+                {!loading && next < totalSupply ? (
+                  <button
+                    className="btn py-2 px-3 nft-load-more-btn"
+                    onClick={() => loadMore()}
+                  >
+                    Load more
+                  </button>
+                ) : loading &&
+                  next < totalSupply &&
+                  timepieceNFTS.length > 0 ? (
                   <HashLoader
                     color={"#554fd8"}
                     loading={loading}
@@ -530,34 +572,15 @@ const TimepieceNFT = ({
                     aria-label="Loading Spinner"
                     data-testid="loader"
                   />
+                ) : (
+                  <></>
                 )}
               </div>
-            </div>
-            <div className="d-flex justify-content-center w-100">
-              {!loading && next < allTimepiece ? (
-                <button
-                  className="btn py-2 px-3 nft-load-more-btn"
-                  onClick={() => loadMore()}
-                >
-                  Load more
-                </button>
-              ) : loading && next < allTimepiece && timepieceNFTS.length > 0 ? (
-                <HashLoader
-                  color={"#554fd8"}
-                  loading={loading}
-                  cssOverride={override}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              ) : (
-                <></>
-              )}
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <OutsideClickHandler onOutsideClick={() => setOpenTraits(false)}>
+      <OutsideClickHandler onOutsideClick={() => setOpenTraits(false)}>
         <div
           className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xxl-5 ${
             openTraits && "filters-active"
@@ -834,7 +857,7 @@ const TimepieceNFT = ({
           ) : null}
         </div>
       </OutsideClickHandler>
-  </>
+    </>
   );
 };
 
