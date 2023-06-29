@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-const FilterCard = ({filters, categoryIndex, title, value, addProducts, selectedFilters}) => {
+const FilterCard = ({filters, categoryIndex, title, value, addProducts, selectedFilters, count}) => {
 
     const [selected, setSelected] = useState(false)
 
@@ -19,9 +19,8 @@ const FilterCard = ({filters, categoryIndex, title, value, addProducts, selected
       }else{
         setSelected(false)
       }
-      // console.log(value, title, "selected");
       
-    }, [JSON.stringify(selectedFilters)])
+    }, [count])
     
 
   return (
