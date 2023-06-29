@@ -20,6 +20,9 @@ import ItemCard from "../../../../../components/ItemCard/ItemCard";
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
 import accountEmptyCaws from "./assets/accountEmptyCaws.svg";
 import accountEmptyLand from "./assets/accountEmptyLand.svg";
+import filterIcon from "./assets/filterIcon.svg";
+import emptyCheck from "./assets/emptyCheck.svg";
+import dropdownIcon from "./assets/dropdownIcon.svg";
 
 const WalletBalance = ({
   dypBalance,
@@ -89,8 +92,9 @@ const WalletBalance = ({
   };
 
   const getAllnftsListed = async () => {
-    const result = await getAllNfts();
-    setAllListed(result);
+    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
+
+    setAllListed(listedNFTS);
   };
 
   const sortNfts = (sortValue) => {
@@ -221,28 +225,27 @@ const WalletBalance = ({
   const getListed = async () => {
     let finalItems = [];
 
-    const listedNFTS = await getListedNFTS(
-      0,
-      "",
-      "seller",
-      isVerified && email ? address : coinbase,
-      ""
-    );
-    listedNFTS &&
-      listedNFTS.length > 0 &&
-      listedNFTS.map((nft) => {
+    allListed &&
+      allListed.length > 0 &&
+      allListed.map((nft) => {
         if (nft.nftAddress === window.config.nft_caws_address) {
           nft.type = "caws";
           nft.chain = 1;
+          nft.isListed = true;
+          nft.isStaked = false;
           finalItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
+          nft.isListed = true;
+          nft.isStaked = false;
           finalItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_timepiece_address) {
           nft.type = "timepiece";
           nft.chain = 1;
+          nft.isListed = true;
           finalItems.push(nft);
+          nft.isStaked = false;
         }
       });
     setlistedItems(finalItems);
@@ -254,10 +257,13 @@ const WalletBalance = ({
     let finalLandArray = [];
     let finalCawsArray = [];
     let finalCollection = [];
+    let stakeArray = [];
+    // console.log(allListed, "allListed");
 
     //bought [latestBoughtNFTS]
     //listed [listedItems]
     //staked [myWodWodStakes,myCawsWodStakes,landStaked]
+    //final [listed, toList, staked]
 
     if (myTimepieceCollected && myTimepieceCollected.length > 0) {
       for (let i = 0; i < myTimepieceCollected.length; i++) {
@@ -274,6 +280,13 @@ const WalletBalance = ({
           type: "timepiece",
           chain: 1,
           isStaked: false,
+          isListed: allListed.find(
+            (obj) =>
+              obj.tokenId == myTimepieceCollected[i] &&
+              obj.nftAddress === window.config.nft_timepiece_address
+          )
+            ? true
+            : false,
         });
       }
     }
@@ -293,6 +306,13 @@ const WalletBalance = ({
           type: "land",
           chain: 1,
           isStaked: false,
+          isListed: allListed.find(
+            (obj) =>
+              obj.tokenId == myLandCollected[i] &&
+              obj.nftAddress === window.config.nft_land_address
+          )
+            ? true
+            : false,
         });
       }
     }
@@ -312,6 +332,76 @@ const WalletBalance = ({
           type: "caws",
           chain: 1,
           isStaked: false,
+          isListed: allListed.find(
+            (obj) =>
+              obj.tokenId == myCawsCollected[i] &&
+              obj.nftAddress === window.config.nft_caws_address
+          )
+            ? true
+            : false,
+        });
+      }
+    }
+    if (myWodWodStakes && myWodWodStakes.length > 0) {
+      for (let i = 0; i < myWodWodStakes.length; i++) {
+        stakeArray.push({
+          nftAddress: window.config.nft_land_address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
+          tokenId: myWodWodStakes[i].name.slice(
+            1,
+            myWodWodStakes[i].name.length
+          ),
+          type: "land",
+          chain: 1,
+          isStaked: true,
+          isListed: false,
+        });
+      }
+    }
+    if (myCawsWodStakes && myCawsWodStakes.length > 0) {
+      for (let i = 0; i < myCawsWodStakes.length; i++) {
+        stakeArray.push({
+          nftAddress: window.config.nft_caws_address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
+          tokenId: myCawsWodStakes[i].name.slice(
+            6,
+            myCawsWodStakes[i].name.length
+          ),
+          type: "caws",
+          chain: 1,
+          isStaked: true,
+          isListed: false,
+        });
+      }
+    }
+    if (landStaked && landStaked.length > 0) {
+      for (let i = 0; i < landStaked.length; i++) {
+        stakeArray.push({
+          nftAddress: window.config.nft_land_address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
+          tokenId: landStaked[i].name.slice(1, landStaked[i].name.length),
+          type: "land",
+          chain: 1,
+          isStaked: true,
+          isListed: false,
         });
       }
     }
@@ -320,6 +410,7 @@ const WalletBalance = ({
       ...finalTimepieceArray,
       ...finalLandArray,
       ...finalCawsArray,
+      ...stakeArray,
     ];
 
     setcollectedItems(finalCollection);
@@ -444,70 +535,6 @@ const WalletBalance = ({
       });
   };
 
-  var settings = {
-    dots: false,
-    arrows: false,
-    dotsClass: "button__bar",
-    infinite: false,
-    speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    beforeChange: (current, next) => {
-      setActiveSlide(next);
-    },
-    afterChange: (current) => setActiveSlide(current),
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1500,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
-
-  const firstNext = () => {
-    firstSlider.current.slickNext();
-  };
-  const firstPrev = () => {
-    firstSlider.current.slickPrev();
-  };
-
   const getTwonfts = () => {
     const allnft = [...myCawsWodStakes, ...landStaked];
     setNftItems(allnft);
@@ -519,20 +546,26 @@ const WalletBalance = ({
     getTokenData();
     getTokenDataavax();
     getTokenDatabnb();
-    getAllnftsListed();
+    getListed();
   }, []);
+
+  useEffect(() => {
+    getCollected();
+  }, [allListed]);
 
   useEffect(() => {
     getAllFavs();
   }, [favoritesArray, latestBoughtNFTS]);
 
-  const emptyArray = [1, 2, 3, 4, 5, 6];
+  // useEffect(() => {
+  //   if (myTimepieceCollected || myCawsCollected || myLandCollected) {
+  //     getCollected();
+  //   }
+  // }, [myTimepieceCollected, myCawsCollected, myLandCollected, coinbase]);
 
   useEffect(() => {
-    if (myTimepieceCollected || myCawsCollected || myLandCollected) {
-      getCollected();
-    }
-  }, [myTimepieceCollected, myCawsCollected, myLandCollected, coinbase]);
+    getAllnftsListed();
+  }, [listedNFTS]);
 
   useEffect(() => {
     getTwonfts();
@@ -1271,9 +1304,8 @@ const WalletBalance = ({
       </div>
       {showNfts && (
         <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-11">
-           
           <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-end w-100 position-relative">
-            {filterTitle !== "Staked" ? (
+            {filterTitle !== "Staked" && filterTitle !== "Collected" ? (
               <div className="d-flex align-items-center gap-4">
                 <h6
                   className={`filter-title ${
@@ -1308,7 +1340,7 @@ const WalletBalance = ({
                   Timepiece
                 </h6>
               </div>
-            ) : (
+            ) : filterTitle === "Staked" ? (
               <div className="d-flex align-items-center gap-4">
                 <h6
                   className={`filter-title ${
@@ -1337,6 +1369,123 @@ const WalletBalance = ({
                   Land
                 </h6>
               </div>
+            ) : (
+              <div className="d-flex flex-column mb-3 flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+                <span className="totalcollection">
+                  Total NFTs: {collectedItems.length}
+                </span>
+                <div className="d-flex gap-3 align-items-center">
+                  <div class="dropdown" style={{ width: "150px" }}>
+                    <button
+                      class="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <h6 className="filter-nav-title mb-0">Collections</h6>
+                      </div>
+                      <img src={dropdownIcon} alt="" />
+                    </button>
+                    <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Oldest to newest");
+                          sortNfts("otl");
+                        }}
+                      >
+                        <span>All</span>
+                      </li>
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>Land</span>
+                      </li>
+
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>CAWS</span>
+                      </li>
+
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>Timepiece</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="dropdown" style={{ width: "150px" }}>
+                    <button
+                      class="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <h6 className="filter-nav-title mb-0">Status</h6>
+                      </div>
+                      <img src={dropdownIcon} alt="" />
+                    </button>
+                    <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Oldest to newest");
+                          sortNfts("otl");
+                        }}
+                      >
+                        <span>All</span>
+                      </li>
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>To List</span>
+                      </li>
+
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>Listed</span>
+                      </li>
+
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>In Stake</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           {loadingRecentListings === false && filterTitle === "Collected" ? (
@@ -1348,7 +1497,7 @@ const WalletBalance = ({
                     to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
                     style={{ textDecoration: "none" }}
                     key={index}
-                    className="col-12 col-lg-6 col-xxl-4 mb-3"
+                    className="col-12 col-lg-6 col-xxl-3 mb-3"
                     state={{
                       nft: nft,
                       type:
@@ -1684,7 +1833,7 @@ const WalletBalance = ({
                     <NavLink
                       to={`/marketplace/stake`}
                       style={{ textDecoration: "none" }}
-                      className="col-12 col-lg-6 col-xxl-2 mb-3"
+                      className="col-12 col-lg-6 col-xxl-4 mb-3"
                       key={index}
                     >
                       <CawsWodItem

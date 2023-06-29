@@ -902,7 +902,7 @@ function App() {
           throw new Error("Error fetching user favorites");
         }
         const data = await response.json();
-        console.log(data.favorites);
+        // console.log(data.favorites);
 
         setFavorites(data.favorites);
         return data.favorites;
@@ -924,7 +924,6 @@ function App() {
         (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
       );
 
-
       let wodFilter = allSold.filter(
         (item) => item.nftAddress === window.config.nft_land_address
       );
@@ -936,11 +935,10 @@ function App() {
         (item) => item.nftAddress === window.config.nft_timepiece_address
       );
 
-
       let uniqueTimepiece = timepieceFilter.filter(
         (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
       );
-      
+
       setCawsBought(uniqueCaws);
       setLandBought(uniqueWod);
       setTimepieceBought(uniqueTimepiece);
@@ -971,11 +969,11 @@ function App() {
   }, [recentListedNFTS2?.length, listedNFTS2?.length, nftCount]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      getOtherNfts();
-      getallNfts();
-    }, 3000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(() => {
+    getOtherNfts();
+    getallNfts();
+    // }, 3000);
+    // return () => clearInterval(interval);
   }, [recentListedNFTS2?.length, listedNFTS2?.length, nftCount]);
 
   // useEffect(() => {
