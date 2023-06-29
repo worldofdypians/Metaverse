@@ -23,7 +23,7 @@ import fullCheck from "./assets/fullCheck.svg";
 import FilterCard from "./FilterCard";
 import traitXmark from "./assets/traitXmark.svg";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
-import cawsmetadata from '../../../actions/cawsmetadatas.json'
+import cawsmetadata from "../../../actions/cawsmetadatas.json";
 
 const CawsNFT = ({
   isConnected,
@@ -84,7 +84,7 @@ const CawsNFT = ({
     hat,
     eyewear,
   ]);
-  const [filterIds, setFilterIds] = useState()
+  const [filterIds, setFilterIds] = useState();
   const addProducts = (product, category) => {
     if (category === 0) {
       let testarr = background;
@@ -271,7 +271,7 @@ const CawsNFT = ({
       eyewear,
     ];
 
-    primarySelected = primarySelected.filter((item) => item.value.length !== 0)
+    primarySelected = primarySelected.filter((item) => item.value.length !== 0);
 
     setSelectedFilters([
       background,
@@ -297,12 +297,10 @@ const CawsNFT = ({
       });
     });
     setDisplayFilters(testDisplay);
-   
-    // console.log(searchNFTsByTraits(primarySelected, cawsmetadata), "PLEASE WORK OMFG");
-    setFilterIds(searchNFTsByTraits(primarySelected, cawsmetadata),)
-  };
 
-  
+    // console.log(searchNFTsByTraits(primarySelected, cawsmetadata), "PLEASE WORK OMFG");
+    setFilterIds(searchNFTsByTraits(primarySelected, cawsmetadata));
+  };
 
   const fetchFilters = async () => {
     await axios
@@ -540,10 +538,16 @@ const CawsNFT = ({
             <div className="row align-items-center justify-content-between mt-4">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
-                  <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
-                    Cats And Watches Society{" "}
-                    <span style={{ color: "#8c56ff" }}>(CAWS)</span>
-                  </h6>
+                  <div className="d-flex align-items-baseline gap-3 justify-content-between">
+                    <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                      Cats And Watches Society{" "}
+                      <span style={{ color: "#8c56ff" }}>(CAWS)</span>
+                    </h6>
+                    <span className="totalsupplytxt">
+                      10000
+                      <mark className="text-white bg-transparent">CAWS</mark>{" "}
+                    </span>
+                  </div>
                   <p className="collection-desc">
                     The Timepiece NFTs offer different benefits in Metaverse
                     like: <b>Exclusive Access</b> to new and exciting events,{" "}
@@ -684,7 +688,7 @@ const CawsNFT = ({
                   className="btn clear-all-btn p-2"
                   onClick={() => {
                     setSelectedFilters([]);
-                    setDisplayFilters([])
+                    setDisplayFilters([]);
                     setCount(0);
                   }}
                 >
@@ -801,7 +805,7 @@ const CawsNFT = ({
               style={{ cursor: "pointer" }}
               onClick={() => {
                 setSelectedFilters([]);
-                setDisplayFilters([])
+                setDisplayFilters([]);
 
                 setCount(0);
               }}

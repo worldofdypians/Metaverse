@@ -2752,6 +2752,7 @@ class NFT {
       "cawsPrice",
       "maxCawsPurchase",
       "ownerOf",
+      "totalSupply"
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
         let contract = await getContractNFT(this.key);
@@ -2873,6 +2874,7 @@ class LANDNFT {
       "landPrice",
       "maxLandPurchase",
       "ownerOf",
+      "totalSupply"
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
         let contract = await getContractLandNFT(this.key);

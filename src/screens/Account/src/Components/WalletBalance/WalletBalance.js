@@ -83,6 +83,9 @@ const WalletBalance = ({
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
   const [allListed, setAllListed] = useState([]);
 
+  const [filter1, setFilter1] = useState("");
+  const [filter2, setFilter2] = useState("");
+
   const firstSlider = useRef();
 
   const override = {
@@ -130,39 +133,13 @@ const WalletBalance = ({
 
   const filterRecentListings = (filter) => {
     setLoadingRecentListings(true);
-    if (filterTitle === "Collected") {
-      if (filter === "caws") {
-        setRecentListingsFilter("caws");
-        let cawsFilter = collectedItems.filter(
-          (item) =>
-            item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address
-        );
-        setcollectedItemsFiltered(cawsFilter);
-      } else if (filter === "land") {
-        setRecentListingsFilter("land");
-        let wodFilter = collectedItems.filter(
-          (item) => item.nftAddress === window.config.nft_land_address
-        );
-        setcollectedItemsFiltered(wodFilter);
-      } else if (filter === "timepiece") {
-        setRecentListingsFilter("timepiece");
-        let timepieceFilter = collectedItems.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address
-        );
-        setcollectedItemsFiltered(timepieceFilter);
-      } else if (filter === "all") {
-        setRecentListingsFilter("all");
-        setcollectedItemsFiltered(collectedItems);
-      }
-    }
+
     if (filterTitle === "Favorites") {
       if (filter === "caws") {
         setRecentListingsFilter("caws");
         let cawsFilter = favoriteItems.filter(
           (item) =>
-            item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address
+            item.nftAddress === window.config.nft_caws_address
         );
         setfavItemsFiltered(cawsFilter);
       } else if (filter === "land") {
@@ -179,7 +156,7 @@ const WalletBalance = ({
         setfavItemsFiltered(timepieceFilter);
       } else if (filter === "all") {
         setRecentListingsFilter("all");
-        setcollectedItemsFiltered(favoriteItems);
+        setfavItemsFiltered(favoriteItems);
       }
     }
     if (filterTitle === "Listed") {
@@ -221,6 +198,7 @@ const WalletBalance = ({
       setLoadingRecentListings(false);
     }, 1000);
   };
+ 
 
   const getListed = async () => {
     let finalItems = [];
@@ -263,7 +241,7 @@ const WalletBalance = ({
     //bought [latestBoughtNFTS]
     //listed [listedItems]
     //staked [myWodWodStakes,myCawsWodStakes,landStaked]
-    //final [listed, toList, staked]
+    //final [listed, to list, staked]
 
     if (myTimepieceCollected && myTimepieceCollected.length > 0) {
       for (let i = 0; i < myTimepieceCollected.length; i++) {
@@ -540,6 +518,114 @@ const WalletBalance = ({
     setNftItems(allnft);
   };
 
+
+  const handleSortCollection = (value1, value2) => {
+    if (filter1 === "all" && filter2 === "all") {
+      setcollectedItemsFiltered(collectedItems);
+    } else if (filter1 === "land" && filter2 === "all") {
+      let wodFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_land_address
+      );
+      setcollectedItemsFiltered(wodFilter);
+    } else if (filter1 === "timepiece" && filter2 === "all") {
+      let timepieceFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_timepiece_address
+      );
+      setcollectedItemsFiltered(timepieceFilter);
+    } else if (filter1 === "caws" && filter2 === "all") {
+      let cawsFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_caws_address
+      );
+      setcollectedItemsFiltered(cawsFilter);
+    } else if (filter1 === "all" && filter2 === "to list") {
+      let nftFilter = collectedItems.filter(
+        (item) => item.isListed === false && item.isStaked === false
+      );
+
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "all" && filter2 === "listed") {
+      let nftFilter = collectedItems.filter(
+        (item) => item.isListed === true && item.isStaked === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "all" && filter2 === "in stake") {
+      let nftFilter = collectedItems.filter((item) => item.isStaked === true);
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "land" && filter2 === "to list") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_land_address &&
+          item.isListed === false &&
+          item.isStaked === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "land" && filter2 === "listed") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_land_address &&
+          item.isListed === true &&
+          item.isStaked === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "land" && filter2 === "in stake") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_land_address &&
+          item.isListed === false &&
+          item.isStaked === true
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "caws" && filter2 === "to list") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_caws_address &&
+          item.isListed === false &&
+          item.isStaked === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "caws" && filter2 === "listed") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_caws_address &&
+          item.isListed === true &&
+          item.isStaked === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "caws" && filter2 === "in stake") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_caws_address &&
+          item.isListed === false &&
+          item.isStaked === true
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "timepiece" && filter2 === "to list") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_timepiece_address &&
+          item.isListed === false &&
+          item.isStaked === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "timepiece" && filter2 === "listed") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_timepiece_address &&
+          item.isListed === true &&
+          item.isStaked === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "timepiece" && filter2 === "in stake") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_timepiece_address &&
+          item.isListed === false &&
+          item.isStaked === true
+      );
+      setcollectedItemsFiltered(nftFilter);
+    }
+  };
+
   useEffect(() => {
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
@@ -552,6 +638,10 @@ const WalletBalance = ({
   useEffect(() => {
     getCollected();
   }, [allListed]);
+
+  useEffect(() => {
+    handleSortCollection();
+  }, [filter1, filter2]);
 
   useEffect(() => {
     getAllFavs();
@@ -1384,7 +1474,9 @@ const WalletBalance = ({
                       aria-expanded="false"
                     >
                       <div className="d-flex align-items-center gap-2">
-                        <h6 className="filter-nav-title mb-0">Collections</h6>
+                        <h6 className="filter-nav-title mb-0">
+                          {filter1 === "" ? "Collections" : filter1}
+                        </h6>
                       </div>
                       <img src={dropdownIcon} alt="" />
                     </button>
@@ -1392,8 +1484,8 @@ const WalletBalance = ({
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
-                          setFilterTitle("Oldest to newest");
-                          sortNfts("otl");
+                          setFilter1("all");
+                          handleSortCollection();
                         }}
                       >
                         <span>All</span>
@@ -1401,8 +1493,8 @@ const WalletBalance = ({
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
-                          setFilterTitle("Newest To Oldest");
-                          sortNfts("lto");
+                          setFilter1("land");
+                          handleSortCollection();
                         }}
                       >
                         <span>Land</span>
@@ -1411,8 +1503,8 @@ const WalletBalance = ({
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
-                          setFilterTitle("Newest To Oldest");
-                          sortNfts("lto");
+                          setFilter1("caws");
+                          handleSortCollection();
                         }}
                       >
                         <span>CAWS</span>
@@ -1421,8 +1513,8 @@ const WalletBalance = ({
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
-                          setFilterTitle("Newest To Oldest");
-                          sortNfts("lto");
+                          setFilter1("timepiece");
+                          handleSortCollection();
                         }}
                       >
                         <span>Timepiece</span>
@@ -1439,7 +1531,9 @@ const WalletBalance = ({
                       aria-expanded="false"
                     >
                       <div className="d-flex align-items-center gap-2">
-                        <h6 className="filter-nav-title mb-0">Status</h6>
+                        <h6 className="filter-nav-title mb-0">
+                          {filter2 === "" ? "Status" : filter2}
+                        </h6>
                       </div>
                       <img src={dropdownIcon} alt="" />
                     </button>
@@ -1447,8 +1541,8 @@ const WalletBalance = ({
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
-                          setFilterTitle("Oldest to newest");
-                          sortNfts("otl");
+                          setFilter2("all");
+                          handleSortCollection();
                         }}
                       >
                         <span>All</span>
@@ -1456,8 +1550,8 @@ const WalletBalance = ({
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
-                          setFilterTitle("Newest To Oldest");
-                          sortNfts("lto");
+                          setFilter2("to list");
+                          handleSortCollection();
                         }}
                       >
                         <span>To List</span>
@@ -1466,8 +1560,8 @@ const WalletBalance = ({
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
-                          setFilterTitle("Newest To Oldest");
-                          sortNfts("lto");
+                          setFilter2("listed");
+                          handleSortCollection();
                         }}
                       >
                         <span>Listed</span>
@@ -1476,8 +1570,8 @@ const WalletBalance = ({
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
-                          setFilterTitle("Newest To Oldest");
-                          sortNfts("lto");
+                          setFilter2("in stake");
+                          handleSortCollection();
                         }}
                       >
                         <span>In Stake</span>

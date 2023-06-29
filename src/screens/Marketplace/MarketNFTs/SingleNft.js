@@ -23,6 +23,8 @@ import { useQuery } from "@apollo/client";
 import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
 import favActive from "./assets/favActive.svg";
 import favInactive from "./assets/favInactive.svg";
+import cart from "./assets/cart.svg";
+import link from "./assets/link.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -342,6 +344,55 @@ const SingleNft = ({
           console.log(e);
         });
     }
+  };
+
+  const getLatest20BoughtNFTS = async () => {
+    let boughtItems = [];
+    let finalboughtItems = [];
+
+    const URL =
+      "https://api.studio.thegraph.com/query/46190/dypius-marketplace/version/latest";
+
+    const itemBoughtQuery = `
+        {
+            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
+            nftAddress
+            tokenId
+            payment_priceType
+            price
+            buyer
+            blockNumber
+            blockTimestamp
+        }
+        }
+        `;
+
+    await axios
+      .post(URL, { query: itemBoughtQuery })
+      .then(async (result) => {
+        boughtItems = await result.data.data.itemBoughts;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    boughtItems &&
+      boughtItems.map((nft) => {
+        if (nft.nftAddress === window.config.nft_caws_address) {
+          nft.type = "caws";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_land_address) {
+          nft.type = "land";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+          nft.type = "timepiece";
+          nft.chain = 1;
+          finalboughtItems.push(nft);
+        }
+      });
+    return finalboughtItems;
   };
 
   async function addNFTToUserFavorites(userId, tokenId, nftAddress) {
@@ -1754,6 +1805,82 @@ const SingleNft = ({
                   </>
                 )}
               </div>
+            </div>
+          </div>
+
+          <div className="px-2 mt-5">
+            <div className="d-flex flex-column gap-3">
+              <span className="nftactivity">NFT Activity </span>
+              <table className="pastsaleTable p-2">
+                <tbody>
+                  <th className="saleHeader">Event</th>
+                  <th className="saleHeader">Price</th>
+                  <th className="saleHeader">From</th>
+                  <th className="saleHeader">To</th>
+                  <th className="saleHeader">Date</th>
+                  <tr className="saleRow">
+                    <td className="saledata">
+                      {" "}
+                      <img src={cart} alt="" /> Sale
+                    </td>
+                    <td className="saleprice">0.0218 ETH</td>
+                    <td className="greendata">0xat...beef</td>
+                    <td className="greendata">0x2ab...a4e2</td>
+                    <td className="greendata">
+                      1 day ago <img src={link} alt="" />
+                    </td>
+                  </tr>
+                  <tr className="saleRow">
+                    <td className="saledata">
+                      {" "}
+                      <img src={cart} alt="" /> Sale
+                    </td>
+                    <td className="saleprice">0.0218 ETH</td>
+                    <td className="greendata">0xat...beef</td>
+                    <td className="greendata">0x2ab...a4e2</td>
+                    <td className="greendata">
+                      1 day ago <img src={link} alt="" />
+                    </td>
+                  </tr>
+
+                  <tr className="saleRow">
+                    <td className="saledata">
+                      {" "}
+                      <img src={cart} alt="" /> Sale
+                    </td>
+                    <td className="saleprice">0.0218 ETH</td>
+                    <td className="greendata">0xat...beef</td>
+                    <td className="greendata">0x2ab...a4e2</td>
+                    <td className="greendata">
+                      1 day ago <img src={link} alt="" />
+                    </td>
+                  </tr>
+                  <tr className="saleRow">
+                    <td className="saledata">
+                      {" "}
+                      <img src={cart} alt="" /> Sale
+                    </td>
+                    <td className="saleprice">0.0218 ETH</td>
+                    <td className="greendata">0xat...beef</td>
+                    <td className="greendata">0x2ab...a4e2</td>
+                    <td className="greendata">
+                      1 day ago <img src={link} alt="" />
+                    </td>
+                  </tr>
+                  <tr className="saleRow">
+                    <td className="saledata">
+                      {" "}
+                      <img src={cart} alt="" /> Sale
+                    </td>
+                    <td className="saleprice">0.0218 ETH</td>
+                    <td className="greendata">0xat...beef</td>
+                    <td className="greendata">0x2ab...a4e2</td>
+                    <td className="greendata">
+                      1 day ago <img src={link} alt="" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
