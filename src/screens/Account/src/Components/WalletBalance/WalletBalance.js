@@ -20,6 +20,9 @@ import ItemCard from "../../../../../components/ItemCard/ItemCard";
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
 import accountEmptyCaws from "./assets/accountEmptyCaws.svg";
 import accountEmptyLand from "./assets/accountEmptyLand.svg";
+import filterIcon from "./assets/filterIcon.svg";
+import emptyCheck from "./assets/emptyCheck.svg";
+import dropdownIcon from "./assets/dropdownIcon.svg";
 
 const WalletBalance = ({
   dypBalance,
@@ -89,8 +92,9 @@ const WalletBalance = ({
   };
 
   const getAllnftsListed = async () => {
-    const result = await getAllNfts();
-    setAllListed(result);
+    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
+
+    setAllListed(listedNFTS);
   };
 
   const sortNfts = (sortValue) => {
@@ -221,28 +225,27 @@ const WalletBalance = ({
   const getListed = async () => {
     let finalItems = [];
 
-    const listedNFTS = await getListedNFTS(
-      0,
-      "",
-      "seller",
-      isVerified && email ? address : coinbase,
-      ""
-    );
-    listedNFTS &&
-      listedNFTS.length > 0 &&
-      listedNFTS.map((nft) => {
+    allListed &&
+      allListed.length > 0 &&
+      allListed.map((nft) => {
         if (nft.nftAddress === window.config.nft_caws_address) {
           nft.type = "caws";
           nft.chain = 1;
+          nft.isListed = true;
+          nft.isStaked = false;
           finalItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
+          nft.isListed = true;
+          nft.isStaked = false;
           finalItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_timepiece_address) {
           nft.type = "timepiece";
           nft.chain = 1;
+          nft.isListed = true;
           finalItems.push(nft);
+          nft.isStaked = false;
         }
       });
     setlistedItems(finalItems);
@@ -252,9 +255,15 @@ const WalletBalance = ({
   const getCollected = async () => {
     var finalTimepieceArray = [];
     let finalLandArray = [];
-    let finalCawsOldArray = [];
     let finalCawsArray = [];
     let finalCollection = [];
+    let stakeArray = [];
+    // console.log(allListed, "allListed");
+
+    //bought [latestBoughtNFTS]
+    //listed [listedItems]
+    //staked [myWodWodStakes,myCawsWodStakes,landStaked]
+    //final [listed, toList, staked]
 
     if (myTimepieceCollected && myTimepieceCollected.length > 0) {
       for (let i = 0; i < myTimepieceCollected.length; i++) {
@@ -270,6 +279,14 @@ const WalletBalance = ({
           tokenId: myTimepieceCollected[i],
           type: "timepiece",
           chain: 1,
+          isStaked: false,
+          isListed: allListed.find(
+            (obj) =>
+              obj.tokenId == myTimepieceCollected[i] &&
+              obj.nftAddress === window.config.nft_timepiece_address
+          )
+            ? true
+            : false,
         });
       }
     }
@@ -288,6 +305,14 @@ const WalletBalance = ({
           tokenId: myLandCollected[i],
           type: "land",
           chain: 1,
+          isStaked: false,
+          isListed: allListed.find(
+            (obj) =>
+              obj.tokenId == myLandCollected[i] &&
+              obj.nftAddress === window.config.nft_land_address
+          )
+            ? true
+            : false,
         });
       }
     }
@@ -306,6 +331,77 @@ const WalletBalance = ({
           tokenId: myCawsCollected[i],
           type: "caws",
           chain: 1,
+          isStaked: false,
+          isListed: allListed.find(
+            (obj) =>
+              obj.tokenId == myCawsCollected[i] &&
+              obj.nftAddress === window.config.nft_caws_address
+          )
+            ? true
+            : false,
+        });
+      }
+    }
+    if (myWodWodStakes && myWodWodStakes.length > 0) {
+      for (let i = 0; i < myWodWodStakes.length; i++) {
+        stakeArray.push({
+          nftAddress: window.config.nft_land_address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
+          tokenId: myWodWodStakes[i].name.slice(
+            1,
+            myWodWodStakes[i].name.length
+          ),
+          type: "land",
+          chain: 1,
+          isStaked: true,
+          isListed: false,
+        });
+      }
+    }
+    if (myCawsWodStakes && myCawsWodStakes.length > 0) {
+      for (let i = 0; i < myCawsWodStakes.length; i++) {
+        stakeArray.push({
+          nftAddress: window.config.nft_caws_address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
+          tokenId: myCawsWodStakes[i].name.slice(
+            6,
+            myCawsWodStakes[i].name.length
+          ),
+          type: "caws",
+          chain: 1,
+          isStaked: true,
+          isListed: false,
+        });
+      }
+    }
+    if (landStaked && landStaked.length > 0) {
+      for (let i = 0; i < landStaked.length; i++) {
+        stakeArray.push({
+          nftAddress: window.config.nft_land_address,
+          buyer:
+            isVerified &&
+            email &&
+            coinbase &&
+            address?.toLowerCase() === coinbase.toLowerCase()
+              ? address
+              : coinbase,
+          tokenId: landStaked[i].name.slice(1, landStaked[i].name.length),
+          type: "land",
+          chain: 1,
+          isStaked: true,
+          isListed: false,
         });
       }
     }
@@ -314,6 +410,7 @@ const WalletBalance = ({
       ...finalTimepieceArray,
       ...finalLandArray,
       ...finalCawsArray,
+      ...stakeArray,
     ];
 
     setcollectedItems(finalCollection);
@@ -340,8 +437,8 @@ const WalletBalance = ({
 
   const getAllFavs = async () => {
     if (favoritesArray && favoritesArray.length > 0) {
-      const unique =  [...new Set(favoritesArray.map((item) =>  {}))]
-      console.log(unique, favoritesArray);
+      const unique = [...new Set(favoritesArray.map((item) => {}))];
+      // console.log(unique, favoritesArray);
       setfavoriteItems(favoritesArray);
       setfavItemsFiltered(favoritesArray);
     } else {
@@ -438,70 +535,6 @@ const WalletBalance = ({
       });
   };
 
-  var settings = {
-    dots: false,
-    arrows: false,
-    dotsClass: "button__bar",
-    infinite: false,
-    speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    beforeChange: (current, next) => {
-      setActiveSlide(next);
-    },
-    afterChange: (current) => setActiveSlide(current),
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1500,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
-
-  const firstNext = () => {
-    firstSlider.current.slickNext();
-  };
-  const firstPrev = () => {
-    firstSlider.current.slickPrev();
-  };
-
   const getTwonfts = () => {
     const allnft = [...myCawsWodStakes, ...landStaked];
     setNftItems(allnft);
@@ -513,18 +546,26 @@ const WalletBalance = ({
     getTokenData();
     getTokenDataavax();
     getTokenDatabnb();
-    getAllnftsListed();
+    getListed();
   }, []);
+
+  useEffect(() => {
+    getCollected();
+  }, [allListed]);
 
   useEffect(() => {
     getAllFavs();
   }, [favoritesArray, latestBoughtNFTS]);
 
-  const emptyArray = [1, 2, 3, 4, 5, 6];
+  // useEffect(() => {
+  //   if (myTimepieceCollected || myCawsCollected || myLandCollected) {
+  //     getCollected();
+  //   }
+  // }, [myTimepieceCollected, myCawsCollected, myLandCollected, coinbase]);
 
   useEffect(() => {
-    getCollected();
-  }, [myTimepieceCollected]);
+    getAllnftsListed();
+  }, [listedNFTS]);
 
   useEffect(() => {
     getTwonfts();
@@ -1222,7 +1263,7 @@ const WalletBalance = ({
               ((filterTitle === "Collected" && collectedItems.length > 6) ||
                 (filterTitle === "Listed" && listedItems.length > 6) ||
                 (filterTitle === "Staked" &&
-                  myCawsWodStakes.length + landStaked.length > 1) ||
+                  myCawsWodStakes.length + landStaked.length > 0) ||
                 (filterTitle === "Favorites" && favoriteItems.length > 6)) && (
                 <div
                   className="row w-100 justify-content-center position-relative"
@@ -1263,26 +1304,8 @@ const WalletBalance = ({
       </div>
       {showNfts && (
         <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-11">
-          {activeSlide > 0 && (
-            <img
-              src={nextArrow}
-              width={40}
-              height={40}
-              onClick={firstPrev}
-              className="prev-arrow-nft"
-              alt=""
-            />
-          )}
-          <img
-            src={nextArrow}
-            width={40}
-            height={40}
-            onClick={firstNext}
-            className="next-arrow-nft"
-            alt=""
-          />
           <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-end w-100 position-relative">
-            {filterTitle !== "Staked" ? (
+            {filterTitle !== "Staked" && filterTitle !== "Collected" ? (
               <div className="d-flex align-items-center gap-4">
                 <h6
                   className={`filter-title ${
@@ -1317,7 +1340,7 @@ const WalletBalance = ({
                   Timepiece
                 </h6>
               </div>
-            ) : (
+            ) : filterTitle === "Staked" ? (
               <div className="d-flex align-items-center gap-4">
                 <h6
                   className={`filter-title ${
@@ -1346,206 +1369,481 @@ const WalletBalance = ({
                   Land
                 </h6>
               </div>
+            ) : (
+              <div className="d-flex flex-column mb-3 flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+                <span className="totalcollection">
+                  Total NFTs: {collectedItems.length}
+                </span>
+                <div className="d-flex gap-3 align-items-center">
+                  <div class="dropdown" style={{ width: "150px" }}>
+                    <button
+                      class="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <h6 className="filter-nav-title mb-0">Collections</h6>
+                      </div>
+                      <img src={dropdownIcon} alt="" />
+                    </button>
+                    <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Oldest to newest");
+                          sortNfts("otl");
+                        }}
+                      >
+                        <span>All</span>
+                      </li>
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>Land</span>
+                      </li>
+
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>CAWS</span>
+                      </li>
+
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>Timepiece</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="dropdown" style={{ width: "150px" }}>
+                    <button
+                      class="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <h6 className="filter-nav-title mb-0">Status</h6>
+                      </div>
+                      <img src={dropdownIcon} alt="" />
+                    </button>
+                    <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Oldest to newest");
+                          sortNfts("otl");
+                        }}
+                      >
+                        <span>All</span>
+                      </li>
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>To List</span>
+                      </li>
+
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>Listed</span>
+                      </li>
+
+                      <li
+                        className="nft-dropdown-item"
+                        onClick={() => {
+                          setFilterTitle("Newest To Oldest");
+                          sortNfts("lto");
+                        }}
+                      >
+                        <span>In Stake</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           {loadingRecentListings === false && filterTitle === "Collected" ? (
-            <div className="slider-container">
-              <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                {collectedItemsFiltered &&
-                  collectedItemsFiltered.length > 0 &&
-                  collectedItemsFiltered.map((nft, index) => (
-                    <NavLink
-                      to={`/marketplace/nft/${index}`}
-                      style={{ textDecoration: "none" }}
-                      key={index}
-                      state={{
-                        nft: nft,
-                        type: nft.type,
-                        isOwner:
-                          (nft.buyer &&
-                            nft.buyer.toLowerCase() ===
-                              coinbase?.toLowerCase()) ||
-                          (nft.seller &&
-                            nft.seller.toLowerCase() ===
-                              coinbase?.toLowerCase()),
-                        chain: nft.chain,
-                      }}
-                      onClick={() => {
-                        updateViewCount(nft.tokenId, nft.nftAddress);
-                      }}
-                    >
-                      <ItemCard
-                        ethTokenData={ethTokenData}
-                        dypTokenData={dypTokenData}
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={nft.type === "caws"}
-                        isTimepiece={nft.type === "timepiece"}
-                        isWod={nft.type === "land"}
-                        coinbase={coinbase}
-                      />
-                    </NavLink>
-                  ))}
-              </Slider>
+            <div className="row px-3">
+              {collectedItemsFiltered &&
+                collectedItemsFiltered.length > 0 &&
+                collectedItemsFiltered.map((nft, index) => (
+                  <NavLink
+                    to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                    style={{ textDecoration: "none" }}
+                    key={index}
+                    className="col-12 col-lg-6 col-xxl-3 mb-3"
+                    state={{
+                      nft: nft,
+                      type:
+                        nft.type ??
+                        nft.nftAddress === window.config.nft_caws_address
+                          ? "caws"
+                          : nft.nftAddress === window.config.nft_land_address
+                          ? "land"
+                          : "timepiece",
+                      // isOwner:
+                      //   isVerified && email
+                      //     ? nft.buyer
+                      //       ? nft.buyer?.toLowerCase() ===
+                      //         address?.toLowerCase()
+                      //         ? nft.buyer?.toLowerCase() ===
+                      //           coinbase?.toLowerCase()
+                      //         : nft.seller?.toLowerCase() ===
+                      //           address?.toLowerCase()
+                      //       : nft.seller?.toLowerCase() ===
+                      //         coinbase?.toLowerCase()
+                      //     : false,
+                      isOwner:
+                        (nft.buyer &&
+                          nft.buyer.toLowerCase() ===
+                            coinbase?.toLowerCase()) ||
+                        (nft.seller &&
+                          nft.seller.toLowerCase() === coinbase?.toLowerCase()),
+                      chain: nft.chain,
+                      chain: 1,
+                    }}
+                    onClick={() => {
+                      updateViewCount(nft.tokenId, nft.nftAddress);
+                    }}
+                  >
+                    <div className="">
+                      <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                        <img
+                          src={
+                            nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                              : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                          }
+                          alt=""
+                          className="account-card-img"
+                        />
+                        <div className="d-flex flex-column align-items-center justify-content-center">
+                          <h6 className="account-nft-title">
+                            {nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "CAWS"
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? "Genesis Land"
+                              : "CAWS Timepiece"}{" "}
+                            #{nft.tokenId}
+                          </h6>
+                          <span className="account-nft-type">
+                            {nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "CAWS"
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? "Genesis Land"
+                              : "Timepiece"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </NavLink>
+                ))}
             </div>
           ) : loadingRecentListings === false && filterTitle === "Favorites" ? (
-            <div className="slider-container">
-              <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                {favItemsFiltered &&
-                  favItemsFiltered.length > 0 &&
-                  favItemsFiltered.map((nft, index) => (
-                    <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                      style={{ textDecoration: "none" }}
-                      key={index}
-                      state={{
-                        nft: nft,
-                        type:
-                          nft.type ??
-                          nft.nftAddress === window.config.nft_caws_address
-                            ? "caws"
-                            : nft.nftAddress === window.config.nft_land_address
-                            ? "land"
-                            : "timepiece",
-                        // isOwner:
-                        //   isVerified && email
-                        //     ? nft.buyer
-                        //       ? nft.buyer?.toLowerCase() ===
-                        //         address?.toLowerCase()
-                        //         ? nft.buyer?.toLowerCase() ===
-                        //           coinbase?.toLowerCase()
-                        //         : nft.seller?.toLowerCase() ===
-                        //           address?.toLowerCase()
-                        //       : nft.seller?.toLowerCase() ===
-                        //         coinbase?.toLowerCase()
-                        //     : false,
-                        isOwner:
-                          (nft.buyer &&
-                            nft.buyer.toLowerCase() ===
-                              coinbase?.toLowerCase()) ||
-                          (nft.seller &&
-                            nft.seller.toLowerCase() ===
-                              coinbase?.toLowerCase()),
-                        chain: nft.chain,
-                        chain: 1,
-                      }}
-                      onClick={() => {
-                        updateViewCount(nft.tokenId, nft.nftAddress);
-                      }}
-                    >
-                      <ItemCard
-                        ethTokenData={ethTokenData}
-                        dypTokenData={dypTokenData}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={
-                          nft.nftAddress === window.config.nft_caws_address ||
-                          nft.nftAddress === window.config.nft_cawsold_address
-                        }
-                        isTimepiece={
-                          nft.nftAddress === window.config.nft_timepiece_address
-                        }
-                        isWod={
-                          nft.nftAddress === window.config.nft_land_address
-                        }
-                        coinbase={coinbase}
-                      />
-                    </NavLink>
-                  ))}
-              </Slider>
+            <div className="row px-3">
+              {favItemsFiltered &&
+                favItemsFiltered.length > 0 &&
+                favItemsFiltered.map((nft, index) => (
+                  <NavLink
+                    to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                    style={{ textDecoration: "none" }}
+                    key={index}
+                    className="col-12 col-lg-6 col-xxl-4 mb-3"
+                    state={{
+                      nft: nft,
+                      type:
+                        nft.type ??
+                        nft.nftAddress === window.config.nft_caws_address
+                          ? "caws"
+                          : nft.nftAddress === window.config.nft_land_address
+                          ? "land"
+                          : "timepiece",
+                      // isOwner:
+                      //   isVerified && email
+                      //     ? nft.buyer
+                      //       ? nft.buyer?.toLowerCase() ===
+                      //         address?.toLowerCase()
+                      //         ? nft.buyer?.toLowerCase() ===
+                      //           coinbase?.toLowerCase()
+                      //         : nft.seller?.toLowerCase() ===
+                      //           address?.toLowerCase()
+                      //       : nft.seller?.toLowerCase() ===
+                      //         coinbase?.toLowerCase()
+                      //     : false,
+                      isOwner:
+                        (nft.buyer &&
+                          nft.buyer.toLowerCase() ===
+                            coinbase?.toLowerCase()) ||
+                        (nft.seller &&
+                          nft.seller.toLowerCase() === coinbase?.toLowerCase()),
+                      chain: nft.chain,
+                      chain: 1,
+                    }}
+                    onClick={() => {
+                      updateViewCount(nft.tokenId, nft.nftAddress);
+                    }}
+                  >
+                    <div className="">
+                      <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                        <img
+                          src={
+                            nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                              : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                          }
+                          alt=""
+                          className="account-card-img"
+                        />
+                        <div className="d-flex flex-column align-items-center justify-content-center">
+                          <h6 className="account-nft-title">
+                            {nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "CAWS"
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? "Genesis Land"
+                              : "CAWS Timepiece"}{" "}
+                            #{nft.tokenId}
+                          </h6>
+                          <span className="account-nft-type">
+                            {nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "CAWS"
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? "Genesis Land"
+                              : "Timepiece"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </NavLink>
+                ))}
             </div>
           ) : loadingRecentListings === false && filterTitle === "Listed" ? (
-            <div className="slider-container">
-              <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                {listedItemsFiltered &&
-                  listedItemsFiltered.length > 0 &&
-                  listedItemsFiltered.map((nft, index) => (
+            <div className="row px-3">
+              {listedItemsFiltered &&
+                listedItemsFiltered.length > 0 &&
+                listedItemsFiltered.map((nft, index) => (
+                  <NavLink
+                    to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                    style={{ textDecoration: "none" }}
+                    key={index}
+                    className="col-12 col-lg-6 col-xxl-4 mb-3"
+                    state={{
+                      nft: nft,
+                      type:
+                        nft.type ??
+                        nft.nftAddress === window.config.nft_caws_address
+                          ? "caws"
+                          : nft.nftAddress === window.config.nft_land_address
+                          ? "land"
+                          : "timepiece",
+                      // isOwner:
+                      //   isVerified && email
+                      //     ? nft.buyer
+                      //       ? nft.buyer?.toLowerCase() ===
+                      //         address?.toLowerCase()
+                      //         ? nft.buyer?.toLowerCase() ===
+                      //           coinbase?.toLowerCase()
+                      //         : nft.seller?.toLowerCase() ===
+                      //           address?.toLowerCase()
+                      //       : nft.seller?.toLowerCase() ===
+                      //         coinbase?.toLowerCase()
+                      //     : false,
+                      isOwner:
+                        (nft.buyer &&
+                          nft.buyer.toLowerCase() ===
+                            coinbase?.toLowerCase()) ||
+                        (nft.seller &&
+                          nft.seller.toLowerCase() === coinbase?.toLowerCase()),
+                      chain: nft.chain,
+                      chain: 1,
+                    }}
+                    onClick={() => {
+                      updateViewCount(nft.tokenId, nft.nftAddress);
+                    }}
+                  >
+                    <div className="">
+                      <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                        <img
+                          src={
+                            nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                              : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                          }
+                          alt=""
+                          className="account-card-img"
+                        />
+                        <div className="d-flex flex-column align-items-center justify-content-center">
+                          <h6 className="account-nft-title">
+                            {nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "CAWS"
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? "Genesis Land"
+                              : "CAWS Timepiece"}{" "}
+                            #{nft.tokenId}
+                          </h6>
+                          <span className="account-nft-type">
+                            {nft.nftAddress ===
+                              window.config.nft_cawsold_address ||
+                            nft.nftAddress === window.config.nft_caws_address
+                              ? "CAWS"
+                              : nft.nftAddress ===
+                                window.config.nft_land_address
+                              ? "Genesis Land"
+                              : "Timepiece"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </NavLink>
+                ))}
+            </div>
+          ) : loadingRecentListings === false && filterTitle === "Staked" ? (
+            <div className="row px-3">
+              {recentListingsFilter === "cawswod"
+                ? myCawsWodStakes &&
+                  myCawsWodStakes.length > 0 &&
+                  myCawsWodStakes.map((nft, index) => (
                     <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp}`}
+                      to={`/marketplace/stake`}
                       style={{ textDecoration: "none" }}
                       key={index}
-                      state={{
-                        nft: nft,
-                        type: nft.type,
-                        isOwner:
-                          (nft.buyer &&
-                            nft.buyer.toLowerCase() ===
-                              coinbase?.toLowerCase()) ||
-                          (nft.seller &&
-                            nft.seller.toLowerCase() ===
-                              coinbase?.toLowerCase()),
-                        chain: nft.chain,
-                      }}
-                      onClick={() => {
-                        updateViewCount(nft.tokenId, nft.nftAddress);
-                      }}
+                      className="col-12 col-lg-6 col-xxl-4 mb-3"
                     >
-                      <ItemCard
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={nft.type === "caws"}
-                        isTimepiece={nft.type === "timepiece"}
-                        isWod={nft.type === "land"}
-                        coinbase={coinbase}
+                      <div className="">
+                        <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                          <div className="d-flex">
+                            <img
+                              src={nft.image}
+                              alt=""
+                              className="account-card-img"
+                            />
+                            <img
+                              src={myWodWodStakes[index].image}
+                              alt=""
+                              className="account-card-img"
+                            />
+                          </div>
+                          <div className="d-flex flex-column align-items-center justify-content-center">
+                            <h6 className="account-nft-title">
+                              Land {myWodWodStakes[index].name} x {nft.name}
+                            </h6>
+                            <span className="account-nft-type">
+                              Land x Caws
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      {/* <CawsWodItem
+                        cawsImg={nft.image}
+                        wodImg={myWodWodStakes[index].image}
+                        cawsName={nft.name}
+                        wodName={myWodWodStakes[index].name}
+                      /> */}
+                    </NavLink>
+                  ))
+                : recentListingsFilter === "land"
+                ? landStaked &&
+                  landStaked.length > 0 &&
+                  landStaked.map((nft, index) => (
+                    <NavLink
+                      to={`/marketplace/stake`}
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                      className="col-12 col-lg-6 col-xxl-4 mb-3"
+                    >
+                      <div className="">
+                        <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                          <div className="d-flex">
+                            <img
+                              src={nft.image}
+                              alt=""
+                              className="account-card-img"
+                            />
+                          </div>
+                          <div className="d-flex flex-column align-items-center justify-content-center">
+                            <h6 className="account-nft-title">
+                              Land {nft.name}
+                            </h6>
+                            <span className="account-nft-type">
+                              Genesis Land
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </NavLink>
+                  ))
+                : nftItems &&
+                  nftItems.length > 0 &&
+                  nftItems.map((nft, index) => (
+                    <NavLink
+                      to={`/marketplace/stake`}
+                      style={{ textDecoration: "none" }}
+                      className="col-12 col-lg-6 col-xxl-4 mb-3"
+                      key={index}
+                    >
+                      <CawsWodItem
+                        cawsImg={nft?.name.includes("CAWS") && nft?.image}
+                        wodImg={myWodWodStakes[index]?.image ?? nft?.image}
+                        cawsName={nft?.name.includes("CAWS") && nft?.name}
+                        wodName={myWodWodStakes[index]?.name ?? nft?.name}
                       />
                     </NavLink>
                   ))}
-              </Slider>
-            </div>
-          ) : loadingRecentListings === false && filterTitle === "Staked" ? (
-            <div className="slider-container">
-              <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                {recentListingsFilter === "cawswod"
-                  ? myCawsWodStakes &&
-                    myCawsWodStakes.length > 0 &&
-                    myCawsWodStakes.map((nft, index) => (
-                      <NavLink
-                        to={`/marketplace/stake`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                      >
-                        <CawsWodItem
-                          cawsImg={nft.image}
-                          wodImg={myWodWodStakes[index].image}
-                          cawsName={nft.name}
-                          wodName={myWodWodStakes[index].name}
-                        />
-                      </NavLink>
-                    ))
-                  : recentListingsFilter === "land"
-                  ? landStaked &&
-                    landStaked.length > 0 &&
-                    landStaked.map((nft, index) => (
-                      <NavLink
-                        to={`/marketplace/stake`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                      >
-                        <CawsWodItem wodImg={nft.image} wodName={nft.name} />
-                      </NavLink>
-                    ))
-                  : nftItems &&
-                    nftItems.length > 0 &&
-                    nftItems.map((nft, index) => (
-                      <NavLink
-                        to={`/marketplace/stake`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                      >
-                        <CawsWodItem
-                          cawsImg={nft?.name.includes("CAWS") && nft?.image}
-                          wodImg={myWodWodStakes[index]?.image ?? nft?.image}
-                          cawsName={nft?.name.includes("CAWS") && nft?.name}
-                          wodName={myWodWodStakes[index]?.name ?? nft?.name}
-                        />
-                      </NavLink>
-                    ))}
-              </Slider>
             </div>
           ) : (
             <div className="loader-wrapper">

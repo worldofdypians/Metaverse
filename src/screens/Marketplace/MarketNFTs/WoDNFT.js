@@ -279,9 +279,9 @@ const WoDNFT = ({
   }, [wodBought]);
 
   useEffect(() => {
-    // if (wodBought && allwodNfts.length > 0 && finalData.length > 0) {
-    fetchInitialWod();
-    // }
+    if (wodBought && allwodNfts.length > 0 && finalData.length > 0) {
+      fetchInitialWod();
+    }
   }, [allwodNfts.length, finalData.length, wodBought]);
 
   useEffect(() => {

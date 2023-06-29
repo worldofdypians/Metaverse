@@ -333,35 +333,31 @@ function Dashboard({
   const fetchAllMyNfts = async () => {
     if (data?.getPlayer?.wallet?.publicAddress || coinbase) {
       getMyNFTS(
-        data?.getPlayer?.wallet &&
-          email &&
-          coinbase &&
-          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+        email
+          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
             coinbase.toLowerCase()
-          ? data?.getPlayer?.wallet?.publicAddress
+            ? data?.getPlayer?.wallet?.publicAddress
+            : coinbase
           : coinbase,
         "caws"
       ).then((NFTS) => setMyNFTSCaws(NFTS));
 
-
       getMyNFTS(
-        data?.getPlayer?.wallet &&
-          email &&
-          coinbase &&
-          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+        email
+          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
             coinbase.toLowerCase()
-          ? data?.getPlayer?.wallet?.publicAddress
+            ? data?.getPlayer?.wallet?.publicAddress
+            : coinbase
           : coinbase,
         "timepiece"
       ).then((NFTS) => setMyNFTSTimepiece(NFTS));
 
       getMyNFTS(
-        data?.getPlayer?.wallet &&
-          email &&
-          coinbase &&
-          data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
+        email
+          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
             coinbase.toLowerCase()
-          ? data?.getPlayer?.wallet?.publicAddress
+            ? data?.getPlayer?.wallet?.publicAddress
+            : coinbase
           : coinbase,
         "land"
       ).then((NFTS) => setMyNFTSLand(NFTS));
@@ -391,7 +387,7 @@ function Dashboard({
           nft.type = "caws";
           nft.chain = 1;
           finalboughtItems1.push(nft);
-        }else if (nft.nftAddress === window.config.nft_land_address) {
+        } else if (nft.nftAddress === window.config.nft_land_address) {
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems1.push(nft);
@@ -697,20 +693,9 @@ function Dashboard({
   }, [dataNonce]);
 
   useEffect(() => {
-    if (
-      coinbase &&
-      data?.getPlayer?.wallet?.publicAddress &&
-      email &&
-      coinbase.toLowerCase() ===
-        data?.getPlayer?.wallet?.publicAddress.toLowerCase()
-    ) {
+    if (coinbase || (data?.getPlayer?.wallet?.publicAddress && email)) {
       setsyncStatus("initial");
-    }
-    fetchAllMyNfts();
-    // getTokens();
-    // getStakes();
-    // getLandStakes();
-    if (coinbase) {
+      fetchAllMyNfts();
       getmyCawsWodStakes();
       getmyWodStakes();
     }
