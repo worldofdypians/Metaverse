@@ -101,7 +101,7 @@ const WoDNFT = ({
   ]);
 
   const [displayFilters, setDisplayFilters] = useState([]);
-  // const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, landmetadata));
+  const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, landmetadata));
   let emptyFilters = [
     {
       trait_type: "Artifacts",
@@ -156,7 +156,7 @@ const WoDNFT = ({
     setSelectedFilters(emptyFilters)
     setDisplayFilters([])
     setCount(0)
-    // setFilterIds(searchNFTsByTraits(emptyFilters, landmetadata))
+    setFilterIds(searchNFTsByTraits(emptyFilters, landmetadata))
    
   
   }
@@ -395,7 +395,8 @@ const WoDNFT = ({
     setDisplayFilters(testDisplay);
 
     // console.log(searchNFTsByTraits(primarySelected, cawsmetadata), "PLEASE WORK OMFG");
-    // setFilterIds(searchNFTsByTraits(primarySelected, landmetadata));
+    setFilterIds(searchNFTsByTraits(primarySelected, landmetadata));
+    // console.log(searchNFTsByTraits(primarySelected, landmetadata));
   };
 
   const fetchFilters = async () => {
@@ -747,13 +748,13 @@ const WoDNFT = ({
               </div>
             </div>
             <div className="selected-traits-wrapper d-flex align-items-center my-4 gap-2">
-              {selectedFilters.map((item, index) => (
+              {displayFilters.map((item, index) => (
                 <div
                   className="selected-trait-item d-flex align-items-center p-2 gap-4"
                   key={index}
                 >
                   <div className="d-flex align-items-center gap-1">
-                    <span className="selected-trait-key">{item.key} :</span>
+                    <span className="selected-trait-key">{item.trait_type} :</span>
                     <span className="selected-trait-value">{item.value}</span>
                   </div>
                   <img
@@ -764,7 +765,7 @@ const WoDNFT = ({
                   />
                 </div>
               ))}
-              {selectedFilters.length > 0 && (
+              {displayFilters.length > 0 && (
                 <button
                   className="btn clear-all-btn p-2"
                   onClick={() => {
