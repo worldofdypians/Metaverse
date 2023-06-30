@@ -139,9 +139,11 @@ const getTimepieceNfts = async () => {
 };
 
 export {
+  convertToUSD,
   getCawsNfts,
   getCawsOldNfts,
   getWodNfts,
   getTimepieceNfts,
   getAllNfts,
+  
 };

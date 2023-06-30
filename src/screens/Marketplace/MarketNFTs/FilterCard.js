@@ -24,7 +24,7 @@ const FilterCard = ({filters, categoryIndex, title, value, addProducts, selected
     
 
   return (
-    <div className="col-12 col-md-6 col-lg-4 col-xxl-3">
+    <div className="col-6 col-lg-4 col-xxl-3">
     <div
       className={`trait-wrapper ${selected && 'trait-wrapper-active'} d-flex align-items-center justify-content-between p-2`}
       style={{height: "40px", cursor: 'pointer'}}
@@ -38,7 +38,6 @@ const FilterCard = ({filters, categoryIndex, title, value, addProducts, selected
       <div className="d-flex align-items-center">
         <span className="trait-title mb-0">{title}</span>
       </div>
-      <span className="trait-amount mb-0">{value}</span>
     </div>
   </div>
   )

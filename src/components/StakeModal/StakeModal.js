@@ -327,7 +327,7 @@ const StakeModal = ({
         </div>
       </div>
       <div className="row modal-scroll position-relative mt-3">
-        <span className="vertical-stake-divider"></span>
+        <span className="vertical-stake-divider d-none d-lg-flex"></span>
         <div className="col-12 col-lg-6">
           <div className="nft-modal-grid">
             {landItems.length === 0 ? (

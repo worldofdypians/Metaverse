@@ -332,7 +332,7 @@ const TimepieceNFT = ({
           style={{ backgroundSize: "cover" }}
         >
           <div className="container-lg mx-0 position-relative">
-            <div className="row align-items-center justify-content-between mt-4">
+            <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
@@ -364,7 +364,7 @@ const TimepieceNFT = ({
               className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
               style={{ zIndex: 2 }}
             >
-              <div class="dropdown" style={{ width: "200px" }}>
+              <div class="dropdown" style={{ width: "150px" }}>
                 <button
                   class="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
@@ -437,7 +437,7 @@ const TimepieceNFT = ({
                   </div>
                 </ul>
               </div>
-              <div className="d-flex align-items-center gap-5">
+              <div className="d-flex align-items-center gap-3 gap-lg-5">
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
