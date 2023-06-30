@@ -101,7 +101,7 @@ const WoDNFT = ({
   ]);
 
   const [displayFilters, setDisplayFilters] = useState([]);
-  const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, landmetadata));
+  // const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, landmetadata));
   let emptyFilters = [
     {
       trait_type: "Artifacts",
@@ -156,7 +156,7 @@ const WoDNFT = ({
     setSelectedFilters(emptyFilters)
     setDisplayFilters([])
     setCount(0)
-    setFilterIds(searchNFTsByTraits(emptyFilters, landmetadata))
+    // setFilterIds(searchNFTsByTraits(emptyFilters, landmetadata))
    
   
   }
@@ -395,7 +395,7 @@ const WoDNFT = ({
     setDisplayFilters(testDisplay);
 
     // console.log(searchNFTsByTraits(primarySelected, cawsmetadata), "PLEASE WORK OMFG");
-    setFilterIds(searchNFTsByTraits(primarySelected, landmetadata));
+    // setFilterIds(searchNFTsByTraits(primarySelected, landmetadata));
   };
 
   const fetchFilters = async () => {
