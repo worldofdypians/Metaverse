@@ -10,6 +10,12 @@
   src: url("./fonts/Organetto.ttf");
 }
 
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+
 
 ::-webkit-scrollbar {
   width: 5px;

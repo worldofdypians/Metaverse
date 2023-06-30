@@ -21,7 +21,6 @@ import traitXmark from "./assets/traitXmark.svg";
 import filtersXmark from "./assets/filtersXmark.svg";
 import axios from "axios";
 
-
 const WoDNFT = ({
   isConnected,
   handleConnect,
@@ -49,17 +48,15 @@ const WoDNFT = ({
   const [paginatedData, setpaginatedData] = useState([]);
   const [finalData, setfinalData] = useState([]);
   const [allwodNfts, setAllwod] = useState([]);
-  const [openTraits, setOpenTraits] = useState(false)
-  const [filters, setFilters] = useState([])
+  const [openTraits, setOpenTraits] = useState(false);
+  const [filters, setFilters] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [count, setCount] = useState(0);
-  const [categoryIndex, setCategoryIndex] = useState(0)
-
+  const [categoryIndex, setCategoryIndex] = useState(0);
 
   const listInnerRef = useRef();
   const nftsPerRow = 18;
   const allLandpiece = 999;
-
 
   const addProducts = (product) => {
     let testarr = selectedFilters;
@@ -77,19 +74,15 @@ const WoDNFT = ({
       setSelectedFilters(testarr);
     }
     setCount(count + 1);
-
   };
 
   const fetchFilters = async () => {
     await axios
-      .get(
-        "https://api.opensea.io/api/v1/collection/worldofdypians",
-        {
-          headers: {
-            "X-API-KEY": "b132fcc52ab540f0b13a319bf57b34f0",
-          },
-        }
-      )
+      .get("https://api.opensea.io/api/v1/collection/worldofdypians", {
+        headers: {
+          "X-API-KEY": "b132fcc52ab540f0b13a319bf57b34f0",
+        },
+      })
       .then((res) => {
         setFilters(res.data.collection.traits);
       });
@@ -101,8 +94,6 @@ const WoDNFT = ({
     );
     setCount(count + 1);
   };
-
-
 
   const sortNfts = (sortValue) => {
     if (sortValue === "htl") {
@@ -315,15 +306,10 @@ const WoDNFT = ({
             <div className="row align-items-center justify-content-between mt-4">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
-                  <div className="d-flex gap-3 justify-content-between align-items-baseline">
-                    <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      Genesis <span style={{ color: "#8c56ff" }}>Land</span>
-                    </h6>
-                    <span className="totalsupplytxt">
-                      1000
-                      <mark className="text-white bg-transparent">Lands</mark>{" "}
-                    </span>
-                  </div>
+                  <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                    Genesis <span style={{ color: "#8c56ff" }}>Land</span>
+                  </h6>
+
                   <p className="collection-desc">
                     The Genesis Land offers <b>Access</b> to the metaverse,{" "}
                     <b>Ownership</b> to land in WoD, participate on different{" "}

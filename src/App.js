@@ -991,7 +991,7 @@ function App() {
     <BrowserRouter>
       <ApolloProvider client={client}>
         <AuthProvider>
-          <div className="container-fluid p-0 main-wrapper h-100 position-relative overflow-auto">
+          <div className="container-fluid p-0 main-wrapper position-relative">
             <Header
               handleSignUp={handleShowWalletModal}
               coinbase={coinbase}
