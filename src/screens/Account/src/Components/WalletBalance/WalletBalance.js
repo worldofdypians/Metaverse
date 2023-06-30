@@ -697,7 +697,7 @@ const WalletBalance = ({
           </div>
         </div>
         <div className="col-12 px-0 px-lg-3 col-lg-7">
-          <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2 justify-content-between">
+          <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
             <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2">
               <h6
                 className={`account-nft-sort ${
@@ -1354,7 +1354,7 @@ const WalletBalance = ({
               ((filterTitle === "Collected" && collectedItems.length > 0) ||
                 (filterTitle === "Listed" && listedItems.length > 0) ||
                 (filterTitle === "Staked" &&
-                  myCawsWodStakes.length + landStaked.length > 0) ||
+                  myCawsWodStakes.length + landStaked.length > 4) ||
                 (filterTitle === "Favorites" && favoriteItems.length > 0)) && (
                 <div
                   className="row w-100 justify-content-center position-relative"
