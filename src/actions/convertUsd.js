@@ -24,6 +24,9 @@ const getDypPrice = async () => {
       dyp_Price = data["defi-yield-protocol"].usd;
       dyp_Price = dyp_Price.toFixed(2);
       return dyp_Price;
+    })
+    .catch((e) => {
+      console.error(e);
     });
 };
 
@@ -37,7 +40,6 @@ const getListedNftResult = async () => {
 
 getDypPrice();
 getEthPrice();
-
 
 const convertToUSD = async (price, payment_priceType) => {
   if (payment_priceType === 0) {
@@ -70,7 +72,7 @@ const getAllNfts = async () => {
         nft.type = "caws";
         nft.chain = 1;
         convertedNFTs.push(nft);
-      }  else if (nft.nftAddress === window.config.nft_land_address) {
+      } else if (nft.nftAddress === window.config.nft_land_address) {
         nft.type = "land";
         nft.chain = 1;
         convertedNFTs.push(nft);
@@ -145,5 +147,4 @@ export {
   getWodNfts,
   getTimepieceNfts,
   getAllNfts,
-  
 };

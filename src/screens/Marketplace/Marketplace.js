@@ -78,7 +78,6 @@ const Marketplace = ({
   };
   const firstPrev = () => {
     firstSlider.current.slickPrev();
-    console.log("hello");
   };
   const secondPrev = () => {
     secondSlider.current.slickPrev();
@@ -200,12 +199,16 @@ const Marketplace = ({
   };
 
   const getAllData = async () => {
-    const result = await axios.get(
-      "https://api.worldofdypians.com/api/totalTXs"
-    );
-    const result2 = await axios.get(
-      "https://api.worldofdypians.com/api/totalVolumes"
-    );
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/totalTXs")
+      .catch((e) => {
+        console.error(e);
+      });
+    const result2 = await axios
+      .get("https://api.worldofdypians.com/api/totalVolumes")
+      .catch((e) => {
+        console.error(e);
+      });
 
     if (result.data) {
       setTotalTx(result.data);
@@ -599,7 +602,10 @@ const Marketplace = ({
                 </div>
               </NavLink>
             </div>
-            <div className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4" style={{minHeight: '420px'}}>
+            <div
+              className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4"
+              style={{ minHeight: "420px" }}
+            >
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-4">
                   <h6 className="nft-wrapper-title font-raleway mb-0">
@@ -675,127 +681,132 @@ const Marketplace = ({
                 }
                 style={{ rowGap: "22px" }}
               >
-                {!loadingTopSales ?  
-                topSold && topSold.length > 0 ? (
-                  topSold.slice(0, 9).map((nft, index) => (
-                    <div className="col-12 col-lg-4" key={index}>
-                      <NavLink
-                        to={`/marketplace/nft/${nft.blockTimestamp}`}
-                        style={{ textDecoration: "none" }}
-                        state={{
-                          nft: nft,
-                          type: nft.type,
-                          isOwner:
-                            nft.buyer?.toLowerCase() ===
-                            coinbase?.toLowerCase(),
-                          chain: nft.chain,
-                        }}
-                        onClick={() => {
-                          updateViewCount(nft.tokenId, nft.nftAddress);
-                        }}
-                      >
-                        <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
-                          {/* <div className="position-absolute top-sales-rank">
+                {!loadingTopSales ? (
+                  topSold && topSold.length > 0 ? (
+                    topSold.slice(0, 9).map((nft, index) => (
+                      <div className="col-12 col-lg-4" key={index}>
+                        <NavLink
+                          to={`/marketplace/nft/${nft.blockTimestamp}`}
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            nft: nft,
+                            type: nft.type,
+                            isOwner:
+                              nft.buyer?.toLowerCase() ===
+                              coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={() => {
+                            updateViewCount(nft.tokenId, nft.nftAddress);
+                          }}
+                        >
+                          <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
+                            {/* <div className="position-absolute top-sales-rank">
                             <span>{index + 1}</span>
                           </div> */}
-                          {/* <span className="sales-number">{index + 1}</span> */}
-                          <img
-                            src={
-                              nft.type === "caws"
-                                ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
-                                : nft.type === "land"
-                                ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                            }
-                            width={40}
-                            height={40}
-                            style={{ borderRadius: "10px" }}
-                            alt=""
-                          />
-                          <div className="d-flex justify-content-center gap-2 col-10">
-                            <h6
-                              className="nft-name-wrapper mb-0 py-1 px-2"
-                              style={{ fontSize: 14 }}
-                            >
-                              {nft.type === "caws"
-                                ? "CAWS"
-                                : nft.type === "land"
-                                ? "Genesis Land"
-                                : "Timepiece"}{" "}
-                              #{nft.tokenId}
-                            </h6>
-                            <div className="d-flex align-items-center gap-1 col-5 justify-content-end">
-                              <div className="d-flex flex-column col-9 ">
-                                <span
-                                  className="nft-price-usd overflow-hidden"
-                                  style={{
-                                    color: "#7DD9AF",
-                                    whiteSpace: "nowrap",
-                                    textOverflow: "ellipsis",
-                                    textAlign: "end",
-                                  }}
-                                >
-                                  $
-                                  {getFormattedNumber(
-                                    nft.payment_priceType === 0
-                                      ? ethTokenData * (nft.price / 1e18)
-                                      : dypTokenData * (nft.price / 1e18),
-                                    0
-                                  )}
-                                </span>{" "}
-                                <span
-                                  className="top-eth overflow-hidden"
-                                  style={{
-                                    fontSize: 10,
-                                    whiteSpace: "nowrap",
-                                    textOverflow: "ellipsis",
-                                    textAlign: "end",
-                                  }}
-                                >
-                                  {nft.payment_priceType === 0 ? (
-                                    <img
-                                      src={topEth}
-                                      height={12}
-                                      width={12}
-                                      alt=""
-                                      className="mx-1"
-                                    />
-                                  ) : (
-                                    <img
-                                      src={topDyp}
-                                      height={12}
-                                      width={12}
-                                      alt=""
-                                      className="mx-1"
-                                    />
-                                  )}
-                                  {getFormattedNumber(
-                                    nft.price / 1e18,
-                                    nft.payment_priceType === 0 ? 3 : 0
-                                  )}{" "}
-                                  {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                                </span>
+                            {/* <span className="sales-number">{index + 1}</span> */}
+                            <img
+                              src={
+                                nft.type === "caws"
+                                  ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                  : nft.type === "land"
+                                  ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                  : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                              }
+                              width={40}
+                              height={40}
+                              style={{ borderRadius: "10px" }}
+                              alt=""
+                            />
+                            <div className="d-flex justify-content-center gap-2 col-10">
+                              <h6
+                                className="nft-name-wrapper mb-0 py-1 px-2"
+                                style={{ fontSize: 14 }}
+                              >
+                                {nft.type === "caws"
+                                  ? "CAWS"
+                                  : nft.type === "land"
+                                  ? "Genesis Land"
+                                  : "Timepiece"}{" "}
+                                #{nft.tokenId}
+                              </h6>
+                              <div className="d-flex align-items-center gap-1 col-5 justify-content-end">
+                                <div className="d-flex flex-column col-9 ">
+                                  <span
+                                    className="nft-price-usd overflow-hidden"
+                                    style={{
+                                      color: "#7DD9AF",
+                                      whiteSpace: "nowrap",
+                                      textOverflow: "ellipsis",
+                                      textAlign: "end",
+                                    }}
+                                  >
+                                    $
+                                    {getFormattedNumber(
+                                      nft.payment_priceType === 0
+                                        ? ethTokenData * (nft.price / 1e18)
+                                        : dypTokenData * (nft.price / 1e18),
+                                      0
+                                    )}
+                                  </span>{" "}
+                                  <span
+                                    className="top-eth overflow-hidden"
+                                    style={{
+                                      fontSize: 10,
+                                      whiteSpace: "nowrap",
+                                      textOverflow: "ellipsis",
+                                      textAlign: "end",
+                                    }}
+                                  >
+                                    {nft.payment_priceType === 0 ? (
+                                      <img
+                                        src={topEth}
+                                        height={12}
+                                        width={12}
+                                        alt=""
+                                        className="mx-1"
+                                      />
+                                    ) : (
+                                      <img
+                                        src={topDyp}
+                                        height={12}
+                                        width={12}
+                                        alt=""
+                                        className="mx-1"
+                                      />
+                                    )}
+                                    {getFormattedNumber(
+                                      nft.price / 1e18,
+                                      nft.payment_priceType === 0 ? 3 : 0
+                                    )}{" "}
+                                    {nft.payment_priceType === 0
+                                      ? "ETH"
+                                      : "DYP"}
+                                  </span>
+                                </div>
                               </div>
                             </div>
+                            <span
+                              className="position-absolute top-sale-time"
+                              style={{ bottom: "-20%" }}
+                            >
+                              {getRelativeTime(nft.blockTimestamp)}
+                            </span>
                           </div>
-                          <span
-                            className="position-absolute top-sale-time"
-                            style={{ bottom: "-20%" }}
-                          >
-                            {getRelativeTime(nft.blockTimestamp)}
-                          </span>
-                        </div>
-                      </NavLink>{" "}
+                        </NavLink>{" "}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="d-flex justify-content-center">
+                      <h3
+                        className="text-white"
+                        style={{ textAlign: "center" }}
+                      >
+                        There are no listed items
+                      </h3>
                     </div>
-                  ))
-                ) :
-                (
-                  <div className="d-flex justify-content-center">
-                    <h3 className="text-white" style={{textAlign: 'center'}}>There are no listed items</h3>
-                  </div>
-                ) 
-                
-                : (
+                  )
+                ) : (
                   <HashLoader
                     color={"#554fd8"}
                     loading={loadingTopSales}
@@ -807,7 +818,10 @@ const Marketplace = ({
               </div>
             </div>
 
-            <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4" style={{minHeight: '420px'}}>
+            <div
+              className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4"
+              style={{ minHeight: "420px" }}
+            >
               {activeSlide > 0 && (
                 <div className="prev-arrow-nft" onClick={firstPrev}>
                   <img src={nextArrow} alt="" />
@@ -910,7 +924,10 @@ const Marketplace = ({
                 </div>
               )}
             </div>
-            <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4" style={{minHeight: '420px'}}>
+            <div
+              className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4"
+              style={{ minHeight: "420px" }}
+            >
               {activeSlide2 > 0 && (
                 <div className="prev-arrow-nft" onClick={secondPrev}>
                   <img src={nextArrow} alt="" />

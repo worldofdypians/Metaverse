@@ -41,6 +41,8 @@ const CawsNFT = ({
   };
   const windowSize = useWindowSize();
   const nftsPerRow = 18;
+  const nftsPerRow2 = 18;
+
   const allCaws = 10000;
 
   const [loading, setLoading] = useState(false);
@@ -48,11 +50,18 @@ const CawsNFT = ({
   const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [cawsNFTS, setCawsNFTS] = useState([]);
+  const [cawsNFTS2, setCawsNFTS2] = useState([]);
 
   const [next, setNext] = useState(0);
+  const [next2, setNext2] = useState(0);
+
   const [filters, setFilters] = useState([]);
   const [paginatedData, setpaginatedData] = useState([]);
+  const [paginatedData2, setpaginatedData2] = useState([]);
+
   const [finalData, setfinalData] = useState([]);
+  const [finalData2, setfinalData2] = useState([]);
+
   const [allCawsNfts, setAllcaws] = useState([]);
   const listInnerRef = useRef();
   const [openTraits, setOpenTraits] = useState(false);
@@ -84,7 +93,9 @@ const CawsNFT = ({
     hat,
     eyewear,
   ]);
-  const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, cawsmetadata));
+  const [filterIds, setFilterIds] = useState(
+    searchNFTsByTraits(selectedFilters, cawsmetadata)
+  );
   let emptyFilters = [
     { trait_type: "Tail", value: [] },
     { trait_type: "Ears", value: [] },
@@ -98,7 +109,7 @@ const CawsNFT = ({
   ];
 
   const clearAll = () => {
-    setBackground({trait_type: "Background", value: []});
+    setBackground({ trait_type: "Background", value: [] });
     setTail({ trait_type: "Tail", value: [] });
     setEars({ trait_type: "Ears", value: [] });
     setBody({ trait_type: "Body", value: [] });
@@ -108,13 +119,11 @@ const CawsNFT = ({
     setMouth({ trait_type: "Mouth", value: [] });
     setHat({ trait_type: "Hat", value: [] });
     setEyewear({ trait_type: "Eyewear", value: [] });
-    setSelectedFilters(emptyFilters)
-    setDisplayFilters([])
-    setCount(0)
-    setFilterIds(searchNFTsByTraits(emptyFilters, cawsmetadata))
-   
-  
-  }
+    setSelectedFilters(emptyFilters);
+    setDisplayFilters([]);
+    setCount(0);
+    setFilterIds(searchNFTsByTraits(emptyFilters, cawsmetadata));
+  };
   const addProducts = (product, category) => {
     if (category === 0) {
       let testarr = background;
@@ -456,6 +465,48 @@ const CawsNFT = ({
     return finaldata;
   };
 
+  const getAllCawsCollection = async () => {
+    let finalArray = [];
+    let paginatedArray = paginatedData2;
+
+    for (
+      let i = next2;
+      i < nftsPerRow2 + next2 && next2 + nftsPerRow2 < allCaws;
+      i++
+    ) {
+      const owner = await window.nft.ownerOf(i).catch((e) => {
+        console.log(e);
+      });
+      const attributes = await window.getNft(i);
+
+      finalArray.push({
+        nftAddress: window.config.nft_address,
+        buyer: owner,
+        tokenId: i.toString(),
+        type: "caws",
+        chain: 1,
+        attributes: attributes.attributes,
+      });
+    }
+
+    const finaldata = [...paginatedArray, ...finalArray];
+
+    setpaginatedData2(finaldata);
+
+    setfinalData2(finaldata);
+  };
+
+  const fetchInitialCaws2 = async () => {
+    const uniqueArray = finalData2.filter(
+      ({ tokenId: id1 }) => !allCawsNfts.some(({ tokenId: id2 }) => id2 == id1)
+    );
+
+    const finalUnique = [...allCawsNfts, ...uniqueArray];
+    setCawsNFTS2(finalUnique);
+    // setInitialNfts(finalUnique); todo
+    setLoading(false);
+  };
+
   const fetchInitialCaws = async () => {
     const collectionItems = finalData;
     const uniqueArray = collectionItems.filter(
@@ -490,6 +541,11 @@ const CawsNFT = ({
     setLoading(true);
   };
 
+  const loadMore2 = () => {
+    setNext2(next2 + nftsPerRow2);
+    setLoading(true);
+  };
+
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
 
@@ -497,13 +553,23 @@ const CawsNFT = ({
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
       if (isBottom) {
-        if (next < allCaws) {
-          loadMore();
+        if (count === 0) {
+          if (next < allCaws) {
+            loadMore();
+          }
+        } else {
+          if (next2 < allCaws) {
+            loadMore2();
+          }
         }
         document.removeEventListener("scroll", onScroll);
       }
     }
   };
+
+  useEffect(() => {
+    loadMore2();
+  }, [count]);
 
   useEffect(() => {
     document.addEventListener("scroll", onScroll);
@@ -512,6 +578,7 @@ const CawsNFT = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     getCawsCollection();
+    getAllCawsCollection();
     fetchFilters();
     document.title = "CAWS NFT";
   }, []);
@@ -527,10 +594,21 @@ const CawsNFT = ({
   }, [next]);
 
   useEffect(() => {
+    getAllCawsCollection();
+  }, [next2]);
+
+  useEffect(() => {
     if (cawsBought && allCawsNfts.length > 0 && finalData.length > 0) {
       fetchInitialCaws();
     }
   }, [allCawsNfts.length, finalData.length, cawsBought]);
+
+  useEffect(() => {
+    if (allCawsNfts.length > 0 && finalData2.length > 0) {
+      fetchInitialCaws2();
+    }
+  }, [allCawsNfts.length, finalData2.length]);
+
   useEffect(() => {
     if (cawsNFTS && cawsNFTS.length === 0) {
       setLoading(true);
@@ -540,9 +618,6 @@ const CawsNFT = ({
     }
     sortNfts("lth");
   }, [cawsNFTS]);
-
-
-  // console.log(filters);
 
   return (
     <div
@@ -708,7 +783,7 @@ const CawsNFT = ({
                 <button
                   className="btn clear-all-btn p-2"
                   onClick={() => {
-                    clearAll()
+                    clearAll();
                   }}
                 >
                   Clear all
@@ -724,11 +799,9 @@ const CawsNFT = ({
                       : "loader-wrapper"
                   }
                 >
-                  {cawsNFTS && cawsNFTS.length > 0 ? (
+                  {cawsNFTS && cawsNFTS.length > 0 && count === 0 ? (
                     <>
-                      {cawsNFTS.filter(function(item){
-                        return filterIds.includes(item.tokenId)
-                      }).map((nft, index) => (
+                      {cawsNFTS.map((nft, index) => (
                         <NavLink
                           to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
                           style={{ textDecoration: "none" }}
@@ -767,6 +840,50 @@ const CawsNFT = ({
                         </NavLink>
                       ))}
                     </>
+                  ) : count > 0 && filterIds && filterIds.length > 0 ? (
+                    <>
+                      {cawsNFTS2
+                        .filter(function (item) {
+                          return filterIds.includes(item.tokenId);
+                        })
+                        .map((nft, index) => (
+                          <NavLink
+                            to={`/marketplace/nft/${index}`}
+                            style={{ textDecoration: "none" }}
+                            key={index}
+                            state={{
+                              nft: cawsNFTS2.find((obj) => obj.tokenId == nft),
+                              type: "caws",
+                              isOwner:
+                                nft.seller?.toLowerCase() ===
+                                  coinbase?.toLowerCase() ||
+                                nft.buyer?.toLowerCase() ===
+                                  coinbase?.toLowerCase(),
+                              chain: nft.chain,
+                            }}
+                            onClick={() => {
+                              updateViewCount(nft, window.config.nft_address);
+                            }}
+                          >
+                            <ItemCard
+                              ethTokenData={ethTokenData}
+                              dypTokenData={dypTokenData}
+                              key={nft.id}
+                              nft={nft}
+                              isConnected={isConnected}
+                              showConnectWallet={handleConnect}
+                              isCaws={true}
+                              isTimepiece={false}
+                              isWod={false}
+                              coinbase={coinbase}
+                              lastSold={nft.lastSold}
+                              isLatestSale={nft.isLatestSale}
+                              isListed={nft.isListed}
+                              soldPriceType={nft.soldPriceType}
+                            />
+                          </NavLink>
+                        ))}
+                    </>
                   ) : (
                     <HashLoader
                       color={"#554fd8"}
@@ -783,7 +900,9 @@ const CawsNFT = ({
                 {!loading && next < allCaws ? (
                   <button
                     className="btn py-2 px-3 nft-load-more-btn"
-                    onClick={() => loadMore()}
+                    onClick={() => {
+                      count === 0 ? loadMore() : loadMore2();
+                    }}
                   >
                     Load more
                   </button>
@@ -825,7 +944,7 @@ const CawsNFT = ({
               className="clear-all mb-0"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                clearAll()
+                clearAll();
               }}
             >
               Clear all
