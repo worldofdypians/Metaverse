@@ -164,7 +164,6 @@
   font-weight: 600;
   line-height: normal;
   text-align: center;
-
 }
 
 .saledata {
@@ -178,13 +177,30 @@
 }
 
 .pastsaleTable {
-    border-radius: 40px;
-background: linear-gradient(180deg, rgba(37, 39, 67, 0.00) 45.83%, rgba(37, 39, 67, 0.15) 100%);
-box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
+  border-radius: 40px;
+  background: linear-gradient(
+    180deg,
+    rgba(37, 39, 67, 0) 45.83%,
+    rgba(37, 39, 67, 0.15) 100%
+  );
+  box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
+  max-height: 300px;
+
+  @media only screen and (max-width: 690px) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+.tablesalewrapper {
+  display: grid;
+  height: 300px;
+  overflow-y: auto;
 }
 
 .saleRow {
-    border-top: 1px solid #B8B8E0;
+  border-top: 1px solid #b8b8e0;
 }
 
 .saleprice {
@@ -195,7 +211,6 @@ box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
   line-height: normal;
   text-align: center;
   padding: 10px;
-
 }
 
 .greendata {

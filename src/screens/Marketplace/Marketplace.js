@@ -349,7 +349,6 @@ const Marketplace = ({
   }, [topSalesFilter, topSalesDate]);
 
   const filterRecentListings = (filter) => {
-    
     setLoadingRecentListings(true);
     if (filter === "caws") {
       setRecentListingsFilter("caws");
@@ -877,7 +876,6 @@ const Marketplace = ({
                               nft.seller?.toLowerCase() ===
                               coinbase?.toLowerCase(),
                             chain: nft.chain,
-                           
                           }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
@@ -993,7 +991,6 @@ const Marketplace = ({
                               nft.buyer?.toLowerCase() ===
                               coinbase?.toLowerCase(),
                             chain: nft.chain,
-                            
                           }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
