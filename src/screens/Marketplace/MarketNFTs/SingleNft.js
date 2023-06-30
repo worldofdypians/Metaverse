@@ -1541,7 +1541,7 @@ const SingleNft = ({
                           ) : !sellLoading && chainId !== 1 && chainId !== 5 ? (
                             "Switch Network"
                           ) : sellStatus === "sell" ? (
-                            "List Nft"
+                            "List NFT"
                           ) : sellStatus === "success" ? (
                             "Success"
                           ) : sellStatus === "approve" || sellStatus === "" ? (
