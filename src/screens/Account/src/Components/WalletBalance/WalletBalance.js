@@ -23,6 +23,7 @@ import accountEmptyLand from "./assets/accountEmptyLand.svg";
 import filterIcon from "./assets/filterIcon.svg";
 import emptyCheck from "./assets/emptyCheck.svg";
 import dropdownIcon from "./assets/dropdownIcon.svg";
+import Pagination from "@mui/material/Pagination";
 
 const WalletBalance = ({
   dypBalance,
@@ -85,6 +86,33 @@ const WalletBalance = ({
 
   const [filter1, setFilter1] = useState("");
   const [filter2, setFilter2] = useState("");
+  const [favoritesPage, setFavoritesPage] = useState(1)
+  const [favoritesSliceValue, setFavoritesSliceValue] = useState(6)
+  const [listedPage, setListedPage] = useState(1)
+  const [listedPageSlice, setListedPageSlice] = useState(6)
+  const [collectedPage, setCollectedPage] = useState(1)
+  const [collectedPageSlice, setCollectedPageSlice] = useState(6)
+  const [stakedPage, setStakedPage] = useState(1)
+  const [stakedPageSlice, setStakedPageSlice] = useState(6)
+
+
+  const handleFavoritesPage = (e, value) => {
+    setFavoritesPage(value)
+    setFavoritesSliceValue(value * 6)
+  };
+  const handleListedPage = (e, value) => {
+    setListedPage(value)
+    setListedPageSlice(value * 6)
+  };
+  const handleCollectedPage = (e, value) => {
+    setCollectedPage(value)
+    setCollectedPageSlice(value * 6)
+  };
+  const handleStakedPage = (e, value) => {
+    setStakedPage(value)
+    setStakedPageSlice(value * 6)
+  };
+
 
   const firstSlider = useRef();
 
@@ -1060,13 +1088,14 @@ const WalletBalance = ({
                               className="account-card-img"
                             />
                           </div>
-                          <div className="d-flex flex-column align-items-center justify-content-center">
+                          <div className="d-flex flex-column align-items-start justify-content-center">
                             <h6 className="account-nft-title">
-                              Land {myWodWodStakes[index].name} x {item.name}
+                              Genesis Land {myWodWodStakes[index].name} 
                             </h6>
-                            <span className="account-nft-type">
-                              Land x Caws
-                            </span>
+                            <h6 className="account-nft-title">
+                            {item.name}
+                            </h6>
+                            
                           </div>
                         </div>
                       </div>
@@ -1394,7 +1423,7 @@ const WalletBalance = ({
         </div>
       </div>
       {showNfts && (
-        <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-11">
+        <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-11" style={{minHeight: '330px'}}>
           <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-end w-100 position-relative">
             {filterTitle !== "Staked" && filterTitle !== "Collected" ? (
               <div className="d-flex align-items-center gap-4">
@@ -1584,7 +1613,8 @@ const WalletBalance = ({
             )}
           </div>
           {loadingRecentListings === false && filterTitle === "Collected" ? (
-            <div className="row px-3">
+            <div className="container d-flex flex-column justify-content-between" style={{height: '200px'}}>
+              <div className="row px-3">
               {collectedItemsFiltered &&
                 collectedItemsFiltered.length > 0 &&
                 collectedItemsFiltered.map((nft, index) => (
@@ -1674,12 +1704,18 @@ const WalletBalance = ({
                     </div>
                   </NavLink>
                 ))}
+                
+            </div>
+            <div className="col-12 d-flex justify-content-center">
+                  <Pagination color="primary" count={Math.round(collectedItemsFiltered.length / 6)} page={collectedPage} onChange={(e, value) => {handleCollectedPage(e, value);} } />     
+                </div>
             </div>
           ) : loadingRecentListings === false && filterTitle === "Favorites" ? (
-            <div className="row px-3">
+           <div className="container d-flex flex-column justify-content-between" style={{height: '200px'}}>
+             <div className="row px-3">
               {favItemsFiltered &&
                 favItemsFiltered.length > 0 &&
-                favItemsFiltered.map((nft, index) => (
+                favItemsFiltered.slice(favoritesSliceValue - 6, favoritesSliceValue).map((nft, index) => (
                   <NavLink
                     to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
                     style={{ textDecoration: "none" }}
@@ -1755,7 +1791,7 @@ const WalletBalance = ({
                               : nft.nftAddress ===
                                 window.config.nft_land_address
                               ? "Genesis Land"
-                              : "Timepiece"}
+                              : "Caws Timepiece"}
                           </span>
                         </div>
                       </div>
@@ -1763,8 +1799,13 @@ const WalletBalance = ({
                   </NavLink>
                 ))}
             </div>
+                  <div className="col-12 d-flex justify-content-center">
+                  <Pagination color="primary" count={Math.round(favItemsFiltered.length / 6)} page={favoritesPage} onChange={(e, value) => {handleFavoritesPage(e, value);} } />     
+                </div>
+           </div>
           ) : loadingRecentListings === false && filterTitle === "Listed" ? (
-            <div className="row px-3">
+           <div className="container d-flex flex-column justify-content-between" style={{height: '200px'}}>
+             <div className="row px-3">
               {listedItemsFiltered &&
                 listedItemsFiltered.length > 0 &&
                 listedItemsFiltered.map((nft, index) => (
@@ -1851,8 +1892,13 @@ const WalletBalance = ({
                   </NavLink>
                 ))}
             </div>
+            <div className="col-12 d-flex justify-content-center">
+                  <Pagination color="primary" count={Math.round(listedItemsFiltered.length / 6)} page={listedPage} onChange={(e, value) => {handleListedPage(e, value);} } />     
+                </div>
+           </div>
           ) : loadingRecentListings === false && filterTitle === "Staked" ? (
-            <div className="row px-3">
+          <div className="container d-flex flex-column justify-content-between" style={{height: '200px'}}>
+              <div className="row px-3">
               {recentListingsFilter === "cawswod"
                 ? myCawsWodStakes &&
                   myCawsWodStakes.length > 0 &&
@@ -1879,11 +1925,11 @@ const WalletBalance = ({
                           </div>
                           <div className="d-flex flex-column align-items-center justify-content-center">
                             <h6 className="account-nft-title">
-                              Land {myWodWodStakes[index].name} x {nft.name}
+                              Land {myWodWodStakes[index].name} 
                             </h6>
-                            <span className="account-nft-type">
-                              Land x Caws
-                            </span>
+                              <h6 className="account-nft-title">
+                              {nft.name}
+                              </h6>
                           </div>
                         </div>
                       </div>
@@ -1944,6 +1990,10 @@ const WalletBalance = ({
                     </NavLink>
                   ))}
             </div>
+            <div className="col-12 d-flex justify-content-center">
+                  <Pagination color="primary" count={Math.round(myCawsWodStakes.length / 6)} page={stakedPage} onChange={(e, value) => {handleStakedPage(e, value);} } />     
+                </div>
+          </div>
           ) : (
             <div className="loader-wrapper">
               <HashLoader

@@ -25,6 +25,7 @@ import axios from "axios";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import moment from "moment";
+import { Skeleton } from "@mui/material";
 
 const Marketplace = ({
   listedNFTS,
@@ -718,7 +719,7 @@ const Marketplace = ({
                               style={{ borderRadius: "10px" }}
                               alt=""
                             />
-                            <div className="d-flex justify-content-center gap-2 col-10">
+                            <div className="d-flex justify-content-between gap-2 w-100">
                               <h6
                                 className="nft-name-wrapper mb-0 py-1 px-2"
                                 style={{ fontSize: 14 }}
@@ -730,8 +731,8 @@ const Marketplace = ({
                                   : "Timepiece"}{" "}
                                 #{nft.tokenId}
                               </h6>
-                              <div className="d-flex align-items-center gap-1 col-5 justify-content-end">
-                                <div className="d-flex flex-column col-9 ">
+                              <div className="d-flex align-items-center gap-1 ">
+                                <div className="d-flex flex-column ">
                                   <span
                                     className="nft-price-usd overflow-hidden"
                                     style={{
@@ -752,7 +753,7 @@ const Marketplace = ({
                                   <span
                                     className="top-eth overflow-hidden"
                                     style={{
-                                      fontSize: 10,
+                                      fontSize: 12,
                                       whiteSpace: "nowrap",
                                       textOverflow: "ellipsis",
                                       textAlign: "end",
@@ -785,15 +786,15 @@ const Marketplace = ({
                                   </span>
                                 </div>
                               </div>
+                              <span
+                                className="position-absolute top-sale-time"
+                                style={{ bottom: "-20%" }}
+                              >
+                                {getRelativeTime(nft.blockTimestamp)}
+                              </span>
                             </div>
-                            <span
-                              className="position-absolute top-sale-time"
-                              style={{ bottom: "-20%" }}
-                            >
-                              {getRelativeTime(nft.blockTimestamp)}
-                            </span>
                           </div>
-                        </NavLink>{" "}
+                        </NavLink>
                       </div>
                     ))
                   ) : (
@@ -913,14 +914,157 @@ const Marketplace = ({
                   </Slider>
                 </div>
               ) : (
-                <div className="loader-wrapper">
-                  <HashLoader
+                <div className="loader-wrapper gap-3">
+                  {/* <HashLoader
                     color={"#554fd8"}
                     loading={loadingRecentListings}
                     cssOverride={override}
                     aria-label="Loading Spinner"
                     data-testid="loader"
-                  />
+                  /> */}
+                  {windowSize.width > 1600 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : windowSize.width > 1500 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : windowSize.width > 1024 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : windowSize.width > 600 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : windowSize.width > 480 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : (
+                    <Skeleton
+                      width={178}
+                      variant="rounded"
+                      height={230}
+                      sx={{ bgcolor: "black.700" }}
+                    />
+                  )}
                 </div>
               )}
             </div>
@@ -1032,14 +1176,157 @@ const Marketplace = ({
                   </Slider>
                 </div>
               ) : (
-                <div className="loader-wrapper">
-                  <HashLoader
+                <div className="loader-wrapper gap-3">
+                  {/* <HashLoader
                     color={"#554fd8"}
-                    loading={loadingRecentSales}
+                    loading={loadingRecentListings}
                     cssOverride={override}
                     aria-label="Loading Spinner"
                     data-testid="loader"
-                  />
+                  /> */}
+                  {windowSize.width > 1600 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : windowSize.width > 1500 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : windowSize.width > 1024 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : windowSize.width > 600 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : windowSize.width > 480 ? (
+                    <>
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : (
+                    <Skeleton
+                      width={178}
+                      variant="rounded"
+                      height={230}
+                      sx={{ bgcolor: "black.700" }}
+                    />
+                  )}
                 </div>
               )}
             </div>
