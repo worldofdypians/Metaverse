@@ -13,12 +13,12 @@ function searchNFTsByTraits(traits, jsonData) {
 
       const attributeValues = attributes
         .filter((attribute) => attribute.trait_type === traitType)
-        .map((attribute) => attribute.value.toLowerCase());
+        .map((attribute) => attribute.value.toString().toLowerCase());
 
       if (traitValues && traitValues.length === 1) {
-        return attributeValues.includes(traitValues[0].toLowerCase());
+        return attributeValues.includes(traitValues[0].toString().toLowerCase());
       } else if (traitValues && traitValues.length > 1) {
-        return traitValues.some((value) => attributeValues.includes(value.toLowerCase()));
+        return traitValues.some((value) => attributeValues.includes(value.toString().toLowerCase()));
       }
       
       return true;

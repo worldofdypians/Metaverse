@@ -22,6 +22,9 @@ import emptyCheck from "./assets/emptyCheck.svg";
 import fullCheck from "./assets/fullCheck.svg";
 import FilterCard from "./FilterCard";
 import traitXmark from "./assets/traitXmark.svg";
+import { searchNFTsByTraits } from "../../../actions/filterTraits";
+import timepiecemetadata from "../../../actions/timepiecemetadata.json";
+
 
 const TimepieceNFT = ({
   isConnected,
@@ -51,12 +54,287 @@ const TimepieceNFT = ({
   const [alltimepieceNfts, setAlltimepiece] = useState([]);
   const [openTraits, setOpenTraits] = useState(false);
   const [categoryIndex, setCategoryIndex] = useState(0);
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [count, setCount] = useState(0);
   const [filteredCaws, setFilteredCaws] = useState([]);
   const [testFinal, setTestFinal] = useState([]);
   const [filters, setFilters] = useState([]);
   const [totalSupply, settotalSupply] = useState(311);
+  const [background, setBackground] = useState({
+    trait_type: "Background",
+    value: [],
+  });
+  const [tail, setTail] = useState({ trait_type: "Tail", value: [] });
+  const [ears, setEars] = useState({ trait_type: "Ears", value: [] });
+  const [body, setBody] = useState({ trait_type: "Body", value: [] });
+  const [clothes, setClothes] = useState({ trait_type: "Clothes", value: [] });
+  const [eyes, setEyes] = useState({ trait_type: "Eyes", value: [] });
+  const [mouth, setMouth] = useState({ trait_type: "Mouth", value: [] });
+  const [hat, setHat] = useState({ trait_type: "Hat", value: [] });
+  const [eyewear, setEyewear] = useState({ trait_type: "Eyewear", value: [] });
+  const [watch, setWatch] = useState({ trait_type: "Watch", value: [] });
+  const [count, setCount] = useState(0);
+  const [displayFilters, setDisplayFilters] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState([
+    background,
+    tail,
+    ears,
+    body,
+    clothes,
+    eyes,
+    mouth,
+    hat,
+    eyewear,
+    watch,
+  ]);
+  const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, timepiecemetadata));
+  let emptyFilters = [
+    { trait_type: "Tail", value: [] },
+    { trait_type: "Ears", value: [] },
+    { trait_type: "Body", value: [] },
+    { trait_type: "Clothes", value: [] },
+    { trait_type: "Eyes", value: [] },
+    { trait_type: "Mouth", value: [] },
+    { trait_type: "Hat", value: [] },
+    { trait_type: "Eyewear", value: [] },
+    { trait_type: "Watch", value: [] },
+  ];
+
+
+  const clearAll = () => {
+    setBackground({trait_type: "Background", value: []});
+    setTail({ trait_type: "Tail", value: [] });
+    setEars({ trait_type: "Ears", value: [] });
+    setBody({ trait_type: "Body", value: [] });
+    setClothes({ trait_type: "Clothes", value: [] });
+    setEyes({ trait_type: "Eyes", value: [] });
+    setMouth({ trait_type: "Mouth", value: [] });
+    setHat({ trait_type: "Hat", value: [] });
+    setEyewear({ trait_type: "Eyewear", value: [] });
+    setWatch({ trait_type: "Watch", value: [] });
+    setSelectedFilters(emptyFilters)
+    setDisplayFilters([])
+    setCount(0)
+    setFilterIds(searchNFTsByTraits(emptyFilters, timepiecemetadata))
+   
+  
+  }
+  const addProducts = (product, category) => {
+    if (category === 0) {
+      let testarr = background;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setBackground(testarr);
+      } else {
+        testarr.value.push(product);
+        setBackground(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 1) {
+      let testarr = tail;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setTail(testarr);
+      } else {
+        testarr.value.push(product);
+        setTail(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 2) {
+      let testarr = ears;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setEars(testarr);
+      } else {
+        testarr.value.push(product);
+        setEars(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 3) {
+      let testarr = body;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setBody(testarr);
+      } else {
+        testarr.value.push(product);
+        setBody(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 4) {
+      let testarr = clothes;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setClothes(testarr);
+      } else {
+        testarr.value.push(product);
+        setClothes(testarr);
+      }
+
+      setCount(count + 1);
+    }  else if (category === 5) {
+      let testarr = eyes;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setEyes(testarr);
+      } else {
+        testarr.value.push(product);
+        setEyes(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 6) {
+      let testarr = mouth;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setMouth(testarr);
+      } else {
+        testarr.value.push(product);
+        setMouth(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 7) {
+      let testarr = hat;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setHat(testarr);
+      } else {
+        testarr.value.push(product);
+        setHat(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 8) {
+      let testarr = eyewear;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setEyewear(testarr);
+      } else {
+        testarr.value.push(product);
+        setEyewear(testarr);
+      }
+
+      setCount(count + 1);
+    }else if (category === 9) {
+      let testarr = watch;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setWatch(testarr);
+      } else {
+        testarr.value.push(product);
+        setWatch(testarr);
+      }
+
+      setCount(count + 1);
+    }
+
+    let primarySelected = [
+      background,
+      tail,
+      ears,
+      body,
+      clothes,
+      eyes,
+      mouth,
+      hat,
+      eyewear,
+      watch,
+    ];
+
+    primarySelected = primarySelected.filter((item) => item.value.length !== 0);
+
+    setSelectedFilters([
+      background,
+      tail,
+      ears,
+      body,
+      clothes,
+      eyes,
+      mouth,
+      hat,
+      eyewear,
+      watch,
+    ]);
+
+    let testDisplay = [];
+    selectedFilters.map((item, index) => {
+      item.value.map((item2) => {
+        testDisplay.push({
+          trait_type: item.trait_type,
+          value: item2,
+          id: index,
+        });
+      });
+    });
+    setDisplayFilters(testDisplay);
+
+    // console.log(searchNFTsByTraits(primarySelected, timepiecemetadata), "PLEASE WORK OMFG");
+    setFilterIds(searchNFTsByTraits(primarySelected, timepiecemetadata));
+  };
+
+
 
   const listInnerRef = useRef();
   const nftsPerRow = 18;
@@ -78,23 +356,7 @@ const TimepieceNFT = ({
     settotalSupply(parseInt(result));
   };
 
-  const addProducts = (product, category) => {
-    let testarr = selectedFilters[category].value;
-    let firstIndex = null;
-    testarr.map((item, index) => {
-      if (item === product) {
-        firstIndex = index;
-      }
-    });
-    if (firstIndex !== null) {
-      testarr.splice(firstIndex, 1);
-      setSelectedFilters(testarr);
-    } else {
-      testarr.push(product);
-      setSelectedFilters(testarr);
-    }
-    setCount(count + 1);
-  };
+ 
 
   const removeTrait = (trait) => {
     setSelectedFilters((current) =>
@@ -456,13 +718,13 @@ const TimepieceNFT = ({
               </div>
             </div>
             <div className="selected-traits-wrapper d-flex align-items-center my-4 gap-2">
-              {selectedFilters.map((item, index) => (
+              {displayFilters.map((item, index) => (
                 <div
                   className="selected-trait-item d-flex align-items-center p-2 gap-4"
                   key={index}
                 >
                   <div className="d-flex align-items-center gap-1">
-                    <span className="selected-trait-key">{item.key} :</span>
+                    <span className="selected-trait-key">{item.trait_type} :</span>
                     <span className="selected-trait-value">{item.value}</span>
                   </div>
                   <img
@@ -473,12 +735,11 @@ const TimepieceNFT = ({
                   />
                 </div>
               ))}
-              {selectedFilters.length > 0 && (
+              {displayFilters.length > 0 && (
                 <button
                   className="btn clear-all-btn p-2"
                   onClick={() => {
-                    setSelectedFilters([]);
-                    setCount(0);
+                    clearAll();
                   }}
                 >
                   Clear all
@@ -594,8 +855,7 @@ const TimepieceNFT = ({
               className="clear-all mb-0"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                setSelectedFilters([]);
-                setCount(0);
+              clearAll();
               }}
             >
               Clear all
