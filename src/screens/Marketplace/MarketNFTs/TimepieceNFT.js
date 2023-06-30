@@ -335,17 +335,10 @@ const TimepieceNFT = ({
             <div className="row align-items-center justify-content-between mt-4">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
-                  <div className="d-flex gap-3 align-items-baseline justify-content-between">
                     <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
                       CAWS <span style={{ color: "#8c56ff" }}>Timepiece</span>
                     </h6>
-                    <span className="totalsupplytxt">
-                      {totalSupply}{" "}
-                      <mark className="text-white bg-transparent">
-                        Timepiece
-                      </mark>{" "}
-                    </span>
-                  </div>
+                    
                   <p className="collection-desc">
                     The Timepiece NFTs offer different benefits in Metaverse
                     like:

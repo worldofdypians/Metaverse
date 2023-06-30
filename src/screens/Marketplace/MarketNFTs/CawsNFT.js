@@ -538,16 +538,10 @@ const CawsNFT = ({
             <div className="row align-items-center justify-content-between mt-4">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
-                  <div className="d-flex align-items-baseline gap-3 justify-content-between">
-                    <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      Cats And Watches Society{" "}
-                      <span style={{ color: "#8c56ff" }}>(CAWS)</span>
-                    </h6>
-                    <span className="totalsupplytxt">
-                      10000
-                      <mark className="text-white bg-transparent">CAWS</mark>{" "}
-                    </span>
-                  </div>
+                  <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                    Cats And Watches Society{" "}
+                    <span style={{ color: "#8c56ff" }}>(CAWS)</span>
+                  </h6>
                   <p className="collection-desc">
                     The Timepiece NFTs offer different benefits in Metaverse
                     like: <b>Exclusive Access</b> to new and exciting events,{" "}
