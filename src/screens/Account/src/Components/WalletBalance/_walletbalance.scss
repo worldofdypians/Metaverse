@@ -238,7 +238,7 @@
 
 .account-nft-type {
   font-weight: 500;
-  font-size: 8px;
+  font-size: 10px;
   line-height: 10px;
   color: #ffffff;
 }
@@ -270,4 +270,9 @@
   @media screen and (max-width: 786px) {
     overflow-x: scroll;
   }
+}
+
+
+.MuiPaginationItem-root{
+  color: white !important;
 }

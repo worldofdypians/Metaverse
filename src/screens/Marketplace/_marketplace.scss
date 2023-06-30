@@ -87,7 +87,7 @@
 .nft-price-usd {
   font-style: normal;
   font-weight: 500;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 15px;
   color: #7DD9AF;
 }
@@ -1537,6 +1537,10 @@ line-height: normal;
   @media screen and (max-width: 786px) {
     top: 13%;
   }
+}
+
+.MuiSkeleton-rounded{
+background-color: rgba(255,255,255, 0.3) !important;
 }
 
 
