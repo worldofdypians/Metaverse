@@ -138,8 +138,7 @@ const WalletBalance = ({
       if (filter === "caws") {
         setRecentListingsFilter("caws");
         let cawsFilter = favoriteItems.filter(
-          (item) =>
-            item.nftAddress === window.config.nft_caws_address
+          (item) => item.nftAddress === window.config.nft_caws_address
         );
         setfavItemsFiltered(cawsFilter);
       } else if (filter === "land") {
@@ -198,7 +197,6 @@ const WalletBalance = ({
       setLoadingRecentListings(false);
     }, 1000);
   };
- 
 
   const getListed = async () => {
     let finalItems = [];
@@ -517,7 +515,6 @@ const WalletBalance = ({
     const allnft = [...myCawsWodStakes, ...landStaked];
     setNftItems(allnft);
   };
-
 
   const handleSortCollection = (value1, value2) => {
     if (filter1 === "all" && filter2 === "all") {
@@ -893,7 +890,11 @@ const WalletBalance = ({
                   collectedItems.slice(0, 6).map((item, index) => (
                     <NavLink
                       key={index}
-                      to={`/marketplace/nft/${index}`}
+                      to={
+                        item.isStaked === true
+                          ? `/marketplace/stake`
+                          : `/marketplace/nft/${index}`
+                      }
                       style={{ textDecoration: "none" }}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
                       state={{
@@ -1588,7 +1589,11 @@ const WalletBalance = ({
                 collectedItemsFiltered.length > 0 &&
                 collectedItemsFiltered.map((nft, index) => (
                   <NavLink
-                    to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                    to={
+                      nft.isStaked === true
+                        ? `/marketplace/stake`
+                        : `/marketplace/nft/${index}`
+                    }
                     style={{ textDecoration: "none" }}
                     key={index}
                     className="col-12 col-lg-6 col-xxl-3 mb-3"
