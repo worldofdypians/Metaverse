@@ -396,7 +396,7 @@ const WoDNFT = ({
 
     // console.log(searchNFTsByTraits(primarySelected, cawsmetadata), "PLEASE WORK OMFG");
     setFilterIds(searchNFTsByTraits(primarySelected, landmetadata));
-    console.log(searchNFTsByTraits(primarySelected, landmetadata));
+    // console.log(searchNFTsByTraits(primarySelected, landmetadata));
   };
 
   const fetchFilters = async () => {
