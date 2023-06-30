@@ -24,7 +24,7 @@ import FilterCard from "./FilterCard";
 import traitXmark from "./assets/traitXmark.svg";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import timepiecemetadata from "../../../actions/timepiecemetadata.json";
-
+import ComfirmationModal from "./ConfirmationModal";
 
 const TimepieceNFT = ({
   isConnected,
@@ -56,6 +56,7 @@ const TimepieceNFT = ({
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [filteredCaws, setFilteredCaws] = useState([]);
   const [testFinal, setTestFinal] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [filters, setFilters] = useState([]);
   const [totalSupply, settotalSupply] = useState(311);
   const [background, setBackground] = useState({
@@ -85,7 +86,9 @@ const TimepieceNFT = ({
     eyewear,
     watch,
   ]);
-  const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, timepiecemetadata));
+  const [filterIds, setFilterIds] = useState(
+    searchNFTsByTraits(selectedFilters, timepiecemetadata)
+  );
   let emptyFilters = [
     { trait_type: "Tail", value: [] },
     { trait_type: "Ears", value: [] },
@@ -98,9 +101,8 @@ const TimepieceNFT = ({
     { trait_type: "Watch", value: [] },
   ];
 
-
   const clearAll = () => {
-    setBackground({trait_type: "Background", value: []});
+    setBackground({ trait_type: "Background", value: [] });
     setTail({ trait_type: "Tail", value: [] });
     setEars({ trait_type: "Ears", value: [] });
     setBody({ trait_type: "Body", value: [] });
@@ -110,13 +112,11 @@ const TimepieceNFT = ({
     setHat({ trait_type: "Hat", value: [] });
     setEyewear({ trait_type: "Eyewear", value: [] });
     setWatch({ trait_type: "Watch", value: [] });
-    setSelectedFilters(emptyFilters)
-    setDisplayFilters([])
-    setCount(0)
-    setFilterIds(searchNFTsByTraits(emptyFilters, timepiecemetadata))
-   
-  
-  }
+    setSelectedFilters(emptyFilters);
+    setDisplayFilters([]);
+    setCount(0);
+    setFilterIds(searchNFTsByTraits(emptyFilters, timepiecemetadata));
+  };
   const addProducts = (product, category) => {
     if (category === 0) {
       let testarr = background;
@@ -203,7 +203,7 @@ const TimepieceNFT = ({
       }
 
       setCount(count + 1);
-    }  else if (category === 5) {
+    } else if (category === 5) {
       let testarr = eyes;
       let firstIndex = null;
       testarr.value.map((item, index) => {
@@ -271,7 +271,7 @@ const TimepieceNFT = ({
       }
 
       setCount(count + 1);
-    }else if (category === 9) {
+    } else if (category === 9) {
       let testarr = watch;
       let firstIndex = null;
       testarr.value.map((item, index) => {
@@ -334,8 +334,6 @@ const TimepieceNFT = ({
     setFilterIds(searchNFTsByTraits(primarySelected, timepiecemetadata));
   };
 
-
-
   const listInnerRef = useRef();
   const nftsPerRow = 18;
 
@@ -355,8 +353,6 @@ const TimepieceNFT = ({
 
     settotalSupply(parseInt(result));
   };
-
- 
 
   const removeTrait = (trait) => {
     setSelectedFilters((current) =>
@@ -540,6 +536,10 @@ const TimepieceNFT = ({
     }
   };
 
+  const handleManageBuy = async (nft) => {
+    setShowModal(true);
+  };
+
   useEffect(() => {
     document.addEventListener("scroll", onScroll);
   });
@@ -588,6 +588,14 @@ const TimepieceNFT = ({
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+        {showModal && isConnected && (
+          <ComfirmationModal
+            open={showModal}
+            onclose={() => {
+              setShowModal(false);
+            }}
+          />
+        )}
 
         <div
           className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
@@ -597,10 +605,10 @@ const TimepieceNFT = ({
             <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
-                    <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      CAWS <span style={{ color: "#8c56ff" }}>Timepiece</span>
-                    </h6>
-                    
+                  <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                    CAWS <span style={{ color: "#8c56ff" }}>Timepiece</span>
+                  </h6>
+
                   <p className="collection-desc">
                     The Timepiece NFTs offer different benefits in Metaverse
                     like:
@@ -724,7 +732,9 @@ const TimepieceNFT = ({
                   key={index}
                 >
                   <div className="d-flex align-items-center gap-1">
-                    <span className="selected-trait-key">{item.trait_type} :</span>
+                    <span className="selected-trait-key">
+                      {item.trait_type} :
+                    </span>
                     <span className="selected-trait-value">{item.value}</span>
                   </div>
                   <img
@@ -794,6 +804,9 @@ const TimepieceNFT = ({
                           isLatestSale={nft.isLatestSale}
                           isListed={nft.isListed}
                           soldPriceType={nft.soldPriceType}
+                          onProceedBuy={() => {
+                            handleManageBuy(nft);
+                          }}
                         />
                       </NavLink>
                     ))
@@ -855,7 +868,7 @@ const TimepieceNFT = ({
               className="clear-all mb-0"
               style={{ cursor: "pointer" }}
               onClick={() => {
-              clearAll();
+                clearAll();
               }}
             >
               Clear all

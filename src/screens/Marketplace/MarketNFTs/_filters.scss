@@ -193,6 +193,66 @@
   }
 }
 
+.summarytitle {
+  color: #f7f7fc;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.summaryseparator {
+  background: #565891;
+  height: 1px;
+  width: 100%;
+}
+
+.summarywrapper {
+  border-radius: 10px;
+  background: #252743;
+  padding: 10px;
+}
+
+.itemname {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.itemcollectionName {
+  color: #7dd9af;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.itemchain {
+  color: #eeedff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.gotowallet {
+  color: #eeedff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.footertext {
+  color: #eeedff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
 .tablesalewrapper {
   display: grid;
   height: 300px;
