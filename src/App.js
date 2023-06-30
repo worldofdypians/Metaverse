@@ -1253,7 +1253,7 @@ function App() {
                 }
               />
             </Routes>
-            <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" />
+            {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
             <ScrollTop />
             <Footer />
           </div>
