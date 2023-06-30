@@ -1088,7 +1088,7 @@ background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255,
   aspect-ratio: 4.52/1;
 
   @media screen and (max-width: 786px) {
-    aspect-ratio: 1.03/1;
+    aspect-ratio: 0.62/1;
     background-image: url("./assets/cawsBannerMobile.png");
   }
 }
@@ -1493,6 +1493,51 @@ font-weight: 500;
   margin-bottom: 0;
 }
 
+.past-caws-eth{
+  color: #27A085;
+text-align: center;
+font-size: 24px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+.past-caws-usd{
+  color: #FFBC00;
+text-align: center;
+font-size: 13px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.past-caws-total{
+  color: #BEBDE4;
+text-align: center;
+font-size: 10px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.past-caws-values{
+  height: fit-content;
+  background-image: url('./assets/pastCawsCloud.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.past-caws-wrapper{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  @media screen and (max-width: 786px) {
+    top: 13%;
+  }
+}
 
 
 

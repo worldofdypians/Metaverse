@@ -20,6 +20,8 @@ import FilterCard from "./FilterCard";
 import traitXmark from "./assets/traitXmark.svg";
 import filtersXmark from "./assets/filtersXmark.svg";
 import axios from "axios";
+import landmetadata from "../../../actions/landmetadata.json";
+import { searchNFTsByTraits } from "../../../actions/filterTraits";
 
 const WoDNFT = ({
   isConnected,
@@ -50,30 +52,350 @@ const WoDNFT = ({
   const [allwodNfts, setAllwod] = useState([]);
   const [openTraits, setOpenTraits] = useState(false);
   const [filters, setFilters] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState([]);
   const [count, setCount] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
+  const [artifacts, setArtifacts] = useState({
+    trait_type: "Artifacts",
+    value: [],
+  });
+  const [multifunctionalBuilding, setMultifunctionalBuilding] = useState({
+    trait_type: "Multi Functional Building",
+    value: [],
+  });
+  const [npc, setNpc] = useState({ trait_type: "NPC", value: [] });
+  const [aiNpc, setAiNpc] = useState({
+    trait_type: "NPC - AI Powered",
+    value: [],
+  });
+  const [plot, setPlot] = useState({ trait_type: "Plot", value: [] });
+  const [tier, setTier] = useState({ trait_type: "Tier", value: [] });
+  const [size, setSize] = useState({ trait_type: "Size", value: [] });
+  const [building, setBuilding] = useState({
+    trait_type: "Building",
+    value: [],
+  });
+  const [workbench, setWorkbench] = useState({
+    trait_type: "Workbench",
+    value: [],
+  });
+  const [npcAttire, setNpcAttire] = useState({
+    trait_type: "NPC - Attire",
+    value: [],
+  });
+  const [gemstone, setGemstone] = useState({
+    trait_type: "Gemstone",
+    value: [],
+  });
+  const [selectedFilters, setSelectedFilters] = useState([
+    artifacts,
+    multifunctionalBuilding,
+    npc,
+    aiNpc,
+    plot,
+    tier,
+    size,
+    building,
+    workbench,
+    npcAttire,
+    gemstone,
+  ]);
+
+  const [displayFilters, setDisplayFilters] = useState([]);
+  const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, landmetadata));
+  let emptyFilters = [
+    {
+      trait_type: "Artifacts",
+      value: [],
+    },
+    {
+      trait_type: "Multi Functional Building",
+      value: [],
+    },
+    { trait_type: "NPC", value: [] },
+    {
+      trait_type: "NPC - AI Powered",
+      value: [],
+    },
+    { trait_type: "Plot", value: [] },
+    { trait_type: "Tier", value: [] },
+    { trait_type: "Size", value: [] },
+    {
+      trait_type: "Building",
+      value: [],
+    },
+    {
+      trait_type: "Workbench",
+      value: [],
+    },
+    {
+      trait_type: "NPC - Attire",
+      value: [],
+    },
+    {
+      trait_type: "Gemstone",
+      value: [],
+    },
+  ];
 
   const listInnerRef = useRef();
   const nftsPerRow = 18;
   const allLandpiece = 999;
 
-  const addProducts = (product) => {
-    let testarr = selectedFilters;
-    let firstIndex = null;
-    testarr.map((item, index) => {
-      if (item.key === product.key && item.value === product.value) {
-        firstIndex = index;
+  const clearAll = () => {
+    setArtifacts({trait_type: "Artifacts", value: []});
+    setMultifunctionalBuilding({ trait_type: "Multi Functional Building", value: [] });
+    setNpc({ trait_type: "NPC", value: [] });
+    setAiNpc({ trait_type: "NPC - AI Powered", value: [] });
+    setPlot({ trait_type: "Plot", value: [] });
+    setTier({ trait_type: "Tier", value: [] });
+    setSize({ trait_type: "Size", value: [] });
+    setBuilding({ trait_type: "Building", value: [] });
+    setWorkbench({ trait_type: "Workbench", value: [] });
+    setNpcAttire({ trait_type: "NPC - Attire", value: [] });
+    setGemstone({ trait_type: "Gemstone", value: [] });
+    setSelectedFilters(emptyFilters)
+    setDisplayFilters([])
+    setCount(0)
+    setFilterIds(searchNFTsByTraits(emptyFilters, landmetadata))
+   
+  
+  }
+
+
+  const addProducts = (product, category) => {
+    if (category === 0) {
+      let testarr = artifacts;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setArtifacts(testarr);
+      } else {
+        testarr.value.push(product);
+        setArtifacts(testarr);
       }
-    });
-    if (firstIndex !== null) {
-      testarr.splice(firstIndex, 1);
-      setSelectedFilters(testarr);
-    } else {
-      testarr.push(product);
-      setSelectedFilters(testarr);
+
+      setCount(count + 1);
+    } else if (category === 1) {
+      let testarr = multifunctionalBuilding;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setMultifunctionalBuilding(testarr);
+      } else {
+        testarr.value.push(product);
+        setMultifunctionalBuilding(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 2) {
+      let testarr = npc;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setNpc(testarr);
+      } else {
+        testarr.value.push(product);
+        setNpc(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 3) {
+      let testarr = aiNpc;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setAiNpc(testarr);
+      } else {
+        testarr.value.push(product);
+        setAiNpc(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 4) {
+      let testarr = plot;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setPlot(testarr);
+      } else {
+        testarr.value.push(product);
+        setPlot(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 5) {
+      let testarr = tier;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setTier(testarr);
+      } else {
+        testarr.value.push(product);
+        setTier(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 6) {
+      let testarr = size;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setSize(testarr);
+      } else {
+        testarr.value.push(product);
+        setSize(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 7) {
+      let testarr = building;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setBuilding(testarr);
+      } else {
+        testarr.value.push(product);
+        setBuilding(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 8) {
+      let testarr = workbench;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setWorkbench(testarr);
+      } else {
+        testarr.value.push(product);
+        setWorkbench(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 9) {
+      let testarr = npcAttire;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setNpcAttire(testarr);
+      } else {
+        testarr.value.push(product);
+        setNpcAttire(testarr);
+      }
+
+      setCount(count + 1);
+    } else if (category === 10) {
+      let testarr = gemstone;
+      let firstIndex = null;
+      testarr.value.map((item, index) => {
+        if (item === product) {
+          firstIndex = index;
+        }
+      });
+      if (firstIndex !== null) {
+        testarr.value.splice(firstIndex, 1);
+        setGemstone(testarr);
+      } else {
+        testarr.value.push(product);
+        setGemstone(testarr);
+      }
+
+      setCount(count + 1);
     }
-    setCount(count + 1);
+
+    let primarySelected = [
+      artifacts,
+      multifunctionalBuilding,
+      npc,
+      aiNpc,
+      plot,
+      tier,
+      size,
+      building,
+      workbench,
+      npcAttire,
+      gemstone,
+    ];
+
+    primarySelected = primarySelected.filter((item) => item.value.length !== 0);
+
+    setSelectedFilters([
+      artifacts,
+      multifunctionalBuilding,
+      npc,
+      aiNpc,
+      plot,
+      tier,
+      size,
+      building,
+      workbench,
+      npcAttire,
+      gemstone,
+    ]);
+
+    let testDisplay = [];
+    selectedFilters.map((item, index) => {
+      item.value.map((item2) => {
+        testDisplay.push({
+          trait_type: item.trait_type,
+          value: item2,
+          id: index,
+        });
+      });
+    });
+    setDisplayFilters(testDisplay);
+
+    // console.log(searchNFTsByTraits(primarySelected, cawsmetadata), "PLEASE WORK OMFG");
+    setFilterIds(searchNFTsByTraits(primarySelected, landmetadata));
   };
 
   const fetchFilters = async () => {
@@ -303,7 +625,7 @@ const WoDNFT = ({
           style={{ backgroundSize: "cover" }}
         >
           <div className="container-lg mx-0 position-relative">
-            <div className="row align-items-center justify-content-between mt-4">
+            <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
                   <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
@@ -334,7 +656,7 @@ const WoDNFT = ({
               className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
               style={{ zIndex: 2 }}
             >
-              <div class="dropdown" style={{ width: "200px" }}>
+              <div class="dropdown" style={{ width: "150px" }}>
                 <button
                   class="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
@@ -407,7 +729,7 @@ const WoDNFT = ({
                   </div>
                 </ul>
               </div>
-              <div className="d-flex align-items-center gap-5">
+              <div className="d-flex align-items-center gap-3 gap-lg-5">
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
@@ -447,8 +769,7 @@ const WoDNFT = ({
                 <button
                   className="btn clear-all-btn p-2"
                   onClick={() => {
-                    setSelectedFilters([]);
-                    setCount(0);
+                    clearAll()
                   }}
                 >
                   Clear all
@@ -564,8 +885,7 @@ const WoDNFT = ({
               className="clear-all mb-0"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                setSelectedFilters([]);
-                setCount(0);
+               clearAll()
               }}
             >
               Clear all

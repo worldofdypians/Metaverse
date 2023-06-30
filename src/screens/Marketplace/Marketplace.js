@@ -289,7 +289,7 @@ const Marketplace = ({
   var hours = moment().subtract(1, "days");
   var week = moment().subtract(7, "days");
   var month = moment().subtract(30, "days");
-  const [topSalesDate, setTopSalesDate] = useState("24h");
+  const [topSalesDate, setTopSalesDate] = useState("month");
 
   const filterTopSales = () => {
     setLoadingTopSales(true);
@@ -456,7 +456,7 @@ const Marketplace = ({
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
         <div className="container-lg mx-0">
-          <div className="row justify-content-between align-items-center marketplace-banner">
+          <div className="row justify-content-between align-items-center marketplace-banner mt-4 mt-lg-0">
             <div className="col-12 col-lg-5">
               <h6 className="market-banner-title">
                 Explore the World of Dypians{" "}
@@ -468,7 +468,7 @@ const Marketplace = ({
                     background: "transparent",
                   }}
                 >
-                  Game Shop!
+                  Marketplace!
                 </mark>
               </h6>
 
@@ -600,7 +600,7 @@ const Marketplace = ({
                 </div>
               </NavLink>
             </div>
-            <div className="row mx-1 justify-content-center d-flex my-4 align-items-center nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4">
+            <div className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4" style={{minHeight: '420px'}}>
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-4">
                   <h6 className="nft-wrapper-title font-raleway mb-0">
@@ -643,7 +643,7 @@ const Marketplace = ({
                 </div>
                 <div className="d-flex align-items-center gap-4">
                   <h6
-                    className={`filter-title px-2 py-1 mb-0 ${
+                    className={`filter-title  mb-0 ${
                       topSalesDate === "24h" && "filter-selected"
                     }`}
                     onClick={() => setTopSalesDate("24h")}
@@ -651,7 +651,7 @@ const Marketplace = ({
                     24H
                   </h6>
                   <h6
-                    className={`filter-title px-2 py-1 mb-0 ${
+                    className={`filter-title  mb-0 ${
                       topSalesDate === "week" && "filter-selected"
                     }`}
                     onClick={() => setTopSalesDate("week")}
@@ -659,7 +659,7 @@ const Marketplace = ({
                     7D
                   </h6>
                   <h6
-                    className={`filter-title px-2 py-1 mb-0 ${
+                    className={`filter-title  mb-0 ${
                       topSalesDate === "month" && "filter-selected"
                     }`}
                     onClick={() => setTopSalesDate("month")}
@@ -676,7 +676,8 @@ const Marketplace = ({
                 }
                 style={{ rowGap: "22px" }}
               >
-                {topSold && topSold.length > 0 ? (
+                {!loadingTopSales ?  
+                topSold && topSold.length > 0 ? (
                   topSold.slice(0, 9).map((nft, index) => (
                     <div className="col-12 col-lg-4" key={index}>
                       <NavLink
@@ -712,7 +713,7 @@ const Marketplace = ({
                             style={{ borderRadius: "10px" }}
                             alt=""
                           />
-                          <div className="d-flex justify-content-between gap-2 col-10">
+                          <div className="d-flex justify-content-center gap-2 col-10">
                             <h6
                               className="nft-name-wrapper mb-0 py-1 px-2"
                               style={{ fontSize: 14 }}
@@ -788,7 +789,14 @@ const Marketplace = ({
                       </NavLink>{" "}
                     </div>
                   ))
-                ) : (
+                ) :
+                (
+                  <div className="d-flex justify-content-center">
+                    <h3 className="text-white" style={{textAlign: 'center'}}>There are no listed items</h3>
+                  </div>
+                ) 
+                
+                : (
                   <HashLoader
                     color={"#554fd8"}
                     loading={loadingTopSales}
@@ -800,7 +808,7 @@ const Marketplace = ({
               </div>
             </div>
 
-            <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
+            <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4" style={{minHeight: '420px'}}>
               {activeSlide > 0 && (
                 <div className="prev-arrow-nft" onClick={firstPrev}>
                   <img src={nextArrow} alt="" />
@@ -904,7 +912,7 @@ const Marketplace = ({
                 </div>
               )}
             </div>
-            <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4">
+            <div className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4" style={{minHeight: '420px'}}>
               {activeSlide2 > 0 && (
                 <div className="prev-arrow-nft" onClick={secondPrev}>
                   <img src={nextArrow} alt="" />

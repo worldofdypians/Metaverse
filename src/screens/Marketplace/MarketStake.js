@@ -8,6 +8,8 @@ import RewardsModal from "../../components/StakeModal/RewardsModal";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import axios from "axios";
 import { abbreviateNumber } from "js-abbreviation-number";
+import { convertToUSD } from "../../actions/convertUsd";
+import getFormattedNumber from "../Caws/functions/get-formatted-number";
 
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const windowSize = useWindowSize();
@@ -38,7 +40,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [activeTab, setActiveTab] = useState("live")
   const [totalRewards, setTotalRewards] = useState(0)
   const [totalLocked, setTotalLocked] = useState(0)
-
+  const [pastCawsUsdPrice, setPastCawsUsdPrice] = useState(0)
   const html = document.querySelector("html");
 
   const fetchTvl = async () => {
@@ -100,6 +102,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
 
       return allCawsStakes;
     }
+  
   };
 
   const myStakes = async () => {
@@ -206,7 +209,15 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(EthRewards));
     setethToUSDLandPool(Number(ethprice) * Number(EthRewardsLandPool))
+    setPastCawsUsdPrice(Number(ethprice) * 59)
+ 
   };
+
+  const setPastCawsUsd = async () => {
+    const ethprice = await convertEthToUsd();
+    setPastCawsUsdPrice(Number(ethprice) * 59)
+
+  }
 
   const calculateAllRewards = async () => {
     let myStakes = await getStakesIds();
@@ -315,6 +326,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     if (isConnected) {
       setUSDPrice();
     }
+    setPastCawsUsd();
   }, [isConnected, EthRewards]);
 
   useEffect(() => {
@@ -595,6 +607,17 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                 </div> */}
                
               </div>
+              <div className="past-caws-wrapper">
+                <div className="d-flex align-items-center flex-column past-caws-values p-5">
+                  <h6 className="past-caws-eth">59 ETH</h6>
+                  <h6 className="past-caws-usd">${getFormattedNumber(pastCawsUsdPrice)}</h6>
+                </div>
+                <div className="d-flex flex-column align-items-center">
+                  <span className="past-caws-total">Total</span>
+                  <span className="past-caws-total">Distributed Rewards</span>
+                </div>
+              </div>
+              <div></div>
             </div>
           </div>
         </div>

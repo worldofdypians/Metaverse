@@ -85,6 +85,36 @@ const CawsNFT = ({
     eyewear,
   ]);
   const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, cawsmetadata));
+  let emptyFilters = [
+    { trait_type: "Tail", value: [] },
+    { trait_type: "Ears", value: [] },
+    { trait_type: "Body", value: [] },
+    { trait_type: "Clothes", value: [] },
+    { trait_type: "Watch", value: [] },
+    { trait_type: "Eyes", value: [] },
+    { trait_type: "Mouth", value: [] },
+    { trait_type: "Hat", value: [] },
+    { trait_type: "Eyewear", value: [] },
+  ];
+
+  const clearAll = () => {
+    setBackground({trait_type: "Background", value: []});
+    setTail({ trait_type: "Tail", value: [] });
+    setEars({ trait_type: "Ears", value: [] });
+    setBody({ trait_type: "Body", value: [] });
+    setClothes({ trait_type: "Clothes", value: [] });
+    setWatch({ trait_type: "Watch", value: [] });
+    setEyes({ trait_type: "Eyes", value: [] });
+    setMouth({ trait_type: "Mouth", value: [] });
+    setHat({ trait_type: "Hat", value: [] });
+    setEyewear({ trait_type: "Eyewear", value: [] });
+    setSelectedFilters(emptyFilters)
+    setDisplayFilters([])
+    setCount(0)
+    setFilterIds(searchNFTsByTraits(emptyFilters, cawsmetadata))
+   
+  
+  }
   const addProducts = (product, category) => {
     if (category === 0) {
       let testarr = background;
@@ -511,10 +541,6 @@ const CawsNFT = ({
     sortNfts("lth");
   }, [cawsNFTS]);
 
-  useEffect(() => {
-    console.log(finalData, "caws");
-    console.log(filterIds);
-  }, []);
 
   // console.log(filters);
 
@@ -536,7 +562,7 @@ const CawsNFT = ({
           style={{ backgroundSize: "cover" }}
         >
           <div className="container-lg mx-0 position-relative">
-            <div className="row align-items-center justify-content-between mt-4">
+            <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
                   <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
@@ -567,7 +593,7 @@ const CawsNFT = ({
               className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
               style={{ zIndex: 2 }}
             >
-              <div class="dropdown" style={{ width: "200px" }}>
+              <div class="dropdown" style={{ width: "150px" }}>
                 <button
                   class="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
@@ -640,7 +666,7 @@ const CawsNFT = ({
                   </div>
                 </ul>
               </div>
-              <div className="d-flex align-items-center gap-5">
+              <div className="d-flex align-items-center gap-3 gap-lg-5">
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
@@ -682,11 +708,7 @@ const CawsNFT = ({
                 <button
                   className="btn clear-all-btn p-2"
                   onClick={() => {
-                    setSelectedFilters([]);
-                    setDisplayFilters([]);
-                    setFilterIds(searchNFTsByTraits(selectedFilters, cawsmetadata));
-                    console.log(filterIds);
-                    setCount(0);
+                    clearAll()
                   }}
                 >
                   Clear all
@@ -803,10 +825,7 @@ const CawsNFT = ({
               className="clear-all mb-0"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                setSelectedFilters([]);
-                setDisplayFilters([]);
-
-                setCount(0);
+                clearAll()
               }}
             >
               Clear all
