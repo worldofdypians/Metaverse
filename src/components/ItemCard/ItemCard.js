@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./_itemcard.scss";
-
+import ComfirmationModal from "../../screens/Marketplace/MarketNFTs/ConfirmationModal";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import _ from "lodash";
@@ -13,6 +13,7 @@ const ItemCard = ({
   single,
   isConnected,
   showConnectWallet,
+  onProceedBuy,
   isCaws,
   isTimepiece,
   isWod,
@@ -31,6 +32,7 @@ const ItemCard = ({
   const [buttonTxt, setbuttonTxt] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastTitle, setToastTitle] = useState("");
+  const [status, setStatus] = useState("initial");
 
   const location = useLocation();
 
@@ -214,6 +216,16 @@ const ItemCard = ({
     }
   }
 
+  const handleBuyState = async (nft) => {
+    if (!isOwner && isConnected) {
+      onProceedBuy();
+    }
+
+    if (!isConnected) {
+      showConnectWallet();
+    }
+  };
+
   useEffect(() => {
     // getAllFavs(nft);
     checkOwner(nft);
@@ -225,6 +237,12 @@ const ItemCard = ({
       checkapprove(nft);
     }
   }, [nft, isFavorite, coinbase]);
+
+  useEffect(() => {
+    if (isConnected && status === "buy") {
+      onProceedBuy();
+    }
+  }, [isConnected, status]);
 
   return (
     <div className="d-flex flex-column position-relative gap-1">
@@ -367,17 +385,14 @@ const ItemCard = ({
                 className="buy-nft-btn w-100"
                 style={{ paddingLeft: "20px", paddingRight: "20px" }}
                 onClick={(e) => {
-                  !isOwner && e.preventDefault();
-                  !isOwner && e.stopPropagation();
-                  isConnected === true
-                    ? !isOwner
-                      ? handleBuy(nft)
-                      : console.log("owner")
-                    : showConnectWallet();
+                  handleBuyState(nft);
+                  setStatus();
+                  e.preventDefault();
+                  e.stopPropagation();
                 }}
               >
                 {" "}
-                {isConnected === true ? (
+                {/* {isConnected === true ? (
                   nft.payment_priceType === 1 && !isOwner ? (
                     <>{buttonTxt}</>
                   ) : nft.payment_priceType === 1 && isOwner ? (
@@ -387,7 +402,8 @@ const ItemCard = ({
                   )
                 ) : (
                   "Connect wallet"
-                )}{" "}
+                )}{" "} */}
+                Buy
               </button>
             </div>
           )}

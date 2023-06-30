@@ -101,7 +101,9 @@ const WoDNFT = ({
   ]);
 
   const [displayFilters, setDisplayFilters] = useState([]);
-  const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, landmetadata));
+  const [filterIds, setFilterIds] = useState(
+    searchNFTsByTraits(selectedFilters, landmetadata)
+  );
   let emptyFilters = [
     {
       trait_type: "Artifacts",
@@ -142,8 +144,11 @@ const WoDNFT = ({
   const allLandpiece = 999;
 
   const clearAll = () => {
-    setArtifacts({trait_type: "Artifacts", value: []});
-    setMultifunctionalBuilding({ trait_type: "Multi Functional Building", value: [] });
+    setArtifacts({ trait_type: "Artifacts", value: [] });
+    setMultifunctionalBuilding({
+      trait_type: "Multi Functional Building",
+      value: [],
+    });
     setNpc({ trait_type: "NPC", value: [] });
     setAiNpc({ trait_type: "NPC - AI Powered", value: [] });
     setPlot({ trait_type: "Plot", value: [] });
@@ -153,14 +158,11 @@ const WoDNFT = ({
     setWorkbench({ trait_type: "Workbench", value: [] });
     setNpcAttire({ trait_type: "NPC - Attire", value: [] });
     setGemstone({ trait_type: "Gemstone", value: [] });
-    setSelectedFilters(emptyFilters)
-    setDisplayFilters([])
-    setCount(0)
-    setFilterIds(searchNFTsByTraits(emptyFilters, landmetadata))
-   
-  
-  }
-
+    setSelectedFilters(emptyFilters);
+    setDisplayFilters([]);
+    setCount(0);
+    setFilterIds(searchNFTsByTraits(emptyFilters, landmetadata));
+  };
 
   const addProducts = (product, category) => {
     if (category === 0) {
@@ -754,7 +756,9 @@ const WoDNFT = ({
                   key={index}
                 >
                   <div className="d-flex align-items-center gap-1">
-                    <span className="selected-trait-key">{item.trait_type} :</span>
+                    <span className="selected-trait-key">
+                      {item.trait_type} :
+                    </span>
                     <span className="selected-trait-value">{item.value}</span>
                   </div>
                   <img
@@ -769,7 +773,7 @@ const WoDNFT = ({
                 <button
                   className="btn clear-all-btn p-2"
                   onClick={() => {
-                    clearAll()
+                    clearAll();
                   }}
                 >
                   Clear all
@@ -885,7 +889,7 @@ const WoDNFT = ({
               className="clear-all mb-0"
               style={{ cursor: "pointer" }}
               onClick={() => {
-               clearAll()
+                clearAll();
               }}
             >
               Clear all
