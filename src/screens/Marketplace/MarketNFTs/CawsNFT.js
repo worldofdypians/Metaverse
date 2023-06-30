@@ -84,7 +84,7 @@ const CawsNFT = ({
     hat,
     eyewear,
   ]);
-  const [filterIds, setFilterIds] = useState();
+  const [filterIds, setFilterIds] = useState(searchNFTsByTraits(selectedFilters, cawsmetadata));
   const addProducts = (product, category) => {
     if (category === 0) {
       let testarr = background;
@@ -513,6 +513,7 @@ const CawsNFT = ({
 
   useEffect(() => {
     console.log(finalData, "caws");
+    console.log(filterIds);
   }, []);
 
   // console.log(filters);
@@ -683,6 +684,8 @@ const CawsNFT = ({
                   onClick={() => {
                     setSelectedFilters([]);
                     setDisplayFilters([]);
+                    setFilterIds(searchNFTsByTraits(selectedFilters, cawsmetadata));
+                    console.log(filterIds);
                     setCount(0);
                   }}
                 >
@@ -701,7 +704,9 @@ const CawsNFT = ({
                 >
                   {cawsNFTS && cawsNFTS.length > 0 ? (
                     <>
-                      {cawsNFTS.map((nft, index) => (
+                      {cawsNFTS.filter(function(item){
+                        return filterIds.includes(item.tokenId)
+                      }).map((nft, index) => (
                         <NavLink
                           to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
                           style={{ textDecoration: "none" }}
