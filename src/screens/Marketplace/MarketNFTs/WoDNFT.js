@@ -276,7 +276,6 @@ const WoDNFT = ({
   }, [allwodNfts.length, finalData.length, wodBought]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     getWodCollection();
     fetchFilters();
   }, [next]);

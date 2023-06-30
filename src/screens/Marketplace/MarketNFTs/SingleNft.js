@@ -118,6 +118,8 @@ const SingleNft = ({
   const [toastTitle, setToastTitle] = useState("");
 
   const [metaData, setmetaData] = useState([]);
+  const [saleHistory, setsaleHistory] = useState([]);
+
   const [isOwner, setisOwner] = useState(
     location.state?.isOwner ? location.state?.isOwner : false
   );
@@ -179,9 +181,9 @@ const SingleNft = ({
     return result;
   };
 
-  async function isApprovedNFT(nft, type) {
-    console.log("isapprovednft", nft, type);
-    const result = window.isApproved(nft, type).catch((e) => {
+  // console.log(window)
+  async function isApprovedNFT(nft, type, coinbase) {
+    const result = await window.isApprovedNFT(nft, type, coinbase).catch((e) => {
       console.error(e);
     });
     return result;
@@ -213,12 +215,43 @@ const SingleNft = ({
     }
   };
 
+  const getRelativeTime = (nftTimestamp) => {
+    const date = new Date();
+    const timestamp = date.getTime();
+
+    const seconds = Math.floor(timestamp / 1000);
+    const oldTimestamp = nftTimestamp;
+    const difference = seconds - oldTimestamp;
+    let output = ``;
+
+    if (difference < 60) {
+      // Less than a minute has passed:
+      output = `${difference} seconds ago`;
+    } else if (difference < 3600) {
+      // Less than an hour has passed:
+      output = `${Math.floor((difference / 60).toFixed())} minutes ago`;
+    } else if (difference < 86400) {
+      // Less than a day has passed:
+      output = `${Math.floor((difference / 3600).toFixed())} hours ago`;
+    } else if (difference < 2620800) {
+      // Less than a month has passed:
+      output = `${Math.floor((difference / 86400).toFixed())} days ago`;
+    } else if (difference < 31449600) {
+      // Less than a year has passed:
+      output = `${Math.floor((difference / 2620800).toFixed())} months ago`;
+    } else {
+      // More than a year has passed:
+      output = `${Math.floor((difference / 31449600).toFixed())} years ago`;
+    }
+    return output;
+  };
+
   const getLatestBoughtNFT = async () => {
     let boughtItems = [];
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/dypius-marketplace/version/latest";
+      "https://api.studio.thegraph.com/query/46190/wod-marketplace/v1.0.0";
 
     const itemBoughtQuery = `
         {
@@ -270,9 +303,9 @@ const SingleNft = ({
   };
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
-    const isApproved = await isApprovedNFT(tokenId, type);
+    const isApproved = await isApprovedNFT(tokenId, type, coinbase);
     const newPrice = new BigNumber(nftPrice * 1e18).toFixed();
-    console.log(newPrice);
+    console.log(newPrice, isApproved);
     if (isApproved) {
       console.log("selling");
       setsellLoading(true);
@@ -317,7 +350,7 @@ const SingleNft = ({
       setPurchaseColor("#00FECF");
 
       await window
-        .approveNFT(tokenId, type)
+        .approveNFT(type)
         .then((result) => {
           setTimeout(() => {
             setsellStatus("sell");
@@ -327,7 +360,7 @@ const SingleNft = ({
 
           setsellLoading(false);
           setsellStatus("success");
-          setPurchaseStatus("Successfully approved! You can sell your nft");
+          setPurchaseStatus("Successfully approved! You can list your nft");
           setPurchaseColor("#00FECF");
         })
         .catch((e) => {
@@ -346,16 +379,16 @@ const SingleNft = ({
     }
   };
 
-  const getLatest20BoughtNFTS = async () => {
+  const getLatest20BoughtNFTS = async (nftAddress, tokenId) => {
     let boughtItems = [];
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/dypius-marketplace/version/latest";
+      "https://api.studio.thegraph.com/query/46190/wod-marketplace/v1.0.0";
 
     const itemBoughtQuery = `
         {
-            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
+            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc, where: { nftAddress_in: ["${nftAddress}"], tokenId: "${tokenId}"  }) {
             nftAddress
             tokenId
             payment_priceType
@@ -363,6 +396,7 @@ const SingleNft = ({
             buyer
             blockNumber
             blockTimestamp
+            transactionHash
         }
         }
         `;
@@ -392,6 +426,9 @@ const SingleNft = ({
           finalboughtItems.push(nft);
         }
       });
+    console.log(finalboughtItems);
+
+    setsaleHistory(finalboughtItems);
     return finalboughtItems;
   };
 
@@ -703,8 +740,9 @@ const SingleNft = ({
         setIsApprove(isApproved);
       });
     } else if (!IsListed) {
-      console.log(nft);
-      isApprovedNFT(nft.tokenId, type).then((isApproved) => {
+      // console.log(nft);
+      isApprovedNFT(nft.tokenId, type, coinbase).then((isApproved) => {
+        console.log('isApproved', isApproved)
         if (isApproved === true) {
           setsellStatus("sell");
         } else if (isApproved === false) {
@@ -786,6 +824,7 @@ const SingleNft = ({
 
   useEffect(() => {
     if (nft) {
+      getLatest20BoughtNFTS(nft.nftAddress, nft.tokenId);
       getFavoritesCount(nft.tokenId, nft.nftAddress);
       setNft(nft);
     }
@@ -923,6 +962,7 @@ const SingleNft = ({
                           handleFavorite(nft);
                         }}
                         alt=""
+                        style={{ cursor: "pointer" }}
                       />
                     </h3>
                     {isOwner && IsListed && (
@@ -960,7 +1000,7 @@ const SingleNft = ({
                             {getFormattedNumber(
                               nft.price / 1e18,
                               nft.payment_priceType === 0 ? 3 : 0
-                            )}
+                            )}{" "}
                             {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                           </span>
                           <span className="nft-price-usd">
@@ -1086,12 +1126,6 @@ const SingleNft = ({
                               Listing price
                             </span>
                             <div className="d-flex gap-2 align-items-center">
-                              <img
-                                src={priceType === 0 ? topEth : topDyp}
-                                alt=""
-                                height={30}
-                                width={30}
-                              />
                               <span className="nft-price-eth gap-3 d-flex">
                                 <StyledTextField
                                   error={nftPrice === "" ? true : false}
@@ -1205,12 +1239,6 @@ const SingleNft = ({
                               Listing price
                             </span>
                             <div className="d-flex gap-2 align-items-center">
-                              <img
-                                src={priceType === 0 ? topEth : topDyp}
-                                alt=""
-                                height={30}
-                                width={30}
-                              />
                               <span className="nft-price-eth gap-3 d-flex">
                                 <StyledTextField
                                   error={nftPrice === "" ? true : false}
@@ -1513,11 +1541,11 @@ const SingleNft = ({
                           ) : !sellLoading && chainId !== 1 && chainId !== 5 ? (
                             "Switch Network"
                           ) : sellStatus === "sell" ? (
-                            "Sell Nft"
+                            "List Nft"
                           ) : sellStatus === "success" ? (
                             "Success"
                           ) : sellStatus === "approve" || sellStatus === "" ? (
-                            "Approve sell"
+                            "Approve list"
                           ) : (
                             "Failed"
                           )}
@@ -1807,82 +1835,68 @@ const SingleNft = ({
               </div>
             </div>
           </div>
+          {saleHistory && saleHistory.length > 0 && (
+            <div className="px-2 mt-5">
+              <div className="d-flex flex-column gap-3">
+                <span className="nftactivity">NFT Sale Activity </span>
+                <div className="tablesalewrapper">
+                  <table className="pastsaleTable p-2">
+                    <tbody>
+                      <th className="saleHeader">Event</th>
+                      <th className="saleHeader">Price</th>
+                      <th className="saleHeader">Owner</th>
+                      <th className="saleHeader">Transaction</th>
+                      <th className="saleHeader">Date</th>
 
-          <div className="px-2 mt-5">
-            <div className="d-flex flex-column gap-3">
-              <span className="nftactivity">NFT Activity </span>
-              <table className="pastsaleTable p-2">
-                <tbody>
-                  <th className="saleHeader">Event</th>
-                  <th className="saleHeader">Price</th>
-                  <th className="saleHeader">From</th>
-                  <th className="saleHeader">To</th>
-                  <th className="saleHeader">Date</th>
-                  <tr className="saleRow">
-                    <td className="saledata">
-                      {" "}
-                      <img src={cart} alt="" /> Sale
-                    </td>
-                    <td className="saleprice">0.0218 ETH</td>
-                    <td className="greendata">0xat...beef</td>
-                    <td className="greendata">0x2ab...a4e2</td>
-                    <td className="greendata">
-                      1 day ago <img src={link} alt="" />
-                    </td>
-                  </tr>
-                  <tr className="saleRow">
-                    <td className="saledata">
-                      {" "}
-                      <img src={cart} alt="" /> Sale
-                    </td>
-                    <td className="saleprice">0.0218 ETH</td>
-                    <td className="greendata">0xat...beef</td>
-                    <td className="greendata">0x2ab...a4e2</td>
-                    <td className="greendata">
-                      1 day ago <img src={link} alt="" />
-                    </td>
-                  </tr>
-
-                  <tr className="saleRow">
-                    <td className="saledata">
-                      {" "}
-                      <img src={cart} alt="" /> Sale
-                    </td>
-                    <td className="saleprice">0.0218 ETH</td>
-                    <td className="greendata">0xat...beef</td>
-                    <td className="greendata">0x2ab...a4e2</td>
-                    <td className="greendata">
-                      1 day ago <img src={link} alt="" />
-                    </td>
-                  </tr>
-                  <tr className="saleRow">
-                    <td className="saledata">
-                      {" "}
-                      <img src={cart} alt="" /> Sale
-                    </td>
-                    <td className="saleprice">0.0218 ETH</td>
-                    <td className="greendata">0xat...beef</td>
-                    <td className="greendata">0x2ab...a4e2</td>
-                    <td className="greendata">
-                      1 day ago <img src={link} alt="" />
-                    </td>
-                  </tr>
-                  <tr className="saleRow">
-                    <td className="saledata">
-                      {" "}
-                      <img src={cart} alt="" /> Sale
-                    </td>
-                    <td className="saleprice">0.0218 ETH</td>
-                    <td className="greendata">0xat...beef</td>
-                    <td className="greendata">0x2ab...a4e2</td>
-                    <td className="greendata">
-                      1 day ago <img src={link} alt="" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      {saleHistory.map((item, index) => {
+                        return (
+                          <tr className="saleRow" key={index}>
+                            <td className="saledata">
+                              <img src={cart} alt="" /> Sale
+                            </td>
+                            <td className="saleprice">
+                              {getFormattedNumber(
+                                item.price / 1e18,
+                                item.payment_priceType === 1 ? 0 : 2
+                              )}{" "}
+                              {item.payment_priceType === 1 ? "DYP" : "ETH"}
+                            </td>
+                            <td className="greendata">
+                              <a
+                                href={`https://etherscan.io/address/${item.buyer}`}
+                                target="_blank"
+                                style={{ textDecoration: "none" }}
+                                className="greendata p-0"
+                                rel="noreferrer"
+                              >
+                                {shortAddress(item.buyer)}{" "}
+                                <img src={link} alt="" />
+                              </a>
+                            </td>
+                            <td className="greendata">
+                              <a
+                                href={`https://etherscan.io/tx/${item.transactionHash}`}
+                                target="_blank"
+                                style={{ textDecoration: "none" }}
+                                className="greendata p-0"
+                                rel="noreferrer"
+                              >
+                                {shortAddress(item.transactionHash)}{" "}
+                                <img src={link} alt="" />
+                              </a>
+                            </td>
+                            <td className="greendata">
+                              {getRelativeTime(item.blockTimestamp)}{" "}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
