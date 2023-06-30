@@ -747,7 +747,7 @@ const Marketplace = ({
                                       nft.payment_priceType === 0
                                         ? ethTokenData * (nft.price / 1e18)
                                         : dypTokenData * (nft.price / 1e18),
-                                      0
+                                      2
                                     )}
                                   </span>{" "}
                                   <span
