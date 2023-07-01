@@ -84,7 +84,7 @@ const WalletBalance = ({
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
   const [allListed, setAllListed] = useState([]);
 
-  const [filter1, setFilter1] = useState("");
+  const [filter1, setFilter1] = useState("all");
   const [filter2, setFilter2] = useState("");
   const [favoritesPage, setFavoritesPage] = useState(1)
   const [favoritesSliceValue, setFavoritesSliceValue] = useState(6)
