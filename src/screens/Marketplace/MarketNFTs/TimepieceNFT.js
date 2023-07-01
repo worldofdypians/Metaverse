@@ -11,7 +11,7 @@ import { getTimepieceNfts } from "../../../actions/convertUsd";
 import "./_filters.scss";
 import filtersXmark from "./assets/filtersXmark.svg";
 import axios from "axios";
-import { Checkbox } from "@mui/material";
+import { Checkbox, Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import traitIcon from "./assets/traitIcon.svg";
 import priceIcon from "./assets/priceIcon.svg";
@@ -764,11 +764,7 @@ const TimepieceNFT = ({
                 ref={listInnerRef}
               >
                 <div
-                  className={
-                    loading === false || timepieceNFTS.length > 0
-                      ? "item-cards-wrapper"
-                      : "loader-wrapper"
-                  }
+                  className={"item-cards-wrapper"}
                 >
                   {timepieceNFTS && timepieceNFTS.length > 0 ? (
                     timepieceNFTS.map((nft, index) => (
@@ -811,13 +807,86 @@ const TimepieceNFT = ({
                       </NavLink>
                     ))
                   ) : (
-                    <HashLoader
-                      color={"#554fd8"}
-                      loading={loading}
-                      cssOverride={override}
-                      aria-label="Loading Spinner"
-                      data-testid="loader"
-                    />
+                    <>
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                 </>
                   )}
                 </div>
               </div>

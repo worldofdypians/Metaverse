@@ -555,7 +555,7 @@
   );
   backdrop-filter: blur(26px);
   /* Note: backdrop-filter has minimal browser support */
-  width: 90%;
+  width: 100%;
   border-radius: 20px;
   transition: all 0.35s;
   @media screen and (max-width: 786px) {

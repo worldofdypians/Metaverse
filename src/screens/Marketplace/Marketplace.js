@@ -677,7 +677,7 @@ const Marketplace = ({
               <div
                 className={
                   loadingTopSales === false
-                    ? "row align-items-center position-relative"
+                    ? "row align-items-center position-relative justify-content-center"
                     : "loader-wrapper"
                 }
                 style={{ rowGap: "22px" }}
@@ -788,7 +788,7 @@ const Marketplace = ({
                               </div>
                               <span
                                 className="position-absolute top-sale-time"
-                                style={{ bottom: "-20%" }}
+                                style={{ bottom: "-20%", left: '4%' }}
                               >
                                 {getRelativeTime(nft.blockTimestamp)}
                               </span>
@@ -808,13 +808,44 @@ const Marketplace = ({
                     </div>
                   )
                 ) : (
-                  <HashLoader
-                    color={"#554fd8"}
-                    loading={loadingTopSales}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
+                  // <HashLoader
+                  //   color={"#554fd8"}
+                  //   loading={loadingTopSales}
+                  //   cssOverride={override}
+                  //   aria-label="Loading Spinner"
+                  //   data-testid="loader"
+                  // />
+                <div className="row loader-wrapper gap-0">
+                 
+            
+                <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                </div>
+                </div>
                 )}
               </div>
             </div>
@@ -924,37 +955,37 @@ const Marketplace = ({
                   /> */}
                   {windowSize.width > 1600 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -963,31 +994,31 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1500 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -996,25 +1027,25 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1024 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1023,19 +1054,19 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 600 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1044,13 +1075,13 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 480 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1058,7 +1089,7 @@ const Marketplace = ({
                       />
                     </>
                   ) : (
-                    <Skeleton
+                    <Skeleton animation="wave"
                       width={178}
                       variant="rounded"
                       height={230}
@@ -1186,37 +1217,37 @@ const Marketplace = ({
                   /> */}
                   {windowSize.width > 1600 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1225,31 +1256,31 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1500 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1258,25 +1289,25 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1024 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1285,19 +1316,19 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 600 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1306,13 +1337,13 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 480 ? (
                     <>
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton
+                      <Skeleton animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1320,7 +1351,7 @@ const Marketplace = ({
                       />
                     </>
                   ) : (
-                    <Skeleton
+                    <Skeleton animation="wave"
                       width={178}
                       variant="rounded"
                       height={230}
