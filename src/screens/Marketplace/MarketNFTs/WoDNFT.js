@@ -22,6 +22,7 @@ import filtersXmark from "./assets/filtersXmark.svg";
 import axios from "axios";
 import landmetadata from "../../../actions/landmetadata.json";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
+import { Skeleton } from "@mui/material";
 
 const WoDNFT = ({
   isConnected,
@@ -788,11 +789,7 @@ const WoDNFT = ({
                 ref={listInnerRef}
               >
                 <div
-                  className={
-                    loading === false || landNfts.length > 0
-                      ? "item-cards-wrapper"
-                      : "loader-wrapper"
-                  }
+                  className={"item-cards-wrapper"}
                 >
                   {landNfts && landNfts.length > 0 ? (
                     landNfts.map((nft, index) => (
@@ -834,13 +831,86 @@ const WoDNFT = ({
                       </NavLink>
                     ))
                   ) : (
-                    <HashLoader
-                      color={"#554fd8"}
-                      loading={loading}
-                      cssOverride={override}
-                      aria-label="Loading Spinner"
-                      data-testid="loader"
-                    />
+                    <>
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                    <Skeleton animation="wave"
+                     width={178}
+                     variant="rounded"
+                     height={230}
+                     sx={{ bgcolor: "black.700" }}
+                   />
+                 </>
                   )}
                 </div>
               </div>
