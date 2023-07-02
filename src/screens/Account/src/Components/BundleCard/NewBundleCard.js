@@ -93,7 +93,6 @@ const NewBundleCard = ({
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
   const [sliderValue3500, setSliderValue3500] = useState(1);
-console.log(coinbase,wallet)
   const [status, setStatus] = useState(
     "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
   );
