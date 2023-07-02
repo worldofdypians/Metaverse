@@ -819,31 +819,31 @@ const Marketplace = ({
                  
             
                 <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton animation="wave" width={303} height={72} variant="rounded" /> 
+                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
                 </div>
                 </div>
                 )}

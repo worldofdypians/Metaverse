@@ -24,6 +24,7 @@ import filterIcon from "./assets/filterIcon.svg";
 import emptyCheck from "./assets/emptyCheck.svg";
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import Pagination from "@mui/material/Pagination";
+import { Skeleton } from "@mui/material";
 
 const WalletBalance = ({
   dypBalance,
@@ -850,7 +851,7 @@ const WalletBalance = ({
                                 : "CAWS Timepiece"}{" "}
                               #{item.tokenId}
                             </h6>
-                            <span className="account-nft-type">
+                            {/* <span className="account-nft-type">
                               {item.nftAddress ===
                                 window.config.nft_cawsold_address ||
                               item.nftAddress === window.config.nft_caws_address
@@ -859,7 +860,7 @@ const WalletBalance = ({
                                   window.config.nft_land_address
                                 ? "Genesis Land"
                                 : "Timepiece"}
-                            </span>
+                            </span> */}
                           </div>
                         </div>
                       </div>
@@ -963,13 +964,13 @@ const WalletBalance = ({
                                 : "Timepiece"}{" "}
                               #{item.tokenId}
                             </h6>
-                            <span className="account-nft-type">
+                            {/* <span className="account-nft-type">
                               {item.type === "caws"
                                 ? "CAWS"
                                 : item.type === "land"
                                 ? "Land"
                                 : "CAWS Timepiece"}
-                            </span>
+                            </span> */}
                           </div>
                         </div>
                       </div>
@@ -1051,7 +1052,7 @@ const WalletBalance = ({
                             <h6 className="account-nft-title">
                               {"Genesis"} {item.name}
                             </h6>
-                            <span className="account-nft-type">{"Land"}</span>
+                            {/* <span className="account-nft-type">{"Land"}</span> */}
                           </div>
                         </div>
                       </div>
@@ -1193,13 +1194,13 @@ const WalletBalance = ({
                                 : "CAWS Timepiece"}{" "}
                               #{item.tokenId}
                             </h6>
-                            <span className="account-nft-type">
+                            {/* <span className="account-nft-type">
                               {item.type === "caws"
                                 ? "CAWS"
                                 : item.type === "land"
                                 ? "Genesis Land"
                                 : "Timepiece"}
-                            </span>
+                            </span> */}
                           </div>
                         </div>
                       </div>
@@ -1409,14 +1410,34 @@ const WalletBalance = ({
               )}
 
             {loading === true && (
-              <div className="loader-wrapper">
-                <HashLoader
-                  color={"#554fd8"}
-                  loading={loading}
-                  cssOverride={override}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
+              // <div className="loader-wrapper">
+              //   <HashLoader
+              //     color={"#554fd8"}
+              //     loading={loading}
+              //     cssOverride={override}
+              //     aria-label="Loading Spinner"
+              //     data-testid="loader"
+              //   />
+              // </div>
+              <div className="row px-3">
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+                </div>
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+                </div>
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+                </div>
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+                </div>
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+                </div>
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+                </div>
               </div>
             )}
           </div>
@@ -1689,7 +1710,7 @@ const WalletBalance = ({
                               : "CAWS Timepiece"}{" "}
                             #{nft.tokenId}
                           </h6>
-                          <span className="account-nft-type">
+                          {/* <span className="account-nft-type">
                             {nft.nftAddress ===
                               window.config.nft_cawsold_address ||
                             nft.nftAddress === window.config.nft_caws_address
@@ -1698,7 +1719,7 @@ const WalletBalance = ({
                                 window.config.nft_land_address
                               ? "Genesis Land"
                               : "Timepiece"}
-                          </span>
+                          </span> */}
                         </div>
                       </div>
                     </div>
@@ -1783,7 +1804,7 @@ const WalletBalance = ({
                               : "CAWS Timepiece"}{" "}
                             #{nft.tokenId}
                           </h6>
-                          <span className="account-nft-type">
+                          {/* <span className="account-nft-type">
                             {nft.nftAddress ===
                               window.config.nft_cawsold_address ||
                             nft.nftAddress === window.config.nft_caws_address
@@ -1792,7 +1813,7 @@ const WalletBalance = ({
                                 window.config.nft_land_address
                               ? "Genesis Land"
                               : "Caws Timepiece"}
-                          </span>
+                          </span> */}
                         </div>
                       </div>
                     </div>
@@ -1876,7 +1897,7 @@ const WalletBalance = ({
                               : "CAWS Timepiece"}{" "}
                             #{nft.tokenId}
                           </h6>
-                          <span className="account-nft-type">
+                          {/* <span className="account-nft-type">
                             {nft.nftAddress ===
                               window.config.nft_cawsold_address ||
                             nft.nftAddress === window.config.nft_caws_address
@@ -1885,7 +1906,7 @@ const WalletBalance = ({
                                 window.config.nft_land_address
                               ? "Genesis Land"
                               : "Timepiece"}
-                          </span>
+                          </span> */}
                         </div>
                       </div>
                     </div>
@@ -1964,9 +1985,9 @@ const WalletBalance = ({
                             <h6 className="account-nft-title">
                               Land {nft.name}
                             </h6>
-                            <span className="account-nft-type">
+                            {/* <span className="account-nft-type">
                               Genesis Land
-                            </span>
+                            </span> */}
                           </div>
                         </div>
                       </div>
@@ -1995,15 +2016,35 @@ const WalletBalance = ({
                 </div>
           </div>
           ) : (
-            <div className="loader-wrapper">
-              <HashLoader
-                color={"#554fd8"}
-                loading={loadingRecentListings}
-                cssOverride={override}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
+            // <div className="loader-wrapper">
+            //   <HashLoader
+            //     color={"#554fd8"}
+            //     loading={loadingRecentListings}
+            //     cssOverride={override}
+            //     aria-label="Loading Spinner"
+            //     data-testid="loader"
+            //   />
+            // </div>
+            <div className="row px-3">
+            <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+              <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
             </div>
+            <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+              <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+            </div>
+            <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+              <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+            </div>
+            <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+              <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+            </div>
+            <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+              <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+            </div>
+            <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+              <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+            </div>
+          </div>
           )}
         </div>
       )}
