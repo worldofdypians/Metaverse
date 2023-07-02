@@ -89,7 +89,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
-  color: #7DD9AF;
+  color: #7dd9af;
 }
 
 .buyNftbtn {
@@ -222,6 +222,27 @@
   color: white;
 }
 
+.instakeWrapper {
+  z-index: 4;
+  padding: 5px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  width: fit-content;
+  top: -12px;
+  position: absolute;
+
+  .instaketxt {
+    color: #fff;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
 .loader-wrapper {
   width: 100%;
   display: flex;
@@ -279,7 +300,7 @@
   }
 }
 
-.dragon-test-bg{
+.dragon-test-bg {
   position: absolute;
   left: 0;
   right: 0;
@@ -301,8 +322,6 @@
   position: relative;
   z-index: 2;
 }
-
-
 
 .nft-outer-wrapper::before {
   content: "";
@@ -336,8 +355,6 @@
   z-index: 2;
 }
 
-
-
 .new-bundle-wrapper::before {
   content: "";
   position: absolute;
@@ -347,7 +364,7 @@
   right: 0;
   z-index: -1;
   padding: 20px;
-  border: 2px solid #00FECF;
+  border: 2px solid #00fecf;
   backdrop-filter: blur(13.3817px);
 
   background: linear-gradient(
@@ -615,7 +632,7 @@
 }
 
 .time-filter-title:hover {
-  color: #7DD9AF;
+  color: #7dd9af;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.15) 0%,
@@ -624,7 +641,7 @@
 }
 
 .time-filter-selected {
-  color: #7DD9AF !important;
+  color: #7dd9af !important;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.15) 0%,
@@ -783,14 +800,14 @@
   transform: translateY(-10px);
 
   .first-box-blur {
-    border: 2px solid #00FECF;
+    border: 2px solid #00fecf;
   }
   .second-box-blur {
-    border: 2px solid #00FECF;
+    border: 2px solid #00fecf;
   }
 
   .blur-package-title {
-    color: #00FECF;
+    color: #00fecf;
   }
 }
 
@@ -840,7 +857,7 @@
   background: rgba(18, 21, 50, 1);
   border-radius: 50%;
   border: 2px solid rgba(238, 237, 255, 1);
-  transition: all .2s;
+  transition: all 0.2s;
   cursor: pointer;
   @media screen and (max-width: 786px) {
     right: -3%;
@@ -848,7 +865,7 @@
   }
 }
 
-.next-arrow-nft:hover{
+.next-arrow-nft:hover {
   background: rgba(37, 39, 67, 1);
 }
 .prev-arrow-nft {
@@ -865,7 +882,7 @@
   background: rgba(18, 21, 50, 1);
   border-radius: 50%;
   border: 2px solid rgba(238, 237, 255, 1);
-  transition: all .2s;
+  transition: all 0.2s;
   transform: rotate(180deg);
   cursor: pointer;
   @media screen and (max-width: 786px) {
@@ -874,7 +891,7 @@
   }
 }
 
-.prev-arrow-nft:hover{
+.prev-arrow-nft:hover {
   background: rgba(37, 39, 67, 1);
 }
 
@@ -947,7 +964,7 @@
   cursor: pointer;
 
   span {
-    color: #EFEEFF;
+    color: #efeeff;
     font-size: 14px;
     font-weight: 500;
     color: rgba(239, 238, 255, 1);
@@ -955,7 +972,11 @@
 }
 
 .nft-dropdown-item:hover {
-background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0.00) 100%);
+  background: linear-gradient(
+    268deg,
+    rgba(255, 255, 255, 0.21) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   span {
     color: rgba(17, 254, 210, 1);
   }
@@ -1018,16 +1039,16 @@ background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255,
 }
 
 .nft-event-package:hover {
-  border: 2px solid #00FECF;
+  border: 2px solid #00fecf;
   .event-package-title {
-    color: #00FECF;
+    color: #00fecf;
   }
 }
 
 .selected-event-package {
-  border: 2px solid #00FECF;
+  border: 2px solid #00fecf;
   .event-package-title {
-    color: #00FECF !important;
+    color: #00fecf !important;
   }
 }
 
@@ -1201,13 +1222,12 @@ background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255,
   line-height: 20px;
   width: fit-content;
   color: #eeedff;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
-.nft-load-more-btn:hover{
+.nft-load-more-btn:hover {
   color: rgba(255, 255, 255, 1);
   background: rgba(238, 237, 255, 0.15);
-
 }
 
 .package-popup-wrapper {
@@ -1253,7 +1273,7 @@ background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255,
   }
 }
 
-.popup-linear{
+.popup-linear {
   position: fixed;
   left: 0;
   right: 0;
@@ -1264,7 +1284,7 @@ background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255,
   width: 765px;
   z-index: 101;
   aspect-ratio: 0.76/1;
-  filter:drop-shadow(0 0 0 1000px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 0 0 1000px rgba(0, 0, 0, 0.5));
   pointer-events: none;
   @media screen and (max-width: 800px) {
     width: 95%;
@@ -1366,83 +1386,80 @@ background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255,
   font-weight: 300;
 }
 
-
-.past-caws-mint{
-  background-image: url('./assets/pastCawsMintBg.png');
+.past-caws-mint {
+  background-image: url("./assets/pastCawsMintBg.png");
   width: 100%;
   aspect-ratio: 2.22/1;
   background-size: 100% 100%;
   position: relative;
 
   @media screen and (max-width: 786px) {
-    background-image: url('./assets/landMintMobile.png');
+    background-image: url("./assets/landMintMobile.png");
     aspect-ratio: 1/1;
   }
 }
-.past-land-mint{
-  background-image: url('./assets/pastLandMintBg.png');
+.past-land-mint {
+  background-image: url("./assets/pastLandMintBg.png");
   width: 100%;
   aspect-ratio: 2.22/1;
   background-size: 100% 100%;
   position: relative;
 
   @media screen and (max-width: 786px) {
-    background-image: url('./assets/cawsMintMobile.png');
+    background-image: url("./assets/cawsMintMobile.png");
     aspect-ratio: 1/1;
   }
 }
 
-.sold-out-tag{
+.sold-out-tag {
   border-radius: 20px;
-background: linear-gradient(90deg, #830E47 0%, #5065C3 100%);
-backdrop-filter: blur(13px);
-display: flex;
-align-items: center;
-justify-content: center;
-width: fit-content;
-position: absolute;
-top: -15px;
-left: 15px;
-
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  backdrop-filter: blur(13px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  position: absolute;
+  top: -15px;
+  left: 15px;
 }
 
-.sold-out-span{
-  color: #FFF;
-text-align: center;
-font-size: 13px;
-font-weight: 600;
+.sold-out-span {
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-
-.past-mint-title{
-  color: #FFF;
-font-size: 16px;
-font-weight: 800;
-letter-spacing: 0.08px;
+.past-mint-title {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.08px;
 }
 
-.past-caws-mint-amount{
-  color: #FF6232;
-text-align: center;
-font-size: 40px;
-font-weight: 800;
+.past-caws-mint-amount {
+  color: #ff6232;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 800;
 }
 
-.past-land-mint-amount{
-  color: #00FECF;
-text-align: center;
-font-size: 40px;
-font-weight: 800;
+.past-land-mint-amount {
+  color: #00fecf;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 800;
 }
 
-.past-caws-mint-desc{
-  color: #FFF;
-text-align: center;
-font-size: 12px;
-font-weight: 500;
+.past-caws-mint-desc {
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
 }
 
-.past-content-wrapper{
+.past-content-wrapper {
   width: 40%;
   height: 100%;
   @media screen and (max-width: 786px) {
@@ -1451,25 +1468,23 @@ font-weight: 500;
   }
 }
 
-.custom-height-2{
+.custom-height-2 {
   height: 250px;
   @media screen and (max-width: 1024px) {
     height: fit-content;
   }
 }
 
-
-
-.popup-closer{
+.popup-closer {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
 }
 
-.expired-caws-tag{
+.expired-caws-tag {
   border-radius: 20px;
-  background: linear-gradient(90deg, #D88028 0%, #A41F29 100%);
+  background: linear-gradient(90deg, #d88028 0%, #a41f29 100%);
   backdrop-filter: blur(13px);
   position: absolute;
   top: -10px;
@@ -1479,55 +1494,54 @@ font-weight: 500;
   align-items: center;
   width: fit-content;
   @media screen and (max-width: 786px) {
-  right: 10px;
-  left: auto;    
-
+    right: 10px;
+    left: auto;
   }
 }
 
-.expired-caws-span{
-  color: #FFF;
+.expired-caws-span {
+  color: #fff;
   text-align: center;
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 0;
 }
 
-.past-caws-eth{
-  color: #27A085;
-text-align: center;
-font-size: 24px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+.past-caws-eth {
+  color: #27a085;
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
-.past-caws-usd{
-  color: #FFBC00;
-text-align: center;
-font-size: 13px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
-}
-
-.past-caws-total{
-  color: #BEBDE4;
-text-align: center;
-font-size: 10px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+.past-caws-usd {
+  color: #ffbc00;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
 
-.past-caws-values{
+.past-caws-total {
+  color: #bebde4;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.past-caws-values {
   height: fit-content;
-  background-image: url('./assets/pastCawsCloud.png');
+  background-image: url("./assets/pastCawsCloud.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.past-caws-wrapper{
+.past-caws-wrapper {
   position: absolute;
   left: 0;
   right: 0;
@@ -1539,104 +1553,6 @@ line-height: normal;
   }
 }
 
-.MuiSkeleton-rounded{
-background-color: rgba(255,255,255, 0.3) !important;
+.MuiSkeleton-rounded {
+  background-color: rgba(255, 255, 255, 0.3) !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

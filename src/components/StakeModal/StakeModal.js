@@ -22,6 +22,7 @@ const StakeModal = ({
   coinbase,
   onDepositComplete,
   nftItem,
+  handleConnect
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
 
@@ -272,7 +273,7 @@ const StakeModal = ({
         A list of your NFT collection that can be added and removed from the
         staking pools
       </span>
-      
+
       <span className="d-flex my-3 market-stake-divider"></span>
       <div className="d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center ">
@@ -614,22 +615,11 @@ const StakeModal = ({
         {/* <button className="btn disabled-approve-btn px-4">Approve</button> */}
         <div className="d-flex flex-column gap-2">
           <div className="mt-4 row mx-0 justify-content-xxl-between justify-content-lg-between justify-content-md-between justify-content-sm-between justify-content-center gap-3">
-            {showCawsApprove === true && showLandApprove === true && (
-              <button
-                className={`btn m-auto ${
-                  showCawsApprove === true &&
-                  showLandApprove === true &&
-                  getApprovedNfts(selectNftIds).length > 0 &&
-                  getApprovedLandNfts(selectNftLandIds).length > 0 &&
-                  getApprovedNfts(selectNftIds).length ===
-                    getApprovedLandNfts(selectNftLandIds).length &&
-                  getApprovedNfts(selectNftIds).length < 51 &&
-                  getApprovedLandNfts(selectNftLandIds).length < 51
-                    ? "pill-btn"
-                    : "disabled-approve-btn"
-                }`}
-                style={{
-                  pointerEvents:
+            {showCawsApprove === true &&
+              showLandApprove === true &&
+              isConnected && (
+                <button
+                  className={`btn m-auto ${
                     showCawsApprove === true &&
                     showLandApprove === true &&
                     getApprovedNfts(selectNftIds).length > 0 &&
@@ -638,38 +628,40 @@ const StakeModal = ({
                       getApprovedLandNfts(selectNftLandIds).length &&
                     getApprovedNfts(selectNftIds).length < 51 &&
                     getApprovedLandNfts(selectNftLandIds).length < 51
-                      ? "auto"
-                      : "none",
-                }}
-                onClick={() => {
-                  handleApproveWod();
-                }}
-              >
-                {loading ? (
-                  <>
-                    <div className="spinner-border " role="status"></div>
-                  </>
-                ) : (
-                  "Approve Land"
-                )}
-              </button>
-            )}
-            {showCawsApprove === true && showLandApprove === false && (
-              <button
-                className={`btn m-auto ${
-                  showCawsApprove === true &&
-                  showLandApprove === false &&
-                  getApprovedNfts(selectNftIds).length > 0 &&
-                  getApprovedLandNfts(selectNftLandIds).length > 0 &&
-                  getApprovedNfts(selectNftIds).length ===
-                    getApprovedLandNfts(selectNftLandIds).length &&
-                  getApprovedNfts(selectNftIds).length < 51 &&
-                  getApprovedLandNfts(selectNftLandIds).length < 51
-                    ? "pill-btn"
-                    : "disabled-approve-btn"
-                }`}
-                style={{
-                  pointerEvents:
+                      ? "pill-btn"
+                      : "disabled-approve-btn"
+                  }`}
+                  style={{
+                    pointerEvents:
+                      showCawsApprove === true &&
+                      showLandApprove === true &&
+                      getApprovedNfts(selectNftIds).length > 0 &&
+                      getApprovedLandNfts(selectNftLandIds).length > 0 &&
+                      getApprovedNfts(selectNftIds).length ===
+                        getApprovedLandNfts(selectNftLandIds).length &&
+                      getApprovedNfts(selectNftIds).length < 51 &&
+                      getApprovedLandNfts(selectNftLandIds).length < 51
+                        ? "auto"
+                        : "none",
+                  }}
+                  onClick={() => {
+                    handleApproveWod();
+                  }}
+                >
+                  {loading ? (
+                    <>
+                      <div className="spinner-border " role="status"></div>
+                    </>
+                  ) : (
+                    "Approve Land"
+                  )}
+                </button>
+              )}
+            {showCawsApprove === true &&
+              showLandApprove === false &&
+              isConnected && (
+                <button
+                  className={`btn m-auto ${
                     showCawsApprove === true &&
                     showLandApprove === false &&
                     getApprovedNfts(selectNftIds).length > 0 &&
@@ -678,20 +670,38 @@ const StakeModal = ({
                       getApprovedLandNfts(selectNftLandIds).length &&
                     getApprovedNfts(selectNftIds).length < 51 &&
                     getApprovedLandNfts(selectNftLandIds).length < 51
-                      ? "auto"
-                      : "none",
-                }}
-                onClick={() => {
-                  handleApprove();
-                }}
-              >
-                {loading ? (
-                  <>
-                    <div className="spinner-border " role="status"></div>
-                  </>
-                ) : (
-                  "Approve CAWS"
-                )}
+                      ? "pill-btn"
+                      : "disabled-approve-btn"
+                  }`}
+                  style={{
+                    pointerEvents:
+                      showCawsApprove === true &&
+                      showLandApprove === false &&
+                      getApprovedNfts(selectNftIds).length > 0 &&
+                      getApprovedLandNfts(selectNftLandIds).length > 0 &&
+                      getApprovedNfts(selectNftIds).length ===
+                        getApprovedLandNfts(selectNftLandIds).length &&
+                      getApprovedNfts(selectNftIds).length < 51 &&
+                      getApprovedLandNfts(selectNftLandIds).length < 51
+                        ? "auto"
+                        : "none",
+                  }}
+                  onClick={() => {
+                    handleApprove();
+                  }}
+                >
+                  {loading ? (
+                    <>
+                      <div className="spinner-border " role="status"></div>
+                    </>
+                  ) : (
+                    "Approve CAWS"
+                  )}
+                </button>
+              )}
+            {!isConnected && (
+              <button className={`btn m-auto pill-btn`} onClick={handleConnect}>
+                Connect Wallet
               </button>
             )}
             <button

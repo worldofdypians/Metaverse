@@ -494,7 +494,7 @@ const CawsNFT = ({
       );
 
       const finalUnique = [...objArrFiltered];
-      
+
       setLoading(false);
 
       setCawsNFTS2(finalUnique);
@@ -560,8 +560,6 @@ const CawsNFT = ({
       }
     }
   };
-
-
 
   useEffect(() => {
     loadMore2();
@@ -786,6 +784,7 @@ const CawsNFT = ({
                   className="btn clear-all-btn p-2"
                   onClick={() => {
                     clearAll();
+                    setCawsNFTS2([]);
                   }}
                 >
                   Clear all
