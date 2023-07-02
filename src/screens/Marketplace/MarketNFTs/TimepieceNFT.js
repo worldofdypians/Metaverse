@@ -34,6 +34,8 @@ const TimepieceNFT = ({
   ethTokenData,
   dypTokenData,
   timepieceBought,
+  handleRefreshListing,
+  nftCount,
 }) => {
   const override = {
     display: "block",
@@ -47,8 +49,11 @@ const TimepieceNFT = ({
   const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [timepieceNFTS, setTimepieceNFTS] = useState([]);
+  const [timepieceNFTS2, setTimepieceNFTS2] = useState([]);
 
   const [next, setNext] = useState(0);
+  const [next2, setNext2] = useState(0);
+
   const [paginatedData, setpaginatedData] = useState([]);
   const [finalData, setfinalData] = useState([]);
   const [alltimepieceNfts, setAlltimepiece] = useState([]);
@@ -336,6 +341,7 @@ const TimepieceNFT = ({
 
   const listInnerRef = useRef();
   const nftsPerRow = 18;
+  const nftsPerRow2 = 18;
 
   const getTotalSupply = async () => {
     const infura_web3 = window.infuraWeb3;
@@ -484,6 +490,36 @@ const TimepieceNFT = ({
     return finaldata;
   };
 
+  const testFunc = async () => {
+    const array = Array.from({ length: totalSupply }, (_, index) => index + 1);
+
+    const objArr = await Promise.all(
+      array.map(async (i) => {
+        const owner = await window.caws_timepiece.ownerOf(i).catch((e) => {
+          console.log(e);
+        });
+        const attributes = await window.getTimepieceNft(i);
+
+        return {
+          nftAddress: window.config.timepiecenft_address,
+          buyer: owner,
+          tokenId: i.toString(),
+          type: "timepiece",
+          chain: 1,
+          attributes: attributes.attributes,
+        };
+      })
+    );
+
+    const objArrFiltered = objArr.filter(
+      ({ tokenId: id1 }) =>
+        !alltimepieceNfts.some(({ tokenId: id2 }) => id2 == id1)
+    );
+
+    const finalUnique = [...alltimepieceNfts, ...objArrFiltered];
+    setTimepieceNFTS2(finalUnique);
+  };
+
   const fetchInitialTimepiece = async () => {
     const collectionItems = finalData;
 
@@ -522,22 +558,29 @@ const TimepieceNFT = ({
     setNext(next + nftsPerRow);
   };
 
+  const loadMore2 = () => {
+    setLoading(true);
+    setNext2(next2 + nftsPerRow2);
+  };
+
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
     if (wrappedElement) {
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
       if (isBottom) {
-        if (next < totalSupply) {
-          loadMore();
+        if (count === 0) {
+          if (next < totalSupply) {
+            loadMore();
+          }
+        } else {
+          if (next2 < filterIds.length) {
+            loadMore2();
+          }
         }
         document.removeEventListener("scroll", onScroll);
       }
     }
-  };
-
-  const handleManageBuy = async (nft) => {
-    setShowModal(true);
   };
 
   useEffect(() => {
@@ -551,10 +594,21 @@ const TimepieceNFT = ({
   }, []);
 
   useEffect(() => {
+    if (
+      timepieceNFTS &&
+      timepieceNFTS.length > 0 &&
+      loading === false &&
+      totalSupply > 0
+    ) {
+      testFunc();
+    }
+  }, [timepieceNFTS, totalSupply]);
+
+  useEffect(() => {
     if (timepieceBought) {
       getListedTimepiece();
     }
-  }, [timepieceBought]);
+  }, [timepieceBought, nftCount]);
 
   useEffect(() => {
     if (
@@ -588,14 +642,6 @@ const TimepieceNFT = ({
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-        {showModal && isConnected && (
-          <ComfirmationModal
-            open={showModal}
-            onclose={() => {
-              setShowModal(false);
-            }}
-          />
-        )}
 
         <div
           className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
@@ -614,10 +660,13 @@ const TimepieceNFT = ({
                     like:
                     <b>Exclusive Access</b> to new and exciting events,{" "}
                     <b>Enhanced Interactions</b> with available activities,{" "}
-                    <b>Expanded Functionality</b>
-                    on performing new actions, and earn multiple <b>Rewards.</b>
+                    <b>Expanded Functionality</b> on performing new actions, and
+                    earn multiple <b>Rewards.</b>
                   </p>
-                  <NavLink>
+                  <NavLink
+                    to="/caws-timepiece"
+                    style={{ width: "fit-content" }}
+                  >
                     <button className="btn pill-btn">Explore</button>
                   </NavLink>
                 </div>
@@ -763,135 +812,514 @@ const TimepieceNFT = ({
                 onScroll={onScroll}
                 ref={listInnerRef}
               >
-                <div
-                  className={"item-cards-wrapper"}
-                >
-                  {timepieceNFTS && timepieceNFTS.length > 0 ? (
-                    timepieceNFTS.map((nft, index) => (
-                      <NavLink
-                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                        state={{
-                          nft: nft,
-                          type: "timepiece",
-                          isOwner:
-                            nft.seller?.toLowerCase() ===
-                              coinbase?.toLowerCase() ||
-                            nft.buyer?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
-                          chain: nft.chain,
-                        }}
-                        onClick={() => {
-                          updateViewCount(nft.tokenId, nft.nftAddress);
-                        }}
-                      >
-                        <ItemCard
-                          ethTokenData={ethTokenData}
-                          dypTokenData={dypTokenData}
-                          nft={nft}
-                          isConnected={isConnected}
-                          showConnectWallet={handleConnect}
-                          isCaws={false}
-                          isTimepiece={true}
-                          isWod={false}
-                          coinbase={coinbase}
-                          lastSold={nft.LastSold}
-                          isLatestSale={nft.isLatestSale}
-                          isListed={nft.isListed}
-                          soldPriceType={nft.soldPriceType}
-                          onProceedBuy={() => {
-                            handleManageBuy(nft);
-                          }}
-                        />
-                      </NavLink>
-                    ))
-                  ) : (
+                <div className={"item-cards-wrapper"}>
+                  {timepieceNFTS && timepieceNFTS.length > 0 && count === 0 ? (
                     <>
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                 </>
+                      {timepieceNFTS.map((nft, index) => (
+                        <NavLink
+                          to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: nft.type,
+                            isOwner:
+                              nft.seller?.toLowerCase() ===
+                                coinbase?.toLowerCase() ||
+                              nft.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={() => {
+                            updateViewCount(nft.tokenId, nft.nftAddress);
+                          }}
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={false}
+                            isTimepiece={true}
+                            isWod={false}
+                            coinbase={coinbase}
+                            lastSale={nft.buyer ? true : false}
+                            lastSold={nft.LastSold}
+                            isLatestSale={nft.isLatestSale}
+                            isListed={nft.isListed}
+                            soldPriceType={nft.soldPriceType}
+                            handleRefreshListing={handleRefreshListing}
+                          />
+                        </NavLink>
+                      ))}
+                      {count === 0 && !loading && next < totalSupply ? (
+                        <button
+                          className="btn py-2 px-3 nft-load-more-btn"
+                          onClick={() => {
+                            loadMore();
+                          }}
+                        >
+                          Load more
+                        </button>
+                      ) : count === 0 &&
+                        loading &&
+                        timepieceNFTS.length === 0 ? (
+                        <>
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ) : timepieceNFTS &&
+                    timepieceNFTS.length === 0 &&
+                    count === 0 ? (
+                    <>
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {count > 0 && timepieceNFTS2 && timepieceNFTS2.length > 0 ? (
+                    <>
+                      {timepieceNFTS2
+                        .filter(function (item) {
+                          return filterIds.includes(item.tokenId);
+                        })
+                        .slice(0, next2)
+                        .map((nft, index) => (
+                          <NavLink
+                            to={`/marketplace/nft/${index}`}
+                            style={{ textDecoration: "none" }}
+                            key={index}
+                            state={{
+                              nft: nft,
+                              type: "timepiece",
+                              isOwner:
+                                nft.seller?.toLowerCase() ===
+                                  coinbase?.toLowerCase() ||
+                                nft.buyer?.toLowerCase() ===
+                                  coinbase?.toLowerCase(),
+                              chain: nft.chain,
+                            }}
+                            onClick={() => {
+                              updateViewCount(nft, window.config.nft_address);
+                            }}
+                          >
+                            <ItemCard
+                              ethTokenData={ethTokenData}
+                              dypTokenData={dypTokenData}
+                              key={nft.id}
+                              nft={nft}
+                              isConnected={isConnected}
+                              showConnectWallet={handleConnect}
+                              isCaws={false}
+                              isTimepiece={true}
+                              isWod={false}
+                              coinbase={coinbase}
+                              lastSold={nft.LastSold}
+                              isLatestSale={nft.isLatestSale}
+                              isListed={nft.isListed}
+                              soldPriceType={nft.soldPriceType}
+                            />
+                          </NavLink>
+                        ))}
+                      {count > 0 && !loading && next2 < filterIds.length ? (
+                        <button
+                          className="btn py-2 px-3 nft-load-more-btn"
+                          onClick={() => {
+                            loadMore2();
+                          }}
+                        >
+                          Load more
+                        </button>
+                      ) : count > 0 &&
+                        loading &&
+                        next2 < filterIds.length &&
+                        filterIds.length > 0 ? (
+                        <>
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ) : count > 0 &&
+                    timepieceNFTS2 &&
+                    timepieceNFTS2.length === 0 ? (
+                    <>
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </div>
               <div className="d-flex justify-content-center w-100">
-                {!loading && next < totalSupply ? (
+                {/* {!loading && next < totalSupply ? (
                   <button
                     className="btn py-2 px-3 nft-load-more-btn"
                     onClick={() => loadMore()}
@@ -910,7 +1338,7 @@ const TimepieceNFT = ({
                   />
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
             </div>
           </div>

@@ -7,7 +7,7 @@ import MobileNav from "../../../components/MobileNav/MobileNav";
 import searchIcon from "../assets/search.svg";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import { NavLink } from "react-router-dom";
-import { getCawsNfts, getCawsOldNfts } from "../../../actions/convertUsd";
+import { getCawsNfts } from "../../../actions/convertUsd";
 import "./_filters.scss";
 import filtersXmark from "./assets/filtersXmark.svg";
 import axios from "axios";
@@ -33,6 +33,8 @@ const CawsNFT = ({
   ethTokenData,
   dypTokenData,
   cawsBought,
+  handleRefreshListing,
+  nftCount,
 }) => {
   const override = {
     display: "block",
@@ -466,32 +468,37 @@ const CawsNFT = ({
   };
 
   const testFunc = async () => {
-    const array = Array.from({ length: 1000 }, (_, index) => index + 1);
-    const objArr = await Promise.all(
-      array.map(async (i) => {
-        const owner = await window.nft.ownerOf(i).catch((e) => {
-          console.log(e);
-        });
-        const attributes = await window.getNft(i);
+    if (count > 0) {
+      setLoading(true);
+      const objArr = await Promise.all(
+        filterIds.map(async (i) => {
+          const owner = await window.nft.ownerOf(i).catch((e) => {
+            console.log(e);
+          });
+          const attributes = await window.getNft(i);
 
-        return {
-          nftAddress: window.config.nft_address,
-          buyer: owner,
-          tokenId: i.toString(),
-          type: "caws",
-          chain: 1,
-          attributes: attributes.attributes,
-        };
-      })
-    );
+          return {
+            nftAddress: window.config.nft_address,
+            buyer: owner,
+            tokenId: i.toString(),
+            type: "caws",
+            chain: 1,
+            attributes: attributes.attributes,
+          };
+        })
+      );
 
-    const objArrFiltered = objArr.filter(
-      ({ tokenId: id1 }) => !allCawsNfts.some(({ tokenId: id2 }) => id2 == id1)
-    );
+      const objArrFiltered = objArr.filter(
+        ({ tokenId: id1 }) =>
+          !allCawsNfts.some(({ tokenId: id2 }) => id2 == id1)
+      );
 
-    const finalUnique = [...allCawsNfts, ...objArrFiltered];
+      const finalUnique = [...objArrFiltered];
+      
+      setLoading(false);
 
-    setCawsNFTS2(finalUnique);
+      setCawsNFTS2(finalUnique);
+    }
   };
 
   const fetchInitialCaws = async () => {
@@ -554,8 +561,19 @@ const CawsNFT = ({
     }
   };
 
+  const cawsfiltered = async () => {
+    if (count > 0) {
+      const testArray = cawsNFTS2.filter(function (item) {
+        return filterIds.includes(item.tokenId);
+      });
+
+      console.log(testArray, filterIds);
+    }
+  };
+
   useEffect(() => {
     loadMore2();
+    cawsfiltered();
   }, [count]);
 
   useEffect(() => {
@@ -571,24 +589,22 @@ const CawsNFT = ({
   }, []);
 
   useEffect(() => {
-    if (cawsNFTS && cawsNFTS.length > 0 && loading === false) {
+    if (count > 0) {
       testFunc();
+    } else if (count === 0) {
+      fetchInitialCaws();
     }
-  }, [cawsNFTS]);
+  }, [count]);
 
   useEffect(() => {
     if (cawsBought) {
       getListedCaws();
     }
-  }, [cawsBought]);
+  }, [cawsBought, nftCount]);
 
   useEffect(() => {
     getCawsCollection();
   }, [next]);
-
-  // useEffect(() => {
-  //   getAllCawsCollection();
-  // }, [next2]);
 
   useEffect(() => {
     if (cawsBought && allCawsNfts.length > 0 && finalData.length > 0) {
@@ -640,13 +656,13 @@ const CawsNFT = ({
                     <span style={{ color: "#8c56ff" }}>(CAWS)</span>
                   </h6>
                   <p className="collection-desc">
-                    The Timepiece NFTs offer different benefits in Metaverse
-                    like: <b>Exclusive Access</b> to new and exciting events,{" "}
+                    The CAWS NFTs offer different benefits in Metaverse like:{" "}
+                    <b>Exclusive Access</b> to new and exciting events,{" "}
                     <b>Enhanced Interactions</b> with available activities,{" "}
                     <b>Expanded Functionality</b> on performing new actions, and
                     earn multiple <b>Rewards</b>.
                   </p>
-                  <NavLink>
+                  <NavLink to="/caws" style={{ width: "fit-content" }}>
                     <button className="btn pill-btn">Explore</button>
                   </NavLink>
                 </div>
@@ -825,6 +841,7 @@ const CawsNFT = ({
                             isLatestSale={nft.isLatestSale}
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
+                            handleRefreshListing={handleRefreshListing}
                           />
                         </NavLink>
                       ))}
@@ -1035,48 +1052,43 @@ const CawsNFT = ({
 
                   {count > 0 && cawsNFTS2 && cawsNFTS2.length > 0 ? (
                     <>
-                      {cawsNFTS2
-                        .filter(function (item) {
-                          return filterIds.includes(item.tokenId);
-                        })
-                        .slice(0, next2)
-                        .map((nft, index) => (
-                          <NavLink
-                            to={`/marketplace/nft/${index}`}
-                            style={{ textDecoration: "none" }}
-                            key={index}
-                            state={{
-                              nft: nft,
-                              type: "caws",
-                              isOwner:
-                                nft.seller?.toLowerCase() ===
-                                  coinbase?.toLowerCase() ||
-                                nft.buyer?.toLowerCase() ===
-                                  coinbase?.toLowerCase(),
-                              chain: nft.chain,
-                            }}
-                            onClick={() => {
-                              updateViewCount(nft, window.config.nft_address);
-                            }}
-                          >
-                            <ItemCard
-                              ethTokenData={ethTokenData}
-                              dypTokenData={dypTokenData}
-                              key={nft.id}
-                              nft={nft}
-                              isConnected={isConnected}
-                              showConnectWallet={handleConnect}
-                              isCaws={true}
-                              isTimepiece={false}
-                              isWod={false}
-                              coinbase={coinbase}
-                              lastSold={nft.LastSold}
-                              isLatestSale={nft.isLatestSale}
-                              isListed={nft.isListed}
-                              soldPriceType={nft.soldPriceType}
-                            />
-                          </NavLink>
-                        ))}
+                      {cawsNFTS2.slice(0, next2).map((nft, index) => (
+                        <NavLink
+                          to={`/marketplace/nft/${index}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: "caws",
+                            isOwner:
+                              nft.seller?.toLowerCase() ===
+                                coinbase?.toLowerCase() ||
+                              nft.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={() => {
+                            updateViewCount(nft, window.config.nft_address);
+                          }}
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={true}
+                            isTimepiece={false}
+                            isWod={false}
+                            coinbase={coinbase}
+                            lastSold={nft.LastSold}
+                            isLatestSale={nft.isLatestSale}
+                            isListed={nft.isListed}
+                            soldPriceType={nft.soldPriceType}
+                          />
+                        </NavLink>
+                      ))}
                       {count > 0 && !loading && next2 < filterIds.length ? (
                         <button
                           className="btn py-2 px-3 nft-load-more-btn"

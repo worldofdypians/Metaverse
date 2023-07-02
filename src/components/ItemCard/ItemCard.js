@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./_itemcard.scss";
 import ComfirmationModal from "../../screens/Marketplace/MarketNFTs/ConfirmationModal";
-import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import Toast from "../../components/Toast/Toast";
 import ethgrayLogo from "./assets/ethgrayLogo.svg";
+import { useNavigate } from "react-router-dom";
 
 const ItemCard = ({
   nft,
   single,
   isConnected,
   showConnectWallet,
-  onProceedBuy,
   isCaws,
   isTimepiece,
   isWod,
@@ -26,6 +25,7 @@ const ItemCard = ({
   isLatestSale,
   isListed,
   soldPriceType,
+  handleRefreshListing,
 }) => {
   const [isOwner, setisOwner] = useState(false);
   const [IsApprove, setIsApprove] = useState(false);
@@ -33,8 +33,11 @@ const ItemCard = ({
   const [showToast, setShowToast] = useState(false);
   const [toastTitle, setToastTitle] = useState("");
   const [status, setStatus] = useState("initial");
+  const [showModal, setShowModal] = useState(false);
+  const [purchasestate, setpurchasestate] = useState("approve");
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const checkOwner = (nftItem) => {
     if (coinbase === undefined) {
@@ -70,7 +73,12 @@ const ItemCard = ({
         console.log(isApproved);
         setbuttonTxt(isApproved ? "Buy" : "Approve");
         setIsApprove(isApproved);
+        setpurchasestate(isApproved ? "buy" : "approve");
       });
+    } else if (isConnected === true && nftItem.payment_priceType === 0) {
+      setbuttonTxt("Buy");
+      setIsApprove(true);
+      setpurchasestate("buy");
     }
   };
 
@@ -105,125 +113,107 @@ const ItemCard = ({
     return output;
   };
 
-  async function addNFTToUserFavorites(userId, tokenId, nftAddress) {
-    try {
-      const response = await fetch(
-        `https://api.worldofdypians.com/user-favorites/${userId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ tokenId, nftAddress }),
-        }
-      );
-      if (!response.ok) {
-        console.log(response);
-        throw new Error("Error adding NFT to user favorites");
-      }
-      const data = await response.json();
-      onFavorite();
-      return data.favorites;
-    } catch (error) {
-      console.log(error);
+  async function handleBuy(nft) {
+    console.log("nft", nft);
 
-      console.error("Error adding NFT to user favorites:", error);
-      throw error;
-    }
-  }
+    setbuttonTxt("Buy");
+    setpurchasestate("buy");
 
-  async function deleteNFTFromUserFavorites(userId, tokenId, nftAddress) {
-    fetch(
-      `https://api.worldofdypians.com/user-favorites/${userId}/${tokenId}/${nftAddress}`,
-      {
-        method: "DELETE",
-      }
-    )
-      .then((response) => {
-        if (response.ok || response.status === 204 || response.status === 404) {
-          // NFT removed successfully or was not found (404)
-          console.log("NFT removed from favorites");
-          onFavorite();
-        } else {
-          // Handle other status codes as errors
-          console.error(
-            "Failed to remove NFT from favorites. Status:",
-            response.status
-          );
-        }
+    console.log("buying in handlebuy");
+    await window
+      .buyNFT(
+        nft.price,
+        nft.nftAddress,
+        nft.tokenId,
+        nft.payment_priceType,
+        nft.payment_tokenAddress
+      )
+      .then((result) => {
+        console.log("buyNFT", result);
+        setShowToast(true);
+        setpurchasestate("success");
+        setStatus("done");
+        handleRefreshListing();
+        setTimeout(() => {
+          checkapprove(nft);
+        }, 2000);
+
+        setToastTitle("Successfully purchased!");
       })
-      .catch((error) => {
-        // Handle network or fetch error
-        console.error("Error removing NFT from favorites:", error);
+      .catch((e) => {
+        console.error(e);
+        setpurchasestate("fail");
+        setStatus("fail");
       });
   }
 
-  const handleFavorite = async (nft) => {
-    if (isConnected) {
-      if (isFavorite === true) {
-        await deleteNFTFromUserFavorites(
-          coinbase,
-          parseInt(nft.tokenId),
-          nft.nftAddress
-        );
+  const handleBuyState = async (nft) => {
+    const isApproved = await isApprovedBuy(nft.price);
+    console.log("Buystate");
+
+    if (!isOwner && isConnected) {
+      // onProceedBuy();
+      setShowModal(true);
+
+      if (isApproved || nft.payment_priceType === 0) {
+        setbuttonTxt("Buy");
+        setpurchasestate("buy");
+        setStatus("buy");
+
+        console.log("buying in buystate");
+        await window
+          .buyNFT(
+            nft.price,
+            nft.nftAddress,
+            nft.tokenId,
+            nft.payment_priceType,
+            nft.payment_tokenAddress
+          )
+          .then((result) => {
+            console.log("buyNFT", result);
+            setShowToast(true);
+            setpurchasestate("success");
+            setStatus("done");
+            handleRefreshListing();
+            setTimeout(() => {
+              checkapprove(nft);
+            }, 2000);
+            setToastTitle("Successfully purchased!");
+          })
+          .catch((e) => {
+            console.error(e);
+            setpurchasestate("fail");
+            setStatus("fail");
+          });
+      } else {
+        setbuttonTxt("Approve");
+        setpurchasestate("approve");
+        setStatus("approve");
+
+        console.log("approve buying");
+        await window
+          .approveBuy(nft.price)
+          .then((result) => {
+            setbuttonTxt("Buy");
+            setpurchasestate("buy");
+            setStatus("approve");
+            setIsApprove(true);
+            setTimeout(() => {
+              handleBuy(nft);
+            }, 2000);
+          })
+          .catch((e) => {
+            console.error(e);
+            setStatus("clicked");
+            setpurchasestate("fail");
+          });
       }
-      if (!isFavorite) {
-        await addNFTToUserFavorites(
-          coinbase,
-          parseInt(nft.tokenId),
-          nft.nftAddress
-        );
-      }
-    } else showConnectWallet();
+    }
   };
 
-  async function handleBuy(nft) {
-    console.log("nft", nft);
-    const isApproved = await isApprovedBuy(nft.price);
-
-    if (isApproved || nft.payment_priceType === 0) {
-      setbuttonTxt("Buy");
-
-      console.log("buying");
-      await window
-        .buyNFT(
-          nft.price,
-          nft.nftAddress,
-          nft.tokenId,
-          nft.payment_priceType,
-          nft.payment_tokenAddress
-        )
-        .then((result) => {
-          console.log("buyNFT", result);
-          setShowToast(true);
-          setToastTitle("Successfully purchased!");
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    } else {
-      setbuttonTxt("Approve");
-
-      console.log("approve buying");
-      await window
-        .approveBuy(nft.price)
-        .then((result) => {
-          setbuttonTxt("Buy");
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    }
-  }
-
-  const handleBuyState = async (nft) => {
-    if (!isOwner && isConnected) {
-      onProceedBuy();
-    }
-
-    if (!isConnected) {
-      showConnectWallet();
-    }
+  const handleConnectState = () => {
+    showConnectWallet();
+    setStatus("clicked");
   };
 
   useEffect(() => {
@@ -236,18 +226,52 @@ const ItemCard = ({
     ) {
       checkapprove(nft);
     }
-  }, [nft, isFavorite, coinbase]);
+  }, [nft, coinbase, isConnected]);
+
+  const html = document.querySelector("html");
 
   useEffect(() => {
-    if (isConnected && status === "buy") {
-      onProceedBuy();
+    if (showModal) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [showModal]);
+
+  useEffect(() => {
+    if (isConnected && status === "clicked") {
+      setShowModal(true);
+      setTimeout(() => {
+        handleBuyState(nft);
+      }, 2000);
     }
   }, [isConnected, status]);
+
+  useEffect(() => {
+    if (status === "initial") {
+      setShowModal(false);
+    }
+  }, [status]);
 
   return (
     <div className="d-flex flex-column position-relative gap-1">
       <Toast showToast={showToast} title={toastTitle} />
-
+      {showModal && isConnected && (
+        <ComfirmationModal
+          open={showModal}
+          onclose={() => {
+            setShowModal(false);
+            setStatus("initial");
+          }}
+          nft={nft}
+          isCaws={isCaws}
+          isWod={isWod}
+          isTimepiece={isTimepiece}
+          state={purchasestate}
+          ethTokenData={ethTokenData}
+          dypTokenData={dypTokenData}
+        />
+      )}
       <div className="item-wrapper" style={{ maxWidth: "100%" }}>
         <div className="nftimg-bg position-relative">
           <div className="name-wrapper d-flex justify-content-center p-2">
@@ -331,7 +355,7 @@ const ItemCard = ({
                       nft.payment_priceType === 0
                         ? ethTokenData * (nft.price / 1e18)
                         : dypTokenData * (nft.price / 1e18),
-                      0
+                      nft.payment_priceType === 0 ? 3 : 0
                     )}
                   </span>
                 </div>
@@ -385,8 +409,7 @@ const ItemCard = ({
                 className="buy-nft-btn w-100"
                 style={{ paddingLeft: "20px", paddingRight: "20px" }}
                 onClick={(e) => {
-                  handleBuyState(nft);
-                  setStatus();
+                  isConnected ? handleBuyState(nft) : handleConnectState();
                   e.preventDefault();
                   e.stopPropagation();
                 }}

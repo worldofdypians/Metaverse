@@ -176,6 +176,20 @@
   text-align: center;
 }
 
+.successwrapper {
+  border-radius: 10px;
+  background: rgba(0, 255, 182, 0.15) !important;
+  display: flex;
+  justify-content: center;
+}
+
+.errorwrapper {
+  border-radius: 10px;
+  background: rgba(255, 60, 0, 0.15) !important;
+  display: flex;
+  justify-content: center;
+}
+
 .pastsaleTable {
   border-radius: 40px;
   background: linear-gradient(
