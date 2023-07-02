@@ -25,7 +25,8 @@ const StakeLandModal = ({
   ETHrewards,
   hideItem,
   finalUsd,
-  onClaimAll
+  onClaimAll,
+  handleConnect,
 }) => {
   const [active, setActive] = useState(true);
   const [showToStake, setshowToStake] = useState(false);
@@ -534,7 +535,7 @@ const StakeLandModal = ({
           </div>
           <div className="d-flex flex-column gap-2">
             <div className="mt-4 row mx-0 justify-content-xxl-between justify-content-lg-between justify-content-md-between justify-content-sm-between justify-content-center gap-3">
-              {showApprove === true && (
+              {showApprove === true && isConnected && (
                 <button
                   className={`btn m-auto ${
                     showApprove === true &&
@@ -566,7 +567,7 @@ const StakeLandModal = ({
               )}
               <button
                 className={`btn m-auto ${
-                  showApprove === false &&
+                  showApprove === false  && isConnected && 
                   getApprovedLandPoolsNfts(selectNftIds).length > 0 &&
                   getApprovedLandPoolsNfts(selectNftIds).length < 51
                     ? "pill-btn"
@@ -603,6 +604,11 @@ const StakeLandModal = ({
                   "Deposit"
                 )}
               </button>
+              {!isConnected && (
+              <button className={`btn m-auto pill-btn`} onClick={handleConnect}>
+                Connect Wallet
+              </button>
+            )}
             </div>
             <p className="mt-1" style={{ color: color, textAlign: "center" }}>
               {status}
@@ -629,37 +635,40 @@ const StakeLandModal = ({
                 </div>
               </div>
             </div>
-            <button
-              className={`pill-btn ${
-                ETHrewards == 0 && "disabled-approve-btn"
-              } mb-1 w-100 p-2`}
-              onClick={() => {
-                checkUnstakebtn === true &&
-                selectNftIds.length === nftItem.length
-                  ? onClaimAll()
-                  : checkUnstakebtn === true && selectNftIds.length === 0
-                  ? onEmptyState()
-                  : selectNftIds.length !== 0 &&
-                    selectNftIds.length < nftItem.length
-                  ? handleClaim(selectNftIds)
-                  : onClaimAll();
-              }}
-              style={{
-                pointerEvents: ETHrewards == 0 ? "none" : "auto",
-              }}
-            >
-              {loadingClaim ? (
-                <>
-                  <div
-                    className="spinner-border "
-                    role="status"
-                    style={{ height: "1.5rem", width: "1.5rem" }}
-                  ></div>
-                </>
-              ) : (
-                "Claim selected"
-              )}
-            </button>
+            {isConnected && (
+              <button
+                className={`pill-btn ${
+                  ETHrewards == 0 && "disabled-approve-btn"
+                } mb-1 w-100 p-2`}
+                onClick={() => {
+                  checkUnstakebtn === true &&
+                  selectNftIds.length === nftItem.length
+                    ? onClaimAll()
+                    : checkUnstakebtn === true && selectNftIds.length === 0
+                    ? onEmptyState()
+                    : selectNftIds.length !== 0 &&
+                      selectNftIds.length < nftItem.length
+                    ? handleClaim(selectNftIds)
+                    : onClaimAll();
+                }}
+                style={{
+                  pointerEvents: ETHrewards == 0 ? "none" : "auto",
+                }}
+              >
+                {loadingClaim ? (
+                  <>
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{ height: "1.5rem", width: "1.5rem" }}
+                    ></div>
+                  </>
+                ) : (
+                  "Claim selected"
+                )}
+              </button>
+            )}
+            
           </div>
           <div className="d-flex flex-column gap-2 justify-content-center align-items-center w-100 w-xxl-50 w-lg-50 w-md-50">
             <div className="gap-3 selected-nfts-wrapper2 p-3 w-100 d-flex flex-column">
@@ -670,58 +679,61 @@ const StakeLandModal = ({
                 <div className="d-flex align-items-center gap-1">
                   <img src={wodTag} alt="" />
                   <span className="selected-nfts-amount">
-                  {getApprovedLandPoolsNfts(selectNftIds).length} Wod Land
+                    {getApprovedLandPoolsNfts(selectNftIds).length} Wod Land
                   </span>
                 </div>
-                
               </div>
             </div>
-            <button
-              className={` ${
-                (getApprovedLandPoolsNfts(selectNftIds).length !== 0 &&
-                  getApprovedLandPoolsNfts(selectNftIds).length < 51 &&
-                  nftItem.length !== 0) ||
-                checkUnstakebtn === true
-                  ? "withdrawbtn"
-                  : "disabled-approve-btn"
-              } w-100 p-2`}
-              onClick={() => {
-                checkUnstakebtn === true &&
-                getApprovedLandPoolsNfts(selectNftIds).length === nftItem.length &&
-                getApprovedLandPoolsNfts(selectNftIds).length < 51
-                  ? handleUnstake()
-                  : (checkUnstakebtn === true &&
-                      getApprovedLandPoolsNfts(selectNftIds).length === 0) ||
-                    getApprovedLandPoolsNfts(selectNftIds).length > 50
-                  ? onEmptyState()
-                  : getApprovedLandPoolsNfts(selectNftIds).length !== 0 &&
-                    getApprovedLandPoolsNfts(selectNftIds).length < nftItem.length
-                  ? handleUnstake()
-                  : handleUnstake();
-              }}
-              style={{
-                pointerEvents:
-                  getApprovedLandPoolsNfts(selectNftIds).length !== 0
-                    ? "auto"
-                    : nftItem.length !== 0 &&
-                      checkUnstakebtn === true &&
-                      getApprovedLandPoolsNfts(selectNftIds).length === 0
-                    ? "auto"
-                    : "none",
-              }}
-            >
-              {loadingWithdraw ? (
-                <>
-                  <div
-                    className="spinner-border "
-                    role="status"
-                    style={{ height: "1.5rem", width: "1.5rem" }}
-                  ></div>
-                </>
-              ) : (
-                "Unstake"
-              )}
-            </button>
+            {isConnected && (
+              <button
+                className={` ${
+                  (getApprovedLandPoolsNfts(selectNftIds).length !== 0 &&
+                    getApprovedLandPoolsNfts(selectNftIds).length < 51 &&
+                    nftItem.length !== 0) ||
+                  checkUnstakebtn === true
+                    ? "withdrawbtn"
+                    : "disabled-approve-btn"
+                } w-100 p-2`}
+                onClick={() => {
+                  checkUnstakebtn === true &&
+                  getApprovedLandPoolsNfts(selectNftIds).length ===
+                    nftItem.length &&
+                  getApprovedLandPoolsNfts(selectNftIds).length < 51
+                    ? handleUnstake()
+                    : (checkUnstakebtn === true &&
+                        getApprovedLandPoolsNfts(selectNftIds).length === 0) ||
+                      getApprovedLandPoolsNfts(selectNftIds).length > 50
+                    ? onEmptyState()
+                    : getApprovedLandPoolsNfts(selectNftIds).length !== 0 &&
+                      getApprovedLandPoolsNfts(selectNftIds).length <
+                        nftItem.length
+                    ? handleUnstake()
+                    : handleUnstake();
+                }}
+                style={{
+                  pointerEvents:
+                    getApprovedLandPoolsNfts(selectNftIds).length !== 0
+                      ? "auto"
+                      : nftItem.length !== 0 &&
+                        checkUnstakebtn === true &&
+                        getApprovedLandPoolsNfts(selectNftIds).length === 0
+                      ? "auto"
+                      : "none",
+                }}
+              >
+                {loadingWithdraw ? (
+                  <>
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{ height: "1.5rem", width: "1.5rem" }}
+                    ></div>
+                  </>
+                ) : (
+                  "Unstake"
+                )}
+              </button>
+            )}
           </div>
         </div>
       )}

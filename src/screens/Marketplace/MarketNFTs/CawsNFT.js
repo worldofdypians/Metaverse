@@ -494,7 +494,7 @@ const CawsNFT = ({
       );
 
       const finalUnique = [...objArrFiltered];
-      
+
       setLoading(false);
 
       setCawsNFTS2(finalUnique);
@@ -561,19 +561,8 @@ const CawsNFT = ({
     }
   };
 
-  const cawsfiltered = async () => {
-    if (count > 0) {
-      const testArray = cawsNFTS2.filter(function (item) {
-        return filterIds.includes(item.tokenId);
-      });
-
-      console.log(testArray, filterIds);
-    }
-  };
-
   useEffect(() => {
     loadMore2();
-    cawsfiltered();
   }, [count]);
 
   useEffect(() => {
@@ -795,6 +784,7 @@ const CawsNFT = ({
                   className="btn clear-all-btn p-2"
                   onClick={() => {
                     clearAll();
+                    setCawsNFTS2([]);
                   }}
                 >
                   Clear all

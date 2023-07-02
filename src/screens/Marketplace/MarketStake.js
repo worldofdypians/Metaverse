@@ -10,6 +10,7 @@ import axios from "axios";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { convertToUSD } from "../../actions/convertUsd";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import instake from "./assets/instake.svg";
 
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const windowSize = useWindowSize();
@@ -37,10 +38,10 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
-  const [activeTab, setActiveTab] = useState("live")
-  const [totalRewards, setTotalRewards] = useState(0)
-  const [totalLocked, setTotalLocked] = useState(0)
-  const [pastCawsUsdPrice, setPastCawsUsdPrice] = useState(0)
+  const [activeTab, setActiveTab] = useState("live");
+  const [totalRewards, setTotalRewards] = useState(0);
+  const [totalLocked, setTotalLocked] = useState(0);
+  const [pastCawsUsdPrice, setPastCawsUsdPrice] = useState(0);
   const html = document.querySelector("html");
 
   const fetchTvl = async () => {
@@ -59,7 +60,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       `https://api.worldofdypians.com/api/lockedNFTs`
     );
     if (result) {
-    setTotalLocked(result.data)
+      setTotalLocked(result.data);
     }
   };
   const fetchTotalRewars = async () => {
@@ -67,11 +68,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       `https://api.worldofdypians.com/api/stakeRewards`
     );
     if (result) {
-    setTotalRewards(result.data)
+      setTotalRewards(result.data);
     }
   };
-
-
 
   const myNft = async () => {
     let myNft = await window.myNftListContract(coinbase);
@@ -102,7 +101,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
 
       return allCawsStakes;
     }
-  
   };
 
   const myStakes = async () => {
@@ -208,16 +206,14 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const setUSDPrice = async () => {
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(EthRewards));
-    setethToUSDLandPool(Number(ethprice) * Number(EthRewardsLandPool))
-    setPastCawsUsdPrice(Number(ethprice) * 59)
- 
+    setethToUSDLandPool(Number(ethprice) * Number(EthRewardsLandPool));
+    setPastCawsUsdPrice(Number(ethprice) * 59);
   };
 
   const setPastCawsUsd = async () => {
     const ethprice = await convertEthToUsd();
-    setPastCawsUsdPrice(Number(ethprice) * 59)
-
-  }
+    setPastCawsUsdPrice(Number(ethprice) * 59);
+  };
 
   const calculateAllRewards = async () => {
     let myStakes = await getStakesIds();
@@ -275,7 +271,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       .then(() => {
         setEthRewards(0);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const claimRewardsLandPool = async () => {
@@ -288,7 +284,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       .then(() => {
         setEthRewards(0);
       })
-      .catch((err) => { console.log(err) });
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getApprovedNfts = (data) => {
@@ -330,21 +328,24 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   }, [isConnected, EthRewards]);
 
   useEffect(() => {
-    calculateAllRewards();
-    calculateAllRewardsLandPool()
-    myNft();
-    myStakes();
-    myLandNft();
-    myLandStakes();
-    myStakesLandPool();
-    fetchTotalLocked();
-    fetchTotalRewars();
-  }, [isConnected, coinbase, newStakes]);
+
+    if (coinbase && chainId === 1) {
+      calculateAllRewards();
+      calculateAllRewardsLandPool();
+      myNft();
+      myStakes();
+      myLandNft();
+      myLandStakes();
+      myStakesLandPool();
+    }
+  }, [isConnected, coinbase, newStakes, chainId]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Stake";
     fetchTvl();
+    fetchTotalLocked();
+    fetchTotalRewars();
   }, []);
 
   useEffect(() => {
@@ -358,7 +359,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   return (
     <div
       className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
-      style={{ minHeight: "72vh", maxWidth: '2400px' }}
+      style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div
@@ -377,6 +378,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               isConnected={isConnected}
               coinbase={coinbase}
               onDepositComplete={() => refreshStakes()}
+              handleConnect={handleConnect}
             />
           )}
           {rewardModal && (
@@ -392,6 +394,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               onDepositComplete={() => refreshStakes()}
               ETHrewards={EthRewards}
               finalUsd={ethToUSD}
+              handleConnect={handleConnect}
               onClaimAll={() => {
                 claimRewards();
               }}
@@ -409,6 +412,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                 claimRewards();
               }}
               isStake={false}
+              handleConnect={handleConnect}
             />
           )}
 
@@ -426,153 +430,183 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                 claimRewardsLandPool();
               }}
               isStake={true}
+              handleConnect={handleConnect}
             />
           )}
           <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
-            NFT{" "}
-            <span style={{ color: "#8c56ff" }}> Staking</span>
+            NFT <span style={{ color: "#8c56ff" }}> Staking</span>
           </h6>
           <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-            <h6 className={`new-stake-tab ${activeTab === "live" && "stake-tab-active"} px-3 py-2`} onClick={() => setActiveTab("live")}>Live</h6>
-            <h6 className={`new-stake-tab ${activeTab === "upcoming" && "stake-tab-active"} px-3 py-2`} onClick={() => setActiveTab("upcoming")}>Upcoming</h6>
-            <h6 className={`new-stake-tab ${activeTab === "past" && "stake-tab-active"} px-3 py-2`} onClick={() => setActiveTab("past")}>Past</h6>
+            <h6
+              className={`new-stake-tab ${
+                activeTab === "live" && "stake-tab-active"
+              } px-3 py-2`}
+              onClick={() => setActiveTab("live")}
+            >
+              Live
+            </h6>
+            <h6
+              className={`new-stake-tab ${
+                activeTab === "upcoming" && "stake-tab-active"
+              } px-3 py-2`}
+              onClick={() => setActiveTab("upcoming")}
+            >
+              Upcoming
+            </h6>
+            <h6
+              className={`new-stake-tab ${
+                activeTab === "past" && "stake-tab-active"
+              } px-3 py-2`}
+              onClick={() => setActiveTab("past")}
+            >
+              Past
+            </h6>
           </div>
-          <span className="w-100 new-stake-divider mt-3 mb-5">
-          </span>
-        {activeTab === "live" &&
-        <>
-          <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-4 d-flex align-items-center justify-content-around">
-            <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">${abbreviateNumber(landtvl + cawslandTvl)}</h6>
-              <span className="new-stake-desc">
-                Total Value Locked (TVL)
-              </span>
-            </div>
-            <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">{abbreviateNumber(totalLocked)}</h6>
-              <span className="new-stake-desc">
-                Total Staked NFTs
-              </span>
-            </div>
-            <div className="d-flex flex-column align-items-center gap-2">
-              <h6 className="new-stake-info">${abbreviateNumber(totalRewards)}</h6>
-              <span className="new-stake-desc">
-                Paid Rewards
-              </span>
-            </div>
-          </div>
-          <div className="row w-100  m-0 mt-5">
-            <div className="col-12 px-0">
-              <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
-                <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                  <div className="d-flex flex-column gap-4">
-                    <div className="d-flex flex-column gap-2">
-                      <h6 className="market-stake-title">
-                        World of Dypians Land & CAWS
-                      </h6>
-                      <span className="market-stake-desc">
-                        Combine your Land and CAWS NFTs to earn daily ETH
-                        rewards.
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center gap-3">
-                      <button
-                        className="btn pill-btn px-4 py-2"
-                        onClick={() => setNftModal(true)}
-                      >
-                        Deposit
-                      </button>
-                      <button
-                        className="btn rewards-btn px-4 py-2"
-                        onClick={() => {
-                          setRewardModal(true);
-                        }}
-                      >
-                        Rewards
-                      </button>
-                    </div>
-                  </div>
-                  <div className="tvl-wrapper">
-                    <h6 className="market-stake-tvl">
-                      ${abbreviateNumber(cawslandTvl)}
-                    </h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row w-100 m-0 mt-5">
-            <div className="col-12 px-0">
-              <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
-                <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                  <div className="d-flex flex-column gap-4">
-                    <div className="d-flex flex-column gap-2">
-                      <h6 className="market-stake-title">
-                        World of Dypians Land
-                      </h6>
-                      <span className="market-stake-desc">
-                        Stake your Genesis Land NFTs to earn daily ETH rewards.
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center gap-3">
-                      <button
-                        className="btn pill-btn px-4 py-2"
-                        onClick={() => {
-                          setlandStakeModal(true);
-                        }}
-                      >
-                        Deposit
-                      </button>
-                      <button
-                        className="btn rewards-btn px-4 py-2"
-                        onClick={() => {
-                          setlandunStakeModal(true);
-                        }}
-                      >
-                        Rewards
-                      </button>
-                    </div>
-                    <div className="tvl-wrapper">
-                      <h6 className="market-stake-tvl">
-                        ${abbreviateNumber(landtvl)}
-                      </h6>
-                    </div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-        }
-        {activeTab === "upcoming" &&
-         <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-         <div className="d-flex flex-column align-items-center gap-2">
-           <h6 className="upcoming-stake">Staking pools are coming...</h6>
-           <span className="upcoming-stake-desc">
-           Check back soon!
-           </span>
-         </div>
-       
-       </div>
-        }
-        {activeTab === "past" &&
-        <div className="row w-100 m-0 mt-5">
-        <div className="col-12 px-0">
-          <div className="caws-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5 position-relative">
-            <div className="expired-caws-tag px-3 py-1">
-              <span className="expired-caws-span">Expired</span>
-            </div>
-            <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-              <div className="d-flex flex-column gap-4">
-                <div className="d-flex flex-column gap-2">
-                  <h6 className="market-stake-title">
-                    Cats and Watches Society
+          <span className="w-100 new-stake-divider mt-3 mb-5"></span>
+          {activeTab === "live" && (
+            <>
+              <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-4 d-flex align-items-center justify-content-around">
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <h6 className="new-stake-info">
+                    ${abbreviateNumber(landtvl + cawslandTvl)}
                   </h6>
-                  <span className="market-stake-desc">
-                    Stake your CAWS NFTs to earn daily ETH rewards.
+                  <span className="new-stake-desc">
+                    Total Value Locked (TVL)
                   </span>
-                  {/* <div className="d-flex align-items-center justify-content-between">
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <h6 className="new-stake-info">
+                    {abbreviateNumber(totalLocked)}
+                  </h6>
+                  <span className="new-stake-desc">Total Staked NFTs</span>
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <h6 className="new-stake-info">
+                    ${abbreviateNumber(totalRewards)}
+                  </h6>
+                  <span className="new-stake-desc">Paid Rewards</span>
+                </div>
+              </div>
+              <div className="row w-100  m-0 mt-5 position-relative">
+                {myLandstakes && myLandstakes.length > 0 && (
+                  <div className="instakeWrapper">
+                    <span className="instaketxt">In stake</span>
+                  </div>
+                )}
+                <div className="col-12 px-0">
+                  <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                      <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="market-stake-title">
+                            World of Dypians Land & CAWS
+                          </h6>
+                          <span className="market-stake-desc">
+                            Combine your Land and CAWS NFTs to earn daily ETH
+                            rewards.
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-3">
+                          <button
+                            className="btn pill-btn px-4 py-2"
+                            onClick={() => setNftModal(true)}
+                          >
+                            Deposit
+                          </button>
+                          <button
+                            className="btn rewards-btn px-4 py-2"
+                            onClick={() => {
+                              setRewardModal(true);
+                            }}
+                          >
+                            Rewards
+                          </button>
+                        </div>
+                      </div>
+                      <div className="tvl-wrapper">
+                        <h6 className="market-stake-tvl">
+                          ${abbreviateNumber(cawslandTvl)}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row w-100 m-0 mt-5 position-relative">
+                {mystakesLandPool && mystakesLandPool.length > 0 && (
+                  <div className="instakeWrapper">
+                    <span className="instaketxt">In stake</span>
+                  </div>
+                )}
+                <div className="col-12 px-0">
+                  <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                      <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="market-stake-title">
+                            World of Dypians Land
+                          </h6>
+                          <span className="market-stake-desc">
+                            Stake your Genesis Land NFTs to earn daily ETH
+                            rewards.
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-3">
+                          <button
+                            className="btn pill-btn px-4 py-2"
+                            onClick={() => {
+                              setlandStakeModal(true);
+                            }}
+                          >
+                            Deposit
+                          </button>
+                          <button
+                            className="btn rewards-btn px-4 py-2"
+                            onClick={() => {
+                              setlandunStakeModal(true);
+                            }}
+                          >
+                            Rewards
+                          </button>
+                        </div>
+                        <div className="tvl-wrapper">
+                          <h6 className="market-stake-tvl">
+                            ${abbreviateNumber(landtvl)}
+                          </h6>
+                        </div>
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+          {activeTab === "upcoming" && (
+            <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+              <div className="d-flex flex-column align-items-center gap-2">
+                <h6 className="upcoming-stake">Staking pools are coming...</h6>
+                <span className="upcoming-stake-desc">Check back soon!</span>
+              </div>
+            </div>
+          )}
+          {activeTab === "past" && (
+            <div className="row w-100 m-0 mt-5">
+              <div className="col-12 px-0">
+                <div className="caws-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5 position-relative">
+                  <div className="expired-caws-tag px-3 py-1">
+                    <span className="expired-caws-span">Expired</span>
+                  </div>
+                  <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                    <div className="d-flex flex-column gap-4">
+                      <div className="d-flex flex-column gap-2">
+                        <h6 className="market-stake-title">
+                          Cats and Watches Society
+                        </h6>
+                        <span className="market-stake-desc">
+                          Stake your CAWS NFTs to earn daily ETH rewards.
+                        </span>
+                        {/* <div className="d-flex align-items-center justify-content-between">
                     <div className="past-caws-info-wrapper d-flex flex-column align-items-center px-3 py-2" style={{width: '30%'}}>
                       <h6 className="past-caws-info-value">50%</h6>
                       <span className="past-caws-info">APR</span>
@@ -586,8 +620,8 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                       <span className="past-caws-info">Lock Time</span>
                     </div>
                   </div> */}
-                </div>
-                {/* <div className="d-flex align-items-center gap-3">
+                      </div>
+                      {/* <div className="d-flex align-items-center gap-3">
                   <button
                     className="btn pill-btn px-4 py-2"
                     onClick={() => {
@@ -605,24 +639,27 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                     Rewards
                   </button>
                 </div> */}
-               
-              </div>
-              <div className="past-caws-wrapper">
-                <div className="d-flex align-items-center flex-column past-caws-values p-5">
-                  <h6 className="past-caws-eth">59 ETH</h6>
-                  <h6 className="past-caws-usd">${getFormattedNumber(pastCawsUsdPrice)}</h6>
+                    </div>
+                    <div className="past-caws-wrapper">
+                      <div className="d-flex align-items-center flex-column past-caws-values p-5">
+                        <h6 className="past-caws-eth">59 ETH</h6>
+                        <h6 className="past-caws-usd">
+                          ${getFormattedNumber(pastCawsUsdPrice)}
+                        </h6>
+                      </div>
+                      <div className="d-flex flex-column align-items-center">
+                        <span className="past-caws-total">Total</span>
+                        <span className="past-caws-total">
+                          Distributed Rewards
+                        </span>
+                      </div>
+                    </div>
+                    <div></div>
+                  </div>
                 </div>
-                <div className="d-flex flex-column align-items-center">
-                  <span className="past-caws-total">Total</span>
-                  <span className="past-caws-total">Distributed Rewards</span>
-                </div>
               </div>
-              <div></div>
             </div>
-          </div>
-        </div>
-      </div>
-        }
+          )}
         </div>
       </div>
     </div>

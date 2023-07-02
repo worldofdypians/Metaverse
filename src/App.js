@@ -1233,7 +1233,7 @@ function App() {
                 element={
                   <MarketStake
                     isConnected={isConnected}
-                    handleConnect={handleShowWalletModal}
+                    handleConnect={handleConnectWallet}
                     chainId={chainId}
                     coinbase={coinbase}
                   />
