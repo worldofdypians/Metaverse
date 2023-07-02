@@ -561,19 +561,10 @@ const CawsNFT = ({
     }
   };
 
-  const cawsfiltered = async () => {
-    if (count > 0) {
-      const testArray = cawsNFTS2.filter(function (item) {
-        return filterIds.includes(item.tokenId);
-      });
 
-      console.log(testArray, filterIds);
-    }
-  };
 
   useEffect(() => {
     loadMore2();
-    cawsfiltered();
   }, [count]);
 
   useEffect(() => {

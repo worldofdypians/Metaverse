@@ -517,6 +517,7 @@ const TimepieceNFT = ({
     );
 
     const finalUnique = [...alltimepieceNfts, ...objArrFiltered];
+    
     setTimepieceNFTS2(finalUnique);
   };
 
@@ -620,6 +621,11 @@ const TimepieceNFT = ({
     }
   }, [alltimepieceNfts.length, finalData.length, timepieceBought]);
 
+
+  useEffect(() => {
+    loadMore2();
+  }, [count]);
+
   useEffect(() => {
     getTimepieceCollection();
     fetchFilters();
@@ -634,6 +640,7 @@ const TimepieceNFT = ({
     }
     sortNfts("lth");
   }, [timepieceNFTS]);
+
 
   return (
     <>
@@ -1107,7 +1114,7 @@ const TimepieceNFT = ({
                             />
                           </NavLink>
                         ))}
-                      {count > 0 && !loading && next2 < filterIds.length ? (
+                       {count > 0 && !loading && next2 < filterIds.length ? (
                         <button
                           className="btn py-2 px-3 nft-load-more-btn"
                           onClick={() => {

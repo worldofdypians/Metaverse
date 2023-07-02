@@ -641,6 +641,12 @@ const WoDNFT = ({
     }
   }, [wodBought, nftCount]);
 
+
+  useEffect(() => {
+    loadMore2();
+  }, [count]);
+
+
   useEffect(() => {
     if (landNfts && landNfts.length > 0 && loading === false) {
       testFunc();
