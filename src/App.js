@@ -1172,6 +1172,9 @@ function App() {
                     listedNFTS={listedNFTS}
                     coinbase={coinbase}
                     cawsBought={cawsBought}
+                    handleRefreshListing={handleRefreshList}
+                    nftCount={nftCount}
+
                   />
                 }
               />
@@ -1187,6 +1190,9 @@ function App() {
                     listedNFTS={listedNFTS}
                     coinbase={coinbase}
                     wodBought={landBought}
+                    handleRefreshListing={handleRefreshList}
+                    nftCount={nftCount}
+
                   />
                 }
               />
@@ -1202,6 +1208,9 @@ function App() {
                     listedNFTS={listedNFTS}
                     coinbase={coinbase}
                     timepieceBought={timepieceBought}
+                    handleRefreshListing={handleRefreshList}
+                    nftCount={nftCount}
+
                   />
                 }
               />

@@ -32,6 +32,8 @@ const WoDNFT = ({
   ethTokenData,
   dypTokenData,
   wodBought,
+  handleRefreshListing,
+  nftCount,
 }) => {
   const override = {
     display: "block",
@@ -45,9 +47,13 @@ const WoDNFT = ({
   const [filterTitle, setFilterTitle] = useState("Price low to high");
   const [initialNfts, setInitialNfts] = useState([]);
   const [landNfts, setLandNfts] = useState([]);
+  const [landNfts2, setLandNfts2] = useState([]);
+
   const [favItems, setfavItems] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const [next, setNext] = useState(0);
+  const [next2, setNext2] = useState(0);
+
   const [paginatedData, setpaginatedData] = useState([]);
   const [finalData, setfinalData] = useState([]);
   const [allwodNfts, setAllwod] = useState([]);
@@ -527,6 +533,35 @@ const WoDNFT = ({
     return finaldata;
   };
 
+  const testFunc = async () => {
+    const array = Array.from({ length: 998 }, (_, index) => index + 1);
+
+    const objArr = await Promise.all(
+      array.map(async (i) => {
+        const owner = await window.landnft.ownerOf(i).catch((e) => {
+          console.log(e);
+        });
+        const attributes = await window.getLandNft(i);
+
+        return {
+          nftAddress: window.config.landnft_address,
+          buyer: owner,
+          tokenId: i.toString(),
+          type: "land",
+          chain: 1,
+          attributes: attributes.attributes,
+        };
+      })
+    );
+
+    const objArrFiltered = objArr.filter(
+      ({ tokenId: id1 }) => !allwodNfts.some(({ tokenId: id2 }) => id2 == id1)
+    );
+
+    const finalUnique = [...allwodNfts, ...objArrFiltered];
+    setLandNfts2(finalUnique);
+  };
+
   const fetchInitialWod = async () => {
     const collectionItems = finalData;
     const uniqueArray = collectionItems.filter(
@@ -561,14 +596,25 @@ const WoDNFT = ({
     setNext(next + 12);
   };
 
+  const loadMore2 = () => {
+    setLoading(true);
+    setNext2(next2 + 12);
+  };
+
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
     if (wrappedElement) {
       const isBottom =
         wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
       if (isBottom) {
-        if (next < allLandpiece) {
-          loadMore();
+        if (count === 0) {
+          if (next < allLandpiece) {
+            loadMore();
+          }
+        } else {
+          if (next2 < filterIds.length) {
+            loadMore2();
+          }
         }
         document.removeEventListener("scroll", onScroll);
       }
@@ -593,7 +639,13 @@ const WoDNFT = ({
     if (wodBought) {
       getListedWod();
     }
-  }, [wodBought]);
+  }, [wodBought, nftCount]);
+
+  useEffect(() => {
+    if (landNfts && landNfts.length > 0 && loading === false) {
+      testFunc();
+    }
+  }, [landNfts]);
 
   useEffect(() => {
     if (wodBought && allwodNfts.length > 0 && finalData.length > 0) {
@@ -642,7 +694,7 @@ const WoDNFT = ({
                     <b> NFT Staking Pool,</b> ranking on <b>Leaderboard</b>, and
                     earn multiple <b>Rewards</b> by playing the game.
                   </p>
-                  <NavLink>
+                  <NavLink to="/land" style={{ width: "fit-content" }}>
                     <button className="btn pill-btn">Explore</button>
                   </NavLink>
                 </div>
@@ -788,134 +840,508 @@ const WoDNFT = ({
                 onScroll={onScroll}
                 ref={listInnerRef}
               >
-                <div
-                  className={"item-cards-wrapper"}
-                >
-                  {landNfts && landNfts.length > 0 ? (
-                    landNfts.map((nft, index) => (
-                      <NavLink
-                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                        state={{
-                          nft: nft,
-                          type: "land",
-                          isOwner:
-                            nft.seller?.toLowerCase() ===
-                              coinbase?.toLowerCase() ||
-                            nft.buyer?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
-                          chain: nft.chain,
-                        }}
-                        onClick={() => {
-                          updateViewCount(nft.tokenId, nft.nftAddress);
-                        }}
-                      >
-                        <ItemCard
-                          ethTokenData={ethTokenData}
-                          dypTokenData={dypTokenData}
-                          key={nft.id}
-                          nft={nft}
-                          isConnected={isConnected}
-                          showConnectWallet={handleConnect}
-                          isCaws={false}
-                          isTimepiece={false}
-                          isWod={true}
-                          coinbase={coinbase}
-                          lastSale={nft.buyer ? true : false}
-                          lastSold={nft.LastSold}
-                          isLatestSale={nft.isLatestSale}
-                          isListed={nft.isListed}
-                          soldPriceType={nft.soldPriceType}
-                        />
-                      </NavLink>
-                    ))
-                  ) : (
+                <div className={"item-cards-wrapper"}>
+                  {landNfts && landNfts.length > 0 && count === 0 ? (
                     <>
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                    <Skeleton animation="wave"
-                     width={178}
-                     variant="rounded"
-                     height={230}
-                     sx={{ bgcolor: "black.700" }}
-                   />
-                 </>
+                      {landNfts.map((nft, index) => (
+                        <NavLink
+                          to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: nft.type,
+                            isOwner:
+                              nft.seller?.toLowerCase() ===
+                                coinbase?.toLowerCase() ||
+                              nft.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={() => {
+                            updateViewCount(nft.tokenId, nft.nftAddress);
+                          }}
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={false}
+                            isTimepiece={false}
+                            isWod={true}
+                            coinbase={coinbase}
+                            lastSale={nft.buyer ? true : false}
+                            lastSold={nft.LastSold}
+                            isLatestSale={nft.isLatestSale}
+                            isListed={nft.isListed}
+                            soldPriceType={nft.soldPriceType}
+                            handleRefreshListing={handleRefreshListing}
+                          />
+                        </NavLink>
+                      ))}
+                      {count === 0 && !loading && next < allLandpiece ? (
+                        <button
+                          className="btn py-2 px-3 nft-load-more-btn"
+                          onClick={() => {
+                            loadMore();
+                          }}
+                        >
+                          Load more
+                        </button>
+                      ) : count === 0 && loading && landNfts.length === 0 ? (
+                        <>
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ) : landNfts && landNfts.length === 0 && count === 0 ? (
+                    <>
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {count > 0 && landNfts2 && landNfts2.length > 0 ? (
+                    <>
+                      {landNfts2
+                        .filter(function (item) {
+                          return filterIds.includes(item.tokenId);
+                        })
+                        .slice(0, next2)
+                        .map((nft, index) => (
+                          <NavLink
+                            to={`/marketplace/nft/${index}`}
+                            style={{ textDecoration: "none" }}
+                            key={index}
+                            state={{
+                              nft: nft,
+                              type: "land",
+                              isOwner:
+                                nft.seller?.toLowerCase() ===
+                                  coinbase?.toLowerCase() ||
+                                nft.buyer?.toLowerCase() ===
+                                  coinbase?.toLowerCase(),
+                              chain: nft.chain,
+                            }}
+                            onClick={() => {
+                              updateViewCount(nft, window.config.nft_address);
+                            }}
+                          >
+                            <ItemCard
+                              ethTokenData={ethTokenData}
+                              dypTokenData={dypTokenData}
+                              key={nft.id}
+                              nft={nft}
+                              isConnected={isConnected}
+                              showConnectWallet={handleConnect}
+                              isCaws={false}
+                              isTimepiece={false}
+                              isWod={true}
+                              coinbase={coinbase}
+                              lastSold={nft.LastSold}
+                              isLatestSale={nft.isLatestSale}
+                              isListed={nft.isListed}
+                              soldPriceType={nft.soldPriceType}
+                            />
+                          </NavLink>
+                        ))}
+                      {count > 0 && !loading && next2 < filterIds.length ? (
+                        <button
+                          className="btn py-2 px-3 nft-load-more-btn"
+                          onClick={() => {
+                            loadMore2();
+                          }}
+                        >
+                          Load more
+                        </button>
+                      ) : count > 0 &&
+                        loading &&
+                        next2 < filterIds.length &&
+                        filterIds.length > 0 ? (
+                        <>
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={178}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ) : count > 0 && landNfts2 && landNfts2.length === 0 ? (
+                    <>
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={178}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </div>
               <div className="d-flex justify-content-center w-100">
-                {!loading && next < allLandpiece ? (
+                {/* {!loading && next < allLandpiece ? (
                   <button
                     className="btn py-2 px-3 nft-load-more-btn"
                     onClick={() => loadMore()}
@@ -932,7 +1358,7 @@ const WoDNFT = ({
                   />
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
             </div>
           </div>
