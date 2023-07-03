@@ -138,11 +138,7 @@ const ProfileCard = ({
     <div className="main-wrapper py-4 w-100">
       <div className="row justify-content-center gap-5 gap-lg-0">
         <div className="position-relative px-0 px-lg-3 col-12 col-lg-5 col-xxl-5">
-          <div
-            className={
-            "user-cardImg"
-            }
-          >
+          <div className={"user-cardImg"}>
             <div className="d-flex flex-column justify-content-between gap-2">
               <div className="d-flex gap-2 justify-content-between align-items-center">
                 <div className="d-flex align-items-center gap-2">
@@ -377,7 +373,7 @@ const ProfileCard = ({
           <img src={dypMedal} alt="" className="position-absolute dypMedal" />
         </div>
         <div className="explorebanner col-12 col-lg-7 col-xxl-7 position-relative">
-          <div className="d-flex flex-column gap-2">
+          <div className="d-flex flex-column gap-2 justify-content-center h-100">
             <div className="orangesection">
               <span>World of Dypians</span>
             </div>
@@ -387,7 +383,21 @@ const ProfileCard = ({
               </h5>
             </div>
           </div>
-          <img src={player} alt="" className="position-absolute playerimg" />
+          <img
+            src={player}
+            alt=""
+            className="position-absolute playerimg"
+            style={{
+              height:
+                address &&
+                email &&
+                coinbase &&
+                syncStatus !== "" &&
+                address.toLowerCase() !== coinbase.toLowerCase()
+                  ? "450px"
+                  : "",
+            }}
+          />
         </div>
       </div>
     </div>

@@ -402,11 +402,17 @@ const RewardsModal = ({
                   ></div>
                 </>
               ) : (
-                "Claim selected"
+                <>
+                  {getApprovedNfts(selectNftIds).length > 0 &&
+                  nftItem.length > 0
+                    ? "Claim Selected"
+                    : nftItem.length === 0
+                    ? "Claim"
+                    : "Claim all rewards"}
+                </>
               )}
             </button>
           )}
-         
         </div>
         <div className="d-flex flex-column gap-2 justify-content-center align-items-center w-100 w-xxl-50 w-lg-50 w-md-50">
           <div className="gap-3 selected-nfts-wrapper2 p-3 w-100 d-flex flex-column">

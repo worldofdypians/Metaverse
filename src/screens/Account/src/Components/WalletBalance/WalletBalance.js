@@ -86,7 +86,7 @@ const WalletBalance = ({
   const [allListed, setAllListed] = useState([]);
 
   const [filter1, setFilter1] = useState("all");
-  const [filter2, setFilter2] = useState("");
+  const [filter2, setFilter2] = useState("all");
   const [favoritesPage, setFavoritesPage] = useState(1);
   const [favoritesSliceValue, setFavoritesSliceValue] = useState(6);
   const [listedPage, setListedPage] = useState(1);
@@ -565,7 +565,6 @@ const WalletBalance = ({
       let nftFilter = collectedItems.filter(
         (item) => item.isListed === false && item.isStaked === false
       );
-      
 
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "all" && filter2 === "listed") {
@@ -829,7 +828,7 @@ const WalletBalance = ({
                               item.nftAddress ===
                                 window.config.nft_cawsold_address ||
                               item.nftAddress === window.config.nft_caws_address
-                                ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                 : item.nftAddress ===
                                   window.config.nft_land_address
                                 ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -946,7 +945,7 @@ const WalletBalance = ({
                           <img
                             src={
                               item.type === "caws"
-                                ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                 : item.type === "land"
                                 ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
                                 : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -1080,7 +1079,7 @@ const WalletBalance = ({
                               className="account-card-img"
                             />
                             <img
-                              src={`https://mint.dyp.finance/thumbs/${item.name?.slice(
+                              src={`https://mint.dyp.finance/thumbs50/${item.name?.slice(
                                 6,
                                 item.name?.length
                               )}.png`}
@@ -1173,7 +1172,7 @@ const WalletBalance = ({
                           <img
                             src={
                               item.type === "caws"
-                                ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                 : item.type === "land"
                                 ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
                                 : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -1386,79 +1385,77 @@ const WalletBalance = ({
                   className="row w-100 justify-content-center position-relative"
                   style={{ top: "-12px" }}
                 >
-                 {filterTitle === "Collected" && collectedItems.length > 6 ?
-                 <div
-                 className="d-flex align-items-center justify-content-center gap-2"
-                 onClick={() => {
-                   setShowNfts(!showNfts);
-                 }}
-                 style={{ cursor: "pointer", width: "fit-content" }}
-               >
-                 <span className="account-view-all">
-                   {showNfts ? "View Less" : "View All"}
-                 </span>
-                 <img
-                   src={viewAllArrow}
-                   style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                   alt=""
-                 />
-               </div> 
-               :
-               filterTitle === "Favorites" && favItemsFiltered.length > 6 ?
-                 <div
-                 className="d-flex align-items-center justify-content-center gap-2"
-                 onClick={() => {
-                   setShowNfts(!showNfts);
-                 }}
-                 style={{ cursor: "pointer", width: "fit-content" }}
-               >
-                 <span className="account-view-all">
-                   {showNfts ? "View Less" : "View All"}
-                 </span>
-                 <img
-                   src={viewAllArrow}
-                   style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                   alt=""
-                 />
-               </div> 
-               :
-               filterTitle === "Listed" && listedItemsFiltered.length > 6 ?
-                 <div
-                 className="d-flex align-items-center justify-content-center gap-2"
-                 onClick={() => {
-                   setShowNfts(!showNfts);
-                 }}
-                 style={{ cursor: "pointer", width: "fit-content" }}
-               >
-                 <span className="account-view-all">
-                   {showNfts ? "View Less" : "View All"}
-                 </span>
-                 <img
-                   src={viewAllArrow}
-                   style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                   alt=""
-                 />
-               </div> 
-               :
-               filterTitle === "Staked" && myCawsWodStakes.length > 6 ?
-                 <div
-                 className="d-flex align-items-center justify-content-center gap-2"
-                 onClick={() => {
-                   setShowNfts(!showNfts);
-                 }}
-                 style={{ cursor: "pointer", width: "fit-content" }}
-               >
-                 <span className="account-view-all">
-                   {showNfts ? "View Less" : "View All"}
-                 </span>
-                 <img
-                   src={viewAllArrow}
-                   style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                   alt=""
-                 />
-               </div> 
-               : null
-                }
+                  {filterTitle === "Collected" && collectedItems.length >= 6 ? (
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      onClick={() => {
+                        setShowNfts(!showNfts);
+                      }}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all">
+                        {showNfts ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
+                  ) : filterTitle === "Favorites" &&
+                    favItemsFiltered.length > 6 ? (
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      onClick={() => {
+                        setShowNfts(!showNfts);
+                      }}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all">
+                        {showNfts ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
+                  ) : filterTitle === "Listed" &&
+                    listedItemsFiltered.length > 6 ? (
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      onClick={() => {
+                        setShowNfts(!showNfts);
+                      }}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all">
+                        {showNfts ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
+                  ) : filterTitle === "Staked" && myCawsWodStakes.length > 6 ? (
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      onClick={() => {
+                        setShowNfts(!showNfts);
+                      }}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all">
+                        {showNfts ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
+                  ) : null}
                 </div>
               )}
 
@@ -1722,7 +1719,7 @@ const WalletBalance = ({
           {loadingRecentListings === false && filterTitle === "Collected" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: 'fit-content' }}
+              style={{ minHeight: "200px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {collectedItemsFiltered &&
@@ -1777,7 +1774,7 @@ const WalletBalance = ({
                           <img
                             src={
                               nft.nftAddress === window.config.nft_caws_address
-                                ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                 : nft.nftAddress ===
                                   window.config.nft_land_address
                                 ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -1826,8 +1823,7 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Favorites" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: 'fit-content' }}
-
+              style={{ minHeight: "200px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {favItemsFiltered &&
@@ -1884,7 +1880,7 @@ const WalletBalance = ({
                                   window.config.nft_cawsold_address ||
                                 nft.nftAddress ===
                                   window.config.nft_caws_address
-                                  ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                  ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                   : nft.nftAddress ===
                                     window.config.nft_land_address
                                   ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -1936,8 +1932,7 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Listed" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: 'fit-content' }}
-
+              style={{ minHeight: "200px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {listedItemsFiltered &&
@@ -1990,7 +1985,7 @@ const WalletBalance = ({
                               nft.nftAddress ===
                                 window.config.nft_cawsold_address ||
                               nft.nftAddress === window.config.nft_caws_address
-                                ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                 : nft.nftAddress ===
                                   window.config.nft_land_address
                                 ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -2041,8 +2036,7 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Staked" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: 'fit-content' }}
-
+              style={{ minHeight: "200px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {recentListingsFilter === "cawswod"
