@@ -565,7 +565,6 @@ const WalletBalance = ({
       let nftFilter = collectedItems.filter(
         (item) => item.isListed === false && item.isStaked === false
       );
-      
 
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "all" && filter2 === "listed") {
@@ -1386,79 +1385,77 @@ const WalletBalance = ({
                   className="row w-100 justify-content-center position-relative"
                   style={{ top: "-12px" }}
                 >
-                 {filterTitle === "Collected" && collectedItems.length > 6 ?
-                 <div
-                 className="d-flex align-items-center justify-content-center gap-2"
-                 onClick={() => {
-                   setShowNfts(!showNfts);
-                 }}
-                 style={{ cursor: "pointer", width: "fit-content" }}
-               >
-                 <span className="account-view-all">
-                   {showNfts ? "View Less" : "View All"}
-                 </span>
-                 <img
-                   src={viewAllArrow}
-                   style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                   alt=""
-                 />
-               </div> 
-               :
-               filterTitle === "Favorites" && favItemsFiltered.length > 6 ?
-                 <div
-                 className="d-flex align-items-center justify-content-center gap-2"
-                 onClick={() => {
-                   setShowNfts(!showNfts);
-                 }}
-                 style={{ cursor: "pointer", width: "fit-content" }}
-               >
-                 <span className="account-view-all">
-                   {showNfts ? "View Less" : "View All"}
-                 </span>
-                 <img
-                   src={viewAllArrow}
-                   style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                   alt=""
-                 />
-               </div> 
-               :
-               filterTitle === "Listed" && listedItemsFiltered.length > 6 ?
-                 <div
-                 className="d-flex align-items-center justify-content-center gap-2"
-                 onClick={() => {
-                   setShowNfts(!showNfts);
-                 }}
-                 style={{ cursor: "pointer", width: "fit-content" }}
-               >
-                 <span className="account-view-all">
-                   {showNfts ? "View Less" : "View All"}
-                 </span>
-                 <img
-                   src={viewAllArrow}
-                   style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                   alt=""
-                 />
-               </div> 
-               :
-               filterTitle === "Staked" && myCawsWodStakes.length > 6 ?
-                 <div
-                 className="d-flex align-items-center justify-content-center gap-2"
-                 onClick={() => {
-                   setShowNfts(!showNfts);
-                 }}
-                 style={{ cursor: "pointer", width: "fit-content" }}
-               >
-                 <span className="account-view-all">
-                   {showNfts ? "View Less" : "View All"}
-                 </span>
-                 <img
-                   src={viewAllArrow}
-                   style={{ rotate: showNfts ? "0deg" : "180deg" }}
-                   alt=""
-                 />
-               </div> 
-               : null
-                }
+                  {filterTitle === "Collected" && collectedItems.length >= 6 ? (
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      onClick={() => {
+                        setShowNfts(!showNfts);
+                      }}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all">
+                        {showNfts ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
+                  ) : filterTitle === "Favorites" &&
+                    favItemsFiltered.length > 6 ? (
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      onClick={() => {
+                        setShowNfts(!showNfts);
+                      }}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all">
+                        {showNfts ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
+                  ) : filterTitle === "Listed" &&
+                    listedItemsFiltered.length > 6 ? (
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      onClick={() => {
+                        setShowNfts(!showNfts);
+                      }}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all">
+                        {showNfts ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
+                  ) : filterTitle === "Staked" && myCawsWodStakes.length > 6 ? (
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      onClick={() => {
+                        setShowNfts(!showNfts);
+                      }}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all">
+                        {showNfts ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showNfts ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
+                  ) : null}
                 </div>
               )}
 
@@ -1722,7 +1719,7 @@ const WalletBalance = ({
           {loadingRecentListings === false && filterTitle === "Collected" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: 'fit-content' }}
+              style={{ minHeight: "200px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {collectedItemsFiltered &&
@@ -1826,8 +1823,7 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Favorites" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: 'fit-content' }}
-
+              style={{ minHeight: "200px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {favItemsFiltered &&
@@ -1936,8 +1932,7 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Listed" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: 'fit-content' }}
-
+              style={{ minHeight: "200px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {listedItemsFiltered &&
@@ -2041,8 +2036,7 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Staked" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: 'fit-content' }}
-
+              style={{ minHeight: "200px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {recentListingsFilter === "cawswod"
