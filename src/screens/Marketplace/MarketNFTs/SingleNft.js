@@ -130,8 +130,7 @@ const SingleNft = ({
   const { email, logout } = useAuth();
 
   const [isFavorite, setIsFavorite] = useState(false);
-
-  // console.log("IsListed isOwner", IsListed, isOwner);
+  const [owner, setowner] = useState("");
 
   const {
     data,
@@ -156,11 +155,31 @@ const SingleNft = ({
       });
   };
 
+  const getNftOwner = async (type, nftId) => {
+    if (type === "timepiece") {
+      const nftowner = await window.caws_timepiece.ownerOf(nftId).catch((e) => {
+        console.log(e);
+      });
+      console.log(nftowner);
+      setowner(nftowner);
+    } else if (type === "land") {
+      const nftowner = await window.landnft.ownerOf(nftId).catch((e) => {
+        console.log(e);
+      });
+      setowner(nftowner);
+    } else if (type === "caws") {
+      const nftowner = await window.nft.ownerOf(nftId).catch((e) => {
+        console.log(e);
+      });
+
+      setowner(nftowner);
+    }
+  };
+
   const getMetaData = async () => {
     if (nft) {
       if (type === "caws") {
         const result = await window.getNft(nft.tokenId);
-        console.log(result);
 
         setmetaData(result);
       } else if (type === "land") {
@@ -183,12 +202,14 @@ const SingleNft = ({
 
   // console.log(window)
   async function isApprovedNFT(nft, type, coinbase) {
-    const result = await window.isApprovedNFT(nft, type, coinbase).catch((e) => {
-      console.error(e);
-    });
+    const result = await window
+      .isApprovedNFT(nft, type, coinbase)
+      .catch((e) => {
+        console.error(e);
+      });
     return result;
   }
-
+  
   const handleRefreshList = async (type, tokenId) => {
     let nft_address;
 
@@ -742,7 +763,7 @@ const SingleNft = ({
     } else if (!IsListed) {
       // console.log(nft);
       isApprovedNFT(nft.tokenId, type, coinbase).then((isApproved) => {
-        console.log('isApproved', isApproved)
+        console.log("isApproved", isApproved);
         if (isApproved === true) {
           setsellStatus("sell");
         } else if (isApproved === false) {
@@ -812,6 +833,7 @@ const SingleNft = ({
       isListedNFT(nft, type).then((isListed) => {
         setIsListed(isListed);
       });
+      getNftOwner(type, nft.tokenId);
       handleRefreshList(type, nft.tokenId);
     }
   }, [type, nftCount]);
@@ -827,6 +849,7 @@ const SingleNft = ({
       getLatest20BoughtNFTS(nft.nftAddress, nft.tokenId);
       getFavoritesCount(nft.tokenId, nft.nftAddress);
       setNft(nft);
+      setType(nft.type);
     }
   }, [nft]);
 
@@ -849,7 +872,7 @@ const SingleNft = ({
         } else setIsFavorite(false);
       }
     }
-  }, [nft]);
+  }, [nft, favorites]);
 
   useEffect(() => {
     if (
@@ -1353,7 +1376,7 @@ const SingleNft = ({
                           >
                             {shortAddress(nft.seller)}
                           </a>
-                        ) : (
+                        ) : nft.buyer ? (
                           <a
                             href={`https://etherscan.io/address/${nft.buyer}`}
                             target="_blank"
@@ -1362,6 +1385,16 @@ const SingleNft = ({
                             rel="noreferrer"
                           >
                             {shortAddress(nft.buyer)}
+                          </a>
+                        ) : (
+                          <a
+                            href={`https://etherscan.io/address/${owner}`}
+                            target="_blank"
+                            style={{ textDecoration: "none" }}
+                            className="seller-addr"
+                            rel="noreferrer"
+                          >
+                            {shortAddress(owner)}
                           </a>
                         )}
                       </div>
