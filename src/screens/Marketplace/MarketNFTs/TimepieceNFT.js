@@ -870,9 +870,7 @@ const TimepieceNFT = ({
                         >
                           Load more
                         </button>
-                      ) : count === 0 &&
-                        loading &&
-                        timepieceNFTS.length === 0 ? (
+                      ) : count === 0 && loading && next < totalSupply ? (
                         <>
                           <Skeleton
                             animation="wave"
