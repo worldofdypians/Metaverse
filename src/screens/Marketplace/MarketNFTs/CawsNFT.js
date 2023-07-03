@@ -844,7 +844,7 @@ const CawsNFT = ({
                         >
                           Load more
                         </button>
-                      ) : count === 0 && loading && cawsNFTS.length === 0 ? (
+                      ) : count === 0 && loading && next < allCaws ? (
                         <>
                           <Skeleton
                             animation="wave"
