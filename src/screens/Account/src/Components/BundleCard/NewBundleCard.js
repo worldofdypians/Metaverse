@@ -116,7 +116,6 @@ const windowSize = useWindowSize()
 
   const [bundleState700, setbundleState700] = useState("initial");
   const [depositState700, setDepositState700] = useState("initial");
-
   const [bundleState3500, setbundleState3500] = useState("initial");
   const [depositState3500, setDepositState3500] = useState("initial");
 
@@ -169,6 +168,7 @@ const windowSize = useWindowSize()
         });
     }
   };
+  console.log(bundleState700,depositState700, checkWallet, isAtlimit)
 
   const checkApproval700 = async () => {
     if (coinbase === wallet && chainId === 56) {
@@ -508,12 +508,13 @@ const windowSize = useWindowSize()
     setcountdown3500(remainingTime);
   };
 
-  let oneJune = new Date("2023-06-01 11:11:00 GMT+02:00");
+  
   let oneJuly = new Date("2023-07-01 11:11:00 GMT+02:00");
+  let oneAugust = new Date("2023-08-01 11:11:00 GMT+02:00");
 
   let today = new Date();
-  let twentyfivemay = new Date("2023-05-25 11:11:00 GMT+02:00");
-  let twentyfivejune = new Date("2023-06-25 11:11:00 GMT+02:00");
+  
+  let twentyfivejuly = new Date("2023-07-25 11:11:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -630,15 +631,15 @@ const windowSize = useWindowSize()
         handleRefreshCountdown700();
         setisAtlimit(false);
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
-        if (today > oneJune && lastDayofBundleMilliseconds > 0) {
+        if (today > oneJuly && lastDayofBundleMilliseconds > 0) {
           setisAtlimit(true);
-          setcountdown700(oneJuly.getTime());
-          handleSetAvailableTime(oneJuly.getTime());
+          setcountdown700(oneAugust.getTime());
+          handleSetAvailableTime(oneAugust.getTime());
           setStatus700(
             "The Golden Pass bundle is currently not available for purchase. Please check back next month."
           );
           setStatusColor700("#FE7A00");
-        } else if (today > oneJune && lastDayofBundleMilliseconds == 0) {
+        } else if (today > oneJuly && lastDayofBundleMilliseconds == 0) {
           setisAtlimit(true);
           setcountdown700();
           handleSetAvailableTime();
@@ -646,15 +647,15 @@ const windowSize = useWindowSize()
             "The Golden Pass bundle is currently not available for purchase. Please check back next month."
           );
           setStatusColor700("#FE7A00");
-        } else if (today < oneJune && lastDayofBundleMilliseconds > 0) {
+        } else if (today < oneJuly && lastDayofBundleMilliseconds > 0) {
           setisAtlimit(true);
-          setcountdown700(oneJuly.getTime());
-          handleSetAvailableTime(oneJuly.getTime());
+          setcountdown700(oneAugust.getTime());
+          handleSetAvailableTime(oneAugust.getTime());
           setStatus700(
             "The Golden Pass bundle is currently not available for purchase. Please check back next month."
           );
           setStatusColor700("#FE7A00");
-        } else if (today < oneJune && lastDayofBundleMilliseconds == 0) {
+        } else if (today < oneJuly && lastDayofBundleMilliseconds == 0) {
           setisAtlimit(true);
           setcountdown700();
           handleSetAvailableTime();
@@ -667,8 +668,8 @@ const windowSize = useWindowSize()
     } else if (today_date > 25) {
       if (lastDayofBundleMilliseconds > 0) {
         setisAtlimit(true);
-        setcountdown700(oneJuly.getTime());
-        handleSetAvailableTime(oneJuly.getTime());
+        setcountdown700(oneAugust.getTime());
+        handleSetAvailableTime(oneAugust.getTime());
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
         );
@@ -750,18 +751,19 @@ const windowSize = useWindowSize()
   }, [coinbase, chainId, wallet]);
 
   useEffect(() => {
+
     if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
       setisAtlimit(true);
-      setcountdown700(oneJuly.getTime());
-      handleSetAvailableTime(oneJuly.getTime());
+      setcountdown700(oneAugust.getTime());
+      handleSetAvailableTime(oneAugust.getTime());
     }
   }, [bundlesBought, countdown700]);
 
   useEffect(() => {
-    if (today > twentyfivejune) {
+    if (today > twentyfivejuly) {
       setisAtlimit(true);
     }
-  }, [today, oneJune, oneJuly]);
+  }, [today, oneJuly]);
 
   const [tooltip, setTooltip] = useState(false);
 
@@ -933,14 +935,14 @@ const windowSize = useWindowSize()
                       <>
                         <button
                           disabled={
-                            bundleState700 === "deposit" ||
+                            bundleState700 !== "deposit" ||
                             checkWallet === false ||
                             isAtlimit == true
                               ? true
                               : false
                           }
                           className={`btn ${
-                            bundleState700 === "deposit" ||
+                            bundleState700 !== "deposit" ||
                             checkWallet === false ||
                             isAtlimit == true
                               ? "inactive-pill-btn"

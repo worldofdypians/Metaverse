@@ -67,7 +67,7 @@ const ConfirmationModal = ({
                       className="p-0 nft-img"
                       src={
                         isCaws
-                          ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                          ? `https://mint.dyp.finance/thumbs150/${nft.tokenId}.png`
                           : isWod
                           ? `https://mint.worldofdypians.com/thumbs150/${nft.tokenId}.png`
                           : `https://timepiece.worldofdypians.com/thumbs150/${nft.tokenId}.png`
@@ -143,7 +143,7 @@ const ConfirmationModal = ({
                       className="p-0 nft-img"
                       src={
                         isCaws
-                          ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                          ? `https://mint.dyp.finance/thumbs150/${nft.tokenId}.png`
                           : isWod
                           ? `https://mint.worldofdypians.com/thumbs150/${nft.tokenId}.png`
                           : `https://timepiece.worldofdypians.com/thumbs150/${nft.tokenId}.png`

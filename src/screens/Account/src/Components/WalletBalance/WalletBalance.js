@@ -86,7 +86,7 @@ const WalletBalance = ({
   const [allListed, setAllListed] = useState([]);
 
   const [filter1, setFilter1] = useState("all");
-  const [filter2, setFilter2] = useState("");
+  const [filter2, setFilter2] = useState("all");
   const [favoritesPage, setFavoritesPage] = useState(1);
   const [favoritesSliceValue, setFavoritesSliceValue] = useState(6);
   const [listedPage, setListedPage] = useState(1);
@@ -829,7 +829,7 @@ const WalletBalance = ({
                               item.nftAddress ===
                                 window.config.nft_cawsold_address ||
                               item.nftAddress === window.config.nft_caws_address
-                                ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                 : item.nftAddress ===
                                   window.config.nft_land_address
                                 ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -946,7 +946,7 @@ const WalletBalance = ({
                           <img
                             src={
                               item.type === "caws"
-                                ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                 : item.type === "land"
                                 ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
                                 : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -1080,7 +1080,7 @@ const WalletBalance = ({
                               className="account-card-img"
                             />
                             <img
-                              src={`https://mint.dyp.finance/thumbs/${item.name?.slice(
+                              src={`https://mint.dyp.finance/thumbs50/${item.name?.slice(
                                 6,
                                 item.name?.length
                               )}.png`}
@@ -1173,7 +1173,7 @@ const WalletBalance = ({
                           <img
                             src={
                               item.type === "caws"
-                                ? `https://mint.dyp.finance/thumbs/${item.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                 : item.type === "land"
                                 ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
                                 : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -1720,7 +1720,7 @@ const WalletBalance = ({
                           <img
                             src={
                               nft.nftAddress === window.config.nft_caws_address
-                                ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                 : nft.nftAddress ===
                                   window.config.nft_land_address
                                 ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -1826,7 +1826,7 @@ const WalletBalance = ({
                                   window.config.nft_cawsold_address ||
                                 nft.nftAddress ===
                                   window.config.nft_caws_address
-                                  ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                  ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                   : nft.nftAddress ===
                                     window.config.nft_land_address
                                   ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -1931,7 +1931,7 @@ const WalletBalance = ({
                               nft.nftAddress ===
                                 window.config.nft_cawsold_address ||
                               nft.nftAddress === window.config.nft_caws_address
-                                ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                 : nft.nftAddress ===
                                   window.config.nft_land_address
                                 ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`

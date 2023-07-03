@@ -709,7 +709,7 @@ const Marketplace = ({
                             <img
                               src={
                                 nft.type === "caws"
-                                  ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
+                                  ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                   : nft.type === "land"
                                   ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`

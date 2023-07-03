@@ -841,7 +841,7 @@ const SingleNft = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
-    getViewCount(nft.tokenId, nft.nftAddress);
+   
   }, []);
 
   useEffect(() => {
@@ -850,6 +850,7 @@ const SingleNft = ({
       getFavoritesCount(nft.tokenId, nft.nftAddress);
       setNft(nft);
       setType(nft.type);
+      getViewCount(nft.tokenId, nft.nftAddress);
     }
   }, [nft]);
 

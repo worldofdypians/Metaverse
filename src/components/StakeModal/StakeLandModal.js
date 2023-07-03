@@ -567,7 +567,8 @@ const StakeLandModal = ({
               )}
               <button
                 className={`btn m-auto ${
-                  showApprove === false  && isConnected && 
+                  showApprove === false &&
+                  isConnected &&
                   getApprovedLandPoolsNfts(selectNftIds).length > 0 &&
                   getApprovedLandPoolsNfts(selectNftIds).length < 51
                     ? "pill-btn"
@@ -605,10 +606,13 @@ const StakeLandModal = ({
                 )}
               </button>
               {!isConnected && (
-              <button className={`btn m-auto pill-btn`} onClick={handleConnect}>
-                Connect Wallet
-              </button>
-            )}
+                <button
+                  className={`btn m-auto pill-btn`}
+                  onClick={handleConnect}
+                >
+                  Connect Wallet
+                </button>
+              )}
             </div>
             <p className="mt-1" style={{ color: color, textAlign: "center" }}>
               {status}
@@ -637,8 +641,8 @@ const StakeLandModal = ({
             </div>
             {isConnected && (
               <button
-                className={`pill-btn ${
-                  ETHrewards == 0 && "disabled-approve-btn"
+                className={` ${
+                  ETHrewards == 0 ? "disabled-approve-btn" : "pill-btn"
                 } mb-1 w-100 p-2`}
                 onClick={() => {
                   checkUnstakebtn === true &&
@@ -664,11 +668,17 @@ const StakeLandModal = ({
                     ></div>
                   </>
                 ) : (
-                  "Claim selected"
+                  <>
+                    {getApprovedLandPoolsNfts(selectNftIds).length > 0 &&
+                    nftItem.length > 0
+                      ? "Claim Selected"
+                      : nftItem.length === 0
+                      ? "Claim"
+                      : "Claim all rewards"}
+                  </>
                 )}
               </button>
             )}
-            
           </div>
           <div className="d-flex flex-column gap-2 justify-content-center align-items-center w-100 w-xxl-50 w-lg-50 w-md-50">
             <div className="gap-3 selected-nfts-wrapper2 p-3 w-100 d-flex flex-column">
