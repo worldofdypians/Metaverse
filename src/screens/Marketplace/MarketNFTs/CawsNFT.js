@@ -60,10 +60,8 @@ const CawsNFT = ({
 
   const [filters, setFilters] = useState([]);
   const [paginatedData, setpaginatedData] = useState([]);
-  const [paginatedData2, setpaginatedData2] = useState([]);
 
   const [finalData, setfinalData] = useState([]);
-  const [finalData2, setfinalData2] = useState([]);
 
   const [allCawsNfts, setAllcaws] = useState([]);
   const listInnerRef = useRef();

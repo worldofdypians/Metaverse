@@ -405,7 +405,7 @@ const ItemCard = ({
         {(location.pathname.includes("/marketplace/caws") ||
           location.pathname.includes("/marketplace/wod") ||
           location.pathname.includes("/marketplace/timepiece")) &&
-          isListed && (
+          (isListed && !isOwner) && (
             <div className="buy-nft w-100">
               <button
                 className="buy-nft-btn w-100"
@@ -435,7 +435,7 @@ const ItemCard = ({
         {(location.pathname.includes("/marketplace/caws") ||
           location.pathname.includes("/marketplace/wod") ||
           location.pathname.includes("/marketplace/timepiece")) &&
-          !isListed && (
+          (!isListed || isOwner) && (
             <div className="buy-nft w-100">
               <button
                 className="view-nft-btn w-100"

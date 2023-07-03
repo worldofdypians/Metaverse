@@ -62,7 +62,7 @@ const WoDNFT = ({
   const [filters, setFilters] = useState([]);
   const [count, setCount] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
-  const [pricePoint, setPricePoint] = useState("lth")
+  const [pricePoint, setPricePoint] = useState("lth");
 
   const [artifacts, setArtifacts] = useState({
     trait_type: "Artifacts",
@@ -792,13 +792,27 @@ const WoDNFT = ({
                 </ul>
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5">
-              <div
+                <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
-                  onClick={() =>{setPricePoint(pricePoint === "lth" ? "htl" : "lth"); sortNfts(pricePoint); console.log(pricePoint);}}
+                  onClick={() => {
+                    setPricePoint(pricePoint === "lth" ? "htl" : "lth");
+                    sortNfts(pricePoint);
+                    console.log(pricePoint);
+                  }}
                 >
-                  <img src={pricePoint === "lth" ? priceIconUp  : priceIconDown} alt="" />
-                  <h6 className="filter-nav-title mb-0" style={{color: pricePoint === "lth" ? "#09F3D2" : "#FF6232" }}>Price</h6>
+                  <img
+                    src={pricePoint === "lth" ? priceIconUp : priceIconDown}
+                    alt=""
+                  />
+                  <h6
+                    className="filter-nav-title mb-0"
+                    style={{
+                      color: pricePoint === "lth" ? "#09F3D2" : "#FF6232",
+                    }}
+                  >
+                    Price
+                  </h6>
                 </div>
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
@@ -825,7 +839,11 @@ const WoDNFT = ({
                   <img
                     src={traitXmark}
                     style={{ cursor: "pointer" }}
-                    onClick={() => displayFilters.length === 1 ? clearAll() : addProducts(item.value, item.id)}
+                    onClick={() =>
+                      displayFilters.length === 1
+                        ? clearAll()
+                        : addProducts(item.value, item.id)
+                    }
                     alt=""
                   />
                 </div>
