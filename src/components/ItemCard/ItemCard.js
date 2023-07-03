@@ -136,6 +136,7 @@ const ItemCard = ({
         handleRefreshListing();
         setTimeout(() => {
           checkapprove(nft);
+          setShowModal(false);
         }, 2000);
 
         setToastTitle("Successfully purchased!");
@@ -177,6 +178,7 @@ const ItemCard = ({
             handleRefreshListing();
             setTimeout(() => {
               checkapprove(nft);
+              setShowModal(false);
             }, 2000);
             setToastTitle("Successfully purchased!");
           })
@@ -204,7 +206,7 @@ const ItemCard = ({
           })
           .catch((e) => {
             console.error(e);
-            setStatus("clicked");
+            setStatus("fail");
             setpurchasestate("fail");
           });
       }
@@ -355,7 +357,7 @@ const ItemCard = ({
                       nft.payment_priceType === 0
                         ? ethTokenData * (nft.price / 1e18)
                         : dypTokenData * (nft.price / 1e18),
-                      nft.payment_priceType === 0 ? 3 : 0
+                      3
                     )}
                   </span>
                 </div>

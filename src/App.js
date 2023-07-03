@@ -761,7 +761,7 @@ function App() {
 
     setListedNFTS(finalboughtItems1);
     setListedNFTSCount(finalboughtItems1.length);
-
+    
     recentListedNFTS2 &&
       recentListedNFTS2.length > 0 &&
       recentListedNFTS2.map((nft) => {
