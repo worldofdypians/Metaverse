@@ -83,6 +83,7 @@ const CawsNFT = ({
   const [eyewear, setEyewear] = useState({ trait_type: "Eyewear", value: [] });
   const [count, setCount] = useState(0);
   const [displayFilters, setDisplayFilters] = useState([]);
+  const [pricePoint, setPricePoint] = useState("lth")
   const [selectedFilters, setSelectedFilters] = useState([
     background,
     tail,
@@ -359,6 +360,7 @@ const CawsNFT = ({
   };
 
   const sortNfts = (sortValue) => {
+    // console.log(sortValue);
     if (sortValue === "htl") {
       let htl = initialNfts.sort((a, b) => {
         return b.priceUSD - a.priceUSD;
@@ -720,7 +722,7 @@ const CawsNFT = ({
                     <span>Price: DYP</span>
                   </li> */}
                   <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
-                    <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-3">
+                    <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-2" onClick={() => sortNfts("eth")}>
                       <img
                         src={emptyCheck}
                         alt=""
@@ -729,7 +731,7 @@ const CawsNFT = ({
                       <img src={ethIcon} width={12} height={12} alt="" />
                       <span className="collection-price-span mb-0">ETH</span>
                     </div>
-                    <div className="collection-price position-relative d-flex align-items-center gap-1 py-1 px-3">
+                    <div className="collection-price position-relative d-flex align-items-center gap-1 py-1 px-2" onClick={() => sortNfts("dyp")}>
                       <img
                         src={emptyCheck}
                         alt=""
@@ -745,6 +747,7 @@ const CawsNFT = ({
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
+                  onClick={() =>{setPricePoint(pricePoint === "lth" ? "htl" : "lth"); sortNfts(pricePoint); console.log(pricePoint);}}
                 >
                   <img src={priceIcon} alt="" />
                   <h6 className="filter-nav-title mb-0">Price</h6>
