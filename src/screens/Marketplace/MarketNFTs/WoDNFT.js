@@ -641,11 +641,9 @@ const WoDNFT = ({
     }
   }, [wodBought, nftCount]);
 
-
   useEffect(() => {
     loadMore2();
   }, [count]);
-
 
   useEffect(() => {
     if (landNfts && landNfts.length > 0 && loading === false) {
@@ -897,7 +895,7 @@ const WoDNFT = ({
                         >
                           Load more
                         </button>
-                      ) : count === 0 && loading && landNfts.length === 0 ? (
+                      ) : count === 0 && loading && next < allLandpiece ? (
                         <>
                           <Skeleton
                             animation="wave"
