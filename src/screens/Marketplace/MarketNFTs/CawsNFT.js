@@ -1277,7 +1277,7 @@ const CawsNFT = ({
 
       <OutsideClickHandler onOutsideClick={() => setOpenTraits(false)}>
         <div
-          className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xxl-5 ${
+          className={`filters-wrapper col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6 ${
             openTraits && "filters-active"
           } p-4`}
         >

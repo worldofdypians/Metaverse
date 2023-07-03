@@ -293,7 +293,7 @@ const Marketplace = ({
   var hours = moment().subtract(1, "days");
   var week = moment().subtract(7, "days");
   var month = moment().subtract(30, "days");
-  const [topSalesDate, setTopSalesDate] = useState("month");
+  const [topSalesDate, setTopSalesDate] = useState("week");
 
   const filterTopSales = () => {
     setLoadingTopSales(true);
@@ -677,10 +677,10 @@ const Marketplace = ({
               <div
                 className={
                   loadingTopSales === false
-                    ? "row align-items-center position-relative justify-content-center"
+                    ? "row align-items-start position-relative justify-content-start"
                     : "loader-wrapper"
                 }
-                style={{ rowGap: "22px" }}
+                style={{ rowGap: "22px", minHeight: '260px' }}
               >
                 {!loadingTopSales ? (
                   topSold && topSold.length > 0 ? (
@@ -907,10 +907,11 @@ const Marketplace = ({
               </div>
               {loadingRecentListings === false ? (
                 <div className="slider-container">
+                  {recentListed &&
+                      recentListed.length > 0 ?
                   <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                    {recentListed &&
-                      recentListed.length > 0 &&
-                      recentListed.map((nft, index) => (
+                    
+                      {recentListed.map((nft, index) => (
                         <NavLink
                           to={`/marketplace/nft/${nft.blockTimestamp}`}
                           style={{ textDecoration: "none" }}
@@ -942,7 +943,14 @@ const Marketplace = ({
                           />
                         </NavLink>
                       ))}
+                       
                   </Slider>
+                   :
+                   <div className="d-flex w-100 align-items-center justify-content-center">
+                     <h3 className="text-white">There are no listed items</h3>
+                   </div>  
+                  
+                  }
                 </div>
               ) : (
                 <div className="loader-wrapper gap-3">
