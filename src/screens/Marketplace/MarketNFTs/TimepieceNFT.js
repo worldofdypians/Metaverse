@@ -14,7 +14,8 @@ import axios from "axios";
 import { Checkbox, Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import traitIcon from "./assets/traitIcon.svg";
-import priceIcon from "./assets/priceIcon.svg";
+import priceIconUp from "./assets/priceIconUp.svg";
+import priceIconDown from "./assets/priceIconDown.svg";
 import filterIcon from "./assets/filterIcon.svg";
 import ethIcon from "./assets/ethIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
@@ -53,6 +54,7 @@ const TimepieceNFT = ({
 
   const [next, setNext] = useState(0);
   const [next2, setNext2] = useState(0);
+  const [pricePoint, setPricePoint] = useState("lth")
 
   const [paginatedData, setpaginatedData] = useState([]);
   const [finalData, setfinalData] = useState([]);
@@ -741,7 +743,7 @@ const TimepieceNFT = ({
                   >
                     <span>Price: DYP</span>
                   </li> */}
-                  <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
+                  {/* <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
                     <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-3">
                       <img
                         src={emptyCheck}
@@ -760,16 +762,17 @@ const TimepieceNFT = ({
                       <img src={dypIcon} width={12} height={12} alt="" />
                       <span className="collection-price-span mb-0">DYP</span>
                     </div>
-                  </div>
+                  </div> */}
                 </ul>
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5">
-                <div
+              <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
+                  onClick={() =>{setPricePoint(pricePoint === "lth" ? "htl" : "lth"); sortNfts(pricePoint); console.log(pricePoint);}}
                 >
-                  <img src={priceIcon} alt="" />
-                  <h6 className="filter-nav-title mb-0">Price</h6>
+                  <img src={pricePoint === "lth" ? priceIconUp  : priceIconDown} alt="" />
+                  <h6 className="filter-nav-title mb-0" style={{color: pricePoint === "lth" ? "#09F3D2" : "#FF6232" }}>Price</h6>
                 </div>
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
@@ -796,7 +799,7 @@ const TimepieceNFT = ({
                   <img
                     src={traitXmark}
                     style={{ cursor: "pointer" }}
-                    onClick={() => removeTrait(item.value)}
+                    onClick={() => displayFilters.length === 1 ? clearAll() : addProducts(item.value, item.id)}
                     alt=""
                   />
                 </div>
