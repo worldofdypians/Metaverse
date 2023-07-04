@@ -773,7 +773,7 @@ const windowSize = useWindowSize()
       <div className="row m-0 align-items-center gap-4 gap-lg-0">
         <div className="col-12 col-lg-7 custom-height">
           <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height position-relative">
-            <img src={require(`../../../../Marketplace/assets/${packageData.background}`)} alt="" className="dragon-test-bg" />
+            <img src={require(`../../../../Marketplace/assets/${windowSize.width > 786 ? packageData.background : packageData.mobileBackground}`)} alt="" className="dragon-test-bg" />
             <div className="d-flex align-items-center justify-content-between mb-3 mb-lg-5">
               <h6 className="new-bundle-title mb-0">{packageData.title}</h6>
               <div style={{cursor: 'pointer'}}  onClick={() => {

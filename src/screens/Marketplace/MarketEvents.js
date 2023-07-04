@@ -53,6 +53,7 @@ const MarketEvents = ({ account, chainId }) => {
     price: "50 DYP",
     link: "https://www.worldofdypians.com/news/644a3089aa4deb26fe4dac90/Dragon-Ruins-Event",
     background: "newDragonBg.webp",
+    mobileBackground: "dragonBgMobile.webp",
   };
 
   const iDypPackageData = {
@@ -66,6 +67,8 @@ const MarketEvents = ({ account, chainId }) => {
     price: "3,500 iDYP",
     link: "https://www.worldofdypians.com/news/644ce83e7f931ac9706b515e/Puzzle-Madness-Event",
     background: "newPuzzleBg.webp",
+    mobileBackground: "puzzleBgMobile.webp",
+
   };
   const dypPackageData = {
     title: "Golden Pass",
@@ -78,6 +81,8 @@ const MarketEvents = ({ account, chainId }) => {
     price: "700 DYP",
     link: "https://www.worldofdypians.com/news/644e343627cca74b2d4a60b1/Golden-Pass-Event",
     background: "newGoldenBg.webp",
+    mobileBackground: "goldenBgMobile.webp",
+
   };
 
   const criticalHitPackageData = {
@@ -91,6 +96,8 @@ const MarketEvents = ({ account, chainId }) => {
     price: "700 DYP",
     link: "https://www.worldofdypians.com/news/6426dc2bb15f9e51ad8bd4e6/Critical-Hit-Event",
     background: "newCriticalBg.webp",
+    mobileBackground: "criticalBgMobile.webp",
+
   };
 
   const {
