@@ -200,7 +200,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
                       textAlign: "center",
                     }}
                   >
-                    #1,600
+                    $1,600
                   </td>
                 </tr>
                 <tr>
