@@ -672,12 +672,17 @@ const TimepieceNFT = ({
                     <b>Expanded Functionality</b> on performing new actions, and
                     earn multiple <b>Rewards.</b>
                   </p>
-                  <NavLink
+                <div className="d-flex align-items-center gap-3">
+                <NavLink
                     to="/caws-timepiece"
                     style={{ width: "fit-content" }}
                   >
                     <button className="btn pill-btn">Explore</button>
                   </NavLink>
+                  <NavLink to="/marketplace/mint" className="mint-link">
+                    Mint Now
+                  </NavLink>
+                </div>
                 </div>
               </div>
               <div className="col-12 col-lg-4">
