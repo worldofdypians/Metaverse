@@ -805,7 +805,7 @@ const Marketplace = ({
                         className="text-white"
                         style={{ textAlign: "center" }}
                       >
-                        There are no listed items
+                        There were no sales for that period.
                       </h3>
                     </div>
                   )
@@ -949,7 +949,7 @@ const Marketplace = ({
                   </Slider>
                    :
                    <div className="d-flex w-100 align-items-center justify-content-center">
-                     <h3 className="text-white">There are no listed items</h3>
+                     <h3 className="text-white">There are no listed items for that category.</h3>
                    </div>  
                   
                   }

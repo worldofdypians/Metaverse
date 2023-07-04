@@ -128,28 +128,28 @@ const LeaderBoard = ({
 
   const placeholderplayerData = [
     {
-      position: "-1",
+      position: "0",
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: "1",
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: "2",
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: "3",
       displayName: "---",
       reward: "---",
       statValue: "---",
@@ -157,42 +157,42 @@ const LeaderBoard = ({
     },
 
     {
-      position: "-1",
+      position: "4",
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: "5",
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: "6",
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: "7",
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: "8",
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: "9",
       displayName: "---",
       reward: "---",
       premium: false,
@@ -200,20 +200,23 @@ const LeaderBoard = ({
     },
   ];
 
-  const dailyPrizes = ["20", "10", "8", "5", "0", "0", "0", "0", "0", "0"];
+  const dailyPrizes = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
   const previous_dailyPrizes = [
-    "40",
     "20",
-    "15",
     "10",
+    "8",
     "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
   ];
-  const dailyPrizesGolden = [
+
+  const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
+
+  const previous_dailyPrizesGolden = [
     "20",
     "10",
     "8",
@@ -226,8 +229,35 @@ const LeaderBoard = ({
     "5",
   ];
 
-  const weeklyPrizes = ["40", "20", "15", "10", "0", "0", "0", "0", "0", "0"];
+  const weeklyPrizes = ["25", "15", "10", "8", "0", "0", "0", "0", "0", "0"];
   const weeklyPrizesGolden = [
+    "25",
+    "15",
+    "10",
+    "8",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ];
+
+  const previous_weeklyPrizes = [
+    "40",
+    "20",
+    "15",
+    "10",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+  ];
+
+  const previous_weeklyPrizesGolden = [
     "40",
     "20",
     "15",
@@ -242,6 +272,19 @@ const LeaderBoard = ({
   ];
 
   const monthlyPrizes = [
+    "250",
+    "150",
+    "100",
+    "50",
+    "50",
+    "20",
+    "20",
+    "10",
+    "10",
+    "10",
+  ];
+
+  const previous_monthlyPrizes = [
     "500",
     "250",
     "150",
@@ -255,6 +298,19 @@ const LeaderBoard = ({
   ];
 
   const monthlyPrizesGolden = [
+    "250",
+    "150",
+    "100",
+    "50",
+    "50",
+    "20",
+    "20",
+    "10",
+    "10",
+    "10",
+  ];
+
+  const previous_monthlyPrizesGolden = [
     "500",
     "250",
     "150",
@@ -265,32 +321,6 @@ const LeaderBoard = ({
     "25",
     "25",
     "25",
-  ];
-
-  const previous_weeklyPrizes = [
-    "80",
-    "40",
-    "30",
-    "20",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
-
-  const previous_monthlyPrizes = [
-    "1000",
-    "500",
-    "300",
-    "100",
-    "50",
-    "50",
-    "50",
-    "50",
-    "50",
-    "50",
   ];
 
   const [optionText, setOptionText] = useState("genesis");
@@ -557,11 +587,11 @@ const LeaderBoard = ({
     if (item === "daily" && inactiveBoard === false) {
       setPrizes(dailyPrizes);
     } else if (item === "daily" && inactiveBoard === true) {
-      setPrizes(dailyPrizes);
+      setPrizes(previous_dailyPrizes);
     } else if (item === "weekly" && inactiveBoard === false) {
       setPrizes(weeklyPrizes);
     } else if (item === "weekly" && inactiveBoard === true) {
-      setPrizes(weeklyPrizes);
+      setPrizes(previous_weeklyPrizes);
     } else if (item === "monthly" && inactiveBoard === false) {
       setPrizes(monthlyPrizes);
     } else if (item === "monthly" && inactiveBoard === true) {
@@ -579,6 +609,18 @@ const LeaderBoard = ({
       setRecords(finalData);
     }
   };
+
+  const fillRecordsDaily = (itemData) => {
+    if (itemData.length === 0) {
+      setdailyplayerData(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setdailyplayerData(finalData);
+    }
+  };
+
 
   const fillRecordsGenesis = (itemData) => {
     if (itemData.length === 0) {
@@ -602,8 +644,9 @@ const LeaderBoard = ({
       `${backendApi}/auth/GetLeaderboard?Version=-1`,
       data
     );
+    fillRecordsDaily(result.data.data.leaderboard)
 
-    setdailyplayerData(result.data.data.leaderboard);
+    // setdailyplayerData(result.data.data.leaderboard);
   };
 
   const fetchGenesisPreviousWinners = async () => {
@@ -697,11 +740,11 @@ const LeaderBoard = ({
   return (
     <>
       <div className="row w-100 justify-content-start">
-      <h2
-        className={`font-organetto d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
-      >
-        <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
-      </h2>
+        <h2
+          className={`font-organetto d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+        >
+          <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
+        </h2>
       </div>
       <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-end">
         <div className="row w-100 align-items-start">
@@ -958,7 +1001,11 @@ const LeaderBoard = ({
                                   : "goldenscore-inactive"
                               }`}
                             >
-                              +$0
+                              +$
+                              {getFormattedNumber(
+                                previous_monthlyPrizesGolden[index],
+                                0
+                              )}
                             </td>
                           </tr>
                         );
@@ -1031,7 +1078,10 @@ const LeaderBoard = ({
                               }`}
                             >
                               +$
-                              {getFormattedNumber(weeklyPrizesGolden[index], 0)}
+                              {getFormattedNumber(
+                                previous_weeklyPrizesGolden[index],
+                                0
+                              )}
                             </td>
                           </tr>
                         );
@@ -1052,7 +1102,7 @@ const LeaderBoard = ({
                             }`}
                           >
                             <td className="playerData col-1">
-                              #{item.position + 1}
+                              #{Number(item.position) + 1}
                             </td>
                             <td className="playerName col-5">
                               {availableTime !== "0" &&
@@ -1103,7 +1153,11 @@ const LeaderBoard = ({
                                   : "goldenscore-inactive"
                               }`}
                             >
-                              +${dailyPrizesGolden[index]}
+                              +$
+                              {getFormattedNumber(
+                                previous_dailyPrizesGolden[index],
+                                0
+                              )}
                             </td>
                           </tr>
                         );

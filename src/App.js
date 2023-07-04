@@ -779,6 +779,7 @@ function App() {
           finalboughtItems2.push(nft);
         }
       });
+      
     setLatest20RecentListedNFTS(finalboughtItems2);
   };
 
@@ -1180,7 +1181,7 @@ function App() {
               />
               <Route
                 exact
-                path="/marketplace/wod"
+                path="/marketplace/land"
                 element={
                   <WoDNFT
                     ethTokenData={ethTokenData}

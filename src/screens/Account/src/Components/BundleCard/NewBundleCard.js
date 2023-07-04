@@ -823,7 +823,7 @@ const windowSize = useWindowSize()
                   </div>
                   <NavLink
                     className="btn purple-pill"
-                    to="/marketplace/wod"
+                    to="/marketplace/land"
                     
                     rel="noreferrer"
                   >
