@@ -205,9 +205,37 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     },
   ];
 
-  const dailyPrizes = ["20", "10", "8", "5", "0", "0", "0", "0", "0", "0"];
+  const dailyPrizes = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
   const dailyPrizesGolden = [
+    "10",
+    "8",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ];
+
+  const previous_dailyPrizesGolden = [
     "20",
+    "10",
+    "8",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ]
+
+  const weeklyPrizes = ["25", "15", "10", "8", "0", "0", "0", "0", "0", "0"];
+  const weeklyPrizesGolden = [
+    "25",
+    "15",
     "10",
     "8",
     "5",
@@ -219,8 +247,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     "5",
   ];
 
-  const weeklyPrizes = ["40", "20", "15", "10", "0", "0", "0", "0", "0", "0"];
-  const weeklyPrizesGolden = [
+  const previous_weeklyPrizesGolden = [
     "40",
     "20",
     "15",
@@ -235,58 +262,62 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
   ];
 
   const monthlyPrizes = [
-    "500",
     "250",
     "150",
-    "50",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-  ];
-
-  const monthlyPrizesGolden = [
-    "500",
-    "250",
-    "150",
-    "50",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-  ];
-
-
-  const previous_dailyPrizes = ["40", "20", "15", "10", "5", "5", "5", "5", "5", "5"];
-
-  const previous_weeklyPrizes = [
-    "80",
-    "40",
-    "30",
-    "20",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
-
-  const previous_monthlyPrizes = [
-    "1000",
-    "500",
-    "300",
     "100",
     "50",
     "50",
+    "20",
+    "20",
+    "10",
+    "10",
+    "10",
+  ];
+
+  const monthlyPrizesGolden = [
+    "250",
+    "150",
+    "100",
     "50",
     "50",
+    "20",
+    "20",
+    "10",
+    "10",
+    "10",
+  ];
+
+
+  const previous_monthlyPrizesGolden = [
+    "500",
+    "250",
+    "150",
     "50",
+    "25",
+    "25",
+    "25",
+    "25",
+    "25",
+    "25",
+  ];
+
+
+
+  const previous_dailyPrizes = ["20", "10", "8", "5", "0", "0", "0", "0", "0", "0"];
+
+  const previous_weeklyPrizes = ["40", "20", "15", "10", "0", "0", "0", "0", "0", "0"];
+
+  const previous_monthlyPrizes = [
+    "500",
+    "250",
+    "150",
     "50",
+    "25",
+    "25",
+    "25",
+    "25",
+    "25",
+    "25",
   ];
 
   const [optionText, setOptionText] = useState("genesis");
@@ -407,15 +438,15 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     if (item === "daily" && inactiveBoard === false) {
       setPrizes(dailyPrizes);
     } else if (item === "daily" && inactiveBoard === true) {
-      setPrizes(dailyPrizes);
+      setPrizes(previous_dailyPrizes);
     } else if (item === "weekly" && inactiveBoard === false) {
       setPrizes(weeklyPrizes);
     } else if (item === "weekly" && inactiveBoard === true) {
-      setPrizes(weeklyPrizes);
+      setPrizes(previous_weeklyPrizes);
     } else if (item === "monthly" && inactiveBoard === false) {
       setPrizes(monthlyPrizes);
     } else if (item === "monthly" && inactiveBoard === true) {
-      setPrizes(monthlyPrizes);
+      setPrizes(previous_monthlyPrizes);
     }
   };
 
@@ -838,7 +869,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +${getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                        +${getFormattedNumber(previous_monthlyPrizesGolden[index], 0)}
                       </td>
                     </tr>
                   );
@@ -899,7 +930,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +${getFormattedNumber(weeklyPrizesGolden[index],0)}
+                        +${getFormattedNumber(previous_weeklyPrizesGolden[index],0)}
                       </td>
                     </tr>
                   );
@@ -960,7 +991,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                       +${dailyPrizesGolden[index]}
+                      +${getFormattedNumber(previous_dailyPrizesGolden[index],0)}
                       </td>
                     </tr>
                   );
