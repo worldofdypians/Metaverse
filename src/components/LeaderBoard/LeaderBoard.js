@@ -289,16 +289,16 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
 
   const previous_monthlyPrizesGolden = [
+    "500",
     "250",
     "150",
-    "100",
     "50",
-    "50",
-    "20",
-    "20",
-    "10",
-    "10",
-    "10",
+    "25",
+    "25",
+    "25",
+    "25",
+    "25",
+    "25",
   ];
 
 
