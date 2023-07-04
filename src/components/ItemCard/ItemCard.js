@@ -223,7 +223,7 @@ const ItemCard = ({
     checkOwner(nft);
     if (
       location.pathname.includes("/marketplace/caws") ||
-      location.pathname.includes("/marketplace/wod") ||
+      location.pathname.includes("/marketplace/land") ||
       location.pathname.includes("/marketplace/timepiece")
     ) {
       checkapprove(nft);
@@ -312,7 +312,7 @@ const ItemCard = ({
         <div
           className={`d-flex flex-column gap-2 position-relative p-3 ${
             (location.pathname.includes("/marketplace/caws") ||
-              location.pathname.includes("/marketplace/wod") ||
+              location.pathname.includes("/marketplace/land") ||
               location.pathname.includes("/marketplace/timepiece")) &&
             "topwrapper"
           }`}
@@ -320,7 +320,7 @@ const ItemCard = ({
           <div
             className={`d-flex gap-2 justify-content-between ${
               (location.pathname.includes("/marketplace/caws") ||
-                location.pathname.includes("/marketplace/wod") ||
+                location.pathname.includes("/marketplace/land") ||
                 location.pathname.includes("/marketplace/timepiece")) &&
               "middlewrapper"
             } ${!isListed && "invisible"} `}
@@ -346,7 +346,7 @@ const ItemCard = ({
                   <span
                     className={`nft-price-usd  ${
                       (location.pathname.includes("/marketplace/caws") ||
-                        location.pathname.includes("/marketplace/wod") ||
+                        location.pathname.includes("/marketplace/land") ||
                         location.pathname.includes("/marketplace/timepiece")) &&
                       "nft-price-usdhover"
                     } ${!isListed && "nft-price-usdhover2"}`}
@@ -403,7 +403,7 @@ const ItemCard = ({
           )}
         </div>
         {(location.pathname.includes("/marketplace/caws") ||
-          location.pathname.includes("/marketplace/wod") ||
+          location.pathname.includes("/marketplace/land") ||
           location.pathname.includes("/marketplace/timepiece")) &&
           (isListed && !isOwner) && (
             <div className="buy-nft w-100">
@@ -433,7 +433,7 @@ const ItemCard = ({
             </div>
           )}
         {(location.pathname.includes("/marketplace/caws") ||
-          location.pathname.includes("/marketplace/wod") ||
+          location.pathname.includes("/marketplace/land") ||
           location.pathname.includes("/marketplace/timepiece")) &&
           (!isListed || isOwner) && (
             <div className="buy-nft w-100">
@@ -447,7 +447,7 @@ const ItemCard = ({
           )}
       </div>
       {!location.pathname.includes("/marketplace/caws") &&
-        !location.pathname.includes("/marketplace/wod") &&
+        !location.pathname.includes("/marketplace/land") &&
         !location.pathname.includes("/marketplace/timepiece") &&
         !location.pathname.includes("/account") && (
           <span

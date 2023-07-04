@@ -1180,7 +1180,7 @@ function App() {
               />
               <Route
                 exact
-                path="/marketplace/wod"
+                path="/marketplace/land"
                 element={
                   <WoDNFT
                     ethTokenData={ethTokenData}
