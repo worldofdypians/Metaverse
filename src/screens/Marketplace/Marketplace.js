@@ -448,6 +448,8 @@ const Marketplace = ({
       setSliderCut(3);
     } else if (windowSize.width > 480) {
       setSliderCut(2);
+    }else{
+      setSliderCut(1);
     }
   }, [windowSize.width]);
 
