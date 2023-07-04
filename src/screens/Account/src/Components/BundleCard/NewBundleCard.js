@@ -327,8 +327,8 @@ const windowSize = useWindowSize()
     const result_formatted = result.data.count;
     if (result_formatted <= 4) {
       if (parseInt(result_formatted) === 0) {
-        setbundlesBought(1);
-        setProgressValue(25);
+        setbundlesBought(0);
+        setProgressValue(0);
       } else if (parseInt(result_formatted) === 1) {
         setbundlesBought(1);
         setProgressValue(25);
@@ -1234,7 +1234,7 @@ const windowSize = useWindowSize()
                 </div>
                 <div className="new-bundles-bought-count d-flex align-items-center justify-content-center p-2">
                   <span className="new-bought-bundles">
-                    {bundlesBought} purchased bundles
+                    {bundlesBought} purchased { bundlesBought > 1 ? 'bundles' : 'bundle'}
                   </span>
                 </div>
               </div>
