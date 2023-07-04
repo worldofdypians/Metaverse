@@ -77,7 +77,6 @@ const WoDNFT = ({
     trait_type: "NPC - AI Powered",
     value: [],
   });
-  const [plot, setPlot] = useState({ trait_type: "Plot", value: [] });
   const [tier, setTier] = useState({ trait_type: "Tier", value: [] });
   const [size, setSize] = useState({ trait_type: "Size", value: [] });
   const [building, setBuilding] = useState({
@@ -101,7 +100,6 @@ const WoDNFT = ({
     multifunctionalBuilding,
     npc,
     aiNpc,
-    plot,
     tier,
     size,
     building,
@@ -128,7 +126,6 @@ const WoDNFT = ({
       trait_type: "NPC - AI Powered",
       value: [],
     },
-    { trait_type: "Plot", value: [] },
     { trait_type: "Tier", value: [] },
     { trait_type: "Size", value: [] },
     {
@@ -161,7 +158,6 @@ const WoDNFT = ({
     });
     setNpc({ trait_type: "NPC", value: [] });
     setAiNpc({ trait_type: "NPC - AI Powered", value: [] });
-    setPlot({ trait_type: "Plot", value: [] });
     setTier({ trait_type: "Tier", value: [] });
     setSize({ trait_type: "Size", value: [] });
     setBuilding({ trait_type: "Building", value: [] });
@@ -240,23 +236,6 @@ const WoDNFT = ({
       } else {
         testarr.value.push(product);
         setAiNpc(testarr);
-      }
-
-      setCount(count + 1);
-    } else if (category === 4) {
-      let testarr = plot;
-      let firstIndex = null;
-      testarr.value.map((item, index) => {
-        if (item === product) {
-          firstIndex = index;
-        }
-      });
-      if (firstIndex !== null) {
-        testarr.value.splice(firstIndex, 1);
-        setPlot(testarr);
-      } else {
-        testarr.value.push(product);
-        setPlot(testarr);
       }
 
       setCount(count + 1);
@@ -369,7 +348,6 @@ const WoDNFT = ({
       multifunctionalBuilding,
       npc,
       aiNpc,
-      plot,
       tier,
       size,
       building,
@@ -385,7 +363,6 @@ const WoDNFT = ({
       multifunctionalBuilding,
       npc,
       aiNpc,
-      plot,
       tier,
       size,
       building,
@@ -1243,6 +1220,7 @@ const WoDNFT = ({
                         next2 < filterIds.length &&
                         filterIds.length > 0 ? (
                         <>
+                         
                           <Skeleton
                             animation="wave"
                             width={178}
@@ -1285,90 +1263,8 @@ const WoDNFT = ({
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
+                         
+                          
                         </>
                       ) : (
                         <></>

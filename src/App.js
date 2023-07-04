@@ -779,6 +779,7 @@ function App() {
           finalboughtItems2.push(nft);
         }
       });
+      
     setLatest20RecentListedNFTS(finalboughtItems2);
   };
 

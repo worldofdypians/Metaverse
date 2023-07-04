@@ -7,7 +7,8 @@ import { GENERATE_NONCE, GET_PLAYER, VERIFY_WALLET } from "./Dashboard.schema";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 
 import { getWalletTokens } from "../../web3/tmp";
-import { CircularProgress, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
+import { HashLoader } from "react-spinners";
 import { Cart, LoginWrapper, ErrorAlert, Button } from "../../Components";
 import LandCart from "../../Components/Cart/LandCart";
 import EmptyCard from "../../Components/Cart/EmptyCard";
@@ -67,6 +68,7 @@ function Dashboard({
   const [showChecklistLandNftModal, setshowChecklistLandNftModal] =
     useState(false);
   const firstSlider = useRef();
+  const [loading, setLoading] = useState(true);
 
   const [dypBalance, setDypBalance] = useState();
   const [dypBalancebnb, setDypBalanceBnb] = useState();
@@ -98,6 +100,15 @@ function Dashboard({
   const navigate = useNavigate();
   const location = useLocation();
 
+  const override2 = {
+    display: "block",
+    margin: "auto",
+    borderColor: "#554fd8",
+    top: '30%',
+    left: '40%',
+    position: 'absolute'
+  };
+  
   const onOpenNfts = () => {
     setShowNfts(!showNfts);
   };
@@ -748,12 +759,16 @@ function Dashboard({
           >
             {loadingPlayer ? (
               <>
-                <CircularProgress
-                  size={80}
-                  style={{ alignSelf: "center", margin: "auto" }}
+                <HashLoader
+                  color={"#554fd8"}
+                  loading={loading}
+                  cssOverride={override2}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
                 />
               </>
             ) : (
+              
               <div className="container-fluid px-0 px-lg-3">
                 <div className={""}>
                   <div

@@ -209,30 +209,47 @@ const SingleNft = ({
       });
     return result;
   }
-  
+
   const handleRefreshList = async (type, tokenId) => {
-    let nft_address;
-
     if (type === "timepiece") {
-      nft_address = window.config.nft_timepiece_address;
+      let nft_address = window.config.nft_timepiece_address;
+      const listedNFT = await getListedNFTS(
+        0,
+        "",
+        "nftAddress_tokenId",
+        tokenId,
+        nft_address
+      );
+
+      if (listedNFT && listedNFT.length > 0) {
+        setNft(...listedNFT);
+      }
     } else if (type === "land") {
-      nft_address = window.config.nft_land_address;
+      let nft_address = window.config.nft_land_address;
+      const listedNFT = await getListedNFTS(
+        0,
+        "",
+        "nftAddress_tokenId",
+        tokenId,
+        nft_address
+      );
+
+      if (listedNFT && listedNFT.length > 0) {
+        setNft(...listedNFT);
+      }
     } else {
-      nft_address = window.config.nft_caws_address;
-    }
+      let nft_address = window.config.nft_caws_address;
+      const listedNFT = await getListedNFTS(
+        0,
+        "",
+        "nftAddress_tokenId",
+        tokenId,
+        nft_address
+      );
 
-    const listedNFT = await getListedNFTS(
-      0,
-      "",
-      "nftAddress_tokenId",
-      tokenId,
-      nft_address
-    );
-
-    console.log("test", listedNFT);
-
-    if (listedNFT && listedNFT.length > 0) {
-      setNft(...listedNFT);
+      if (listedNFT && listedNFT.length > 0) {
+        setNft(...listedNFT);
+      }
     }
   };
 
@@ -342,7 +359,14 @@ const SingleNft = ({
           setPurchaseStatus("NFT successfully listed!");
           setPurchaseColor("#00FECF");
           setShowToast(true);
-          handleRefreshList(type, tokenId);
+          handleRefreshList(
+            nft.type ?? nft.nftAddress === window.config.nft_caws_address
+              ? "caws"
+              : nft.nftAddress === window.config.nft_timepiece_address
+              ? "timepiece"
+              : "land",
+            tokenId
+          );
           handleRefreshListing();
           setTimeout(() => {
             setPurchaseStatus("");
@@ -560,7 +584,14 @@ const SingleNft = ({
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
             setbuyStatus("");
-            handleRefreshList(type, nft);
+            handleRefreshList(
+              nft.type ?? nft.nftAddress === window.config.nft_caws_address
+                ? "caws"
+                : nft.nftAddress === window.config.nft_timepiece_address
+                ? "timepiece"
+                : "land",
+              nft
+            );
             handleRefreshListing();
             getLatestBoughtNFT();
           }, 3000);
@@ -667,7 +698,14 @@ const SingleNft = ({
         }, 3000);
         setShowToast(true);
         setToastTitle("Successfully updated!");
-        handleRefreshList(type, nft);
+        handleRefreshList(
+          nft.type ?? nft.nftAddress === window.config.nft_caws_address
+            ? "caws"
+            : nft.nftAddress === window.config.nft_timepiece_address
+            ? "timepiece"
+            : "land",
+          nft
+        );
         handleRefreshListing();
         setPurchaseColor("#00FECF");
         setPurchaseStatus("Price updated successfully.");
@@ -750,28 +788,30 @@ const SingleNft = ({
 
   useEffect(() => {
     // if (isOwner === false) {
-    if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
-      isApprovedBuy(nft.price).then((isApproved) => {
-        console.log(isApproved);
-        if (isApproved === true) {
-          setbuyStatus("buy");
-        } else if (isApproved === false) {
-          setbuyStatus("approve");
-        }
-        setIsApprove(isApproved);
-      });
-    } else if (!IsListed) {
-      // console.log(nft);
-      isApprovedNFT(nft.tokenId, type, coinbase).then((isApproved) => {
-        console.log("isApproved", isApproved);
-        if (isApproved === true) {
-          setsellStatus("sell");
-        } else if (isApproved === false) {
-          setsellStatus("approve");
-        }
-      });
-    } else {
-      setbuyStatus("buy");
+    if (coinbase) {
+      if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
+        isApprovedBuy(nft.price).then((isApproved) => {
+          console.log(isApproved);
+          if (isApproved === true) {
+            setbuyStatus("buy");
+          } else if (isApproved === false) {
+            setbuyStatus("approve");
+          }
+          setIsApprove(isApproved);
+        });
+      } else if (!IsListed) {
+        // console.log(nft);
+        isApprovedNFT(nft.tokenId, type, coinbase).then((isApproved) => {
+          console.log("isApproved", isApproved);
+          if (isApproved === true) {
+            setsellStatus("sell");
+          } else if (isApproved === false) {
+            setsellStatus("approve");
+          }
+        });
+      } else {
+        setbuyStatus("buy");
+      }
     }
     // }
   }, [nft.price, isConnected, IsListed, isOwner, coinbase, nftCount]);
@@ -834,14 +874,20 @@ const SingleNft = ({
         setIsListed(isListed);
       });
       getNftOwner(type, nft.tokenId);
-      handleRefreshList(type, nft.tokenId);
+      handleRefreshList(
+        nft.type ?? nft.nftAddress === window.config.nft_caws_address
+          ? "caws"
+          : nft.nftAddress === window.config.nft_timepiece_address
+          ? "timepiece"
+          : "land",
+        nft.tokenId
+      );
     }
   }, [type, nftCount]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
-   
   }, []);
 
   useEffect(() => {
@@ -849,16 +895,17 @@ const SingleNft = ({
       getLatest20BoughtNFTS(nft.nftAddress, nft.tokenId);
       getFavoritesCount(nft.tokenId, nft.nftAddress);
       setNft(nft);
-      setType(nft.type);
+      // setType(
+      //   nft.type ?? nft.nftAddress === window.config.nft_caws_address
+      //     ? "caws"
+      //     : nft.nftAddress === window.config.nft_timepiece_address
+      //     ? "timepiece"
+      //     : "land"
+      // );
+
       getViewCount(nft.tokenId, nft.nftAddress);
     }
   }, [nft]);
-
-  // useEffect(() => {
-  //   if (buyStatus === "success") {
-  //     getLatestBoughtNFT();
-  //   }
-  // }, [buyStatus]);
 
   useEffect(() => {
     if (nft) {
