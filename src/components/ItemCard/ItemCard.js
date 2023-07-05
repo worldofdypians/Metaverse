@@ -8,6 +8,7 @@ import Toast from "../../components/Toast/Toast";
 import ethgrayLogo from "./assets/ethgrayLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -48,7 +49,7 @@ const ItemCard = ({
   const [status, setStatus] = useState("initial");
   const [showModal, setShowModal] = useState(false);
   const [purchasestate, setpurchasestate] = useState("approve");
-
+  const windowSize = useWindowSize()
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -358,7 +359,7 @@ const ItemCard = ({
                   >
                     {getFormattedNumber(
                       nft.price / 1e18,
-                      nft.payment_priceType === 0 ? 3 : 0
+                      nft.payment_priceType === 0 ? 2 : 0
                     )}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                   </span>
@@ -376,7 +377,7 @@ const ItemCard = ({
                       nft.payment_priceType === 0
                         ? ethTokenData * (nft.price / 1e18)
                         : dypTokenData * (nft.price / 1e18),
-                      3
+                      2
                     )}
                   </span>
                 </div>
