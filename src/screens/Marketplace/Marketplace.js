@@ -755,7 +755,7 @@ const Marketplace = ({
                     topSold.slice(0, 9).map((nft, index) => (
                       <div className="col-12 col-lg-4" key={index}>
                         <NavLink
-                          to={`/marketplace/nft/${nft.blockTimestamp}`}
+                          to={`/marketplace/nft/${nft.blockTimestamp}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           state={{
                             nft: nft,
@@ -981,7 +981,7 @@ const Marketplace = ({
                     
                       {recentListed.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.blockTimestamp}`}
+                          to={`/marketplace/nft/${nft.blockTimestamp}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1249,7 +1249,7 @@ const Marketplace = ({
                       recentSold.length > 0 &&
                       recentSold.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.blockTimestamp}`}
+                          to={`/marketplace/nft/${nft.blockTimestamp}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
