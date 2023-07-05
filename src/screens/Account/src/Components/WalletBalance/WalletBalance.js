@@ -792,7 +792,7 @@ const WalletBalance = ({
                   favoriteItems.slice(0, 6).map((item, index) => (
                     <NavLink
                       key={index}
-                      to={`/marketplace/nft/${index}`}
+                      to={`/marketplace/nft/${index}/${item.nftAddress}`}
                       style={{ textDecoration: "none" }}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
                       state={{
@@ -920,7 +920,7 @@ const WalletBalance = ({
                       to={
                         item.isStaked === true
                           ? `/marketplace/stake`
-                          : `/marketplace/nft/${index}`
+                          : `/marketplace/nft/${index}/${item.nftAddress}`
                       }
                       style={{ textDecoration: "none" }}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -1157,7 +1157,7 @@ const WalletBalance = ({
                   listedItems.slice(0, 6).map((item, index) => (
                     <NavLink
                       key={index}
-                      to={`/marketplace/nft/${item.blockTimestamp}`}
+                      to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
                       style={{ textDecoration: "none" }}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
                       state={{
@@ -1734,7 +1734,7 @@ const WalletBalance = ({
                       to={
                         nft.isStaked === true
                           ? `/marketplace/stake`
-                          : `/marketplace/nft/${index}`
+                          : `/marketplace/nft/${index}/${nft.nftAddress}`
                       }
                       style={{ textDecoration: "none" }}
                       key={index}
@@ -1836,7 +1836,7 @@ const WalletBalance = ({
                     .slice(favoritesSliceValue - 6, favoritesSliceValue)
                     .map((nft, index) => (
                       <NavLink
-                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}/${nft.nftAddress}`}
                         style={{ textDecoration: "none" }}
                         key={index}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -1943,7 +1943,7 @@ const WalletBalance = ({
                   listedItemsFiltered.length > 0 &&
                   listedItemsFiltered.map((nft, index) => (
                     <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}/${nft.nftAddress}`}
                       style={{ textDecoration: "none" }}
                       key={index}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
