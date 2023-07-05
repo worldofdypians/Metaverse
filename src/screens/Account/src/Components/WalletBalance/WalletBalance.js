@@ -1729,7 +1729,7 @@ const WalletBalance = ({
               <div className="row px-3">
                 {collectedItemsFiltered &&
                   collectedItemsFiltered.length > 0 &&
-                  collectedItemsFiltered.map((nft, index) => (
+                  collectedItemsFiltered.slice(collectedPageSlice - 6, collectedPageSlice).map((nft, index) => (
                     <NavLink
                       to={
                         nft.isStaked === true
@@ -1738,7 +1738,7 @@ const WalletBalance = ({
                       }
                       style={{ textDecoration: "none" }}
                       key={index}
-                      className="col-12 col-lg-6 col-xxl-3 mb-3"
+                      className="col-12 col-lg-6 col-xxl-4 mb-3"
                       state={{
                         nft: nft,
                         type:

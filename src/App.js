@@ -1012,7 +1012,7 @@ function App() {
             <Routes>
               <Route path="/news/:newsId?/:titleId?" element={<News />} />
               <Route
-                path="marketplace/nft/:nftId"
+                path="marketplace/nft/:nftId/:nftAddress?"
                 element={
                   <SingleNft
                     coinbase={coinbase}

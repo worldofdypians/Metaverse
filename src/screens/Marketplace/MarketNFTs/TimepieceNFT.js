@@ -832,7 +832,7 @@ const TimepieceNFT = ({
                     <>
                       {timepieceNFTS.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.blockTimestamp ?? index}`}
+                          to={`/marketplace/nft/${nft.blockTimestamp ?? index}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1155,7 +1155,7 @@ const TimepieceNFT = ({
                         .slice(0, next2)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/marketplace/nft/${index}`}
+                            to={`/marketplace/nft/${index}/${nft.nftAddress}`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             state={{
