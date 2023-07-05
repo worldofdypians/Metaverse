@@ -7,6 +7,19 @@ import { useLocation } from "react-router-dom";
 import Toast from "../../components/Toast/Toast";
 import ethgrayLogo from "./assets/ethgrayLogo.svg";
 import { useNavigate } from "react-router-dom";
+import { Tooltip, styled, tooltipClasses } from "@mui/material";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#252743 !important',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: '150px !important',
+    minWidth: '100px !important',
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
 
 const ItemCard = ({
   nft,
@@ -292,11 +305,17 @@ const ItemCard = ({
               </span>
             )}
           </div>
-          <img
+         
+         <HtmlTooltip  placement="top" title={
+                <span className="card-eth-chain-text">Chain: Ethereum</span>
+         } >
+           <img
             src={ethgrayLogo}
             alt=""
             className="ethgraylogo position-absolute"
           />
+         </HtmlTooltip>
+           
           <img
             className="w-100 h-100 p-0 nft-img"
             src={

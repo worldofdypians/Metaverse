@@ -1205,7 +1205,7 @@ const SingleNft = ({
                                   id="price"
                                   name="price"
                                   value={nftPrice}
-                                  type="number"
+                                  type="text"
                                   required
                                   onChange={(e) => {
                                     handlepricechange(e.target.value);

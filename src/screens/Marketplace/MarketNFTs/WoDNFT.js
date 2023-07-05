@@ -671,7 +671,7 @@ const WoDNFT = ({
             <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
-                  <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                  <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
                     Genesis <span style={{ color: "#8c56ff" }}>Land</span>
                   </h6>
 

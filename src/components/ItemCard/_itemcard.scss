@@ -121,14 +121,37 @@
   left: 10px;
 }
 
+.card-eth-chain{
+
+  border-radius: 10px;
+background: #252743;
+
+}
+
+.card-eth-chain-text{
+  color: #EEEDFF;
+text-align: center;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+font-family: 'Poppins' !important;
+}
+
+
+
 .item-wrapper:hover {
   background: rgba(103, 67, 124, 0.35) !important;
   .ethgraylogo {
     visibility: visible;
     top: 10px;
     left: 10px;
-    z-index: 1;
+    z-index: 5;
+    pointer-events: all;
   }
+
+
+
   .topwrapper {
     padding-top: 11px !important;
   }
