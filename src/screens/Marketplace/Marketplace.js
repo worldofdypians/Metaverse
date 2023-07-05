@@ -459,7 +459,7 @@ const Marketplace = ({
       style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-      <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
+      <div className="container-nft d-flex align-items-start px-0 px-lg-5 position-relative">
         <div className="container-lg mx-0">
           <div className="row justify-content-between align-items-center marketplace-banner mt-4 mt-lg-0">
             <div className="col-12 col-lg-5">
@@ -679,7 +679,7 @@ const Marketplace = ({
               <div
                 className={
                   loadingTopSales === false
-                    ? "row align-items-start position-relative justify-content-start"
+                    ? "row align-items-start position-relative justify-content-start px-0"
                     : "loader-wrapper"
                 }
                 style={{ rowGap: "22px", minHeight: '260px' }}

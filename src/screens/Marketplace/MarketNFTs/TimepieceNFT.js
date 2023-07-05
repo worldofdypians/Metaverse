@@ -694,7 +694,7 @@ const TimepieceNFT = ({
               </div>
             </div>
             <div
-              className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative"
+              className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative gap-2"
               style={{ zIndex: 2 }}
             >
               <div class="dropdown" style={{ width: "150px" }}>
@@ -827,7 +827,7 @@ const TimepieceNFT = ({
                 onScroll={onScroll}
                 ref={listInnerRef}
               >
-                <div className={"item-cards-wrapper"}>
+                <div className={"item-cards-wrapper w-100"}>
                   {timepieceNFTS && timepieceNFTS.length > 0 && count === 0 ? (
                     <>
                       {timepieceNFTS.map((nft, index) => (
@@ -882,126 +882,126 @@ const TimepieceNFT = ({
                         <>
                            <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
@@ -1017,126 +1017,126 @@ const TimepieceNFT = ({
                     <>
                        <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
@@ -1206,42 +1206,42 @@ const TimepieceNFT = ({
                         <>
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
@@ -1258,126 +1258,126 @@ const TimepieceNFT = ({
                     <>
                       <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                           <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
                             <Skeleton
                             animation="wave"
-                            width={178}
+                            width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
