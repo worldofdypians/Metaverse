@@ -163,7 +163,6 @@ const MobileNav = () => {
               isActive ? "nft-link-active" : "nft-link"
             }
           >
-            <img src={wodLogo} height={22} width={22} alt="" />
             <h6 className="mobile-nft-title">Land</h6>
           </NavLink>
           <NavLink
@@ -172,7 +171,6 @@ const MobileNav = () => {
               isActive ? "nft-link-active" : "nft-link"
             }
           >
-            <img src={cawsLogo} height={22} width={22} alt="" />
             <h6 className="mobile-nft-title">Cats and Watches Society</h6>
           </NavLink>
 
@@ -182,7 +180,6 @@ const MobileNav = () => {
               isActive ? "nft-link-active" : "nft-link"
             }
           >
-            <img src={cawsLogo} height={22} width={22} alt="" />
             <h6 className="mobile-nft-title">CAWS Timepiece</h6>
           </NavLink>
         </div>
