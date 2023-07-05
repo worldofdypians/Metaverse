@@ -926,7 +926,12 @@ const WalletBalance = ({
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
                       state={{
                         nft: item,
-                        type: item.type,
+                        type:
+                          item.nftAddress === window.config.nft_caws_address
+                            ? "caws"
+                            : item.nftAddress === window.config.nft_land_address
+                            ? "land"
+                            : "timepiece",
                         isOwner:
                           (item.buyer &&
                             item.buyer.toLowerCase() ===
@@ -1737,7 +1742,6 @@ const WalletBalance = ({
                       state={{
                         nft: nft,
                         type:
-                          nft.type ??
                           nft.nftAddress === window.config.nft_caws_address
                             ? "caws"
                             : nft.nftAddress === window.config.nft_land_address
