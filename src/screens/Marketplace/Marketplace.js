@@ -931,7 +931,7 @@ const Marketplace = ({
                 ? null
                 : recentListed.length > sliderCut && (
                     <div className="next-arrow-nft" onClick={firstNext}>
-                      <img src={nextArrow} alt="" />
+                      <img src={nextArrow} alt="1" />
                     </div>
                   )}
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">

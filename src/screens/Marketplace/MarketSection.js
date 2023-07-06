@@ -6,10 +6,30 @@ const MarketSection = () => {
   const [activebtn, setActiveBtn] = useState("land");
 
   const eventData = [
-    { eventTitle: "Dragon Ruins", eventPrice: "50 DYP", eventImg: 'dragon' },
-    { eventTitle: "Puzzle Madness", eventPrice: "3,500 iDYP", eventImg: 'puzzle' },
-    { eventTitle: "Golden Pass", eventPrice: "700 DYP", eventImg: 'golden' },
-    { eventTitle: "Critical Hit", eventPrice: "", eventImg: 'critical' }
+    {
+      eventTitle: "Dragon Ruins",
+      eventPrice: "50 DYP",
+      eventImg: "dragon",
+      state: "dragon",
+    },
+    {
+      eventTitle: "Puzzle Madness",
+      eventPrice: "3,500 iDYP",
+      eventImg: "puzzle",
+      state: "idyp",
+    },
+    {
+      eventTitle: "Golden Pass",
+      eventPrice: "700 DYP",
+      eventImg: "golden",
+      state: "dyp",
+    },
+    {
+      eventTitle: "Critical Hit",
+      eventPrice: "",
+      eventImg: "critical",
+      state: "criticalHit",
+    },
   ];
 
   return (
@@ -63,23 +83,31 @@ const MarketSection = () => {
             <span className="marketItemText">Events</span>
           </div>
         </div>
-        <div className="d-flex align-items-center justify-content-between gap-2">
+        <div className="marketcardwrapper">
           {activebtn === "events" &&
             eventData &&
             eventData.length > 0 &&
             eventData.map((item, index) => {
               return (
-                <MarketCards
-                  activebtn={"events"}
-                  key={index}
-                  eventTitle={item.eventTitle}
-                  eventPrice={item.eventPrice}
-                  eventImg={item.eventImg}
-                />
+                <NavLink
+                  to="/marketplace/events"
+                  state={{ package: item.state }}
+                  style={{ textDecoration: "none" }}
+                >
+                  <MarketCards
+                    activebtn={"events"}
+                    key={index}
+                    eventTitle={item.eventTitle}
+                    eventPrice={item.eventPrice}
+                    eventImg={item.eventImg}
+                  />
+                </NavLink>
               );
             })}
         </div>
-        <NavLink to="/marketplace">
+        <NavLink
+          to={activebtn === "events" ? "/marketplace/events" : "/marketplace"}
+        >
           <div
             className="linear-border"
             style={{

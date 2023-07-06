@@ -501,8 +501,15 @@
   cursor: pointer;
 }
 
-.marketItem:hover, .marketItemActive {
-background: linear-gradient(214deg, #7B2EB0 18.75%, #142D8E 100%);
+.marketcardwrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.marketItem:hover,
+.marketItemActive {
+  background: linear-gradient(214deg, #7b2eb0 18.75%, #142d8e 100%);
 }
 
 .sidebar-item-active {

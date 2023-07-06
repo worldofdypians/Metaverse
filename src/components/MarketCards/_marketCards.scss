@@ -3,6 +3,12 @@
   background: var(--white-10, rgba(255, 255, 255, 0.1));
   box-shadow: 0px 5px 4px 0px rgba(103, 26, 228, 0.15);
   padding: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.marketCards-wrapper:hover {
+  border: 2px solid #00fecf;
 }
 
 .marketicon {

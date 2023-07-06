@@ -10,7 +10,7 @@ const MarketCards = ({
   eventImg,
 }) => {
   return (
-    <div className="marketCards-wrapper col-3">
+    <div className="marketCards-wrapper">
       <div className="d-flex flex-column gap-2">
         <div className="">
           <img src={require(`./assets/${eventImg}.png`)} alt="" className="marketicon"/>
