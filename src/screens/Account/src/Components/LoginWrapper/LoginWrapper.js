@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import { loginBackground } from "../../Themes/Images";
-import classes from './LoginWrapper.module.css'
+import classes from "./LoginWrapper.module.css";
 
 function LoginWrapper({ img, children, style }) {
   return (
@@ -11,12 +11,12 @@ function LoginWrapper({ img, children, style }) {
       //   ...style
       // }}
       className={classes.container}
+      style={style}
     >
       {children}
     </div>
   );
 }
-
 
 LoginWrapper.propTypes = {
   img: PropTypes.string,

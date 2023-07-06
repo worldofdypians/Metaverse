@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./_header.scss";
 import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import person from "./assets/person.svg";
+import copy from "./assets/copy.svg";
+import check from "./assets/check.svg";
+import user from "./assets/user.svg";
+import logout from "./assets/logout.svg";
+import Clipboard from "react-clipboard.js";
+import OutsideClickHandler from "react-outside-click-handler";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Header = ({ handleSignUp, handleRedirect, coinbase, avatar }) => {
+const Header = ({
+  handleSignUp,
+  handleRedirect,
+  coinbase,
+  avatar,
+  handleDisconnect,
+}) => {
+  const [tooltip, setTooltip] = useState(false);
+  const [showmenu, setShowMenu] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  let id = Math.random().toString(36);
+
+  const manageDisconnect = () => {
+    if (location.pathname.includes("/account")) {
+      handleDisconnect();
+      navigate("/");
+    } else handleDisconnect();
+  };
+
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
@@ -66,7 +94,7 @@ const Header = ({ handleSignUp, handleRedirect, coinbase, avatar }) => {
           >
             News
           </NavLink>
-        
+
           {/* <NavLink
             to="/nft-event"
             className={({isActive}) =>
@@ -78,25 +106,91 @@ const Header = ({ handleSignUp, handleRedirect, coinbase, avatar }) => {
             NFT Event
           </NavLink> */}
         </div>
-        <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0">
+        <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0 position-relative ">
           {!coinbase ? (
-            <div className="linear-border">
-              <button className="btn outline-btn px-5" onClick={handleSignUp}>
+            <div className="linearborder2">
+              <button className="btn connectwallet px-3" onClick={handleSignUp}>
                 Connect Wallet
-              </button>
+              </button>{" "}
             </div>
           ) : (
             <div className="d-flex align-items-center gap-3">
-              <div className="linear-border">
-                <div className="btn outline-btn px-5">
-                  {shortAddress(coinbase)}
+              <Clipboard
+                component="div"
+                data-event="click"
+                data-for={id}
+                data-tip="Copied To Clipboard!"
+                data-clipboard-text={coinbase}
+                className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
+              >
+                <div
+                  className="btn connected px-3"
+                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                  onClick={() => {
+                    setTooltip(true);
+                    setTimeout(() => setTooltip(false), 2000);
+                  }}
+                >
+                  {shortAddress(coinbase)}{" "}
+                  <img src={tooltip ? check : copy} alt="" />
                 </div>
-              </div>
+              </Clipboard>
+
               {avatar === null ? (
-                <img src={person} className="account-icon" alt="" onClick={handleRedirect}/>
+                <img
+                  src={person}
+                  className="account-icon"
+                  alt=""
+                  // onClick={handleRedirect}
+                  onClick={() => {
+                    setShowMenu(true);
+                  }}
+                />
               ) : (
-                <img src={avatar} className="account-icon" alt=""  onClick={handleRedirect}/>
+                <img
+                  src={avatar}
+                  className="account-icon"
+                  alt=""
+                  onClick={() => {
+                    setShowMenu(true);
+                  }}
+
+                  // onClick={handleRedirect}
+                />
               )}
+            </div>
+          )}
+
+          {showmenu === true && (
+            <div className="position-absolute" style={{ width: "150px" }}>
+              <OutsideClickHandler
+                onOutsideClick={() => {
+                  setShowMenu(false);
+                }}
+              >
+                <div className="menuwrapper">
+                  <div className="d-flex flex-column gap-2">
+                    <span
+                      className="menuitem2"
+                      onClick={() => {
+                        setShowMenu(false);
+                        handleRedirect();
+                      }}
+                    >
+                      <img src={user} alt="" /> My Account{" "}
+                    </span>
+                    <span
+                      className="menuitem2"
+                      onClick={() => {
+                        setShowMenu(false);
+                        manageDisconnect();
+                      }}
+                    >
+                      <img src={logout} alt="" /> Disconnect wallet{" "}
+                    </span>
+                  </div>
+                </div>
+              </OutsideClickHandler>
             </div>
           )}
         </div>

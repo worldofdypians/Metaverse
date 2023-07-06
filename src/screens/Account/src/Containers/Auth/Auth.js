@@ -78,7 +78,7 @@ function Auth({ isConnected, coinbase }) {
   }
   return (
     <>
-      <LoginWrapper>
+      <LoginWrapper style={{marginTop: '4rem'}}>
         <LoginCard
           containerStyles={{
             height: 500,

@@ -11,7 +11,7 @@ import LandNft from "./LandNFT/LandNft";
 import Utilities from "./Utilities/Utilities";
 import MarketSection from "../Marketplace/MarketSection";
 
-const Home = ({handleRegister, handleDownload}) => {
+const Home = ({handleRegister, handleDownload,coinbase,ethTokenData}) => {
 
   useEffect(()=>{
     window.scrollTo(0,0)
@@ -25,7 +25,7 @@ const Home = ({handleRegister, handleDownload}) => {
       <div className="d-flex flex-column home-main-wrapper">
         <VideoWrapper handleRegister={handleRegister} handleDownload={handleDownload}/>
         <Utilities />
-        <MarketSection/>
+        <MarketSection coinbase={coinbase} ethTokenData={ethTokenData}/>
         <ExplorerGrid />
         <LandNft />
         <CawsSociety content="The Cats and Watches Society (CAWS) NFT is a unique collection of

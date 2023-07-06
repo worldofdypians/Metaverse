@@ -1601,7 +1601,7 @@ const WalletBalance = ({
             ) : (
               <div className="d-flex flex-column mb-3 flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
                 <span className="totalcollection">
-                  Total NFTs: {collectedItems.length}
+                  Total NFTs: {collectedItemsFiltered.length}
                 </span>
                 <div className="d-flex gap-3 align-items-center">
                   <div class="dropdown" style={{ width: "150px" }}>
@@ -1625,6 +1625,10 @@ const WalletBalance = ({
                         onClick={() => {
                           setFilter1("all");
                           handleSortCollection();
+                          setFavoritesPage(1);
+                          setListedPage(1);
+                          setCollectedPage(1);
+                          setStakedPage(1);
                         }}
                       >
                         <span>All</span>
@@ -1634,6 +1638,10 @@ const WalletBalance = ({
                         onClick={() => {
                           setFilter1("land");
                           handleSortCollection();
+                          setFavoritesPage(1);
+                          setListedPage(1);
+                          setCollectedPage(1);
+                          setStakedPage(1);
                         }}
                       >
                         <span>Land</span>
@@ -1644,6 +1652,10 @@ const WalletBalance = ({
                         onClick={() => {
                           setFilter1("caws");
                           handleSortCollection();
+                          setFavoritesPage(1);
+                          setListedPage(1);
+                          setCollectedPage(1);
+                          setStakedPage(1);
                         }}
                       >
                         <span>CAWS</span>
@@ -1654,6 +1666,10 @@ const WalletBalance = ({
                         onClick={() => {
                           setFilter1("timepiece");
                           handleSortCollection();
+                          setFavoritesPage(1);
+                          setListedPage(1);
+                          setCollectedPage(1);
+                          setStakedPage(1);
                         }}
                       >
                         <span>Timepiece</span>
@@ -1682,6 +1698,10 @@ const WalletBalance = ({
                         onClick={() => {
                           setFilter2("all");
                           handleSortCollection();
+                          setFavoritesPage(1);
+                          setListedPage(1);
+                          setCollectedPage(1);
+                          setStakedPage(1);
                         }}
                       >
                         <span>All</span>
@@ -1691,6 +1711,10 @@ const WalletBalance = ({
                         onClick={() => {
                           setFilter2("to list");
                           handleSortCollection();
+                          setFavoritesPage(1);
+                          setListedPage(1);
+                          setCollectedPage(1);
+                          setStakedPage(1);
                         }}
                       >
                         <span>To List</span>
@@ -1701,6 +1725,10 @@ const WalletBalance = ({
                         onClick={() => {
                           setFilter2("listed");
                           handleSortCollection();
+                          setFavoritesPage(1);
+                          setListedPage(1);
+                          setCollectedPage(1);
+                          setStakedPage(1);
                         }}
                       >
                         <span>Listed</span>
@@ -1711,6 +1739,10 @@ const WalletBalance = ({
                         onClick={() => {
                           setFilter2("in stake");
                           handleSortCollection();
+                          setFavoritesPage(1);
+                          setListedPage(1);
+                          setCollectedPage(1);
+                          setStakedPage(1);
                         }}
                       >
                         <span>In Stake</span>

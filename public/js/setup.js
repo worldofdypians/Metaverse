@@ -31016,11 +31016,17 @@ async function getCoinbase() {
 
     if (coinbase && coinbase.length > 0) {
       window.coinbase_address = coinbase.pop();
+
       return window.coinbase_address.toLowerCase();
     }
   }
 }
 
+async function disconnectWallet() {
+  window.coinbase_address = "0x0000000000000000000000000000000000000000";
+  console.log(window.coinbase_address)
+  return window.coinbase_addres
+}
 async function getContract({ key, address = null, ABI = null }) {
   ABI = ABI || window[key + "_ABI"];
   address = address || window.config[key.toLowerCase() + "_address"];
