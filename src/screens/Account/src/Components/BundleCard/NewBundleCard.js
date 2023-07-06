@@ -10,7 +10,7 @@ import criticalHit from "./assets/criticalHit.webp";
 import goldenPass from "./assets/goldenPass.png";
 import puzzleMadness from "./assets/puzzleMadness.png";
 import "react-circular-progressbar/dist/styles.css";
-import newLandTooltip from './assets/newLandTooltip.svg'
+import newLandTooltip from "./assets/newLandTooltip.svg";
 import {
   wod_abi,
   token_abi,
@@ -35,7 +35,6 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 import { NavLink } from "react-router-dom";
 import { convertToUSD } from "../../../../../actions/convertUsd";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
-
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -91,7 +90,7 @@ const NewBundleCard = ({
   getiDypBalance,
   availableTime,
   handleSetAvailableTime,
-  onOpenPopup
+  onOpenPopup,
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
@@ -108,7 +107,7 @@ const NewBundleCard = ({
     "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
   );
   const [statusCritical, setStatusCritical] = useState("");
-const windowSize = useWindowSize()
+  const windowSize = useWindowSize();
   const [statusColor, setStatusColor] = useState("#FE7A00");
   const [statusColor700, setStatusColor700] = useState("#FE7A00");
   const [statusColor3500, setStatusColor3500] = useState("#FE7A00");
@@ -121,7 +120,7 @@ const windowSize = useWindowSize()
   const [depositState700, setDepositState700] = useState("initial");
   const [bundleState3500, setbundleState3500] = useState("initial");
   const [depositState3500, setDepositState3500] = useState("initial");
-  
+
   const [countdown, setcountdown] = useState();
   const [usdPrice, setUsdPrice] = useState();
   const [countdown700, setcountdown700] = useState();
@@ -142,7 +141,8 @@ const windowSize = useWindowSize()
   const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
   const [idyptokenData, setIDypTokenData] = useState([]);
-
+  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
+  const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
@@ -153,6 +153,22 @@ const windowSize = useWindowSize()
         setcheckWallet(true);
       }
     } else setcheckWallet(false);
+  };
+
+  const getTokenDatabnb = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
+      .then((data) => {
+        const propertyDyp = Object.entries(
+          data.data.the_graph_bsc_v2.token_data
+        );
+        setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
+
+        const propertyIDyp = Object.entries(
+          data.data.the_graph_bsc_v2.token_data
+        );
+        setIDypTokenDatabnb(propertyIDyp[1][1].token_price_usd);
+      });
   };
 
   const checkApproval = async () => {
@@ -174,8 +190,6 @@ const windowSize = useWindowSize()
         });
     }
   };
-  console.log(bundleState700,depositState700, checkWallet, isAtlimit)
-
 
   const getTokenData = async () => {
     await axios
@@ -526,12 +540,11 @@ const windowSize = useWindowSize()
     setcountdown3500(remainingTime);
   };
 
-  
   let oneJuly = new Date("2023-07-01 11:11:00 GMT+02:00");
   let oneAugust = new Date("2023-08-01 11:11:00 GMT+02:00");
 
   let today = new Date();
-  
+
   let twentyfivejuly = new Date("2023-07-25 11:11:00 GMT+02:00");
 
   const checkBundleDates = async () => {
@@ -768,20 +781,18 @@ const windowSize = useWindowSize()
     }
   }, [coinbase, chainId, wallet]);
 
-  const convertPrice = async() => { 
-    let price
-    if(packageData.title === 'Puzzle Madness'){ 
-      price = packageData.price * idyptokenData
-    } else  { 
-      price = await convertToUSD(packageData.price, 1)
+  const convertPrice = async () => {
+    let price;
+    if (packageData.title === "Puzzle Madness") {
+      price = packageData.price * idyptokenData;
+    } else {
+      price = await convertToUSD(packageData.price, 1);
     }
 
-    setUsdPrice(price)
-   }
-
+    setUsdPrice(price);
+  };
 
   useEffect(() => {
-
     if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
       setisAtlimit(true);
       setcountdown700(oneAugust.getTime());
@@ -790,27 +801,50 @@ const windowSize = useWindowSize()
   }, [bundlesBought, countdown700]);
 
   useEffect(() => {
-    getTokenData()
+    getTokenData();
     if (today > twentyfivejuly) {
       setisAtlimit(true);
     }
-    convertPrice()
+    convertPrice();
   }, [today, oneJuly]);
+
+  useEffect(() => {
+    getTokenDatabnb();
+  }, []);
 
   const [tooltip, setTooltip] = useState(false);
 
   return (
-   
     <>
       <div className="row m-0 align-items-center gap-4 gap-lg-0">
         <div className="col-12 col-lg-7 custom-height">
           <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height position-relative">
-            <img src={require(`../../../../Marketplace/assets/${windowSize.width > 786 ? packageData.background : packageData.mobileBackground}`)} alt="" className="dragon-test-bg" />
+            <img
+              src={require(`../../../../Marketplace/assets/${
+                windowSize.width > 786
+                  ? packageData.background
+                  : packageData.mobileBackground
+              }`)}
+              alt=""
+              className="dragon-test-bg"
+            />
             <div className="d-flex align-items-center justify-content-between mb-3 mb-lg-5">
               <h6 className="new-bundle-title mb-0">{packageData.title}</h6>
-              <div style={{cursor: 'pointer'}}  onClick={() => {
-                onOpenPopup(packageData.title === "Dragon Ruins" ? "dragon" : packageData.title === "Puzzle Madness" ? "puzzlemadness" : packageData.title === "Golden Pass" ? "goldenpass" : "criticalhit")
-              }} target="_blank">
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  onOpenPopup(
+                    packageData.title === "Dragon Ruins"
+                      ? "dragon"
+                      : packageData.title === "Puzzle Madness"
+                      ? "puzzlemadness"
+                      : packageData.title === "Golden Pass"
+                      ? "goldenpass"
+                      : "criticalhit"
+                  );
+                }}
+                target="_blank"
+              >
                 <img src={newLandTooltip} width={30} height={30} alt="" />
               </div>
             </div>
@@ -840,7 +874,10 @@ const windowSize = useWindowSize()
           <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height">
             <div className="d-flex flex-column custom-height justify-content-start gap-3">
               {packageData.title === "Critical Hit" ? (
-                <div className="d-flex flex-column align-items-center gap-4 position-relative" style={{top: '30px'}}>
+                <div
+                  className="d-flex flex-column align-items-center gap-4 position-relative"
+                  style={{ top: "30px" }}
+                >
                   <div
                     className="position-relative package-blur"
                     style={{ pointerEvents: "none" }}
@@ -856,7 +893,6 @@ const windowSize = useWindowSize()
                   <NavLink
                     className="btn purple-pill"
                     to="/marketplace/land"
-                    
                     rel="noreferrer"
                   >
                     Buy Genesis Land
@@ -886,15 +922,25 @@ const windowSize = useWindowSize()
                             {getFormattedNumber(packageData.price, 0)}
                           </h6>
                         </div>
-                        <span className="purchase-price-usd mb-0">${getFormattedNumber(usdPrice)}</span>
+                        <span className="purchase-price-usd mb-0">
+                          $
+                          {getFormattedNumber(
+                            packageData.title === "Puzzle Madness"
+                              ? packageData.price * idyptokenDatabnb
+                              : packageData.price * dyptokenDatabnb
+                          )}
+                        </span>
                       </div>
                     </div>
-                   <div className="d-flex align-items-center gap-2">
-                   <span className="new-bnb-chain">
-                      Available only on BNB Chain
-                    </span>
-                    <img src={require('./assets/bnbIcon.svg').default} alt="" />
-                   </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <span className="new-bnb-chain">
+                        Available only on BNB Chain
+                      </span>
+                      <img
+                        src={require("./assets/bnbIcon.svg").default}
+                        alt=""
+                      />
+                    </div>
                   </div>
                 </>
               )}
@@ -1136,7 +1182,7 @@ const windowSize = useWindowSize()
               : packageData.title === "Puzzle Madness"
               ? statusColor3500
               : statusColor700,
-              width: 'fit-content'
+          width: "fit-content",
         }}
       >
         {packageData.title === "Dragon Ruins"
@@ -1159,13 +1205,17 @@ const windowSize = useWindowSize()
                   >
                     Available Time Remaining
                   </div>
-                  <div className="position-relative new-tooltip-wrapper "><img
-                    src={require("./assets/newTooltip.svg").default}
-                    alt=""
-                  />
-                  <div className="new-tooltip-content-wrapper p-2 d-flex align-items-center justify-content-center">
-                    <p className="new-tooltip-content mb-0">Additional bundles can be purchased to extend your usage time.</p>
-                  </div>
+                  <div className="position-relative new-tooltip-wrapper ">
+                    <img
+                      src={require("./assets/newTooltip.svg").default}
+                      alt=""
+                    />
+                    <div className="new-tooltip-content-wrapper p-2 d-flex align-items-center justify-content-center">
+                      <p className="new-tooltip-content mb-0">
+                        Additional bundles can be purchased to extend your usage
+                        time.
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <span className="new-timer-description ">
@@ -1199,14 +1249,18 @@ const windowSize = useWindowSize()
                     >
                       Available Time Remaining
                     </div>
-                    <div className="position-relative new-tooltip-wrapper "><img
-                    src={require("./assets/newTooltip.svg").default}
-                    alt=""
-                  />
-                  <div className="new-tooltip-content-wrapper p-2 d-flex align-items-center justify-content-center">
-                    <p className="new-tooltip-content mb-0">Additional bundles can be purchased to extend your usage time.</p>
-                  </div>
-                  </div>
+                    <div className="position-relative new-tooltip-wrapper ">
+                      <img
+                        src={require("./assets/newTooltip.svg").default}
+                        alt=""
+                      />
+                      <div className="new-tooltip-content-wrapper p-2 d-flex align-items-center justify-content-center">
+                        <p className="new-tooltip-content mb-0">
+                          Additional bundles can be purchased to extend your
+                          usage time.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   <span className="new-timer-description ">
                     Use in-game{" "}
@@ -1234,14 +1288,13 @@ const windowSize = useWindowSize()
             <div className="d-flex w-100 flex-column flex-lg-row gap-4 align-items-center justify-content-between">
               <div className="d-flex flex-column gap-3  available-time-wrapper">
                 <div className="d-flex align-items-center gap-3">
-                  <div
-                    className="new-bundle-title"
-                  >
-                    Purchased Bundles
-                  </div>
+                  <div className="new-bundle-title">Purchased Bundles</div>
                   {/* <img src={require("./assets/newTooltip.svg").default} alt="" /> */}
                 </div>
-                <span className="new-timer-description" style={{width: windowSize.width < 786 ? '100%' : '120%'}}>
+                <span
+                  className="new-timer-description"
+                  style={{ width: windowSize.width < 786 ? "100%" : "120%" }}
+                >
                   The Golden Pass bundle is available for 7 days and can be
                   purchased up to 4 times
                 </span>
@@ -1249,7 +1302,7 @@ const windowSize = useWindowSize()
               <div className="d-flex flex-column align-items-center gap-2">
                 <div style={{ width: 75, height: 75 }}>
                   <CircularProgressbar
-                  counterClockwise={true}
+                    counterClockwise={true}
                     value={progressValue}
                     text={`${progressValue}%`}
                     styles={buildStyles({
@@ -1266,7 +1319,8 @@ const windowSize = useWindowSize()
                 </div>
                 <div className="new-bundles-bought-count d-flex align-items-center justify-content-center p-2">
                   <span className="new-bought-bundles">
-                    {bundlesBought} purchased { bundlesBought > 1 ? 'bundles' : 'bundle'}
+                    {bundlesBought} purchased{" "}
+                    {bundlesBought > 1 ? "bundles" : "bundle"}
                   </span>
                 </div>
               </div>
