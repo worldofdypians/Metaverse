@@ -660,14 +660,13 @@ const TimepieceNFT = ({
             <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
-                  <h6 className="nft-page-title font-raleway pt-4 pt-lg-0 mt-5 mt-lg-4">
+                  <h6 className="nft-page-title  pt-4 pt-lg-0 mt-5 mt-lg-4">
                     CAWS <span style={{ color: "#8c56ff" }}>Timepiece</span>
                   </h6>
 
                   <p className="collection-desc">
                     The Timepiece NFTs offer different benefits in Metaverse
-                    like:
-                    <b>Exclusive Access</b> to new and exciting events,{" "}
+                    like: {" "}<b>Exclusive Access</b> to new and exciting events,{" "}
                     <b>Enhanced Interactions</b> with available activities,{" "}
                     <b>Expanded Functionality</b> on performing new actions, and
                     earn multiple <b>Rewards.</b>

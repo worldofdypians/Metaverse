@@ -33,6 +33,9 @@ import Slider from "rc-slider";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import { NavLink } from "react-router-dom";
+import { convertToUSD } from "../../../../../actions/convertUsd";
+import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
+
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -118,8 +121,9 @@ const windowSize = useWindowSize()
   const [depositState700, setDepositState700] = useState("initial");
   const [bundleState3500, setbundleState3500] = useState("initial");
   const [depositState3500, setDepositState3500] = useState("initial");
-
+  
   const [countdown, setcountdown] = useState();
+  const [usdPrice, setUsdPrice] = useState();
   const [countdown700, setcountdown700] = useState();
   const [countdown3500, setcountdown3500] = useState();
   const [showApproval, setshowApproval] = useState(true);
@@ -137,6 +141,8 @@ const windowSize = useWindowSize()
     useState(0);
   const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
+  const [idyptokenData, setIDypTokenData] = useState([]);
+
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
@@ -169,6 +175,18 @@ const windowSize = useWindowSize()
     }
   };
   console.log(bundleState700,depositState700, checkWallet, isAtlimit)
+
+
+  const getTokenData = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_eth_v2")
+      .then((data) => {
+        const propertyIDyp = Object.entries(
+          data.data.the_graph_eth_v2.token_data
+        );
+        setIDypTokenData(propertyIDyp[1][1].token_price_usd);
+      });
+  };
 
   const checkApproval700 = async () => {
     if (coinbase === wallet && chainId === 56) {
@@ -750,6 +768,18 @@ const windowSize = useWindowSize()
     }
   }, [coinbase, chainId, wallet]);
 
+  const convertPrice = async() => { 
+    let price
+    if(packageData.title === 'Puzzle Madness'){ 
+      price = packageData.price * idyptokenData
+    } else  { 
+      price = await convertToUSD(packageData.price, 1)
+    }
+
+    setUsdPrice(price)
+   }
+
+
   useEffect(() => {
 
     if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
@@ -760,9 +790,11 @@ const windowSize = useWindowSize()
   }, [bundlesBought, countdown700]);
 
   useEffect(() => {
+    getTokenData()
     if (today > twentyfivejuly) {
       setisAtlimit(true);
     }
+    convertPrice()
   }, [today, oneJuly]);
 
   const [tooltip, setTooltip] = useState(false);
@@ -851,10 +883,10 @@ const windowSize = useWindowSize()
                             alt=""
                           />
                           <h6 className="purchase-price mb-0">
-                            {packageData.price}
+                            {getFormattedNumber(packageData.price, 0)}
                           </h6>
                         </div>
-                        <span className="purchase-price-usd mb-0">$6.62</span>
+                        <span className="purchase-price-usd mb-0">${getFormattedNumber(usdPrice)}</span>
                       </div>
                     </div>
                    <div className="d-flex align-items-center gap-2">

@@ -1941,7 +1941,7 @@ const WalletBalance = ({
               <div className="row px-3">
                 {listedItemsFiltered &&
                   listedItemsFiltered.length > 0 &&
-                  listedItemsFiltered.map((nft, index) => (
+                  listedItemsFiltered.slice(listedPageSlice - 6, listedPageSlice).map((nft, index) => (
                     <NavLink
                       to={`/marketplace/nft/${nft.blockTimestamp ?? index}/${nft.nftAddress}`}
                       style={{ textDecoration: "none" }}
@@ -2046,7 +2046,7 @@ const WalletBalance = ({
                 {recentListingsFilter === "cawswod"
                   ? myCawsWodStakes &&
                     myCawsWodStakes.length > 0 &&
-                    myCawsWodStakes.map((nft, index) => (
+                    myCawsWodStakes.slice(stakedPageSlice - 6, stakedPageSlice).map((nft, index) => (
                       <NavLink
                         to={`/marketplace/stake`}
                         style={{ textDecoration: "none" }}

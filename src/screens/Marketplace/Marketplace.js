@@ -531,8 +531,11 @@ const Marketplace = ({
             <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
               Active Events
             </h6>
-            <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-5 mx-2 mx-lg-0 position-relative">
-              <NavLink
+            <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
+            
+              {windowSize.width > 786 ? 
+                <>
+                  <NavLink
                 to="/marketplace/events"
                 state={{ package: "dragon" }}
                 className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
@@ -604,6 +607,69 @@ const Marketplace = ({
                   />
                 </div>
               </NavLink>
+                </> 
+                : 
+                <div className="d-flex justify-content-center">
+                <div className="new-packages-grid mb-3">
+                  <div className="">
+                    <div
+                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                    >
+                      <img
+                        src={require("../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp")}
+                        className="w-100"
+                        style={{ borderRadius: "16px" }}
+                        alt=""
+                      />
+                      <span className="event-package-title">Dragon Ruins</span>
+                    </div>
+                  </div>
+                  <div className="">
+                    <div
+                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                    >
+                      <img
+                        src={require("./assets/goldenPass.png")}
+                        className="w-100"
+                        style={{ borderRadius: "16px" }}
+                        alt=""
+                      />
+                      <span className="event-package-title">Golden Pass</span>
+                    </div>
+                  </div>
+
+                  <div className="">
+                    <div
+                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                    >
+                      <img
+                        src={require("./assets/puzzleMadness.png")}
+                        className="w-100"
+                        style={{ borderRadius: "16px" }}
+                        alt=""
+                      />
+                      <span className="event-package-title">
+                        Puzzle Madness
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="">
+                    <div
+                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                    >
+                      <img
+                        src={require("./assets/criticalHit.webp")}
+                        className="w-100"
+                        style={{ borderRadius: "16px" }}
+                        alt=""
+                      />
+                      <span className="event-package-title">Critical Hit</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
             </div>
             <div
               className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4"

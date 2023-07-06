@@ -1037,6 +1037,7 @@ background: linear-gradient(214deg, #7B2EB0 18.75%, #142D8E 100%);
   transition: all 0.35s;
   @media screen and (max-width: 786px) {
     transform: none !important;
+    backdrop-filter: none !important;
   }
 }
 
