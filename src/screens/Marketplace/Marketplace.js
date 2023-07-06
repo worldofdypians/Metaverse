@@ -742,13 +742,14 @@ const Marketplace = ({
                   </h6>
                 </div>
               </div>
+              <div className="w-100" style={{minHeight: '260px'}}>
               <div
                 className={
                   loadingTopSales === false
                     ? "row align-items-start position-relative justify-content-start px-0"
                     : "loader-wrapper"
                 }
-                style={{ rowGap: "22px", minHeight: '260px' }}
+                style={{ rowGap: "22px" }}
               >
                 {!loadingTopSales ? (
                   topSold && topSold.length > 0 ? (
@@ -876,13 +877,6 @@ const Marketplace = ({
                     </div>
                   )
                 ) : (
-                  // <HashLoader
-                  //   color={"#554fd8"}
-                  //   loading={loadingTopSales}
-                  //   cssOverride={override}
-                  //   aria-label="Loading Spinner"
-                  //   data-testid="loader"
-                  // />
                 <div className="row loader-wrapper gap-0">
                  
             
@@ -916,11 +910,12 @@ const Marketplace = ({
                 </div>
                 )}
               </div>
+              </div>
             </div>
 
             <div
               className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4"
-              style={{ minHeight: "420px" }}
+              style={{ minHeight: "430px" }}
             >
               {activeSlide > 0 && (
                 <div className="prev-arrow-nft" onClick={firstPrev}>
@@ -1021,7 +1016,7 @@ const Marketplace = ({
                   }
                 </div>
               ) : (
-                <div className="loader-wrapper gap-3">
+                <div className="loader-wrapper gap-3 justify-content-start  mt-3">
                   {/* <HashLoader
                     color={"#554fd8"}
                     loading={loadingRecentListings}
@@ -1177,7 +1172,7 @@ const Marketplace = ({
             </div>
             <div
               className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4"
-              style={{ minHeight: "420px" }}
+              style={{ minHeight: "430px" }}
             >
               {activeSlide2 > 0 && (
                 <div className="prev-arrow-nft" onClick={secondPrev}>
@@ -1283,7 +1278,7 @@ const Marketplace = ({
                   </Slider>
                 </div>
               ) : (
-                <div className="loader-wrapper gap-3">
+                <div className="loader-wrapper mt-3 justify-content-start gap-3">
                   {/* <HashLoader
                     color={"#554fd8"}
                     loading={loadingRecentListings}

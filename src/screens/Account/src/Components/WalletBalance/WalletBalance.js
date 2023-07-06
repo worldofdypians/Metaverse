@@ -88,29 +88,29 @@ const WalletBalance = ({
   const [filter1, setFilter1] = useState("all");
   const [filter2, setFilter2] = useState("all");
   const [favoritesPage, setFavoritesPage] = useState(1);
-  const [favoritesSliceValue, setFavoritesSliceValue] = useState(6);
+  const [favoritesSliceValue, setFavoritesSliceValue] = useState(9);
   const [listedPage, setListedPage] = useState(1);
-  const [listedPageSlice, setListedPageSlice] = useState(6);
+  const [listedPageSlice, setListedPageSlice] = useState(9);
   const [collectedPage, setCollectedPage] = useState(1);
-  const [collectedPageSlice, setCollectedPageSlice] = useState(6);
+  const [collectedPageSlice, setCollectedPageSlice] = useState(9);
   const [stakedPage, setStakedPage] = useState(1);
-  const [stakedPageSlice, setStakedPageSlice] = useState(6);
+  const [stakedPageSlice, setStakedPageSlice] = useState(9);
 
   const handleFavoritesPage = (e, value) => {
     setFavoritesPage(value);
-    setFavoritesSliceValue(value * 6);
+    setFavoritesSliceValue(value * 9);
   };
   const handleListedPage = (e, value) => {
     setListedPage(value);
-    setListedPageSlice(value * 6);
+    setListedPageSlice(value * 9);
   };
   const handleCollectedPage = (e, value) => {
     setCollectedPage(value);
-    setCollectedPageSlice(value * 6);
+    setCollectedPageSlice(value * 9);
   };
   const handleStakedPage = (e, value) => {
     setStakedPage(value);
-    setStakedPageSlice(value * 6);
+    setStakedPageSlice(value * 9);
   };
 
   const firstSlider = useRef();
@@ -1474,7 +1474,7 @@ const WalletBalance = ({
               //     data-testid="loader"
               //   />
               // </div>
-              <div className="row px-3">
+              <div className="row justify-content-center px-3">
                 <div className="col-12 col-lg-6 col-xxl-4 mb-3">
                   <Skeleton
                     variant="rounded"
@@ -1531,7 +1531,7 @@ const WalletBalance = ({
       {showNfts && (
         <div
           className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-11"
-          style={{ minHeight: "330px" }}
+          style={{ minHeight: "420px" }}
         >
           <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-end w-100 position-relative">
             {filterTitle !== "Staked" && filterTitle !== "Collected" ? (
@@ -1756,12 +1756,12 @@ const WalletBalance = ({
           {loadingRecentListings === false && filterTitle === "Collected" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: "fit-content" }}
+              style={{ minHeight: "280px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {collectedItemsFiltered &&
                   collectedItemsFiltered.length > 0 &&
-                  collectedItemsFiltered.slice(collectedPageSlice - 6, collectedPageSlice).map((nft, index) => (
+                  collectedItemsFiltered.slice(collectedPageSlice - 9, collectedPageSlice).map((nft, index) => (
                     <NavLink
                       to={
                         nft.isStaked === true
@@ -1848,7 +1848,7 @@ const WalletBalance = ({
               <div className="col-12 d-flex justify-content-center">
                 <Pagination
                   color="primary"
-                  count={Math.round(collectedItemsFiltered.length / 6)}
+                  count={Math.round(collectedItemsFiltered.length / 9)}
                   page={collectedPage}
                   onChange={(e, value) => {
                     handleCollectedPage(e, value);
@@ -1859,13 +1859,13 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Favorites" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: "fit-content" }}
+              style={{ minHeight: "280px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {favItemsFiltered &&
                   favItemsFiltered.length > 0 &&
                   favItemsFiltered
-                    .slice(favoritesSliceValue - 6, favoritesSliceValue)
+                    .slice(favoritesSliceValue - 9, favoritesSliceValue)
                     .map((nft, index) => (
                       <NavLink
                         to={`/marketplace/nft/${nft.blockTimestamp ?? index}/${nft.nftAddress}`}
@@ -1957,7 +1957,7 @@ const WalletBalance = ({
               <div className="col-12 d-flex justify-content-center">
                 <Pagination
                   color="primary"
-                  count={Math.round(favItemsFiltered.length / 6)}
+                  count={Math.round(favItemsFiltered.length / 9)}
                   page={favoritesPage}
                   onChange={(e, value) => {
                     handleFavoritesPage(e, value);
@@ -1968,12 +1968,12 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Listed" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: "fit-content" }}
+              style={{ minHeight: "280px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {listedItemsFiltered &&
                   listedItemsFiltered.length > 0 &&
-                  listedItemsFiltered.slice(listedPageSlice - 6, listedPageSlice).map((nft, index) => (
+                  listedItemsFiltered.slice(listedPageSlice - 9, listedPageSlice).map((nft, index) => (
                     <NavLink
                       to={`/marketplace/nft/${nft.blockTimestamp ?? index}/${nft.nftAddress}`}
                       style={{ textDecoration: "none" }}
@@ -2061,7 +2061,7 @@ const WalletBalance = ({
               <div className="col-12 d-flex justify-content-center">
                 <Pagination
                   color="primary"
-                  count={Math.round(listedItemsFiltered.length / 6)}
+                  count={Math.round(listedItemsFiltered.length / 9)}
                   page={listedPage}
                   onChange={(e, value) => {
                     handleListedPage(e, value);
@@ -2072,13 +2072,13 @@ const WalletBalance = ({
           ) : loadingRecentListings === false && filterTitle === "Staked" ? (
             <div
               className="container d-flex flex-column justify-content-between"
-              style={{ minHeight: "200px", maxHeight: "fit-content" }}
+              style={{ minHeight: "280px", maxHeight: "fit-content" }}
             >
               <div className="row px-3">
                 {recentListingsFilter === "cawswod"
                   ? myCawsWodStakes &&
                     myCawsWodStakes.length > 0 &&
-                    myCawsWodStakes.slice(stakedPageSlice - 6, stakedPageSlice).map((nft, index) => (
+                    myCawsWodStakes.slice(stakedPageSlice - 9, stakedPageSlice).map((nft, index) => (
                       <NavLink
                         to={`/marketplace/stake`}
                         style={{ textDecoration: "none" }}
@@ -2167,7 +2167,7 @@ const WalletBalance = ({
               <div className="col-12 d-flex justify-content-center">
                 <Pagination
                   color="primary"
-                  count={Math.round(myCawsWodStakes.length / 6)}
+                  count={Math.round(myCawsWodStakes.length / 9)}
                   page={stakedPage}
                   onChange={(e, value) => {
                     handleStakedPage(e, value);
@@ -2185,7 +2185,31 @@ const WalletBalance = ({
             //     data-testid="loader"
             //   />
             // </div>
-            <div className="row px-3">
+            <div className="row justify-content-center px-3">
+              <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                <Skeleton
+                  variant="rounded"
+                  width={"100%"}
+                  height={60}
+                  animation="wave"
+                />
+              </div>
+              <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                <Skeleton
+                  variant="rounded"
+                  width={"100%"}
+                  height={60}
+                  animation="wave"
+                />
+              </div>
+              <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                <Skeleton
+                  variant="rounded"
+                  width={"100%"}
+                  height={60}
+                  animation="wave"
+                />
+              </div>
               <div className="col-12 col-lg-6 col-xxl-4 mb-3">
                 <Skeleton
                   variant="rounded"
