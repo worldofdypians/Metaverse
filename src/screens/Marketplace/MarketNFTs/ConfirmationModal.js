@@ -125,7 +125,7 @@ const ConfirmationModal = ({
           ) : state === "buy" ? (
             <div className="d-flex flex-column gap-3">
               <div className="d-flex justify-content-between gap-1  position-relative">
-                <h6 className="text-white summarytitle">Buy purchase</h6>
+                <h6 className="text-white summarytitle">Approve purchase</h6>
                 <img
                   src={closeX}
                   alt=""
