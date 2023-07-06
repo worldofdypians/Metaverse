@@ -761,7 +761,7 @@ function App() {
 
     setListedNFTS(finalboughtItems1);
     setListedNFTSCount(finalboughtItems1.length);
-    
+
     recentListedNFTS2 &&
       recentListedNFTS2.length > 0 &&
       recentListedNFTS2.map((nft) => {
@@ -779,7 +779,7 @@ function App() {
           finalboughtItems2.push(nft);
         }
       });
-      
+
     setLatest20RecentListedNFTS(finalboughtItems2);
   };
 
@@ -946,6 +946,12 @@ function App() {
     }
   };
 
+  const handleDisconnect = async () => {
+    await window.disconnectWallet();
+    setCoinbase();
+    setIsConnected(false);
+  };
+
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // filterByDate("day")
@@ -977,16 +983,14 @@ function App() {
     // return () => clearInterval(interval);
   }, [recentListedNFTS2?.length, listedNFTS2?.length, nftCount]);
 
-  // useEffect(() => {
-  //   if (window.ethereum) {
-  //     if (window.ethereum.isConnected() === true) {
-  //       checkConnection();
-  //       setIsConnected(true);
-  //     } else setIsConnected(false);
-  //   }
-  // },[window.ethereum]);
-
-  // console.log(window.ethereum.isConnected(), coinbase, isConnected)
+  useEffect(() => {
+    if (
+      window.coinbase_address === "0x0000000000000000000000000000000000000000"
+    ) {
+      setCoinbase();
+      setIsConnected(false);
+    }
+  }, [window.coinbase_address]);
 
   return (
     <BrowserRouter>
@@ -1000,6 +1004,7 @@ function App() {
               handleRedirect={() => {
                 setFireAppContent(true);
               }}
+              handleDisconnect={handleDisconnect}
             />
             <MobileNavbar
               handleSignUp={handleShowWalletModal}
@@ -1008,6 +1013,8 @@ function App() {
               handleRedirect={() => {
                 setFireAppContent(true);
               }}
+              handleDisconnect={handleDisconnect}
+
             />
             <Routes>
               <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1036,6 +1043,8 @@ function App() {
                   <Home
                     handleRegister={handleRegister}
                     handleDownload={handleDownload}
+                    coinbase={coinbase}
+                    ethTokenData={ethTokenData}
                   />
                 }
               />
@@ -1175,7 +1184,6 @@ function App() {
                     cawsBought={cawsBought}
                     handleRefreshListing={handleRefreshList}
                     nftCount={nftCount}
-
                   />
                 }
               />
@@ -1193,7 +1201,6 @@ function App() {
                     wodBought={landBought}
                     handleRefreshListing={handleRefreshList}
                     nftCount={nftCount}
-
                   />
                 }
               />
@@ -1211,7 +1218,6 @@ function App() {
                     timepieceBought={timepieceBought}
                     handleRefreshListing={handleRefreshList}
                     nftCount={nftCount}
-
                   />
                 }
               />

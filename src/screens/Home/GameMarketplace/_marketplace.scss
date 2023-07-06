@@ -1,11 +1,10 @@
-.caws-grid{
+.caws-grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 100px;
 }
 
-
-.marquee{
+.marquee {
   gap: 45px;
 }
 
@@ -19,10 +18,13 @@
 //   margin: 0 -24px;
 // }
 
-.slick-list {margin: 0 -10px;}
-.slick-slide>div {padding: 0 10px;}
+.slick-list {
+  margin: 0 -10px;
+}
+.slick-slide > div {
+  padding: 0 10px;
+}
 
- 
 .button__bar {
   display: flex !important;
   justify-content: center;
@@ -47,7 +49,7 @@
 
 .button__bar li button {
   border: none;
-  background: #9664FF;
+  background: #9664ff;
   color: transparent;
   cursor: pointer;
   display: block;
@@ -61,12 +63,9 @@
   width: 16px;
   height: 16px;
   opacity: 1;
-  background: #9664FF;
+  background: #9664ff;
   box-shadow: 0px 4px 4px rgba(150, 100, 255, 0.24);
 }
-
-
-
 
 .marketplace-title {
   font-style: normal;
@@ -87,18 +86,18 @@
   width: 50%;
 }
 
-
 @media screen and (max-width: 786px) {
-  .caws-grid{
+  .caws-grid {
     grid-template-columns: auto;
     gap: 30px;
   }
 
-  .marketplace-title{
+  .marketplace-title {
     width: 100% !important;
+    font-size: 28px;
   }
 
-  .marketplace-desc{
+  .marketplace-desc {
     width: 100% !important;
   }
 }

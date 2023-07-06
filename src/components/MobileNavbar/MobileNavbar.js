@@ -5,14 +5,26 @@ import mobileArrow from "../../assets/navbarAssets/mobileArrow.svg";
 import xMark from "../../assets/navbarAssets/xMark.svg";
 import { NavLink } from "react-router-dom";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
-import person from '../Header/assets/person.svg'
+import person from "../Header/assets/person.svg";
+import check from "../Header/assets/check.svg";
+import copy from "../Header/assets/copy.svg";
 
-const MobileNavbar = ({ handleSignUp, handleRedirect,coinbase, avatar }) => {
+import Clipboard from "react-clipboard.js";
+
+const MobileNavbar = ({
+  handleSignUp,
+  handleRedirect,
+  coinbase,
+  avatar,
+  handleDisconnect,
+}) => {
   const [openNavbar, setOpenNavbar] = useState(false);
+  const [tooltip, setTooltip] = useState(false);
 
   const bgmenu = document.querySelector("#bgmenu");
   const hamburger = document.querySelector("#mobileNavbar");
   const html = document.querySelector("html");
+  let id = Math.random().toString(36);
 
   useEffect(() => {
     if (openNavbar === true) {
@@ -119,45 +131,63 @@ const MobileNavbar = ({ handleSignUp, handleRedirect,coinbase, avatar }) => {
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-       
-        {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/nft-event"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">NFT Event</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div> */}
+
         <div className="w-100 d-flex align-items-center justify-content-center gap-3">
-         {!coinbase ? (
-            <div className="linear-border">
-              <button className="btn outline-btn px-5" onClick={() => {
-                handleSignUp();
-                setOpenNavbar(false);
-              }}>
+          {!coinbase ? (
+            <div className="linearborder2">
+              <button
+                className="btn connectwallet px-3"
+                onClick={() => {
+                  handleSignUp();
+                  setOpenNavbar(false);
+                }}
+              >
                 Connect Wallet
-              </button>
+              </button>{" "}
             </div>
           ) : (
             <div className="d-flex align-items-center gap-3">
-              <div className="linear-border">
-                <div className="btn outline-btn px-5">
-                  {shortAddress(coinbase)}
+              <Clipboard
+                component="div"
+                data-event="click"
+                data-for={id}
+                data-tip="Copied To Clipboard!"
+                data-clipboard-text={coinbase}
+                className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
+              >
+                <div
+                  className="btn connected px-3"
+                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                  onClick={() => {
+                    setTooltip(true);
+                    setTimeout(() => setTooltip(false), 2000);
+                  }}
+                >
+                  {shortAddress(coinbase)}{" "}
+                  <img src={tooltip ? check : copy} alt="" />
                 </div>
-              </div>
+              </Clipboard>
+
               {avatar === null ? (
-                <img src={person} className="account-icon" alt="" onClick={() => {
-                  handleRedirect();
-                  setOpenNavbar(false);
-                }}/>
+                <img
+                  src={person}
+                  className="account-icon"
+                  alt=""
+                  onClick={() => {
+                    handleRedirect();
+                    setOpenNavbar(false);
+                  }}
+                />
               ) : (
-                <img src={avatar} className="account-icon" alt=""  onClick={() => {
-                  handleRedirect();
-                  setOpenNavbar(false);
-                }}/>
+                <img
+                  src={avatar}
+                  className="account-icon"
+                  alt=""
+                  onClick={() => {
+                    handleRedirect();
+                    setOpenNavbar(false);
+                  }}
+                />
               )}
             </div>
           )}
