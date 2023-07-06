@@ -11,6 +11,8 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import { convertToUSD } from "../../actions/convertUsd";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import instake from "./assets/instake.svg";
+import cawsStakeImage from './assets/cawsStakeImage.png'
+import cawsStakeMobileImage from './assets/cawsStakeMobileImage.png'
 
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const windowSize = useWindowSize();
@@ -593,11 +595,11 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
           {activeTab === "past" && (
             <div className="row w-100 m-0 mt-5">
               <div className="col-12 px-0">
-                <div className="caws-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5 position-relative">
+                <div className="caws-stake-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between w-100 position-relative">
                   <div className="expired-caws-tag px-3 py-1">
                     <span className="expired-caws-span">Expired</span>
                   </div>
-                  <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                  <div className="d-flex p-4 p-lg-5 align-items-start align-items-lg-center justify-content-between  position-relative">
                     <div className="d-flex flex-column gap-4">
                       <div className="d-flex flex-column gap-2">
                         <h6 className="market-stake-title">
@@ -606,41 +608,10 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                         <span className="market-stake-desc">
                           Stake your CAWS NFTs to earn daily ETH rewards.
                         </span>
-                        {/* <div className="d-flex align-items-center justify-content-between">
-                    <div className="past-caws-info-wrapper d-flex flex-column align-items-center px-3 py-2" style={{width: '30%'}}>
-                      <h6 className="past-caws-info-value">50%</h6>
-                      <span className="past-caws-info">APR</span>
-                    </div>
-                    <div className="past-caws-info-wrapper d-flex flex-column align-items-center px-3 py-2" style={{width: '30%'}}>
-                      <h6 className="past-caws-info-value">ETH</h6>
-                      <span className="past-caws-info">Rewards</span>
-                    </div>
-                    <div className="past-caws-info-wrapper d-flex flex-column align-items-center px-3 py-2" style={{width: '30%'}}>
-                      <h6 className="past-caws-info-value">No Lock</h6>
-                      <span className="past-caws-info">Lock Time</span>
-                    </div>
-                  </div> */}
                       </div>
-                      {/* <div className="d-flex align-items-center gap-3">
-                  <button
-                    className="btn pill-btn px-4 py-2"
-                    onClick={() => {
-                      setlandStakeModal(true);
-                    }}
-                  >
-                    Deposit
-                  </button>
-                  <button
-                    className="btn rewards-btn px-4 py-2"
-                    onClick={() => {
-                      setlandunStakeModal(true);
-                    }}
-                  >
-                    Rewards
-                  </button>
-                </div> */}
                     </div>
-                    <div className="past-caws-wrapper">
+                  </div>
+                  <div className="total-past-rewards">
                       <div className="d-flex align-items-center flex-column past-caws-values p-5">
                         <h6 className="past-caws-eth">59 ETH</h6>
                         <h6 className="past-caws-usd">
@@ -654,7 +625,26 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                         </span>
                       </div>
                     </div>
-                    <div></div>
+                  <div className="position-relative past-image-position">
+                    <div className="stake-info-column  d-flex flex-row flex-lg-column justify-content-center w-100 gap-2">
+                      <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
+                        <h6 className="stake-info-primary mb-0">50%</h6>
+                        <span className="stake-info-secondary mb-0">APR</span>
+                      </div>
+                      <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
+                        <h6 className="stake-info-primary mb-0">ETH</h6>
+                        <span className="stake-info-secondary mb-0">Rewards</span>
+                      </div>
+                      <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
+                        <h6 className="stake-info-primary mb-0">No Lock</h6>
+                        <span className="stake-info-secondary mb-0">Lock Time</span>
+                      </div>
+                    </div>
+                  {windowSize.width > 786 ? 
+                <img src={cawsStakeImage} className="caws-stake-image h-100" alt="" />
+                :
+                <img src={cawsStakeMobileImage} className="caws-stake-image w-100" alt="" />  
+                }
                   </div>
                 </div>
               </div>

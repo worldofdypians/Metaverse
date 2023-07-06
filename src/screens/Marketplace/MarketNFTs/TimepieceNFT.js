@@ -26,6 +26,7 @@ import traitXmark from "./assets/traitXmark.svg";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import timepiecemetadata from "../../../actions/timepiecemetadata.json";
 import ComfirmationModal from "./ConfirmationModal";
+import mintNowIcon from './assets/mintNowIcon.svg'
 
 const TimepieceNFT = ({
   isConnected,
@@ -678,8 +679,11 @@ const TimepieceNFT = ({
                   >
                     <button className="btn pill-btn">Explore</button>
                   </NavLink>
-                  <NavLink to="/marketplace/mint" className="mint-link">
-                    Mint Now
+                  <NavLink to="/marketplace/mint" style={{textDecoration: 'none'}}>
+                  <button className="btn mint-now-btn gap-2">
+                    <img src={mintNowIcon} alt="" />
+                    Available minting
+                  </button>
                   </NavLink>
                 </div>
                 </div>

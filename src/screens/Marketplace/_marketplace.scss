@@ -1105,13 +1105,17 @@
   }
 }
 .caws-stake-wrapper {
-  background-image: url("./assets/cawsBanner1.png");
+  // background-image: url("./assets/cawsBanner1.png");
+  border-radius: 20px;
+background: linear-gradient(49deg, #181B38 0%, rgba(32, 32, 35, 0.20) 100%);
   background-size: 100% 100%;
   aspect-ratio: 4.52/1;
 
   @media screen and (max-width: 786px) {
+    border-radius: 20px;
+background: linear-gradient(90deg, #181B38 0%, rgba(32, 32, 35, 0.20) 100%);
     aspect-ratio: 0.62/1;
-    background-image: url("./assets/cawsBannerMobile.png");
+    // background-image: url("./assets/cawsBannerMobile.png");
   }
 }
 
@@ -1224,6 +1228,33 @@
   width: fit-content;
   color: #eeedff;
   transition: all 0.25s;
+}
+
+.mint-now-btn{
+  border-radius: 20px;
+background: linear-gradient(90deg, #830E47 0%, #5065C3 100%);
+color: #FFF !important;
+text-decoration: none !important;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+display: flex;
+align-items: center;
+}
+.mint-now-btn:hover{
+  border-radius: 20px;
+background: linear-gradient(90deg, #830E47 0%, #5065C3 100%);
+color: #FFF !important;
+text-decoration: none !important;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+display: flex;
+align-items: center;
 }
 
 .nft-load-more-btn:hover {
@@ -1470,7 +1501,7 @@
 }
 
 .custom-height-2 {
-  min-height: 250px;
+  min-height: 280px;
   max-height: fit-content;
   @media screen and (max-width: 1024px) {
     height: fit-content;
@@ -1573,4 +1604,71 @@ text-decoration-line: underline;
 .mint-link:hover{
   color: #11FED2 !important;
 
+}
+
+
+.stake-info-column{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: fit-content;
+  @media screen and (max-width: 786px) {
+    bottom: 200%;
+  }
+}
+
+.stake-info-item{
+  border-radius: 20px;
+background: rgba(8, 11, 42, 0.45);
+// backdrop-filter: blur(3.7028565406799316px);
+width: 90px;
+height: 55px;
+}
+
+.stake-info-primary{
+  color: #FFF;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.stake-info-secondary{
+  color: #FFF;
+text-align: center;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.stake-info-item:nth-child(2){
+  position: relative;
+  right: 10px;
+  @media screen and (max-width: 786px) {
+    right: 0;
+  }
+}
+.stake-info-item:nth-child(3){
+  position: relative;
+  right: 20px;
+  @media screen and (max-width: 786px) {
+    right: 0;
+  }
+}
+
+.past-image-position{
+  height: 100%;
+  @media screen and (max-width: 786px) {
+    height: fit-content;
+  }
+}
+
+@media screen and (max-width: 786px) { 
+  .total-past-rewards{
+    position: relative;
+    bottom: 10%;
+  }
 }
