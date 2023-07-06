@@ -14,10 +14,10 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: '#252743 !important',
-    color: 'rgba(0, 0, 0, 0.87)',
-    maxWidth: '150px !important',
-    minWidth: '100px !important',
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "100px !important",
     fontSize: theme.typography.pxToRem(12),
   },
 }));
@@ -48,8 +48,10 @@ const ItemCard = ({
   const [toastTitle, setToastTitle] = useState("");
   const [status, setStatus] = useState("initial");
   const [showModal, setShowModal] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const [purchasestate, setpurchasestate] = useState("approve");
-  const windowSize = useWindowSize()
+  const windowSize = useWindowSize();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -270,7 +272,11 @@ const ItemCard = ({
   }, [status]);
 
   return (
-    <div className="d-flex flex-column position-relative gap-1">
+    <div
+      className={`${
+        isLoaded ? "d-flex" : "d-none"
+      } flex-column position-relative gap-1`}
+    >
       <Toast showToast={showToast} title={toastTitle} />
       {showModal && isConnected && (
         <ComfirmationModal
@@ -306,17 +312,18 @@ const ItemCard = ({
               </span>
             )}
           </div>
-         
-         <HtmlTooltip  placement="top" title={
-                <span className="card-eth-chain-text">Chain: Ethereum</span>
-         } >
-           <img
-            src={ethgrayLogo}
-            alt=""
-            className="ethgraylogo position-absolute"
-          />
-         </HtmlTooltip>
-           
+
+          <HtmlTooltip
+            placement="top"
+            title={<span className="card-eth-chain-text">Chain: Ethereum</span>}
+          >
+            <img
+              src={ethgrayLogo}
+              alt=""
+              className="ethgraylogo position-absolute"
+            />
+          </HtmlTooltip>
+
           <img
             className="w-100 h-100 p-0 nft-img"
             src={
@@ -327,6 +334,9 @@ const ItemCard = ({
                 : `https://timepiece.worldofdypians.com/thumbs150/${nft.tokenId}.png`
             }
             alt=""
+            onLoad={() => {
+              setIsLoaded(true);
+            }}
           />
         </div>
         <div
@@ -425,7 +435,8 @@ const ItemCard = ({
         {(location.pathname.includes("/marketplace/caws") ||
           location.pathname.includes("/marketplace/land") ||
           location.pathname.includes("/marketplace/timepiece")) &&
-          (isListed && !isOwner) && (
+          isListed &&
+          !isOwner && (
             <div className="buy-nft w-100">
               <button
                 className="buy-nft-btn w-100"
