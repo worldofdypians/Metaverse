@@ -866,7 +866,7 @@ const WalletBalance = ({
                   ))}
                 {favoriteItems.length === 0 && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
-                    You don't have any favorite NFTs
+                   You do not have any favorite NFTs
                   </span>
                 )}
 
@@ -981,7 +981,7 @@ const WalletBalance = ({
                   ))}
                 {collectedItems.length === 0 && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
-                    You don't have any NFTs in your wallet
+                    You do not have any NFTs in your wallet
                   </span>
                 )}
                 {/* {collectedItems.length < 6 &&
@@ -1104,7 +1104,7 @@ const WalletBalance = ({
                   ))}
                 {myCawsWodStakes.length === 0 && landStaked.length === 0 && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
-                    You have no nfts staked
+                    You do not have any NFTs in stake
                   </span>
                 )}
 
@@ -1208,7 +1208,7 @@ const WalletBalance = ({
                   ))}
                 {listedItems.length === 0 && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
-                    You don't have any NFTs listed
+             You do not have any listed NFTs
                   </span>
                 )}
                 {/* {listedItems.length < 6 &&
