@@ -49,8 +49,8 @@ const MobileNavbar = ({
         {openNavbar === false ? (
           <div className="linear-border" onClick={() => setOpenNavbar(true)}>
             <button
-              className="btn filled-btn px-4"
-              style={{ clipPath: "none" }}
+              className="px-4 bg-transparent"
+              style={{ clipPath: "none", border: 'none' }}
               id="hamburgermenu"
             >
               <span></span>
