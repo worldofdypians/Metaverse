@@ -606,7 +606,7 @@ const MarketMint = ({
                         <div className="d-flex flex-column align-items-center">
                           <h6 className="past-land-mint-amount">1,000</h6>
                           <span className="past-caws-mint-desc">
-                            Minted Cats and Watches Society (CAWS) NFTs
+                          Minted World of Dypians Genesis Land NFTs
                           </span>
                         </div>
                       </div>

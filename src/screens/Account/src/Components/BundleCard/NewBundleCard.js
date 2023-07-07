@@ -1319,8 +1319,11 @@ const NewBundleCard = ({
                 </div>
                 <div className="new-bundles-bought-count d-flex align-items-center justify-content-center p-2">
                   <span className="new-bought-bundles">
-                    {bundlesBought} purchased{" "}
-                    {bundlesBought > 1 ? "bundles" : "bundle"}
+                    {bundlesBought === 0 ? "No" : bundlesBought}{" "}
+                    {bundlesBought > 1 || bundlesBought === 0
+                      ? "bundles"
+                      : "bundle"}{" "}
+                    purchased
                   </span>
                 </div>
               </div>
