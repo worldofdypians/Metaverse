@@ -1,5 +1,5 @@
 const fs = require('fs');
-const metadata = require('./cawsmetadatas.json')
+const metadata = require('./cawsmetadatas2.json')
 
 
 

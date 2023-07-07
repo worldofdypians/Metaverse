@@ -1185,7 +1185,7 @@ const WoDNFT = ({
                               chain: nft.chain,
                             }}
                             onClick={() => {
-                              updateViewCount(nft, window.config.nft_address);
+                              updateViewCount(nft.tokenId, window.config.nft_address);
                             }}
                           >
                             <ItemCard
