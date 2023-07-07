@@ -18,7 +18,7 @@
 
 .buy-nft-btn {
   // background-color: rgb(46, 142, 238);
-  background: #009FF5;
+  background: var(--pp-2-purple,linear-gradient(214deg,#b75cff 0,#671ae4 100%));
   border: none !important;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -30,13 +30,13 @@
   bottom: -40px;
   transition: all 0.2s;
   color: #eeedff;
-  height: 23px;
+  height: 28px;
 }
 
 .view-nft-btn {
   // background-color: rgb(46, 142, 238);
   border-radius: 0px 0px 20px 20px;
-  background: rgba(50, 143, 132, 1);
+  background: linear-gradient(90deg, #008B9C 0%, #1261A8 100%);
   border: none !important;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -46,8 +46,8 @@
   transition: all 0.2s;
   color: #eeedff;
   text-align: center;
-  font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 13px;
   height: 28px;
 }
 

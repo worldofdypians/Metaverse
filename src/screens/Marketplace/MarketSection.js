@@ -9,7 +9,12 @@ import {
 } from "../../actions/convertUsd";
 import useWindowSize from "../../hooks/useWindowSize";
 
-const MarketSection = ({ coinbase, ethTokenData }) => {
+const MarketSection = ({
+  coinbase,
+  ethTokenData,
+  dyptokenDatabnb,
+  idyptokenDatabnb,
+}) => {
   const [activebtn, setActiveBtn] = useState("land");
   const [cawsListed, setcawsListed] = useState([]);
   const [wodListed, setwodListed] = useState([]);
@@ -67,18 +72,21 @@ const MarketSection = ({ coinbase, ethTokenData }) => {
       eventPrice: "50 DYP",
       eventImg: "dragon",
       state: "dragon",
+      price: 50,
     },
     {
       eventTitle: "Puzzle Madness",
       eventPrice: "3,500 iDYP",
       eventImg: "puzzle",
       state: "idyp",
+      price: 3500,
     },
     {
       eventTitle: "Golden Pass",
       eventPrice: "700 DYP",
       eventImg: "golden",
       state: "dyp",
+      price: 700,
     },
     {
       eventTitle: "Critical Hit",
@@ -204,6 +212,9 @@ const MarketSection = ({ coinbase, ethTokenData }) => {
                       eventTitle={item.eventTitle}
                       eventPrice={item.eventPrice}
                       eventImg={item.eventImg}
+                      dyptokenDatabnb={dyptokenDatabnb}
+                      idyptokenDatabnb={idyptokenDatabnb}
+                      price={item.price}
                     />
                   </NavLink>
                 );
@@ -317,6 +328,9 @@ const MarketSection = ({ coinbase, ethTokenData }) => {
                         eventTitle={item.eventTitle}
                         eventPrice={item.eventPrice}
                         eventImg={item.eventImg}
+                        dyptokenDatabnb={dyptokenDatabnb}
+                        idyptokenDatabnb={idyptokenDatabnb}
+                        price={item.price}
                       />
                     </NavLink>
                   );
