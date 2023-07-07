@@ -1,7 +1,21 @@
 import React from "react";
 import "./_marketCards.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import { NavLink } from "react-router-dom";
+import ethlogo from "./assets/ethlogo.svg";
+import bnblogo from "./assets/bnblogo.svg";
+import { Tooltip, styled, tooltipClasses } from "@mui/material";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "100px !important",
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
 
 const MarketCards = ({
   nft,
@@ -11,11 +25,14 @@ const MarketCards = ({
   eventImg,
   ethTokenData,
   coinbase,
+  dyptokenDatabnb,
+  idyptokenDatabnb,
+  price,
 }) => {
   return (
     <div className="marketCards-wrapper h-100">
       <div className="d-flex flex-column gap-2 h-100 justify-content-between">
-        <div className="">
+        <div className="position-relative">
           {activebtn === "events" && (
             <img
               src={require(`./assets/${eventImg}.png`)}
@@ -44,6 +61,50 @@ const MarketCards = ({
           ) : (
             <></>
           )}
+          {activebtn !== "events" && (
+            <HtmlTooltip
+              placement="top"
+              title={
+                <span className="card-eth-chain-text">Chain: Ethereum</span>
+              }
+            >
+              <img
+                src={ethlogo}
+                alt=""
+                className="ethgraylogo position-absolute"
+              />
+            </HtmlTooltip>
+          )}
+
+          {activebtn === "events" && eventImg === "critical" ? (
+            <HtmlTooltip
+              placement="top"
+              title={
+                <span className="card-eth-chain-text">Chain: Ethereum</span>
+              }
+            >
+              <img
+                src={ethlogo}
+                alt=""
+                className="ethgraylogo position-absolute"
+              />
+            </HtmlTooltip>
+          ) : activebtn === "events" && eventImg !== "critical" ? (
+            <HtmlTooltip
+              placement="top"
+              title={
+                <span className="card-eth-chain-text">Chain: BNB Chain</span>
+              }
+            >
+              <img
+                src={bnblogo}
+                alt=""
+                className="ethgraylogo position-absolute"
+              />
+            </HtmlTooltip>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="d-flex justify-content-between gap-2 align-items-center">
           {activebtn === "events" ? (
@@ -65,7 +126,11 @@ const MarketCards = ({
             </span>
             <span className="nftcard-usd">
               {activebtn === "events"
-                ? ""
+                ? eventImg === "puzzle"
+                  ? getFormattedNumber(idyptokenDatabnb * price, 2)
+                  : eventImg === "critical"
+                  ? ""
+                  : getFormattedNumber(dyptokenDatabnb * price, 2)
                 : getFormattedNumber(ethTokenData * (nft.price / 1e18), 2)}
             </span>
           </div>

@@ -103,6 +103,8 @@ function App() {
   const [activeUser, setactiveUser] = useState(false);
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
+  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
+  const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
   const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
@@ -139,6 +141,22 @@ function App() {
         const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
 
         setEthTokenData(propertyETH);
+      });
+  };
+
+  const getTokenDatabnb = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
+      .then((data) => {
+        const propertyDyp = Object.entries(
+          data.data.the_graph_bsc_v2.token_data
+        );
+        setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
+
+        const propertyIDyp = Object.entries(
+          data.data.the_graph_bsc_v2.token_data
+        );
+        setIDypTokenDatabnb(propertyIDyp[1][1].token_price_usd);
       });
   };
 
@@ -961,6 +979,7 @@ function App() {
 
   useEffect(() => {
     getTokenData();
+    getTokenDatabnb();
     getListedNfts2();
     getCawsSold();
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
@@ -1045,6 +1064,8 @@ function App() {
                   handleDownload={handleDownload}
                   coinbase={coinbase}
                   ethTokenData={ethTokenData}
+                  dyptokenDatabnb={dypTokenData}
+                  idyptokenDatabnb={idyptokenDatabnb}
                 />
               }
             />
