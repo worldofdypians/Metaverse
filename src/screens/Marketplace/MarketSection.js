@@ -191,7 +191,7 @@ const MarketSection = ({ coinbase, ethTokenData }) => {
             {activebtn === "events" &&
               eventData &&
               eventData.length > 0 &&
-              eventData.map((item, index) => {
+              eventData.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
                     to="/marketplace/events"
@@ -212,7 +212,7 @@ const MarketSection = ({ coinbase, ethTokenData }) => {
             {activebtn === "land" &&
               wodListed &&
               wodListed.length > 0 &&
-              wodListed.map((item, index) => {
+              wodListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
                     to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
@@ -242,7 +242,7 @@ const MarketSection = ({ coinbase, ethTokenData }) => {
             {activebtn === "caws" &&
               cawsListed &&
               cawsListed.length > 0 &&
-              cawsListed.map((item, index) => {
+              cawsListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
                     to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
@@ -271,7 +271,7 @@ const MarketSection = ({ coinbase, ethTokenData }) => {
             {activebtn === "timepiece" &&
               timepieceListed &&
               timepieceListed.length > 0 &&
-              timepieceListed.map((item, index) => {
+              timepieceListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
                     to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
@@ -414,7 +414,15 @@ const MarketSection = ({ coinbase, ethTokenData }) => {
           </div>
         )}
         <NavLink
-          to={activebtn === "events" ? "/marketplace/events" : "/marketplace"}
+          to={
+            activebtn === "events"
+              ? "/marketplace/events"
+              : activebtn === "timepiece"
+              ? "/marketplace/timepiece"
+              : activebtn === "land"
+              ? "/marketplace/land"
+              : "/marketplace/caws"
+          }
         >
           <div
             className="linear-border"
