@@ -15,21 +15,21 @@ const MarketSidebar = () => {
  
 
   
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.innerHeight + window.pageYOffset;
-      const documentHeight = document.documentElement.scrollHeight;
-      const distanceFromBottom = documentHeight - scrollPosition;
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const scrollPosition = window.innerHeight + window.pageYOffset;
+  //     const documentHeight = document.documentElement.scrollHeight;
+  //     const distanceFromBottom = documentHeight - scrollPosition;
 
-      setIsSticky(distanceFromBottom <= 200);
-    };
+  //     setIsSticky(distanceFromBottom <= 200);
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
+  //   window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [])
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, [])
 
   return (
     <div className="marketplace-sidebar d-flex justify-content-center p-4">
