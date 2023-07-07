@@ -198,6 +198,17 @@
   background-position: center;
 }
 
+.failbtn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #ffac45 0%, #ff6232 100%);
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+}
+
 .signintext {
   color: #82daac;
   font-size: 12px;
