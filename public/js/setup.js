@@ -29903,6 +29903,7 @@ window.sign = async function (msg, account) {
 
 //Check If Whitelist
 const whitelistWod = [
+  "0xf7Daa481cA09B2818552C9C5d56d5cC88Cf18047",
   "0xbfa3b43b735971b7f1a92028a975b44e1dfc157a",
   "0xb4bd860f00df73559fa73df86ddb644f1a1c4ff3",
   "0x73b679f48dfa71e044b8eee478d22622dbdcb806",
