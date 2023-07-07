@@ -243,16 +243,14 @@ const ProfileCard = ({
                   //     <img src={circleArrow} alt="" />
                   //   </div>
                   // </div>
-                  <div
-                    className="d-flex align-self-end align-items-center"
+                  <button
+                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
                     onClick={onSigninClick}
                     role="button"
-                    style={{ width: "fit-content" }}
+                    style={{ width: "fit-content", fontSize: 14 }}
                   >
-                    <span className="signintext">
-                      Sign in <img src={greenarrow} alt="" />
-                    </span>
-                  </div>
+                    Sign in <img src={greenarrow} alt="" />
+                  </button>
                 ) : (
                   <div
                     className="d-flex align-self-end align-items-center"
@@ -298,13 +296,13 @@ const ProfileCard = ({
                             : "Error"}
                         </button>
                       )}
-                    <span
-                      className="logouttext"
+                    <button
+                      className="failbtn px-3 py-1"
                       onClick={onLogoutClick}
                       role="button"
                     >
                       <img src={logouticon} alt="" /> Log Out
-                    </span>
+                    </button>
                   </div>
                 )}
 
