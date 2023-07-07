@@ -1690,3 +1690,58 @@ line-height: normal;
     bottom: 10%;
   }
 }
+
+
+.join-now-wrapper{
+  width: 100%;
+  background-image: url('../../components/MarketSidebar/assets/joinNowBg.svg');
+  background-size: 100% 100%;
+  // aspect-ratio: 0.91/1;
+  transition: all 0.3s ease;
+}
+
+.join-up{
+  transform: translateY(-210px);
+}
+
+.build-wod-title{
+  color:  #FFF;
+text-align: center;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 32px;
+}
+
+.build-wod-desc{
+  color: rgba(255, 255, 255, 0.80);
+text-align: center;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 16px;
+width: 80%;
+}
+
+.join-now-btn{
+display: flex;
+width: 136px;
+padding: 8px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 8px;
+background: #fff;
+color: #5D5FEF;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px;
+}
+
+.join-now-btn:hover{
+  background: #fff;
+color: #5D5FEF;
+  
+
+}
