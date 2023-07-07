@@ -5,14 +5,35 @@ import emailIcon from "./assets/emailIcon.svg";
 import discordIcon from "./assets/discordIcon.svg";
 import sidebarArrow from "./assets/sidebarArrow.svg";
 import { useLocation } from "react-router-dom";
+import dypiansLogo from './assets/dypiansLogo.png'
+import { useEffect } from "react";
 
 const MarketSidebar = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("collections");
+  const [isSticky, setIsSticky] = useState(false)
+ 
+
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.pageYOffset;
+      const documentHeight = document.documentElement.scrollHeight;
+      const distanceFromBottom = documentHeight - scrollPosition;
+
+      setIsSticky(distanceFromBottom <= 200);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [])
 
   return (
     <div className="marketplace-sidebar d-flex justify-content-center p-4">
-      <div className="d-flex flex-column justify-content-between w-100">
+      <div className="d-flex flex-column justify-content-between w-100" style={{height: '90%'}}>
         <div className="d-flex flex-column  gap-2">
           <NavLink
             to="/marketplace"
@@ -188,21 +209,16 @@ const MarketSidebar = () => {
             }}
           />
         </div>
-        {/* <div className="sidebar-links d-flex flex-column gap-2">
-          <span className="links-divider"></span>
-          <a href="https://twitter.com/worldofdypians" target="_blank" className="d-flex align-items-center gap-2">
-            <img src={twitterIcon} alt="" />
-            <span className="sidebar-link">
-              Follow Us
-            </span>
-          </a>
-          <a href="https://discord.gg/worldofdypians" target="_blank" className="d-flex align-items-center gap-2">
-            <img src={discordIcon} alt="" />
-            <span className="sidebar-link">
-              Join Discord
-            </span>
-          </a>
-        </div> */}
+          <div className={`join-now-wrapper ${isSticky && "join-up"} p-3 d-flex flex-column align-items-center gap-4`}>
+            <div className="d-flex flex-column align-items-center gap-2">
+              <img src={dypiansLogo} alt="" />
+              <h6 className="build-wod-title mb-0">Build in WoD</h6>
+              <p className="build-wod-desc mb-0">Express your creativity and make a mark on the virtual world</p>
+            </div>
+            <NavLink to="/contact-us">
+            <button className="btn join-now-btn">Join now</button>
+            </NavLink>
+          </div>
       </div>
     </div>
   );
