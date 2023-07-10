@@ -1214,12 +1214,12 @@ const SingleNft = ({
                                     inputMode: "numeric",
                                   }}
                                 />
-                                {priceType === 0 ? "ETH" : "DYP"}{" "}
+                                {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                               </span>
                               <span className="nft-price-usd">
                                 $
                                 {getFormattedNumber(
-                                  priceType === 0
+                                  nft.payment_priceType === 0
                                     ? ethtokenData * nftPrice
                                     : dyptokenData * nftPrice,
                                   2
@@ -1236,17 +1236,18 @@ const SingleNft = ({
                             <div className="d-flex flex-row justify-content-around w-100 gap-2">
                               <div
                                 className={`d-flex gap-2 align-items-center position-relative ${
-                                  priceType === 0
+                                  priceType === 0 && nft.payment_priceType === 0
                                     ? "currencyWrapper"
                                     : "currencyWrapper-inactive"
-                                } `}
+                                } ${nft.payment_priceType === 1 && 'currency-wrapper-disabled'}`}
                                 onClick={() => {
                                   setPriceType(0);
                                 }}
+                                
                               >
                                 <img
                                   src={
-                                    priceType === 0 ? checkActive : checkPassive
+                                    priceType === 0 && nft.payment_priceType === 0 ? checkActive : checkPassive
                                   }
                                   alt=""
                                   className={"position-absolute checkicons"}
@@ -1264,19 +1265,17 @@ const SingleNft = ({
 
                               <div
                                 className={`d-flex gap-2 align-items-center position-relative ${
-                                  priceType === 1
+                                  nft.payment_priceType === 1
                                     ? "currencyWrapper"
                                     : "currencyWrapper-inactive"
-                                } `}
+                                } ${nft.payment_priceType === 0 && 'currency-wrapper-disabled'}`}
                                 onClick={() => {
                                   setPriceType(1);
                                 }}
                               >
                                 <img
                                   src={
-                                    priceType === 0
-                                      ? checkPassive
-                                      : priceType === 1
+                                    nft.payment_priceType === 1
                                       ? checkActive
                                       : checkPassive
                                   }

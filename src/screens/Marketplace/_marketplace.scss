@@ -1126,13 +1126,13 @@
 .caws-stake-wrapper {
   // background-image: url("./assets/cawsBanner1.png");
   border-radius: 20px;
-background: linear-gradient(49deg, #181B38 0%, rgba(32, 32, 35, 0.20) 100%);
+  background: linear-gradient(49deg, #181b38 0%, rgba(32, 32, 35, 0.2) 100%);
   background-size: 100% 100%;
   aspect-ratio: 4.52/1;
 
   @media screen and (max-width: 786px) {
     border-radius: 20px;
-background: linear-gradient(90deg, #181B38 0%, rgba(32, 32, 35, 0.20) 100%);
+    background: linear-gradient(90deg, #181b38 0%, rgba(32, 32, 35, 0.2) 100%);
     aspect-ratio: 0.62/1;
     // background-image: url("./assets/cawsBannerMobile.png");
   }
@@ -1249,31 +1249,31 @@ background: linear-gradient(90deg, #181B38 0%, rgba(32, 32, 35, 0.20) 100%);
   transition: all 0.25s;
 }
 
-.mint-now-btn{
+.mint-now-btn {
   border-radius: 20px;
-background: linear-gradient(90deg, #830E47 0%, #5065C3 100%);
-color: #FFF !important;
-text-decoration: none !important;
-text-align: center;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-display: flex;
-align-items: center;
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  color: #fff !important;
+  text-decoration: none !important;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: flex;
+  align-items: center;
 }
-.mint-now-btn:hover{
+.mint-now-btn:hover {
   border-radius: 20px;
-background: linear-gradient(90deg, #830E47 0%, #5065C3 100%);
-color: #FFF !important;
-text-decoration: none !important;
-text-align: center;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-display: flex;
-align-items: center;
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  color: #fff !important;
+  text-decoration: none !important;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: flex;
+  align-items: center;
 }
 
 .nft-load-more-btn:hover {
@@ -1449,6 +1449,12 @@ align-items: center;
     aspect-ratio: 1/1;
   }
 }
+
+.currency-wrapper-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .past-land-mint {
   background-image: url("./assets/pastLandMintBg.png");
   width: 100%;
@@ -1624,8 +1630,7 @@ align-items: center;
   color: #11fed2 !important;
 }
 
-
-.stake-info-column{
+.stake-info-column {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -1636,40 +1641,40 @@ align-items: center;
   }
 }
 
-.stake-info-item{
+.stake-info-item {
   border-radius: 20px;
-background: rgba(8, 11, 42, 0.45);
-// backdrop-filter: blur(3.7028565406799316px);
-width: 90px;
-height: 55px;
+  background: rgba(8, 11, 42, 0.45);
+  // backdrop-filter: blur(3.7028565406799316px);
+  width: 90px;
+  height: 55px;
 }
 
-.stake-info-primary{
-  color: #FFF;
-text-align: center;
-font-size: 16px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+.stake-info-primary {
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
 
-.stake-info-secondary{
-  color: #FFF;
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+.stake-info-secondary {
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
-.stake-info-item:nth-child(2){
+.stake-info-item:nth-child(2) {
   position: relative;
   right: 10px;
   @media screen and (max-width: 786px) {
     right: 0;
   }
 }
-.stake-info-item:nth-child(3){
+.stake-info-item:nth-child(3) {
   position: relative;
   right: 20px;
   @media screen and (max-width: 786px) {
@@ -1677,76 +1682,74 @@ line-height: normal;
   }
 }
 
-.past-image-position{
+.past-image-position {
   height: 100%;
   @media screen and (max-width: 786px) {
     height: fit-content;
   }
 }
 
-@media screen and (max-width: 786px) { 
-  .total-past-rewards{
+@media screen and (max-width: 786px) {
+  .total-past-rewards {
     position: relative;
     bottom: 10%;
   }
 }
 
-
-.join-now-wrapper{
+.join-now-wrapper {
   width: 100%;
-  background-image: url('../../components/MarketSidebar/assets/joinNowBg.svg');
+  background-image: url("../../components/MarketSidebar/assets/joinNowBg.svg");
   background-size: 100% 100%;
   // aspect-ratio: 0.91/1;
   transition: all 0.3s ease;
 }
 
-.join-up{
+.join-up {
   transform: translateY(-210px);
 }
 
-.build-wod-title{
-  color:  #FFF;
-text-align: center;
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
-line-height: 32px;
+.build-wod-title {
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px;
 }
 
-.build-wod-desc{
-  color: rgba(255, 255, 255, 0.80);
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-line-height: 16px;
-width: 80%;
+.build-wod-desc {
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  width: 80%;
 }
 
-.join-now-btn{
-display: flex;
-width: 136px;
-padding: 8px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 8px;
-background: #fff;
-color: #5D5FEF;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: 24px;
-}
-
-.join-now-btn:hover{
+.join-now-btn {
+  display: flex;
+  width: 136px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
   background: #fff;
-color: #5D5FEF;
+  color: #5d5fef;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
 }
 
-.join-now-btn:active{
-background: #5D5FEF !important;
-color: #fff !important;
-border: 1px solid #5D5FEF !important;
+.join-now-btn:hover {
+  background: #fff;
+  color: #5d5fef;
+}
 
+.join-now-btn:active {
+  background: #5d5fef !important;
+  color: #fff !important;
+  border: 1px solid #5d5fef !important;
 }
