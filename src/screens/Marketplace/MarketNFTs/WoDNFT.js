@@ -24,6 +24,7 @@ import axios from "axios";
 import landmetadata from "../../../actions/landmetadata.json";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import { Skeleton } from "@mui/material";
+import landtraits from '../../../actions/landtraits.json'
 
 const WoDNFT = ({
   isConnected,
@@ -643,7 +644,9 @@ const WoDNFT = ({
 
   useEffect(() => {
     getWodCollection();
-    fetchFilters();
+    // fetchFilters();
+    setFilters(landtraits.collection.traits);
+
   }, [next]);
 
   useEffect(() => {
@@ -656,7 +659,12 @@ const WoDNFT = ({
   }, [landNfts]);
 
   return (
-    <>
+    <div 
+    id="header"
+    onScroll={onScroll}
+    ref={listInnerRef}
+    style={{ overflow: "scroll" }}
+    >
       <div
         className="container-fluid d-flex justify-content-end p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
@@ -841,9 +849,6 @@ const WoDNFT = ({
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
               <div
                 className="d-flex align-items-center p-4 gap-4 justify-content-center"
-                id="header"
-                onScroll={onScroll}
-                ref={listInnerRef}
               >
                 <div className={"item-cards-wrapper w-100"}>
                   {landNfts && landNfts.length > 0 && count === 0 ? (
@@ -1404,7 +1409,7 @@ const WoDNFT = ({
                     <></>
                   )}
                 </div>
-              </div>
+                </div>
               <div className="d-flex justify-content-center w-100">
                 {/* {!loading && next < allLandpiece ? (
                   <button
@@ -1728,7 +1733,7 @@ const WoDNFT = ({
           ) : null}
         </div>
       </OutsideClickHandler>
-    </>
+    </div>
   );
 };
 

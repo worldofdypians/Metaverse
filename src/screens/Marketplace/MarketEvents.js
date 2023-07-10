@@ -22,7 +22,7 @@ import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
 import PuzzleMadnessPopup from "../../components/PackagePopups/PuzzleMadnessPopup";
 import CriticalHitPopup from "../../components/PackagePopups/CriticalHitPopup";
 import OutsideClickHandler from "react-outside-click-handler";
-const MarketEvents = ({ account, chainId }) => {
+const MarketEvents = ({ account, chainId, dyptokenDatabnb, idyptokenDatabnb }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
   const [dypBalance, setDypBalance] = useState();
@@ -347,6 +347,8 @@ const MarketEvents = ({ account, chainId }) => {
                 chainId={chainId}
                 getDypBalance={getDypBalance}
                 getiDypBalance={getDypBalance}
+                  dyptokenDatabnb={dyptokenDatabnb}
+                  idyptokenDatabnb={idyptokenDatabnb}
                 packageData={
                   selectedPackage === "dragon"
                     ? dragonData

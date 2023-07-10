@@ -91,6 +91,8 @@ const NewBundleCard = ({
   availableTime,
   handleSetAvailableTime,
   onOpenPopup,
+  dyptokenDatabnb,
+idyptokenDatabnb
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
@@ -141,8 +143,7 @@ const NewBundleCard = ({
   const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
   const [idyptokenData, setIDypTokenData] = useState([]);
-  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
-  const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
+
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
@@ -155,21 +156,7 @@ const NewBundleCard = ({
     } else setcheckWallet(false);
   };
 
-  const getTokenDatabnb = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
-      .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_bsc_v2.token_data
-        );
-        setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
 
-        const propertyIDyp = Object.entries(
-          data.data.the_graph_bsc_v2.token_data
-        );
-        setIDypTokenDatabnb(propertyIDyp[1][1].token_price_usd);
-      });
-  };
 
   const checkApproval = async () => {
     if (coinbase === wallet && chainId === 56) {
@@ -809,7 +796,7 @@ const NewBundleCard = ({
   }, [today, oneJuly]);
 
   useEffect(() => {
-    getTokenDatabnb();
+    // getTokenDatabnb();
   }, []);
 
   const [tooltip, setTooltip] = useState(false);

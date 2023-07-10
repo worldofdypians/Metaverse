@@ -25,6 +25,7 @@ import FilterCard from "./FilterCard";
 import traitXmark from "./assets/traitXmark.svg";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import cawsmetadata from "../../../actions/cawsmetadatas2.json";
+import cawstraits from '../../../actions/cawstraits.json'
 
 const CawsNFT = ({
   isConnected,
@@ -343,20 +344,20 @@ const CawsNFT = ({
     setFilterIds(searchNFTsByTraits(primarySelected, cawsmetadata));
   };
 
-  const fetchFilters = async () => {
-    await axios
-      .get(
-        "https://api.opensea.io/api/v1/collection/catsandwatchessocietycaws",
-        {
-          headers: {
-            "X-API-KEY": "b132fcc52ab540f0b13a319bf57b34f0",
-          },
-        }
-      )
-      .then((res) => {
-        setFilters(res.data.collection.traits);
-      });
-  };
+  // const fetchFilters = async () => {
+  //   await axios
+  //     .get(
+  //       "https://api.opensea.io/api/v1/collection/catsandwatchessocietycaws",
+  //       {
+  //         headers: {
+  //           "X-API-KEY": "b132fcc52ab540f0b13a319bf57b34f0",
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setFilters(res.data.collection.traits);
+  //     });
+  // };
 
   const sortNfts = (sortValue) => {
     // console.log(sortValue);
@@ -574,7 +575,9 @@ const CawsNFT = ({
     window.scrollTo(0, 0);
     getCawsCollection();
     // getAllCawsCollection();
-    fetchFilters();
+    // fetchFilters();
+    setFilters(cawstraits.collection.traits);
+
     document.title = "CAWS NFT";
   }, []);
 

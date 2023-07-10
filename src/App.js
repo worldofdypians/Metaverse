@@ -1243,7 +1243,9 @@ function App() {
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
                   account={coinbase}
-                  chainId={chainId}
+                  chainId={chainId}     
+                  dyptokenDatabnb={dypTokenData}
+                  idyptokenDatabnb={idyptokenDatabnb}
                 />
               }
             />
