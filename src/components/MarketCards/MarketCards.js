@@ -45,18 +45,21 @@ const MarketCards = ({
               className="w-100 h-100 p-0 nft-img"
               src={`https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`}
               alt=""
+              style={{borderRadius: '10px'}}
             />
           ) : activebtn === "caws" ? (
             <img
               className="w-100 h-100 p-0 nft-img"
               src={`https://mint.dyp.finance/thumbs/${nft.tokenId}.png`}
               alt=""
+              style={{borderRadius: '10px'}}
             />
           ) : activebtn === "timepiece" ? (
             <img
               className="w-100 h-100 p-0 nft-img"
               src={`https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`}
               alt=""
+              style={{borderRadius: '10px'}}
             />
           ) : (
             <></>
@@ -125,6 +128,7 @@ const MarketCards = ({
               {activebtn !== "events" && "ETH"}
             </span>
             <span className="nftcard-usd">
+              {eventImg !== "critical" && "$"}
               {activebtn === "events"
                 ? eventImg === "puzzle"
                   ? getFormattedNumber(idyptokenDatabnb * price, 2)

@@ -591,7 +591,7 @@ const LeaderBoard = ({
     } else if (item === "weekly" && inactiveBoard === false) {
       setPrizes(weeklyPrizes);
     } else if (item === "weekly" && inactiveBoard === true) {
-      setPrizes(previous_weeklyPrizes);
+      setPrizes(weeklyPrizes);
     } else if (item === "monthly" && inactiveBoard === false) {
       setPrizes(monthlyPrizes);
     } else if (item === "monthly" && inactiveBoard === true) {
@@ -621,7 +621,6 @@ const LeaderBoard = ({
     }
   };
 
-
   const fillRecordsGenesis = (itemData) => {
     if (itemData.length === 0) {
       setgenesisData(placeholderplayerData);
@@ -644,7 +643,7 @@ const LeaderBoard = ({
       `${backendApi}/auth/GetLeaderboard?Version=-1`,
       data
     );
-    fillRecordsDaily(result.data.data.leaderboard)
+    fillRecordsDaily(result.data.data.leaderboard);
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
@@ -1078,10 +1077,7 @@ const LeaderBoard = ({
                               }`}
                             >
                               +$
-                              {getFormattedNumber(
-                                previous_weeklyPrizesGolden[index],
-                                0
-                              )}
+                              {getFormattedNumber(weeklyPrizesGolden[index], 0)}
                             </td>
                           </tr>
                         );
@@ -1154,10 +1150,7 @@ const LeaderBoard = ({
                               }`}
                             >
                               +$
-                              {getFormattedNumber(
-                                dailyPrizesGolden[index],
-                                0
-                              )}
+                              {getFormattedNumber(dailyPrizesGolden[index], 0)}
                             </td>
                           </tr>
                         );

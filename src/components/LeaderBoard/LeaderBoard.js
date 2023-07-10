@@ -578,7 +578,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     } else if (item === "weekly" && inactiveBoard === false) {
       setPrizes(weeklyPrizes);
     } else if (item === "weekly" && inactiveBoard === true) {
-      setPrizes(previous_weeklyPrizes);
+      setPrizes(weeklyPrizes);
     } else if (item === "monthly" && inactiveBoard === false) {
       setPrizes(monthlyPrizes);
     } else if (item === "monthly" && inactiveBoard === true) {
@@ -796,7 +796,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                 handleOption("genesis");
                 fetchGenesisRecords();
               }}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
             >
               Genesis
             </span>
@@ -804,7 +804,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
               className={`${
                 optionText === "daily" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
               onClick={() => {
                 handleOption("daily");
                 fetchDailyRecords();
@@ -816,7 +816,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
               className={`${
                 optionText === "weekly" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
               onClick={() => {
                 handleOption("weekly");
                 fetchWeeklyRecords();
@@ -997,7 +997,11 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                         +${getFormattedNumber(previous_monthlyPrizesGolden[index], 0)}
+                        +$
+                        {getFormattedNumber(
+                          previous_monthlyPrizesGolden[index],
+                          0
+                        )}
                       </td>
                     </tr>
                   );
@@ -1058,7 +1062,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +${getFormattedNumber(previous_weeklyPrizesGolden[index], 0)}
+                        +${getFormattedNumber(weeklyPrizesGolden[index], 0)}
                       </td>
                     </tr>
                   );
