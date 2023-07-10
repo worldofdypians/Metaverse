@@ -645,7 +645,7 @@ function Dashboard({
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/wod-marketplace/v1.0.0";
+      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
 
     const itemBoughtQuery = `
         {

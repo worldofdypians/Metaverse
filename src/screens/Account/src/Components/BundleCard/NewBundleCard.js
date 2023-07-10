@@ -91,6 +91,7 @@ const NewBundleCard = ({
   availableTime,
   handleSetAvailableTime,
   onOpenPopup,
+  
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);

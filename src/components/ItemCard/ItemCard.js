@@ -414,7 +414,7 @@ const ItemCard = ({
               } `}
             /> */}
           </div>
-          {lastSold && (
+          {isLatestSale && (
             <div
               className={`d-flex align-items-center position-relative ${
                 !isListed && "lastsoldwrapper"

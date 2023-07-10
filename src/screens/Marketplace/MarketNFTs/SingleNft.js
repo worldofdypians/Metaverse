@@ -202,6 +202,7 @@ const SingleNft = ({
 
   // console.log(window)
   async function isApprovedNFT(nft, type, coinbase) {
+   
     const result = await window
       .isApprovedNFT(nft, type, coinbase)
       .catch((e) => {
@@ -289,7 +290,7 @@ const SingleNft = ({
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/wod-marketplace/v1.0.0";
+      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
 
     const itemBoughtQuery = `
         {
@@ -429,7 +430,7 @@ const SingleNft = ({
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/wod-marketplace/v1.0.0";
+      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
 
     const itemBoughtQuery = `
         {
@@ -1230,7 +1231,7 @@ const SingleNft = ({
                           </div>
                         </div>
                         <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
-                          <div className="d-flex w-100 justify-content-between flex-column gap-2 align-items-center">
+                          <div className="d-flex w-100 justify-content-between flex-column gap-2">
                             <span className="currentprice-txt">
                               Choose currency
                             </span>
@@ -1302,7 +1303,7 @@ const SingleNft = ({
                     {isOwner && !IsListed && (
                       <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                         <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
-                          <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
+                          <div className="d-flex w-100 justify-content-between flex-column ">
                             <span
                               className="currentprice-txt"
                               style={{ alignSelf: "baseline" }}
@@ -1342,7 +1343,7 @@ const SingleNft = ({
                           </div>
                         </div>
                         <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
-                          <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
+                          <div className="d-flex w-100 justify-content-between flex-column gap-2">
                             <span className="currentprice-txt">
                               Choose currency
                             </span>

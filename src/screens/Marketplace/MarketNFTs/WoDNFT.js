@@ -462,7 +462,7 @@ const WoDNFT = ({
             ...nft,
             date: date,
             isListed: true,
-            isLatestSale: true,
+            isLatestSale: false,
             LastSold: wodArray2[index]?.price,
             soldPriceType: wodArray2[index]?.payment_priceType,
           };

@@ -1463,7 +1463,7 @@ class VAULT_NEW {
 // ALL THE ADDRESSES IN CONFIG MUST BE LOWERCASE
 window.config = {
   dyp_token_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
-  nft_marketplace_address: "0x12C18b8D76D03E05a25c2d184990C13b1AaA8E4A",
+  nft_marketplace_address: "0xF55D96735Fa22ba1C119bA37aF76C2c4E3BeC224",
   nft_caws_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
   nft_cawsold_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
   nft_timepiece_address: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
@@ -3350,23 +3350,26 @@ window.isApprovedBuy = async (amount) => {
 
 window.isApprovedNFT = async (token, type, address) => {
   if (type === "timepiece") {
+    window.web3 = new Web3(window.ethereum);
     let contract = new window.web3.eth.Contract(
       window.TIMEPIECE_ABI,
       window.config.nft_timepiece_address
     );
 
     let approved = await contract.methods.getApproved(token).call();
-
+    
     let approvedAll = await contract.methods
       .isApprovedForAll(address, window.config.nft_marketplace_address)
       .call();
 
     console.log(
-      approved === window.config.nft_marketplace_address || approvedAll
+      approvedAll, 'approvedAll'
     );
     approved = approved.toLowerCase();
 
-    return approved === window.config.nft_marketplace_address || approvedAll;
+    if (approved === window.config.nft_marketplace_address || approvedAll) {
+      return true;
+    } else return false;
   } else if (type === "land") {
     let contract = new window.web3.eth.Contract(
       window.WOD_ABI,
@@ -3379,8 +3382,9 @@ window.isApprovedNFT = async (token, type, address) => {
       .call();
 
     approved = approved.toLowerCase();
-
-    return approved === window.config.nft_marketplace_address || approvedAll;
+    if (approved === window.config.nft_marketplace_address || approvedAll) {
+      return true;
+    } else return false;
   } else {
     let contract = new window.web3.eth.Contract(
       window.CAWS_ABI,
@@ -3394,7 +3398,9 @@ window.isApprovedNFT = async (token, type, address) => {
 
     approved = approved.toLowerCase();
 
-    return approved === window.config.nft_marketplace_address || approvedAll;
+    if (approved === window.config.nft_marketplace_address || approvedAll) {
+      return true;
+    } else return false;
   }
 };
 
@@ -31024,8 +31030,8 @@ async function getCoinbase() {
 
 async function disconnectWallet() {
   window.coinbase_address = "0x0000000000000000000000000000000000000000";
-  console.log(window.coinbase_address)
-  return window.coinbase_addres
+  console.log(window.coinbase_address);
+  return window.coinbase_addres;
 }
 async function getContract({ key, address = null, ABI = null }) {
   ABI = ABI || window[key + "_ABI"];

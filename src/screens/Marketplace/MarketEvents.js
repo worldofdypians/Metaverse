@@ -8,7 +8,7 @@ import dragonIcon from "../Account/src/Images/userProfile/dragonIcon.svg";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "../Account/src/Containers/Dashboard/Dashboard.schema";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import criticalHit from "../Marketplace/MarketNFTs/assets/criticalHit2.webp";
@@ -22,7 +22,12 @@ import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
 import PuzzleMadnessPopup from "../../components/PackagePopups/PuzzleMadnessPopup";
 import CriticalHitPopup from "../../components/PackagePopups/CriticalHitPopup";
 import OutsideClickHandler from "react-outside-click-handler";
-const MarketEvents = ({ account, chainId }) => {
+import { useParams } from "react-router-dom";
+
+const MarketEvents = ({
+  account,
+  chainId
+}) => {
   const location = useLocation();
   const windowSize = useWindowSize();
   const [dypBalance, setDypBalance] = useState();
@@ -41,6 +46,7 @@ const MarketEvents = ({ account, chainId }) => {
   const [packagePopup, setPackagePopup] = useState("");
   const [activeTab, setActiveTab] = useState("live");
 
+  const { eventId } = useParams();
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -68,7 +74,6 @@ const MarketEvents = ({ account, chainId }) => {
     link: "https://www.worldofdypians.com/news/644ce83e7f931ac9706b515e/Puzzle-Madness-Event",
     background: "newPuzzleBg.webp",
     mobileBackground: "puzzleBgMobile.webp",
-
   };
   const dypPackageData = {
     title: "Golden Pass",
@@ -82,7 +87,6 @@ const MarketEvents = ({ account, chainId }) => {
     link: "https://www.worldofdypians.com/news/644e343627cca74b2d4a60b1/Golden-Pass-Event",
     background: "newGoldenBg.webp",
     mobileBackground: "goldenBgMobile.webp",
-
   };
 
   const criticalHitPackageData = {
@@ -97,7 +101,6 @@ const MarketEvents = ({ account, chainId }) => {
     link: "https://www.worldofdypians.com/news/6426dc2bb15f9e51ad8bd4e6/Critical-Hit-Event",
     background: "newCriticalBg.webp",
     mobileBackground: "criticalBgMobile.webp",
-
   };
 
   const {
@@ -228,161 +231,174 @@ const MarketEvents = ({ account, chainId }) => {
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
           <div className="container-lg mx-0">
-            <div
-              className={`col-12 col-lg-12`}
-            >
+            <div className={`col-12 col-lg-12`}>
               <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
                 Event
                 <span style={{ color: "#8c56ff" }}> Center</span>
               </h6>
-                <div className="d-flex flex-column">
-            <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-                <h6
-                  className={`new-stake-tab ${
-                    activeTab === "live" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("live")}
-                >
-                  Live
-                </h6>
-                <h6
-                  className={`new-stake-tab ${
-                    activeTab === "upcoming" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("upcoming")}
-                >
-                  Upcoming
-                </h6>
-                <h6
-                  className={`new-stake-tab ${
-                    activeTab === "past" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("past")}
-                >
-                  Past
-                </h6>
+              <div className="d-flex flex-column">
+                <div className="d-flex w-100 align-items-center justify-content-center gap-4">
+                  <h6
+                    className={`new-stake-tab ${
+                      activeTab === "live" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("live")}
+                  >
+                    Live
+                  </h6>
+                  <h6
+                    className={`new-stake-tab ${
+                      activeTab === "upcoming" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("upcoming")}
+                  >
+                    Upcoming
+                  </h6>
+                  <h6
+                    className={`new-stake-tab ${
+                      activeTab === "past" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("past")}
+                  >
+                    Past
+                  </h6>
+                </div>
+                <span className="w-100 new-stake-divider mt-3 mb-5"></span>
               </div>
-              <span className="w-100 new-stake-divider mt-3 mb-5"></span>
-            </div>
 
-             {activeTab === "live" && 
-            <>
-             <div className="d-flex justify-content-center">
-                <div className="new-packages-grid mb-3">
-                  <div className="">
-                    <div
-                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                        selectedPackage === "dragon" && "selected-event-package"
-                      }`}
-                      onClick={() => setSelectedPackage("dragon")}
-                    >
-                      <img
-                        src={dragonPackage}
-                        className="w-100"
-                        style={{ borderRadius: "16px" }}
-                        alt=""
-                      />
-                      <span className="event-package-title">Dragon Ruins</span>
+              {activeTab === "live" && (
+                <>
+                  <div className="d-flex justify-content-center">
+                    <div className="new-packages-grid mb-3">
+                      <NavLink to="/marketplace/events/dragon-ruins">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                              selectedPackage === "dragon" &&
+                              eventId === "dragon-ruins" &&
+                              "selected-event-package"
+                            }`}
+                            onClick={() => setSelectedPackage("dragon")}
+                          >
+                            <img
+                              src={dragonPackage}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Dragon Ruins
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/marketplace/events/golden-pass">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                              selectedPackage === "dyp" &&
+                              "selected-event-package"
+                            }`}
+                            onClick={() => setSelectedPackage("dyp")}
+                          >
+                            <img
+                              src={goldenPass}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Golden Pass
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/marketplace/events/puzzle-madness">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                              selectedPackage === "idyp" &&
+                              "selected-event-package"
+                            }`}
+                            onClick={() => setSelectedPackage("idyp")}
+                          >
+                            <img
+                              src={puzzleMadness}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Puzzle Madness
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/marketplace/events/critical-hit">
+                      <div className="">
+                        <div
+                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                            selectedPackage === "criticalHit" &&
+                            "selected-event-package"
+                          }`}
+                          onClick={() => setSelectedPackage("criticalHit")}
+                        >
+                          <img
+                            src={criticalHit}
+                            className="w-100"
+                            style={{ borderRadius: "16px" }}
+                            alt=""
+                          />
+                          <span className="event-package-title">
+                            Critical Hit
+                          </span>
+                        </div>
+                      </div>
+                      </NavLink>
                     </div>
                   </div>
-                  <div className="">
-                    <div
-                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                        selectedPackage === "dyp" && "selected-event-package"
-                      }`}
-                      onClick={() => setSelectedPackage("dyp")}
-                    >
-                      <img
-                        src={goldenPass}
-                        className="w-100"
-                        style={{ borderRadius: "16px" }}
-                        alt=""
-                      />
-                      <span className="event-package-title">Golden Pass</span>
-                    </div>
-                  </div>
-
-                  <div className="">
-                    <div
-                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                        selectedPackage === "idyp" && "selected-event-package"
-                      }`}
-                      onClick={() => setSelectedPackage("idyp")}
-                    >
-                      <img
-                        src={puzzleMadness}
-                        className="w-100"
-                        style={{ borderRadius: "16px" }}
-                        alt=""
-                      />
-                      <span className="event-package-title">
-                        Puzzle Madness
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="">
-                    <div
-                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                        selectedPackage === "criticalHit" &&
-                        "selected-event-package"
-                      }`}
-                      onClick={() => setSelectedPackage("criticalHit")}
-                    >
-                      <img
-                        src={criticalHit}
-                        className="w-100"
-                        style={{ borderRadius: "16px" }}
-                        alt=""
-                      />
-                      <span className="event-package-title">Critical Hit</span>
-                    </div>
+                  <NewBundleCard
+                    onOpenPopup={onOpenPopup}
+                    coinbase={account}
+                    wallet={data?.getPlayer?.wallet?.publicAddress}
+                    chainId={chainId}
+                    getDypBalance={getDypBalance}
+                    getiDypBalance={getDypBalance}
+                    packageData={
+                      selectedPackage === "dragon"
+                        ? dragonData
+                        : selectedPackage === "dyp"
+                        ? dypPackageData
+                        : selectedPackage === "criticalHit"
+                        ? criticalHitPackageData
+                        : iDypPackageData
+                    }
+                    handleSetAvailableTime={(value) => {
+                      setAvailableTime(value);
+                    }}
+                    availableTime={availableTime}
+                  />
+                </>
+              )}
+              {activeTab === "upcoming" && (
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">New events are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
                   </div>
                 </div>
-              </div>
-              <NewBundleCard
-                onOpenPopup={onOpenPopup}
-                coinbase={account}
-                wallet={data?.getPlayer?.wallet?.publicAddress}
-                chainId={chainId}
-                getDypBalance={getDypBalance}
-                getiDypBalance={getDypBalance}
-                packageData={
-                  selectedPackage === "dragon"
-                    ? dragonData
-                    : selectedPackage === "dyp"
-                    ? dypPackageData
-                    : selectedPackage === "criticalHit"
-                    ? criticalHitPackageData
-                    : iDypPackageData
-                }
-                handleSetAvailableTime={(value) => {
-                  setAvailableTime(value);
-                }}
-                availableTime={availableTime}
-              />
-            </>
-             }
-             {activeTab === "upcoming" &&
-         <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-         <div className="d-flex flex-column align-items-center gap-2">
-           <h6 className="upcoming-stake">New events are coming...</h6>
-           <span className="upcoming-stake-desc">
-           Check back soon!
-           </span>
-         </div>
-       
-       </div>
-        }
-        {activeTab === "past" &&
-         <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-         <div className="d-flex flex-column align-items-center gap-2">
-           <h6 className="upcoming-stake">There are no previous events!</h6>
-            
-         </div>
-       
-       </div>
-        }
+              )}
+              {activeTab === "past" && (
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">
+                      There are no previous events!
+                    </h6>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
