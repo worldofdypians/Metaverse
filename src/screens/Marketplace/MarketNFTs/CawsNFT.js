@@ -415,7 +415,7 @@ const CawsNFT = ({
             ...nft,
             date: date,
             isListed: true,
-            isLatestSale: true,
+            isLatestSale: false,
             LastSold: cawsArray2[index]?.price,
             soldPriceType: cawsArray2[index]?.payment_priceType,
           };

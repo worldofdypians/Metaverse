@@ -448,7 +448,7 @@ const Marketplace = ({
       setSliderCut(3);
     } else if (windowSize.width > 480) {
       setSliderCut(2);
-    }else{
+    } else {
       setSliderCut(1);
     }
   }, [windowSize.width]);
@@ -532,144 +532,150 @@ const Marketplace = ({
               Active Events
             </h6>
             <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
-            
-              {windowSize.width > 786 ? 
+              {windowSize.width > 786 ? (
                 <>
                   <NavLink
-                to="/marketplace/events"
-                state={{ package: "dragon" }}
-                className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
-                style={{ textDecoration: "none" }}
-              >
-                <div className="position-relative package-blur">
-                  <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                    <span className="blur-package-title">Dragon Ruins</span>
-                  </div>
-                  <div className="second-box-blur"></div>
-                  <img
-                    src={require("../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp")}
-                    alt=""
-                    className="blur-img"
-                  />
-                </div>
-              </NavLink>
-              <NavLink
-                to="/marketplace/events"
-                state={{ package: "idyp" }}
-                className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
-                style={{ textDecoration: "none" }}
-              >
-                <div className="position-relative package-blur">
-                  <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                    <span className="blur-package-title">Puzzle Madness</span>
-                  </div>
-                  <div className="second-box-blur"></div>
-                  <img
-                    src={require("./assets/puzzleMadness.png")}
-                    alt=""
-                    className="blur-img"
-                  />
-                </div>
-              </NavLink>
-              <NavLink
-                to="/marketplace/events"
-                state={{ package: "dyp" }}
-                className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
-                style={{ textDecoration: "none" }}
-              >
-                <div className="position-relative package-blur">
-                  <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                    <span className="blur-package-title">Golden Pass</span>
-                  </div>
-                  <div className="second-box-blur"></div>
-                  <img
-                    src={require("./assets/goldenPass.png")}
-                    alt=""
-                    className="blur-img"
-                  />
-                </div>
-              </NavLink>
-              <NavLink
-                to="/marketplace/events"
-                state={{ package: "criticalHit" }}
-                className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
-                style={{ textDecoration: "none" }}
-              >
-                <div className="position-relative package-blur">
-                  <div className="first-box-blur d-flex align-items-end justify-content-center">
-                    <span className="blur-package-title">Critical Hit</span>
-                  </div>
-                  <div className="second-box-blur"></div>
-                  <img
-                    src={require("./assets/criticalHit.webp")}
-                    alt=""
-                    className="blur-img"
-                  />
-                </div>
-              </NavLink>
-                </> 
-                : 
-                <div className="d-flex justify-content-center">
-                <div className="new-packages-grid mb-3">
-                  <div className="">
-                    <div
-                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                    >
+                    to="/marketplace/events/dragon-ruins"
+                    state={{ package: "dragon" }}
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="position-relative package-blur">
+                      <div className="first-box-blur  d-flex align-items-end justify-content-center">
+                        <span className="blur-package-title">Dragon Ruins</span>
+                      </div>
+                      <div className="second-box-blur"></div>
                       <img
                         src={require("../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp")}
-                        className="w-100"
-                        style={{ borderRadius: "16px" }}
                         alt=""
+                        className="blur-img"
                       />
-                      <span className="event-package-title">Dragon Ruins</span>
                     </div>
-                  </div>
-                  <div className="">
-                    <div
-                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                    >
+                  </NavLink>
+
+                  <NavLink
+                    to="/marketplace/events/golden-pass"
+                    state={{ package: "dyp" }}
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="position-relative package-blur">
+                      <div className="first-box-blur  d-flex align-items-end justify-content-center">
+                        <span className="blur-package-title">Golden Pass</span>
+                      </div>
+                      <div className="second-box-blur"></div>
                       <img
                         src={require("./assets/goldenPass.png")}
-                        className="w-100"
-                        style={{ borderRadius: "16px" }}
                         alt=""
+                        className="blur-img"
                       />
-                      <span className="event-package-title">Golden Pass</span>
                     </div>
-                  </div>
-
-                  <div className="">
-                    <div
-                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                    >
+                  </NavLink>
+                  <NavLink
+                    to="/marketplace/events/puzzle-madness"
+                    state={{ package: "idyp" }}
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="position-relative package-blur">
+                      <div className="first-box-blur  d-flex align-items-end justify-content-center">
+                        <span className="blur-package-title">
+                          Puzzle Madness
+                        </span>
+                      </div>
+                      <div className="second-box-blur"></div>
                       <img
                         src={require("./assets/puzzleMadness.png")}
-                        className="w-100"
-                        style={{ borderRadius: "16px" }}
                         alt=""
+                        className="blur-img"
                       />
-                      <span className="event-package-title">
-                        Puzzle Madness
-                      </span>
                     </div>
-                  </div>
-
-                  <div className="">
-                    <div
-                      className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                    >
+                  </NavLink>
+                  <NavLink
+                    to="/marketplace/events/critical-hit"
+                    state={{ package: "criticalHit" }}
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="position-relative package-blur">
+                      <div className="first-box-blur d-flex align-items-end justify-content-center">
+                        <span className="blur-package-title">Critical Hit</span>
+                      </div>
+                      <div className="second-box-blur"></div>
                       <img
                         src={require("./assets/criticalHit.webp")}
-                        className="w-100"
-                        style={{ borderRadius: "16px" }}
                         alt=""
+                        className="blur-img"
                       />
-                      <span className="event-package-title">Critical Hit</span>
+                    </div>
+                  </NavLink>
+                </>
+              ) : (
+                <div className="d-flex justify-content-center">
+                  <div className="new-packages-grid mb-3">
+                    <div className="">
+                      <div
+                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                      >
+                        <img
+                          src={require("../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp")}
+                          className="w-100"
+                          style={{ borderRadius: "16px" }}
+                          alt=""
+                        />
+                        <span className="event-package-title">
+                          Dragon Ruins
+                        </span>
+                      </div>
+                    </div>
+                    <div className="">
+                      <div
+                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                      >
+                        <img
+                          src={require("./assets/goldenPass.png")}
+                          className="w-100"
+                          style={{ borderRadius: "16px" }}
+                          alt=""
+                        />
+                        <span className="event-package-title">Golden Pass</span>
+                      </div>
+                    </div>
+
+                    <div className="">
+                      <div
+                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                      >
+                        <img
+                          src={require("./assets/puzzleMadness.png")}
+                          className="w-100"
+                          style={{ borderRadius: "16px" }}
+                          alt=""
+                        />
+                        <span className="event-package-title">
+                          Puzzle Madness
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="">
+                      <div
+                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                      >
+                        <img
+                          src={require("./assets/criticalHit.webp")}
+                          className="w-100"
+                          style={{ borderRadius: "16px" }}
+                          alt=""
+                        />
+                        <span className="event-package-title">
+                          Critical Hit
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            }
+              )}
             </div>
             <div
               className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4"
@@ -742,174 +748,217 @@ const Marketplace = ({
                   </h6>
                 </div>
               </div>
-              <div className="w-100" style={{minHeight: '260px'}}>
-              <div
-                className={
-                  loadingTopSales === false
-                    ? "row align-items-start position-relative justify-content-start px-0"
-                    : "loader-wrapper"
-                }
-                style={{ rowGap: "22px" }}
-              >
-                {!loadingTopSales ? (
-                  topSold && topSold.length > 0 ? (
-                    topSold.slice(0, 9).map((nft, index) => (
-                      <div className="col-12 col-lg-4" key={index}>
-                        <NavLink
-                          to={`/marketplace/nft/${nft.blockTimestamp}/${nft.nftAddress}`}
-                          style={{ textDecoration: "none" }}
-                          state={{
-                            nft: nft,
-                            type: nft.type,
-                            isOwner:
-                              nft.buyer?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
-                          onClick={() => {
-                            updateViewCount(nft.tokenId, nft.nftAddress);
-                          }}
-                        >
-                          <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
-                            {/* <div className="position-absolute top-sales-rank">
+              <div className="w-100" style={{ minHeight: "260px" }}>
+                <div
+                  className={
+                    loadingTopSales === false
+                      ? "row align-items-start position-relative justify-content-start px-0"
+                      : "loader-wrapper"
+                  }
+                  style={{ rowGap: "22px" }}
+                >
+                  {!loadingTopSales ? (
+                    topSold && topSold.length > 0 ? (
+                      topSold.slice(0, 9).map((nft, index) => (
+                        <div className="col-12 col-lg-4" key={index}>
+                          <NavLink
+                            to={`/marketplace/nft/${nft.blockTimestamp}/${nft.nftAddress}`}
+                            style={{ textDecoration: "none" }}
+                            state={{
+                              nft: nft,
+                              type: nft.type,
+                              isOwner:
+                                nft.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase(),
+                              chain: nft.chain,
+                            }}
+                            onClick={() => {
+                              updateViewCount(nft.tokenId, nft.nftAddress);
+                            }}
+                          >
+                            <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
+                              {/* <div className="position-absolute top-sales-rank">
                             <span>{index + 1}</span>
                           </div> */}
-                            {/* <span className="sales-number">{index + 1}</span> */}
-                            <img
-                              src={
-                                nft.type === "caws"
-                                  ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
-                                  : nft.type === "land"
-                                  ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                  : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                              }
-                              width={40}
-                              height={40}
-                              style={{ borderRadius: "10px" }}
-                              alt=""
-                            />
-                            <div className="d-flex justify-content-between gap-2 w-100">
-                              <h6
-                                className="nft-name-wrapper mb-0 py-1 px-2"
-                                style={{ fontSize: 14 }}
-                              >
-                                {nft.type === "caws"
-                                  ? "CAWS"
-                                  : nft.type === "land"
-                                  ? "Genesis Land"
-                                  : "Timepiece"}{" "}
-                                #{nft.tokenId}
-                              </h6>
-                              <div className="d-flex align-items-center gap-1 ">
-                                <div className="d-flex flex-column ">
-                                  <span
-                                    className="nft-price-usd overflow-hidden"
-                                    style={{
-                                      color: "#7DD9AF",
-                                      whiteSpace: "nowrap",
-                                      textOverflow: "ellipsis",
-                                      textAlign: "end",
-                                    }}
-                                  >
-                                    $
-                                    {getFormattedNumber(
-                                      nft.payment_priceType === 0
-                                        ? ethTokenData * (nft.price / 1e18)
-                                        : dypTokenData * (nft.price / 1e18),
-                                      2
-                                    )}
-                                  </span>{" "}
-                                  <span
-                                    className="top-eth overflow-hidden"
-                                    style={{
-                                      fontSize: 12,
-                                      whiteSpace: "nowrap",
-                                      textOverflow: "ellipsis",
-                                      textAlign: "end",
-                                    }}
-                                  >
-                                    {nft.payment_priceType === 0 ? (
-                                      <img
-                                        src={topEth}
-                                        height={12}
-                                        width={12}
-                                        alt=""
-                                        className="mx-1"
-                                      />
-                                    ) : (
-                                      <img
-                                        src={topDyp}
-                                        height={12}
-                                        width={12}
-                                        alt=""
-                                        className="mx-1"
-                                      />
-                                    )}
-                                    {getFormattedNumber(
-                                      nft.price / 1e18,
-                                      nft.payment_priceType === 0 ? 3 : 0
-                                    )}{" "}
-                                    {nft.payment_priceType === 0
-                                      ? "ETH"
-                                      : "DYP"}
-                                  </span>
+                              {/* <span className="sales-number">{index + 1}</span> */}
+                              <img
+                                src={
+                                  nft.type === "caws"
+                                    ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
+                                    : nft.type === "land"
+                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                }
+                                width={40}
+                                height={40}
+                                style={{ borderRadius: "10px" }}
+                                alt=""
+                              />
+                              <div className="d-flex justify-content-between gap-2 w-100">
+                                <h6
+                                  className="nft-name-wrapper mb-0 py-1 px-2"
+                                  style={{ fontSize: 14 }}
+                                >
+                                  {nft.type === "caws"
+                                    ? "CAWS"
+                                    : nft.type === "land"
+                                    ? "Genesis Land"
+                                    : "Timepiece"}{" "}
+                                  #{nft.tokenId}
+                                </h6>
+                                <div className="d-flex align-items-center gap-1 ">
+                                  <div className="d-flex flex-column ">
+                                    <span
+                                      className="nft-price-usd overflow-hidden"
+                                      style={{
+                                        color: "#7DD9AF",
+                                        whiteSpace: "nowrap",
+                                        textOverflow: "ellipsis",
+                                        textAlign: "end",
+                                      }}
+                                    >
+                                      $
+                                      {getFormattedNumber(
+                                        nft.payment_priceType === 0
+                                          ? ethTokenData * (nft.price / 1e18)
+                                          : dypTokenData * (nft.price / 1e18),
+                                        2
+                                      )}
+                                    </span>{" "}
+                                    <span
+                                      className="top-eth overflow-hidden"
+                                      style={{
+                                        fontSize: 12,
+                                        whiteSpace: "nowrap",
+                                        textOverflow: "ellipsis",
+                                        textAlign: "end",
+                                      }}
+                                    >
+                                      {nft.payment_priceType === 0 ? (
+                                        <img
+                                          src={topEth}
+                                          height={12}
+                                          width={12}
+                                          alt=""
+                                          className="mx-1"
+                                        />
+                                      ) : (
+                                        <img
+                                          src={topDyp}
+                                          height={12}
+                                          width={12}
+                                          alt=""
+                                          className="mx-1"
+                                        />
+                                      )}
+                                      {getFormattedNumber(
+                                        nft.price / 1e18,
+                                        nft.payment_priceType === 0 ? 3 : 0
+                                      )}{" "}
+                                      {nft.payment_priceType === 0
+                                        ? "ETH"
+                                        : "DYP"}
+                                    </span>
+                                  </div>
                                 </div>
+                                <span
+                                  className="position-absolute top-sale-time"
+                                  style={{ bottom: "-20%", left: "4%" }}
+                                >
+                                  {getRelativeTime(nft.blockTimestamp)}
+                                </span>
                               </div>
-                              <span
-                                className="position-absolute top-sale-time"
-                                style={{ bottom: "-20%", left: '4%' }}
-                              >
-                                {getRelativeTime(nft.blockTimestamp)}
-                              </span>
                             </div>
-                          </div>
-                        </NavLink>
+                          </NavLink>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="d-flex justify-content-center">
+                        <h3
+                          className="text-white"
+                          style={{ textAlign: "center" }}
+                        >
+                          There were no sales for that period.
+                        </h3>
                       </div>
-                    ))
+                    )
                   ) : (
-                    <div className="d-flex justify-content-center">
-                      <h3
-                        className="text-white"
-                        style={{ textAlign: "center" }}
-                      >
-                        There were no sales for that period.
-                      </h3>
+                    <div className="row loader-wrapper gap-0">
+                      <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
+                      <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
+                      <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
+                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
+                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
+                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
+                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
+                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
+                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
+                        <Skeleton
+                          animation="wave"
+                          width={"100%"}
+                          height={72}
+                          variant="rounded"
+                        />
+                      </div>
                     </div>
-                  )
-                ) : (
-                <div className="row loader-wrapper gap-0">
-                 
-            
-                <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
+                  )}
                 </div>
-                <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
-                </div>
-                <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
-                </div>
-                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
-                </div>
-                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
-                </div>
-                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
-                </div>
-                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
-                </div>
-                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
-                </div>
-                <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                  <Skeleton  animation="wave" width={"100%"} height={72} variant="rounded" /> 
-                </div>
-                </div>
-                )}
-              </div>
               </div>
             </div>
 
@@ -970,10 +1019,11 @@ const Marketplace = ({
               </div>
               {loadingRecentListings === false ? (
                 <div className="slider-container">
-                  {recentListed &&
-                      recentListed.length > 0 ?
-                  <Slider ref={(c) => (firstSlider.current = c)} {...settings}>
-                    
+                  {recentListed && recentListed.length > 0 ? (
+                    <Slider
+                      ref={(c) => (firstSlider.current = c)}
+                      {...settings}
+                    >
                       {recentListed.map((nft, index) => (
                         <NavLink
                           to={`/marketplace/nft/${nft.blockTimestamp}/${nft.nftAddress}`}
@@ -1006,14 +1056,14 @@ const Marketplace = ({
                           />
                         </NavLink>
                       ))}
-                       
-                  </Slider>
-                   :
-                   <div className="d-flex w-100 align-items-center justify-content-center">
-                     <h3 className="text-white">There are no listed items for that category.</h3>
-                   </div>  
-                  
-                  }
+                    </Slider>
+                  ) : (
+                    <div className="d-flex w-100 align-items-center justify-content-center">
+                      <h3 className="text-white">
+                        There are no listed items for that category.
+                      </h3>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="loader-wrapper gap-3 justify-content-start  mt-3">
@@ -1026,37 +1076,43 @@ const Marketplace = ({
                   /> */}
                   {windowSize.width > 1600 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1065,31 +1121,36 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1500 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1098,25 +1159,29 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1024 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1125,19 +1190,22 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 600 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1146,13 +1214,15 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 480 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1160,7 +1230,8 @@ const Marketplace = ({
                       />
                     </>
                   ) : (
-                    <Skeleton animation="wave"
+                    <Skeleton
+                      animation="wave"
                       width={178}
                       variant="rounded"
                       height={230}
@@ -1288,37 +1359,43 @@ const Marketplace = ({
                   /> */}
                   {windowSize.width > 1600 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1327,31 +1404,36 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1500 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1360,25 +1442,29 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1024 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1387,19 +1473,22 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 600 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1408,13 +1497,15 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 480 ? (
                     <>
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
                         sx={{ bgcolor: "black.700" }}
                       />
-                      <Skeleton animation="wave"
+                      <Skeleton
+                        animation="wave"
                         width={178}
                         variant="rounded"
                         height={230}
@@ -1422,7 +1513,8 @@ const Marketplace = ({
                       />
                     </>
                   ) : (
-                    <Skeleton animation="wave"
+                    <Skeleton
+                      animation="wave"
                       width={178}
                       variant="rounded"
                       height={230}

@@ -586,7 +586,7 @@ function App() {
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/wod-marketplace/v1.0.0";
+      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
 
     const itemBoughtQuery = `
         {
@@ -638,7 +638,7 @@ function App() {
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/wod-marketplace/v1.0.0";
+      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
 
     const itemBoughtQuery = `
         {
@@ -692,7 +692,7 @@ function App() {
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/wod-marketplace/v1.0.0";
+      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
 
     const itemBoughtQuery = `
       {
@@ -1236,7 +1236,7 @@ function App() {
             />
             <Route
               exact
-              path="/marketplace/events"
+              path="/marketplace/events/:eventId"
               element={
                 <MarketEvents
                   isConnected={isConnected}

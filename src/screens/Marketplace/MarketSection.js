@@ -73,6 +73,7 @@ const MarketSection = ({
       eventImg: "dragon",
       state: "dragon",
       price: 50,
+      eventId: "dragon-ruins",
     },
     {
       eventTitle: "Puzzle Madness",
@@ -80,6 +81,7 @@ const MarketSection = ({
       eventImg: "puzzle",
       state: "idyp",
       price: 3500,
+      eventId: "puzzle-madness",
     },
     {
       eventTitle: "Golden Pass",
@@ -87,12 +89,14 @@ const MarketSection = ({
       eventImg: "golden",
       state: "dyp",
       price: 700,
+      eventId: "golden-pass",
     },
     {
       eventTitle: "Critical Hit",
       eventPrice: "",
       eventImg: "critical",
       state: "criticalHit",
+      eventId: "critical-hit",
     },
   ];
 
@@ -202,7 +206,7 @@ const MarketSection = ({
               eventData.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
-                    to="/marketplace/events"
+                    to={`/marketplace/events/${item.eventId}`}
                     state={{ package: item.state }}
                     style={{ textDecoration: "none" }}
                   >
@@ -318,7 +322,7 @@ const MarketSection = ({
                 eventData.map((item, index) => {
                   return (
                     <NavLink
-                      to="/marketplace/events"
+                      to={`/marketplace/events/${item.eventId}`}
                       state={{ package: item.state }}
                       style={{ textDecoration: "none" }}
                     >
@@ -430,7 +434,7 @@ const MarketSection = ({
         <NavLink
           to={
             activebtn === "events"
-              ? "/marketplace/events"
+              ? "/marketplace/events/dragon-ruins"
               : activebtn === "timepiece"
               ? "/marketplace/timepiece"
               : activebtn === "land"

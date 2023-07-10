@@ -439,7 +439,7 @@ const TimepieceNFT = ({
             ...nft,
             date: date,
             isListed: true,
-            isLatestSale: true,
+            isLatestSale: false,
             LastSold: timepieceArray2[index]?.price,
             soldPriceType: timepieceArray2[index]?.payment_priceType,
           };
