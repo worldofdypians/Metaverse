@@ -148,11 +148,10 @@ function App() {
     await axios
       .get("https://api.dyp.finance/api/the_graph_bsc_v2")
       .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_bsc_v2.token_data
-        );
-        
-        setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
+        // const propertyDyp = Object.entries(
+        //   data.data.the_graph_bsc_v2.token_data
+        // );
+        // setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
 
         const propertyIDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
@@ -160,6 +159,13 @@ function App() {
         setIDypTokenDatabnb(propertyIDyp[1][1].token_price_usd);
       });
   };
+
+  const getTokenDatabnbNew = async () => {
+    await axios.get('https://api.geckoterminal.com/api/v2/networks/bsc/pools/0x3fbca1072fb101e9440bb97be9ef763aac312516').then((res) => {
+      setDypTokenDatabnb(res.data.data.attributes.base_token_price_usd)
+      // console.log(res.data.data.attributes.base_token_price_usd, "Base token price");
+    })
+  }
 
   const handleSwitchChain = async () => {
     const { ethereum } = window;
@@ -981,6 +987,7 @@ function App() {
   useEffect(() => {
     getTokenData();
     getTokenDatabnb();
+    getTokenDatabnbNew();
     getListedNfts2();
     getCawsSold();
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
@@ -1244,7 +1251,7 @@ function App() {
                   listedNFTS={listedNFTS}
                   account={coinbase}
                   chainId={chainId}     
-                  dyptokenDatabnb={dypTokenData}
+                  dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}
                 />
               }
