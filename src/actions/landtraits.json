@@ -56,58 +56,58 @@
       ],
       "traits": {
         "Artifacts": {
-          "2": 414
+          "2": 1000
         },
         "Multi Functional Building": {
-          "1": 414
+          "1": 1000
         },
         "NPC": {
-          "1": 414
+          "1": 1000
         },
         "NPC - AI Powered": {
-          "1": 414
+          "1": 1000
         },
         "Plot": {
           "min": 0,
-          "max": 998
+          "max": 1000
         },
         "Tier": {
-          "genesis": 999
+          "genesis": 1000
         },
         "Size": {
-          "125x125m": 999
+          "125x125m": 1000
         },
         "Building": {
-          "garnet streaks": 201,
-          "amber streaks": 200,
-          "aquamarine streaks": 200,
           "charoite streaks": 202,
+          "garnet streaks": 201,
+          "amber streaks": 201,
+          "aquamarine streaks": 200,
           "emerald streaks": 196
         },
         "Workbench": {
-          "teal tranquility": 256,
-          "emerald elegance": 247,
+          "teal tranquility": 257,
           "scarlet symphony": 251,
+          "emerald elegance": 247,
           "majestic mauve": 245
         },
         "NPC - Attire": {
-          "shadowweave": 164,
+          "celestial": 172,
           "crimson": 168,
           "verdant": 167,
           "sunburst": 166,
-          "nightshade": 162,
-          "celestial": 172
+          "shadowweave": 164,
+          "nightshade": 163
         },
         "Gemstone": {
-          "aquamarine": 108,
-          "charoite": 109,
-          "garnet": 107,
           "amethyst": 117,
-          "black onyx": 111,
-          "diamond": 110,
           "morganite": 114,
           "citrine": 113,
-          "emerald": 110
+          "black onyx": 111,
+          "diamond": 110,
+          "emerald": 110,
+          "aquamarine": 109,
+          "charoite": 109,
+          "garnet": 107
         }
       },
       "stats": {

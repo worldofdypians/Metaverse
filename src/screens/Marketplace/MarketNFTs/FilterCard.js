@@ -38,6 +38,8 @@ const FilterCard = ({filters, categoryIndex, title, value, addProducts, selected
       <div className="d-flex align-items-center">
         <span className="trait-title mb-0">{title === "1" ? "1 (One)" : title === "2" ? "2 (Two)" : title}</span>
       </div>
+      <span className="trait-amount">{value}</span>
+
     </div>
   </div>
   )
