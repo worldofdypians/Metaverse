@@ -796,7 +796,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                 handleOption("genesis");
                 fetchGenesisRecords();
               }}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
             >
               Genesis
             </span>
@@ -804,7 +804,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
               className={`${
                 optionText === "daily" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
               onClick={() => {
                 handleOption("daily");
                 fetchDailyRecords();
@@ -816,7 +816,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
               className={`${
                 optionText === "weekly" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
               onClick={() => {
                 handleOption("weekly");
                 fetchWeeklyRecords();
