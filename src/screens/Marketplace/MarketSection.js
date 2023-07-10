@@ -145,7 +145,14 @@ const MarketSection = ({
     fetchCawsNfts();
     fetchLandNfts();
     fetchTimepieceNfts();
+    firstSlider.current.innerSlider.slickGoTo(0);
   }, [activebtn]);
+
+  useEffect(() => {
+    if (wodListed.length > 0) {
+      firstSlider.current.innerSlider.slickGoTo(0);
+    }
+  }, [wodListed.length]);
 
   return (
     <div className="row px-3 px-lg-5 flex-column justify-content-center text-white gap-4">
@@ -203,7 +210,7 @@ const MarketSection = ({
             {activebtn === "events" &&
               eventData &&
               eventData.length > 0 &&
-              eventData.slice(0, 4).map((item, index) => {
+              eventData.map((item, index) => {
                 return (
                   <NavLink
                     to={`/marketplace/events/${item.eventId}`}
@@ -343,7 +350,7 @@ const MarketSection = ({
               {activebtn === "land" &&
                 wodListed &&
                 wodListed.length > 0 &&
-                wodListed.map((item, index) => {
+                wodListed.slice(0, 4).map((item, index) => {
                   return (
                     <NavLink
                       to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
@@ -373,7 +380,7 @@ const MarketSection = ({
               {activebtn === "caws" &&
                 cawsListed &&
                 cawsListed.length > 0 &&
-                cawsListed.map((item, index) => {
+                cawsListed.slice(0, 4).map((item, index) => {
                   return (
                     <NavLink
                       to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
@@ -402,7 +409,7 @@ const MarketSection = ({
               {activebtn === "timepiece" &&
                 timepieceListed &&
                 timepieceListed.length > 0 &&
-                timepieceListed.map((item, index) => {
+                timepieceListed.slice(0, 4).map((item, index) => {
                   return (
                     <NavLink
                       to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
