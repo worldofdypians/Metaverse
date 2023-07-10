@@ -222,6 +222,37 @@
   color: white;
 }
 
+.offerInput {
+  border-radius: 10px;
+  border: 1px solid #565891;
+  background: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #eeedff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.summaryred {
+  border-radius: 10px;
+  background: rgba(127, 20, 80, 0.2);
+  padding: 10px;
+}
+
+.acceptbtn {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00b0b5 0%, #0082ba 100%);
+  padding: 5px 10px;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
 .instakeWrapper {
   z-index: 4;
   padding: 5px 15px;

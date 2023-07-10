@@ -3568,6 +3568,86 @@ window.isApproved = async (token, type) => {
   }
 };
 
+window.makeOffer = async (nftAddress, tokenId, price, priceType) => {
+  let price_address;
+
+  if (priceType === 0) {
+    price_address = "0x0000000000000000000000000000000000000000";
+  }
+
+  if (priceType === 1) {
+    price_address = window.config.dyp_token_address;
+  }
+
+  const marketplace = new window.web3.eth.Contract(
+    window.MARKETPLACE_ABI,
+    window.config.nft_marketplace_address
+  );
+  console.log(nftAddress, tokenId, price, [priceType, price_address])
+  await marketplace.methods
+    .makeOffer(nftAddress, tokenId, price, [priceType, price_address])
+    .send({ from: await getCoinbase() });
+};
+
+
+window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
+  
+
+  const marketplace = new window.web3.eth.Contract(
+    window.MARKETPLACE_ABI,
+    window.config.nft_marketplace_address
+  );
+  
+  await marketplace.methods
+    .cancelOffer(nftAddress, tokenId, offerIndex)
+    .send({ from: await getCoinbase() });
+};
+
+
+
+window.updateOffer = async (nftAddress, tokenId, offerIndex, newPrice, priceType) => {
+  
+  let price_address;
+
+  if (priceType === 0) {
+    price_address = "0x0000000000000000000000000000000000000000";
+  }
+
+  if (priceType === 1) {
+    price_address = window.config.dyp_token_address;
+  }
+
+  const marketplace = new window.web3.eth.Contract(
+    window.MARKETPLACE_ABI,
+    window.config.nft_marketplace_address
+  );
+  console.log(nftAddress, tokenId, offerIndex,  newPrice, [priceType, price_address])
+  await marketplace.methods
+    .updateOffer(nftAddress, tokenId, offerIndex,  newPrice, [priceType, price_address])
+    .send({ from: await getCoinbase() });
+};
+
+
+
+
+
+window.getAllOffers = async (nftAddress, tokenId)=>{
+  //getActiveOffers
+
+  const marketplace = new window.web3.eth.Contract(
+    window.MARKETPLACE_ABI,
+    window.config.nft_marketplace_address
+  ); 
+ console.log(nftAddress, tokenId)
+  const result = await marketplace.methods
+    .getActiveOffers(nftAddress, tokenId)
+    .call();
+
+   
+
+    return result
+}
+
 async function getFavoritesETH2() {
   return JSON.parse(localStorage.getItem("favoritesETH") || `[]`);
 }
@@ -9269,6 +9349,7 @@ window.TIMEPIECE_ABI = [
 ];
 
 window.MARKETPLACE_ABI = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
     inputs: [
@@ -9399,6 +9480,170 @@ window.MARKETPLACE_ABI = [
     type: "event",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "buyer",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "nftAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
+      },
+      {
+        components: [
+          {
+            internalType: "enum Marketplace.PriceType",
+            name: "priceType",
+            type: "uint8",
+          },
+          { internalType: "address", name: "tokenAddress", type: "address" },
+        ],
+        indexed: false,
+        internalType: "struct Marketplace.Payment",
+        name: "payment",
+        type: "tuple",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "offerIndex",
+        type: "uint256",
+      },
+    ],
+    name: "OfferCanceled",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "buyer",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "nftAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
+      },
+      {
+        components: [
+          {
+            internalType: "enum Marketplace.PriceType",
+            name: "priceType",
+            type: "uint8",
+          },
+          { internalType: "address", name: "tokenAddress", type: "address" },
+        ],
+        indexed: false,
+        internalType: "struct Marketplace.Payment",
+        name: "payment",
+        type: "tuple",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "offerIndex",
+        type: "uint256",
+      },
+    ],
+    name: "OfferMade",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "buyer",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "nftAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newPrice",
+        type: "uint256",
+      },
+      {
+        components: [
+          {
+            internalType: "enum Marketplace.PriceType",
+            name: "priceType",
+            type: "uint8",
+          },
+          { internalType: "address", name: "tokenAddress", type: "address" },
+        ],
+        indexed: false,
+        internalType: "struct Marketplace.Payment",
+        name: "payment",
+        type: "tuple",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "offerIndex",
+        type: "uint256",
+      },
+    ],
+    name: "OfferUpdated",
+    type: "event",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "uint256", name: "offerIndex", type: "uint256" },
+    ],
+    name: "acceptOffer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "nftAddress", type: "address" },
       { internalType: "uint256", name: "tokenId", type: "uint256" },
@@ -9419,6 +9664,16 @@ window.MARKETPLACE_ABI = [
     name: "buyItem",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "cancelAnyListing",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -9447,19 +9702,55 @@ window.MARKETPLACE_ABI = [
   {
     inputs: [
       { internalType: "address", name: "nftAddress", type: "address" },
-      { internalType: "uint256", name: "index", type: "uint256" },
-    ],
-    name: "getListingByIndex",
-    outputs: [
-      { internalType: "address", name: "owner", type: "address" },
       { internalType: "uint256", name: "tokenId", type: "uint256" },
-      { internalType: "uint256", name: "price", type: "uint256" },
+      { internalType: "uint256", name: "offerIndex", type: "uint256" },
+    ],
+    name: "cancelOffer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "getActiveOffers",
+    outputs: [
       {
-        internalType: "enum Marketplace.PriceType",
-        name: "priceType",
-        type: "uint8",
+        components: [
+          { internalType: "uint256", name: "index", type: "uint256" },
+          {
+            components: [
+              { internalType: "uint256", name: "price", type: "uint256" },
+              { internalType: "address", name: "buyer", type: "address" },
+              {
+                components: [
+                  {
+                    internalType: "enum Marketplace.PriceType",
+                    name: "priceType",
+                    type: "uint8",
+                  },
+                  {
+                    internalType: "address",
+                    name: "tokenAddress",
+                    type: "address",
+                  },
+                ],
+                internalType: "struct Marketplace.Payment",
+                name: "payment",
+                type: "tuple",
+              },
+            ],
+            internalType: "struct Marketplace.Offer",
+            name: "offer",
+            type: "tuple",
+          },
+        ],
+        internalType: "struct Marketplace.OfferWithIndex[]",
+        name: "",
+        type: "tuple[]",
       },
-      { internalType: "address", name: "tokenAddress", type: "address" },
     ],
     stateMutability: "view",
     type: "function",
@@ -9492,6 +9783,30 @@ window.MARKETPLACE_ABI = [
     inputs: [
       { internalType: "address", name: "nftAddress", type: "address" },
       { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "uint256", name: "price", type: "uint256" },
+      {
+        components: [
+          {
+            internalType: "enum Marketplace.PriceType",
+            name: "priceType",
+            type: "uint8",
+          },
+          { internalType: "address", name: "tokenAddress", type: "address" },
+        ],
+        internalType: "struct Marketplace.Payment",
+        name: "payment",
+        type: "tuple",
+      },
+    ],
+    name: "makeOffer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
       { internalType: "uint256", name: "newPrice", type: "uint256" },
       {
         components: [
@@ -9508,6 +9823,31 @@ window.MARKETPLACE_ABI = [
       },
     ],
     name: "updateListing",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "uint256", name: "offerIndex", type: "uint256" },
+      { internalType: "uint256", name: "newPrice", type: "uint256" },
+      {
+        components: [
+          {
+            internalType: "enum Marketplace.PriceType",
+            name: "priceType",
+            type: "uint8",
+          },
+          { internalType: "address", name: "tokenAddress", type: "address" },
+        ],
+        internalType: "struct Marketplace.Payment",
+        name: "newPayment",
+        type: "tuple",
+      },
+    ],
+    name: "updateOffer",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
