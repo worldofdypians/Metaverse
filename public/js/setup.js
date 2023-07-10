@@ -3357,14 +3357,12 @@ window.isApprovedNFT = async (token, type, address) => {
     );
 
     let approved = await contract.methods.getApproved(token).call();
-    
+
     let approvedAll = await contract.methods
       .isApprovedForAll(address, window.config.nft_marketplace_address)
       .call();
 
-    console.log(
-      approvedAll, 'approvedAll'
-    );
+    console.log(approvedAll, "approvedAll");
     approved = approved.toLowerCase();
 
     if (approved === window.config.nft_marketplace_address || approvedAll) {

@@ -350,7 +350,15 @@ const SingleNft = ({
   };
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
-    const isApproved = await isApprovedNFT(tokenId, type, coinbase);
+    const isApproved = await isApprovedNFT(
+      nftId,
+      nftAddress === window.config.nft_caws_address
+        ? "caws"
+        : nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : "land",
+      coinbase
+    );
     const newPrice = new BigNumber(nftPrice * 1e18).toFixed();
     console.log(newPrice, isApproved);
     if (isApproved) {
@@ -361,7 +369,7 @@ const SingleNft = ({
       setPurchaseColor("#00FECF");
 
       await window
-        .listNFT(tokenId, newPrice, priceType, type)
+        .listNFT(nftId, newPrice, priceType, type)
         .then((result) => {
           setsellLoading(false);
           setsellStatus("success");
@@ -369,9 +377,9 @@ const SingleNft = ({
           setPurchaseColor("#00FECF");
           setShowToast(true);
           handleRefreshList(
-            nft.type ?? nft.nftAddress === window.config.nft_caws_address
+           nftAddress === window.config.nft_caws_address
               ? "caws"
-              : nft.nftAddress === window.config.nft_timepiece_address
+              : nftAddress === window.config.nft_timepiece_address
               ? "timepiece"
               : "land",
             tokenId
@@ -826,7 +834,15 @@ const SingleNft = ({
         });
       } else if (!IsListed) {
         // console.log(nft);
-        isApprovedNFT(nftId, type, coinbase).then((isApproved) => {
+        isApprovedNFT(
+          nftId,
+          nftAddress === window.config.nft_caws_address
+            ? "caws"
+            : nftAddress === window.config.nft_timepiece_address
+            ? "timepiece"
+            : "land",
+          coinbase
+        ).then((isApproved) => {
           console.log("isApproved", isApproved);
           if (isApproved === true) {
             setsellStatus("sell");
@@ -851,8 +867,7 @@ const SingleNft = ({
 
     if ((coinbase === undefined || !nft.price) && !owner) {
       setisOwner(false);
-    } 
-    else if (coinbase) {
+    } else if (coinbase) {
       if (nft.seller) {
         if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
           setisOwner(true);
@@ -862,10 +877,9 @@ const SingleNft = ({
         coinbase &&
         nft.buyer.toLowerCase() === coinbase.toLowerCase()
       ) {
-        setisOwner(true); 
-      }
-      else if (owner.toLowerCase() === coinbase.toLowerCase()) {
-        setisOwner(true); 
+        setisOwner(true);
+      } else if (owner.toLowerCase() === coinbase.toLowerCase()) {
+        setisOwner(true);
       }
     }
   }, [isConnected, isOwner, IsListed, coinbase, nft, owner]);
@@ -1241,15 +1255,20 @@ const SingleNft = ({
                                   priceType === 0 && nft.payment_priceType === 0
                                     ? "currencyWrapper"
                                     : "currencyWrapper-inactive"
-                                } ${nft.payment_priceType === 1 && 'currency-wrapper-disabled'}`}
+                                } ${
+                                  nft.payment_priceType === 1 &&
+                                  "currency-wrapper-disabled"
+                                }`}
                                 onClick={() => {
                                   setPriceType(0);
                                 }}
-                                
                               >
                                 <img
                                   src={
-                                    priceType === 0 && nft.payment_priceType === 0 ? checkActive : checkPassive
+                                    priceType === 0 &&
+                                    nft.payment_priceType === 0
+                                      ? checkActive
+                                      : checkPassive
                                   }
                                   alt=""
                                   className={"position-absolute checkicons"}
@@ -1270,7 +1289,10 @@ const SingleNft = ({
                                   nft.payment_priceType === 1
                                     ? "currencyWrapper"
                                     : "currencyWrapper-inactive"
-                                } ${nft.payment_priceType === 0 && 'currency-wrapper-disabled'}`}
+                                } ${
+                                  nft.payment_priceType === 0 &&
+                                  "currency-wrapper-disabled"
+                                }`}
                                 onClick={() => {
                                   setPriceType(1);
                                 }}
@@ -1633,7 +1655,7 @@ const SingleNft = ({
                         </button>
                       )}
 
-                      {!isConnected  && (
+                      {!isConnected && (
                         <button
                           className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                           onClick={() => {
