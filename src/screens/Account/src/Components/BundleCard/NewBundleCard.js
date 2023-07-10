@@ -717,6 +717,7 @@ idyptokenDatabnb
     checkApproval3500();
     checkApproval();
     increaseBundle();
+    console.log(dyptokenDatabnb, "das price");
   }, [
     coinbase,
     chainId,

@@ -88,7 +88,7 @@ const MarketSidebar = () => {
                 id="collapseOne"
                 className={`accordion-collapse collapse ${
                   location.pathname.includes("caws") ||
-                  location.pathname.includes("wod") ||
+                  location.pathname.includes("land") ||
                   location.pathname.includes("timepiece")
                     ? "show"
                     : null
