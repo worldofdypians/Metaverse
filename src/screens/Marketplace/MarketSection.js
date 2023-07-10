@@ -145,12 +145,13 @@ const MarketSection = ({
     fetchCawsNfts();
     fetchLandNfts();
     fetchTimepieceNfts();
-    firstSlider.current.innerSlider.slickGoTo(0);
+
+    firstSlider?.current?.innerSlider?.slickGoTo(0);
   }, [activebtn]);
 
   useEffect(() => {
     if (wodListed.length > 0) {
-      firstSlider.current.innerSlider.slickGoTo(0);
+      firstSlider?.current?.innerSlider?.slickGoTo(0);
     }
   }, [wodListed.length]);
 
