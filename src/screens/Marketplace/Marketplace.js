@@ -884,7 +884,7 @@ const Marketplace = ({
                       <div className="d-flex justify-content-center">
                         <h3
                           className="text-white"
-                          style={{ textAlign: "center" }}
+                          style={{ textAlign: "center", marginTop: '100px' }}
                         >
                           There were no sales for that period.
                         </h3>
@@ -1240,7 +1240,7 @@ const Marketplace = ({
                   ) : (
                     <Skeleton
                       animation="wave"
-                      width={178}
+                      width={"100%"}
                       variant="rounded"
                       height={230}
                       sx={{ bgcolor: "black.700" }}
@@ -1523,9 +1523,9 @@ const Marketplace = ({
                   ) : (
                     <Skeleton
                       animation="wave"
-                      width={178}
+                      width={"100%"}
                       variant="rounded"
-                      height={230}
+                      height={360}
                       sx={{ bgcolor: "black.700" }}
                     />
                   )}
