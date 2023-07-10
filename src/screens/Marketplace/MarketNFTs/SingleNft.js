@@ -849,13 +849,12 @@ const SingleNft = ({
       });
     }
 
-    if (coinbase === undefined || !nft.price) {
+    if ((coinbase === undefined || !nft.price) && !owner) {
       setisOwner(false);
     } 
     else if (coinbase) {
       if (nft.seller) {
         if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
-         
           setisOwner(true);
         }
       } else if (
@@ -865,8 +864,11 @@ const SingleNft = ({
       ) {
         setisOwner(true); 
       }
+      else if (owner.toLowerCase() === coinbase.toLowerCase()) {
+        setisOwner(true); 
+      }
     }
-  }, [isConnected, isOwner, IsListed, coinbase, nft]);
+  }, [isConnected, isOwner, IsListed, coinbase, nft, owner]);
 
   useEffect(() => {
     getNftOwner(
@@ -1631,7 +1633,7 @@ const SingleNft = ({
                         </button>
                       )}
 
-                      {!isConnected && nft.price && (
+                      {!isConnected  && (
                         <button
                           className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                           onClick={() => {
