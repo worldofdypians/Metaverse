@@ -819,9 +819,7 @@ const CawsNFT = ({
                     <>
                       {cawsNFTS.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${
-                            nft.blockTimestamp ?? index
-                          }/${nft.nftAddress}`}
+                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1137,7 +1135,7 @@ const CawsNFT = ({
                     <>
                       {cawsNFTS2.slice(0, next2).map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${index}/${nft.nftAddress}`}
+                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{

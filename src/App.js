@@ -998,19 +998,18 @@ function App() {
     getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
       settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
     );
+    getallNfts();
   }, [nftCount]);
 
-  useEffect(() => {
-    getListedNfts2();
-  }, [recentListedNFTS2?.length, listedNFTS2?.length, nftCount]);
-
-  useEffect(() => {
-    // const interval = setInterval(() => {
+  useEffect(()=>{
+    if(listedNFTS2.length>0 && recentListedNFTS2.length>0) {
     getOtherNfts();
-    getallNfts();
-    // }, 3000);
-    // return () => clearInterval(interval);
-  }, [recentListedNFTS2?.length, listedNFTS2?.length, nftCount]);
+
+    }
+  },[listedNFTS2?.length, recentListedNFTS2?.length,nftCount])
+
+
+ 
 
   useEffect(() => {
     if (
@@ -1072,7 +1071,7 @@ function App() {
                   handleDownload={handleDownload}
                   coinbase={coinbase}
                   ethTokenData={ethTokenData}
-                  dyptokenDatabnb={dypTokenData}
+                  dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}
                 />
               }

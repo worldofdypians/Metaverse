@@ -25,6 +25,8 @@ import favActive from "./assets/favActive.svg";
 import favInactive from "./assets/favInactive.svg";
 import cart from "./assets/cart.svg";
 import link from "./assets/link.svg";
+import { useParams } from "react-router-dom";
+import { HashLoader } from "react-spinners";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -131,6 +133,9 @@ const SingleNft = ({
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [owner, setowner] = useState("");
+  const [loadingNft, setloadingNft] = useState(false);
+
+  const { nftId, nftAddress } = useParams();
 
   const {
     data,
@@ -139,6 +144,12 @@ const SingleNft = ({
   } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
+
+  const override = {
+    display: "block",
+    margin: "auto",
+    borderColor: "#554fd8",
+  };
 
   const getTokenData = async () => {
     await axios
@@ -155,20 +166,20 @@ const SingleNft = ({
       });
   };
 
-  const getNftOwner = async (type, nftId) => {
+  const getNftOwner = async (type, Id) => {
     if (type === "timepiece") {
-      const nftowner = await window.caws_timepiece.ownerOf(nftId).catch((e) => {
+      const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
         console.log(e);
       });
       console.log(nftowner);
       setowner(nftowner);
     } else if (type === "land") {
-      const nftowner = await window.landnft.ownerOf(nftId).catch((e) => {
+      const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
         console.log(e);
       });
       setowner(nftowner);
     } else if (type === "caws") {
-      const nftowner = await window.nft.ownerOf(nftId).catch((e) => {
+      const nftowner = await window.nft.ownerOf(Id).catch((e) => {
         console.log(e);
       });
 
@@ -176,20 +187,18 @@ const SingleNft = ({
     }
   };
 
-  const getMetaData = async () => {
-    if (nft) {
-      if (type === "caws") {
-        const result = await window.getNft(nft.tokenId);
+  const getMetaData = async (addr, tokenid) => {
+    if (addr === window.config.nft_caws_address) {
+      const result = await window.getNft(tokenid);
 
-        setmetaData(result);
-      } else if (type === "land") {
-        const result = await window.getLandNft(nft.tokenId);
-        setmetaData(result);
-      } else if (type === "timepiece") {
-        const result = await window.getTimepieceNft(nft.tokenId);
-        setmetaData(result);
-      }
-    } else console.log("no");
+      setmetaData(result);
+    } else if (addr === window.config.nft_land_address) {
+      const result = await window.getLandNft(tokenid);
+      setmetaData(result);
+    } else if (addr === window.config.nft_timepiece_address) {
+      const result = await window.getTimepieceNft(tokenid);
+      setmetaData(result);
+    }
   };
 
   const isApprovedBuy = async (amount) => {
@@ -202,7 +211,6 @@ const SingleNft = ({
 
   // console.log(window)
   async function isApprovedNFT(nft, type, coinbase) {
-   
     const result = await window
       .isApprovedNFT(nft, type, coinbase)
       .catch((e) => {
@@ -472,7 +480,6 @@ const SingleNft = ({
           finalboughtItems.push(nft);
         }
       });
-    console.log(finalboughtItems);
 
     setsaleHistory(finalboughtItems);
     return finalboughtItems;
@@ -727,18 +734,35 @@ const SingleNft = ({
       });
   }
 
-  async function isListedNFT(nft, type, details = false) {
+  async function isListedNFT(tokenId, addr) {
     const listedNFTS = await getListedNFTS(
       0,
       "",
       "nftAddress_tokenId",
-      nft.tokenId,
-      nft.nftAddress
+      tokenId,
+      addr
     );
 
     return listedNFTS.length > 0;
   }
 
+  async function checkisListedNFT(tokenId, nftAddr) {
+    setloadingNft(true);
+    const listedNFTS = await getListedNFTS(
+      0,
+      "",
+      "nftAddress_tokenId",
+      tokenId,
+      nftAddr
+    );
+    if (listedNFTS.length > 0) {
+      setNft(...listedNFTS);
+      setloadingNft(false);
+    } else {
+      setNft([]);
+      setloadingNft(false);
+    }
+  }
   //to get the favorites count
   async function getFavoritesCount(tokenId, nftAddress) {
     try {
@@ -802,7 +826,7 @@ const SingleNft = ({
         });
       } else if (!IsListed) {
         // console.log(nft);
-        isApprovedNFT(nft.tokenId, type, coinbase).then((isApproved) => {
+        isApprovedNFT(nftId, type, coinbase).then((isApproved) => {
           console.log("isApproved", isApproved);
           if (isApproved === true) {
             setsellStatus("sell");
@@ -815,98 +839,80 @@ const SingleNft = ({
       }
     }
     // }
-  }, [nft.price, isConnected, IsListed, isOwner, coinbase, nftCount]);
+  }, [isConnected, IsListed, isOwner, coinbase, nftCount]);
 
   useEffect(() => {
-    if (isConnected === true && nft.payment_priceType === 1) {
+    if (isConnected === true && nft && nft.payment_priceType === 1) {
       isApprovedBuy(nft.price).then((isApproved) => {
         // console.log(isApproved);
         setIsApprove(isApproved);
       });
     }
 
-    if (coinbase === undefined) {
+    if (coinbase === undefined || !nft.price) {
       setisOwner(false);
-    } else if (coinbase) {
-      if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
-        setisOwner(true);
+    } 
+    else if (coinbase) {
+      if (nft.seller) {
+        if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
+         
+          setisOwner(true);
+        }
       } else if (
         nft.buyer &&
         coinbase &&
         nft.buyer.toLowerCase() === coinbase.toLowerCase()
       ) {
-        setisOwner(true);
+        setisOwner(true); 
       }
     }
-
-    // else if (data?.getPlayer?.wallet && email && coinbase) {
-    //   if (
-    //     nft.seller &&
-    //     nft.seller.toLowerCase() ===
-    //       data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
-    //   ) {
-    //     setisOwner(true);
-    //   } else
-
-    //   if (
-    //     nft.buyer &&
-    //     nft.buyer.toLowerCase() ===
-    //       data?.getPlayer?.wallet?.publicAddress?.toLowerCase()
-    //   ) {
-    //     setisOwner(true);
-    //   }
-    // }
-    // else if (coinbase && !data?.getPlayer?.wallet && !email) {
-    //   if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
-    //     setisOwner(true);
-    //   } else if (
-    //     nft.buyer &&
-    //     nft.buyer.toLowerCase() === coinbase.toLowerCase()
-    //   ) {
-    //     setisOwner(true);
-    //   } else setisOwner(false);
-    // }
-  }, [nft.price, isConnected, isOwner, IsListed, coinbase]);
+  }, [isConnected, isOwner, IsListed, coinbase, nft]);
 
   useEffect(() => {
-    if (type) {
-      getMetaData();
-      isListedNFT(nft, type).then((isListed) => {
-        setIsListed(isListed);
-      });
-      getNftOwner(type, nft.tokenId);
-      handleRefreshList(
-        nft.type ?? nft.nftAddress === window.config.nft_caws_address
-          ? "caws"
-          : nft.nftAddress === window.config.nft_timepiece_address
-          ? "timepiece"
-          : "land",
-        nft.tokenId
-      );
-    }
-  }, [type, nftCount]);
+    getNftOwner(
+      nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : nftAddress === window.config.nft_land_address
+        ? "land"
+        : "caws",
+      nftId
+    );
+    handleRefreshList(
+      nftAddress === window.config.nft_caws_address
+        ? "caws"
+        : nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : "land",
+      nftId
+    );
+  }, [type, nftId, nftAddress, nftCount]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
+    checkisListedNFT(nftId, nftAddress);
+    isListedNFT(nftId, nftAddress).then((isListed) => {
+      setIsListed(isListed);
+    });
+    getFavoritesCount(nftId, nftAddress);
+    getLatest20BoughtNFTS(nftAddress, nftId);
+    getViewCount(nftId, nftAddress);
   }, []);
 
   useEffect(() => {
-    if (nft) {
-      getLatest20BoughtNFTS(nft.nftAddress, nft.tokenId);
+    if (nft.tokenId) {
       getFavoritesCount(nft.tokenId, nft.nftAddress);
       setNft(nft);
-      // setType(
-      //   nft.type ?? nft.nftAddress === window.config.nft_caws_address
-      //     ? "caws"
-      //     : nft.nftAddress === window.config.nft_timepiece_address
-      //     ? "timepiece"
-      //     : "land"
-      // );
-
-      getViewCount(nft.tokenId, nft.nftAddress);
     }
-  }, [nft]);
+    if (nftAddress === window.config.nft_caws_address) {
+      setType("caws");
+    } else if (nftAddress === window.config.nft_timepiece_address) {
+      setType("timepiece");
+    } else if (nftAddress === window.config.nft_land_address) {
+      setType("land");
+    }
+    getMetaData(nftAddress, nftId);
+  }, [nftId, nftAddress, nft]);
 
   useEffect(() => {
     if (nft) {
@@ -992,11 +998,11 @@ const SingleNft = ({
                   <img
                     className="blur-img blur-img-big"
                     src={
-                      type === "caws"
-                        ? `https://mint.dyp.finance/thumbs/${nft.tokenId}.png`
-                        : type === "land"
-                        ? `https://mint.worldofdypians.com/thumbs/${nft.tokenId}.png`
-                        : `https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`
+                      nftAddress === window.config.nft_caws_address
+                        ? `https://mint.dyp.finance/thumbs/${nftId}.png`
+                        : nftAddress === window.config.nft_land_address
+                        ? `https://mint.worldofdypians.com/thumbs/${nftId}.png`
+                        : `https://timepiece.worldofdypians.com/images/${nftId}.png`
                     }
                     alt=""
                   />
@@ -1027,7 +1033,7 @@ const SingleNft = ({
                         : type === "land"
                         ? "Genesis Land"
                         : "CAWS Timepiece"}{" "}
-                      #{nft.tokenId}
+                      #{nftId}
                       <img
                         src={isFavorite ? favActive : favInactive}
                         onClick={() => {
@@ -1037,10 +1043,15 @@ const SingleNft = ({
                         style={{ cursor: "pointer" }}
                       />
                     </h3>
-                    {isOwner && IsListed && (
-                      <div className="d-flex gap-2 align-items-center">
-                        <span className="currentprice-txt">Current price</span>
-                        {/* <StyledTextField
+                    {isOwner &&
+                      IsListed &&
+                      nft.price &&
+                      loadingNft === false && (
+                        <div className="d-flex gap-2 align-items-center">
+                          <span className="currentprice-txt">
+                            Current price
+                          </span>
+                          {/* <StyledTextField
                         error={nftPrice === "" ? true : false}
                         size="small"
                         id="price"
@@ -1058,112 +1069,99 @@ const SingleNft = ({
                           max: 10,
                         }}
                       /> */}
-                        <div className="d-flex gap-2 align-items-center">
-                          <img
-                            src={nft.payment_priceType === 0 ? topEth : topDyp}
-                            alt=""
-                            height={20}
-                            width={20}
+                          <div className="d-flex gap-2 align-items-center">
+                            <img
+                              src={
+                                nft?.payment_priceType === 0 ? topEth : topDyp
+                              }
+                              alt=""
+                              height={20}
+                              width={20}
+                            />
+                            <span
+                              className="nft-price-eth"
+                              style={{ fontSize: 15, lineHeight: "20px" }}
+                            >
+                              {getFormattedNumber(
+                                nft?.price / 1e18,
+                                nft?.payment_priceType === 0 ? 3 : 0
+                              )}{" "}
+                              {nft?.payment_priceType === 0 ? "ETH" : "DYP"}
+                            </span>
+                            <span className="nft-price-usd">
+                              $
+                              {getFormattedNumber(
+                                nft?.payment_priceType === 0
+                                  ? ethtokenData * (nft?.price / 1e18)
+                                  : dyptokenData * (nft?.price / 1e18),
+                                2
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    {!isOwner &&
+                      IsListed &&
+                      nft.price &&
+                      loadingNft === false && (
+                        <div className="price-wrapper p-3">
+                          <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
+                            <span className="currentprice-txt">
+                              Current price
+                            </span>
+                            <div className="d-flex gap-2 align-items-center">
+                              <img
+                                src={
+                                  nft?.payment_priceType === 0 ? topEth : topDyp
+                                }
+                                alt=""
+                                height={30}
+                                width={30}
+                              />
+                              <span className="nft-price-eth">
+                                {getFormattedNumber(
+                                  nft?.price / 1e18,
+                                  nft?.payment_priceType === 0 ? 3 : 0
+                                )}{" "}
+                                {nft?.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+                              </span>
+                              <span className="nft-price-usd">
+                                $
+                                {getFormattedNumber(
+                                  nft?.payment_priceType === 0
+                                    ? ethtokenData * (nft?.price / 1e18)
+                                    : dyptokenData * (nft?.price / 1e18),
+                                  2
+                                )}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    {loadingNft === true && (
+                      <div className="price-wrapper p-3">
+                        <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
+                          <HashLoader
+                            color={"#554fd8"}
+                            loading={loadingNft}
+                            cssOverride={override}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
                           />
-                          <span
-                            className="nft-price-eth"
-                            style={{ fontSize: 15, lineHeight: "20px" }}
-                          >
-                            {getFormattedNumber(
-                              nft.price / 1e18,
-                              nft.payment_priceType === 0 ? 3 : 0
-                            )}{" "}
-                            {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                          </span>
-                          <span className="nft-price-usd">
-                            $
-                            {getFormattedNumber(
-                              nft.payment_priceType === 0
-                                ? ethtokenData * (nft.price / 1e18)
-                                : dyptokenData * (nft.price / 1e18),
-                              2
-                            )}
-                          </span>
                         </div>
                       </div>
                     )}
-                    {!isOwner && IsListed && (
-                      <div className="price-wrapper p-3">
-                        <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
-                          <span className="currentprice-txt">
-                            Current price
-                          </span>
-                          <div className="d-flex gap-2 align-items-center">
-                            <img
-                              src={
-                                nft.payment_priceType === 0 ? topEth : topDyp
-                              }
-                              alt=""
-                              height={30}
-                              width={30}
-                            />
-                            <span className="nft-price-eth">
-                              {getFormattedNumber(
-                                nft.price / 1e18,
-                                nft.payment_priceType === 0 ? 3 : 0
-                              )}{" "}
-                              {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+
+                    {!isOwner &&
+                      !IsListed &&
+                      !nft.price &&
+                      loadingNft === false && (
+                        <div className="price-wrapper p-3">
+                          <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
+                            <span className="currentprice-txt">
+                              This NFT is not listed
                             </span>
-                            <span className="nft-price-usd">
-                              $
-                              {getFormattedNumber(
-                                nft.payment_priceType === 0
-                                  ? ethtokenData * (nft.price / 1e18)
-                                  : dyptokenData * (nft.price / 1e18),
-                                2
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {!isOwner && !IsListed && nft.price && (
-                      <div className="price-wrapper p-3">
-                        <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
-                          <span className="currentprice-txt">
-                            Current price
-                          </span>
-                          <div className="d-flex gap-2 align-items-center">
-                            <img
-                              src={
-                                nft.payment_priceType === 0 ? topEth : topDyp
-                              }
-                              alt=""
-                              height={30}
-                              width={30}
-                            />
-                            <span className="nft-price-eth">
-                              {getFormattedNumber(
-                                nft.price / 1e18,
-                                nft.payment_priceType === 0 ? 3 : 0
-                              )}{" "}
-                              {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
-                            </span>
-                            <span className="nft-price-usd">
-                              $
-                              {getFormattedNumber(
-                                nft.payment_priceType === 0
-                                  ? ethtokenData * (nft.price / 1e18)
-                                  : dyptokenData * (nft.price / 1e18),
-                                2
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {!isOwner && !IsListed && !nft.price && (
-                      <div className="price-wrapper p-3">
-                        <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
-                          <span className="currentprice-txt">
-                            This NFT is not listed
-                          </span>
-                          {/* <div className="d-flex gap-2 align-items-center">
+                            {/* <div className="d-flex gap-2 align-items-center">
                           <img
                             src={nft.payment_priceType === 0 ? topEth : topDyp}
                             alt=""
@@ -1184,10 +1182,10 @@ const SingleNft = ({
                             )}
                           </span>
                         </div> */}
+                          </div>
                         </div>
-                      </div>
-                    )}
-                    {isOwner && IsListed && (
+                      )}
+                    {isOwner && IsListed && loadingNft === false && (
                       <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                         <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                           <div className="d-flex w-100 justify-content-between flex-column gap-2">
@@ -1216,12 +1214,12 @@ const SingleNft = ({
                                     inputMode: "numeric",
                                   }}
                                 />
-                                {priceType === 0 ? "ETH" : "DYP"}{" "}
+                                {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                               </span>
                               <span className="nft-price-usd">
                                 $
                                 {getFormattedNumber(
-                                  priceType === 0
+                                  nft.payment_priceType === 0
                                     ? ethtokenData * nftPrice
                                     : dyptokenData * nftPrice,
                                   2
@@ -1238,17 +1236,18 @@ const SingleNft = ({
                             <div className="d-flex flex-row justify-content-around w-100 gap-2">
                               <div
                                 className={`d-flex gap-2 align-items-center position-relative ${
-                                  priceType === 0
+                                  priceType === 0 && nft.payment_priceType === 0
                                     ? "currencyWrapper"
                                     : "currencyWrapper-inactive"
-                                } `}
+                                } ${nft.payment_priceType === 1 && 'currency-wrapper-disabled'}`}
                                 onClick={() => {
                                   setPriceType(0);
                                 }}
+                                
                               >
                                 <img
                                   src={
-                                    priceType === 0 ? checkActive : checkPassive
+                                    priceType === 0 && nft.payment_priceType === 0 ? checkActive : checkPassive
                                   }
                                   alt=""
                                   className={"position-absolute checkicons"}
@@ -1266,19 +1265,17 @@ const SingleNft = ({
 
                               <div
                                 className={`d-flex gap-2 align-items-center position-relative ${
-                                  priceType === 1
+                                  nft.payment_priceType === 1
                                     ? "currencyWrapper"
                                     : "currencyWrapper-inactive"
-                                } `}
+                                } ${nft.payment_priceType === 0 && 'currency-wrapper-disabled'}`}
                                 onClick={() => {
                                   setPriceType(1);
                                 }}
                               >
                                 <img
                                   src={
-                                    priceType === 0
-                                      ? checkPassive
-                                      : priceType === 1
+                                    nft.payment_priceType === 1
                                       ? checkActive
                                       : checkPassive
                                   }
@@ -1300,7 +1297,7 @@ const SingleNft = ({
                         </div>
                       </div>
                     )}
-                    {isOwner && !IsListed && (
+                    {isOwner && !IsListed && loadingNft === false && (
                       <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                         <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                           <div className="d-flex w-100 justify-content-between flex-column ">
