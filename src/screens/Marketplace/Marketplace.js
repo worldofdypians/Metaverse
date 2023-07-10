@@ -614,7 +614,9 @@ const Marketplace = ({
                 <div className="d-flex justify-content-center">
                   <div className="new-packages-grid mb-3">
                     <div className="">
-                      <div
+                      <NavLink
+                         to="/marketplace/events/dragon-ruins"
+                         state={{ package: "dragon" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -626,10 +628,12 @@ const Marketplace = ({
                         <span className="event-package-title">
                           Dragon Ruins
                         </span>
-                      </div>
+                      </NavLink>
                     </div>
                     <div className="">
-                      <div
+                      <NavLink
+                      to="/marketplace/events/golden-pass"
+                      state={{ package: "dyp" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -639,11 +643,13 @@ const Marketplace = ({
                           alt=""
                         />
                         <span className="event-package-title">Golden Pass</span>
-                      </div>
+                      </NavLink>
                     </div>
 
                     <div className="">
-                      <div
+                      <NavLink
+                       to="/marketplace/events/puzzle-madness"
+                       state={{ package: "idyp" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -655,11 +661,13 @@ const Marketplace = ({
                         <span className="event-package-title">
                           Puzzle Madness
                         </span>
-                      </div>
+                      </NavLink>
                     </div>
 
                     <div className="">
-                      <div
+                      <NavLink
+                 to="/marketplace/events/critical-hit"
+                 state={{ package: "criticalHit" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -671,7 +679,7 @@ const Marketplace = ({
                         <span className="event-package-title">
                           Critical Hit
                         </span>
-                      </div>
+                      </NavLink>
                     </div>
                   </div>
                 </div>
