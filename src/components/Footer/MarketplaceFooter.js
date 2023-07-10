@@ -64,7 +64,7 @@ const Footer = () => {
     
     > 
       <div className="container-nft d-flex align-items-start px-0 px-lg-5 position-relative" style={{backgroundImage: 'none', background: '#080b2a'}}>
-      <div className={`${padding ? 'extra-padding' : null} footer-container flex-column px-3 px-lg-5 container-lg mx-0`} style={{maxWidth: 'auto'}}>
+      <div className={`${padding ? 'extra-padding' : null} footer-container flex-column px-3 px-lg-0 container-lg mx-0`} style={{maxWidth: 'auto'}}>
       <div className="container-fluid d-flex w-100 pb-4 flex-column flex-xxl-row flex-lg-row flex-xl-row  gap-3 justify-content-between align-items-baseline">
         <div className="d-flex pt-5  w-50 footer-wrapper flex-row align-items-start align-items-lg-center gap-4 gap-lg-0 justify-content-between">
           <a
