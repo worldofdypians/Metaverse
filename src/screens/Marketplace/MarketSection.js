@@ -230,7 +230,7 @@ const MarketSection = ({
               wodListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
-                    to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
+                    to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
                     state={{
                       nft: item,
                       type: item.type,
@@ -260,7 +260,7 @@ const MarketSection = ({
               cawsListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
-                    to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
+                    to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
                     state={{
                       nft: item,
                       type: item.type,
@@ -289,7 +289,7 @@ const MarketSection = ({
               timepieceListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
-                    to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
+                    to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
                     state={{
                       nft: item,
                       type: item.type,
@@ -346,7 +346,7 @@ const MarketSection = ({
                 wodListed.map((item, index) => {
                   return (
                     <NavLink
-                      to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
+                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
                       state={{
                         nft: item,
                         type: item.type,
@@ -376,7 +376,7 @@ const MarketSection = ({
                 cawsListed.map((item, index) => {
                   return (
                     <NavLink
-                      to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
+                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
                       state={{
                         nft: item,
                         type: item.type,
@@ -405,7 +405,7 @@ const MarketSection = ({
                 timepieceListed.map((item, index) => {
                   return (
                     <NavLink
-                      to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
+                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
                       state={{
                         nft: item,
                         type: item.type,

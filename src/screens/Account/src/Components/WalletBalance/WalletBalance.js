@@ -441,7 +441,6 @@ const WalletBalance = ({
   const getAllFavs = async () => {
     if (favoritesArray && favoritesArray.length > 0) {
       const unique = [...new Set(favoritesArray.map((item) => {}))];
-      // console.log(unique, favoritesArray);
       setfavoriteItems(favoritesArray);
       setfavItemsFiltered(favoritesArray);
     } else {
@@ -792,7 +791,7 @@ const WalletBalance = ({
                   favoriteItems.slice(0, 6).map((item, index) => (
                     <NavLink
                       key={index}
-                      to={`/marketplace/nft/${index}/${item.nftAddress}`}
+                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
                       style={{ textDecoration: "none" }}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
                       state={{
@@ -920,7 +919,7 @@ const WalletBalance = ({
                       to={
                         item.isStaked === true
                           ? `/marketplace/stake`
-                          : `/marketplace/nft/${index}/${item.nftAddress}`
+                          : `/marketplace/nft/${item.tokenId}/${item.nftAddress}`
                       }
                       style={{ textDecoration: "none" }}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -1157,7 +1156,7 @@ const WalletBalance = ({
                   listedItems.slice(0, 6).map((item, index) => (
                     <NavLink
                       key={index}
-                      to={`/marketplace/nft/${item.blockTimestamp}/${item.nftAddress}`}
+                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
                       style={{ textDecoration: "none" }}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
                       state={{
@@ -1766,7 +1765,7 @@ const WalletBalance = ({
                       to={
                         nft.isStaked === true
                           ? `/marketplace/stake`
-                          : `/marketplace/nft/${index}/${nft.nftAddress}`
+                          : `/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`
                       }
                       style={{ textDecoration: "none" }}
                       key={index}
@@ -1868,7 +1867,7 @@ const WalletBalance = ({
                     .slice(favoritesSliceValue - 9, favoritesSliceValue)
                     .map((nft, index) => (
                       <NavLink
-                        to={`/marketplace/nft/${nft.blockTimestamp ?? index}/${nft.nftAddress}`}
+                        to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
                         style={{ textDecoration: "none" }}
                         key={index}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -1975,7 +1974,7 @@ const WalletBalance = ({
                   listedItemsFiltered.length > 0 &&
                   listedItemsFiltered.slice(listedPageSlice - 9, listedPageSlice).map((nft, index) => (
                     <NavLink
-                      to={`/marketplace/nft/${nft.blockTimestamp ?? index}/${nft.nftAddress}`}
+                      to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
                       style={{ textDecoration: "none" }}
                       key={index}
                       className="col-12 col-lg-6 col-xxl-4 mb-3"
