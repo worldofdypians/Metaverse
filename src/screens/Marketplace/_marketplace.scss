@@ -1742,6 +1742,11 @@ line-height: 24px;
 .join-now-btn:hover{
   background: #fff;
 color: #5D5FEF;
-  
+}
+
+.join-now-btn:active{
+background: #5D5FEF !important;
+color: #fff !important;
+border: 1px solid #5D5FEF !important;
 
 }

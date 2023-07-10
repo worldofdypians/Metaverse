@@ -27,6 +27,7 @@ import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import timepiecemetadata from "../../../actions/timepiecemetadata.json";
 import ComfirmationModal from "./ConfirmationModal";
 import mintNowIcon from './assets/mintNowIcon.svg'
+import timepiecetraits from '../../../actions/timepiecetraits.json'
 
 const TimepieceNFT = ({
   isConnected,
@@ -379,7 +380,7 @@ const TimepieceNFT = ({
       })
       .then((res) => {
         setFilters(res.data.collection.traits);
-        console.log(Object.entries(res.data.collection.traits), "wodtraits");
+      
       });
   };
 
@@ -631,7 +632,9 @@ const TimepieceNFT = ({
 
   useEffect(() => {
     getTimepieceCollection();
-    fetchFilters();
+    // fetchFilters();
+    setFilters(timepiecetraits.collection.traits);
+
   }, [next]);
 
   useEffect(() => {
@@ -646,7 +649,11 @@ const TimepieceNFT = ({
 
 
   return (
-    <>
+    <div 
+    id="header"
+    onScroll={onScroll}
+    ref={listInnerRef}
+    >
       <div
         className="container-fluid d-flex justify-content-end p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
@@ -826,9 +833,7 @@ const TimepieceNFT = ({
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
               <div
                 className="d-flex align-items-center p-4 gap-4 justify-content-center"
-                id="header"
-                onScroll={onScroll}
-                ref={listInnerRef}
+             
               >
                 <div className={"item-cards-wrapper w-100"}>
                   {timepieceNFTS && timepieceNFTS.length > 0 && count === 0 ? (
@@ -1693,7 +1698,7 @@ const TimepieceNFT = ({
           ) : null}
         </div>
       </OutsideClickHandler>
-    </>
+    </div>
   );
 };
 
