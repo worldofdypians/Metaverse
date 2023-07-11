@@ -328,10 +328,10 @@ const ItemCard = ({
             className="w-100 h-100 p-0 nft-img"
             src={
               isCaws
-                ? `https://mint.dyp.finance/thumbs150/${nft.tokenId}.png`
+                ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nft.tokenId}.png`
                 : isWod
-                ? `https://mint.worldofdypians.com/thumbs150/${nft.tokenId}.png`
-                : `https://timepiece.worldofdypians.com/thumbs150/${nft.tokenId}.png`
+                ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nft.tokenId}.png`
+                : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nft.tokenId}.png`
             }
             alt=""
             onLoad={() => {

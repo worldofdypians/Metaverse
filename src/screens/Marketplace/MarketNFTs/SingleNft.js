@@ -1015,10 +1015,13 @@ const SingleNft = ({
                     className="blur-img blur-img-big"
                     src={
                       nftAddress === window.config.nft_caws_address
-                        ? `https://mint.dyp.finance/thumbs/${nftId}.png`
+                        ? 
+                        `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nftId}.png`
                         : nftAddress === window.config.nft_land_address
-                        ? `https://mint.worldofdypians.com/thumbs/${nftId}.png`
-                        : `https://timepiece.worldofdypians.com/images/${nftId}.png`
+                        ? 
+                        `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
+                        : 
+                        `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
                   />

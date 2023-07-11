@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-const FilterCard = ({filters, categoryIndex, title, value, addProducts, selectedFilters, count}) => {
+const FilterCard = ({filters, categoryIndex, title, value, addProducts, selectedFilters, count, filtersLength, clearAll}) => {
 
     const [selected, setSelected] = useState(false)
 
@@ -28,10 +28,18 @@ const FilterCard = ({filters, categoryIndex, title, value, addProducts, selected
     <div
       className={`trait-wrapper ${selected && 'trait-wrapper-active'} d-flex align-items-center justify-content-between p-2`}
       style={{height: "40px", cursor: 'pointer'}}
-      onClick={() =>{
+      // onClick={() =>{
 
-          addProducts(title, categoryIndex);
-          // setSelected(!selected)
+      //     addProducts(title, categoryIndex);
+      //     // setSelected(!selected)
+      // }
+      // }
+      onClick={() => {
+
+        setSelected(!selected);
+        filtersLength.length === 1
+          ? clearAll()
+          : addProducts(title, categoryIndex)
       }
       }
     >

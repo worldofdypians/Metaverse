@@ -1430,6 +1430,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1453,6 +1455,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1476,6 +1480,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1499,6 +1505,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1522,6 +1530,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1545,6 +1555,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1568,6 +1580,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1591,6 +1605,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1614,6 +1630,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1637,6 +1655,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
+                    filtersLength={displayFilters.length}
+                    clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
