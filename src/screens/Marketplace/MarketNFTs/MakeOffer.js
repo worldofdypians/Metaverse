@@ -151,6 +151,7 @@ const MakeOffer = ({
     overflowX: "hidden",
     borderRadius: "10px",
     background: "#1A1C39",
+    height: windowSize.width < 500 ? '480px' : ''
   };
 
   useEffect(() => {
@@ -183,7 +184,7 @@ const MakeOffer = ({
           </div>
           <div className="summarywrapper">
             <div className="d-flex flex-column flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between">
-              <div className="d-flex flex-column w-100 flex-xxl-row flex-lg-row align-items-center gap-2">
+              <div className="d-flex flex-column w-100 flex-xxl-row flex-lg-row  align-items-center gap-2">
                 <img
                   className="p-0 nft-img"
                   src={
@@ -214,7 +215,7 @@ const MakeOffer = ({
                 </div>
               </div>
               {nft.price && (
-                <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-end">
+                <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-xxl-end align-items-lg-end align-items-center">
                   <span className="itemname" style={{ whiteSpace: "nowrap" }}>
                     {getFormattedNumber(nft.price / 1e18, 2)}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}

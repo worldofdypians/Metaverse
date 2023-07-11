@@ -1581,7 +1581,7 @@ const SingleNft = ({
                         )}
                       </div>
                       {!isOwner && IsListed && coinbase && isConnected && (
-                        <div className="d-flex gap-3 align-items-center">
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
                           <button
                             disabled={
                               buyloading === true || buyStatus === "failed"
