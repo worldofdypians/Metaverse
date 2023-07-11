@@ -1031,18 +1031,16 @@ const SingleNft = ({
   }, [nftId, nftAddress, nft, nftCount]);
 
   useEffect(() => {
-    if (nft) {
-      if (favorites && favorites.length > 0) {
-        const favobj = favorites.find(
-          (obj) => obj.nftAddress === nft.nftAddress && obj.tokenId === nftId
-        );
+    if (favorites && favorites.length > 0) {
+      const favobj = favorites.find(
+        (obj) => obj.nftAddress === nftAddress && obj.tokenId === nftId
+      );
 
-        if (favobj !== undefined) {
-          setIsFavorite(true);
-        } else setIsFavorite(false);
-      }
+      if (favobj !== undefined) {
+        setIsFavorite(true);
+      } else setIsFavorite(false);
     }
-  }, [nft, favorites]);
+}, [nft, favorites]);
 
   useEffect(() => {
     if (
