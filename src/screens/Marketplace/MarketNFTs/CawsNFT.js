@@ -43,6 +43,137 @@ const CawsNFT = ({
     margin: "auto",
     borderColor: "#554fd8",
   };
+
+  const dummyData = [
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "0",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x38735bE0B0E44BF0B8Da1dD5aA96B787879F1c72",
+      "tokenId": "1",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x9058FF24462B6fe98a73781c6EEdad9D4e550c7a",
+      "tokenId": "2",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x76E60102AE09386eE0c848F2Ee36ede6d03ad4B3",
+      "tokenId": "3",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0xf6180221a94aCA479f71e2A3a48e9A65E0dF179c",
+      "tokenId": "4",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0xd577E2b4C4B85Cc28B35DA6bC8475729b7197a50",
+      "tokenId": "5",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
+      "tokenId": "6",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "7",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "8",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0xb8CAC1C259bA3a73e26744fB8D09B5Bd77c2207B",
+      "tokenId": "9",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
+      "tokenId": "10",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0xcE8Bb137Ed6204a8259e9bD44197D4BD1184344B",
+      "tokenId": "11",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "12",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x86aBfF52425D7159C1220BA7532eD69674DCef45",
+      "tokenId": "13",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
+      "tokenId": "14",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x105704a52DEB48895226f2C6C47Fb4cc353A4560",
+      "tokenId": "15",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "16",
+      "type": "caws",
+      "chain": 1
+    },
+    {
+      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "17",
+      "type": "caws",
+      "chain": 1
+    }
+  ]
+
+
   const windowSize = useWindowSize();
   const nftsPerRow = 18;
   const nftsPerRow2 = 18;
@@ -408,7 +539,8 @@ const CawsNFT = ({
 
     if (uniquecaws && uniquecaws.length > 0) {
       let datedNfts = uniquecaws.map((nft, index) => {
-        if (nft.tokenId == cawsArray2[index]?.tokenId) {
+        if (nft.tokenId == cawsArray2[index]?.tokenId&&
+          !cawsBought.find((obj) => obj.tokenId === nft.tokenId)) {
           let date = new Date(nft?.blockTimestamp * 1000);
 
           return {
@@ -419,7 +551,24 @@ const CawsNFT = ({
             LastSold: cawsArray2[index]?.price,
             soldPriceType: cawsArray2[index]?.payment_priceType,
           };
-        } else if (nft.tokenId != cawsArray2[index]?.tokenId && nft?.buyer) {
+        }  else if (
+          nft.tokenId == cawsArray2[index]?.tokenId &&
+          cawsBought.find((obj) => obj.tokenId === nft.tokenId) !== undefined
+        ) {
+          const result = cawsBought.find((obj) => obj.tokenId === nft.tokenId);
+
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: true,
+            isLatestSale: true,
+            LastSold: result?.price,
+            soldPriceType: result?.payment_priceType,
+          };
+        }
+        else if (nft.tokenId != cawsArray2[index]?.tokenId && nft?.buyer) {
           let date = new Date(nft?.blockTimestamp * 1000);
 
           return {
@@ -436,6 +585,8 @@ const CawsNFT = ({
       setAllcaws(datedNfts);
     }
   };
+
+ ;
 
   const getCawsCollection = async () => {
     let finalArray = [];
@@ -577,9 +728,9 @@ const CawsNFT = ({
     // getAllCawsCollection();
     // fetchFilters();
     setFilters(cawstraits.collection.traits);
-
     document.title = "CAWS NFT";
   }, []);
+ 
 
   useEffect(() => {
     if (count > 0) {
@@ -593,7 +744,7 @@ const CawsNFT = ({
     if (cawsBought) {
       getListedCaws();
     }
-  }, [cawsBought, nftCount]);
+  }, [cawsBought, nftCount,allCawsNfts.length]);
 
   useEffect(() => {
     getCawsCollection();
@@ -999,134 +1150,46 @@ const CawsNFT = ({
                       )}
                     </>
                   ) : cawsNFTS && cawsNFTS.length === 0 && count === 0 ? (
-                    <>
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
+                    dummyData.map((nft, index)=>{
+                      return  <NavLink
+                      to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                      state={{
+                        nft: nft,
+                        type: "caws",
+                        isOwner:
+                          nft.seller?.toLowerCase() ===
+                            coinbase?.toLowerCase() ||
+                          nft.buyer?.toLowerCase() ===
+                            coinbase?.toLowerCase(),
+                        chain: nft.chain,
+                      }}
+                      onClick={() => {
+                        updateViewCount(
+                          nft.tokenId,
+                          window.config.nft_address
+                        );
+                      }}
+                    >
+                      <ItemCard
+                        ethTokenData={ethTokenData}
+                        dypTokenData={dypTokenData}
+                        key={nft.id}
+                        nft={nft}
+                        isConnected={isConnected}
+                        showConnectWallet={handleConnect}
+                        isCaws={true}
+                        isTimepiece={false}
+                        isWod={false}
+                        coinbase={coinbase}
+                        lastSold={nft.LastSold}
+                        isLatestSale={nft.isLatestSale}
+                        isListed={nft.isListed}
+                        soldPriceType={nft.soldPriceType}
                       />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                    </>
+                    </NavLink>
+                    })
                   ) : (
                     <></>
                   )}
@@ -1430,8 +1493,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1455,8 +1518,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1480,8 +1543,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1505,8 +1568,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1530,8 +1593,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1555,8 +1618,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1580,8 +1643,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1605,8 +1668,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1630,8 +1693,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1655,8 +1718,8 @@ const CawsNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}

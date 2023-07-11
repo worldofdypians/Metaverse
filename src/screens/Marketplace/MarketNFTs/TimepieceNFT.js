@@ -47,6 +47,153 @@ const TimepieceNFT = ({
   };
   const windowSize = useWindowSize();
 
+  const dummyData = [
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
+      "tokenId": "0",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
+      "tokenId": "1",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
+      "tokenId": "2",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "3",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "4",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "5",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "6",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "7",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "8",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "9",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "10",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
+      "tokenId": "11",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "12",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "13",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "14",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "15",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "16",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    },
+    {
+      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      "tokenId": "17",
+      "type": "timepiece",
+      "chain": 1,
+      "isListed": false
+    }
+  ]
+
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [filterTitle, setFilterTitle] = useState("Price low to high");
@@ -432,7 +579,8 @@ const TimepieceNFT = ({
 
     if (uniqueTimepiece && uniqueTimepiece.length > 0) {
       let datedNfts = uniqueTimepiece.map((nft, index) => {
-        if (nft.tokenId == timepieceArray2[index]?.tokenId) {
+        if (nft.tokenId == timepieceArray2[index]?.tokenId &&
+          !timepieceBought.find((obj) => obj.tokenId === nft.tokenId)) {
           let date = new Date(nft?.blockTimestamp * 1000);
 
           return {
@@ -442,6 +590,22 @@ const TimepieceNFT = ({
             isLatestSale: false,
             LastSold: timepieceArray2[index]?.price,
             soldPriceType: timepieceArray2[index]?.payment_priceType,
+          };
+        } else if (
+          nft.tokenId == timepieceArray2[index]?.tokenId &&
+          timepieceBought.find((obj) => obj.tokenId === nft.tokenId) !== undefined
+        ) {
+          const result = timepieceBought.find((obj) => obj.tokenId === nft.tokenId);
+
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: true,
+            isLatestSale: true,
+            LastSold: result?.price,
+            soldPriceType: result?.payment_priceType,
           };
         } else if (
           nft.tokenId != timepieceArray2[index]?.tokenId &&
@@ -463,6 +627,7 @@ const TimepieceNFT = ({
       setAlltimepiece(datedNfts);
     }
   };
+ 
 
   const getTimepieceCollection = async () => {
     let finalArray = [];
@@ -595,7 +760,7 @@ const TimepieceNFT = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Timepiece NFT";
-    getTotalSupply();
+    getTotalSupply(); 
   }, []);
 
   useEffect(() => {
@@ -613,7 +778,7 @@ const TimepieceNFT = ({
     if (timepieceBought) {
       getListedTimepiece();
     }
-  }, [timepieceBought, nftCount]);
+  }, [timepieceBought, nftCount,alltimepieceNfts.length]);
 
   useEffect(() => {
     if (
@@ -1022,134 +1187,46 @@ const TimepieceNFT = ({
                   ) : timepieceNFTS &&
                     timepieceNFTS.length === 0 &&
                     count === 0 ? (
-                    <>
-                       <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                    </>
+                      dummyData.map((nft, index)=>{
+                        return  <NavLink
+                        to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                        style={{ textDecoration: "none" }}
+                        key={index}
+                        state={{
+                          nft: nft,
+                          type: "timepiece",
+                          isOwner:
+                            nft.seller?.toLowerCase() ===
+                              coinbase?.toLowerCase() ||
+                            nft.buyer?.toLowerCase() ===
+                              coinbase?.toLowerCase(),
+                          chain: nft.chain,
+                        }}
+                        onClick={() => {
+                          updateViewCount(
+                            nft.tokenId,
+                            nft.nftAddress
+                          );
+                        }}
+                      >
+                        <ItemCard
+                          ethTokenData={ethTokenData}
+                          dypTokenData={dypTokenData}
+                          key={nft.id}
+                          nft={nft}
+                          isConnected={isConnected}
+                          showConnectWallet={handleConnect}
+                          isCaws={false}
+                          isTimepiece={true}
+                          isWod={false}
+                          coinbase={coinbase}
+                          lastSold={nft.LastSold}
+                          isLatestSale={nft.isLatestSale}
+                          isListed={nft.isListed}
+                          soldPriceType={nft.soldPriceType}
+                        />
+                      </NavLink>
+                      })
                   ) : (
                     <></>
                   )}

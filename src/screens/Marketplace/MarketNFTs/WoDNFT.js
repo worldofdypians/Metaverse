@@ -24,7 +24,7 @@ import axios from "axios";
 import landmetadata from "../../../actions/landmetadata.json";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import { Skeleton } from "@mui/material";
-import landtraits from '../../../actions/landtraits.json'
+import landtraits from "../../../actions/landtraits.json";
 
 const WoDNFT = ({
   isConnected,
@@ -42,6 +42,135 @@ const WoDNFT = ({
     margin: "auto",
     borderColor: "#554fd8",
   };
+
+  const dummyData = [
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0xF4914F025b45798F634fBE638d33701FBff3274A",
+      tokenId: "0",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x2B838A5a2B8A2E80E965f1Fc9dFED63F1cC269Fd",
+      tokenId: "1",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
+      tokenId: "2",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
+      tokenId: "3",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
+      tokenId: "4",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
+      tokenId: "5",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
+      tokenId: "6",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
+      tokenId: "7",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
+      tokenId: "8",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
+      tokenId: "9",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6310D0aD15c12a42d278E1234d3B087e140aEaa0",
+      tokenId: "10",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0xD324A03BF17Eee8D34A8843D094a76FF8f561e38",
+      tokenId: "11",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x599C70d48012472336bC1Be052b10D476c013Da3",
+      tokenId: "12",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0xD324A03BF17Eee8D34A8843D094a76FF8f561e38",
+      tokenId: "13",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0xD324A03BF17Eee8D34A8843D094a76FF8f561e38",
+      tokenId: "14",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0xD324A03BF17Eee8D34A8843D094a76FF8f561e38",
+      tokenId: "15",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0xD324A03BF17Eee8D34A8843D094a76FF8f561e38",
+      tokenId: "16",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
+      tokenId: "17",
+      type: "land",
+      chain: 1,
+    },
+  ];
 
   const windowSize = useWindowSize();
   const [loading, setLoading] = useState(false);
@@ -453,10 +582,13 @@ const WoDNFT = ({
     let uniquewod = wodArray.filter(
       (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
     );
-
+    
     if (uniquewod && uniquewod.length > 0) {
       let datedNfts = uniquewod.map((nft, index) => {
-        if (nft.tokenId == wodArray2[index]?.tokenId) {
+        if (
+          nft.tokenId == wodArray2[index]?.tokenId &&
+          !wodBought.find((obj) => obj.tokenId === nft.tokenId)
+        ) {
           let date = new Date(nft?.blockTimestamp * 1000);
 
           return {
@@ -466,6 +598,22 @@ const WoDNFT = ({
             isLatestSale: false,
             LastSold: wodArray2[index]?.price,
             soldPriceType: wodArray2[index]?.payment_priceType,
+          };
+        } else if (
+          nft.tokenId == wodArray2[index]?.tokenId &&
+          wodBought.find((obj) => obj.tokenId === nft.tokenId) !== undefined
+        ) {
+          const result = wodBought.find((obj) => obj.tokenId === nft.tokenId);
+
+          let date = new Date(nft?.blockTimestamp * 1000);
+
+          return {
+            ...nft,
+            date: date,
+            isListed: true,
+            isLatestSale: true,
+            LastSold: result?.price,
+            soldPriceType: result?.payment_priceType,
           };
         } else if (nft.tokenId != wodArray2[index]?.tokenId && nft?.buyer) {
           let date = new Date(nft?.blockTimestamp * 1000);
@@ -621,10 +769,10 @@ const WoDNFT = ({
   }, []);
 
   useEffect(() => {
-    if (wodBought) {
+    if (wodBought && wodBought.length > 0) {
       getListedWod();
     }
-  }, [wodBought, nftCount]);
+  }, [wodBought, nftCount,allwodNfts.length]);
 
   useEffect(() => {
     loadMore2();
@@ -637,7 +785,7 @@ const WoDNFT = ({
   }, [landNfts]);
 
   useEffect(() => {
-    if (wodBought && allwodNfts.length > 0 && finalData.length > 0) {
+    if (wodBought && wodBought.length > 0 && allwodNfts.length > 0 && finalData.length > 0) {
       fetchInitialWod();
     }
   }, [allwodNfts.length, finalData.length, wodBought]);
@@ -646,9 +794,8 @@ const WoDNFT = ({
     getWodCollection();
     // fetchFilters();
     setFilters(landtraits.collection.traits);
-
   }, [next]);
-
+  
   useEffect(() => {
     if (landNfts && landNfts.length === 0) {
       setLoading(true);
@@ -657,13 +804,13 @@ const WoDNFT = ({
       setLoading(false);
     }
   }, [landNfts]);
-
+ 
   return (
-    <div 
-    id="header"
-    onScroll={onScroll}
-    ref={listInnerRef}
-    style={{ overflow: "scroll" }}
+    <div
+      id="header"
+      onScroll={onScroll}
+      ref={listInnerRef}
+      style={{ overflow: "scroll" }}
     >
       <div
         className="container-fluid d-flex justify-content-end p-0"
@@ -847,9 +994,7 @@ const WoDNFT = ({
               )}
             </div>
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
-              <div
-                className="d-flex align-items-center p-4 gap-4 justify-content-center"
-              >
+              <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
                 <div className={"item-cards-wrapper w-100"}>
                   {landNfts && landNfts.length > 0 && count === 0 ? (
                     <>
@@ -1035,134 +1180,45 @@ const WoDNFT = ({
                       )}
                     </>
                   ) : landNfts && landNfts.length === 0 && count === 0 ? (
-                    <>
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                    </>
+                    dummyData.map((nft, index) => {
+                      return (
+                        <NavLink
+                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: "land",
+                            isOwner:
+                              nft.seller?.toLowerCase() ===
+                                coinbase?.toLowerCase() ||
+                              nft.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={() => {
+                            updateViewCount(nft.tokenId, nft.nftAddress);
+                          }}
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={false}
+                            isTimepiece={false}
+                            isWod={true}
+                            coinbase={coinbase}
+                            lastSold={nft.LastSold}
+                            isLatestSale={nft.isLatestSale}
+                            isListed={nft.isListed}
+                            soldPriceType={nft.soldPriceType}
+                          />
+                        </NavLink>
+                      );
+                    })
                   ) : (
                     <></>
                   )}
@@ -1190,7 +1246,10 @@ const WoDNFT = ({
                               chain: nft.chain,
                             }}
                             onClick={() => {
-                              updateViewCount(nft.tokenId, window.config.nft_address);
+                              updateViewCount(
+                                nft.tokenId,
+                                window.config.nft_address
+                              );
                             }}
                           >
                             <ItemCard
@@ -1225,7 +1284,6 @@ const WoDNFT = ({
                         next2 < filterIds.length &&
                         filterIds.length > 0 ? (
                         <>
-                         
                           <Skeleton
                             animation="wave"
                             width={"100%"}
@@ -1268,8 +1326,6 @@ const WoDNFT = ({
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                         
-                          
                         </>
                       ) : (
                         <></>
@@ -1409,7 +1465,7 @@ const WoDNFT = ({
                     <></>
                   )}
                 </div>
-                </div>
+              </div>
               <div className="d-flex justify-content-center w-100">
                 {/* {!loading && next < allLandpiece ? (
                   <button
@@ -1489,8 +1545,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1514,9 +1570,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1540,9 +1595,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1566,9 +1620,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1592,9 +1645,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1618,9 +1670,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1644,9 +1695,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1670,9 +1720,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1696,9 +1745,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1722,9 +1770,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
-
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1748,8 +1795,8 @@ const WoDNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
