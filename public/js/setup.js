@@ -32930,6 +32930,7 @@ window.sign = async function (msg, account) {
 
 //Check If Whitelist
 const whitelistWod = [
+  "0xf7Daa481cA09B2818552C9C5d56d5cC88Cf18047",
   "0xbfa3b43b735971b7f1a92028a975b44e1dfc157a",
   "0xb4bd860f00df73559fa73df86ddb644f1a1c4ff3",
   "0x73b679f48dfa71e044b8eee478d22622dbdcb806",
@@ -34417,6 +34418,7 @@ const whitelistWod = [
   "0xb5bc87f0b51545f1ec8bc8a858fc32560303a42d",
   "0x0037fa577e547a7616e4b01d15553a0c7e980c63",
   "0xe7674b190def5a82730f5d6ab8125e277f10414f",
+  "0xF4914F025b45798F634fBE638d33701FBff3274A",
 ];
 
 window.checkWhitelistWod = function (address) {

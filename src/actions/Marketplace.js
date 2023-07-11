@@ -158,7 +158,7 @@ const itemListedQuery = (
   if (findBy === "recentListedNFTS") {
     return `
         {
-            itemListeds(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
+            itemListeds(first: 100, orderBy: blockTimestamp, orderDirection: desc) {
             seller
             nftAddress
             tokenId

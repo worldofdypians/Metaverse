@@ -336,74 +336,62 @@ function App() {
   };
 
   const myNft = async () => {
-    let myNft = await window.myNftLandListContract(coinbase);
-    let nfts = myNft.map((nft) => window.getLandNft(nft));
-    nfts = await Promise.all(nfts);
-    setMyNFTsCreated(nfts);
+    if (coinbase !== null && coinbase !== undefined) {
+      const infura_web3 = window.infuraWeb3;
+      let nfts_contract = new infura_web3.eth.Contract(
+        window.LANDMINTING_ABI,
+        window.config.landnft_address
+      );
 
-    nfts.reverse();
-    setMyNFTs(nfts);
-  };
+      let getBalanceOf = await nfts_contract.methods
+        .balanceOf(coinbase)
+        .call();
 
+      let nftList = [];
+
+      for (let i = 0; i < getBalanceOf; i++)
+        nftList.push(
+          await nfts_contract.methods
+            .tokenOfOwnerByIndex(coinbase, i)
+            .call()
+        );
+
+      let nfts = nftList.map((nft) => window.getLandNft(nft));
+
+      nfts = await Promise.all(nfts);
+      nfts.reverse();
+      setMyNFTs(nfts);
+    }
+  }; 
   const myCAWNft = async () => {
-    let myNft = await window.myNftListContract(coinbase);
-    let nfts = myNft.map((nft) => window.getNft(nft));
-    nfts = await Promise.all(nfts);
-    setMyCAWSNFTsCreated(nfts);
+    if (coinbase !== null && coinbase !== undefined) {
+      const infura_web3 = window.infuraWeb3;
+      let nfts_contract = new infura_web3.eth.Contract(
+        window.NFT_ABI,
+        window.config.nft_address
+      );
 
-    nfts.reverse();
-    setMyCAWNFTs(nfts);
+      let getBalanceOf = await nfts_contract.methods
+        .balanceOf(coinbase)
+        .call();
+
+      let nftList = [];
+
+      for (let i = 0; i < getBalanceOf; i++)
+        nftList.push(
+          await nfts_contract.methods
+            .tokenOfOwnerByIndex(coinbase, i)
+            .call()
+        );
+
+      let nfts = nftList.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+      nfts.reverse();
+      setMyCAWNFTs(nfts);
+    }
   };
 
-  const getStakesIds = async () => {
-    const address = coinbase;
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
-    let stakenft = [];
-    let myStakes = await staking_contract.methods
-      .depositsOf(address)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft.push(parseInt(result[i]));
-        return stakenft;
-      });
-
-    return myStakes;
-  };
-
-  const getStakesCAWIds = async () => {
-    const address = coinbase;
-    let staking_contract = await window.getContractNFT("NFTSTAKING");
-    let stakenft = [];
-    let myStakes = await staking_contract.methods
-      .depositsOf(address)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft.push(parseInt(result[i]));
-        return stakenft;
-      });
-
-    return myStakes;
-  };
-
-  const myStakes = async () => {
-    let myStakes = await getStakesIds();
-    let stakes = myStakes.map((stake) => window.getLandNft(stake));
-    stakes = await Promise.all(stakes);
-    stakes.reverse();
-    setMystakes(stakes);
-  };
-
-  const myCAWStakes = async () => {
-    let myStakes = await getStakesCAWIds();
-    let stakes = myStakes.map((stake) => window.getNft(stake));
-
-    stakes = await Promise.all(stakes);
-    setMyCAWSNFTsTotalStaked(stakes);
-    stakes.reverse();
-    setCAWMystakes(stakes);
-  };
 
   const getStakesIdsCawsWod = async () => {
     const address = coinbase;
@@ -431,6 +419,70 @@ function App() {
       setMyCawsWodStakes(stakes);
     } else setMyCawsWodStakes([]);
   };
+
+ const getStakesIds = async () => {
+    const address = coinbase;
+    if (address !== null && address !== undefined) {
+      const infura_web3 = window.infuraWeb3;
+      let staking_contract = new infura_web3.eth.Contract(
+        window.NFTSTAKING_ABI,
+        window.config.nftstaking_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
+ const getLandStakesIds = async () => {
+    const address = coinbase;
+    if (address !== null && coinbase !== undefined) {
+      const infura_web3 = window.infuraWeb3;
+      let staking_contract = new infura_web3.eth.Contract(
+        window.LANDSTAKING_ABI,
+        window.config.landnftstake_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
+ const myCAWStakes = async () => {
+    let myStakes = await  getStakesIds();
+    if(myStakes && myStakes.length > 0)
+   { let stakes = myStakes.map((stake) => window.getNft(stake));
+    stakes = await Promise.all(stakes);
+    setMyCAWSNFTsTotalStaked(stakes);
+    stakes.reverse();
+    setCAWMystakes(stakes);}
+  };
+
+ const myLandStakes = async () => {
+    let myStakes = await getLandStakesIds();
+    if(myStakes && myStakes.length > 0)
+   { let stakes = myStakes.map((stake) => window.getLandNft(stake));
+    stakes = await Promise.all(stakes);
+    stakes.reverse();
+    setMystakes(stakes);}
+  };
+
 
   const checkCawsToUse = async () => {
     const testArray = [];
@@ -869,7 +921,7 @@ function App() {
   useEffect(() => {
     if (isConnected === true && coinbase && chainId === 1) {
       myCAWStakes();
-      myStakes();
+      myLandStakes();
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
@@ -1311,6 +1363,7 @@ function App() {
             handleConnect={handleConnection}
             coinbase={coinbase}
             showForms={showForms}
+            myCawsWodStakes={myCawsWodStakesAll}
           />
         )}
         {betaModal === true && (

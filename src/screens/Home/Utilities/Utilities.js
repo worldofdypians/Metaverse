@@ -185,7 +185,17 @@ const Utilities = () => {
                   <span className="utility-desc">Avalanche</span>
                 </div>
               </div>
-              <div className="d-flex align-items-center gap-3 mt-3">
+              <div className="d-flex align-items-center gap-4 mt-3">
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <img
+                    width={40}
+                    height={40}
+                    src={require(`./assets/conflux.png`)}
+                    alt=""
+                  />
+                  <span className="utility-desc">Conflux</span>
+                </div>
+
                 <div className="d-flex flex-column align-items-center gap-2">
                   <img
                     width={40}
