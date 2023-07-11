@@ -252,7 +252,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      } 
+      }
     } else if (type === "land") {
       let nft_address = window.config.nft_land_address;
       const listedNFT = await getListedNFTS(
@@ -265,7 +265,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      } 
+      }
     } else {
       let nft_address = window.config.nft_caws_address;
       const listedNFT = await getListedNFTS(
@@ -278,7 +278,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      } 
+      }
     }
   };
 
@@ -405,7 +405,7 @@ const SingleNft = ({
               : "land",
             nftId
           );
-          setIsListed(true)
+          setIsListed(true);
           handleRefreshListing();
           setTimeout(() => {
             setPurchaseStatus("");
@@ -1015,7 +1015,6 @@ const SingleNft = ({
     getOffer();
   }, []);
 
-
   useEffect(() => {
     if (nft.tokenId) {
       getFavoritesCount(nft.tokenId, nft.nftAddress);
@@ -1032,16 +1031,14 @@ const SingleNft = ({
   }, [nftId, nftAddress, nft, nftCount]);
 
   useEffect(() => {
-    if (nft) {
-      if (favorites && favorites.length > 0) {
-        const favobj = favorites.find(
-          (obj) => obj.nftAddress === nft.nftAddress && obj.tokenId === nftId
-        );
+    if (favorites && favorites.length > 0) {
+      const favobj = favorites.find(
+        (obj) => obj.nftAddress === nftAddress && obj.tokenId === nftId
+      );
 
-        if (favobj !== undefined) {
-          setIsFavorite(true);
-        } else setIsFavorite(false);
-      }
+      if (favobj !== undefined) {
+        setIsFavorite(true);
+      } else setIsFavorite(false);
     }
   }, [nft, favorites]);
 
@@ -1085,12 +1082,6 @@ const SingleNft = ({
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Cats and Watches Society{" "}
-                  <h6
-                    className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
-                  >
-                    (CAWS)
-                  </h6>
                 </h6>
               </>
             ) : (
@@ -1311,39 +1302,35 @@ const SingleNft = ({
                             >
                               Listing price
                             </span>
-                            <div className="d-flex gap-2 align-items-center">
-                                <StyledTextField
-                                  error={nftPrice === "" ? true : false}
-                                  size="small"
-                                  // label="Price"
-                                  id="price"
-                                  name="price"
-                                  value={nftPrice}
-                                  type="text"
-                                  required
-                                  onChange={(e) => {
-                                    handlepricechange2(e.target.value);
-                                  }}
-                                  sx={{ width: "120px" }}
-                                  inputProps={{
-                                    inputMode: "numeric",
-                                  }}
-                                />
-                                <div className="d-flex flex-column gap-1">
-
-                                  <span className="nft-price-eth gap-3 d-flex">
-                                {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
-                              </span>
-                              <span className="nft-price-usd">
-                                $
-                                {getFormattedNumber(
-                                  nft.payment_priceType === 0
-                                    ? ethtokenData * nftPrice
-                                    : dyptokenData * nftPrice,
-                                  2
-                                )}
-                              </span>
-                                </div>
+                            <div className="d-flex gap-2 align-items-center"> 
+                        
+                        <input
+                                required
+                                className="single-nft-input"
+                                type="number"
+                                id="price"
+                                name="price"
+                                pattern="^[0-9]*[.,]?[0-9]*$"
+                                min={0}
+                                value={nftPrice}
+                                onChange={(e) => {
+                                  handlepricechange2(e.target.value);
+                                }}
+                              />
+                              <div className="d-flex flex-column gap-1">
+                                <span className="nft-price-eth gap-3 d-flex">
+                                  {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+                                </span>
+                                <span className="nft-price-usd">
+                                  $
+                                  {getFormattedNumber(
+                                    nft.payment_priceType === 0
+                                      ? ethtokenData * nftPrice
+                                      : dyptokenData * nftPrice,
+                                    2
+                                  )}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1435,36 +1422,33 @@ const SingleNft = ({
                               Listing price
                             </span>
                             <div className="d-flex gap-2 align-items-center">
-                                <StyledTextField
-                                  error={nftPrice === "" ? true : false}
-                                  size="small"
+                            <input
+                                  required
+                                  className="single-nft-input"
+                                  type="number"
                                   id="price"
                                   name="price"
+                                  pattern="^[0-9]*[.,]?[0-9]*$"
+                                  min={0}
                                   value={nftPrice}
-                                  type="number"
-                                  required
                                   onChange={(e) => {
                                     handlepricechange(e.target.value);
                                   }}
-                                  sx={{ width: "120px" }}
-                                  inputProps={{
-                                    inputMode: "numeric",
-                                  }}
                                 />
-                                <div className="d-flex flex-column flex-xxl-row align-items-start align-items-lg-center gap-1 gap-xxl-3">
-                                  <span className="nft-price-eth gap-3 d-flex">
-                                {priceType === 0 ? "ETH" : "DYP"}{" "}
-                              </span>
-                              <span className="nft-price-usd">
-                                $
-                                {getFormattedNumber(
-                                  priceType === 0
-                                    ? ethtokenData * nftPrice
-                                    : dyptokenData * nftPrice,
-                                  2
-                                )}
-                              </span>
-                                </div>
+                              <div className="d-flex flex-column flex-xxl-row align-items-start align-items-lg-center gap-1 gap-xxl-3">
+                                <span className="nft-price-eth gap-3 d-flex">
+                                  {priceType === 0 ? "ETH" : "DYP"}{" "}
+                                </span>
+                                <span className="nft-price-usd">
+                                  $
+                                  {getFormattedNumber(
+                                    priceType === 0
+                                      ? ethtokenData * nftPrice
+                                      : dyptokenData * nftPrice,
+                                    2
+                                  )}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
