@@ -323,21 +323,37 @@ const ItemCard = ({
               className="ethgraylogo position-absolute"
             />
           </HtmlTooltip>
-
-          <img
+          {windowSize.width > 786 ? (
+            <img
             className="w-100 h-100 p-0 nft-img"
-            src={
-              isCaws
-                ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nft.tokenId}.png`
-                : isWod
-                ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nft.tokenId}.png`
-                : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nft.tokenId}.png`
-            }
-            alt=""
-            onLoad={() => {
-              setIsLoaded(true);
-            }}
-          />
+              src={
+                nft.type === "caws"
+                  ? `https://mint.dyp.finance/thumbs150/${nft.tokenId}.png`
+                  : nft.type === "land"
+                  ? `https://mint.worldofdypians.com/thumbs150/${nft.tokenId}.png`
+                  : `https://timepiece.worldofdypians.com/thumbs150/${nft.tokenId}.png`
+              }
+              alt=""
+              onLoad={() => {
+                setIsLoaded(true);
+              }}
+            />
+          ) : (
+            <img
+              className="w-100 h-100 p-0 nft-img"
+              src={
+                isCaws
+                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nft.tokenId}.png`
+                  : isWod
+                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nft.tokenId}.png`
+                  : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nft.tokenId}.png`
+              }
+              alt=""
+              onLoad={() => {
+                setIsLoaded(true);
+              }}
+            />
+          )}
         </div>
         <div
           className={`d-flex flex-column gap-2 position-relative p-3 ${
