@@ -25,7 +25,7 @@ import FilterCard from "./FilterCard";
 import traitXmark from "./assets/traitXmark.svg";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import cawsmetadata from "../../../actions/cawsmetadatas2.json";
-import cawstraits from '../../../actions/cawstraits.json'
+import cawstraits from "../../../actions/cawstraits.json";
 
 const CawsNFT = ({
   isConnected,

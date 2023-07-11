@@ -20,8 +20,6 @@ import PlayerCreation from "./screens/Account/src/Containers/PlayerCreation/Play
 import client from "./screens/Account/src/apolloConfig.js";
 import Dashboard from "./screens/Account/src/Containers/Dashboard/Dashboard.js";
 import LandingScreen from "./screens/Account/src/Containers/LandingScreen/LandingScreen.js";
-import Web3Provider from "./screens/Account/src/Utils.js/Web3/Web3Provider.js";
-
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import MarketplaceFooter from "./components/Footer/MarketplaceFooter";
@@ -35,14 +33,11 @@ import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./screens/TermsConditions/TermsConditions";
 import Explorer from "./screens/Explorer/Explorer";
 import Land from "./screens/Land/Land";
-import LandPopup from "./components/LandPopup/LandPopup";
 import Roadmap from "./screens/Roadmap/Roadmap";
-import scrollToTop from "./assets/scrollToTop.svg";
 import ScrollTop from "./components/ScrollTop";
 import JoinBeta from "./screens/JoinBeta/JoinBeta";
 import JoinBetaModal from "./components/JoinBetaModal/JoinBetaModal";
 import PartnerForm from "./screens/PartnerForm/PartnerForm";
-import NFTEvent from "./screens/NFTEvent/NFTEvent";
 import WalletModal from "./components/WalletModal/WalletModal";
 import TimePiece from "./screens/Timepiece/Timepiece";
 import axios from "axios";

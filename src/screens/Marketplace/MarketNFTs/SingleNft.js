@@ -27,6 +27,8 @@ import cart from "./assets/cart.svg";
 import link from "./assets/link.svg";
 import { useParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
+import whiteTag from "./assets/whiteTag.svg";
+import MakeOffer from "./MakeOffer";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -100,6 +102,7 @@ const SingleNft = ({
   const [IsApprove, setIsApprove] = useState(false);
   const [buttonText, setbuttonText] = useState("Approve");
   const [IsListed, setIsListed] = useState(false);
+  const [offerData, setofferData] = useState([]);
 
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [buyloading, setbuyLoading] = useState(false); //buy
@@ -134,6 +137,10 @@ const SingleNft = ({
   const [isFavorite, setIsFavorite] = useState(false);
   const [owner, setowner] = useState("");
   const [loadingNft, setloadingNft] = useState(false);
+  const [showMakeOffer, setshowMakeOffer] = useState(false);
+  const [offerStatus, setOfferStatus] = useState("initial");
+  const [offerdeleteStatus, setOfferdeleteStatus] = useState("initial");
+  const [offerupdateStatus, setOfferupdateStatus] = useState("initial");
 
   const { nftId, nftAddress } = useParams();
 
@@ -151,6 +158,19 @@ const SingleNft = ({
     borderColor: "#554fd8",
   };
 
+  const getOffer = async () => {
+    let finalArray = [];
+    const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
+      console.error(e);
+    });
+
+    result.map((item) => {
+      return finalArray.push({ offer: item.offer, index: item.index });
+    });
+
+    setofferData(finalArray);
+  };
+  // console.log(offerData)
   const getTokenData = async () => {
     await axios
       .get("https://api.dyp.finance/api/the_graph_eth_v2")
@@ -377,12 +397,12 @@ const SingleNft = ({
           setPurchaseColor("#00FECF");
           setShowToast(true);
           handleRefreshList(
-           nftAddress === window.config.nft_caws_address
+            nftAddress === window.config.nft_caws_address
               ? "caws"
               : nftAddress === window.config.nft_timepiece_address
               ? "timepiece"
               : "land",
-            tokenId
+            nftId
           );
           handleRefreshListing();
           setTimeout(() => {
@@ -510,7 +530,7 @@ const SingleNft = ({
         throw new Error("Error adding NFT to user favorites");
       }
       const data = await response.json();
-      getFavoritesCount(nft.tokenId, nft.nftAddress);
+      getFavoritesCount(nftId, nftAddress);
       setIsFavorite(true);
       handleRefreshListing();
       return data.favorites;
@@ -533,7 +553,7 @@ const SingleNft = ({
         if (response.ok || response.status === 204 || response.status === 404) {
           // NFT removed successfully or was not found (404)
           console.log("NFT removed from favorites");
-          getFavoritesCount(nft.tokenId, nft.nftAddress);
+          getFavoritesCount(nftId, nftAddress);
           setIsFavorite(false);
           handleRefreshListing();
         } else {
@@ -553,18 +573,10 @@ const SingleNft = ({
   const handleFavorite = async (nft) => {
     if (isConnected) {
       if (isFavorite === true) {
-        await deleteNFTFromUserFavorites(
-          coinbase,
-          parseInt(nft.tokenId),
-          nft.nftAddress
-        );
+        await deleteNFTFromUserFavorites(coinbase, parseInt(nftId), nftAddress);
       }
       if (!isFavorite) {
-        await addNFTToUserFavorites(
-          coinbase,
-          parseInt(nft.tokenId),
-          nft.nftAddress
-        );
+        await addNFTToUserFavorites(coinbase, parseInt(nftId), nftAddress);
       }
     } else showWalletConnect();
   };
@@ -582,8 +594,8 @@ const SingleNft = ({
       await window
         .buyNFT(
           nft.price,
-          nft.nftAddress,
-          nft.tokenId,
+          nftAddress,
+          nftId,
           nft.payment_priceType,
           nft.payment_tokenAddress
         )
@@ -601,12 +613,12 @@ const SingleNft = ({
             setPurchaseColor("#00FECF");
             setbuyStatus("");
             handleRefreshList(
-              nft.type ?? nft.nftAddress === window.config.nft_caws_address
+              nftAddress === window.config.nft_caws_address
                 ? "caws"
-                : nft.nftAddress === window.config.nft_timepiece_address
+                : nftAddress === window.config.nft_timepiece_address
                 ? "timepiece"
                 : "land",
-              nft
+              nftId
             );
             handleRefreshListing();
             getLatestBoughtNFT();
@@ -715,12 +727,12 @@ const SingleNft = ({
         setShowToast(true);
         setToastTitle("Successfully updated!");
         handleRefreshList(
-          nft.type ?? nft.nftAddress === window.config.nft_caws_address
+          nftAddress === window.config.nft_caws_address
             ? "caws"
-            : nft.nftAddress === window.config.nft_timepiece_address
+            : nftAddress === window.config.nft_timepiece_address
             ? "timepiece"
             : "land",
-          nft
+          nftId
         );
         handleRefreshListing();
         setPurchaseColor("#00FECF");
@@ -819,6 +831,75 @@ const SingleNft = ({
     }
   };
 
+  const handleMakeOffer = async (price, pricetype) => {
+    setOfferStatus("loading");
+    const newPrice = new BigNumber(price * 1e18).toFixed();
+
+    await window
+      .makeOffer(nftAddress, nftId, newPrice, pricetype)
+      .then(() => {
+        handleRefreshListing();
+        setOfferStatus("success");
+        setTimeout(() => {
+          setOfferStatus("initial");
+        }, 3000);
+      })
+      .catch((e) => {
+        console.error(e);
+        setOfferStatus("fail");
+
+        setTimeout(() => {
+          setOfferStatus("initial");
+        }, 3000);
+      });
+  };
+
+  const handleDeleteOffer = async (offerIndex) => {
+    setOfferdeleteStatus("loadingdelete");
+
+    console.log(nftAddress, nftId, offerIndex);
+    await window
+      .cancelOffer(nftAddress, nftId, offerIndex)
+      .then(() => {
+        handleRefreshListing();
+        setOfferdeleteStatus("successdelete");
+        setTimeout(() => {
+          setOfferdeleteStatus("initial");
+        }, 3000);
+      })
+      .catch((e) => {
+        console.error(e);
+        setOfferdeleteStatus("faildelete");
+
+        setTimeout(() => {
+          setOfferdeleteStatus("initial");
+        }, 3000);
+      });
+  };
+
+  const handleUpdateOffer = async (price, pricetype, offerIndex) => {
+    setOfferupdateStatus("loadingupdate");
+    const newPrice = new BigNumber(price * 1e18).toFixed();
+
+    await window
+      .cancelOffer(nftAddress, nftId, offerIndex, newPrice, pricetype)
+      .then(() => {
+        handleRefreshListing();
+        setOfferupdateStatus("successupdate");
+        setTimeout(() => {
+          setOfferupdateStatus("initial");
+        }, 3000);
+      })
+      .catch((e) => {
+        console.error(e);
+        setOfferupdateStatus("failupdate");
+
+        setTimeout(() => {
+          setOfferupdateStatus("initial");
+        }, 3000);
+      });
+  };
+
   useEffect(() => {
     // if (isOwner === false) {
     if (coinbase) {
@@ -913,7 +994,8 @@ const SingleNft = ({
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
-  }, []);
+    getOffer();
+  }, [nftCount]);
 
   useEffect(() => {
     if (nft.tokenId) {
@@ -928,14 +1010,13 @@ const SingleNft = ({
       setType("land");
     }
     getMetaData(nftAddress, nftId);
-  }, [nftId, nftAddress, nft]);
+  }, [nftId, nftAddress, nft,nftCount]);
 
   useEffect(() => {
     if (nft) {
       if (favorites && favorites.length > 0) {
         const favobj = favorites.find(
-          (obj) =>
-            obj.nftAddress === nft.nftAddress && obj.tokenId === nft.tokenId
+          (obj) => obj.nftAddress === nft.nftAddress && obj.tokenId === nftId
         );
 
         if (favobj !== undefined) {
@@ -1472,47 +1553,51 @@ const SingleNft = ({
                         )}
                       </div>
                       {!isOwner && IsListed && coinbase && isConnected && (
-                        <button
-                          disabled={
-                            buyloading === true || buyStatus === "failed"
-                              ? true
-                              : false
-                          }
-                          className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
-                            buyStatus === "success"
-                              ? "successbtn"
-                              : buyStatus === "failed" ||
-                                (chainId !== 5 && chainId !== 1)
-                              ? "errorbtn"
-                              : null
-                          } d-flex justify-content-center align-items-center gap-2`}
-                          onClick={() => {
-                            chainId !== 1 && chainId !== 5
-                              ? handleSwitchChain()
-                              : handleBuy(nft);
-                          }}
-                        >
-                          {buyloading && (chainId === 1 || chainId === 5) ? (
-                            <div
-                              className="spinner-border spinner-border-sm text-light"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          ) : !buyloading && chainId !== 1 && chainId !== 5 ? (
-                            "Switch Network"
-                          ) : buyStatus === "buy" ? (
-                            "Buy"
-                          ) : buyStatus === "approve" || buyStatus === "" ? (
-                            "Approve buy"
-                          ) : buyStatus === "success" ? (
-                            "Success"
-                          ) : (
-                            "Failed"
-                          )}
-                        </button>
+                  
+                          <button
+                            disabled={
+                              buyloading === true || buyStatus === "failed"
+                                ? true
+                                : false
+                            }
+                            className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
+                              buyStatus === "success"
+                                ? "successbtn"
+                                : buyStatus === "failed" ||
+                                  (chainId !== 5 && chainId !== 1)
+                                ? "errorbtn"
+                                : null
+                            } d-flex justify-content-center align-items-center gap-2`}
+                            onClick={() => {
+                              chainId !== 1 && chainId !== 5
+                                ? handleSwitchChain()
+                                : handleBuy(nft);
+                            }}
+                          >
+                            {buyloading && (chainId === 1 || chainId === 5) ? (
+                              <div
+                                className="spinner-border spinner-border-sm text-light"
+                                role="status"
+                              >
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </div>
+                            ) : !buyloading &&
+                              chainId !== 1 &&
+                              chainId !== 5 ? (
+                              "Switch Network"
+                            ) : buyStatus === "buy" ? (
+                              "Buy"
+                            ) : buyStatus === "approve" || buyStatus === "" ? (
+                              "Approve buy"
+                            ) : buyStatus === "success" ? (
+                              "Success"
+                            ) : (
+                              "Failed"
+                            )}
+                          </button>
+                         
                       )}
                       {isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex gap-2 col-lg-5 col-xxl-5 align-items-center">
@@ -1657,6 +1742,17 @@ const SingleNft = ({
                           )}
                         </button>
                       )}
+
+                      {/* {!isOwner && !IsListed && coinbase && isConnected && (
+                        <button
+                          className="btn mint-now-btn gap-2"
+                          onClick={() => {
+                            setshowMakeOffer(true);
+                          }}
+                        >
+                          <img src={whiteTag} alt="" /> Make offer
+                        </button>
+                      )} */}
 
                       {!isConnected && (
                         <button
@@ -1941,6 +2037,68 @@ const SingleNft = ({
               </div>
             </div>
           </div>
+{/* 
+          {offerData && offerData.length > 0 && (
+            <div className="px-2 mt-5">
+              <div className="d-flex flex-column gap-3">
+                <span className="nftactivity">NFT Offers Activity </span>
+                <div className="tablesalewrapper">
+                  <table className="pastsaleTable p-2">
+                    <tbody>
+                      <th className="saleHeader">Price</th>
+                      <th className="saleHeader">USD Price</th>
+                      <th className="saleHeader">Floor Difference</th>
+                      <th className="saleHeader">From</th>
+                      {isOwner && <th className="saleHeader">Action</th>}
+
+                      {offerData.map((item, index) => {
+                        return (
+                          <tr className="saleRow" key={index}>
+                            <td className="saledata">
+                              {getFormattedNumber(item.offer[0] / 1e18, 2)}{" "}
+                              {item.offer.payment.priceType === "0"
+                                ? "ETH"
+                                : "DYP"}
+                            </td>
+                            <td className="saleprice">
+                              $
+                              {getFormattedNumber(
+                                item.offer.payment.priceType === "0"
+                                  ? ethtokenData * (item.offer[0] / 1e18)
+                                  : dyptokenData * (item.offer[0] / 1e18),
+                                item.offer.payment.priceType === "0" ? 3 : 0
+                              )}
+                            </td>
+                            <td className="greendata">tbd</td>
+                            <td className="greendata">
+                              <a
+                                href={`https://etherscan.io/address/${item.offer.buyer}`}
+                                target="_blank"
+                                style={{ textDecoration: "none" }}
+                                className="greendata p-0"
+                                rel="noreferrer"
+                              >
+                                {shortAddress(item.offer.buyer)}{" "}
+                                <img src={link} alt="" />
+                              </a>
+                            </td>
+                            {isOwner && (
+                              <td className="greendata">
+                                <button className="acceptbtn btn">
+                                  Accept
+                                </button>
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )} */}
+
           {saleHistory && saleHistory.length > 0 && (
             <div className="px-2 mt-5">
               <div className="d-flex flex-column gap-3">
@@ -2005,6 +2163,31 @@ const SingleNft = ({
           )}
         </div>
       </div>
+      {showMakeOffer === true && (
+        <MakeOffer
+          open={showMakeOffer}
+          onclose={() => {
+            setshowMakeOffer(false);
+          }}
+          isCaws={type === "caws"}
+          isTimepiece={type === "timepiece"}
+          isWod={type === "land"}
+          nft={nft}
+          nftAddr={nftAddress}
+          nftId={nftId}
+          ethTokenData={ethtokenData}
+          dypTokenData={dyptokenData}
+          handleMakeOffer={handleMakeOffer}
+          handleDeleteOffer={handleDeleteOffer}
+          handleUpdateOffer={handleUpdateOffer}
+          status={offerStatus}
+          deletestatus={offerdeleteStatus}
+          updatestatus={offerupdateStatus}
+
+          coinbase={coinbase}
+          nftCount={nftCount}
+        />
+      )}
     </div>
   );
 };
