@@ -1090,8 +1090,8 @@ const SingleNft = ({
             <div className="d-flex flex-column gap-4 flex-xxl-row flex-lg-row align-items-center justify-content-around mt-5 px-3">
               <div className="d-flex flex-column align-items-center gap-2 col-6 col-lg-3 position-relative">
                 <div className="position-relative package-blur">
-                  <div className="first-box-blur first-bigbox-blur d-flex align-items-end justify-content-center"></div>
-                  <div className="second-box-blur second-bigbox-blur"></div>
+                  <div className="first-box-blur first-bigbox-blur d-none d-lg-flex  align-items-end justify-content-center"></div>
+                  <div className="second-box-blur d-none d-lg-flex second-bigbox-blur"></div>
                   <img
                     className="blur-img blur-img-big"
                     src={
@@ -1108,7 +1108,7 @@ const SingleNft = ({
                   />
                 </div>
               </div>
-              <div className="d-flex flex-column gap-2 col-lg-7">
+              <div className="d-flex flex-column gap-2 col-12 col-lg-7">
                 <div
                   className="d-flex align-items-center gap-2 px-4"
                   style={{
@@ -1125,7 +1125,7 @@ const SingleNft = ({
                     <img src={heart} alt="" /> {favCount} favorites
                   </span>
                 </div>
-                <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
+                <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
                     <h3 className="nft-title d-flex align-items-center justify-content-between">
                       {type === "caws"
