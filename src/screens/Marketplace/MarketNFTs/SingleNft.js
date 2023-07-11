@@ -1040,7 +1040,7 @@ const SingleNft = ({
         setIsFavorite(true);
       } else setIsFavorite(false);
     }
-}, [nft, favorites]);
+  }, [nft, favorites]);
 
   useEffect(() => {
     if (
@@ -1347,11 +1347,12 @@ const SingleNft = ({
                                   }}
                                 /> */}
                                 <input
-                                required
+                                  required
                                   className="single-nft-input"
                                   type="number"
                                   id="price"
                                   name="price"
+                                  pattern="^[0-9]*[.,]?[0-9]*$"
                                   min={0}
                                   value={nftPrice}
                                   onChange={(e) => {
@@ -1461,21 +1462,17 @@ const SingleNft = ({
                             </span>
                             <div className="d-flex gap-2 align-items-center">
                               <span className="nft-price-eth gap-3 d-flex">
-                                <StyledTextField
-                                  error={nftPrice === "" ? true : false}
-                                  size="small"
+                                <input
+                                  required
+                                  className="single-nft-input"
+                                  type="number"
                                   id="price"
                                   name="price"
+                                  pattern="^[0-9]*[.,]?[0-9]*$"
+                                  min={0}
                                   value={nftPrice}
-                                  type="number"
-                                  required
                                   onChange={(e) => {
                                     handlepricechange(e.target.value);
-                                  }}
-                                  sx={{ width: "120px" }}
-                                  inputProps={{
-                                    inputMode: "numeric",
-                                    pattern:"^[0-9]*[.,]?[0-9]*$"
                                   }}
                                 />
                                 {priceType === 0 ? "ETH" : "DYP"}{" "}
