@@ -795,7 +795,7 @@ const WoDNFT = ({
     // fetchFilters();
     setFilters(landtraits.collection.traits);
   }, [next]);
-  console.log(landNfts);
+  
   useEffect(() => {
     if (landNfts && landNfts.length === 0) {
       setLoading(true);
