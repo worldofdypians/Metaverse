@@ -106,15 +106,18 @@ const RegisterModal = ({
     }
   };
 
+
+  
+
   useEffect(() => {
     checkData();
     checkBetaTester();
   }, [coinbase, nftresult]);
 
   useEffect(() => {
-    const sum = cawsMinted + cawsStaked + landMinted + landStaked;
+    const sum = cawsMinted + cawsStaked + landMinted + landStaked + myCawsWodStakes;
     setResult(sum);
-  }, [cawsMinted, cawsStaked, landMinted, landStaked, coinbase]);
+  }, [cawsMinted, cawsStaked, landMinted, landStaked, coinbase, myCawsWodStakes]);
 
   return (
     <Modal
