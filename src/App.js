@@ -1363,6 +1363,7 @@ function App() {
             handleConnect={handleConnection}
             coinbase={coinbase}
             showForms={showForms}
+            myCawsWodStakes={myCawsWodStakesAll}
           />
         )}
         {betaModal === true && (
