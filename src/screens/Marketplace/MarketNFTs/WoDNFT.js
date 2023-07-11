@@ -582,7 +582,7 @@ const WoDNFT = ({
     let uniquewod = wodArray.filter(
       (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
     );
-    
+
     if (uniquewod && uniquewod.length > 0) {
       let datedNfts = uniquewod.map((nft, index) => {
         if (
@@ -772,7 +772,7 @@ const WoDNFT = ({
     if (wodBought && wodBought.length > 0) {
       getListedWod();
     }
-  }, [wodBought, nftCount,allwodNfts.length]);
+  }, [wodBought, nftCount, allwodNfts.length]);
 
   useEffect(() => {
     loadMore2();
@@ -785,7 +785,12 @@ const WoDNFT = ({
   }, [landNfts]);
 
   useEffect(() => {
-    if (wodBought && wodBought.length > 0 && allwodNfts.length > 0 && finalData.length > 0) {
+    if (
+      wodBought &&
+      wodBought.length > 0 &&
+      allwodNfts.length > 0 &&
+      finalData.length > 0
+    ) {
       fetchInitialWod();
     }
   }, [allwodNfts.length, finalData.length, wodBought]);
@@ -795,7 +800,7 @@ const WoDNFT = ({
     // fetchFilters();
     setFilters(landtraits.collection.traits);
   }, [next]);
-  
+
   useEffect(() => {
     if (landNfts && landNfts.length === 0) {
       setLoading(true);
@@ -804,13 +809,12 @@ const WoDNFT = ({
       setLoading(false);
     }
   }, [landNfts]);
- 
+
   return (
     <div
       id="header"
       onScroll={onScroll}
       ref={listInnerRef}
-      style={{ overflow: "scroll" }}
     >
       <div
         className="container-fluid d-flex justify-content-end p-0"
@@ -1326,6 +1330,90 @@ const WoDNFT = ({
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
                         </>
                       ) : (
                         <></>
@@ -1333,7 +1421,6 @@ const WoDNFT = ({
                     </>
                   ) : count > 0 && landNfts2 && landNfts2.length === 0 ? (
                     <>
-                      {" "}
                       <Skeleton
                         animation="wave"
                         width={"100%"}

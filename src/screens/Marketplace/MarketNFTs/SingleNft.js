@@ -1328,6 +1328,7 @@ const SingleNft = ({
                                   sx={{ width: "120px" }}
                                   inputProps={{
                                     inputMode: "numeric",
+                                    pattern:"^[0-9]*[.,]?[0-9]*$"
                                   }}
                                 />
                                 {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
@@ -1447,6 +1448,7 @@ const SingleNft = ({
                                   sx={{ width: "120px" }}
                                   inputProps={{
                                     inputMode: "numeric",
+                                    pattern:"^[0-9]*[.,]?[0-9]*$"
                                   }}
                                 />
                                 {priceType === 0 ? "ETH" : "DYP"}{" "}
