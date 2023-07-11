@@ -31556,7 +31556,8 @@ async function connectWallet() {
       let coinbase_address = await window.ethereum?.request({
         method: "eth_accounts",
       });
-      window.coinbase_address = coinbase_address.pop();
+      
+      window.coinbase_address = coinbase_address[0];
       onConnect();
       return true;
     } catch (e) {
@@ -31591,7 +31592,7 @@ async function getCoinbase() {
     });
 
     if (coinbase && coinbase.length > 0) {
-      window.coinbase_address = coinbase.pop();
+      window.coinbase_address = coinbase[0];;
 
       return window.coinbase_address.toLowerCase();
     }
