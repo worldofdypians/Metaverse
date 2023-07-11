@@ -376,6 +376,17 @@
   }
 }
 
+.market-mint-bg {
+  background-image: url("./assets/timepiecehero1.png");
+  background-size: 100% 100%;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+// background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
 // .mint-wrappernew::before {
 //   content: "";
 //   position: absolute;
@@ -617,7 +628,7 @@
   font-family: "Organetto" !important;
   font-style: normal;
   font-weight: 800;
-  font-size: 40px;
+  font-size: 30px;
   line-height: 54px;
   color: #ffffff;
 
@@ -1212,8 +1223,8 @@ input::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 991px) {
-  .timepiecewhite-gif{
-      max-height: 250px !important;
+  .timepiecewhite-gif {
+    max-height: 250px !important;
   }
 
   .timepiece-graphic {
@@ -1263,4 +1274,19 @@ input::-webkit-inner-spin-button {
   font-size: 12px;
   line-height: 18px;
   color: #b8b8b8;
+}
+
+.market-mint-title {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: 1.08px;
+  text-transform: capitalize;
+}
+
+.market-mint-desc {
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.48px;
 }

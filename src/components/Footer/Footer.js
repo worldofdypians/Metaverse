@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./_footer.scss";
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+
+  const location = useLocation();
+
   const year = new Date().getFullYear();
 
   const windowSize = useWindowSize();
-
+  const [padding, setPadding] = useState(false)
   const socials = [
     {
       icon: "twitter",
@@ -43,8 +47,19 @@ const Footer = () => {
     },
   ];
 
+  useEffect(() => {
+  
+    if(location.pathname.includes("marketplace")){
+      setPadding(true)
+    }else{
+      setPadding(false)
+    }
+
+  }, [location])
+  
+
   return (
-    <div className="footer-container flex-column px-3 px-lg-5">
+    <div className={`${padding ? 'extra-padding' : null} footer-container flex-column px-3 px-lg-5 `}>
       <div className="container-fluid d-flex w-100 pb-4 flex-column flex-xxl-row flex-lg-row flex-xl-row  gap-3 justify-content-between align-items-baseline">
         <div className="d-flex pt-5  w-50 footer-wrapper flex-row align-items-start align-items-lg-center gap-4 gap-lg-0 justify-content-between">
           <a

@@ -785,7 +785,7 @@ if(address)
                       <div className="d-flex justify-content-between">
                         <div>
                           <p id="ethPrice" className="mb-0">
-                            {getFormattedNumber(ETHrewards, 4)} WETH
+                            {getFormattedNumber(ETHrewards, 4)} ETH
                           </p>
                           <p id="fiatPrice" className="mb-0">
                             {formattedNum(ethToUSD, true)}
