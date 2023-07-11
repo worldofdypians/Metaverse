@@ -1082,12 +1082,6 @@ const SingleNft = ({
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Cats and Watches Society{" "}
-                  <h6
-                    className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
-                  >
-                    (CAWS)
-                  </h6>
                 </h6>
               </>
             ) : (
