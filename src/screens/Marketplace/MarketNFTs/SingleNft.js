@@ -252,7 +252,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      }
+      } 
     } else if (type === "land") {
       let nft_address = window.config.nft_land_address;
       const listedNFT = await getListedNFTS(
@@ -265,7 +265,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      }
+      } 
     } else {
       let nft_address = window.config.nft_caws_address;
       const listedNFT = await getListedNFTS(
@@ -278,7 +278,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      }
+      } 
     }
   };
 
@@ -367,6 +367,7 @@ const SingleNft = ({
     console.log(test);
 
     setNft(...finalboughtItems);
+    setIsListed(false);
   };
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
@@ -404,6 +405,7 @@ const SingleNft = ({
               : "land",
             nftId
           );
+          setIsListed(true)
           handleRefreshListing();
           setTimeout(() => {
             setPurchaseStatus("");
@@ -607,6 +609,7 @@ const SingleNft = ({
           setShowToast(true);
           setToastTitle("Successfully purchased!");
           setPurchaseColor("#00FECF");
+          // setIsListed(false)
 
           setTimeout(() => {
             setPurchaseStatus("");
@@ -778,9 +781,11 @@ const SingleNft = ({
     if (listedNFTS.length > 0) {
       setNft(...listedNFTS);
       setloadingNft(false);
+      setIsListed(true);
     } else {
       setNft([]);
       setloadingNft(false);
+      setIsListed(false);
     }
   }
   //to get the favorites count
@@ -827,6 +832,19 @@ const SingleNft = ({
     } else if (Number(newprice) > 100000 && priceType === 1) {
       setNftPrice(100000);
     } else if (Number(newprice) <= 100000 && priceType === 1) {
+      setNftPrice(newprice);
+    }
+  };
+
+  const handlepricechange2 = (newprice) => {
+    //isdyp nft.payment_priceType === 1
+    if (Number(newprice) > 100 && nft.payment_priceType === 0) {
+      setNftPrice(100);
+    } else if (Number(newprice) <= 100 && nft.payment_priceType === 0) {
+      setNftPrice(newprice);
+    } else if (Number(newprice) > 100000 && nft.payment_priceType === 1) {
+      setNftPrice(100000);
+    } else if (Number(newprice) <= 100000 && nft.payment_priceType === 1) {
       setNftPrice(newprice);
     }
   };
@@ -963,7 +981,7 @@ const SingleNft = ({
         setisOwner(true);
       }
     }
-  }, [isConnected, isOwner, IsListed, coinbase, nft, owner]);
+  }, [isConnected, isOwner, IsListed, coinbase, nft, owner, nftCount]);
 
   useEffect(() => {
     getNftOwner(
@@ -982,7 +1000,7 @@ const SingleNft = ({
         : "land",
       nftId
     );
-  }, [type, nftId, nftAddress, nftCount]);
+  }, [type, nftId, nftAddress]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -995,7 +1013,8 @@ const SingleNft = ({
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
     getOffer();
-  }, [nftCount]);
+  }, []);
+
 
   useEffect(() => {
     if (nft.tokenId) {
@@ -1010,7 +1029,7 @@ const SingleNft = ({
       setType("land");
     }
     getMetaData(nftAddress, nftId);
-  }, [nftId, nftAddress, nft,nftCount]);
+  }, [nftId, nftAddress, nft, nftCount]);
 
   useEffect(() => {
     if (nft) {
@@ -1096,13 +1115,10 @@ const SingleNft = ({
                     className="blur-img blur-img-big"
                     src={
                       nftAddress === window.config.nft_caws_address
-                        ? 
-                        `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nftId}.png`
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nftId}.png`
                         : nftAddress === window.config.nft_land_address
-                        ? 
-                        `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
-                        : 
-                        `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
+                        : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
                   />
@@ -1307,7 +1323,7 @@ const SingleNft = ({
                                   type="text"
                                   required
                                   onChange={(e) => {
-                                    handlepricechange(e.target.value);
+                                    handlepricechange2(e.target.value);
                                   }}
                                   sx={{ width: "120px" }}
                                   inputProps={{
@@ -1553,51 +1569,47 @@ const SingleNft = ({
                         )}
                       </div>
                       {!isOwner && IsListed && coinbase && isConnected && (
-                  
-                          <button
-                            disabled={
-                              buyloading === true || buyStatus === "failed"
-                                ? true
-                                : false
-                            }
-                            className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
-                              buyStatus === "success"
-                                ? "successbtn"
-                                : buyStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
-                                ? "errorbtn"
-                                : null
-                            } d-flex justify-content-center align-items-center gap-2`}
-                            onClick={() => {
-                              chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain()
-                                : handleBuy(nft);
-                            }}
-                          >
-                            {buyloading && (chainId === 1 || chainId === 5) ? (
-                              <div
-                                className="spinner-border spinner-border-sm text-light"
-                                role="status"
-                              >
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            ) : !buyloading &&
-                              chainId !== 1 &&
-                              chainId !== 5 ? (
-                              "Switch Network"
-                            ) : buyStatus === "buy" ? (
-                              "Buy"
-                            ) : buyStatus === "approve" || buyStatus === "" ? (
-                              "Approve buy"
-                            ) : buyStatus === "success" ? (
-                              "Success"
-                            ) : (
-                              "Failed"
-                            )}
-                          </button>
-                         
+                        <button
+                          disabled={
+                            buyloading === true || buyStatus === "failed"
+                              ? true
+                              : false
+                          }
+                          className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
+                            buyStatus === "success"
+                              ? "successbtn"
+                              : buyStatus === "failed" ||
+                                (chainId !== 5 && chainId !== 1)
+                              ? "errorbtn"
+                              : null
+                          } d-flex justify-content-center align-items-center gap-2`}
+                          onClick={() => {
+                            chainId !== 1 && chainId !== 5
+                              ? handleSwitchChain()
+                              : handleBuy(nft);
+                          }}
+                        >
+                          {buyloading && (chainId === 1 || chainId === 5) ? (
+                            <div
+                              className="spinner-border spinner-border-sm text-light"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                          ) : !buyloading && chainId !== 1 && chainId !== 5 ? (
+                            "Switch Network"
+                          ) : buyStatus === "buy" ? (
+                            "Buy"
+                          ) : buyStatus === "approve" || buyStatus === "" ? (
+                            "Approve buy"
+                          ) : buyStatus === "success" ? (
+                            "Success"
+                          ) : (
+                            "Failed"
+                          )}
+                        </button>
                       )}
                       {isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex gap-2 col-lg-5 col-xxl-5 align-items-center">
@@ -1622,7 +1634,7 @@ const SingleNft = ({
                                 : updateListing(
                                     nft.tokenId,
                                     nftPrice,
-                                    priceType,
+                                    nft.payment_priceType,
                                     type
                                   );
                             }}
@@ -2037,7 +2049,7 @@ const SingleNft = ({
               </div>
             </div>
           </div>
-{/* 
+          {/* 
           {offerData && offerData.length > 0 && (
             <div className="px-2 mt-5">
               <div className="d-flex flex-column gap-3">
@@ -2183,7 +2195,6 @@ const SingleNft = ({
           status={offerStatus}
           deletestatus={offerdeleteStatus}
           updatestatus={offerupdateStatus}
-
           coinbase={coinbase}
           nftCount={nftCount}
         />
