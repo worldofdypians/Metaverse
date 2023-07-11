@@ -252,7 +252,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      } 
+      }
     } else if (type === "land") {
       let nft_address = window.config.nft_land_address;
       const listedNFT = await getListedNFTS(
@@ -265,7 +265,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      } 
+      }
     } else {
       let nft_address = window.config.nft_caws_address;
       const listedNFT = await getListedNFTS(
@@ -278,7 +278,7 @@ const SingleNft = ({
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
-      } 
+      }
     }
   };
 
@@ -405,7 +405,7 @@ const SingleNft = ({
               : "land",
             nftId
           );
-          setIsListed(true)
+          setIsListed(true);
           handleRefreshListing();
           setTimeout(() => {
             setPurchaseStatus("");
@@ -1015,7 +1015,6 @@ const SingleNft = ({
     getOffer();
   }, []);
 
-
   useEffect(() => {
     if (nft.tokenId) {
       getFavoritesCount(nft.tokenId, nft.nftAddress);
@@ -1141,6 +1140,24 @@ const SingleNft = ({
                     <img src={heart} alt="" /> {favCount} favorites
                   </span>
                 </div>
+                {/* <StyledTextField
+                  error={nftPrice === "" ? true : false}
+                  size="small"
+                  // label="Price"
+                  id="price"
+                  name="price"
+                  value={nftPrice}
+                  type="text"
+                  required
+                  onChange={(e) => {
+                    handlepricechange2(e.target.value);
+                  }}
+                  sx={{ width: "120px" }}
+                  inputProps={{
+                    inputMode: "numeric",
+                  }}
+                /> */}
+
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
                     <h3 className="nft-title d-flex align-items-center justify-content-between">
@@ -1313,7 +1330,7 @@ const SingleNft = ({
                             </span>
                             <div className="d-flex gap-2 align-items-center">
                               <span className="nft-price-eth gap-3 d-flex">
-                                <StyledTextField
+                                {/* <StyledTextField
                                   error={nftPrice === "" ? true : false}
                                   size="small"
                                   // label="Price"
@@ -1329,6 +1346,18 @@ const SingleNft = ({
                                   inputProps={{
                                     inputMode: "numeric",
                                     pattern:"^[0-9]*[.,]?[0-9]*$"
+                                  }}
+                                /> */}
+                                <input
+                                required
+                                  className="single-nft-input"
+                                  type="number"
+                                  id="price"
+                                  name="price"
+                                  min={0}
+                                  value={nftPrice}
+                                  onChange={(e) => {
+                                    handlepricechange2(e.target.value);
                                   }}
                                 />
                                 {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
