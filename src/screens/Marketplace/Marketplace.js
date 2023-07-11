@@ -437,7 +437,8 @@ const Marketplace = ({
     setRecentSold(recentSales);
   }, [recentSales]);
 
-  useEffect(() => {
+
+  const cutLength = () => {
     if (windowSize.width > 1600) {
       setSliderCut(6);
     } else if (windowSize.width > 1500) {
@@ -451,6 +452,10 @@ const Marketplace = ({
     } else {
       setSliderCut(1);
     }
+  }
+
+  useEffect(() => {
+   cutLength();
   }, [windowSize.width]);
 
   return (
@@ -995,7 +1000,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "all" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentListings("all")}
+                    onClick={() =>{  filterRecentListings("all");
+                    cutLength();
+                    firstSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide(0);
+                  }}
                   >
                     All
                   </h6>
@@ -1003,7 +1012,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "caws" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentListings("caws")}
+                    onClick={() => { filterRecentListings("caws");
+                    cutLength();
+                    firstSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide(0);
+                  }}
                   >
                     CAWS
                   </h6>
@@ -1011,7 +1024,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "land" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentListings("land")}
+                    onClick={() => { filterRecentListings("land");
+                    cutLength();
+                    firstSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide(0);
+                  }}
                   >
                     Land
                   </h6>
@@ -1019,7 +1036,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "timepiece" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentListings("timepiece")}
+                    onClick={() => { filterRecentListings("timepiece");
+                    cutLength();
+                    firstSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide(0);
+                  }}
                   >
                     Timepiece
                   </h6>
@@ -1283,7 +1304,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "all" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentSales("all")}
+                    onClick={() => {filterRecentSales("all");
+                  cutLength();
+                    secondSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide2(0);
+                  }}
                   >
                     All
                   </h6>
@@ -1291,7 +1316,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "caws" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentSales("caws")}
+                    onClick={() => {filterRecentSales("caws");
+                  cutLength();
+                    secondSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide2(0);
+                  }}
                   >
                     CAWS
                   </h6>
@@ -1299,7 +1328,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "land" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentSales("land")}
+                    onClick={() => {filterRecentSales("land");
+                  cutLength();
+                    secondSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide2(0);
+                  }}
                   >
                     Land
                   </h6>
@@ -1307,7 +1340,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "timepiece" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentSales("timepiece")}
+                    onClick={() => {filterRecentSales("timepiece");
+                  cutLength();
+                    secondSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide2(0);
+                  }}
                   >
                     Timepiece
                   </h6>

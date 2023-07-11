@@ -1847,7 +1847,7 @@ const WalletBalance = ({
               <div className="col-12 d-flex justify-content-center">
                 <Pagination
                   color="primary"
-                  count={Math.round(collectedItemsFiltered.length / 9)}
+                  count={Math.ceil(collectedItemsFiltered.length / 9)}
                   page={collectedPage}
                   onChange={(e, value) => {
                     handleCollectedPage(e, value);
@@ -1956,7 +1956,7 @@ const WalletBalance = ({
               <div className="col-12 d-flex justify-content-center">
                 <Pagination
                   color="primary"
-                  count={Math.round(favItemsFiltered.length / 9)}
+                  count={Math.ceil(favItemsFiltered.length / 9)}
                   page={favoritesPage}
                   onChange={(e, value) => {
                     handleFavoritesPage(e, value);
@@ -2060,7 +2060,7 @@ const WalletBalance = ({
               <div className="col-12 d-flex justify-content-center">
                 <Pagination
                   color="primary"
-                  count={Math.round(listedItemsFiltered.length / 9)}
+                  count={Math.ceil(listedItemsFiltered.length / 9)}
                   page={listedPage}
                   onChange={(e, value) => {
                     handleListedPage(e, value);
@@ -2166,7 +2166,7 @@ const WalletBalance = ({
               <div className="col-12 d-flex justify-content-center">
                 <Pagination
                   color="primary"
-                  count={Math.round(myCawsWodStakes.length / 9)}
+                  count={Math.ceil(myCawsWodStakes.length / 9)}
                   page={stakedPage}
                   onChange={(e, value) => {
                     handleStakedPage(e, value);
