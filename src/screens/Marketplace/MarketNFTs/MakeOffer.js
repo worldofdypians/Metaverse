@@ -151,7 +151,7 @@ const MakeOffer = ({
     overflowX: "hidden",
     borderRadius: "10px",
     background: "#1A1C39",
-    height: windowSize.width < 500 ? '480px' : ''
+    height: windowSize.width < 500 ? '480px' : 'auto'
   };
 
   useEffect(() => {
