@@ -1,0 +1,74 @@
+.bigContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 16px 131px;
+}
+
+.containerPlayer {
+  display: flex;
+  flex-direction: column;
+  /* flex: 1; */
+  /* max-width: 400px; */
+  /* margin-right: 32px; */
+}
+
+.playerProfileTitle {
+  font-weight: 800;
+font-size: 24px;
+line-height: 32px;
+color: #FFFFFF;
+}
+
+.idypicon {
+  background: url(./front.webp);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.exploreTag {
+  background: none!important;
+  color: #8c56ff!important;
+}
+
+.containerCurrency {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.text {
+  font-family: "Poppins" !important;
+  font-weight: 600 !important;
+  font-size: 24px !important;
+  color: #ffffff !important;
+  letter-spacing: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.notFoundText {
+  margin: auto;
+  margin-top: 60px;
+  font-family: "Poppins" !important;
+  font-weight: 600 !important;
+  font-size: 20px !important;
+  color: #ffffff !important;
+  letter-spacing: 0 !important;
+}
+
+.button {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 20px;
+  color: #0b0b2e;
+  letter-spacing: 0;
+  line-height: 30;
+}
+
+.cartContainer {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  padding-bottom: 15px;
+}

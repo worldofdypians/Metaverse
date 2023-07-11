@@ -580,7 +580,7 @@
     font-family: "Organetto" !important;
     font-style: normal;
     font-weight: 800;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 54px;
     color: #ffffff;
 
@@ -1093,6 +1093,15 @@ input::-webkit-inner-spin-button {
 }
 
 .newminttitle-marked {
+  color: #09FBD3;
+}
+.marketmintnewtitle {
+  color: #FFF;
+font-size: 28px;
+font-weight: 800;
+}
+
+.marketmintnewtitle-marked {
   color: #09FBD3;
 }
 

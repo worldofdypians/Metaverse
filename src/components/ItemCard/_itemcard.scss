@@ -1,0 +1,191 @@
+.item-wrapper {
+  background: #252743 !important;
+  border: 1px solid #494b63;
+  // backdrop-filter: blur(26px);
+  overflow: hidden;
+  transition: all 0.35s;
+  border-radius: 20px;
+  // padding-top: 15px;
+  // padding-bottom: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.nft-img {
+  transition: all 0.2s;
+  border-radius: 20px 20px 0 0;
+}
+
+.buy-nft-btn {
+  // background-color: rgb(46, 142, 238);
+  background: var(--pp-2-purple,linear-gradient(214deg,#b75cff 0,#671ae4 100%));
+  border: none !important;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 0px 0px 20px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 12px;
+  position: absolute;
+  bottom: -40px;
+  transition: all 0.2s;
+  color: #eeedff;
+  height: 28px;
+}
+
+.view-nft-btn {
+  // background-color: rgb(46, 142, 238);
+  border-radius: 0px 0px 20px 20px;
+  background: linear-gradient(90deg, #008B9C 0%, #1261A8 100%);
+  border: none !important;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 12px;
+  position: absolute;
+  bottom: -40px;
+  transition: all 0.2s;
+  color: #eeedff;
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+  height: 28px;
+}
+
+.cawsimg {
+  --mask: linear-gradient(-284deg, #0000 93px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  margin-left: -140px;
+}
+
+.nft-name {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #b8b8e0;
+  margin-bottom: 0;
+}
+
+.nft-price {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #eeedff;
+  margin-bottom: 0;
+}
+
+.nftimg-bg {
+  // background: url('https://mint.dyp.finance/thumbs/424.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  // height: 200px;
+}
+
+.name-wrapper {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(26px);
+  z-index: 1;
+  border-radius: 0px;
+}
+
+.nft-card-name {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.lastsold {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  color: #eeedff;
+}
+
+.ethgraylogo {
+  visibility: hidden;
+  top: 10px;
+  left: 10px;
+}
+
+.card-eth-chain{
+
+  border-radius: 10px;
+background: #252743;
+
+}
+
+.card-eth-chain-text{
+  color: #EEEDFF;
+text-align: center;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+font-family: 'Poppins' !important;
+}
+
+
+
+.item-wrapper:hover {
+  background: rgba(103, 67, 124, 0.35) !important;
+  .ethgraylogo {
+    visibility: visible;
+    top: 10px;
+    left: 10px;
+    z-index: 5;
+    pointer-events: all;
+  }
+
+
+
+  .topwrapper {
+    padding-top: 11px !important;
+  }
+
+  .lastsoldwrapper {
+    bottom: 23px !important
+  }
+
+  .favoritehover {
+    position: relative;
+    top: -3px;
+    scale: 0.9;
+  }
+
+  .nft-price-usdhover {
+    visibility: visible;
+    line-height: 8px;
+  }
+
+  .nft-price-usdhover2 {
+    visibility: hidden;
+    line-height: 8px;
+  }
+
+  .middlewrapper {
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .buy-nft-btn,
+  .view-nft-btn {
+    bottom: 0px;
+  }
+  .nft-img {
+    transform: scale(1.1);
+  }
+}

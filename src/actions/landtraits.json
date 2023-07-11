@@ -1,0 +1,221 @@
+{
+    "collection": {
+      "editors": [
+        "0x910090ea889b64b4e722ea4b8ff6d5e734dfb38f"
+      ],
+      "payment_tokens": [
+        {
+          "id": 13689077,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "image_url": "https://openseauserdata.com/files/6f8e2979d428180222796ff4a33ab929.svg",
+          "name": "Ether",
+          "decimals": 18,
+          "eth_price": 1.0,
+          "usd_price": 1856.43
+        },
+        {
+          "id": 4645681,
+          "symbol": "WETH",
+          "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+          "image_url": "https://openseauserdata.com/files/accae6b6fb3888cbff27a013729c22dc.svg",
+          "name": "Wrapped Ether",
+          "decimals": 18,
+          "eth_price": 1.0,
+          "usd_price": 1856.61
+        }
+      ],
+      "is_collection_offers_enabled": true,
+      "is_trait_offers_enabled": false,
+      "primary_asset_contracts": [
+        {
+          "address": "0xcd60d912655281908ee557ce1add61e983385a03",
+          "asset_contract_type": "non-fungible",
+          "chain_identifier": "ethereum",
+          "created_date": "2023-02-22T11:24:49.449553",
+          "name": "WorldofDypians",
+          "nft_version": null,
+          "opensea_version": null,
+          "owner": 12196533,
+          "schema_name": "ERC721",
+          "symbol": "WOD",
+          "total_supply": "0",
+          "description": "The WOD Land Genesis edition is a new type of NFT that offers a unique way to own virtual land in the World of Dypians Metaverse platform. The minted land is located in a prime area within the game and provides players with a wide range of benefits. Visit https://www.worldofdypians.com for more details.",
+          "external_link": "https://www.worldofdypians.com/",
+          "image_url": "https://i.seadn.io/gcs/files/3c9e7767f0c4f67112155d2e9f64e3e7.png?w=500&auto=format",
+          "default_to_fiat": false,
+          "dev_buyer_fee_basis_points": 0,
+          "dev_seller_fee_basis_points": 500,
+          "only_proxied_transfers": false,
+          "opensea_buyer_fee_basis_points": 0,
+          "opensea_seller_fee_basis_points": 250,
+          "buyer_fee_basis_points": 0,
+          "seller_fee_basis_points": 750,
+          "payout_address": "0x910090ea889b64b4e722ea4b8ff6d5e734dfb38f"
+        }
+      ],
+      "traits": {
+        "Artifacts": {
+          "2": 1000
+        },
+        "Multi Functional Building": {
+          "1": 1000
+        },
+        "NPC": {
+          "1": 1000
+        },
+        "NPC - AI Powered": {
+          "1": 1000
+        },
+        "Plot": {
+          "min": 0,
+          "max": 1000
+        },
+        "Tier": {
+          "genesis": 1000
+        },
+        "Size": {
+          "125x125m": 1000
+        },
+        "Building": {
+          "charoite streaks": 202,
+          "garnet streaks": 201,
+          "amber streaks": 201,
+          "aquamarine streaks": 200,
+          "emerald streaks": 196
+        },
+        "Workbench": {
+          "teal tranquility": 257,
+          "scarlet symphony": 251,
+          "emerald elegance": 247,
+          "majestic mauve": 245
+        },
+        "NPC - Attire": {
+          "celestial": 172,
+          "crimson": 168,
+          "verdant": 167,
+          "sunburst": 166,
+          "shadowweave": 164,
+          "nightshade": 163
+        },
+        "Gemstone": {
+          "amethyst": 117,
+          "morganite": 114,
+          "citrine": 113,
+          "black onyx": 111,
+          "diamond": 110,
+          "emerald": 110,
+          "aquamarine": 109,
+          "charoite": 109,
+          "garnet": 107
+        }
+      },
+      "stats": {
+        "one_minute_volume": 0.0,
+        "one_minute_change": 0.0,
+        "one_minute_sales": 0.0,
+        "one_minute_sales_change": 0.0,
+        "one_minute_average_price": 0.0,
+        "one_minute_difference": 0.0,
+        "five_minute_volume": 0.0,
+        "five_minute_change": 0.0,
+        "five_minute_sales": 0.0,
+        "five_minute_sales_change": 0.0,
+        "five_minute_average_price": 0.0,
+        "five_minute_difference": 0.0,
+        "fifteen_minute_volume": 0.0,
+        "fifteen_minute_change": 0.0,
+        "fifteen_minute_sales": 0.0,
+        "fifteen_minute_sales_change": 0.0,
+        "fifteen_minute_average_price": 0.0,
+        "fifteen_minute_difference": 0.0,
+        "thirty_minute_volume": 0.0,
+        "thirty_minute_change": 0.0,
+        "thirty_minute_sales": 0.0,
+        "thirty_minute_sales_change": 0.0,
+        "thirty_minute_average_price": 0.0,
+        "thirty_minute_difference": 0.0,
+        "one_hour_volume": 0.0,
+        "one_hour_change": 0.0,
+        "one_hour_sales": 0.0,
+        "one_hour_sales_change": 0.0,
+        "one_hour_average_price": 0.0,
+        "one_hour_difference": 0.0,
+        "six_hour_volume": 0.0,
+        "six_hour_change": 0.0,
+        "six_hour_sales": 0.0,
+        "six_hour_sales_change": 0.0,
+        "six_hour_average_price": 0.0,
+        "six_hour_difference": 0.0,
+        "one_day_volume": 0.0,
+        "one_day_change": 0.0,
+        "one_day_sales": 0.0,
+        "one_day_sales_change": 0.0,
+        "one_day_average_price": 0.0,
+        "one_day_difference": 0.0,
+        "seven_day_volume": 0.525,
+        "seven_day_change": 0.0,
+        "seven_day_sales": 1.0,
+        "seven_day_average_price": 0.525,
+        "seven_day_difference": 0.525,
+        "thirty_day_volume": 0.525,
+        "thirty_day_change": -0.33121019108280253,
+        "thirty_day_sales": 1.0,
+        "thirty_day_average_price": 0.525,
+        "thirty_day_difference": -0.26,
+        "total_volume": 148.82,
+        "total_sales": 134.0,
+        "total_supply": 999.0,
+        "count": 999.0,
+        "num_owners": 214,
+        "average_price": 1.110597014925373,
+        "num_reports": 0,
+        "market_cap": 524.475,
+        "floor_price": 0.5
+      },
+      "banner_image_url": "https://i.seadn.io/gcs/files/9331cf932af86b2da8a4f0560efb539d.png?w=500&auto=format",
+      "chat_url": null,
+      "created_date": "2023-02-22T14:45:13.397610+00:00",
+      "default_to_fiat": false,
+      "description": "The WOD Land Genesis edition is a new type of NFT that offers a unique way to own virtual land in the World of Dypians Metaverse platform. The minted land is located in a prime area within the game and provides players with a wide range of benefits. Visit https://www.worldofdypians.com for more details.",
+      "dev_buyer_fee_basis_points": "0",
+      "dev_seller_fee_basis_points": "500",
+      "discord_url": "https://discord.gg/worldofdypians",
+      "display_data": {
+        "card_display_style": "contain",
+        "images": null
+      },
+      "external_url": "https://www.worldofdypians.com/",
+      "featured": false,
+      "featured_image_url": "https://i.seadn.io/gcs/files/394d75b598a6b729eb5cab4819763114.png?w=500&auto=format",
+      "hidden": false,
+      "safelist_request_status": "disabled_top_trending",
+      "image_url": "https://i.seadn.io/gcs/files/3c9e7767f0c4f67112155d2e9f64e3e7.png?w=500&auto=format",
+      "is_subject_to_whitelist": false,
+      "large_image_url": "https://i.seadn.io/gcs/files/394d75b598a6b729eb5cab4819763114.png?w=500&auto=format",
+      "medium_username": "dypius",
+      "name": "World of Dypians",
+      "only_proxied_transfers": false,
+      "opensea_buyer_fee_basis_points": "0",
+      "opensea_seller_fee_basis_points": 250,
+      "payout_address": "0x910090ea889b64b4e722ea4b8ff6d5e734dfb38f",
+      "require_email": false,
+      "short_description": null,
+      "slug": "worldofdypians",
+      "telegram_url": "https://t.me/dypius",
+      "twitter_username": "dypius",
+      "instagram_username": null,
+      "wiki_url": null,
+      "is_nsfw": false,
+      "fees": {
+        "seller_fees": {
+          "0x910090ea889b64b4e722ea4b8ff6d5e734dfb38f": 500
+        },
+        "opensea_fees": {
+          "0x0000a26b00c1f0df003000390027140000faa719": 250
+        }
+      },
+      "is_rarity_enabled": false,
+      "is_creator_fees_enforced": false
+    }
+  }

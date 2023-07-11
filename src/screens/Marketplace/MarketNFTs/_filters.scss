@@ -1,0 +1,381 @@
+.filters-wrapper {
+  z-index: 999;
+  position: fixed;
+  min-height: 100vh;
+  right: 0;
+  transform: translateX(100%);
+  top: 0;
+  background: rgb(26, 28, 57);
+  transition: all 0.25s ease-out;
+}
+
+.filters-active {
+  transform: translateX(0);
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.7);
+}
+
+.filters-title {
+  color: #f7f7fc;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.select-category {
+  color: #c0cbf7;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.clear-all {
+  color: #ff6232;
+  text-align: right;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration-line: underline;
+}
+
+.filter-tabs {
+  flex-wrap: wrap;
+  @media screen and (max-width: 786px) {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    padding-bottom: 10px;
+  }
+}
+
+.filter-tab {
+  border-radius: 8px;
+  background: #252743;
+  border: 1px solid #252743;
+
+  cursor: pointer;
+}
+
+.filter-tab-active {
+  border-radius: 8px;
+  border: 1px solid #7dd9af;
+  background: #252743;
+
+  .filter-tab-title {
+    color: rgba(125, 217, 175, 1);
+  }
+}
+
+.filter-tab-title {
+  color: #c0cbf7;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.filters-divider {
+  display: flex;
+  width: 100%;
+  height: 2px;
+  background: rgba(86, 88, 145, 1);
+}
+
+.trait-wrapper {
+  border-radius: 8px;
+  background: #2f314d;
+  border: 1px solid #2f314d;
+  transform: border 0.25s;
+}
+
+.trait-title {
+  color: #f7f7ff;
+  font-size: 12px;
+  letter-spacing: -0.18px;
+  text-transform: capitalize;
+  transform: border 0.25s;
+}
+
+.trait-wrapper:hover {
+  border-radius: 8px;
+  border: 1px solid #50f9df;
+  background: linear-gradient(
+    180deg,
+    rgba(178, 254, 151, 0.08) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  .trait-title {
+    color: rgba(80, 249, 223, 1);
+  }
+}
+
+.trait-wrapper-active {
+  border-radius: 8px;
+  border: 1px solid #50f9df;
+  background: linear-gradient(
+    180deg,
+    rgba(178, 254, 151, 0.08) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  .trait-title {
+    color: rgba(80, 249, 223, 1);
+  }
+}
+
+.trait-amount {
+  color: #50f9df;
+  text-align: right;
+  font-size: 10px;
+  letter-spacing: -0.18px;
+}
+
+.traits-wrapper {
+  max-height: 65vh;
+  overflow-y: scroll;
+}
+
+.collection-desc {
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.48px;
+}
+
+.filters-container {
+  border-radius: 20px;
+  background: rgba(37, 39, 67, 0.45);
+  box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
+  backdrop-filter: blur(13.380000114440918px);
+}
+
+.totalsupplytxt {
+  color: #11fed2;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.nftactivity {
+  color: #fff;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.saleHeader {
+  color: #b8b8e0;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+}
+
+.saledata {
+  color: #eeedff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 10px;
+  text-align: center;
+}
+
+.successwrapper {
+  border-radius: 10px;
+  background: rgba(0, 255, 182, 0.15) !important;
+  display: flex;
+  justify-content: center;
+}
+
+.errorwrapper {
+  border-radius: 10px;
+  background: rgba(255, 60, 0, 0.15) !important;
+  display: flex;
+  justify-content: center;
+}
+
+.pastsaleTable {
+  border-radius: 40px;
+  background: linear-gradient(
+    180deg,
+    rgba(37, 39, 67, 0) 45.83%,
+    rgba(37, 39, 67, 0.15) 100%
+  );
+  box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
+  max-height: 300px;
+
+  @media only screen and (max-width: 690px) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+.summarytitle {
+  color: #f7f7fc;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.summaryseparator {
+  background: #565891;
+  height: 1px;
+  width: 100%;
+}
+
+.summarywrapper {
+  border-radius: 10px;
+  background: #252743;
+  padding: 10px;
+}
+
+.itemname {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.itemcollectionName {
+  color: #7dd9af;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.itemchain {
+  color: #eeedff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.gotowallet {
+  color: #eeedff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.footertext {
+  color: #eeedff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.tablesalewrapper {
+  display: grid;
+  height: 300px;
+  overflow-y: auto;
+}
+
+.saleRow {
+  border-top: 1px solid #b8b8e0;
+}
+
+.saleprice {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  padding: 10px;
+}
+
+.greendata {
+  color: #7dd9af;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  padding: 10px;
+}
+
+.filter-nav-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(238, 237, 255, 1);
+  text-transform: capitalize;
+}
+
+.collection-price {
+  border-radius: 12px;
+  border: 1px solid #43455d;
+  background: #312a4d;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.collection-price:hover {
+  border: 1px solid #11fed2;
+  .collection-price-span {
+    color: rgba(238, 237, 255, 1);
+  }
+}
+
+.collection-price-span {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(238, 237, 255, 1);
+}
+
+.collection-price-check {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -8px;
+  margin: auto;
+}
+
+.selected-traits-wrapper {
+  flex-wrap: wrap;
+}
+
+.selected-trait-item {
+  border-radius: 8px;
+  border: 1px solid rgba(239, 238, 255, 0.2);
+  background: #252743;
+}
+
+.selected-trait-key {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.selected-trait-value {
+  color: rgba(17, 254, 210, 1);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.clear-all-btn {
+  border-radius: 8px;
+  border: 1px solid rgba(239, 238, 255, 0.4);
+  background: #151735;
+  color: #eeedff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.clear-all-btn:hover {
+  color: #eeedff;
+  border: 1px solid rgba(239, 238, 255, 0.4);
+  background: #151735;
+}
