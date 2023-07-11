@@ -24,7 +24,7 @@ import CriticalHitPopup from "../../components/PackagePopups/CriticalHitPopup";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useParams } from "react-router-dom";
 
-const MarketEvents = ({ account, chainId, dyptokenDatabnb, idyptokenDatabnb }) => {
+const MarketEvents = ({ account, chainId, dyptokenDatabnb, idyptokenDatabnb, handleAvailableTime, remainingTime }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
   const [dypBalance, setDypBalance] = useState();
@@ -374,6 +374,7 @@ const MarketEvents = ({ account, chainId, dyptokenDatabnb, idyptokenDatabnb }) =
                     }
                     handleSetAvailableTime={(value) => {
                       setAvailableTime(value);
+                      handleAvailableTime(value)
                     }}
                     availableTime={availableTime}
                   />

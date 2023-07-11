@@ -104,6 +104,8 @@ function App() {
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
   const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
   const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
+  const [availTime, setavailTime] = useState();
+
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
     top20BoughtByPriceAndPriceTypeETHNFTS,
@@ -1135,6 +1137,7 @@ function App() {
                   onSigninClick={() => {
                     setShowWalletModalRegister2(true);
                   }}
+                  availableTime={availTime}
                 />
               }
             />
@@ -1248,6 +1251,7 @@ function App() {
                   chainId={chainId}     
                   dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}
+                  handleAvailableTime={(value)=>{setavailTime(value)}}
                 />
               }
             />

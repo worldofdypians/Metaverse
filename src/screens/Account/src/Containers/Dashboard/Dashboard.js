@@ -46,6 +46,7 @@ function Dashboard({
   dypTokenData,
   onSigninClick,
   onLogoutClick,
+  availableTime
 }) {
   const { email, logout } = useAuth();
 
@@ -93,8 +94,7 @@ function Dashboard({
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
-
-  const [availableTime, setAvailableTime] = useState();
+ 
   const [syncStatus, setsyncStatus] = useState("initial");
 
   const navigate = useNavigate();
