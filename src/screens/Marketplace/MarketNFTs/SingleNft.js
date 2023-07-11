@@ -1312,7 +1312,6 @@ const SingleNft = ({
                               Listing price
                             </span>
                             <div className="d-flex gap-2 align-items-center">
-                              <span className="nft-price-eth gap-3 d-flex">
                                 <StyledTextField
                                   error={nftPrice === "" ? true : false}
                                   size="small"
@@ -1330,6 +1329,9 @@ const SingleNft = ({
                                     inputMode: "numeric",
                                   }}
                                 />
+                                <div className="d-flex flex-column gap-1">
+
+                                  <span className="nft-price-eth gap-3 d-flex">
                                 {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                               </span>
                               <span className="nft-price-usd">
@@ -1341,6 +1343,7 @@ const SingleNft = ({
                                   2
                                 )}
                               </span>
+                                </div>
                             </div>
                           </div>
                         </div>
@@ -1432,7 +1435,6 @@ const SingleNft = ({
                               Listing price
                             </span>
                             <div className="d-flex gap-2 align-items-center">
-                              <span className="nft-price-eth gap-3 d-flex">
                                 <StyledTextField
                                   error={nftPrice === "" ? true : false}
                                   size="small"
@@ -1449,6 +1451,8 @@ const SingleNft = ({
                                     inputMode: "numeric",
                                   }}
                                 />
+                                <div className="d-flex flex-column flex-xxl-row align-items-start align-items-lg-center gap-1 gap-xxl-3">
+                                  <span className="nft-price-eth gap-3 d-flex">
                                 {priceType === 0 ? "ETH" : "DYP"}{" "}
                               </span>
                               <span className="nft-price-usd">
@@ -1460,6 +1464,7 @@ const SingleNft = ({
                                   2
                                 )}
                               </span>
+                                </div>
                             </div>
                           </div>
                         </div>
