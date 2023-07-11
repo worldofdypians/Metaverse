@@ -139,6 +139,8 @@ const SingleNft = ({
   const [loadingNft, setloadingNft] = useState(false);
   const [showMakeOffer, setshowMakeOffer] = useState(false);
   const [offerStatus, setOfferStatus] = useState("initial");
+  const [offerdeleteStatus, setOfferdeleteStatus] = useState("initial");
+  const [offerupdateStatus, setOfferupdateStatus] = useState("initial");
 
   const { nftId, nftAddress } = useParams();
 
@@ -162,11 +164,13 @@ const SingleNft = ({
       console.error(e);
     });
 
-    result.map((item)=>{ return finalArray.push({ offer: item.offer, index: item.index });})
+    result.map((item) => {
+      return finalArray.push({ offer: item.offer, index: item.index });
+    });
 
     setofferData(finalArray);
   };
-// console.log(offerData)
+  // console.log(offerData)
   const getTokenData = async () => {
     await axios
       .get("https://api.dyp.finance/api/the_graph_eth_v2")
@@ -398,7 +402,7 @@ const SingleNft = ({
               : nftAddress === window.config.nft_timepiece_address
               ? "timepiece"
               : "land",
-            tokenId
+            nftId
           );
           handleRefreshListing();
           setTimeout(() => {
@@ -609,12 +613,12 @@ const SingleNft = ({
             setPurchaseColor("#00FECF");
             setbuyStatus("");
             handleRefreshList(
-              nft.type ?? nft.nftAddress === window.config.nft_caws_address
+              nftAddress === window.config.nft_caws_address
                 ? "caws"
-                : nft.nftAddress === window.config.nft_timepiece_address
+                : nftAddress === window.config.nft_timepiece_address
                 ? "timepiece"
                 : "land",
-              nft
+              nftId
             );
             handleRefreshListing();
             getLatestBoughtNFT();
@@ -723,12 +727,12 @@ const SingleNft = ({
         setShowToast(true);
         setToastTitle("Successfully updated!");
         handleRefreshList(
-          nft.type ?? nft.nftAddress === window.config.nft_caws_address
+          nftAddress === window.config.nft_caws_address
             ? "caws"
-            : nft.nftAddress === window.config.nft_timepiece_address
+            : nftAddress === window.config.nft_timepiece_address
             ? "timepiece"
             : "land",
-          nft
+          nftId
         );
         handleRefreshListing();
         setPurchaseColor("#00FECF");
@@ -850,52 +854,51 @@ const SingleNft = ({
       });
   };
 
-  const handleDeleteOffer = async(offerIndex)=>{
-    setOfferStatus("loadingdelete");
-    
+  const handleDeleteOffer = async (offerIndex) => {
+    setOfferdeleteStatus("loadingdelete");
 
+    console.log(nftAddress, nftId, offerIndex);
     await window
-      .cancelOffer(nftAddress, nftId,offerIndex)
+      .cancelOffer(nftAddress, nftId, offerIndex)
       .then(() => {
         handleRefreshListing();
-        setOfferStatus("successdelete");
+        setOfferdeleteStatus("successdelete");
         setTimeout(() => {
-          setOfferStatus("initial");
+          setOfferdeleteStatus("initial");
         }, 3000);
       })
       .catch((e) => {
         console.error(e);
-        setOfferStatus("faildelete");
+        setOfferdeleteStatus("faildelete");
 
         setTimeout(() => {
-          setOfferStatus("initial");
+          setOfferdeleteStatus("initial");
         }, 3000);
       });
-  }
+  };
 
-  const handleUpdateOffer = async(price, pricetype, offerIndex)=>{
-    setOfferStatus("loadingupdate");
+  const handleUpdateOffer = async (price, pricetype, offerIndex) => {
+    setOfferupdateStatus("loadingupdate");
     const newPrice = new BigNumber(price * 1e18).toFixed();
-    
 
     await window
-      .cancelOffer(nftAddress, nftId,offerIndex, newPrice, pricetype)
+      .cancelOffer(nftAddress, nftId, offerIndex, newPrice, pricetype)
       .then(() => {
         handleRefreshListing();
-        setOfferStatus("successupdate");
+        setOfferupdateStatus("successupdate");
         setTimeout(() => {
-          setOfferStatus("initial");
+          setOfferupdateStatus("initial");
         }, 3000);
       })
       .catch((e) => {
         console.error(e);
-        setOfferStatus("failupdate");
+        setOfferupdateStatus("failupdate");
 
         setTimeout(() => {
-          setOfferStatus("initial");
+          setOfferupdateStatus("initial");
         }, 3000);
       });
-  }
+  };
 
   useEffect(() => {
     // if (isOwner === false) {
@@ -2057,7 +2060,7 @@ const SingleNft = ({
                         return (
                           <tr className="saleRow" key={index}>
                             <td className="saledata">
-                              {getFormattedNumber(item.offer[0]/ 1e18, 2)}{" "}
+                              {getFormattedNumber(item.offer[0] / 1e18, 2)}{" "}
                               {item.offer.payment.priceType === "0"
                                 ? "ETH"
                                 : "DYP"}
@@ -2182,9 +2185,12 @@ const SingleNft = ({
           handleMakeOffer={handleMakeOffer}
           handleDeleteOffer={handleDeleteOffer}
           handleUpdateOffer={handleUpdateOffer}
-
           status={offerStatus}
+          deletestatus={offerdeleteStatus}
+          updatestatus={offerupdateStatus}
+
           coinbase={coinbase}
+          nftCount={nftCount}
         />
       )}
     </div>

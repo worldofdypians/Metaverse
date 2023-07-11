@@ -25,26 +25,28 @@ const MakeOffer = ({
   handleMakeOffer,
   handleUpdateOffer,
   handleDeleteOffer,
-
+  nftCount,
   coinbase,
   status,
-  nftAddr, nftId
+  nftAddr,
+  nftId,
+  deletestatus,
+  updatestatus,
 }) => {
   const windowSize = useWindowSize();
   const [filter1, setFilter1] = useState("weth");
   const [price, setprice] = useState(0);
   const [offerData, setofferData] = useState([]);
+  const [isApprove, setisApprove] = useState(false);
 
   const getOffer = async () => {
     let finalArray = [];
-    const result = await window
-      .getAllOffers(nftAddr, nftId)
-      .catch((e) => {
-        console.error(e);
-      });
+    const result = await window.getAllOffers(nftAddr, nftId).catch((e) => {
+      console.error(e);
+    });
 
     finalArray = result.filter((object) => {
-        console.log(object)
+      console.log(object);
       return object.offer.buyer.toLowerCase() === coinbase.toLowerCase();
     });
     console.log(finalArray);
@@ -52,6 +54,10 @@ const MakeOffer = ({
     // finalArray.push({ offer: result[0].offer, index: result[0].index });
     setofferData(finalArray);
   };
+
+  const approveMakeOffer = async()=>{
+    await window.approveNewOffer()
+  }
 
   const style = {
     position: "absolute",
@@ -73,7 +79,7 @@ const MakeOffer = ({
     if (coinbase) {
       getOffer();
     }
-  }, [coinbase]);
+  }, [coinbase, nftCount]);
 
   return (
     <Modal
@@ -127,22 +133,23 @@ const MakeOffer = ({
                   <span className="itemchain">Chain: Ethereum</span>
                 </div>
               </div>
-              {nft.price &&
-              <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-center">
-                <span className="itemname" style={{ whiteSpace: "nowrap" }}>
-                  {getFormattedNumber(nft.price / 1e18, 2)}{" "}
-                  {nft.payment_priceType === 0 ? "ETH" : "DYP"}
-                </span>
-                <span className="itemcollectionName">
-                  $
-                  {getFormattedNumber(
-                    nft.payment_priceType === 0
-                      ? ethTokenData * (nft.price / 1e18)
-                      : dypTokenData * (nft.price / 1e18),
-                    nft.payment_priceType === 0 ? 3 : 0
-                  )}
-                </span>
-              </div> }
+              {nft.price && (
+                <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-end">
+                  <span className="itemname" style={{ whiteSpace: "nowrap" }}>
+                    {getFormattedNumber(nft.price / 1e18, 2)}{" "}
+                    {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                  </span>
+                  <span className="itemcollectionName">
+                    $
+                    {getFormattedNumber(
+                      nft.payment_priceType === 0
+                        ? ethTokenData * (nft.price / 1e18)
+                        : dypTokenData * (nft.price / 1e18),
+                      nft.payment_priceType === 0 ? 3 : 0
+                    )}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
           <div className="summarywrapper">
@@ -168,7 +175,7 @@ const MakeOffer = ({
                 <span className="itemchain">
                   <img src={whiteTag} alt="" /> My offer
                 </span>
-                <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-center">
+                <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-end">
                   <span className="itemname" style={{ whiteSpace: "nowrap" }}>
                     {getFormattedNumber(offerData[0].offer[0], 2)}{" "}
                     {offerData[0].offer.payment.priceType === "0"
@@ -238,89 +245,95 @@ const MakeOffer = ({
               </ul>
             </div>
           </div>
-          {offerData.length === 0 ?
-          <button
-            className={`btn ${
-              status === "fail" ? "errorbtn" : "mint-now-btn"
-            } gap-2 align-self-end mt-4`}
-            style={{ width: "fit-content" }}
-            onClick={() => {
-              handleMakeOffer(price, filter1 === "weth" ? 0 : 1);
-            }}
-          >
-            {status !== "fail " && <img src={whiteTag} alt="" />}
-            {status === "initial" ? (
-              "Make offer"
-            ) : status === "loading" ? (
-              <>
-                Making offer{" "}
-                <div
-                  className="spinner-border mx-1"
-                  role="status"
-                  style={{ width: 16, height: 16 }}
-                ></div>
-              </>
-            ) : status === "success" ? (
-              "Success"
-            ) : (
-              "Failed"
-            )}
-          </button> : <div className="d-flex align-items-center gap-2 justify-content-between w-100">
+          {offerData.length === 0 ? (
+            <button
+              className={`btn ${
+                status === "fail" ? "errorbtn" : "mint-now-btn"
+              } gap-2 align-self-end mt-4`}
+              style={{ width: "fit-content" }}
+              onClick={() => {
+                handleMakeOffer(price, filter1 === "weth" ? 0 : 1);
+              }}
+            >
+              {status !== "fail " && <img src={whiteTag} alt="" />}
+              {status === "initial" ? (
+                "Make offer"
+              ) : status === "loading" ? (
+                <>
+                  Making offer{" "}
+                  <div
+                    className="spinner-border mx-1"
+                    role="status"
+                    style={{ width: 16, height: 16 }}
+                  ></div>
+                </>
+              ) : status === "success" ? (
+                "Success"
+              ) : (
+                "Failed"
+              )}
+            </button>
+          ) : (
+            <div className="d-flex align-items-center gap-2 justify-content-between w-100">
+              <button
+                className={`btn ${
+                  status === "fail" ? "errorbtn" : "mint-now-btn"
+                } gap-2 align-self-end mt-4`}
+                style={{ width: "fit-content" }}
+                onClick={() => {
+                  handleDeleteOffer(offerData[0].index);
+                }}
+              >
+                {deletestatus === "initial" ? (
+                  "Delete offer"
+                ) : deletestatus === "loadingdelete" ? (
+                  <>
+                    Deleting offer{" "}
+                    <div
+                      className="spinner-border mx-1"
+                      role="status"
+                      style={{ width: 16, height: 16 }}
+                    ></div>
+                  </>
+                ) : deletestatus === "successdelete" ? (
+                  "Success"
+                ) : (
+                  "Failed"
+                )}
+              </button>
 
-          <button
-            className={`btn ${
-              status === "fail" ? "errorbtn" : "mint-now-btn"
-            } gap-2 align-self-end mt-4`}
-            style={{ width: "fit-content" }}
-            onClick={() => {
-              handleDeleteOffer(offerData.index);
-            }}
-          >
-           {status === "initial" ? (
-              "Delete offer"
-            ) : status === "loadingdelete" ? (
-              <>
-                Deleting offer{" "}
-                <div
-                  className="spinner-border mx-1"
-                  role="status"
-                  style={{ width: 16, height: 16 }}
-                ></div>
-              </>
-            ) : status === "successdelete" ? (
-              "Success"
-            ) : (
-              "Failed"
-            )}
-          </button>
-
-          <button
-            className={`btn ${
-              status === "fail" ? "errorbtn" : "pill-btn"
-            } gap-2 align-self-end mt-4`}
-            style={{ width: "fit-content" }}
-            onClick={() => {
-              handleUpdateOffer(price, filter1 === "weth" ? 0 : 1, offerData.index);
-            }}
-          >
-           {status === "initial" ? (
-              "Update"
-            ) : status === "loadingupdate" ? (
-              <>
-                Updating offer{" "}
-                <div
-                  className="spinner-border mx-1"
-                  role="status"
-                  style={{ width: 16, height: 16 }}
-                ></div>
-              </>
-            ) : status === "successupdate" ? (
-              "Success"
-            ) : (
-              "Failed"
-            )}
-          </button>
-          </div> }
+              <button
+                className={`btn ${
+                  status === "fail" ? "errorbtn" : "pill-btn"
+                } gap-2 align-self-end mt-4`}
+                style={{ width: "fit-content" }}
+                onClick={() => {
+                  handleUpdateOffer(
+                    price,
+                    filter1 === "weth" ? 0 : 1,
+                    offerData.index
+                  );
+                }}
+              >
+                {updatestatus === "initial" ? (
+                  "Update"
+                ) : updatestatus === "loadingupdate" ? (
+                  <>
+                    Updating offer{" "}
+                    <div
+                      className="spinner-border mx-1"
+                      role="status"
+                      style={{ width: 16, height: 16 }}
+                    ></div>
+                  </>
+                ) : updatestatus === "successupdate" ? (
+                  "Success"
+                ) : (
+                  "Failed"
+                )}
+              </button>
+            </div>
+          )}
         </div>
       </Box>
     </Modal>
