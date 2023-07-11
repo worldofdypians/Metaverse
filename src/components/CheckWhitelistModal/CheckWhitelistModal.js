@@ -25,7 +25,8 @@ const RegisterModal = ({
   landMinted,
   landStaked,
   handleRedirect,
-  handleActiveUser
+  handleActiveUser,
+  myCawsWodStakes
 }) => {
   const windowSize = useWindowSize();
 
