@@ -1322,13 +1322,12 @@ const SingleNft = ({
                                   value={nftPrice}
                                   type="text"
                                   required
-                                
                                   onChange={(e) => {
                                     handlepricechange2(e.target.value);
                                   }}
                                   sx={{ width: "120px" }}
                                   inputProps={{
-                                    inputMode: "numeric",
+                                    inputMode: "decimal",
                                     pattern:"^[0-9]*[.,]?[0-9]*$"
                                   }}
                                 />
@@ -1448,7 +1447,7 @@ const SingleNft = ({
                                   }}
                                   sx={{ width: "120px" }}
                                   inputProps={{
-                                    inputMode: "numeric",
+                                    inputMode: "decimal",
                                     pattern:"^[0-9]*[.,]?[0-9]*$"
                                   }}
                                 />
