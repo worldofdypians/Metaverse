@@ -84,6 +84,7 @@ const ComingSoon = ({ optionText, data }) => {
       style={{ pointerEvents: "none", userSelect: "none" }}
     >
       <table className="playerTable">
+      <tbody>
         <tr className="playerRow">
           <th className="playerHeader">Rank</th>
           <th className="playerHeader">Player</th>
@@ -114,6 +115,7 @@ const ComingSoon = ({ optionText, data }) => {
               </tr>
             );
           })}
+          </tbody>
       </table>
       {/* <span className="statusText" style={{textAlign: 'left', paddingTop: 5}}>*Genesis leaderboard coming soon</span> */}
     </div>

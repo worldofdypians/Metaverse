@@ -10,10 +10,21 @@
   src: url("./fonts/Organetto.ttf");
 }
 
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+
 
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
 }
 
 /* Track */
@@ -31,6 +42,9 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+a {
+  text-decoration: none;
+ }
 
 body {
   background: #080b2a;
@@ -42,6 +56,10 @@ body {
 
   .font-organetto {
     font-family: "Organetto" !important;
+  }
+
+  .font-raleway{
+    font-family: 'Raleway', sans-serif !important;
   }
 
 
@@ -468,7 +486,7 @@ body {
   cursor: pointer;
   width: 40px;
   height: 40px;
-  z-index: 2;
+  z-index: 999;
 
   @media screen and (max-width: 786px) {
     bottom: 9%;

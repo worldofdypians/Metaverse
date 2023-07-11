@@ -1,7 +1,6 @@
-.leaderboard-wrapper{
-  font-family: 'Poppins', sans-serif !important;
+.leaderboard-wrapper {
+  font-family: "Poppins", sans-serif !important;
 }
-
 
 .leaderboardTitle {
   font-style: normal;
@@ -20,32 +19,29 @@
   background-repeat: no-repeat;
   background-size: cover;
   height: 180px;
-  
 }
 
-
 .goldenscore {
-  background: linear-gradient(180deg, #F3980F 0.44%, #FE5A51 100%) !important;
+  background: linear-gradient(180deg, #f3980f 0.44%, #fe5a51 100%) !important;
   color: #fff !important;
   text-align: center;
   position: relative;
 }
 
 .goldenscore-inactive {
-  background: rgb(88 86 82 / 80%) !important;
-  color: rgba(255, 255, 255, 0.5) !important;
+  // background: rgb(88 86 82 / 80%) !important;
+  color: #48465E !important;
   text-align: center;
   position: relative;
 }
 
-.grand-label{
+.grand-label {
   font-weight: 600;
-font-size: 21px;
-line-height: 32px;
-letter-spacing: -0.018em;
+  font-size: 21px;
+  line-height: 32px;
+  letter-spacing: -0.018em;
 
-color: #F7F7FF;
-
+  color: #f7f7ff;
 }
 
 .grandprizeTitle {
@@ -75,10 +71,10 @@ color: #F7F7FF;
   line-height: 42px;
   letter-spacing: -0.018em;
   color: #f7f7fc;
-  text-shadow: 0px 6px 4px #5E06A2;
+  text-shadow: 0px 6px 4px #5e06a2;
 }
 
-.grand-prize{
+.grand-prize {
   position: absolute;
   left: 0;
   right: 0;
@@ -96,19 +92,21 @@ color: #F7F7FF;
 
 .playerData {
   padding: 0 10px;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 400;
   font-size: 14px;
-  line-height: 21px;
+  line-height: 17px;
   letter-spacing: -0.018em;
-  color: #ffffff;
+  color: #FFFFFF;
 }
 
 .playerHeader {
+  font-style: normal;
   font-weight: 600;
   font-size: 10px;
-  line-height: 15px;
+  line-height: 12px;
   letter-spacing: -0.018em;
-  color: #f7f7ff;
+  color: #F7F7FF;
   position: sticky;
   top: 0;
   background: #080b2a;
@@ -117,19 +115,19 @@ color: #F7F7FF;
 
 .optionText {
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 15px;
   line-height: 18px;
-  letter-spacing: -0.018em;
-  color: #f7f7ff;
+  color: #FFFFFF;  
   display: flex;
   justify-content: center;
   cursor: pointer;
   // width: 80px;
 }
 
-.optionText:hover, .activeoption {
-  color: #09F3D2;
+.optionText:hover,
+.activeoption {
+  color: #09f3d2;
 }
 
 .optionTextGolden {
@@ -138,32 +136,30 @@ color: #F7F7FF;
   font-size: 12px;
   line-height: 18px;
   letter-spacing: -0.018em;
-  color: #F7F7FF;
+  color: #f7f7ff;
   display: flex;
   justify-content: center;
-  
 }
 
 .activeoptiongolden {
-  color: #F7F7FF;
+  color: #f7f7ff;
   font-size: 14px;
-  }
+}
 
 .viewWinners {
   font-weight: 400;
-font-size: 12px;
-line-height: 18px;
-letter-spacing: -0.018em;
-color: #F7F7FF;
-
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
 }
 
-.previous-desc{
+.previous-desc {
   font-weight: 400;
-font-size: 10px;
-line-height: 15px;
-letter-spacing: -0.018em;
-color: #F7F7FF;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
 }
 
 .optionsWrapper {
@@ -183,20 +179,30 @@ color: #F7F7FF;
   border-bottom: 1px solid #757086;
 }
 
-.playerInnerRow-inactive{
-  background: #223B40;
+.playerInnerRow-inactive {
+  background: rgba(0, 254, 207, 0.1);
+
+  .goldenscore-inactive {
+    color: #09F3D2 !important;
+  }
+}
+
+.optionsWrapper2 {
+  background: linear-gradient(180deg, rgba(33, 36, 64, 0.15) 99.99%, rgba(255, 255, 255, 0.15) 100%);
+backdrop-filter: blur(13px);
+border-radius: 10px;
+border: 1px solid #4C4E64;
 }
 
 .playerAvatar {
   width: 30px;
   height: 30px;
 }
-.premium-star{
+.premium-star {
   position: absolute;
   width: 12px;
   height: 12px;
   left: 0;
-  
 }
 
 .playerReward {
@@ -215,11 +221,12 @@ color: #F7F7FF;
 }
 
 .playerName {
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 400;
   font-size: 14px;
-  line-height: 21px;
+  line-height: 17px;
   letter-spacing: -0.018em;
-  color: #f7f7ff;
+  color: #F7F7FF;
 }
 
 .tablewrapper {
@@ -232,22 +239,23 @@ color: #F7F7FF;
 }
 
 .optiongenesis {
-  background: linear-gradient(90.31deg, #F1B14B 0.27%, #DC5738 99.74%);
-border-radius: 8px;
-padding: 10px;
-cursor: pointer;
+  // background: linear-gradient(90.31deg, #F1B14B 0.27%, #DC5738 99.74%);
+  border-radius: 0px;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #09f3d2 !important;
+  color: #09f3d2;
 }
 
 .otheroptionsActive {
-  background: linear-gradient(90.31deg, #7344B3 0.27%, #20BBCA 99.74%);;
+  // background: linear-gradient(90.31deg, #7344B3 0.27%, #20BBCA 99.74%);
   // font-weight: bold;
   padding: 10px;
-  border-radius: 8px;
-  
-  }
+  // border-radius: 8px;
+    border-bottom: 1px solid #09f3d2 !important;
+}
 
-
-.nft-hover{
+.nft-hover {
   position: absolute;
   left: -50%;
   top: 7.5%;
@@ -265,17 +273,16 @@ cursor: pointer;
   line-height: 21px;
   text-align: center;
   letter-spacing: -0.018em;
-  color: #FE7A00;
+  color: #fe7a00;
 }
 
-
-.nft-badges-wrapper{
+.nft-badges-wrapper {
   position: relative;
   top: -24px;
 }
 
-.opensea-badge{
-  transition: all .25s ease-in-out;
+.opensea-badge {
+  transition: all 0.25s ease-in-out;
   width: 90px;
 
   @media screen and (max-width: 786px) {
@@ -283,7 +290,7 @@ cursor: pointer;
   }
 }
 
-.opensea-badge:hover{
+.opensea-badge:hover {
   transform: scale(1.1);
 }
 
@@ -296,10 +303,29 @@ cursor: pointer;
   z-index: 4;
   visibility: hidden;
   opacity: 0;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
-.tooltip-active{
+.tooltip-wrapper2 {
+  background: #43455D;
+  box-shadow: 0px 4.3px 53px rgba(0, 7, 72, 0.12);
+  border-radius: 10px;
+  position: absolute;
+  top: 100%;
+  z-index: 4;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.25s;
+}
+
+.tooltip-content2 {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #B8B8E0;
+}
+
+.tooltip-active {
   opacity: 1;
   visibility: visible;
 }
@@ -309,41 +335,34 @@ cursor: pointer;
   font-size: 10px;
   line-height: 16px;
   color: #ffffff;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
-
-.nft-hover-wrapper{
+.nft-hover-wrapper {
   background: linear-gradient(180deg, #582378 0%, #272343 100%);
-border-radius: 8px;
-padding: 0px 12px 0px 12px;
-width: 100%;
-
-
-
+  border-radius: 8px;
+  padding: 0px 12px 0px 12px;
+  width: 100%;
 }
 
-.nft-hover-title{
+.nft-hover-title {
   font-weight: 300;
-font-size: 12px;
-line-height: 18px;
-letter-spacing: -0.018em;
-color: #F7F7FF;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
 }
 
-
-.nft-hover-desc{
+.nft-hover-desc {
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
 }
-
 
 .comingsoon {
   filter: blur(3px);
-  
 }
 .watermark {
   color: #fff;
@@ -366,8 +385,7 @@ color: #F7F7FF;
   // }
 
   @media only screen and (max-width: 500px) {
-      width: 253px;
-      font-size: 20px;
-
+    width: 253px;
+    font-size: 20px;
   }
-  }
+}

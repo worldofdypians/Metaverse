@@ -1,0 +1,432 @@
+.App {
+  text-align: center;
+}
+
+.root {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+@font-face {
+  font-family: "Organetto";
+  src: url("./fonts/Organetto.ttf");
+}
+
+.font-organetto {
+  font-family: "Organetto" !important;
+}
+
+.staked{
+  position: absolute;
+  right: 0px;
+  top: -8px;
+}
+
+.walletbutton:hover {
+  border: 1px solid rgb(140, 86, 255);
+}
+
+.walletmodal-wrapper {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.walletclose {
+  display: flex;
+  justify-content: end;
+  padding: 18px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
+
+.walletbutton {
+  background: var(--box-bg);
+  outline: currentcolor none medium;
+  border: 1px solid rgb(237, 238, 242);
+  border-radius: 12px;
+  width: 93% !important;
+  display: flex;
+  flex-direction: row;
+  -moz-box-align: center;
+  align-items: center;
+  -moz-box-pack: justify;
+  padding: 1rem;
+  margin: auto;
+  opacity: 1;
+}
+
+
+.nftcontainer {
+  background: #242240;
+  border-radius: 8px;
+  padding: 10px;
+  width: fit-content;
+  gap: 50px;
+}
+
+
+.packages-grid{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+
+.premium-package{
+  background: #242240;
+  width: 125px;
+  height: 125px;
+  aspect-ratio: 1/1;
+  border-radius: 12px;
+  border: 2px solid #242240;
+  cursor: pointer;
+  transition: all .25s;
+
+}
+
+@media screen and (max-width: 786px) {
+  .premium-package{
+    width: 75px;
+    height: 75px;
+  }
+}
+
+.premium-package:hover{
+  border: 2px solid #4ED5D2;
+
+}
+
+.selected-premium{
+  border: 2px solid #4ED5D2;
+}
+
+
+
+
+@media only screen and (max-width: 991px) {
+  .nftcontainer {
+    width: 100%;
+  }
+
+  .contentwrapper {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center !important;
+  }
+}
+.ethwrapper {
+  background: linear-gradient(90.83deg, #5871d2 0.71%, #2e2853 99.29%);
+  border-radius: 6px;
+  padding: 10px;
+  top: -25px;
+  width: 83px;
+  right: 44px;
+
+}
+
+.checklistmodal {
+  background: #242240;
+  border-radius: 8px;
+}
+
+.nftBigWrapper {
+  width: fit-content !important;
+  margin: 0 !important;
+}
+
+iframe {
+  z-index: -5;
+  pointer-events: none !important;
+}
+
+.walletconnectBtn {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 254, 207, 0.3),
+      rgba(0, 254, 207, 0.3)
+    ),
+    linear-gradient(
+      112.83deg,
+      rgba(255, 255, 255, 0.47) 0%,
+      rgba(255, 255, 255, 0) 110.84%
+    );
+  box-shadow: 0px 4px 12px rgba(0, 254, 207, 0.24);
+  backdrop-filter: blur(4px);
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 15px;
+  width: fit-content;
+  margin: 0 0 0 auto;
+}
+
+.firsttitle {
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 10px;
+line-height: 15px;
+letter-spacing: -0.018em;
+color: #F7F7F7;
+opacity: 0.8;
+}
+
+.secondTitle {
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 18px;
+letter-spacing: -0.018em;
+color: #F7F7FF;
+}
+
+@media only screen and (max-width: 1399px) {
+  .nftBigWrapper {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .nftcontainer {
+    width: 100% !important;
+  }
+
+  .contentwrapper {
+    justify-content: center;
+    width: 100% !important;
+  }
+}
+
+.ethText {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  color: #f7f7fc;
+}
+
+.ethlogo {
+  position: absolute;
+  left: -13px;
+  right: -35px;
+}
+
+.viewAllbtn {
+  /* top: 45px !important; */
+}
+
+.nftGridItem {
+  position: relative;
+  top: -40px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.linear-border {
+  position: relative;
+  padding: 3px;
+  background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
+  border-radius: 8px;
+  clip-path: polygon(
+    0 20px,
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%
+  );
+}
+
+.linear-border::before {
+  content: "";
+}
+
+.linear-border-disabled {
+  position: relative;
+  padding: 2px;
+  background: #c4c4c4;
+  border-radius: 8px;
+  clip-path: polygon(
+    0 20px,
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%
+  );
+}
+
+.linear-border-disabled::before {
+  content: "";
+}
+
+.purple-btn {
+  background: linear-gradient(266.71deg,#a420e2 8.87%,#1829bd 91.56%);
+  clip-path: polygon(
+    0 20px,
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%
+  );
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  border: none !important;
+  white-space: pre;
+}
+
+.linear-border-purple::before {
+  content: "";
+}
+
+.outline-btn {
+  clip-path: polygon(
+    0 19px,
+    19px 0,
+    100% 0,
+    100% calc(100% - 19px),
+    calc(100% - 19px) 100%,
+    0 100%
+  );
+  background: #080b2a;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #ffffff;
+  white-space: pre;
+}
+
+.outline-btn:hover {
+  clip-path: polygon(
+    0 19px,
+    19px 0,
+    100% 0,
+    100% calc(100% - 19px),
+    calc(100% - 19px) 100%,
+    0 100%
+  );
+  background: linear-gradient(89.7deg, #7b84d8 0.23%, #a4fb85 99.72%);
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #000;
+  white-space: pre;
+}
+
+.outline-btn-disabled {
+  clip-path: polygon(
+    0 19px,
+    19px 0,
+    100% 0,
+    100% calc(100% - 19px),
+    calc(100% - 19px) 100%,
+    0 100%
+  );
+  background: #c4c4c4;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #080b2a;
+  white-space: pre;
+  border: none;
+  outline: none;
+}
+
+.filled-btn {
+  clip-path: polygon(
+    0 19px,
+    19px 0,
+    100% 0,
+    100% calc(100% - 19px),
+    calc(100% - 19px) 100%,
+    0 100%
+  );
+  background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #080b2a;
+  border: none !important;
+  white-space: pre;
+  transition: all 0.25s;
+}
+
+.filled-error-btn {
+  clip-path: polygon(
+    0 19px,
+    19px 0,
+    100% 0,
+    100% calc(100% - 19px),
+    calc(100% - 19px) 100%,
+    0 100%
+  );
+  background: linear-gradient(89.7deg, #d87b7b 0.23%, #fb85d3 99.72%);
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #080b2a;
+  border: none !important;
+  white-space: pre;
+  transition: all 0.25s;
+}
+
+.filled-btn:hover {
+  color: #ffffff;
+  background: #080b2a;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

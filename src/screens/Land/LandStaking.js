@@ -736,8 +736,8 @@ const LandStaking = ({
                 </div>
               </div>
               <div className="mint-benefits-grid">
-                {mintBenefits.map((item) => (
-                  <div className="d-flex align-items-center gap-2">
+                {mintBenefits.map((item, index) => (
+                  <div className="d-flex align-items-center gap-2" key={index}>
                     <img
                       src={require(`./mintAssets/${item.icon}.svg`)}
                       alt=""

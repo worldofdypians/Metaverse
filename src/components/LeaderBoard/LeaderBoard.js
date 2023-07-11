@@ -206,18 +206,20 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
   ];
 
   const dailyPrizes = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
-  const dailyPrizesGolden = [
+  const previous_dailyPrizes = [
+    "20",
     "10",
     "8",
     "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
   ];
+
+  const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
 
   const previous_dailyPrizesGolden = [
     "20",
@@ -230,7 +232,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     "5",
     "5",
     "5",
-  ]
+  ];
 
   const weeklyPrizes = ["25", "15", "10", "8", "0", "0", "0", "0", "0", "0"];
   const weeklyPrizesGolden = [
@@ -245,6 +247,19 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     "5",
     "5",
     "5",
+  ];
+
+  const previous_weeklyPrizes = [
+    "40",
+    "20",
+    "15",
+    "10",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
   ];
 
   const previous_weeklyPrizesGolden = [
@@ -274,39 +289,6 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     "10",
   ];
 
-  const monthlyPrizesGolden = [
-    "250",
-    "150",
-    "100",
-    "50",
-    "50",
-    "20",
-    "20",
-    "10",
-    "10",
-    "10",
-  ];
-
-
-  const previous_monthlyPrizesGolden = [
-    "500",
-    "250",
-    "150",
-    "50",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-  ];
-
-
-
-  const previous_dailyPrizes = ["20", "10", "8", "5", "0", "0", "0", "0", "0", "0"];
-
-  const previous_weeklyPrizes = ["40", "20", "15", "10", "0", "0", "0", "0", "0", "0"];
-
   const previous_monthlyPrizes = [
     "500",
     "250",
@@ -320,10 +302,37 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     "25",
   ];
 
+  const monthlyPrizesGolden = [
+    "250",
+    "150",
+    "100",
+    "50",
+    "50",
+    "20",
+    "20",
+    "10",
+    "10",
+    "10",
+  ];
+
+  const previous_monthlyPrizesGolden = [
+    "500",
+    "250",
+    "150",
+    "50",
+    "25",
+    "25",
+    "25",
+    "25",
+    "25",
+    "25",
+  ];
   const [optionText, setOptionText] = useState("genesis");
   const [dailyrecords, setRecords] = useState([]);
+  const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dailyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
+  const [userData, setUserData] = useState({});
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [dailyplayerData, setdailyplayerData] = useState([]);
   const [weeklyplayerData, setweeklyplayerData] = useState([]);
@@ -354,13 +363,45 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
       });
     if (result2) {
       setgenesisData(result2.data.data.leaderboard);
-    setpreviousGenesisVersion(result2.data.data.version);
+      setpreviousGenesisVersion(result2.data.data.version);
 
       fillRecordsGenesis(result2.data.data.leaderboard);
     }
 
+    // fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
   };
 
+  // const fetchDailyRecordsAroundPlayer = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "DailyLeaderboard",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   const result = await axios.post(
+  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //     data
+  //   );
+  //   setRecordsAroundPlayer(result.data.data.leaderboard);
+  //   var testArray = result.data.data.leaderboard.filter(
+  //     (item) => item.displayName === username
+  //   );
+
+  //   if (itemData.length > 0) {
+  //     var testArray2 = itemData.filter((item) => item.displayName === username);
+
+  //     if (testArray.length > 0 && testArray2.length > 0) {
+  //       setActivePlayer(true);
+  //     }
+  //     if (testArray.length > 0 && testArray2.length === 0) {
+  //       setActivePlayer(false);
+  //       setUserData(...testArray);
+  //     }
+  //   }
+  //   if (testArray.length > 0) {
+  //     setActivePlayer(false);
+  //     setUserData(...testArray);
+  //   }
+  // };
 
   const fetchDailyRecords = async () => {
     const data = {
@@ -381,10 +422,42 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
     if (testArray.length === 0) {
       setActivePlayer(false);
+      // fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
 
-  
+  // const fetchWeeklyRecordsAroundPlayer = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "WeeklyLeaderboard",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   const result = await axios.post(
+  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //     data
+  //   );
+  //   setRecordsAroundPlayer(result.data.data.leaderboard);
+  //   var testArray = result.data.data.leaderboard.filter(
+  //     (item) => item.displayName === username
+  //   );
+
+  //   if (itemData.length > 0) {
+  //     var testArray2 = itemData.filter((item) => item.displayName === username);
+
+  //     if (testArray.length > 0 && testArray2.length > 0) {
+  //       setActivePlayer(true);
+  //     }
+  //     if (testArray.length > 0 && testArray2.length === 0) {
+  //       setActivePlayer(false);
+  //       setUserData(...testArray);
+  //     }
+  //   }
+  //   if (testArray.length > 0) {
+  //     setActivePlayer(false);
+  //     setUserData(...testArray);
+  //   }
+  // };
+
   const fetchWeeklyRecords = async () => {
     const data = {
       StatisticName: "WeeklyLeaderboard",
@@ -404,10 +477,73 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     }
     if (testArray.length === 0) {
       setActivePlayer(false);
+      // fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
 
-  
+  // const fetchMonthlyRecordsAroundPlayer = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "MonthlyLeaderboard",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   const result = await axios.post(
+  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //     data
+  //   );
+  //   setRecordsAroundPlayer(result.data.data.leaderboard);
+
+  //   var testArray = result.data.data.leaderboard.filter(
+  //     (item) => item.displayName === username
+  //   );
+
+  //   if (itemData.length > 0) {
+  //     var testArray2 = itemData.filter((item) => item.displayName === username);
+
+  //     if (testArray.length > 0 && testArray2.length > 0) {
+  //       setActivePlayer(true);
+  //     }
+
+  //     if (testArray.length > 0 && testArray2.length === 0) {
+  //       setActivePlayer(false);
+  //       setUserData(...testArray);
+  //     }
+  //   }
+  //   if (testArray.length > 0) {
+  //     setActivePlayer(false);
+  //     setUserData(...testArray);
+  //   }
+  // };
+
+  const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
+    const data = {
+      StatisticName: "GenesisLandRewards",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+
+    if (itemData.length > 0) {
+      var testArray2 = itemData.filter((item) => item.displayName === username);
+
+      if (testArray.length > 0 && testArray2.length > 0) {
+        setActivePlayer(true);
+      } else if (testArray.length > 0 && testArray2.length === 0) {
+        setActivePlayer(false);
+        setUserData(...testArray);
+      }
+    } else if (testArray.length > 0) {
+      setActivePlayer(false);
+      setUserData(...testArray);
+    }
+  };
 
   const fetchMonthlyRecords = async () => {
     const data = {
@@ -428,7 +564,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
     if (testArray.length === 0) {
       setActivePlayer(false);
-      
+      // fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
   const label = { inputProps: { "aria-label": "Switch demo" } };
@@ -442,7 +578,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     } else if (item === "weekly" && inactiveBoard === false) {
       setPrizes(weeklyPrizes);
     } else if (item === "weekly" && inactiveBoard === true) {
-      setPrizes(previous_weeklyPrizes);
+      setPrizes(weeklyPrizes);
     } else if (item === "monthly" && inactiveBoard === false) {
       setPrizes(monthlyPrizes);
     } else if (item === "monthly" && inactiveBoard === true) {
@@ -487,7 +623,6 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     setdailyplayerData(result.data.data.leaderboard);
   };
 
-
   const fetchGenesisPreviousWinners = async () => {
     const data = {
       StatisticName: "GenesisLandRewards",
@@ -503,7 +638,6 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 
     setgenesisData(result.data.data.leaderboard);
   };
-
 
   const fetchPreviousWeeklyWinners = async () => {
     const data = {
@@ -535,8 +669,6 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     setmonthlyplayerData(result.data.data.leaderboard);
   };
 
-  
-
   useEffect(() => {
     fetchDailyRecords();
   }, []);
@@ -551,8 +683,8 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     if (inactiveBoard === true && optionText === "genesis") {
       fetchGenesisPreviousWinners();
     }
-    if(inactiveBoard === false && optionText === 'genesis') {
-      fetchGenesisRecords()
+    if (inactiveBoard === false && optionText === "genesis") {
+      fetchGenesisRecords();
     }
     if (inactiveBoard === true && optionText === "monthly") {
       fetchPreviousMonthlyWinners();
@@ -569,10 +701,8 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
     handleOption(optionText);
   }, [inactiveBoard]);
 
-
-
   useEffect(() => {
-    if (countdown === null || countdown === undefined || countdown === '0') {
+    if (countdown === null || countdown === undefined || countdown === "0") {
       setisActive(false);
     } else setisActive(true);
   }, [countdown]);
@@ -651,9 +781,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
           </div>
         </OutsideClickHandler>
       </h2>
-      <div className="grandPrices-wrapper position-relative">
- 
-      </div>
+      <div className="grandPrices-wrapper position-relative"></div>
       <div className="d-flex align-items-center gap-1">
         <div className="optionsWrapper col-12">
           <div
@@ -668,7 +796,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                 handleOption("genesis");
                 fetchGenesisRecords();
               }}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
             >
               Genesis
             </span>
@@ -676,7 +804,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
               className={`${
                 optionText === "daily" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
               onClick={() => {
                 handleOption("daily");
                 fetchDailyRecords();
@@ -688,7 +816,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
               className={`${
                 optionText === "weekly" && "otheroptionsActive"
               } optionText col-3`}
-              style={{ borderRight: "1px solid #757086", width: "24%" }}
+              style={{ width: "24%" }}
               onClick={() => {
                 handleOption("weekly");
                 fetchWeeklyRecords();
@@ -727,7 +855,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                 {optionText !== "genesis" && (
                   <th className="playerHeader text-center">Reward</th>
                 )}
-                <th className="playerHeader text-center">Pass Reward</th>
+                <th className="playerHeader text-center">Golden Pass</th>
               </tr>
 
               {dailyrecords &&
@@ -869,7 +997,11 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +${getFormattedNumber(previous_monthlyPrizesGolden[index], 0)}
+                        +$
+                        {getFormattedNumber(
+                          previous_monthlyPrizesGolden[index],
+                          0
+                        )}
                       </td>
                     </tr>
                   );
@@ -930,7 +1062,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                        +${getFormattedNumber(previous_weeklyPrizesGolden[index],0)}
+                        +${getFormattedNumber(weeklyPrizesGolden[index], 0)}
                       </td>
                     </tr>
                   );
@@ -991,7 +1123,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             : "goldenscore-inactive"
                         }`}
                       >
-                      +${getFormattedNumber(dailyPrizesGolden[index],0)}
+                        +${dailyPrizesGolden[index]}
                       </td>
                     </tr>
                   );
@@ -1092,12 +1224,6 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
               }}
             />
           </div>
-          <span className="previous-desc mb-0">
-            {optionText === "genesis"
-              ? "Display previous monthly Genesis ranking results."
-              : `Display previous ${optionText} ranking results. The scores from
-              previous rankings will be accumulated towards the grand prize.`}
-          </span>
         </div>
       </div>
     </div>
@@ -1105,4 +1231,3 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
 };
 
 export default LeaderBoard;
-

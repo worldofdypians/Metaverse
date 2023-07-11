@@ -1,0 +1,279 @@
+.wallet-balance {
+  // background: #242240;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif !important;
+
+  .wallet-wrapper {
+    // background: linear-gradient(0deg, #2e2853, #2e2853),
+    //   linear-gradient(
+    //     112.83deg,
+    //     rgba(255, 255, 255, 0.47) 0%,
+    //     rgba(255, 255, 255, 0) 110.84%
+    //   );
+    cursor: pointer;
+    border-radius: 6px;
+    .wallet-span {
+      color: #fff;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: -0.18px;
+    }
+
+    .wallet-address {
+      color: #b8b8e0;
+      font-size: 12px;
+      letter-spacing: -0.216px;
+    }
+  }
+
+  .walletassoc-txt {
+    color: #b8b8e0;
+    font-size: 10px;
+  }
+
+  .multipe-wallet {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.018em;
+    color: #ffffff;
+  }
+
+  // .bnb-wrapper {
+  //   background: linear-gradient(90.83deg, #daaa0a 0.71%, #2e2853 65.22%);
+  //   border-radius: 6px;
+  // }
+
+  // .avax-wrapper {
+  //   background: linear-gradient(90.83deg, #df2d2e 0.71%, #2e2853 65.22%);
+  //   border-radius: 6px;
+  // }
+
+  .chain-title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    color: #f7f7fc;
+  }
+}
+
+.walletinfo {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 15px;
+  color: #f7f7fc;
+  opacity: 0.8;
+}
+
+.totalcollection {
+  color: #11fed2;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.orangesection {
+  background: linear-gradient(114.11deg, #faa525 3.05%, #c13509 97.98%);
+  border-radius: 6px;
+  padding: 10px;
+  width: fit-content;
+  height: 23px;
+  display: flex;
+  align-items: center;
+
+  span {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 9px;
+    line-height: 11px;
+    color: #ffffff;
+  }
+}
+
+.explore-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 45px;
+  color: #ffffff;
+}
+
+.bal-txt {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #b8b8e0;
+}
+
+.dyp-wrapper,
+.idyp-wrapper {
+  background: #252743;
+  border-radius: 25px;
+}
+
+.wallet-amount {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+.chain-icon {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  width: 16px;
+  height: 16px;
+}
+
+.balancewrapper3 {
+  margin: 0 1rem;
+}
+
+.globaltext {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #b5ccd4;
+}
+
+.genesistext {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffb802;
+}
+
+.genesisimg {
+  height: 70px;
+  scale: 1.3;
+}
+
+.eth-chain-text {
+  color: #5871d2;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.bnb-chain-text {
+  color: #d9a908;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.blurrystate {
+  filter: blur(6px);
+}
+
+.avax-chain-text {
+  color: #df2c2d;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.account-nft-sort {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #e2e2e2;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.balanceseparator {
+  height: 1px;
+  background: #e2e2e2;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+  border-radius: 500px;
+}
+
+.nft-sort-selected {
+  color: #00fecf;
+}
+
+.account-nft-sort:hover {
+  color: #00fecf;
+}
+
+.account-card-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+}
+
+.account-nft-card {
+  background: #252743;
+  backdrop-filter: blur(26px);
+  border-radius: 10px;
+}
+
+.account-nft-title {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #b8b8e0;
+  margin-bottom: 0;
+}
+
+.account-nft-type {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 10px;
+  color: #ffffff;
+}
+
+.account-view-all {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 10px;
+  color: #7dd9af;
+  margin-bottom: 0;
+}
+
+.rankings-outer-wrapper {
+  height: auto;
+  @media screen and (max-width: 786px) {
+    height: fit-content;
+  }
+}
+.rankings-wrapper {
+  height: 100%;
+  @media screen and (max-width: 786px) {
+    height: fit-content;
+  }
+}
+
+.account-nft-sort-wrapper {
+  width: 100%;
+
+  @media screen and (max-width: 786px) {
+    overflow-x: scroll;
+  }
+}
+
+
+.MuiPaginationItem-root{
+  color: white !important;
+}

@@ -26,3 +26,80 @@
     text-decoration: underline !important;
   }
 }
+
+.linearborder2 {
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
+  border-radius: 10px;
+  height: fit-content;
+}
+
+.connectwallet {
+  border-radius: 10px;
+  background: #080b2a;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.menuwrapper {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  background: #080b2a;
+  padding: 10px;
+  position: absolute;
+  top: 17px;
+  right: -30px;
+}
+
+.menuitem2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.menuitem2:hover {
+  background: linear-gradient(
+    268deg,
+    rgba(255, 255, 255, 0.21) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  color: #11fed2;
+}
+
+.connected,
+.connected:hover {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  background: #080b2a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.216px;
+}
+
+.account-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  // border: 2px solid #7371ff;
+  margin: auto;
+  cursor: pointer;
+}

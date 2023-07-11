@@ -1,0 +1,52 @@
+.genesis-wrapper {
+  --mask: linear-gradient(-150deg, #0000 36.57px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  background: linear-gradient(
+    141.14deg,
+    #5e17cc 11.06%,
+    #381486 34.42%,
+    #1f164c 56.62%
+  );
+  box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.32);
+  border-radius: 6px;
+  // max-width: 200px;
+  @media screen and (max-width: 991px) {
+    // max-width: 250px;
+  }
+  @media screen and (max-width: 375px) {
+    min-width: 300px;
+    max-width: 300px;
+  }
+}
+
+.genesis-badge {
+
+  width: 100%;
+}
+
+.genesis-desc {
+  width: 100%;
+  background: linear-gradient(180deg, #5b08d0 -17.02%, #7f2df7 100%);
+  border-radius: 6px;
+  --mask: linear-gradient(30deg, #0000 20px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  padding: 20px;
+  // max-width: 200px;
+  @media screen and (max-width: 991px) {
+    // max-width: 250px;
+  }
+  @media screen and (max-width: 375px) {
+    min-width: 300px;
+    max-width: 300px;
+  }
+}
+
+.land-desc {
+    font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #f7f7fc;
+}

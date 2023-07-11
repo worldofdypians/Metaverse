@@ -1,0 +1,310 @@
+.stake-modal {
+  background: #1a1c39;
+  border-radius: 10px;
+  width: 50%;
+  height: fit-content;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  z-index: 9999;
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  @media screen and (max-width: 1600px) {
+    width: 75%;
+  }
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+.landimg2 {
+  margin-left: -60px;
+}
+
+.container2 {
+  border-radius: 20px;
+}
+
+.imgcontainer {
+  border-radius: 20px 20px 0px 0px;
+  overflow: hidden;
+}
+
+.earn-checklist-container2 {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+#earnedText2 {
+  color: #b8b8e0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.rewardtxtCawswod {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.withdrawbtn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cawsimg2 {
+  --mask: linear-gradient(-284deg, #0000 138px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  margin-left: -165px;
+}
+
+.stake-modal-title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  color: #f7f7fc;
+}
+
+.stake-modal-desc {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #c0cbf7;
+}
+
+.nft-stake-btn {
+  background: rgba(8, 11, 42, 0.3);
+  border: 1px solid #494b63;
+  border-radius: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #f7f7fc;
+}
+
+.nft-stake-btn:hover {
+  background: rgba(8, 11, 42, 0.3);
+  border: 1px solid #494b63;
+  border-radius: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #f7f7fc;
+}
+
+.market-stake-divider {
+  width: 100%;
+  height: 2px;
+  background: #565891;
+}
+
+.checkbox-label {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
+  margin-bottom: 0;
+}
+
+.nft-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  @media only screen and (max-width: 691px) {
+    grid-template-columns: repeat(1, 1fr);
+    place-items: center;
+  }
+}
+
+.nft-modal-grid2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+
+  @media only screen and (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (max-width: 540px) {
+    grid-template-columns: repeat(1, 1fr);
+    place-items: center;
+  }
+}
+
+.nft-modal-card {
+  border-radius: 20px;
+}
+.empty-img-wrapper {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  border-radius: 20px 20px 0px 0px;
+  aspect-ratio: 1/1;
+}
+
+.full-card-info {
+  border-radius: 0px 0px 20px 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+}
+
+.modal-nft-title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #b8b8e0;
+}
+
+.empty-card-info {
+  border-radius: 0px 0px 20px 20px;
+  background: rgba(33, 36, 64, 0.7);
+}
+
+.info-text {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #b8b8e0;
+}
+
+.vertical-stake-divider {
+  display: flex;
+  width: 2px;
+  height: inherit;
+  position: fixed;
+  left: -6px;
+  right: 0;
+  margin: auto;
+  background: #494b63;
+  padding: 0 !important;
+}
+
+.empty-image {
+  aspect-ratio: 0.82/1;
+  width: 75%;
+}
+
+.full-image {
+  aspect-ratio: 1/1;
+  width: 100%;
+}
+.info-span {
+  background: #292c47;
+  border: 1px solid #292b47;
+  border-radius: 8px;
+  .info-span-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #f7f7fc;
+  }
+}
+
+.tooltipicon {
+  cursor: pointer;
+}
+.modal-scroll {
+  height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  @media screen and (max-width: 786px) {
+    height: 180px;
+  }
+}
+
+.selected-nfts-wrapper {
+  border-radius: 10px;
+  border: 2px solid #494b63;
+  width: 25%;
+  @media screen and (max-width: 991px) {
+    width: 50%;
+  }
+}
+
+.selected-nfts-amount2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  color: #ffffff;
+  line-height: 39px;
+}
+
+.selected-nfts-wrapper2 {
+  border-radius: 10px;
+  border: 2px solid #494b63;
+  width: 35%;
+  @media screen and (max-width: 991px) {
+    width: 50%;
+  }
+}
+.selected-nfts-span {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
+}
+.selected-nfts-amount {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
+}
+
+.disabled-approve-btn {
+  background: #292c47;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+  border: none;
+}
+.disabled-approve-btn:hover {
+  background: #292c47;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.selected-nfts-info {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0px 4.3px 53px rgba(0, 7, 72, 0.12);
+  backdrop-filter: blur(13.38px);
+  border-radius: 10px;
+  transition: all 0.25s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.selected-nfts-info-text {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #b8b8e0;
+}
+
+.selected-nfts-info-tooltip:hover {
+  .selected-nfts-info {
+    opacity: 1;
+    visibility: visible;
+  }
+}
