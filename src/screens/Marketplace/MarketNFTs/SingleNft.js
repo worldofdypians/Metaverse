@@ -1327,7 +1327,7 @@ const SingleNft = ({
                                   }}
                                   sx={{ width: "120px" }}
                                   inputProps={{
-                                    inputMode: "decimal",
+                                    inputMode: "numeric",
                                     pattern:"^[0-9]*[.,]?[0-9]*$"
                                   }}
                                 />
@@ -1447,7 +1447,7 @@ const SingleNft = ({
                                   }}
                                   sx={{ width: "120px" }}
                                   inputProps={{
-                                    inputMode: "decimal",
+                                    inputMode: "numeric",
                                     pattern:"^[0-9]*[.,]?[0-9]*$"
                                   }}
                                 />
