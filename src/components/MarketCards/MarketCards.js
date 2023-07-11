@@ -23,6 +23,7 @@ const MarketCards = ({
   eventTitle,
   eventPrice,
   eventImg,
+  eventDesc,
   ethTokenData,
   coinbase,
   dyptokenDatabnb,
@@ -111,7 +112,16 @@ const MarketCards = ({
         </div>
         <div className="d-flex justify-content-between gap-2 align-items-center">
           {activebtn === "events" ? (
+            eventDesc === "Event available for Genesis Land NFT owners" 
+            ?
+            <div className="d-flex flex-column">
             <span className="nftcard-name">{eventTitle}</span>
+            <span className="nftcard-usd">{eventDesc}</span>
+            </div>
+            :
+            <span className="nftcard-name">{eventTitle}</span>
+            
+          
           ) : activebtn === "land" ? (
             <span className="nftcard-name">Genesis Land #{nft?.tokenId}</span>
           ) : activebtn === "caws" ? (
