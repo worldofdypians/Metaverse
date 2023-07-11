@@ -70,6 +70,7 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
+  const [totalSupply, setTotalSupply] = useState(0)
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -199,6 +200,24 @@ const Marketplace = ({
     ],
   };
 
+
+  const getTotalSupply = async () => {
+    const infura_web3 = window.infuraWeb3;
+    let timepiece_contract = new infura_web3.eth.Contract(
+      window.CAWS_TIMEPIECE_ABI,
+      window.config.nft_timepiece_address
+    );
+
+    const result = await timepiece_contract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    setTotalSupply(parseInt(result));
+  };
+
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
@@ -277,6 +296,7 @@ const Marketplace = ({
 
   useEffect(() => {
     getAllData();
+    getTotalSupply();
     window.scrollTo(0, 0);
     document.title = "Marketplace";
   }, []);
@@ -437,7 +457,8 @@ const Marketplace = ({
     setRecentSold(recentSales);
   }, [recentSales]);
 
-  useEffect(() => {
+
+  const cutLength = () => {
     if (windowSize.width > 1600) {
       setSliderCut(6);
     } else if (windowSize.width > 1500) {
@@ -451,6 +472,10 @@ const Marketplace = ({
     } else {
       setSliderCut(1);
     }
+  }
+
+  useEffect(() => {
+   cutLength();
   }, [windowSize.width]);
 
   return (
@@ -519,7 +544,7 @@ const Marketplace = ({
                 <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
                     {" "}
-                    {getFormattedNumber(11000).slice(
+                    {getFormattedNumber(11000 + totalSupply).slice(
                       0,
                       getFormattedNumber(11000).length - 3
                     )}
@@ -995,7 +1020,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "all" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentListings("all")}
+                    onClick={() =>{  filterRecentListings("all");
+                    cutLength();
+                    firstSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide(0);
+                  }}
                   >
                     All
                   </h6>
@@ -1003,7 +1032,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "caws" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentListings("caws")}
+                    onClick={() => { filterRecentListings("caws");
+                    cutLength();
+                    firstSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide(0);
+                  }}
                   >
                     CAWS
                   </h6>
@@ -1011,7 +1044,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "land" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentListings("land")}
+                    onClick={() => { filterRecentListings("land");
+                    cutLength();
+                    firstSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide(0);
+                  }}
                   >
                     Land
                   </h6>
@@ -1019,7 +1056,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "timepiece" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentListings("timepiece")}
+                    onClick={() => { filterRecentListings("timepiece");
+                    cutLength();
+                    firstSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide(0);
+                  }}
                   >
                     Timepiece
                   </h6>
@@ -1283,7 +1324,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "all" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentSales("all")}
+                    onClick={() => {filterRecentSales("all");
+                  cutLength();
+                    secondSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide2(0);
+                  }}
                   >
                     All
                   </h6>
@@ -1291,7 +1336,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "caws" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentSales("caws")}
+                    onClick={() => {filterRecentSales("caws");
+                  cutLength();
+                    secondSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide2(0);
+                  }}
                   >
                     CAWS
                   </h6>
@@ -1299,7 +1348,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "land" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentSales("land")}
+                    onClick={() => {filterRecentSales("land");
+                  cutLength();
+                    secondSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide2(0);
+                  }}
                   >
                     Land
                   </h6>
@@ -1307,7 +1360,11 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "timepiece" && "filter-selected"
                     }`}
-                    onClick={() => filterRecentSales("timepiece")}
+                    onClick={() => {filterRecentSales("timepiece");
+                  cutLength();
+                    secondSlider.current.innerSlider.slickGoTo(0);
+                    setActiveSlide2(0);
+                  }}
                   >
                     Timepiece
                   </h6>

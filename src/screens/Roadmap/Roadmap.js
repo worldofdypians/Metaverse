@@ -137,6 +137,11 @@ const Roadmap = () => {
 
       content: [
         {
+          title: "Introduction of marketplace",
+          desc: "Users can access WoD marketplace to purchase assets used to customize and enhance their experience.",
+          completed: true,
+        },
+        {
           title: "Introduction of 25,000 Land NFTs",
           desc: "The creation of a multi-tiered NFT Land collection with different features such as special rewards, futuristic buildings, AI driven NPCs, and much more.  Each user can preview the in-game land before purchasing the associated NFT.",
         },
@@ -144,10 +149,7 @@ const Roadmap = () => {
           title: "In-game representation of Land NFTs",
           desc: "Players can access the land they own and enjoy its benefits within the game. It will be possible to trade Land NFTs and transfer the associated benefits to the new owner.",
         },
-        {
-          title: "Introduction of marketplace",
-          desc: "Users can access WoD marketplace to purchase assets used to customize and enhance their experience.",
-        },
+      
         {
           title: "Introduction of Mall and shopping centers",
           desc: "Users can acquire game items, skins, and much more.",
