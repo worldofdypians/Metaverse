@@ -94,9 +94,10 @@ const MarketSection = ({
     {
       eventTitle: "Critical Hit",
       eventPrice: "",
+      eventDesc: "Event available for Genesis Land NFT owners",
       eventImg: "critical",
       state: "criticalHit",
-      eventId: "critical-hit",
+      eventId: "critical-hit", 
     },
   ];
 
@@ -224,6 +225,7 @@ const MarketSection = ({
                       eventTitle={item.eventTitle}
                       eventPrice={item.eventPrice}
                       eventImg={item.eventImg}
+                      eventDesc={item?.eventDesc}
                       dyptokenDatabnb={dyptokenDatabnb}
                       idyptokenDatabnb={idyptokenDatabnb}
                       price={item.price}
@@ -340,6 +342,8 @@ const MarketSection = ({
                         eventTitle={item.eventTitle}
                         eventPrice={item.eventPrice}
                         eventImg={item.eventImg}
+                      eventDesc={item?.eventDesc}
+
                         dyptokenDatabnb={dyptokenDatabnb}
                         idyptokenDatabnb={idyptokenDatabnb}
                         price={item.price}
