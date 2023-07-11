@@ -70,6 +70,7 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
+  const [totalSupply, setTotalSupply] = useState(0)
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -199,6 +200,24 @@ const Marketplace = ({
     ],
   };
 
+
+  const getTotalSupply = async () => {
+    const infura_web3 = window.infuraWeb3;
+    let timepiece_contract = new infura_web3.eth.Contract(
+      window.CAWS_TIMEPIECE_ABI,
+      window.config.nft_timepiece_address
+    );
+
+    const result = await timepiece_contract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    setTotalSupply(parseInt(result));
+  };
+
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
@@ -277,6 +296,7 @@ const Marketplace = ({
 
   useEffect(() => {
     getAllData();
+    getTotalSupply();
     window.scrollTo(0, 0);
     document.title = "Marketplace";
   }, []);
@@ -524,7 +544,7 @@ const Marketplace = ({
                 <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
                     {" "}
-                    {getFormattedNumber(11000).slice(
+                    {getFormattedNumber(11000 + totalSupply).slice(
                       0,
                       getFormattedNumber(11000).length - 3
                     )}
