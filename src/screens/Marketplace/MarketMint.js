@@ -332,7 +332,7 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-md-12 col-xxl-4 mt-0">
+                  <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -595,7 +595,7 @@ const MarketMint = ({
                 </div>
               )}
               {activeTab === "past" && (
-                <div className="row w-100 align-items-center gap-4 gap-lg-0">
+                <div className="row w-100 align-items-center gap-4 gap-lg-0 px-0">
                   <div className="col-12 col-lg-6">
                     <div className="past-land-mint p-4">
                       <div className="sold-out-tag px-3 py-1">

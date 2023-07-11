@@ -805,7 +805,7 @@ idyptokenDatabnb
   return (
     <>
       <div className="row m-0 align-items-center gap-4 gap-lg-0">
-        <div className="col-12 col-lg-7 custom-height">
+        <div className="col-12 col-lg-7 custom-height px-0 px-lg-2">
           <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height position-relative">
             <img
               src={require(`../../../../Marketplace/assets/${
@@ -858,7 +858,7 @@ idyptokenDatabnb
             </div>
           </div>
         </div>
-        <div className="col-12 col-lg-5 custom-height">
+        <div className="col-12 col-lg-5 custom-height px-0 px-lg-2">
           <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height">
             <div className="d-flex flex-column custom-height justify-content-start gap-3">
               {packageData.title === "Critical Hit" ? (
