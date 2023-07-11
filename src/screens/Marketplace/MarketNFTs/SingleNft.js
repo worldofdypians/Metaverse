@@ -995,7 +995,7 @@ const SingleNft = ({
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
     getOffer();
-  }, []);
+  }, [nftCount]);
 
   useEffect(() => {
     if (nft.tokenId) {
@@ -1010,7 +1010,7 @@ const SingleNft = ({
       setType("land");
     }
     getMetaData(nftAddress, nftId);
-  }, [nftId, nftAddress, nft]);
+  }, [nftId, nftAddress, nft,nftCount]);
 
   useEffect(() => {
     if (nft) {
@@ -1550,14 +1550,14 @@ const SingleNft = ({
                         )}
                       </div>
                       {!isOwner && IsListed && coinbase && isConnected && (
-                        <div className="d-flex gap-3 align-items-center">
+                  
                           <button
                             disabled={
                               buyloading === true || buyStatus === "failed"
                                 ? true
                                 : false
                             }
-                            className={`btn  buyNftbtn px-4 d-flex justify-content-center ${
+                            className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
                               buyStatus === "success"
                                 ? "successbtn"
                                 : buyStatus === "failed" ||
@@ -1594,15 +1594,7 @@ const SingleNft = ({
                               "Failed"
                             )}
                           </button>
-                          <button
-                            className="btn mint-now-btn gap-2"
-                            onClick={() => {
-                              setshowMakeOffer(true);
-                            }}
-                          >
-                            <img src={whiteTag} alt="" /> Make offer
-                          </button>
-                        </div>
+                         
                       )}
                       {isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex gap-2 col-lg-5 col-xxl-5 align-items-center">
@@ -1748,7 +1740,7 @@ const SingleNft = ({
                         </button>
                       )}
 
-                      {!isOwner && !IsListed && coinbase && isConnected && (
+                      {/* {!isOwner && !IsListed && coinbase && isConnected && (
                         <button
                           className="btn mint-now-btn gap-2"
                           onClick={() => {
@@ -1757,7 +1749,7 @@ const SingleNft = ({
                         >
                           <img src={whiteTag} alt="" /> Make offer
                         </button>
-                      )}
+                      )} */}
 
                       {!isConnected && (
                         <button
@@ -2042,7 +2034,7 @@ const SingleNft = ({
               </div>
             </div>
           </div>
-
+{/* 
           {offerData && offerData.length > 0 && (
             <div className="px-2 mt-5">
               <div className="d-flex flex-column gap-3">
@@ -2102,7 +2094,7 @@ const SingleNft = ({
                 </div>
               </div>
             </div>
-          )}
+          )} */}
 
           {saleHistory && saleHistory.length > 0 && (
             <div className="px-2 mt-5">

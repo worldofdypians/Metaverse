@@ -38,7 +38,7 @@ const MakeOffer = ({
   const [price, setprice] = useState(0);
   const [offerData, setofferData] = useState([]);
   const [isApprove, setisApprove] = useState(false);
-
+  const { BigNumber } = window;
   const getOffer = async () => {
     let finalArray = [];
     const result = await window.getAllOffers(nftAddr, nftId).catch((e) => {
@@ -55,9 +55,28 @@ const MakeOffer = ({
     setofferData(finalArray);
   };
 
-  const approveMakeOffer = async()=>{
-    await window.approveNewOffer()
-  }
+  const approveMakeOffer = async (price, pricetype) => {
+    const newPrice = new BigNumber(price * 1e18).toFixed();
+    await window
+      .approveOffer(newPrice, pricetype)
+      .then(() => {
+        setisApprove(true);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  const isapprovedMakeOffer = async (price, pricetype) => {
+    const newPrice = new BigNumber(price * 1e18).toFixed();
+    const result = await window
+      .isApprovedOffer(newPrice, pricetype)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    return result;
+  };
 
   const style = {
     position: "absolute",
@@ -177,7 +196,7 @@ const MakeOffer = ({
                 </span>
                 <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-end">
                   <span className="itemname" style={{ whiteSpace: "nowrap" }}>
-                    {getFormattedNumber(offerData[0].offer[0], 2)}{" "}
+                    {getFormattedNumber(offerData[0].offer[0]/ 1e18, 2)}{" "}
                     {offerData[0].offer.payment.priceType === "0"
                       ? "ETH"
                       : "DYP"}
@@ -186,8 +205,8 @@ const MakeOffer = ({
                     $
                     {getFormattedNumber(
                       offerData[0].offer.payment.priceType === "0"
-                        ? ethTokenData * offerData[0].offer[0]
-                        : dypTokenData * offerData[0].offer[0],
+                        ? ethTokenData *( offerData[0].offer[0]/ 1e18)
+                        : dypTokenData *( offerData[0].offer[0]/ 1e18),
                       offerData[0].offer.payment.priceType === "0" ? 3 : 0
                     )}
                   </span>
@@ -205,6 +224,10 @@ const MakeOffer = ({
               value={price}
               onChange={(e) => {
                 setprice(e.target.value === "" ? "" : Number(e.target.value));
+                isapprovedMakeOffer(
+                  Number(e.target.value),
+                  filter1 === "weth" ? 0 : 1
+                );
               }}
             />
             <div class="dropdown" style={{ width: "150px" }}>
@@ -252,12 +275,18 @@ const MakeOffer = ({
               } gap-2 align-self-end mt-4`}
               style={{ width: "fit-content" }}
               onClick={() => {
-                handleMakeOffer(price, filter1 === "weth" ? 0 : 1);
+                isApprove
+                  ? handleMakeOffer(price, filter1 === "weth" ? 0 : 1)
+                  : approveMakeOffer(price, filter1 === "weth" ? 0 : 1);
               }}
             >
-              {status !== "fail " && <img src={whiteTag} alt="" />}
+              {status !== "fail " || !isApprove  && <img src={whiteTag} alt="" />}
               {status === "initial" ? (
-                "Make offer"
+                isApprove ? (
+                  "Make offer"
+                ) : (
+                  "Approve"
+                )
               ) : status === "loading" ? (
                 <>
                   Making offer{" "}
@@ -311,7 +340,7 @@ const MakeOffer = ({
                   handleUpdateOffer(
                     price,
                     filter1 === "weth" ? 0 : 1,
-                    offerData.index
+                    offerData[0].index
                   );
                 }}
               >
