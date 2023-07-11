@@ -26,8 +26,8 @@ import traitXmark from "./assets/traitXmark.svg";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import timepiecemetadata from "../../../actions/timepiecemetadata.json";
 import ComfirmationModal from "./ConfirmationModal";
-import mintNowIcon from './assets/mintNowIcon.svg'
-import timepiecetraits from '../../../actions/timepiecetraits.json'
+import mintNowIcon from "./assets/mintNowIcon.svg";
+import timepiecetraits from "../../../actions/timepiecetraits.json";
 
 const TimepieceNFT = ({
   isConnected,
@@ -49,150 +49,150 @@ const TimepieceNFT = ({
 
   const dummyData = [
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
-      "tokenId": "0",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
+      tokenId: "0",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
-      "tokenId": "1",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
+      tokenId: "1",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
-      "tokenId": "2",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
+      tokenId: "2",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "3",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "3",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "4",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "4",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "5",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "5",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "6",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "6",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "7",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "7",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "8",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "8",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "9",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "9",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "10",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "10",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
-      "tokenId": "11",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
+      tokenId: "11",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "12",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "12",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "13",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "13",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "14",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "14",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "15",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "15",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "16",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "16",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
     {
-      "nftAddress": "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "17",
-      "type": "timepiece",
-      "chain": 1,
-      "isListed": false
-    }
-  ]
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "17",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
+    },
+  ];
 
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -203,7 +203,7 @@ const TimepieceNFT = ({
 
   const [next, setNext] = useState(0);
   const [next2, setNext2] = useState(0);
-  const [pricePoint, setPricePoint] = useState("lth")
+  const [pricePoint, setPricePoint] = useState("lth");
 
   const [paginatedData, setpaginatedData] = useState([]);
   const [finalData, setfinalData] = useState([]);
@@ -527,7 +527,6 @@ const TimepieceNFT = ({
       })
       .then((res) => {
         setFilters(res.data.collection.traits);
-      
       });
   };
 
@@ -579,8 +578,10 @@ const TimepieceNFT = ({
 
     if (uniqueTimepiece && uniqueTimepiece.length > 0) {
       let datedNfts = uniqueTimepiece.map((nft, index) => {
-        if (nft.tokenId == timepieceArray2[index]?.tokenId &&
-          !timepieceBought.find((obj) => obj.tokenId === nft.tokenId)) {
+        if (
+          nft.tokenId == timepieceArray2[index]?.tokenId &&
+          !timepieceBought.find((obj) => obj.tokenId === nft.tokenId)
+        ) {
           let date = new Date(nft?.blockTimestamp * 1000);
 
           return {
@@ -593,9 +594,12 @@ const TimepieceNFT = ({
           };
         } else if (
           nft.tokenId == timepieceArray2[index]?.tokenId &&
-          timepieceBought.find((obj) => obj.tokenId === nft.tokenId) !== undefined
+          timepieceBought.find((obj) => obj.tokenId === nft.tokenId) !==
+            undefined
         ) {
-          const result = timepieceBought.find((obj) => obj.tokenId === nft.tokenId);
+          const result = timepieceBought.find(
+            (obj) => obj.tokenId === nft.tokenId
+          );
 
           let date = new Date(nft?.blockTimestamp * 1000);
 
@@ -627,7 +631,6 @@ const TimepieceNFT = ({
       setAlltimepiece(datedNfts);
     }
   };
- 
 
   const getTimepieceCollection = async () => {
     let finalArray = [];
@@ -686,7 +689,7 @@ const TimepieceNFT = ({
     );
 
     const finalUnique = [...alltimepieceNfts, ...objArrFiltered];
-    
+
     setTimepieceNFTS2(finalUnique);
   };
 
@@ -760,7 +763,7 @@ const TimepieceNFT = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Timepiece NFT";
-    getTotalSupply(); 
+    getTotalSupply();
   }, []);
 
   useEffect(() => {
@@ -778,7 +781,7 @@ const TimepieceNFT = ({
     if (timepieceBought) {
       getListedTimepiece();
     }
-  }, [timepieceBought, nftCount,alltimepieceNfts.length]);
+  }, [timepieceBought, nftCount, alltimepieceNfts.length]);
 
   useEffect(() => {
     if (
@@ -790,7 +793,6 @@ const TimepieceNFT = ({
     }
   }, [alltimepieceNfts.length, finalData.length, timepieceBought]);
 
-
   useEffect(() => {
     loadMore2();
   }, [count]);
@@ -799,7 +801,6 @@ const TimepieceNFT = ({
     getTimepieceCollection();
     // fetchFilters();
     setFilters(timepiecetraits.collection.traits);
-
   }, [next]);
 
   useEffect(() => {
@@ -812,13 +813,8 @@ const TimepieceNFT = ({
     sortNfts("lth");
   }, [timepieceNFTS]);
 
-
   return (
-    <div 
-    id="header"
-    onScroll={onScroll}
-    ref={listInnerRef}
-    >
+    <div id="header" onScroll={onScroll} ref={listInnerRef}>
       <div
         className="container-fluid d-flex justify-content-end p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
@@ -839,25 +835,28 @@ const TimepieceNFT = ({
 
                   <p className="collection-desc">
                     The Timepiece NFTs offer different benefits in Metaverse
-                    like: {" "}<b>Exclusive Access</b> to new and exciting events,{" "}
+                    like: <b>Exclusive Access</b> to new and exciting events,{" "}
                     <b>Enhanced Interactions</b> with available activities,{" "}
                     <b>Expanded Functionality</b> on performing new actions, and
                     earn multiple <b>Rewards.</b>
                   </p>
-                <div className="d-flex align-items-center gap-3">
-                <NavLink
-                    to="/caws-timepiece"
-                    style={{ width: "fit-content" }}
-                  >
-                    <button className="btn pill-btn">Explore</button>
-                  </NavLink>
-                  <NavLink to="/marketplace/mint" style={{textDecoration: 'none'}}>
-                  <button className="btn mint-now-btn gap-2">
-                    <img src={mintNowIcon} alt="" />
-                    Available minting
-                  </button>
-                  </NavLink>
-                </div>
+                  <div className="d-flex align-items-center gap-3">
+                    <NavLink
+                      to="/caws-timepiece"
+                      style={{ width: "fit-content" }}
+                    >
+                      <button className="btn pill-btn">Explore</button>
+                    </NavLink>
+                    <NavLink
+                      to="/marketplace/mint"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <button className="btn mint-now-btn gap-2">
+                        <img src={mintNowIcon} alt="" />
+                        Available minting
+                      </button>
+                    </NavLink>
+                  </div>
                 </div>
               </div>
               <div className="col-12 col-lg-4">
@@ -946,13 +945,27 @@ const TimepieceNFT = ({
                 </ul>
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5">
-              <div
+                <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
-                  onClick={() =>{setPricePoint(pricePoint === "lth" ? "htl" : "lth"); sortNfts(pricePoint); console.log(pricePoint);}}
+                  onClick={() => {
+                    setPricePoint(pricePoint === "lth" ? "htl" : "lth");
+                    sortNfts(pricePoint);
+                    console.log(pricePoint);
+                  }}
                 >
-                  <img src={pricePoint === "lth" ? priceIconUp  : priceIconDown} alt="" />
-                  <h6 className="filter-nav-title mb-0" style={{color: pricePoint === "lth" ? "#09F3D2" : "#FF6232" }}>Price</h6>
+                  <img
+                    src={pricePoint === "lth" ? priceIconUp : priceIconDown}
+                    alt=""
+                  />
+                  <h6
+                    className="filter-nav-title mb-0"
+                    style={{
+                      color: pricePoint === "lth" ? "#09F3D2" : "#FF6232",
+                    }}
+                  >
+                    Price
+                  </h6>
                 </div>
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
@@ -979,7 +992,11 @@ const TimepieceNFT = ({
                   <img
                     src={traitXmark}
                     style={{ cursor: "pointer" }}
-                    onClick={() => displayFilters.length === 1 ? clearAll() : addProducts(item.value, item.id)}
+                    onClick={() =>
+                      displayFilters.length === 1
+                        ? clearAll()
+                        : addProducts(item.value, item.id)
+                    }
                     alt=""
                   />
                 </div>
@@ -996,10 +1013,7 @@ const TimepieceNFT = ({
               )}
             </div>
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
-              <div
-                className="d-flex align-items-center p-4 gap-4 justify-content-center"
-             
-              >
+              <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
                 <div className={"item-cards-wrapper w-100"}>
                   {timepieceNFTS && timepieceNFTS.length > 0 && count === 0 ? (
                     <>
@@ -1053,13 +1067,6 @@ const TimepieceNFT = ({
                         </button>
                       ) : count === 0 && loading && next < totalSupply ? (
                         <>
-                           <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
                           <Skeleton
                             animation="wave"
                             width={"100%"}
@@ -1137,42 +1144,49 @@ const TimepieceNFT = ({
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                            <Skeleton
+                          <Skeleton
                             animation="wave"
                             width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                            <Skeleton
+                          <Skeleton
                             animation="wave"
                             width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                            <Skeleton
+                          <Skeleton
                             animation="wave"
                             width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                            <Skeleton
+                          <Skeleton
                             animation="wave"
                             width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                            <Skeleton
+                          <Skeleton
                             animation="wave"
                             width={"100%"}
                             variant="rounded"
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                            <Skeleton
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
                             animation="wave"
                             width={"100%"}
                             variant="rounded"
@@ -1187,46 +1201,45 @@ const TimepieceNFT = ({
                   ) : timepieceNFTS &&
                     timepieceNFTS.length === 0 &&
                     count === 0 ? (
-                      dummyData.map((nft, index)=>{
-                        return  <NavLink
-                        to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                        state={{
-                          nft: nft,
-                          type: "timepiece",
-                          isOwner:
-                            nft.seller?.toLowerCase() ===
-                              coinbase?.toLowerCase() ||
-                            nft.buyer?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
-                          chain: nft.chain,
-                        }}
-                        onClick={() => {
-                          updateViewCount(
-                            nft.tokenId,
-                            nft.nftAddress
-                          );
-                        }}
-                      >
-                        <ItemCard
-                          ethTokenData={ethTokenData}
-                          dypTokenData={dypTokenData}
-                          key={nft.id}
-                          nft={nft}
-                          isConnected={isConnected}
-                          showConnectWallet={handleConnect}
-                          isCaws={false}
-                          isTimepiece={true}
-                          isWod={false}
-                          coinbase={coinbase}
-                          lastSold={nft.LastSold}
-                          isLatestSale={nft.isLatestSale}
-                          isListed={nft.isListed}
-                          soldPriceType={nft.soldPriceType}
-                        />
-                      </NavLink>
-                      })
+                    dummyData.map((nft, index) => {
+                      return (
+                        <NavLink
+                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: "timepiece",
+                            isOwner:
+                              nft.seller?.toLowerCase() ===
+                                coinbase?.toLowerCase() ||
+                              nft.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={() => {
+                            updateViewCount(nft.tokenId, nft.nftAddress);
+                          }}
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={false}
+                            isTimepiece={true}
+                            isWod={false}
+                            coinbase={coinbase}
+                            lastSold={nft.LastSold}
+                            isLatestSale={nft.isLatestSale}
+                            isListed={nft.isListed}
+                            soldPriceType={nft.soldPriceType}
+                          />
+                        </NavLink>
+                      );
+                    })
                   ) : (
                     <></>
                   )}
@@ -1254,7 +1267,10 @@ const TimepieceNFT = ({
                               chain: nft.chain,
                             }}
                             onClick={() => {
-                              updateViewCount(nft.tokenId, window.config.nft_address);
+                              updateViewCount(
+                                nft.tokenId,
+                                window.config.nft_address
+                              );
                             }}
                           >
                             <ItemCard
@@ -1275,7 +1291,7 @@ const TimepieceNFT = ({
                             />
                           </NavLink>
                         ))}
-                       {count > 0 && !loading && next2 < filterIds.length ? (
+                      {count > 0 && !loading && next2 < filterIds.length ? (
                         <button
                           className="btn py-2 px-3 nft-load-more-btn"
                           onClick={() => {
@@ -1331,7 +1347,6 @@ const TimepieceNFT = ({
                             height={230}
                             sx={{ bgcolor: "black.700" }}
                           />
-                         
                         </>
                       ) : (
                         <></>
@@ -1342,131 +1357,131 @@ const TimepieceNFT = ({
                     timepieceNFTS2.length === 0 ? (
                     <>
                       <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                            <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
                     </>
                   ) : (
                     <></>
@@ -1554,8 +1569,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1579,8 +1594,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1604,8 +1619,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1629,8 +1644,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1654,8 +1669,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1679,8 +1694,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1704,8 +1719,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1729,8 +1744,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1754,8 +1769,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
@@ -1779,8 +1794,8 @@ const TimepieceNFT = ({
                   ([key, value], i) => (
                     // <span key={i}>{key} ({value})</span>
                     <FilterCard
-                    filtersLength={displayFilters.length}
-                    clearAll={clearAll}
+                      filtersLength={displayFilters.length}
+                      clearAll={clearAll}
                       title={key}
                       value={value}
                       categoryIndex={categoryIndex}
