@@ -745,7 +745,7 @@ const LeaderBoard = ({
           <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
         </h2>
       </div>
-      <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-end">
+      <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-start" style={{minHeight: '600px'}}>
         <div className="row w-100 align-items-start">
           <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 leaderboard-wrapper">
             <div className="d-none">
