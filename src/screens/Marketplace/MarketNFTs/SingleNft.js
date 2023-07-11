@@ -141,6 +141,7 @@ const SingleNft = ({
   const [offerStatus, setOfferStatus] = useState("initial");
   const [offerdeleteStatus, setOfferdeleteStatus] = useState("initial");
   const [offerupdateStatus, setOfferupdateStatus] = useState("initial");
+  const [offeracceptStatus, setOfferacceptStatus] = useState("initial");
 
   const { nftId, nftAddress } = useParams();
 
@@ -918,6 +919,29 @@ const SingleNft = ({
       });
   };
 
+  const handleAcceptOffer = async (offerIndex) => {
+    setOfferacceptStatus("loading");
+
+    console.log(nftAddress, nftId, offerIndex);
+    await window
+      .acceptOffer(nftAddress, nftId, offerIndex)
+      .then(() => {
+        handleRefreshListing();
+        setOfferacceptStatus("success");
+        setTimeout(() => {
+          setOfferacceptStatus("initial");
+        }, 3000);
+      })
+      .catch((e) => {
+        console.error(e);
+        setOfferacceptStatus("fail");
+
+        setTimeout(() => {
+          setOfferacceptStatus("initial");
+        }, 3000);
+      });
+  };
+
   useEffect(() => {
     // if (isOwner === false) {
     if (coinbase) {
@@ -1302,9 +1326,8 @@ const SingleNft = ({
                             >
                               Listing price
                             </span>
-                            <div className="d-flex gap-2 align-items-center"> 
-                        
-                        <input
+                            <div className="d-flex gap-2 align-items-center">
+                              <input
                                 required
                                 className="single-nft-input"
                                 type="number"
@@ -1422,19 +1445,19 @@ const SingleNft = ({
                               Listing price
                             </span>
                             <div className="d-flex gap-2 align-items-center">
-                            <input
-                                  required
-                                  className="single-nft-input"
-                                  type="number"
-                                  id="price"
-                                  name="price"
-                                  pattern="^[0-9]*[.,]?[0-9]*$"
-                                  min={0}
-                                  value={nftPrice}
-                                  onChange={(e) => {
-                                    handlepricechange(e.target.value);
-                                  }}
-                                />
+                              <input
+                                required
+                                className="single-nft-input"
+                                type="number"
+                                id="price"
+                                name="price"
+                                pattern="^[0-9]*[.,]?[0-9]*$"
+                                min={0}
+                                value={nftPrice}
+                                onChange={(e) => {
+                                  handlepricechange(e.target.value);
+                                }}
+                              />
                               <div className="d-flex flex-column flex-xxl-row align-items-start align-items-lg-center gap-1 gap-xxl-3">
                                 <span className="nft-price-eth gap-3 d-flex">
                                   {priceType === 0 ? "ETH" : "DYP"}{" "}
@@ -1558,47 +1581,59 @@ const SingleNft = ({
                         )}
                       </div>
                       {!isOwner && IsListed && coinbase && isConnected && (
-                        <button
-                          disabled={
-                            buyloading === true || buyStatus === "failed"
-                              ? true
-                              : false
-                          }
-                          className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
-                            buyStatus === "success"
-                              ? "successbtn"
-                              : buyStatus === "failed" ||
-                                (chainId !== 5 && chainId !== 1)
-                              ? "errorbtn"
-                              : null
-                          } d-flex justify-content-center align-items-center gap-2`}
-                          onClick={() => {
-                            chainId !== 1 && chainId !== 5
-                              ? handleSwitchChain()
-                              : handleBuy(nft);
-                          }}
-                        >
-                          {buyloading && (chainId === 1 || chainId === 5) ? (
-                            <div
-                              className="spinner-border spinner-border-sm text-light"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          ) : !buyloading && chainId !== 1 && chainId !== 5 ? (
-                            "Switch Network"
-                          ) : buyStatus === "buy" ? (
-                            "Buy"
-                          ) : buyStatus === "approve" || buyStatus === "" ? (
-                            "Approve buy"
-                          ) : buyStatus === "success" ? (
-                            "Success"
-                          ) : (
-                            "Failed"
-                          )}
-                        </button>
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
+                          <button
+                            disabled={
+                              buyloading === true || buyStatus === "failed"
+                                ? true
+                                : false
+                            }
+                            className={`btn  buyNftbtn px-4 d-flex justify-content-center ${
+                              buyStatus === "success"
+                                ? "successbtn"
+                                : buyStatus === "failed" ||
+                                  (chainId !== 5 && chainId !== 1)
+                                ? "errorbtn"
+                                : null
+                            } d-flex justify-content-center align-items-center gap-2`}
+                            onClick={() => {
+                              chainId !== 1 && chainId !== 5
+                                ? handleSwitchChain()
+                                : handleBuy(nft);
+                            }}
+                          >
+                            {buyloading && (chainId === 1 || chainId === 5) ? (
+                              <div
+                                className="spinner-border spinner-border-sm text-light"
+                                role="status"
+                              >
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </div>
+                            ) : !buyloading &&
+                              chainId !== 1 &&
+                              chainId !== 5 ? (
+                              "Switch Network"
+                            ) : buyStatus === "buy" ? (
+                              "Buy"
+                            ) : buyStatus === "approve" || buyStatus === "" ? (
+                              "Approve buy"
+                            ) : buyStatus === "success" ? (
+                              "Success"
+                            ) : (
+                              "Failed"
+                            )}
+                          </button>
+                          <button
+                            className="btn mint-now-btn gap-2"
+                            onClick={() => {
+                              setshowMakeOffer(true);
+                            }}
+                          >
+                            <img src={whiteTag} alt="" /> Make offer
+                          </button>
+                        </div>
                       )}
                       {isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex gap-2 col-lg-5 col-xxl-5 align-items-center">
@@ -1744,7 +1779,7 @@ const SingleNft = ({
                         </button>
                       )}
 
-                      {/* {!isOwner && !IsListed && coinbase && isConnected && (
+                      {!isOwner && !IsListed && coinbase && isConnected && (
                         <button
                           className="btn mint-now-btn gap-2"
                           onClick={() => {
@@ -1753,7 +1788,7 @@ const SingleNft = ({
                         >
                           <img src={whiteTag} alt="" /> Make offer
                         </button>
-                      )} */}
+                      )}
 
                       {!isConnected && (
                         <button
@@ -2038,7 +2073,7 @@ const SingleNft = ({
               </div>
             </div>
           </div>
-          {/* 
+
           {offerData && offerData.length > 0 && (
             <div className="px-2 mt-5">
               <div className="d-flex flex-column gap-3">
@@ -2085,8 +2120,28 @@ const SingleNft = ({
                             </td>
                             {isOwner && (
                               <td className="greendata">
-                                <button className="acceptbtn btn">
-                                  Accept
+                                <button
+                                  className={` ${offeracceptStatus === 'fail' ? 'errorbtn' : 'acceptbtn'}  btn`}
+                                  onClick={() => {
+                                    handleAcceptOffer(item.index);
+                                  }}
+                                >
+                                  {offeracceptStatus === "initial" ? (
+                                    "Accept"
+                                  ) : offeracceptStatus === "loading" ? (
+                                    <>
+                                      Accepting{" "}
+                                      <div
+                                        className="spinner-border mx-1"
+                                        role="status"
+                                        style={{ width: 16, height: 16 }}
+                                      ></div>
+                                    </>
+                                  ) : offeracceptStatus === "success" ? (
+                                    "Success"
+                                  ) : (
+                                    "Failed"
+                                  )}
                                 </button>
                               </td>
                             )}
@@ -2098,7 +2153,7 @@ const SingleNft = ({
                 </div>
               </div>
             </div>
-          )} */}
+          )}
 
           {saleHistory && saleHistory.length > 0 && (
             <div className="px-2 mt-5">

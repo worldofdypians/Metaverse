@@ -11,7 +11,8 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import "../_marketplace.scss";
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import whiteTag from "./assets/whiteTag.svg";
-import { objectOf } from "prop-types";
+import Web3 from "web3";
+import getListedNFTS from "../../../actions/Marketplace";
 
 const MakeOffer = ({
   open,
@@ -38,7 +39,19 @@ const MakeOffer = ({
   const [price, setprice] = useState(0);
   const [offerData, setofferData] = useState([]);
   const [isApprove, setisApprove] = useState(false);
+  const [approvestatus, setapprovestatus] = useState("initial");
+
+  const [dypBalance, setDypBalance] = useState(0);
+  const [wethBalance, setWethBalance] = useState(0);
+  const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
+
   const { BigNumber } = window;
+
+  const getListedNtsAsc = async () => {
+    const result = await getListedNFTS(0, "price_asc");
+    setlowestPriceNftListed(result[0]);
+  };
+
   const getOffer = async () => {
     let finalArray = [];
     const result = await window.getAllOffers(nftAddr, nftId).catch((e) => {
@@ -57,14 +70,60 @@ const MakeOffer = ({
 
   const approveMakeOffer = async (price, pricetype) => {
     const newPrice = new BigNumber(price * 1e18).toFixed();
+    setapprovestatus("loading");
     await window
       .approveOffer(newPrice, pricetype)
       .then(() => {
         setisApprove(true);
+        setapprovestatus("success");
+
+        setTimeout(() => {
+          setapprovestatus("initial");
+        }, 3000);
       })
       .catch((e) => {
         console.error(e);
+        setapprovestatus("fail");
+
+        setTimeout(() => {
+          setapprovestatus("initial");
+        }, 3000);
       });
+  };
+
+  const getDypBalance = async () => {
+    const web3eth = new Web3(
+      "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
+    );
+
+    if (coinbase !== undefined) {
+      const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
+
+      const contract1 = new web3eth.eth.Contract(
+        window.ERC20_ABI,
+        token_address
+      );
+      const contract2 = new web3eth.eth.Contract(
+        window.WETH_ABI,
+        window.config.weth2_address
+      );
+
+      const bal1 = await contract1.methods
+        .balanceOf(coinbase)
+        .call()
+        .then((data) => {
+          return web3eth.utils.fromWei(data, "ether");
+        });
+      setDypBalance(bal1);
+
+      const bal2 = await contract2.methods
+        .balanceOf(coinbase)
+        .call()
+        .then((data) => {
+          return web3eth.utils.fromWei(data, "ether");
+        });
+      setWethBalance(bal2);
+    }
   };
 
   const isapprovedMakeOffer = async (price, pricetype) => {
@@ -74,7 +133,7 @@ const MakeOffer = ({
       .catch((e) => {
         console.error(e);
       });
-
+    setisApprove(result);
     return result;
   };
 
@@ -92,11 +151,14 @@ const MakeOffer = ({
     overflowX: "hidden",
     borderRadius: "10px",
     background: "#1A1C39",
+    height: windowSize.width < 500 ? '480px' : 'auto'
   };
 
   useEffect(() => {
     if (coinbase) {
       getOffer();
+      getDypBalance();
+      getListedNtsAsc();
     }
   }, [coinbase, nftCount]);
 
@@ -122,7 +184,7 @@ const MakeOffer = ({
           </div>
           <div className="summarywrapper">
             <div className="d-flex flex-column flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between">
-              <div className="d-flex flex-column w-100 flex-xxl-row flex-lg-row align-items-center gap-2">
+              <div className="d-flex flex-column w-100 flex-xxl-row flex-lg-row  align-items-center gap-2">
                 <img
                   className="p-0 nft-img"
                   src={
@@ -153,7 +215,7 @@ const MakeOffer = ({
                 </div>
               </div>
               {nft.price && (
-                <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-end">
+                <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-xxl-end align-items-lg-end align-items-center">
                   <span className="itemname" style={{ whiteSpace: "nowrap" }}>
                     {getFormattedNumber(nft.price / 1e18, 2)}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}
@@ -175,16 +237,26 @@ const MakeOffer = ({
             <div className="d-flex flex-column align-items-center justify-content-between">
               <div className="d-flex w-100 align-items-center gap-3 justify-content-between">
                 <span className="itemchain">Balance</span>
-                <span className="itemchain">0.78 WETH</span>
+                <span className="itemchain">
+                  {filter1 === "weth"
+                    ? getFormattedNumber(wethBalance, 2)
+                    : getFormattedNumber(dypBalance, 2)}{" "}
+                  {filter1 === "weth" ? "WETH" : "DYP"}
+                </span>
               </div>
               <div className="d-flex w-100 align-items-center gap-3 justify-content-between">
                 <span className="itemchain">Floor price</span>
-                <span className="itemchain">0.78 WETH</span>
+                <span className="itemchain">
+                  {getFormattedNumber(lowestPriceNftListed.price / 1e18, 2)}{" "}
+                  {lowestPriceNftListed.payment_priceType === 0 ? "ETH" : "DYP"}
+                </span>
               </div>
-              <div className="d-flex  w-100 align-items-center gap-3 justify-content-between">
-                <span className="itemchain">Best offer</span>
-                <span className="itemchain">0.78 WETH</span>
-              </div>
+              {offerData.length > 0 && (
+                <div className="d-flex  w-100 align-items-center gap-3 justify-content-between">
+                  <span className="itemchain">Best offer</span>
+                  <span className="itemchain">0.78 WETH</span>
+                </div>
+              )}
             </div>
           </div>
           <div className="summaryseparator"></div>
@@ -196,7 +268,7 @@ const MakeOffer = ({
                 </span>
                 <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-end">
                   <span className="itemname" style={{ whiteSpace: "nowrap" }}>
-                    {getFormattedNumber(offerData[0].offer[0]/ 1e18, 2)}{" "}
+                    {getFormattedNumber(offerData[0].offer[0] / 1e18, 2)}{" "}
                     {offerData[0].offer.payment.priceType === "0"
                       ? "ETH"
                       : "DYP"}
@@ -205,8 +277,8 @@ const MakeOffer = ({
                     $
                     {getFormattedNumber(
                       offerData[0].offer.payment.priceType === "0"
-                        ? ethTokenData *( offerData[0].offer[0]/ 1e18)
-                        : dypTokenData *( offerData[0].offer[0]/ 1e18),
+                        ? ethTokenData * (offerData[0].offer[0] / 1e18)
+                        : dypTokenData * (offerData[0].offer[0] / 1e18),
                       offerData[0].offer.payment.priceType === "0" ? 3 : 0
                     )}
                   </span>
@@ -271,7 +343,7 @@ const MakeOffer = ({
           {offerData.length === 0 ? (
             <button
               className={`btn ${
-                status === "fail" ? "errorbtn" : "mint-now-btn"
+                (status === "fail" || approvestatus === 'fail') ? "errorbtn" : "mint-now-btn"
               } gap-2 align-self-end mt-4`}
               style={{ width: "fit-content" }}
               onClick={() => {
@@ -280,12 +352,24 @@ const MakeOffer = ({
                   : approveMakeOffer(price, filter1 === "weth" ? 0 : 1);
               }}
             >
-              {status !== "fail " || !isApprove  && <img src={whiteTag} alt="" />}
+              {status !== "fail " ||
+                (!isApprove && <img src={whiteTag} alt="" />)}
               {status === "initial" ? (
                 isApprove ? (
                   "Make offer"
-                ) : (
+                ) : approvestatus === "initial" ? (
                   "Approve"
+                ) : approvestatus === "loading" ? (
+                  <>
+                    Approving{" "}
+                    <div
+                      className="spinner-border mx-1"
+                      role="status"
+                      style={{ width: 16, height: 16 }}
+                    ></div>
+                  </>
+                ) : (
+                  "Failed"
                 )
               ) : status === "loading" ? (
                 <>
