@@ -99,7 +99,6 @@ function Dashboard({
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
 
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -614,7 +613,7 @@ function Dashboard({
       .post(URL, { query: offersQuery })
       .then(async (result) => {
         allOffers = await result.data.data.offerMades;
-        setallOffers(result.data.data.offerMades)
+        setallOffers(result.data.data.offerMades);
       })
       .catch((error) => {
         console.log(error);
@@ -651,15 +650,16 @@ function Dashboard({
         })
       );
       let uniqueOffers = finalArray.filter(
-        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId && v2.nftAddress === v.nftAddress) === i
-      ); 
+        (v, i, a) =>
+          a.findIndex(
+            (v2) => v2.tokenId === v.tokenId && v2.nftAddress === v.nftAddress
+          ) === i
+      );
 
-    
       setmyOffers(uniqueOffers);
     }
   };
- 
-  
+
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
@@ -683,7 +683,6 @@ function Dashboard({
 
   useEffect(() => {
     getOtherNfts();
-    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
     getDypBalance();
     fetchUserFavorites(
       data?.getPlayer?.wallet && email
@@ -697,8 +696,14 @@ function Dashboard({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getMyOffers();
   }, []);
+
+  useEffect(() => {
+    if (coinbase) {
+      getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
+      getMyOffers();
+    }
+  }, [coinbase]);
 
   useEffect(() => {
     if (!isConnected && !coinbase && location.pathname === "/account") {
