@@ -161,14 +161,67 @@ const SingleNft = ({
 
   const getOffer = async () => {
     let finalArray = [];
+    const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
+
+    const contract1 = new window.infuraWeb3.eth.Contract(
+      window.ERC20_ABI,
+      token_address
+    );
+    const contract2 = new window.infuraWeb3.eth.Contract(
+      window.WETH_ABI,
+      window.config.weth2_address
+    );
+
     const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
       console.error(e);
     });
 
-    result.map((item) => {
-      return finalArray.push({ offer: item.offer, index: item.index });
-    });
-    finalArray.reverse()
+    await Promise.all(
+      result.map(async (item) => {
+        if (item.offer.payment.priceType === "1") {
+          const balance = await contract1.methods
+            .balanceOf(item.offer.buyer)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
+
+          const allowance = await contract1.methods
+            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
+
+          const priceFormatted = item.offer.price / 1e18;
+
+          if (balance >= priceFormatted && allowance >= priceFormatted) {
+            return finalArray.push({ offer: item.offer, index: item.index });
+          }
+        } else if (item.offer.payment.priceType === "0") {
+          const balance = await contract2.methods
+            .balanceOf(item.offer.buyer)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
+
+          const allowance = await contract2.methods
+            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
+
+          const priceFormatted = item.offer.price / 1e18;
+
+          if (balance >= priceFormatted && allowance >= priceFormatted) {
+            return finalArray.push({ offer: item.offer, index: item.index });
+          }
+        }
+      })
+    );
+    finalArray.reverse();
     setofferData(finalArray);
   };
   // console.log(offerData)
@@ -345,7 +398,6 @@ const SingleNft = ({
       });
 
     // console.log("boughtItems", boughtItems);
-    console.log("boughtItems", boughtItems);
 
     boughtItems &&
       boughtItems.map((nft) => {
@@ -364,9 +416,12 @@ const SingleNft = ({
         }
       });
 
-    const test = [...finalboughtItems];
+    console.log("...finalboughtItems", finalboughtItems);
     setNft(...finalboughtItems);
     setIsListed(false);
+    if (finalboughtItems[0].buyer.toLowerCase() !== coinbase.toLowerCase()) {
+      setisOwner(false);
+    }
   };
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
@@ -922,19 +977,18 @@ const SingleNft = ({
     console.log(nftAddress, nftId, offerIndex);
     await window
       .acceptOffer(nftAddress, nftId, offerIndex)
-      .then(() => { 
-        
+      .then(() => {
         setOfferacceptStatus("success");
         setTimeout(() => {
           setOfferacceptStatus("initial");
           handleRefreshListing();
-        getLatestBoughtNFT();
+          getLatest20BoughtNFTS(nftAddress, nftId)
+          getLatestBoughtNFT();
         }, 3000);
       })
       .catch((e) => {
         console.error(e);
         setOfferacceptStatus("fail");
-
         setTimeout(() => {
           setOfferacceptStatus("initial");
         }, 3000);
@@ -993,6 +1047,11 @@ const SingleNft = ({
       if (nft.seller) {
         if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
           setisOwner(true);
+        } else if (
+          nft.seller &&
+          nft.seller.toLowerCase() !== coinbase.toLowerCase()
+        ) {
+          setisOwner(false);
         }
       } else if (
         nft.buyer &&
@@ -1000,6 +1059,12 @@ const SingleNft = ({
         nft.buyer.toLowerCase() === coinbase.toLowerCase()
       ) {
         setisOwner(true);
+      } else if (
+        nft.buyer &&
+        coinbase &&
+        nft.buyer.toLowerCase() !== coinbase.toLowerCase()
+      ) {
+        setisOwner(false);
       } else if (owner.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
       }
@@ -1023,15 +1088,11 @@ const SingleNft = ({
         : "land",
       nftId
     );
-  }, [type, nftId, nftAddress,nftCount]);
+  }, [type, nftId, nftAddress, nftCount]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
-    checkisListedNFT(nftId, nftAddress);
-    isListedNFT(nftId, nftAddress).then((isListed) => {
-      setIsListed(isListed);
-    });
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
@@ -1054,6 +1115,10 @@ const SingleNft = ({
 
   useEffect(() => {
     getOffer();
+      isListedNFT(nftId, nftAddress).then((isListed) => {
+      setIsListed(isListed);
+    });
+    checkisListedNFT(nftId, nftAddress);
   }, [nftCount]);
 
   useEffect(() => {
@@ -1550,27 +1615,7 @@ const SingleNft = ({
                     <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
                       <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="owner-txt">Owner:</span>
-                        {nft.seller ? (
-                          <a
-                            href={`https://etherscan.io/address/${nft.seller}`}
-                            target="_blank"
-                            style={{ textDecoration: "none" }}
-                            className="seller-addr"
-                            rel="noreferrer"
-                          >
-                            {shortAddress(nft.seller)}
-                          </a>
-                        ) : nft.buyer ? (
-                          <a
-                            href={`https://etherscan.io/address/${nft.buyer}`}
-                            target="_blank"
-                            style={{ textDecoration: "none" }}
-                            className="seller-addr"
-                            rel="noreferrer"
-                          >
-                            {shortAddress(nft.buyer)}
-                          </a>
-                        ) : (
+                        {
                           <a
                             href={`https://etherscan.io/address/${owner}`}
                             target="_blank"
@@ -1580,7 +1625,7 @@ const SingleNft = ({
                           >
                             {shortAddress(owner)}
                           </a>
-                        )}
+                        }
                       </div>
                       {!isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
