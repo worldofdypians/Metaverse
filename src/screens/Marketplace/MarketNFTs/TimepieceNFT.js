@@ -16,6 +16,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import traitIcon from "./assets/traitIcon.svg";
 import priceIconUp from "./assets/priceIconUp.svg";
 import priceIconDown from "./assets/priceIconDown.svg";
+import priceIconNeutral from "./assets/priceIconNeutral.svg";
 import filterIcon from "./assets/filterIcon.svg";
 import ethIcon from "./assets/ethIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
@@ -196,7 +197,7 @@ const TimepieceNFT = ({
 
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [filterTitle, setFilterTitle] = useState("Price low to high");
+  const [filterTitle, setFilterTitle] = useState("Filter");
   const [initialNfts, setInitialNfts] = useState([]);
   const [timepieceNFTS, setTimepieceNFTS] = useState([]);
   const [timepieceNFTS2, setTimepieceNFTS2] = useState([]);
@@ -229,6 +230,7 @@ const TimepieceNFT = ({
   const [eyewear, setEyewear] = useState({ trait_type: "Eyewear", value: [] });
   const [watch, setWatch] = useState({ trait_type: "Watch", value: [] });
   const [count, setCount] = useState(0);
+  const [priceCount, setPriceCount] = useState(0)
   const [displayFilters, setDisplayFilters] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([
     background,
@@ -531,30 +533,35 @@ const TimepieceNFT = ({
   };
 
   const sortNfts = (sortValue) => {
-    if (sortValue === "htl") {
-      let htl = initialNfts.sort((a, b) => {
-        return b.priceUSD - a.priceUSD;
-      });
-      setTimepieceNFTS(htl);
-    } else if (sortValue === "lth") {
-      let lth = initialNfts.sort((a, b) => {
-        return a.priceUSD - b.priceUSD;
-      });
-      setTimepieceNFTS(lth);
+    if (sortValue === "all") {
+      setTimepieceNFTS(initialNfts);
+    } else if (sortValue === "price") {
+      if (priceCount % 2 == 0) {
+        let lth = initialNfts.sort((a, b) => {
+          return a.priceUSD - b.priceUSD;
+        });
+        setTimepieceNFTS(lth);
+      } else {
+        let htl = initialNfts.sort((a, b) => {
+          return b.priceUSD - a.priceUSD;
+        });
+        setTimepieceNFTS(htl);
+      }
+      setPriceCount(priceCount + 1);
     } else if (sortValue === "lso") {
       let lsoDate = initialNfts.sort((a, b) => {
         return b.isLatestSale - a.isLatestSale;
       });
       let lso = lsoDate.sort((a, b) => {
-        return new Date(b.lastSoldTimeStamp) - new Date(a.lastSoldTimeStamp)
-      })
+        return new Date(b.lastSoldTimeStamp) - new Date(a.lastSoldTimeStamp);
+      });
       setTimepieceNFTS(lso);
     } else if (sortValue === "lto") {
       let otl = initialNfts.sort((a, b) => {
         return b.date - a.date;
       });
       setTimepieceNFTS(otl);
-    } 
+    }
   };
 
   
@@ -863,10 +870,10 @@ const TimepieceNFT = ({
               </div>
             </div>
             <div
-              className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative gap-2"
+              className="filters-container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between my-4 p-3 position-relative gap-3"
               style={{ zIndex: 2 }}
             >
-              <div class="dropdown" style={{ width: "150px" }}>
+              <div class="dropdown filters-dropdown">
                 <button
                   class="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
@@ -876,7 +883,7 @@ const TimepieceNFT = ({
                 >
                   <div className="d-flex align-items-center gap-2">
                     <img src={filterIcon} alt="" />
-                    <h6 className="filter-nav-title mb-0">Filter</h6>
+                    <h6 className="filter-nav-title mb-0">{filterTitle}</h6>
                   </div>
                   <img src={dropdownIcon} alt="" />
                 </button>
@@ -884,7 +891,16 @@ const TimepieceNFT = ({
                   <li
                     className="nft-dropdown-item"
                     onClick={() => {
-                      setFilterTitle("Oldest to newest");
+                      setFilterTitle("Filter");
+                      sortNfts("all");
+                    }}
+                  >
+                    <span>All</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Recently listed");
                       sortNfts("lto");
                     }}
                   >
@@ -893,70 +909,41 @@ const TimepieceNFT = ({
                   <li
                     className="nft-dropdown-item"
                     onClick={() => {
-                      setFilterTitle("Newest To Oldest");
+                      setFilterTitle("Recently sold");
                       sortNfts("lso");
                     }}
                   >
                     <span>Recently sold</span>
                   </li>
-                  {/* <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
-                      setFilterTitle("Price: ETH");
-                      sortNfts("eth");
-                    }}
-                  >
-                    <span>Price: ETH</span>
-                  </li>
-                  <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
-                      setFilterTitle("Price: DYP");
-                      sortNfts("dyp");
-                    }}
-                  >
-                    <span>Price: DYP</span>
-                  </li> */}
-                  {/* <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
-                    <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-3">
-                      <img
-                        src={emptyCheck}
-                        alt=""
-                        className="collection-price-check"
-                      />
-                      <img src={ethIcon} width={12} height={12} alt="" />
-                      <span className="collection-price-span mb-0">ETH</span>
-                    </div>
-                    <div className="collection-price position-relative d-flex align-items-center gap-1 py-1 px-3">
-                      <img
-                        src={emptyCheck}
-                        alt=""
-                        className="collection-price-check"
-                      />
-                      <img src={dypIcon} width={12} height={12} alt="" />
-                      <span className="collection-price-span mb-0">DYP</span>
-                    </div>
-                  </div> */}
                 </ul>
               </div>
-              <div className="d-flex align-items-center gap-3 gap-lg-5">
+              <div className="d-flex align-items-center justify-content-between justify-cotent-lg-center gap-3 gap-lg-5 price-traits-wrapper">
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                    setPricePoint(pricePoint === "lth" ? "htl" : "lth");
-                    sortNfts(pricePoint);
-                    console.log(pricePoint);
+                    sortNfts("price");
                   }}
                 >
                   <img
-                    src={pricePoint === "lth" ? priceIconUp : priceIconDown}
+                    src={
+                      priceCount === 0
+                        ? priceIconNeutral
+                        : priceCount % 2 == 0
+                        ? priceIconDown
+                        : priceIconUp
+                    }
                     alt=""
                   />
                   <h6
                     className="filter-nav-title mb-0"
                     style={{
-                      color: pricePoint === "lth" ? "#09F3D2" : "#FF6232",
+                      color:
+                        priceCount === 0
+                          ? "#EEEDFF"
+                          : priceCount % 2 == 0
+                          ? "#FF6232"
+                          : "#09F3D2",
                     }}
                   >
                     Price
