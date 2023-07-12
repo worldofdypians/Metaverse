@@ -736,6 +736,8 @@ const LeaderBoard = ({
     } else setisActive(true);
   }, [availableTime]);
 
+  const today1 = new Date()
+
   return (
     <>
       <div className="row w-100 justify-content-start">
@@ -861,7 +863,7 @@ const LeaderBoard = ({
                             </td>
                             <td className="playerName col-5">
                               {availableTime !== "0" &&
-                              availableTime &&
+                              availableTime && availableTime >= today1.getTime() &&
                               availableTime !== undefined &&
                               item.displayName === username ? (
                                 <div className="position-relative">
@@ -897,7 +899,7 @@ const LeaderBoard = ({
                               <td
                                 className={`playerReward text-center col-2 ${
                                   availableTime !== "0" &&
-                                  availableTime &&
+                                  availableTime && availableTime >= today1.getTime() &&
                                   availableTime !== undefined &&
                                   username === item.displayName
                                     ? "goldenscore"
@@ -910,7 +912,7 @@ const LeaderBoard = ({
                             <td
                               className={`playerScore col-2 ${
                                 availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -952,7 +954,7 @@ const LeaderBoard = ({
                             </td>
                             <td className="playerName col-5">
                               {availableTime !== "0" &&
-                              availableTime &&
+                              availableTime && availableTime >= today1.getTime() &&
                               availableTime !== undefined &&
                               item.displayName === username ? (
                                 <div className="position-relative">
@@ -981,7 +983,7 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward text-center col-2 ${
                                 availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -993,7 +995,7 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward col-2 ${
                                 availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1029,7 +1031,7 @@ const LeaderBoard = ({
                             </td>
                             <td className="playerName col-5">
                               {availableTime !== "0" &&
-                              availableTime &&
+                              availableTime && availableTime >= today1.getTime() &&
                               availableTime !== undefined &&
                               item.displayName === username ? (
                                 <div className="position-relative">
@@ -1057,7 +1059,7 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward text-center col-2 ${
                                 availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1069,7 +1071,7 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward col-2 ${
                                 availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1102,7 +1104,7 @@ const LeaderBoard = ({
                             </td>
                             <td className="playerName col-5">
                               {availableTime !== "0" &&
-                              availableTime &&
+                              availableTime && availableTime >= today1.getTime() &&
                               availableTime !== undefined &&
                               item.displayName === username ? (
                                 <div className="position-relative">
@@ -1130,7 +1132,7 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward text-center col-2 ${
                                 availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1142,7 +1144,7 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward col-2 ${
                                 availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1196,7 +1198,7 @@ const LeaderBoard = ({
                       <td className="playerName col-5">
                         <div className="position-relative">
                           {availableTime !== "0" &&
-                          availableTime &&
+                          availableTime && availableTime >= today1.getTime() &&
                           availableTime !== undefined ? (
                             <div className="position-relative">
                               <img
@@ -1231,7 +1233,7 @@ const LeaderBoard = ({
                       <td
                         className={`playerReward text-center ${
                           availableTime !== "0" &&
-                          availableTime &&
+                          availableTime && availableTime >= today1.getTime() &&
                           availableTime !== undefined &&
                           username === userData.displayName
                             ? "goldenscore"
@@ -1247,11 +1249,11 @@ const LeaderBoard = ({
                         <td
                           className={`playerScore col-2 ${
                             availableTime !== "0" &&
-                            availableTime &&
+                            availableTime && availableTime >= today1.getTime() &&
                             availableTime !== undefined &&
                             username === userData.displayName
                               ? "goldenscore"
-                              : "goldenscore-inactive"
+                              : "inactivegold"
                           }`}
                         >
                           +$0
@@ -1305,7 +1307,7 @@ const LeaderBoard = ({
                         {optionText === "daily"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[1]?.displayName
                                 ? parseInt(prizes[1]) +
@@ -1316,7 +1318,7 @@ const LeaderBoard = ({
                           : optionText === "weekly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[1]?.displayName
                                 ? parseInt(prizes[1]) +
@@ -1327,7 +1329,7 @@ const LeaderBoard = ({
                           : optionText === "monthly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[1]?.displayName
                                 ? parseInt(prizes[1]) +
@@ -1375,7 +1377,7 @@ const LeaderBoard = ({
                         {optionText === "daily"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[0]?.displayName
                                 ? parseInt(prizes[0]) +
@@ -1386,7 +1388,7 @@ const LeaderBoard = ({
                           : optionText === "weekly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[0]?.displayName
                                 ? parseInt(prizes[0]) +
@@ -1397,7 +1399,7 @@ const LeaderBoard = ({
                           : optionText === "monthly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[0]?.displayName
                                 ? parseInt(prizes[0]) +
@@ -1445,7 +1447,7 @@ const LeaderBoard = ({
                         {optionText === "daily"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[2]?.displayName
                                 ? parseInt(prizes[2]) +
@@ -1456,7 +1458,7 @@ const LeaderBoard = ({
                           : optionText === "weekly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[2]?.displayName
                                 ? parseInt(prizes[2]) +
@@ -1467,7 +1469,7 @@ const LeaderBoard = ({
                           : optionText === "monthly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime &&
+                                availableTime && availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[2]?.displayName
                                 ? parseInt(prizes[2]) +
