@@ -44,12 +44,26 @@ const MakeOffer = ({
   const [dypBalance, setDypBalance] = useState(0);
   const [wethBalance, setWethBalance] = useState(0);
   const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
+  const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
+  const [bestOffer, setbestOffer] = useState([]);
 
   const { BigNumber } = window;
 
   const getListedNtsAsc = async () => {
-    const result = await getListedNFTS(0, "price_asc");
-    setlowestPriceNftListed(result[0]);
+    const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
+
+    let dypNftsAsc = dypNfts.sort((a, b) => {
+      return a.price - b.price;
+    });
+
+    const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
+
+    let ethNftsAsc = ethNfts.sort((a, b) => {
+      return a.price - b.price;
+    });
+    setlowestPriceNftListed(ethNftsAsc[0].price);
+
+    setlowestPriceNftListedDYP(dypNftsAsc[0].price);
   };
 
   const getOffer = async () => {
@@ -59,11 +73,13 @@ const MakeOffer = ({
     });
 
     finalArray = result.filter((object) => {
-      console.log(object);
+      // console.log(object);
       return object.offer.buyer.toLowerCase() === coinbase.toLowerCase();
     });
-    console.log(finalArray);
 
+    const maxPrice = Math.max(...result.map((o) => o.offer.price));
+    const obj = result.find((item) => item.offer.price == maxPrice);
+    setbestOffer(obj);
     // finalArray.push({ offer: result[0].offer, index: result[0].index });
     setofferData(finalArray);
   };
@@ -151,7 +167,7 @@ const MakeOffer = ({
     overflowX: "hidden",
     borderRadius: "10px",
     background: "#1A1C39",
-    height: windowSize.width < 500 ? '480px' : 'auto'
+    height: windowSize.width < 500 ? "480px" : "auto",
   };
 
   useEffect(() => {
@@ -247,14 +263,22 @@ const MakeOffer = ({
               <div className="d-flex w-100 align-items-center gap-3 justify-content-between">
                 <span className="itemchain">Floor price</span>
                 <span className="itemchain">
-                  {getFormattedNumber(lowestPriceNftListed.price / 1e18, 2)}{" "}
-                  {lowestPriceNftListed.payment_priceType === 0 ? "ETH" : "DYP"}
+                  {getFormattedNumber(
+                    filter1 === "weth"
+                      ? lowestPriceNftListed / 1e18
+                      : lowestPriceNftListedDYP / 1e18,
+                    2
+                  )}{" "}
+                  {filter1 === "weth" ? "ETH" : "DYP"}
                 </span>
               </div>
               {offerData.length > 0 && (
                 <div className="d-flex  w-100 align-items-center gap-3 justify-content-between">
                   <span className="itemchain">Best offer</span>
-                  <span className="itemchain">0.78 WETH</span>
+                  <span className="itemchain">
+                    {getFormattedNumber(bestOffer.offer.price / 1e18, 2)}{" "}
+                    {bestOffer.offer.payment.priceType === "0" ? "ETH" : "DYP"}
+                  </span>
                 </div>
               )}
             </div>
@@ -343,7 +367,9 @@ const MakeOffer = ({
           {offerData.length === 0 ? (
             <button
               className={`btn ${
-                (status === "fail" || approvestatus === 'fail') ? "errorbtn" : "mint-now-btn"
+                status === "fail" || approvestatus === "fail"
+                  ? "errorbtn"
+                  : "mint-now-btn"
               } gap-2 align-self-end mt-4`}
               style={{ width: "fit-content" }}
               onClick={() => {
@@ -390,7 +416,7 @@ const MakeOffer = ({
             <div className="d-flex align-items-center gap-2 justify-content-between w-100">
               <button
                 className={`btn ${
-                  status === "fail" ? "errorbtn" : "mint-now-btn"
+                  deletestatus === "faildelete" ? "errorbtn" : "mint-now-btn"
                 } gap-2 align-self-end mt-4`}
                 style={{ width: "fit-content" }}
                 onClick={() => {
@@ -417,7 +443,7 @@ const MakeOffer = ({
 
               <button
                 className={`btn ${
-                  status === "fail" ? "errorbtn" : "pill-btn"
+                  updatestatus === "failupdate" ? "errorbtn" : "pill-btn"
                 } gap-2 align-self-end mt-4`}
                 style={{ width: "fit-content" }}
                 onClick={() => {

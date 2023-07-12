@@ -142,6 +142,8 @@ const SingleNft = ({
   const [offerdeleteStatus, setOfferdeleteStatus] = useState("initial");
   const [offerupdateStatus, setOfferupdateStatus] = useState("initial");
   const [offeracceptStatus, setOfferacceptStatus] = useState("initial");
+  const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
+  const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
 
   const { nftId, nftAddress } = useParams();
 
@@ -157,6 +159,23 @@ const SingleNft = ({
     display: "block",
     margin: "auto",
     borderColor: "#554fd8",
+  };
+
+  const getListedNtsAsc = async () => {
+    const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
+
+    let dypNftsAsc = dypNfts.sort((a, b) => {
+      return a.price - b.price;
+    });
+
+    const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
+
+    let ethNftsAsc = ethNfts.sort((a, b) => {
+      return a.price - b.price;
+    });
+    setlowestPriceNftListed(ethNftsAsc[0].price);
+
+    setlowestPriceNftListedDYP(dypNftsAsc[0].price);
   };
 
   const getOffer = async () => {
@@ -245,7 +264,7 @@ const SingleNft = ({
       const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
         console.log(e);
       });
-      console.log(nftowner);
+
       setowner(nftowner);
     } else if (type === "land") {
       const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
@@ -953,7 +972,7 @@ const SingleNft = ({
     const newPrice = new BigNumber(price * 1e18).toFixed();
 
     await window
-      .cancelOffer(nftAddress, nftId, offerIndex, newPrice, pricetype)
+      .updateOffer(nftAddress, nftId, offerIndex, newPrice, pricetype)
       .then(() => {
         handleRefreshListing();
         setOfferupdateStatus("successupdate");
@@ -982,7 +1001,7 @@ const SingleNft = ({
         setTimeout(() => {
           setOfferacceptStatus("initial");
           handleRefreshListing();
-          getLatest20BoughtNFTS(nftAddress, nftId)
+          getLatest20BoughtNFTS(nftAddress, nftId);
           getLatestBoughtNFT();
         }, 3000);
       })
@@ -1065,13 +1084,9 @@ const SingleNft = ({
         nft.buyer.toLowerCase() !== coinbase.toLowerCase()
       ) {
         setisOwner(false);
-      } 
-
-      else if (owner.toLowerCase() === coinbase.toLowerCase()) {
+      } else if (owner.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
-      }
-
-      else if (owner.toLowerCase() !== coinbase.toLowerCase()) {
+      } else if (owner.toLowerCase() !== coinbase.toLowerCase()) {
         setisOwner(false);
       }
     }
@@ -1102,6 +1117,7 @@ const SingleNft = ({
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
+    getListedNtsAsc();
   }, []);
 
   useEffect(() => {
@@ -1121,7 +1137,7 @@ const SingleNft = ({
 
   useEffect(() => {
     getOffer();
-      isListedNFT(nftId, nftAddress).then((isListed) => {
+    isListedNFT(nftId, nftAddress).then((isListed) => {
       setIsListed(isListed);
     });
     checkisListedNFT(nftId, nftAddress);
@@ -2164,7 +2180,26 @@ const SingleNft = ({
                                 item.offer.payment.priceType === "0" ? 3 : 0
                               )}
                             </td>
-                            <td className="greendata">tbd</td>
+                            <td className="greendata">
+                              {item.offer.payment.priceType === "0"
+                                ? lowestPriceNftListed / 1e18 >
+                                  item.offer[0] / 1e18
+                                  ? (lowestPriceNftListed / 1e18 -
+                                      item.offer[0] / 1e18) /
+                                    100
+                                  : (item.offer[0] / 1e18 -
+                                      lowestPriceNftListed / 1e18) /
+                                    100
+                                : lowestPriceNftListedDYP / 1e18 >
+                                  item.offer[0] / 1e18
+                                ? (lowestPriceNftListedDYP / 1e18 -
+                                    item.offer[0] / 1e18) /
+                                  100
+                                : (item.offer[0] / 1e18 -
+                                    lowestPriceNftListedDYP / 1e18) /
+                                  100}
+                              %
+                            </td>
                             <td className="greendata">
                               <a
                                 href={`https://etherscan.io/address/${item.offer.buyer}`}

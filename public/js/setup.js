@@ -3339,11 +3339,11 @@ window.isApprovedBuy = async (amount) => {
   const allowance = await contract.methods
     .allowance(coinbase, window.config.nft_marketplace_address)
     .call({ from: await getCoinbase() });
-  console.log(
-    Number(allowance) >= Number(amount),
-    Number(allowance),
-    Number(amount)
-  );
+  // console.log(
+  //   Number(allowance) >= Number(amount),
+  //   Number(allowance),
+  //   Number(amount)
+  // );
 
   return Number(allowance) >= Number(amount);
 };
@@ -3734,7 +3734,7 @@ window.getAllOffers = async (nftAddress, tokenId) => {
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
-  console.log(nftAddress, tokenId);
+  
   const result = await marketplace.methods
     .getActiveOffers(nftAddress, tokenId)
     .call();
