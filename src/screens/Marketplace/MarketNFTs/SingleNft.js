@@ -168,7 +168,7 @@ const SingleNft = ({
     result.map((item) => {
       return finalArray.push({ offer: item.offer, index: item.index });
     });
-
+    finalArray.reverse()
     setofferData(finalArray);
   };
   // console.log(offerData)
@@ -365,8 +365,6 @@ const SingleNft = ({
       });
 
     const test = [...finalboughtItems];
-    console.log(test);
-
     setNft(...finalboughtItems);
     setIsListed(false);
   };
@@ -866,7 +864,6 @@ const SingleNft = ({
       .catch((e) => {
         console.error(e);
         setOfferStatus("fail");
-
         setTimeout(() => {
           setOfferStatus("initial");
         }, 3000);
@@ -925,11 +922,13 @@ const SingleNft = ({
     console.log(nftAddress, nftId, offerIndex);
     await window
       .acceptOffer(nftAddress, nftId, offerIndex)
-      .then(() => {
-        handleRefreshListing();
+      .then(() => { 
+        
         setOfferacceptStatus("success");
         setTimeout(() => {
           setOfferacceptStatus("initial");
+          handleRefreshListing();
+        getLatestBoughtNFT();
         }, 3000);
       })
       .catch((e) => {
@@ -1024,7 +1023,7 @@ const SingleNft = ({
         : "land",
       nftId
     );
-  }, [type, nftId, nftAddress]);
+  }, [type, nftId, nftAddress,nftCount]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1036,7 +1035,6 @@ const SingleNft = ({
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
-    getOffer();
   }, []);
 
   useEffect(() => {
@@ -1053,6 +1051,10 @@ const SingleNft = ({
     }
     getMetaData(nftAddress, nftId);
   }, [nftId, nftAddress, nft, nftCount]);
+
+  useEffect(() => {
+    getOffer();
+  }, [nftCount]);
 
   useEffect(() => {
     if (favorites && favorites.length > 0) {
@@ -1625,14 +1627,16 @@ const SingleNft = ({
                               "Failed"
                             )}
                           </button>
-                          <button
-                            className="btn mint-now-btn gap-2"
-                            onClick={() => {
-                              setshowMakeOffer(true);
-                            }}
-                          >
-                            <img src={whiteTag} alt="" /> Make offer
-                          </button>
+                          {chainId === 1 && (
+                            <button
+                              className="btn mint-now-btn gap-2"
+                              onClick={() => {
+                                setshowMakeOffer(true);
+                              }}
+                            >
+                              <img src={whiteTag} alt="" /> Make offer
+                            </button>
+                          )}
                         </div>
                       )}
                       {isOwner && IsListed && coinbase && isConnected && (
@@ -1779,16 +1783,20 @@ const SingleNft = ({
                         </button>
                       )}
 
-                      {!isOwner && !IsListed && coinbase && isConnected && (
-                        <button
-                          className="btn mint-now-btn gap-2"
-                          onClick={() => {
-                            setshowMakeOffer(true);
-                          }}
-                        >
-                          <img src={whiteTag} alt="" /> Make offer
-                        </button>
-                      )}
+                      {!isOwner &&
+                        !IsListed &&
+                        coinbase &&
+                        isConnected &&
+                        chainId === 1 && (
+                          <button
+                            className="btn mint-now-btn gap-2"
+                            onClick={() => {
+                              setshowMakeOffer(true);
+                            }}
+                          >
+                            <img src={whiteTag} alt="" /> Make offer
+                          </button>
+                        )}
 
                       {!isConnected && (
                         <button
@@ -2121,7 +2129,11 @@ const SingleNft = ({
                             {isOwner && (
                               <td className="greendata">
                                 <button
-                                  className={` ${offeracceptStatus === 'fail' ? 'errorbtn' : 'acceptbtn'}  btn`}
+                                  className={` ${
+                                    offeracceptStatus === "fail"
+                                      ? "errorbtn"
+                                      : "acceptbtn"
+                                  }  btn`}
                                   onClick={() => {
                                     handleAcceptOffer(item.index);
                                   }}
