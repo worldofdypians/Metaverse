@@ -1093,8 +1093,6 @@ const SingleNft = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
-    checkisListedNFT(nftId, nftAddress);
-  
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
@@ -1120,6 +1118,7 @@ const SingleNft = ({
       isListedNFT(nftId, nftAddress).then((isListed) => {
       setIsListed(isListed);
     });
+    checkisListedNFT(nftId, nftAddress);
   }, [nftCount]);
 
   useEffect(() => {
