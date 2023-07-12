@@ -490,8 +490,8 @@ const CawsNFT = ({
   //     });
   // };
 
+  
   const sortNfts = (sortValue) => {
-    // console.log(sortValue);
     if (sortValue === "htl") {
       let htl = initialNfts.sort((a, b) => {
         return b.priceUSD - a.priceUSD;
@@ -502,28 +502,22 @@ const CawsNFT = ({
         return a.priceUSD - b.priceUSD;
       });
       setCawsNFTS(lth);
+    } else if (sortValue === "lso") {
+      let lsoDate = initialNfts.sort((a, b) => {
+        return b.isLatestSale - a.isLatestSale;
+      });
+      let lso = lsoDate.sort((a, b) => {
+        return new Date(b.lastSoldTimeStamp) - new Date(a.lastSoldTimeStamp)
+      })
+      setCawsNFTS(lso);
     } else if (sortValue === "lto") {
-      let lto = initialNfts.sort((a, b) => {
+      let otl = initialNfts.sort((a, b) => {
         return b.date - a.date;
       });
-      setCawsNFTS(lto);
-    } else if (sortValue === "otl") {
-      let otl = initialNfts.sort((a, b) => {
-        return a.date - b.date;
-      });
       setCawsNFTS(otl);
-    } else if (sortValue === "dyp") {
-      let dyp = initialNfts.filter((nft) => {
-        return nft.payment_priceType !== 0;
-      });
-      setCawsNFTS(dyp);
-    } else if (sortValue === "eth") {
-      let eth = initialNfts.filter((nft) => {
-        return nft.payment_priceType !== 1;
-      });
-      setCawsNFTS(eth);
-    }
+    } 
   };
+
 
   const getListedCaws = async () => {
     const caws = await getCawsNfts().catch((e) => {
@@ -565,6 +559,7 @@ const CawsNFT = ({
             isListed: true,
             isLatestSale: true,
             LastSold: result?.price,
+            lastSoldTimeStamp: result?.blockTimestamp,
             soldPriceType: result?.payment_priceType,
           };
         }
@@ -576,6 +571,7 @@ const CawsNFT = ({
             date: date,
             isListed: false,
             isLatestSale: true,
+            lastSoldTimeStamp: nft?.blockTimestamp,
             LastSold: nft?.price,
             soldPriceType: nft.payment_priceType,
           };
@@ -698,7 +694,7 @@ const CawsNFT = ({
 
     if (wrappedElement) {
       const isBottom =
-        wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
+        parseInt(wrappedElement.getBoundingClientRect()?.bottom) <= window.innerHeight;
       if (isBottom) {
         if (count === 0) {
           if (next < allCaws) {
@@ -841,7 +837,7 @@ const CawsNFT = ({
                     className="nft-dropdown-item"
                     onClick={() => {
                       setFilterTitle("Oldest to newest");
-                      sortNfts("otl");
+                      sortNfts("lto");
                     }}
                   >
                     <span>Recently listed</span>
@@ -850,7 +846,7 @@ const CawsNFT = ({
                     className="nft-dropdown-item"
                     onClick={() => {
                       setFilterTitle("Newest To Oldest");
-                      sortNfts("lto");
+                      sortNfts("lso");
                     }}
                   >
                     <span>Recently sold</span>
