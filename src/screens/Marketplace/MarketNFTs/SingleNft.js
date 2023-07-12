@@ -194,7 +194,7 @@ const SingleNft = ({
             });
 
           const priceFormatted = item.offer.price / 1e18;
-
+          
           if (balance >= priceFormatted && allowance >= priceFormatted) {
             return finalArray.push({ offer: item.offer, index: item.index });
           }
@@ -1065,8 +1065,14 @@ const SingleNft = ({
         nft.buyer.toLowerCase() !== coinbase.toLowerCase()
       ) {
         setisOwner(false);
-      } else if (owner.toLowerCase() === coinbase.toLowerCase()) {
+      } 
+
+      else if (owner.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
+      }
+
+      else if (owner.toLowerCase() !== coinbase.toLowerCase()) {
+        setisOwner(false);
       }
     }
   }, [isConnected, isOwner, IsListed, coinbase, nft, owner, nftCount]);
@@ -1088,7 +1094,7 @@ const SingleNft = ({
         : "land",
       nftId
     );
-  }, [type, nftId, nftAddress, nftCount]);
+  }, [type, nftId, nftAddress, nftCount, nft]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
