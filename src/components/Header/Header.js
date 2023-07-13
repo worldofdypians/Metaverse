@@ -130,7 +130,9 @@ const Header = ({
                   src={bellIcon}
                   width={30}
                   style={{ cursor: "pointer" }}
-                  onClick={() => setOpenNotifications(true)}
+                  onClick={() =>
+                    setOpenNotifications(myOffers.length > 0 ? true : false)
+                  }
                   height={30}
                   alt=""
                 />
