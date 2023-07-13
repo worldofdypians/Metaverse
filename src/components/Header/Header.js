@@ -136,7 +136,7 @@ const Header = ({
                 />
                 {myOffers.length > 0 && (
                   <div className="bell-amount">
-                    <span className="mb-0">{myOffers.length}</span>
+                    {/* <span className="mb-0">{myOffers.length}</span> */}
                   </div>
                 )}
                 <OutsideClickHandler
