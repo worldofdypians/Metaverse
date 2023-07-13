@@ -213,10 +213,12 @@ const SingleNft = ({
             });
 
           const priceFormatted = item.offer.price / 1e18;
-          
-          if (balance >= priceFormatted && allowance >= priceFormatted) {
-            return finalArray.push({ offer: item.offer, index: item.index });
-          }
+
+          return finalArray.push({
+            offer: item.offer,
+            index: item.index,
+            isAllowed: balance >= priceFormatted && allowance >= priceFormatted,
+          });
         } else if (item.offer.payment.priceType === "0") {
           const balance = await contract2.methods
             .balanceOf(item.offer.buyer)
@@ -233,10 +235,11 @@ const SingleNft = ({
             });
 
           const priceFormatted = item.offer.price / 1e18;
-
-          if (balance >= priceFormatted && allowance >= priceFormatted) {
-            return finalArray.push({ offer: item.offer, index: item.index });
-          }
+          return finalArray.push({
+            offer: item.offer,
+            index: item.index,
+            isAllowed: balance >= priceFormatted && allowance >= priceFormatted,
+          });
         }
       })
     );
@@ -1101,14 +1104,7 @@ const SingleNft = ({
         : "caws",
       nftId
     );
-    handleRefreshList(
-      nftAddress === window.config.nft_caws_address
-        ? "caws"
-        : nftAddress === window.config.nft_timepiece_address
-        ? "timepiece"
-        : "land",
-      nftId
-    );
+
   }, [type, nftId, nftAddress, nftCount, nft]);
 
   useEffect(() => {
@@ -1137,10 +1133,15 @@ const SingleNft = ({
 
   useEffect(() => {
     getOffer();
-    isListedNFT(nftId, nftAddress).then((isListed) => {
-      setIsListed(isListed);
-    });
     checkisListedNFT(nftId, nftAddress);
+    handleRefreshList(
+      nftAddress === window.config.nft_caws_address
+        ? "caws"
+        : nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : "land",
+      nftId
+    );
   }, [nftCount]);
 
   useEffect(() => {
@@ -2220,6 +2221,7 @@ const SingleNft = ({
                                       ? "errorbtn"
                                       : "acceptbtn"
                                   }  btn`}
+                                  disabled={item.isAllowed}
                                   onClick={() => {
                                     handleAcceptOffer(item.index);
                                   }}

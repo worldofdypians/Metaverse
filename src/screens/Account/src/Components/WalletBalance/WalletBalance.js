@@ -922,7 +922,7 @@ const WalletBalance = ({
                   setShowNfts(false);
                 }}
               >
-                Offers
+                Offers made
               </h6>
             </div>
 
@@ -1593,7 +1593,7 @@ const WalletBalance = ({
                   className="row w-100 justify-content-center position-relative"
                   style={{ top: "-12px" }}
                 >
-                  {filterTitle === "Collected" && collectedItems.length >= 6 ? (
+                  {filterTitle === "Collected" && collectedItems.length >= 3 ? (
                     <div
                       className="d-flex align-items-center justify-content-center gap-2"
                       onClick={() => {

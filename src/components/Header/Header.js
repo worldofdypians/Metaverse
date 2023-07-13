@@ -12,7 +12,7 @@ import Clipboard from "react-clipboard.js";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import bellIcon from './assets/bellIcon.svg'
+import bellIcon from "./assets/bellIcon.svg";
 
 const Header = ({
   handleSignUp,
@@ -20,12 +20,13 @@ const Header = ({
   coinbase,
   avatar,
   handleDisconnect,
+  myOffers,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [openNotifications, setOpenNotifications] = useState(false)
+  const [openNotifications, setOpenNotifications] = useState(false);
 
   let id = Math.random().toString(36);
 
@@ -35,6 +36,24 @@ const Header = ({
       navigate("/");
     } else handleDisconnect();
   };
+
+  async function updateViewCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch("https://api.worldofdypians.com/nft-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokenId, nftAddress }),
+      });
+      const data = await response.json();
+      console.log(
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+      );
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  }
 
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
@@ -96,17 +115,6 @@ const Header = ({
           >
             News
           </NavLink>
-
-          {/* <NavLink
-            to="/nft-event"
-            className={({isActive}) =>
-              isActive
-                ? "nav-anchor font-poppins activenavlink"
-                : "nav-anchor font-poppins"
-            }
-          >
-            NFT Event
-          </NavLink> */}
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0 position-relative ">
           {!coinbase ? (
@@ -118,37 +126,65 @@ const Header = ({
           ) : (
             <div className="d-flex align-items-center gap-3">
               <div className="position-relative">
-                <img src={bellIcon} width={30} style={{cursor: 'pointer'}} onClick={() => setOpenNotifications(true)} height={30} alt="" />
-                <div className="bell-amount">
-                  <span className="mb-0">2</span>
-                </div>
-                <OutsideClickHandler onOutsideClick={() => setOpenNotifications(false)}>
-                <div className={`notifications-wrapper d-flex flex-column ${openNotifications && "open-notifications"}`}>
-                  <div className="header-notification d-flex align-items-center gap-2 p-3">
-                    <div className="green-dot"></div>
-                    <span className="notification-text">Your CAWS #234 has a new offer</span>
+                <img
+                  src={bellIcon}
+                  width={30}
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    setOpenNotifications(myOffers.length > 0 ? true : false)
+                  }
+                  height={30}
+                  alt=""
+                />
+                {myOffers.length > 0 && (
+                  <div className="bell-amount">
+                    {/* <span className="mb-0">{myOffers.length}</span> */}
                   </div>
-                  <div className="header-notification d-flex align-items-center gap-2 p-3">
-                    <div className="green-dot"></div>
-                    <span className="notification-text">Your CAWS #234 has a new offer</span>
+                )}
+                <OutsideClickHandler
+                  onOutsideClick={() => setOpenNotifications(false)}
+                >
+                  <div
+                    className={`notifications-wrapper d-flex flex-column ${
+                      openNotifications && "open-notifications"
+                    }`}
+                  >
+                    {myOffers &&
+                      myOffers.length > 0 &&
+                      myOffers.map((nft, index) => {
+                        return (
+                          <NavLink
+                            to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                            style={{ textDecoration: "none" }}
+                            state={{
+                              nft: nft,
+                              type: nft.type,
+                              isOwner: true,
+                              chain: 1,
+                            }}
+                            onClick={() => {
+                              updateViewCount(nft.tokenId, nft.nftAddress);
+                            }}
+                          >
+                            <div
+                              className="header-notification d-flex align-items-center gap-2 p-3"
+                              key={index}
+                            >
+                              <div className="green-dot"></div>
+                              <span className="notification-text">
+                                Your{" "}
+                                {nft.type === "caws"
+                                  ? "CAWS"
+                                  : nft.type === "timepiece"
+                                  ? "Caws Timepiece"
+                                  : "Genesis Land"}{" "}
+                                #{nft.tokenId} has a new offer
+                              </span>
+                            </div>
+                          </NavLink>
+                        );
+                      })}
                   </div>
-                  <div className="header-notification d-flex align-items-center gap-2 p-3">
-                    <div className="green-dot"></div>
-                    <span className="notification-text">Your CAWS #234 has a new offer</span>
-                  </div>
-                  <div className="header-notification d-flex align-items-center gap-2 p-3">
-                    <div className="green-dot"></div>
-                    <span className="notification-text">Your CAWS #234 has a new offer</span>
-                  </div>
-                  <div className="header-notification d-flex align-items-center gap-2 p-3">
-                    <div className="green-dot"></div>
-                    <span className="notification-text">Your CAWS #234 has a new offer</span>
-                  </div>
-                  <div className="header-notification d-flex align-items-center gap-2 p-3">
-                    <div className="green-dot"></div>
-                    <span className="notification-text">Your CAWS #234 has a new offer</span>
-                  </div>
-                </div>
                 </OutsideClickHandler>
               </div>
               <Clipboard
