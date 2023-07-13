@@ -232,7 +232,7 @@ function App() {
 
   const checkConnection = async () => {
     await window.getCoinbase().then((data) => {
-      setCoinbase(data);
+      setCoinbase(window.infuraWeb3.utils.toChecksumAddress(data));
 
       fetchAvatar(data);
       axios
@@ -275,7 +275,7 @@ function App() {
         setIsConnected(data);
       });
       await window.getCoinbase().then((data) => {
-        setCoinbase(data);
+        setCoinbase(window.infuraWeb3.utils.toChecksumAddress(data));
       });
       setShowForms(true);
     } catch (e) {
@@ -309,7 +309,7 @@ function App() {
       checkConnection();
 
       await window.getCoinbase().then((data) => {
-        setCoinbase(data);
+        setCoinbase(window.infuraWeb3.utils.toChecksumAddress(data));
       });
       setShowForms2(true);
       setwalletModal(false);
@@ -922,15 +922,15 @@ function App() {
     }
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
-  useEffect(() => {
-    if (
-      MyNFTSCaws.length > 0 ||
-      MyNFTSTimepiece.length > 0 ||
-      MyNFTSLand.length > 0
-    ) {
-      getmyCollectedNfts();
-    }
-  }, [MyNFTSCaws?.length, MyNFTSTimepiece?.length, MyNFTSLand?.length]);
+  // useEffect(() => {
+  //   if (
+  //     MyNFTSCaws.length > 0 ||
+  //     MyNFTSTimepiece.length > 0 ||
+  //     MyNFTSLand.length > 0
+  //   ) {
+  //     getmyCollectedNfts();
+  //   }
+  // }, [MyNFTSCaws?.length, MyNFTSTimepiece?.length, MyNFTSLand?.length]);
 
   useEffect(() => {
     if (isConnected === true && coinbase && chainId === 1) {
@@ -1026,88 +1026,101 @@ function App() {
     }
   };
 
-  const getmyCollectedNfts = async () => {
-    let recievedOffers = [];
+  // const getmyCollectedNfts = async () => {
+  //   let recievedOffers = [];
 
-    if (MyNFTSTimepiece && MyNFTSTimepiece.length > 0) {
-      await Promise.all(
-        MyNFTSTimepiece.map(async (i) => {
-          const result = await window
-            .getAllOffers(window.config.nft_timepiece_address, i)
-            .catch((e) => {
-              console.error(e);
-            });
+  //   if (MyNFTSTimepiece && MyNFTSTimepiece.length > 0) {
+  //     await Promise.all(
+  //       MyNFTSTimepiece.map(async (i) => {
+  //         const result = await window
+  //           .getAllOffers(window.config.nft_timepiece_address, i)
+  //           .catch((e) => {
+  //             console.error(e);
+  //           });
 
-          if (result && result.length > 0) {
-            result.map((item) => {
-              return recievedOffers.push({
-                offer: item.offer,
-                index: item.index,
-                nftAddress: window.config.nft_timepiece_address,
-                tokenId: i,
-                type: "timepiece",
-              });
-            });
-          }
-        })
-      );
-    }
+  //         if (result && result.length > 0) {
+  //           result.map((item) => {
+  //             return recievedOffers.push({
+  //               offer: item.offer,
+  //               index: item.index,
+  //               nftAddress: window.config.nft_timepiece_address,
+  //               tokenId: i,
+  //               type: "timepiece",
+  //             });
+  //           });
+  //         }
+  //       })
+  //     );
+  //   }
 
-    if (MyNFTSLand && MyNFTSLand.length > 0) {
-      await Promise.all(
-        MyNFTSLand.map(async (i) => {
-          const result = await window
-            .getAllOffers(window.config.nft_land_address, i)
-            .catch((e) => {
-              console.error(e);
-            });
+  //   if (MyNFTSLand && MyNFTSLand.length > 0) {
+  //     await Promise.all(
+  //       MyNFTSLand.map(async (i) => {
+  //         const result = await window
+  //           .getAllOffers(window.config.nft_land_address, i)
+  //           .catch((e) => {
+  //             console.error(e);
+  //           });
 
-          if (result && result.length > 0) {
-            result.map((item) => {
-              return recievedOffers.push({
-                offer: item.offer,
-                index: item.index,
-                nftAddress: window.config.nft_land_address,
-                tokenId: i,
-                type: "land",
-              });
-            });
-          }
-        })
-      );
-    }
+  //         if (result && result.length > 0) {
+  //           result.map((item) => {
+  //             return recievedOffers.push({
+  //               offer: item.offer,
+  //               index: item.index,
+  //               nftAddress: window.config.nft_land_address,
+  //               tokenId: i,
+  //               type: "land",
+  //             });
+  //           });
+  //         }
+  //       })
+  //     );
+  //   }
 
-    if (MyNFTSCaws && MyNFTSCaws.length > 0) {
-      await Promise.all(
-        MyNFTSCaws.map(async (i) => {
-          const result = await window
-            .getAllOffers(window.config.nft_caws_address, i)
-            .catch((e) => {
-              console.error(e);
-            });
+  //   if (MyNFTSCaws && MyNFTSCaws.length > 0) {
+  //     await Promise.all(
+  //       MyNFTSCaws.map(async (i) => {
+  //         const result = await window
+  //           .getAllOffers(window.config.nft_caws_address, i)
+  //           .catch((e) => {
+  //             console.error(e);
+  //           });
 
-          if (result && result.length > 0) {
-            result.map((item) => {
-              return recievedOffers.push({
-                offer: item.offer,
-                index: item.index,
-                nftAddress: window.config.nft_caws_address,
-                tokenId: i,
-                type: "caws",
-              });
-            });
-          }
-        })
-      );
-    }
-    setmyNftsOffer(recievedOffers);
-  };
+  //         if (result && result.length > 0) {
+  //           result.map((item) => {
+  //             return recievedOffers.push({
+  //               offer: item.offer,
+  //               index: item.index,
+  //               nftAddress: window.config.nft_caws_address,
+  //               tokenId: i,
+  //               type: "caws",
+  //             });
+  //           });
+  //         }
+  //       })
+  //     );
+  //   }
+  //   setmyNftsOffer(recievedOffers);
+  // };
 
   const handleDisconnect = async () => {
     await window.disconnectWallet();
     setCoinbase();
     setIsConnected(false);
   };
+
+  async function getNotifications(walletAddress) {
+    try {
+      const response = await axios.get(
+        `https://api.worldofdypians.com/notifications/${walletAddress}`
+      );
+      const notifications = response.data[0]?.notifications || [];
+      setmyNftsOffer(notifications.reverse());
+      console.log("Notifications:", notifications);
+    } catch (error) {
+      console.error("Error retrieving notifications:", error.message);
+    }
+  }
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -1147,6 +1160,12 @@ function App() {
       setIsConnected(false);
     }
   }, [window.coinbase_address]);
+
+  useEffect(() => {
+    if (coinbase) {
+      getNotifications(coinbase);
+    }
+  }, [coinbase,nftCount]);
 
   return (
     <ApolloProvider client={client}>

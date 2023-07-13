@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./_header.scss";
 import metaverse from "../../assets/navbarAssets/metaverse.svg";
@@ -13,6 +13,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import bellIcon from "./assets/bellIcon.svg";
+import axios from "axios";
 
 const Header = ({
   handleSignUp,
@@ -24,6 +25,8 @@ const Header = ({
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
+  const [isUnread, setisUnread] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
@@ -54,6 +57,66 @@ const Header = ({
       console.error("Error updating view count:", error);
     }
   }
+
+  async function markNotificationsAsRead() {
+    console.log("Wallet Address:", coinbase); // Check the value of walletAddress
+    try {
+      await axios.patch(
+        `https://api.worldofdypians.com/notifications/${coinbase}`
+      );
+      setisUnread(false);
+      console.log("Notifications marked as read");
+    } catch (error) {
+      console.error("Error marking notifications as read:", error.message);
+    }
+  }
+
+  const getRelativeTime = (nftTimestamp) => {
+    const date = new Date();
+    const timestamp = date.getTime();
+
+    const seconds = Math.floor(timestamp / 1000);
+    const oldTimestamp = nftTimestamp / 1000;
+    const difference = seconds - oldTimestamp;
+    let output = ``;
+
+    if (difference < 60) {
+      // Less than a minute has passed:
+      output = `${difference} seconds ago`;
+    } else if (difference < 3600) {
+      // Less than an hour has passed:
+      output = `${Math.floor((difference / 60).toFixed())} minutes ago`;
+    } else if (difference < 86400) {
+      // Less than a day has passed:
+      output = `${Math.floor((difference / 3600).toFixed())} hours ago`;
+    } else if (difference < 2620800) {
+      // Less than a month has passed:
+      output = `${Math.floor((difference / 86400).toFixed())} days ago`;
+    } else if (difference < 31449600) {
+      // Less than a year has passed:
+      output = `${Math.floor((difference / 2620800).toFixed())} months ago`;
+    } else {
+      // More than a year has passed:
+      output = `${Math.floor((difference / 31449600).toFixed())} years ago`;
+    }
+    return output;
+  };
+
+  const checkRead = () => {
+    if (myOffers.length > 0) {
+      let count = myOffers.filter(({ read }) => read === false).length;
+
+      if (count.length > 0) {
+        setisUnread(true);
+      } else setisUnread(false);
+    }
+  };
+
+  useEffect(() => {
+    checkRead();
+  }, [myOffers.length, openNotifications]);
+
+  console.log(myOffers.length > 0, isUnread, openNotifications);
 
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
@@ -130,60 +193,116 @@ const Header = ({
                   src={bellIcon}
                   width={30}
                   style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    setOpenNotifications(myOffers.length > 0 ? true : false)
-                  }
+                  onClick={() => {
+                    setOpenNotifications(true);
+                    // markNotificationsAsRead()
+                  }}
                   height={30}
                   alt=""
                 />
-                {myOffers.length > 0 && (
+                {myOffers.length > 0 && isUnread === true && (
                   <div className="bell-amount">
-                    {/* <span className="mb-0">{myOffers.length}</span> */}
+                    <span className="mb-0">
+                      {myOffers.filter(({ read }) => read === false).length > 99
+                        ? "99+"
+                        : myOffers.filter(({ read }) => read === false).length}
+                    </span>
                   </div>
                 )}
                 <OutsideClickHandler
-                  onOutsideClick={() => setOpenNotifications(false)}
+                  onOutsideClick={() => {
+                    setOpenNotifications(false);
+                  }}
                 >
                   <div
                     className={`notifications-wrapper d-flex flex-column ${
                       openNotifications && "open-notifications"
                     }`}
+                    style={{
+                      justifyContent: myOffers.length === 0 ? "center" : "",
+                      alignItems: myOffers.length === 0 ? "center" : "",
+                    }}
                   >
                     {myOffers &&
                       myOffers.length > 0 &&
                       myOffers.map((nft, index) => {
                         return (
                           <NavLink
-                            to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                            to={`/marketplace/nft/${
+                              nft.tokenId
+                            }/${nft.nftAddress.toLowerCase()}`}
                             style={{ textDecoration: "none" }}
                             state={{
                               nft: nft,
-                              type: nft.type,
+                              type:
+                                nft.nftAddress.toLowerCase() ===
+                                window.config.nft_caws_address.toLowerCase()
+                                  ? "caws"
+                                  : nft.nftAddress.toLowerCase() ===
+                                    window.config.nft_timepiece_address.toLowerCase()
+                                  ? "timepiece"
+                                  : "land",
                               isOwner: true,
                               chain: 1,
                             }}
                             onClick={() => {
-                              updateViewCount(nft.tokenId, nft.nftAddress);
+                              {
+                                updateViewCount(
+                                  nft.tokenId,
+                                  nft.nftAddress.toLowerCase()
+                                );
+                                setOpenNotifications(false);
+                              }
                             }}
                           >
                             <div
-                              className="header-notification d-flex align-items-center gap-2 p-3"
+                              className="header-notification d-flex align-items-center gap-2 p-3 position-relative"
                               key={index}
                             >
-                              <div className="green-dot"></div>
+                              {nft.read === false && (
+                                <div className="green-dot"></div>
+                              )}
                               <span className="notification-text">
                                 Your{" "}
-                                {nft.type === "caws"
+                                {nft.nftAddress.toLowerCase() ===
+                                window.config.nft_caws_address.toLowerCase()
                                   ? "CAWS"
-                                  : nft.type === "timepiece"
+                                  : nft.nftAddress.toLowerCase() ===
+                                    window.config.nft_timepiece_address.toLowerCase()
                                   ? "Caws Timepiece"
                                   : "Genesis Land"}{" "}
-                                #{nft.tokenId} has a new offer
+                                #{nft.tokenId}{" "}
+                                {nft.offer === "yes"
+                                  ? "has a new offer"
+                                  : nft.offerAccepted === "yes"
+                                  ? "offer has been accepted"
+                                  : "has been sold"}
+                              </span>
+                              <span
+                                className="position-absolute top-sale-time"
+                                style={{
+                                  bottom: "10%",
+                                  right: "8%",
+                                  fontSize: 10,
+                                }}
+                              >
+                                {getRelativeTime(nft.timestamp)}
                               </span>
                             </div>
                           </NavLink>
                         );
                       })}
+
+                    {myOffers.length === 0 && (
+                      <div
+                        className="header-notification d-flex align-items-center gap-2 p-3 position-relative"
+                        style={{ pointerEvents: "none" }}
+                      >
+                        <span className="notification-text">
+                          No notifications
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </OutsideClickHandler>
               </div>
