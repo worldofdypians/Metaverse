@@ -103,3 +103,80 @@
   margin: auto;
   cursor: pointer;
 }
+
+
+.bell-amount{
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #DE5634;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -8px;
+  right: -8px;
+
+  span{
+    color: #FFF;
+    text-align: center;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.notifications-wrapper{
+  width: 200px;
+  height: 220px;
+  border-radius: 10px;
+  border: 1px solid #B8B8E0;
+  background: #080B2A;
+  position: absolute;
+  bottom: -230px;
+  right: 0;
+  visibility: hidden;
+  opacity: 0;
+  overflow-y: scroll;
+  transition: all .25s;
+}
+
+.open-notifications{
+  visibility: visible;
+  opacity: 1;
+}
+
+
+
+.notifications-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.green-dot{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #11FED2;
+}
+
+.header-notification{
+  cursor: pointer;
+}
+
+.header-notification:hover{
+  border-radius: 6px;
+background: linear-gradient(268deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0.00) 100%);
+.notification-text{
+  color: #11FED2 !important;
+}
+}
+
+
+.notification-text{
+  color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
