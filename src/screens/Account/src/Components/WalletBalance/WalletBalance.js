@@ -922,7 +922,7 @@ const WalletBalance = ({
                   setShowNfts(false);
                 }}
               >
-                Offers
+                Offers made
               </h6>
             </div>
 

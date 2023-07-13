@@ -197,47 +197,49 @@ const SingleNft = ({
 
     await Promise.all(
       result.map(async (item) => {
-        if (item.offer.payment.priceType === "1") {
-          const balance = await contract1.methods
-            .balanceOf(item.offer.buyer)
-            .call()
-            .then((data) => {
-              return window.infuraWeb3.utils.fromWei(data, "ether");
-            });
+        // if (item.offer.payment.priceType === "1") {
+        //   const balance = await contract1.methods
+        //     .balanceOf(item.offer.buyer)
+        //     .call()
+        //     .then((data) => {
+        //       return window.infuraWeb3.utils.fromWei(data, "ether");
+        //     });
 
-          const allowance = await contract1.methods
-            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
-            .call()
-            .then((data) => {
-              return window.infuraWeb3.utils.fromWei(data, "ether");
-            });
+        //   const allowance = await contract1.methods
+        //     .allowance(item.offer.buyer, window.config.nft_marketplace_address)
+        //     .call()
+        //     .then((data) => {
+        //       return window.infuraWeb3.utils.fromWei(data, "ether");
+        //     });
 
-          const priceFormatted = item.offer.price / 1e18;
+        //   const priceFormatted = item.offer.price / 1e18;
           
-          if (balance >= priceFormatted && allowance >= priceFormatted) {
+          // if (balance >= priceFormatted && allowance >= priceFormatted) {
             return finalArray.push({ offer: item.offer, index: item.index });
-          }
-        } else if (item.offer.payment.priceType === "0") {
-          const balance = await contract2.methods
-            .balanceOf(item.offer.buyer)
-            .call()
-            .then((data) => {
-              return window.infuraWeb3.utils.fromWei(data, "ether");
-            });
+          // }
+        // }
+        
+        // else if (item.offer.payment.priceType === "0") {
+        //   const balance = await contract2.methods
+        //     .balanceOf(item.offer.buyer)
+        //     .call()
+        //     .then((data) => {
+        //       return window.infuraWeb3.utils.fromWei(data, "ether");
+        //     });
 
-          const allowance = await contract2.methods
-            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
-            .call()
-            .then((data) => {
-              return window.infuraWeb3.utils.fromWei(data, "ether");
-            });
+        //   const allowance = await contract2.methods
+        //     .allowance(item.offer.buyer, window.config.nft_marketplace_address)
+        //     .call()
+        //     .then((data) => {
+        //       return window.infuraWeb3.utils.fromWei(data, "ether");
+        //     });
 
-          const priceFormatted = item.offer.price / 1e18;
+        //   const priceFormatted = item.offer.price / 1e18;
 
-          if (balance >= priceFormatted && allowance >= priceFormatted) {
-            return finalArray.push({ offer: item.offer, index: item.index });
-          }
-        }
+        //   if (balance >= priceFormatted && allowance >= priceFormatted) {
+        //     return finalArray.push({ offer: item.offer, index: item.index });
+        //   }
+        // }
       })
     );
     finalArray.reverse();
