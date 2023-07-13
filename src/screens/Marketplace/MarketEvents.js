@@ -24,7 +24,14 @@ import CriticalHitPopup from "../../components/PackagePopups/CriticalHitPopup";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useParams } from "react-router-dom";
 
-const MarketEvents = ({ account, chainId, dyptokenDatabnb, idyptokenDatabnb, handleAvailableTime, remainingTime }) => {
+const MarketEvents = ({
+  account,
+  chainId,
+  dyptokenDatabnb,
+  idyptokenDatabnb,
+  handleAvailableTime,
+  remainingTime,
+}) => {
   const location = useLocation();
   const windowSize = useWindowSize();
   const [dypBalance, setDypBalance] = useState();
@@ -215,6 +222,18 @@ const MarketEvents = ({ account, chainId, dyptokenDatabnb, idyptokenDatabnb, han
     }
   }, [popup]);
 
+  useEffect(() => {
+    if (eventId === "dragon-ruins") {
+      setSelectedPackage("dragon");
+    } else if (eventId === "golden-pass") {
+      setSelectedPackage("dyp");
+    } else if (eventId === "puzzle-madness") {
+      setSelectedPackage("idyp");
+    } else if (eventId === "critical-hit") {
+      setSelectedPackage("criticalHit");
+    }
+  }, []);
+
   return (
     <>
       <div
@@ -332,25 +351,25 @@ const MarketEvents = ({ account, chainId, dyptokenDatabnb, idyptokenDatabnb, han
                         </div>
                       </NavLink>
                       <NavLink to="/marketplace/events/critical-hit">
-                      <div className="">
-                        <div
-                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                            selectedPackage === "criticalHit" &&
-                            "selected-event-package"
-                          }`}
-                          onClick={() => setSelectedPackage("criticalHit")}
-                        >
-                          <img
-                            src={criticalHit}
-                            className="w-100"
-                            style={{ borderRadius: "16px" }}
-                            alt=""
-                          />
-                          <span className="event-package-title">
-                            Critical Hit
-                          </span>
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                              selectedPackage === "criticalHit" &&
+                              "selected-event-package"
+                            }`}
+                            onClick={() => setSelectedPackage("criticalHit")}
+                          >
+                            <img
+                              src={criticalHit}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Critical Hit
+                            </span>
+                          </div>
                         </div>
-                      </div>
                       </NavLink>
                     </div>
                   </div>
@@ -374,7 +393,7 @@ const MarketEvents = ({ account, chainId, dyptokenDatabnb, idyptokenDatabnb, han
                     }
                     handleSetAvailableTime={(value) => {
                       setAvailableTime(value);
-                      handleAvailableTime(value)
+                      handleAvailableTime(value);
                     }}
                     availableTime={availableTime}
                   />
