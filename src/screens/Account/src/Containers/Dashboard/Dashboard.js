@@ -83,14 +83,15 @@ function Dashboard({
   const [stakes, setStakes] = useState([]);
   const [landstakes, setLandStakes] = useState([]);
   const [favorites, setFavorites] = useState([]);
-
+  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
+  const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+  
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
 
-  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
-  const [MyNFTSLand, setMyNFTSLand] = useState([]);
+
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);

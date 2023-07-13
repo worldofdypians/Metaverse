@@ -197,49 +197,50 @@ const SingleNft = ({
 
     await Promise.all(
       result.map(async (item) => {
-        // if (item.offer.payment.priceType === "1") {
-        //   const balance = await contract1.methods
-        //     .balanceOf(item.offer.buyer)
-        //     .call()
-        //     .then((data) => {
-        //       return window.infuraWeb3.utils.fromWei(data, "ether");
-        //     });
+        if (item.offer.payment.priceType === "1") {
+          const balance = await contract1.methods
+            .balanceOf(item.offer.buyer)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
 
-        //   const allowance = await contract1.methods
-        //     .allowance(item.offer.buyer, window.config.nft_marketplace_address)
-        //     .call()
-        //     .then((data) => {
-        //       return window.infuraWeb3.utils.fromWei(data, "ether");
-        //     });
+          const allowance = await contract1.methods
+            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
 
-        //   const priceFormatted = item.offer.price / 1e18;
-          
-          // if (balance >= priceFormatted && allowance >= priceFormatted) {
-            return finalArray.push({ offer: item.offer, index: item.index });
-          // }
-        // }
-        
-        // else if (item.offer.payment.priceType === "0") {
-        //   const balance = await contract2.methods
-        //     .balanceOf(item.offer.buyer)
-        //     .call()
-        //     .then((data) => {
-        //       return window.infuraWeb3.utils.fromWei(data, "ether");
-        //     });
+          const priceFormatted = item.offer.price / 1e18;
 
-        //   const allowance = await contract2.methods
-        //     .allowance(item.offer.buyer, window.config.nft_marketplace_address)
-        //     .call()
-        //     .then((data) => {
-        //       return window.infuraWeb3.utils.fromWei(data, "ether");
-        //     });
+          return finalArray.push({
+            offer: item.offer,
+            index: item.index,
+            isAllowed: balance >= priceFormatted && allowance >= priceFormatted,
+          });
+        } else if (item.offer.payment.priceType === "0") {
+          const balance = await contract2.methods
+            .balanceOf(item.offer.buyer)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
 
-        //   const priceFormatted = item.offer.price / 1e18;
+          const allowance = await contract2.methods
+            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
 
-        //   if (balance >= priceFormatted && allowance >= priceFormatted) {
-        //     return finalArray.push({ offer: item.offer, index: item.index });
-        //   }
-        // }
+          const priceFormatted = item.offer.price / 1e18;
+          return finalArray.push({
+            offer: item.offer,
+            index: item.index,
+            isAllowed: balance >= priceFormatted && allowance >= priceFormatted,
+          });
+        }
       })
     );
     finalArray.reverse();
@@ -1103,14 +1104,7 @@ const SingleNft = ({
         : "caws",
       nftId
     );
-    handleRefreshList(
-      nftAddress === window.config.nft_caws_address
-        ? "caws"
-        : nftAddress === window.config.nft_timepiece_address
-        ? "timepiece"
-        : "land",
-      nftId
-    );
+
   }, [type, nftId, nftAddress, nftCount, nft]);
 
   useEffect(() => {
@@ -1139,10 +1133,15 @@ const SingleNft = ({
 
   useEffect(() => {
     getOffer();
-    isListedNFT(nftId, nftAddress).then((isListed) => {
-      setIsListed(isListed);
-    });
     checkisListedNFT(nftId, nftAddress);
+    handleRefreshList(
+      nftAddress === window.config.nft_caws_address
+        ? "caws"
+        : nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : "land",
+      nftId
+    );
   }, [nftCount]);
 
   useEffect(() => {
@@ -2222,6 +2221,7 @@ const SingleNft = ({
                                       ? "errorbtn"
                                       : "acceptbtn"
                                   }  btn`}
+                                  disabled={item.isAllowed}
                                   onClick={() => {
                                     handleAcceptOffer(item.index);
                                   }}
