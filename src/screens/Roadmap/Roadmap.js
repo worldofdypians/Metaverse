@@ -141,34 +141,31 @@ const Roadmap = () => {
           desc: "Users can access WoD marketplace to purchase assets used to customize and enhance their experience.",
           completed: true,
         },
-        {
-          title: "Introduction of 25,000 Land NFTs",
-          desc: "The creation of a multi-tiered NFT Land collection with different features such as special rewards, futuristic buildings, AI driven NPCs, and much more.  Each user can preview the in-game land before purchasing the associated NFT.",
-        },
+       
         {
           title: "In-game representation of Land NFTs",
           desc: "Players can access the land they own and enjoy its benefits within the game. It will be possible to trade Land NFTs and transfer the associated benefits to the new owner.",
-        },
-      
-        {
-          title: "Introduction of Mall and shopping centers",
-          desc: "Users can acquire game items, skins, and much more.",
+          completed: true,
+
         },
         {
           title: "Quest System",
           desc: "Adventurers will complete quests to earn items and gain prestige.",
+          completed: true,
+
         },
         {
           title: "Tracking goals and achievements",
           desc: "Players will receive special rewards and titles for accomplishing some of the game's most difficult tasks.",
+          completed: true,
         },
-        {
-          title: "Introduction of tutorial guide v1",
-          desc: "In-depth tips and tricks to help players master World of Dypians.",
-        },
+    
+    
         {
           title: "Addition and development of partnerships",
           desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
+          completed: true,
+
         },
       ],
     },
@@ -188,6 +185,18 @@ const Roadmap = () => {
         {
           title: "Addition and development of partnerships",
           desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
+        },
+        {
+          title: "Introduction of 25,000 Land NFTs",
+          desc: "The creation of a multi-tiered NFT Land collection with different features such as special rewards, futuristic buildings, AI driven NPCs, and much more.  Each user can preview the in-game land before purchasing the associated NFT.",
+        },
+        {
+          title: "Introduction of tutorial guide v1",
+          desc: "In-depth tips and tricks to help players master World of Dypians.",
+        },
+        {
+          title: "Introduction of Mall and shopping centers",
+          desc: "Users can acquire game items, skins, and much more.",
         },
       ],
     },
