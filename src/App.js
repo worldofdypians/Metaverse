@@ -1180,6 +1180,9 @@ function App() {
             }}
             handleDisconnect={handleDisconnect}
             myOffers={myNftsOffer}
+            handleRefreshList={handleRefreshList}
+            nftCount={nftCount}
+
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1189,6 +1192,7 @@ function App() {
               setFireAppContent(true);
             }}
             handleDisconnect={handleDisconnect}
+
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
