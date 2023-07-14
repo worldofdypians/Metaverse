@@ -1,6 +1,7 @@
 import React from "react";
 import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
 import cawsPopupBanner from "../../screens/Marketplace/assets/cawsPopupBanner.png";
+import puzzleMap from "../../screens/Marketplace/assets/puzzleMap.webp";
 import popupLinear from "./assets/popupLinear.png";
 import puzzlePopup from "./assets/puzzlePopup.webp";
 
@@ -65,7 +66,7 @@ const PuzzleMadnessPopup = ({ onClosePopup }) => {
             a player, will have to showcase your skills and explore the city
             thoroughly to find all the pieces and complete the puzzle.
           </p>
-          <img src={cawsPopupBanner} className="w-100 my-3" alt="" />
+          <img src={puzzleMap} className="w-100 my-3" alt="" />
           <span className="popup-secondary-title">How it works:</span>
           <ul className="package-popup-desc">
             <li className="package-popup-desc">
@@ -76,8 +77,7 @@ const PuzzleMadnessPopup = ({ onClosePopup }) => {
               the Puzzle Madness pieces.
             </li>
             <li className="package-popup-desc">
-              Step 3: Use your puzzle-solving skills to find the 10 pieces
-              hidden on the map.
+              Step 3: Use your puzzle-solving skills to find the 10 pieces hidden on the map. The puzzles are located in the center of the city and the mining map.
             </li>
             <li className="package-popup-desc">
               Step 4: Collect as many pieces as you can within the two-hour time
