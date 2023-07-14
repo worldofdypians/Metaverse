@@ -105,18 +105,16 @@ const Header = ({
   const checkRead = () => {
     if (myOffers.length > 0) {
       let count = myOffers.filter(({ read }) => read === false).length;
-
-      if (count.length > 0) {
+   
+      if (count > 0) {
         setisUnread(true);
-      } else setisUnread(false);
+      } else if (count === 0) { setisUnread(false);}
     }
   };
 
   useEffect(() => {
     checkRead();
-  }, [myOffers.length, openNotifications]);
-
-  console.log(myOffers.length > 0, isUnread, openNotifications);
+  }, [myOffers.length, openNotifications, coinbase]);
 
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
