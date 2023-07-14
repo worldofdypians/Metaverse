@@ -22,6 +22,7 @@ const Header = ({
   avatar,
   handleDisconnect,
   myOffers,
+  handleRefreshList,nftCount
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -58,7 +59,7 @@ const Header = ({
     }
   }
 
-  async function markNotificationsAsRead() {
+  async function markAllNotificationsAsRead() {
     console.log("Wallet Address:", coinbase); // Check the value of walletAddress
     try {
       await axios.patch(
@@ -71,12 +72,24 @@ const Header = ({
     }
   }
 
+  async function markNotificationAsRead(walletAddress, notificationId) {
+    try {
+      await axios.patch(
+        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}/${notificationId}`
+      );
+      console.log("Notification marked as read");
+      handleRefreshList();
+    } catch (error) {
+      console.error("Error marking notification as read:", error.message);
+    }
+  }
+
   const getRelativeTime = (nftTimestamp) => {
     const date = new Date();
     const timestamp = date.getTime();
 
     const seconds = Math.floor(timestamp / 1000);
-    const oldTimestamp = nftTimestamp / 1000;
+    const oldTimestamp = Math.floor(nftTimestamp / 1000);
     const difference = seconds - oldTimestamp;
     let output = ``;
 
@@ -106,17 +119,17 @@ const Header = ({
     if (myOffers.length > 0) {
       let count = myOffers.filter(({ read }) => read === false).length;
 
-      if (count.length > 0) {
+      if (count > 0) {
         setisUnread(true);
-      } else setisUnread(false);
+      } else if (count === 0) {
+        setisUnread(false);
+      }
     }
   };
 
   useEffect(() => {
     checkRead();
-  }, [myOffers.length, openNotifications]);
-
-  console.log(myOffers.length > 0, isUnread, openNotifications);
+  }, [myOffers.length, openNotifications, coinbase,nftCount]);
 
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
@@ -252,6 +265,7 @@ const Header = ({
                                   nft.nftAddress.toLowerCase()
                                 );
                                 setOpenNotifications(false);
+                                markNotificationAsRead(coinbase, nft._id);
                               }
                             }}
                           >
@@ -281,9 +295,9 @@ const Header = ({
                               <span
                                 className="position-absolute top-sale-time"
                                 style={{
-                                  bottom: "10%",
+                                  bottom: "6%",
                                   right: "8%",
-                                  fontSize: 10,
+                                  fontSize: 9,
                                 }}
                               >
                                 {getRelativeTime(nft.timestamp)}

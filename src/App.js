@@ -232,7 +232,7 @@ function App() {
 
   const checkConnection = async () => {
     await window.getCoinbase().then((data) => {
-      setCoinbase(window.infuraWeb3.utils.toChecksumAddress(data));
+      setCoinbase(data);
 
       fetchAvatar(data);
       axios
@@ -275,7 +275,7 @@ function App() {
         setIsConnected(data);
       });
       await window.getCoinbase().then((data) => {
-        setCoinbase(window.infuraWeb3.utils.toChecksumAddress(data));
+        setCoinbase(data);
       });
       setShowForms(true);
     } catch (e) {
@@ -309,7 +309,7 @@ function App() {
       checkConnection();
 
       await window.getCoinbase().then((data) => {
-        setCoinbase(window.infuraWeb3.utils.toChecksumAddress(data));
+        setCoinbase(data);
       });
       setShowForms2(true);
       setwalletModal(false);
@@ -1112,7 +1112,7 @@ function App() {
   async function getNotifications(walletAddress) {
     try {
       const response = await axios.get(
-        `https://api.worldofdypians.com/notifications/${walletAddress}`
+        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`
       );
       const notifications = response.data[0]?.notifications || [];
       setmyNftsOffer(notifications.reverse());
@@ -1180,6 +1180,9 @@ function App() {
             }}
             handleDisconnect={handleDisconnect}
             myOffers={myNftsOffer}
+            handleRefreshList={handleRefreshList}
+            nftCount={nftCount}
+
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1189,6 +1192,7 @@ function App() {
               setFireAppContent(true);
             }}
             handleDisconnect={handleDisconnect}
+
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
