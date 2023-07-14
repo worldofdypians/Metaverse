@@ -213,7 +213,7 @@ const SingleNft = ({
             });
 
           const priceFormatted = item.offer.price / 1e18;
-
+console.log(balance >= priceFormatted && allowance >= priceFormatted)
           return finalArray.push({
             offer: item.offer,
             index: item.index,
@@ -2221,7 +2221,7 @@ const SingleNft = ({
                                       ? "errorbtn"
                                       : "acceptbtn"
                                   }  btn`}
-                                  disabled={item.isAllowed}
+                                  disabled={!item.isAllowed}
                                   onClick={() => {
                                     handleAcceptOffer(item.index);
                                   }}
