@@ -1,0 +1,31 @@
+.notification-bar{
+    border-radius: 20px;
+    background: rgba(37, 39, 67, 0.45);
+    box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
+    backdrop-filter: blur(13.380000114440918px);
+}
+.notification-bar-item{
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .25s;
+}
+
+.notification-item-text{
+    color: #EEEDFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.notification-bar-item:hover{
+    background: #252743;
+}
+
+.notification-bar-item-active{
+    border-radius: 8px;
+    background: #252743;
+    .notification-item-text{
+        color: #00FECF;
+    }
+}

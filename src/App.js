@@ -54,6 +54,7 @@ import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
 import { useLocation } from "react-router-dom";
 import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
+import Notifications from "./screens/Marketplace/Notifications/Notifications";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -1229,6 +1230,7 @@ function App() {
               }
             />
             <Route exact path="/caws" element={<Caws />} />
+            <Route exact path="/notifications" element={<Notifications />} />
             <Route exact path="/roadmap" element={<Roadmap />} />
             <Route exact path="/explorer" element={<Explorer />} />
             <Route exact path="/stake" element={<NftMinting />} />
@@ -1450,6 +1452,7 @@ function App() {
           {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
           <ScrollTop />
           {location.pathname.includes("marketplace") ||
+            location.pathname.includes("notifications") ||
           location.pathname.includes("account") ? (
             location.pathname.includes("timepiece") ||
             location.pathname.includes("caws") ||
