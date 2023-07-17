@@ -71,6 +71,7 @@ function App() {
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
+
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState(null);
@@ -106,6 +107,10 @@ function App() {
   const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
   const [availTime, setavailTime] = useState();
 
+  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
+  const [MyNFTSLand, setMyNFTSLand] = useState([]);
+  const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
     top20BoughtByPriceAndPriceTypeETHNFTS,
@@ -124,6 +129,8 @@ function App() {
   const [cawsBought, setCawsBought] = useState([]);
   const [timepieceBought, setTimepieceBought] = useState([]);
   const [landBought, setLandBought] = useState([]);
+  const [myNftsOffer, setmyNftsOffer] = useState([]);
+
   const location = useLocation();
 
   const getTokenData = async () => {
@@ -158,11 +165,15 @@ function App() {
   };
 
   const getTokenDatabnbNew = async () => {
-    await axios.get('https://api.geckoterminal.com/api/v2/networks/bsc/pools/0x3fbca1072fb101e9440bb97be9ef763aac312516').then((res) => {
-      setDypTokenDatabnb(res.data.data.attributes.base_token_price_usd)
-      // console.log(res.data.data.attributes.base_token_price_usd, "Base token price");
-    })
-  }
+    await axios
+      .get(
+        "https://api.geckoterminal.com/api/v2/networks/bsc/pools/0x3fbca1072fb101e9440bb97be9ef763aac312516"
+      )
+      .then((res) => {
+        setDypTokenDatabnb(res.data.data.attributes.base_token_price_usd);
+        // console.log(res.data.data.attributes.base_token_price_usd, "Base token price");
+      });
+  };
 
   const handleSwitchChain = async () => {
     const { ethereum } = window;
@@ -290,31 +301,6 @@ function App() {
     }
   };
 
-  const getEthBalance = async () => {
-    const ethereum = window.ethereum;
-    if (isConnected === true) {
-      if (coinbase) {
-        const balance = await ethereum.request({
-          method: "eth_getBalance",
-          params: [coinbase, "latest"],
-        });
-
-        // if (balance) {
-        if (chainId === 1) {
-          const stringBalance =
-            window.infuraWeb3.utils.hexToNumberString(balance);
-          const amount = window.infuraWeb3.utils.fromWei(
-            stringBalance,
-            "ether"
-          );
-
-          setCurrencyAmount(Number(amount));
-        }
-        // }
-      }
-    }
-  };
-
   const handleConnectWallet = async () => {
     try {
       await window.connectWallet().then((data) => {
@@ -343,17 +329,13 @@ function App() {
         window.config.landnft_address
       );
 
-      let getBalanceOf = await nfts_contract.methods
-        .balanceOf(coinbase)
-        .call();
+      let getBalanceOf = await nfts_contract.methods.balanceOf(coinbase).call();
 
       let nftList = [];
 
       for (let i = 0; i < getBalanceOf; i++)
         nftList.push(
-          await nfts_contract.methods
-            .tokenOfOwnerByIndex(coinbase, i)
-            .call()
+          await nfts_contract.methods.tokenOfOwnerByIndex(coinbase, i).call()
         );
 
       let nfts = nftList.map((nft) => window.getLandNft(nft));
@@ -362,7 +344,22 @@ function App() {
       nfts.reverse();
       setMyNFTs(nfts);
     }
-  }; 
+  };
+  const getMyNFTS = async (coinbase, type) => {
+    return await window.getMyNFTs(coinbase, type);
+  };
+
+  //todo
+  const fetchAllMyNfts = async () => {
+    if (coinbase) {
+      getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
+
+      getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
+
+      getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
+    }
+  };
+
   const myCAWNft = async () => {
     if (coinbase !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
@@ -371,17 +368,13 @@ function App() {
         window.config.nft_address
       );
 
-      let getBalanceOf = await nfts_contract.methods
-        .balanceOf(coinbase)
-        .call();
+      let getBalanceOf = await nfts_contract.methods.balanceOf(coinbase).call();
 
       let nftList = [];
 
       for (let i = 0; i < getBalanceOf; i++)
         nftList.push(
-          await nfts_contract.methods
-            .tokenOfOwnerByIndex(coinbase, i)
-            .call()
+          await nfts_contract.methods.tokenOfOwnerByIndex(coinbase, i).call()
         );
 
       let nfts = nftList.map((nft) => window.getNft(nft));
@@ -391,7 +384,6 @@ function App() {
       setMyCAWNFTs(nfts);
     }
   };
-
 
   const getStakesIdsCawsWod = async () => {
     const address = coinbase;
@@ -420,7 +412,7 @@ function App() {
     } else setMyCawsWodStakes([]);
   };
 
- const getStakesIds = async () => {
+  const getStakesIds = async () => {
     const address = coinbase;
     if (address !== null && address !== undefined) {
       const infura_web3 = window.infuraWeb3;
@@ -442,7 +434,7 @@ function App() {
     }
   };
 
- const getLandStakesIds = async () => {
+  const getLandStakesIds = async () => {
     const address = coinbase;
     if (address !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
@@ -464,25 +456,26 @@ function App() {
     }
   };
 
- const myCAWStakes = async () => {
-    let myStakes = await  getStakesIds();
-    if(myStakes && myStakes.length > 0)
-   { let stakes = myStakes.map((stake) => window.getNft(stake));
-    stakes = await Promise.all(stakes);
-    setMyCAWSNFTsTotalStaked(stakes);
-    stakes.reverse();
-    setCAWMystakes(stakes);}
+  const myCAWStakes = async () => {
+    let myStakes = await getStakesIds();
+    if (myStakes && myStakes.length > 0) {
+      let stakes = myStakes.map((stake) => window.getNft(stake));
+      stakes = await Promise.all(stakes);
+      setMyCAWSNFTsTotalStaked(stakes);
+      stakes.reverse();
+      setCAWMystakes(stakes);
+    }
   };
 
- const myLandStakes = async () => {
+  const myLandStakes = async () => {
     let myStakes = await getLandStakesIds();
-    if(myStakes && myStakes.length > 0)
-   { let stakes = myStakes.map((stake) => window.getLandNft(stake));
-    stakes = await Promise.all(stakes);
-    stakes.reverse();
-    setMystakes(stakes);}
+    if (myStakes && myStakes.length > 0) {
+      let stakes = myStakes.map((stake) => window.getLandNft(stake));
+      stakes = await Promise.all(stakes);
+      stakes.reverse();
+      setMystakes(stakes);
+    }
   };
-
 
   const checkCawsToUse = async () => {
     const testArray = [];
@@ -925,8 +918,19 @@ function App() {
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
+      fetchAllMyNfts();
     }
   }, [isConnected, chainId, currencyAmount, coinbase]);
+
+  // useEffect(() => {
+  //   if (
+  //     MyNFTSCaws.length > 0 ||
+  //     MyNFTSTimepiece.length > 0 ||
+  //     MyNFTSLand.length > 0
+  //   ) {
+  //     getmyCollectedNfts();
+  //   }
+  // }, [MyNFTSCaws?.length, MyNFTSTimepiece?.length, MyNFTSLand?.length]);
 
   useEffect(() => {
     if (isConnected === true && coinbase && chainId === 1) {
@@ -991,7 +995,7 @@ function App() {
   }
 
   const getCawsSold = async () => {
-    const allSold = await getLatest20BoughtNFTS();
+    const allSold = latest20BoughtNFTS;
 
     if (allSold && allSold.length > 0) {
       let cawsFilter = allSold.filter(
@@ -1022,15 +1026,104 @@ function App() {
     }
   };
 
+  // const getmyCollectedNfts = async () => {
+  //   let recievedOffers = [];
+
+  //   if (MyNFTSTimepiece && MyNFTSTimepiece.length > 0) {
+  //     await Promise.all(
+  //       MyNFTSTimepiece.map(async (i) => {
+  //         const result = await window
+  //           .getAllOffers(window.config.nft_timepiece_address, i)
+  //           .catch((e) => {
+  //             console.error(e);
+  //           });
+
+  //         if (result && result.length > 0) {
+  //           result.map((item) => {
+  //             return recievedOffers.push({
+  //               offer: item.offer,
+  //               index: item.index,
+  //               nftAddress: window.config.nft_timepiece_address,
+  //               tokenId: i,
+  //               type: "timepiece",
+  //             });
+  //           });
+  //         }
+  //       })
+  //     );
+  //   }
+
+  //   if (MyNFTSLand && MyNFTSLand.length > 0) {
+  //     await Promise.all(
+  //       MyNFTSLand.map(async (i) => {
+  //         const result = await window
+  //           .getAllOffers(window.config.nft_land_address, i)
+  //           .catch((e) => {
+  //             console.error(e);
+  //           });
+
+  //         if (result && result.length > 0) {
+  //           result.map((item) => {
+  //             return recievedOffers.push({
+  //               offer: item.offer,
+  //               index: item.index,
+  //               nftAddress: window.config.nft_land_address,
+  //               tokenId: i,
+  //               type: "land",
+  //             });
+  //           });
+  //         }
+  //       })
+  //     );
+  //   }
+
+  //   if (MyNFTSCaws && MyNFTSCaws.length > 0) {
+  //     await Promise.all(
+  //       MyNFTSCaws.map(async (i) => {
+  //         const result = await window
+  //           .getAllOffers(window.config.nft_caws_address, i)
+  //           .catch((e) => {
+  //             console.error(e);
+  //           });
+
+  //         if (result && result.length > 0) {
+  //           result.map((item) => {
+  //             return recievedOffers.push({
+  //               offer: item.offer,
+  //               index: item.index,
+  //               nftAddress: window.config.nft_caws_address,
+  //               tokenId: i,
+  //               type: "caws",
+  //             });
+  //           });
+  //         }
+  //       })
+  //     );
+  //   }
+  //   setmyNftsOffer(recievedOffers);
+  // };
+
   const handleDisconnect = async () => {
     await window.disconnectWallet();
     setCoinbase();
     setIsConnected(false);
   };
 
+  async function getNotifications(walletAddress) {
+    try {
+      const response = await axios.get(
+        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`
+      );
+      const notifications = response.data[0]?.notifications || [];
+      setmyNftsOffer(notifications.reverse());
+      console.log("Notifications:", notifications);
+    } catch (error) {
+      console.error("Error retrieving notifications:", error.message);
+    }
+  }
+
   useEffect(() => {
     fetchUserFavorites(coinbase);
-    // filterByDate("day")
   }, [coinbase, nftCount]);
 
   useEffect(() => {
@@ -1038,8 +1131,11 @@ function App() {
     getTokenDatabnb();
     getTokenDatabnbNew();
     getListedNfts2();
-    getCawsSold();
-    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
+
+    getLatest20BoughtNFTS().then((NFTS) => {
+      setLatest20BoughtNFTS(NFTS);
+      getCawsSold();
+    });
 
     getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
       settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
@@ -1050,15 +1146,11 @@ function App() {
     getallNfts();
   }, [nftCount]);
 
-  useEffect(()=>{
-    if(listedNFTS2.length>0 && recentListedNFTS2.length>0) {
-    getOtherNfts();
-
+  useEffect(() => {
+    if (listedNFTS2.length > 0 && recentListedNFTS2.length > 0) {
+      getOtherNfts();
     }
-  },[listedNFTS2?.length, recentListedNFTS2?.length,nftCount])
-
-
- 
+  }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
 
   useEffect(() => {
     if (
@@ -1068,6 +1160,12 @@ function App() {
       setIsConnected(false);
     }
   }, [window.coinbase_address]);
+
+  useEffect(() => {
+    if (coinbase) {
+      getNotifications(coinbase);
+    }
+  }, [coinbase,nftCount]);
 
   return (
     <ApolloProvider client={client}>
@@ -1081,6 +1179,10 @@ function App() {
               setFireAppContent(true);
             }}
             handleDisconnect={handleDisconnect}
+            myOffers={myNftsOffer}
+            handleRefreshList={handleRefreshList}
+            nftCount={nftCount}
+
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1090,6 +1192,7 @@ function App() {
               setFireAppContent(true);
             }}
             handleDisconnect={handleDisconnect}
+
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1300,10 +1403,12 @@ function App() {
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
                   account={coinbase}
-                  chainId={chainId}     
+                  chainId={chainId}
                   dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}
-                  handleAvailableTime={(value)=>{setavailTime(value)}}
+                  handleAvailableTime={(value) => {
+                    setavailTime(value);
+                  }}
                 />
               }
             />
@@ -1344,7 +1449,8 @@ function App() {
           </Routes>
           {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
           <ScrollTop />
-          {location.pathname.includes("marketplace") || location.pathname.includes("account") ? (
+          {location.pathname.includes("marketplace") ||
+          location.pathname.includes("account") ? (
             location.pathname.includes("timepiece") ||
             location.pathname.includes("caws") ||
             location.pathname.includes("land") ? null : (

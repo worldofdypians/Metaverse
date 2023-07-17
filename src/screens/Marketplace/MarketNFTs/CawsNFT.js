@@ -16,6 +16,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import traitIcon from "./assets/traitIcon.svg";
 import priceIconUp from "./assets/priceIconUp.svg";
 import priceIconDown from "./assets/priceIconDown.svg";
+import priceIconNeutral from "./assets/priceIconNeutral.svg";
 import filterIcon from "./assets/filterIcon.svg";
 import ethIcon from "./assets/ethIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
@@ -182,7 +183,7 @@ const CawsNFT = ({
 
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [filterTitle, setFilterTitle] = useState("Price low to high");
+  const [filterTitle, setFilterTitle] = useState("Filter");
   const [initialNfts, setInitialNfts] = useState([]);
   const [cawsNFTS, setCawsNFTS] = useState([]);
   const [cawsNFTS2, setCawsNFTS2] = useState([]);
@@ -213,6 +214,7 @@ const CawsNFT = ({
   const [hat, setHat] = useState({ trait_type: "Hat", value: [] });
   const [eyewear, setEyewear] = useState({ trait_type: "Eyewear", value: [] });
   const [count, setCount] = useState(0);
+  const [priceCount, setPriceCount] = useState(0)
   const [displayFilters, setDisplayFilters] = useState([]);
   const [pricePoint, setPricePoint] = useState("lth");
   const [selectedFilters, setSelectedFilters] = useState([
@@ -490,38 +492,36 @@ const CawsNFT = ({
   //     });
   // };
 
+  
   const sortNfts = (sortValue) => {
-    // console.log(sortValue);
-    if (sortValue === "htl") {
-      let htl = initialNfts.sort((a, b) => {
-        return b.priceUSD - a.priceUSD;
+    if (sortValue === "all") {
+      setCawsNFTS(initialNfts);
+    } else if (sortValue === "price") {
+      if (priceCount % 2 == 0) {
+        let lth = initialNfts.sort((a, b) => {
+          return a.priceUSD - b.priceUSD;
+        });
+        setCawsNFTS(lth);
+      } else {
+        let htl = initialNfts.sort((a, b) => {
+          return b.priceUSD - a.priceUSD;
+        });
+        setCawsNFTS(htl);
+      }
+      setPriceCount(priceCount + 1);
+    } else if (sortValue === "lso") {
+      let lsoDate = initialNfts.sort((a, b) => {
+        return b.isLatestSale - a.isLatestSale;
       });
-      setCawsNFTS(htl);
-    } else if (sortValue === "lth") {
-      let lth = initialNfts.sort((a, b) => {
-        return a.priceUSD - b.priceUSD;
+      let lso = lsoDate.sort((a, b) => {
+        return new Date(b.lastSoldTimeStamp) - new Date(a.lastSoldTimeStamp);
       });
-      setCawsNFTS(lth);
+      setCawsNFTS(lso);
     } else if (sortValue === "lto") {
-      let lto = initialNfts.sort((a, b) => {
+      let otl = initialNfts.sort((a, b) => {
         return b.date - a.date;
       });
-      setCawsNFTS(lto);
-    } else if (sortValue === "otl") {
-      let otl = initialNfts.sort((a, b) => {
-        return a.date - b.date;
-      });
       setCawsNFTS(otl);
-    } else if (sortValue === "dyp") {
-      let dyp = initialNfts.filter((nft) => {
-        return nft.payment_priceType !== 0;
-      });
-      setCawsNFTS(dyp);
-    } else if (sortValue === "eth") {
-      let eth = initialNfts.filter((nft) => {
-        return nft.payment_priceType !== 1;
-      });
-      setCawsNFTS(eth);
     }
   };
 
@@ -565,6 +565,7 @@ const CawsNFT = ({
             isListed: true,
             isLatestSale: true,
             LastSold: result?.price,
+            lastSoldTimeStamp: result?.blockTimestamp,
             soldPriceType: result?.payment_priceType,
           };
         }
@@ -576,6 +577,7 @@ const CawsNFT = ({
             date: date,
             isListed: false,
             isLatestSale: true,
+            lastSoldTimeStamp: nft?.blockTimestamp,
             LastSold: nft?.price,
             soldPriceType: nft.payment_priceType,
           };
@@ -698,7 +700,7 @@ const CawsNFT = ({
 
     if (wrappedElement) {
       const isBottom =
-        wrappedElement.getBoundingClientRect()?.bottom <= window.innerHeight;
+        parseInt(wrappedElement.getBoundingClientRect()?.bottom) <= window.innerHeight;
       if (isBottom) {
         if (count === 0) {
           if (next < allCaws) {
@@ -819,10 +821,10 @@ const CawsNFT = ({
               </div>
             </div>
             <div
-              className="filters-container d-flex align-items-center justify-content-between my-4 p-3 position-relative gap-2"
+              className="filters-container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between my-4 p-3 position-relative gap-3"
               style={{ zIndex: 2 }}
             >
-              <div class="dropdown" style={{ width: "150px" }}>
+              <div class="dropdown filters-dropdown">
                 <button
                   class="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
@@ -832,7 +834,7 @@ const CawsNFT = ({
                 >
                   <div className="d-flex align-items-center gap-2">
                     <img src={filterIcon} alt="" />
-                    <h6 className="filter-nav-title mb-0">Filter</h6>
+                    <h6 className="filter-nav-title mb-0">{filterTitle}</h6>
                   </div>
                   <img src={dropdownIcon} alt="" />
                 </button>
@@ -840,8 +842,17 @@ const CawsNFT = ({
                   <li
                     className="nft-dropdown-item"
                     onClick={() => {
-                      setFilterTitle("Oldest to newest");
-                      sortNfts("otl");
+                      setFilterTitle("Filter");
+                      sortNfts("all");
+                    }}
+                  >
+                    <span>All</span>
+                  </li>
+                  <li
+                    className="nft-dropdown-item"
+                    onClick={() => {
+                      setFilterTitle("Recently listed");
+                      sortNfts("lto");
                     }}
                   >
                     <span>Recently listed</span>
@@ -849,69 +860,41 @@ const CawsNFT = ({
                   <li
                     className="nft-dropdown-item"
                     onClick={() => {
-                      setFilterTitle("Newest To Oldest");
-                      sortNfts("lto");
+                      setFilterTitle("Recently sold");
+                      sortNfts("lso");
                     }}
                   >
                     <span>Recently sold</span>
                   </li>
-                  {/* <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
-                      setFilterTitle("Price: ETH");
-                      sortNfts("eth");
-                    }}
-                  >
-                    <span>Price: ETH</span>
-                  </li>
-                  <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
-                      setFilterTitle("Price: DYP");
-                      sortNfts("dyp");
-                    }}
-                  >
-                    <span>Price: DYP</span>
-                  </li> */}
-                  {/* <div className="d-flex w-100 align-items-center justify-content-around mt-2 py-2">
-                    <div className="collection-price position-relative d-flex align-items-center gap-1  py-1 px-2" onClick={() => sortNfts("eth")}>
-                      <img
-                        src={emptyCheck}
-                        alt=""
-                        className="collection-price-check"
-                      />
-                      <img src={ethIcon} width={12} height={12} alt="" />
-                      <span className="collection-price-span mb-0">ETH</span>
-                    </div>
-                    <div className="collection-price position-relative d-flex align-items-center gap-1 py-1 px-2" onClick={() => sortNfts("dyp")}>
-                      <img
-                        src={emptyCheck}
-                        alt=""
-                        className="collection-price-check"
-                      />
-                      <img src={dypIcon} width={12} height={12} alt="" />
-                      <span className="collection-price-span mb-0">DYP</span>
-                    </div>
-                  </div> */}
                 </ul>
               </div>
-              <div className="d-flex align-items-center gap-3 gap-lg-5">
+              <div className="d-flex align-items-center justify-content-between justify-cotent-lg-center gap-3 gap-lg-5 price-traits-wrapper">
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                    setPricePoint(pricePoint === "lth" ? "htl" : "lth");
-                    sortNfts(pricePoint);
+                    sortNfts("price");
                   }}
                 >
                   <img
-                    src={pricePoint === "lth" ? priceIconUp : priceIconDown}
+                    src={
+                      priceCount === 0
+                        ? priceIconNeutral
+                        : priceCount % 2 == 0
+                        ? priceIconDown
+                        : priceIconUp
+                    }
                     alt=""
                   />
                   <h6
                     className="filter-nav-title mb-0"
                     style={{
-                      color: pricePoint === "lth" ? "#09F3D2" : "#FF6232",
+                      color:
+                        priceCount === 0
+                          ? "#EEEDFF"
+                          : priceCount % 2 == 0
+                          ? "#FF6232"
+                          : "#09F3D2",
                     }}
                   >
                     Price
