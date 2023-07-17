@@ -72,6 +72,21 @@ const Notifications = () => {
                     
                   </div>
               </div>
+              <div className="notifications-list">
+                <div className="list-notification d-flex align-items-end justify-content-between">
+                  <div className="d-flex-flex-column gap-2">
+                    <div className="d-flex align-items-center gap-2">
+                      <img src={cartIcon} alt="" />
+                      <h6 className="notification-title mb-0">NFT Sale</h6>
+                    </div>
+                    <p className="notification-desc mb-0">Your CAWS #234 has been successfully sold. The new owner of the CAWS is registered with the address: 0x375...2b5E.</p>
+                  </div>
+                  <div className="d-flex flex-column align-items-end gap-2">
+                    <span className="notification-hour mb-0">10:25 AM</span>
+                    <span className="notifcation-date mb-0">July 23, 2023</span>
+                  </div>
+                </div>
+              </div>
         </div>
       </div>
     </div>
