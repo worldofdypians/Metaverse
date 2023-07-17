@@ -3281,6 +3281,35 @@ window.buyback_stakingbsc1_2 = new BUYBACK_STAKINGBSC("BUYBACK_STAKINGBSC1_2");
 window.BUYBACK_STAKINGBSC1_1_ABI = window.BUYBACK_STAKINGBSC1_1_ABI;
 window.BUYBACK_STAKINGBSC1_1_ABI = window.BUYBACK_STAKINGBSC1_2_ABI;
 
+// window.buyNFT = async (
+//   price,
+//   nft_address,
+//   tokenId,
+//   priceType,
+//   priceAddress
+// ) => {
+//   console.log("priceType", price, nft_address, tokenId, [
+//     priceType,
+//     priceAddress,
+//   ]);
+
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
+
+//   if (priceType === 1) {
+//     await marketplace.methods
+//       .buyItem(nft_address, tokenId, [priceType, priceAddress])
+//       .send({ from: await getCoinbase(), value: 0 });
+//   } else if (priceType === 0) {
+//     await marketplace.methods
+//       .buyItem(nft_address, tokenId, [priceType, priceAddress])
+//       .send({ from: await getCoinbase(), value: price });
+//   }
+// };
+
+
 window.buyNFT = async (
   price,
   nft_address,
@@ -3298,15 +3327,32 @@ window.buyNFT = async (
     window.config.nft_marketplace_address
   );
 
-  if (priceType === 1) {
-    await marketplace.methods
+    const gasPrice = await window.web3.eth.getGasPrice();
+    const currentGwei = window.web3.utils.fromWei(gasPrice, 'gwei');
+    const increasedGwei = parseInt(currentGwei) + 2;
+    const priorityFeeGwei = '0.1';
+
+    const transactionParameters = {
+      gasPrice: window.web3.utils.toWei(increasedGwei.toString(), 'gwei'),
+      maxPriorityFeePerGas: window.web3.utils.toWei(priorityFeeGwei, 'gwei'),
+    };
+
+
+    const estimateGas = await marketplace.methods
       .buyItem(nft_address, tokenId, [priceType, priceAddress])
-      .send({ from: await getCoinbase(), value: 0 });
-  } else if (priceType === 0) {
-    await marketplace.methods
-      .buyItem(nft_address, tokenId, [priceType, priceAddress])
-      .send({ from: await getCoinbase(), value: price });
-  }
+      .estimateGas({ from: await getCoinbase(), value: price });
+
+    transactionParameters.gas = estimateGas.toString();
+
+    if (priceType === 1) {
+      await marketplace.methods
+        .buyItem(nft_address, tokenId, [priceType, priceAddress])
+        .send({ from: await getCoinbase(), value: 0, ...transactionParameters });
+    } else if (priceType === 0) {
+      await marketplace.methods
+        .buyItem(nft_address, tokenId, [priceType, priceAddress])
+        .send({ from: await getCoinbase(), value: price, ...transactionParameters });
+    }
 };
 
 window.approveBuy = async (amount) => {
