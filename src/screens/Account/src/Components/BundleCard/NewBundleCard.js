@@ -92,7 +92,7 @@ const NewBundleCard = ({
   handleSetAvailableTime,
   onOpenPopup,
   dyptokenDatabnb,
-idyptokenDatabnb
+  idyptokenDatabnb,
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
@@ -144,7 +144,6 @@ idyptokenDatabnb
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
   const [idyptokenData, setIDypTokenData] = useState([]);
 
-
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
       if (coinbase !== wallet || chainId !== 56) {
@@ -155,8 +154,6 @@ idyptokenDatabnb
       }
     } else setcheckWallet(false);
   };
-
-
 
   const checkApproval = async () => {
     if (coinbase === wallet && chainId === 56) {
@@ -269,6 +266,7 @@ idyptokenDatabnb
         setSliderValue700(2);
       })
       .catch((e) => {
+        console.error(e);
         setStatusColor700("#FE7A00");
         setStatus700(e?.message);
         setbundleState700("fail");
@@ -1001,14 +999,14 @@ idyptokenDatabnb
                       <>
                         <button
                           disabled={
-                            bundleState700 !== "deposit" ||
+                            bundleState700 === "deposit" ||
                             checkWallet === false ||
                             isAtlimit == true
                               ? true
                               : false
                           }
                           className={`btn ${
-                            bundleState700 !== "deposit" ||
+                            bundleState700 === "deposit" ||
                             checkWallet === false ||
                             isAtlimit == true
                               ? "inactive-pill-btn"
