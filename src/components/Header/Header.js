@@ -201,7 +201,7 @@ const Header = ({
             </div>
           ) : (
             <div className="d-flex align-items-center gap-3">
-              <div className="position-relative">
+              {/* <div className="position-relative">
                 <img
                   src={bellIcon}
                   width={30}
@@ -319,7 +319,7 @@ const Header = ({
                     )}
                   </div>
                 </OutsideClickHandler>
-              </div>
+              </div> */}
               <Clipboard
                 component="div"
                 data-event="click"
