@@ -1230,7 +1230,10 @@ function App() {
               }
             />
             <Route exact path="/caws" element={<Caws />} />
-            <Route exact path="/notifications" element={<Notifications />} />
+            <Route exact path="/notifications" element={<Notifications 
+            handleRefreshList={handleRefreshList}
+            coinbase={coinbase}
+            />} />
             <Route exact path="/roadmap" element={<Roadmap />} />
             <Route exact path="/explorer" element={<Explorer />} />
             <Route exact path="/stake" element={<NftMinting />} />

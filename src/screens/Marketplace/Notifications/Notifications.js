@@ -21,12 +21,47 @@ import updateIcon from './assets/updateIcon.svg'
 import updateIconActive from './assets/updateIconActive.svg'
 import deleteIcon from './assets/deleteIcon.svg'
 import deleteIconActive from './assets/deleteIconActive.svg'
+import axios from 'axios'
+import { useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 
-const Notifications = () => {
+const Notifications = ({coinbase, handleRefreshList}) => {
 
     const windowSize = useWindowSize();
     const [activeBar, setActiveBar] = useState("all")
+    const [nftOffers, setNftOffers] = useState([])
 
+
+    async function getNotifications(walletAddress) {
+      try {
+        const response = await axios.get(
+          `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`
+        );
+        const notifications = response.data[0]?.notifications || [];
+       
+        setNftOffers(notifications.reverse());
+        console.log("Notifications:", notifications);
+      } catch (error) {
+        console.error("Error retrieving notifications:", error.message);
+      }
+    }
+
+    async function markNotificationAsRead(walletAddress, notificationId) {
+      try {
+        await axios.patch(
+          `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}/${notificationId}`
+        );
+        console.log("Notification marked as read");
+        handleRefreshList();
+      } catch (error) {
+        console.error("Error marking notification as read:", error.message);
+      }
+    }
+
+    useEffect(() => {
+     getNotifications(coinbase);
+    }, [])
+    
 
   return (
     <>
@@ -72,20 +107,36 @@ const Notifications = () => {
                     
                   </div>
               </div>
-              <div className="notifications-list">
-                <div className="list-notification d-flex align-items-end justify-content-between">
-                  <div className="d-flex-flex-column gap-2">
-                    <div className="d-flex align-items-center gap-2">
-                      <img src={cartIcon} alt="" />
-                      <h6 className="notification-title mb-0">NFT Sale</h6>
-                    </div>
-                    <p className="notification-desc mb-0">Your CAWS #234 has been successfully sold. The new owner of the CAWS is registered with the address: 0x375...2b5E.</p>
-                  </div>
-                  <div className="d-flex flex-column align-items-end gap-2">
-                    <span className="notification-hour mb-0">10:25 AM</span>
-                    <span className="notifcation-date mb-0">July 23, 2023</span>
-                  </div>
-                </div>
+              <div className="outer-notification-list my-5 p-3">
+              <div className="notifications-list p-3">
+                {nftOffers.map((item, index) => (
+                      <NavLink to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`} className="list-notification px-2 py-4 d-flex align-items-end justify-content-between" onClick={() => markNotificationAsRead(coinbase, item._id)}>
+                      <div className="d-flex-flex-column gap-2">
+                        <div className="d-flex align-items-center gap-2">
+                          <img src={item.buy === "yes" && item.read === false ? cartIconActive : item.buy === "yes" && item.read === true ? cartIcon : item.offer === "yes" && item.read === false ? offerIconActive : item.offer === "yes" && item.read === true ? offerIcon : item.offerAccepted === "yes" && item.read === false ? transferIconActive : item.offerAccepted === "yes" && item.read === true ? transferIcon : null } alt="" />
+                          <h6 className="notification-title mb-0" style={{color: item.read === false ? "#11FED2" : "#EEEDFF"}}>{item.buy === "yes" ? "NFT Sale" : item.offer === "yes" ? "New Offer" : item.offerAccepted === "yes" ? "Accepted Offer" : null}</h6>
+                        </div>
+                        <p className="notification-desc mb-0">{item.buy === "yes" ? `Your ${
+                          item.nftAddress === window.config.nft_caws_address
+                          ? "CAWS"
+                          : item.nftAddress === window.config.nft_land_address
+                          ? "WOD"
+                          : "Timepiece"
+                        } #${item.tokenId} has been successfully sold. The new owner of the CAWS is registered with the address: 0x375...2b5E.` : item.offer === "yes" ? `There is a new offer for your ${
+                          item.nftAddress === window.config.nft_caws_address
+                          ? "CAWS"
+                          : item.nftAddress === window.config.nft_land_address
+                          ? "WOD"
+                          : "Timepiece"
+                        } #${item.tokenId}. The user with the address 0x375...2b5E has submitted a bid of 0.95 ETH` : null}</p>
+                      </div>
+                      <div className="d-flex flex-column align-items-end gap-2">
+                        <span className="notification-hour mb-0">{new Date(item.timestamp).getHours() + " : " + (new Date(item.timestamp).getMinutes() < 10 ? '0' : '') + new Date(item.timestamp).getMinutes()}</span>
+                        <span className="notification-date mb-0">{new Date(item.timestamp).toDateString().slice(3, new Date(item.timestamp).toDateString().length)}</span>
+                      </div>
+                    </NavLink>
+                ))}
+              </div>
               </div>
         </div>
       </div>
