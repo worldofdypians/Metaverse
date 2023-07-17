@@ -269,6 +269,7 @@ idyptokenDatabnb
         setSliderValue700(2);
       })
       .catch((e) => {
+        console.error(e);
         setStatusColor700("#FE7A00");
         setStatus700(e?.message);
         setbundleState700("fail");
@@ -1001,14 +1002,14 @@ idyptokenDatabnb
                       <>
                         <button
                           disabled={
-                            bundleState700 !== "deposit" ||
+                            bundleState700 === "deposit" ||
                             checkWallet === false ||
                             isAtlimit == true
                               ? true
                               : false
                           }
                           className={`btn ${
-                            bundleState700 !== "deposit" ||
+                            bundleState700 === "deposit" ||
                             checkWallet === false ||
                             isAtlimit == true
                               ? "inactive-pill-btn"
