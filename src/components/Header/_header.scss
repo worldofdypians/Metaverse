@@ -128,19 +128,52 @@
 }
 
 .notifications-wrapper{
-  width: 200px;
-  height: 220px;
+  width: 430px;
+  height: 360px;
   border-radius: 10px;
   border: 1px solid #B8B8E0;
   background: #080B2A;
   position: absolute;
-  bottom: -230px;
+  bottom: -360px;
   right: 0;
   visibility: hidden;
   opacity: 0;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   transition: all .25s;
+@media screen and (max-width: 440px) {
+  width: 90%;
 }
+}
+
+.inner-notifications{
+  overflow-y: scroll;
+}
+
+.pending-notifications{
+  border-radius: 10px;
+background: rgba(37, 39, 67, 0.45);
+box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
+backdrop-filter: blur(13.380000114440918px);
+cursor: pointer;
+}
+
+.notifications-amount{
+  color: #FFF;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.pending-text{
+  color: #FFF;
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+
 
 .open-notifications{
   visibility: visible;
@@ -149,7 +182,7 @@
 
 
 
-.notifications-wrapper::-webkit-scrollbar {
+.inner-notifications::-webkit-scrollbar {
   display: none;
 }
 
@@ -158,6 +191,24 @@
   height: 6px;
   border-radius: 50%;
   background: #11FED2;
+}
+
+.notification-relative-time{
+  color: #00FECF;
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.header-notification-item{
+  border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid #565891;
+transition: all .25s;
+}
+
+.header-notification-item:hover{
+  background: rgba(54, 194, 207, 0.06);
 }
 
 .header-notification{
