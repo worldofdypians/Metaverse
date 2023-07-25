@@ -533,7 +533,7 @@ const NewBundleCard = ({
 
   let today = new Date();
 
-  let twentyfivejuly = new Date("2023-07-25 23:59:00 GMT+02:00");
+  let twentyfivejuly = new Date("2023-07-26 23:59:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
