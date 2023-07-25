@@ -533,7 +533,7 @@ const NewBundleCard = ({
 
   let today = new Date();
 
-  let twentyfivejuly = new Date("2023-07-26 23:59:00 GMT+02:00");
+  let twentyfivejuly = new Date("2023-07-27 23:59:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -544,7 +544,7 @@ const NewBundleCard = ({
     const week1 = ["1", "2", "3", "4", "5", "6", "7"];
     const week2 = ["8", "9", "10", "11", "12", "13", "14"];
     const week3 = ["15", "16", "17", "18", "19", "20", "21"];
-    const week4 = ["22", "23", "24", "25"];
+    const week4 = ["22", "23", "24", "25", '26', '27'];
 
     const timeofDeposit = await dyp700_abi.methods
       .getTimeOfDeposit(coinbase)
@@ -568,7 +568,7 @@ const NewBundleCard = ({
       .getDate()
       .toString();
 
-    if (today_date <= 25) {
+    if (today_date <= 27) {
       if (week1.includes(today_date.toString()) && bundlesBought <= 3) {
         setisAtlimit(false);
         handleRefreshCountdown700();
@@ -576,7 +576,7 @@ const NewBundleCard = ({
         const remainingTime_day = bundleExpireDay;
         const remainingTime_miliseconds = bundleExpireMiliseconds;
 
-        if (parseInt(remainingTime_day) >= 25) {
+        if (parseInt(remainingTime_day) >= 27) {
           const additional_remainingTime_time = 31 - remainingTime_day;
           const additional_remaining_time_timestamp =
             additional_remainingTime_time * 24 * 60 * 60 -
@@ -600,7 +600,7 @@ const NewBundleCard = ({
         setisAtlimit(false);
       } else if (week2.includes(today_date.toString()) && bundlesBought >= 3) {
         const remainingTime2 = lastDayofBundle;
-        if (parseInt(remainingTime2) >= 25) {
+        if (parseInt(remainingTime2) >= 27) {
           const additional_remainingTime_time2 = 31 - remainingTime2;
           const additional_remaining_time_timestamp2 =
             additional_remainingTime_time2 * 24 * 60 * 60 -
@@ -627,7 +627,7 @@ const NewBundleCard = ({
         const remainingTime3 = lastDayofBundle;
         const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
-        if (parseInt(remainingTime3) >= 25) {
+        if (parseInt(remainingTime3) >= 27) {
           const additional_remainingTime_time3 = 31 - remainingTime3;
           const additional_remaining_time_timestamp3 =
             additional_remainingTime_time3 * 24 * 60 * 60 -
@@ -668,7 +668,7 @@ const NewBundleCard = ({
           setStatusColor700("#FE7A00");
         }
       }
-    } else if (today_date > 25) {
+    } else if (today_date > 27) {
       if (today < dateofBundle) {
         setisAtlimit(true);
         setcountdown700(oneAugust.getTime());
