@@ -92,7 +92,7 @@ const NewBundleCard = ({
   handleSetAvailableTime,
   onOpenPopup,
   dyptokenDatabnb,
-idyptokenDatabnb
+  idyptokenDatabnb,
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
@@ -140,10 +140,10 @@ idyptokenDatabnb
 
   const [lastDayofBundleMilliseconds, setlastDayofBundleMilliseconds] =
     useState(0);
+  const [dateofBundle, setdateofBundle] = useState(0);
   const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
   const [idyptokenData, setIDypTokenData] = useState([]);
-
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
@@ -155,8 +155,6 @@ idyptokenDatabnb
       }
     } else setcheckWallet(false);
   };
-
-
 
   const checkApproval = async () => {
     if (coinbase === wallet && chainId === 56) {
@@ -401,6 +399,8 @@ idyptokenDatabnb
     }).format(expiringTime_miliseconds);
 
     const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+    setdateofBundle(expiringTime_Date_formatted);
+
     const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
     const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
     const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
@@ -533,7 +533,7 @@ idyptokenDatabnb
 
   let today = new Date();
 
-  let twentyfivejuly = new Date("2023-07-25 11:11:00 GMT+02:00");
+  let twentyfivejuly = new Date("2023-07-26 23:59:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -650,31 +650,15 @@ idyptokenDatabnb
         handleRefreshCountdown700();
         setisAtlimit(false);
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
-        if (today > oneJuly && lastDayofBundleMilliseconds > 0) {
-          setisAtlimit(true);
+        if (today < dateofBundle) { 
           setcountdown700(oneAugust.getTime());
           handleSetAvailableTime(oneAugust.getTime());
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
-          setStatusColor700("#FE7A00");
-        } else if (today > oneJuly && lastDayofBundleMilliseconds == 0) {
           setisAtlimit(true);
-          setcountdown700();
-          handleSetAvailableTime();
+          setStatusColor700("#FE7A00");
           setStatus700(
             "The Golden Pass bundle is currently not available for purchase. Please check back next month."
           );
-          setStatusColor700("#FE7A00");
-        } else if (today < oneJuly && lastDayofBundleMilliseconds > 0) {
-          setisAtlimit(true);
-          setcountdown700(oneAugust.getTime());
-          handleSetAvailableTime(oneAugust.getTime());
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
-          setStatusColor700("#FE7A00");
-        } else if (today < oneJuly && lastDayofBundleMilliseconds == 0) {
+        } else if (today > dateofBundle && bundlesBought > 0) {
           setisAtlimit(true);
           setcountdown700();
           handleSetAvailableTime();
@@ -685,7 +669,7 @@ idyptokenDatabnb
         }
       }
     } else if (today_date > 25) {
-      if (lastDayofBundleMilliseconds > 0) {
+      if (today < dateofBundle) {
         setisAtlimit(true);
         setcountdown700(oneAugust.getTime());
         handleSetAvailableTime(oneAugust.getTime());
@@ -718,7 +702,7 @@ idyptokenDatabnb
     checkApproval3500();
     checkApproval();
     increaseBundle();
-    console.log(dyptokenDatabnb, "das price");
+    
   }, [
     coinbase,
     chainId,
@@ -801,7 +785,6 @@ idyptokenDatabnb
     // getTokenDatabnb();
   }, []);
 
-  const [tooltip, setTooltip] = useState(false);
 
   return (
     <>
