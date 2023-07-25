@@ -140,8 +140,7 @@ const NewBundleCard = ({
 
   const [lastDayofBundleMilliseconds, setlastDayofBundleMilliseconds] =
     useState(0);
-    const [dateofBundle, setdateofBundle] =
-    useState(0);
+  const [dateofBundle, setdateofBundle] = useState(0);
   const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
   const [idyptokenData, setIDypTokenData] = useState([]);
@@ -400,8 +399,8 @@ const NewBundleCard = ({
     }).format(expiringTime_miliseconds);
 
     const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-    setdateofBundle(expiringTime_Date_formatted) 
-    
+    setdateofBundle(expiringTime_Date_formatted);
+
     const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
     const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
     const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
@@ -534,7 +533,7 @@ const NewBundleCard = ({
 
   let today = new Date();
 
-  let twentyfivejuly = new Date("2023-07-25 11:11:00 GMT+02:00");
+  let twentyfivejuly = new Date("2023-07-25 23:59:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -651,12 +650,10 @@ const NewBundleCard = ({
         handleRefreshCountdown700();
         setisAtlimit(false);
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
-        if (today > dateofBundle) {
-         
+        if (today < dateofBundle) {
           const remainingTime3 = lastDayofBundle;
-        const remainingTime_miliseconds3 = bundleExpireMiliseconds;
+          const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
-      
           const additional_remainingTime_time3 = 31 - remainingTime3;
           const additional_remaining_time_timestamp3 =
             additional_remainingTime_time3 * 24 * 60 * 60 -
@@ -671,9 +668,7 @@ const NewBundleCard = ({
           handleSetAvailableTime(final);
           setisAtlimit(true);
           setStatusColor700("#FE7A00");
-        
-
-        } else if (today < dateofBundle) {
+        } else if (today > dateofBundle && bundlesBought > 0) {
           setisAtlimit(true);
           setcountdown700();
           handleSetAvailableTime();
@@ -717,7 +712,7 @@ const NewBundleCard = ({
     checkApproval3500();
     checkApproval();
     increaseBundle();
-    console.log(dyptokenDatabnb, "das price");
+    
   }, [
     coinbase,
     chainId,
@@ -795,13 +790,11 @@ const NewBundleCard = ({
     }
     convertPrice();
   }, [today, oneJuly]);
- 
 
   useEffect(() => {
     // getTokenDatabnb();
   }, []);
 
-  const [tooltip, setTooltip] = useState(false);
 
   return (
     <>
