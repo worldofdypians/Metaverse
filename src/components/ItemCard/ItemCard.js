@@ -493,9 +493,7 @@ const ItemCard = ({
             </div>
           )}
       </div>
-      {!location.pathname.includes("/marketplace/caws") &&
-        !location.pathname.includes("/marketplace/land") &&
-        !location.pathname.includes("/marketplace/timepiece") &&
+      {isListed &&
         !location.pathname.includes("/account") && (
           <span
             className="position-relative top-sale-time"

@@ -141,6 +141,9 @@ const SingleNft = ({
   const [offerStatus, setOfferStatus] = useState("initial");
   const [offerdeleteStatus, setOfferdeleteStatus] = useState("initial");
   const [offerupdateStatus, setOfferupdateStatus] = useState("initial");
+  const [offeracceptStatus, setOfferacceptStatus] = useState("initial");
+  const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
+  const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
 
   const { nftId, nftAddress } = useParams();
 
@@ -158,16 +161,89 @@ const SingleNft = ({
     borderColor: "#554fd8",
   };
 
+  const getListedNtsAsc = async () => {
+    const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
+
+    let dypNftsAsc = dypNfts.sort((a, b) => {
+      return a.price - b.price;
+    });
+
+    const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
+
+    let ethNftsAsc = ethNfts.sort((a, b) => {
+      return a.price - b.price;
+    });
+    setlowestPriceNftListed(ethNftsAsc[0].price);
+
+    setlowestPriceNftListedDYP(dypNftsAsc[0].price);
+  };
+
   const getOffer = async () => {
     let finalArray = [];
+    const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
+
+    const contract1 = new window.infuraWeb3.eth.Contract(
+      window.ERC20_ABI,
+      token_address
+    );
+    const contract2 = new window.infuraWeb3.eth.Contract(
+      window.WETH_ABI,
+      window.config.weth2_address
+    );
+
     const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
       console.error(e);
     });
 
-    result.map((item) => {
-      return finalArray.push({ offer: item.offer, index: item.index });
-    });
+    await Promise.all(
+      result.map(async (item) => {
+        if (item.offer.payment.priceType === "1") {
+          const balance = await contract1.methods
+            .balanceOf(item.offer.buyer)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
 
+          const allowance = await contract1.methods
+            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
+
+          const priceFormatted = item.offer.price / 1e18;
+console.log(balance >= priceFormatted && allowance >= priceFormatted)
+          return finalArray.push({
+            offer: item.offer,
+            index: item.index,
+            isAllowed: balance >= priceFormatted && allowance >= priceFormatted,
+          });
+        } else if (item.offer.payment.priceType === "0") {
+          const balance = await contract2.methods
+            .balanceOf(item.offer.buyer)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
+
+          const allowance = await contract2.methods
+            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
+            .call()
+            .then((data) => {
+              return window.infuraWeb3.utils.fromWei(data, "ether");
+            });
+
+          const priceFormatted = item.offer.price / 1e18;
+          return finalArray.push({
+            offer: item.offer,
+            index: item.index,
+            isAllowed: balance >= priceFormatted && allowance >= priceFormatted,
+          });
+        }
+      })
+    );
+    finalArray.reverse();
     setofferData(finalArray);
   };
   // console.log(offerData)
@@ -191,7 +267,7 @@ const SingleNft = ({
       const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
         console.log(e);
       });
-      console.log(nftowner);
+
       setowner(nftowner);
     } else if (type === "land") {
       const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
@@ -344,7 +420,6 @@ const SingleNft = ({
       });
 
     // console.log("boughtItems", boughtItems);
-    console.log("boughtItems", boughtItems);
 
     boughtItems &&
       boughtItems.map((nft) => {
@@ -363,11 +438,12 @@ const SingleNft = ({
         }
       });
 
-    const test = [...finalboughtItems];
-    console.log(test);
-
+    console.log("...finalboughtItems", finalboughtItems);
     setNft(...finalboughtItems);
     setIsListed(false);
+    if (finalboughtItems[0].buyer.toLowerCase() !== coinbase.toLowerCase()) {
+      setisOwner(false);
+    }
   };
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
@@ -865,7 +941,6 @@ const SingleNft = ({
       .catch((e) => {
         console.error(e);
         setOfferStatus("fail");
-
         setTimeout(() => {
           setOfferStatus("initial");
         }, 3000);
@@ -900,7 +975,7 @@ const SingleNft = ({
     const newPrice = new BigNumber(price * 1e18).toFixed();
 
     await window
-      .cancelOffer(nftAddress, nftId, offerIndex, newPrice, pricetype)
+      .updateOffer(nftAddress, nftId, offerIndex, newPrice, pricetype)
       .then(() => {
         handleRefreshListing();
         setOfferupdateStatus("successupdate");
@@ -914,6 +989,30 @@ const SingleNft = ({
 
         setTimeout(() => {
           setOfferupdateStatus("initial");
+        }, 3000);
+      });
+  };
+
+  const handleAcceptOffer = async (offerIndex) => {
+    setOfferacceptStatus("loading");
+
+    console.log(nftAddress, nftId, offerIndex);
+    await window
+      .acceptOffer(nftAddress, nftId, offerIndex)
+      .then(() => {
+        setOfferacceptStatus("success");
+        setTimeout(() => {
+          setOfferacceptStatus("initial");
+          handleRefreshListing();
+          getLatest20BoughtNFTS(nftAddress, nftId);
+          getLatestBoughtNFT();
+        }, 3000);
+      })
+      .catch((e) => {
+        console.error(e);
+        setOfferacceptStatus("fail");
+        setTimeout(() => {
+          setOfferacceptStatus("initial");
         }, 3000);
       });
   };
@@ -970,6 +1069,11 @@ const SingleNft = ({
       if (nft.seller) {
         if (nft.seller && nft.seller.toLowerCase() === coinbase.toLowerCase()) {
           setisOwner(true);
+        } else if (
+          nft.seller &&
+          nft.seller.toLowerCase() !== coinbase.toLowerCase()
+        ) {
+          setisOwner(false);
         }
       } else if (
         nft.buyer &&
@@ -977,8 +1081,16 @@ const SingleNft = ({
         nft.buyer.toLowerCase() === coinbase.toLowerCase()
       ) {
         setisOwner(true);
+      } else if (
+        nft.buyer &&
+        coinbase &&
+        nft.buyer.toLowerCase() !== coinbase.toLowerCase()
+      ) {
+        setisOwner(false);
       } else if (owner.toLowerCase() === coinbase.toLowerCase()) {
         setisOwner(true);
+      } else if (owner.toLowerCase() !== coinbase.toLowerCase()) {
+        setisOwner(false);
       }
     }
   }, [isConnected, isOwner, IsListed, coinbase, nft, owner, nftCount]);
@@ -992,27 +1104,16 @@ const SingleNft = ({
         : "caws",
       nftId
     );
-    handleRefreshList(
-      nftAddress === window.config.nft_caws_address
-        ? "caws"
-        : nftAddress === window.config.nft_timepiece_address
-        ? "timepiece"
-        : "land",
-      nftId
-    );
-  }, [type, nftId, nftAddress]);
+
+  }, [type, nftId, nftAddress, nftCount, nft]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
-    checkisListedNFT(nftId, nftAddress);
-    isListedNFT(nftId, nftAddress).then((isListed) => {
-      setIsListed(isListed);
-    });
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
-    getOffer();
+    getListedNtsAsc();
   }, []);
 
   useEffect(() => {
@@ -1029,6 +1130,19 @@ const SingleNft = ({
     }
     getMetaData(nftAddress, nftId);
   }, [nftId, nftAddress, nft, nftCount]);
+
+  useEffect(() => {
+    getOffer();
+    checkisListedNFT(nftId, nftAddress);
+    handleRefreshList(
+      nftAddress === window.config.nft_caws_address
+        ? "caws"
+        : nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : "land",
+      nftId
+    );
+  }, [nftCount]);
 
   useEffect(() => {
     if (favorites && favorites.length > 0) {
@@ -1082,12 +1196,6 @@ const SingleNft = ({
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Cats and Watches Society{" "}
-                  <h6
-                    className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
-                  >
-                    (CAWS)
-                  </h6>
                 </h6>
               </>
             ) : (
@@ -1138,24 +1246,6 @@ const SingleNft = ({
                     <img src={heart} alt="" /> {favCount} favorites
                   </span>
                 </div>
-                {/* <StyledTextField
-                  error={nftPrice === "" ? true : false}
-                  size="small"
-                  // label="Price"
-                  id="price"
-                  name="price"
-                  value={nftPrice}
-                  type="text"
-                  required
-                  onChange={(e) => {
-                    handlepricechange2(e.target.value);
-                  }}
-                  sx={{ width: "120px" }}
-                  inputProps={{
-                    inputMode: "numeric",
-                  }}
-                /> */}
-
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
                     <h3 className="nft-title d-flex align-items-center justify-content-between">
@@ -1327,49 +1417,33 @@ const SingleNft = ({
                               Listing price
                             </span>
                             <div className="d-flex gap-2 align-items-center">
-                              <span className="nft-price-eth gap-3 d-flex">
-                                {/* <StyledTextField
-                                  error={nftPrice === "" ? true : false}
-                                  size="small"
-                                  // label="Price"
-                                  id="price"
-                                  name="price"
-                                  value={nftPrice}
-                                  type="text"
-                                  required
-                                  onChange={(e) => {
-                                    handlepricechange2(e.target.value);
-                                  }}
-                                  sx={{ width: "120px" }}
-                                  inputProps={{
-                                    inputMode: "numeric",
-                                    pattern:"^[0-9]*[.,]?[0-9]*$"
-                                  }}
-                                /> */}
-                                <input
-                                  required
-                                  className="single-nft-input"
-                                  type="number"
-                                  id="price"
-                                  name="price"
-                                  pattern="^[0-9]*[.,]?[0-9]*$"
-                                  min={0}
-                                  value={nftPrice}
-                                  onChange={(e) => {
-                                    handlepricechange2(e.target.value);
-                                  }}
-                                />
-                                {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
-                              </span>
-                              <span className="nft-price-usd">
-                                $
-                                {getFormattedNumber(
-                                  nft.payment_priceType === 0
-                                    ? ethtokenData * nftPrice
-                                    : dyptokenData * nftPrice,
-                                  2
-                                )}
-                              </span>
+                              <input
+                                required
+                                className="single-nft-input"
+                                type="number"
+                                id="price"
+                                name="price"
+                                pattern="^[0-9]*[.,]?[0-9]*$"
+                                min={0}
+                                value={nftPrice}
+                                onChange={(e) => {
+                                  handlepricechange2(e.target.value);
+                                }}
+                              />
+                              <div className="d-flex flex-column gap-1">
+                                <span className="nft-price-eth gap-3 d-flex">
+                                  {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+                                </span>
+                                <span className="nft-price-usd">
+                                  $
+                                  {getFormattedNumber(
+                                    nft.payment_priceType === 0
+                                      ? ethtokenData * nftPrice
+                                      : dyptokenData * nftPrice,
+                                    2
+                                  )}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1461,31 +1535,33 @@ const SingleNft = ({
                               Listing price
                             </span>
                             <div className="d-flex gap-2 align-items-center">
-                              <span className="nft-price-eth gap-3 d-flex">
-                                <input
-                                  required
-                                  className="single-nft-input"
-                                  type="number"
-                                  id="price"
-                                  name="price"
-                                  pattern="^[0-9]*[.,]?[0-9]*$"
-                                  min={0}
-                                  value={nftPrice}
-                                  onChange={(e) => {
-                                    handlepricechange(e.target.value);
-                                  }}
-                                />
-                                {priceType === 0 ? "ETH" : "DYP"}{" "}
-                              </span>
-                              <span className="nft-price-usd">
-                                $
-                                {getFormattedNumber(
-                                  priceType === 0
-                                    ? ethtokenData * nftPrice
-                                    : dyptokenData * nftPrice,
-                                  2
-                                )}
-                              </span>
+                              <input
+                                required
+                                className="single-nft-input"
+                                type="number"
+                                id="price"
+                                name="price"
+                                pattern="^[0-9]*[.,]?[0-9]*$"
+                                min={0}
+                                value={nftPrice}
+                                onChange={(e) => {
+                                  handlepricechange(e.target.value);
+                                }}
+                              />
+                              <div className="d-flex flex-column flex-xxl-row align-items-start align-items-lg-center gap-1 gap-xxl-3">
+                                <span className="nft-price-eth gap-3 d-flex">
+                                  {priceType === 0 ? "ETH" : "DYP"}{" "}
+                                </span>
+                                <span className="nft-price-usd">
+                                  $
+                                  {getFormattedNumber(
+                                    priceType === 0
+                                      ? ethtokenData * nftPrice
+                                      : dyptokenData * nftPrice,
+                                    2
+                                  )}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1562,27 +1638,7 @@ const SingleNft = ({
                     <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
                       <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="owner-txt">Owner:</span>
-                        {nft.seller ? (
-                          <a
-                            href={`https://etherscan.io/address/${nft.seller}`}
-                            target="_blank"
-                            style={{ textDecoration: "none" }}
-                            className="seller-addr"
-                            rel="noreferrer"
-                          >
-                            {shortAddress(nft.seller)}
-                          </a>
-                        ) : nft.buyer ? (
-                          <a
-                            href={`https://etherscan.io/address/${nft.buyer}`}
-                            target="_blank"
-                            style={{ textDecoration: "none" }}
-                            className="seller-addr"
-                            rel="noreferrer"
-                          >
-                            {shortAddress(nft.buyer)}
-                          </a>
-                        ) : (
+                        {
                           <a
                             href={`https://etherscan.io/address/${owner}`}
                             target="_blank"
@@ -1592,50 +1648,64 @@ const SingleNft = ({
                           >
                             {shortAddress(owner)}
                           </a>
-                        )}
+                        }
                       </div>
                       {!isOwner && IsListed && coinbase && isConnected && (
-                        <button
-                          disabled={
-                            buyloading === true || buyStatus === "failed"
-                              ? true
-                              : false
-                          }
-                          className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
-                            buyStatus === "success"
-                              ? "successbtn"
-                              : buyStatus === "failed" ||
-                                (chainId !== 5 && chainId !== 1)
-                              ? "errorbtn"
-                              : null
-                          } d-flex justify-content-center align-items-center gap-2`}
-                          onClick={() => {
-                            chainId !== 1 && chainId !== 5
-                              ? handleSwitchChain()
-                              : handleBuy(nft);
-                          }}
-                        >
-                          {buyloading && (chainId === 1 || chainId === 5) ? (
-                            <div
-                              className="spinner-border spinner-border-sm text-light"
-                              role="status"
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
+                          <button
+                            disabled={
+                              buyloading === true || buyStatus === "failed"
+                                ? true
+                                : false
+                            }
+                            className={`btn  buyNftbtn px-4 d-flex justify-content-center ${
+                              buyStatus === "success"
+                                ? "successbtn"
+                                : buyStatus === "failed" ||
+                                  (chainId !== 5 && chainId !== 1)
+                                ? "errorbtn"
+                                : null
+                            } d-flex justify-content-center align-items-center gap-2`}
+                            onClick={() => {
+                              chainId !== 1 && chainId !== 5
+                                ? handleSwitchChain()
+                                : handleBuy(nft);
+                            }}
+                          >
+                            {buyloading && (chainId === 1 || chainId === 5) ? (
+                              <div
+                                className="spinner-border spinner-border-sm text-light"
+                                role="status"
+                              >
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </div>
+                            ) : !buyloading &&
+                              chainId !== 1 &&
+                              chainId !== 5 ? (
+                              "Switch Network"
+                            ) : buyStatus === "buy" ? (
+                              "Buy"
+                            ) : buyStatus === "approve" || buyStatus === "" ? (
+                              "Approve buy"
+                            ) : buyStatus === "success" ? (
+                              "Success"
+                            ) : (
+                              "Failed"
+                            )}
+                          </button>
+                          {chainId === 1 && (
+                            <button
+                              className="btn mint-now-btn gap-2"
+                              onClick={() => {
+                                setshowMakeOffer(true);
+                              }}
                             >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          ) : !buyloading && chainId !== 1 && chainId !== 5 ? (
-                            "Switch Network"
-                          ) : buyStatus === "buy" ? (
-                            "Buy"
-                          ) : buyStatus === "approve" || buyStatus === "" ? (
-                            "Approve buy"
-                          ) : buyStatus === "success" ? (
-                            "Success"
-                          ) : (
-                            "Failed"
+                              <img src={whiteTag} alt="" /> Make offer
+                            </button>
                           )}
-                        </button>
+                        </div>
                       )}
                       {isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex gap-2 col-lg-5 col-xxl-5 align-items-center">
@@ -1781,16 +1851,20 @@ const SingleNft = ({
                         </button>
                       )}
 
-                      {/* {!isOwner && !IsListed && coinbase && isConnected && (
-                        <button
-                          className="btn mint-now-btn gap-2"
-                          onClick={() => {
-                            setshowMakeOffer(true);
-                          }}
-                        >
-                          <img src={whiteTag} alt="" /> Make offer
-                        </button>
-                      )} */}
+                      {!isOwner &&
+                        !IsListed &&
+                        coinbase &&
+                        isConnected &&
+                        chainId === 1 && (
+                          <button
+                            className="btn mint-now-btn gap-2"
+                            onClick={() => {
+                              setshowMakeOffer(true);
+                            }}
+                          >
+                            <img src={whiteTag} alt="" /> Make offer
+                          </button>
+                        )}
 
                       {!isConnected && (
                         <button
@@ -2075,7 +2149,7 @@ const SingleNft = ({
               </div>
             </div>
           </div>
-          {/* 
+
           {offerData && offerData.length > 0 && (
             <div className="px-2 mt-5">
               <div className="d-flex flex-column gap-3">
@@ -2107,7 +2181,26 @@ const SingleNft = ({
                                 item.offer.payment.priceType === "0" ? 3 : 0
                               )}
                             </td>
-                            <td className="greendata">tbd</td>
+                            <td className="greendata">
+                              {item.offer.payment.priceType === "0"
+                                ? lowestPriceNftListed / 1e18 >
+                                  item.offer[0] / 1e18
+                                  ? (lowestPriceNftListed / 1e18 -
+                                      item.offer[0] / 1e18) /
+                                    100
+                                  : (item.offer[0] / 1e18 -
+                                      lowestPriceNftListed / 1e18) /
+                                    100
+                                : lowestPriceNftListedDYP / 1e18 >
+                                  item.offer[0] / 1e18
+                                ? (lowestPriceNftListedDYP / 1e18 -
+                                    item.offer[0] / 1e18) /
+                                  100
+                                : (item.offer[0] / 1e18 -
+                                    lowestPriceNftListedDYP / 1e18) /
+                                  100}
+                              %
+                            </td>
                             <td className="greendata">
                               <a
                                 href={`https://etherscan.io/address/${item.offer.buyer}`}
@@ -2122,8 +2215,33 @@ const SingleNft = ({
                             </td>
                             {isOwner && (
                               <td className="greendata">
-                                <button className="acceptbtn btn">
-                                  Accept
+                                <button
+                                  className={` ${
+                                    offeracceptStatus === "fail"
+                                      ? "errorbtn"
+                                      : "acceptbtn"
+                                  }  btn`}
+                                  disabled={!item.isAllowed}
+                                  onClick={() => {
+                                    handleAcceptOffer(item.index);
+                                  }}
+                                >
+                                  {offeracceptStatus === "initial" ? (
+                                    "Accept"
+                                  ) : offeracceptStatus === "loading" ? (
+                                    <>
+                                      Accepting{" "}
+                                      <div
+                                        className="spinner-border mx-1"
+                                        role="status"
+                                        style={{ width: 16, height: 16 }}
+                                      ></div>
+                                    </>
+                                  ) : offeracceptStatus === "success" ? (
+                                    "Success"
+                                  ) : (
+                                    "Failed"
+                                  )}
                                 </button>
                               </td>
                             )}
@@ -2135,7 +2253,7 @@ const SingleNft = ({
                 </div>
               </div>
             </div>
-          )} */}
+          )}
 
           {saleHistory && saleHistory.length > 0 && (
             <div className="px-2 mt-5">

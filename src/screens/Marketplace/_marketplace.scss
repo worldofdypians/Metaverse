@@ -82,7 +82,7 @@
 .nft-price-eth {
   font-style: normal;
   font-weight: 500;
-  font-size: 32px;
+  font-size: 26px;
   line-height: 39px;
   color: #ffffff;
 }
@@ -1813,4 +1813,18 @@
   padding-left: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.filters-dropdown{
+  width: 200px !important;
+  @media screen and (max-width: 786px) {
+    width: 100% !important;
+  }
+}
+
+.price-traits-wrapper{
+  width: fit-content;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
 }

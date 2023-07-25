@@ -240,6 +240,18 @@ const MarketEvents = ({
     }
   }, [popup]);
 
+  useEffect(() => {
+    if (eventId === "dragon-ruins") {
+      setSelectedPackage("dragon");
+    } else if (eventId === "golden-pass") {
+      setSelectedPackage("dyp");
+    } else if (eventId === "puzzle-madness") {
+      setSelectedPackage("idyp");
+    } else if (eventId === "critical-hit") {
+      setSelectedPackage("criticalHit");
+    }
+  }, []);
+
   return (
     <>
       <div

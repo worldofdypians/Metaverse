@@ -104,15 +104,19 @@ const MarketSection = ({
   const fetchCawsNfts = async () => {
     const cawsNft = await getCawsNfts();
     let cawsNft_ETH = cawsNft.filter((item) => item.payment_priceType === 0);
-
-    setcawsListed(cawsNft_ETH);
+    let latestCaws = cawsNft_ETH.sort((a, b) => {
+      return new Date(Number(b.blockTimestamp) * 1000) - new Date(Number(a.blockTimestamp) * 1000)
+    })
+    setcawsListed(latestCaws);
   };
 
   const fetchLandNfts = async () => {
     const wodNft = await getWodNfts();
     let wodNft_ETH = wodNft.filter((item) => item.payment_priceType === 0);
-
-    setwodListed(wodNft_ETH);
+    let latestWod = wodNft_ETH.sort((a, b) => {
+      return new Date(Number(b.blockTimestamp) * 1000) - new Date(Number(a.blockTimestamp) * 1000)
+    })
+    setwodListed(latestWod);
   };
 
   const fetchTimepieceNfts = async () => {
@@ -120,8 +124,11 @@ const MarketSection = ({
     let timepieceNft_ETH = timepieceNft.filter(
       (item) => item.payment_priceType === 0
     );
+    let latestTimepiece = timepieceNft_ETH.sort((a, b) => {
+      return new Date(Number(b.blockTimestamp) * 1000) - new Date(Number(a.blockTimestamp) * 1000)
+    })
 
-    settimepieceListed(timepieceNft_ETH);
+    settimepieceListed(latestTimepiece);
   };
 
   async function updateViewCount(tokenId, nftAddress) {

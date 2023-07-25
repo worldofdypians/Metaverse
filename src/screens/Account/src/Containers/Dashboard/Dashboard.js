@@ -46,7 +46,7 @@ function Dashboard({
   dypTokenData,
   onSigninClick,
   onLogoutClick,
-  availableTime
+  availableTime,
 }) {
   const { email, logout } = useAuth();
 
@@ -83,19 +83,22 @@ function Dashboard({
   const [stakes, setStakes] = useState([]);
   const [landstakes, setLandStakes] = useState([]);
   const [favorites, setFavorites] = useState([]);
-
+  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
+  const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+  
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
 
-  const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
-  const [MyNFTSLand, setMyNFTSLand] = useState([]);
+
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
- 
+
   const [syncStatus, setsyncStatus] = useState("initial");
+  const [myOffers, setmyOffers] = useState([]);
+  const [allActiveOffers, setallOffers] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -104,11 +107,11 @@ function Dashboard({
     display: "block",
     margin: "auto",
     borderColor: "#554fd8",
-    top: '30%',
-    left: '40%',
-    position: 'absolute'
+    top: "30%",
+    left: "40%",
+    position: "absolute",
   };
-  
+
   const onOpenNfts = () => {
     setShowNfts(!showNfts);
   };
@@ -230,27 +233,6 @@ function Dashboard({
       setmyWodWodStakesAll([]);
     }
   };
-
-  const getTokens = async () => {
-    try {
-      const res = await getWalletTokens(data?.getPlayer?.wallet?.publicAddress);
-      setTokensState(res);
-    } catch (error) {
-      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
-    }
-  };
-
-  // const connectWallet = async () => {
-  //   try {
-  //     await generateNonce({
-  //       variables: {
-  //         publicAddress: account,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
-  //   }
-  // };
 
   async function connectWallet() {
     if (window.ethereum) {
@@ -413,88 +395,6 @@ function Dashboard({
   };
 
   const windowSize = useWindowSize();
-
-  let buttonProps = {
-    title: "Connect Wallet",
-    onPress: connectWallet,
-    loading: loadingVerify || loadingGenerateNonce,
-  };
-
-  const renderItems = () => {
-    if (
-      (tokensState?.items && tokensState?.items?.length === 0) ||
-      _.isEmpty(tokensState)
-    ) {
-      return (
-        <>
-          {windowSize.width < 701 ? (
-            <>
-              <div className="nftGridItem">
-                <EmptyCard />
-              </div>
-            </>
-          ) : (
-            <>
-              {" "}
-              <div className="nftGridItem">
-                <EmptyCard />
-              </div>
-              <div className="nftGridItem">
-                <EmptyCard />
-              </div>
-            </>
-          )}
-        </>
-      );
-    }
-    if (tokensState?.items && tokensState?.items?.length > 0) {
-      return tokensState.items
-        .slice(0, windowSize.width < 701 ? 1 : 2)
-        .map((item, index) => (
-          <Grid key={index} item xs={3} md={2.4} className="nftGridItem">
-            <Cart {...item} stakes={stakes} />
-          </Grid>
-        ));
-    }
-  };
-
-  const renderGenesisItems = () => {
-    if (
-      (tokensState?.landItems && tokensState?.landItems?.length === 0) ||
-      _.isEmpty(tokensState)
-    ) {
-      return (
-        <>
-          {windowSize.width < 701 ? (
-            <>
-              <div className="nftGridItem">
-                <EmptyGenesisCard />
-              </div>
-            </>
-          ) : (
-            <>
-              {" "}
-              <div className="nftGridItem">
-                <EmptyGenesisCard />
-              </div>
-              <div className="nftGridItem">
-                <EmptyGenesisCard />
-              </div>
-            </>
-          )}
-        </>
-      );
-    }
-    if (tokensState?.landItems && tokensState?.landItems?.length > 0) {
-      return tokensState.landItems
-        .slice(0, windowSize.width < 701 ? 1 : 2)
-        .map((item, index) => (
-          <Grid key={index} item xs={3} md={2.4} className="nftGridItem">
-            <LandCart {...item} stakes={landstakes} />
-          </Grid>
-        ));
-    }
-  };
 
   const getDypBalance = async () => {
     const web3eth = new Web3(
@@ -691,6 +591,76 @@ function Dashboard({
     return finalboughtItems;
   };
 
+  const getMyOffers = async () => {
+    //setmyOffers
+
+    let allOffers = [];
+
+    const URL =
+      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
+
+    const offersQuery = `
+    {
+      offerMades(first: 100) {
+        id
+        buyer
+        nftAddress
+        tokenId
+      }
+    }
+    `;
+
+    await axios
+      .post(URL, { query: offersQuery })
+      .then(async (result) => {
+        allOffers = await result.data.data.offerMades;
+        setallOffers(result.data.data.offerMades);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    if (allOffers.length > 0) {
+      let finalArray = [];
+      await Promise.all(
+        allOffers.map(async (nft) => {
+          const result = await window
+            .getAllOffers(nft.nftAddress, nft.tokenId)
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (result && result.length > 0) {
+            result.map((item) => {
+              if (item.offer.buyer.toLowerCase() === coinbase.toLowerCase()) {
+                return finalArray.push({
+                  offer: item.offer,
+                  index: item.index,
+                  nftAddress: nft.nftAddress,
+                  tokenId: nft.tokenId,
+                  type:
+                    nft.nftAddress === window.config.nft_caws_address
+                      ? "caws"
+                      : nft.nftAddress === window.config.nft_timepiece_address
+                      ? "timepiece"
+                      : "land",
+                });
+              }
+            });
+          }
+        })
+      );
+      let uniqueOffers = finalArray.filter(
+        (v, i, a) =>
+          a.findIndex(
+            (v2) => v2.tokenId === v.tokenId && v2.nftAddress === v.nftAddress
+          ) === i
+      );
+
+      setmyOffers(uniqueOffers);
+    }
+  };
+
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
@@ -714,7 +684,6 @@ function Dashboard({
 
   useEffect(() => {
     getOtherNfts();
-    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
     getDypBalance();
     fetchUserFavorites(
       data?.getPlayer?.wallet && email
@@ -729,6 +698,13 @@ function Dashboard({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (coinbase) {
+      getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
+      getMyOffers();
+    }
+  }, [coinbase]);
 
   useEffect(() => {
     if (!isConnected && !coinbase && location.pathname === "/account") {
@@ -768,7 +744,6 @@ function Dashboard({
                 />
               </>
             ) : (
-              
               <div className="container-fluid px-0 px-lg-3">
                 <div className={""}>
                   <div
@@ -830,6 +805,8 @@ function Dashboard({
                         myCawsWodStakes={myCawsWodStakesAll}
                         myWodWodStakes={myWodWodStakesAll}
                         latestBoughtNFTS={latest20BoughtNFTS}
+                        myOffers={myOffers}
+                        allActiveOffers={allActiveOffers}
                       />
                     </div>
 
