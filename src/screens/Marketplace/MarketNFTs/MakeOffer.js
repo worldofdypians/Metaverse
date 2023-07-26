@@ -178,6 +178,13 @@ const MakeOffer = ({
     }
   }, [coinbase, nftCount]);
 
+  useEffect(() => {
+    if (offerData.length > 0) {
+      setprice(getFormattedNumber(offerData[0].offer[0] / 1e18, 2));
+      setFilter1(offerData[0].offer.payment.priceType === "0" ? "weth" : "dyp");
+    }
+  }, [offerData.length]);
+
   return (
     <Modal
       open={open}
@@ -202,7 +209,7 @@ const MakeOffer = ({
             <div className="d-flex flex-column flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between">
               <div className="d-flex flex-column w-100 flex-xxl-row flex-lg-row  align-items-center gap-2">
                 <img
-                  className="p-0 nft-img"
+                  className="p-0 nft-img nftimg2"
                   src={
                     isCaws
                       ? `https://mint.dyp.finance/thumbs150/${nftId}.png`
@@ -211,11 +218,7 @@ const MakeOffer = ({
                       : `https://timepiece.worldofdypians.com/thumbs150/${nftId}.png`
                   }
                   alt=""
-                  style={{
-                    width: windowSize.width > 500 ? 80 : "100%",
-                    height: windowSize.width > 500 ? 80 : "150",
-                    borderRadius: 20,
-                  }}
+                  loading="lazy"
                 />
                 <div className="d-flex flex-column justify-content-between">
                   <div className="d-flex flex-column align-items-center">
@@ -311,21 +314,34 @@ const MakeOffer = ({
             </div>
           )}
           <div className="d-flex align-items-center gap-3 justify-content-between">
-            <input
-              type="number"
-              min={0}
-              pattern="^[0-9]*[.,]?[0-9]*$"
-              placeholder="Price"
-              className="px-3 py-2 offerInput"
-              value={price}
-              onChange={(e) => {
-                setprice(e.target.value === "" ? "" : Number(e.target.value));
-                isapprovedMakeOffer(
-                  Number(e.target.value),
-                  filter1 === "weth" ? 0 : 1
-                );
-              }}
-            />
+            <div className="d-flex align-items-center gap-2">
+              <input
+                type="number"
+                min={0}
+                pattern="^[0-9]*[.,]?[0-9]*$"
+                placeholder="Price"
+                className="px-3 py-2 offerInput"
+                value={price}
+                onClickCapture={() => {
+                  setprice(price != 0 ? price : "");
+                }}
+                onChange={(e) => {
+                  setprice(e.target.value === "" ? "" : Number(e.target.value));
+                  isapprovedMakeOffer(
+                    Number(e.target.value),
+                    filter1 === "weth" ? 0 : 1
+                  );
+                }}
+              />
+              <span className="itemcollectionName">
+                $
+                {getFormattedNumber(
+                  filter1 === "weth"
+                    ? ethTokenData * price
+                    : dypTokenData * price, 3 
+                )}
+              </span>
+            </div>
             <div class="dropdown" style={{ width: "150px" }}>
               <button
                 class="btn btn-secondary nft-dropdown w-100
