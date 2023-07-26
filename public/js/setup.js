@@ -3535,6 +3535,48 @@ window.updateListingNFT = async (token, price, priceType, type) => {
     .send({ from: window.ethereum.selectedAddress });
 };
 
+// window.listNFT = async (token, price, priceType, type = "") => {
+//   let nft_address, price_nft, price_address;
+
+//   if (type === "timepiece") {
+//     nft_address = window.config.nft_timepiece_address;
+//   } else if (type === "land") {
+//     nft_address = window.config.nft_land_address;
+//   } else {
+//     nft_address = window.config.nft_caws_address;
+//   }
+
+//   if (priceType === 0) {
+//     price_nft = 0;
+//     price_address = "0x0000000000000000000000000000000000000000";
+//   }
+
+//   if (priceType === 1) {
+//     price_nft = 1;
+//     price_address = window.config.dyp_token_address;
+//   }
+
+//   console.log(
+//     "listNFT",
+//     token,
+//     price,
+//     priceType,
+//     type,
+//     nft_address,
+//     price_nft,
+//     price_address
+//   );
+
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
+
+//   await marketplace.methods
+//     .listItem(nft_address, token, price, [price_nft, price_address])
+//     .send({ from: window.ethereum.selectedAddress });
+// };
+
 window.listNFT = async (token, price, priceType, type = "") => {
   let nft_address, price_nft, price_address;
 
@@ -3556,26 +3598,31 @@ window.listNFT = async (token, price, priceType, type = "") => {
     price_address = window.config.dyp_token_address;
   }
 
-  console.log(
-    "listNFT",
-    token,
-    price,
-    priceType,
-    type,
-    nft_address,
-    price_nft,
-    price_address
-  );
-
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
 
-  await marketplace.methods
-    .listItem(nft_address, token, price, [price_nft, price_address])
-    .send({ from: window.ethereum.selectedAddress });
+    const gasPrice = await window.web3.eth.getGasPrice();
+    const currentGwei = window.web3.utils.fromWei(gasPrice, 'gwei');
+    const increasedGwei = parseInt(currentGwei) + 3;
+
+    const transactionParameters = {
+      gasPrice: window.web3.utils.toWei(increasedGwei.toString(), 'gwei'),
+    };
+
+    const estimateGas = await marketplace.methods
+      .listItem(nft_address, token, price, [price_nft, price_address])
+      .estimateGas({ from: window.ethereum.selectedAddress });
+
+    transactionParameters.gas = estimateGas.toString();
+
+    await marketplace.methods
+      .listItem(nft_address, token, price, [price_nft, price_address])
+      .send({ from: window.ethereum.selectedAddress, ...transactionParameters });
+  
 };
+
 
 window.isApproved = async (token, type) => {
   window.web3 = new Web3(window.ethereum);
@@ -3671,17 +3718,76 @@ window.makeOffer = async (nftAddress, tokenId, price, priceType) => {
 };
 
 
+// window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
+
+//   await marketplace.methods
+//     .cancelOffer(nftAddress, tokenId, offerIndex)
+//     .send({ from: await getCoinbase() });
+// };
+
 window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
 
-  await marketplace.methods
-    .cancelOffer(nftAddress, tokenId, offerIndex)
-    .send({ from: await getCoinbase() });
+    const gasPrice = await window.web3.eth.getGasPrice();
+    const currentGwei = window.web3.utils.fromWei(gasPrice, 'gwei');
+    const increasedGwei = parseInt(currentGwei) + 3;
+
+    const transactionParameters = {
+      gasPrice: window.web3.utils.toWei(increasedGwei.toString(), 'gwei'),
+    };
+
+    const estimateGas = await marketplace.methods
+      .cancelOffer(nftAddress, tokenId, offerIndex)
+      .estimateGas({ from: await getCoinbase() });
+
+    transactionParameters.gas = estimateGas.toString();
+
+    await marketplace.methods
+      .cancelOffer(nftAddress, tokenId, offerIndex)
+      .send({ from: await getCoinbase(), ...transactionParameters });
+
 };
 
+
+// window.updateOffer = async (
+//   nftAddress,
+//   tokenId,
+//   offerIndex,
+//   newPrice,
+//   priceType
+// ) => {
+//   let price_address;
+
+//   if (priceType === 0) {
+//     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+//   }
+
+//   if (priceType === 1) {
+//     price_address = window.config.dyp_token_address;
+//   }
+
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
+//   console.log(nftAddress, tokenId, offerIndex, newPrice, [
+//     priceType,
+//     price_address,
+//   ]);
+//   await marketplace.methods
+//     .updateOffer(nftAddress, tokenId, offerIndex, newPrice, [
+//       priceType,
+//       price_address,
+//     ])
+//     .send({ from: await getCoinbase() });
+// };
 
 window.updateOffer = async (
   nftAddress,
@@ -3704,16 +3810,26 @@ window.updateOffer = async (
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
-  console.log(nftAddress, tokenId, offerIndex, newPrice, [
-    priceType,
-    price_address,
-  ]);
-  await marketplace.methods
-    .updateOffer(nftAddress, tokenId, offerIndex, newPrice, [
-      priceType,
-      price_address,
-    ])
-    .send({ from: await getCoinbase() });
+
+
+    const gasPrice = await window.web3.eth.getGasPrice();
+    const currentGwei = window.web3.utils.fromWei(gasPrice, 'gwei');
+    const increasedGwei = parseInt(currentGwei) + 3;
+
+    const transactionParameters = {
+      gasPrice: window.web3.utils.toWei(increasedGwei.toString(), 'gwei'),
+    };
+
+    const estimateGas = await marketplace.methods
+      .updateOffer(nftAddress, tokenId, offerIndex, newPrice, [priceType, price_address])
+      .estimateGas({ from: await getCoinbase() });
+
+    transactionParameters.gas = estimateGas.toString();
+
+    await marketplace.methods
+      .updateOffer(nftAddress, tokenId, offerIndex, newPrice, [priceType, price_address])
+      .send({ from: await getCoinbase(), ...transactionParameters });
+  
 };
 
 window.approveOffer = async (amount, priceType) => {
