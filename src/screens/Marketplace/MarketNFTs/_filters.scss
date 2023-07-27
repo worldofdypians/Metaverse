@@ -251,6 +251,17 @@
   line-height: normal;
 }
 
+.nftimg2 {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    height: 150px;
+  }
+}
+
 .gotowallet {
   color: #eeedff;
   font-size: 14px;

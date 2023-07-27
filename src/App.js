@@ -247,6 +247,13 @@ function App() {
     });
   };
 
+  
+  const checkConnection2 = async () => { 
+    await window.getCoinbase().then((data) => {
+      setCoinbase(data);
+    });
+  };
+
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -899,13 +906,24 @@ function App() {
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
+  // ethereum?.on("accountsChanged", checkConnection2);
 
-  useEffect(() => {
-    if (ethereum) {
-      ethereum.on("chainChanged", checkNetworkId);
-      ethereum.on("accountsChanged", handleConnection);
-    }
-  }, [ethereum, nftCount]);
+  // useEffect(() => {
+  //   if (ethereum) {
+  //     ethereum.on("chainChanged", checkNetworkId);
+  //     ethereum.on("accountsChanged", handleConnection);
+  //   }
+  // }, [ethereum, nftCount]);
+
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (window.ethereum.isConnected() === true) {
+  //       checkConnection2();
+  //       setIsConnected(true);
+  //     } else setIsConnected(false);
+  //     checkNetworkId();
+  //   }
+  // }, [coinbase, chainId]);
 
   useEffect(() => {
     checkNetworkId();
@@ -1103,20 +1121,16 @@ function App() {
   //   setmyNftsOffer(recievedOffers);
   // };
 
-  const handleDisconnect = async () => {
-    await window.disconnectWallet();
-    setCoinbase();
-    setIsConnected(false);
-  };
-
   async function getNotifications(walletAddress) {
     try {
       const response = await axios.get(
-        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`
+        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+          walletAddress
+        )}`
       );
       const notifications = response.data[0]?.notifications || [];
       setmyNftsOffer(notifications.reverse());
-      console.log("Notifications:", notifications);
+      // console.log("Notifications:", notifications);
     } catch (error) {
       console.error("Error retrieving notifications:", error.message);
     }
@@ -1165,7 +1179,14 @@ function App() {
     if (coinbase) {
       getNotifications(coinbase);
     }
-  }, [coinbase,nftCount]);
+  }, [coinbase, nftCount]);
+
+  const handleDisconnect = async () => {
+    await window.disconnectWallet();
+    setCoinbase();
+    setIsConnected(false);
+  };
+  
 
   return (
     <ApolloProvider client={client}>
@@ -1182,7 +1203,6 @@ function App() {
             myOffers={myNftsOffer}
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
-
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1192,7 +1212,6 @@ function App() {
               setFireAppContent(true);
             }}
             handleDisconnect={handleDisconnect}
-
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
