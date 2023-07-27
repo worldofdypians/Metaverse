@@ -906,7 +906,7 @@ function App() {
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
-  ethereum?.on("accountsChanged", checkConnection2);
+  // ethereum?.on("accountsChanged", checkConnection2);
 
   // useEffect(() => {
   //   if (ethereum) {
@@ -915,15 +915,15 @@ function App() {
   //   }
   // }, [ethereum, nftCount]);
 
-  useEffect(() => {
-    if (window.ethereum) {
-      if (window.ethereum.isConnected() === true) {
-        checkConnection2();
-        setIsConnected(true);
-      } else setIsConnected(false);
-      checkNetworkId();
-    }
-  }, [coinbase, chainId]);
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (window.ethereum.isConnected() === true) {
+  //       checkConnection2();
+  //       setIsConnected(true);
+  //     } else setIsConnected(false);
+  //     checkNetworkId();
+  //   }
+  // }, [coinbase, chainId]);
 
   useEffect(() => {
     checkNetworkId();
@@ -1182,7 +1182,7 @@ function App() {
   }, [coinbase, nftCount]);
 
   const handleDisconnect = async () => {
-    console.log("test");
+    await window.disconnectWallet();
     setCoinbase();
     setIsConnected(false);
   };
