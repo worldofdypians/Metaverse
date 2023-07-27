@@ -706,11 +706,19 @@ function Dashboard({
     }
   }, [coinbase]);
 
+  const logoutItem = localStorage.getItem("logout");
+
   useEffect(() => {
-    if (!isConnected && !coinbase && location.pathname === "/account") {
-      navigate("/");
+    if (window.ethereum) {
+      if (window.ethereum.isConnected() === true && logoutItem === "false") {
+        localStorage.setItem("logout", "false");
+      } else {
+        navigate("/");
+        localStorage.setItem("logout", "true");
+      }
     }
-  }, [isConnected, coinbase]);
+  }, [coinbase, chainId]);
+
 
   return (
     <div

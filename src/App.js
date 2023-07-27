@@ -51,7 +51,7 @@ import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
 import MarketStake from "./screens/Marketplace/MarketStake";
 import MarketEvents from "./screens/Marketplace/MarketEvents";
 import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 
@@ -132,6 +132,7 @@ function App() {
   const [myNftsOffer, setmyNftsOffer] = useState([]);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getTokenData = async () => {
     await axios
@@ -247,11 +248,17 @@ function App() {
     });
   };
 
-  
-  const checkConnection2 = async () => { 
+  const checkConnection2 = async () => {
     await window.getCoinbase().then((data) => {
-      setCoinbase(data);
+      if (data) {
+        setCoinbase(data);
+        setIsConnected(true);
+      } else {
+        setCoinbase();
+        setIsConnected(false);
+      }
     });
+    localStorage.setItem("logout", "false");
   };
 
   const handleRegister = () => {
@@ -310,6 +317,7 @@ function App() {
 
   const handleConnectWallet = async () => {
     try {
+      localStorage.setItem("logout", "false");
       await window.connectWallet().then((data) => {
         setIsConnected(data);
       });
@@ -906,7 +914,7 @@ function App() {
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
-  // ethereum?.on("accountsChanged", checkConnection2);
+  ethereum?.on("accountsChanged", checkConnection2);
 
   // useEffect(() => {
   //   if (ethereum) {
@@ -915,15 +923,24 @@ function App() {
   //   }
   // }, [ethereum, nftCount]);
 
-  // useEffect(() => {
-  //   if (window.ethereum) {
-  //     if (window.ethereum.isConnected() === true) {
-  //       checkConnection2();
-  //       setIsConnected(true);
-  //     } else setIsConnected(false);
-  //     checkNetworkId();
-  //   }
-  // }, [coinbase, chainId]);
+  const logout = localStorage.getItem("logout");
+
+  useEffect(() => {
+    if (window.ethereum) {
+      if (window.ethereum.isConnected() === true && logout === "false") {
+        checkConnection2();
+        setIsConnected(true);
+      } else {
+        setIsConnected(false);
+        localStorage.setItem("logout", "true");
+        if (location.pathname.includes("/account")) {
+          navigate("/");
+        }
+      }
+      checkNetworkId();
+    }
+  }, [coinbase, chainId]);
+
 
   useEffect(() => {
     checkNetworkId();
@@ -1167,26 +1184,16 @@ function App() {
   }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
 
   useEffect(() => {
-    if (
-      window.coinbase_address === "0x0000000000000000000000000000000000000000"
-    ) {
-      setCoinbase();
-      setIsConnected(false);
-    }
-  }, [window.coinbase_address]);
-
-  useEffect(() => {
     if (coinbase) {
       getNotifications(coinbase);
     }
   }, [coinbase, nftCount]);
 
   const handleDisconnect = async () => {
-    await window.disconnectWallet();
+    localStorage.setItem("logout", "true");
     setCoinbase();
     setIsConnected(false);
   };
-  
 
   return (
     <ApolloProvider client={client}>
