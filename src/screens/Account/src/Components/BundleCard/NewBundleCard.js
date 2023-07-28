@@ -651,6 +651,7 @@ const NewBundleCard = ({
         setisAtlimit(false);
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
         if (today < dateofBundle) { 
+         
           setcountdown700(oneAugust.getTime());
           handleSetAvailableTime(oneAugust.getTime());
           setisAtlimit(true);
@@ -659,7 +660,7 @@ const NewBundleCard = ({
             "The Golden Pass bundle is currently not available for purchase. Please check back next month."
           );
         } else if (today > dateofBundle && bundlesBought > 0) {
-          setisAtlimit(true);
+          setisAtlimit(false);
           setcountdown700();
           handleSetAvailableTime();
           setStatus700(

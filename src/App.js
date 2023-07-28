@@ -908,12 +908,12 @@ function App() {
   ethereum?.on("accountsChanged", handleRefreshList);
   // ethereum?.on("accountsChanged", checkConnection2);
 
-  // useEffect(() => {
-  //   if (ethereum) {
-  //     ethereum.on("chainChanged", checkNetworkId);
-  //     ethereum.on("accountsChanged", handleConnection);
-  //   }
-  // }, [ethereum, nftCount]);
+  useEffect(() => {
+    if (ethereum) {
+      ethereum.on("chainChanged", checkNetworkId);
+      ethereum.on("accountsChanged", handleConnection);
+    }
+  }, [ethereum, nftCount]);
 
   // useEffect(() => {
   //   if (window.ethereum) {
