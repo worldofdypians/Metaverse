@@ -647,19 +647,32 @@ const NewBundleCard = ({
           );
           setStatusColor700("#FE7A00");
         }
-      } else if (week4.includes(today_date.toString()) && today_date <= 25) {
+      } else if (week4.includes(today_date.toString()) && today_date <= 22) {
         handleRefreshCountdown700();
         setisAtlimit(false);
-      } else if (week4.includes(today_date.toString()) && today_date > 25) {
+      } else if (week4.includes(today_date.toString()) && today_date > 22) {
         if (today > dateofBundle) {
-          console.log('yes')
+         
+          const remainingTime3 = lastDayofBundle;
+        const remainingTime_miliseconds3 = bundleExpireMiliseconds;
+
+      
+          const additional_remainingTime_time3 = 31 - remainingTime3;
+          const additional_remaining_time_timestamp3 =
+            additional_remainingTime_time3 * 24 * 60 * 60 -
+            lastDayofBundleHours * 60 * 60 -
+            lastDayofBundleMinutes * 60;
+
+          const final =
+            Number(remainingTime_miliseconds3) +
+            Number(additional_remaining_time_timestamp3 * 1000);
+
+          setcountdown700(final);
+          handleSetAvailableTime(final);
           setisAtlimit(true);
-          setcountdown700(oneAugust.getTime());
-          handleSetAvailableTime(oneAugust.getTime());
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
           setStatusColor700("#FE7A00");
+        
+
         } else if (today < dateofBundle) {
           setisAtlimit(true);
           setcountdown700();
