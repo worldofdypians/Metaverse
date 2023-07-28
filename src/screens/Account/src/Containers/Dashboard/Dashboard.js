@@ -5,7 +5,6 @@ import { ethers } from "ethers";
 import { dashboardBackground } from "../../Themes/Images";
 import { GENERATE_NONCE, GET_PLAYER, VERIFY_WALLET } from "./Dashboard.schema";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
-
 import { getWalletTokens } from "../../web3/tmp";
 import { Grid } from "@mui/material";
 import { HashLoader } from "react-spinners";
@@ -14,10 +13,8 @@ import LandCart from "../../Components/Cart/LandCart";
 import EmptyCard from "../../Components/Cart/EmptyCard";
 import classes from "./Dashboard.module.css";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
-
 import LeaderBoard from "../../Components/LeaderBoard/LeaderBoard";
 import WalletBalance from "../../Components/WalletBalance/WalletBalance";
-
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import ChecklistModal from "../../Components/ChecklistModal/ChecklistModal";
 import ChecklistLandNftModal from "../../Components/ChecklistModal/ChecklistLandNftModal";
@@ -26,13 +23,12 @@ import Web3 from "web3";
 import { ERC20_ABI } from "../../web3/abis";
 import _ from "lodash";
 import WalletModal from "../../Components/WalletModal/WalletModal";
-
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
-
 import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 
 function Dashboard({
   account,
@@ -77,7 +73,6 @@ function Dashboard({
   const [idypBalance, setiDypBalance] = useState();
   const [idypBalancebnb, setiDypBalanceBnb] = useState();
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
-  const [loadingRecentListings, setLoadingRecentListings] = useState(false);
   const [showNfts, setShowNfts] = useState(false);
   const [showWalletModal, setshowWalletModal] = useState(false);
   const [stakes, setStakes] = useState([]);
@@ -86,11 +81,10 @@ function Dashboard({
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
-  
+
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
-
 
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
@@ -99,6 +93,7 @@ function Dashboard({
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
+  const [showSyncModal, setshowSyncModal] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -301,8 +296,15 @@ function Dashboard({
     }
   };
 
+  const handleShowSyncModal = () => {
+    setshowSyncModal(true);
+  };
+
   const handleSync = async () => {
     setsyncStatus("loading");
+    setTimeout(() => {
+      setshowSyncModal(false);
+    }, 3000);
     try {
       await generateNonce({
         variables: {
@@ -706,11 +708,18 @@ function Dashboard({
     }
   }, [coinbase]);
 
-  useEffect(() => {
-    if (!isConnected && !coinbase && location.pathname === "/account") {
-      navigate("/");
-    }
-  }, [isConnected, coinbase]);
+  // const logoutItem = localStorage.getItem("logout");
+
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (window.ethereum.isConnected() === true && logoutItem === "false") {
+  //       localStorage.setItem("logout", "false");
+  //     } else {
+  //       navigate("/");
+  //       localStorage.setItem("logout", "true");
+  //     }
+  //   }
+  // }, [coinbase, chainId]);
 
   return (
     <div
@@ -771,7 +780,7 @@ function Dashboard({
                         }}
                         onSigninClick={onSigninClick}
                         onLogoutClick={logout}
-                        onSyncClick={handleSync}
+                        onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
                       />
                       <WalletBalance
@@ -1058,6 +1067,19 @@ function Dashboard({
                   setshowWalletModal(false);
                 }}
                 handleConnection={connectWallet}
+              />
+            )}
+
+            {showSyncModal === true && (
+              <SyncModal
+                onCancel={() => {
+                  setshowSyncModal(false);
+                }}
+                onclose={() => {
+                  setshowSyncModal(false);
+                }}
+                open={showSyncModal}
+                onConfirm={handleSync}
               />
             )}
 
