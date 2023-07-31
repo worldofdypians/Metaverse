@@ -70,7 +70,7 @@ function Auth({ isConnected, coinbase }) {
   useEffect(() => {
     if (!isConnected && !coinbase && location.pathname === "/auth") {
       navigate("/");
-    localStorage.setItem("logout", "true");
+    // localStorage.setItem("logout", "true");
     }
   }, [isConnected, coinbase]);
 
