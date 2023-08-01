@@ -529,6 +529,8 @@ const NewBundleCard = ({
   };
 
   let oneSeptember = new Date("2023-09-01 11:11:00 GMT+02:00");
+  let oneAugust = new Date("2023-08-01 11:11:00 GMT+02:00");
+
   let twentyfiveaugust = new Date("2023-08-25 23:59:00 GMT+02:00");
   let today = new Date();
 
@@ -772,12 +774,16 @@ const NewBundleCard = ({
       handleSetAvailableTime(oneSeptember.getTime());
     }
   }, [bundlesBought, countdown700]);
-
+ 
   useEffect(() => {
     getTokenData();
     if (today > twentyfiveaugust) {
       setisAtlimit(true);
     }
+    if (today < oneAugust) {
+      setisAtlimit(true);
+    }
+
     convertPrice();
   }, [today]);
 
