@@ -15,24 +15,24 @@ import { useNavigate } from "react-router-dom";
 import bellIcon from "./assets/bellIcon.svg";
 import axios from "axios";
 import viewAllArrow from "./assets/viewAllArrow.svg";
-import allIcon from '../../screens/Marketplace/Notifications/assets/allIcon.svg'
-import allIconActive from '../../screens/Marketplace/Notifications/assets/allIconActive.svg'
-import cartIcon from '../../screens/Marketplace/Notifications/assets/cartIcon.svg'
-import cartIconActive from '../../screens/Marketplace/Notifications/assets/cartIconActive.svg'
-import eventIcon from '../../screens/Marketplace/Notifications/assets/eventIcon.svg'
-import eventIconActive from '../../screens/Marketplace/Notifications/assets/eventIconActive.svg'
-import markReadIcon from '../../screens/Marketplace/Notifications/assets/markReadIcon.svg'
-import markReadIconActive from '../../screens/Marketplace/Notifications/assets/markReadIconActive.svg'
-import newsIcon from '../../screens/Marketplace/Notifications/assets/newsIcon.svg'
-import newsIconActive from '../../screens/Marketplace/Notifications/assets/newsIconActive.svg'
-import offerIcon from '../../screens/Marketplace/Notifications/assets/offerIcon.svg'
-import offerIconActive from '../../screens/Marketplace/Notifications/assets/offerIconActive.svg'
-import transferIcon from '../../screens/Marketplace/Notifications/assets/transferIcon.svg'
-import transferIconActive from '../../screens/Marketplace/Notifications/assets/transferIconActive.svg'
-import updateIcon from '../../screens/Marketplace/Notifications/assets/updateIcon.svg'
-import updateIconActive from '../../screens/Marketplace/Notifications/assets/updateIconActive.svg'
-import deleteIcon from '../../screens/Marketplace/Notifications/assets/deleteIcon.svg'
-import deleteIconActive from '../../screens/Marketplace/Notifications/assets/deleteIconActive.svg'
+import allIcon from "../../screens/Marketplace/Notifications/assets/allIcon.svg";
+import allIconActive from "../../screens/Marketplace/Notifications/assets/allIconActive.svg";
+import cartIcon from "../../screens/Marketplace/Notifications/assets/cartIcon.svg";
+import cartIconActive from "../../screens/Marketplace/Notifications/assets/cartIconActive.svg";
+import eventIcon from "../../screens/Marketplace/Notifications/assets/eventIcon.svg";
+import eventIconActive from "../../screens/Marketplace/Notifications/assets/eventIconActive.svg";
+import markReadIcon from "../../screens/Marketplace/Notifications/assets/markReadIcon.svg";
+import markReadIconActive from "../../screens/Marketplace/Notifications/assets/markReadIconActive.svg";
+import newsIcon from "../../screens/Marketplace/Notifications/assets/newsIcon.svg";
+import newsIconActive from "../../screens/Marketplace/Notifications/assets/newsIconActive.svg";
+import offerIcon from "../../screens/Marketplace/Notifications/assets/offerIcon.svg";
+import offerIconActive from "../../screens/Marketplace/Notifications/assets/offerIconActive.svg";
+import transferIcon from "../../screens/Marketplace/Notifications/assets/transferIcon.svg";
+import transferIconActive from "../../screens/Marketplace/Notifications/assets/transferIconActive.svg";
+import updateIcon from "../../screens/Marketplace/Notifications/assets/updateIcon.svg";
+import updateIconActive from "../../screens/Marketplace/Notifications/assets/updateIconActive.svg";
+import deleteIcon from "../../screens/Marketplace/Notifications/assets/deleteIcon.svg";
+import deleteIconActive from "../../screens/Marketplace/Notifications/assets/deleteIconActive.svg";
 
 const Header = ({
   handleSignUp,
@@ -47,6 +47,7 @@ const Header = ({
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
   const [isUnread, setisUnread] = useState(false);
+  const [unreadNotifications, setunreadNotifications] = useState(0);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -76,19 +77,6 @@ const Header = ({
       );
     } catch (error) {
       console.error("Error updating view count:", error);
-    }
-  }
-
-  async function markAllNotificationsAsRead() {
-    console.log("Wallet Address:", coinbase); // Check the value of walletAddress
-    try {
-      await axios.patch(
-        `https://api.worldofdypians.com/notifications/${coinbase}`
-      );
-      setisUnread(false);
-      console.log("Notifications marked as read");
-    } catch (error) {
-      console.error("Error marking notifications as read:", error.message);
     }
   }
 
@@ -140,7 +128,7 @@ const Header = ({
   const checkRead = () => {
     if (myOffers.length > 0) {
       let count = myOffers.filter(({ read }) => read === false).length;
-
+      setunreadNotifications(count);
       if (count > 0) {
         setisUnread(true);
       } else if (count === 0) {
@@ -258,9 +246,15 @@ const Header = ({
                     //   alignItems: myOffers.length === 0 ? "center" : "",
                     // }}
                   >
-                    <NavLink to={"/notifications"} onClick={() => setOpenNotifications(false)} className="pending-notifications m-3 p-2 d-flex align-items-center justify-content-between">
+                    <NavLink
+                      to={"/notifications"}
+                      onClick={() => setOpenNotifications(false)}
+                      className="pending-notifications m-3 p-2 d-flex align-items-center justify-content-between"
+                    >
                       <div className="d-flex align-items-center gap-1">
-                        <h6 className="notifications-amount mb-0">{myOffers.length}</h6>
+                        <h6 className="notifications-amount mb-0">
+                          {unreadNotifications}
+                        </h6>
                         <span className="pending-text mb-0">
                           Pending Notifications
                         </span>
@@ -276,7 +270,6 @@ const Header = ({
                         myOffers.map((nft, index) => {
                           return (
                             <NavLink
-                            
                               to={`/marketplace/nft/${
                                 nft.tokenId
                               }/${nft.nftAddress.toLowerCase()}`}
@@ -341,28 +334,83 @@ const Header = ({
                               </div> */}
                               <div className="d-flex flex-column gap-1 p-3 header-notification-item">
                                 <div className="d-flex align-items-center gap-1">
-                          <img height={16} width={16} src={nft.buy === "yes" && nft.read === false ? cartIconActive : nft.buy === "yes" && nft.read === true ? cartIcon : nft.offer === "yes" && nft.read === false ? offerIconActive : nft.offer === "yes" && nft.read === true ? offerIcon : nft.offerAccepted === "yes" && nft.read === false ? transferIconActive : nft.offerAccepted === "yes" && nft.read === true ? transferIcon : null } alt="" />
-                          <h6 className="notification-title mb-0"  style={{color: nft.read === false ? "#11FED2" : "#EEEDFF", fontSize: '12px'}}>{nft.buy === "yes" ? "NFT Sale" : nft.offer === "yes" ? "New Offer" : nft.offerAccepted === "yes" ? "Accepted Offer" : null}</h6>
+                                  <img
+                                    height={16}
+                                    width={16}
+                                    src={
+                                      nft.buy === "yes" && nft.read === false
+                                        ? cartIconActive
+                                        : nft.buy === "yes" && nft.read === true
+                                        ? cartIcon
+                                        : nft.offer === "yes" &&
+                                          nft.read === false
+                                        ? offerIconActive
+                                        : nft.offer === "yes" &&
+                                          nft.read === true
+                                        ? offerIcon
+                                        : nft.offerAccepted === "yes" &&
+                                          nft.read === false
+                                        ? transferIconActive
+                                        : nft.offerAccepted === "yes" &&
+                                          nft.read === true
+                                        ? transferIcon
+                                        : null
+                                    }
+                                    alt=""
+                                  />
+                                  <h6
+                                    className="notification-title mb-0"
+                                    style={{
+                                      color:
+                                        nft.read === false
+                                          ? "#11FED2"
+                                          : "#EEEDFF",
+                                      fontSize: "12px",
+                                    }}
+                                  >
+                                    {nft.buy === "yes"
+                                      ? "NFT Sale"
+                                      : nft.offer === "yes"
+                                      ? "New Offer"
+                                      : nft.offerAccepted === "yes"
+                                      ? "NFT Sale"
+                                      : null}
+                                  </h6>
                                 </div>
-                                <p className="notification-desc mb-0" style={{fontSize: '10px'}}>{nft.buy === "yes" ? `Your ${
-                          nft.nftAddress === window.config.nft_caws_address
-                          ? "CAWS"
-                          : nft.nftAddress === window.config.nft_land_address
-                          ? "WOD"
-                          : "Timepiece"
-                        } #${nft.tokenId} has been successfully sold. The new owner of the CAWS is registered with the address: 0x375...2b5E.` : nft.offer === "yes" ? `There is a new offer for your ${
-                          nft.nftAddress === window.config.nft_caws_address
-                          ? "CAWS"
-                          : nft.nftAddress === window.config.nft_land_address
-                          ? "WOD"
-                          : "Timepiece"
-                        } #${nft.tokenId}. The user with the address 0x375...2b5E has submitted a bid of 0.95 ETH` : null}</p>
-                              <span className="notification-relative-time mb-0">
-                              {getRelativeTime(nft.timestamp)}
-
-                              </span>
+                                <p
+                                  className="notification-desc mb-0"
+                                  style={{ fontSize: "10px" }}
+                                >
+                                  {nft.buy === "yes"
+                                    ? `Congratulations on being the new owner of  ${
+                                        nft.nftAddress ===
+                                        window.config.nft_caws_address
+                                          ? "CAWS"
+                                          : nft.nftAddress ===
+                                            window.config.nft_land_address
+                                          ? "WOD"
+                                          : "Timepiece"
+                                      } #${
+                                        nft.tokenId
+                                      }.`
+                                    : nft.offer === "yes"
+                                    ? `There is a new offer for your ${
+                                        nft.nftAddress ===
+                                        window.config.nft_caws_address
+                                          ? "CAWS"
+                                          : nft.nftAddress ===
+                                            window.config.nft_land_address
+                                          ? "WOD"
+                                          : "Timepiece"
+                                      } #${
+                                        nft.tokenId
+                                      }`
+                                    : null}
+                                </p>
+                                <span className="notification-relative-time mb-0">
+                                  {getRelativeTime(nft.timestamp)}
+                                </span>
                               </div>
-
                             </NavLink>
                           );
                         })}

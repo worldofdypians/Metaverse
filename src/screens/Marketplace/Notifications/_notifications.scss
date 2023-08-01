@@ -32,7 +32,9 @@
 
 .notifications-list {
   height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  display: flex;
+    flex-direction: column;
 }
 
 .outer-notification-list {
