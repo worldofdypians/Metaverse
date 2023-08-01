@@ -247,8 +247,7 @@ function App() {
     });
   };
 
-  
-  const checkConnection2 = async () => { 
+  const checkConnection2 = async () => {
     await window.getCoinbase().then((data) => {
       setCoinbase(data);
     });
@@ -737,7 +736,7 @@ function App() {
           finalboughtItems.push(nft);
         }
       });
-    return finalboughtItems;
+    setLatest20BoughtNFTS(finalboughtItems);
   };
 
   const handleRefreshList = () => {
@@ -1043,7 +1042,6 @@ function App() {
       setTimepieceBought(uniqueTimepiece);
     }
   };
-
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
 
@@ -1146,10 +1144,7 @@ function App() {
     getTokenDatabnbNew();
     getListedNfts2();
 
-    getLatest20BoughtNFTS().then((NFTS) => {
-      setLatest20BoughtNFTS(NFTS);
-      getCawsSold();
-    });
+    getLatest20BoughtNFTS();
 
     getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
       settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
@@ -1165,6 +1160,12 @@ function App() {
       getOtherNfts();
     }
   }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
+
+  useEffect(()=>{
+    if(latest20BoughtNFTS.length > 0) {
+      getCawsSold();
+    }
+  },[latest20BoughtNFTS.length])
 
   useEffect(() => {
     if (
@@ -1186,7 +1187,6 @@ function App() {
     setCoinbase();
     setIsConnected(false);
   };
-  
 
   return (
     <ApolloProvider client={client}>

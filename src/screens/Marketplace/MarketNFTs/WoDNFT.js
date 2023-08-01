@@ -280,7 +280,7 @@ const WoDNFT = ({
 
   const listInnerRef = useRef();
   const nftsPerRow = 18;
-  const allLandpiece = 999;
+  const allLandpiece = 998;
 
   const clearAll = () => {
     setArtifacts({ trait_type: "Artifacts", value: [] });
@@ -665,32 +665,34 @@ const WoDNFT = ({
   };
 
   const testFunc = async () => {
-    const array = Array.from({ length: 998 }, (_, index) => index + 1);
+    if (count > 0) {
+      setLoading(true);
+      const objArr = await Promise.all(
+        filterIds.map(async (i) => {
+          const owner = await window.landnft.ownerOf(i).catch((e) => {
+            console.log(e);
+          });
+          const attributes = await window.getLandNft(i);
 
-    const objArr = await Promise.all(
-      array.map(async (i) => {
-        const owner = await window.landnft.ownerOf(i).catch((e) => {
-          console.log(e);
-        });
-        const attributes = await window.getLandNft(i);
+          return {
+            nftAddress: window.config.landnft_address,
+            buyer: owner,
+            tokenId: i.toString(),
+            type: "land",
+            chain: 1,
+            attributes: attributes.attributes,
+          };
+        })
+      );
 
-        return {
-          nftAddress: window.config.landnft_address,
-          buyer: owner,
-          tokenId: i.toString(),
-          type: "land",
-          chain: 1,
-          attributes: attributes.attributes,
-        };
-      })
-    );
+      const objArrFiltered = objArr.filter(
+        ({ tokenId: id1 }) => !allwodNfts.some(({ tokenId: id2 }) => id2 == id1)
+      );
 
-    const objArrFiltered = objArr.filter(
-      ({ tokenId: id1 }) => !allwodNfts.some(({ tokenId: id2 }) => id2 == id1)
-    );
-
-    const finalUnique = [...allwodNfts, ...objArrFiltered];
-    setLandNfts2(finalUnique);
+      const finalUnique = [...allwodNfts, ...objArrFiltered];
+      setLoading(false);
+      setLandNfts2(finalUnique);
+    }
   };
 
   const fetchInitialWod = async () => {
@@ -699,6 +701,7 @@ const WoDNFT = ({
       ({ tokenId: id1 }) => !allwodNfts.some(({ tokenId: id2 }) => id2 === id1)
     );
     const finalUnique = [...allwodNfts, ...uniqueArray];
+
     setLandNfts(finalUnique);
     setInitialNfts(finalUnique);
     setLoading(false);
@@ -774,22 +777,19 @@ const WoDNFT = ({
   }, [count]);
 
   useEffect(() => {
-    if (landNfts && landNfts.length > 0 && loading === false) {
+    if (count > 0) {
       testFunc();
+    } else if (count === 0) {
+      fetchInitialWod();
     }
-  }, [landNfts]);
+  }, [count]);
 
   useEffect(() => {
-    if (
-      wodBought &&
-      wodBought.length > 0 &&
-      allwodNfts.length > 0 &&
-      finalData.length > 0
-    ) {
+    if (wodBought && allwodNfts.length > 0 && finalData.length > 0) {
       fetchInitialWod();
     }
   }, [allwodNfts.length, finalData.length, wodBought]);
-
+ 
   useEffect(() => {
     getWodCollection();
     // fetchFilters();
@@ -803,6 +803,7 @@ const WoDNFT = ({
     if (landNfts && landNfts.length > 0) {
       setLoading(false);
     }
+    sortNfts("lth");
   }, [landNfts]);
 
   return (

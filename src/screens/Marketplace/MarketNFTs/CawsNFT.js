@@ -588,7 +588,6 @@ const CawsNFT = ({
     }
   };
 
- ;
 
   const getCawsCollection = async () => {
     let finalArray = [];
@@ -758,11 +757,6 @@ const CawsNFT = ({
     }
   }, [allCawsNfts.length, finalData.length, cawsBought]);
 
-  // useEffect(() => {
-  //   if (allCawsNfts.length > 0 && finalData2.length > 0) {
-  //     fetchInitialCaws2();
-  //   }
-  // }, [allCawsNfts.length, finalData2.length]);
 
   useEffect(() => {
     if (cawsNFTS && cawsNFTS.length === 0) {
