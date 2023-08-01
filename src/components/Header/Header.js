@@ -422,7 +422,7 @@ const Header = ({
                         style={{ pointerEvents: "none" }}
                       >
                         <span className="notification-text">
-                          No notifications
+                          No recent notifications
                         </span>
                       </div>
                     )}

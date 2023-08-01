@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./_notifications.scss";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
@@ -22,8 +22,8 @@ import updateIconActive from "./assets/updateIconActive.svg";
 import deleteIcon from "./assets/deleteIcon.svg";
 import deleteIconActive from "./assets/deleteIconActive.svg";
 import axios from "axios";
-import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import notifBell from './assets/notifbell.svg'
 
 const Notifications = ({
   coinbase,
@@ -113,6 +113,12 @@ const Notifications = ({
     }
   }, [nftCount, coinbase,isConnected]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Notification Center';
+
+  }, []);
+
   return (
     <>
       <div
@@ -131,7 +137,7 @@ const Notifications = ({
               <span style={{ color: "#8c56ff" }}> Center</span>
             </h6>
             <div
-              className={`notification-bar p-3 d-flex align-items-center justify-content-between`}
+              className={`notification-bar p-3 d-flex flex-lg-row flex-xxl-row flex-column align-items-center justify-content-between`}
             >
               <div className="d-flex align-items-center gap-3">
                 <div
@@ -195,9 +201,12 @@ const Notifications = ({
             <div className="outer-notification-list my-5 p-3">
               <div className="notifications-list p-3">
                 {nftOffers && nftOffers.length === 0 && (
-                  <h5 className="text-white align-center m-auto">
-                    You have no notifications
+                  <div className="d-flex flex-column gap-2 align-items-center m-auto">
+                    <img src={notifBell} alt='' />
+                  <h5 className="text-white align-center">
+                  No recent notifications
                   </h5>
+                  </div>
                 )}
                 {nftOffers &&
                   nftOffers.length > 0 &&
