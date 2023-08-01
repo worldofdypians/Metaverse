@@ -595,7 +595,7 @@ const LeaderBoard = ({
     } else if (item === "monthly" && inactiveBoard === false) {
       setPrizes(monthlyPrizes);
     } else if (item === "monthly" && inactiveBoard === true) {
-      setPrizes(previous_monthlyPrizes);
+      setPrizes(monthlyPrizes);
     }
   };
 
@@ -1004,7 +1004,7 @@ const LeaderBoard = ({
                             >
                               +$
                               {getFormattedNumber(
-                                previous_monthlyPrizesGolden[index],
+                                monthlyPrizesGolden[index],
                                 0
                               )}
                             </td>
