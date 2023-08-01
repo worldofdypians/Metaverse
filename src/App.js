@@ -276,6 +276,7 @@ function App() {
         setIsConnected(data);
       });
       await window.getCoinbase().then((data) => {
+        console.log(data)
         setCoinbase(data);
       });
       setShowForms(true);
@@ -1114,7 +1115,9 @@ function App() {
     try {
       const response = await axios.get(
         // `https://api.worldofdypians.com/notifications/0x65C3d0F9438644945dF5BF321c9F0fCf333302b8`
-        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`
+        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+          walletAddress
+        )}`
       );
       const notifications = response.data[0]?.notifications || [];
       setmyNftsOffer(notifications.reverse());
@@ -1167,7 +1170,7 @@ function App() {
     if (coinbase) {
       getNotifications(coinbase);
     }
-  }, [coinbase,nftCount]);
+  }, [coinbase, nftCount]);
 
   return (
     <ApolloProvider client={client}>
@@ -1184,7 +1187,6 @@ function App() {
             myOffers={myNftsOffer}
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
-
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1194,7 +1196,6 @@ function App() {
               setFireAppContent(true);
             }}
             handleDisconnect={handleDisconnect}
-
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1231,10 +1232,19 @@ function App() {
               }
             />
             <Route exact path="/caws" element={<Caws />} />
-            <Route exact path="/notifications" element={<Notifications 
-            handleRefreshList={handleRefreshList}
-            coinbase={coinbase}
-            />} />
+            <Route
+              exact
+              path="/notifications"
+              element={
+                <Notifications
+                  handleRefreshList={handleRefreshList}
+                  coinbase={coinbase}
+                  nftCount={nftCount}
+                  isConnected={isConnected}
+
+                />
+              }
+            />
             <Route exact path="/roadmap" element={<Roadmap />} />
             <Route exact path="/explorer" element={<Explorer />} />
             <Route exact path="/stake" element={<NftMinting />} />
@@ -1456,7 +1466,7 @@ function App() {
           {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
           <ScrollTop />
           {location.pathname.includes("marketplace") ||
-            location.pathname.includes("notifications") ||
+          location.pathname.includes("notifications") ||
           location.pathname.includes("account") ? (
             location.pathname.includes("timepiece") ||
             location.pathname.includes("caws") ||

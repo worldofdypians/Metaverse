@@ -2,7 +2,7 @@
   border-radius: 20px;
   background: rgba(37, 39, 67, 0.45);
   box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
-  backdrop-filter: blur(13.380000114440918px);
+  // backdrop-filter: blur(13.380000114440918px);
 }
 .notification-bar-item {
   border-radius: 8px;
@@ -16,6 +16,10 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 13px;
+  }
 }
 
 .notification-bar-item:hover {
@@ -32,57 +36,62 @@
 
 .notifications-list {
   height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  @media only screen and (max-width: 600px) {
+    height: auto;
+  }
 }
 
 .outer-notification-list {
   border-radius: 40px;
   background: rgba(37, 39, 67, 0.15);
   box-shadow: 0px 4.300000190734863px 53px 0px rgba(0, 7, 72, 0.12);
-  backdrop-filter: blur(13.380000114440918px);
+  // backdrop-filter: blur(13.380000114440918px);
 }
 
-.list-notification{
-    border-bottom: 2px solid #565891;
-    cursor: pointer;
-    border-radius: 8px 8px 0 0;
-    transition: all .25s;
+.list-notification {
+  border-bottom: 2px solid #565891;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.25s;
 }
 
-.list-notification:hover{
-    background: rgba(54, 194, 207, 0.06);
+.list-notification:hover {
+  background: rgba(54, 194, 207, 0.06);
 }
 
-.notification-title{
-    color: #EEEDFF;
-font-size: 16px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+.notification-title {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
-.notification-desc{
-    color: #EEEDFF;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.notification-desc {
+  color: #eeedff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-.notification-hour{
-    color: #EEEDFF;
-text-align: right;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.notification-hour {
+  color: #eeedff;
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-.notification-date{
-    color: #00FECF;
-text-align: right;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.notification-date {
+  color: #00fecf;
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
