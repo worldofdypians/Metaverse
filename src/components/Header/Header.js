@@ -223,12 +223,12 @@ const Header = ({
                   height={30}
                   alt=""
                 />
-                {myOffers.length > 0 && isUnread === true && (
+                {unreadNotifications > 0 && (
                   <div className="bell-amount">
                     <span className="mb-0">
-                      {myOffers.filter(({ read }) => read === false).length > 99
+                      {unreadNotifications > 99
                         ? "99+"
-                        : myOffers.filter(({ read }) => read === false).length}
+                        : unreadNotifications}
                     </span>
                   </div>
                 )}

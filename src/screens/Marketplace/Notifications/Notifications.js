@@ -241,13 +241,13 @@ const Notifications = ({
                               : item.offer === "yes"
                               ? "New Offer"
                               : item.offerAccepted === "yes"
-                              ? "Accepted Offer"
+                              ? "NFT Sale"
                               : null}
                           </h6>
                         </div>
                         <p className="notification-desc mb-0">
                           {item.buy === "yes"
-                            ? `Your ${
+                            ? `Congratulations on being the new owner of ${
                                 item.nftAddress ===
                                 window.config.nft_caws_address
                                   ? "CAWS"
@@ -257,7 +257,7 @@ const Notifications = ({
                                   : "Timepiece"
                               } #${
                                 item.tokenId
-                              } has been successfully sold. The new owner of the CAWS is registered with the address: 0x375...2b5E.`
+                              } .`
                             : item.offer === "yes"
                             ? `There is a new offer for your ${
                                 item.nftAddress ===
@@ -269,7 +269,7 @@ const Notifications = ({
                                   : "Timepiece"
                               } #${
                                 item.tokenId
-                              }. The user with the address 0x375...2b5E has submitted a bid of 0.95 ETH`
+                              }.`
                             : null}
                         </p>
                       </div>
