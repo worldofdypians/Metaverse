@@ -75,16 +75,26 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel, syncStatus }) => {
             </div>
             <button
               onClick={onConfirm}
-              className="btn pill-btn"
-              disabled={!checkbtn}
+              className={`btn ${
+                !checkbtn ? "disabled-approve-btn" : syncStatus !== 'error' ?  "pill-btn" : "errorbtn"
+              } `}
             >
-              {syncStatus === "initial"
-                ? "Update"
-                : syncStatus === "loading"
-                ? "Updating..."
-                : syncStatus === "success"
-                ? "Success"
-                : "Error"}
+              {syncStatus === "initial" ? (
+                "Update"
+              ) : syncStatus === "loading" ? (
+                <>
+                  Updating...
+                  <div
+                    className="spinner-border mx-1"
+                    role="status"
+                    style={{ width: 16, height: 16 }}
+                  ></div>
+                </>
+              ) : syncStatus === "success" ? (
+                "Success"
+              ) : (
+                "Error"
+              )}
             </button>
           </div>
         </div>
