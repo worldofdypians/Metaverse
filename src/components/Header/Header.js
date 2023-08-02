@@ -36,7 +36,7 @@ const Header = ({
 
   const manageDisconnect = () => {
     if (location.pathname.includes("/account")) {
-    // localStorage.setItem("logout", "true");
+    localStorage.setItem("logout", "true");
       handleDisconnect();
       navigate("/");
     } else handleDisconnect();

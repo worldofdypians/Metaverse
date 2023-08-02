@@ -670,7 +670,7 @@ function Dashboard({
         window.location.reload()
       }
     });
-    // localStorage.setItem("logout", "false");
+    localStorage.setItem("logout", "false");
   };
 
   window.ethereum?.on("accountsChanged", checkConnection2)
@@ -720,15 +720,15 @@ function Dashboard({
     }
   }, [coinbase]);
 
-  // const logoutItem = localStorage.getItem("logout");
+  const logoutItem = localStorage.getItem("logout");
 
   useEffect(() => {
     if (window.ethereum) {
       if (window.ethereum.isConnected() === true) {
-        // localStorage.setItem("logout", "false");
+        localStorage.setItem("logout", "false");
       } else {
         navigate("/");
-        // localStorage.setItem("logout", "true");
+        localStorage.setItem("logout", "true");
       }
     }
   }, [coinbase, chainId]);

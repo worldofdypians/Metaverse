@@ -258,7 +258,7 @@ function App() {
         setIsConnected(false);
       }
     });
-    // localStorage.setItem("logout", "false");
+    localStorage.setItem("logout", "false");
   };
 
   const handleRegister = () => {
@@ -284,7 +284,7 @@ function App() {
 
   const handleConnection = async () => {
     try {
-      // localStorage.setItem("logout", "false");
+      localStorage.setItem("logout", "false");
       await window.connectWallet().then((data) => {
         setIsConnected(data);
       });
@@ -317,7 +317,7 @@ function App() {
 
   const handleConnectWallet = async () => {
     try {
-      // localStorage.setItem("logout", "false");
+      localStorage.setItem("logout", "false");
       await window.connectWallet().then((data) => {
         setIsConnected(data);
       });
@@ -923,16 +923,16 @@ function App() {
   //   }
   // }, [ethereum, nftCount]);
 
-  // const logout = localStorage.getItem("logout");
+  const logout = localStorage.getItem("logout");
 
   useEffect(() => {
     if (window.ethereum) {
-      if (window.ethereum.isConnected() === true) {
+      if (window.ethereum.isConnected() === true && logout === 'false') {
         checkConnection2();
         setIsConnected(true);
       } else {
         setIsConnected(false);
-        // localStorage.setItem("logout", "true");
+        localStorage.setItem("logout", "true");
         if (location.pathname.includes("/account")) {
           navigate("/");
         }
@@ -1190,7 +1190,7 @@ function App() {
   }, [coinbase, nftCount]);
 
   const handleDisconnect = async () => {
-    // localStorage.setItem("logout", "true");
+    localStorage.setItem("logout", "true");
     setCoinbase();
     setIsConnected(false);
   };
