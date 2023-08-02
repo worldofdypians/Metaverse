@@ -919,7 +919,6 @@ function App() {
   useEffect(() => {
     if (ethereum) {
       ethereum.on("chainChanged", checkNetworkId);
-      ethereum.on("accountsChanged", handleConnection);
     }
   }, [ethereum, nftCount]);
 
