@@ -281,10 +281,10 @@ function Dashboard({
         },
       }).then(() => {
         setsyncStatus("success");
-
         setTimeout(() => {
+          setshowSyncModal(false);
           setsyncStatus("initial");
-        }, 5000);
+        }, 1000);
       });
     } catch (error) {
       setsyncStatus("error");
@@ -302,9 +302,7 @@ function Dashboard({
 
   const handleSync = async () => {
     setsyncStatus("loading");
-    setTimeout(() => {
-      setshowSyncModal(false);
-    }, 3000);
+
     try {
       await generateNonce({
         variables: {
@@ -315,6 +313,7 @@ function Dashboard({
       setsyncStatus("error");
       setTimeout(() => {
         setsyncStatus("initial");
+        setshowSyncModal(false);
       }, 3000);
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
@@ -677,7 +676,7 @@ function Dashboard({
 
   useEffect(() => {
     if (coinbase || (data?.getPlayer?.wallet?.publicAddress && email)) {
-      setsyncStatus("initial");
+      // setsyncStatus("initial");
       fetchAllMyNfts();
       getmyCawsWodStakes();
       getmyWodStakes();
@@ -1080,6 +1079,7 @@ function Dashboard({
                 }}
                 open={showSyncModal}
                 onConfirm={handleSync}
+                syncStatus={syncStatus}
               />
             )}
 

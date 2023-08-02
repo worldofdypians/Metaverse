@@ -7,7 +7,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import "../_marketplace.scss";
 import { Checkbox } from "@mui/material";
 
-const SyncModal = ({ open, onclose, onConfirm, onCancel }) => {
+const SyncModal = ({ open, onclose, onConfirm, onCancel, syncStatus }) => {
   const windowSize = useWindowSize();
 
   const [approvestatus, setapprovestatus] = useState("initial");
@@ -38,7 +38,7 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel }) => {
     >
       <Box sx={style}>
         <div className="d-flex flex-column gap-3">
-        <div className="d-flex justify-content-between gap-1  position-relative">
+          <div className="d-flex justify-content-between gap-1  position-relative">
             <h6 className="text-white summarytitle"></h6>
             <img
               src={closeX}
@@ -52,15 +52,12 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel }) => {
           </div>
           <div className="d-flex flex-column gap-3 align-items-center justify-content-center">
             <h6 className="text-white summarytitle2">
-              Are you sure you want to connect this wallet to your game account?
+              Are you sure you want to update your game wallet address?
             </h6>
             <div className="d-flex align-items-center gap-2 justify-content-between w-100">
               <button
                 onClick={() => {
-                  setCheckBtn(true);
-                  setTimeout(() => {
-                    onConfirm();
-                  }, 500);
+                  setCheckBtn(!checkbtn);
                 }}
                 className="select-all-btn d-flex align-items-center syncText"
               >
@@ -73,9 +70,22 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel }) => {
                   }}
                   checked={checkbtn}
                 />
-                I confirm to change my game wallet account.
+                I confirm to update my game wallet address.
               </button>
             </div>
+            <button
+              onClick={onConfirm}
+              className="btn pill-btn"
+              disabled={!checkbtn}
+            >
+              {syncStatus === "initial"
+                ? "Update"
+                : syncStatus === "loading"
+                ? "Updating..."
+                : syncStatus === "success"
+                ? "Success"
+                : "Error"}
+            </button>
           </div>
         </div>
       </Box>
