@@ -230,14 +230,28 @@ const Marketplace = ({
         console.error(e);
       });
 
+      
     if (result.data) {
       setTotalTx(result.data);
+      localStorage.setItem('cachedTvl', result.data)
     }
 
     if (result2.data) {
       setTotalVolume(result2.data);
+      localStorage.setItem('cachedVolume', result2.data)
     }
   };
+
+  const fetchCachedData = ()=>{
+   const cachedVolume = localStorage.getItem('cachedVolume');
+   const cachedTvl = localStorage.getItem('cachedTvl');
+
+   if(cachedTvl && cachedVolume) {
+    setTotalTx(cachedTvl);
+    setTotalVolume(cachedVolume)
+   }
+
+  }
 
   const getRelativeTime = (nftTimestamp) => {
     const date = new Date();
@@ -296,6 +310,7 @@ const Marketplace = ({
 
   useEffect(() => {
     getAllData();
+    fetchCachedData()
     getTotalSupply();
     window.scrollTo(0, 0);
     document.title = "Marketplace";

@@ -1231,7 +1231,7 @@ console.log(balance >= priceFormatted && allowance >= priceFormatted)
               </div>
               <div className="d-flex flex-column gap-2 col-12 col-lg-7">
                 <div
-                  className="d-flex align-items-center gap-2 px-4"
+                  className="d-flex align-items-center gap-2"
                   style={{
                     color: purchaseColor,
                   }}
