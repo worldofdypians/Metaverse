@@ -19,7 +19,7 @@ const Footer = () => {
     },
     {
       icon: "telegram",
-      link: "https://t.me/worldofdypians",
+      link: "https://t.me/dypius",
     },
     {
       icon: "discord",
@@ -43,7 +43,7 @@ const Footer = () => {
     },
     {
       icon: "youtube",
-      link: "https://www.youtube.com/channel/UCnRXdsNpnb2kMiNb7Cu4bDA",
+      link: "https://www.youtube.com/@Dypius",
     },
   ];
 
