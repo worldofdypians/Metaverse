@@ -662,6 +662,20 @@ function Dashboard({
     }
   };
 
+  const checkConnection2 = async () => {
+    await window.getCoinbase().then((data) => {
+      if (data) {
+        
+      } else {
+        navigate('/');
+        window.location.reload()
+      }
+    });
+    localStorage.setItem("logout", "false");
+  };
+
+  window.ethereum?.on("accountsChanged", checkConnection2)
+
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
@@ -707,18 +721,19 @@ function Dashboard({
     }
   }, [coinbase]);
 
-  // const logoutItem = localStorage.getItem("logout");
+  const logoutItem = localStorage.getItem("logout");
 
-  // useEffect(() => {
-  //   if (window.ethereum) {
-  //     if (window.ethereum.isConnected() === true && logoutItem === "false") {
-  //       localStorage.setItem("logout", "false");
-  //     } else {
-  //       navigate("/");
-  //       localStorage.setItem("logout", "true");
-  //     }
-  //   }
-  // }, [coinbase, chainId]);
+  useEffect(() => {
+    if (window.ethereum) {
+      if (window.ethereum.isConnected() === true) {
+        localStorage.setItem("logout", "false");
+      } else {
+        navigate("/");
+        localStorage.setItem("logout", "true");
+      }
+    }
+  }, [coinbase, chainId]);
+
 
   return (
     <div
