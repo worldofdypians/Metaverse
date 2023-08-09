@@ -528,12 +528,13 @@ const NewBundleCard = ({
     setcountdown3500(remainingTime);
   };
 
-  let oneJuly = new Date("2023-07-01 11:11:00 GMT+02:00");
+  let oneSeptember = new Date("2023-09-01 11:11:00 GMT+02:00");
   let oneAugust = new Date("2023-08-01 11:11:00 GMT+02:00");
 
+  let twentyfiveaugust = new Date("2023-08-25 23:59:00 GMT+02:00");
   let today = new Date();
 
-  let twentyfivejuly = new Date("2023-07-29 23:59:00 GMT+02:00");
+
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -544,7 +545,7 @@ const NewBundleCard = ({
     const week1 = ["1", "2", "3", "4", "5", "6", "7"];
     const week2 = ["8", "9", "10", "11", "12", "13", "14"];
     const week3 = ["15", "16", "17", "18", "19", "20", "21"];
-    const week4 = ["22", "23", "24", "25", '26', '27', '28', '29'];
+    const week4 = ["22", "23", "24", "25"];
 
     const timeofDeposit = await dyp700_abi.methods
       .getTimeOfDeposit(coinbase)
@@ -568,7 +569,7 @@ const NewBundleCard = ({
       .getDate()
       .toString();
 
-    if (today_date <= 29) {
+    if (today_date <= 25) {
       if (week1.includes(today_date.toString()) && bundlesBought <= 3) {
         setisAtlimit(false);
         handleRefreshCountdown700();
@@ -576,7 +577,7 @@ const NewBundleCard = ({
         const remainingTime_day = bundleExpireDay;
         const remainingTime_miliseconds = bundleExpireMiliseconds;
 
-        if (parseInt(remainingTime_day) >= 29) {
+        if (parseInt(remainingTime_day) >= 25) {
           const additional_remainingTime_time = 31 - remainingTime_day;
           const additional_remaining_time_timestamp =
             additional_remainingTime_time * 24 * 60 * 60 -
@@ -600,7 +601,7 @@ const NewBundleCard = ({
         setisAtlimit(false);
       } else if (week2.includes(today_date.toString()) && bundlesBought >= 3) {
         const remainingTime2 = lastDayofBundle;
-        if (parseInt(remainingTime2) >= 29) {
+        if (parseInt(remainingTime2) >= 25) {
           const additional_remainingTime_time2 = 31 - remainingTime2;
           const additional_remaining_time_timestamp2 =
             additional_remainingTime_time2 * 24 * 60 * 60 -
@@ -627,7 +628,7 @@ const NewBundleCard = ({
         const remainingTime3 = lastDayofBundle;
         const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
-        if (parseInt(remainingTime3) >= 29) {
+        if (parseInt(remainingTime3) >= 25) {
           const additional_remainingTime_time3 = 31 - remainingTime3;
           const additional_remaining_time_timestamp3 =
             additional_remainingTime_time3 * 24 * 60 * 60 -
@@ -651,15 +652,16 @@ const NewBundleCard = ({
         setisAtlimit(false);
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
         if (today < dateofBundle) { 
-          setcountdown700(oneAugust.getTime());
-          handleSetAvailableTime(oneAugust.getTime());
+         
+          setcountdown700(oneSeptember.getTime());
+          handleSetAvailableTime(oneSeptember.getTime());
           setisAtlimit(true);
           setStatusColor700("#FE7A00");
           setStatus700(
             "The Golden Pass bundle is currently not available for purchase. Please check back next month."
           );
         } else if (today > dateofBundle && bundlesBought > 0) {
-          setisAtlimit(true);
+          setisAtlimit(false);
           setcountdown700();
           handleSetAvailableTime();
           setStatus700(
@@ -668,11 +670,11 @@ const NewBundleCard = ({
           setStatusColor700("#FE7A00");
         }
       }
-    } else if (today_date > 29) {
+    } else if (today_date > 25) {
       if (today < dateofBundle) {
         setisAtlimit(true);
-        setcountdown700(oneAugust.getTime());
-        handleSetAvailableTime(oneAugust.getTime());
+        setcountdown700(oneSeptember.getTime());
+        handleSetAvailableTime(oneSeptember.getTime());
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
         );
@@ -768,18 +770,22 @@ const NewBundleCard = ({
   useEffect(() => {
     if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
       setisAtlimit(true);
-      setcountdown700(oneAugust.getTime());
-      handleSetAvailableTime(oneAugust.getTime());
+      setcountdown700(oneSeptember.getTime());
+      handleSetAvailableTime(oneSeptember.getTime());
     }
   }, [bundlesBought, countdown700]);
-
+ 
   useEffect(() => {
     getTokenData();
-    if (today > twentyfivejuly) {
+    if (today > twentyfiveaugust) {
       setisAtlimit(true);
     }
+    if (today < oneAugust) {
+      setisAtlimit(true);
+    }
+
     convertPrice();
-  }, [today, oneJuly]);
+  }, [today]);
 
   useEffect(() => {
     // getTokenDatabnb();

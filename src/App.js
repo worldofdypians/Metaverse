@@ -750,7 +750,7 @@ function App() {
           finalboughtItems.push(nft);
         }
       });
-    return finalboughtItems;
+    setLatest20BoughtNFTS(finalboughtItems);
   };
 
   const handleRefreshList = () => {
@@ -921,12 +921,12 @@ function App() {
   ethereum?.on("accountsChanged", handleRefreshList);
   ethereum?.on("accountsChanged", checkConnection2);
 
-  // useEffect(() => {
-  //   if (ethereum) {
-  //     ethereum.on("chainChanged", checkNetworkId);
-  //     ethereum.on("accountsChanged", handleConnection);
-  //   }
-  // }, [ethereum, nftCount]);
+  useEffect(() => {
+    if (ethereum) {
+      ethereum.on("chainChanged", checkNetworkId);
+      ethereum.on("accountsChanged", handleConnection);
+    }
+  }, [ethereum, nftCount]);
 
   const logout = localStorage.getItem("logout");
 
@@ -1062,7 +1062,6 @@ function App() {
       setTimepieceBought(uniqueTimepiece);
     }
   };
-
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
 
@@ -1165,10 +1164,7 @@ function App() {
     getTokenDatabnbNew();
     getListedNfts2();
 
-    getLatest20BoughtNFTS().then((NFTS) => {
-      setLatest20BoughtNFTS(NFTS);
-      getCawsSold();
-    });
+    getLatest20BoughtNFTS();
 
     getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
       settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
@@ -1184,6 +1180,12 @@ function App() {
       getOtherNfts();
     }
   }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
+
+  useEffect(()=>{
+    if(latest20BoughtNFTS.length > 0) {
+      getCawsSold();
+    }
+  },[latest20BoughtNFTS.length])
 
   useEffect(() => {
     if (coinbase) {
