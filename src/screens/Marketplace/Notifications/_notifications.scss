@@ -52,14 +52,59 @@
 }
 
 .list-notification {
+  position: relative;
   border-bottom: 2px solid #565891;
   cursor: pointer;
   border-radius: 8px 8px 0 0;
   transition: all 0.25s;
+  overflow-x: hidden;
+}
+
+.notification-delete{
+  background: rgba(222, 86, 52, 0.06);
+  position: absolute;
+  transform: translateX(100%);
+  height: 100%;
+  transition: all .25s;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.notification-date-wrapper{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+
+
+.notif-delete-text{
+  color: #DE5634;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .list-notification:hover {
   background: rgba(54, 194, 207, 0.06);
+
+  .notification-date-wrapper{
+    display: none !important;
+  }
+
+  .notification-delete{
+    transform: translateX(0%);
+  }
+}
+
+.header-notification:hover{
+  .notification-delete{
+    transform: translateX(0%);
+  }
 }
 
 .notification-title {

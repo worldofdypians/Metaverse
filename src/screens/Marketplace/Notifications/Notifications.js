@@ -21,6 +21,7 @@ import updateIcon from "./assets/updateIcon.svg";
 import updateIconActive from "./assets/updateIconActive.svg";
 import deleteIcon from "./assets/deleteIcon.svg";
 import deleteIconActive from "./assets/deleteIconActive.svg";
+import orangeDeleteIcon from './assets/orangeDeleteIcon.svg'
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import notifBell from './assets/notifbell.svg'
@@ -88,6 +89,8 @@ const Notifications = ({
         )}/${notificationId}`
       );
       console.log("Notification deleted");
+      handleRefreshList();
+
     } catch (error) {
       console.error("Error deleting notification:", error.message);
     }
@@ -211,12 +214,15 @@ const Notifications = ({
                 {nftOffers &&
                   nftOffers.length > 0 &&
                   nftOffers.map((item, index) => (
-                    <NavLink
-                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                    <div
                       className="list-notification px-2 py-4 d-flex align-items-end justify-content-between"
-                      onClick={() => markNotificationAsRead(coinbase, item._id)}
                     >
-                      <div className="d-flex-flex-column gap-2">
+                     <NavLink 
+                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                      onClick={() => markNotificationAsRead(coinbase, item._id)}
+                     
+                     >
+                     <div className="d-flex-flex-column gap-2">
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
@@ -282,7 +288,7 @@ const Notifications = ({
                             : null}
                         </p>
                       </div>
-                      <div className="d-flex flex-column align-items-end gap-2">
+                      <div className="notification-date-wrapper d-flex flex-column align-items-end justify-content-center px-3 gap-2">
                         <span className="notification-hour mb-0">
                           {new Date(item.timestamp).getHours() +
                             " : " +
@@ -300,7 +306,12 @@ const Notifications = ({
                             )}
                         </span>
                       </div>
-                    </NavLink>
+                     </NavLink>
+                      <div className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3" onClick={() => {deleteNotification(item._id)}}>
+                        <img src={orangeDeleteIcon} alt="" />
+                        <span className="notif-delete-text">Delete</span>
+                      </div>
+                    </div>
                   ))}
               </div>
             </div>

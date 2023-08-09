@@ -33,6 +33,7 @@ import updateIcon from "../../screens/Marketplace/Notifications/assets/updateIco
 import updateIconActive from "../../screens/Marketplace/Notifications/assets/updateIconActive.svg";
 import deleteIcon from "../../screens/Marketplace/Notifications/assets/deleteIcon.svg";
 import deleteIconActive from "../../screens/Marketplace/Notifications/assets/deleteIconActive.svg";
+import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
 
 const Header = ({
   handleSignUp,
@@ -93,6 +94,23 @@ const Header = ({
       console.error("Error marking notification as read:", error.message);
     }
   }
+
+
+  async function deleteNotification(notificationId) {
+    try {
+      await axios.delete(
+        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+          coinbase
+        )}/${notificationId}`
+      );
+      console.log("Notification deleted");
+      handleRefreshList();
+
+    } catch (error) {
+      console.error("Error deleting notification:", error.message);
+    }
+  }
+
 
   const getRelativeTime = (nftTimestamp) => {
     const date = new Date();
@@ -269,7 +287,12 @@ const Header = ({
                         myOffers.length > 0 &&
                         myOffers.map((nft, index) => {
                           return (
-                            <NavLink
+                            <div
+                            className="position-relative header-notification"
+                              
+                            >
+                          
+                              <NavLink 
                               to={`/marketplace/nft/${
                                 nft.tokenId
                               }/${nft.nftAddress.toLowerCase()}`}
@@ -297,42 +320,7 @@ const Header = ({
                                   markNotificationAsRead(coinbase, nft._id);
                                 }
                               }}
-                            >
-                              {/* <div
-                                className="header-notification d-flex align-items-center gap-2 p-3 position-relative"
-                                key={index}
-                              >
-                                {nft.read === false && (
-                                  <div className="green-dot"></div>
-                                )}
-                                <span className="notification-text">
-                                  Your{" "}
-                                  {nft.nftAddress.toLowerCase() ===
-                                  window.config.nft_caws_address.toLowerCase()
-                                    ? "CAWS"
-                                    : nft.nftAddress.toLowerCase() ===
-                                      window.config.nft_timepiece_address.toLowerCase()
-                                    ? "Caws Timepiece"
-                                    : "Genesis Land"}{" "}
-                                  #{nft.tokenId}{" "}
-                                  {nft.offer === "yes"
-                                    ? "has a new offer"
-                                    : nft.offerAccepted === "yes"
-                                    ? "offer has been accepted"
-                                    : "has been sold"}
-                                </span>
-                                <span
-                                  className="position-absolute top-sale-time"
-                                  style={{
-                                    bottom: "6%",
-                                    right: "8%",
-                                    fontSize: 9,
-                                  }}
-                                >
-                                  {getRelativeTime(nft.timestamp)}
-                                </span>
-                              </div> */}
-                              <div className="d-flex flex-column gap-1 p-3 header-notification-item">
+                              className="d-flex flex-column gap-1 p-3 header-notification-item">
                                 <div className="d-flex align-items-center gap-1">
                                   <img
                                     height={16}
@@ -410,8 +398,12 @@ const Header = ({
                                 <span className="notification-relative-time mb-0">
                                   {getRelativeTime(nft.timestamp)}
                                 </span>
-                              </div>
-                            </NavLink>
+                              </NavLink>
+                              <div className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3" onClick={() => {deleteNotification(nft._id)}}>
+                        <img src={orangeDeleteIcon} alt="" />
+                        <span className="notif-delete-text">Delete</span>
+                      </div>
+                            </div>
                           );
                         })}
                     </div>

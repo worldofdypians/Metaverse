@@ -1114,7 +1114,6 @@ function App() {
   async function getNotifications(walletAddress) {
     try {
       const response = await axios.get(
-        // `https://api.worldofdypians.com/notifications/0x65C3d0F9438644945dF5BF321c9F0fCf333302b8`
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
         )}`
