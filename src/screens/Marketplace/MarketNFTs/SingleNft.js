@@ -191,7 +191,6 @@ const SingleNft = ({
       window.config.weth2_address
     );
 
-    console.log(contract2)
 
     const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
       console.error(e);
