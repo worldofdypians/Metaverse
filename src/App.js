@@ -130,6 +130,8 @@ function App() {
   const [timepieceBought, setTimepieceBought] = useState([]);
   const [landBought, setLandBought] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
+  const [success, setSuccess] = useState(false);
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -291,14 +293,17 @@ function App() {
     try {
       localStorage.setItem("logout", "false");
       await window.connectWallet().then((data) => {
-        setIsConnected(data);
+        setIsConnected(true);
       });
       await window.getCoinbase().then((data) => {
         setCoinbase(data);
       });
       setShowForms(true);
+      setSuccess(true)
     } catch (e) {
       setShowWalletModal(false);
+      setSuccess(true)
+
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
       return;
@@ -1195,6 +1200,7 @@ function App() {
 
   const handleDisconnect = async () => {
     localStorage.setItem("logout", "true");
+    setSuccess(false)
     setCoinbase("0x0000000000000000000000000000000000000000");
     setIsConnected(false);
   };
@@ -1324,6 +1330,7 @@ function App() {
                   onSigninClick={() => {
                     setShowWalletModalRegister2(true);
                   }}
+                  success={success}
                   availableTime={availTime}
                 />
               }

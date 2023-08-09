@@ -22,7 +22,7 @@ import EmptyGenesisCard from "../../Components/EmptyGenesisCard/EmptyGenesisCard
 import Web3 from "web3";
 import { ERC20_ABI } from "../../web3/abis";
 import _ from "lodash";
-import WalletModal from "../../Components/WalletModal/WalletModal";
+import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import getListedNFTS from "../../../../../actions/Marketplace";
@@ -43,6 +43,7 @@ function Dashboard({
   onSigninClick,
   onLogoutClick,
   availableTime,
+  success
 }) {
   const { email, logout } = useAuth();
 
@@ -618,6 +619,12 @@ function Dashboard({
     }
   }, [coinbase, chainId]);
 
+  useEffect(()=>{
+    if(success === true) {
+      setshowWalletModal(false)
+    }
+  },[success])
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
@@ -958,13 +965,13 @@ function Dashboard({
               />
             )}
 
-            {showWalletModal === true && (
+            {showWalletModal === true && success === false && (
               <WalletModal
                 show={showWalletModal}
                 handleClose={() => {
                   setshowWalletModal(false);
                 }}
-                handleConnection={connectWallet}
+                handleConnection={handleConnect}
               />
             )}
 
