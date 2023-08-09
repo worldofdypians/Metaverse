@@ -187,9 +187,11 @@ const SingleNft = ({
       token_address
     );
     const contract2 = new window.infuraWeb3.eth.Contract(
-      window.WETH_ABI,
+      window.TOKEN_ABI,
       window.config.weth2_address
     );
+
+    console.log(contract2)
 
     const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
       console.error(e);
@@ -213,7 +215,7 @@ const SingleNft = ({
             });
 
           const priceFormatted = item.offer.price / 1e18;
-console.log(balance >= priceFormatted && allowance >= priceFormatted)
+// console.log(balance >= priceFormatted && allowance >= priceFormatted)
           return finalArray.push({
             offer: item.offer,
             index: item.index,
