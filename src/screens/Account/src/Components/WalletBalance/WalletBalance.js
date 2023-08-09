@@ -102,7 +102,6 @@ const WalletBalance = ({
   const [myOffersFiltered, setmyOffersFiltered] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
 
-
   const handleFavoritesPage = (e, value) => {
     setFavoritesPage(value);
     setFavoritesSliceValue(value * 9);
@@ -313,75 +312,148 @@ const WalletBalance = ({
     //listed [listedItems]
     //staked [myWodWodStakes,myCawsWodStakes,landStaked]
     //final [listed, to list, staked]
-
-    if (myTimepieceCollected && myTimepieceCollected.length > 0) {
-      await Promise.all(
-        myTimepieceCollected.map(async (i) => {
-          const result = await window
-            .getAllOffers(window.config.nft_timepiece_address, i)
-            .catch((e) => {
-              console.error(e);
-            });
-
-          if (result && result.length > 0) {
-            result.map((item) => {
-              return recievedOffers.push({
-                offer: item.offer,
-                index: item.index,
-                nftAddress: window.config.nft_timepiece_address,
-                tokenId: i,
-                type: "timepiece",
+    if (coinbase !== "0x0000000000000000000000000000000000000000") {
+      if (myTimepieceCollected && myTimepieceCollected.length > 0) {
+        await Promise.all(
+          myTimepieceCollected.map(async (i) => {
+            const result = await window
+              .getAllOffers(window.config.nft_timepiece_address, i)
+              .catch((e) => {
+                console.error(e);
               });
-            });
-          }
 
-          finalTimepieceArray.push({
-            nftAddress: window.config.nft_timepiece_address,
-            buyer:
-              isVerified &&
-              email &&
-              coinbase &&
-              address?.toLowerCase() === coinbase.toLowerCase()
-                ? address
-                : coinbase,
-            tokenId: i,
-            type: "timepiece",
-            chain: 1,
-            isStaked: false,
-            isListed: allListed.find(
-              (obj) =>
-                obj.tokenId == i &&
-                obj.nftAddress === window.config.nft_timepiece_address
-            )
-              ? true
-              : false,
-          });
-        })
-      );
-    }
-
-    if (myLandCollected && myLandCollected.length > 0) {
-      await Promise.all(
-        myLandCollected.map(async (i) => {
-          const result = await window
-            .getAllOffers(window.config.nft_land_address, i)
-            .catch((e) => {
-              console.error(e);
-            });
-
-          if (result && result.length > 0) {
-            result.map((item) => {
-              return recievedOffers.push({
-                offer: item.offer,
-                index: item.index,
-                nftAddress: window.config.nft_land_address,
-                tokenId: i,
-                type: "land",
+            if (result && result.length > 0) {
+              result.map((item) => {
+                return recievedOffers.push({
+                  offer: item.offer,
+                  index: item.index,
+                  nftAddress: window.config.nft_timepiece_address,
+                  tokenId: i,
+                  type: "timepiece",
+                });
               });
-            });
-          }
+            }
 
-          finalLandArray.push({
+            finalTimepieceArray.push({
+              nftAddress: window.config.nft_timepiece_address,
+              buyer:
+                isVerified &&
+                email &&
+                coinbase &&
+                address?.toLowerCase() === coinbase.toLowerCase()
+                  ? address
+                  : coinbase,
+              tokenId: i,
+              type: "timepiece",
+              chain: 1,
+              isStaked: false,
+              isListed: allListed.find(
+                (obj) =>
+                  obj.tokenId == i &&
+                  obj.nftAddress === window.config.nft_timepiece_address
+              )
+                ? true
+                : false,
+            });
+          })
+        );
+      }
+
+      if (myLandCollected && myLandCollected.length > 0) {
+        await Promise.all(
+          myLandCollected.map(async (i) => {
+            const result = await window
+              .getAllOffers(window.config.nft_land_address, i)
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (result && result.length > 0) {
+              result.map((item) => {
+                return recievedOffers.push({
+                  offer: item.offer,
+                  index: item.index,
+                  nftAddress: window.config.nft_land_address,
+                  tokenId: i,
+                  type: "land",
+                });
+              });
+            }
+
+            finalLandArray.push({
+              nftAddress: window.config.nft_land_address,
+              buyer:
+                isVerified &&
+                email &&
+                coinbase &&
+                address?.toLowerCase() === coinbase.toLowerCase()
+                  ? address
+                  : coinbase,
+              tokenId: i,
+              type: "land",
+              chain: 1,
+              isStaked: false,
+              isListed: allListed.find(
+                (obj) =>
+                  obj.tokenId == i &&
+                  obj.nftAddress === window.config.nft_land_address
+              )
+                ? true
+                : false,
+            });
+          })
+        );
+      }
+
+      if (myCawsCollected && myCawsCollected.length > 0) {
+        await Promise.all(
+          myCawsCollected.map(async (i) => {
+            const result = await window
+              .getAllOffers(window.config.nft_caws_address, i)
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (result && result.length > 0) {
+              result.map((item) => {
+                return recievedOffers.push({
+                  offer: item.offer,
+                  index: item.index,
+                  nftAddress: window.config.nft_caws_address,
+                  tokenId: i,
+                  type: "caws",
+                });
+              });
+            }
+
+            finalCawsArray.push({
+              nftAddress: window.config.nft_caws_address,
+              buyer:
+                isVerified &&
+                email &&
+                coinbase &&
+                address?.toLowerCase() === coinbase.toLowerCase()
+                  ? address
+                  : coinbase,
+              tokenId: i,
+              type: "caws",
+              chain: 1,
+              isStaked: false,
+              isListed: allListed.find(
+                (obj) =>
+                  obj.tokenId == i &&
+                  obj.nftAddress === window.config.nft_caws_address
+              )
+                ? true
+                : false,
+            });
+          })
+        );
+      }
+
+      if (myWodWodStakes && myWodWodStakes.length > 0) {
+        myWodWodStakes.map((i) => {
+          stakeArray.push({
             nftAddress: window.config.nft_land_address,
             buyer:
               isVerified &&
@@ -390,44 +462,18 @@ const WalletBalance = ({
               address?.toLowerCase() === coinbase.toLowerCase()
                 ? address
                 : coinbase,
-            tokenId: i,
+            tokenId: i.name.slice(1, i.name.length),
             type: "land",
             chain: 1,
-            isStaked: false,
-            isListed: allListed.find(
-              (obj) =>
-                obj.tokenId == i &&
-                obj.nftAddress === window.config.nft_land_address
-            )
-              ? true
-              : false,
+            isStaked: true,
+            isListed: false,
           });
-        })
-      );
-    }
+        });
+      }
 
-    if (myCawsCollected && myCawsCollected.length > 0) {
-      await Promise.all(
-        myCawsCollected.map(async (i) => {
-          const result = await window
-            .getAllOffers(window.config.nft_caws_address, i)
-            .catch((e) => {
-              console.error(e);
-            });
-
-          if (result && result.length > 0) {
-            result.map((item) => {
-              return recievedOffers.push({
-                offer: item.offer,
-                index: item.index,
-                nftAddress: window.config.nft_caws_address,
-                tokenId: i,
-                type: "caws",
-              });
-            });
-          }
-
-          finalCawsArray.push({
+      if (myCawsWodStakes && myCawsWodStakes.length > 0) {
+        myCawsWodStakes.map((i) => {
+          stakeArray.push({
             nftAddress: window.config.nft_caws_address,
             buyer:
               isVerified &&
@@ -436,92 +482,49 @@ const WalletBalance = ({
               address?.toLowerCase() === coinbase.toLowerCase()
                 ? address
                 : coinbase,
-            tokenId: i,
+            tokenId: i.name.slice(6, i.name.length),
             type: "caws",
             chain: 1,
-            isStaked: false,
-            isListed: allListed.find(
-              (obj) =>
-                obj.tokenId == i &&
-                obj.nftAddress === window.config.nft_caws_address
-            )
-              ? true
-              : false,
+            isStaked: true,
+            isListed: false,
           });
-        })
-      );
-    }
-
-    if (myWodWodStakes && myWodWodStakes.length > 0) {
-      myWodWodStakes.map((i) => {
-        stakeArray.push({
-          nftAddress: window.config.nft_land_address,
-          buyer:
-            isVerified &&
-            email &&
-            coinbase &&
-            address?.toLowerCase() === coinbase.toLowerCase()
-              ? address
-              : coinbase,
-          tokenId: i.name.slice(1, i.name.length),
-          type: "land",
-          chain: 1,
-          isStaked: true,
-          isListed: false,
         });
-      });
-    }
+      }
 
-    if (myCawsWodStakes && myCawsWodStakes.length > 0) {
-      myCawsWodStakes.map((i) => {
-        stakeArray.push({
-          nftAddress: window.config.nft_caws_address,
-          buyer:
-            isVerified &&
-            email &&
-            coinbase &&
-            address?.toLowerCase() === coinbase.toLowerCase()
-              ? address
-              : coinbase,
-          tokenId: i.name.slice(6, i.name.length),
-          type: "caws",
-          chain: 1,
-          isStaked: true,
-          isListed: false,
+      if (landStaked && landStaked.length > 0) {
+        landStaked.map((i) => {
+          stakeArray.push({
+            nftAddress: window.config.nft_land_address,
+            buyer:
+              isVerified &&
+              email &&
+              coinbase &&
+              address?.toLowerCase() === coinbase.toLowerCase()
+                ? address
+                : coinbase,
+            tokenId: i.name.slice(1, i.name.length),
+            type: "land",
+            chain: 1,
+            isStaked: true,
+            isListed: false,
+          });
         });
-      });
-    }
+      }
+      setmyNftsOffer(recievedOffers);
 
-    if (landStaked && landStaked.length > 0) {
-      landStaked.map((i) => {
-        stakeArray.push({
-          nftAddress: window.config.nft_land_address,
-          buyer:
-            isVerified &&
-            email &&
-            coinbase &&
-            address?.toLowerCase() === coinbase.toLowerCase()
-              ? address
-              : coinbase,
-          tokenId: i.name.slice(1, i.name.length),
-          type: "land",
-          chain: 1,
-          isStaked: true,
-          isListed: false,
-        });
-      });
-    }
-    setmyNftsOffer(recievedOffers)
-    
-    finalCollection = [
-      ...finalTimepieceArray,
-      ...finalLandArray,
-      ...finalCawsArray,
-      ...stakeArray,
-    ];
+      finalCollection = [
+        ...finalTimepieceArray,
+        ...finalLandArray,
+        ...finalCawsArray,
+        ...stakeArray,
+      ];
 
-    setcollectedItems(finalCollection);
-    setcollectedItemsFiltered(finalCollection);
+      setcollectedItems(finalCollection);
+      setcollectedItemsFiltered(finalCollection);
+    } else {
+      setcollectedItems([]);
+      setcollectedItemsFiltered([]);
+    }
   };
 
   async function updateViewCount(tokenId, nftAddress) {
@@ -670,10 +673,9 @@ const WalletBalance = ({
       );
 
       setcollectedItemsFiltered(nftFilter);
-    } 
-    else if (filter1 === "all" && filter2 === "has offers") {
-       setcollectedItemsFiltered(myNftsOffer);
-    }else if (filter1 === "all" && filter2 === "listed") {
+    } else if (filter1 === "all" && filter2 === "has offers") {
+      setcollectedItemsFiltered(myNftsOffer);
+    } else if (filter1 === "all" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
         (item) => item.isListed === true && item.isStaked === false
       );
@@ -689,16 +691,12 @@ const WalletBalance = ({
           item.isStaked === false
       );
       setcollectedItemsFiltered(nftFilter);
-    }
-    else if (filter1 === "land" && filter2 === "has offers") {
+    } else if (filter1 === "land" && filter2 === "has offers") {
       let nftFilter = myNftsOffer.filter(
-        (item) =>
-          item.nftAddress === window.config.nft_land_address
+        (item) => item.nftAddress === window.config.nft_land_address
       );
       setcollectedItemsFiltered(nftFilter);
-   }
-
-    else if (filter1 === "land" && filter2 === "listed") {
+    } else if (filter1 === "land" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
         (item) =>
           item.nftAddress === window.config.nft_land_address &&
@@ -722,15 +720,12 @@ const WalletBalance = ({
           item.isStaked === false
       );
       setcollectedItemsFiltered(nftFilter);
-    }
-    else if (filter1 === "caws" && filter2 === "has offers") {
+    } else if (filter1 === "caws" && filter2 === "has offers") {
       let nftFilter = myNftsOffer.filter(
-        (item) =>
-          item.nftAddress === window.config.nft_caws_address
+        (item) => item.nftAddress === window.config.nft_caws_address
       );
       setcollectedItemsFiltered(nftFilter);
-   }
-    else if (filter1 === "caws" && filter2 === "listed") {
+    } else if (filter1 === "caws" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
         (item) =>
           item.nftAddress === window.config.nft_caws_address &&
@@ -754,15 +749,12 @@ const WalletBalance = ({
           item.isStaked === false
       );
       setcollectedItemsFiltered(nftFilter);
-    }
-    else if (filter1 === "timepiece" && filter2 === "has offers") {
+    } else if (filter1 === "timepiece" && filter2 === "has offers") {
       let nftFilter = myNftsOffer.filter(
-        (item) =>
-          item.nftAddress === window.config.nft_timepiece_address
+        (item) => item.nftAddress === window.config.nft_timepiece_address
       );
       setcollectedItemsFiltered(nftFilter);
-   }
-    else if (filter1 === "timepiece" && filter2 === "listed") {
+    } else if (filter1 === "timepiece" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
         (item) =>
           item.nftAddress === window.config.nft_timepiece_address &&
@@ -792,7 +784,7 @@ const WalletBalance = ({
 
   useEffect(() => {
     getCollected();
-  }, [allListed]);
+  }, [allListed, coinbase]);
 
   useEffect(() => {
     handleSortCollection();
@@ -1007,9 +999,14 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {favoriteItems.length === 0 && (
+                {favoriteItems.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000"  && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You do not have any favorite NFTs
+                  </span>
+                )}
+                {favoriteItems.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                  <span className="seller-addr" style={{ textAlign: "center" }}>
+                    Connect your wallet to view your favorite NFTs.
                   </span>
                 )}
 
@@ -1102,9 +1099,14 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {myOffers.length === 0 && (
+                {myOffers.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000"  && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You have not made any offers
+                  </span>
+                )}
+                {myOffers.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                  <span className="seller-addr" style={{ textAlign: "center" }}>
+                    Connect your wallet to view the offers you have made.
                   </span>
                 )}
               </div>
@@ -1181,11 +1183,18 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {collectedItems.length === 0 && (
+                {collectedItems.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000" && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You do not have any NFTs in your wallet
                   </span>
                 )}
+
+{collectedItems.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                  <span className="seller-addr" style={{ textAlign: "center" }}>
+                    Connect your wallet to view your NFTs.
+                  </span>
+                )}
+
                 {/* {collectedItems.length < 6 &&
                   emptyArray
                     .slice(0, 6 - collectedItems.length)
@@ -1304,9 +1313,14 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {myCawsWodStakes.length === 0 && landStaked.length === 0 && (
+                {myCawsWodStakes.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000" && landStaked.length === 0 && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You do not have any NFTs in stake
+                  </span>
+                )}
+                {myCawsWodStakes.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                  <span className="seller-addr" style={{ textAlign: "center" }}>
+                    Connect your wallet to view your staked NFTs.
                   </span>
                 )}
 
@@ -1408,9 +1422,14 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {listedItems.length === 0 && (
+                {listedItems.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000" && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You do not have any listed NFTs
+                  </span>
+                )}
+                 {listedItems.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                  <span className="seller-addr" style={{ textAlign: "center" }}>
+                    Connect your wallet to view your listed NFTs.
                   </span>
                 )}
                 {/* {listedItems.length < 6 &&

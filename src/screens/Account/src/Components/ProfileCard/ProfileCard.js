@@ -172,7 +172,7 @@ const ProfileCard = ({
                     <img src={walletIcon} alt="" className="wallet-icon" />
                     <div className="d-flex flex-column">
                       <span className="wallet-span d-flex align-items-center gap-2">
-                        Wallet address
+                        Game Wallet address
                       </span>
 
                       <div

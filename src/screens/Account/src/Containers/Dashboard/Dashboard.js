@@ -86,11 +86,10 @@ function Dashboard({
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
-  
+
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
-
 
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
@@ -155,14 +154,7 @@ function Dashboard({
   };
 
   const getCawsStakesIdsCawsWod = async () => {
-    const address =
-      data?.getPlayer?.wallet &&
-      email &&
-      coinbase &&
-      data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-        coinbase.toLowerCase()
-        ? data?.getPlayer?.wallet?.publicAddress
-        : coinbase;
+    const address = coinbase;
 
     let stakenft_cawsWod = [];
     const infura_web3 = window.infuraWeb3;
@@ -184,14 +176,7 @@ function Dashboard({
   };
 
   const getWodStakesIdsCawsWod = async () => {
-    const address =
-      data?.getPlayer?.wallet &&
-      email &&
-      coinbase &&
-      data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-        coinbase.toLowerCase()
-        ? data?.getPlayer?.wallet?.publicAddress
-        : coinbase;
+    const address = coinbase;
     let stakenft_cawsWod = [];
     const infura_web3 = window.infuraWeb3;
     let staking_contract = new infura_web3.eth.Contract(
@@ -324,55 +309,17 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
-    if (data?.getPlayer?.wallet?.publicAddress || coinbase) {
-      getMyNFTS(
-        email
-          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-            coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-          : coinbase,
-        "caws"
-      ).then((NFTS) => setMyNFTSCaws(NFTS));
+    getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
 
-      getMyNFTS(
-        email
-          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-            coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-          : coinbase,
-        "timepiece"
-      ).then((NFTS) => setMyNFTSTimepiece(NFTS));
+    getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
 
-      getMyNFTS(
-        email
-          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-            coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-          : coinbase,
-        "land"
-      ).then((NFTS) => setMyNFTSLand(NFTS));
-    }
+    getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
   };
 
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
 
-    const listedNFTS = await getListedNFTS(
-      0,
-      "",
-      "buyer",
-      data?.getPlayer?.wallet &&
-        email &&
-        coinbase &&
-        data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-          coinbase.toLowerCase()
-        ? data?.getPlayer?.wallet?.publicAddress
-        : coinbase,
-      ""
-    );
+    const listedNFTS = await getListedNFTS(0, "", "buyer", coinbase, "");
     listedNFTS &&
       listedNFTS.length > 0 &&
       listedNFTS.map((nft) => {
@@ -426,15 +373,7 @@ function Dashboard({
         token_addressIDYP
       );
       const bal1 = await contract1.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3eth.utils.fromWei(data, "ether");
@@ -442,15 +381,7 @@ function Dashboard({
       setDypBalance(bal1);
 
       const bal2 = await contract2.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -458,15 +389,7 @@ function Dashboard({
       setDypBalanceBnb(bal2);
 
       const bal3 = await contract3.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -474,11 +397,7 @@ function Dashboard({
       setDypBalanceAvax(bal3);
 
       const bal1_idyp = await contract1_idyp.methods
-        .balanceOf(
-          data?.getPlayer?.wallet && email
-            ? data?.getPlayer?.wallet?.publicAddress
-            : account
-        )
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3eth.utils.fromWei(data, "ether");
@@ -486,15 +405,7 @@ function Dashboard({
       setiDypBalance(bal1_idyp);
 
       const bal2_idyp = await contract2_idyp.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -502,15 +413,7 @@ function Dashboard({
       setiDypBalanceBnb(bal2_idyp);
 
       const bal3_idyp = await contract3_idyp.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -661,19 +564,7 @@ function Dashboard({
     }
   };
 
-  const checkConnection2 = async () => {
-    await window.getCoinbase().then((data) => {
-      if (data) {
-        
-      } else {
-        navigate('/');
-        window.location.reload()
-      }
-    });
-    localStorage.setItem("logout", "false");
-  };
 
-  window.ethereum?.on("accountsChanged", checkConnection2)
 
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
@@ -688,7 +579,7 @@ function Dashboard({
   }, [dataNonce]);
 
   useEffect(() => {
-    if (coinbase || (data?.getPlayer?.wallet?.publicAddress && email)) {
+    if (coinbase) {
       setsyncStatus("initial");
       fetchAllMyNfts();
       getmyCawsWodStakes();
@@ -699,14 +590,7 @@ function Dashboard({
   useEffect(() => {
     getOtherNfts();
     getDypBalance();
-    fetchUserFavorites(
-      data?.getPlayer?.wallet && email
-        ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-          coinbase.toLowerCase()
-          ? data?.getPlayer?.wallet?.publicAddress
-          : coinbase
-        : coinbase
-    );
+    fetchUserFavorites(coinbase);
   }, [account, email, data?.getPlayer?.wallet]);
 
   useEffect(() => {
@@ -727,12 +611,10 @@ function Dashboard({
       if (window.ethereum.isConnected() === true) {
         localStorage.setItem("logout", "false");
       } else {
-        navigate("/");
         localStorage.setItem("logout", "true");
       }
     }
   }, [coinbase, chainId]);
-
 
   return (
     <div
@@ -955,6 +837,7 @@ function Dashboard({
                       dypBalancebnb={dypBalancebnb}
                       address={data?.getPlayer?.wallet?.publicAddress}
                       availableTime={availableTime}
+                      email={email}
                     />
                   </div>
                   {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
