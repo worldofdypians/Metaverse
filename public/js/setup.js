@@ -34691,6 +34691,7 @@ const whitelistWod = [
   "0xe7674b190def5a82730f5d6ab8125e277f10414f",
   "0xF4914F025b45798F634fBE638d33701FBff3274A",
   "0x8052a398480b5B80D52d3DAd6fA842e5B671baae",
+  "0x97C05103C3E714AB36B2Cc509cbAfFef4E93BDc0"
 ];
 
 window.checkWhitelistWod = function (address) {
