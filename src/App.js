@@ -249,16 +249,21 @@ function App() {
   };
 
   const checkConnection2 = async () => {
-    await window.getCoinbase().then((data) => {
-      if (data) {
-        setCoinbase(data);
-        setIsConnected(true);
-      } else {
-        setCoinbase();
-        setIsConnected(false);
-      }
-    });
-    localStorage.setItem("logout", "false");
+    const logout = localStorage.getItem("logout");
+    if (logout !== "true") {
+      await window.getCoinbase().then((data) => {
+        if (data) {
+          setCoinbase(data);
+          setIsConnected(true);
+        } else {
+          setCoinbase("0x0000000000000000000000000000000000000000");
+          setIsConnected(false);
+        }
+      });
+    } else {
+      setIsConnected(false);
+      setCoinbase("0x0000000000000000000000000000000000000000");
+    }
   };
 
   const handleRegister = () => {
@@ -926,20 +931,17 @@ function App() {
 
   useEffect(() => {
     if (window.ethereum) {
-      if (window.ethereum.isConnected() === true && logout === 'false') {
+      if (window.ethereum.isConnected() === true && logout === "false") {
         checkConnection2();
-        setIsConnected(true);
       } else {
         setIsConnected(false);
+        setCoinbase("0x0000000000000000000000000000000000000000");
         localStorage.setItem("logout", "true");
-        if (location.pathname.includes("/account")) {
-          navigate("/");
-        }
+        
       }
       checkNetworkId();
     }
   }, [coinbase, chainId]);
-
 
   useEffect(() => {
     checkNetworkId();
@@ -1192,7 +1194,7 @@ function App() {
 
   const handleDisconnect = async () => {
     localStorage.setItem("logout", "true");
-    setCoinbase();
+    setCoinbase("0x0000000000000000000000000000000000000000");
     setIsConnected(false);
   };
 
@@ -1211,6 +1213,8 @@ function App() {
             myOffers={myNftsOffer}
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
+            isConnected={isConnected}
+
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
