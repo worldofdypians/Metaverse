@@ -72,15 +72,25 @@
 }
 
 .notification-date-wrapper{
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  width: 20%;
 }
 
 
+.view-more-notif{
+  color: #00fecf;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
 
-.notif-delete-text{
+.view-more-notif:hover{
+  text-decoration: underline;
+
+}
+
+.delete-notif{
   color: #DE5634;
   text-align: center;
   font-size: 12px;
@@ -89,12 +99,16 @@
   line-height: normal;
 }
 
+.delete-notif:hover{
+  text-decoration: underline;
+}
+
 .list-notification:hover {
   background: rgba(54, 194, 207, 0.06);
 
-  .notification-date-wrapper{
-    display: none !important;
-  }
+  // .notification-date-wrapper{
+  //   display: none !important;
+  // }
 
   .notification-delete{
     transform: translateX(0%);
@@ -121,6 +135,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  width: 80%;
 }
 
 .notification-hour {

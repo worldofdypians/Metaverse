@@ -427,6 +427,7 @@ const Header = ({
                                 className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
                                 onClick={() => {
                                   deleteNotification(nft._id);
+                                  
                                 }}
                               >
                                 <img src={orangeDeleteIcon} alt="" />
