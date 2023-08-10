@@ -276,7 +276,7 @@ function App() {
         setIsConnected(data);
       });
       await window.getCoinbase().then((data) => {
-        console.log(data)
+        console.log(data);
         setCoinbase(data);
       });
       setShowForms(true);
@@ -1111,18 +1111,49 @@ function App() {
     setIsConnected(false);
   };
 
-  async function getNotifications(walletAddress) {
+  const API_BASE_URL = "https://api.worldofdypians.com";
+
+  async function addNewUserIfNotExists(walletAddress, title, description) {
     try {
       const response = await axios.get(
-        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+        `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
         )}`
       );
-      const notifications = response.data[0]?.notifications || [];
-      setmyNftsOffer(notifications.reverse());
-      console.log("Notifications:", notifications);
+
+      if (response.data.length === 0) {
+        const newUserResponse = await axios.post(
+          `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+            walletAddress
+          )}`,
+          {
+            tokenId: "",
+            nftAddress: "",
+            timestamp: Date.now(),
+            read: false,
+            offer: "no",
+            offerAccepted: "no",
+            buy: "no",
+            event: "no",
+            news: "no",
+            welcome: "yes",
+            update: "no",
+            title: title,
+            description: description,
+            redirect_link: "/marketplace",
+          }
+        );
+
+        console.log("New user added:", newUserResponse.data);
+        const notifications = newUserResponse.data?.notifications || [];
+        setmyNftsOffer(notifications.reverse());
+      } else {
+        console.log("User already exists:", response.data);
+        const notifications = response.data[0]?.notifications || [];
+        setmyNftsOffer(notifications.reverse());
+      }
     } catch (error) {
-      console.error("Error retrieving notifications:", error.message);
+      console.error("Error adding new user:", error.message);
     }
   }
 
@@ -1167,10 +1198,16 @@ function App() {
 
   useEffect(() => {
     if (coinbase) {
-      getNotifications(coinbase);
+      // getNotifications(coinbase);
+      addNewUserIfNotExists(
+        coinbase,
+        "Welcome",
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Begin your journey and uncover the magic of our NFT offerings. Happy browsing and collecting!"
+      );
     }
   }, [coinbase, nftCount]);
 
+  // console.log(nftCount);
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -1240,7 +1277,6 @@ function App() {
                   coinbase={coinbase}
                   nftCount={nftCount}
                   isConnected={isConnected}
-
                 />
               }
             />

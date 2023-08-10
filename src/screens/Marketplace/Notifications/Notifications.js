@@ -19,12 +19,16 @@ import transferIcon from "./assets/transferIcon.svg";
 import transferIconActive from "./assets/transferIconActive.svg";
 import updateIcon from "./assets/updateIcon.svg";
 import updateIconActive from "./assets/updateIconActive.svg";
+
+import welcomeIcon from "./assets/welcomeIcon.svg";
+import welcomeIconActive from "./assets/welcomeIconActive.svg";
+
 import deleteIcon from "./assets/deleteIcon.svg";
 import deleteIconActive from "./assets/deleteIconActive.svg";
-import orangeDeleteIcon from './assets/orangeDeleteIcon.svg'
+import orangeDeleteIcon from "./assets/orangeDeleteIcon.svg";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import notifBell from './assets/notifbell.svg'
+import notifBell from "./assets/notifbell.svg";
 
 const Notifications = ({
   coinbase,
@@ -35,6 +39,7 @@ const Notifications = ({
   const windowSize = useWindowSize();
   const [activeBar, setActiveBar] = useState("all");
   const [nftOffers, setNftOffers] = useState([]);
+  const [nftOffersAll, setNftOffersAll] = useState([]);
 
   async function getNotifications(walletAddress) {
     try {
@@ -46,6 +51,7 @@ const Notifications = ({
       const notifications = response.data[0]?.notifications || [];
 
       setNftOffers(notifications.reverse());
+      setNftOffersAll(notifications.reverse());
       console.log("Notifications:", notifications);
     } catch (error) {
       console.error("Error retrieving notifications:", error.message);
@@ -90,7 +96,6 @@ const Notifications = ({
       );
       console.log("Notification deleted");
       handleRefreshList();
-
     } catch (error) {
       console.error("Error deleting notification:", error.message);
     }
@@ -110,16 +115,35 @@ const Notifications = ({
     }
   }
 
+  const filterNotifications = (filtertitle) => {
+    if (nftOffers.length > 0) {
+      if (filtertitle === "all") {
+        setNftOffers(nftOffersAll);
+      } else if (filtertitle === "activities") {
+        const filterArray = nftOffersAll.filter((item) => {
+          return item.news === "no";
+        });
+        setNftOffers(filterArray);
+      } else if (filtertitle === "news") {
+        const filterArray = nftOffersAll.filter((item) => {
+          return item.news === "yes";
+        });
+        setNftOffers(filterArray);
+      }
+    } else {
+      setNftOffers([]);
+    }
+  };
+
   useEffect(() => {
     if (isConnected && coinbase) {
       getNotifications(coinbase);
     }
-  }, [nftCount, coinbase,isConnected]);
+  }, [nftCount, coinbase, isConnected]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Notification Center';
-
+    document.title = "Notification Center";
   }, []);
 
   return (
@@ -147,7 +171,10 @@ const Notifications = ({
                   className={`${
                     activeBar === "all" && "notification-bar-item-active"
                   } notification-bar-item p-2 d-flex align-items-center gap-2`}
-                  onClick={() => setActiveBar("all")}
+                  onClick={() => {
+                    setActiveBar("all");
+                    filterNotifications("all");
+                  }}
                 >
                   <img
                     src={activeBar === "all" ? allIconActive : allIcon}
@@ -159,7 +186,10 @@ const Notifications = ({
                   className={`${
                     activeBar === "activities" && "notification-bar-item-active"
                   } notification-bar-item p-2 d-flex align-items-center gap-2`}
-                  onClick={() => setActiveBar("activities")}
+                  onClick={() => {
+                    setActiveBar("activities");
+                    filterNotifications("activities");
+                  }}
                 >
                   <img
                     src={
@@ -173,7 +203,10 @@ const Notifications = ({
                   className={` ${
                     activeBar === "news" && "notification-bar-item-active"
                   } notification-bar-item p-2 d-flex align-items-center gap-2`}
-                  onClick={() => setActiveBar("news")}
+                  onClick={() => {
+                    setActiveBar("news");
+                    filterNotifications("news");
+                  }}
                 >
                   <img
                     src={activeBar === "news" ? newsIconActive : newsIcon}
@@ -205,109 +238,135 @@ const Notifications = ({
               <div className="notifications-list p-3">
                 {nftOffers && nftOffers.length === 0 && (
                   <div className="d-flex flex-column gap-2 align-items-center m-auto">
-                    <img src={notifBell} alt='' />
-                  <h5 className="text-white align-center">
-                  No recent notifications
-                  </h5>
+                    <img src={notifBell} alt="" />
+                    <h5 className="text-white align-center">
+                      No recent notifications
+                    </h5>
                   </div>
                 )}
                 {nftOffers &&
                   nftOffers.length > 0 &&
                   nftOffers.map((item, index) => (
-                    <div
-                      className="list-notification px-2 py-4 d-flex align-items-end justify-content-between"
-                    >
-                     <NavLink 
-                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
-                      onClick={() => markNotificationAsRead(coinbase, item._id)}
-                     
-                     >
-                     <div className="d-flex-flex-column gap-2">
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={
-                              item.buy === "yes" && item.read === false
-                                ? cartIconActive
-                                : item.buy === "yes" && item.read === true
-                                ? cartIcon
-                                : item.offer === "yes" && item.read === false
-                                ? offerIconActive
-                                : item.offer === "yes" && item.read === true
-                                ? offerIcon
-                                : item.offerAccepted === "yes" &&
-                                  item.read === false
-                                ? transferIconActive
-                                : item.offerAccepted === "yes" &&
-                                  item.read === true
-                                ? transferIcon
-                                : null
-                            }
-                            alt=""
-                          />
-                          <h6
-                            className="notification-title mb-0"
-                            style={{
-                              color:
-                                item.read === false ? "#11FED2" : "#EEEDFF",
-                            }}
-                          >
+                    <div className="list-notification px-2 py-4 d-flex align-items-end justify-content-between">
+                      {/* <NavLink
+                        to={
+                          item.redirect_link !== ""
+                            ? item.redirect_link
+                            : `/marketplace/nft/${
+                                item.tokenId
+                              }/${item.nftAddress.toLowerCase()}`
+                        }
+                        onClick={() =>
+                          markNotificationAsRead(coinbase, item._id)
+                        }
+                      > */}
+                        <div className="d-flex-flex-column gap-2">
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={
+                                item.buy === "yes" && item.read === false
+                                  ? cartIconActive
+                                  : item.buy === "yes" && item.read === true
+                                  ? cartIcon
+                                  : item.offer === "yes" && item.read === false
+                                  ? offerIconActive
+                                  : item.offer === "yes" && item.read === true
+                                  ? offerIcon
+                                  : item.offerAccepted === "yes" &&
+                                    item.read === false
+                                  ? transferIconActive
+                                  : item.offerAccepted === "yes" &&
+                                    item.read === true
+                                  ? transferIcon
+                                  : //welcome
+                                  item.welcome === "yes" && item.read === false
+                                  ? welcomeIconActive
+                                  : item.welcome === "yes" && item.read === true
+                                  ? welcomeIcon
+                                  : //news
+                                  item.news === "yes" && item.read === false
+                                  ? newsIconActive
+                                  : item.news === "yes" && item.read === true
+                                  ? newsIcon
+                                  : //updates
+                                  item.update === "yes" && item.read === false
+                                  ? updateIconActive
+                                  : item.update === "yes" && item.read === true
+                                  ? updateIcon
+                                  : //events
+                                  item.event === "yes" && item.read === false
+                                  ? eventIconActive
+                                  : item.event === "yes" && item.read === true
+                                  ? eventIcon
+                                  : null
+                              }
+                              alt=""
+                            />
+                            <h6
+                              className="notification-title mb-0"
+                              style={{
+                                color:
+                                  item.read === false ? "#11FED2" : "#EEEDFF",
+                              }}
+                            >
+                              {item.buy === "yes"
+                                ? "NFT Sale"
+                                : item.offer === "yes"
+                                ? "New Offer"
+                                : item.offerAccepted === "yes"
+                                ? "NFT Sale"
+                                : item.title}
+                            </h6>
+                          </div>
+                          <p className="notification-desc mb-0">
                             {item.buy === "yes"
-                              ? "NFT Sale"
+                              ? `Congratulations on being the new owner of ${
+                                  item.nftAddress ===
+                                  window.config.nft_caws_address
+                                    ? "CAWS"
+                                    : item.nftAddress ===
+                                      window.config.nft_land_address
+                                    ? "WOD"
+                                    : "Timepiece"
+                                } #${item.tokenId} .`
                               : item.offer === "yes"
-                              ? "New Offer"
-                              : item.offerAccepted === "yes"
-                              ? "NFT Sale"
-                              : null}
-                          </h6>
+                              ? `There is a new offer for your ${
+                                  item.nftAddress ===
+                                  window.config.nft_caws_address
+                                    ? "CAWS"
+                                    : item.nftAddress ===
+                                      window.config.nft_land_address
+                                    ? "WOD"
+                                    : "Timepiece"
+                                } #${item.tokenId}.`
+                              : item.description}
+                          </p>
                         </div>
-                        <p className="notification-desc mb-0">
-                          {item.buy === "yes"
-                            ? `Congratulations on being the new owner of ${
-                                item.nftAddress ===
-                                window.config.nft_caws_address
-                                  ? "CAWS"
-                                  : item.nftAddress ===
-                                    window.config.nft_land_address
-                                  ? "WOD"
-                                  : "Timepiece"
-                              } #${
-                                item.tokenId
-                              } .`
-                            : item.offer === "yes"
-                            ? `There is a new offer for your ${
-                                item.nftAddress ===
-                                window.config.nft_caws_address
-                                  ? "CAWS"
-                                  : item.nftAddress ===
-                                    window.config.nft_land_address
-                                  ? "WOD"
-                                  : "Timepiece"
-                              } #${
-                                item.tokenId
-                              }.`
-                            : null}
-                        </p>
-                      </div>
-                      <div className="notification-date-wrapper d-flex flex-column align-items-end justify-content-center px-3 gap-2">
-                        <span className="notification-hour mb-0">
-                          {new Date(item.timestamp).getHours() +
-                            " : " +
-                            (new Date(item.timestamp).getMinutes() < 10
-                              ? "0"
-                              : "") +
-                            new Date(item.timestamp).getMinutes()}
-                        </span>
-                        <span className="notification-date mb-0">
-                          {new Date(item.timestamp)
-                            .toDateString()
-                            .slice(
-                              3,
-                              new Date(item.timestamp).toDateString().length
-                            )}
-                        </span>
-                      </div>
-                     </NavLink>
-                      <div className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3" onClick={() => {deleteNotification(item._id)}}>
+                        <div className="notification-date-wrapper d-flex flex-column align-items-end justify-content-center px-3 gap-2">
+                          <span className="notification-hour mb-0">
+                            {new Date(item.timestamp).getHours() +
+                              " : " +
+                              (new Date(item.timestamp).getMinutes() < 10
+                                ? "0"
+                                : "") +
+                              new Date(item.timestamp).getMinutes()}
+                          </span>
+                          <span className="notification-date mb-0">
+                            {new Date(item.timestamp)
+                              .toDateString()
+                              .slice(
+                                3,
+                                new Date(item.timestamp).toDateString().length
+                              )}
+                          </span>
+                        </div>
+                      {/* </NavLink> */}
+                      <div
+                        className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
+                        onClick={() => {
+                          deleteNotification(item._id);
+                        }}
+                      >
                         <img src={orangeDeleteIcon} alt="" />
                         <span className="notif-delete-text">Delete</span>
                       </div>
