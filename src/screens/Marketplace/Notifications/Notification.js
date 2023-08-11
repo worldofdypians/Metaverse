@@ -48,10 +48,10 @@ const Notification = ({
   return (
     <div className="d-flex flex-column list-notification">
       <div
-        className="list-notification-first px-2 py-4 d-flex align-items-end justify-content-between"
+        className="list-notification-first px-2 py-4 d-flex align-items-start align-items-lg-end justify-content-between"
         onClick={() => setActive(!active)}
       >
-        <div className="d-flex-flex-column gap-2">
+        <div className="d-flex-flex-column gap-2" style={{width: '80%'}}>
           <div className="d-flex align-items-center gap-2">
             <img
               src={
@@ -128,7 +128,7 @@ const Notification = ({
           </p>
         </div>
         <div className="d-flex flex-column align-items-end gap-4 notification-date-wrapper">
-          <div className=" d-flex align-items-end justify-content-center  gap-2">
+          <div className=" d-flex flex-column flex-lg-row align-items-end justify-content-center  gap-2">
             <span className="notification-hour mb-0">
               {new Date(item.timestamp).getHours() +
                 " : " +
