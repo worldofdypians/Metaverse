@@ -1202,7 +1202,7 @@ function App() {
       addNewUserIfNotExists(
         coinbase,
         "Welcome",
-        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Begin your journey and uncover the magic of our NFT offerings. Happy browsing and collecting!"
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
       );
     }
   }, [coinbase, nftCount]);
