@@ -123,7 +123,8 @@ const Notification = ({
                     ? "WOD"
                     : "Timepiece"
                 } #${item.tokenId}.`
-              : item.description.slice(0, descSlice)}
+              : item.description.slice(0, descSlice)} 
+              {!active  && '...'}
           </p>
         </div>
         <div className="d-flex flex-column align-items-end gap-4 notification-date-wrapper">

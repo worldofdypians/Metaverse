@@ -29,7 +29,7 @@ import orangeDeleteIcon from "./assets/orangeDeleteIcon.svg";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import notifBell from "./assets/notifbell.svg";
-import notificationDropdown from './assets/notificationDropdown.svg'
+import notificationDropdown from "./assets/notificationDropdown.svg";
 import Notification from "./Notification";
 
 const Notifications = ({
@@ -42,22 +42,52 @@ const Notifications = ({
   const [activeBar, setActiveBar] = useState("all");
   const [nftOffers, setNftOffers] = useState([]);
   const [nftOffersAll, setNftOffersAll] = useState([]);
-  const [descSlice, setDescSlice] = useState(100)
+  const [descSlice, setDescSlice] = useState(100);
+  const API_BASE_URL = "https://api.worldofdypians.com";
 
-  async function getNotifications(walletAddress) {
+  async function addNewUserIfNotExists(walletAddress, title, description) {
     try {
       const response = await axios.get(
-        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+        `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
         )}`
       );
-      const notifications = response.data[0]?.notifications || [];
 
-      setNftOffers(notifications.reverse());
-      setNftOffersAll(notifications.reverse());
-      console.log("Notifications:", notifications);
+      if (response.data.length === 0) {
+        const newUserResponse = await axios.post(
+          `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+            walletAddress
+          )}`,
+          {
+            tokenId: "",
+            nftAddress: "",
+            timestamp: Date.now(),
+            read: false,
+            offer: "no",
+            offerAccepted: "no",
+            buy: "no",
+            event: "no",
+            news: "no",
+            welcome: "yes",
+            update: "no",
+            title: title,
+            description: description,
+            redirect_link: "/marketplace",
+          }
+        );
+
+        console.log("New user added:", newUserResponse.data);
+        const notifications = newUserResponse.data?.notifications || [];
+        setNftOffers(notifications.reverse());
+        setNftOffersAll(notifications.reverse());
+      } else {
+        console.log("User already exists:", response.data);
+        const notifications = response.data[0]?.notifications || [];
+        setNftOffers(notifications.reverse());
+        setNftOffersAll(notifications.reverse());
+      }
     } catch (error) {
-      console.error("Error retrieving notifications:", error.message);
+      console.error("Error adding new user:", error.message);
     }
   }
 
@@ -119,7 +149,7 @@ const Notifications = ({
   }
 
   const filterNotifications = (filtertitle) => {
-    if (nftOffers.length > 0) {
+    if (nftOffersAll.length > 0) {
       if (filtertitle === "all") {
         setNftOffers(nftOffersAll);
       } else if (filtertitle === "activities") {
@@ -138,9 +168,95 @@ const Notifications = ({
     }
   };
 
+  async function deleteNotificationsByType(walletAddress, type) {
+    try {
+      const notifications = nftOffersAll;
+
+      if (type === "activities") {
+        const notificationsToDelete = notifications.filter(
+          (notification) => notification["news"] === "no"
+        );
+
+        for (const notification of notificationsToDelete) {
+          await axios.delete(
+            `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+              walletAddress
+            )}/${notification._id}`
+          );
+        }
+
+        console.log(`Deleted ${type} notifications`);
+        handleRefreshList();
+      } else if (type === "news") {
+        const notificationsToDelete = notifications.filter(
+          (notification) => notification["news"] === "yes"
+        );
+
+        for (const notification of notificationsToDelete) {
+          await axios.delete(
+            `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+              walletAddress
+            )}/${notification._id}`
+          );
+        }
+
+        console.log(`Deleted ${type} notifications`);
+        handleRefreshList();
+      }
+    } catch (error) {
+      console.error(`Error deleting ${type} notifications:, error.message`);
+    }
+  }
+
+  async function markNotificationsAsReadByType(walletAddress, type) {
+    try {
+      const notifications = nftOffersAll;
+
+      if (type === "activities") {
+        const filteredNotifications = notifications.filter(
+          (notification) => notification["news"] === "no"
+        );
+
+        for (const notification of filteredNotifications) {
+          await axios.patch(
+            `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+              walletAddress
+            )}/${notification._id}, { read: true }`
+          );
+        }
+
+        console.log(`Marked ${type} notifications as read`);
+        handleRefreshList();
+      } else if (type === "news") {
+        const filteredNotifications = notifications.filter(
+          (notification) => notification["news"] === "yes"
+        );
+
+        for (const notification of filteredNotifications) {
+          await axios.patch(
+            `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+              walletAddress
+            )}/${notification._id}, { read: true }`
+          );
+        }
+
+        console.log(`Marked ${type} notifications as read`);
+        handleRefreshList();
+      }
+    } catch (error) {
+      console.error(
+        `Error marking ${type} notifications as read:, error.message`
+      );
+    }
+  }
+
   useEffect(() => {
     if (isConnected && coinbase) {
-      getNotifications(coinbase);
+      addNewUserIfNotExists(
+        coinbase,
+        "Welcome",
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Begin your journey and uncover the magic of our NFT offerings. Happy browsing and collecting!"
+      );
     }
   }, [nftCount, coinbase, isConnected]);
 
@@ -148,8 +264,6 @@ const Notifications = ({
     window.scrollTo(0, 0);
     document.title = "Notification Center";
   }, []);
-
-  
 
   return (
     <>
@@ -223,7 +337,13 @@ const Notifications = ({
               <div className="d-flex align-items-center gap-3">
                 <div
                   className="notification-bar-item p-2 d-flex align-items-center gap-2"
-                  onClick={markAllNotificationsAsRead}
+                  onClick={() => {
+                    activeBar === "all"
+                      ? markAllNotificationsAsRead()
+                      : activeBar === "activities"
+                      ? markNotificationsAsReadByType(coinbase, "activities")
+                      : markNotificationsAsReadByType(coinbase, "news");
+                  }}
                 >
                   <img src={markReadIcon} alt="" />
                   <h6 className="notification-item-text mb-0">
@@ -232,7 +352,13 @@ const Notifications = ({
                 </div>
                 <div
                   className="notification-bar-item p-2 d-flex align-items-center gap-2"
-                  onClick={deleteAllNotifications}
+                  onClick={() => {
+                    activeBar === "all"
+                      ? deleteAllNotifications()
+                      : activeBar === "activities"
+                      ? deleteNotificationsByType(coinbase, "activities")
+                      : deleteNotificationsByType(coinbase, "news");
+                  }}
                 >
                   <img src={deleteIcon} alt="" />
                   <h6 className="notification-item-text mb-0">Clear all</h6>
@@ -252,7 +378,13 @@ const Notifications = ({
                 {nftOffers &&
                   nftOffers.length > 0 &&
                   nftOffers.map((item, index) => (
-                    <Notification item={item} index={index} markNotificationAsRead={markNotificationAsRead} coinbase={coinbase} deleteNotification={deleteNotification}   />
+                    <Notification
+                      item={item}
+                      index={index}
+                      markNotificationAsRead={markNotificationAsRead}
+                      coinbase={coinbase}
+                      deleteNotification={deleteNotification}
+                    />
                   ))}
               </div>
             </div>
