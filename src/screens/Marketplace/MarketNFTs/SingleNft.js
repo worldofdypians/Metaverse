@@ -213,7 +213,7 @@ const SingleNft = ({
             });
 
           const priceFormatted = item.offer.price / 1e18;
-console.log(balance >= priceFormatted && allowance >= priceFormatted)
+          console.log(balance >= priceFormatted && allowance >= priceFormatted);
           return finalArray.push({
             offer: item.offer,
             index: item.index,
@@ -280,6 +280,27 @@ console.log(balance >= priceFormatted && allowance >= priceFormatted)
       });
 
       setowner(nftowner);
+    }
+  };
+
+  const getOldNftOwner = async (type, Id) => {
+    if (type === "timepiece") {
+      const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
+
+      localStorage.setItem("oldOwner", nftowner);
+    } else if (type === "land") {
+      const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
+      localStorage.setItem("oldOwner", nftowner);
+    } else if (type === "caws") {
+      const nftowner = await window.nft.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
+
+      localStorage.setItem("oldOwner", nftowner);
     }
   };
 
@@ -1104,7 +1125,6 @@ console.log(balance >= priceFormatted && allowance >= priceFormatted)
         : "caws",
       nftId
     );
-
   }, [type, nftId, nftAddress, nftCount, nft]);
 
   useEffect(() => {
@@ -1114,6 +1134,14 @@ console.log(balance >= priceFormatted && allowance >= priceFormatted)
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
     getListedNtsAsc();
+    getOldNftOwner(
+      nftAddress === window.config.nft_caws_address
+        ? "caws"
+        : nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : "land",
+      nftId
+    );
   }, []);
 
   useEffect(() => {
