@@ -135,7 +135,7 @@ const Notification = ({
                     ? "WOD"
                     : "Timepiece"
                 } #${item.tokenId}.`
-              : item.description.slice(0, descSlice)} 
+              : item.description?.slice(0, descSlice)} 
               {!active  && '...'}
           </p>
         </div>
