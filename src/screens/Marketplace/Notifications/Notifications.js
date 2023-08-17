@@ -47,11 +47,11 @@ const Notifications = ({
 
   async function addNewUserIfNotExists(walletAddress, title, description, redirect_link) {
     try {
-        const response = await axios.get(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`);
+        const response = await axios.get(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress('0x65C3d0F9438644945dF5BF321c9F0fCf333302b8')}`);
         
       
         if (response.data.length === 0) {
-            const newUserResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
+            const newUserResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress('0x65C3d0F9438644945dF5BF321c9F0fCf333302b8')}`, {
                 tokenId: '', 
                 nftAddress: '', 
                 timestamp: Date.now(),
@@ -80,7 +80,7 @@ const Notifications = ({
             ];
 
             for (const news of newsNotifications) {
-                const newsNotificationResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
+                const newsNotificationResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress('0x65C3d0F9438644945dF5BF321c9F0fCf333302b8')}`, {
                     tokenId: '', 
                     nftAddress: '', 
                     timestamp: Date.now(),

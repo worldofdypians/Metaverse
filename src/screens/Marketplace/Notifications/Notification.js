@@ -39,7 +39,7 @@ const Notification = ({
 
   useEffect(() => {
     if (active) {
-      setDescSlice(item.description.length);
+      setDescSlice(item.description?.length || 0);
     } else {
       setDescSlice(100);
     }
