@@ -50,6 +50,7 @@ const LeaderBoard = ({
   dypBalancebnb,
   address,
   availableTime,
+  email
 }) => {
   const playerData = [
     {
@@ -595,14 +596,14 @@ const LeaderBoard = ({
     } else if (item === "monthly" && inactiveBoard === false) {
       setPrizes(monthlyPrizes);
     } else if (item === "monthly" && inactiveBoard === true) {
-      setPrizes(previous_monthlyPrizes);
+      setPrizes(monthlyPrizes);
     }
   };
 
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
       setRecords(placeholderplayerData);
-    } else if (itemData.length < 10) {
+    } else if (itemData.length <= 10) {
       const testArray = itemData;
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
@@ -613,7 +614,7 @@ const LeaderBoard = ({
   const fillRecordsDaily = (itemData) => {
     if (itemData.length === 0) {
       setdailyplayerData(placeholderplayerData);
-    } else if (itemData.length < 10) {
+    } else if (itemData.length <= 10) {
       const testArray = itemData;
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
@@ -624,7 +625,7 @@ const LeaderBoard = ({
   const fillRecordsGenesis = (itemData) => {
     if (itemData.length === 0) {
       setgenesisData(placeholderplayerData);
-    } else if (itemData.length < 10) {
+    } else if (itemData.length <= 10) {
       const testArray = itemData;
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
@@ -1004,7 +1005,7 @@ const LeaderBoard = ({
                             >
                               +$
                               {getFormattedNumber(
-                                previous_monthlyPrizesGolden[index],
+                                monthlyPrizesGolden[index],
                                 0
                               )}
                             </td>
@@ -1182,7 +1183,7 @@ const LeaderBoard = ({
               )}
             </div>
 
-            {activePlayer === false &&
+            {activePlayer === false && email &&
               inactiveBoard === false &&
               optionText !== "genesis" && (
                 <table className="playerTable" style={{ marginTop: "-33px" }}>

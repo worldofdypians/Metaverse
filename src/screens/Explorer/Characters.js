@@ -31,12 +31,12 @@ const Characters = () => {
               <li className="character-trait">High vitality</li>
             </ul>
           </div>
-          <img src={warrior} alt="" />
+          <img src={warrior} alt=""  style={{ width: "330px", objectFit: 'contain' }}/>
         </div>
       </div>
       <div className="col-12 col-lg-6 character-card">
         <div className="d-flex flex-column flex-lg-row gap-3 character-card justify-content-start second-character">
-          <img src={mage} alt="" />
+          <img src={mage} alt=""  style={{ width: "330px", objectFit: 'contain' }}/>
           <div
             className="d-flex flex-column justify-content-start gap-5 character-info"
             style={{ width: "34%" }}

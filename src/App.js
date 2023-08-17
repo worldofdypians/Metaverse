@@ -51,7 +51,7 @@ import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
 import MarketStake from "./screens/Marketplace/MarketStake";
 import MarketEvents from "./screens/Marketplace/MarketEvents";
 import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
@@ -131,8 +131,11 @@ function App() {
   const [timepieceBought, setTimepieceBought] = useState([]);
   const [landBought, setLandBought] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
+  const [success, setSuccess] = useState(false);
+
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getTokenData = async () => {
     await axios
@@ -248,6 +251,24 @@ function App() {
     });
   };
 
+  const checkConnection2 = async () => {
+    const logout = localStorage.getItem("logout");
+    if (logout !== "true") {
+      await window.getCoinbase().then((data) => {
+        if (data) {
+          setCoinbase(data);
+          setIsConnected(true);
+        } else {
+          setCoinbase("0x0000000000000000000000000000000000000000");
+          setIsConnected(false);
+        }
+      });
+    } else {
+      setIsConnected(false);
+      setCoinbase("0x0000000000000000000000000000000000000000");
+    }
+  };
+
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -273,15 +294,18 @@ function App() {
     try {
       localStorage.setItem("logout", "false");
       await window.connectWallet().then((data) => {
-        setIsConnected(data);
+        setIsConnected(true);
       });
       await window.getCoinbase().then((data) => {
         console.log(data);
         setCoinbase(data);
       });
       setShowForms(true);
+      setSuccess(true)
     } catch (e) {
       setShowWalletModal(false);
+      setSuccess(true)
+
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
       return;
@@ -305,6 +329,7 @@ function App() {
 
   const handleConnectWallet = async () => {
     try {
+      localStorage.setItem("logout", "false");
       await window.connectWallet().then((data) => {
         setIsConnected(data);
       });
@@ -732,7 +757,7 @@ function App() {
           finalboughtItems.push(nft);
         }
       });
-    return finalboughtItems;
+    setLatest20BoughtNFTS(finalboughtItems);
   };
 
   const handleRefreshList = () => {
@@ -901,13 +926,29 @@ function App() {
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
+  ethereum?.on("accountsChanged", checkConnection2);
 
   useEffect(() => {
     if (ethereum) {
       ethereum.on("chainChanged", checkNetworkId);
-      ethereum.on("accountsChanged", handleConnection);
     }
   }, [ethereum, nftCount]);
+
+  const logout = localStorage.getItem("logout");
+
+  useEffect(() => {
+    if (window.ethereum) {
+      if (window.ethereum.isConnected() === true && logout === "false") {
+        checkConnection2();
+      } else {
+        setIsConnected(false);
+        setCoinbase("0x0000000000000000000000000000000000000000");
+        localStorage.setItem("logout", "true");
+        
+      }
+      checkNetworkId();
+    }
+  }, [coinbase, chainId]);
 
   useEffect(() => {
     checkNetworkId();
@@ -1027,7 +1068,6 @@ function App() {
       setTimepieceBought(uniqueTimepiece);
     }
   };
-
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
 
@@ -1192,10 +1232,7 @@ function App() {
     getTokenDatabnbNew();
     getListedNfts2();
 
-    getLatest20BoughtNFTS().then((NFTS) => {
-      setLatest20BoughtNFTS(NFTS);
-      getCawsSold();
-    });
+    getLatest20BoughtNFTS();
 
     getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
       settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
@@ -1212,14 +1249,11 @@ function App() {
     }
   }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
 
-  useEffect(() => {
-    if (
-      window.coinbase_address === "0x0000000000000000000000000000000000000000"
-    ) {
-      setCoinbase();
-      setIsConnected(false);
+  useEffect(()=>{
+    if(latest20BoughtNFTS.length > 0) {
+      getCawsSold();
     }
-  }, [window.coinbase_address]);
+  },[latest20BoughtNFTS.length])
 
   useEffect(() => {
     if (coinbase) {
@@ -1248,6 +1282,8 @@ function App() {
             myOffers={myNftsOffer}
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
+            isConnected={isConnected}
+
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1368,6 +1404,7 @@ function App() {
                   onSigninClick={() => {
                     setShowWalletModalRegister2(true);
                   }}
+                  success={success}
                   availableTime={availTime}
                 />
               }

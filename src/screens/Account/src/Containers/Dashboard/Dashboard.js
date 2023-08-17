@@ -5,7 +5,6 @@ import { ethers } from "ethers";
 import { dashboardBackground } from "../../Themes/Images";
 import { GENERATE_NONCE, GET_PLAYER, VERIFY_WALLET } from "./Dashboard.schema";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
-
 import { getWalletTokens } from "../../web3/tmp";
 import { Grid } from "@mui/material";
 import { HashLoader } from "react-spinners";
@@ -14,10 +13,8 @@ import LandCart from "../../Components/Cart/LandCart";
 import EmptyCard from "../../Components/Cart/EmptyCard";
 import classes from "./Dashboard.module.css";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
-
 import LeaderBoard from "../../Components/LeaderBoard/LeaderBoard";
 import WalletBalance from "../../Components/WalletBalance/WalletBalance";
-
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import ChecklistModal from "../../Components/ChecklistModal/ChecklistModal";
 import ChecklistLandNftModal from "../../Components/ChecklistModal/ChecklistLandNftModal";
@@ -25,14 +22,13 @@ import EmptyGenesisCard from "../../Components/EmptyGenesisCard/EmptyGenesisCard
 import Web3 from "web3";
 import { ERC20_ABI } from "../../web3/abis";
 import _ from "lodash";
-import WalletModal from "../../Components/WalletModal/WalletModal";
-
+import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
-
 import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 
 function Dashboard({
   account,
@@ -47,6 +43,7 @@ function Dashboard({
   onSigninClick,
   onLogoutClick,
   availableTime,
+  success
 }) {
   const { email, logout } = useAuth();
 
@@ -77,7 +74,6 @@ function Dashboard({
   const [idypBalance, setiDypBalance] = useState();
   const [idypBalancebnb, setiDypBalanceBnb] = useState();
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
-  const [loadingRecentListings, setLoadingRecentListings] = useState(false);
   const [showNfts, setShowNfts] = useState(false);
   const [showWalletModal, setshowWalletModal] = useState(false);
   const [stakes, setStakes] = useState([]);
@@ -86,11 +82,10 @@ function Dashboard({
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
-  
+
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
-
 
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
@@ -99,6 +94,7 @@ function Dashboard({
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
+  const [showSyncModal, setshowSyncModal] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -155,14 +151,7 @@ function Dashboard({
   };
 
   const getCawsStakesIdsCawsWod = async () => {
-    const address =
-      data?.getPlayer?.wallet &&
-      email &&
-      coinbase &&
-      data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-        coinbase.toLowerCase()
-        ? data?.getPlayer?.wallet?.publicAddress
-        : coinbase;
+    const address = coinbase;
 
     let stakenft_cawsWod = [];
     const infura_web3 = window.infuraWeb3;
@@ -184,14 +173,7 @@ function Dashboard({
   };
 
   const getWodStakesIdsCawsWod = async () => {
-    const address =
-      data?.getPlayer?.wallet &&
-      email &&
-      coinbase &&
-      data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-        coinbase.toLowerCase()
-        ? data?.getPlayer?.wallet?.publicAddress
-        : coinbase;
+    const address = coinbase;
     let stakenft_cawsWod = [];
     const infura_web3 = window.infuraWeb3;
     let staking_contract = new infura_web3.eth.Contract(
@@ -286,10 +268,10 @@ function Dashboard({
         },
       }).then(() => {
         setsyncStatus("success");
-
         setTimeout(() => {
+          setshowSyncModal(false);
           setsyncStatus("initial");
-        }, 5000);
+        }, 1000);
       });
     } catch (error) {
       setsyncStatus("error");
@@ -301,8 +283,13 @@ function Dashboard({
     }
   };
 
+  const handleShowSyncModal = () => {
+    setshowSyncModal(true);
+  };
+
   const handleSync = async () => {
     setsyncStatus("loading");
+
     try {
       await generateNonce({
         variables: {
@@ -313,6 +300,7 @@ function Dashboard({
       setsyncStatus("error");
       setTimeout(() => {
         setsyncStatus("initial");
+        setshowSyncModal(false);
       }, 3000);
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
@@ -324,55 +312,17 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
-    if (data?.getPlayer?.wallet?.publicAddress || coinbase) {
-      getMyNFTS(
-        email
-          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-            coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-          : coinbase,
-        "caws"
-      ).then((NFTS) => setMyNFTSCaws(NFTS));
+    getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
 
-      getMyNFTS(
-        email
-          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-            coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-          : coinbase,
-        "timepiece"
-      ).then((NFTS) => setMyNFTSTimepiece(NFTS));
+    getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
 
-      getMyNFTS(
-        email
-          ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-            coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-          : coinbase,
-        "land"
-      ).then((NFTS) => setMyNFTSLand(NFTS));
-    }
+    getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
   };
 
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
 
-    const listedNFTS = await getListedNFTS(
-      0,
-      "",
-      "buyer",
-      data?.getPlayer?.wallet &&
-        email &&
-        coinbase &&
-        data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-          coinbase.toLowerCase()
-        ? data?.getPlayer?.wallet?.publicAddress
-        : coinbase,
-      ""
-    );
+    const listedNFTS = await getListedNFTS(0, "", "buyer", coinbase, "");
     listedNFTS &&
       listedNFTS.length > 0 &&
       listedNFTS.map((nft) => {
@@ -426,15 +376,7 @@ function Dashboard({
         token_addressIDYP
       );
       const bal1 = await contract1.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3eth.utils.fromWei(data, "ether");
@@ -442,15 +384,7 @@ function Dashboard({
       setDypBalance(bal1);
 
       const bal2 = await contract2.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -458,15 +392,7 @@ function Dashboard({
       setDypBalanceBnb(bal2);
 
       const bal3 = await contract3.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -474,11 +400,7 @@ function Dashboard({
       setDypBalanceAvax(bal3);
 
       const bal1_idyp = await contract1_idyp.methods
-        .balanceOf(
-          data?.getPlayer?.wallet && email
-            ? data?.getPlayer?.wallet?.publicAddress
-            : account
-        )
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3eth.utils.fromWei(data, "ether");
@@ -486,15 +408,7 @@ function Dashboard({
       setiDypBalance(bal1_idyp);
 
       const bal2_idyp = await contract2_idyp.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -502,15 +416,7 @@ function Dashboard({
       setiDypBalanceBnb(bal2_idyp);
 
       const bal3_idyp = await contract3_idyp.methods
-        .balanceOf(
-          data?.getPlayer?.wallet &&
-            email &&
-            coinbase &&
-            data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-              coinbase.toLowerCase()
-            ? data?.getPlayer?.wallet?.publicAddress
-            : coinbase
-        )
+        .balanceOf(coinbase)
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -661,6 +567,8 @@ function Dashboard({
     }
   };
 
+
+
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
@@ -674,7 +582,7 @@ function Dashboard({
   }, [dataNonce]);
 
   useEffect(() => {
-    if (coinbase || (data?.getPlayer?.wallet?.publicAddress && email)) {
+    if (coinbase) {
       setsyncStatus("initial");
       fetchAllMyNfts();
       getmyCawsWodStakes();
@@ -685,14 +593,7 @@ function Dashboard({
   useEffect(() => {
     getOtherNfts();
     getDypBalance();
-    fetchUserFavorites(
-      data?.getPlayer?.wallet && email
-        ? data?.getPlayer?.wallet?.publicAddress?.toLowerCase() ===
-          coinbase.toLowerCase()
-          ? data?.getPlayer?.wallet?.publicAddress
-          : coinbase
-        : coinbase
-    );
+    fetchUserFavorites(coinbase);
   }, [account, email, data?.getPlayer?.wallet]);
 
   useEffect(() => {
@@ -706,11 +607,23 @@ function Dashboard({
     }
   }, [coinbase]);
 
+  const logoutItem = localStorage.getItem("logout");
+
   useEffect(() => {
-    if (!isConnected && !coinbase && location.pathname === "/account") {
-      navigate("/");
+    if (window.ethereum) {
+      if (window.ethereum.isConnected() === true) {
+        localStorage.setItem("logout", "false");
+      } else {
+        localStorage.setItem("logout", "true");
+      }
     }
-  }, [isConnected, coinbase]);
+  }, [coinbase, chainId]);
+
+  useEffect(()=>{
+    if(success === true) {
+      setshowWalletModal(false)
+    }
+  },[success])
 
   return (
     <div
@@ -771,7 +684,7 @@ function Dashboard({
                         }}
                         onSigninClick={onSigninClick}
                         onLogoutClick={logout}
-                        onSyncClick={handleSync}
+                        onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
                       />
                       <WalletBalance
@@ -933,6 +846,7 @@ function Dashboard({
                       dypBalancebnb={dypBalancebnb}
                       address={data?.getPlayer?.wallet?.publicAddress}
                       availableTime={availableTime}
+                      email={email}
                     />
                   </div>
                   {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
@@ -1051,13 +965,27 @@ function Dashboard({
               />
             )}
 
-            {showWalletModal === true && (
+            {showWalletModal === true && success === false && (
               <WalletModal
                 show={showWalletModal}
                 handleClose={() => {
                   setshowWalletModal(false);
                 }}
-                handleConnection={connectWallet}
+                handleConnection={handleConnect}
+              />
+            )}
+
+            {showSyncModal === true && (
+              <SyncModal
+                onCancel={() => {
+                  setshowSyncModal(false);
+                }}
+                onclose={() => {
+                  setshowSyncModal(false);
+                }}
+                open={showSyncModal}
+                onConfirm={handleSync}
+                syncStatus={syncStatus}
               />
             )}
 

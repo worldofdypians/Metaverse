@@ -172,7 +172,7 @@ const ProfileCard = ({
                     <img src={walletIcon} alt="" className="wallet-icon" />
                     <div className="d-flex flex-column">
                       <span className="wallet-span d-flex align-items-center gap-2">
-                        Wallet address
+                        Game Wallet address
                       </span>
 
                       <div
@@ -245,11 +245,18 @@ const ProfileCard = ({
                   // </div>
                   <button
                     className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
-                    onClick={onSigninClick}
+                    onClick={() => {
+                      coinbase === "0x0000000000000000000000000000000000000000"
+                        ? handleShowWalletPopup()
+                        : onSigninClick();
+                    }}
                     role="button"
                     style={{ width: "fit-content", fontSize: 14 }}
                   >
-                    Sign in <img src={greenarrow} alt="" />
+                    {coinbase === "0x0000000000000000000000000000000000000000"
+                      ? "Connect wallet"
+                      : "Sign in "}{" "}
+                    <img src={greenarrow} alt="" />
                   </button>
                 ) : (
                   <div

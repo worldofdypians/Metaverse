@@ -239,10 +239,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
   color: #eeedff;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 21px;
+  line-height: 13px;
+}
+
+.offerInput::placeholder {
+  font-size: 12px;
 }
 
 .summaryred {

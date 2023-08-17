@@ -42,8 +42,7 @@ const Header = ({
   avatar,
   handleDisconnect,
   myOffers,
-  handleRefreshList,
-  nftCount,
+  handleRefreshList,nftCount,isConnected
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -58,8 +57,9 @@ const Header = ({
 
   const manageDisconnect = () => {
     if (location.pathname.includes("/account")) {
+    localStorage.setItem("logout", "true");
       handleDisconnect();
-      navigate("/");
+      // navigate("/");
     } else handleDisconnect();
   };
 
@@ -218,7 +218,7 @@ const Header = ({
           </NavLink>
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0 position-relative ">
-          {!coinbase ? (
+          {!isConnected ? (
             <div className="linearborder2">
               <button className="btn connectwallet px-3" onClick={handleSignUp}>
                 Connect Wallet
@@ -226,7 +226,7 @@ const Header = ({
             </div>
           ) : (
             <div className="d-flex align-items-center gap-3">
-              <div className="position-relative">
+              {/* <div className="position-relative">
                 <img
                   src={bellIcon}
                   width={30}
@@ -447,7 +447,7 @@ const Header = ({
                     )}
                   </div>
                 </OutsideClickHandler>
-              </div>
+              </div> */}
               <Clipboard
                 component="div"
                 data-event="click"

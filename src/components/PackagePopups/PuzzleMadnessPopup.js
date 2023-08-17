@@ -29,7 +29,7 @@ const PuzzleMadnessPopup = ({ onClosePopup }) => {
             valuable points that will be used to rank players on the daily,
             weekly, and monthly leaderboards against other players. One of the
             pieces contains a score multiplier that becomes active once all of
-            them have been found. This score multiplier can vary from x2 to x10
+            them have been found. This score multiplier can vary from x2 to x8
             and significantly increases the points earned, so it's essential to
             find them all to take advantage of this bonus. Although you can
             obtain the point multiplier on the first piece, the points will not

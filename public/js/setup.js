@@ -3309,7 +3309,6 @@ window.BUYBACK_STAKINGBSC1_1_ABI = window.BUYBACK_STAKINGBSC1_2_ABI;
 //   }
 // };
 
-
 window.buyNFT = async (
   price,
   nft_address,
@@ -3327,32 +3326,41 @@ window.buyNFT = async (
     window.config.nft_marketplace_address
   );
 
-    const gasPrice = await window.web3.eth.getGasPrice();
-    const currentGwei = window.web3.utils.fromWei(gasPrice, 'gwei');
-    const increasedGwei = parseInt(currentGwei) + 2;
-    const priorityFeeGwei = '0.1';
+  const gasPrice = await window.web3.eth.getGasPrice();
+  console.log("gasPrice", gasPrice);
+  const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
+  const increasedGwei = parseInt(currentGwei) + 3;
+  console.log("increasedGwei", increasedGwei);
 
-    const transactionParameters = {
-      gasPrice: window.web3.utils.toWei(increasedGwei.toString(), 'gwei'),
-      maxPriorityFeePerGas: window.web3.utils.toWei(priorityFeeGwei, 'gwei'),
-    };
+  const transactionParameters = {
+    gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
+  };
+  // console.log( transactionParameters )
 
+  await marketplace.methods
+    .buyItem(nft_address, tokenId, [priceType, priceAddress])
+    .estimateGas({ from: await getCoinbase(), value: price })
+    .then((gas) => {
+      transactionParameters.gas = window.web3.utils.toHex(gas);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  console.log('transactionParameters',transactionParameters)
 
-    const estimateGas = await marketplace.methods
+  if (priceType === 1) {
+    await marketplace.methods
       .buyItem(nft_address, tokenId, [priceType, priceAddress])
-      .estimateGas({ from: await getCoinbase(), value: price });
-
-    transactionParameters.gas = estimateGas.toString();
-
-    if (priceType === 1) {
-      await marketplace.methods
-        .buyItem(nft_address, tokenId, [priceType, priceAddress])
-        .send({ from: await getCoinbase(), value: 0, ...transactionParameters });
-    } else if (priceType === 0) {
-      await marketplace.methods
-        .buyItem(nft_address, tokenId, [priceType, priceAddress])
-        .send({ from: await getCoinbase(), value: price, ...transactionParameters });
-    }
+      .send({ from: await getCoinbase(), value: 0, ...transactionParameters });
+  } else if (priceType === 0) {
+    await marketplace.methods
+      .buyItem(nft_address, tokenId, [priceType, priceAddress])
+      .send({
+        from: await getCoinbase(),
+        value: price,
+        ...transactionParameters,
+      });
+  }
 };
 
 window.approveBuy = async (amount) => {
@@ -3535,6 +3543,48 @@ window.updateListingNFT = async (token, price, priceType, type) => {
     .send({ from: window.ethereum.selectedAddress });
 };
 
+// window.listNFT = async (token, price, priceType, type = "") => {
+//   let nft_address, price_nft, price_address;
+
+//   if (type === "timepiece") {
+//     nft_address = window.config.nft_timepiece_address;
+//   } else if (type === "land") {
+//     nft_address = window.config.nft_land_address;
+//   } else {
+//     nft_address = window.config.nft_caws_address;
+//   }
+
+//   if (priceType === 0) {
+//     price_nft = 0;
+//     price_address = "0x0000000000000000000000000000000000000000";
+//   }
+
+//   if (priceType === 1) {
+//     price_nft = 1;
+//     price_address = window.config.dyp_token_address;
+//   }
+
+//   console.log(
+//     "listNFT",
+//     token,
+//     price,
+//     priceType,
+//     type,
+//     nft_address,
+//     price_nft,
+//     price_address
+//   );
+
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
+
+//   await marketplace.methods
+//     .listItem(nft_address, token, price, [price_nft, price_address])
+//     .send({ from: window.ethereum.selectedAddress });
+// };
+
 window.listNFT = async (token, price, priceType, type = "") => {
   let nft_address, price_nft, price_address;
 
@@ -3556,25 +3606,33 @@ window.listNFT = async (token, price, priceType, type = "") => {
     price_address = window.config.dyp_token_address;
   }
 
-  console.log(
-    "listNFT",
-    token,
-    price,
-    priceType,
-    type,
-    nft_address,
-    price_nft,
-    price_address
-  );
-
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
 
+  const gasPrice = await window.web3.eth.getGasPrice();
+  const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
+  const increasedGwei = parseInt(currentGwei) + 3;
+
+  const transactionParameters = {
+    gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
+  };
+
+ 
+    await marketplace.methods
+    .listItem(nft_address, token, price, [price_nft, price_address])
+    .estimateGas({ from: await getCoinbase() })
+    .then((gas) => {
+      transactionParameters.gas = window.web3.utils.toHex(gas);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   await marketplace.methods
     .listItem(nft_address, token, price, [price_nft, price_address])
-    .send({ from: window.ethereum.selectedAddress });
+    .send({ from: window.ethereum.selectedAddress, ...transactionParameters });
 };
 
 window.isApproved = async (token, type) => {
@@ -3614,6 +3672,27 @@ window.isApproved = async (token, type) => {
   }
 };
 
+// window.makeOffer = async (nftAddress, tokenId, price, priceType) => {
+//   let price_address;
+
+//   if (priceType === 0) {
+//     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+//   }
+
+//   if (priceType === 1) {
+//     price_address = window.config.dyp_token_address;
+//   }
+
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
+//   console.log(nftAddress, tokenId, price, [priceType, price_address]);
+//   await marketplace.methods
+//     .makeOffer(nftAddress, tokenId, price, [priceType, price_address])
+//     .send({ from: await getCoinbase() });
+// };
+
 window.makeOffer = async (nftAddress, tokenId, price, priceType) => {
   let price_address;
 
@@ -3629,11 +3708,42 @@ window.makeOffer = async (nftAddress, tokenId, price, priceType) => {
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
-  console.log(nftAddress, tokenId, price, [priceType, price_address]);
+
+  const gasPrice = await window.web3.eth.getGasPrice();
+  const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
+  const increasedGwei = parseInt(currentGwei) + 3;
+
+  const transactionParameters = {
+    gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
+  };
+
+    await marketplace.methods
+    .makeOffer(nftAddress, tokenId, price, [priceType, price_address])
+    .estimateGas({ from: await getCoinbase() })
+    .then((gas) => {
+      transactionParameters.gas = window.web3.utils.toHex(gas);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+
   await marketplace.methods
     .makeOffer(nftAddress, tokenId, price, [priceType, price_address])
-    .send({ from: await getCoinbase() });
+    .send({ from: await getCoinbase(), ...transactionParameters });
 };
+
+// window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
+
+//   await marketplace.methods
+//     .cancelOffer(nftAddress, tokenId, offerIndex)
+//     .send({ from: await getCoinbase() });
+// };
 
 window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
   const marketplace = new window.web3.eth.Contract(
@@ -3641,11 +3751,63 @@ window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
     window.config.nft_marketplace_address
   );
 
+  const gasPrice = await window.web3.eth.getGasPrice();
+  const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
+  const increasedGwei = parseInt(currentGwei) + 3;
+
+  const transactionParameters = {
+    gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
+  };
+
+
+
+    await marketplace.methods
+    .cancelOffer(nftAddress, tokenId, offerIndex)
+    .estimateGas({ from: await getCoinbase()})
+    .then((gas) => {
+      transactionParameters.gas = window.web3.utils.toHex(gas);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   await marketplace.methods
     .cancelOffer(nftAddress, tokenId, offerIndex)
-    .send({ from: await getCoinbase() });
+    .send({ from: await getCoinbase(), ...transactionParameters });
 };
 
+// window.updateOffer = async (
+//   nftAddress,
+//   tokenId,
+//   offerIndex,
+//   newPrice,
+//   priceType
+// ) => {
+//   let price_address;
+
+//   if (priceType === 0) {
+//     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+//   }
+
+//   if (priceType === 1) {
+//     price_address = window.config.dyp_token_address;
+//   }
+
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
+//   console.log(nftAddress, tokenId, offerIndex, newPrice, [
+//     priceType,
+//     price_address,
+//   ]);
+//   await marketplace.methods
+//     .updateOffer(nftAddress, tokenId, offerIndex, newPrice, [
+//       priceType,
+//       price_address,
+//     ])
+//     .send({ from: await getCoinbase() });
+// };
 
 window.updateOffer = async (
   nftAddress,
@@ -3668,20 +3830,41 @@ window.updateOffer = async (
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
-  console.log(nftAddress, tokenId, offerIndex, newPrice, [
-    priceType,
-    price_address,
-  ]);
+
+  const gasPrice = await window.web3.eth.getGasPrice();
+  const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
+  const increasedGwei = parseInt(currentGwei) + 3;
+
+  const transactionParameters = {
+    gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
+  };
+
+
+
+    await marketplace.methods
+    .updateOffer(nftAddress, tokenId, offerIndex, newPrice, [
+      priceType,
+      price_address,
+    ])
+    .estimateGas({ from: await getCoinbase()})
+    .then((gas) => {
+      transactionParameters.gas = window.web3.utils.toHex(gas);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
   await marketplace.methods
     .updateOffer(nftAddress, tokenId, offerIndex, newPrice, [
       priceType,
       price_address,
     ])
-    .send({ from: await getCoinbase() });
+    .send({ from: await getCoinbase(), ...transactionParameters });
 };
 
 window.approveOffer = async (amount, priceType) => {
-  console.log(amount,priceType)
+  console.log(amount, priceType);
   if (priceType === 1) {
     const contract = new window.web3.eth.Contract(
       window.DYP_ABI,
@@ -3715,7 +3898,16 @@ window.approveOffer = async (amount, priceType) => {
   }
 };
 
+// window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
+//   const marketplace = new window.web3.eth.Contract(
+//     window.MARKETPLACE_ABI,
+//     window.config.nft_marketplace_address
+//   );
 
+//   await marketplace.methods
+//     .acceptOffer(nftAddress, tokenId, offerIndex)
+//     .send({ from: await getCoinbase() });
+// };
 
 window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
   const marketplace = new window.web3.eth.Contract(
@@ -3723,12 +3915,30 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
     window.config.nft_marketplace_address
   );
 
+  const gasPrice = await window.web3.eth.getGasPrice();
+  const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
+  const increasedGwei = parseInt(currentGwei) + 3;
+
+  const transactionParameters = {
+    gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
+  };
+
+
+    await marketplace.methods
+    acceptOffer(nftAddress, tokenId, offerIndex)
+    .estimateGas({ from: await getCoinbase()})
+    .then((gas) => {
+      transactionParameters.gas = window.web3.utils.toHex(gas);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
   await marketplace.methods
     .acceptOffer(nftAddress, tokenId, offerIndex)
-    .send({ from: await getCoinbase() });
+    .send({ from: await getCoinbase(), ...transactionParameters });
 };
-
-
 
 window.isApprovedOffer = async (amount, priceType) => {
   window.web3 = new Web3(window.ethereum);
@@ -3750,9 +3960,7 @@ window.isApprovedOffer = async (amount, priceType) => {
     );
 
     return Number(allowance) >= Number(amount);
-  }
-
-  else if (priceType === 0) {
+  } else if (priceType === 0) {
     const contract = new window.web3.eth.Contract(
       window.WETH_ABI,
       window.config.weth2_address
@@ -3780,7 +3988,7 @@ window.getAllOffers = async (nftAddress, tokenId) => {
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
-  
+
   const result = await marketplace.methods
     .getActiveOffers(nftAddress, tokenId)
     .call();
@@ -31618,7 +31826,7 @@ async function connectWallet() {
       let coinbase_address = await window.ethereum?.request({
         method: "eth_accounts",
       });
-      
+
       window.coinbase_address = coinbase_address[0];
       onConnect();
       return true;
@@ -31654,7 +31862,7 @@ async function getCoinbase() {
     });
 
     if (coinbase && coinbase.length > 0) {
-      window.coinbase_address = coinbase[0];;
+      window.coinbase_address = coinbase[0];
 
       return window.coinbase_address.toLowerCase();
     }
@@ -34482,6 +34690,8 @@ const whitelistWod = [
   "0x0037fa577e547a7616e4b01d15553a0c7e980c63",
   "0xe7674b190def5a82730f5d6ab8125e277f10414f",
   "0xF4914F025b45798F634fBE638d33701FBff3274A",
+  "0x8052a398480b5B80D52d3DAd6fA842e5B671baae",
+  "0x97C05103C3E714AB36B2Cc509cbAfFef4E93BDc0"
 ];
 
 window.checkWhitelistWod = function (address) {
@@ -36582,8 +36792,8 @@ const landWhitelist = [
   "0x2a650e224cd5c488ff5a9d2fe7769f0d5033afbc",
   "0x2c68e6edd9bb7a27c11c82586fc6162e47d0c65e",
   "0x389ad3700e5bccab1f90fbc0b60f6ee7558952b9",
-  "0x7476d4f4cb2f8e1262be377feaced711f8765ea3"
-]
+  "0x7476d4f4cb2f8e1262be377feaced711f8765ea3",
+];
 
 window.checkWhitelistLand = function (address) {
   // console.log("CHECKCK")
