@@ -51,7 +51,7 @@ import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
 import MarketStake from "./screens/Marketplace/MarketStake";
 import MarketEvents from "./screens/Marketplace/MarketEvents";
 import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
@@ -131,8 +131,11 @@ function App() {
   const [timepieceBought, setTimepieceBought] = useState([]);
   const [landBought, setLandBought] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
+  const [success, setSuccess] = useState(false);
+
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getTokenData = async () => {
     await axios
@@ -248,6 +251,24 @@ function App() {
     });
   };
 
+  const checkConnection2 = async () => {
+    const logout = localStorage.getItem("logout");
+    if (logout !== "true") {
+      await window.getCoinbase().then((data) => {
+        if (data) {
+          setCoinbase(data);
+          setIsConnected(true);
+        } else {
+          setCoinbase("0x0000000000000000000000000000000000000000");
+          setIsConnected(false);
+        }
+      });
+    } else {
+      setIsConnected(false);
+      setCoinbase("0x0000000000000000000000000000000000000000");
+    }
+  };
+
   const handleRegister = () => {
     setShowWalletModal(true);
   };
@@ -273,15 +294,18 @@ function App() {
     try {
       localStorage.setItem("logout", "false");
       await window.connectWallet().then((data) => {
-        setIsConnected(data);
+        setIsConnected(true);
       });
       await window.getCoinbase().then((data) => {
-        console.log(data)
+        console.log(data);
         setCoinbase(data);
       });
       setShowForms(true);
+      setSuccess(true)
     } catch (e) {
       setShowWalletModal(false);
+      setSuccess(true)
+
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
       return;
@@ -305,6 +329,7 @@ function App() {
 
   const handleConnectWallet = async () => {
     try {
+      localStorage.setItem("logout", "false");
       await window.connectWallet().then((data) => {
         setIsConnected(data);
       });
@@ -732,7 +757,7 @@ function App() {
           finalboughtItems.push(nft);
         }
       });
-    return finalboughtItems;
+    setLatest20BoughtNFTS(finalboughtItems);
   };
 
   const handleRefreshList = () => {
@@ -901,13 +926,29 @@ function App() {
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
+  ethereum?.on("accountsChanged", checkConnection2);
 
   useEffect(() => {
     if (ethereum) {
       ethereum.on("chainChanged", checkNetworkId);
-      ethereum.on("accountsChanged", handleConnection);
     }
   }, [ethereum, nftCount]);
+
+  const logout = localStorage.getItem("logout");
+
+  useEffect(() => {
+    if (window.ethereum) {
+      if (window.ethereum.isConnected() === true && logout === "false") {
+        checkConnection2();
+      } else {
+        setIsConnected(false);
+        setCoinbase("0x0000000000000000000000000000000000000000");
+        localStorage.setItem("logout", "true");
+        
+      }
+      checkNetworkId();
+    }
+  }, [coinbase, chainId]);
 
   useEffect(() => {
     checkNetworkId();
@@ -1027,7 +1068,6 @@ function App() {
       setTimepieceBought(uniqueTimepiece);
     }
   };
-
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
 
@@ -1111,21 +1151,76 @@ function App() {
     setIsConnected(false);
   };
 
-  async function getNotifications(walletAddress) {
+  const API_BASE_URL = "https://api.worldofdypians.com";
+
+  async function addNewUserIfNotExists(walletAddress, title, description, redirect_link) {
     try {
-      const response = await axios.get(
-        // `https://api.worldofdypians.com/notifications/0x65C3d0F9438644945dF5BF321c9F0fCf333302b8`
-        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-          walletAddress
-        )}`
-      );
-      const notifications = response.data[0]?.notifications || [];
-      setmyNftsOffer(notifications.reverse());
-      console.log("Notifications:", notifications);
+        const response = await axios.get(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`);
+        
+      
+        if (response.data.length === 0) {
+            const newUserResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
+                tokenId: '', 
+                nftAddress: '', 
+                timestamp: Date.now(),
+                read: false,
+                offer: 'no',
+                offerAccepted: 'no',
+                buy: 'no',
+                event: 'no',    
+                news: 'no',    
+                welcome: 'yes', 
+                update: 'no',  
+                title: 'Welcome', 
+                description: 'Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!' , 
+                redirect_link: '',
+            });
+
+            console.log('New user added:', newUserResponse.data);
+
+           
+            const newsNotifications = [
+                { title: 'Introducing "Make Offer" on World of Dypians NFT Marketplace', description: 'World of Dypians NFT Marketplace is proud to unveil its latest feature, "Make Offer."', redirect_link: 'https://www.worldofdypians.com/news/64b541f1115d5df1e1915687/Introducing-%22Make-Offer%22-on-World-of-Dypians-NFT-Marketplace' },
+                { title: 'Unleash Limitless Adventures: Discover World of Dypians v0.2.0', description: 'Game enthusiasts and virtual reality lovers have reason to celebrate as the highly anticipated game release, version 0.2.0 of World of Dypians, has arrived.', redirect_link: 'https://www.worldofdypians.com/news/64b14993115d5df1e191518a/Unleash-Limitless-Adventures:-Discover-World-of-Dypians-v0.2.0' },
+                { title: 'Unlocking Digital Collectibles In The NFT Marketplace', description: 'We invite you to dive into the immersive experience of the World of Dypians NFT Marketplace - a cutting-edge platform that unleashes the power of digital ownership.', redirect_link: 'https://www.worldofdypians.com/news/64ad6c45115d5df1e1914c77/Unlocking-Digital-Collectibles-In-The-NFT-Marketplace' },
+                { title: 'Unveiling the Conflux Network Area: A Futuristic Journey Awaits', description: 'Welcome to the vibrant and dynamic downtown district of the World of Dypians Metaverse, where the Conflux Network area stands as a testament to innovation and technological advancement.', redirect_link: 'https://www.worldofdypians.com/news/64a7c80dee223e97a19c10c5/Unveiling-the-Conflux-Network-Area:-A-Futuristic-Journey-Awaits' },
+                { title: 'Join the Adventure and Reap the Rewards in the Exciting Events', description: 'Are you ready for a thrilling new chapter in the World of Dypians? We are excited to announce the launch of our incredible $40,000 Monthly Campaign.', redirect_link: 'https://www.worldofdypians.com/news/6479bf907d9bd3ca5df1b332/Join-the-Adventure-and-Reap-the-Rewards-in-the-Exciting-Events' }
+            ];
+
+            for (const news of newsNotifications) {
+                const newsNotificationResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
+                    tokenId: '', 
+                    nftAddress: '', 
+                    timestamp: Date.now(),
+                    read: false,
+                    offer: 'no',
+                    offerAccepted: 'no',
+                    buy: 'no',
+                    event: 'no',    
+                    news: 'yes',    
+                    welcome: 'no', 
+                    update: 'no',  
+                    title: news.title, 
+                    description: news.description, 
+                    redirect_link: news.redirect_link,
+                });
+
+                console.log(`News notification added:`, newsNotificationResponse.data);
+                const notifications = newsNotificationResponse.data?.notifications || [];
+        setmyNftsOffer(notifications.reverse());
+            }
+        } else {
+            console.log('User already exists:', response.data);
+
+            const notifications = response.data[0]?.notifications || [];
+            setmyNftsOffer(notifications.reverse());
+        }
     } catch (error) {
-      console.error("Error retrieving notifications:", error.message);
+        console.error('Error adding new user:', error.message);
     }
-  }
+}
+ 
+
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -1137,10 +1232,7 @@ function App() {
     getTokenDatabnbNew();
     getListedNfts2();
 
-    getLatest20BoughtNFTS().then((NFTS) => {
-      setLatest20BoughtNFTS(NFTS);
-      getCawsSold();
-    });
+    getLatest20BoughtNFTS();
 
     getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
       settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
@@ -1157,21 +1249,24 @@ function App() {
     }
   }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
 
-  useEffect(() => {
-    if (
-      window.coinbase_address === "0x0000000000000000000000000000000000000000"
-    ) {
-      setCoinbase();
-      setIsConnected(false);
+  useEffect(()=>{
+    if(latest20BoughtNFTS.length > 0) {
+      getCawsSold();
     }
-  }, [window.coinbase_address]);
+  },[latest20BoughtNFTS.length])
 
   useEffect(() => {
     if (coinbase) {
-      getNotifications(coinbase);
+      // getNotifications(coinbase);
+      addNewUserIfNotExists(
+        coinbase,
+        "Welcome",
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
+      );
     }
   }, [coinbase, nftCount]);
 
+  // console.log(nftCount);
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -1187,6 +1282,8 @@ function App() {
             myOffers={myNftsOffer}
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
+            isConnected={isConnected}
+
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1241,7 +1338,6 @@ function App() {
                   coinbase={coinbase}
                   nftCount={nftCount}
                   isConnected={isConnected}
-
                 />
               }
             />
@@ -1308,6 +1404,7 @@ function App() {
                   onSigninClick={() => {
                     setShowWalletModalRegister2(true);
                   }}
+                  success={success}
                   availableTime={availTime}
                 />
               }

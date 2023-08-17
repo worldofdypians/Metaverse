@@ -31,8 +31,9 @@ import transferIcon from "../../screens/Marketplace/Notifications/assets/transfe
 import transferIconActive from "../../screens/Marketplace/Notifications/assets/transferIconActive.svg";
 import updateIcon from "../../screens/Marketplace/Notifications/assets/updateIcon.svg";
 import updateIconActive from "../../screens/Marketplace/Notifications/assets/updateIconActive.svg";
-import deleteIcon from "../../screens/Marketplace/Notifications/assets/deleteIcon.svg";
-import deleteIconActive from "../../screens/Marketplace/Notifications/assets/deleteIconActive.svg";
+import welcomeIcon from "../../screens/Marketplace/Notifications/assets/welcomeIcon.svg";
+import welcomeIconActive from "../../screens/Marketplace/Notifications/assets/welcomeIconActive.svg";
+import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
 
 const Header = ({
   handleSignUp,
@@ -41,8 +42,7 @@ const Header = ({
   avatar,
   handleDisconnect,
   myOffers,
-  handleRefreshList,
-  nftCount,
+  handleRefreshList,nftCount,isConnected
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -57,8 +57,9 @@ const Header = ({
 
   const manageDisconnect = () => {
     if (location.pathname.includes("/account")) {
+    localStorage.setItem("logout", "true");
       handleDisconnect();
-      navigate("/");
+      // navigate("/");
     } else handleDisconnect();
   };
 
@@ -87,10 +88,24 @@ const Header = ({
           walletAddress
         )}/${notificationId}`
       );
-      console.log("Notification marked as read");
+      console.log("Notification marked as read", notificationId);
       handleRefreshList();
     } catch (error) {
       console.error("Error marking notification as read:", error.message);
+    }
+  }
+
+  async function deleteNotification(notificationId) {
+    try {
+      await axios.delete(
+        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+          coinbase
+        )}/${notificationId}`
+      );
+      console.log("Notification deleted");
+      handleRefreshList();
+    } catch (error) {
+      console.error("Error deleting notification:", error.message);
     }
   }
 
@@ -139,8 +154,8 @@ const Header = ({
 
   useEffect(() => {
     checkRead();
-  }, [myOffers.length, openNotifications, coinbase, nftCount]);
-
+  }, [myOffers, coinbase, nftCount]);
+ 
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
@@ -203,7 +218,7 @@ const Header = ({
           </NavLink>
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0 position-relative ">
-          {!coinbase ? (
+          {!isConnected ? (
             <div className="linearborder2">
               <button className="btn connectwallet px-3" onClick={handleSignUp}>
                 Connect Wallet
@@ -211,7 +226,7 @@ const Header = ({
             </div>
           ) : (
             <div className="d-flex align-items-center gap-3">
-              <div className="position-relative">
+              {/* <div className="position-relative">
                 <img
                   src={bellIcon}
                   width={30}
@@ -226,9 +241,7 @@ const Header = ({
                 {unreadNotifications > 0 && (
                   <div className="bell-amount">
                     <span className="mb-0">
-                      {unreadNotifications > 99
-                        ? "99+"
-                        : unreadNotifications}
+                      {unreadNotifications > 99 ? "99+" : unreadNotifications}
                     </span>
                   </div>
                 )}
@@ -269,78 +282,37 @@ const Header = ({
                         myOffers.length > 0 &&
                         myOffers.map((nft, index) => {
                           return (
-                            <NavLink
-                              to={`/marketplace/nft/${
-                                nft.tokenId
-                              }/${nft.nftAddress.toLowerCase()}`}
-                              style={{ textDecoration: "none" }}
-                              state={{
-                                nft: nft,
-                                type:
-                                  nft.nftAddress.toLowerCase() ===
-                                  window.config.nft_caws_address.toLowerCase()
-                                    ? "caws"
-                                    : nft.nftAddress.toLowerCase() ===
-                                      window.config.nft_timepiece_address.toLowerCase()
-                                    ? "timepiece"
-                                    : "land",
-                                isOwner: true,
-                                chain: 1,
-                              }}
-                              onClick={() => {
-                                {
-                                  updateViewCount(
-                                    nft.tokenId,
-                                    nft.nftAddress.toLowerCase()
-                                  );
-                                  setOpenNotifications(false);
-                                  markNotificationAsRead(coinbase, nft._id);
-                                }
-                              }}
+                            <div
+                              className="position-relative header-notification"
+                              key={index}
                             >
-                              {/* <div
-                                className="header-notification d-flex align-items-center gap-2 p-3 position-relative"
-                                key={index}
+                              <a
+                                href={
+                                  nft.redirect_link !== ""
+                                    ? nft.redirect_link
+                                    : `https://www.worldofdypians.com/marketplace/nft/${
+                                        nft.tokenId
+                                      }/${nft.nftAddress.toLowerCase()}`
+                                }
+                                target='_blank'
+                                rel='noreferrer'
+                                style={{ textDecoration: "none" }}
+                                
+                                onClick={() => {
+                                  setOpenNotifications(false);
+                                    markNotificationAsRead(coinbase, nft._id);
+                                 
+                                }}
+                                className="d-flex flex-column gap-1 p-3 header-notification-item"
                               >
-                                {nft.read === false && (
-                                  <div className="green-dot"></div>
-                                )}
-                                <span className="notification-text">
-                                  Your{" "}
-                                  {nft.nftAddress.toLowerCase() ===
-                                  window.config.nft_caws_address.toLowerCase()
-                                    ? "CAWS"
-                                    : nft.nftAddress.toLowerCase() ===
-                                      window.config.nft_timepiece_address.toLowerCase()
-                                    ? "Caws Timepiece"
-                                    : "Genesis Land"}{" "}
-                                  #{nft.tokenId}{" "}
-                                  {nft.offer === "yes"
-                                    ? "has a new offer"
-                                    : nft.offerAccepted === "yes"
-                                    ? "offer has been accepted"
-                                    : "has been sold"}
-                                </span>
-                                <span
-                                  className="position-absolute top-sale-time"
-                                  style={{
-                                    bottom: "6%",
-                                    right: "8%",
-                                    fontSize: 9,
-                                  }}
-                                >
-                                  {getRelativeTime(nft.timestamp)}
-                                </span>
-                              </div> */}
-                              <div className="d-flex flex-column gap-1 p-3 header-notification-item">
                                 <div className="d-flex align-items-center gap-1">
                                   <img
                                     height={16}
                                     width={16}
                                     src={
-                                      nft.buy === "yes" && nft.read === false
+                                      nft.bought === "yes" && nft.read === false
                                         ? cartIconActive
-                                        : nft.buy === "yes" && nft.read === true
+                                        : nft.bought === "yes" && nft.read === true
                                         ? cartIcon
                                         : nft.offer === "yes" &&
                                           nft.read === false
@@ -348,12 +320,39 @@ const Header = ({
                                         : nft.offer === "yes" &&
                                           nft.read === true
                                         ? offerIcon
-                                        : nft.offerAccepted === "yes" &&
+                                        : nft.buy === "yes" &&
                                           nft.read === false
                                         ? transferIconActive
-                                        : nft.offerAccepted === "yes" &&
+                                        : nft.buy === "yes" &&
                                           nft.read === true
                                         ? transferIcon
+                                        : //welcome
+                                        nft.welcome === "yes" &&
+                                          nft.read === false
+                                        ? welcomeIconActive
+                                        : nft.welcome === "yes" &&
+                                          nft.read === true
+                                        ? welcomeIcon
+                                        : //news
+                                        nft.news === "yes" && nft.read === false
+                                        ? newsIconActive
+                                        : nft.news === "yes" &&
+                                          nft.read === true
+                                        ? newsIcon
+                                        : //updates
+                                        nft.update === "yes" &&
+                                          nft.read === false
+                                        ? updateIconActive
+                                        : nft.update === "yes" &&
+                                          nft.read === true
+                                        ? updateIcon
+                                        : //events
+                                        nft.event === "yes" &&
+                                          nft.read === false
+                                        ? eventIconActive
+                                        : nft.event === "yes" &&
+                                          nft.read === true
+                                        ? eventIcon
                                         : null
                                     }
                                     alt=""
@@ -369,19 +368,19 @@ const Header = ({
                                     }}
                                   >
                                     {nft.buy === "yes"
-                                      ? "NFT Sale"
+                                      ? "NFT Sold"
                                       : nft.offer === "yes"
                                       ? "New Offer"
-                                      : nft.offerAccepted === "yes"
-                                      ? "NFT Sale"
-                                      : null}
+                                      : nft.bought === "yes"
+                                      ? "NFT Bought"
+                                      : nft.title}
                                   </h6>
                                 </div>
                                 <p
                                   className="notification-desc mb-0"
                                   style={{ fontSize: "10px" }}
                                 >
-                                  {nft.buy === "yes"
+                                  {nft.bought === "yes"
                                     ? `Congratulations on being the new owner of  ${
                                         nft.nftAddress ===
                                         window.config.nft_caws_address
@@ -390,10 +389,20 @@ const Header = ({
                                             window.config.nft_land_address
                                           ? "WOD"
                                           : "Timepiece"
-                                      } #${
-                                        nft.tokenId
-                                      }.`
-                                    : nft.offer === "yes"
+                                      } #${nft.tokenId}.`
+                                    :
+                                    nft.buy === "yes"
+                                    ? `Your  ${
+                                        nft.nftAddress ===
+                                        window.config.nft_caws_address
+                                          ? "CAWS"
+                                          : nft.nftAddress ===
+                                            window.config.nft_land_address
+                                          ? "WOD"
+                                          : "Timepiece"
+                                      } #${nft.tokenId} was sold.`
+                                    :
+                                     nft.offer === "yes"
                                     ? `There is a new offer for your ${
                                         nft.nftAddress ===
                                         window.config.nft_caws_address
@@ -402,16 +411,26 @@ const Header = ({
                                             window.config.nft_land_address
                                           ? "WOD"
                                           : "Timepiece"
-                                      } #${
-                                        nft.tokenId
-                                      }`
-                                    : null}
+                                      } #${nft.tokenId}`
+                                    : nft.description}
                                 </p>
                                 <span className="notification-relative-time mb-0">
                                   {getRelativeTime(nft.timestamp)}
                                 </span>
+                              </a>
+                              <div
+                                className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
+                                onClick={() => {
+                                  deleteNotification(nft._id);
+                                  
+                                }}
+                              >
+                                <img src={orangeDeleteIcon} alt="" />
+                                <span className="notif-delete-text">
+                                  Delete
+                                </span>
                               </div>
-                            </NavLink>
+                            </div>
                           );
                         })}
                     </div>
@@ -428,7 +447,7 @@ const Header = ({
                     )}
                   </div>
                 </OutsideClickHandler>
-              </div>
+              </div> */}
               <Clipboard
                 component="div"
                 data-event="click"

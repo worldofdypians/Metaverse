@@ -154,7 +154,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  x3
+                  x4
                 </td>
                 <td
                   style={{
@@ -163,7 +163,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  105
+                  140
                 </td>
               </tr>
               <tr>
@@ -194,7 +194,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  x3
+                  x4
                 </td>
                 <td
                   style={{
@@ -203,7 +203,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  150
+                  200
                 </td>
               </tr>
               <tr>
@@ -234,7 +234,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  x3
+                  x4
                 </td>
                 <td
                   style={{
@@ -243,7 +243,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  195
+                  260
                 </td>
               </tr>
               <tr>
@@ -274,7 +274,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  x3
+                  x4
                 </td>
                 <td
                   style={{
@@ -283,7 +283,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  240
+                  320
                 </td>
               </tr>
               <tr>
@@ -314,7 +314,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  x3
+                  x4
                 </td>
                 <td
                   style={{
@@ -323,7 +323,7 @@ const DragonPopup = ({onClosePopup}) => {
                     textAlign: "center",
                   }}
                 >
-                  12,000
+                  16,000
                 </td>
               </tr>
             </tbody>

@@ -67,11 +67,7 @@ function Auth({ isConnected, coinbase }) {
     });
   };
 
-  useEffect(() => {
-    if (!isConnected && !coinbase && location.pathname === "/auth") {
-      navigate("/");
-    }
-  }, [isConnected, coinbase]);
+
 
   if (isAuthenticated) {
     return <Navigate to={"/account"} />;

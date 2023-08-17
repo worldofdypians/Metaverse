@@ -36,7 +36,7 @@
 
 .notifications-list {
   height: 500px;
-  overflow-y: auto;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   @media only screen and (max-width: 600px) {
@@ -52,14 +52,76 @@
 }
 
 .list-notification {
+  position: relative;
   border-bottom: 2px solid #565891;
   cursor: pointer;
   border-radius: 8px 8px 0 0;
   transition: all 0.25s;
 }
 
+.notification-delete{
+  background: rgba(222, 86, 52, 0.06);
+  position: absolute;
+  transform: translateX(100%);
+  height: 100%;
+  transition: all .25s;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.notification-date-wrapper{
+  width: 20%;
+
+  // @media screen and (max-width: 786px) {
+  //   width: 55%;
+  // }
+}
+
+
+.view-more-notif{
+  color: #00fecf;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.view-more-notif:hover{
+  text-decoration: underline;
+
+}
+
+.delete-notif{
+  color: #DE5634;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.delete-notif:hover{
+  text-decoration: underline;
+}
+
 .list-notification:hover {
   background: rgba(54, 194, 207, 0.06);
+
+  // .notification-date-wrapper{
+  //   display: none !important;
+  // }
+
+  .notification-delete{
+    transform: translateX(0%);
+  }
+}
+
+.header-notification:hover{
+  .notification-delete{
+    transform: translateX(0%);
+  }
 }
 
 .notification-title {
@@ -76,8 +138,16 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  width: 80%;
 }
-
+.notif-delete-text {
+  color: #de5634;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
 .notification-hour {
   color: #eeedff;
   text-align: right;
