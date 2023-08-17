@@ -173,9 +173,9 @@ const Notification = ({
               chain: 1,
             }}
             onClick={() => {
-              {
+             
                 markNotificationAsRead(coinbase, item._id);
-              }
+             
             }}
             className="view-more-notif mb-2 px-2"
           >
