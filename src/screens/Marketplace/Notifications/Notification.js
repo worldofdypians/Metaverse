@@ -164,7 +164,7 @@ const Notification = ({
         <div className="d-flex w-100 justify-content-between">
           <a
             href={
-              item.redirect_link !== ""
+              item.redirect_link
                 ? item.redirect_link
                 : `https://www.worldofdypians.com/marketplace/nft/${
                     item.tokenId
