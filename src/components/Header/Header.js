@@ -286,39 +286,22 @@ const Header = ({
                               className="position-relative header-notification"
                               key={index}
                             >
-                              <NavLink
-                                to={
+                              <a
+                                href={
                                   nft.redirect_link !== ""
                                     ? nft.redirect_link
-                                    : `/marketplace/nft/${
+                                    : `https://www.worldofdypians.com/marketplace/nft/${
                                         nft.tokenId
                                       }/${nft.nftAddress.toLowerCase()}`
                                 }
+                                target='_blank'
+                                rel='noreferrer'
                                 style={{ textDecoration: "none" }}
-                                state={{
-                                  nft: nft,
-                                  type:
-                                    nft.nftAddress.toLowerCase() ===
-                                    window.config.nft_caws_address.toLowerCase()
-                                      ? "caws"
-                                      : nft.nftAddress.toLowerCase() ===
-                                        window.config.nft_timepiece_address.toLowerCase()
-                                      ? "timepiece"
-                                      : "land",
-                                  isOwner: true,
-                                  chain: 1,
-                                }}
+                                
                                 onClick={() => {
-                                  {
-                                    nft.offer === "yes" ||
-                                    nft.offerAccepted === "yes"
-                                      ? updateViewCount(
-                                          nft.tokenId,
-                                          nft.nftAddress.toLowerCase()
-                                        )
-                                      : setOpenNotifications(false);
+                                  setOpenNotifications(false);
                                     markNotificationAsRead(coinbase, nft._id);
-                                  }
+                                 
                                 }}
                                 className="d-flex flex-column gap-1 p-3 header-notification-item"
                               >
@@ -327,9 +310,9 @@ const Header = ({
                                     height={16}
                                     width={16}
                                     src={
-                                      nft.buy === "yes" && nft.read === false
+                                      nft.bought === "yes" && nft.read === false
                                         ? cartIconActive
-                                        : nft.buy === "yes" && nft.read === true
+                                        : nft.bought === "yes" && nft.read === true
                                         ? cartIcon
                                         : nft.offer === "yes" &&
                                           nft.read === false
@@ -337,10 +320,10 @@ const Header = ({
                                         : nft.offer === "yes" &&
                                           nft.read === true
                                         ? offerIcon
-                                        : nft.offerAccepted === "yes" &&
+                                        : nft.buy === "yes" &&
                                           nft.read === false
                                         ? transferIconActive
-                                        : nft.offerAccepted === "yes" &&
+                                        : nft.buy === "yes" &&
                                           nft.read === true
                                         ? transferIcon
                                         : //welcome
@@ -385,11 +368,11 @@ const Header = ({
                                     }}
                                   >
                                     {nft.buy === "yes"
-                                      ? "NFT Sale"
+                                      ? "NFT Sold"
                                       : nft.offer === "yes"
                                       ? "New Offer"
-                                      : nft.offerAccepted === "yes"
-                                      ? "NFT Sale"
+                                      : nft.bought === "yes"
+                                      ? "NFT Bought"
                                       : nft.title}
                                   </h6>
                                 </div>
@@ -397,7 +380,7 @@ const Header = ({
                                   className="notification-desc mb-0"
                                   style={{ fontSize: "10px" }}
                                 >
-                                  {nft.buy === "yes"
+                                  {nft.bought === "yes"
                                     ? `Congratulations on being the new owner of  ${
                                         nft.nftAddress ===
                                         window.config.nft_caws_address
@@ -407,7 +390,19 @@ const Header = ({
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}.`
-                                    : nft.offer === "yes"
+                                    :
+                                    nft.buy === "yes"
+                                    ? `Your  ${
+                                        nft.nftAddress ===
+                                        window.config.nft_caws_address
+                                          ? "CAWS"
+                                          : nft.nftAddress ===
+                                            window.config.nft_land_address
+                                          ? "WOD"
+                                          : "Timepiece"
+                                      } #${nft.tokenId} was sold.`
+                                    :
+                                     nft.offer === "yes"
                                     ? `There is a new offer for your ${
                                         nft.nftAddress ===
                                         window.config.nft_caws_address
@@ -422,7 +417,7 @@ const Header = ({
                                 <span className="notification-relative-time mb-0">
                                   {getRelativeTime(nft.timestamp)}
                                 </span>
-                              </NavLink>
+                              </a>
                               <div
                                 className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
                                 onClick={() => {
