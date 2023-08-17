@@ -284,6 +284,27 @@ const SingleNft = ({
     }
   };
 
+  const getOldNftOwner = async (type, Id) => {
+    if (type === "timepiece") {
+      const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
+
+      localStorage.setItem("oldOwner", nftowner);
+    } else if (type === "land") {
+      const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
+      localStorage.setItem("oldOwner", nftowner);
+    } else if (type === "caws") {
+      const nftowner = await window.nft.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
+
+      localStorage.setItem("oldOwner", nftowner);
+    }
+  };
+
   const getMetaData = async (addr, tokenid) => {
     if (addr === window.config.nft_caws_address) {
       const result = await window.getNft(tokenid);
@@ -1105,7 +1126,6 @@ const SingleNft = ({
         : "caws",
       nftId
     );
-
   }, [type, nftId, nftAddress, nftCount, nft]);
 
   useEffect(() => {
@@ -1115,6 +1135,14 @@ const SingleNft = ({
     getLatest20BoughtNFTS(nftAddress, nftId);
     getViewCount(nftId, nftAddress);
     getListedNtsAsc();
+    getOldNftOwner(
+      nftAddress === window.config.nft_caws_address
+        ? "caws"
+        : nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : "land",
+      nftId
+    );
   }, []);
 
   useEffect(() => {
