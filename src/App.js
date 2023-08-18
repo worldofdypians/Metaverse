@@ -1178,37 +1178,7 @@ function App() {
 
             console.log('New user added:', newUserResponse.data);
 
-           
-            const newsNotifications = [
-                { title: 'Introducing "Make Offer" on World of Dypians NFT Marketplace', description: 'World of Dypians NFT Marketplace is proud to unveil its latest feature, "Make Offer."', redirect_link: 'https://www.worldofdypians.com/news/64b541f1115d5df1e1915687/Introducing-%22Make-Offer%22-on-World-of-Dypians-NFT-Marketplace' },
-                { title: 'Unleash Limitless Adventures: Discover World of Dypians v0.2.0', description: 'Game enthusiasts and virtual reality lovers have reason to celebrate as the highly anticipated game release, version 0.2.0 of World of Dypians, has arrived.', redirect_link: 'https://www.worldofdypians.com/news/64b14993115d5df1e191518a/Unleash-Limitless-Adventures:-Discover-World-of-Dypians-v0.2.0' },
-                { title: 'Unlocking Digital Collectibles In The NFT Marketplace', description: 'We invite you to dive into the immersive experience of the World of Dypians NFT Marketplace - a cutting-edge platform that unleashes the power of digital ownership.', redirect_link: 'https://www.worldofdypians.com/news/64ad6c45115d5df1e1914c77/Unlocking-Digital-Collectibles-In-The-NFT-Marketplace' },
-                { title: 'Unveiling the Conflux Network Area: A Futuristic Journey Awaits', description: 'Welcome to the vibrant and dynamic downtown district of the World of Dypians Metaverse, where the Conflux Network area stands as a testament to innovation and technological advancement.', redirect_link: 'https://www.worldofdypians.com/news/64a7c80dee223e97a19c10c5/Unveiling-the-Conflux-Network-Area:-A-Futuristic-Journey-Awaits' },
-                { title: 'Join the Adventure and Reap the Rewards in the Exciting Events', description: 'Are you ready for a thrilling new chapter in the World of Dypians? We are excited to announce the launch of our incredible $40,000 Monthly Campaign.', redirect_link: 'https://www.worldofdypians.com/news/6479bf907d9bd3ca5df1b332/Join-the-Adventure-and-Reap-the-Rewards-in-the-Exciting-Events' }
-            ];
-
-            for (const news of newsNotifications) {
-                const newsNotificationResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
-                    tokenId: '', 
-                    nftAddress: '', 
-                    timestamp: Date.now(),
-                    read: false,
-                    offer: 'no',
-                    offerAccepted: 'no',
-                    buy: 'no',
-                    event: 'no',    
-                    news: 'yes',    
-                    welcome: 'no', 
-                    update: 'no',  
-                    title: news.title, 
-                    description: news.description, 
-                    redirect_link: news.redirect_link,
-                });
-
-                console.log(`News notification added:`, newsNotificationResponse.data);
-                const notifications = newsNotificationResponse.data?.notifications || [];
-        setmyNftsOffer(notifications.reverse());
-            }
+            setmyNftsOffer(newUserResponse.reverse());
         } else {
             console.log('User already exists:', response.data);
 

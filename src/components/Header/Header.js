@@ -290,7 +290,7 @@ const Header = ({
                                 href={
                                   nft.redirect_link 
                                     ? nft.redirect_link
-                                    : `https://www.worldofdypians.com/marketplace/nft/${
+                                    : `https://www.worldofdypians.com/marketplace/nft${
                                         nft.tokenId
                                       }/${nft.nftAddress.toLowerCase()}`
                                 }
