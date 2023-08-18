@@ -259,13 +259,13 @@ function App() {
           setCoinbase(data);
           setIsConnected(true);
         } else {
-          setCoinbase("0x0000000000000000000000000000000000000000");
+          setCoinbase();
           setIsConnected(false);
         }
       });
     } else {
       setIsConnected(false);
-      setCoinbase("0x0000000000000000000000000000000000000000");
+      setCoinbase();
     }
   };
 
@@ -942,7 +942,7 @@ function App() {
         checkConnection2();
       } else {
         setIsConnected(false);
-        setCoinbase("0x0000000000000000000000000000000000000000");
+        setCoinbase();
         localStorage.setItem("logout", "true");
         
       }
@@ -1146,7 +1146,8 @@ function App() {
   // };
 
   const handleDisconnect = async () => {
-    await window.disconnectWallet();
+    localStorage.setItem("logout", "true");
+    setSuccess(false)
     setCoinbase();
     setIsConnected(false);
   };

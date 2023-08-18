@@ -172,7 +172,6 @@ const Notification = ({
                   }/${item.nftAddress.toLowerCase()}`
             }
             style={{ textDecoration: "none" }}
-            target='_blank'
             rel='noreferrer'
             onClick={() => {
              

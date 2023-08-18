@@ -295,7 +295,7 @@ const Header = ({
                                         nft.tokenId
                                       }/${nft.nftAddress.toLowerCase()}`
                                 }
-                                target='_blank'
+                                 
                                 rel='noreferrer'
                                 style={{ textDecoration: "none" }}
                                 
@@ -419,7 +419,7 @@ const Header = ({
                                   {getRelativeTime(nft.timestamp)}
                                 </span>
                               </a>
-                              <div
+                              {/* <div
                                 className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
                                 onClick={() => {
                                   deleteNotification(nft._id);
@@ -430,7 +430,7 @@ const Header = ({
                                 <span className="notif-delete-text">
                                   Delete
                                 </span>
-                              </div>
+                              </div> */}
                             </div>
                           );
                         })}
