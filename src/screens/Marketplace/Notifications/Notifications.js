@@ -69,16 +69,21 @@ const Notifications = ({
             });
 
             console.log('New user added:', newUserResponse.data);
-
+            let lso = newUserResponse.sort((a, b) => {
+              return new Date(b.timestamp) - new Date(a.timestamp);
+            });
            
-            setNftOffers(newUserResponse.reverse());
-                setNftOffersAll(newUserResponse.reverse());
+            setNftOffers(lso);
+                setNftOffersAll(lso);
         } else {
             console.log('User already exists:', response.data);
 
             const notifications = response.data[0]?.notifications || [];
-            setNftOffers(notifications.reverse());
-            setNftOffersAll(notifications.reverse());
+            let lso = notifications.sort((a, b) => {
+              return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+            setNftOffers(lso);
+            setNftOffersAll(lso);
         }
     } catch (error) {
         console.error('Error adding new user:', error.message);

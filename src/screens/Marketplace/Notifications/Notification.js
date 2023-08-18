@@ -109,29 +109,29 @@ const Notification = ({
           <p className="notification-desc mb-0">
             {item.bought === "yes"
               ? `Congratulations on being the new owner of ${
-                  item.nftAddress === window.config.nft_caws_address
+                  item.nftAddress.toLowerCase() === window.config.nft_caws_address.toLowerCase()
                     ? "CAWS"
-                    : item.nftAddress === window.config.nft_land_address
+                    : item.nftAddress.toLowerCase() === window.config.nft_land_address.toLowerCase()
                     ? "WOD"
                     : "Timepiece"
                 } #${item.tokenId} .`
               :
               item.buy === "yes"
               ? `Your  ${
-                item.nftAddress ===
-                  window.config.nft_caws_address
+                item.nftAddress.toLowerCase() ===
+                  window.config.nft_caws_address.toLowerCase()
                     ? "CAWS"
-                    : item.nftAddress ===
-                      window.config.nft_land_address
+                    : item.nftAddress.toLowerCase() ===
+                      window.config.nft_land_address.toLowerCase()
                     ? "WOD"
                     : "Timepiece"
                 } #${item.tokenId} was sold.`
               : item.offer === "yes"
 
               ? `There is a new offer for your ${
-                  item.nftAddress === window.config.nft_caws_address
+                  item.nftAddress.toLowerCase() === window.config.nft_caws_address.toLowerCase()
                     ? "CAWS"
-                    : item.nftAddress === window.config.nft_land_address
+                    : item.nftAddress.toLowerCase() === window.config.nft_land_address.toLowerCase()
                     ? "WOD"
                     : "Timepiece"
                 } #${item.tokenId}.`
@@ -167,7 +167,7 @@ const Notification = ({
               item.welcome === 'yes' ? 'https://www.worldofdypians.com/marketplace' :
               item.redirect_link
                 ? item.redirect_link
-                : `https://www.worldofdypians.com/marketplace/nft${
+                : `https://www.worldofdypians.com/marketplace/nft/${
                     item.tokenId
                   }/${item.nftAddress.toLowerCase()}`
             }

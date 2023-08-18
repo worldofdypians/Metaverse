@@ -288,9 +288,10 @@ const Header = ({
                             >
                               <a
                                 href={
+                                  nft.welcome === 'yes' ? 'https://www.worldofdypians.com/marketplace' :
                                   nft.redirect_link 
                                     ? nft.redirect_link
-                                    : `https://www.worldofdypians.com/marketplace/nft${
+                                    : `https://www.worldofdypians.com/marketplace/nft/${
                                         nft.tokenId
                                       }/${nft.nftAddress.toLowerCase()}`
                                 }
@@ -382,33 +383,33 @@ const Header = ({
                                 >
                                   {nft.bought === "yes"
                                     ? `Congratulations on being the new owner of  ${
-                                        nft.nftAddress ===
-                                        window.config.nft_caws_address
+                                        nft.nftAddress.toLowerCase() ===
+                                        window.config.nft_caws_address.toLowerCase()
                                           ? "CAWS"
-                                          : nft.nftAddress ===
-                                            window.config.nft_land_address
+                                          : nft.nftAddress.toLowerCase() ===
+                                            window.config.nft_land_address.toLowerCase()
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}.`
                                     :
                                     nft.buy === "yes"
                                     ? `Your  ${
-                                        nft.nftAddress ===
-                                        window.config.nft_caws_address
+                                        nft.nftAddress.toLowerCase() ===
+                                        window.config.nft_caws_address.toLowerCase()
                                           ? "CAWS"
-                                          : nft.nftAddress ===
-                                            window.config.nft_land_address
+                                          : nft.nftAddress.toLowerCase() ===
+                                            window.config.nft_land_address.toLowerCase()
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId} was sold.`
                                     :
                                      nft.offer === "yes"
                                     ? `There is a new offer for your ${
-                                        nft.nftAddress ===
-                                        window.config.nft_caws_address
+                                        nft.nftAddress.toLowerCase() ===
+                                        window.config.nft_caws_address.toLowerCase()
                                           ? "CAWS"
-                                          : nft.nftAddress ===
-                                            window.config.nft_land_address
+                                          : nft.nftAddress.toLowerCase() ===
+                                            window.config.nft_land_address.toLowerCase()
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}`

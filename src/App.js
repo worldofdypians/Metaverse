@@ -1177,13 +1177,18 @@ function App() {
             });
 
             console.log('New user added:', newUserResponse.data);
-
-            setmyNftsOffer(newUserResponse.reverse());
+            let lso = newUserResponse.sort((a, b) => {
+              return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+            setmyNftsOffer(lso);
         } else {
             console.log('User already exists:', response.data);
-
+          
             const notifications = response.data[0]?.notifications || [];
-            setmyNftsOffer(notifications.reverse());
+            let lso = notifications.sort((a, b) => {
+              return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+            setmyNftsOffer(lso);
         }
     } catch (error) {
         console.error('Error adding new user:', error.message);
