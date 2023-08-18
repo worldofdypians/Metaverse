@@ -1293,6 +1293,10 @@ function App() {
               setFireAppContent(true);
             }}
             handleDisconnect={handleDisconnect}
+            myOffers={myNftsOffer}
+            handleRefreshList={handleRefreshList}
+            nftCount={nftCount}
+            isConnected={isConnected}
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
