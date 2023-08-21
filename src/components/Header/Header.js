@@ -59,7 +59,6 @@ const Header = ({
   const manageDisconnect = () => {
     if (location.pathname.includes("/account")) {
       handleDisconnect();
-      navigate("/");
     } else handleDisconnect();
   };
 

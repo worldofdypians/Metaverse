@@ -1064,8 +1064,8 @@ const WalletBalance = ({
                         nft: item,
                         type: item.type,
                         isOwner:
-                          item.offer.buyer.toLowerCase() ===
-                          coinbase.toLowerCase(),
+                          item.offer.buyer?.toLowerCase() ===
+                          coinbase?.toLowerCase(),
                         chain: 1,
                       }}
                       onClick={() => {
