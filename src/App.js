@@ -55,6 +55,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
+import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -1475,6 +1476,23 @@ function App() {
               path="/marketplace/timepiece"
               element={
                 <TimepieceNFT
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/beta-pass"
+              element={
+                <BetaPassNFT
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   isConnected={isConnected}

@@ -89,6 +89,7 @@ const MarketSidebar = () => {
                 className={`accordion-collapse collapse ${
                   location.pathname.includes("caws") ||
                   location.pathname.includes("land") ||
+                  location.pathname.includes("beta-pass") ||
                   location.pathname.includes("timepiece")
                     ? "show"
                     : null
@@ -134,6 +135,20 @@ const MarketSidebar = () => {
                       <div className="icon-wrapper"></div>
                       <span className={`nft-sidebar-title`}>
                         CAWS Timepiece
+                      </span>
+                    </NavLink>
+                    <NavLink
+                      to="/marketplace/beta-pass"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <span className={`nft-sidebar-title`}>
+                        Beta Pass
                       </span>
                     </NavLink>
                   </div>

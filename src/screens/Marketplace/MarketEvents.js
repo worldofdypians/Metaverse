@@ -106,6 +106,19 @@ const MarketEvents = ({
     background: "newCriticalBg.webp",
     mobileBackground: "criticalBgMobile.webp",
   };
+  const betaPassPackageData = {
+    title: "Beta Pass",
+    image: "betaPassDummy.png",
+    benefits: [
+      "Exclusive access for Beta Pass owners",
+      "Opportunity to win rewards",
+      "Regular and ongoing events",
+    ],
+    price: 220,
+    link: "https://www.worldofdypians.com/news/6426dc2bb15f9e51ad8bd4e6/Critical-Hit-Event",
+    background: "newCriticalBg.webp",
+    mobileBackground: "criticalBgMobile.webp",
+  };
 
   const {
     data,
@@ -392,6 +405,28 @@ const MarketEvents = ({
                           </div>
                         </div>
                       </NavLink>
+                      <NavLink to="/marketplace/events/beta-pass">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                              selectedPackage === "betapass"&&
+                              eventId === "beta-pass"  &&
+                              "selected-event-package"
+                            }`}
+                            onClick={() => setSelectedPackage("betapass")}
+                          >
+                            <img
+                              src={require('./assets/betaPassDummy.png')}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                             Beta Pass
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
                     </div>
                   </div>
                   <NewBundleCard
@@ -409,7 +444,9 @@ const MarketEvents = ({
                         : selectedPackage === "dyp"
                         ? dypPackageData
                         : selectedPackage === "criticalHit"
-                        ? criticalHitPackageData
+                        ? criticalHitPackageData : 
+                        selectedPackage === "betapass" ?
+                        betaPassPackageData
                         : iDypPackageData
                     }
                     handleSetAvailableTime={(value) => {
