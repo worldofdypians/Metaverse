@@ -312,7 +312,7 @@ const WalletBalance = ({
     //listed [listedItems]
     //staked [myWodWodStakes,myCawsWodStakes,landStaked]
     //final [listed, to list, staked]
-    if (coinbase !== "0x0000000000000000000000000000000000000000") {
+    if (coinbase) {
       if (myTimepieceCollected && myTimepieceCollected.length > 0) {
         await Promise.all(
           myTimepieceCollected.map(async (i) => {
@@ -999,12 +999,12 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {favoriteItems.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000"  && (
+                {favoriteItems.length === 0 && coinbase  && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You do not have any favorite NFTs
                   </span>
                 )}
-                {favoriteItems.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                {favoriteItems.length === 0 && !coinbase  && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     Connect your wallet to view your favorite NFTs.
                   </span>
@@ -1099,12 +1099,12 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {myOffers.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000"  && (
+                {myOffers.length === 0 && coinbase  && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You have not made any offers
                   </span>
                 )}
-                {myOffers.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                {myOffers.length === 0 && !coinbase && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     Connect your wallet to view the offers you have made.
                   </span>
@@ -1183,13 +1183,13 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {collectedItems.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000" && (
+                {collectedItems.length === 0 && coinbase && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You do not have any NFTs in your wallet
                   </span>
                 )}
 
-{collectedItems.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+{collectedItems.length === 0 && !coinbase  && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     Connect your wallet to view your NFTs.
                   </span>
@@ -1313,12 +1313,12 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {myCawsWodStakes.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000" && landStaked.length === 0 && (
+                {myCawsWodStakes.length === 0 && coinbase && landStaked.length === 0 && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You do not have any NFTs in stake
                   </span>
                 )}
-                {myCawsWodStakes.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                {myCawsWodStakes.length === 0 && !coinbase   && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     Connect your wallet to view your staked NFTs.
                   </span>
@@ -1422,12 +1422,12 @@ const WalletBalance = ({
                       </div>
                     </NavLink>
                   ))}
-                {listedItems.length === 0 && coinbase !== "0x0000000000000000000000000000000000000000" && (
+                {listedItems.length === 0 && coinbase  && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     You do not have any listed NFTs
                   </span>
                 )}
-                 {listedItems.length === 0 && coinbase === "0x0000000000000000000000000000000000000000" && (
+                 {listedItems.length === 0 && !coinbase  && (
                   <span className="seller-addr" style={{ textAlign: "center" }}>
                     Connect your wallet to view your listed NFTs.
                   </span>

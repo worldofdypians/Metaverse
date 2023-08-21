@@ -8,6 +8,7 @@ import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import person from "../Header/assets/person.svg";
 import check from "../Header/assets/check.svg";
 import copy from "../Header/assets/copy.svg";
+import bellIcon from "./assets/bellIcon.svg";
 
 import Clipboard from "react-clipboard.js";
 
@@ -17,14 +18,29 @@ const MobileNavbar = ({
   coinbase,
   avatar,
   handleDisconnect,
+  myOffers,
+  handleRefreshList,
+  nftCount,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
+  const [unreadNotifications, setunreadNotifications] = useState(0);
 
   const bgmenu = document.querySelector("#bgmenu");
   const hamburger = document.querySelector("#mobileNavbar");
   const html = document.querySelector("html");
   let id = Math.random().toString(36);
+
+  const checkRead = () => {
+    if (myOffers.length > 0) {
+      let count = myOffers.filter(({ read }) => read === false).length;
+      setunreadNotifications(count);
+    }
+  };
+
+  useEffect(() => {
+    checkRead();
+  }, [myOffers, coinbase, nftCount]);
 
   useEffect(() => {
     if (openNavbar === true) {
@@ -46,11 +62,31 @@ const MobileNavbar = ({
         <NavLink to="/">
           <img src={metaverse} alt="metaverse" width={126} />
         </NavLink>
+        <div className="d-flex align-items-center gap-3 justify-content-between">
+        <NavLink to="/notifications">
+          <div className="position-relative">
+            <img
+              src={bellIcon}
+              width={30}
+              style={{ cursor: "pointer" }}
+              height={30}
+              alt=""
+            />
+
+            {unreadNotifications > 0 && (
+              <div className="bell-amount">
+                <span className="mb-0">
+                  {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                </span>
+              </div>
+            )}
+          </div>
+        </NavLink>
         {openNavbar === false ? (
           <div className="linear-border" onClick={() => setOpenNavbar(true)}>
             <button
               className="px-4 bg-transparent"
-              style={{ clipPath: "none", border: 'none' }}
+              style={{ clipPath: "none", border: "none" }}
               id="hamburgermenu"
             >
               <span></span>
@@ -62,10 +98,10 @@ const MobileNavbar = ({
           <img
             src={xMark}
             alt="x mark"
-            style={{ position: "relative", right: "18px" }}
+            style={{ position: "relative", right: "18px", marginLeft: 10 }}
             onClick={() => setOpenNavbar(false)}
           />
-        )}
+        )}</div>
       </div>
       <div
         className={`mobile-menu ${

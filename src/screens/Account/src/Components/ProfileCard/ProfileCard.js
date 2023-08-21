@@ -246,14 +246,14 @@ const ProfileCard = ({
                   <button
                     className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
                     onClick={() => {
-                      coinbase === "0x0000000000000000000000000000000000000000"
+                      !coinbase
                         ? handleShowWalletPopup()
                         : onSigninClick();
                     }}
                     role="button"
                     style={{ width: "fit-content", fontSize: 14 }}
                   >
-                    {coinbase === "0x0000000000000000000000000000000000000000"
+                    {!coinbase
                       ? "Connect wallet"
                       : "Sign in "}{" "}
                     <img src={greenarrow} alt="" />

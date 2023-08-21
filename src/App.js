@@ -54,6 +54,7 @@ import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
 import { useLocation, useNavigate } from "react-router-dom";
 import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
+import Notifications from "./screens/Marketplace/Notifications/Notifications";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -258,13 +259,13 @@ function App() {
           setCoinbase(data);
           setIsConnected(true);
         } else {
-          setCoinbase("0x0000000000000000000000000000000000000000");
+          setCoinbase();
           setIsConnected(false);
         }
       });
     } else {
       setIsConnected(false);
-      setCoinbase("0x0000000000000000000000000000000000000000");
+      setCoinbase();
     }
   };
 
@@ -296,6 +297,7 @@ function App() {
         setIsConnected(true);
       });
       await window.getCoinbase().then((data) => {
+        console.log(data);
         setCoinbase(data);
       });
       setShowForms(true);
@@ -940,7 +942,7 @@ function App() {
         checkConnection2();
       } else {
         setIsConnected(false);
-        setCoinbase("0x0000000000000000000000000000000000000000");
+        setCoinbase();
         localStorage.setItem("logout", "true");
         
       }
@@ -1143,20 +1145,58 @@ function App() {
   //   setmyNftsOffer(recievedOffers);
   // };
 
-  async function getNotifications(walletAddress) {
+  const handleDisconnect = async () => {
+    localStorage.setItem("logout", "true");
+    setSuccess(false)
+    setCoinbase();
+    setIsConnected(false);
+  };
+
+  const API_BASE_URL = "https://api.worldofdypians.com";
+
+  async function addNewUserIfNotExists(walletAddress, title, description, redirect_link) {
     try {
-      const response = await axios.get(
-        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-          walletAddress
-        )}`
-      );
-      const notifications = response.data[0]?.notifications || [];
-      setmyNftsOffer(notifications.reverse());
-      // console.log("Notifications:", notifications);
+        const response = await axios.get(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`);
+        
+      
+        if (response.data.length === 0) {
+            const newUserResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
+                tokenId: '', 
+                nftAddress: '', 
+                timestamp: Date.now(),
+                read: false,
+                offer: 'no',
+                offerAccepted: 'no',
+                buy: 'no',
+                event: 'no',    
+                news: 'no',    
+                welcome: 'yes', 
+                update: 'no',  
+                title: 'Welcome', 
+                description: 'Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!' , 
+                redirect_link: '',
+            });
+
+            console.log('New user added:', newUserResponse.data);
+            let lso = newUserResponse.sort((a, b) => {
+              return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+            setmyNftsOffer(lso);
+        } else {
+            console.log('User already exists:', response.data);
+          
+            const notifications = response.data[0]?.notifications || [];
+            let lso = notifications.sort((a, b) => {
+              return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+            setmyNftsOffer(lso);
+        }
     } catch (error) {
-      console.error("Error retrieving notifications:", error.message);
+        console.error('Error adding new user:', error.message);
     }
-  }
+}
+ 
+
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -1193,17 +1233,16 @@ function App() {
 
   useEffect(() => {
     if (coinbase) {
-      getNotifications(coinbase);
+      // getNotifications(coinbase);
+      addNewUserIfNotExists(
+        coinbase,
+        "Welcome",
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
+      );
     }
   }, [coinbase, nftCount]);
 
-  const handleDisconnect = async () => {
-    localStorage.setItem("logout", "true");
-    setSuccess(false)
-    setCoinbase("0x0000000000000000000000000000000000000000");
-    setIsConnected(false);
-  };
-
+  // console.log(nftCount);
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -1230,6 +1269,10 @@ function App() {
               setFireAppContent(true);
             }}
             handleDisconnect={handleDisconnect}
+            myOffers={myNftsOffer}
+            handleRefreshList={handleRefreshList}
+            nftCount={nftCount}
+            isConnected={isConnected}
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1266,6 +1309,18 @@ function App() {
               }
             />
             <Route exact path="/caws" element={<Caws />} />
+            <Route
+              exact
+              path="/notifications"
+              element={
+                <Notifications
+                  handleRefreshList={handleRefreshList}
+                  coinbase={coinbase}
+                  nftCount={nftCount}
+                  isConnected={isConnected}
+                />
+              }
+            />
             <Route exact path="/roadmap" element={<Roadmap />} />
             <Route exact path="/explorer" element={<Explorer />} />
             <Route exact path="/stake" element={<NftMinting />} />
@@ -1488,6 +1543,7 @@ function App() {
           {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
           <ScrollTop />
           {location.pathname.includes("marketplace") ||
+          location.pathname.includes("notifications") ||
           location.pathname.includes("account") ? (
             location.pathname.includes("timepiece") ||
             location.pathname.includes("caws") ||
