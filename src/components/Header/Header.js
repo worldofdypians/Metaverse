@@ -42,7 +42,8 @@ const Header = ({
   avatar,
   handleDisconnect,
   myOffers,
-  handleRefreshList,nftCount,isConnected
+  handleRefreshList,
+  nftCount,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -57,9 +58,8 @@ const Header = ({
 
   const manageDisconnect = () => {
     if (location.pathname.includes("/account")) {
-    localStorage.setItem("logout", "true");
       handleDisconnect();
-      // navigate("/");
+      navigate("/");
     } else handleDisconnect();
   };
 
@@ -218,7 +218,7 @@ const Header = ({
           </NavLink>
         </div>
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0 position-relative ">
-          {!isConnected ? (
+          {!coinbase ? (
             <div className="linearborder2">
               <button className="btn connectwallet px-3" onClick={handleSignUp}>
                 Connect Wallet
@@ -226,7 +226,7 @@ const Header = ({
             </div>
           ) : (
             <div className="d-flex align-items-center gap-3">
-              {/* <div className="position-relative">
+              <div className="position-relative">
                 <img
                   src={bellIcon}
                   width={30}
@@ -288,13 +288,14 @@ const Header = ({
                             >
                               <a
                                 href={
-                                  nft.redirect_link !== ""
+                                  nft.welcome === 'yes' ? 'https://www.worldofdypians.com/marketplace' :
+                                  nft.redirect_link 
                                     ? nft.redirect_link
                                     : `https://www.worldofdypians.com/marketplace/nft/${
                                         nft.tokenId
                                       }/${nft.nftAddress.toLowerCase()}`
                                 }
-                                target='_blank'
+                                 
                                 rel='noreferrer'
                                 style={{ textDecoration: "none" }}
                                 
@@ -382,33 +383,33 @@ const Header = ({
                                 >
                                   {nft.bought === "yes"
                                     ? `Congratulations on being the new owner of  ${
-                                        nft.nftAddress ===
-                                        window.config.nft_caws_address
+                                        nft.nftAddress.toLowerCase() ===
+                                        window.config.nft_caws_address.toLowerCase()
                                           ? "CAWS"
-                                          : nft.nftAddress ===
-                                            window.config.nft_land_address
+                                          : nft.nftAddress.toLowerCase() ===
+                                            window.config.nft_land_address.toLowerCase()
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}.`
                                     :
                                     nft.buy === "yes"
                                     ? `Your  ${
-                                        nft.nftAddress ===
-                                        window.config.nft_caws_address
+                                        nft.nftAddress.toLowerCase() ===
+                                        window.config.nft_caws_address.toLowerCase()
                                           ? "CAWS"
-                                          : nft.nftAddress ===
-                                            window.config.nft_land_address
+                                          : nft.nftAddress.toLowerCase() ===
+                                            window.config.nft_land_address.toLowerCase()
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId} was sold.`
                                     :
                                      nft.offer === "yes"
                                     ? `There is a new offer for your ${
-                                        nft.nftAddress ===
-                                        window.config.nft_caws_address
+                                        nft.nftAddress.toLowerCase() ===
+                                        window.config.nft_caws_address.toLowerCase()
                                           ? "CAWS"
-                                          : nft.nftAddress ===
-                                            window.config.nft_land_address
+                                          : nft.nftAddress.toLowerCase() ===
+                                            window.config.nft_land_address.toLowerCase()
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}`
@@ -418,7 +419,7 @@ const Header = ({
                                   {getRelativeTime(nft.timestamp)}
                                 </span>
                               </a>
-                              <div
+                              {/* <div
                                 className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
                                 onClick={() => {
                                   deleteNotification(nft._id);
@@ -429,7 +430,7 @@ const Header = ({
                                 <span className="notif-delete-text">
                                   Delete
                                 </span>
-                              </div>
+                              </div> */}
                             </div>
                           );
                         })}
@@ -447,7 +448,7 @@ const Header = ({
                     )}
                   </div>
                 </OutsideClickHandler>
-              </div> */}
+              </div>
               <Clipboard
                 component="div"
                 data-event="click"
