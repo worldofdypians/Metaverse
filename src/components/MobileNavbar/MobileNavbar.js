@@ -62,24 +62,25 @@ const MobileNavbar = ({
         <NavLink to="/">
           <img src={metaverse} alt="metaverse" width={126} />
         </NavLink>
+        <div className="d-flex align-items-center gap-3 justify-content-between">
         <NavLink to="/notifications">
-        <div className="position-relative" style={{right: '-66px'}}>
-          <img
-            src={bellIcon}
-            width={30}
-            style={{ cursor: "pointer" }}
-            height={30}
-            alt=""
-          />
+          <div className="position-relative">
+            <img
+              src={bellIcon}
+              width={30}
+              style={{ cursor: "pointer" }}
+              height={30}
+              alt=""
+            />
 
-          {unreadNotifications > 0 && (
-            <div className="bell-amount">
-              <span className="mb-0">
-                {unreadNotifications > 99 ? "99+" : unreadNotifications}
-              </span>
-            </div>
-          )}
-        </div>
+            {unreadNotifications > 0 && (
+              <div className="bell-amount">
+                <span className="mb-0">
+                  {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                </span>
+              </div>
+            )}
+          </div>
         </NavLink>
         {openNavbar === false ? (
           <div className="linear-border" onClick={() => setOpenNavbar(true)}>
@@ -97,10 +98,10 @@ const MobileNavbar = ({
           <img
             src={xMark}
             alt="x mark"
-            style={{ position: "relative", right: "18px" }}
+            style={{ position: "relative", right: "18px", marginLeft: 10 }}
             onClick={() => setOpenNavbar(false)}
           />
-        )}
+        )}</div>
       </div>
       <div
         className={`mobile-menu ${
