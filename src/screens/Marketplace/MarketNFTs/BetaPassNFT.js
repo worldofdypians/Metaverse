@@ -6,7 +6,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import conflux from "./assets/conflux.svg";
-import coinbase from "./assets/coinbase.svg";
+import coinbaseimg from "./assets/coinbase.svg";
 import { useLocation } from "react-router-dom";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import traitIcon from "./assets/traitIcon.svg";
@@ -328,8 +328,8 @@ const BetaPassNFT = ({
                   "selected-beta-pass-item"
                 } beta-pass-item py-3 px-4 d-flex align-items-center gap-2`}
               >
-                <img src={coinbase} className="beta-pass-chain-img" alt="" />
-                <span>Base</span>
+                <img src={coinbaseimg} className="beta-pass-chain-img" alt="" />
+                <span>Coinbase</span>
               </NavLink>
             </div>
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
