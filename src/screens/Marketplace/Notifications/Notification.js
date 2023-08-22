@@ -35,7 +35,7 @@ const Notification = ({
 }) => {
   const [descSlice, setDescSlice] = useState(100);
   const [active, setActive] = useState(false);
-  const domain = "https://www.worldofdypians.com/";
+  const domain = "https://www.worldofdypians.com";
 
   useEffect(() => {
     if (active) {
