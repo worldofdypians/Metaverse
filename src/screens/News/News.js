@@ -50,10 +50,7 @@ const News = (props) => {
     dotsClass: "button__bar slick-dots w-100",
     slidesToShow: 4,
     slidesToScroll: 1,
-
-    autoplay: true,
     initialSlide: 0,
-
     responsive: [
       {
         breakpoint: 1440,
@@ -239,10 +236,14 @@ const News = (props) => {
   };
 
   useEffect(() => {
-    slider.current.innerSlider.slickGoTo(0);
     window.scrollTo(0, 0);
     document.title = "News";
   }, []);
+
+  useEffect(() => {
+    slider.current.innerSlider.slickGoTo(0);
+  }, [releases.length])
+  
 
   useEffect(() => {
     fetchNews();

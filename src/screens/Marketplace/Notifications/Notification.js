@@ -31,11 +31,11 @@ const Notification = ({
   index,
   markNotificationAsRead,
   coinbase,
-  deleteNotification
-  
+  deleteNotification,
 }) => {
   const [descSlice, setDescSlice] = useState(100);
   const [active, setActive] = useState(false);
+  const domain = "https://www.worldofdypians.com";
 
   useEffect(() => {
     if (active) {
@@ -45,13 +45,14 @@ const Notification = ({
     }
   }, [active]);
 
+
   return (
     <div className="d-flex flex-column list-notification">
       <div
-        className="list-notification-first px-2 py-4 d-flex align-items-start align-items-lg-end justify-content-between"
+        className="list-notification-first px-2 py-3 d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-start align-items-lg-end justify-content-between"
         onClick={() => setActive(!active)}
       >
-        <div className="d-flex-flex-column gap-2" style={{width: '80%'}}>
+        <div className="d-flex-flex-column gap-2 notifwrapper">
           <div className="d-flex align-items-center gap-2">
             <img
               src={
@@ -97,28 +98,29 @@ const Notification = ({
                 color: item.read === false ? "#11FED2" : "#EEEDFF",
               }}
             >
-             {item.buy === "yes"
-                                      ? "NFT Sold"
-                                      : item.offer === "yes"
-                                      ? "New Offer"
-                                      : item.bought === "yes"
-                                      ? "NFT Bought"
-                                      : item.title}
+              {item.buy === "yes"
+                ? "NFT Sold"
+                : item.offer === "yes"
+                ? "New Offer"
+                : item.bought === "yes"
+                ? "NFT Bought"
+                : item.title}
             </h6>
           </div>
           <p className="notification-desc mb-0">
             {item.bought === "yes"
               ? `Congratulations on being the new owner of ${
-                  item.nftAddress.toLowerCase() === window.config.nft_caws_address.toLowerCase()
+                  item.nftAddress.toLowerCase() ===
+                  window.config.nft_caws_address.toLowerCase()
                     ? "CAWS"
-                    : item.nftAddress.toLowerCase() === window.config.nft_land_address.toLowerCase()
+                    : item.nftAddress.toLowerCase() ===
+                      window.config.nft_land_address.toLowerCase()
                     ? "WOD"
                     : "Timepiece"
                 } #${item.tokenId} .`
-              :
-              item.buy === "yes"
+              : item.buy === "yes"
               ? `Your  ${
-                item.nftAddress.toLowerCase() ===
+                  item.nftAddress.toLowerCase() ===
                   window.config.nft_caws_address.toLowerCase()
                     ? "CAWS"
                     : item.nftAddress.toLowerCase() ===
@@ -127,20 +129,21 @@ const Notification = ({
                     : "Timepiece"
                 } #${item.tokenId} was sold.`
               : item.offer === "yes"
-
               ? `There is a new offer for your ${
-                  item.nftAddress.toLowerCase() === window.config.nft_caws_address.toLowerCase()
+                  item.nftAddress.toLowerCase() ===
+                  window.config.nft_caws_address.toLowerCase()
                     ? "CAWS"
-                    : item.nftAddress.toLowerCase() === window.config.nft_land_address.toLowerCase()
+                    : item.nftAddress.toLowerCase() ===
+                      window.config.nft_land_address.toLowerCase()
                     ? "WOD"
                     : "Timepiece"
                 } #${item.tokenId}.`
-              : item.description?.slice(0, descSlice)} 
-              {!active  && '...'}
+              : item.description?.slice(0, descSlice)}
+            {!active && item.offer === 'no' && item.bought === 'no' && item.buy === 'no' && "..."}
           </p>
         </div>
-        <div className="d-flex flex-column align-items-end gap-4 notification-date-wrapper">
-          <div className=" d-flex flex-column flex-lg-row align-items-end justify-content-center  gap-2">
+        <div className="d-flex flex-column align-items-end gap-xxl-4 gap-lg-4 gap-md-4 gap-1 notification-date-wrapper">
+          <div className=" d-flex flex-row align-items-end justify-content-center  gap-2">
             <span className="notification-hour mb-0">
               {new Date(item.timestamp).getHours() +
                 " : " +
@@ -153,36 +156,45 @@ const Notification = ({
                 .slice(3, new Date(item.timestamp).toDateString().length)}
             </span>
           </div>
+          {item.offer === 'no' && item.bought === 'no' && item.buy === 'no' &&
           <img
             src={notificationDropdown}
             alt=""
             style={{ transform: active ? "rotate(180deg)" : "none" }}
-          />
+          /> }
         </div>
       </div>
-      {active && (
+      {(active || item.offer === 'yes' || item.bought === 'yes' || item.buy === 'yes') && (
         <div className="d-flex w-100 justify-content-between">
-          <a
-            href={
-              item.welcome === 'yes' ? 'https://www.worldofdypians.com/marketplace' :
-              item.redirect_link
-                ? item.redirect_link
-                : `https://www.worldofdypians.com/marketplace/nft/${
+          <NavLink
+            to={
+              item.welcome === "yes"
+                ? "/marketplace"
+                : item.redirect_link
+                ? item.redirect_link.slice(
+                    domain.length,
+                    item.redirect_link.length
+                  )
+                : `/marketplace/nft/${
                     item.tokenId
                   }/${item.nftAddress.toLowerCase()}`
             }
-            style={{ textDecoration: "none" }}
-            rel='noreferrer'
+            style={{ textDecoration: "none"}}
+            rel="noreferrer"
             onClick={() => {
-             
-                markNotificationAsRead(coinbase, item._id);
-             
+              markNotificationAsRead(coinbase, item._id);
             }}
-            className="view-more-notif mb-2 px-2"
+            className="view-more-notif px-2"
           >
             View More
-          </a>
-          <div className="d-flex align-items-center gap-1 p-2" onClick={() => {deleteNotification(item._id); setActive(false)}}>
+          </NavLink>
+          <div
+            className="d-flex align-items-center gap-1 p-2"
+            onClick={() => {
+              deleteNotification(item._id);
+              setActive(false);
+            }}
+          >
             <img src={orangeDeleteIcon} width={20} height={20} alt="" />
             <span className="delete-notif">Delete</span>
           </div>

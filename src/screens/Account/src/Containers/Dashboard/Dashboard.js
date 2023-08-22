@@ -43,7 +43,7 @@ function Dashboard({
   onSigninClick,
   onLogoutClick,
   availableTime,
-  success
+  success,
 }) {
   const { email, logout } = useAuth();
 
@@ -422,6 +422,13 @@ function Dashboard({
           return web3avax.utils.fromWei(data, "ether");
         });
       setiDypBalanceAvax(bal3_idyp);
+    } else {
+      setDypBalance(0);
+      setDypBalanceBnb(0);
+      setDypBalanceAvax(0);
+      setiDypBalance(0);
+      setiDypBalanceBnb(0);
+      setiDypBalanceAvax(0);
     }
   };
 
@@ -443,6 +450,9 @@ function Dashboard({
         console.error("Error fetching user favorites:", error);
         throw error;
       }
+    }
+    else {
+      setFavorites([]);
     }
   }
 
@@ -536,23 +546,28 @@ function Dashboard({
               console.error(e);
             });
 
-          if (result && result.length > 0) {
-            result.map((item) => {
-              if (item.offer.buyer.toLowerCase() === coinbase.toLowerCase()) {
-                return finalArray.push({
-                  offer: item.offer,
-                  index: item.index,
-                  nftAddress: nft.nftAddress,
-                  tokenId: nft.tokenId,
-                  type:
-                    nft.nftAddress === window.config.nft_caws_address
-                      ? "caws"
-                      : nft.nftAddress === window.config.nft_timepiece_address
-                      ? "timepiece"
-                      : "land",
-                });
-              }
-            });
+          if (result && result.length > 0) { 
+            if (coinbase) {
+              result.map((item) => {
+                if (
+                  item.offer.buyer?.toLowerCase() === coinbase.toLowerCase()
+                ) {
+                  return finalArray.push({
+                    offer: item.offer,
+                    index: item.index,
+                    nftAddress: nft.nftAddress,
+                    tokenId: nft.tokenId,
+                    type:
+                      nft.nftAddress === window.config.nft_caws_address
+                        ? "caws"
+                        : nft.nftAddress === window.config.nft_timepiece_address
+                        ? "timepiece"
+                        : "land",
+                  });
+                }
+              });
+              
+            }
           }
         })
       );
@@ -566,8 +581,6 @@ function Dashboard({
       setmyOffers(uniqueOffers);
     }
   };
-
-
 
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
@@ -601,11 +614,11 @@ function Dashboard({
   }, []);
 
   useEffect(() => {
-    if (coinbase) {
+    // if (coinbase) {
       getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
       getMyOffers();
-    }
-  }, [coinbase]);
+    // }
+  }, [coinbase,isConnected]);
 
   const logoutItem = localStorage.getItem("logout");
 
@@ -619,11 +632,11 @@ function Dashboard({
     }
   }, [coinbase, chainId]);
 
-  useEffect(()=>{
-    if(success === true) {
-      setshowWalletModal(false)
+  useEffect(() => {
+    if (success === true) {
+      setshowWalletModal(false);
     }
-  },[success])
+  }, [success]);
 
   return (
     <div
