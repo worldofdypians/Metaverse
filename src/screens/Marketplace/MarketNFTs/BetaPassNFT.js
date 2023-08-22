@@ -290,7 +290,7 @@ const BetaPassNFT = ({
                 </div>
               </div>
             </div>
-            <div className="d-flex align-items-center gap-4 justify-content-center">
+            <div className="d-flex align-items-center gap-4 justify-content-center flex-wrap">
               <NavLink
                 to={"/marketplace/beta-pass/conflux"}
                 className={`${
