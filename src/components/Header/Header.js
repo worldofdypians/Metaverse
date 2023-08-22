@@ -53,7 +53,7 @@ const Header = ({
   const location = useLocation();
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
-  const domain = "https://www.worldofdypians.com/";
+  const domain = "https://www.worldofdypians.com";
 
   let id = Math.random().toString(36);
 
