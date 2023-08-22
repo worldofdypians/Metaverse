@@ -53,6 +53,7 @@ const Header = ({
   const location = useLocation();
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
+  const domain = "https://www.worldofdypians.com/";
 
   let id = Math.random().toString(36);
 
@@ -285,12 +286,15 @@ const Header = ({
                               className="position-relative header-notification"
                               key={index}
                             >
-                              <a
-                                href={
-                                  nft.welcome === 'yes' ? 'https://www.worldofdypians.com/marketplace' :
+                              <NavLink
+                                to={
+                                  nft.welcome === 'yes' ? '/marketplace' :
                                   nft.redirect_link 
-                                    ? nft.redirect_link
-                                    : `https://www.worldofdypians.com/marketplace/nft/${
+                                    ? nft.redirect_link.slice(
+                                      domain.length,
+                                      nft.redirect_link.length
+                                    )
+                                    : `/marketplace/nft/${
                                         nft.tokenId
                                       }/${nft.nftAddress.toLowerCase()}`
                                 }
@@ -417,7 +421,7 @@ const Header = ({
                                 <span className="notification-relative-time mb-0">
                                   {getRelativeTime(nft.timestamp)}
                                 </span>
-                              </a>
+                              </NavLink>
                               {/* <div
                                 className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
                                 onClick={() => {

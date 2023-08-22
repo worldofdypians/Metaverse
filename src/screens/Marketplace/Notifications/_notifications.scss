@@ -71,11 +71,11 @@
 }
 
 .notification-date-wrapper{
-  width: 20%;
+  width: auto;
 
-  // @media screen and (max-width: 786px) {
-  //   width: 55%;
-  // }
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 }
 
 
@@ -85,7 +85,7 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
-  line-height: normal;
+  line-height: 33px;
 }
 
 .view-more-notif:hover{
@@ -139,6 +139,17 @@
   font-weight: 400;
   line-height: normal;
   width: 80%;
+
+  @media only screen and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.notifwrapper {
+  width: 80%;
+  @media only screen and (max-width: 767px) {
+    width: 100%;
+  }
 }
 .notif-delete-text {
   color: #de5634;

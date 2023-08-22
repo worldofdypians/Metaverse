@@ -366,7 +366,7 @@ const Notifications = ({
               </div>
             </div>
             <div className="outer-notification-list my-5 p-3">
-              <div className="notifications-list p-3">
+              <div className="notifications-list px-xxl-3 px-lg-3 px-md-3 py-xxl-3 py-lg-3 py-md-3">
                 {nftOffers && nftOffers.length === 0 && (
                   <div className="d-flex flex-column gap-2 align-items-center m-auto">
                     <img src={notifBell} alt="" />
