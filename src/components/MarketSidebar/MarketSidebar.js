@@ -129,7 +129,7 @@ const MarketSidebar = () => {
                       className={({ isActive }) =>
                         isActive
                           ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                          : `d-flex p-2 align-items-center gap-2 sidebar-item`
                       }
                     >
                       <div className="icon-wrapper"></div>
@@ -138,18 +138,25 @@ const MarketSidebar = () => {
                       </span>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/beta-pass"
+                      to="/marketplace/beta-pass/conflux"
                       end
                       className={({ isActive }) =>
                         isActive
                           ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                          : `d-flex p-2 align-items-center gap-2 sidebar-item ${location.pathname.includes('conflux') || location.pathname.includes('coin98') || location.pathname.includes('coingecko') || location.pathname.includes('base') ? 'sidebar-item-active nft-active' : null}`
                       }
                     >
                       <div className="icon-wrapper"></div>
+                      <div className="d-flex align-items-center gap-5">
                       <span className={`nft-sidebar-title`}>
                         Beta Pass
                       </span>
+                      <div className="new-beta-sidebar">
+                        <span className="new-beta-text">
+                          New
+                        </span>
+                      </div>
+                      </div>
                     </NavLink>
                   </div>
                 </div>
@@ -162,10 +169,10 @@ const MarketSidebar = () => {
             className={({ isActive }) =>
               isActive
                 ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                : `d-flex p-2 align-items-center gap-2 sidebar-item ${location.pathname.includes('events') ? 'sidebar-item-active' : null}`
             }
             children={({ isActive }) => {
-              const icon = isActive ? "eventsIconActive" : "eventsIcon";
+              const icon = isActive ? "eventsIconActive" : location.pathname.includes('events') ? "eventsIconActive" : "eventsIcon";
               return (
                 <>
                   <img
