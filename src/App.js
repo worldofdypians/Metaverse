@@ -1490,9 +1490,64 @@ function App() {
             />
             <Route
               exact
-              path="/marketplace/beta-pass"
+              path="/marketplace/beta-pass/conflux"
               element={
                 <BetaPassNFT
+                type={"conflux"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/beta-pass/coin98"
+              element={
+                <BetaPassNFT
+                type={"coin98"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/beta-pass/coingecko"
+              element={
+                <BetaPassNFT
+                type={"coingecko"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/beta-pass/base"
+              element={
+                <BetaPassNFT
+                type={"base"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   isConnected={isConnected}
