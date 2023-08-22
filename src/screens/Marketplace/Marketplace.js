@@ -231,12 +231,12 @@ const Marketplace = ({
       });
 
       
-    if (result.data) {
+    if (result.data && result.data !== 'NaN') {
       setTotalTx(result.data);
       localStorage.setItem('cachedTvl', result.data)
     }
-
-    if (result2.data) {
+ 
+    if (result2.data && result2.data !== 'NaN') {
       setTotalVolume(result2.data);
       localStorage.setItem('cachedVolume', result2.data)
     }
