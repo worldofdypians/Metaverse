@@ -15,6 +15,10 @@ import dummyBadge from "../../assets/landAssets/dummyBadge.png";
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import marketMintBanner from "./assets/marketMintBanner.png";
+import confluxUpcoming from './assets/confluxUpcoming.png'
+import coin98Upcoming from './assets/coin98Upcoming.png'
+import coingeckoUpcoming from './assets/coingeckoUpcoming.png'
+import baseUpcoming from './assets/baseUpcoming.png'
 
 const MarketMint = ({
   showWalletConnect,
@@ -585,14 +589,44 @@ const MarketMint = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">Mints are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">Mints are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
+                //   </div>
+                // </div>
+           <div className="d-flex flex-column gap-4">
+                 <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                  <div className="d-flex flex-column gap-2 ps-3">
+                  <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
+                  <p className="upcoming-mint-desc">Get access to a special ticket to enter the metaverse and participate in an exclusive event hosted by Conflux</p>
                   </div>
+                  <img src={confluxUpcoming} alt="" className="upcoming-mint-img" />
                 </div>
+                <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                  <div className="d-flex flex-column gap-2 ps-3">
+                  <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
+                  <p className="upcoming-mint-desc">Get access to a special ticket to enter the metaverse and participate in an exclusive event hosted by Coin98</p>
+                  </div>
+                  <img src={coin98Upcoming} alt="" className="upcoming-mint-img" />
+                </div>
+                <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                  <div className="d-flex flex-column gap-2 ps-3">
+                  <h6 className="upcoming-mint-title">CoinGecko Beta Pass</h6>
+                  <p className="upcoming-mint-desc">Get access to a special ticket to enter the metaverse and participate in an exclusive event hosted by CoinGecko</p>
+                  </div>
+                  <img src={coingeckoUpcoming} alt="" className="upcoming-mint-img" />
+                </div>
+                <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                  <div className="d-flex flex-column gap-2 ps-3">
+                  <h6 className="upcoming-mint-title">Base Beta Pass</h6>
+                  <p className="upcoming-mint-desc">Get access to a special ticket to enter the metaverse and participate in an exclusive event hosted on Base Network</p>
+                  </div>
+                  <img src={baseUpcoming} alt="" className="upcoming-mint-img" />
+                </div>
+           </div>
               )}
               {activeTab === "past" && (
                 <div className="row w-100 align-items-center gap-4 gap-lg-0 px-0">
