@@ -132,7 +132,7 @@ function App() {
   const [landBought, setLandBought] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [success, setSuccess] = useState(false);
-
+  const [isPremium, setIsPremium] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -301,10 +301,10 @@ function App() {
         setCoinbase(data);
       });
       setShowForms(true);
-      setSuccess(true)
+      setSuccess(true);
     } catch (e) {
       setShowWalletModal(false);
-      setSuccess(true)
+      setSuccess(true);
 
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
@@ -944,7 +944,6 @@ function App() {
         setIsConnected(false);
         setCoinbase();
         localStorage.setItem("logout", "true");
-        
       }
       checkNetworkId();
     }
@@ -1068,6 +1067,61 @@ function App() {
       setTimepieceBought(uniqueTimepiece);
     }
   };
+
+  const refreshSubscription = async () => {
+    let subscribedPlatformTokenAmountETH;
+    let subscribedPlatformTokenAmountAvax;
+    let subscribedPlatformTokenAmountBNB;
+
+    const web3eth = window.infuraWeb3;
+    const web3avax = window.avaxWeb3;
+    const web3bnb = window.bscWeb3;
+
+    const AvaxABI = window.SUBSCRIPTION_ABI;
+    const EthABI = window.SUBSCRIPTIONETH_ABI;
+    const BnbABI = window.SUBSCRIPTIONBNB_ABI;
+
+    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const avaxsubscribeAddress = window.config.subscription_address;
+    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
+
+    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+    const avaxcontract = new web3avax.eth.Contract(
+      AvaxABI,
+      avaxsubscribeAddress
+    );
+
+    const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+
+    if (coinbase) {
+      subscribedPlatformTokenAmountETH = await ethcontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
+        .call();
+
+      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
+        .call();
+
+      subscribedPlatformTokenAmountBNB = await bnbcontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
+        .call();
+
+      if (
+        subscribedPlatformTokenAmountAvax === "0" &&
+        subscribedPlatformTokenAmountETH === "0" &&
+        subscribedPlatformTokenAmountBNB === "0"
+      ) {
+        setIsPremium(false);
+      }
+      if (
+        subscribedPlatformTokenAmountAvax !== "0" ||
+        subscribedPlatformTokenAmountETH !== "0" ||
+        subscribedPlatformTokenAmountBNB !== "0"
+      ) {
+        setIsPremium(true);
+      }
+    }
+  };
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
 
@@ -1147,59 +1201,72 @@ function App() {
 
   const handleDisconnect = async () => {
     localStorage.setItem("logout", "true");
-    setSuccess(false)
+    setSuccess(false);
     setCoinbase();
     setIsConnected(false);
   };
 
   const API_BASE_URL = "https://api.worldofdypians.com";
 
-  async function addNewUserIfNotExists(walletAddress, title, description, redirect_link) {
+  async function addNewUserIfNotExists(
+    walletAddress,
+    title,
+    description,
+    redirect_link
+  ) {
     try {
-        const response = await axios.get(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`);
-        
-      
-        if (response.data.length === 0) {
-            const newUserResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
-                tokenId: '', 
-                nftAddress: '', 
-                timestamp: Date.now(),
-                read: false,
-                offer: 'no',
-                offerAccepted: 'no',
-                buy: 'no',
-                event: 'no',    
-                news: 'no',    
-                welcome: 'yes', 
-                update: 'no',  
-                title: 'Welcome', 
-                description: 'Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!' , 
-                redirect_link: '',
-            });
+      const response = await axios.get(
+        `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+          walletAddress
+        )}`
+      );
 
-            console.log('New user added:', newUserResponse.data);
-            let lso = newUserResponse.sort((a, b) => {
-              return new Date(b.timestamp) - new Date(a.timestamp);
-            });
-            setmyNftsOffer(lso);
-        } else {
-            console.log('User already exists:', response.data);
-          
-            const notifications = response.data[0]?.notifications || [];
-            let lso = notifications.sort((a, b) => {
-              return new Date(b.timestamp) - new Date(a.timestamp);
-            });
-            setmyNftsOffer(lso);
-        }
+      if (response.data.length === 0) {
+        const newUserResponse = await axios.post(
+          `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+            walletAddress
+          )}`,
+          {
+            tokenId: "",
+            nftAddress: "",
+            timestamp: Date.now(),
+            read: false,
+            offer: "no",
+            offerAccepted: "no",
+            buy: "no",
+            event: "no",
+            news: "no",
+            welcome: "yes",
+            update: "no",
+            title: "Welcome",
+            description:
+              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
+            redirect_link: "",
+          }
+        );
+
+        console.log("New user added:", newUserResponse.data);
+        let lso = newUserResponse.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+        setmyNftsOffer(lso);
+      } else {
+        console.log("User already exists:", response.data);
+
+        const notifications = response.data[0]?.notifications || [];
+        let lso = notifications.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+        setmyNftsOffer(lso);
+      }
     } catch (error) {
-        console.error('Error adding new user:', error.message);
+      console.error("Error adding new user:", error.message);
     }
-}
- 
-
+  }
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
+    refreshSubscription();
   }, [coinbase, nftCount]);
 
   useEffect(() => {
@@ -1225,11 +1292,11 @@ function App() {
     }
   }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
 
-  useEffect(()=>{
-    if(latest20BoughtNFTS.length > 0) {
+  useEffect(() => {
+    if (latest20BoughtNFTS.length > 0) {
       getCawsSold();
     }
-  },[latest20BoughtNFTS.length])
+  }, [latest20BoughtNFTS.length]);
 
   useEffect(() => {
     if (coinbase) {
@@ -1259,7 +1326,6 @@ function App() {
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
             isConnected={isConnected}
-
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1597,6 +1663,7 @@ function App() {
               setdownloadSelected(false);
               setShowWalletModalDownload(false);
             }}
+            isPremium={isPremium}
             handleConnect={handleConnection}
             coinbase={coinbase}
             showForms={showForms}
@@ -1620,6 +1687,7 @@ function App() {
             onClose={() => {
               setShowWalletModalRegister(false);
             }}
+            isPremium={isPremium}
             handleConnect={handleConnection}
             coinbase={coinbase}
             showForms={showForms}

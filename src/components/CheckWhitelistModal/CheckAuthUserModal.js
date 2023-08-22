@@ -28,6 +28,8 @@ const CheckAuthUserModal = ({
   landStaked,
   handleRedirect,
   handleActiveUser,
+  isPremium
+
 }) => {
   const windowSize = useWindowSize();
   const navigate = useNavigate();
@@ -77,7 +79,7 @@ const CheckAuthUserModal = ({
       let result = window.checkWhitelistWod(coinbase);
  
 
-      if (result === 1 || nftresult > 0) {
+      if (result === 1 || nftresult > 0 || isPremium) {
         setactiveUser(true);
         handleActiveUser(true);
         setLoading(false);
