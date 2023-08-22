@@ -182,6 +182,14 @@ const MobileNav = () => {
           >
             <h6 className="mobile-nft-title">CAWS Timepiece</h6>
           </NavLink>
+          <NavLink
+            to={"/marketplace/beta-pass/conflux"}
+            className={({ isActive }) =>
+              isActive ? "nft-link-active" : "nft-link"
+            }
+          >
+            <h6 className="mobile-nft-title">Beta Pass</h6>
+          </NavLink>
         </div>
       </OutsideClickHandler>
     </>
