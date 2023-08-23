@@ -329,7 +329,7 @@ const BetaPassNFT = ({
                 } beta-pass-item py-3 px-4 d-flex align-items-center gap-2`}
               >
                 <img src={coinbaseimg} className="beta-pass-chain-img" alt="" />
-                <span>Coinbase</span>
+                <span>Base</span>
               </NavLink>
             </div>
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
