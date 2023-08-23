@@ -1858,11 +1858,7 @@
 
 .beta-pass-item {
   border-radius: 15px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
+  background: #252743;
   backdrop-filter: blur(10px);
   margin: 1px;
   .beta-pass-chain-img {
