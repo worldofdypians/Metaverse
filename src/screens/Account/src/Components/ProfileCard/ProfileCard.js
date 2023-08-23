@@ -15,7 +15,8 @@ import logouticon from "./assets/logout.svg";
 import player from "./assets/explorePlayer.png";
 import triangle from "./assets/triangle.svg";
 import sync from "./assets/sync.svg";
-
+import walletImg from "../../Images/userProfile/wallet.svg";
+import circleArrow from "../../Images/userProfile/arrow-circle.svg";
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
 //     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
@@ -52,6 +53,7 @@ const ProfileCard = ({
   onLogoutClick,
   onSyncClick,
   syncStatus,
+  onLinkWallet
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -227,35 +229,32 @@ const ProfileCard = ({
                     <p className="tooltip-content m-0">Copied!</p>
                   </div>
                 </>
-                {!isVerified || !address || !email ? (
-                  // <div
-                  //   className="walletconnectBtn w-100"
-                  //   onClick={handleShowWalletPopup}
-                  // >
-                  //   <div className="d-flex gap-2 justify-content-between align-items-center">
-                  //     <div className="d-flex gap-2 align-items-center">
-                  //       <img src={walletImg} alt="" />
-                  //       <div className="d-flex flex-column">
-                  //         <span className="firsttitle">Connect wallet</span>
-                  //         <span className="secondTitle">Link your wallet</span>
-                  //       </div>
-                  //     </div>
-                  //     <img src={circleArrow} alt="" />
-                  //   </div>
-                  // </div>
+                {isVerified && !address && email ? (
+                  
+                  <div
+                    className="walletconnectBtn w-100"
+                    onClick={onLinkWallet}
+                  >
+                    <div className="d-flex gap-2 justify-content-between align-items-center">
+                      <div className="d-flex gap-2 align-items-center">
+                        <img src={walletImg} alt="" />
+                        <div className="d-flex flex-column">
+                          <span className="firsttitle">Link your wallet</span> 
+                        </div>
+                      </div>
+                      <img src={circleArrow} alt="" />
+                    </div>
+                  </div>
+                ) : !coinbase || !address ? (
                   <button
                     className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
                     onClick={() => {
-                      !coinbase
-                        ? handleShowWalletPopup()
-                        : onSigninClick();
+                      !coinbase && !address ? handleShowWalletPopup() : onSigninClick();
                     }}
                     role="button"
                     style={{ width: "fit-content", fontSize: 14 }}
                   >
-                    {!coinbase
-                      ? "Connect wallet"
-                      : "Sign in "}{" "}
+                    {!coinbase ? "Connect wallet" : "Sign in "}{" "}
                     <img src={greenarrow} alt="" />
                   </button>
                 ) : (

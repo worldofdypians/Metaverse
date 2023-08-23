@@ -237,7 +237,13 @@ function Dashboard({
             coinbase_address = data[0];
           });
         // window.coinbase_address = coinbase_address.pop();
-
+        await generateNonce({
+          variables: {
+            publicAddress: coinbase_address,
+          },
+        }).then(() => {
+          setshowWalletModal(false);
+        });
         return true;
       } catch (e) {
         console.error(e);
@@ -695,6 +701,7 @@ function Dashboard({
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
+                        onLinkWallet={connectWallet}
                         onSigninClick={onSigninClick}
                         onLogoutClick={logout}
                         onSyncClick={handleShowSyncModal}

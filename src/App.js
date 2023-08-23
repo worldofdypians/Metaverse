@@ -886,13 +886,14 @@ function App() {
 
     return (
       <React.Fragment>
-        <Navigate to="/account" />
+        <Navigate to="/auth" />
       </React.Fragment>
     );
   }
 
   const AppContent = () => {
     const { isLoading, isAuthenticated, playerId } = useAuth();
+     
     useEffect(() => {
       if (!isLoading || !isAuthenticated || !playerId) {
         setFireAppContent(false);
@@ -1122,6 +1123,16 @@ function App() {
       }
     }
   };
+
+
+  const checkData = async () => {
+    console.log('test')
+    if (coinbase) {
+      navigate("/auth");
+    }
+  };
+
+
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
 
@@ -1447,9 +1458,7 @@ function App() {
                   isConnected={isConnected}
                   chainId={chainId}
                   handleConnect={handleConnection}
-                  onSigninClick={() => {
-                    setShowWalletModalRegister2(true);
-                  }}
+                  onSigninClick={checkData}
                   success={success}
                   availableTime={availTime}
                 />
