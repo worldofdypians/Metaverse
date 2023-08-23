@@ -53,7 +53,7 @@ const ProfileCard = ({
   onLogoutClick,
   onSyncClick,
   syncStatus,
-  onLinkWallet
+  onLinkWallet,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -229,8 +229,59 @@ const ProfileCard = ({
                     <p className="tooltip-content m-0">Copied!</p>
                   </div>
                 </>
-                {isVerified && !address && email ? (
-                  
+                {!coinbase && (
+                  <button
+                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    onClick={() => {
+                      handleShowWalletPopup();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Connect wallet
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+
+                {coinbase && address && !email && (
+                  <button
+                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    onClick={() => {
+                      onSigninClick();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Sign in
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+
+                {coinbase && !email && !address && !username && (
+                  <button
+                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    onClick={() => {
+                      onSigninClick();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Create game account
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+
+                {coinbase && email && !address && !username && (
+                  <button
+                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    onClick={() => {
+                      onSigninClick();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Create player
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+
+                {coinbase && email && username && !address && (
                   <div
                     className="walletconnectBtn w-100"
                     onClick={onLinkWallet}
@@ -239,78 +290,69 @@ const ProfileCard = ({
                       <div className="d-flex gap-2 align-items-center">
                         <img src={walletImg} alt="" />
                         <div className="d-flex flex-column">
-                          <span className="firsttitle">Link your wallet</span> 
+                        <span className="secondTitle">Connect wallet</span>
+
+                          <span className="firsttitle">Link your wallet</span>
                         </div>
                       </div>
                       <img src={circleArrow} alt="" />
                     </div>
                   </div>
-                ) : !coinbase || !address ? (
-                  <button
-                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
-                    onClick={() => {
-                      !coinbase && !address ? handleShowWalletPopup() : onSigninClick();
-                    }}
-                    role="button"
-                    style={{ width: "fit-content", fontSize: 14 }}
-                  >
-                    {!coinbase ? "Connect wallet" : "Sign in "}{" "}
-                    <img src={greenarrow} alt="" />
-                  </button>
-                ) : (
-                  <div
-                    className="d-flex align-self-end align-items-center"
-                    style={{
-                      width:
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase()
-                          ? "100%"
-                          : "fit-content",
-                      justifyContent:
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase()
-                          ? "space-between"
-                          : "",
-                    }}
-                  >
-                    {address &&
+                )}
+
+                <div
+                  className="d-flex align-self-end align-items-center"
+                  style={{
+                    width:
+                      address &&
                       email &&
                       coinbase &&
                       syncStatus !== "" &&
-                      address.toLowerCase() !== coinbase.toLowerCase() && (
-                        <button
-                          className="d-flex align-items-center gap-1 syncbtn"
-                          onClick={onSyncClick}
-                        >
-                          <img
-                            src={sync}
-                            alt=""
-                            className={syncStatus === "loading" && "syncicon"}
-                          />{" "}
-                          {syncStatus === "initial"
-                            ? "Synchronize"
-                            : syncStatus === "loading"
-                            ? "Synchronising..."
-                            : syncStatus === "success"
-                            ? "Success"
-                            : "Error"}
-                        </button>
-                      )}
+                      address.toLowerCase() !== coinbase.toLowerCase()
+                        ? "100%"
+                        : "fit-content",
+                    justifyContent:
+                      address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address.toLowerCase() !== coinbase.toLowerCase()
+                        ? "space-between"
+                        : "",
+                  }}
+                >
+                  {address &&
+                    email &&
+                    coinbase &&
+                    syncStatus !== "" &&
+                    address.toLowerCase() !== coinbase.toLowerCase() && (
+                      <button
+                        className="d-flex align-items-center gap-1 syncbtn"
+                        onClick={onSyncClick}
+                      >
+                        <img
+                          src={sync}
+                          alt=""
+                          className={syncStatus === "loading" && "syncicon"}
+                        />{" "}
+                        {syncStatus === "initial"
+                          ? "Synchronize"
+                          : syncStatus === "loading"
+                          ? "Synchronising..."
+                          : syncStatus === "success"
+                          ? "Success"
+                          : "Error"}
+                      </button>
+                    )}
+                  {address && email && coinbase && (
                     <button
                       className="failbtn px-3 py-1"
                       onClick={onLogoutClick}
-                      role="button"
                     >
                       <img src={logouticon} alt="" /> Log Out
                     </button>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 {/* : 
                  (

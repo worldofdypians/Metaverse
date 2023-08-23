@@ -886,7 +886,7 @@ function App() {
 
     return (
       <React.Fragment>
-        <Navigate to="/auth" />
+        <Navigate to="/account" />
       </React.Fragment>
     );
   }
