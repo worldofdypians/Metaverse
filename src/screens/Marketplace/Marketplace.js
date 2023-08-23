@@ -577,7 +577,7 @@ const Marketplace = ({
                   <NavLink
                     to="/marketplace/events/dragon-ruins"
                     state={{ package: "dragon" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-relative package-blur">
@@ -596,7 +596,7 @@ const Marketplace = ({
                   <NavLink
                     to="/marketplace/events/golden-pass"
                     state={{ package: "dyp" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-relative package-blur">
@@ -614,7 +614,7 @@ const Marketplace = ({
                   <NavLink
                     to="/marketplace/events/puzzle-madness"
                     state={{ package: "idyp" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-relative package-blur">
@@ -634,12 +634,30 @@ const Marketplace = ({
                   <NavLink
                     to="/marketplace/events/critical-hit"
                     state={{ package: "criticalHit" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-relative package-blur">
                       <div className="first-box-blur d-flex align-items-end justify-content-center">
                         <span className="blur-package-title">Critical Hit</span>
+                      </div>
+                      <div className="second-box-blur"></div>
+                      <img
+                        src={require("./assets/criticalHit.webp")}
+                        alt=""
+                        className="blur-img"
+                      />
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/marketplace/events/beta-pass"
+                    state={{ package: "betaPass" }}
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="position-relative package-blur">
+                      <div className="first-box-blur d-flex align-items-end justify-content-center">
+                        <span className="blur-package-title">Beta Pass</span>
                       </div>
                       <div className="second-box-blur"></div>
                       <img
@@ -718,6 +736,24 @@ const Marketplace = ({
                         />
                         <span className="event-package-title">
                           Critical Hit
+                        </span>
+                      </NavLink>
+                    </div>
+
+                    <div className="">
+                      <NavLink
+                 to="/marketplace/events/beta-pass"
+                 state={{ package: "betaPass" }}
+                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                      >
+                        <img
+                          src={require("./assets/criticalHit.webp")}
+                          className="w-100"
+                          style={{ borderRadius: "16px" }}
+                          alt=""
+                        />
+                        <span className="event-package-title">
+                          Beta  pass
                         </span>
                       </NavLink>
                     </div>
