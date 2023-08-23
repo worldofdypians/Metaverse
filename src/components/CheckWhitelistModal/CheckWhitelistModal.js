@@ -26,7 +26,8 @@ const RegisterModal = ({
   landStaked,
   handleRedirect,
   handleActiveUser,
-  myCawsWodStakes
+  myCawsWodStakes,
+  isPremium
 }) => {
   const windowSize = useWindowSize();
 
@@ -68,7 +69,7 @@ const RegisterModal = ({
       let result = window.checkWhitelistWod(coinbase);
       console.log(result);
 
-      if (result === 1 || nftresult > 0) {
+      if (result === 1 || nftresult > 0 || isPremium) {
         setactiveUser(true)
         handleActiveUser(true)
         if (donwloadSelected === true)
