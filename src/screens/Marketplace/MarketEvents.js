@@ -239,6 +239,9 @@ const MarketEvents = ({
     else if (eventId === "critical-hit") {
       setSelectedPackage("criticalHit");
     }
+    else if (eventId === "beta-pass") {
+      setSelectedPackage("betaPass");
+    }
   },[]);
  
   const html = document.querySelector("html");
@@ -253,18 +256,7 @@ const MarketEvents = ({
     }
   }, [popup]);
 
-  useEffect(() => {
-    if (eventId === "dragon-ruins") {
-      setSelectedPackage("dragon");
-    } else if (eventId === "golden-pass") {
-      setSelectedPackage("dyp");
-    } else if (eventId === "puzzle-madness") {
-      setSelectedPackage("idyp");
-    } else if (eventId === "critical-hit") {
-      setSelectedPackage("criticalHit");
-    }
-  }, []);
-
+ 
   return (
     <>
       <div
@@ -409,11 +401,11 @@ const MarketEvents = ({
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                              selectedPackage === "betapass"&&
+                              selectedPackage === "betaPass"&&
                               eventId === "beta-pass"  &&
                               "selected-event-package"
                             }`}
-                            onClick={() => setSelectedPackage("betapass")}
+                            onClick={() => setSelectedPackage("betaPass")}
                           >
                             <img
                               src={require('./assets/betaPassDummy.png')}
@@ -445,7 +437,7 @@ const MarketEvents = ({
                         ? dypPackageData
                         : selectedPackage === "criticalHit"
                         ? criticalHitPackageData : 
-                        selectedPackage === "betapass" ?
+                        selectedPackage === "betaPass" ?
                         betaPassPackageData
                         : iDypPackageData
                     }

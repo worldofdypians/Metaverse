@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import { NavLink } from "react-router-dom";
@@ -16,7 +16,6 @@ import priceIconNeutral from "./assets/priceIconNeutral.svg";
 import filterIcon from "./assets/filterIcon.svg";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 import mintNowIcon from "./assets/mintNowIcon.svg";
-
 
 const BetaPassNFT = ({
   isConnected,
@@ -163,6 +162,13 @@ const BetaPassNFT = ({
     },
   ];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // getAllCawsCollection();
+    // fetchFilters();
+    document.title = "Beta Pass";
+  }, []);
+
   return (
     <div
       id="header"
@@ -196,14 +202,14 @@ const BetaPassNFT = ({
                     that are distributed monthly.
                   </p>
                   <NavLink
-                      to="/marketplace/mint"
-                      style={{ textDecoration: "none" }}
-                    >
-                      <button className="btn mint-now-btn gap-2">
-                        <img src={mintNowIcon} alt="" />
-                        Available minting
-                      </button>
-                    </NavLink>
+                    to="/marketplace/mint"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <button className="btn mint-now-btn gap-2">
+                      <img src={mintNowIcon} alt="" />
+                      Available minting
+                    </button>
+                  </NavLink>
                 </div>
               </div>
               <div className="col-12 col-lg-4">
@@ -260,47 +266,51 @@ const BetaPassNFT = ({
                 </ul>
               </div>
               <div className="d-flex align-items-center gap-4 justify-content-center flex-wrap">
-              <NavLink
-                to={"/marketplace/beta-pass/conflux"}
-                className={`${
-                  location.pathname.includes("conflux") &&
-                  "selected-beta-pass-item"
-                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-              >
-                <img src={conflux} className="beta-pass-chain-img" alt="" />
-                <span>Conflux</span>
-              </NavLink>
-              <NavLink
-                to={"/marketplace/beta-pass/coin98"}
-                className={`${
-                  location.pathname.includes("coin98") &&
-                  "selected-beta-pass-item"
-                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-              >
-                <img src={coin98} className="beta-pass-chain-img" alt="" />
-                <span>Coin98</span>
-              </NavLink>
-              <NavLink
-                to={"/marketplace/beta-pass/coingecko"}
-                className={`${
-                  location.pathname.includes("coingecko") &&
-                  "selected-beta-pass-item"
-                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-              >
-                <img src={coingecko} className="beta-pass-chain-img" alt="" />
-                <span>CoinGecko</span>
-              </NavLink>
-              <NavLink
-                to={"/marketplace/beta-pass/base"}
-                className={`${
-                  location.pathname.includes("base") &&
-                  "selected-beta-pass-item"
-                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-              >
-                <img src={coinbaseimg} className="beta-pass-chain-img" alt="" />
-                <span>Coinbase</span>
-              </NavLink>
-            </div>
+                <NavLink
+                  to={"/marketplace/beta-pass/conflux"}
+                  className={`${
+                    location.pathname.includes("conflux") &&
+                    "selected-beta-pass-item"
+                  } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                >
+                  <img src={conflux} className="beta-pass-chain-img" alt="" />
+                  <span>Conflux</span>
+                </NavLink>
+                <NavLink
+                  to={"/marketplace/beta-pass/coin98"}
+                  className={`${
+                    location.pathname.includes("coin98") &&
+                    "selected-beta-pass-item"
+                  } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                >
+                  <img src={coin98} className="beta-pass-chain-img" alt="" />
+                  <span>Coin98</span>
+                </NavLink>
+                <NavLink
+                  to={"/marketplace/beta-pass/coingecko"}
+                  className={`${
+                    location.pathname.includes("coingecko") &&
+                    "selected-beta-pass-item"
+                  } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                >
+                  <img src={coingecko} className="beta-pass-chain-img" alt="" />
+                  <span>CoinGecko</span>
+                </NavLink>
+                <NavLink
+                  to={"/marketplace/beta-pass/base"}
+                  className={`${
+                    location.pathname.includes("base") &&
+                    "selected-beta-pass-item"
+                  } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                >
+                  <img
+                    src={coinbaseimg}
+                    className="beta-pass-chain-img"
+                    alt=""
+                  />
+                  <span>Coinbase</span>
+                </NavLink>
+              </div>
               <div className="d-flex align-items-center justify-content-between justify-cotent-lg-center gap-3 gap-lg-5 price-traits-wrapper">
                 <div
                   className="filter-nav d-flex align-items-center gap-2"
@@ -332,7 +342,7 @@ const BetaPassNFT = ({
                 </div>
               </div>
             </div>
-           
+
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
               <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
                 <div className="item-cards-wrapper w-100">
