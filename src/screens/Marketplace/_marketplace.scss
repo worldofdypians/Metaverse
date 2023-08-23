@@ -1914,30 +1914,86 @@
 }
 .upcoming-mint-wrapper:nth-child(2) {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #503E11 100%);
+  background: linear-gradient(90deg, #181b38 0%, #503e11 100%);
 }
 .upcoming-mint-wrapper:nth-child(3) {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #481150 100%);
+  background: linear-gradient(90deg, #181b38 0%, #481150 100%);
 }
 .upcoming-mint-wrapper:nth-child(4) {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #1D438D 100%);
+  background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
 }
 
-.upcoming-mint-title{
-color: #FFF;
-font-size: 24px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
-letter-spacing: 0.12px;
+.upcoming-mint-title {
+  color: #fff;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.12px;
 }
 
-.upcoming-mint-desc{
-color: #FFF;
-font-size: 15px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+.upcoming-mint-desc {
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.active-mint {
+  min-width: 245px !important;
+  min-height: 235px !important;
+  border-radius: 30px;
+  cursor: pointer;
+  border: 2px solid #080b2a;
+  transition: all .25s;
+}
+
+
+.active-mint-selected{
+  border: 2px solid #00FECF;
+  
+}
+
+.active-mint:hover{
+  border: 2px solid #00FECF;
+}
+
+
+
+
+
+.mint-1 {
+  background: linear-gradient(90deg, #181b38 0%, #11503d 100%);
+}
+.mint-2 {
+  background: linear-gradient(90deg, #181b38 0%, #503e11 100%);
+}
+.mint-3 {
+  background: linear-gradient(90deg, #181b38 0%, #481150 100%);
+}
+.mint-4 {
+  background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
+}
+.mint-5 {
+  background: linear-gradient(90deg, #181b38 0%, #ae1e2e 100%);
+}
+
+.active-mint-title {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.08px;
+}
+
+.active-mint-desc {
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }

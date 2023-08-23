@@ -382,8 +382,50 @@
 
   @media screen and (max-width: 786px) {
     background-image: none;
-// background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
-background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.conflux-mint-bg {
+  background-image: url("./assets/confluxBackground.png");
+  background-size: 100% 100%;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.coin98-mint-bg {
+  background-image: url("./assets/coin98Background.png");
+  background-size: 100% 100%;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.coingecko-mint-bg {
+  background-image: url("./assets/confluxBackground.png");
+
+  background-size: 100% 100%;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.base-mint-bg {
+  background-image: url("./assets/coin98Background.png");
+
+  background-size: 100% 100%;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
 
@@ -752,6 +794,14 @@ background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
 
 .genesis-land-empty {
   background-image: url("../../assets/cawsplaceholder.svg"),
+    linear-gradient(141.14deg, #5e17cc 11.06%, #381486 34.42%, #1f164c 56.62%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.conflux-empty {
+  background-image: url("./assets/confluxPlaceholder.svg"),
     linear-gradient(141.14deg, #5e17cc 11.06%, #381486 34.42%, #1f164c 56.62%);
   background-repeat: no-repeat;
   background-size: cover;
