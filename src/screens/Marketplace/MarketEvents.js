@@ -405,12 +405,12 @@ const MarketEvents = ({
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/beta-pass">
+                      <NavLink to="/marketplace/events/betapass">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
                               selectedPackage === "betapass"&&
-                              eventId === "beta-pass"  &&
+                              eventId === "betapass"  &&
                               "selected-event-package"
                             }`}
                             onClick={() => setSelectedPackage("betapass")}
