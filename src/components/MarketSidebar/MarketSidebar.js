@@ -87,10 +87,10 @@ const MarketSidebar = () => {
               <div
                 id="collapseOne"
                 className={`accordion-collapse collapse ${
-                  location.pathname.includes("caws") ||
-                  location.pathname.includes("land") ||
-                  location.pathname.includes("beta-pass") ||
-                  location.pathname.includes("timepiece")
+                  location.pathname.includes("marketplace/caws") ||
+                  location.pathname.includes("marketplace/land") ||
+                  location.pathname.includes("marketplace/timepiece") ||
+                  location.pathname.includes("marketplace/beta-pass")
                     ? "show"
                     : null
                 }`}
