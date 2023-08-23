@@ -650,7 +650,7 @@ const Marketplace = ({
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/marketplace/events/beta-pass"
+                    to="/marketplace/events/betapass"
                     state={{ package: "betaPass" }}
                     className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}

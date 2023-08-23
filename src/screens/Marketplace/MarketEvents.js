@@ -401,7 +401,7 @@ const MarketEvents = ({
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                              selectedPackage === "betapass"&&
+                              selectedPackage === "betaPass"&&
                               eventId === "betapass"  &&
                               "selected-event-package"
                             }`}
