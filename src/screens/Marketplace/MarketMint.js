@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
@@ -15,10 +15,16 @@ import dummyBadge from "../../assets/landAssets/dummyBadge.png";
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import marketMintBanner from "./assets/marketMintBanner.png";
-import confluxUpcoming from './assets/confluxUpcoming.png'
-import coin98Upcoming from './assets/coin98Upcoming.png'
-import coingeckoUpcoming from './assets/coingeckoUpcoming.png'
-import baseUpcoming from './assets/baseUpcoming.png'
+import confluxUpcoming from "./assets/confluxUpcoming.png";
+import coin98Upcoming from "./assets/coin98Upcoming.png";
+import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
+import baseUpcoming from "./assets/baseUpcoming.png";
+import confluxActive from "./assets/confluxActive.png";
+import coin98Active from "./assets/coin98Active.png";
+import coingeckoActive from "./assets/coingeckoActive.png";
+import baseActive from "./assets/baseActive.png";
+import timepieceActive from "./assets/timepieceActive.png";
+import Slider from "react-slick";
 
 const MarketMint = ({
   showWalletConnect,
@@ -50,6 +56,103 @@ const MarketMint = ({
   const [countdownFinished, setCountdownFinished] = useState(true);
   const [latestMintId, setlatestMintId] = useState(0);
   const [activeTab, setActiveTab] = useState("live");
+  const [overflowing, setOverflowing] = useState(false);
+  const [shadows, setShadows] = useState(false);
+  const slider = useRef(null);
+
+
+  const confluxData = {
+    id: "conflux",
+    cardTitle: "Conflux Beta Pass",
+    title: "Conflux Beta Pass",
+    background: 'conflux-mint-bg'
+  }
+  const timepieceData = {
+    id: "timepiece",
+    cardTitle: "Caws Timepiece",
+    title: "Timepiece",
+    background: 'market-mint-bg'
+  }
+  const coin98Data = {
+    id: "coin98",
+    cardTitle: "Coin98 Beta Pass",
+    title: "Coin98 Beta Pass",
+    background: 'coin98-mint-bg'
+  }
+  const coingeckoData = {
+    id: "coingecko",
+    cardTitle: "Coingecko Beta Pass",
+    title: "Coingecko Beta Pass",
+    background: 'coingecko-mint-bg'
+  }
+  const baseData = {
+    id: "base",
+    cardTitle: "Base Beta Pass",
+    title: "Base Beta Pass",
+    background: 'base-mint-bg'
+  }
+
+  const [selectedMint, setSelectedMint] = useState(confluxData)
+  const [mintTitle, setMintTitle] = useState("conflux")
+
+  useEffect(() => {
+    setSelectedMint(confluxData)
+  }, [])
+  
+
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
 
   const handleViewCollection = () => {
     setViewCollection(true);
@@ -167,8 +270,7 @@ const MarketMint = ({
     <>
       <div
         className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
-        style={{ minHeight: "72vh", maxWidth: '2400px' }}
-
+        style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
         <div
@@ -203,38 +305,130 @@ const MarketMint = ({
               <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
                 NFT <span style={{ color: "#8c56ff" }}> Minting</span>
               </h6>
-            <div className="d-flex flex-column">
-            <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-                <h6
-                  className={`new-stake-tab ${
-                    activeTab === "live" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("live")}
-                >
-                  Live
-                </h6>
-                <h6
-                  className={`new-stake-tab ${
-                    activeTab === "upcoming" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("upcoming")}
-                >
-                  Upcoming
-                </h6>
-                <h6
-                  className={`new-stake-tab ${
-                    activeTab === "past" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("past")}
-                >
-                  Past
-                </h6>
+              <div className="d-flex flex-column">
+                <div className="d-flex w-100 align-items-center justify-content-center gap-4">
+                  <h6
+                    className={`new-stake-tab ${
+                      activeTab === "live" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("live")}
+                  >
+                    Live
+                  </h6>
+                  <h6
+                    className={`new-stake-tab ${
+                      activeTab === "upcoming" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("upcoming")}
+                  >
+                    Upcoming
+                  </h6>
+                  <h6
+                    className={`new-stake-tab ${
+                      activeTab === "past" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("past")}
+                  >
+                    Past
+                  </h6>
+                </div>
+                <span className="w-100 new-stake-divider mt-3 mb-5"></span>
               </div>
-              <span className="w-100 new-stake-divider mt-3 mb-5"></span>
-            </div>
 
               {activeTab === "live" && (
                 <>
+                  <div className="pb-5 px-0">
+                    <Slider ref={(c) => (slider.current = c)} {...settings}>
+                        <div className={` ${mintTitle === "conflux" && "active-mint-selected"}  active-mint mint-1 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(confluxData); setMintTitle("conflux")}}>
+                          <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                            <h6 className="active-mint-title mb-0">
+                              Conflux Pass
+                            </h6>
+                            <p className="active-mint-desc mb-0">
+                              Gain entry to metaverse, and join exclusive
+                              Conflux event with special ticket.
+                            </p>
+                          </div>
+                          <div className="second-half h-50 w-100">
+                            <img
+                              src={confluxActive}
+                              className="w-100 h-100"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      <div className={` ${mintTitle === "coin98" && "active-mint-selected"}  active-mint mint-2 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(coin98Data); setMintTitle("coin98")}}>
+                        <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                          <h6 className="active-mint-title mb-0">
+                            Coin98 Pass
+                          </h6>
+                          <p className="active-mint-desc mb-0">
+                            Gain entry to metaverse, and join exclusive Coin98
+                            event with special ticket.
+                          </p>
+                        </div>
+                        <div className="second-half h-50 w-100">
+                          <img
+                            src={coin98Active}
+                            className="w-100 h-100"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className={` ${mintTitle === "coingecko" && "active-mint-selected"}  active-mint mint-3 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(coingeckoData); setMintTitle("coingecko")}}>
+                        <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                          <h6 className="active-mint-title mb-0">
+                            CoinGecko Pass
+                          </h6>
+                          <p className="active-mint-desc mb-0">
+                            Gain entry to metaverse, and join exclusive
+                            CoinGecko event with special ticket.
+                          </p>
+                        </div>
+                        <div className="second-half h-50 w-100">
+                          <img
+                            src={coingeckoActive}
+                            className="w-100 h-100"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className={` ${mintTitle === "base" && "active-mint-selected"}  active-mint mint-4 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(baseData); setMintTitle("base")}}>
+                        <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                          <h6 className="active-mint-title mb-0">Base Pass</h6>
+                          <p className="active-mint-desc mb-0">
+                            Gain entry to metaverse, and join exclusive event
+                            hosted on Base Network with special ticket.
+                          </p>
+                        </div>
+                        <div className="second-half h-50 w-100">
+                          <img
+                            src={baseActive}
+                            className="w-100 h-100"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className={` ${mintTitle === "timepiece" && "active-mint-selected"}  active-mint mint-5 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(timepieceData); setMintTitle("timepiece")}}>
+                        <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                          <h6 className="active-mint-title mb-0">
+                            CAWS Timepiece
+                          </h6>
+                          <p className="active-mint-desc mb-0">
+                            Access the metaverse, experience enhanced
+                            interactions, and enjoy diverse benefits.
+                          </p>
+                        </div>
+                        <div className="second-half h-50 w-100">
+                          <img
+                            src={timepieceActive}
+                            className="w-100 h-100"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </Slider>
+                  </div>
                   <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                     <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                       <div className="d-flex flex-column position-relative">
@@ -245,6 +439,8 @@ const MarketMint = ({
                         )}
                         <div
                           className={`genesis-wrapper ${
+                            mintTitle !== "timepiece" ? 
+                            "conflux-empty" :
                             totalCreated > 0
                               ? "genesis-land"
                               : "genesis-land-empty"
@@ -263,7 +459,7 @@ const MarketMint = ({
                           style={{ bottom: "5px" }}
                         >
                           <h6 className="font-organetto land-desc w-75">
-                            CAWS TIMEPIECE
+                            {selectedMint.cardTitle}
                           </h6>
                         </div>
                       </div>
@@ -301,16 +497,12 @@ const MarketMint = ({
                     style={{ overflowX: "hidden" }}
                   >
                     <div
-                      className="p-4 mint-wrappernew market-mint-bg w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height"
+                      className={`p-4 mint-wrappernew ${selectedMint.background} w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height`}
                       style={{ minHeight: "463px" }}
                     >
-                      {/* <img
-            src={require("../../components/TimepieceMint/assets/timepiecehero.webp")}
-            alt=""
-            className="minthero d-none d-xl-flex d-lg-flex"
-          /> */}
+         
                       <h6 className="marketmintnewtitle position-relative">
-                        Mint your Timepiece <br />
+                        Mint your {selectedMint.title} <br />
                         NFT
                         <span className="marketmintnewtitle-marked mx-2">
                           now!
@@ -597,36 +789,68 @@ const MarketMint = ({
                 //     </span>
                 //   </div>
                 // </div>
-           <div className="d-flex flex-column gap-4">
-                 <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
-                  <div className="d-flex flex-column gap-2 ps-3">
-                  <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
-                  <p className="upcoming-mint-desc">Get access to a special ticket to enter the metaverse and participate in an exclusive event hosted by Conflux</p>
+                <div className="d-flex flex-column gap-4">
+                  <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3">
+                      <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
+                      <p className="upcoming-mint-desc">
+                        Get access to a special ticket to enter the metaverse
+                        and participate in an exclusive event hosted by Conflux
+                      </p>
+                    </div>
+                    <img
+                      src={confluxUpcoming}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
                   </div>
-                  <img src={confluxUpcoming} alt="" className="upcoming-mint-img" />
-                </div>
-                <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
-                  <div className="d-flex flex-column gap-2 ps-3">
-                  <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
-                  <p className="upcoming-mint-desc">Get access to a special ticket to enter the metaverse and participate in an exclusive event hosted by Coin98</p>
+                  <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3">
+                      <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
+                      <p className="upcoming-mint-desc">
+                        Get access to a special ticket to enter the metaverse
+                        and participate in an exclusive event hosted by Coin98
+                      </p>
+                    </div>
+                    <img
+                      src={coin98Upcoming}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
                   </div>
-                  <img src={coin98Upcoming} alt="" className="upcoming-mint-img" />
-                </div>
-                <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
-                  <div className="d-flex flex-column gap-2 ps-3">
-                  <h6 className="upcoming-mint-title">CoinGecko Beta Pass</h6>
-                  <p className="upcoming-mint-desc">Get access to a special ticket to enter the metaverse and participate in an exclusive event hosted by CoinGecko</p>
+                  <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3">
+                      <h6 className="upcoming-mint-title">
+                        CoinGecko Beta Pass
+                      </h6>
+                      <p className="upcoming-mint-desc">
+                        Get access to a special ticket to enter the metaverse
+                        and participate in an exclusive event hosted by
+                        CoinGecko
+                      </p>
+                    </div>
+                    <img
+                      src={coingeckoUpcoming}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
                   </div>
-                  <img src={coingeckoUpcoming} alt="" className="upcoming-mint-img" />
-                </div>
-                <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
-                  <div className="d-flex flex-column gap-2 ps-3">
-                  <h6 className="upcoming-mint-title">Base Beta Pass</h6>
-                  <p className="upcoming-mint-desc">Get access to a special ticket to enter the metaverse and participate in an exclusive event hosted on Base Network</p>
+                  <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3">
+                      <h6 className="upcoming-mint-title">Base Beta Pass</h6>
+                      <p className="upcoming-mint-desc">
+                        Get access to a special ticket to enter the metaverse
+                        and participate in an exclusive event hosted on Base
+                        Network
+                      </p>
+                    </div>
+                    <img
+                      src={baseUpcoming}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
                   </div>
-                  <img src={baseUpcoming} alt="" className="upcoming-mint-img" />
                 </div>
-           </div>
               )}
               {activeTab === "past" && (
                 <div className="row w-100 align-items-center gap-4 gap-lg-0 px-0">
@@ -640,7 +864,7 @@ const MarketMint = ({
                         <div className="d-flex flex-column align-items-center">
                           <h6 className="past-land-mint-amount">1,000</h6>
                           <span className="past-caws-mint-desc">
-                          Minted World of Dypians Genesis Land NFTs
+                            Minted World of Dypians Genesis Land NFTs
                           </span>
                         </div>
                       </div>
