@@ -174,7 +174,11 @@ const ProfileCard = ({
                     <img src={walletIcon} alt="" className="wallet-icon" />
                     <div className="d-flex flex-column">
                       <span className="wallet-span d-flex align-items-center gap-2">
-                        Game Wallet address
+                        {coinbase && address && email
+                          ? "Game Wallet address"
+                          : coinbase && !address
+                          ? "Wallet address"
+                          : "Wallet address"}
                       </span>
 
                       <div
@@ -195,11 +199,20 @@ const ProfileCard = ({
                   </Clipboard>
                   {address &&
                     coinbase &&
-                    address.toLowerCase() === coinbase.toLowerCase() && (
+                    email &&
+                    address?.toLowerCase() === coinbase?.toLowerCase() && (
                       <p className="walletassoc-txt m-0">
                         *This wallet is associated to your game account.
                       </p>
                     )}
+
+                  {!address && coinbase && email && username && (
+                    <p className="walletassoc-txt m-0">
+                      *There is no wallet address associated with your game account.
+                      <br /> Link your wallet to finish setup.
+                    </p>
+                  )}
+
                   {address &&
                     email &&
                     coinbase &&
@@ -290,7 +303,7 @@ const ProfileCard = ({
                       <div className="d-flex gap-2 align-items-center">
                         <img src={walletImg} alt="" />
                         <div className="d-flex flex-column">
-                        <span className="secondTitle">Connect wallet</span>
+                          <span className="secondTitle">Connect wallet</span>
 
                           <span className="firsttitle">Link your wallet</span>
                         </div>

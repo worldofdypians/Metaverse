@@ -96,7 +96,6 @@ function Dashboard({
   const [showSyncModal, setshowSyncModal] = useState(false);
   const [isonlink, setIsOnLink] = useState(false);
 
-
   const override2 = {
     display: "block",
     margin: "auto",
@@ -272,15 +271,17 @@ function Dashboard({
           signature: signature,
         },
       }).then(() => {
-       
         setsyncStatus("success");
         setTimeout(() => {
           setshowSyncModal(false);
           setsyncStatus("initial");
-        if(isonlink) {
-          window.location.reload();
-        }
         }, 1000);
+
+        setTimeout(() => {
+          if (isonlink) {
+            window.location.reload();
+          }
+        }, 2000);
       });
     } catch (error) {
       setsyncStatus("error");
@@ -459,8 +460,7 @@ function Dashboard({
         console.error("Error fetching user favorites:", error);
         throw error;
       }
-    }
-    else {
+    } else {
       setFavorites([]);
     }
   }
@@ -555,7 +555,7 @@ function Dashboard({
               console.error(e);
             });
 
-          if (result && result.length > 0) { 
+          if (result && result.length > 0) {
             if (coinbase) {
               result.map((item) => {
                 if (
@@ -575,7 +575,6 @@ function Dashboard({
                   });
                 }
               });
-              
             }
           }
         })
@@ -624,10 +623,10 @@ function Dashboard({
 
   useEffect(() => {
     // if (coinbase) {
-      getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
-      getMyOffers();
+    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
+    getMyOffers();
     // }
-  }, [coinbase,isConnected]);
+  }, [coinbase, isConnected]);
 
   const logoutItem = localStorage.getItem("logout");
 
