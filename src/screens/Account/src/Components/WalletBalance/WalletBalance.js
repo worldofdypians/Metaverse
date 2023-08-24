@@ -575,13 +575,14 @@ const WalletBalance = ({
       setUserRank(testArray[0].position);
     }
   };
-
+ 
   const fetchGenesisAroundPlayer = async () => {
     const data = {
       StatisticName: "GenesisLandRewards",
       MaxResultsCount: 6,
       PlayerId: userId,
     };
+   
     if (userId) {
       const result = await axios.post(
         `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,

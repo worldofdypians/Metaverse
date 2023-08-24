@@ -263,7 +263,7 @@ const ProfileCard = ({
                     }}
                     style={{ width: "fit-content", fontSize: 14 }}
                   >
-                    Create game account
+                    Sign in
                     <img src={greenarrow} alt="" />
                   </button>
                 )}
