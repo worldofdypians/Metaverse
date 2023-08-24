@@ -74,7 +74,7 @@ function SingUp() {
   }, [username, password]);
 
   if (isAuthenticated) {
-    return <Navigate to="/" state={{ fromLogin: true }} />;
+    return <Navigate to="/account" state={{ fromLogin: true }} />;
   }
 
   if (code === "UserNotConfirmedException") {
