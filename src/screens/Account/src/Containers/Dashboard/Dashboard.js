@@ -27,7 +27,6 @@ import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 
 function Dashboard({
@@ -95,9 +94,8 @@ function Dashboard({
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
   const [showSyncModal, setshowSyncModal] = useState(false);
+  const [isonlink, setIsOnLink] = useState(false);
 
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const override2 = {
     display: "block",
@@ -217,6 +215,7 @@ function Dashboard({
   };
 
   async function connectWallet() {
+    setIsOnLink(true);
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       try {
@@ -273,10 +272,14 @@ function Dashboard({
           signature: signature,
         },
       }).then(() => {
+       
         setsyncStatus("success");
         setTimeout(() => {
           setshowSyncModal(false);
           setsyncStatus("initial");
+        if(isonlink) {
+          window.location.reload();
+        }
         }, 1000);
       });
     } catch (error) {
