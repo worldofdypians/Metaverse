@@ -60,7 +60,6 @@ function Login() {
   }
 
   if (isAuthenticated) {
-    console.log("auth");
     return <Navigate to={"/player"} state={{fromLogin: true}} />;
   }
 
