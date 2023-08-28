@@ -258,6 +258,7 @@ function App() {
         if (data) {
           setCoinbase(data);
           setIsConnected(true);
+          fetchAvatar(data);
         } else {
           setCoinbase();
           setIsConnected(false);
@@ -893,7 +894,7 @@ function App() {
 
   const AppContent = () => {
     const { isLoading, isAuthenticated, playerId } = useAuth();
-     
+
     useEffect(() => {
       if (!isLoading || !isAuthenticated || !playerId) {
         setFireAppContent(false);
@@ -1124,14 +1125,12 @@ function App() {
     }
   };
 
-
   const checkData = async () => {
-    console.log('test')
+    console.log("test");
     if (coinbase) {
       navigate("/auth");
     }
   };
-
 
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
