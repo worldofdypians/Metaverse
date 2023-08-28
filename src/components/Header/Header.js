@@ -145,8 +145,9 @@ const Header = ({
   };
 
   const test = () => {
-    connectWallet(ConnectionType.GATEWALLET);
+    connectWallet(ConnectionType.INJECTED);
   };
+
 
   const checkRead = () => {
     if (myOffers.length > 0) {

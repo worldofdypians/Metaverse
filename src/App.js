@@ -142,7 +142,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const connectors = getConnectors({
-    1: ["https://mainnet.infura.io/v3/xxxxx"],
+    1: [`${window.infuraWeb3}`],
   });
   useEagerlyConnect();
 
