@@ -25,6 +25,17 @@ import emptyCheck from "./assets/emptyCheck.svg";
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
+import ActiveProfileEvent from './ActiveProfileEvent'
+import UpcomingProfileEvent from "./UpcomingProfileEvent";
+import ExpiredProfileEvent from "./ExpiredProfileEvent";
+import eventPopupImage from "./assets/eventPopupImage.png";
+import OutsideClickHandler from "react-outside-click-handler";
+import confluxActive from "../../../../Marketplace/assets/confluxActive.png";
+import coin98Active from "../../../../Marketplace/assets/coin98Active.png";
+import coingeckoActive from "../../../../Marketplace/assets/coingeckoActive.png";
+import baseActive from "../../../../Marketplace/assets/baseActive.png";
+import timepieceActive from "../../../../Marketplace/assets/timepieceActive.png";
+
 
 const WalletBalance = ({
   dypBalance,
@@ -101,6 +112,99 @@ const WalletBalance = ({
   const [offersPage, setoffersPage] = useState(1);
   const [myOffersFiltered, setmyOffersFiltered] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
+  const [eventPopup, setEventPopup] = useState(false);
+  const [showAllEvents, setShowAllEvents] = useState(false)
+  const slider = useRef(null);
+  const [mintTitle, setMintTitle] = useState("conflux")
+
+  const confluxData = {
+    id: "conflux",
+    cardTitle: "Conflux Beta Pass",
+    title: "Conflux Beta Pass",
+    background: 'conflux-mint-bg'
+  }
+  const timepieceData = {
+    id: "timepiece",
+    cardTitle: "Caws Timepiece",
+    title: "Timepiece",
+    background: 'market-mint-bg'
+  }
+  const coin98Data = {
+    id: "coin98",
+    cardTitle: "Coin98 Beta Pass",
+    title: "Coin98 Beta Pass",
+    background: 'coin98-mint-bg'
+  }
+  const coingeckoData = {
+    id: "coingecko",
+    cardTitle: "Coingecko Beta Pass",
+    title: "Coingecko Beta Pass",
+    background: 'coingecko-mint-bg'
+  }
+  const baseData = {
+    id: "base",
+    cardTitle: "Base Beta Pass",
+    title: "Base Beta Pass",
+    background: 'base-mint-bg'
+  }
+
+
+  const [selectedMint, setSelectedMint] = useState(confluxData)
+
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
+
 
   const handleFavoritesPage = (e, value) => {
     setFavoritesPage(value);
@@ -808,42 +912,78 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
+
+  const dummyConflux = {
+    title: "Conflux Pass",
+    chain: "Conflux Network",
+    linkState: "conflux",
+    rewards: "CFX",
+    status: "Live",
+  };
+  const dummyCoingecko = {
+    title: "Coingecko Pass",
+    chain: "BNB Chain",
+    linkState: "coingecko",
+    rewards: "BNB",
+    status: "Comming Soon",
+  };
+  const dummyCoin98 = {
+    title: "Coin98 Pass",
+    chain: "BNB Chain",
+    linkState: "coin98",
+    rewards: "BNB",
+    status: "Expired",
+  };
+  const dummyBase = {
+    title: "Base Pass",
+    chain: "BNB Chain",
+    linkState: "base",
+    rewards: "CFX",
+    status: "Expired",
+  };
+
+  const [dummyEvent, setDummyEvent] = useState({});
+
+
   return (
-    <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
+      <>
+          <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
       <div className="row w-100 gap-5 gap-lg-0">
         <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5">
-          <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
-            <h5 className="bal-txt px-4">My Rankings</h5>
-            <div className={`d-flex gap-3 justify-content-evenly `}>
-              <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
-                <img src={globalRank} alt="" />
-                <span className="globaltext" style={{ fontSize: 12 }}>
-                  #
-                  {isVerified &&
-                  email &&
-                  address &&
-                  coinbase &&
-                  address.toLowerCase() === coinbase.toLowerCase()
-                    ? userRank + 1
-                    : "N/A"}
-                </span>
-                <span className="globaltext">Global</span>
-              </div>
-              <div className="d-flex flex-column gap-2 align-items-center justify-content-between">
-                <img src={genesisImg} alt="" className="genesisimg" />
-                <span className="genesistext" style={{ fontSize: 12 }}>
-                  #
-                  {isVerified &&
-                  email &&
-                  address &&
-                  coinbase &&
-                  address.toLowerCase() === coinbase.toLowerCase()
-                    ? genesisRank + 1
-                    : "N/A"}
-                </span>
-                <span className="genesistext">Genesis</span>
-              </div>
-            </div>
+          <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2">
+          <ActiveProfileEvent
+                  onOpenEvent={() => {
+                    setDummyEvent(dummyConflux);
+                    setEventPopup(true);
+                  }}
+                />
+                <UpcomingProfileEvent
+                  onOpenEvent={() => {
+                    setDummyEvent(dummyCoingecko);
+                    setEventPopup(true);
+                  }}
+                />
+                <ExpiredProfileEvent
+                  onOpenEvent={() => {
+                    setDummyEvent(dummyCoin98);
+                    setEventPopup(true);
+                  }}
+                />
+             
+           <div
+                      className="d-flex align-items-center justify-content-center gap-2 w-100"
+                    
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      <span className="account-view-all" onClick={() => {setShowAllEvents(!showAllEvents); setShowNfts(false)}}>
+                       {showAllEvents ? "View Less" : "View All"}
+                      </span>
+                      <img
+                        src={viewAllArrow}
+                        style={{ rotate: showAllEvents ? "0deg" : "180deg" }}
+                        alt=""
+                      />
+                    </div>
           </div>
         </div>
         <div className="col-12 px-0 px-lg-3 col-lg-7">
@@ -920,11 +1060,11 @@ const WalletBalance = ({
 
             {filterTitle === "Favorites" && loading === false && (
               <div
-                className="row px-3"
+                className="row px-3 mt-3"
                 style={{ margin: favoriteItems.length === 0 ? "auto" : 0 }}
               >
                 {favoriteItems.length > 0 &&
-                  favoriteItems.slice(0, 6).map((item, index) => (
+                  favoriteItems.slice(0, 9).map((item, index) => (
                     <NavLink
                       key={index}
                       to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
@@ -1050,7 +1190,7 @@ const WalletBalance = ({
 
             {filterTitle === "Offers" && loading === false && (
               <div
-                className="row px-3"
+                className="row px-3 mt-3"
                 style={{ margin: myOffers.length === 0 ? "auto" : 0 }}
               >
                 {myOffers.length > 0 &&
@@ -1114,7 +1254,7 @@ const WalletBalance = ({
 
             {filterTitle === "Collected" && loading === false && (
               <div
-                className="row px-3"
+                className="row px-3 mt-3"
                 style={{ margin: collectedItems.length === 0 ? "auto" : 0 }}
               >
                 {collectedItems.length > 0 &&
@@ -1235,7 +1375,7 @@ const WalletBalance = ({
 
             {filterTitle === "Staked" && loading === false && (
               <div
-                className="row px-3"
+                className="row px-3 mt-3"
                 style={{
                   margin:
                     myCawsWodStakes.length === 0 && landStaked.length === 0
@@ -1366,7 +1506,7 @@ const WalletBalance = ({
 
             {filterTitle === "Listed" && loading === false && (
               <div
-                className="row px-3"
+                className="row px-3 mt-3"
                 style={{ margin: listedItems.length === 0 ? "auto" : 0 }}
               >
                 {listedItems.length > 0 &&
@@ -1471,7 +1611,7 @@ const WalletBalance = ({
             )}
 
             {filterTitle === "Balance" && loading === false && (
-              <div className="d-flex flex-column align-items-center balancewrapper3">
+              <div className="d-flex flex-column align-items-center gap-3 balancewrapper3" style={{marginTop: "50px"}}>
                 <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
                   <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-2">
                     <img src={ethIcon} alt="" className="" />
@@ -1609,8 +1749,8 @@ const WalletBalance = ({
                   myCawsWodStakes.length + landStaked.length > 4) ||
                 (filterTitle === "Favorites" && favoriteItems.length > 0)) && (
                 <div
-                  className="row w-100 justify-content-center position-relative"
-                  style={{ top: "-12px" }}
+                  className="row w-100 justify-content-center position-absolute"
+                  style={{ bottom: "25px" }}
                 >
                   {filterTitle === "Collected" && collectedItems.length >= 3 ? (
                     <div
@@ -1714,7 +1854,31 @@ const WalletBalance = ({
               //     data-testid="loader"
               //   />
               // </div>
-              <div className="row justify-content-center px-3">
+              <div className="row justify-content-center mt-3 px-3">
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton
+                    variant="rounded"
+                    width={"100%"}
+                    height={60}
+                    animation="wave"
+                  />
+                </div>
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton
+                    variant="rounded"
+                    width={"100%"}
+                    height={60}
+                    animation="wave"
+                  />
+                </div>
+                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
+                  <Skeleton
+                    variant="rounded"
+                    width={"100%"}
+                    height={60}
+                    animation="wave"
+                  />
+                </div>
                 <div className="col-12 col-lg-6 col-xxl-4 mb-3">
                   <Skeleton
                     variant="rounded"
@@ -1770,7 +1934,7 @@ const WalletBalance = ({
       </div>
       {showNfts && (
         <div
-          className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-11"
+          className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-12"
           style={{ minHeight: "420px" }}
         >
           <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-end w-100 position-relative">
@@ -2597,7 +2761,223 @@ const WalletBalance = ({
           )}
         </div>
       )}
+      {showAllEvents && 
+      <div
+      className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2" style={{maxWidth: "100vw", width: "100%"}}
+    >
+     <Slider ref={(c) => (slider.current = c)} {...settings}>
+                        <div className={` ${mintTitle === "conflux" && "active-mint-selected"}  active-mint mint-1 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(confluxData); setMintTitle("conflux")}}>
+                          <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                            <h6 className="active-mint-title mb-0">
+                              Conflux Pass
+                            </h6>
+                            <p className="active-mint-desc mb-0">
+                              Gain entry to metaverse, and join exclusive
+                              Conflux event with special ticket.
+                            </p>
+                          </div>
+                          <div className="second-half h-50 w-100">
+                            <img
+                              src={confluxActive}
+                              className="w-100 h-100"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      <div className={` ${mintTitle === "coin98" && "active-mint-selected"}  active-mint mint-2 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(coin98Data); setMintTitle("coin98")}}>
+                        <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                          <h6 className="active-mint-title mb-0">
+                            Coin98 Pass
+                          </h6>
+                          <p className="active-mint-desc mb-0">
+                            Gain entry to metaverse, and join exclusive Coin98
+                            event with special ticket.
+                          </p>
+                        </div>
+                        <div className="second-half h-50 w-100">
+                          <img
+                            src={coin98Active}
+                            className="w-100 h-100"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className={` ${mintTitle === "coingecko" && "active-mint-selected"}  active-mint mint-3 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(coingeckoData); setMintTitle("coingecko")}}>
+                        <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                          <h6 className="active-mint-title mb-0">
+                            CoinGecko Pass
+                          </h6>
+                          <p className="active-mint-desc mb-0">
+                            Gain entry to metaverse, and join exclusive
+                            CoinGecko event with special ticket.
+                          </p>
+                        </div>
+                        <div className="second-half h-50 w-100">
+                          <img
+                            src={coingeckoActive}
+                            className="w-100 h-100"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className={` ${mintTitle === "base" && "active-mint-selected"}  active-mint mint-4 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(baseData); setMintTitle("base")}}>
+                        <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                          <h6 className="active-mint-title mb-0">Base Pass</h6>
+                          <p className="active-mint-desc mb-0">
+                            Gain entry to metaverse, and join exclusive event
+                            hosted on Base Network with special ticket.
+                          </p>
+                        </div>
+                        <div className="second-half h-50 w-100">
+                          <img
+                            src={baseActive}
+                            className="w-100 h-100"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    
+                    </Slider>
     </div>
+      }
+    </div>
+    {eventPopup && (
+        <OutsideClickHandler onOutsideClick={() => setEventPopup(false)}>
+          <div className="profile-event-popup p-4">
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <div className="d-flex align-items-center gap-2">
+                <h6 className="event-popup-title mb-0">{dummyEvent?.title}</h6>
+                <div className="event-popup-status d-flex align-items-center justify-content-center p-1">
+                  <span className="mb-0">{dummyEvent?.status}</span>
+                </div>
+              </div>
+              <img
+                src={require("./assets/closeMark.svg").default}
+                alt=""
+                onClick={() => setEventPopup(false)}
+              />
+            </div>
+            <div className="profile-event-popup-wrapper p-3 d-flex align-items-center justify-content-between mb-3">
+              <div className="d-flex align-items-center gap-2">
+                <img src={eventPopupImage} alt="" />
+                <div className="d-flex flex-column justify-content-between">
+                  <div className="d-flex flex-column">
+                    <h6 className="popup-second-title">{dummyEvent?.title}</h6>
+                    <span className="popup-rewards">
+                      $5,000 in {dummyEvent?.rewards} rewards
+                    </span>
+                  </div>
+                  <span className="event-popup-chain mb-0">
+                    Chain: {dummyEvent?.chain}
+                  </span>
+                </div>
+              </div>
+              {dummyEvent?.status === "Live" && (
+                <div className="d-flex align-items-start gap-1">
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6
+                      className="profile-time-number mb-0"
+                      style={{ fontSize: "24px" }}
+                    >
+                      14
+                    </h6>
+                    <span
+                      className="profile-time-desc mb-0"
+                      style={{ fontSize: "18px" }}
+                    >
+                      Days
+                    </span>
+                  </div>
+                  <h6
+                    className="profile-time-number mb-0"
+                    style={{ fontSize: "24px" }}
+                  >
+                    :
+                  </h6>
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6
+                      className="profile-time-number mb-0"
+                      style={{ fontSize: "24px" }}
+                    >
+                      23
+                    </h6>
+                    <span
+                      className="profile-time-desc mb-0"
+                      style={{ fontSize: "18px" }}
+                    >
+                      Hours
+                    </span>
+                  </div>
+                  <h6
+                    className="profile-time-number mb-0"
+                    style={{ fontSize: "24px" }}
+                  >
+                    :
+                  </h6>
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6
+                      className="profile-time-number mb-0"
+                      style={{ fontSize: "24px" }}
+                    >
+                      46
+                    </h6>
+                    <span
+                      className="profile-time-desc mb-0"
+                      style={{ fontSize: "18px" }}
+                    >
+                      Minutes
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="profile-event-popup-wrapper p-3 w-100">
+              <div className="d-flex align-items-center justify-content-between mb-1">
+                <span className="popup-event-info">Total reward pool</span>
+                <span className="popup-event-info">
+                  5,000 {dummyEvent?.rewards}
+                </span>
+              </div>
+              <div className="d-flex align-items-center justify-content-between mb-1">
+                <span className="popup-event-info">
+                  Remaining in the reward pool
+                </span>
+                <span className="popup-event-info">
+                  500 {dummyEvent?.rewards}
+                </span>
+              </div>
+              <div className="d-flex align-items-center justify-content-between">
+                <span className="popup-event-info">Total points earned</span>
+                <span className="popup-event-info">1,500,250 points</span>
+              </div>
+            </div>
+            <div className="popup-red-wrapper mt-3 p-3 d-flex align-items-center justify-content-between">
+              <div className="d-flex align-items-center gap-2">
+                <img
+                  src={require("./assets/grayDollar.svg").default}
+                  width={24}
+                  height={24}
+                  alt=""
+                />
+                <span className="event-my-earnings mb-0">My earnings</span>
+              </div>
+              <div className="d-flex flex-column gap-2">
+                <h6 className="mb-0 event-earnings-coin">
+                  600 {dummyEvent?.rewards}
+                </h6>
+                <span className="mb-0 event-earnings-usd">$1,200</span>
+              </div>
+            </div>
+            <div className="w-100 d-flex justify-content-end mt-3">
+              <NavLink to={"/marketplace/mint"} state={{event: dummyEvent?.linkState}}>
+                {" "}
+                <button className="btn get-beta-btn">Get Beta Pass</button>
+              </NavLink>
+            </div>
+          </div>
+        </OutsideClickHandler>
+      )}
+      </>
   );
 };
 
