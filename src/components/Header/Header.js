@@ -34,6 +34,8 @@ import updateIconActive from "../../screens/Marketplace/Notifications/assets/upd
 import welcomeIcon from "../../screens/Marketplace/Notifications/assets/welcomeIcon.svg";
 import welcomeIconActive from "../../screens/Marketplace/Notifications/assets/welcomeIconActive.svg";
 import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
+import { useWeb3React } from "web3-connector";
+import { connectWallet, ConnectionType } from "web3-connector";
 
 const Header = ({
   handleSignUp,
@@ -54,6 +56,8 @@ const Header = ({
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
   const domain = "https://www.worldofdypians.com";
+  const { account, accounts, chainId, isActive, isActivating, provider } =
+    useWeb3React();
 
   let id = Math.random().toString(36);
 
@@ -140,6 +144,10 @@ const Header = ({
     return output;
   };
 
+  const test = () => {
+    connectWallet(ConnectionType.GATEWALLET);
+  };
+
   const checkRead = () => {
     if (myOffers.length > 0) {
       let count = myOffers.filter(({ read }) => read === false).length;
@@ -155,7 +163,7 @@ const Header = ({
   useEffect(() => {
     checkRead();
   }, [myOffers, coinbase, nftCount]);
- 
+
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
@@ -220,7 +228,7 @@ const Header = ({
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0 position-relative ">
           {!coinbase ? (
             <div className="linearborder2">
-              <button className="btn connectwallet px-3" onClick={handleSignUp}>
+              <button className="btn connectwallet px-3" onClick={test}>
                 Connect Wallet
               </button>{" "}
             </div>
@@ -288,24 +296,22 @@ const Header = ({
                             >
                               <NavLink
                                 to={
-                                  nft.welcome === 'yes' ? '/marketplace' :
-                                  nft.redirect_link 
+                                  nft.welcome === "yes"
+                                    ? "/marketplace"
+                                    : nft.redirect_link
                                     ? nft.redirect_link.slice(
-                                      domain.length,
-                                      nft.redirect_link.length
-                                    )
+                                        domain.length,
+                                        nft.redirect_link.length
+                                      )
                                     : `/marketplace/nft/${
                                         nft.tokenId
                                       }/${nft.nftAddress.toLowerCase()}`
                                 }
-                                 
-                                rel='noreferrer'
+                                rel="noreferrer"
                                 style={{ textDecoration: "none" }}
-                                
                                 onClick={() => {
                                   setOpenNotifications(false);
-                                    markNotificationAsRead(coinbase, nft._id);
-                                 
+                                  markNotificationAsRead(coinbase, nft._id);
                                 }}
                                 className="d-flex flex-column gap-1 p-3 header-notification-item"
                               >
@@ -316,7 +322,8 @@ const Header = ({
                                     src={
                                       nft.bought === "yes" && nft.read === false
                                         ? cartIconActive
-                                        : nft.bought === "yes" && nft.read === true
+                                        : nft.bought === "yes" &&
+                                          nft.read === true
                                         ? cartIcon
                                         : nft.offer === "yes" &&
                                           nft.read === false
@@ -327,8 +334,7 @@ const Header = ({
                                         : nft.buy === "yes" &&
                                           nft.read === false
                                         ? transferIconActive
-                                        : nft.buy === "yes" &&
-                                          nft.read === true
+                                        : nft.buy === "yes" && nft.read === true
                                         ? transferIcon
                                         : //welcome
                                         nft.welcome === "yes" &&
@@ -394,8 +400,7 @@ const Header = ({
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}.`
-                                    :
-                                    nft.buy === "yes"
+                                    : nft.buy === "yes"
                                     ? `Your  ${
                                         nft.nftAddress.toLowerCase() ===
                                         window.config.nft_caws_address.toLowerCase()
@@ -405,8 +410,7 @@ const Header = ({
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId} was sold.`
-                                    :
-                                     nft.offer === "yes"
+                                    : nft.offer === "yes"
                                     ? `There is a new offer for your ${
                                         nft.nftAddress.toLowerCase() ===
                                         window.config.nft_caws_address.toLowerCase()
