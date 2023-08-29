@@ -28,6 +28,9 @@ import Slider from "react-slick";
 import { useLocation } from "react-router-dom";
 import nextArrow from "./assets/nextArrow1.svg";
 import blockChainIcon from './assets/blockChainIcon.svg'
+import confluxLogo from './assets/confluxLogo.svg'
+import baseLogo from './assets/baseLogo.svg'
+import bnbLogo from './assets/bnbLogo.svg'
 
 
 const MarketMint = ({
@@ -763,17 +766,48 @@ const MarketMint = ({
                           />
                         </div>
                       </div>
-                      <span
-                        className="limit-span position-relative"
-                        style={{
-                          color: nftStatus.includes("Exceeded")
-                            ? "#D87B7B"
-                            : "#FFFFFF",
-                          bottom: "auto",
-                        }}
-                      >
-                        {nftStatus}
-                      </span>
+                   {mintTitle === "timepiece" ? 
+                     <span
+                     className="limit-span position-relative"
+                     style={{
+                       color: nftStatus.includes("Exceeded")
+                         ? "#D87B7B"
+                         : "#FFFFFF",
+                       bottom: "auto",
+                     }}
+                   >
+                     {nftStatus}
+                   </span>
+                   :
+                   mintTitle === "conflux" ? 
+                   <span
+                   className="limit-span position-relative d-flex align-items-center gap-2"
+                   style={{bottom: "0px"}}
+                 > 
+                  Available only on Conflux Network
+                  <img src={confluxLogo} alt="" />
+                 </span> 
+                  :
+                  mintTitle === "base" ? 
+                  <span
+                  className="limit-span position-relative d-flex align-items-center gap-2"
+                  style={{bottom: "0px"}}
+                > 
+                 Available only on Base Network
+                 <img src={baseLogo} alt="" />
+                </span>
+                 :
+                 mintTitle === "coin98" || mintTitle === "coingecko" ? 
+                 <span
+                 className="limit-span position-relative d-flex align-items-center gap-2"
+                 style={{bottom: "0px"}}
+               > 
+                Available only on BNB Chain
+                <img src={bnbLogo} alt="" />
+               </span>
+                : 
+                null  
+              }
                       <hr className="mint-divider m-0" />
                       {/* {cawsArray.length > 0 && nftCount > 0 && (
             <span className="land-name">
