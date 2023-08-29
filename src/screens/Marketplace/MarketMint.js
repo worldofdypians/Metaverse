@@ -25,12 +25,14 @@ import coingeckoActive from "./assets/coingeckoActive.png";
 import baseActive from "./assets/baseActive.png";
 import timepieceActive from "./assets/timepieceActive.png";
 import Slider from "react-slick";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import nextArrow from "./assets/nextArrow1.svg";
 import blockChainIcon from './assets/blockChainIcon.svg'
 import confluxLogo from './assets/confluxLogo.svg'
 import baseLogo from './assets/baseLogo.svg'
 import bnbLogo from './assets/bnbLogo.svg'
+import wodLogo from './assets/wodIcon.png'
+import openSeaLogo from './assets/openSeaLogo.png'
 
 
 const MarketMint = ({
@@ -1023,6 +1025,20 @@ const MarketMint = ({
                             Minted World of Dypians Genesis Land NFTs
                           </span>
                         </div>
+                        <div className="d-flex align-items-center justify-content-center justify-content-lg-start mt-2 gap-2">
+                          <NavLink to={"/marketplace/land"}>
+                          <button className="btn buywod-btn d-flex align-items-center gap-2">
+                            <img src={wodLogo} alt="" />
+                            <span>WoD</span>
+                          </button>
+                          </NavLink>
+                        <a href="https://opensea.io/collection/worldofdypians" target="_blank">
+                        <button className="btn buyopensea-btn d-flex align-items-center gap-2">
+                            <img src={openSeaLogo} alt="" />
+                            <span>Opensea</span>
+                          </button>
+                        </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1040,6 +1056,20 @@ const MarketMint = ({
                           <span className="past-caws-mint-desc">
                             Minted Cats and Watches Society (CAWS) NFTs
                           </span>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center justify-content-lg-start mt-2 gap-2">
+                          <NavLink to={"/marketplace/caws"}>
+                          <button className="btn buywod-btn d-flex align-items-center gap-2">
+                            <img src={wodLogo} alt="" />
+                            <span>WoD</span>
+                          </button>
+                          </NavLink>
+                        <a href="https://opensea.io/collection/catsandwatchessocietycaws" target="_blank">
+                        <button className="btn buyopensea-btn d-flex align-items-center gap-2">
+                            <img src={openSeaLogo} alt="" />
+                            <span>Opensea</span>
+                          </button>
+                        </a>
                         </div>
                       </div>
                     </div>

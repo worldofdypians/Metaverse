@@ -1908,6 +1908,10 @@
   }
 }
 
+.upcoming-mint-wrapper{
+  position: relative;
+}
+
 .upcoming-mint-wrapper:first-child {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #11503d 100%);
@@ -1948,22 +1952,16 @@
   border-radius: 30px;
   cursor: pointer;
   border: 2px solid #080b2a;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
-
-.active-mint-selected{
-  border: 2px solid #00FECF;
-  
+.active-mint-selected {
+  border: 2px solid #00fecf;
 }
 
-.active-mint:hover{
-  border: 2px solid #00FECF;
+.active-mint:hover {
+  border: 2px solid #00fecf;
 }
-
-
-
-
 
 .mint-1 {
   background: linear-gradient(90deg, #181b38 0%, #11503d 100%);
@@ -1996,4 +1994,129 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.buywod-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #1829bd 0%, #a420e2 100%);
+  span {
+    color: #fff !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.buyopensea-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #00a7f3 0%, #6375d3 100%);
+  span {
+    color: #fff !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.events-page-title {
+  color: #fff;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.12px;
+  @media screen and (max-width: 786px) {
+    font-size: 20px;
+  }
+}
+
+.events-page-status-tag-live {
+  background: #18ffff;
+  border-radius: 3px;
+  span {
+    color: #b71061;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+.events-page-status-tag-upcoming {
+border-radius: 3px;
+background: #EC8123;
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+.events-page-status-tag-expired {
+  background: #B8B8E0;
+  border-radius: 3px;
+  span {
+    color: #404040;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.events-page-rewards {
+  color: #FFF;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.events-page-details {
+  color: #18FFFF;
+text-align: right;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+
+.event-my-earnings{
+  color: #FFF;
+text-align: center;
+font-size: 24px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.white-events-text{
+  color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+text-transform: capitalize;
+}
+.pick-and-calendar{
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 17%;
+  height: fit-content;
+  margin: auto;
+  @media screen and (max-width: 786px) {
+    position: relative !important;
+    bottom: auto !important;
+    top: auto !important;
+    right: auto !important;
+    padding-bottom: 15px;
+    padding-top: 15px;
+  }
 }
