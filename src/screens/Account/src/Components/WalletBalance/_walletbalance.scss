@@ -382,7 +382,7 @@
 // }
 
 .profile-event-item:nth-child(1) {
-  transform: translateX(15px);
+  transform: translateX(20px);
   @media screen and (max-width: 786px) {
     transform: translateX(0px);
   }
@@ -394,7 +394,7 @@
 //   }
 // }
 .profile-event-item:nth-child(3) {
-  transform: translateX(-15px);
+  transform: translateX(-20px);
   @media screen and (max-width: 786px) {
     transform: translateX(0px);
   }
@@ -454,11 +454,35 @@
   line-height: normal;
 }
 
-.event-popup-status {
+.event-popup-status-live {
   border-radius: 3px;
   background: #18ffff;
   span {
     color: #324b4b;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+.event-popup-status-upcoming {
+  border-radius: 3px;
+  background: #8C56FF;
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+.event-popup-status-expired {
+  border-radius: 3px;
+  background: #B8B8E0;
+  span {
+    color: #404040;
     text-align: center;
     font-size: 10px;
     font-style: normal;
@@ -591,4 +615,11 @@ line-height: normal;
     font-weight: 600;
     line-height: normal;
   }
+}
+.event-slider-date{
+  color: #B8B8E0;
+font-size: 10px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
 }
