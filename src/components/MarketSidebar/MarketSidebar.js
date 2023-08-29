@@ -5,16 +5,14 @@ import emailIcon from "./assets/emailIcon.svg";
 import discordIcon from "./assets/discordIcon.svg";
 import sidebarArrow from "./assets/sidebarArrow.svg";
 import { useLocation } from "react-router-dom";
-import dypiansLogo from './assets/dypiansLogo.png'
+import dypiansLogo from "./assets/dypiansLogo.png";
 import { useEffect } from "react";
 
 const MarketSidebar = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("collections");
-  const [isSticky, setIsSticky] = useState(false)
- 
+  const [isSticky, setIsSticky] = useState(false);
 
-  
   // useEffect(() => {
   //   const handleScroll = () => {
   //     const scrollPosition = window.innerHeight + window.pageYOffset;
@@ -33,7 +31,10 @@ const MarketSidebar = () => {
 
   return (
     <div className="marketplace-sidebar d-flex justify-content-center p-4">
-      <div className="d-flex flex-column justify-content-between w-100" style={{height: '90%'}}>
+      <div
+        className="d-flex flex-column justify-content-between w-100"
+        style={{ height: "90%" }}
+      >
         <div className="d-flex flex-column  gap-2">
           <NavLink
             to="/marketplace"
@@ -99,7 +100,31 @@ const MarketSidebar = () => {
               >
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
-                  <NavLink
+                    <NavLink
+                      to="/marketplace/beta-pass/conflux"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex p-2 align-items-center gap-2 sidebar-item ${
+                              location.pathname.includes("conflux") ||
+                              location.pathname.includes("coin98") ||
+                              location.pathname.includes("coingecko") ||
+                              location.pathname.includes("base")
+                                ? "sidebar-item-active nft-active"
+                                : null
+                            }`
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <div className="d-flex align-items-center gap-5">
+                        <span className={`nft-sidebar-title`}>Beta Pass</span>
+                        <div className="new-beta-sidebar">
+                          <span className="new-beta-text">New</span>
+                        </div>
+                      </div>
+                    </NavLink>
+                    <NavLink
                       to="/marketplace/caws"
                       end
                       className={({ isActive }) =>
@@ -137,27 +162,6 @@ const MarketSidebar = () => {
                         CAWS Timepiece
                       </span>
                     </NavLink>
-                    <NavLink
-                      to="/marketplace/beta-pass/conflux"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : `d-flex p-2 align-items-center gap-2 sidebar-item ${location.pathname.includes('conflux') || location.pathname.includes('coin98') || location.pathname.includes('coingecko') || location.pathname.includes('base') ? 'sidebar-item-active nft-active' : null}`
-                      }
-                    >
-                      <div className="icon-wrapper"></div>
-                      <div className="d-flex align-items-center gap-5">
-                      <span className={`nft-sidebar-title`}>
-                        Beta Pass
-                      </span>
-                      <div className="new-beta-sidebar">
-                        <span className="new-beta-text">
-                          New
-                        </span>
-                      </div>
-                      </div>
-                    </NavLink>
                   </div>
                 </div>
               </div>
@@ -169,10 +173,18 @@ const MarketSidebar = () => {
             className={({ isActive }) =>
               isActive
                 ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : `d-flex p-2 align-items-center gap-2 sidebar-item ${location.pathname.includes('events') ? 'sidebar-item-active' : null}`
+                : `d-flex p-2 align-items-center gap-2 sidebar-item ${
+                    location.pathname.includes("events")
+                      ? "sidebar-item-active"
+                      : null
+                  }`
             }
             children={({ isActive }) => {
-              const icon = isActive ? "eventsIconActive" : location.pathname.includes('events') ? "eventsIconActive" : "eventsIcon";
+              const icon = isActive
+                ? "eventsIconActive"
+                : location.pathname.includes("events")
+                ? "eventsIconActive"
+                : "eventsIcon";
               return (
                 <>
                   <img
@@ -230,16 +242,22 @@ const MarketSidebar = () => {
             }}
           />
         </div>
-          <div className={`join-now-wrapper ${isSticky && "join-up"} p-3 d-flex flex-column align-items-center gap-4`}>
-            <div className="d-flex flex-column align-items-center gap-2">
-              <img src={dypiansLogo} alt="" />
-              <h6 className="build-wod-title mb-0">Build in WoD</h6>
-              <p className="build-wod-desc mb-0">Express your creativity and make a mark on the virtual world</p>
-            </div>
-            <NavLink to="/contact-us">
-            <button className="btn join-now-btn">Join now</button>
-            </NavLink>
+        <div
+          className={`join-now-wrapper ${
+            isSticky && "join-up"
+          } p-3 d-flex flex-column align-items-center gap-4`}
+        >
+          <div className="d-flex flex-column align-items-center gap-2">
+            <img src={dypiansLogo} alt="" />
+            <h6 className="build-wod-title mb-0">Build in WoD</h6>
+            <p className="build-wod-desc mb-0">
+              Express your creativity and make a mark on the virtual world
+            </p>
           </div>
+          <NavLink to="/contact-us">
+            <button className="btn join-now-btn">Join now</button>
+          </NavLink>
+        </div>
       </div>
     </div>
   );
