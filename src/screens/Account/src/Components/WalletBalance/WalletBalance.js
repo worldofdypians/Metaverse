@@ -974,10 +974,10 @@ const WalletBalance = ({
                 </div> */}
               <div
                 className="d-flex align-items-center justify-content-center gap-2 w-100"
-
+                onClick={() => { setShowAllEvents(!showAllEvents); setShowNfts(false) }}
                 style={{ cursor: "pointer", width: "fit-content", position: "absolute", bottom: "20px" }}
               >
-                <span className="account-view-all" onClick={() => { setShowAllEvents(!showAllEvents); setShowNfts(false) }}>
+                <span className="account-view-all" >
                   {showAllEvents ? "View Less" : "View All"}
                 </span>
                 <img
