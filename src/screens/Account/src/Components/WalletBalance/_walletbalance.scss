@@ -309,6 +309,27 @@
   line-height: 12px;
   color: #ffffff;
 }
+.profile-time-number-2 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 14px;
+  color: #ffffff;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
+}
+
+.profile-time-desc-2 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 12px;
+  color: #ffffff;
+  @media screen and (max-width: 786px) {
+    font-size: 10px;
+  }
+}
 
 .event-bottom-text {
   color: #18ffff;
@@ -319,19 +340,19 @@
   text-transform: capitalize;
 }
 
-.profile-events-wrapper{
+.profile-events-wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
 }
 
-.profile-wrapper-title{
-  color: #B8B8E0;
+.profile-wrapper-title {
+  color: #b8b8e0;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-margin-left: 15px;
+  margin-left: 15px;
 }
 
 .profile-event-item {
@@ -403,7 +424,7 @@ margin-left: 15px;
   }
 }
 
-.profile-event-popup{
+.profile-event-popup {
   background: #1a1c39;
   border-radius: 10px;
   width: 50%;
@@ -425,19 +446,19 @@ margin-left: 15px;
   }
 }
 
-.event-popup-title{
-  color: #F7F7FC;
+.event-popup-title {
+  color: #f7f7fc;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 
-.event-popup-status{
+.event-popup-status {
   border-radius: 3px;
-background: #18FFFF;
-  span{
-    color: #324B4B;
+  background: #18ffff;
+  span {
+    color: #324b4b;
     text-align: center;
     font-size: 10px;
     font-style: normal;
@@ -446,60 +467,60 @@ background: #18FFFF;
   }
 }
 
-.profile-event-popup-wrapper{
+.profile-event-popup-wrapper {
   border-radius: 10px;
   background: #252743;
   backdrop-filter: blur(26px);
 }
 
-.popup-second-title{
-  color: #EEEDFF;
+.popup-second-title {
+  color: #eeedff;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.popup-rewards{
-  color: #7DD9AF;
+.popup-rewards {
+  color: #7dd9af;
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.event-popup-chain{
-  color: #EEEDFF;
+.event-popup-chain {
+  color: #eeedff;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.popup-event-info{
-  color: #EEEDFF;
+.popup-event-info {
+  color: #eeedff;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.popup-red-wrapper{
+.popup-red-wrapper {
   border-radius: 10px;
-  background: rgba(127, 20, 80, 0.20);
+  background: rgba(127, 20, 80, 0.2);
   backdrop-filter: blur(26px);
 }
 
-.event-my-earnings{
-  color: #EEEDFF;
+.event-my-earnings {
+  color: #eeedff;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.event-earnings-coin{
-  color: #EEEDFF;
+.event-earnings-coin {
+  color: #eeedff;
   text-align: right;
   font-size: 16px;
   font-style: normal;
@@ -507,8 +528,8 @@ background: #18FFFF;
   line-height: normal;
 }
 
-.event-earnings-usd{
-  color: #7DD9AF;
+.event-earnings-usd {
+  color: #7dd9af;
   text-align: right;
   font-size: 10px;
   font-style: normal;
@@ -516,13 +537,58 @@ background: #18FFFF;
   line-height: normal;
 }
 
-.get-beta-btn{
+.get-beta-btn {
   border-radius: 20px;
-background: linear-gradient(90deg, #7BD8AF 0%, #D9FA86 100%);
-color: #080B2A;
-font-size: 16px;
+  background: linear-gradient(90deg, #7bd8af 0%, #d9fa86 100%);
+  color: #080b2a;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.upcoming-tag {
+  border-radius: 3px;
+  background: #8c56ff;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  .upcoming-text {
+    color: #fff;
+    text-align: center;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+.live-tag {
+  border-radius: 3px;
+  background: #18FFFF;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  .live-text {
+color: #324B4B;
+text-align: center;
+font-size: 8px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
+  }
 }
-
+.expired-tag {
+  border-radius: 3px;
+  background: #B8B8E0;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  .expired-text {
+    color: #404040;
+    text-align: center;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}

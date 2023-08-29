@@ -948,8 +948,9 @@ const WalletBalance = ({
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0">
-          <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5">
-            <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2">
+          <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5 position-relative">
+            <h6 className="new-bundle-title ms-0 ms-lg-4" style={{position: "absolute", top: "-35px"}}>Special Events</h6>
+            <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyConflux);
@@ -968,11 +969,13 @@ const WalletBalance = ({
                   setEventPopup(true);
                 }}
               />
-
+                {/* <div className="d-flex w-100 justify-content-center">
+                <span className="seller-addr">Special events comming soon</span>
+                </div> */}
               <div
                 className="d-flex align-items-center justify-content-center gap-2 w-100"
 
-                style={{ cursor: "pointer", width: "fit-content" }}
+                style={{ cursor: "pointer", width: "fit-content", position: "absolute", bottom: "20px" }}
               >
                 <span className="account-view-all" onClick={() => { setShowAllEvents(!showAllEvents); setShowNfts(false) }}>
                   {showAllEvents ? "View Less" : "View All"}
@@ -985,9 +988,125 @@ const WalletBalance = ({
               </div>
             </div>
           </div>
-          <div className="col-12 px-0 px-lg-3 col-lg-7">
+          {windowSize.width < 786 && showAllEvents &&
+          <div
+            className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2" style={{ maxWidth: "100vw", width: "100%" }}
+          >
+            {activeSlide > 0 && (
+                <div className="prev-arrow-nft" onClick={firstPrev}>
+                  <img src={nextArrow} alt="" />
+                </div>
+              )}
+              {showFirstNext === activeSlide
+                ? null
+                : 4 > sliderCut && (
+                    <div className="next-arrow-nft" onClick={firstNext}>
+                      <img src={nextArrow} alt="1" />
+                    </div>
+                  )}
+            <Slider ref={(c) => (slider.current = c)} {...settings}>
+              <div className={`active-mint mint-1 justify-content-between d-flex flex-column position-relative`} onClick={() => {
+                setDummyEvent(dummyConflux);
+                setEventPopup(true);
+              }}>
+                <div className="upcoming-tag d-flex align-items-center justify-content-center p-1">
+                  <span className="upcoming-text">Coming soon</span>
+                </div>
+                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                  <h6 className="active-mint-title mb-0">
+                    Conflux Pass
+                  </h6>
+                  <p className="active-mint-desc mb-0">
+                    Gain entry to metaverse, and join exclusive
+                    Conflux event with special ticket.
+                  </p>
+                </div>
+                <div className="second-half h-50 w-100">
+                  <img
+                    src={confluxActive}
+                    className="w-100 h-100"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className={`active-mint mint-2 justify-content-between d-flex flex-column position-relative`} onClick={() => {
+                setDummyEvent(dummyCoin98);
+                setEventPopup(true);
+              }}>
+                <div className="live-tag d-flex align-items-center justify-content-center p-1">
+                  <span className="live-text">Live</span>
+                </div>
+                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                  <h6 className="active-mint-title mb-0">
+                    Coin98 Pass
+                  </h6>
+                  <p className="active-mint-desc mb-0">
+                    Gain entry to metaverse, and join exclusive Coin98
+                    event with special ticket.
+                  </p>
+                </div>
+                <div className="second-half h-50 w-100">
+                  <img
+                    src={coin98Active}
+                    className="w-100 h-100"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className={`active-mint mint-3 justify-content-between d-flex flex-column position-relative`} onClick={() => {
+                setDummyEvent(dummyCoingecko);
+                setEventPopup(true);
+              }}>
+                  <div className="expired-tag d-flex align-items-center justify-content-center p-1">
+                  <span className="expired-text">Expired</span>
+                </div>
+                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                  <h6 className="active-mint-title mb-0">
+                    CoinGecko Pass
+                  </h6>
+                  <p className="active-mint-desc mb-0">
+                    Gain entry to metaverse, and join exclusive
+                    CoinGecko event with special ticket.
+                  </p>
+                </div>
+                <div className="second-half h-50 w-100">
+                  <img
+                    src={coingeckoActive}
+                    className="w-100 h-100"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className={`active-mint mint-4 justify-content-between d-flex flex-column position-relative`} onClick={() => {
+                setDummyEvent(dummyBase);
+                setEventPopup(true);
+              }}>
+                <div className="expired-tag d-flex align-items-center justify-content-center p-1">
+                  <span className="expired-text">Expired</span>
+                </div>
+                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                  <h6 className="active-mint-title mb-0">Base Pass</h6>
+                  <p className="active-mint-desc mb-0">
+                    Gain entry to metaverse, and join exclusive event
+                    hosted on Base Network with special ticket.
+                  </p>
+                </div>
+                <div className="second-half h-50 w-100">
+                  <img
+                    src={baseActive}
+                    className="w-100 h-100"
+                    alt=""
+                  />
+                </div>
+              </div>
+
+            </Slider>
+          </div>
+        }
+          <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative">
+          <h6 className="new-bundle-title ms-0 ms-lg-4" style={{position: "absolute", top: "-35px"}}>My Portfolio</h6>
             <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
-              <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2">
+              <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0 ms-lg-3">
                 <h6
                   className={`account-nft-sort ${filterTitle === "Balance" && "nft-sort-selected"
                     } `}
@@ -1750,6 +1869,7 @@ const WalletBalance = ({
                         className="d-flex align-items-center justify-content-center gap-2"
                         onClick={() => {
                           setShowNfts(!showNfts);
+                          setShowAllEvents(false);
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -1768,6 +1888,8 @@ const WalletBalance = ({
                         className="d-flex align-items-center justify-content-center gap-2"
                         onClick={() => {
                           setShowNfts(!showNfts);
+                          setShowAllEvents(false);
+
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -1786,6 +1908,8 @@ const WalletBalance = ({
                         className="d-flex align-items-center justify-content-center gap-2"
                         onClick={() => {
                           setShowNfts(!showNfts);
+                          setShowAllEvents(false);
+
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -1804,6 +1928,8 @@ const WalletBalance = ({
                         className="d-flex align-items-center justify-content-center gap-2"
                         onClick={() => {
                           setShowNfts(!showNfts);
+                          setShowAllEvents(false);
+
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -1821,6 +1947,8 @@ const WalletBalance = ({
                         className="d-flex align-items-center justify-content-center gap-2"
                         onClick={() => {
                           setShowNfts(!showNfts);
+                          setShowAllEvents(false);
+
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -2747,7 +2875,7 @@ const WalletBalance = ({
             )}
           </div>
         )}
-        {showAllEvents &&
+        {windowSize.width > 786 && showAllEvents &&
           <div
             className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2" style={{ maxWidth: "100vw", width: "100%" }}
           >
@@ -2764,10 +2892,13 @@ const WalletBalance = ({
                     </div>
                   )}
             <Slider ref={(c) => (slider.current = c)} {...settings}>
-              <div className={`active-mint mint-1 justify-content-between d-flex flex-column`} onClick={() => {
+              <div className={`active-mint mint-1 justify-content-between d-flex flex-column position-relative`} onClick={() => {
                 setDummyEvent(dummyConflux);
                 setEventPopup(true);
               }}>
+                <div className="upcoming-tag d-flex align-items-center justify-content-center p-1">
+                  <span className="upcoming-text">Coming soon</span>
+                </div>
                 <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
                   <h6 className="active-mint-title mb-0">
                     Conflux Pass
@@ -2785,10 +2916,13 @@ const WalletBalance = ({
                   />
                 </div>
               </div>
-              <div className={`active-mint mint-2 justify-content-between d-flex flex-column`} onClick={() => {
+              <div className={`active-mint mint-2 justify-content-between d-flex flex-column position-relative`} onClick={() => {
                 setDummyEvent(dummyCoin98);
                 setEventPopup(true);
               }}>
+                <div className="live-tag d-flex align-items-center justify-content-center p-1">
+                  <span className="live-text">Live</span>
+                </div>
                 <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
                   <h6 className="active-mint-title mb-0">
                     Coin98 Pass
@@ -2806,10 +2940,13 @@ const WalletBalance = ({
                   />
                 </div>
               </div>
-              <div className={`active-mint mint-3 justify-content-between d-flex flex-column`} onClick={() => {
+              <div className={`active-mint mint-3 justify-content-between d-flex flex-column position-relative`} onClick={() => {
                 setDummyEvent(dummyCoingecko);
                 setEventPopup(true);
               }}>
+                  <div className="expired-tag d-flex align-items-center justify-content-center p-1">
+                  <span className="expired-text">Expired</span>
+                </div>
                 <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
                   <h6 className="active-mint-title mb-0">
                     CoinGecko Pass
@@ -2827,10 +2964,13 @@ const WalletBalance = ({
                   />
                 </div>
               </div>
-              <div className={`active-mint mint-4 justify-content-between d-flex flex-column`} onClick={() => {
+              <div className={`active-mint mint-4 justify-content-between d-flex flex-column position-relative`} onClick={() => {
                 setDummyEvent(dummyBase);
                 setEventPopup(true);
               }}>
+                <div className="expired-tag d-flex align-items-center justify-content-center p-1">
+                  <span className="expired-text">Expired</span>
+                </div>
                 <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
                   <h6 className="active-mint-title mb-0">Base Pass</h6>
                   <p className="active-mint-desc mb-0">
@@ -2886,54 +3026,46 @@ const WalletBalance = ({
                 <div className="d-flex align-items-start gap-1">
                   <div className="d-flex flex-column align-items-center gap-3">
                     <h6
-                      className="profile-time-number mb-0"
-                      style={{ fontSize: "24px" }}
+                      className="profile-time-numbe-2r mb-0"
                     >
                       14
                     </h6>
                     <span
-                      className="profile-time-desc mb-0"
-                      style={{ fontSize: "18px" }}
+                      className="profile-time-desc-2 mb-0"
                     >
                       Days
                     </span>
                   </div>
                   <h6
-                    className="profile-time-number mb-0"
-                    style={{ fontSize: "24px" }}
+                    className="profile-time-number-2 mb-0"
                   >
                     :
                   </h6>
                   <div className="d-flex flex-column align-items-center gap-3">
                     <h6
-                      className="profile-time-number mb-0"
-                      style={{ fontSize: "24px" }}
+                      className="profile-time-number-2 mb-0"
                     >
                       23
                     </h6>
                     <span
-                      className="profile-time-desc mb-0"
-                      style={{ fontSize: "18px" }}
+                      className="profile-time-desc-2 mb-0"
                     >
                       Hours
                     </span>
                   </div>
                   <h6
-                    className="profile-time-number mb-0"
-                    style={{ fontSize: "24px" }}
+                    className="profile-time-number-2 mb-0"
                   >
                     :
                   </h6>
                   <div className="d-flex flex-column align-items-center gap-3">
                     <h6
-                      className="profile-time-number mb-0"
-                      style={{ fontSize: "24px" }}
+                      className="profile-time-number-2 mb-0"
                     >
                       46
                     </h6>
                     <span
-                      className="profile-time-desc mb-0"
-                      style={{ fontSize: "18px" }}
+                      className="profile-time-desc-2 mb-0"
                     >
                       Minutes
                     </span>
