@@ -16,13 +16,25 @@ import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
 import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
 import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
 import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
-
+import conflux from '../Account/src/Components/WalletBalance/assets/conflux.svg'
+import coin98 from '../Account/src/Components/WalletBalance/assets/coin98.svg'
+import coingecko from '../Account/src/Components/WalletBalance/assets/coingecko.svg'
+import base from './assets/baseLogo.svg'
+import betaMyEarnings from './assets/betaMyEarnings.png'
 import DragonPopup from "../../components/PackagePopups/DragonPopup";
 import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
 import PuzzleMadnessPopup from "../../components/PackagePopups/PuzzleMadnessPopup";
 import CriticalHitPopup from "../../components/PackagePopups/CriticalHitPopup";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useParams } from "react-router-dom";
+import confluxUpcoming from "./assets/confluxUpcoming.png";
+import coin98Upcoming from "./assets/coin98Upcoming.png";
+import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
+import baseUpcoming from "./assets/baseUpcoming.png";
+import liveDot from "./assets/liveDot.svg";
+import eventsArrow from "./assets/eventsArrow.svg";
+import whitePickaxe from './assets/whitePickAxe.svg'
+import whiteCalendar from './assets/whiteCalendar.svg'
 
 const MarketEvents = ({
   account,
@@ -421,32 +433,208 @@ const MarketEvents = ({
                       </NavLink>
                     </div>
                   </div>
-                  <NewBundleCard
-                    onOpenPopup={onOpenPopup}
-                    coinbase={account}
-                    wallet={data?.getPlayer?.wallet?.publicAddress}
-                    chainId={chainId}
-                    getDypBalance={getDypBalance}
-                    getiDypBalance={getDypBalance}
-                    dyptokenDatabnb={dyptokenDatabnb}
-                    idyptokenDatabnb={idyptokenDatabnb}
-                    packageData={
-                      selectedPackage === "dragon"
-                        ? dragonData
-                        : selectedPackage === "dyp"
-                        ? dypPackageData
-                        : selectedPackage === "criticalHit"
-                        ? criticalHitPackageData : 
-                        selectedPackage === "betaPass" ?
-                        betaPassPackageData
-                        : iDypPackageData
-                    }
-                    handleSetAvailableTime={(value) => {
-                      setAvailableTime(value);
-                      handleAvailableTime(value);
-                    }}
-                    availableTime={availableTime}
-                  />
+               
+                  {selectedPackage === "betaPass" ? 
+                  <div className="d-flex flex-column gap-4">
+                  <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
+                    <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
+                      <img src={conflux} width={36} height={36} alt="" />
+                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
+                        <div className="d-flex flex-column gap-2">
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="events-page-title mb-0">Conflux (CFX)</h6>
+                            <div className="events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-2">
+                              <img src={liveDot} alt="" />
+                              <span>Live</span>
+                            </div>
+                          </div>
+                          <h6 className="events-page-rewards">
+                            $5,000 in CFX Rewards
+                          </h6>
+                        </div>
+                        <span className="events-page-details d-flex align-items-center gap-2">
+                          Event Details
+                          <img src={eventsArrow} alt="" />
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="d-flex col col-lg-4 flex-column align-items-center">
+                      <h6 className="event-my-earnings">$120.45</h6>
+                      <img src={betaMyEarnings} alt="" />
+                    </div>
+                    <div className="d-flex flex-column gap-3 pick-and-calendar">
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={whitePickaxe} alt="" />
+                        <span className="white-events-text mb-0">Explore & Mine</span>
+                      </div>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={whiteCalendar} alt="" />
+                        <span className="white-events-text mb-0">Ends in 28 days</span>
+                      </div>
+                    </div>
+                    <img
+                      src={confluxUpcoming}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-flex"
+                    />
+                  </div>
+                  <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
+                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
+                      <img src={coin98} width={36} height={36} alt="" />
+                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
+                        <div className="d-flex flex-column gap-2">
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="events-page-title mb-0">Coin98 (C98)</h6>
+                            <div className="events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-2">
+                              <span>Coming Soon</span>
+                            </div>
+                          </div>
+                          <h6 className="events-page-rewards">
+                            $5,000 in CFX Rewards
+                          </h6>
+                        </div>
+                        <span className="events-page-details d-flex align-items-center gap-2">
+                          Event Details
+                          <img src={eventsArrow} alt="" />
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="d-flex col col-lg-4 flex-column align-items-center">
+                      <h6 className="event-my-earnings">$0.0</h6>
+                      <img src={betaMyEarnings} alt="" />
+                    </div>
+                    <div className="d-flex flex-column gap-3 pick-and-calendar">
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={whitePickaxe} alt="" />
+                        <span className="white-events-text mb-0">Explore & Mine</span>
+                      </div>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={whiteCalendar} alt="" />
+                        <span className="white-events-text mb-0">August, 1, 2023</span>
+                      </div>
+                    </div>
+                    <img
+                      src={coin98Upcoming}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-flex"
+                    />
+                  </div>
+                  <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex  align-items-center justify-content-between px-0">
+                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
+                      <img src={coingecko} width={36} height={36} alt="" />
+                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
+                        <div className="d-flex flex-column gap-2">
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="events-page-title mb-0">Coingecko</h6>
+                            <div className="events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-2">
+                              <span>Expired</span>
+                            </div>
+                          </div>
+                          <h6 className="events-page-rewards">
+                            $5,000 in CFX Rewards
+                          </h6>
+                        </div>
+                        <span className="events-page-details d-flex align-items-center gap-2">
+                          Event Details
+                          <img src={eventsArrow} alt="" />
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="d-flex col col-lg-4 flex-column align-items-center">
+                      <h6 className="event-my-earnings">$120.00</h6>
+                      <img src={betaMyEarnings} alt="" />
+                    </div>
+                    <div className="d-flex flex-column gap-3 pick-and-calendar">
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={whitePickaxe} alt="" />
+                        <span className="white-events-text mb-0">Explore & Mine</span>
+                      </div>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={whiteCalendar} alt="" />
+                        <span className="white-events-text mb-0">Expired</span>
+                      </div>
+                    </div>
+                    <img
+                      src={coingeckoUpcoming}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-flex"
+                    /> 
+                  </div>
+                  <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
+                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
+                      <img src={base} width={36} height={36} alt="" />
+                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
+                        <div className="d-flex flex-column gap-2">
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="events-page-title mb-0">Base</h6>
+                            <div className="events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-2">
+                              <span>Coming Soon</span>
+                            </div>
+                          </div>
+                          <h6 className="events-page-rewards">
+                            $5,000 in CFX Rewards
+                          </h6>
+                        </div>
+                        <span className="events-page-details d-flex align-items-center gap-2">
+                          Event Details
+                          <img src={eventsArrow} alt="" />
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="d-flex col col-lg-4 flex-column align-items-center">
+                      <h6 className="event-my-earnings">$120.45</h6>
+                      <img src={betaMyEarnings} alt="" />
+                    </div>
+                    <div className="d-flex flex-column gap-3 pick-and-calendar">
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={whitePickaxe} alt="" />
+                        <span className="white-events-text mb-0">Explore & Mine</span>
+                      </div>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={whiteCalendar} alt="" />
+                        <span className="white-events-text mb-0">August, 1, 2023</span>
+                      </div>
+                    </div>
+                    <img
+                      src={baseUpcoming}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-flex"
+                    />
+                  </div>
+                </div>
+                :  
+                <NewBundleCard
+                onOpenPopup={onOpenPopup}
+                coinbase={account}
+                wallet={data?.getPlayer?.wallet?.publicAddress}
+                chainId={chainId}
+                getDypBalance={getDypBalance}
+                getiDypBalance={getDypBalance}
+                dyptokenDatabnb={dyptokenDatabnb}
+                idyptokenDatabnb={idyptokenDatabnb}
+                packageData={
+                  selectedPackage === "dragon"
+                    ? dragonData
+                    : selectedPackage === "dyp"
+                    ? dypPackageData
+                    : selectedPackage === "criticalHit"
+                    ? criticalHitPackageData : 
+                    selectedPackage === "betaPass" ?
+                    betaPassPackageData
+                    : iDypPackageData
+                }
+                handleSetAvailableTime={(value) => {
+                  setAvailableTime(value);
+                  handleAvailableTime(value);
+                }}
+                availableTime={availableTime}
+              />
+
+                }
                 </>
               )}
               {activeTab === "upcoming" && (
