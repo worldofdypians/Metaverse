@@ -27,6 +27,7 @@ import timepieceActive from "./assets/timepieceActive.png";
 import Slider from "react-slick";
 import { useLocation } from "react-router-dom";
 import nextArrow from "./assets/nextArrow1.svg";
+import blockChainIcon from './assets/blockChainIcon.svg'
 
 
 const MarketMint = ({
@@ -601,7 +602,50 @@ const MarketMint = ({
                                 {item.title}
                               </span>
                             </div>
+                            
                           ))}
+                          {mintTitle === "conflux" ? 
+                          <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={blockChainIcon}
+                            width={32}
+                            height={32}
+                            alt=""
+                       
+                          />
+                          <span className="mint-benefits-title">
+                          Minting is available on Conflux Network
+                          </span>
+                        </div>
+                        : mintTitle === "base" ?
+
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={blockChainIcon}
+                            width={32}
+                            height={32}
+                            alt=""
+                         
+                          />
+                          <span className="mint-benefits-title">
+                          Minting is available on Base Network
+                          </span>
+                        </div>
+                        : mintTitle === "coingecko" || mintTitle === "coin98" ?
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={blockChainIcon}
+                            width={32}
+                            height={32}
+                            alt=""
+                       
+                          />
+                          <span className="mint-benefits-title">
+                          Minting is available on BNB Chain
+                          </span>
+                        </div>
+                        : null
+                       }
                         </div>
                       </div>
                     </div>
