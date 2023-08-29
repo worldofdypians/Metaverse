@@ -25,7 +25,7 @@ import emptyCheck from "./assets/emptyCheck.svg";
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
-import ActiveProfileEvent from './ActiveProfileEvent'
+import ActiveProfileEvent from "./ActiveProfileEvent";
 import UpcomingProfileEvent from "./UpcomingProfileEvent";
 import ExpiredProfileEvent from "./ExpiredProfileEvent";
 import eventPopupImage from "./assets/eventPopupImage.png";
@@ -36,8 +36,9 @@ import coingeckoActive from "../../../../Marketplace/assets/coingeckoActive.png"
 import baseActive from "../../../../Marketplace/assets/baseActive.png";
 import timepieceActive from "../../../../Marketplace/assets/timepieceActive.png";
 import useWindowSize from "../../../../../hooks/useWindowSize";
-
-
+import grayCalendar from "./assets/grayCalendar.svg";
+import eventSkeleton from "./assets/eventSkeleton.png";
+import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
 
 const WalletBalance = ({
   dypBalance,
@@ -115,13 +116,11 @@ const WalletBalance = ({
   const [myOffersFiltered, setmyOffersFiltered] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [eventPopup, setEventPopup] = useState(false);
-  const [showAllEvents, setShowAllEvents] = useState(false)
+  const [showAllEvents, setShowAllEvents] = useState(false);
   const slider = useRef(null);
   const windowSize = useWindowSize();
-  const [sliderCut, setSliderCut] = useState()
+  const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
-
-
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -137,7 +136,7 @@ const WalletBalance = ({
     } else {
       setSliderCut(1);
     }
-  }
+  };
 
   var settings = {
     dots: false,
@@ -200,7 +199,7 @@ const WalletBalance = ({
   const firstNext = () => {
     slider.current.slickNext();
   };
- const firstPrev = () => {
+  const firstPrev = () => {
     slider.current.slickPrev();
   };
 
@@ -440,9 +439,9 @@ const WalletBalance = ({
               nftAddress: window.config.nft_timepiece_address,
               buyer:
                 isVerified &&
-                  email &&
-                  coinbase &&
-                  address?.toLowerCase() === coinbase.toLowerCase()
+                email &&
+                coinbase &&
+                address?.toLowerCase() === coinbase.toLowerCase()
                   ? address
                   : coinbase,
               tokenId: i,
@@ -486,9 +485,9 @@ const WalletBalance = ({
               nftAddress: window.config.nft_land_address,
               buyer:
                 isVerified &&
-                  email &&
-                  coinbase &&
-                  address?.toLowerCase() === coinbase.toLowerCase()
+                email &&
+                coinbase &&
+                address?.toLowerCase() === coinbase.toLowerCase()
                   ? address
                   : coinbase,
               tokenId: i,
@@ -532,9 +531,9 @@ const WalletBalance = ({
               nftAddress: window.config.nft_caws_address,
               buyer:
                 isVerified &&
-                  email &&
-                  coinbase &&
-                  address?.toLowerCase() === coinbase.toLowerCase()
+                email &&
+                coinbase &&
+                address?.toLowerCase() === coinbase.toLowerCase()
                   ? address
                   : coinbase,
               tokenId: i,
@@ -559,9 +558,9 @@ const WalletBalance = ({
             nftAddress: window.config.nft_land_address,
             buyer:
               isVerified &&
-                email &&
-                coinbase &&
-                address?.toLowerCase() === coinbase.toLowerCase()
+              email &&
+              coinbase &&
+              address?.toLowerCase() === coinbase.toLowerCase()
                 ? address
                 : coinbase,
             tokenId: i.name.slice(1, i.name.length),
@@ -579,9 +578,9 @@ const WalletBalance = ({
             nftAddress: window.config.nft_caws_address,
             buyer:
               isVerified &&
-                email &&
-                coinbase &&
-                address?.toLowerCase() === coinbase.toLowerCase()
+              email &&
+              coinbase &&
+              address?.toLowerCase() === coinbase.toLowerCase()
                 ? address
                 : coinbase,
             tokenId: i.name.slice(6, i.name.length),
@@ -599,9 +598,9 @@ const WalletBalance = ({
             nftAddress: window.config.nft_land_address,
             buyer:
               isVerified &&
-                email &&
-                coinbase &&
-                address?.toLowerCase() === coinbase.toLowerCase()
+              email &&
+              coinbase &&
+              address?.toLowerCase() === coinbase.toLowerCase()
                 ? address
                 : coinbase,
             tokenId: i.name.slice(1, i.name.length),
@@ -649,7 +648,7 @@ const WalletBalance = ({
 
   const getAllFavs = async () => {
     if (favoritesArray && favoritesArray.length > 0) {
-      const unique = [...new Set(favoritesArray.map((item) => { }))];
+      const unique = [...new Set(favoritesArray.map((item) => {}))];
       setfavoriteItems(favoritesArray);
       setfavItemsFiltered(favoritesArray);
     } else {
@@ -886,7 +885,7 @@ const WalletBalance = ({
 
   useEffect(() => {
     getCollected();
-    cutLength();  
+    cutLength();
   }, [allListed, coinbase]);
 
   useEffect(() => {
@@ -911,7 +910,6 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
-
   const dummyConflux = {
     title: "Conflux Pass",
     chain: "Conflux Network",
@@ -924,7 +922,7 @@ const WalletBalance = ({
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
-    status: "Comming Soon",
+    status: "Coming Soon",
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -943,13 +941,25 @@ const WalletBalance = ({
 
   const [dummyEvent, setDummyEvent] = useState({});
 
+  const openEvents = () => {
+    if (showAllEvents === false) {
+      window.scrollBy(0, 300);
+    }
+    setShowAllEvents(!showAllEvents);
+    setShowNfts(false);
+  };
 
   return (
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0">
           <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5 position-relative">
-            <h6 className="new-bundle-title ms-0 ms-lg-4" style={{position: "absolute", top: "-35px"}}>Special Events</h6>
+            <h6
+              className="new-bundle-title ms-0 ms-lg-4"
+              style={{ position: "absolute", top: "-35px" }}
+            >
+              Special Events
+            </h6>
             <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
               <ActiveProfileEvent
                 onOpenEvent={() => {
@@ -963,21 +973,26 @@ const WalletBalance = ({
                   setEventPopup(true);
                 }}
               />
-              <ExpiredProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyCoin98);
-                  setEventPopup(true);
-                }}
+              <img
+                src={eventSkeleton}
+                className="profile-event-item"
+                style={{ background: "none", borderBottom: "none" }}
+                alt=""
               />
-                {/* <div className="d-flex w-100 justify-content-center">
+              {/* <div className="d-flex w-100 justify-content-center">
                 <span className="seller-addr">Special events comming soon</span>
                 </div> */}
               <div
                 className="d-flex align-items-center justify-content-center gap-2 w-100"
-                onClick={() => { setShowAllEvents(!showAllEvents); setShowNfts(false) }}
-                style={{ cursor: "pointer", width: "fit-content", position: "absolute", bottom: "20px" }}
+                onClick={() => openEvents()}
+                style={{
+                  cursor: "pointer",
+                  width: "fit-content",
+                  position: "absolute",
+                  bottom: "20px",
+                }}
               >
-                <span className="account-view-all" >
+                <span className="account-view-all">
                   {showAllEvents ? "View Less" : "View All"}
                 </span>
                 <img
@@ -988,11 +1003,12 @@ const WalletBalance = ({
               </div>
             </div>
           </div>
-          {windowSize.width < 786 && showAllEvents &&
-          <div
-            className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2" style={{ maxWidth: "100vw", width: "100%" }}
-          >
-            {activeSlide > 0 && (
+          {windowSize.width < 786 && showAllEvents && (
+            <div
+              className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2"
+              style={{ maxWidth: "100vw", width: "100%" }}
+            >
+              {activeSlide > 0 && (
                 <div className="prev-arrow-nft" onClick={firstPrev}>
                   <img src={nextArrow} alt="" />
                 </div>
@@ -1004,112 +1020,143 @@ const WalletBalance = ({
                       <img src={nextArrow} alt="1" />
                     </div>
                   )}
-            <Slider ref={(c) => (slider.current = c)} {...settings}>
-              <div className={`active-mint mint-1 justify-content-between d-flex flex-column position-relative`} onClick={() => {
-                setDummyEvent(dummyConflux);
-                setEventPopup(true);
-              }}>
-                <div className="upcoming-tag d-flex align-items-center justify-content-center p-1">
-                  <span className="upcoming-text">Coming soon</span>
+              <Slider ref={(c) => (slider.current = c)} {...settings}>
+                <div className="d-flex flex-column gap-1">
+                  <div
+                    className={`active-mint mint-1 justify-content-between d-flex flex-column position-relative`}
+                    onClick={() => {
+                      setDummyEvent(dummyConflux);
+                      setEventPopup(true);
+                    }}
+                  >
+                    <div className="upcoming-tag d-flex align-items-center justify-content-center p-1">
+                      <span className="upcoming-text">Coming soon</span>
+                    </div>
+                    <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                      <h6 className="active-mint-title mb-0">Conflux Pass</h6>
+                      <p className="active-mint-desc mb-0">
+                        Gain entry to metaverse, and join exclusive Conflux
+                        event with special ticket.
+                      </p>
+                    </div>
+                    <div className="second-half h-50 w-100">
+                      <img src={confluxActive} className="w-100 h-100" alt="" />
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={grayCalendar} width={14} height={14} alt="" />
+                    <span className="event-slider-date">
+                      Aug 1, 2023 - Aug 31, 2023{" "}
+                    </span>
+                  </div>
                 </div>
-                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                  <h6 className="active-mint-title mb-0">
-                    Conflux Pass
-                  </h6>
-                  <p className="active-mint-desc mb-0">
-                    Gain entry to metaverse, and join exclusive
-                    Conflux event with special ticket.
-                  </p>
+                <div className="d-flex flex-column gap-1">
+                  <div
+                    className={`active-mint mint-2 justify-content-between d-flex flex-column position-relative`}
+                    onClick={() => {
+                      setDummyEvent(dummyCoin98);
+                      setEventPopup(true);
+                    }}
+                  >
+                    <div className="live-tag d-flex align-items-center justify-content-center p-1">
+                      <span className="live-text">Live</span>
+                    </div>
+                    <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                      <h6 className="active-mint-title mb-0">Coin98 Pass</h6>
+                      <p className="active-mint-desc mb-0">
+                        Gain entry to metaverse, and join exclusive Coin98 event
+                        with special ticket.
+                      </p>
+                    </div>
+                    <div className="second-half h-50 w-100">
+                      <img src={coin98Active} className="w-100 h-100" alt="" />
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={grayCalendar} width={14} height={14} alt="" />
+                    <span className="event-slider-date">
+                      Aug 1, 2023 - Aug 31, 2023{" "}
+                    </span>
+                  </div>
                 </div>
-                <div className="second-half h-50 w-100">
-                  <img
-                    src={confluxActive}
-                    className="w-100 h-100"
-                    alt=""
-                  />
+                <div className="d-flex flex-column gap-1">
+                  <div
+                    className={`active-mint mint-3 justify-content-between d-flex flex-column position-relative`}
+                    onClick={() => {
+                      setDummyEvent(dummyCoingecko);
+                      setEventPopup(true);
+                    }}
+                  >
+                    <div className="expired-tag d-flex align-items-center justify-content-center p-1">
+                      <span className="expired-text">Expired</span>
+                    </div>
+                    <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                      <h6 className="active-mint-title mb-0">CoinGecko Pass</h6>
+                      <p className="active-mint-desc mb-0">
+                        Gain entry to metaverse, and join exclusive CoinGecko
+                        event with special ticket.
+                      </p>
+                    </div>
+                    <div className="second-half h-50 w-100">
+                      <img
+                        src={coingeckoActive}
+                        className="w-100 h-100"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={grayCalendar} width={14} height={14} alt="" />
+                    <span className="event-slider-date">
+                      Aug 1, 2023 - Aug 31, 2023{" "}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className={`active-mint mint-2 justify-content-between d-flex flex-column position-relative`} onClick={() => {
-                setDummyEvent(dummyCoin98);
-                setEventPopup(true);
-              }}>
-                <div className="live-tag d-flex align-items-center justify-content-center p-1">
-                  <span className="live-text">Live</span>
+                <div className="d-flex flex-column gap-1">
+                  <div
+                    className={`active-mint mint-4 justify-content-between d-flex flex-column position-relative`}
+                    onClick={() => {
+                      setDummyEvent(dummyBase);
+                      setEventPopup(true);
+                    }}
+                  >
+                    <div className="expired-tag d-flex align-items-center justify-content-center p-1">
+                      <span className="expired-text">Expired</span>
+                    </div>
+                    <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                      <h6 className="active-mint-title mb-0">Base Pass</h6>
+                      <p className="active-mint-desc mb-0">
+                        Gain entry to metaverse, and join exclusive event hosted
+                        on Base Network with special ticket.
+                      </p>
+                    </div>
+                    <div className="second-half h-50 w-100">
+                      <img src={baseActive} className="w-100 h-100" alt="" />
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={grayCalendar} width={14} height={14} alt="" />
+                    <span className="event-slider-date">
+                      Aug 1, 2023 - Aug 31, 2023{" "}
+                    </span>
+                  </div>
                 </div>
-                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                  <h6 className="active-mint-title mb-0">
-                    Coin98 Pass
-                  </h6>
-                  <p className="active-mint-desc mb-0">
-                    Gain entry to metaverse, and join exclusive Coin98
-                    event with special ticket.
-                  </p>
-                </div>
-                <div className="second-half h-50 w-100">
-                  <img
-                    src={coin98Active}
-                    className="w-100 h-100"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className={`active-mint mint-3 justify-content-between d-flex flex-column position-relative`} onClick={() => {
-                setDummyEvent(dummyCoingecko);
-                setEventPopup(true);
-              }}>
-                  <div className="expired-tag d-flex align-items-center justify-content-center p-1">
-                  <span className="expired-text">Expired</span>
-                </div>
-                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                  <h6 className="active-mint-title mb-0">
-                    CoinGecko Pass
-                  </h6>
-                  <p className="active-mint-desc mb-0">
-                    Gain entry to metaverse, and join exclusive
-                    CoinGecko event with special ticket.
-                  </p>
-                </div>
-                <div className="second-half h-50 w-100">
-                  <img
-                    src={coingeckoActive}
-                    className="w-100 h-100"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className={`active-mint mint-4 justify-content-between d-flex flex-column position-relative`} onClick={() => {
-                setDummyEvent(dummyBase);
-                setEventPopup(true);
-              }}>
-                <div className="expired-tag d-flex align-items-center justify-content-center p-1">
-                  <span className="expired-text">Expired</span>
-                </div>
-                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                  <h6 className="active-mint-title mb-0">Base Pass</h6>
-                  <p className="active-mint-desc mb-0">
-                    Gain entry to metaverse, and join exclusive event
-                    hosted on Base Network with special ticket.
-                  </p>
-                </div>
-                <div className="second-half h-50 w-100">
-                  <img
-                    src={baseActive}
-                    className="w-100 h-100"
-                    alt=""
-                  />
-                </div>
-              </div>
-
-            </Slider>
-          </div>
-        }
+              </Slider>
+            </div>
+          )}
           <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative">
-          <h6 className="new-bundle-title ms-0 ms-lg-4" style={{position: "absolute", top: "-35px"}}>My Portfolio</h6>
+            <h6
+              className="new-bundle-title ms-0 ms-lg-4"
+              style={{ position: "absolute", top: "-35px" }}
+            >
+              My Portfolio
+            </h6>
             <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0 ms-lg-3">
                 <h6
-                  className={`account-nft-sort ${filterTitle === "Balance" && "nft-sort-selected"
-                    } `}
+                  className={`account-nft-sort ${
+                    filterTitle === "Balance" && "nft-sort-selected"
+                  } `}
                   onClick={() => {
                     sortNfts("balance");
                     setShowNfts(false);
@@ -1118,8 +1165,9 @@ const WalletBalance = ({
                   Balance
                 </h6>
                 <h6
-                  className={`account-nft-sort ${filterTitle === "Collected" && "nft-sort-selected"
-                    } `}
+                  className={`account-nft-sort ${
+                    filterTitle === "Collected" && "nft-sort-selected"
+                  } `}
                   onClick={() => {
                     sortNfts("collected");
                     setShowNfts(false);
@@ -1128,8 +1176,9 @@ const WalletBalance = ({
                   Collected
                 </h6>
                 <h6
-                  className={`account-nft-sort ${filterTitle === "Favorites" && "nft-sort-selected"
-                    } `}
+                  className={`account-nft-sort ${
+                    filterTitle === "Favorites" && "nft-sort-selected"
+                  } `}
                   onClick={() => {
                     sortNfts("favorites");
                     setShowNfts(false);
@@ -1138,8 +1187,9 @@ const WalletBalance = ({
                   Favorites
                 </h6>
                 <h6
-                  className={`account-nft-sort ${filterTitle === "Listed" && "nft-sort-selected"
-                    } `}
+                  className={`account-nft-sort ${
+                    filterTitle === "Listed" && "nft-sort-selected"
+                  } `}
                   onClick={() => {
                     sortNfts("listed");
                     setShowNfts(false);
@@ -1148,8 +1198,9 @@ const WalletBalance = ({
                   Listed
                 </h6>
                 <h6
-                  className={`account-nft-sort ${filterTitle === "Staked" && "nft-sort-selected"
-                    } `}
+                  className={`account-nft-sort ${
+                    filterTitle === "Staked" && "nft-sort-selected"
+                  } `}
                   onClick={() => {
                     sortNfts("staked");
                     setShowNfts(false);
@@ -1159,8 +1210,9 @@ const WalletBalance = ({
                 </h6>
 
                 <h6
-                  className={`account-nft-sort ${filterTitle === "Offers" && "nft-sort-selected"
-                    } `}
+                  className={`account-nft-sort ${
+                    filterTitle === "Offers" && "nft-sort-selected"
+                  } `}
                   onClick={() => {
                     sortNfts("offers");
                     setShowNfts(false);
@@ -1187,20 +1239,21 @@ const WalletBalance = ({
                           type:
                             item.nftAddress === window.config.nft_caws_address
                               ? "caws"
-                              : item.nftAddress === window.config.nft_land_address
-                                ? "land"
-                                : "timepiece",
+                              : item.nftAddress ===
+                                window.config.nft_land_address
+                              ? "land"
+                              : "timepiece",
                           isOwner:
                             isVerified && email
                               ? item.buyer
                                 ? item.buyer?.toLowerCase() ===
                                   address?.toLowerCase()
                                   ? item.buyer?.toLowerCase() ===
-                                  coinbase?.toLowerCase()
+                                    coinbase?.toLowerCase()
                                   : item.seller?.toLowerCase() ===
-                                  address?.toLowerCase()
+                                    address?.toLowerCase()
                                 : item.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase()
+                                  coinbase?.toLowerCase()
                               : false,
                           chain: 1,
                         }}
@@ -1214,12 +1267,13 @@ const WalletBalance = ({
                               src={
                                 item.nftAddress ===
                                   window.config.nft_cawsold_address ||
-                                  item.nftAddress === window.config.nft_caws_address
+                                item.nftAddress ===
+                                  window.config.nft_caws_address
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.nftAddress ===
                                     window.config.nft_land_address
-                                    ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
-                                    : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
                               className="account-card-img"
@@ -1228,12 +1282,13 @@ const WalletBalance = ({
                               <h6 className="account-nft-title">
                                 {item.nftAddress ===
                                   window.config.nft_cawsold_address ||
-                                  item.nftAddress === window.config.nft_caws_address
+                                item.nftAddress ===
+                                  window.config.nft_caws_address
                                   ? "CAWS"
                                   : item.nftAddress ===
                                     window.config.nft_land_address
-                                    ? "Genesis Land"
-                                    : "CAWS Timepiece"}{" "}
+                                  ? "Genesis Land"
+                                  : "CAWS Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
                               {/* <span className="account-nft-type">
@@ -1252,12 +1307,18 @@ const WalletBalance = ({
                       </NavLink>
                     ))}
                   {favoriteItems.length === 0 && coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       You do not have any favorite NFTs
                     </span>
                   )}
                   {favoriteItems.length === 0 && !coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       Connect your wallet to view your favorite NFTs.
                     </span>
                   )}
@@ -1331,8 +1392,8 @@ const WalletBalance = ({
                                 item.type === "caws"
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.type === "land"
-                                    ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
-                                    : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
                               className="account-card-img"
@@ -1342,8 +1403,8 @@ const WalletBalance = ({
                                 {item.type === "caws"
                                   ? "CAWS"
                                   : item.type === "land"
-                                    ? "Genesis Land"
-                                    : "CAWS Timepiece"}{" "}
+                                  ? "Genesis Land"
+                                  : "CAWS Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
                             </div>
@@ -1352,12 +1413,18 @@ const WalletBalance = ({
                       </NavLink>
                     ))}
                   {myOffers.length === 0 && coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       You have not made any offers
                     </span>
                   )}
                   {myOffers.length === 0 && !coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       Connect your wallet to view the offers you have made.
                     </span>
                   )}
@@ -1385,16 +1452,17 @@ const WalletBalance = ({
                           type:
                             item.nftAddress === window.config.nft_caws_address
                               ? "caws"
-                              : item.nftAddress === window.config.nft_land_address
-                                ? "land"
-                                : "timepiece",
+                              : item.nftAddress ===
+                                window.config.nft_land_address
+                              ? "land"
+                              : "timepiece",
                           isOwner:
                             (item.buyer &&
                               item.buyer.toLowerCase() ===
-                              coinbase?.toLowerCase()) ||
+                                coinbase?.toLowerCase()) ||
                             (item.seller &&
                               item.seller.toLowerCase() ===
-                              coinbase?.toLowerCase()),
+                                coinbase?.toLowerCase()),
                           chain: item.chain,
                         }}
                         onClick={() => {
@@ -1408,8 +1476,8 @@ const WalletBalance = ({
                                 item.type === "caws"
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.type === "land"
-                                    ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
-                                    : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
                               className="account-card-img"
@@ -1419,8 +1487,8 @@ const WalletBalance = ({
                                 {item.type === "caws"
                                   ? "CAWS"
                                   : item.type === "land"
-                                    ? "Genesis"
-                                    : "Timepiece"}{" "}
+                                  ? "Genesis"
+                                  : "Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
                               {/* <span className="account-nft-type">
@@ -1436,13 +1504,19 @@ const WalletBalance = ({
                       </NavLink>
                     ))}
                   {collectedItems.length === 0 && coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       You do not have any NFTs in your wallet
                     </span>
                   )}
 
                   {collectedItems.length === 0 && !coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       Connect your wallet to view your NFTs.
                     </span>
                   )}
@@ -1565,13 +1639,21 @@ const WalletBalance = ({
                         </div>
                       </NavLink>
                     ))}
-                  {myCawsWodStakes.length === 0 && coinbase && landStaked.length === 0 && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
-                      You do not have any NFTs in stake
-                    </span>
-                  )}
+                  {myCawsWodStakes.length === 0 &&
+                    coinbase &&
+                    landStaked.length === 0 && (
+                      <span
+                        className="seller-addr"
+                        style={{ textAlign: "center" }}
+                      >
+                        You do not have any NFTs in stake
+                      </span>
+                    )}
                   {myCawsWodStakes.length === 0 && !coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       Connect your wallet to view your staked NFTs.
                     </span>
                   )}
@@ -1633,7 +1715,8 @@ const WalletBalance = ({
                           type: item.type,
                           isOwner:
                             item.seller &&
-                            item.seller.toLowerCase() === coinbase?.toLowerCase(),
+                            item.seller.toLowerCase() ===
+                              coinbase?.toLowerCase(),
                           chain: item.chain,
                         }}
                         onClick={() => {
@@ -1647,8 +1730,8 @@ const WalletBalance = ({
                                 item.type === "caws"
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.type === "land"
-                                    ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
-                                    : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
                               className="account-card-img"
@@ -1658,8 +1741,8 @@ const WalletBalance = ({
                                 {item.type === "caws"
                                   ? "CAWS"
                                   : item.type === "land"
-                                    ? "Genesis Land"
-                                    : "CAWS Timepiece"}{" "}
+                                  ? "Genesis Land"
+                                  : "CAWS Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
                               {/* <span className="account-nft-type">
@@ -1675,12 +1758,18 @@ const WalletBalance = ({
                       </NavLink>
                     ))}
                   {listedItems.length === 0 && coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       You do not have any listed NFTs
                     </span>
                   )}
                   {listedItems.length === 0 && !coinbase && (
-                    <span className="seller-addr" style={{ textAlign: "center" }}>
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
                       Connect your wallet to view your listed NFTs.
                     </span>
                   )}
@@ -1723,7 +1812,10 @@ const WalletBalance = ({
               )}
 
               {filterTitle === "Balance" && loading === false && (
-                <div className="d-flex flex-column align-items-center gap-3 balancewrapper3" style={{ marginTop: "50px" }}>
+                <div
+                  className="d-flex flex-column align-items-center gap-3 balancewrapper3"
+                  style={{ marginTop: "50px" }}
+                >
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-2">
                       <img src={ethIcon} alt="" className="" />
@@ -1780,7 +1872,8 @@ const WalletBalance = ({
                         className="nft-price-usd"
                         style={{ color: "#7DD9AF" }}
                       >
-                        ${getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
+                        $
+                        {getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
                       </span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
@@ -1800,7 +1893,10 @@ const WalletBalance = ({
                         style={{ color: "#7DD9AF" }}
                       >
                         $
-                        {getFormattedNumber(idypBalancebnb * idyptokenDatabnb, 2)}
+                        {getFormattedNumber(
+                          idypBalancebnb * idyptokenDatabnb,
+                          2
+                        )}
                       </span>
                     </div>
                   </div>
@@ -1822,7 +1918,10 @@ const WalletBalance = ({
                         style={{ color: "#7DD9AF" }}
                       >
                         $
-                        {getFormattedNumber(dypBalanceavax * dyptokenDataAvax, 2)}
+                        {getFormattedNumber(
+                          dypBalanceavax * dyptokenDataAvax,
+                          2
+                        )}
                       </span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
@@ -1859,12 +1958,14 @@ const WalletBalance = ({
                   (filterTitle === "Offers" && myOffers.length > 6) ||
                   (filterTitle === "Staked" &&
                     myCawsWodStakes.length + landStaked.length > 4) ||
-                  (filterTitle === "Favorites" && favoriteItems.length > 0)) && (
+                  (filterTitle === "Favorites" &&
+                    favoriteItems.length > 0)) && (
                   <div
                     className="row w-100 justify-content-center position-absolute"
                     style={{ bottom: "25px" }}
                   >
-                    {filterTitle === "Collected" && collectedItems.length >= 3 ? (
+                    {filterTitle === "Collected" &&
+                    collectedItems.length >= 3 ? (
                       <div
                         className="d-flex align-items-center justify-content-center gap-2"
                         onClick={() => {
@@ -1889,7 +1990,6 @@ const WalletBalance = ({
                         onClick={() => {
                           setShowNfts(!showNfts);
                           setShowAllEvents(false);
-
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -1909,7 +2009,6 @@ const WalletBalance = ({
                         onClick={() => {
                           setShowNfts(!showNfts);
                           setShowAllEvents(false);
-
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -1929,7 +2028,6 @@ const WalletBalance = ({
                         onClick={() => {
                           setShowNfts(!showNfts);
                           setShowAllEvents(false);
-
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -1942,13 +2040,13 @@ const WalletBalance = ({
                           alt=""
                         />
                       </div>
-                    ) : filterTitle === "Staked" && myCawsWodStakes.length > 6 ? (
+                    ) : filterTitle === "Staked" &&
+                      myCawsWodStakes.length > 6 ? (
                       <div
                         className="d-flex align-items-center justify-content-center gap-2"
                         onClick={() => {
                           setShowNfts(!showNfts);
                           setShowAllEvents(false);
-
                         }}
                         style={{ cursor: "pointer", width: "fit-content" }}
                       >
@@ -2062,29 +2160,33 @@ const WalletBalance = ({
               {filterTitle !== "Staked" && filterTitle !== "Collected" ? (
                 <div className="d-flex align-items-center gap-4">
                   <h6
-                    className={`filter-title ${recentListingsFilter === "all" && "filter-selected"
-                      }`}
+                    className={`filter-title ${
+                      recentListingsFilter === "all" && "filter-selected"
+                    }`}
                     onClick={() => filterRecentListings("all")}
                   >
                     All
                   </h6>
                   <h6
-                    className={`filter-title ${recentListingsFilter === "caws" && "filter-selected"
-                      }`}
+                    className={`filter-title ${
+                      recentListingsFilter === "caws" && "filter-selected"
+                    }`}
                     onClick={() => filterRecentListings("caws")}
                   >
                     CAWS
                   </h6>
                   <h6
-                    className={`filter-title ${recentListingsFilter === "land" && "filter-selected"
-                      }`}
+                    className={`filter-title ${
+                      recentListingsFilter === "land" && "filter-selected"
+                    }`}
                     onClick={() => filterRecentListings("land")}
                   >
                     Land
                   </h6>
                   <h6
-                    className={`filter-title ${recentListingsFilter === "timepiece" && "filter-selected"
-                      }`}
+                    className={`filter-title ${
+                      recentListingsFilter === "timepiece" && "filter-selected"
+                    }`}
                     onClick={() => filterRecentListings("timepiece")}
                   >
                     Timepiece
@@ -2093,22 +2195,25 @@ const WalletBalance = ({
               ) : filterTitle === "Staked" ? (
                 <div className="d-flex align-items-center gap-4">
                   <h6
-                    className={`filter-title ${recentListingsFilter === "all" && "filter-selected"
-                      }`}
+                    className={`filter-title ${
+                      recentListingsFilter === "all" && "filter-selected"
+                    }`}
                     onClick={() => filterRecentListings("all")}
                   >
                     All
                   </h6>
                   <h6
-                    className={`filter-title ${recentListingsFilter === "cawswod" && "filter-selected"
-                      }`}
+                    className={`filter-title ${
+                      recentListingsFilter === "cawswod" && "filter-selected"
+                    }`}
                     onClick={() => filterRecentListings("cawswod")}
                   >
                     Land+CAWS
                   </h6>
                   <h6
-                    className={`filter-title ${recentListingsFilter === "land" && "filter-selected"
-                      }`}
+                    className={`filter-title ${
+                      recentListingsFilter === "land" && "filter-selected"
+                    }`}
                     onClick={() => {
                       filterRecentListings("land");
                     }}
@@ -2312,8 +2417,8 @@ const WalletBalance = ({
                                 ? "caws"
                                 : nft.nftAddress ===
                                   window.config.nft_land_address
-                                  ? "land"
-                                  : "timepiece",
+                                ? "land"
+                                : "timepiece",
                             // isOwner:
                             //   isVerified && email
                             //     ? nft.buyer
@@ -2329,10 +2434,10 @@ const WalletBalance = ({
                             isOwner:
                               (nft.buyer &&
                                 nft.buyer.toLowerCase() ===
-                                coinbase?.toLowerCase()) ||
+                                  coinbase?.toLowerCase()) ||
                               (nft.seller &&
                                 nft.seller.toLowerCase() ===
-                                coinbase?.toLowerCase()),
+                                  coinbase?.toLowerCase()),
                             chain: nft.chain,
                             chain: 1,
                           }}
@@ -2345,12 +2450,12 @@ const WalletBalance = ({
                               <img
                                 src={
                                   nft.nftAddress ===
-                                    window.config.nft_caws_address
+                                  window.config.nft_caws_address
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_land_address
-                                      ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                      : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
                                 className="account-card-img"
@@ -2358,12 +2463,12 @@ const WalletBalance = ({
                               <div className="d-flex flex-column align-items-center justify-content-center">
                                 <h6 className="account-nft-title">
                                   {nft.nftAddress ===
-                                    window.config.nft_caws_address
+                                  window.config.nft_caws_address
                                     ? "CAWS"
                                     : nft.nftAddress ===
                                       window.config.nft_land_address
-                                      ? "Genesis Land"
-                                      : "CAWS Timepiece"}{" "}
+                                    ? "Genesis Land"
+                                    : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
                                 {/* <span className="account-nft-type">
@@ -2428,8 +2533,8 @@ const WalletBalance = ({
                                   nft.type === "caws"
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.type === "land"
-                                      ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                      : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
                                 className="account-card-img"
@@ -2439,8 +2544,8 @@ const WalletBalance = ({
                                   {nft.type === "caws"
                                     ? "CAWS"
                                     : nft.type === "land"
-                                      ? "Genesis Land"
-                                      : "CAWS Timepiece"}{" "}
+                                    ? "Genesis Land"
+                                    : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
                               </div>
@@ -2460,7 +2565,8 @@ const WalletBalance = ({
                   />
                 </div>
               </div>
-            ) : loadingRecentListings === false && filterTitle === "Favorites" ? (
+            ) : loadingRecentListings === false &&
+              filterTitle === "Favorites" ? (
               <div
                 className="container d-flex flex-column justify-content-between"
                 style={{ minHeight: "280px", maxHeight: "fit-content" }}
@@ -2480,12 +2586,12 @@ const WalletBalance = ({
                             nft: nft,
                             type:
                               nft.type ??
-                                nft.nftAddress === window.config.nft_caws_address
+                              nft.nftAddress === window.config.nft_caws_address
                                 ? "caws"
                                 : nft.nftAddress ===
                                   window.config.nft_land_address
-                                  ? "land"
-                                  : "timepiece",
+                                ? "land"
+                                : "timepiece",
                             // isOwner:
                             //   isVerified && email
                             //     ? nft.buyer
@@ -2501,10 +2607,10 @@ const WalletBalance = ({
                             isOwner:
                               (nft.buyer &&
                                 nft.buyer.toLowerCase() ===
-                                coinbase?.toLowerCase()) ||
+                                  coinbase?.toLowerCase()) ||
                               (nft.seller &&
                                 nft.seller.toLowerCase() ===
-                                coinbase?.toLowerCase()),
+                                  coinbase?.toLowerCase()),
                             chain: nft.chain,
                             chain: 1,
                           }}
@@ -2518,13 +2624,13 @@ const WalletBalance = ({
                                 src={
                                   nft.nftAddress ===
                                     window.config.nft_cawsold_address ||
-                                    nft.nftAddress ===
+                                  nft.nftAddress ===
                                     window.config.nft_caws_address
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_land_address
-                                      ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                      : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
                                 className="account-card-img"
@@ -2533,13 +2639,13 @@ const WalletBalance = ({
                                 <h6 className="account-nft-title">
                                   {nft.nftAddress ===
                                     window.config.nft_cawsold_address ||
-                                    nft.nftAddress ===
+                                  nft.nftAddress ===
                                     window.config.nft_caws_address
                                     ? "CAWS"
                                     : nft.nftAddress ===
                                       window.config.nft_land_address
-                                      ? "Genesis Land"
-                                      : "CAWS Timepiece"}{" "}
+                                    ? "Genesis Land"
+                                    : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
                                 {/* <span className="account-nft-type">
@@ -2589,12 +2695,12 @@ const WalletBalance = ({
                             nft: nft,
                             type:
                               nft.type ??
-                                nft.nftAddress === window.config.nft_caws_address
+                              nft.nftAddress === window.config.nft_caws_address
                                 ? "caws"
                                 : nft.nftAddress ===
                                   window.config.nft_land_address
-                                  ? "land"
-                                  : "timepiece",
+                                ? "land"
+                                : "timepiece",
                             // isOwner:
                             //   isVerified && email
                             //     ? nft.buyer
@@ -2610,10 +2716,10 @@ const WalletBalance = ({
                             isOwner:
                               (nft.buyer &&
                                 nft.buyer.toLowerCase() ===
-                                coinbase?.toLowerCase()) ||
+                                  coinbase?.toLowerCase()) ||
                               (nft.seller &&
                                 nft.seller.toLowerCase() ===
-                                coinbase?.toLowerCase()),
+                                  coinbase?.toLowerCase()),
                             chain: nft.chain,
                             chain: 1,
                           }}
@@ -2627,13 +2733,13 @@ const WalletBalance = ({
                                 src={
                                   nft.nftAddress ===
                                     window.config.nft_cawsold_address ||
-                                    nft.nftAddress ===
+                                  nft.nftAddress ===
                                     window.config.nft_caws_address
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_land_address
-                                      ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                      : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
                                 className="account-card-img"
@@ -2642,13 +2748,13 @@ const WalletBalance = ({
                                 <h6 className="account-nft-title">
                                   {nft.nftAddress ===
                                     window.config.nft_cawsold_address ||
-                                    nft.nftAddress ===
+                                  nft.nftAddress ===
                                     window.config.nft_caws_address
                                     ? "CAWS"
                                     : nft.nftAddress ===
                                       window.config.nft_land_address
-                                      ? "Genesis Land"
-                                      : "CAWS Timepiece"}{" "}
+                                    ? "Genesis Land"
+                                    : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
                                 {/* <span className="account-nft-type">
@@ -2686,50 +2792,50 @@ const WalletBalance = ({
                 <div className="row px-3">
                   {recentListingsFilter === "cawswod"
                     ? myCawsWodStakes &&
-                    myCawsWodStakes.length > 0 &&
-                    myCawsWodStakes
-                      .slice(stakedPageSlice - 9, stakedPageSlice)
-                      .map((nft, index) => (
-                        <NavLink
-                          to={`/marketplace/stake`}
-                          style={{ textDecoration: "none" }}
-                          key={index}
-                          className="col-12 col-lg-6 col-xxl-4 mb-3"
-                        >
-                          <div className="">
-                            <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                              <div className="d-flex">
-                                <img
-                                  src={nft.image}
-                                  alt=""
-                                  className="account-card-img"
-                                />
-                                <img
-                                  src={myWodWodStakes[index].image}
-                                  alt=""
-                                  className="account-card-img"
-                                />
-                              </div>
-                              <div className="d-flex flex-column align-items-center justify-content-center">
-                                <h6 className="account-nft-title">
-                                  Land {myWodWodStakes[index].name}
-                                </h6>
-                                <h6 className="account-nft-title">
-                                  {nft.name}
-                                </h6>
+                      myCawsWodStakes.length > 0 &&
+                      myCawsWodStakes
+                        .slice(stakedPageSlice - 9, stakedPageSlice)
+                        .map((nft, index) => (
+                          <NavLink
+                            to={`/marketplace/stake`}
+                            style={{ textDecoration: "none" }}
+                            key={index}
+                            className="col-12 col-lg-6 col-xxl-4 mb-3"
+                          >
+                            <div className="">
+                              <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                                <div className="d-flex">
+                                  <img
+                                    src={nft.image}
+                                    alt=""
+                                    className="account-card-img"
+                                  />
+                                  <img
+                                    src={myWodWodStakes[index].image}
+                                    alt=""
+                                    className="account-card-img"
+                                  />
+                                </div>
+                                <div className="d-flex flex-column align-items-center justify-content-center">
+                                  <h6 className="account-nft-title">
+                                    Land {myWodWodStakes[index].name}
+                                  </h6>
+                                  <h6 className="account-nft-title">
+                                    {nft.name}
+                                  </h6>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          {/* <CawsWodItem
+                            {/* <CawsWodItem
                         cawsImg={nft.image}
                         wodImg={myWodWodStakes[index].image}
                         cawsName={nft.name}
                         wodName={myWodWodStakes[index].name}
                       /> */}
-                        </NavLink>
-                      ))
+                          </NavLink>
+                        ))
                     : recentListingsFilter === "land"
-                      ? landStaked &&
+                    ? landStaked &&
                       landStaked.length > 0 &&
                       landStaked.map((nft, index) => (
                         <NavLink
@@ -2759,7 +2865,7 @@ const WalletBalance = ({
                           </div>
                         </NavLink>
                       ))
-                      : nftItems &&
+                    : nftItems &&
                       nftItems.length > 0 &&
                       nftItems.map((nft, index) => (
                         <NavLink
@@ -2875,95 +2981,112 @@ const WalletBalance = ({
             )}
           </div>
         )}
-        {windowSize.width > 786 && showAllEvents &&
+        {windowSize.width > 786 && showAllEvents && (
           <div
-            className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2" style={{ maxWidth: "100vw", width: "100%" }}
+            className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2"
+            style={{ maxWidth: "100vw", width: "100%" }}
           >
             {activeSlide > 0 && (
-                <div className="prev-arrow-nft" onClick={firstPrev}>
-                  <img src={nextArrow} alt="" />
-                </div>
-              )}
-              {showFirstNext === activeSlide
-                ? null
-                : 4 > sliderCut && (
-                    <div className="next-arrow-nft" onClick={firstNext}>
-                      <img src={nextArrow} alt="1" />
-                    </div>
-                  )}
+              <div className="prev-arrow-nft" onClick={firstPrev}>
+                <img src={nextArrow} alt="" />
+              </div>
+            )}
+            {showFirstNext === activeSlide
+              ? null
+              : 4 > sliderCut && (
+                  <div className="next-arrow-nft" onClick={firstNext}>
+                    <img src={nextArrow} alt="1" />
+                  </div>
+                )}
             <Slider ref={(c) => (slider.current = c)} {...settings}>
-              <div className={`active-mint mint-1 justify-content-between d-flex flex-column position-relative`} onClick={() => {
-                setDummyEvent(dummyConflux);
-                setEventPopup(true);
-              }}>
-                <div className="upcoming-tag d-flex align-items-center justify-content-center p-1">
-                  <span className="upcoming-text">Coming soon</span>
+              <div className="d-flex flex-column gap-1">
+                <div
+                  className={`active-mint mint-1 justify-content-between d-flex flex-column position-relative`}
+                  onClick={() => {
+                    setDummyEvent(dummyConflux);
+                    setEventPopup(true);
+                  }}
+                >
+                  <div className="upcoming-tag d-flex align-items-center justify-content-center p-1">
+                    <span className="upcoming-text">Coming soon</span>
+                  </div>
+                  <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                    <h6 className="active-mint-title mb-0">Conflux Pass</h6>
+                    <p className="active-mint-desc mb-0">
+                      Gain entry to metaverse, and join exclusive Conflux event
+                      with special ticket.
+                    </p>
+                  </div>
+                  <div className="second-half h-50 w-100">
+                    <img src={confluxActive} className="w-100 h-100" alt="" />
+                  </div>
                 </div>
-                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                  <h6 className="active-mint-title mb-0">
-                    Conflux Pass
-                  </h6>
-                  <p className="active-mint-desc mb-0">
-                    Gain entry to metaverse, and join exclusive
-                    Conflux event with special ticket.
-                  </p>
-                </div>
-                <div className="second-half h-50 w-100">
-                  <img
-                    src={confluxActive}
-                    className="w-100 h-100"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className={`active-mint mint-2 justify-content-between d-flex flex-column position-relative`} onClick={() => {
-                setDummyEvent(dummyCoin98);
-                setEventPopup(true);
-              }}>
-                <div className="live-tag d-flex align-items-center justify-content-center p-1">
-                  <span className="live-text">Live</span>
-                </div>
-                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                  <h6 className="active-mint-title mb-0">
-                    Coin98 Pass
-                  </h6>
-                  <p className="active-mint-desc mb-0">
-                    Gain entry to metaverse, and join exclusive Coin98
-                    event with special ticket.
-                  </p>
-                </div>
-                <div className="second-half h-50 w-100">
-                  <img
-                    src={coin98Active}
-                    className="w-100 h-100"
-                    alt=""
-                  />
+                <div className="d-flex align-items-center gap-2">
+                  <img src={grayCalendar} width={14} height={14} alt="" />
+                  <span className="event-slider-date">
+                    Aug 1, 2023 - Aug 31, 2023{" "}
+                  </span>
                 </div>
               </div>
-              <div className={`active-mint mint-3 justify-content-between d-flex flex-column position-relative`} onClick={() => {
-                setDummyEvent(dummyCoingecko);
-                setEventPopup(true);
-              }}>
+              <div className="d-flex flex-column gap-1">
+                <div
+                  className={`active-mint mint-2 justify-content-between d-flex flex-column position-relative`}
+                  onClick={() => {
+                    setDummyEvent(dummyCoin98);
+                    setEventPopup(true);
+                  }}
+                >
+                  <div className="live-tag d-flex align-items-center justify-content-center p-1">
+                    <span className="live-text">Live</span>
+                  </div>
+                  <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                    <h6 className="active-mint-title mb-0">Coin98 Pass</h6>
+                    <p className="active-mint-desc mb-0">
+                      Gain entry to metaverse, and join exclusive Coin98 event
+                      with special ticket.
+                    </p>
+                  </div>
+                  <div className="second-half h-50 w-100">
+                    <img src={coin98Active} className="w-100 h-100" alt="" />
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img src={grayCalendar} width={14} height={14} alt="" />
+                  <span className="event-slider-date">
+                    Aug 1, 2023 - Aug 31, 2023{" "}
+                  </span>
+                </div>
+              </div>
+              <div className="d-flex flex-column gap-1">
+                <div
+                  className={`active-mint mint-3 justify-content-between d-flex flex-column position-relative`}
+                  onClick={() => {
+                    setDummyEvent(dummyCoingecko);
+                    setEventPopup(true);
+                  }}
+                >
                   <div className="expired-tag d-flex align-items-center justify-content-center p-1">
-                  <span className="expired-text">Expired</span>
+                    <span className="expired-text">Expired</span>
+                  </div>
+                  <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
+                    <h6 className="active-mint-title mb-0">CoinGecko Pass</h6>
+                    <p className="active-mint-desc mb-0">
+                      Gain entry to metaverse, and join exclusive CoinGecko
+                      event with special ticket.
+                    </p>
+                  </div>
+                  <div className="second-half h-50 w-100">
+                    <img src={coingeckoActive} className="w-100 h-100" alt="" />
+                  </div>
                 </div>
-                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                  <h6 className="active-mint-title mb-0">
-                    CoinGecko Pass
-                  </h6>
-                  <p className="active-mint-desc mb-0">
-                    Gain entry to metaverse, and join exclusive
-                    CoinGecko event with special ticket.
-                  </p>
-                </div>
-                <div className="second-half h-50 w-100">
-                  <img
-                    src={coingeckoActive}
-                    className="w-100 h-100"
-                    alt=""
-                  />
+                <div className="d-flex align-items-center gap-2">
+                  <img src={grayCalendar} width={14} height={14} alt="" />
+                  <span className="event-slider-date">
+                    Aug 1, 2023 - Aug 31, 2023{" "}
+                  </span>
                 </div>
               </div>
+              {/* <div className="d-flex flex-column gap-1">
               <div className={`active-mint mint-4 justify-content-between d-flex flex-column position-relative`} onClick={() => {
                 setDummyEvent(dummyBase);
                 setEventPopup(true);
@@ -2986,10 +3109,15 @@ const WalletBalance = ({
                   />
                 </div>
               </div>
-
+              <div className="d-flex align-items-center gap-2">
+                  <img src={grayCalendar} width={14} height={14} alt="" />
+                  <span className="event-slider-date">Aug 1, 2023 - Aug 31, 2023 </span>
+                </div>
+              </div> */}
+              <img src={sliderEventSkeleton} height={235} alt="" />
             </Slider>
           </div>
-        }
+        )}
       </div>
       {eventPopup && (
         <OutsideClickHandler onOutsideClick={() => setEventPopup(false)}>
@@ -2997,13 +3125,22 @@ const WalletBalance = ({
             <div className="d-flex align-items-center justify-content-between mb-2">
               <div className="d-flex align-items-center gap-2">
                 <h6 className="event-popup-title mb-0">{dummyEvent?.title}</h6>
-                <div className="event-popup-status d-flex align-items-center justify-content-center p-1">
+                <div
+                  className={`${
+                    dummyEvent?.status === "Live"
+                      ? "event-popup-status-live"
+                      : dummyEvent?.status === "Coming Soon"
+                      ? "event-popup-status-upcoming"
+                      : "event-popup-status-expired"
+                  }  d-flex align-items-center justify-content-center p-1`}
+                >
                   <span className="mb-0">{dummyEvent?.status}</span>
                 </div>
               </div>
               <img
                 src={require("./assets/closeMark.svg").default}
                 alt=""
+                style={{ cursor: "pointer" }}
                 onClick={() => setEventPopup(false)}
               />
             </div>
@@ -3025,50 +3162,18 @@ const WalletBalance = ({
               {dummyEvent?.status === "Live" && (
                 <div className="d-flex align-items-start gap-1">
                   <div className="d-flex flex-column align-items-center gap-3">
-                    <h6
-                      className="profile-time-numbe-2r mb-0"
-                    >
-                      14
-                    </h6>
-                    <span
-                      className="profile-time-desc-2 mb-0"
-                    >
-                      Days
-                    </span>
+                    <h6 className="profile-time-number-2 mb-0">14</h6>
+                    <span className="profile-time-desc-2 mb-0">Days</span>
                   </div>
-                  <h6
-                    className="profile-time-number-2 mb-0"
-                  >
-                    :
-                  </h6>
+                  <h6 className="profile-time-number-2 mb-0">:</h6>
                   <div className="d-flex flex-column align-items-center gap-3">
-                    <h6
-                      className="profile-time-number-2 mb-0"
-                    >
-                      23
-                    </h6>
-                    <span
-                      className="profile-time-desc-2 mb-0"
-                    >
-                      Hours
-                    </span>
+                    <h6 className="profile-time-number-2 mb-0">23</h6>
+                    <span className="profile-time-desc-2 mb-0">Hours</span>
                   </div>
-                  <h6
-                    className="profile-time-number-2 mb-0"
-                  >
-                    :
-                  </h6>
+                  <h6 className="profile-time-number-2 mb-0">:</h6>
                   <div className="d-flex flex-column align-items-center gap-3">
-                    <h6
-                      className="profile-time-number-2 mb-0"
-                    >
-                      46
-                    </h6>
-                    <span
-                      className="profile-time-desc-2 mb-0"
-                    >
-                      Minutes
-                    </span>
+                    <h6 className="profile-time-number-2 mb-0">46</h6>
+                    <span className="profile-time-desc-2 mb-0">Minutes</span>
                   </div>
                 </div>
               )}
@@ -3111,7 +3216,10 @@ const WalletBalance = ({
               </div>
             </div>
             <div className="w-100 d-flex justify-content-end mt-3">
-              <NavLink to={"/marketplace/mint"} state={{ event: dummyEvent?.linkState }}>
+              <NavLink
+                to={"/marketplace/mint"}
+                state={{ event: dummyEvent?.linkState }}
+              >
                 {" "}
                 <button className="btn get-beta-btn">Get Beta Pass</button>
               </NavLink>
