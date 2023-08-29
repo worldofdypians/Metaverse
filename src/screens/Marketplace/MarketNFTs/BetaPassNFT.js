@@ -203,7 +203,7 @@ const BetaPassNFT = ({
                   </p>
                   <NavLink
                     to="/marketplace/mint"
-                    style={{ textDecoration: "none" }}
+                    style={{ textDecoration: "none", width: 'fit-content' }}
                   >
                     <button className="btn mint-now-btn gap-2">
                       <img src={mintNowIcon} alt="" />

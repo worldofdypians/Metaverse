@@ -940,14 +940,31 @@ const WalletBalance = ({
   };
 
   const [dummyEvent, setDummyEvent] = useState({});
+  const releaseContent = useRef();
+
+  const releaseContent2 = useRef();
 
   const openEvents = () => {
-    if (showAllEvents === false) {
-      window.scrollBy(0, 300);
-    }
     setShowAllEvents(!showAllEvents);
     setShowNfts(false);
   };
+  useEffect(() => {
+    if (showAllEvents && windowSize.width > 786) {
+      releaseContent.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+
+    if (showAllEvents && windowSize.width < 786) {
+      releaseContent2.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [showAllEvents]);
 
   return (
     <>
@@ -1003,10 +1020,15 @@ const WalletBalance = ({
               </div>
             </div>
           </div>
-          {windowSize.width < 786 && showAllEvents && (
+          {showAllEvents && (
             <div
               className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2"
-              style={{ maxWidth: "100vw", width: "100%" }}
+              style={{
+                maxWidth: "100vw",
+                width: "100%",
+                display: windowSize.width < 786 ? "block" : "none",
+              }}
+              ref={releaseContent2}
             >
               {activeSlide > 0 && (
                 <div className="prev-arrow-nft" onClick={firstPrev}>
@@ -2981,10 +3003,15 @@ const WalletBalance = ({
             )}
           </div>
         )}
-        {windowSize.width > 786 && showAllEvents && (
+        {showAllEvents && (
           <div
             className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2"
-            style={{ maxWidth: "100vw", width: "100%" }}
+            style={{
+              maxWidth: "100vw",
+              width: "100%",
+              display: windowSize.width > 786 ? "block" : "none",
+            }}
+            ref={releaseContent}
           >
             {activeSlide > 0 && (
               <div className="prev-arrow-nft" onClick={firstPrev}>

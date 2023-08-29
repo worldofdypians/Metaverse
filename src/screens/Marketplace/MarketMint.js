@@ -387,7 +387,7 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("past")}
                   >
-                    Past
+                    Sold out
                   </h6>
                 </div>
                 <span className="w-100 new-stake-divider mt-3 mb-5"></span>
