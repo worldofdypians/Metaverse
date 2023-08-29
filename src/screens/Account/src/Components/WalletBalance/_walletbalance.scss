@@ -425,6 +425,8 @@
 }
 
 .profile-event-popup {
+  max-height: 80%;
+  overflow-y: scroll;
   background: #1a1c39;
   border-radius: 10px;
   width: 50%;

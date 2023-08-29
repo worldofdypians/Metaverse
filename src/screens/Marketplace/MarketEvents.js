@@ -16,11 +16,11 @@ import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
 import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
 import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
 import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
-import conflux from '../Account/src/Components/WalletBalance/assets/conflux.svg'
-import coin98 from '../Account/src/Components/WalletBalance/assets/coin98.svg'
-import coingecko from '../Account/src/Components/WalletBalance/assets/coingecko.svg'
-import base from './assets/baseLogo.svg'
-import betaMyEarnings from './assets/betaMyEarnings.png'
+import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
+import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
+import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
+import base from "./assets/baseLogo.svg";
+import betaMyEarnings from "./assets/betaMyEarnings.png";
 import DragonPopup from "../../components/PackagePopups/DragonPopup";
 import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
 import PuzzleMadnessPopup from "../../components/PackagePopups/PuzzleMadnessPopup";
@@ -33,8 +33,12 @@ import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
 import liveDot from "./assets/liveDot.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
-import whitePickaxe from './assets/whitePickAxe.svg'
-import whiteCalendar from './assets/whiteCalendar.svg'
+import whitePickaxe from "./assets/whitePickAxe.svg";
+import whiteCalendar from "./assets/whiteCalendar.svg";
+import BetaEventCard from "./components/BetaEventCard";
+import eventPopupImage from "../Account/src/Components/WalletBalance/assets/eventPopupImage.png";
+import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
+import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
 
 const MarketEvents = ({
   account,
@@ -57,12 +61,83 @@ const MarketEvents = ({
   const [selectedPackage, setSelectedPackage] = useState(
     location.state?.package ? location.state?.package : "dragon"
   );
-
   const [popup, setPopup] = useState(false);
   const [packagePopup, setPackagePopup] = useState("");
   const [activeTab, setActiveTab] = useState("live");
-
   const { eventId } = useParams();
+  const [dummyEvent, setDummyEvent] = useState();
+  const [eventPopup, setEventPopup] = useState(false);
+
+  const dummyBetaPassData = [
+    {
+      title: "Conflux (CFX)",
+      logo: conflux,
+      eventStatus: "Live",
+      totalRewards: "$5,000 in CFX Rewards",
+      myEarnings: 120.45,
+      eventType: "Explore & Mine",
+      eventDate: "Ends in 28 days",
+      backgroundImage: confluxUpcoming,
+      popupInfo: {
+        title: "Conflux Pass",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
+        status: "Live",
+      },
+    },
+    {
+      title: "Coin98 (C98)",
+      logo: coin98,
+      eventStatus: "Coming Soon",
+      totalRewards: "$5,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "April, 1, 2024",
+      backgroundImage: coin98Upcoming,
+      popupInfo: {
+        title: "Coin98 Pass",
+        chain: "BNB Chain",
+        linkState: "coin98",
+        rewards: "BNB",
+        status: "Coming Soon",
+      },
+    },
+    {
+      title: "Coingecko",
+      logo: coingecko,
+      eventStatus: "Expired",
+      totalRewards: "$5,000 in BNB Rewards",
+      myEarnings: 120.0,
+      eventType: "Explore & Mine",
+      eventDate: "Expired",
+      backgroundImage: coingeckoUpcoming,
+      popupInfo: {
+        title: "Coingecko Pass",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Expired",
+      },
+    },
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Expired",
+      totalRewards: "$5,000 in BASE Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Expired",
+      backgroundImage: baseUpcoming,
+      popupInfo: {
+        title: "Base Pass",
+        chain: "BNB Chain",
+        linkState: "base",
+        rewards: "BNB",
+        status: "Expired",
+      },
+    },
+  ];
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -238,24 +313,17 @@ const MarketEvents = ({
   useEffect(() => {
     if (eventId === "dragon-ruins") {
       setSelectedPackage("dragon");
-    }
-
-    else if (eventId === "golden-pass") {
+    } else if (eventId === "golden-pass") {
       setSelectedPackage("dyp");
-    }
-
-    else if (eventId === "puzzle-maddness") {
+    } else if (eventId === "puzzle-maddness") {
       setSelectedPackage("idyp");
-    }
-
-    else if (eventId === "critical-hit") {
+    } else if (eventId === "critical-hit") {
       setSelectedPackage("criticalHit");
-    }
-    else if (eventId === "beta-pass") {
+    } else if (eventId === "beta-pass") {
       setSelectedPackage("betaPass");
     }
-  },[]);
- 
+  }, []);
+
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#bgmenu");
   useEffect(() => {
@@ -268,7 +336,6 @@ const MarketEvents = ({
     }
   }, [popup]);
 
- 
   return (
     <>
       <div
@@ -391,8 +458,8 @@ const MarketEvents = ({
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                              selectedPackage === "criticalHit"&&
-                              eventId === "critical-hit"  &&
+                              selectedPackage === "criticalHit" &&
+                              eventId === "critical-hit" &&
                               "selected-event-package"
                             }`}
                             onClick={() => setSelectedPackage("criticalHit")}
@@ -413,228 +480,68 @@ const MarketEvents = ({
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                              selectedPackage === "betaPass"&&
-                              eventId === "betapass"  &&
+                              selectedPackage === "betaPass" &&
+                              eventId === "betapass" &&
                               "selected-event-package"
                             }`}
                             onClick={() => setSelectedPackage("betaPass")}
                           >
                             <img
-                              src={require('./assets/betaPassDummy.png')}
+                              src={require("./assets/betaPassDummy.png")}
                               className="w-100"
                               style={{ borderRadius: "16px" }}
                               alt=""
                             />
                             <span className="event-package-title">
-                             Beta Pass
+                              Beta Pass
                             </span>
                           </div>
                         </div>
                       </NavLink>
                     </div>
                   </div>
-               
-                  {selectedPackage === "betaPass" ? 
-                  <div className="d-flex flex-column gap-4">
-                  <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
-                    <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
-                      <img src={conflux} width={36} height={36} alt="" />
-                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
-                        <div className="d-flex flex-column gap-2">
-                          <div className="d-flex align-items-center gap-2">
-                            <h6 className="events-page-title mb-0">Conflux (CFX)</h6>
-                            <div className="events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-2">
-                              <img src={liveDot} alt="" />
-                              <span>Live</span>
-                            </div>
-                          </div>
-                          <h6 className="events-page-rewards">
-                            $5,000 in CFX Rewards
-                          </h6>
-                        </div>
-                        <span className="events-page-details d-flex align-items-center gap-2">
-                          Event Details
-                          <img src={eventsArrow} alt="" />
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="d-flex col col-lg-4 flex-column align-items-center">
-                      <h6 className="event-my-earnings">$120.45</h6>
-                      <img src={betaMyEarnings} alt="" />
-                    </div>
-                    <div className="d-flex flex-column gap-3 pick-and-calendar">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={whitePickaxe} alt="" />
-                        <span className="white-events-text mb-0">Explore & Mine</span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={whiteCalendar} alt="" />
-                        <span className="white-events-text mb-0">Ends in 28 days</span>
-                      </div>
-                    </div>
-                    <img
-                      src={confluxUpcoming}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-flex"
-                    />
-                  </div>
-                  <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
-                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
-                      <img src={coin98} width={36} height={36} alt="" />
-                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
-                        <div className="d-flex flex-column gap-2">
-                          <div className="d-flex align-items-center gap-2">
-                            <h6 className="events-page-title mb-0">Coin98 (C98)</h6>
-                            <div className="events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-2">
-                              <span>Coming Soon</span>
-                            </div>
-                          </div>
-                          <h6 className="events-page-rewards">
-                            $5,000 in CFX Rewards
-                          </h6>
-                        </div>
-                        <span className="events-page-details d-flex align-items-center gap-2">
-                          Event Details
-                          <img src={eventsArrow} alt="" />
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="d-flex col col-lg-4 flex-column align-items-center">
-                      <h6 className="event-my-earnings">$0.0</h6>
-                      <img src={betaMyEarnings} alt="" />
-                    </div>
-                    <div className="d-flex flex-column gap-3 pick-and-calendar">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={whitePickaxe} alt="" />
-                        <span className="white-events-text mb-0">Explore & Mine</span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={whiteCalendar} alt="" />
-                        <span className="white-events-text mb-0">August, 1, 2023</span>
-                      </div>
-                    </div>
-                    <img
-                      src={coin98Upcoming}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-flex"
-                    />
-                  </div>
-                  <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex  align-items-center justify-content-between px-0">
-                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
-                      <img src={coingecko} width={36} height={36} alt="" />
-                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
-                        <div className="d-flex flex-column gap-2">
-                          <div className="d-flex align-items-center gap-2">
-                            <h6 className="events-page-title mb-0">Coingecko</h6>
-                            <div className="events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-2">
-                              <span>Expired</span>
-                            </div>
-                          </div>
-                          <h6 className="events-page-rewards">
-                            $5,000 in CFX Rewards
-                          </h6>
-                        </div>
-                        <span className="events-page-details d-flex align-items-center gap-2">
-                          Event Details
-                          <img src={eventsArrow} alt="" />
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="d-flex col col-lg-4 flex-column align-items-center">
-                      <h6 className="event-my-earnings">$120.00</h6>
-                      <img src={betaMyEarnings} alt="" />
-                    </div>
-                    <div className="d-flex flex-column gap-3 pick-and-calendar">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={whitePickaxe} alt="" />
-                        <span className="white-events-text mb-0">Explore & Mine</span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={whiteCalendar} alt="" />
-                        <span className="white-events-text mb-0">Expired</span>
-                      </div>
-                    </div>
-                    <img
-                      src={coingeckoUpcoming}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-flex"
-                    /> 
-                  </div>
-                  <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
-                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
-                      <img src={base} width={36} height={36} alt="" />
-                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
-                        <div className="d-flex flex-column gap-2">
-                          <div className="d-flex align-items-center gap-2">
-                            <h6 className="events-page-title mb-0">Base</h6>
-                            <div className="events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-2">
-                              <span>Coming Soon</span>
-                            </div>
-                          </div>
-                          <h6 className="events-page-rewards">
-                            $5,000 in CFX Rewards
-                          </h6>
-                        </div>
-                        <span className="events-page-details d-flex align-items-center gap-2">
-                          Event Details
-                          <img src={eventsArrow} alt="" />
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="d-flex col col-lg-4 flex-column align-items-center">
-                      <h6 className="event-my-earnings">$120.45</h6>
-                      <img src={betaMyEarnings} alt="" />
-                    </div>
-                    <div className="d-flex flex-column gap-3 pick-and-calendar">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={whitePickaxe} alt="" />
-                        <span className="white-events-text mb-0">Explore & Mine</span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={whiteCalendar} alt="" />
-                        <span className="white-events-text mb-0">August, 1, 2023</span>
-                      </div>
-                    </div>
-                    <img
-                      src={baseUpcoming}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-flex"
-                    />
-                  </div>
-                </div>
-                :  
-                <NewBundleCard
-                onOpenPopup={onOpenPopup}
-                coinbase={account}
-                wallet={data?.getPlayer?.wallet?.publicAddress}
-                chainId={chainId}
-                getDypBalance={getDypBalance}
-                getiDypBalance={getDypBalance}
-                dyptokenDatabnb={dyptokenDatabnb}
-                idyptokenDatabnb={idyptokenDatabnb}
-                packageData={
-                  selectedPackage === "dragon"
-                    ? dragonData
-                    : selectedPackage === "dyp"
-                    ? dypPackageData
-                    : selectedPackage === "criticalHit"
-                    ? criticalHitPackageData : 
-                    selectedPackage === "betaPass" ?
-                    betaPassPackageData
-                    : iDypPackageData
-                }
-                handleSetAvailableTime={(value) => {
-                  setAvailableTime(value);
-                  handleAvailableTime(value);
-                }}
-                availableTime={availableTime}
-              />
 
-                }
+                  {selectedPackage === "betaPass" ? (
+                    <div className="d-flex flex-column gap-4">
+                      {dummyBetaPassData.map((item, index) => (
+                        <BetaEventCard
+                          data={item}
+                          key={index}
+                          onOpenPopup={() => {
+                            setEventPopup(true);
+                            setDummyEvent(item.popupInfo);
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <NewBundleCard
+                      onOpenPopup={onOpenPopup}
+                      coinbase={account}
+                      wallet={data?.getPlayer?.wallet?.publicAddress}
+                      chainId={chainId}
+                      getDypBalance={getDypBalance}
+                      getiDypBalance={getDypBalance}
+                      dyptokenDatabnb={dyptokenDatabnb}
+                      idyptokenDatabnb={idyptokenDatabnb}
+                      packageData={
+                        selectedPackage === "dragon"
+                          ? dragonData
+                          : selectedPackage === "dyp"
+                          ? dypPackageData
+                          : selectedPackage === "criticalHit"
+                          ? criticalHitPackageData
+                          : selectedPackage === "betaPass"
+                          ? betaPassPackageData
+                          : iDypPackageData
+                      }
+                      handleSetAvailableTime={(value) => {
+                        setAvailableTime(value);
+                        handleAvailableTime(value);
+                      }}
+                      availableTime={availableTime}
+                    />
+                  )}
                 </>
               )}
               {activeTab === "upcoming" && (
@@ -679,6 +586,145 @@ const MarketEvents = ({
           <CriticalHitPopup onClosePopup={onClosePopup} />
         )}
       </OutsideClickHandler>
+      {eventPopup && (
+        <OutsideClickHandler onOutsideClick={() => setEventPopup(false)}>
+          <div className="profile-event-popup p-4">
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <div className="d-flex align-items-center gap-2">
+                <h6 className="event-popup-title mb-0">{dummyEvent?.title}</h6>
+                <div
+                  className={`${
+                    dummyEvent?.status === "Live"
+                      ? "event-popup-status-live"
+                      : dummyEvent?.status === "Coming Soon"
+                      ? "event-popup-status-upcoming"
+                      : "event-popup-status-expired"
+                  }  d-flex align-items-center justify-content-center p-1`}
+                >
+                  <span className="mb-0">{dummyEvent?.status}</span>
+                </div>
+              </div>
+              <img
+                src={closeMark}
+                alt=""
+                style={{ cursor: "pointer" }}
+                onClick={() => setEventPopup(false)}
+              />
+            </div>
+            <div className="profile-event-popup-wrapper p-3 d-flex align-items-center justify-content-between mb-3">
+              <div className="d-flex align-items-center gap-2">
+                <img src={eventPopupImage} alt="" />
+                <div className="d-flex flex-column justify-content-between">
+                  <div className="d-flex flex-column">
+                    <h6 className="popup-second-title">{dummyEvent?.title}</h6>
+                    <span className="popup-rewards">
+                      $5,000 in {dummyEvent?.rewards} rewards
+                    </span>
+                  </div>
+                  <span className="event-popup-chain mb-0">
+                    Chain: {dummyEvent?.chain}
+                  </span>
+                </div>
+              </div>
+              {dummyEvent?.status === "Live" && (
+                <div className="d-flex align-items-start gap-1">
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6 className="profile-time-number-2 mb-0">14</h6>
+                    <span className="profile-time-desc-2 mb-0">Days</span>
+                  </div>
+                  <h6 className="profile-time-number-2 mb-0">:</h6>
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6 className="profile-time-number-2 mb-0">23</h6>
+                    <span className="profile-time-desc-2 mb-0">Hours</span>
+                  </div>
+                  <h6 className="profile-time-number-2 mb-0">:</h6>
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6 className="profile-time-number-2 mb-0">46</h6>
+                    <span className="profile-time-desc-2 mb-0">Minutes</span>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="d-flex align-items-center justify-content-between mb-3">
+              <h6 className="how-it-works mb-0">How it works?</h6>
+              <span className="events-page-details d-flex align-items-center gap-2">
+                Learn more
+                <img src={eventsArrow} alt="" />
+              </span>
+            </div>
+            <div className="row mb-3 gap-3 gap-lg-0">
+              <div className="col-12 col-lg-6">
+                <div className="profile-event-popup-wrapper p-3">
+                  <h6 className="popup-green-text">Details</h6>
+                  <p className="popup-event-desc">
+                    To participate in the event, players are required to hold a
+                    Conflux Beta Pass NFT. You can get the Conflux Beta Pass NFT
+                    from the World of Dypians Marketplace. By engaging in the
+                    game on a daily basis and exploring the Conflux area,
+                    players not only stand a chance to secure daily rewards in
+                    CFX tokens or earn points for their placement on the global
+                    leaderboard. Remember to log in to the game daily and
+                    venture into the Conflux area to uncover hidden treasures.
+                  </p>
+                </div>
+              </div>
+              <div className="col-12 col-lg-6">
+                <div className="profile-event-popup-wrapper p-3">
+                  <h6 className="popup-green-text">Benefits</h6>
+                  <ul>
+                    <li className="popup-event-desc">Exclusive Event Access</li>
+                    <li className="popup-event-desc">Daily Rewards</li>
+                    <li className="popup-event-desc">Earn CFX rewards</li>
+                    <li className="popup-event-desc">
+                      Get global leaderboard points
+                    </li>
+                    <li className="popup-event-desc">Community Engagement</li>
+                    <li className="popup-event-desc">Exploration Adventures</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <h6 className="how-it-works">Learn more about Conflux Network</h6>
+            <p className="popup-event-desc" style={{fontSize: "12px", fontWeight: "500"}}>
+              Conflux Network stands as a Layer 1 public blockchain solution,
+              uniquely blending the advantages of both public and private
+              blockchains within its hybrid architecture. It aims to establish a
+              diverse multi-chain ecosystem, fostering seamless global
+              connectivity for creators, communities, and markets across
+              different borders and protocols.
+            </p>
+            <div className="popup-red-wrapper mt-3 p-3 d-flex align-items-center justify-content-between">
+              <div className="d-flex align-items-center gap-2">
+                <img src={grayDollar} width={24} height={24} alt="" />
+                <span className="event-my-earnings mb-0">My earnings</span>
+              </div>
+             <div className="d-flex align-items-center gap-3 gap-lg-5">
+             <div className="d-flex flex-column gap-2">
+                <h6 className="mb-0 event-earnings-coin">
+                1,500,250
+                </h6>
+                <span className="mb-0 event-earnings-usd">Points</span>
+              </div>
+              <div className="d-flex flex-column gap-2">
+                <h6 className="mb-0 event-earnings-coin">
+                250.62 CFX
+                </h6>
+                <span className="mb-0 event-earnings-usd">Rewards</span>
+              </div>
+             </div>
+            </div>
+            <div className="w-100 d-flex justify-content-end mt-3">
+              <NavLink
+                to={"/marketplace/mint"}
+                state={{ event: dummyEvent?.linkState }}
+              >
+                {" "}
+                <button className="btn get-beta-btn">Get Beta Pass</button>
+              </NavLink>
+            </div>
+          </div>
+        </OutsideClickHandler>
+      )}
     </>
   );
 };

@@ -33,6 +33,8 @@ import baseLogo from './assets/baseLogo.svg'
 import bnbLogo from './assets/bnbLogo.svg'
 import wodLogo from './assets/wodIcon.png'
 import openSeaLogo from './assets/openSeaLogo.png'
+import BetaEventCard from './components/BetaEventCard'
+import EventSliderCard from "./components/EventSliderCard";
 
 
 const MarketMint = ({
@@ -328,6 +330,54 @@ const MarketMint = ({
   }, [])
   
 
+  const dummyCards = [
+    {
+      title: "Conflux Pass",
+      eventId: "conflux",
+      desc: "Gain entry to metaverse, and join exclusive Conflux event with special ticket.",
+      img: confluxActive,
+      data: confluxData,
+      class: "mint-1",
+      
+    },
+    {
+      title: "Coin98 Pass",
+      eventId: "coin98",
+      desc: "Gain entry to metaverse, and join exclusive Coin98 event with special ticket.",
+      img: coin98Active,
+      data: coin98Data,
+      class: "mint-2",
+
+    },
+    {
+      title: "Coingecko Pass",
+      eventId: "coingecko",
+      desc: "Gain entry to metaverse, and join exclusive Coingecko event with special ticket.",
+      img: coingeckoActive,
+      data: coingeckoData,
+      class: "mint-3",
+
+    },
+    {
+      title: "Base Pass",
+      eventId: "base",
+      desc: "Gain entry to metaverse, and join exclusive Base event with special ticket.",
+      img: baseActive,
+      data: baseData,
+      class: "mint-4",
+
+    },
+    {
+      title: "Caws Timepiece",
+      eventId: "timepiece",
+      desc: "Access the metaverse, experience enhanced interactions, and enjoy diverse benefits.",
+      img: timepieceActive,
+      data: timepieceData,
+      class: "mint-5",
+
+    },
+  ]
+
 
   return (
     <>
@@ -414,7 +464,10 @@ const MarketMint = ({
                     </div>
                   )}
                     <Slider ref={(c) => (slider.current = c)} {...settings}>
-                        <div className={` ${mintTitle === "conflux" && "active-mint-selected"}  active-mint mint-1 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(confluxData); setMintTitle("conflux")}}>
+                      {dummyCards.map((item, index) => (
+                        <EventSliderCard key={index} data={item} onSelectCard={() => {setSelectedMint(item.data); setMintTitle(item.eventId)}} mintTitle={mintTitle} />
+                      ))}
+                        {/* <div className={` ${mintTitle === "conflux" && "active-mint-selected"}  active-mint mint-1 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(confluxData); setMintTitle("conflux")}}>
                           <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
                             <h6 className="active-mint-title mb-0">
                               Conflux Pass
@@ -510,7 +563,7 @@ const MarketMint = ({
 
                           />
                         </div>
-                      </div>
+                      </div> */}
                     </Slider>
                   </div>
                   <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">

@@ -2088,6 +2088,9 @@ line-height: normal;
 cursor: pointer;
 }
 
+.events-page-details:hover{
+  text-decoration: underline;
+}
 
 .event-my-earnings{
   color: #FFF;
@@ -2121,4 +2124,29 @@ text-transform: capitalize;
     padding-bottom: 15px;
     padding-top: 15px;
   }
+}
+
+
+.how-it-works{
+  color: #EEEDFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.popup-green-text{
+  color: #7DD9AF;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.popup-event-desc{
+  color: #EEEDFF;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
