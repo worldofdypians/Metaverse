@@ -197,9 +197,9 @@ const BetaPassNFT = ({
                     The Beta Pass NFT provides you with a special ticket to
                     enter the metaverse and participate in an exclusive event
                     hosted by our partners. During this event, players have the
-                    opportunity to earn Points for their daily, weekly, and
-                    monthly Leaderboard rankings, as well as receive rewards
-                    that are distributed monthly.
+                    opportunity to earn Points for their leaderboard rankings,
+                    and also collect rewards in different tokens, which are
+                    distributed on a monthly basis.
                   </p>
                   <NavLink
                     to="/marketplace/mint"
