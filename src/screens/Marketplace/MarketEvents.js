@@ -480,9 +480,9 @@ const MarketEvents = ({
                     />
                   </div>
                   <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
-                  <div className="d-flex align-items-center col col-lg-4 p-3 gap-3">
+                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
                       <img src={coin98} width={36} height={36} alt="" />
-                      <div className="d-flex flex-column justify-content-between gap-4">
+                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
                         <div className="d-flex flex-column gap-2">
                           <div className="d-flex align-items-center gap-2">
                             <h6 className="events-page-title mb-0">Coin98 (C98)</h6>
@@ -518,13 +518,13 @@ const MarketEvents = ({
                     <img
                       src={coin98Upcoming}
                       alt=""
-                      className="upcoming-mint-img"
+                      className="upcoming-mint-img d-none d-lg-flex"
                     />
                   </div>
                   <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex  align-items-center justify-content-between px-0">
-                  <div className="d-flex align-items-center col col-lg-4 p-3 gap-3">
+                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
                       <img src={coingecko} width={36} height={36} alt="" />
-                      <div className="d-flex flex-column justify-content-between gap-4">
+                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
                         <div className="d-flex flex-column gap-2">
                           <div className="d-flex align-items-center gap-2">
                             <h6 className="events-page-title mb-0">Coingecko</h6>
@@ -560,13 +560,13 @@ const MarketEvents = ({
                     <img
                       src={coingeckoUpcoming}
                       alt=""
-                      className="upcoming-mint-img"
-                    />
+                      className="upcoming-mint-img d-none d-lg-flex"
+                    /> 
                   </div>
                   <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
-                  <div className="d-flex align-items-center col col-lg-4 p-3 gap-3">
+                  <div className="d-flex col col-lg-4 align-items-start align-items-lg-center  p-3 gap-3">
                       <img src={base} width={36} height={36} alt="" />
-                      <div className="d-flex flex-column justify-content-between gap-4">
+                      <div className="d-flex flex-column justify-content-between gap-2 gap-lg-4">
                         <div className="d-flex flex-column gap-2">
                           <div className="d-flex align-items-center gap-2">
                             <h6 className="events-page-title mb-0">Base</h6>
@@ -602,7 +602,7 @@ const MarketEvents = ({
                     <img
                       src={baseUpcoming}
                       alt=""
-                      className="upcoming-mint-img"
+                      className="upcoming-mint-img d-none d-lg-flex"
                     />
                   </div>
                 </div>
