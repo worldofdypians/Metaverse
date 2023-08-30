@@ -399,6 +399,38 @@
     transform: none !important;
   }
 }
+
+
+.nft-outer-wrapper2 {
+  position: relative;
+  z-index: 2;
+}
+
+.nft-outer-wrapper2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  padding: 20px;
+  border: 2px solid #41435a;
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+
+  border-radius: 21.4107px;
+  transform: none;
+
+  @media screen and (max-width: 995px) {
+    transform: none !important;
+  }
+}
+
+
 .new-bundle-wrapper {
   position: relative;
   z-index: 2;

@@ -977,7 +977,7 @@ const WalletBalance = ({
             >
               Special Events
             </h6>
-            <div className="nft-outer-wrapper rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
+            <div className="nft-outer-wrapper2 rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyConflux);
@@ -993,7 +993,7 @@ const WalletBalance = ({
               <img
                 src={eventSkeleton}
                 className="profile-event-item"
-                style={{ background: "none", borderBottom: "none" }}
+                style={{ background: "none", borderBottom: "none", transform: 'translateX(0px)' }}
                 alt=""
               />
               {/* <div className="d-flex w-100 justify-content-center">
@@ -1022,7 +1022,7 @@ const WalletBalance = ({
           </div>
           {showAllEvents && (
             <div
-              className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2"
+              className="nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-2"
               style={{
                 maxWidth: "100vw",
                 width: "100%",
@@ -1173,7 +1173,7 @@ const WalletBalance = ({
             >
               My Portfolio
             </h6>
-            <div className=" nft-outer-wrapper p-4  d-flex flex-column gap-2 position-relative custom-height-2">
+            <div className="nft-outer-wrapper2 p-4  d-flex flex-column gap-2 position-relative custom-height-2">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0 ms-lg-3">
                 <h6
                   className={`account-nft-sort ${

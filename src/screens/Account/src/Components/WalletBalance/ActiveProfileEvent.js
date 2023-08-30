@@ -10,7 +10,7 @@ import cyanExplore from "./assets/cyanExplore.svg";
 
 const ActiveProfileEvent = ({onOpenEvent}) => {
   return (
-    <div className="profile-event-item d-flex flex-column position-relative" onClick={onOpenEvent}>
+    <div className="profile-event-item d-flex flex-column position-relative" onClick={onOpenEvent} style={{transform: 'translateX(0px)'}}>
     <div className="profile-event-tag d-flex align-items-center justify-content-center px-1"> 
     <span className="profile-event-tag-text mb-0">Live</span>
     </div>
