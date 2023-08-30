@@ -39,6 +39,9 @@ import BetaEventCard from "./components/BetaEventCard";
 import eventPopupImage from "../Account/src/Components/WalletBalance/assets/eventPopupImage.png";
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
+import twitter from "./assets/greenTwitter.svg";
+import telegram from "./assets/greentg.svg";
+import website from "./assets/greenWebsite.svg";
 
 const MarketEvents = ({
   account,
@@ -84,6 +87,7 @@ const MarketEvents = ({
         linkState: "conflux",
         rewards: "CFX",
         status: "Live",
+        id: "event1",
       },
     },
     {
@@ -101,6 +105,7 @@ const MarketEvents = ({
         linkState: "coin98",
         rewards: "BNB",
         status: "Coming Soon",
+        id: "event2",
       },
     },
     {
@@ -118,6 +123,7 @@ const MarketEvents = ({
         linkState: "coingecko",
         rewards: "BNB",
         status: "Expired",
+        id: "event3",
       },
     },
     {
@@ -135,6 +141,7 @@ const MarketEvents = ({
         linkState: "base",
         rewards: "BNB",
         status: "Expired",
+        id: "event4",
       },
     },
   ];
@@ -319,7 +326,7 @@ const MarketEvents = ({
       setSelectedPackage("idyp");
     } else if (eventId === "critical-hit") {
       setSelectedPackage("criticalHit");
-    } else if (eventId === "beta-pass") {
+    } else if (eventId === "betapass") {
       setSelectedPackage("betaPass");
     }
   }, []);
@@ -335,7 +342,7 @@ const MarketEvents = ({
       html.classList.remove("hidescroll");
     }
   }, [popup]);
-
+  console.log(dummyEvent);
   return (
     <>
       <div
@@ -502,7 +509,7 @@ const MarketEvents = ({
                   </div>
 
                   {selectedPackage === "betaPass" ? (
-                    <div className="d-flex flex-column gap-4">
+                    <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                       {dummyBetaPassData.map((item, index) => (
                         <BetaEventCard
                           data={item}
@@ -656,16 +663,55 @@ const MarketEvents = ({
               <div className="col-12 col-lg-6">
                 <div className="profile-event-popup-wrapper p-3">
                   <h6 className="popup-green-text">Details</h6>
-                  <p className="popup-event-desc">
-                    To participate in the event, players are required to hold a
-                    Conflux Beta Pass NFT. You can get the Conflux Beta Pass NFT
-                    from the World of Dypians Marketplace. By engaging in the
-                    game on a daily basis and exploring the Conflux area,
-                    players not only stand a chance to secure daily rewards in
-                    CFX tokens or earn points for their placement on the global
-                    leaderboard. Remember to log in to the game daily and
-                    venture into the Conflux area to uncover hidden treasures.
-                  </p>
+                  {dummyEvent.id === "event1" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to{" "}
+                      <b>hold a Conflux Beta Pass NFT</b>. You can get the
+                      Conflux Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Conflux area, players not only stand a
+                      chance to secure daily rewards in CFX tokens or earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Conflux area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event2" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to{" "}
+                      <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Coin98 area, players not only stand a chance to secure
+                      daily rewards in C98 tokens or earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Coin98 area to uncover
+                      hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event3" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to
+                      <b>hold a Coingecko Beta Pass NFT</b>. You can get the
+                      Coingecko Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Coingecko area, players not only stand a
+                      chance to secure daily rewards in BNB tokens or earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Coingecko area to uncover hidden treasures.
+                    </p>
+                  ) : (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to{" "}
+                      <b>hold a Base Beta Pass NFT</b>. You can get the Base
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Base area, players not only stand a chance to secure daily
+                      rewards in BASE tokens or earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the Base area to uncover hidden
+                      treasures.
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="col-12 col-lg-6">
@@ -674,7 +720,17 @@ const MarketEvents = ({
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
                     <li className="popup-event-desc">Daily Rewards</li>
-                    <li className="popup-event-desc">Earn CFX rewards</li>
+                    <li className="popup-event-desc">
+                      Earn{" "}
+                      {dummyEvent.id === "event1"
+                        ? "CFX"
+                        : dummyEvent.id === "event2"
+                        ? "C98"
+                        : dummyEvent.id === "event3"
+                        ? "BNB"
+                        : "BASE"}{" "}
+                      rewards
+                    </li>
                     <li className="popup-event-desc">
                       Get global leaderboard points
                     </li>
@@ -684,34 +740,136 @@ const MarketEvents = ({
                 </div>
               </div>
             </div>
-            <h6 className="how-it-works">Learn more about Conflux Network</h6>
-            <p className="popup-event-desc" style={{fontSize: "12px", fontWeight: "500"}}>
-              Conflux Network stands as a Layer 1 public blockchain solution,
-              uniquely blending the advantages of both public and private
-              blockchains within its hybrid architecture. It aims to establish a
-              diverse multi-chain ecosystem, fostering seamless global
-              connectivity for creators, communities, and markets across
-              different borders and protocols.
-            </p>
+            <h6 className="how-it-works">
+              Learn more about{" "}
+              {dummyEvent.id === "event1"
+                ? "Conflux Network"
+                : dummyEvent.id === "event2"
+                ? "Coin98"
+                : dummyEvent.id === "event3"
+                ? "Coingecko"
+                : "Base Network"}
+            </h6>
+            {dummyEvent.id === "event1" ? (
+              <p
+                className="popup-event-desc"
+                style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Conflux Network stands as a Layer 1 public blockchain solution,
+                uniquely blending the advantages of both public and private
+                blockchains within its hybrid architecture. It aims to establish
+                a diverse multi-chain ecosystem, fostering seamless global
+                connectivity for creators, communities, and markets across
+                different borders and protocols.
+              </p>
+            ) : dummyEvent.id === "event2" ? (
+              <p
+                className="popup-event-desc"
+                style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Coin98 Labs is an Open Infrastructure Financial Services builder
+                focusing on creating and developing an ecosystem of DeFi
+                protocols, applications, NFTs on multiple blockchains. Their
+                mission is to fulfill untapped demand and enhance in-demand
+                utilities in the DeFi space, helping people to access DeFi
+                services effortlessly.
+              </p>
+            ) : dummyEvent.id === "event3" ? (
+              <p
+                className="popup-event-desc"
+                style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                CoinGecko is the world's largest independent cryptocurrency data
+                aggregator with over 10,000+ different cryptoassets tracked
+                across more than 800+ exchanges worldwide.
+              </p>
+            ) : (
+              <p
+                className="popup-event-desc"
+                style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Base is built as an Ethereum L2, with the security, stability,
+                and scalability you need to power your dapps.Base is an easy way
+                for decentralized apps to leverage Coinbase's products and
+                distribution. Seamless Coinbase integrations, easy fiat onramps,
+                and access to the $130B assets on platform in the Coinbase
+                ecosystem.
+              </p>
+            )}
+
+            <div className="d-flex gap-3 align-items-center">
+              <a
+                href={
+                  dummyEvent.id === "event1"
+                    ? "https://twitter.com/Conflux_Network"
+                    : dummyEvent.id === "event2"
+                    ? "https://twitter.com/coin98_wallet"
+                    : dummyEvent.id === "event3"
+                    ? "https://twitter.com/coingecko"
+                    : "https://twitter.com/buildonbase"
+                }
+                target="_blank"
+                className="d-flex gap-1 align-items-center greensocial"
+              >
+                <img alt="" src={twitter} /> Twitter
+              </a>
+              <a
+                href={
+                  dummyEvent.id === "event1"
+                    ? "https://t.me/Conflux_English"
+                    : dummyEvent.id === "event2"
+                    ? "https://t.me/coin98wallet"
+                    : dummyEvent.id === "event3"
+                    ? "https://t.me/coingecko"
+                    : ""
+                }
+                target="_blank"
+                className="d-flex gap-1 align-items-center greensocial"
+              >
+                <img alt="" src={telegram} />
+                Telegram
+              </a>
+              <a
+                href={
+                  dummyEvent.id === "event1"
+                    ? "https://confluxnetwork.org/"
+                    : dummyEvent.id === "event2"
+                    ? "https://coin98.com/"
+                    : dummyEvent.id === "event3"
+                    ? "https://www.coingecko.com/"
+                    : "https://base.org/"
+                }
+                target="_blank"
+                className="d-flex gap-1 align-items-center greensocial"
+              >
+                <img alt="" src={website} />
+                Website
+              </a>
+            </div>
             <div className="popup-red-wrapper mt-3 p-3 d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <img src={grayDollar} width={24} height={24} alt="" />
                 <span className="event-my-earnings mb-0">My earnings</span>
               </div>
-             <div className="d-flex align-items-center gap-3 gap-lg-5">
-             <div className="d-flex flex-column gap-2">
-                <h6 className="mb-0 event-earnings-coin">
-                1,500,250
-                </h6>
-                <span className="mb-0 event-earnings-usd">Points</span>
+              <div className="d-flex align-items-center gap-3 gap-lg-5">
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="mb-0 event-earnings-coin">1,500,250</h6>
+                  <span className="mb-0 event-earnings-usd">Points</span>
+                </div>
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="mb-0 event-earnings-coin">
+                    250.62{" "}
+                    {dummyEvent.id === "event1"
+                      ? "CFX"
+                      : dummyEvent.id === "event2"
+                      ? "C98"
+                      : dummyEvent.id === "event3"
+                      ? "BNB"
+                      : "BASE"}
+                  </h6>
+                  <span className="mb-0 event-earnings-usd">Rewards</span>
+                </div>
               </div>
-              <div className="d-flex flex-column gap-2">
-                <h6 className="mb-0 event-earnings-coin">
-                250.62 CFX
-                </h6>
-                <span className="mb-0 event-earnings-usd">Rewards</span>
-              </div>
-             </div>
             </div>
             <div className="w-100 d-flex justify-content-end mt-3">
               <NavLink

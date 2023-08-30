@@ -325,7 +325,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 30px;
 
   @media screen and (max-width: 786px) {
     display: grid !important;
@@ -1084,9 +1084,9 @@
     rgba(255, 255, 255, 0) -2.13%,
     rgba(255, 255, 255, 0.15) 136.58%
   );
-  width: 180px;
-  filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
-  backdrop-filter: blur(13.3817px);
+  width: 165px;
+  // filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
+  // backdrop-filter: blur(13.3817px);
   border-radius: 21.4107px;
   transform: matrix(1, 0, -0.18, 0.98, 0, 0);
   border: 2px solid #41435a;
@@ -1831,6 +1831,46 @@
   }
 }
 
+.greensocial,
+.greensocial:hover {
+  color: #7dd9af;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.upcoming-mint-img {
+  height: 100px;
+}
+
+.mybetaearnings {
+  background: url(./assets/betaMyEarnings.png);
+  background-size: 100% 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  top: 28px;
+  margin: auto;
+  width: 200px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  scale: 0.9;
+
+  @media only screen and (max-width: 991px) {
+    position: relative;
+    top: 0px;
+  }
+}
+
+.greensocial:hover {
+  text-decoration: underline;
+}
+
 .price-traits-wrapper {
   width: fit-content;
   @media screen and (max-width: 786px) {
@@ -1909,8 +1949,9 @@
   }
 }
 
-.upcoming-mint-wrapper{
+.upcoming-mint-wrapper {
   position: relative;
+  min-height: 100px;
 }
 
 .upcoming-mint-wrapper:first-child {
@@ -2023,14 +2064,12 @@
 
 .events-page-title {
   color: #fff;
-  font-size: 24px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
   letter-spacing: 0.12px;
-  @media screen and (max-width: 786px) {
-    font-size: 20px;
-  }
+  white-space: pre;
 }
 
 .events-page-status-tag-live {
@@ -2046,8 +2085,8 @@
   }
 }
 .events-page-status-tag-upcoming {
-border-radius: 3px;
-background: #EC8123;
+  border-radius: 3px;
+  background: #ec8123;
   span {
     color: #fff;
     text-align: center;
@@ -2058,7 +2097,7 @@ background: #EC8123;
   }
 }
 .events-page-status-tag-expired {
-  background: #B8B8E0;
+  background: #b8b8e0;
   border-radius: 3px;
   span {
     color: #404040;
@@ -2071,45 +2110,45 @@ background: #EC8123;
 }
 
 .events-page-rewards {
-  color: #FFF;
-font-size: 15px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .events-page-details {
-  color: #18FFFF;
-text-align: right;
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-cursor: pointer;
+  color: #18ffff;
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
 }
 
-.events-page-details:hover{
+.events-page-details:hover {
   text-decoration: underline;
 }
 
-.event-my-earnings{
-  color: #FFF;
-text-align: center;
-font-size: 24px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+.event-my-earnings {
+  color: #fff;
+  text-align: center;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
 
-.white-events-text{
-  color: #FFF;
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-text-transform: capitalize;
+.white-events-text {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
 }
-.pick-and-calendar{
+.pick-and-calendar {
   position: absolute;
   bottom: 0;
   top: 0;
@@ -2126,25 +2165,24 @@ text-transform: capitalize;
   }
 }
 
-
-.how-it-works{
-  color: #EEEDFF;
+.how-it-works {
+  color: #eeedff;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 
-.popup-green-text{
-  color: #7DD9AF;
+.popup-green-text {
+  color: #7dd9af;
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 
-.popup-event-desc{
-  color: #EEEDFF;
+.popup-event-desc {
+  color: #eeedff;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
