@@ -387,20 +387,23 @@
 }
 
 .market-stake-title2 {
-  color: #FFF;
-font-size: 20px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
-letter-spacing: 0.1px;
+  color: #fff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.1px;
 }
 
 .nft-outer-wrapper3 {
   border-radius: 20px;
-border: 1px solid #4D4F65;
-background: linear-gradient(108deg, rgba(255, 255, 255, 0.02) 37.89%, rgba(255, 255, 255, 0.15) 168.75%);
-box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
-
+  border: 1px solid #4d4f65;
+  background: linear-gradient(
+    108deg,
+    rgba(255, 255, 255, 0.02) 37.89%,
+    rgba(255, 255, 255, 0.15) 168.75%
+  );
+  box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
 }
 
 .nft-outer-wrapper2 {
@@ -1180,6 +1183,22 @@ box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
   border-radius: 20px;
 }
 
+.detailsgreen-txt {
+  color: #7dd9af;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.staking-height2 {
+  height: auto;
+  @media screen and (max-width: 991px) {
+    min-height: fit-content !important;
+  }
+}
+
 .market-stake-stat {
   font-weight: 800;
   font-size: 36px;
@@ -1188,6 +1207,10 @@ box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
   @media screen and (max-width: 786px) {
     font-size: 30px;
   }
+}
+
+.betastyle {
+  aspect-ratio: 0.94/0.6;
 }
 
 .market-stake-stat-desc {
@@ -1222,7 +1245,6 @@ box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
   }
 }
 
-
 .caws-wod-stake-wrapper2 {
   background-image: url("./assets/cawsWodBannerSmall.png");
   background-size: cover;
@@ -1230,11 +1252,11 @@ box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 20px;
- 
-  @media only screen and (max-width: 991px) {
-    min-height: 177px;
-  }
+  aspect-ratio: 2/0.6;
 
+  @media only screen and (max-width: 991px) {
+    // min-height: 177px;
+  }
 }
 .wod-stake-wrapper2 {
   background-image: url("./assets/wodBannerSmall.png");
@@ -1243,11 +1265,54 @@ box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 20px;
+  aspect-ratio: 2/0.6;
 
   @media only screen and (max-width: 991px) {
-    min-height: 177px;
+    // min-height: 177px;
   }
- 
+}
+
+.events-page-status-tag-live {
+  background: #18ffff;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 2;
+  top: -13px;
+
+  span {
+    color: #b71061;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+  }
+}
+
+@keyframes pulseDot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.pulsatingDot {
+  width: 11px;
+  height: 11px;
+  margin-right: 8px;
+  background-color: #b71061;
+  border-radius: 50%;
+  animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
 }
 
 .mintleft-side {
@@ -1263,7 +1328,6 @@ box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
     width: 100%;
   }
 }
-
 
 .caws-stake-wrapper {
   // background-image: url("./assets/cawsBanner1.png");
@@ -1905,26 +1969,25 @@ box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
   border: 1px solid #5d5fef !important;
 }
 
-
-.single-nft-input{
+.single-nft-input {
   width: 120px;
   color: #fff !important;
   border-radius: 8px !important;
-  border: 1px solid #AAA5EB !important;
+  border: 1px solid #aaa5eb !important;
   background: #272450 !important;
   padding-left: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
-.filters-dropdown{
+.filters-dropdown {
   width: 200px !important;
   @media screen and (max-width: 786px) {
     width: 100% !important;
   }
 }
 
-.price-traits-wrapper{
+.price-traits-wrapper {
   width: fit-content;
   @media screen and (max-width: 786px) {
     width: 100%;

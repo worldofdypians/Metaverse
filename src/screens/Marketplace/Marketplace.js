@@ -26,6 +26,7 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import moment from "moment";
 import { Skeleton } from "@mui/material";
+import greenArrow from './assets/greenArrow.svg'
 
 const Marketplace = ({
   listedNFTS,
@@ -1037,17 +1038,14 @@ const Marketplace = ({
               className="row mx-1 justify-content-center d-flex my-4 align-items-start py-5 gap-4 my-4"
               style={{ minHeight: "420px" }}
             >
-              <div className="d-flex col-12 flex-column p-3  nft-outer-wrapper3 flex-lg-row align-items-start align-items-lg-center gap-4 justify-content-between w-100 position-relative">
-                <div className="mintleft-side mt-0 px-0">
-                <div
-                    className=""
-                    style={{ overflowX: "hidden" }}
-                  >
-                    <div
-                      className="p-4 mint-wrappernew market-mint-bg w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height h-auto"
-                     
-                    >
-                
+              <div className="d-flex col-12 position-relative flex-column px-3 py-4 nft-outer-wrapper3 flex-lg-row align-items-start align-items-lg-center gap-4 justify-content-between w-100 position-relative">
+                <div class=" events-page-status-tag-live px-2 d-flex align-items-center justify-content-center">
+                  <div className="pulsatingDot"></div>
+                  <span>Live</span>
+                </div>
+                <div className="mintleft-side mt-0 px-0 d-flex flex-column gap-3">
+                <NavLink to={'/marketplace/mint'} className='w-100 m-0 d-flex flex-column gap-5'>
+                    <div className="p-4 mint-wrappernew market-mint-bg betastyle w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height staking-height2 h-auto">
                       <h6 className="marketmintnewtitle position-relative">
                         Mint your Timepiece <br />
                         NFT
@@ -1074,38 +1072,50 @@ const Marketplace = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                 </NavLink>
+                 <NavLink to="/marketplace/stake">
+                 <span className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto" style={{width: 'fit-content'}}>Mint now <img src={greenArrow} alt=''/> </span>
+                 </NavLink>
                 </div>
-                <div className="stakeright-side d-flex flex-column align-items-start align-items-lg-center gap-4">
-                  <div className="caws-wod-stake-wrapper2 d-flex flex-column justify-content-center gap-3 w-100 p-3">
-                    <div className="instakeWrapper2 position-relative">
-                      <span className="instaketxt">NFT Staking</span>
-                    </div>
-                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                      <div className="d-flex flex-column gap-4">
-                        <div className="d-flex flex-column gap-2">
-                          <h6 className="market-stake-title2">
-                            World of Dypians<br/> Land & CAWS
-                          </h6>
+                <div className="stakeright-side d-flex flex-column gap-3">
+                  <div className=" d-flex flex-column align-items-start align-items-lg-center gap-4">
+                  <NavLink to="/marketplace/stake" className={'d-flex flex-column justify-content-center gap-3 w-100 '}>
+                    <div className="caws-wod-stake-wrapper2 d-flex flex-column justify-content-center gap-3 w-100 p-3">
+                      <div className="instakeWrapper2 position-relative">
+                        <span className="instaketxt">NFT Staking</span>
+                      </div>
+                      <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
+                        <div className="d-flex flex-column gap-4">
+                          <div className="d-flex flex-column gap-2">
+                            <h6 className="market-stake-title2">
+                              World of Dypians
+                              <br /> Land & CAWS
+                            </h6>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="wod-stake-wrapper2  justify-content-center gap-3 d-flex flex-column  w-100 p-3">
-                    <div className="instakeWrapper2 position-relative">
-                      <span className="instaketxt">NFT Staking</span>
-                    </div>
-                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                      <div className="d-flex flex-column gap-4">
-                        <div className="d-flex flex-column gap-2">
-                          <h6 className="market-stake-title2">
-                            World of Dypians<br/>  Land NFT
-                          </h6>
+                  </NavLink>
+                  <NavLink to="/marketplace/stake" className={'d-flex flex-column justify-content-center gap-3 w-100 '}>
+                    <div className="wod-stake-wrapper2  justify-content-center gap-3 d-flex flex-column  w-100 p-3">
+                      <div className="instakeWrapper2 position-relative">
+                        <span className="instaketxt">NFT Staking</span>
+                      </div>
+                      <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
+                        <div className="d-flex flex-column gap-4">
+                          <div className="d-flex flex-column gap-2">
+                            <h6 className="market-stake-title2">
+                              World of Dypians
+                              <br /> Land NFT
+                            </h6>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </NavLink></div>
+                  <NavLink to="/marketplace/stake">
+                  <span className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto" style={{width: 'fit-content'}}>Stake now <img src={greenArrow} alt=''/> </span>
+</NavLink>
                 </div>
               </div>
             </div>
