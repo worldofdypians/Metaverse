@@ -287,6 +287,25 @@
   }
 }
 
+.instakeWrapper2 {
+  z-index: 4;
+  padding: 5px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  width: fit-content;
+
+  .instaketxt {
+    color: #fff;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
 .loader-wrapper {
   width: 100%;
   display: flex;
@@ -365,6 +384,41 @@
 .nft-outer-wrapper {
   position: relative;
   z-index: 2;
+}
+
+.market-stake-title2 {
+  color: #FFF;
+font-size: 20px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+letter-spacing: 0.1px;
+}
+
+.nft-outer-wrapper3 {
+  border-radius: 20px;
+border: 1px solid #4D4F65;
+background: linear-gradient(108deg, rgba(255, 255, 255, 0.02) 37.89%, rgba(255, 255, 255, 0.15) 168.75%);
+box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
+
+}
+
+.nft-outer-wrapper2 {
+  position: relative;
+  z-index: 2;
+  border: 2px solid #41435a;
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+
+  border-radius: 21.4107px;
+  transform: none;
+
+  @media screen and (max-width: 995px) {
+    transform: none !important;
+  }
 }
 
 .nft-outer-wrapper::before {
@@ -1167,6 +1221,50 @@
     background-image: url("./assets/wodBannerMobile.png");
   }
 }
+
+
+.caws-wod-stake-wrapper2 {
+  background-image: url("./assets/cawsWodBannerSmall.png");
+  background-size: cover;
+  min-height: 177px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
+ 
+  @media only screen and (max-width: 991px) {
+    min-height: 177px;
+  }
+
+}
+.wod-stake-wrapper2 {
+  background-image: url("./assets/wodBannerSmall.png");
+  background-size: cover;
+  min-height: 177px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
+
+  @media only screen and (max-width: 991px) {
+    min-height: 177px;
+  }
+ 
+}
+
+.mintleft-side {
+  width: 50%;
+  @media only screen and (max-width: 991px) {
+    width: 100%;
+  }
+}
+
+.stakeright-side {
+  width: 50%;
+  @media only screen and (max-width: 991px) {
+    width: 100%;
+  }
+}
+
+
 .caws-stake-wrapper {
   // background-image: url("./assets/cawsBanner1.png");
   border-radius: 20px;
