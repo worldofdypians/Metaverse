@@ -41,7 +41,7 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
 
       <div className="d-flex col col-lg-3 flex-column align-items-center">
         <div className="mybetaearnings">
-          <h6 className="event-my-earnings mb-3">${data.myEarnings}</h6>
+          <h6 className="event-my-earnings3 mb-3">${data.myEarnings}</h6>
         </div>
       </div>
       <div className="d-flex flex-column gap-3 pick-and-calendar">

@@ -44,7 +44,6 @@ import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 
-
 const MarketEvents = ({
   account,
   chainId,
@@ -625,7 +624,9 @@ const MarketEvents = ({
                 <img src={eventPopupImage} alt="" />
                 <div className="d-flex flex-column justify-content-between">
                   <div className="d-flex flex-column">
-                    <h6 className="popup-second-title m-0">{dummyEvent?.title}</h6>
+                    <h6 className="popup-second-title m-0">
+                      {dummyEvent?.title}
+                    </h6>
                     <span className="popup-rewards">
                       $5,000 in {dummyEvent?.rewards} rewards
                     </span>
@@ -817,7 +818,7 @@ const MarketEvents = ({
               >
                 <img alt="" src={twitter} /> Twitter
               </a>
-              
+
               <a
                 href={
                   dummyEvent.id === "event1"
@@ -831,8 +832,11 @@ const MarketEvents = ({
                 target="_blank"
                 className="d-flex gap-1 align-items-center greensocial"
               >
-                <img alt="" src={ dummyEvent.id !== 'event4' ? telegram : discord} />
-                {dummyEvent.id !== 'event4' ? 'Telegram' : "Discord"}
+                <img
+                  alt=""
+                  src={dummyEvent.id !== "event4" ? telegram : discord}
+                />
+                {dummyEvent.id !== "event4" ? "Telegram" : "Discord"}
               </a>
               <a
                 href={
@@ -852,12 +856,12 @@ const MarketEvents = ({
               </a>
             </div>
             <div className="summaryseparator mt-3"></div>
-            <div className="popup-red-wrapper mt-3 p-3 d-flex align-items-center justify-content-between">
+            <div className="popup-red-wrapper mt-3 p-3 d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row align-items-xxl-center align-items-xl-center align-items-lg-center align-items-md-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <img src={grayDollar} width={36} height={36} alt="" />
                 <span className="event-my-earnings2 mb-0">My earnings</span>
               </div>
-              <div className="d-flex align-items-center gap-3 gap-lg-5">
+              <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">1,500,250</h6>
                   <span className="mb-0 event-earnings-usd">Points</span>
