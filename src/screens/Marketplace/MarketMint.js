@@ -1013,6 +1013,7 @@ const MarketMint = ({
                       src={confluxUpcoming}
                       alt=""
                       className="upcoming-mint-img"
+                      style={{height: 'auto'}}
                     />
                   </div>
                   <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
@@ -1027,6 +1028,8 @@ const MarketMint = ({
                       src={coin98Upcoming}
                       alt=""
                       className="upcoming-mint-img"
+                      style={{height: 'auto'}}
+
                     />
                   </div>
                   <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
@@ -1044,6 +1047,8 @@ const MarketMint = ({
                       src={coingeckoUpcoming}
                       alt=""
                       className="upcoming-mint-img"
+                      style={{height: 'auto'}}
+
                     />
                   </div>
                   <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
@@ -1059,6 +1064,8 @@ const MarketMint = ({
                       src={baseUpcoming}
                       alt=""
                       className="upcoming-mint-img"
+                      style={{height: 'auto'}}
+
                     />
                   </div>
                 </div>

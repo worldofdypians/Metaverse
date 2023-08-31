@@ -426,7 +426,7 @@
 
 .profile-event-popup {
   max-height: 80%;
-  overflow-y: scroll;
+  overflow-y: auto;
   background: #1a1c39;
   border-radius: 10px;
   width: 50%;
@@ -444,7 +444,7 @@
     width: 75%;
   }
   @media screen and (max-width: 786px) {
-    width: 100%;
+    width: 95%;
   }
 }
 
@@ -496,7 +496,7 @@
 .profile-event-popup-wrapper {
   border-radius: 10px;
   background: #252743;
-  backdrop-filter: blur(26px);
+  // backdrop-filter: blur(26px);
 }
 
 .popup-second-title {
