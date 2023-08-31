@@ -201,15 +201,7 @@ const BetaPassNFT = ({
                     and also collect rewards in different tokens, which are
                     distributed on a monthly basis.
                   </p>
-                  <NavLink
-                    to="/marketplace/mint"
-                    style={{ textDecoration: "none", width: 'fit-content' }}
-                  >
-                    <button className="btn mint-now-btn gap-2">
-                      <img src={mintNowIcon} alt="" />
-                      Available minting
-                    </button>
-                  </NavLink>
+                 
                 </div>
               </div>
               <div className="col-12 col-lg-4">
@@ -224,47 +216,8 @@ const BetaPassNFT = ({
               className="filters-container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between my-4 p-3 position-relative gap-3"
               style={{ zIndex: 2 }}
             >
-              <div class="dropdown filters-dropdown">
-                <button
-                  class="btn btn-secondary nft-dropdown w-100
-                 d-flex align-items-center justify-content-between dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={filterIcon} alt="" />
-                    <h6 className="filter-nav-title mb-0">{filterTitle}</h6>
-                  </div>
-                  <img src={dropdownIcon} alt="" />
-                </button>
-                <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
-                  <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
-                      setFilterTitle("Filter");
-                    }}
-                  >
-                    <span>All</span>
-                  </li>
-                  <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
-                      setFilterTitle("Recently listed");
-                    }}
-                  >
-                    <span>Recently listed</span>
-                  </li>
-                  <li
-                    className="nft-dropdown-item"
-                    onClick={() => {
-                      setFilterTitle("Recently sold");
-                    }}
-                  >
-                    <span>Recently sold</span>
-                  </li>
-                </ul>
-              </div>
+
+
               <div className="d-flex align-items-center gap-4 justify-content-center flex-wrap">
                 <NavLink
                   to={"/marketplace/beta-pass/conflux"}
@@ -311,36 +264,7 @@ const BetaPassNFT = ({
                   <span>Base</span>
                 </NavLink>
               </div>
-              <div className="d-flex align-items-center justify-content-between justify-cotent-lg-center gap-3 gap-lg-5 price-traits-wrapper">
-                <div
-                  className="filter-nav d-flex align-items-center gap-2"
-                  style={{ cursor: "pointer" }}
-                >
-                  <img
-                    src={
-                      priceCount === 0
-                        ? priceIconNeutral
-                        : priceCount % 2 == 0
-                        ? priceIconDown
-                        : priceIconUp
-                    }
-                    alt=""
-                  />
-                  <h6
-                    className="filter-nav-title mb-0"
-                    style={{
-                      color:
-                        priceCount === 0
-                          ? "#EEEDFF"
-                          : priceCount % 2 == 0
-                          ? "#FF6232"
-                          : "#09F3D2",
-                    }}
-                  >
-                    Price
-                  </h6>
-                </div>
-              </div>
+
             </div>
 
             <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
