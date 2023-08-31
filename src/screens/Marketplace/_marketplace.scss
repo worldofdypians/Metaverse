@@ -1873,7 +1873,7 @@
 }
 
 .upcoming-mint-img {
-  height: 100px;
+  height: 104px;
 }
 
 .mybetaearnings {
@@ -1984,6 +1984,11 @@
 .upcoming-mint-wrapper {
   position: relative;
   min-height: 100px;
+  border: 1px solid transparent;
+}
+
+.upcoming-mint-wrapper2:hover {
+  border: 1px solid #11fed2;
 }
 
 .upcoming-mint-wrapper:first-child {
@@ -2172,6 +2177,14 @@
   line-height: normal;
 }
 
+.event-my-earnings2 {
+  color: #EEEDFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
 .white-events-text {
   color: #fff;
   font-size: 12px;
@@ -2215,8 +2228,8 @@
 
 .popup-event-desc {
   color: #eeedff;
-  font-size: 10px;
+  font-size: 13px;
   font-style: normal;
-  font-weight: 400;
   line-height: normal;
+font-family: 'Montserrat', sans-serif;
 }

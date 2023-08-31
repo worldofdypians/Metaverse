@@ -1174,7 +1174,7 @@ const WalletBalance = ({
               My Portfolio
             </h6>
             <div className="nft-outer-wrapper2 p-4  d-flex flex-column gap-2 position-relative custom-height-2">
-              <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0 ms-lg-3">
+              <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Balance" && "nft-sort-selected"
@@ -3005,7 +3005,7 @@ const WalletBalance = ({
         )}
         {showAllEvents && (
           <div
-            className="nft-outer-wrapper position-relative p-3 p-lg-5 gap-2"
+            className="nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-2"
             style={{
               maxWidth: "100vw",
               width: "100%",
