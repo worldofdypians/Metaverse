@@ -1255,7 +1255,11 @@
   aspect-ratio: 2/0.6;
 
   @media only screen and (max-width: 991px) {
-    // min-height: 177px;
+    background-position-y: -186px;
+    background-size: cover;
+    background-image: url("./assets/cawsWodBannerMobile.png");
+    aspect-ratio: 0.63/0.7;
+    min-height: fit-content;
   }
 }
 .wod-stake-wrapper2 {
@@ -1269,6 +1273,11 @@
 
   @media only screen and (max-width: 991px) {
     // min-height: 177px;
+    background-image: url("./assets/wodBannerMobile.png");
+    background-position-y: -186px;
+    background-size: cover;
+    aspect-ratio: 0.63/0.7;
+    min-height: fit-content;
   }
 }
 

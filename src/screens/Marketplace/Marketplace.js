@@ -1078,9 +1078,9 @@ const Marketplace = ({
                  </NavLink>
                 </div>
                 <div className="stakeright-side d-flex flex-column gap-3">
-                  <div className=" d-flex flex-column align-items-start align-items-lg-center gap-4">
+                  <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">
                   <NavLink to="/marketplace/stake" className={'d-flex flex-column justify-content-center gap-3 w-100 '}>
-                    <div className="caws-wod-stake-wrapper2 d-flex flex-column justify-content-center gap-3 w-100 p-3">
+                    <div className="caws-wod-stake-wrapper2 d-flex flex-column justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center gap-3 w-100 p-3">
                       <div className="instakeWrapper2 position-relative">
                         <span className="instaketxt">NFT Staking</span>
                       </div>
@@ -1097,7 +1097,7 @@ const Marketplace = ({
                     </div>
                   </NavLink>
                   <NavLink to="/marketplace/stake" className={'d-flex flex-column justify-content-center gap-3 w-100 '}>
-                    <div className="wod-stake-wrapper2  justify-content-center gap-3 d-flex flex-column  w-100 p-3">
+                    <div className="wod-stake-wrapper2 justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center  gap-3 d-flex flex-column  w-100 p-3">
                       <div className="instakeWrapper2 position-relative">
                         <span className="instaketxt">NFT Staking</span>
                       </div>
