@@ -120,7 +120,7 @@ const MakeOffer = ({
         token_address
       );
       const contract2 = new web3eth.eth.Contract(
-        window.WETH_ABI,
+        window.TOKEN_ABI,
         window.config.weth2_address
       );
 
@@ -313,8 +313,8 @@ const MakeOffer = ({
               </div>
             </div>
           )}
-          <div className="d-flex align-items-center gap-3 justify-content-between">
-            <div className="d-flex align-items-center gap-2">
+          <div className="d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row align-items-center gap-3 justify-content-between">
+            <div className="d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row align-items-center gap-2">
               <input
                 type="number"
                 min={0}
@@ -386,7 +386,7 @@ const MakeOffer = ({
                 status === "fail" || approvestatus === "fail"
                   ? "errorbtn"
                   : "mint-now-btn"
-              } gap-2 align-self-end mt-4`}
+              } gap-2 align-self-center align-self-xxl-end align-self-xl-end align-self-lg-end mt-4`}
               style={{ width: "fit-content" }}
               onClick={() => {
                 isApprove
@@ -433,7 +433,7 @@ const MakeOffer = ({
               <button
                 className={`btn ${
                   deletestatus === "faildelete" ? "errorbtn" : "mint-now-btn"
-                } gap-2 align-self-end mt-4`}
+                } gap-2  align-self-center align-self-xxl-end align-self-xl-end align-self-lg-end  mt-4`}
                 style={{ width: "fit-content" }}
                 onClick={() => {
                   handleDeleteOffer(offerData[0].index);
@@ -460,7 +460,7 @@ const MakeOffer = ({
               <button
                 className={`btn ${
                   updatestatus === "failupdate" ? "errorbtn" : "pill-btn"
-                } gap-2 align-self-end mt-4`}
+                } gap-2  align-self-center align-self-xxl-end align-self-xl-end align-self-lg-end  mt-4`}
                 style={{ width: "fit-content" }}
                 onClick={() => {
                   handleUpdateOffer(
