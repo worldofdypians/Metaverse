@@ -661,7 +661,7 @@ const Marketplace = ({
                       </div>
                       <div className="second-box-blur"></div>
                       <img
-                        src={require("./assets/criticalHit.webp")}
+                        src={require("./assets/treasure.jpg")}
                         alt=""
                         className="blur-img"
                       />

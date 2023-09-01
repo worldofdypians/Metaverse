@@ -495,7 +495,7 @@ const MarketEvents = ({
                             onClick={() => setSelectedPackage("betaPass")}
                           >
                             <img
-                              src={require("./assets/betaPassDummy.png")}
+                              src={require("./assets/treasure.jpg")}
                               className="w-100"
                               style={{ borderRadius: "16px" }}
                               alt=""
