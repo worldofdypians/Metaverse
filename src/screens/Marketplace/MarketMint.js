@@ -27,15 +27,14 @@ import timepieceActive from "./assets/timepieceActive.png";
 import Slider from "react-slick";
 import { NavLink, useLocation } from "react-router-dom";
 import nextArrow from "./assets/nextArrow1.svg";
-import blockChainIcon from './assets/blockChainIcon.svg'
-import confluxLogo from './assets/confluxLogo.svg'
-import baseLogo from './assets/baseLogo.svg'
-import bnbLogo from './assets/bnbLogo.svg'
-import wodLogo from './assets/wodIcon.png'
-import openSeaLogo from './assets/openSeaLogo.png'
-import BetaEventCard from './components/BetaEventCard'
+import blockChainIcon from "./assets/blockChainIcon.svg";
+import confluxLogo from "./assets/confluxLogo.svg";
+import baseLogo from "./assets/baseLogo.svg";
+import bnbLogo from "./assets/bnbLogo.svg";
+import wodLogo from "./assets/wodIcon.png";
+import openSeaLogo from "./assets/openSeaLogo.png";
+import BetaEventCard from "./components/BetaEventCard";
 import EventSliderCard from "./components/EventSliderCard";
-
 
 const MarketMint = ({
   showWalletConnect,
@@ -56,7 +55,39 @@ const MarketMint = ({
   const windowSize = useWindowSize();
   const location = useLocation();
 
-  const locationState = location?.state?.event
+  const confluxData = {
+    id: "conflux",
+    cardTitle: "Conflux Beta Pass",
+    title: "Conflux Beta Pass",
+    background: "conflux-mint-bg",
+  };
+  const timepieceData = {
+    id: "timepiece",
+    cardTitle: "Caws Timepiece",
+    title: "Timepiece",
+    background: "market-mint-bg",
+  };
+  const coin98Data = {
+    id: "coin98",
+    cardTitle: "Coin98 Beta Pass",
+    title: "Coin98 Beta Pass",
+    background: "coin98-mint-bg",
+  };
+  const coingeckoData = {
+    id: "coingecko",
+    cardTitle: "Coingecko Beta Pass",
+    title: "Coingecko Beta Pass",
+    background: "coingecko-mint-bg",
+  };
+  
+  const baseData = {
+    id: "base",
+    cardTitle: "Base Beta Pass",
+    title: "Base Beta Pass",
+    background: "base-mint-bg",
+  };
+
+  const locationState = location?.state?.event;
   const [viewCollection, setViewCollection] = useState(false);
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
@@ -77,49 +108,12 @@ const MarketMint = ({
   const [sliderCut, setSliderCut] = useState();
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
-  const [selectedMint, setSelectedMint] = useState(confluxData)
-  const [mintTitle, setMintTitle] = useState("conflux")
-
-
-  const confluxData = {
-    id: "conflux",
-    cardTitle: "Conflux Beta Pass",
-    title: "Conflux Beta Pass",
-    background: 'conflux-mint-bg'
-  }
-  const timepieceData = {
-    id: "timepiece",
-    cardTitle: "Caws Timepiece",
-    title: "Timepiece",
-    background: 'market-mint-bg'
-  }
-  const coin98Data = {
-    id: "coin98",
-    cardTitle: "Coin98 Beta Pass",
-    title: "Coin98 Beta Pass",
-    background: 'coin98-mint-bg'
-  }
-  const coingeckoData = {
-    id: "coingecko",
-    cardTitle: "Coingecko Beta Pass",
-    title: "Coingecko Beta Pass",
-    background: 'coingecko-mint-bg'
-  }
-  const baseData = {
-    id: "base",
-    cardTitle: "Base Beta Pass",
-    title: "Base Beta Pass",
-    background: 'base-mint-bg'
-  }
-
-
+  const [selectedMint, setSelectedMint] = useState(confluxData);
+  const [mintTitle, setMintTitle] = useState("conflux");
 
   useEffect(() => {
-    setSelectedMint(confluxData)
-  }, [])
-  
-
-
+    setSelectedMint(confluxData);
+  }, []);
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -135,7 +129,7 @@ const MarketMint = ({
     } else {
       setSliderCut(1);
     }
-  }
+  };
 
   var settings = {
     dots: false,
@@ -198,7 +192,7 @@ const MarketMint = ({
   const firstNext = () => {
     slider.current.slickNext();
   };
- const firstPrev = () => {
+  const firstPrev = () => {
     slider.current.slickPrev();
   };
 
@@ -316,19 +310,20 @@ const MarketMint = ({
   }, []);
 
   useEffect(() => {
-      if(locationState === "conflux"){
-        setSelectedMint(confluxData); setMintTitle("conflux")
-      }else if(locationState === "coingecko"){
-        setSelectedMint(coingeckoData); setMintTitle("coingecko")
-      
-      }else if(locationState === "coin98"){
-        setSelectedMint(coin98Data); setMintTitle("coin98")
-      
-      }else if(locationState === "base"){
-        setSelectedMint(baseData); setMintTitle("base")
-      }
-  }, [])
-  
+    if (locationState === "conflux") {
+      setSelectedMint(confluxData);
+      setMintTitle("conflux");
+    } else if (locationState === "coingecko") {
+      setSelectedMint(coingeckoData);
+      setMintTitle("coingecko");
+    } else if (locationState === "coin98") {
+      setSelectedMint(coin98Data);
+      setMintTitle("coin98");
+    } else if (locationState === "base") {
+      setSelectedMint(baseData);
+      setMintTitle("base");
+    }
+  }, []);
 
   const dummyCards = [
     {
@@ -338,7 +333,6 @@ const MarketMint = ({
       img: confluxActive,
       data: confluxData,
       class: "mint-1",
-      
     },
     {
       title: "Coin98 Pass",
@@ -347,7 +341,6 @@ const MarketMint = ({
       img: coin98Active,
       data: coin98Data,
       class: "mint-2",
-
     },
     {
       title: "Coingecko Pass",
@@ -356,7 +349,6 @@ const MarketMint = ({
       img: coingeckoActive,
       data: coingeckoData,
       class: "mint-3",
-
     },
     {
       title: "Base Pass",
@@ -365,7 +357,6 @@ const MarketMint = ({
       img: baseActive,
       data: baseData,
       class: "mint-4",
-
     },
     {
       title: "Caws Timepiece",
@@ -374,10 +365,8 @@ const MarketMint = ({
       img: timepieceActive,
       data: timepieceData,
       class: "mint-5",
-
     },
-  ]
-
+  ];
 
   return (
     <>
@@ -451,23 +440,31 @@ const MarketMint = ({
               {activeTab === "live" && (
                 <>
                   <div className="pb-5 px-0 position-relative">
-                  {activeSlide > 0 && (
-                <div className="prev-arrow-nft" onClick={firstPrev}>
-                  <img src={nextArrow} alt="" />
-                </div>
-              )}
-              {showFirstNext === activeSlide
-                ? null
-                : 5 > sliderCut && (
-                    <div className="next-arrow-nft" onClick={firstNext}>
-                      <img src={nextArrow} alt="1" />
-                    </div>
-                  )}
+                    {activeSlide > 0 && (
+                      <div className="prev-arrow-nft" onClick={firstPrev}>
+                        <img src={nextArrow} alt="" />
+                      </div>
+                    )}
+                    {showFirstNext === activeSlide
+                      ? null
+                      : 5 > sliderCut && (
+                          <div className="next-arrow-nft" onClick={firstNext}>
+                            <img src={nextArrow} alt="1" />
+                          </div>
+                        )}
                     <Slider ref={(c) => (slider.current = c)} {...settings}>
                       {dummyCards.map((item, index) => (
-                        <EventSliderCard key={index} data={item} onSelectCard={() => {setSelectedMint(item.data); setMintTitle(item.eventId)}} mintTitle={mintTitle} />
+                        <EventSliderCard
+                          key={index}
+                          data={item}
+                          onSelectCard={() => {
+                            setSelectedMint(item.data);
+                            setMintTitle(item.eventId);
+                          }}
+                          mintTitle={mintTitle}
+                        />
                       ))}
-                        {/* <div className={` ${mintTitle === "conflux" && "active-mint-selected"}  active-mint mint-1 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(confluxData); setMintTitle("conflux")}}>
+                      {/* <div className={` ${mintTitle === "conflux" && "active-mint-selected"}  active-mint mint-1 justify-content-between d-flex flex-column`} onClick={() => {setSelectedMint(confluxData); setMintTitle("conflux")}}>
                           <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
                             <h6 className="active-mint-title mb-0">
                               Conflux Pass
@@ -576,9 +573,9 @@ const MarketMint = ({
                         )}
                         <div
                           className={`genesis-wrapper ${
-                            mintTitle !== "timepiece" ? 
-                            "conflux-empty" :
-                            totalCreated > 0
+                            mintTitle !== "timepiece"
+                              ? "conflux-empty"
+                              : totalCreated > 0
                               ? "genesis-land"
                               : "genesis-land-empty"
                           } d-flex justify-content-center align-items-center p-3 position-relative`}
@@ -637,7 +634,6 @@ const MarketMint = ({
                       className={`p-4 mint-wrappernew ${selectedMint.background} w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height`}
                       style={{ minHeight: "463px" }}
                     >
-         
                       <h6 className="marketmintnewtitle position-relative">
                         Mint your {selectedMint.title} <br />
                         NFT
@@ -660,50 +656,45 @@ const MarketMint = ({
                                 {item.title}
                               </span>
                             </div>
-                            
                           ))}
-                          {mintTitle === "conflux" ? 
-                          <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={blockChainIcon}
-                            width={32}
-                            height={32}
-                            alt=""
-                       
-                          />
-                          <span className="mint-benefits-title">
-                          Minting is available on Conflux Network
-                          </span>
-                        </div>
-                        : mintTitle === "base" ?
-
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={blockChainIcon}
-                            width={32}
-                            height={32}
-                            alt=""
-                         
-                          />
-                          <span className="mint-benefits-title">
-                          Minting is available on Base Network
-                          </span>
-                        </div>
-                        : mintTitle === "coingecko" || mintTitle === "coin98" ?
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={blockChainIcon}
-                            width={32}
-                            height={32}
-                            alt=""
-                       
-                          />
-                          <span className="mint-benefits-title">
-                          Minting is available on BNB Chain
-                          </span>
-                        </div>
-                        : null
-                       }
+                          {mintTitle === "conflux" ? (
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={blockChainIcon}
+                                width={32}
+                                height={32}
+                                alt=""
+                              />
+                              <span className="mint-benefits-title">
+                                Minting is available on Conflux Network
+                              </span>
+                            </div>
+                          ) : mintTitle === "base" ? (
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={blockChainIcon}
+                                width={32}
+                                height={32}
+                                alt=""
+                              />
+                              <span className="mint-benefits-title">
+                                Minting is available on Base Network
+                              </span>
+                            </div>
+                          ) : mintTitle === "coingecko" ||
+                            mintTitle === "coin98" ? (
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={blockChainIcon}
+                                width={32}
+                                height={32}
+                                alt=""
+                              />
+                              <span className="mint-benefits-title">
+                                Minting is available on BNB Chain
+                              </span>
+                            </div>
+                          ) : null}
                         </div>
                       </div>
                     </div>
@@ -821,48 +812,44 @@ const MarketMint = ({
                           />
                         </div>
                       </div>
-                   {mintTitle === "timepiece" ? 
-                     <span
-                     className="limit-span position-relative"
-                     style={{
-                       color: nftStatus.includes("Exceeded")
-                         ? "#D87B7B"
-                         : "#FFFFFF",
-                       bottom: "auto",
-                     }}
-                   >
-                     {nftStatus}
-                   </span>
-                   :
-                   mintTitle === "conflux" ? 
-                   <span
-                   className="limit-span position-relative d-flex align-items-center gap-2"
-                   style={{bottom: "0px"}}
-                 > 
-                  Available only on Conflux Network
-                  <img src={confluxLogo} alt="" />
-                 </span> 
-                  :
-                  mintTitle === "base" ? 
-                  <span
-                  className="limit-span position-relative d-flex align-items-center gap-2"
-                  style={{bottom: "0px"}}
-                > 
-                 Available only on Base Network
-                 <img src={baseLogo} alt="" />
-                </span>
-                 :
-                 mintTitle === "coin98" || mintTitle === "coingecko" ? 
-                 <span
-                 className="limit-span position-relative d-flex align-items-center gap-2"
-                 style={{bottom: "0px"}}
-               > 
-                Available only on BNB Chain
-                <img src={bnbLogo} alt="" />
-               </span>
-                : 
-                null  
-              }
+                      {mintTitle === "timepiece" ? (
+                        <span
+                          className="limit-span position-relative"
+                          style={{
+                            color: nftStatus.includes("Exceeded")
+                              ? "#D87B7B"
+                              : "#FFFFFF",
+                            bottom: "auto",
+                          }}
+                        >
+                          {nftStatus}
+                        </span>
+                      ) : mintTitle === "conflux" ? (
+                        <span
+                          className="limit-span position-relative d-flex align-items-center gap-2"
+                          style={{ bottom: "0px" }}
+                        >
+                          Available only on Conflux Network
+                          <img src={confluxLogo} alt="" />
+                        </span>
+                      ) : mintTitle === "base" ? (
+                        <span
+                          className="limit-span position-relative d-flex align-items-center gap-2"
+                          style={{ bottom: "0px" }}
+                        >
+                          Available only on Base Network
+                          <img src={baseLogo} alt="" />
+                        </span>
+                      ) : mintTitle === "coin98" ||
+                        mintTitle === "coingecko" ? (
+                        <span
+                          className="limit-span position-relative d-flex align-items-center gap-2"
+                          style={{ bottom: "0px" }}
+                        >
+                          Available only on BNB Chain
+                          <img src={bnbLogo} alt="" />
+                        </span>
+                      ) : null}
                       <hr className="mint-divider m-0" />
                       {/* {cawsArray.length > 0 && nftCount > 0 && (
             <span className="land-name">
@@ -1013,7 +1000,7 @@ const MarketMint = ({
                       src={confluxUpcoming}
                       alt=""
                       className="upcoming-mint-img"
-                      style={{height: 'auto'}}
+                      style={{ height: "auto" }}
                     />
                   </div>
                   <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
@@ -1028,8 +1015,7 @@ const MarketMint = ({
                       src={coin98Upcoming}
                       alt=""
                       className="upcoming-mint-img"
-                      style={{height: 'auto'}}
-
+                      style={{ height: "auto" }}
                     />
                   </div>
                   <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
@@ -1047,8 +1033,7 @@ const MarketMint = ({
                       src={coingeckoUpcoming}
                       alt=""
                       className="upcoming-mint-img"
-                      style={{height: 'auto'}}
-
+                      style={{ height: "auto" }}
                     />
                   </div>
                   <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
@@ -1064,8 +1049,7 @@ const MarketMint = ({
                       src={baseUpcoming}
                       alt=""
                       className="upcoming-mint-img"
-                      style={{height: 'auto'}}
-
+                      style={{ height: "auto" }}
                     />
                   </div>
                 </div>
@@ -1087,17 +1071,20 @@ const MarketMint = ({
                         </div>
                         <div className="d-flex align-items-center justify-content-center justify-content-lg-start mt-2 gap-2">
                           <NavLink to={"/marketplace/land"}>
-                          <button className="btn buywod-btn d-flex align-items-center gap-2">
-                            <img src={wodLogo} alt="" />
-                            <span>WoD</span>
-                          </button>
+                            <button className="btn buywod-btn d-flex align-items-center gap-2">
+                              <img src={wodLogo} alt="" />
+                              <span>WoD</span>
+                            </button>
                           </NavLink>
-                        <a href="https://opensea.io/collection/worldofdypians" target="_blank">
-                        <button className="btn buyopensea-btn d-flex align-items-center gap-2">
-                            <img src={openSeaLogo} alt="" />
-                            <span>Opensea</span>
-                          </button>
-                        </a>
+                          <a
+                            href="https://opensea.io/collection/worldofdypians"
+                            target="_blank"
+                          >
+                            <button className="btn buyopensea-btn d-flex align-items-center gap-2">
+                              <img src={openSeaLogo} alt="" />
+                              <span>Opensea</span>
+                            </button>
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -1119,17 +1106,20 @@ const MarketMint = ({
                         </div>
                         <div className="d-flex align-items-center justify-content-center justify-content-lg-start mt-2 gap-2">
                           <NavLink to={"/marketplace/caws"}>
-                          <button className="btn buywod-btn d-flex align-items-center gap-2">
-                            <img src={wodLogo} alt="" />
-                            <span>WoD</span>
-                          </button>
+                            <button className="btn buywod-btn d-flex align-items-center gap-2">
+                              <img src={wodLogo} alt="" />
+                              <span>WoD</span>
+                            </button>
                           </NavLink>
-                        <a href="https://opensea.io/collection/catsandwatchessocietycaws" target="_blank">
-                        <button className="btn buyopensea-btn d-flex align-items-center gap-2">
-                            <img src={openSeaLogo} alt="" />
-                            <span>Opensea</span>
-                          </button>
-                        </a>
+                          <a
+                            href="https://opensea.io/collection/catsandwatchessocietycaws"
+                            target="_blank"
+                          >
+                            <button className="btn buyopensea-btn d-flex align-items-center gap-2">
+                              <img src={openSeaLogo} alt="" />
+                              <span>Opensea</span>
+                            </button>
+                          </a>
                         </div>
                       </div>
                     </div>

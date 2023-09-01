@@ -343,7 +343,7 @@ const MarketEvents = ({
       html.classList.remove("hidescroll");
     }
   }, [popup]);
-  console.log(dummyEvent);
+  
   return (
     <>
       <div
