@@ -8,14 +8,18 @@ import coingecko from "./assets/coingecko.svg";
 import conflux from "./assets/conflux.svg";
 import coinbaseimg from "./assets/base.svg";
 import { useLocation } from "react-router-dom";
-import dropdownIcon from "../assets/dropdownIcon.svg";
-import traitIcon from "./assets/traitIcon.svg";
-import priceIconUp from "./assets/priceIconUp.svg";
-import priceIconDown from "./assets/priceIconDown.svg";
-import priceIconNeutral from "./assets/priceIconNeutral.svg";
-import filterIcon from "./assets/filterIcon.svg";
-import ItemCard from "../../../components/ItemCard/ItemCard";
-import mintNowIcon from "./assets/mintNowIcon.svg";
+import blockChainIcon from '../assets/blockChainIcon.svg'
+import confluxLogo from '../assets/confluxLogo.svg'
+import baseLogo from '../assets/baseLogo.svg'
+import bnbLogo from '../assets/bnbLogo.svg'
+import wodLogo from '../assets/wodIcon.png'
+import blackWallet from "../../../assets/wallet-black.svg";
+import whitewallet from "../../../assets/wallet-white.svg";
+import addActive from "../../../assets/landAssets/addActive.svg";
+import addInactive from "../../../assets/landAssets/addInactive.svg";
+import subtractActive from "../../../assets/landAssets/subtractActive.svg";
+import subtractInactive from "../../../assets/landAssets/subtractInactive.svg";
+import dummyBadge from "../../../assets/landAssets/dummyBadge.png";
 
 const BetaPassNFT = ({
   isConnected,
@@ -26,141 +30,115 @@ const BetaPassNFT = ({
   dypTokenData,
   cawsBought,
   handleRefreshListing,
-  nftCount,
+  chainId,
+  totalCreated,
+  mintloading,
+  showWalletConnect,
+  cawsArray,
+  textColor,
+  mintStatus,
+  nftName,
+  handleMint,
+
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
-  const [priceCount, setPriceCount] = useState(0);
-  const [filterTitle, setFilterTitle] = useState("Filter");
 
-  const dummyData = [
+  const benefits = [
     {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "0",
-      type: "caws",
-      chain: 1,
+      title: "Exclusive Access",
+      icon: "draft",
     },
     {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x38735bE0B0E44BF0B8Da1dD5aA96B787879F1c72",
-      tokenId: "1",
-      type: "caws",
-      chain: 1,
+      title: "Enhanced Interactions",
+      icon: "user",
     },
     {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x9058FF24462B6fe98a73781c6EEdad9D4e550c7a",
-      tokenId: "2",
-      type: "caws",
-      chain: 1,
+      title: "Special Rewards",
+      icon: "star",
     },
     {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x76E60102AE09386eE0c848F2Ee36ede6d03ad4B3",
-      tokenId: "3",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0xf6180221a94aCA479f71e2A3a48e9A65E0dF179c",
-      tokenId: "4",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0xd577E2b4C4B85Cc28B35DA6bC8475729b7197a50",
-      tokenId: "5",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
-      tokenId: "6",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "7",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "8",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0xb8CAC1C259bA3a73e26744fB8D09B5Bd77c2207B",
-      tokenId: "9",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
-      tokenId: "10",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0xcE8Bb137Ed6204a8259e9bD44197D4BD1184344B",
-      tokenId: "11",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "12",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x86aBfF52425D7159C1220BA7532eD69674DCef45",
-      tokenId: "13",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
-      tokenId: "14",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x105704a52DEB48895226f2C6C47Fb4cc353A4560",
-      tokenId: "15",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "16",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "17",
-      type: "caws",
-      chain: 1,
+      title: "Expanded Functionality",
+      icon: "expand",
     },
   ];
+
+  const confluxData = {
+    id: "conflux",
+    cardTitle: "Conflux Beta Pass",
+    title: "Conflux Beta Pass",
+    background: 'conflux-mint-bg'
+  }
+  const timepieceData = {
+    id: "timepiece",
+    cardTitle: "Caws Timepiece",
+    title: "Timepiece",
+    background: 'market-mint-bg'
+  }
+  const coin98Data = {
+    id: "coin98",
+    cardTitle: "Coin98 Beta Pass",
+    title: "Coin98 Beta Pass",
+    background: 'coin98-mint-bg'
+  }
+  const coingeckoData = {
+    id: "coingecko",
+    cardTitle: "Coingecko Beta Pass",
+    title: "Coingecko Beta Pass",
+    background: 'coingecko-mint-bg'
+  }
+  const baseData = {
+    id: "base",
+    cardTitle: "Base Beta Pass",
+    title: "Base Beta Pass",
+    background: 'base-mint-bg'
+  }
+
+
+  const locationState = location?.pathname
+
+  const [priceCount, setPriceCount] = useState(0);
+  const [filterTitle, setFilterTitle] = useState("Filter");
+  const [showBadge, setshowBadge] = useState(false);
+  const [latestMintId, setlatestMintId] = useState(0);
+  const [mouseOver, setMouseOver] = useState(false);
+  const [status, setStatus] = useState("Connect your wallet.");
+  const [activeButton, setactiveButton] = useState(false);
+  const [selectedMint, setSelectedMint] = useState(confluxData)
+  const [mintTitle, setMintTitle] = useState("conflux")
+  const [nftCount, setNftCount] = useState(1);
+  const [nftStatus, setNftStatus] = useState("*50 NFT limit");
+  const [viewCollection, setViewCollection] = useState(false);
+
+
+  const handleViewCollection = () => {
+    setViewCollection(true);
+  };
+
+  const handleCreate = () => {
+    handleMint({
+      numberOfTokens: parseInt(nftCount),
+    });
+  };
+
+  const addNft = () => {
+    if (nftCount === null) {
+      setNftCount(1);
+    } else if (nftCount < cawsArray.length) {
+      setNftCount(nftCount + 1);
+    }
+  };
+
+  // console.log(totalCaws)
+  const subtractNft = () => {
+    if (nftCount === null) {
+      setNftCount(1);
+    } else if (nftCount > 1) {
+      setNftCount(nftCount - 1);
+    }
+  };
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -168,6 +146,20 @@ const BetaPassNFT = ({
     // fetchFilters();
     document.title = "Beta Pass";
   }, []);
+ 
+  useEffect(() => {
+    if(locationState.includes('/beta-pass/conflux')){
+      setSelectedMint(confluxData); setMintTitle("conflux")
+    }else if(locationState.includes('/beta-pass/coingecko')){
+      setSelectedMint(coingeckoData); setMintTitle("coingecko")
+    
+    }else if(locationState.includes('/beta-pass/coin98')){
+      setSelectedMint(coin98Data); setMintTitle("coin98")
+    
+    }else if(locationState.includes('/beta-pass/base')){
+      setSelectedMint(baseData); setMintTitle("base")
+    }
+}, [])
 
   return (
     <div
@@ -201,7 +193,6 @@ const BetaPassNFT = ({
                     and also collect rewards in different tokens, which are
                     distributed on a monthly basis.
                   </p>
-                 
                 </div>
               </div>
               <div className="col-12 col-lg-4">
@@ -213,11 +204,9 @@ const BetaPassNFT = ({
               </div>
             </div>
             <div
-              className="filters-container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between my-4 p-3 position-relative gap-3"
+              className="filters-container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-center my-4 p-3 position-relative gap-3"
               style={{ zIndex: 2 }}
             >
-
-
               <div className="d-flex align-items-center gap-4 justify-content-center flex-wrap">
                 <NavLink
                   to={"/marketplace/beta-pass/conflux"}
@@ -225,6 +214,7 @@ const BetaPassNFT = ({
                     location.pathname.includes("conflux") &&
                     "selected-beta-pass-item"
                   } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                  onClick={() => {setSelectedMint(confluxData); setMintTitle("conflux")}}
                 >
                   <img src={conflux} className="beta-pass-chain-img" alt="" />
                   <span>Conflux</span>
@@ -235,6 +225,7 @@ const BetaPassNFT = ({
                     location.pathname.includes("coin98") &&
                     "selected-beta-pass-item"
                   } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                  onClick={() => {setSelectedMint(coin98Data); setMintTitle("coin98")}}
                 >
                   <img src={coin98} className="beta-pass-chain-img" alt="" />
                   <span>Coin98</span>
@@ -245,6 +236,8 @@ const BetaPassNFT = ({
                     location.pathname.includes("coingecko") &&
                     "selected-beta-pass-item"
                   } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                  onClick={() => {setSelectedMint(coingeckoData); setMintTitle("coingecko")}}
+
                 >
                   <img src={coingecko} className="beta-pass-chain-img" alt="" />
                   <span>CoinGecko</span>
@@ -255,6 +248,8 @@ const BetaPassNFT = ({
                     location.pathname.includes("base") &&
                     "selected-beta-pass-item"
                   } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                  onClick={() => {setSelectedMint(baseData); setMintTitle("base")}}
+
                 >
                   <img
                     src={coinbaseimg}
@@ -264,48 +259,415 @@ const BetaPassNFT = ({
                   <span>Base</span>
                 </NavLink>
               </div>
-
             </div>
 
-            <div className=" nft-page-wrapper d-flex flex-column gap-3 pb-3">
-              <div className="d-flex align-items-center p-4 gap-4 justify-content-center">
-                <div className="item-cards-wrapper w-100">
-                  {dummyData.map((nft, index) => {
-                    return (
-                      <NavLink
-                        to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                        state={{
-                          nft: nft,
-                          type: "caws",
-                          isOwner:
-                            nft.seller?.toLowerCase() ===
-                              coinbase?.toLowerCase() ||
-                            nft.buyer?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
-                          chain: nft.chain,
+            <div className=" nft-page-wrapper d-flex gap-3 pb-3">
+              <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
+                <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
+                  <div className="d-flex flex-column position-relative">
+                    {showBadge && totalCreated > 0 && (
+                      <div className="totalcreated">
+                        <span>{totalCreated}</span>
+                      </div>
+                    )}
+                    <div
+                      className={`genesis-wrapper ${
+                        mintTitle !== "timepiece"
+                          ? "conflux-empty"
+                          : totalCreated > 0
+                          ? "genesis-land"
+                          : "genesis-land-empty"
+                      } d-flex justify-content-center align-items-center p-3 position-relative`}
+                      style={{ height: 312 }}
+                    >
+                      <img
+                        src={dummyBadge}
+                        className="genesis-badge"
+                        style={{ visibility: "hidden" }}
+                        alt="badge"
+                      />
+                    </div>
+                    <div
+                      className="genesis-desc position-relative"
+                      style={{ bottom: "5px" }}
+                    >
+                      <h6 className="font-organetto land-desc w-75">
+                        {selectedMint.cardTitle}
+                      </h6>
+                    </div>
+                  </div>
+                  <div
+                    className={
+                      isConnected === false ||
+                      activeButton === false ||
+                      totalCreated === 0
+                        ? "linear-border-disabled"
+                        : "linear-border"
+                    }
+                  >
+                    <button
+                      className={`btn ${
+                        isConnected === false ||
+                        activeButton === false ||
+                        totalCreated === 0
+                          ? "outline-btn-disabled"
+                          : "outline-btn"
+                      } px-5 w-100`}
+                      disabled={
+                        isConnected === false ||
+                        activeButton === false ||
+                        totalCreated === 0
+                      }
+                      onClick={handleViewCollection}
+                    >
+                      View collection
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-12 col-md-12 col-xxl-5 mt-0 px-0"
+                style={{ overflowX: "hidden" }}
+              >
+                <div
+                  className={`p-4 mint-wrappernew ${selectedMint.background} w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height`}
+                  style={{ minHeight: "463px" }}
+                >
+                  <h6 className="marketmintnewtitle position-relative">
+                    Mint your {selectedMint.title} <br />
+                    NFT
+                    <span className="marketmintnewtitle-marked mx-2">now!</span>
+                  </h6>
+                  <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
+                    <div className="mint-benefits-grid">
+                      {benefits.map((item) => (
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={require(`../../../components/TimepieceMint/assets/${item.icon}.png`)}
+                            alt=""
+                            style={{
+                              scale: item.icon === "expand" ? "0.8" : "1",
+                            }}
+                          />
+                          <span className="mint-benefits-title">
+                            {item.title}
+                          </span>
+                        </div>
+                      ))}
+                      {mintTitle === "conflux" ? (
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={blockChainIcon}
+                            width={32}
+                            height={32}
+                            alt=""
+                          />
+                          <span className="mint-benefits-title">
+                            Minting is available on Conflux Network
+                          </span>
+                        </div>
+                      ) : mintTitle === "base" ? (
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={blockChainIcon}
+                            width={32}
+                            height={32}
+                            alt=""
+                          />
+                          <span className="mint-benefits-title">
+                            Minting is available on Base Network
+                          </span>
+                        </div>
+                      ) : mintTitle === "coingecko" ||
+                        mintTitle === "coin98" ? (
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={blockChainIcon}
+                            width={32}
+                            height={32}
+                            alt=""
+                          />
+                          <span className="mint-benefits-title">
+                            Minting is available on BNB Chain
+                          </span>
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
+                <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
+                  <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+                    <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
+                      <span className="land-name">
+                        Available NFTs to mint:{" "}
+                        <span
+                          className="addr-text"
+                          style={{ color: "rgb(123, 216, 176)" }}
+                        >
+                          {cawsArray.length}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
+                    <div className="d-flex flex-column gap-2 col-12 col-lg-6">
+                      <span className="land-name">Name</span>
+                      <div
+                        className="borderText borderText2"
+                        style={{ width: "100%" }}
+                      >
+                        <h6
+                          className="land-placeholder mb-0"
+                          style={{ marginLeft: 11 }}
+                        >
+                          {nftName === "" ? "" : selectedMint.title}
+                        </h6>
+                      </div>
+                    </div>
+                    <div className="d-flex flex-column gap-2 col-12 col-lg-6">
+                      <span className="land-name">Latest Mint</span>
+                      <h6
+                        className="land-placeholder borderText"
+                        style={{
+                          fontSize: "12px",
+                          paddingLeft: 14,
+                          lineHeight: "40px",
                         }}
                       >
-                        <ItemCard
-                          ethTokenData={ethTokenData}
-                          dypTokenData={dypTokenData}
-                          key={nft.id}
-                          nft={nft}
-                          isConnected={isConnected}
-                          showConnectWallet={handleConnect}
-                          isCaws={true}
-                          isTimepiece={false}
-                          isWod={false}
-                          coinbase={coinbase}
-                          lastSold={nft.LastSold}
-                          isLatestSale={nft.isLatestSale}
-                          isListed={nft.isListed}
-                          soldPriceType={nft.soldPriceType}
-                        />
-                      </NavLink>
-                    );
-                  })}
+                        # {latestMintId}
+                      </h6>
+                    </div>
+                  </div>
+                  <hr className="mint-divider m-0" />
+                  <div className="d-flex align-items-center justify-content-between position-relative gap-3">
+                    <div className="input-container position-relative col-8 col-lg-6">
+                      <input
+                        type="number"
+                        placeholder="Nr. of CAWS Timepiece NFT to create"
+                        max={cawsArray.length}
+                        min={1}
+                        className="land-input w-100"
+                        value={parseInt(nftCount)}
+                        onChange={(e) => setNftCount(parseInt(e.target.value))}
+                      />
+                    </div>
+
+                    <div className="d-flex align-items-center gap-3">
+                      <img
+                        src={
+                          nftCount > 1 &&
+                          isConnected === true &&
+                          activeButton === true &&
+                          status === ""
+                            ? subtractActive
+                            : subtractInactive
+                        }
+                        alt="subtract"
+                        onClick={subtractNft}
+                        style={{
+                          cursor:
+                            isConnected === true && activeButton === true
+                              ? "pointer"
+                              : "default",
+                          pointerEvents:
+                            isConnected === true &&
+                            activeButton === true &&
+                            status === ""
+                              ? "auto"
+                              : "none",
+                        }}
+                      />
+                      <img
+                        src={
+                          nftCount < cawsArray.length &&
+                          nftCount >= 1 &&
+                          isConnected === true &&
+                          activeButton === true &&
+                          status === ""
+                            ? addActive
+                            : addInactive
+                        }
+                        alt="add"
+                        onClick={addNft}
+                        style={{
+                          cursor:
+                            isConnected === true && activeButton === true
+                              ? "pointer"
+                              : "default",
+                          pointerEvents:
+                            isConnected === true &&
+                            activeButton === true &&
+                            status === ""
+                              ? "auto"
+                              : "none",
+                        }}
+                      />
+                    </div>
+                  </div>
+                  {mintTitle === "timepiece" ? (
+                    <span
+                      className="limit-span position-relative"
+                      style={{
+                        color: nftStatus.includes("Exceeded")
+                          ? "#D87B7B"
+                          : "#FFFFFF",
+                        bottom: "auto",
+                      }}
+                    >
+                      {nftStatus}
+                    </span>
+                  ) : mintTitle === "conflux" ? (
+                    <span
+                      className="limit-span position-relative d-flex align-items-center gap-2"
+                      style={{ bottom: "0px" }}
+                    >
+                      Available only on Conflux Network
+                      <img src={confluxLogo} alt="" />
+                    </span>
+                  ) : mintTitle === "base" ? (
+                    <span
+                      className="limit-span position-relative d-flex align-items-center gap-2"
+                      style={{ bottom: "0px" }}
+                    >
+                      Available only on Base Network
+                      <img src={baseLogo} alt="" />
+                    </span>
+                  ) : mintTitle === "coin98" || mintTitle === "coingecko" ? (
+                    <span
+                      className="limit-span position-relative d-flex align-items-center gap-2"
+                      style={{ bottom: "0px" }}
+                    >
+                      Available only on BNB Chain
+                      <img src={bnbLogo} alt="" />
+                    </span>
+                  ) : null}
+                  <hr className="mint-divider m-0" />
+                  {/* {cawsArray.length > 0 && nftCount > 0 && (
+            <span className="land-name">
+              Number of CAWS NFTs left after minting:{" "}
+              <span
+                className="addr-text"
+                style={{ color: "rgb(123, 216, 176)" }}
+              >
+                {cawsArray.length - nftCount}
+              </span>
+            </span>
+          )}  */}
+                  {mintStatus.length > 0 && (
+                    <span
+                      style={{ color: textColor }}
+                      className={
+                        mintStatus.includes("Success")
+                          ? "mint-span-success"
+                          : "mint-span"
+                      }
+                    >
+                      {mintStatus}
+                    </span>
+                  )}
+                  <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
+                    <div className="d-flex flex-column flex-lg-row align-items-center align-items-lg-center justify-content-xxl-end justify-content-lg-end justify-content-center w-100">
+                      <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
+                        <div
+                          className={
+                            (isConnected === true &&
+                              chainId !== 1 &&
+                              cawsArray.length === 0) ||
+                            (status !== "Connect your wallet." &&
+                              status !== "") ||
+                            mintloading === "error" ||
+                            (isConnected === true &&
+                              chainId === 1 &&
+                              cawsArray.length === 0)
+                              ? "linear-border-disabled"
+                              : "linear-border"
+                          }
+                        >
+                          <button
+                            className={`btn ${
+                              mintloading === "error"
+                                ? "filled-error-btn"
+                                : (isConnected === true &&
+                                    chainId !== 1 &&
+                                    cawsArray.length === 0) ||
+                                  (status !== "Connect your wallet." &&
+                                    status !== "") ||
+                                  (isConnected === true &&
+                                    chainId === 1 &&
+                                    cawsArray.length === 0)
+                                ? "outline-btn-disabled"
+                                : "filled-btn"
+                            }  px-4 w-100`}
+                            onClick={() => {
+                              isConnected === true && chainId === 1
+                                ? handleCreate()
+                                : showWalletConnect();
+                            }}
+                            disabled={
+                              mintloading === "error" ||
+                              mintloading === "success" ||
+                              (isConnected === true && chainId !== 1) ||
+                              (status !== "Connect your wallet." &&
+                                status !== "") ||
+                              (isConnected === true &&
+                                chainId === 1 &&
+                                cawsArray.length === 0)
+                                ? true
+                                : false
+                            }
+                            onMouseEnter={() => {
+                              setMouseOver(true);
+                            }}
+                            onMouseLeave={() => {
+                              setMouseOver(false);
+                            }}
+                          >
+                            {(isConnected === false || chainId !== 1) && (
+                              <img
+                                src={
+                                  mouseOver === false
+                                    ? blackWallet
+                                    : whitewallet
+                                }
+                                alt=""
+                                style={{ width: "23px", height: "23px" }}
+                              />
+                            )}{" "}
+                            {mintloading === "initial" &&
+                            isConnected === true &&
+                            chainId === 1 ? (
+                              "Mint"
+                            ) : mintloading === "mint" &&
+                              isConnected === true &&
+                              chainId === 1 ? (
+                              <>
+                                <div
+                                  className="spinner-border "
+                                  role="status"
+                                ></div>
+                              </>
+                            ) : mintloading === "error" &&
+                              isConnected === true &&
+                              chainId === 1 ? (
+                              "Failed"
+                            ) : mintloading === "success" &&
+                              isConnected === true &&
+                              activeButton ===
+                                (isConnected === true && chainId === 1) ? (
+                              "Success"
+                            ) : isConnected === true && chainId !== 1 ? (
+                              " Switch Chain"
+                            ) : (
+                              "Connect wallet"
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

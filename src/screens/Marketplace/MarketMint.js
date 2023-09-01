@@ -77,7 +77,8 @@ const MarketMint = ({
   const [sliderCut, setSliderCut] = useState();
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
-
+  const [selectedMint, setSelectedMint] = useState(confluxData)
+  const [mintTitle, setMintTitle] = useState("conflux")
 
 
   const confluxData = {
@@ -111,8 +112,7 @@ const MarketMint = ({
     background: 'base-mint-bg'
   }
 
-  const [selectedMint, setSelectedMint] = useState(confluxData)
-  const [mintTitle, setMintTitle] = useState("conflux")
+
 
   useEffect(() => {
     setSelectedMint(confluxData)
