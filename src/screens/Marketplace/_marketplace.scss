@@ -1195,7 +1195,7 @@
 .staking-height2 {
   height: auto;
   @media screen and (max-width: 991px) {
-    min-height: fit-content !important;
+    // min-height: fit-content !important;
   }
 }
 
@@ -1211,6 +1211,12 @@
 
 .betastyle {
   aspect-ratio: 0.94/0.6;
+}
+
+.smaillmintbg {
+  scale: 1.1;
+    position: relative;
+    top: -30px;
 }
 
 .market-stake-stat-desc {

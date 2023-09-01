@@ -1045,7 +1045,7 @@ const Marketplace = ({
                 </div>
                 <div className="mintleft-side mt-0 px-0 d-flex flex-column gap-3">
                 <NavLink to={'/marketplace/mint'} className='w-100 m-0 d-flex flex-column gap-5'>
-                    <div className="p-4 mint-wrappernew market-mint-bg betastyle w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height staking-height2 h-auto">
+                    <div className="p-4 mint-wrappernew market-mint-bg betastyle w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height staking-height2 h-auto">
                       <h6 className="marketmintnewtitle position-relative">
                         Mint your Timepiece <br />
                         NFT
@@ -1071,6 +1071,7 @@ const Marketplace = ({
                           ))}
                         </div>
                       </div>
+                      <img src={require('./assets/smallMintBg.png')} alt='' className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"/>
                     </div>
                  </NavLink>
                  <NavLink to="/marketplace/stake">
