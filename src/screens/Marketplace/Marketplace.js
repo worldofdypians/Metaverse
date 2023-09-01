@@ -26,7 +26,7 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import moment from "moment";
 import { Skeleton } from "@mui/material";
-import greenArrow from './assets/greenArrow.svg'
+import greenArrow from "./assets/greenArrow.svg";
 
 const Marketplace = ({
   listedNFTS,
@@ -603,9 +603,27 @@ const Marketplace = ({
               {windowSize.width > 786 ? (
                 <>
                   <NavLink
+                    to="/marketplace/events/betapass"
+                    state={{ package: "betaPass" }}
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="position-relative package-blur">
+                      <div className="first-box-blur d-flex align-items-end justify-content-center">
+                        <span className="blur-package-title">Treasure Hunt</span>
+                      </div>
+                      <div className="second-box-blur"></div>
+                      <img
+                        src={require("./assets/treasure.jpg")}
+                        alt=""
+                        className="blur-img"
+                      />
+                    </div>
+                  </NavLink>
+                  <NavLink
                     to="/marketplace/events/dragon-ruins"
                     state={{ package: "dragon" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-relative package-blur">
@@ -624,7 +642,7 @@ const Marketplace = ({
                   <NavLink
                     to="/marketplace/events/golden-pass"
                     state={{ package: "dyp" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-relative package-blur">
@@ -642,7 +660,7 @@ const Marketplace = ({
                   <NavLink
                     to="/marketplace/events/puzzle-madness"
                     state={{ package: "idyp" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-relative package-blur">
@@ -662,7 +680,7 @@ const Marketplace = ({
                   <NavLink
                     to="/marketplace/events/critical-hit"
                     state={{ package: "criticalHit" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-3 position-relative"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-relative package-blur">
@@ -681,6 +699,21 @@ const Marketplace = ({
               ) : (
                 <div className="d-flex justify-content-center">
                   <div className="new-packages-grid mb-3">
+                    <div className="">
+                      <NavLink
+                        to="/marketplace/events/beta-pass"
+                        state={{ package: "betaPass" }}
+                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                      >
+                        <img
+                          src={require("./assets/treasure.jpg")}
+                          className="w-100"
+                          style={{ borderRadius: "16px" }}
+                          alt=""
+                        />
+                        <span className="event-package-title">Treasure Hunt</span>
+                      </NavLink>
+                    </div>
                     <div className="">
                       <NavLink
                         to="/marketplace/events/dragon-ruins"
@@ -713,7 +746,6 @@ const Marketplace = ({
                         <span className="event-package-title">Golden Pass</span>
                       </NavLink>
                     </div>
-
                     <div className="">
                       <NavLink
                         to="/marketplace/events/puzzle-madness"
@@ -731,7 +763,6 @@ const Marketplace = ({
                         </span>
                       </NavLink>
                     </div>
-
                     <div className="">
                       <NavLink
                         to="/marketplace/events/critical-hit"
@@ -1044,7 +1075,10 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="mintleft-side mt-0 px-0 d-flex flex-column gap-3">
-                <NavLink to={'/marketplace/mint'} className='w-100 m-0 d-flex flex-column gap-5'>
+                  <NavLink
+                    to={"/marketplace/mint"}
+                    className="w-100 m-0 d-flex flex-column gap-5"
+                  >
                     <div className="p-4 mint-wrappernew market-mint-bg betastyle w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height staking-height2 h-auto">
                       <h6 className="marketmintnewtitle position-relative">
                         Mint your Timepiece <br />
@@ -1071,52 +1105,77 @@ const Marketplace = ({
                           ))}
                         </div>
                       </div>
-                      <img src={require('./assets/smallMintBg.png')} alt='' className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"/>
+                      <img
+                        src={require("./assets/smallMintBg.png")}
+                        alt=""
+                        className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
+                      />
                     </div>
-                 </NavLink>
-                 <NavLink to="/marketplace/mint">
-                 <span className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto" style={{width: 'fit-content'}}>Mint now <img src={greenArrow} alt=''/> </span>
-                 </NavLink>
+                  </NavLink>
+                  <NavLink to="/marketplace/mint">
+                    <span
+                      className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
+                      style={{ width: "fit-content" }}
+                    >
+                      Mint now <img src={greenArrow} alt="" />{" "}
+                    </span>
+                  </NavLink>
                 </div>
                 <div className="stakeright-side d-flex flex-column gap-3">
                   <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">
-                  <NavLink to="/marketplace/stake" className={'d-flex flex-column justify-content-center gap-3 w-100 '}>
-                    <div className="caws-wod-stake-wrapper2 d-flex flex-column justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center gap-3 w-100 p-3">
-                      <div className="instakeWrapper2 position-relative">
-                        <span className="instaketxt">NFT Staking</span>
-                      </div>
-                      <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
-                        <div className="d-flex flex-column gap-4">
-                          <div className="d-flex flex-column gap-2">
-                            <h6 className="market-stake-title2">
-                              World of Dypians
-                              <br /> Land & CAWS
-                            </h6>
+                    <NavLink
+                      to="/marketplace/stake"
+                      className={
+                        "d-flex flex-column justify-content-center gap-3 w-100 "
+                      }
+                    >
+                      <div className="caws-wod-stake-wrapper2 d-flex flex-column justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center gap-3 w-100 p-3">
+                        <div className="instakeWrapper2 position-relative">
+                          <span className="instaketxt">NFT Staking</span>
+                        </div>
+                        <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
+                          <div className="d-flex flex-column gap-4">
+                            <div className="d-flex flex-column gap-2">
+                              <h6 className="market-stake-title2">
+                                World of Dypians
+                                <br /> Land & CAWS
+                              </h6>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </NavLink>
-                  <NavLink to="/marketplace/stake" className={'d-flex flex-column justify-content-center gap-3 w-100 '}>
-                    <div className="wod-stake-wrapper2 justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center  gap-3 d-flex flex-column  w-100 p-3">
-                      <div className="instakeWrapper2 position-relative">
-                        <span className="instaketxt">NFT Staking</span>
-                      </div>
-                      <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
-                        <div className="d-flex flex-column gap-4">
-                          <div className="d-flex flex-column gap-2">
-                            <h6 className="market-stake-title2">
-                              World of Dypians
-                              <br /> Land NFT
-                            </h6>
+                    </NavLink>
+                    <NavLink
+                      to="/marketplace/stake"
+                      className={
+                        "d-flex flex-column justify-content-center gap-3 w-100 "
+                      }
+                    >
+                      <div className="wod-stake-wrapper2 justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center  gap-3 d-flex flex-column  w-100 p-3">
+                        <div className="instakeWrapper2 position-relative">
+                          <span className="instaketxt">NFT Staking</span>
+                        </div>
+                        <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
+                          <div className="d-flex flex-column gap-4">
+                            <div className="d-flex flex-column gap-2">
+                              <h6 className="market-stake-title2">
+                                World of Dypians
+                                <br /> Land NFT
+                              </h6>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </NavLink></div>
+                    </NavLink>
+                  </div>
                   <NavLink to="/marketplace/stake">
-                  <span className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto" style={{width: 'fit-content'}}>Stake now <img src={greenArrow} alt=''/> </span>
-</NavLink>
+                    <span
+                      className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
+                      style={{ width: "fit-content" }}
+                    >
+                      Stake now <img src={greenArrow} alt="" />{" "}
+                    </span>
+                  </NavLink>
                 </div>
               </div>
             </div>

@@ -337,15 +337,20 @@
 }
 
 .new-packages-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  width: 50%;
+  // display: grid;
+  // grid-template-columns: repeat(4, 1fr);
+  // gap: 15px;
+  // width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
 
   @media screen and (max-width: 786px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+    width: 100% !important;
   }
 }
 
@@ -1091,6 +1096,31 @@
   }
 }
 
+.upcoming-mint-wrapper {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #3e2313 168.67%);
+
+  .upcoming-mint-title {
+    color: #fff;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.12px;
+  }
+
+  .upcoming-mint-desc {
+    color: #fff;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .upcoming-mint-img {
+    height: 150px;
+  }
+}
+
 .nft-dropdown-item:hover {
   background: linear-gradient(
     268deg,
@@ -1136,13 +1166,14 @@
     rgba(255, 255, 255, 0) -2.13%,
     rgba(255, 255, 255, 0.15) 136.58%
   );
-  filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
-  backdrop-filter: blur(13.3817px);
+  // filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
+  // backdrop-filter: blur(13.3817px);
   border-radius: 21.4107px;
   transform: matrix(1, 0, -0.18, 0.98, 0, 0);
   border: 2px solid #41435a;
   cursor: pointer;
   transition: all 0.35s;
+  width: 165px;
   @media screen and (max-width: 786px) {
     transform: none !important;
     backdrop-filter: none !important;
@@ -1215,8 +1246,8 @@
 
 .smaillmintbg {
   scale: 1.1;
-    position: relative;
-    top: -30px;
+  position: relative;
+  top: -30px;
 }
 
 .market-stake-stat-desc {
