@@ -26,6 +26,7 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import moment from "moment";
 import { Skeleton } from "@mui/material";
+import greenArrow from './assets/greenArrow.svg'
 
 const Marketplace = ({
   listedNFTS,
@@ -70,7 +71,7 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
-  const [totalSupply, setTotalSupply] = useState(0)
+  const [totalSupply, setTotalSupply] = useState(0);
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -84,6 +85,25 @@ const Marketplace = ({
   const secondPrev = () => {
     secondSlider.current.slickPrev();
   };
+
+  const benefits = [
+    {
+      title: "Exclusive Access",
+      icon: "draft",
+    },
+    {
+      title: "Enhanced Interactions",
+      icon: "user",
+    },
+    {
+      title: "Special Rewards",
+      icon: "star",
+    },
+    {
+      title: "Expanded Functionality",
+      icon: "expand",
+    },
+  ];
 
   var settings = {
     dots: false,
@@ -200,7 +220,6 @@ const Marketplace = ({
     ],
   };
 
-
   const getTotalSupply = async () => {
     const infura_web3 = window.infuraWeb3;
     let timepiece_contract = new infura_web3.eth.Contract(
@@ -230,28 +249,26 @@ const Marketplace = ({
         console.error(e);
       });
 
-      
-    if (result.data && result.data !== 'NaN') {
+    if (result.data && result.data !== "NaN") {
       setTotalTx(result.data);
-      localStorage.setItem('cachedTvl', result.data)
+      localStorage.setItem("cachedTvl", result.data);
     }
- 
-    if (result2.data && result2.data !== 'NaN') {
+
+    if (result2.data && result2.data !== "NaN") {
       setTotalVolume(result2.data);
-      localStorage.setItem('cachedVolume', result2.data)
+      localStorage.setItem("cachedVolume", result2.data);
     }
   };
 
-  const fetchCachedData = ()=>{
-   const cachedVolume = localStorage.getItem('cachedVolume');
-   const cachedTvl = localStorage.getItem('cachedTvl');
+  const fetchCachedData = () => {
+    const cachedVolume = localStorage.getItem("cachedVolume");
+    const cachedTvl = localStorage.getItem("cachedTvl");
 
-   if(cachedTvl && cachedVolume) {
-    setTotalTx(cachedTvl);
-    setTotalVolume(cachedVolume)
-   }
-
-  }
+    if (cachedTvl && cachedVolume) {
+      setTotalTx(cachedTvl);
+      setTotalVolume(cachedVolume);
+    }
+  };
 
   const getRelativeTime = (nftTimestamp) => {
     const date = new Date();
@@ -285,7 +302,7 @@ const Marketplace = ({
   };
 
   useEffect(() => {
-    initialSales()
+    initialSales();
     setRecentListed(latest20RecentListedNFTS);
     setRecentSalesFilter(recentSales);
     if (topSales && topSales.length === 0) {
@@ -310,7 +327,7 @@ const Marketplace = ({
 
   useEffect(() => {
     getAllData();
-    fetchCachedData()
+    fetchCachedData();
     getTotalSupply();
     window.scrollTo(0, 0);
     document.title = "Marketplace";
@@ -330,7 +347,7 @@ const Marketplace = ({
   var month = moment().subtract(30, "days");
   const [topSalesDate, setTopSalesDate] = useState("week");
 
-  const initialSales = ()=>{
+  const initialSales = () => {
     let datedSales = topSales.map((item) => {
       return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };
     });
@@ -340,8 +357,7 @@ const Marketplace = ({
     });
 
     setTopSold(filteredDateSales);
-  }
-
+  };
 
   const filterTopSales = () => {
     setLoadingTopSales(true);
@@ -485,7 +501,6 @@ const Marketplace = ({
     setRecentSold(recentSales);
   }, [recentSales]);
 
-
   const cutLength = () => {
     if (windowSize.width > 1600) {
       setSliderCut(6);
@@ -500,10 +515,10 @@ const Marketplace = ({
     } else {
       setSliderCut(1);
     }
-  }
+  };
 
   useEffect(() => {
-   cutLength();
+    cutLength();
   }, [windowSize.width]);
 
   return (
@@ -584,7 +599,7 @@ const Marketplace = ({
             <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
               Active Events
             </h6>
-            <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
+            <div className="nft-outer-wrapper2 row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
               {windowSize.width > 786 ? (
                 <>
                   <NavLink
@@ -668,8 +683,8 @@ const Marketplace = ({
                   <div className="new-packages-grid mb-3">
                     <div className="">
                       <NavLink
-                         to="/marketplace/events/dragon-ruins"
-                         state={{ package: "dragon" }}
+                        to="/marketplace/events/dragon-ruins"
+                        state={{ package: "dragon" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -685,8 +700,8 @@ const Marketplace = ({
                     </div>
                     <div className="">
                       <NavLink
-                      to="/marketplace/events/golden-pass"
-                      state={{ package: "dyp" }}
+                        to="/marketplace/events/golden-pass"
+                        state={{ package: "dyp" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -701,8 +716,8 @@ const Marketplace = ({
 
                     <div className="">
                       <NavLink
-                       to="/marketplace/events/puzzle-madness"
-                       state={{ package: "idyp" }}
+                        to="/marketplace/events/puzzle-madness"
+                        state={{ package: "idyp" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -719,8 +734,8 @@ const Marketplace = ({
 
                     <div className="">
                       <NavLink
-                 to="/marketplace/events/critical-hit"
-                 state={{ package: "criticalHit" }}
+                        to="/marketplace/events/critical-hit"
+                        state={{ package: "criticalHit" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -738,8 +753,8 @@ const Marketplace = ({
                 </div>
               )}
             </div>
-            <div
-              className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper px-3 py-5 px-lg-5 gap-4 my-4"
+            {/*  <div
+              className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper2 px-3 py-5 px-lg-5 gap-4 my-4"
               style={{ minHeight: "420px" }}
             >
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
@@ -808,7 +823,7 @@ const Marketplace = ({
                     30D
                   </h6>
                 </div>
-              </div>
+              </div> 
               <div className="w-100" style={{ minHeight: "260px" }}>
                 <div
                   className={
@@ -838,10 +853,7 @@ const Marketplace = ({
                             }}
                           >
                             <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
-                              {/* <div className="position-absolute top-sales-rank">
-                            <span>{index + 1}</span>
-                          </div> */}
-                              {/* <span className="sales-number">{index + 1}</span> */}
+                         
                               <img
                                 src={
                                   nft.type === "caws"
@@ -1021,10 +1033,96 @@ const Marketplace = ({
                   )}
                 </div>
               </div>
+            </div>*/}
+            <div
+              className="row mx-1 justify-content-center d-flex my-4 align-items-start py-5 gap-4 my-4"
+              style={{ minHeight: "420px" }}
+            >
+              <div className="d-flex col-12 position-relative flex-column px-3 py-4 nft-outer-wrapper3 flex-lg-row align-items-start align-items-lg-center gap-4 justify-content-between w-100 position-relative">
+                <div class=" events-page-status-tag-live px-2 d-flex align-items-center justify-content-center">
+                  <div className="pulsatingDot"></div>
+                  <span>Live</span>
+                </div>
+                <div className="mintleft-side mt-0 px-0 d-flex flex-column gap-3">
+                <NavLink to={'/marketplace/mint'} className='w-100 m-0 d-flex flex-column gap-5'>
+                    <div className="p-4 mint-wrappernew market-mint-bg betastyle w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height staking-height2 h-auto">
+                      <h6 className="marketmintnewtitle position-relative">
+                        Mint your Timepiece <br />
+                        NFT
+                        <span className="marketmintnewtitle-marked mx-2">
+                          now!
+                        </span>
+                      </h6>
+                      <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
+                        <div className="mint-benefits-grid">
+                          {benefits.map((item) => (
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={require(`../../components/TimepieceMint/assets/${item.icon}.png`)}
+                                alt=""
+                                style={{
+                                  scale: item.icon === "expand" ? "0.8" : "1",
+                                }}
+                              />
+                              <span className="mint-benefits-title">
+                                {item.title}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <img src={require('./assets/smallMintBg.png')} alt='' className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"/>
+                    </div>
+                 </NavLink>
+                 <NavLink to="/marketplace/mint">
+                 <span className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto" style={{width: 'fit-content'}}>Mint now <img src={greenArrow} alt=''/> </span>
+                 </NavLink>
+                </div>
+                <div className="stakeright-side d-flex flex-column gap-3">
+                  <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">
+                  <NavLink to="/marketplace/stake" className={'d-flex flex-column justify-content-center gap-3 w-100 '}>
+                    <div className="caws-wod-stake-wrapper2 d-flex flex-column justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center gap-3 w-100 p-3">
+                      <div className="instakeWrapper2 position-relative">
+                        <span className="instaketxt">NFT Staking</span>
+                      </div>
+                      <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
+                        <div className="d-flex flex-column gap-4">
+                          <div className="d-flex flex-column gap-2">
+                            <h6 className="market-stake-title2">
+                              World of Dypians
+                              <br /> Land & CAWS
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </NavLink>
+                  <NavLink to="/marketplace/stake" className={'d-flex flex-column justify-content-center gap-3 w-100 '}>
+                    <div className="wod-stake-wrapper2 justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center  gap-3 d-flex flex-column  w-100 p-3">
+                      <div className="instakeWrapper2 position-relative">
+                        <span className="instaketxt">NFT Staking</span>
+                      </div>
+                      <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
+                        <div className="d-flex flex-column gap-4">
+                          <div className="d-flex flex-column gap-2">
+                            <h6 className="market-stake-title2">
+                              World of Dypians
+                              <br /> Land NFT
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </NavLink></div>
+                  <NavLink to="/marketplace/stake">
+                  <span className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto" style={{width: 'fit-content'}}>Stake now <img src={greenArrow} alt=''/> </span>
+</NavLink>
+                </div>
+              </div>
             </div>
 
             <div
-              className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4"
+              className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-4 my-4"
               style={{ minHeight: "430px" }}
             >
               {activeSlide > 0 && (
@@ -1048,11 +1146,12 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "all" && "filter-selected"
                     }`}
-                    onClick={() =>{  filterRecentListings("all");
-                    cutLength();
-                    firstSlider.current.innerSlider.slickGoTo(0);
-                    setActiveSlide(0);
-                  }}
+                    onClick={() => {
+                      filterRecentListings("all");
+                      cutLength();
+                      firstSlider.current.innerSlider.slickGoTo(0);
+                      setActiveSlide(0);
+                    }}
                   >
                     All
                   </h6>
@@ -1060,11 +1159,12 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "caws" && "filter-selected"
                     }`}
-                    onClick={() => { filterRecentListings("caws");
-                    cutLength();
-                    firstSlider.current.innerSlider.slickGoTo(0);
-                    setActiveSlide(0);
-                  }}
+                    onClick={() => {
+                      filterRecentListings("caws");
+                      cutLength();
+                      firstSlider.current.innerSlider.slickGoTo(0);
+                      setActiveSlide(0);
+                    }}
                   >
                     CAWS
                   </h6>
@@ -1072,11 +1172,12 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "land" && "filter-selected"
                     }`}
-                    onClick={() => { filterRecentListings("land");
-                    cutLength();
-                    firstSlider.current.innerSlider.slickGoTo(0);
-                    setActiveSlide(0);
-                  }}
+                    onClick={() => {
+                      filterRecentListings("land");
+                      cutLength();
+                      firstSlider.current.innerSlider.slickGoTo(0);
+                      setActiveSlide(0);
+                    }}
                   >
                     Land
                   </h6>
@@ -1084,11 +1185,12 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentListingsFilter === "timepiece" && "filter-selected"
                     }`}
-                    onClick={() => { filterRecentListings("timepiece");
-                    cutLength();
-                    firstSlider.current.innerSlider.slickGoTo(0);
-                    setActiveSlide(0);
-                  }}
+                    onClick={() => {
+                      filterRecentListings("timepiece");
+                      cutLength();
+                      firstSlider.current.innerSlider.slickGoTo(0);
+                      setActiveSlide(0);
+                    }}
                   >
                     Timepiece
                   </h6>
@@ -1319,7 +1421,7 @@ const Marketplace = ({
               )}
             </div>
             <div
-              className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-4 my-4"
+              className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-4 my-4"
               style={{ minHeight: "430px" }}
             >
               {activeSlide2 > 0 && (
@@ -1352,11 +1454,12 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "all" && "filter-selected"
                     }`}
-                    onClick={() => {filterRecentSales("all");
-                  cutLength();
-                    secondSlider.current.innerSlider.slickGoTo(0);
-                    setActiveSlide2(0);
-                  }}
+                    onClick={() => {
+                      filterRecentSales("all");
+                      cutLength();
+                      secondSlider.current.innerSlider.slickGoTo(0);
+                      setActiveSlide2(0);
+                    }}
                   >
                     All
                   </h6>
@@ -1364,11 +1467,12 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "caws" && "filter-selected"
                     }`}
-                    onClick={() => {filterRecentSales("caws");
-                  cutLength();
-                    secondSlider.current.innerSlider.slickGoTo(0);
-                    setActiveSlide2(0);
-                  }}
+                    onClick={() => {
+                      filterRecentSales("caws");
+                      cutLength();
+                      secondSlider.current.innerSlider.slickGoTo(0);
+                      setActiveSlide2(0);
+                    }}
                   >
                     CAWS
                   </h6>
@@ -1376,11 +1480,12 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "land" && "filter-selected"
                     }`}
-                    onClick={() => {filterRecentSales("land");
-                  cutLength();
-                    secondSlider.current.innerSlider.slickGoTo(0);
-                    setActiveSlide2(0);
-                  }}
+                    onClick={() => {
+                      filterRecentSales("land");
+                      cutLength();
+                      secondSlider.current.innerSlider.slickGoTo(0);
+                      setActiveSlide2(0);
+                    }}
                   >
                     Land
                   </h6>
@@ -1388,11 +1493,12 @@ const Marketplace = ({
                     className={`filter-title ${
                       recentSalesFilter === "timepiece" && "filter-selected"
                     }`}
-                    onClick={() => {filterRecentSales("timepiece");
-                  cutLength();
-                    secondSlider.current.innerSlider.slickGoTo(0);
-                    setActiveSlide2(0);
-                  }}
+                    onClick={() => {
+                      filterRecentSales("timepiece");
+                      cutLength();
+                      secondSlider.current.innerSlider.slickGoTo(0);
+                      setActiveSlide2(0);
+                    }}
                   >
                     Timepiece
                   </h6>

@@ -287,6 +287,25 @@
   }
 }
 
+.instakeWrapper2 {
+  z-index: 4;
+  padding: 5px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
+  width: fit-content;
+
+  .instaketxt {
+    color: #fff;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
 .loader-wrapper {
   width: 100%;
   display: flex;
@@ -365,6 +384,44 @@
 .nft-outer-wrapper {
   position: relative;
   z-index: 2;
+}
+
+.market-stake-title2 {
+  color: #fff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.1px;
+}
+
+.nft-outer-wrapper3 {
+  border-radius: 20px;
+  border: 1px solid #4d4f65;
+  background: linear-gradient(
+    108deg,
+    rgba(255, 255, 255, 0.02) 37.89%,
+    rgba(255, 255, 255, 0.15) 168.75%
+  );
+  box-shadow: 0px 4.3px 53px 0px rgba(0, 7, 72, 0.12);
+}
+
+.nft-outer-wrapper2 {
+  position: relative;
+  z-index: 2;
+  border: 2px solid #41435a;
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+
+  border-radius: 21.4107px;
+  transform: none;
+
+  @media screen and (max-width: 995px) {
+    transform: none !important;
+  }
 }
 
 .nft-outer-wrapper::before {
@@ -1126,6 +1183,22 @@
   border-radius: 20px;
 }
 
+.detailsgreen-txt {
+  color: #7dd9af;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.staking-height2 {
+  height: auto;
+  @media screen and (max-width: 991px) {
+    // min-height: fit-content !important;
+  }
+}
+
 .market-stake-stat {
   font-weight: 800;
   font-size: 36px;
@@ -1134,6 +1207,16 @@
   @media screen and (max-width: 786px) {
     font-size: 30px;
   }
+}
+
+.betastyle {
+  aspect-ratio: 0.94/0.6;
+}
+
+.smaillmintbg {
+  scale: 1.1;
+    position: relative;
+    top: -30px;
 }
 
 .market-stake-stat-desc {
@@ -1167,6 +1250,100 @@
     background-image: url("./assets/wodBannerMobile.png");
   }
 }
+
+.caws-wod-stake-wrapper2 {
+  background-image: url("./assets/cawsWodBannerSmall.png");
+  background-size: cover;
+  min-height: 177px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
+  aspect-ratio: 2/0.6;
+
+  @media only screen and (max-width: 991px) {
+    background-position-y: -186px;
+    background-size: cover;
+    background-image: url("./assets/cawsWodBannerMobile.png");
+    aspect-ratio: 0.63/0.7;
+    min-height: fit-content;
+  }
+}
+.wod-stake-wrapper2 {
+  background-image: url("./assets/wodBannerSmall.png");
+  background-size: cover;
+  min-height: 177px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
+  aspect-ratio: 2/0.6;
+
+  @media only screen and (max-width: 991px) {
+    // min-height: 177px;
+    background-image: url("./assets/wodBannerMobile.png");
+    background-position-y: -186px;
+    background-size: cover;
+    aspect-ratio: 0.63/0.7;
+    min-height: fit-content;
+  }
+}
+
+.events-page-status-tag-live {
+  background: #18ffff;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 2;
+  top: -13px;
+
+  span {
+    color: #b71061;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+  }
+}
+
+@keyframes pulseDot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.pulsatingDot {
+  width: 11px;
+  height: 11px;
+  margin-right: 8px;
+  background-color: #b71061;
+  border-radius: 50%;
+  animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+}
+
+.mintleft-side {
+  width: 50%;
+  @media only screen and (max-width: 991px) {
+    width: 100%;
+  }
+}
+
+.stakeright-side {
+  width: 50%;
+  @media only screen and (max-width: 991px) {
+    width: 100%;
+  }
+}
+
 .caws-stake-wrapper {
   // background-image: url("./assets/cawsBanner1.png");
   border-radius: 20px;
@@ -1807,26 +1984,25 @@
   border: 1px solid #5d5fef !important;
 }
 
-
-.single-nft-input{
+.single-nft-input {
   width: 120px;
   color: #fff !important;
   border-radius: 8px !important;
-  border: 1px solid #AAA5EB !important;
+  border: 1px solid #aaa5eb !important;
   background: #272450 !important;
   padding-left: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
-.filters-dropdown{
+.filters-dropdown {
   width: 200px !important;
   @media screen and (max-width: 786px) {
     width: 100% !important;
   }
 }
 
-.price-traits-wrapper{
+.price-traits-wrapper {
   width: fit-content;
   @media screen and (max-width: 786px) {
     width: 100%;
