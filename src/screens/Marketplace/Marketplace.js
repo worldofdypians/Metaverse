@@ -1074,7 +1074,7 @@ const Marketplace = ({
                       <img src={require('./assets/smallMintBg.png')} alt='' className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"/>
                     </div>
                  </NavLink>
-                 <NavLink to="/marketplace/stake">
+                 <NavLink to="/marketplace/mint">
                  <span className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto" style={{width: 'fit-content'}}>Mint now <img src={greenArrow} alt=''/> </span>
                  </NavLink>
                 </div>
