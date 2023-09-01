@@ -543,9 +543,10 @@ const NewBundleCard = ({
     setcountdown3500(remainingTime);
   };
 
-  let oneOctober = new Date("2023-010-01 11:11:00 GMT+02:00");
   let twentyfiveseptember = new Date("2023-09-25 23:59:00 GMT+02:00");
   let today = new Date();
+  let oneOctober = new Date("2023-10-01 11:11:00 GMT+02:00");
+  let oneSeptember = new Date("2023-09-01 11:11:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -793,6 +794,10 @@ const NewBundleCard = ({
   useEffect(() => {
     getTokenData();
     if (today > twentyfiveseptember) {
+      setisAtlimit(true);
+    }
+
+    if (today < oneSeptember) {
       setisAtlimit(true);
     }
 
