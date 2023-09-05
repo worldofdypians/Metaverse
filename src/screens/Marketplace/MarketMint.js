@@ -504,7 +504,7 @@ const MarketMint = ({
                     )}
                     {showFirstNext === activeSlide
                       ? null
-                      : 5 > sliderCut && (
+                      : 8 > sliderCut && (
                           <div className="next-arrow-nft" onClick={firstNext}>
                             <img src={nextArrow} alt="1" />
                           </div>
