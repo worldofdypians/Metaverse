@@ -24,6 +24,8 @@ import coin98Active from "./assets/coin98Active.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
 import baseActive from "./assets/baseActive.png";
 import timepieceActive from "./assets/timepieceActive.png";
+import gateActive from "./assets/gateActive.png";
+import kucoinActive from "./assets/kucoinActive.png";
 import Slider from "react-slick";
 import { NavLink, useLocation } from "react-router-dom";
 import nextArrow from "./assets/nextArrow1.svg";
@@ -56,13 +58,6 @@ const MarketMint = ({
   const windowSize = useWindowSize();
   const location = useLocation();
 
-  const confluxData = {
-    id: "conflux",
-    cardTitle: "Conflux Beta Pass",
-    title: "Conflux Beta Pass",
-    background: "conflux-mint-bg",
-    mobileBg: "confluxMobileBg.png",
-  };
   const avaxData = {
     id: "avax",
     cardTitle: "Avalanche Beta Pass",
@@ -70,6 +65,28 @@ const MarketMint = ({
     background: "avax-mint-bg",
     mobileBg: "avaxMobileBg.png",
   };
+  const gateData = {
+    id: "gate",
+    cardTitle: "Gate.Io Beta Pass",
+    title: "Gate.Io Beta Pass",
+    background: "gate-mint-bg",
+    mobileBg: "gateMobileBg.png",
+  };
+  const kucoinData = {
+    id: "kucoin",
+    cardTitle: "KuCoin Beta Pass",
+    title: "KuCoin Beta Pass",
+    background: "kucoin-mint-bg",
+    mobileBg: "kucoinMobileBg.png",
+  };
+  const confluxData = {
+    id: "conflux",
+    cardTitle: "Conflux Beta Pass",
+    title: "Conflux Beta Pass",
+    background: "conflux-mint-bg",
+    mobileBg: "confluxMobileBg.png",
+  };
+
   const timepieceData = {
     id: "timepiece",
     cardTitle: "Caws Timepiece",
@@ -91,7 +108,7 @@ const MarketMint = ({
     background: "coingecko-mint-bg",
     mobileBg: "coingeckoMobileBg.png",
   };
-  
+
   const baseData = {
     id: "base",
     cardTitle: "Base Beta Pass",
@@ -323,9 +340,7 @@ const MarketMint = ({
 
   useEffect(() => {
     cutLength();
- 
-  }, [windowSize.width])
-  
+  }, [windowSize.width]);
 
   useEffect(() => {
     if (locationState === "conflux") {
@@ -353,12 +368,28 @@ const MarketMint = ({
       class: "mint-1",
     },
     {
+      title: "Gate.Io Pass",
+      eventId: "gate",
+      desc: "Gain entry to metaverse, and join exclusive Gate.Io event with special ticket.",
+      img: gateActive,
+      data: gateData,
+      class: "mint-2",
+    },
+    {
+      title: "KuCoin Pass",
+      eventId: "kucoin",
+      desc: "Gain entry to metaverse, and join exclusive KuCoin event with special ticket.",
+      img: kucoinActive,
+      data: kucoinData,
+      class: "mint-3",
+    },
+    {
       title: "Conflux Pass",
       eventId: "conflux",
       desc: "Gain entry to metaverse, and join exclusive Conflux event with special ticket.",
       img: confluxActive,
       data: confluxData,
-      class: "mint-2",
+      class: "mint-4",
     },
     {
       title: "Coin98 Pass",
@@ -366,7 +397,7 @@ const MarketMint = ({
       desc: "Gain entry to metaverse, and join exclusive Coin98 event with special ticket.",
       img: coin98Active,
       data: coin98Data,
-      class: "mint-3",
+      class: "mint-5",
     },
     {
       title: "Coingecko Pass",
@@ -374,7 +405,7 @@ const MarketMint = ({
       desc: "Gain entry to metaverse, and join exclusive Coingecko event with special ticket.",
       img: coingeckoActive,
       data: coingeckoData,
-      class: "mint-4",
+      class: "mint-6",
     },
     {
       title: "Base Pass",
@@ -382,7 +413,7 @@ const MarketMint = ({
       desc: "Gain entry to metaverse, and join exclusive Base event with special ticket.",
       img: baseActive,
       data: baseData,
-      class: "mint-5",
+      class: "mint-7",
     },
     {
       title: "Caws Timepiece",
@@ -390,7 +421,7 @@ const MarketMint = ({
       desc: "Access the metaverse, experience enhanced interactions, and enjoy diverse benefits.",
       img: timepieceActive,
       data: timepieceData,
-      class: "mint-6",
+      class: "mint-8",
     },
   ];
 
@@ -723,7 +754,11 @@ const MarketMint = ({
                           ) : null}
                         </div>
                       </div>
-                      <img src={require(`../../components/TimepieceMint/assets/${selectedMint.mobileBg}`)} className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none" alt="" />
+                      <img
+                        src={require(`../../components/TimepieceMint/assets/${selectedMint.mobileBg}`)}
+                        className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
+                        alt=""
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
@@ -859,8 +894,7 @@ const MarketMint = ({
                           Available only on Conflux Network
                           <img src={confluxLogo} alt="" />
                         </span>
-                      )
-                      : mintTitle === "avax" ? (
+                      ) : mintTitle === "avax" ? (
                         <span
                           className="limit-span position-relative d-flex align-items-center gap-2"
                           style={{ bottom: "0px" }}
@@ -868,8 +902,7 @@ const MarketMint = ({
                           Available only on Avalanche Network
                           <img src={avaxLogo} alt="" width={16} height={16} />
                         </span>
-                      )
-                      : mintTitle === "base" ? (
+                      ) : mintTitle === "base" ? (
                         <span
                           className="limit-span position-relative d-flex align-items-center gap-2"
                           style={{ bottom: "0px" }}
@@ -878,7 +911,7 @@ const MarketMint = ({
                           <img src={baseLogo} alt="" />
                         </span>
                       ) : mintTitle === "coin98" ||
-                        mintTitle === "coingecko" ? (
+                        mintTitle === "coingecko" || mintTitle === "kucoin" || mintTitle === "gate" ? (
                         <span
                           className="limit-span position-relative d-flex align-items-center gap-2"
                           style={{ bottom: "0px" }}
