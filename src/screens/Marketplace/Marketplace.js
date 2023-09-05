@@ -602,7 +602,7 @@ const Marketplace = ({
             <div className="nft-outer-wrapper2 row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
               {windowSize.width > 786 ? (
                 <>
-                  <NavLink
+                  {/* <NavLink
                     to="/marketplace/events/betapass"
                     state={{ package: "betaPass" }}
                     className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
@@ -619,7 +619,7 @@ const Marketplace = ({
                         className="blur-img"
                       />
                     </div>
-                  </NavLink>
+                  </NavLink> */}
                   <NavLink
                     to="/marketplace/events/dragon-ruins"
                     state={{ package: "dragon" }}

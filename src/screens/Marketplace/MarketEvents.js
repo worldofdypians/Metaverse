@@ -302,7 +302,7 @@ const MarketEvents = ({
                 <>
                   <div className="d-flex justify-content-center">
                     <div className="new-packages-grid mb-3">
-                    <NavLink to="/marketplace/events/betapass">
+                    {/* <NavLink to="/marketplace/events/betapass">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
@@ -323,7 +323,7 @@ const MarketEvents = ({
                             </span>
                           </div>
                         </div>
-                      </NavLink>
+                      </NavLink> */}
                       <NavLink to="/marketplace/events/dragon-ruins">
                         <div className="">
                           <div
@@ -443,19 +443,22 @@ const MarketEvents = ({
                       availableTime={availableTime}
                     />
                   ) : (
-                    <BetaPassEvents />
-                  )}
+                    <>
+                    </>
+                    )}
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">New events are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
-                  </div>
-                </div>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">New events are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
+                //   </div>
+                // </div>
+                    <BetaPassEvents />
+
               )}
               {activeTab === "past" && (
                 <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
