@@ -144,9 +144,7 @@ const Header = ({
     return output;
   };
 
-  const test = () => {
-    connectWallet(ConnectionType.INJECTED);
-  };
+
 
 
   const checkRead = () => {
@@ -229,7 +227,7 @@ const Header = ({
         <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0 position-relative ">
           {!coinbase ? (
             <div className="linearborder2">
-              <button className="btn connectwallet px-3" onClick={test}>
+              <button className="btn connectwallet px-3" onClick={handleSignUp}>
                 Connect Wallet
               </button>{" "}
             </div>

@@ -32539,7 +32539,7 @@ async function connectWallet() {
       window.oneTimeConnectionEvents.forEach((fn) => fn());
     }
   }
-  if (window.ethereum) {
+  if (window.ethereum && !window.gatewallet) {
     window.web3 = new Web3(window.ethereum);
     try {
       await window.ethereum?.enable();
@@ -32561,7 +32561,25 @@ async function connectWallet() {
       console.error(e);
       throw new Error("User denied wallet connection!");
     }
-  } else if (window.web3) {
+  }
+  else if(window.gatewallet) {
+    try {
+      console.log('yes')
+      await window.gatewallet.enable();
+      console.log("Connected!");
+      let coinbase_address = await window.gatewallet?.request({
+        method: "eth_accounts",
+      });
+
+      window.coinbase_address = coinbase_address[0];
+      onConnect();
+      return true;
+    } catch (e) {
+      console.error(e);
+      throw new Error("User denied wallet connection!");
+    }
+  }
+   else if (window.web3) {
     window.web3 = new Web3(window.web3.currentProvider);
     console.log("connected to old web3");
     onConnect();

@@ -323,6 +323,8 @@ function App() {
     return isConnected;
   };
 
+  console.log(window.gatewallet)
+
   const checkNetworkId = () => {
     if (window.ethereum) {
       window.ethereum
@@ -1327,7 +1329,7 @@ function App() {
     }
   }, [coinbase, nftCount]);
 
-  // console.log(nftCount);
+  console.log(window.ethereum, window.gatewallet);
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
