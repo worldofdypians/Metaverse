@@ -30,6 +30,7 @@ import nextArrow from "./assets/nextArrow1.svg";
 import blockChainIcon from "./assets/blockChainIcon.svg";
 import confluxLogo from "./assets/confluxLogo.svg";
 import baseLogo from "./assets/baseLogo.svg";
+import avaxLogo from "./assets/avaxLogo.svg";
 import bnbLogo from "./assets/bnbLogo.svg";
 import wodLogo from "./assets/wodIcon.png";
 import openSeaLogo from "./assets/openSeaLogo.png";
@@ -60,24 +61,35 @@ const MarketMint = ({
     cardTitle: "Conflux Beta Pass",
     title: "Conflux Beta Pass",
     background: "conflux-mint-bg",
+    mobileBg: "confluxMobileBg.png",
+  };
+  const avaxData = {
+    id: "avax",
+    cardTitle: "Avalanche Beta Pass",
+    title: "Avalanche Beta Pass",
+    background: "avax-mint-bg",
+    mobileBg: "avaxMobileBg.png",
   };
   const timepieceData = {
     id: "timepiece",
     cardTitle: "Caws Timepiece",
     title: "Timepiece",
     background: "market-mint-bg",
+    mobileBg: "timepieceMobileBg.png",
   };
   const coin98Data = {
     id: "coin98",
     cardTitle: "Coin98 Beta Pass",
     title: "Coin98 Beta Pass",
     background: "coin98-mint-bg",
+    mobileBg: "coin98MobileBg.png",
   };
   const coingeckoData = {
     id: "coingecko",
     cardTitle: "Coingecko Beta Pass",
     title: "Coingecko Beta Pass",
     background: "coingecko-mint-bg",
+    mobileBg: "coingeckoMobileBg.png",
   };
   
   const baseData = {
@@ -85,6 +97,7 @@ const MarketMint = ({
     cardTitle: "Base Beta Pass",
     title: "Base Beta Pass",
     background: "base-mint-bg",
+    mobileBg: "baseMobileBg.png",
   };
 
   const locationState = location?.state?.event;
@@ -108,11 +121,11 @@ const MarketMint = ({
   const [sliderCut, setSliderCut] = useState();
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
-  const [selectedMint, setSelectedMint] = useState(confluxData);
-  const [mintTitle, setMintTitle] = useState("conflux");
+  const [selectedMint, setSelectedMint] = useState(avaxData);
+  const [mintTitle, setMintTitle] = useState("avax");
 
   useEffect(() => {
-    setSelectedMint(confluxData);
+    setSelectedMint(avaxData);
   }, []);
 
   const cutLength = () => {
@@ -306,8 +319,13 @@ const MarketMint = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Timepiece Mint";
-    cutLength();
   }, []);
+
+  useEffect(() => {
+    cutLength();
+ 
+  }, [windowSize.width])
+  
 
   useEffect(() => {
     if (locationState === "conflux") {
@@ -327,12 +345,20 @@ const MarketMint = ({
 
   const dummyCards = [
     {
+      title: "Avalanche Pass",
+      eventId: "avax",
+      desc: "Gain entry to metaverse, and join exclusive Avalanche event with special ticket.",
+      img: baseActive,
+      data: avaxData,
+      class: "mint-1",
+    },
+    {
       title: "Conflux Pass",
       eventId: "conflux",
       desc: "Gain entry to metaverse, and join exclusive Conflux event with special ticket.",
       img: confluxActive,
       data: confluxData,
-      class: "mint-1",
+      class: "mint-2",
     },
     {
       title: "Coin98 Pass",
@@ -340,7 +366,7 @@ const MarketMint = ({
       desc: "Gain entry to metaverse, and join exclusive Coin98 event with special ticket.",
       img: coin98Active,
       data: coin98Data,
-      class: "mint-2",
+      class: "mint-3",
     },
     {
       title: "Coingecko Pass",
@@ -348,7 +374,7 @@ const MarketMint = ({
       desc: "Gain entry to metaverse, and join exclusive Coingecko event with special ticket.",
       img: coingeckoActive,
       data: coingeckoData,
-      class: "mint-3",
+      class: "mint-4",
     },
     {
       title: "Base Pass",
@@ -356,7 +382,7 @@ const MarketMint = ({
       desc: "Gain entry to metaverse, and join exclusive Base event with special ticket.",
       img: baseActive,
       data: baseData,
-      class: "mint-4",
+      class: "mint-5",
     },
     {
       title: "Caws Timepiece",
@@ -364,7 +390,7 @@ const MarketMint = ({
       desc: "Access the metaverse, experience enhanced interactions, and enjoy diverse benefits.",
       img: timepieceActive,
       data: timepieceData,
-      class: "mint-5",
+      class: "mint-6",
     },
   ];
 
@@ -661,8 +687,8 @@ const MarketMint = ({
                             <div className="d-flex align-items-center gap-2">
                               <img
                                 src={blockChainIcon}
-                                width={32}
-                                height={32}
+                                width={40}
+                                height={40}
                                 alt=""
                               />
                               <span className="mint-benefits-title">
@@ -673,8 +699,8 @@ const MarketMint = ({
                             <div className="d-flex align-items-center gap-2">
                               <img
                                 src={blockChainIcon}
-                                width={32}
-                                height={32}
+                                width={40}
+                                height={40}
                                 alt=""
                               />
                               <span className="mint-benefits-title">
@@ -686,8 +712,8 @@ const MarketMint = ({
                             <div className="d-flex align-items-center gap-2">
                               <img
                                 src={blockChainIcon}
-                                width={32}
-                                height={32}
+                                width={40}
+                                height={40}
                                 alt=""
                               />
                               <span className="mint-benefits-title">
@@ -697,6 +723,7 @@ const MarketMint = ({
                           ) : null}
                         </div>
                       </div>
+                      <img src={require(`../../components/TimepieceMint/assets/${selectedMint.mobileBg}`)} className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none" alt="" />
                     </div>
                   </div>
                   <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
@@ -832,7 +859,17 @@ const MarketMint = ({
                           Available only on Conflux Network
                           <img src={confluxLogo} alt="" />
                         </span>
-                      ) : mintTitle === "base" ? (
+                      )
+                      : mintTitle === "avax" ? (
+                        <span
+                          className="limit-span position-relative d-flex align-items-center gap-2"
+                          style={{ bottom: "0px" }}
+                        >
+                          Available only on Avalanche Network
+                          <img src={avaxLogo} alt="" width={16} height={16} />
+                        </span>
+                      )
+                      : mintTitle === "base" ? (
                         <span
                           className="limit-span position-relative d-flex align-items-center gap-2"
                           style={{ bottom: "0px" }}
