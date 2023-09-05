@@ -404,17 +404,6 @@
 .nft-outer-wrapper2 {
   position: relative;
   z-index: 2;
-}
-
-.nft-outer-wrapper2::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  z-index: -1;
-  padding: 20px;
   border: 2px solid #41435a;
   background: linear-gradient(
     155.14deg,
@@ -429,6 +418,30 @@
     transform: none !important;
   }
 }
+
+// .nft-outer-wrapper2::before {
+//   content: "";
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   bottom: 0;
+//   right: 0;
+//   z-index: -1;
+//   padding: 20px;
+//   border: 2px solid #41435a;
+//   background: linear-gradient(
+//     155.14deg,
+//     rgba(255, 255, 255, 0) -2.13%,
+//     rgba(255, 255, 255, 0.15) 136.58%
+//   );
+
+//   border-radius: 21.4107px;
+//   transform: none;
+
+//   @media screen and (max-width: 995px) {
+//     transform: none !important;
+//   }
+// }
 
 
 .new-bundle-wrapper {
@@ -1873,7 +1886,7 @@
 }
 
 .upcoming-mint-img {
-  height: 100px;
+  height: 104px;
 }
 
 .mybetaearnings {
@@ -1984,6 +1997,11 @@
 .upcoming-mint-wrapper {
   position: relative;
   min-height: 100px;
+  border: 1px solid transparent;
+}
+
+.upcoming-mint-wrapper2:hover {
+  border: 1px solid #11fed2;
 }
 
 .upcoming-mint-wrapper:first-child {
@@ -2163,12 +2181,20 @@
   text-decoration: underline;
 }
 
-.event-my-earnings {
+.event-my-earnings3 {
   color: #fff;
   text-align: center;
   font-size: 22px;
   font-style: normal;
   font-weight: 800;
+  line-height: normal;
+}
+
+.event-my-earnings2 {
+  color: #EEEDFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
   line-height: normal;
 }
 
@@ -2215,8 +2241,8 @@
 
 .popup-event-desc {
   color: #eeedff;
-  font-size: 10px;
+  font-size: 13px;
   font-style: normal;
-  font-weight: 400;
   line-height: normal;
+font-family: 'Montserrat', sans-serif;
 }

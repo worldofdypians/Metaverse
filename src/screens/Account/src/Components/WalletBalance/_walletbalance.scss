@@ -193,7 +193,7 @@
 
 .account-nft-sort {
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
   color: #e2e2e2;
   transition: all 0.25s;
@@ -425,7 +425,7 @@
 }
 
 .profile-event-popup {
-  max-height: 80%;
+  max-height: 82%;
   overflow-y: auto;
   background: #1a1c39;
   border-radius: 10px;
@@ -496,6 +496,7 @@
 .profile-event-popup-wrapper {
   border-radius: 10px;
   background: #252743;
+  height: 100%;
   // backdrop-filter: blur(26px);
 }
 
@@ -519,7 +520,7 @@
   color: #eeedff;
   font-size: 12px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: normal;
 }
 
@@ -545,12 +546,31 @@
   line-height: normal;
 }
 
+.event-my-earnings3 {
+  color: #fff;
+  text-align: center;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
 .event-earnings-coin {
   color: #eeedff;
   text-align: right;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
+  line-height: normal;
+}
+
+.event-earnings-coin2 {
+  color: #EEEDFF;
+  text-align: right;
+  font-family: 'Montserrat';
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 600;
   line-height: normal;
 }
 
@@ -567,7 +587,7 @@
   border-radius: 20px;
   background: linear-gradient(90deg, #7bd8af 0%, #d9fa86 100%);
   color: #080b2a;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;

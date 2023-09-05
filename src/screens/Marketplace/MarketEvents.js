@@ -42,6 +42,7 @@ import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
+import discord from "./assets/greenDiscord.svg";
 
 const MarketEvents = ({
   account,
@@ -139,7 +140,7 @@ const MarketEvents = ({
         title: "Base Pass",
         chain: "BNB Chain",
         linkState: "base",
-        rewards: "BNB",
+        rewards: "BASE",
         status: "Expired",
         id: "event4",
       },
@@ -342,7 +343,7 @@ const MarketEvents = ({
       html.classList.remove("hidescroll");
     }
   }, [popup]);
-  console.log(dummyEvent);
+  
   return (
     <>
       <div
@@ -494,7 +495,7 @@ const MarketEvents = ({
                             onClick={() => setSelectedPackage("betaPass")}
                           >
                             <img
-                              src={require("./assets/betaPassDummy.png")}
+                              src={require("./assets/treasure.jpg")}
                               className="w-100"
                               style={{ borderRadius: "16px" }}
                               alt=""
@@ -619,18 +620,22 @@ const MarketEvents = ({
               />
             </div>
             <div className="profile-event-popup-wrapper p-3 d-flex align-items-center justify-content-between mb-3">
-              <div className="d-flex align-items-center gap-2">
+              <div className="d-flex gap-2">
                 <img src={eventPopupImage} alt="" />
                 <div className="d-flex flex-column justify-content-between">
                   <div className="d-flex flex-column">
-                    <h6 className="popup-second-title">{dummyEvent?.title}</h6>
+                    <h6 className="popup-second-title m-0">
+                      {dummyEvent?.title}
+                    </h6>
                     <span className="popup-rewards">
                       $5,000 in {dummyEvent?.rewards} rewards
                     </span>
                   </div>
-                  <span className="event-popup-chain mb-0">
-                    Chain: {dummyEvent?.chain}
-                  </span>
+                  <div className="d-flex">
+                    <span className="event-popup-chain mb-0">
+                      Chain: {dummyEvent?.chain}
+                    </span>
+                  </div>
                 </div>
               </div>
               {dummyEvent?.status === "Live" && (
@@ -753,7 +758,7 @@ const MarketEvents = ({
             {dummyEvent.id === "event1" ? (
               <p
                 className="popup-event-desc"
-                style={{ fontSize: "12px", fontWeight: "500" }}
+                // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Conflux Network stands as a Layer 1 public blockchain solution,
                 uniquely blending the advantages of both public and private
@@ -765,7 +770,7 @@ const MarketEvents = ({
             ) : dummyEvent.id === "event2" ? (
               <p
                 className="popup-event-desc"
-                style={{ fontSize: "12px", fontWeight: "500" }}
+                // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Coin98 Labs is an Open Infrastructure Financial Services builder
                 focusing on creating and developing an ecosystem of DeFi
@@ -777,7 +782,7 @@ const MarketEvents = ({
             ) : dummyEvent.id === "event3" ? (
               <p
                 className="popup-event-desc"
-                style={{ fontSize: "12px", fontWeight: "500" }}
+                // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 CoinGecko is the world's largest independent cryptocurrency data
                 aggregator with over 10,000+ different cryptoassets tracked
@@ -786,7 +791,7 @@ const MarketEvents = ({
             ) : (
               <p
                 className="popup-event-desc"
-                style={{ fontSize: "12px", fontWeight: "500" }}
+                // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Base is built as an Ethereum L2, with the security, stability,
                 and scalability you need to power your dapps.Base is an easy way
@@ -813,6 +818,7 @@ const MarketEvents = ({
               >
                 <img alt="" src={twitter} /> Twitter
               </a>
+
               <a
                 href={
                   dummyEvent.id === "event1"
@@ -821,13 +827,16 @@ const MarketEvents = ({
                     ? "https://t.me/coin98wallet"
                     : dummyEvent.id === "event3"
                     ? "https://t.me/coingecko"
-                    : ""
+                    : "https://base.org/discord"
                 }
                 target="_blank"
                 className="d-flex gap-1 align-items-center greensocial"
               >
-                <img alt="" src={telegram} />
-                Telegram
+                <img
+                  alt=""
+                  src={dummyEvent.id !== "event4" ? telegram : discord}
+                />
+                {dummyEvent.id !== "event4" ? "Telegram" : "Discord"}
               </a>
               <a
                 href={
@@ -846,18 +855,19 @@ const MarketEvents = ({
                 Website
               </a>
             </div>
-            <div className="popup-red-wrapper mt-3 p-3 d-flex align-items-center justify-content-between">
+            <div className="summaryseparator mt-3"></div>
+            <div className="popup-red-wrapper mt-3 p-3 d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row align-items-xxl-center align-items-xl-center align-items-lg-center align-items-md-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
-                <img src={grayDollar} width={24} height={24} alt="" />
-                <span className="event-my-earnings mb-0">My earnings</span>
+                <img src={grayDollar} width={36} height={36} alt="" />
+                <span className="event-my-earnings2 mb-0">My earnings</span>
               </div>
-              <div className="d-flex align-items-center gap-3 gap-lg-5">
+              <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin">1,500,250</h6>
+                  <h6 className="mb-0 event-earnings-coin2">1,500,250</h6>
                   <span className="mb-0 event-earnings-usd">Points</span>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin">
+                  <h6 className="mb-0 event-earnings-coin2">
                     250.62{" "}
                     {dummyEvent.id === "event1"
                       ? "CFX"

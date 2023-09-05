@@ -1503,6 +1503,15 @@ function App() {
                   timepieceBought={timepieceBought}
                   handleRefreshListing={handleRefreshList}
                   nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
                 />
               }
             />
@@ -1514,7 +1523,16 @@ function App() {
                 type={"coin98"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
                   isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
                   coinbase={coinbase}
@@ -1532,7 +1550,16 @@ function App() {
                 type={"coingecko"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
                   isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
                   coinbase={coinbase}
@@ -1550,7 +1577,16 @@ function App() {
                 type={"base"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
                   isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
                   coinbase={coinbase}

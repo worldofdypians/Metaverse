@@ -7,7 +7,7 @@ import whiteCalendar from "../assets/whiteCalendar.svg";
 
 const BetaEventCard = ({ data, onOpenPopup }) => {
   return (
-    <div className="upcoming-mint-wrapper flex-column flex-lg-row d-flex align-items-center justify-content-between px-0">
+    <div className="upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row d-flex align-items-center justify-content-between px-0" onClick={onOpenPopup} style={{cursor: 'pointer'}} >
       <div className="d-flex col col-lg-5 align-items-start align-items-lg-center  p-3 gap-3">
         <img src={data.logo} width={36} height={36} alt="" />
         <div className="d-flex flex-column justify-content-between gap-2 gap-lg-0">
@@ -41,7 +41,7 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
 
       <div className="d-flex col col-lg-3 flex-column align-items-center">
         <div className="mybetaearnings">
-          <h6 className="event-my-earnings mb-3">${data.myEarnings}</h6>
+          <h6 className="event-my-earnings3 mb-3">${data.myEarnings}</h6>
         </div>
       </div>
       <div className="d-flex flex-column gap-3 pick-and-calendar">
