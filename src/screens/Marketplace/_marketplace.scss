@@ -2040,21 +2040,26 @@
   border: 1px solid #11fed2;
 }
 
-.upcoming-mint-wrapper:first-child {
+.upcoming-mint-wrapper-coingecko {
   border-radius: 20px;
   background: linear-gradient(90deg, #181B38 0%, #27A330 168.67%);
 }
-.upcoming-mint-wrapper:nth-child(2) {
+.upcoming-mint-wrapper-coin98 {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #503e11 100%);
 }
-.upcoming-mint-wrapper:nth-child(3) {
+.upcoming-mint-wrapper-avax {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #481150 100%);
 }
-.upcoming-mint-wrapper:nth-child(4) {
+.upcoming-mint-wrapper-base {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
+}
+
+.upcoming-mint-wrapper-conflux {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #11503D 168.67%);
 }
 
 .upcoming-mint-title {

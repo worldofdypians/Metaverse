@@ -157,7 +157,7 @@ const Header = ({
   };
 
   const handleConfluxPool = async () => {
-    await handleSwitchNetworkhook("0x2105")
+    await handleSwitchNetworkhook("0x406")
       .then(() => {
         handleSwitchNetwork(1030);
       })
@@ -166,23 +166,7 @@ const Header = ({
       });
   };
 
-  async function updateViewCount(tokenId, nftAddress) {
-    try {
-      const response = await fetch("https://api.worldofdypians.com/nft-view", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ tokenId, nftAddress }),
-      });
-      const data = await response.json();
-      console.log(
-        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
-      );
-    } catch (error) {
-      console.error("Error updating view count:", error);
-    }
-  }
+ 
 
   async function markNotificationAsRead(walletAddress, notificationId) {
     try {
@@ -198,19 +182,7 @@ const Header = ({
     }
   }
 
-  async function deleteNotification(notificationId) {
-    try {
-      await axios.delete(
-        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-          coinbase
-        )}/${notificationId}`
-      );
-      console.log("Notification deleted");
-      handleRefreshList();
-    } catch (error) {
-      console.error("Error deleting notification:", error.message);
-    }
-  }
+ 
 
   const getRelativeTime = (nftTimestamp) => {
     const date = new Date();
@@ -583,6 +555,8 @@ const Header = ({
                           ? avax
                           : baseState === true
                           ? base
+                          : confluxState === true
+                          ? conflux
                           : error
                       }
                       height={16}
@@ -598,6 +572,8 @@ const Header = ({
                         ? "Avalanche"
                         : baseState === true
                         ? "Base"
+                        : confluxState === true
+                        ? "Conflux"
                         : "Unsupported Chain"}
                     </span>
 
@@ -616,6 +592,10 @@ const Header = ({
                 <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleConfluxPool()}>
+                  <img src={conflux} alt="" />
+                  Conflux
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />

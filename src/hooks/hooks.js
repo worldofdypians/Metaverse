@@ -49,6 +49,18 @@ export const handleSwitchNetworkhook = async (chainID) => {
       rpcUrls: ["https://rpc.ankr.com/base"],
       blockExplorerUrls: ["https://basescan.org"],
     };
+
+    const CONFLUXPARAMS = {
+      chainId: "0x406", // A 0x-prefixed hexadecimal string
+      chainName: "Conflux eSpace",
+      nativeCurrency: {
+        name: "CFX",
+        symbol: "CFX", // 2-6 characters long
+        decimals: 18,
+      },
+      rpcUrls: ["https://evm.confluxrpc.com"],
+      blockExplorerUrls: ["https://evm.confluxscan.net"],
+    };
   
   
     try {
@@ -74,7 +86,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
                 : chainID === "0x38"
                 ? [BNBPARAMS]
                 : chainID === "0x2105"
-                ? [BASEPARAMS]
+                ? [BASEPARAMS] : chainID === '0x406' ? [CONFLUXPARAMS]
                 : "",
           });
           if(window.ethereum && window.ethereum.isTrust === true) {

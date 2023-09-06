@@ -33,6 +33,8 @@ import confluxUpcoming from "./assets/confluxUpcoming.png";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
+import avaxUpcoming from "./assets/avaxUpcoming.png";
+
 import liveDot from "./assets/liveDot.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import whitePickaxe from "./assets/whitePickAxe.svg";
@@ -161,7 +163,7 @@ const MarketEvents = ({
     //   myEarnings: 0.0,
     //   eventType: "Explore & Mine",
     //   eventDate: "September xx, 2023",
-    //   backgroundImage: coingeckoUpcoming,
+    //   backgroundImage: avaxUpcoming,
     //   popupInfo: {
     //     title: "Avalanche",
     //     chain: "Avalanche",
