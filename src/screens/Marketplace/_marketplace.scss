@@ -1114,6 +1114,38 @@
   }
 }
 
+.coingeckonft-wrapper {
+  background: url(./MarketNFTs/assets/coingeckonftBg.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  aspect-ratio: 0.1/0.04;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.coingecko-nft-number {
+  color: #f2f2f2;
+  text-align: center;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.coingecko-nft-desc {
+  color: #91eeeb;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
 .market-stake-banner {
   width: 50%;
   @media screen and (max-width: 786px) {
@@ -2010,7 +2042,7 @@
 
 .upcoming-mint-wrapper:first-child {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181b38 0%, #11503d 100%);
+  background: linear-gradient(90deg, #181B38 0%, #27A330 168.67%);
 }
 .upcoming-mint-wrapper:nth-child(2) {
   border-radius: 20px;
@@ -2064,11 +2096,11 @@
 }
 
 .mint-2 {
-  background: linear-gradient(90deg, #181B38 0%, #12A272 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #12a272 168.67%);
 }
 
 .mint-3 {
-  background: linear-gradient(90deg, #181B38 0%, #000B6E 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #000b6e 168.67%);
 }
 
 .mint-4 {
