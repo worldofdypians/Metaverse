@@ -1388,10 +1388,10 @@ input::-webkit-inner-spin-button {
   transition: all 0.25s ease-in-out;
 
   @media screen and (max-width: 1455px) {
-    width: 55%;
+    width: 40%;
   }
   @media screen and (max-width: 1300px) {
-    width: 70% !important;
+    width: 50% !important;
   }
   @media screen and (max-width: 786px) {
     width: 90% !important;
@@ -1461,4 +1461,31 @@ input::-webkit-inner-spin-button {
 .popup-active{
   box-shadow:0 0 0 10000px rgba(0,0,0,.50);
   top: 0% !important;
+}
+
+
+@keyframes pulseDot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(183, 16, 97, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(183, 16, 97, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(183, 16, 97, 0);
+  }
+}
+
+.pulsatingDot {
+  width: 11px;
+  height: 11px;
+  margin-right: 8px;
+  background-color: #b71061;
+  border-radius: 50%;
+  animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
 }

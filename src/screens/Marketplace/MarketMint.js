@@ -39,6 +39,9 @@ import openSeaLogo from "./assets/openSeaLogo.png";
 import BetaEventCard from "./components/BetaEventCard";
 import EventSliderCard from "./components/EventSliderCard";
 
+
+
+
 const MarketMint = ({
   showWalletConnect,
   handleMint,
@@ -57,6 +60,11 @@ const MarketMint = ({
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
+
+
+
+
+
 
   const avaxData = {
     id: "avax",
@@ -378,21 +386,22 @@ const MarketMint = ({
       class: "mint-1",
     },
     {
-      title: "Gate.Io Pass",
-      eventId: "gate",
-      desc: "Gain entry to metaverse, and join exclusive Gate.Io event with special ticket.",
-      img: gateActive,
-      data: gateData,
-      class: "mint-2",
-    },
-    {
       title: "KuCoin Pass",
       eventId: "kucoin",
       desc: "Gain entry to metaverse, and join exclusive KuCoin event with special ticket.",
       img: kucoinActive,
       data: kucoinData,
+      class: "mint-2",
+    },
+    {
+      title: "Gate.Io Pass",
+      eventId: "gate",
+      desc: "Gain entry to metaverse, and join exclusive Gate.Io event with special ticket.",
+      img: gateActive,
+      data: gateData,
       class: "mint-3",
     },
+   
     {
       title: "Conflux Pass",
       eventId: "conflux",
