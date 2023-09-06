@@ -323,8 +323,6 @@ function App() {
     return isConnected;
   };
 
-  console.log(window.gatewallet)
-
   const checkNetworkId = () => {
     if (window.ethereum) {
       window.ethereum
@@ -950,7 +948,10 @@ function App() {
 
   useEffect(() => {
     if (window.ethereum) {
-      if (window.ethereum.isConnected() === true && logout === "false") {
+      if (
+        (window.ethereum.isConnected() === true && logout === "false") ||
+        window.gatewallet
+      ) {
         checkConnection2();
       } else {
         setIsConnected(false);
@@ -1329,7 +1330,6 @@ function App() {
     }
   }, [coinbase, nftCount]);
 
-  console.log(window.ethereum, window.gatewallet);
   return (
     <ApolloProvider client={client}>
       <AuthProvider>

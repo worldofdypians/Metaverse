@@ -61,6 +61,8 @@ const Header = ({
 
   let id = Math.random().toString(36);
 
+  // console.log(chainId, isActive)
+
   const manageDisconnect = () => {
     if (location.pathname.includes("/account")) {
       handleDisconnect();

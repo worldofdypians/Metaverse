@@ -32601,7 +32601,21 @@ window.cached_contracts = Object.create(null);
 async function getCoinbase() {
   if (window.WALLET_TYPE == "coin98") {
     return window.coinbase_address.toLowerCase();
-  } else {
+  }   else if(window.gatewallet) {
+    try {
+    
+      let coinbase_address = await window.gatewallet?.request({
+        method: "eth_accounts",
+      });
+
+      window.coinbase_address = coinbase_address[0];
+     
+      return window.coinbase_address.toLowerCase();
+    } catch (e) {
+      console.error(e);
+      throw new Error("User denied wallet connection!");
+    }
+  }else {
     const coinbase = await window.ethereum.request({
       method: "eth_accounts",
     });
