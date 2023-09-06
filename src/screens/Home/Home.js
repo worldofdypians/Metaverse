@@ -10,6 +10,14 @@ import Discord from "./Discord/Discord";
 import LandNft from "./LandNFT/LandNft";
 import Utilities from "./Utilities/Utilities";
 import MarketSection from "../Marketplace/MarketSection";
+import MintPopup from "../../components/TimepieceMint/MintPopup";
+import OutsideClickHandler from "react-outside-click-handler";
+import { useState } from "react";
+import avalanchePopup from '../../components/TimepieceMint/assets/avalanchePopup.png'
+import coin98Popup from '../../components/TimepieceMint/assets/coin98Popup.png'
+import basePopup from '../../components/TimepieceMint/assets/basePopup.png'
+import confluxPopup from '../../components/TimepieceMint/assets/confluxPopup.png'
+
 
 const Home = ({
   handleRegister,
@@ -19,12 +27,57 @@ const Home = ({
   dyptokenDatabnb,
   idyptokenDatabnb,
 }) => {
+
+
+  const avaxPopupInfo = {
+    title: "Avalanche",
+    img: avalanchePopup,
+    state: "avax",
+  }
+  const confluxPopupInfo = {
+    title: "Conflux",
+    img: confluxPopup,
+    state: "conflux",
+  }
+  const coin98PopupInfo = {
+    title: "Coin98", 
+    img: coin98Popup,
+    state: "coin98",
+  }
+  const basePopupInfo = {
+    title: "Base ",
+    img: basePopup,
+    state: "base",
+  }
+
+
+  const [activePopup, setActivePopup] = useState(true)
+
+  const html = document.querySelector("html");
+  const hamburger = document.querySelector("#popup");
+
+
+  useEffect(() => {
+    if (activePopup) {
+      html.classList.add("hidescroll");
+    } else {
+      // Enable scroll
+      html.classList.remove("hidescroll");
+    }
+  }, [activePopup]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "World of Dypians";
   }, []);
 
+
+
   return (
+  <>
+  <OutsideClickHandler id="popup" onOutsideClick={() => setActivePopup(false)}>
+  <MintPopup active={activePopup} data={avaxPopupInfo} onClose={() => setActivePopup(false)} />
+  </OutsideClickHandler>
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex flex-column home-main-wrapper">
         <VideoWrapper
@@ -52,6 +105,7 @@ const Home = ({
         {/* <Partners /> */}
       </div>
     </div>
+  </>
   );
 };
 
