@@ -342,13 +342,23 @@ const MarketMint = ({
     cutLength();
   }, [windowSize.width]);
 
+
+  const html = document.querySelector("html");
+
+
   useEffect(() => {
+  html.classList.remove("hidescroll");
+
     if (locationState === "conflux") {
       setSelectedMint(confluxData);
       setMintTitle("conflux");
     } else if (locationState === "coingecko") {
       setSelectedMint(coingeckoData);
       setMintTitle("coingecko");
+    } 
+   else if (locationState === "avax") {
+      setSelectedMint(avaxData);
+      setMintTitle("avax");
     } else if (locationState === "coin98") {
       setSelectedMint(coin98Data);
       setMintTitle("coin98");
