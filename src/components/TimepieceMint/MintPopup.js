@@ -35,7 +35,7 @@ const MintPopup = ({ active, onClose, data }) => {
       </div>
       <h6 className="mint-popup-title font-organetto">{data.title} Beta Pass</h6>
 
-      <img src={data.img} className="mint-popup-img w-100" alt="" />
+      <img src={data.img} className="mint-popup-img" style={{maxWidth: "100%" }} alt="" />
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
         <span className="popup-available-mint">
         Gain access to the game and a unique event filled with surprises and rewards!
@@ -47,7 +47,7 @@ const MintPopup = ({ active, onClose, data }) => {
         state={{ event: data.state }}
         className="linear-border"
       >
-        <button className="btn filled-btn px-4">Mint now</button>
+        <button className="btn filled-btn px-4">More</button>
       </Link>
     </div>
   );
