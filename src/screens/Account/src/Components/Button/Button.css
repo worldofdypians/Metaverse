@@ -13,14 +13,13 @@
 }
 
 .coingeckoButton {
-    width: auto;
+    width: fit-content;
     cursor: pointer;
-    padding: 11px;
-    border-radius: 12px;
-    background: rgb(123, 216, 176);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: end;
 }
 
 .titleButton {
@@ -34,14 +33,13 @@
 }
 
 .coingeckotitleButton {
-    font: normal normal normal 20px/30px Poppins;
-    letter-spacing: 0px;
-    color: #0B0B2E;
-    opacity: 1;
-    font-size: 18px;
+    color: #7DD9AF;
     text-align: center;
-    margin: 0;
+    font-size: 14px;
+    font-style: normal;
     font-weight: 500;
+    line-height: normal;
+    margin: 0;
 }
 
 .lds-dual-ring {

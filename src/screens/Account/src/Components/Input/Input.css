@@ -24,10 +24,9 @@
 .coingeckoInput {
     width: 100%;
     padding: 10px;
-    border-radius: 12px;
-    border-color: #AAA5EB;
-    border-style: solid;
-    border-width: 1px;
+    border-radius: 8px;
+    height: 35px;
+    border: 1px solid #AAA5EB;
     font-size: 14px;
     color: 'white';
     text-align: left;

@@ -155,45 +155,45 @@ const MarketEvents = ({
   ];
 
   const dummyBetaPassData2 = [
-    {
-      title: "Avalanche",
-      logo: avaxLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$3,000 in AVAX Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "September xx, 2023",
-      backgroundImage: avaxUpcoming,
-      popupInfo: {
-        title: "Avalanche",
-        chain: "Avalanche",
-        linkState: "coingecko",
-        rewards: "AVAX",
-        status: "Coming Soon",
-        id: "event5",
-      eventType: "Explore & Mine",
-
-      },
-    },
     // {
-    //   title: "CoinGecko",
-    //   logo: coingecko,
+    //   title: "Avalanche",
+    //   logo: avaxLogo,
     //   eventStatus: "Coming Soon",
-    //   totalRewards: "$3,000 in BNB Rewards",
+    //   totalRewards: "$3,000 in AVAX Rewards",
     //   myEarnings: 0.0,
     //   eventType: "Explore & Mine",
     //   eventDate: "September xx, 2023",
-    //   backgroundImage: coingeckoUpcoming,
+    //   backgroundImage: avaxUpcoming,
     //   popupInfo: {
-    //     title: "CoinGecko",
-    //     chain: "BNB Chain",
+    //     title: "Avalanche",
+    //     chain: "Avalanche",
     //     linkState: "coingecko",
-    //     rewards: "BNB",
+    //     rewards: "AVAX",
     //     status: "Coming Soon",
-    //     id: "event3",
-    //     eventType: "Explore & Mine",
+    //     id: "event5",
+    //   eventType: "Explore & Mine",
+
     //   },
     // },
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Coming Soon",
+      totalRewards: "$3,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "September 25, 2023",
+      backgroundImage: coingeckoUpcoming,
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event3",
+        eventType: "Explore & Mine",
+      },
+    },
     // {
     //   title: "Conflux (CFX)",
     //   logo: conflux,
@@ -204,6 +204,7 @@ const MarketEvents = ({
     //   eventDate: "September xx, 2023",
     //   backgroundImage: confluxUpcoming,
     //   popupInfo: {
+    //     eventType: "Explore & Mine",
     //     title: "Conflux Pass",
     //     chain: "Conflux Network",
     //     linkState: "conflux",
@@ -866,7 +867,7 @@ const MarketEvents = ({
                 : dummyEvent.id === "event2"
                 ? "Coin98"
                 : dummyEvent.id === "event3"
-                ? "Coingecko"
+                ? "CoinGecko"
                 : dummyEvent.id === "event5"
                 ? "Avalanche"
                 : "Base Network"}
@@ -902,7 +903,11 @@ const MarketEvents = ({
               >
                 CoinGecko is the world's largest independent cryptocurrency data
                 aggregator with over 10,000+ different cryptoassets tracked
-                across more than 800+ exchanges worldwide.
+                across more than 800+ exchanges worldwide. CoinGecko provides a
+                fundamental analysis of the digital currency market. In addition
+                to tracking price, volume, and market capitalization, CoinGecko
+                tracks community growth, open source code development, major
+                events, and on-chain metrics.
               </p>
             ) : dummyEvent.id === "event5" ? (
               <p

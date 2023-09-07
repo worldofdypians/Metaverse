@@ -841,24 +841,29 @@ const BetaPassNFT = ({
                  </Timeline> */}
                     <div>
                       <ul class="timeline m-0 p-0" id="timeline">
-                        <li class="li complete">
+                        <li class="col-3 li complete">
                           <div class="status">
                             <h4 className="listtext"> Create </h4>
                           </div>
                         </li>
-                        <li class="li complete">
+                        <li class="col-3 li">
                           <div class="status">
                             <h4 className="listtext"> Verify </h4>
                           </div>
                         </li>
-                        <li class="li complete">
+                        <li class="col-3 li">
                           <div class="status">
                             <h4 className="listtext"> Profile </h4>
                           </div>
                         </li>
-                        <li class="li">
+                        <li class="col-2 li" style={{ width: 0 }}>
                           <div class="status">
-                            <h4 className="listtext"> Link Wallet </h4>
+                            <h4
+                              className="listtext"
+                              style={{ width: 0, whiteSpace: "nowrap" }}
+                            >
+                              Link Wallet
+                            </h4>
                           </div>
                         </li>
                       </ul>
@@ -899,13 +904,6 @@ const BetaPassNFT = ({
                           <img src={circleArrow} alt="" />
                         </div>
                       </div>
-                    )}
-                    {mintTitle === "coingecko" && (
-                      <span className="footertxt-coingecko">
-                        Users who have claimed the CoinGecko Beta Pass NFT are
-                        required to create a WoD Account to receive the NFT and
-                        participate in the exclusive event.
-                      </span>
                     )}
                   </div>
                 )}

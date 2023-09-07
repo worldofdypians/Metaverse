@@ -2316,7 +2316,7 @@
 
 .footertxt-coingecko {
   color: #c0cbf7;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
@@ -2338,6 +2338,8 @@
       font-weight: 600;
       line-height: normal;
       letter-spacing: -0.18px;
+      position: relative;
+      left: -11px;
     }
     .timestamp {
       margin-bottom: 20px;
@@ -2348,10 +2350,9 @@
       font-weight: 100;
     }
     .status {
-      padding: 0px 40px;
+      padding: 10px 0 0 0;
       display: flex;
-      justify-content: center;
-      border-top: 2px solid #d6dce0;
+      border-top: 2px solid #565891;
       position: relative;
       transition: all 200ms ease-in;
 
@@ -2363,19 +2364,9 @@
         border-radius: 25px;
         border: 2px solid #565891;
         position: absolute;
-        top: -15px;
-        left: 42%;
+        top: -10px;
+        left: -2%;
         transition: all 200ms ease-in;
-      }
-    }
-    .li.complete {
-      .status {
-        border-top: 2px solid #48b4bd;
-        &:before {
-          background-color: #48b4bd;
-          border: none;
-          transition: all 200ms ease-in;
-        }
       }
     }
 
@@ -2398,6 +2389,16 @@
             }
           }
         }
+      }
+    }
+  }
+  .complete {
+    .status {
+      border-top: 2px solid #48b4bd;
+      &:before {
+        background-color: #48b4bd;
+        border: none;
+        transition: all 200ms ease-in;
       }
     }
   }

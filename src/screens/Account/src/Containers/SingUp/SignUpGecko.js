@@ -47,7 +47,7 @@ function SingUpGecko({ onSuccessVerify }) {
         login();
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         setLoginValues((prev) => {
           return {
             ...prev,
@@ -137,10 +137,19 @@ function SingUpGecko({ onSuccessVerify }) {
         onChange={setConfirmPassword}
         type={"coingecko"}
       />
+
+      <span className="footertxt-coingecko mt-4">
+        Users who have claimed the CoinGecko Beta Pass NFT are required to
+        create a WoD Account to receive the NFT and participate in the exclusive
+        event.
+      </span>
+
+      <div className="summaryseparator"></div>
+
       <Button
         disabled={disabled}
         onPress={signup}
-        title={"Create account"}
+        title={"Continue  >"}
         type={"coingecko"}
       />
     </div>
