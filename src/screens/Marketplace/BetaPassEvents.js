@@ -3,7 +3,7 @@ import greenArrow from "./assets/greenArrow.svg";
 
 const BetaPassEvents = () => {
   return (
-    <div class="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+    <div class="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
       <div class="d-flex flex-column p-3">
         <h6 class="upcoming-mint-title">Treasure Hunt</h6>
         <p class="upcoming-mint-desc">
@@ -20,7 +20,7 @@ const BetaPassEvents = () => {
       <img
         src={require("./assets/treasurebg.png")}
         alt=""
-        class="upcoming-mint-img d-none d-lg-flex"
+        class="upcoming-mint-img d-flex"
       />
     </div>
   );
