@@ -23,6 +23,7 @@ import PuzzleMadnessPopup from "../../components/PackagePopups/PuzzleMadnessPopu
 import CriticalHitPopup from "../../components/PackagePopups/CriticalHitPopup";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useParams } from "react-router-dom";
+import BetaPassEvents from "./BetaPassEvents";
 
 const MarketEvents = ({
   account,
@@ -106,6 +107,7 @@ const MarketEvents = ({
     background: "newCriticalBg.webp",
     mobileBackground: "criticalBgMobile.webp",
   };
+
 
   const {
     data,
@@ -213,21 +215,15 @@ const MarketEvents = ({
   useEffect(() => {
     if (eventId === "dragon-ruins") {
       setSelectedPackage("dragon");
-    }
-
-    else if (eventId === "golden-pass") {
+    } else if (eventId === "golden-pass") {
       setSelectedPackage("dyp");
-    }
-
-    else if (eventId === "puzzle-maddness") {
+    } else if (eventId === "puzzle-maddness") {
       setSelectedPackage("idyp");
-    }
-
-    else if (eventId === "critical-hit") {
+    } else if (eventId === "critical-hit") {
       setSelectedPackage("criticalHit");
     }
-  },[]);
- 
+  }, []);
+
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#bgmenu");
   useEffect(() => {
@@ -245,10 +241,14 @@ const MarketEvents = ({
       setSelectedPackage("dragon");
     } else if (eventId === "golden-pass") {
       setSelectedPackage("dyp");
-    } else if (eventId === "puzzle-madness") {
+    } else if (eventId === "puzzle-maddness") {
       setSelectedPackage("idyp");
     } else if (eventId === "critical-hit") {
       setSelectedPackage("criticalHit");
+    } else if (eventId === "betapass") {
+      setSelectedPackage("betaPass");
+    }else if (eventId === "treasure-hunt"){
+      setActiveTab("upcoming")
     }
   }, []);
 
@@ -280,14 +280,21 @@ const MarketEvents = ({
                   >
                     Live
                   </h6>
+                  <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                   <h6
-                    className={`new-stake-tab ${
+                    className={`new-stake-tab  ${
                       activeTab === "upcoming" && "stake-tab-active"
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
+                    
                     Upcoming
                   </h6>
+                  </div>
+                 
                   <h6
                     className={`new-stake-tab ${
                       activeTab === "past" && "stake-tab-active"
@@ -304,6 +311,28 @@ const MarketEvents = ({
                 <>
                   <div className="d-flex justify-content-center">
                     <div className="new-packages-grid mb-3">
+                    {/* <NavLink to="/marketplace/events/treasure-hunt">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                              selectedPackage === "betaPass" &&
+                              eventId === "betapass" &&
+                              "selected-event-package"
+                            }`}
+                            onClick={() => setSelectedPackage("betaPass")}
+                          >
+                            <img
+                              src={require("./assets/treasure.jpg")}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Treasure Hunt
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink> */}
                       <NavLink to="/marketplace/events/dragon-ruins">
                         <div className="">
                           <div
@@ -374,8 +403,8 @@ const MarketEvents = ({
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                              selectedPackage === "criticalHit"&&
-                              eventId === "critical-hit"  &&
+                              selectedPackage === "criticalHit" &&
+                              eventId === "critical-hit" &&
                               "selected-event-package"
                             }`}
                             onClick={() => setSelectedPackage("criticalHit")}
@@ -392,43 +421,53 @@ const MarketEvents = ({
                           </div>
                         </div>
                       </NavLink>
+                     
                     </div>
                   </div>
-                  <NewBundleCard
-                    onOpenPopup={onOpenPopup}
-                    coinbase={account}
-                    wallet={data?.getPlayer?.wallet?.publicAddress}
-                    chainId={chainId}
-                    getDypBalance={getDypBalance}
-                    getiDypBalance={getDypBalance}
-                    dyptokenDatabnb={dyptokenDatabnb}
-                    idyptokenDatabnb={idyptokenDatabnb}
-                    packageData={
-                      selectedPackage === "dragon"
-                        ? dragonData
-                        : selectedPackage === "dyp"
-                        ? dypPackageData
-                        : selectedPackage === "criticalHit"
-                        ? criticalHitPackageData
-                        : iDypPackageData
-                    }
-                    handleSetAvailableTime={(value) => {
-                      setAvailableTime(value);
-                      handleAvailableTime(value);
-                    }}
-                    availableTime={availableTime}
-                  />
+                  {selectedPackage !== "betaPass" ? (
+                    <NewBundleCard
+                      onOpenPopup={onOpenPopup}
+                      coinbase={account}
+                      wallet={data?.getPlayer?.wallet?.publicAddress}
+                      chainId={chainId}
+                      getDypBalance={getDypBalance}
+                      getiDypBalance={getDypBalance}
+                      dyptokenDatabnb={dyptokenDatabnb}
+                      idyptokenDatabnb={idyptokenDatabnb}
+                      packageData={
+                        selectedPackage === "dragon"
+                          ? dragonData
+                          : selectedPackage === "dyp"
+                          ? dypPackageData
+                          : selectedPackage === "criticalHit"
+                          ? criticalHitPackageData
+                          : // : selectedPackage === "betaPass"
+                            // ? betaPassPackageData
+                            iDypPackageData
+                      }
+                      handleSetAvailableTime={(value) => {
+                        setAvailableTime(value);
+                        handleAvailableTime(value);
+                      }}
+                      availableTime={availableTime}
+                    />
+                  ) : (
+                    <>
+                    </>
+                    )}
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">New events are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
-                  </div>
-                </div>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">New events are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
+                //   </div>
+                // </div>
+                    <BetaPassEvents />
+
               )}
               {activeTab === "past" && (
                 <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">

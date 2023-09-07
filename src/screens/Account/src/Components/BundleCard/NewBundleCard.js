@@ -543,11 +543,10 @@ const NewBundleCard = ({
     setcountdown3500(remainingTime);
   };
 
-  let oneSeptember = new Date("2023-09-01 11:11:00 GMT+02:00");
-  let oneAugust = new Date("2023-08-01 11:11:00 GMT+02:00");
-
-  let twentyfiveaugust = new Date("2023-08-25 23:59:00 GMT+02:00");
+  let twentyfiveseptember = new Date("2023-09-25 23:59:00 GMT+02:00");
   let today = new Date();
+  let oneOctober = new Date("2023-10-01 11:11:00 GMT+02:00");
+  let oneSeptember = new Date("2023-09-01 11:11:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -670,8 +669,8 @@ const NewBundleCard = ({
             setisAtlimit(false);
             handleSetAvailableTime(dateofBundle);
           } else {
-            setcountdown700(oneSeptember.getTime());
-            handleSetAvailableTime(oneSeptember.getTime());
+            setcountdown700(oneOctober.getTime());
+            handleSetAvailableTime(oneOctober.getTime());
             setisAtlimit(true);
             setStatusColor700("#FE7A00");
             setStatus700(
@@ -691,8 +690,8 @@ const NewBundleCard = ({
     } else if (today_date > 25) {
       if (today < dateofBundle) {
         setisAtlimit(true);
-        setcountdown700(oneSeptember.getTime());
-        handleSetAvailableTime(oneSeptember.getTime());
+        setcountdown700(oneOctober.getTime());
+        handleSetAvailableTime(oneOctober.getTime());
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
         );
@@ -787,17 +786,18 @@ const NewBundleCard = ({
   useEffect(() => {
     if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
       setisAtlimit(true);
-      setcountdown700(oneSeptember.getTime());
-      handleSetAvailableTime(oneSeptember.getTime());
+      setcountdown700(oneOctober.getTime());
+      handleSetAvailableTime(oneOctober.getTime());
     }
   }, [bundlesBought, countdown700]);
 
   useEffect(() => {
     getTokenData();
-    if (today > twentyfiveaugust) {
+    if (today > twentyfiveseptember) {
       setisAtlimit(true);
     }
-    if (today < oneAugust) {
+
+    if (today < oneSeptember) {
       setisAtlimit(true);
     }
 
