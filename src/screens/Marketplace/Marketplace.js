@@ -651,7 +651,7 @@ const Marketplace = ({
                       </div>
                       <div className="second-box-blur"></div>
                       <img
-                        src={require("./assets/goldenPass.png")}
+                        src={require("../Account/src/Components/BundleCard/assets/goldenPass.webp")}
                         alt=""
                         className="blur-img"
                       />
@@ -699,7 +699,7 @@ const Marketplace = ({
               ) : (
                 <div className="d-flex justify-content-center">
                   <div className="new-packages-grid mb-3">
-                    <div className="">
+                    {/* <div className="">
                       <NavLink
                         to="/marketplace/events/beta-pass"
                         state={{ package: "betaPass" }}
@@ -713,7 +713,7 @@ const Marketplace = ({
                         />
                         <span className="event-package-title">Treasure Hunt</span>
                       </NavLink>
-                    </div>
+                    </div> */}
                     <div className="">
                       <NavLink
                         to="/marketplace/events/dragon-ruins"
