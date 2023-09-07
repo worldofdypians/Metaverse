@@ -12,6 +12,17 @@
     justify-content: center;
 }
 
+.coingeckoButton {
+    width: auto;
+    cursor: pointer;
+    padding: 11px;
+    border-radius: 12px;
+    background: rgb(123, 216, 176);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .titleButton {
     font-size: 20px;
     color: #0B0B2E;
@@ -20,6 +31,17 @@
     color: #0B0B2E;
     opacity: 1;
     text-align: left;
+}
+
+.coingeckotitleButton {
+    font: normal normal normal 20px/30px Poppins;
+    letter-spacing: 0px;
+    color: #0B0B2E;
+    opacity: 1;
+    font-size: 18px;
+    text-align: center;
+    margin: 0;
+    font-weight: 500;
 }
 
 .lds-dual-ring {

@@ -1077,7 +1077,7 @@ const MarketMint = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                  <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                  <div className="upcoming-mint-wrapper upcoming-mint-wrapper-conflux d-flex align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3">
                       <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -1088,11 +1088,11 @@ const MarketMint = ({
                     <img
                       src={confluxUpcoming}
                       alt=""
-                      className="upcoming-mint-img"
-                      style={{ height: "auto" }}
+                      className="upcoming-mint-img2"
+                      // style={{ height: "auto" }}
                     />
                   </div>
-                  <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                  <div className="upcoming-mint-wrapper upcoming-mint-wrapper-coin98 d-flex align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3">
                       <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -1103,11 +1103,11 @@ const MarketMint = ({
                     <img
                       src={coin98Upcoming}
                       alt=""
-                      className="upcoming-mint-img"
-                      style={{ height: "auto" }}
+                      className="upcoming-mint-img2"
+                      // style={{ height: "auto" }}
                     />
                   </div>
-                  <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                  <div className="upcoming-mint-wrapper upcoming-mint-wrapper-coingecko d-flex align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3">
                       <h6 className="upcoming-mint-title">
                         CoinGecko Beta Pass
@@ -1121,11 +1121,11 @@ const MarketMint = ({
                     <img
                       src={coingeckoUpcoming}
                       alt=""
-                      className="upcoming-mint-img"
-                      style={{ height: "auto" }}
+                      className="upcoming-mint-img2"
+                      // style={{ height: "auto" }}
                     />
                   </div>
-                  <div className="upcoming-mint-wrapper d-flex align-items-center justify-content-between px-0">
+                  <div className="upcoming-mint-wrapper upcoming-mint-wrapper-base d-flex align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3">
                       <h6 className="upcoming-mint-title">Base Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -1137,8 +1137,8 @@ const MarketMint = ({
                     <img
                       src={baseUpcoming}
                       alt=""
-                      className="upcoming-mint-img"
-                      style={{ height: "auto" }}
+                      className="upcoming-mint-img2"
+                      // style={{ height: "auto" }}
                     />
                   </div>
                 </div>

@@ -9,8 +9,6 @@ import SingUp from "../SingUp/SingUp";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import ErrorAlert from "../../Components/ErrorAlert/ErrorAlert";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -51,9 +49,6 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 
 function Auth({ isConnected, coinbase }) {
   const { isAuthenticated, loginError, setLoginValues } = useAuth();
-
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const [value, setValue] = React.useState(0);
 

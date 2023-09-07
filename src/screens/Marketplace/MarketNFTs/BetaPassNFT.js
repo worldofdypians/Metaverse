@@ -3,6 +3,8 @@ import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../../../hooks/useWindowSize";
+import arrowRight from "./assets/arrowRight.svg";
+
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import conflux from "./assets/conflux.svg";
@@ -24,6 +26,11 @@ import avaxLogo from "./assets/avaxLogo.svg";
 import betapassBanner from "./assets/betaPassBanner.png";
 import avaxbetapassBanner from "./assets/betapassAvax.png";
 import geckobetapassBanner from "./assets/betaPassBannerGecko.png";
+import SingUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
+import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/PlayerCreationGecko";
+import pinkArea from "./assets/pinkArea.svg";
+import walletImg from "./assets/wallet.svg";
+import circleArrow from "./assets/arrow-circle.svg";
 
 const BetaPassNFT = ({
   isConnected,
@@ -119,6 +126,8 @@ const BetaPassNFT = ({
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
   const [viewCollection, setViewCollection] = useState(false);
+  const [playerCreation, setplayerCreation] = useState(false);
+  const [linkWallet, setLinkWallet] = useState(false);
 
   const handleViewCollection = () => {
     setViewCollection(true);
@@ -292,7 +301,7 @@ const BetaPassNFT = ({
               </div>
             </div> */}
 
-            <div className=" nft-page-wrapper d-flex flex-column flex-xl-row gap-3 pb-3">
+            <div className=" nft-page-wrapper d-flex flex-column flex-xl-row gap-3 mb-3">
               {mintTitle !== "coingecko" && (
                 <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                   <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
@@ -371,65 +380,103 @@ const BetaPassNFT = ({
                   style={{ minHeight: "463px" }}
                 >
                   <h6 className="marketmintnewtitle position-relative">
-                    {mintTitle === "coingecko" ? "Get" : "Mint"} your{" "}
-                    {selectedMint.title} <br />
-                    NFT
-                    <span className="marketmintnewtitle-marked mx-2">now!</span>
+                    {mintTitle === "coingecko" && (
+                      <>
+                        Get Your CoinGecko Beta Pass
+                        <br /> via{" "}
+                        <span className="marketmintnewtitle-marked mx-2">
+                          Candy Rewards!
+                        </span>
+                      </>
+                    )}
+                    {mintTitle !== "coingecko" && (
+                      <>
+                        Mint your {selectedMint.title} <br />
+                        NFT
+                        <span className="marketmintnewtitle-marked mx-2">
+                          now!
+                        </span>{" "}
+                      </>
+                    )}
                   </h6>
                   <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
-                    <div className="mint-benefits-grid">
-                      {benefits.map((item) => (
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={require(`../../../components/TimepieceMint/assets/${item.icon}.png`)}
-                            alt=""
-                            style={{
-                              scale: item.icon === "expand" ? "0.8" : "1",
-                            }}
-                          />
-                          <span className="mint-benefits-title">
-                            {item.title}
-                          </span>
+                    <div className="d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row align-items-center gap-2 w-100 justify-content-center justify-content-xxl-between  justify-content-xl-between  justify-content-lg-between ">
+                      <div className="mint-benefits-grid">
+                        {benefits.map((item) => (
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={require(`../../../components/TimepieceMint/assets/${item.icon}.png`)}
+                              alt=""
+                              style={{
+                                scale: item.icon === "expand" ? "0.8" : "1",
+                              }}
+                            />
+                            <span className="mint-benefits-title">
+                              {item.title}
+                            </span>
+                          </div>
+                        ))}
+                        {mintTitle === "conflux" ? (
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={blockChainIcon}
+                              width={32}
+                              height={32}
+                              alt=""
+                            />
+                            <span className="mint-benefits-title">
+                              Minting is available on Conflux Network
+                            </span>
+                          </div>
+                        ) : mintTitle === "base" ? (
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={blockChainIcon}
+                              width={32}
+                              height={32}
+                              alt=""
+                            />
+                            <span className="mint-benefits-title">
+                              Minting is available on Base Network
+                            </span>
+                          </div>
+                        ) : mintTitle === "coin98" ? (
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={blockChainIcon}
+                              width={32}
+                              height={32}
+                              alt=""
+                            />
+                            <span className="mint-benefits-title">
+                              Minting is available on BNB Chain
+                            </span>
+                          </div>
+                        ) : null}
+                      </div>
+                      {mintTitle === "coingecko" && (
+                        <div className="position-relative">
+                          <img src={pinkArea} alt="" />
                         </div>
-                      ))}
-                      {mintTitle === "conflux" ? (
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={blockChainIcon}
-                            width={32}
-                            height={32}
-                            alt=""
-                          />
-                          <span className="mint-benefits-title">
-                            Minting is available on Conflux Network
-                          </span>
-                        </div>
-                      ) : mintTitle === "base" ? (
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={blockChainIcon}
-                            width={32}
-                            height={32}
-                            alt=""
-                          />
-                          <span className="mint-benefits-title">
-                            Minting is available on Base Network
-                          </span>
-                        </div>
-                      ) : mintTitle === "coin98" ? (
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={blockChainIcon}
-                            width={32}
-                            height={32}
-                            alt=""
-                          />
-                          <span className="mint-benefits-title">
-                            Minting is available on BNB Chain
-                          </span>
-                        </div>
-                      ) : null}
+                      )}
                     </div>
+                    {mintTitle === "coingecko" && (
+                      <button
+                        className={`btn coingecko-btn px-3 d-flex align-items-center justify-content-center gap-2`}
+                      >
+                        <img
+                          src={coingecko}
+                          alt=""
+                          style={{ width: 16, height: 16 }}
+                        />{" "}
+                        Get Beta Pass
+                        <img
+                          src={arrowRight}
+                          alt=""
+                          style={{ width: 16, height: 16 }}
+                        />{" "}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -701,8 +748,14 @@ const BetaPassNFT = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="p-3 mint-wrappernew d-flex flex-column justify-content-evenly staking-height gap-2">
-                    <h6
+                  <div
+                    className={` ${
+                      playerCreation
+                        ? "justify-content-center"
+                        : "justify-content-between"
+                    } p-4 mint-wrappernew d-flex flex-column staking-height gap-2`}
+                  >
+                    {/* <h6
                       className="land-placeholder mb-0"
                       style={{ marginLeft: 11 }}
                     >
@@ -722,7 +775,45 @@ const BetaPassNFT = ({
                       <button className={`btn filled-btn px-5 w-auto`}>
                         Get Beta Pass
                       </button>
-                    </div>
+                    </div> */}
+                    <h6 className="land-name">Create account</h6>
+                    {playerCreation === false && (
+                      <SingUpGecko
+                        onSuccessVerify={(value) => {
+                          setplayerCreation(value);
+                        }}
+                      />
+                    )}
+                    {playerCreation === true && linkWallet === false && (
+                      <PlayerCreationGecko
+                        onSuccessCreation={() => {
+                          setLinkWallet(true);
+                        }}
+                      />
+                    )}
+
+                    {linkWallet === true && (
+                      <div
+                        className="walletconnectBtn w-100"
+                        // onClick={onLinkWallet}
+                      >
+                        <div className="d-flex gap-2 justify-content-between align-items-center">
+                          <div className="d-flex gap-2 align-items-center">
+                            <img src={walletImg} alt="" />
+                            <div className="d-flex flex-column">
+                              <span className="secondTitle">
+                                Connect wallet
+                              </span>
+
+                              <span className="firsttitle">
+                                Link your wallet
+                              </span>
+                            </div>
+                          </div>
+                          <img src={circleArrow} alt="" />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
