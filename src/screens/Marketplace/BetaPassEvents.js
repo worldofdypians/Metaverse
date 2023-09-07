@@ -6,7 +6,7 @@ const BetaPassEvents = () => {
   return (
     <div class="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
       <NavLink
-        to=""
+        to="/news/64f9d1bb7531f3d1a8fa3561/Treasure-Hunt-Event"
         className={
           "d-flex flex-column flex-lg-row align-items-center justify-content-between px-0 w-100"
         }
