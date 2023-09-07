@@ -699,7 +699,7 @@ const Marketplace = ({
               ) : (
                 <div className="d-flex justify-content-center">
                   <div className="new-packages-grid mb-3">
-                    <div className="">
+                    {/* <div className="">
                       <NavLink
                         to="/marketplace/events/beta-pass"
                         state={{ package: "betaPass" }}
@@ -713,7 +713,7 @@ const Marketplace = ({
                         />
                         <span className="event-package-title">Treasure Hunt</span>
                       </NavLink>
-                    </div>
+                    </div> */}
                     <div className="">
                       <NavLink
                         to="/marketplace/events/dragon-ruins"
