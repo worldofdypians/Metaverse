@@ -17,6 +17,7 @@ import avalanchePopup from '../../components/TimepieceMint/assets/avalanchePopup
 import coin98Popup from '../../components/TimepieceMint/assets/coin98Popup.png'
 import basePopup from '../../components/TimepieceMint/assets/basePopup.png'
 import confluxPopup from '../../components/TimepieceMint/assets/confluxPopup.png'
+import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup.png'
 
 
 const Home = ({
@@ -49,6 +50,11 @@ const Home = ({
     img: basePopup,
     state: "base",
   }
+  const coingeckoPopupInfo = {
+    title: "CoinGecko",
+    img: coingeckoPopup,
+    state: "coingecko",
+  }
 
 
   const [activePopup, setActivePopup] = useState(true)
@@ -76,7 +82,7 @@ const Home = ({
   return (
   <>
   <OutsideClickHandler id="popup" onOutsideClick={() => setActivePopup(false)}>
-  <MintPopup active={activePopup} data={avaxPopupInfo} onClose={() => setActivePopup(false)} />
+  <MintPopup active={activePopup} data={coingeckoPopupInfo} onClose={() => setActivePopup(false)} />
   </OutsideClickHandler>
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex flex-column home-main-wrapper">
