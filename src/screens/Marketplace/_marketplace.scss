@@ -1930,13 +1930,13 @@
 }
 
 .coingecko-btn {
-border-radius: 20px;
-background: linear-gradient(90deg, #007F82 -13.56%, #8BC53F 129.3%);
-color: #FFF;
-font-size: 12px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #007f82 -13.56%, #8bc53f 129.3%);
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .mybetaearnings {
@@ -2056,7 +2056,7 @@ line-height: normal;
 
 .upcoming-mint-wrapper-coingecko {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #27A330 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #27a330 168.67%);
 }
 .upcoming-mint-wrapper-coin98 {
   border-radius: 20px;
@@ -2073,7 +2073,7 @@ line-height: normal;
 
 .upcoming-mint-wrapper-conflux {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #11503D 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #11503d 168.67%);
 }
 
 .upcoming-mint-title {
@@ -2312,4 +2312,93 @@ line-height: normal;
   font-style: normal;
   line-height: normal;
   font-family: "Montserrat", sans-serif;
+}
+
+.footertxt-coingecko {
+  color: #c0cbf7;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.timeline {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .li {
+    transition: all 200ms ease-in;
+    .listtext {
+      color: #c0cbf7;
+      text-align: center;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      letter-spacing: -0.18px;
+    }
+    .timestamp {
+      margin-bottom: 20px;
+      padding: 0px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 100;
+    }
+    .status {
+      padding: 0px 40px;
+      display: flex;
+      justify-content: center;
+      border-top: 2px solid #d6dce0;
+      position: relative;
+      transition: all 200ms ease-in;
+
+      &:before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background-color: #26264f;
+        border-radius: 25px;
+        border: 2px solid #565891;
+        position: absolute;
+        top: -15px;
+        left: 42%;
+        transition: all 200ms ease-in;
+      }
+    }
+    .li.complete {
+      .status {
+        border-top: 2px solid #48b4bd;
+        &:before {
+          background-color: #48b4bd;
+          border: none;
+          transition: all 200ms ease-in;
+        }
+      }
+    }
+
+    @media (min-device-width: 320px) and (max-device-width: 700px) {
+      .timeline {
+        list-style-type: none;
+        display: block;
+        .li {
+          transition: all 200ms ease-in;
+          display: flex;
+          width: inherit;
+        }
+        .timestamp {
+          width: 100px;
+          .status {
+            &:before {
+              left: -8%;
+              top: 30%;
+              transition: all 200ms ease-in;
+            }
+          }
+        }
+      }
+    }
+  }
 }

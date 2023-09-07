@@ -38,7 +38,6 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 
-
 const BetaPassNFT = ({
   isConnected,
   handleConnect,
@@ -784,6 +783,86 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
                     <h6 className="land-name">Create account</h6>
+                    {/* <Timeline
+                   sx={{
+                     [`& .${timelineItemClasses.root}:before`]: {
+                       flex: 0,
+                       padding: 0,
+                     },
+                   }}
+                 >
+                   <TimelineItem>
+                     <TimelineSeparator>
+                       <TimelineDot className={`timelinedot-completed`} />
+                       <TimelineConnector className={"timeline-line"} />
+                    
+                     </TimelineSeparator>
+                     <TimelineContent>
+                       <h6 className="content-title2">
+                            Create
+                       </h6>
+                     </TimelineContent>
+                   </TimelineItem>
+                   <TimelineItem>
+                     <TimelineSeparator>
+                       <TimelineDot className={`timelinedot-completed`} />
+                       <TimelineConnector className={"timeline-line"} />
+                       
+                     </TimelineSeparator>
+                     <TimelineContent>
+                       <h6 className="content-title2">
+                       Verify
+                       </h6>
+                     </TimelineContent>
+                   </TimelineItem>
+                   <TimelineItem>
+                     <TimelineSeparator>
+                       <TimelineDot className={`timelinedot-completed`} />
+                       <TimelineConnector className={"timeline-line"} />
+
+                     </TimelineSeparator>
+                     <TimelineContent>
+                       <h6 className="content-title2">
+                       Profile
+                       </h6>
+                     </TimelineContent>
+                   </TimelineItem>
+                   <TimelineItem>
+                     <TimelineSeparator>
+                       <TimelineDot className={`timelinedot-completed`} />
+                       <TimelineConnector className={"timeline-line"} />
+                     </TimelineSeparator>
+                     <TimelineContent>
+                       <h6 className="content-title2">
+                       Link Wallet
+                       </h6>
+                     </TimelineContent>
+                   </TimelineItem>
+                 </Timeline> */}
+                    <div>
+                      <ul class="timeline m-0 p-0" id="timeline">
+                        <li class="li complete">
+                          <div class="status">
+                            <h4 className="listtext"> Create </h4>
+                          </div>
+                        </li>
+                        <li class="li complete">
+                          <div class="status">
+                            <h4 className="listtext"> Verify </h4>
+                          </div>
+                        </li>
+                        <li class="li complete">
+                          <div class="status">
+                            <h4 className="listtext"> Profile </h4>
+                          </div>
+                        </li>
+                        <li class="li">
+                          <div class="status">
+                            <h4 className="listtext"> Link Wallet </h4>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                     {playerCreation === false && (
                       <SingUpGecko
                         onSuccessVerify={(value) => {
@@ -820,6 +899,13 @@ const BetaPassNFT = ({
                           <img src={circleArrow} alt="" />
                         </div>
                       </div>
+                    )}
+                    {mintTitle === "coingecko" && (
+                      <span className="footertxt-coingecko">
+                        Users who have claimed the CoinGecko Beta Pass NFT are
+                        required to create a WoD Account to receive the NFT and
+                        participate in the exclusive event.
+                      </span>
                     )}
                   </div>
                 )}
