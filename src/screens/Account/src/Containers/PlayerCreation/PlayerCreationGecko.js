@@ -13,7 +13,7 @@ import {
 } from "../../Components";
 import classes from "./PlayerCreation.module.css";
 
-function PlayerCreationGecko({onSuccessCreation}) {
+function PlayerCreationGecko({ onSuccessCreation }) {
   const { getUpdatedUser } = useAuth();
 
   const [onCreatePlayer, { loading }] = useMutation(CREATE_PLAYER);
@@ -62,30 +62,39 @@ function PlayerCreationGecko({onSuccessCreation}) {
 
   return (
     <div>
- <div className={classes.containergecko}>
+      <div className={classes.containergecko}>
         {/* <form autocomplete="off"> */}
-          <Input
-            autocomplete="off"
-            name="displayName"
-            placeHolder="Display name"
-            value={displayName}
-            onChange={setDisplayName}
-            type={"coingecko"}
-          />
-          <Input
-            name="player-password"
-            inputType="password"
-            placeHolder="Password"
-            value={password}
-            onChange={setPassword}
-            type={"coingecko"}
-          />
-          <Button
-            onPress={_onCreatePlayer}
-            title={"Continue"}
-            loading={loading}
-            type={"coingecko"}
-          />
+        <span className={classes.createplayertxt}>
+          *Create the username that will be associated to your game account.
+        </span>
+        <Input
+          autocomplete="off"
+          name="displayName"
+          placeHolder="Display name"
+          value={displayName}
+          onChange={setDisplayName}
+          type={"coingecko"}
+        />
+        <Input
+          name="player-password"
+          inputType="password"
+          placeHolder="Password"
+          value={password}
+          onChange={setPassword}
+          type={"coingecko"}
+        />{" "}
+        <span className="footertxt-coingecko mt-4">
+          Users who have claimed the CoinGecko Beta Pass NFT are required to
+          create a WoD Account to receive the NFT and participate in the
+          exclusive event.
+        </span>
+        <div className="summaryseparator"></div>
+        <Button
+          onPress={_onCreatePlayer}
+          title={"Continue  >"}
+          loading={loading}
+          type={"coingecko"}
+        />
         {/* </form> */}
       </div>
 

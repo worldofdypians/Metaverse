@@ -31,12 +31,7 @@ import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/Pla
 import pinkArea from "./assets/pinkArea.svg";
 import walletImg from "./assets/wallet.svg";
 import circleArrow from "./assets/arrow-circle.svg";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineDot from "@mui/lab/TimelineDot";
+
 
 const BetaPassNFT = ({
   isConnected,
@@ -133,6 +128,7 @@ const BetaPassNFT = ({
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
   const [viewCollection, setViewCollection] = useState(false);
   const [playerCreation, setplayerCreation] = useState(false);
+  const [emailVerify, setEmailVerify] = useState(false)
   const [linkWallet, setLinkWallet] = useState(false);
 
   const handleViewCollection = () => {
@@ -783,62 +779,7 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
                     <h6 className="land-name">Create account</h6>
-                    {/* <Timeline
-                   sx={{
-                     [`& .${timelineItemClasses.root}:before`]: {
-                       flex: 0,
-                       padding: 0,
-                     },
-                   }}
-                 >
-                   <TimelineItem>
-                     <TimelineSeparator>
-                       <TimelineDot className={`timelinedot-completed`} />
-                       <TimelineConnector className={"timeline-line"} />
-                    
-                     </TimelineSeparator>
-                     <TimelineContent>
-                       <h6 className="content-title2">
-                            Create
-                       </h6>
-                     </TimelineContent>
-                   </TimelineItem>
-                   <TimelineItem>
-                     <TimelineSeparator>
-                       <TimelineDot className={`timelinedot-completed`} />
-                       <TimelineConnector className={"timeline-line"} />
-                       
-                     </TimelineSeparator>
-                     <TimelineContent>
-                       <h6 className="content-title2">
-                       Verify
-                       </h6>
-                     </TimelineContent>
-                   </TimelineItem>
-                   <TimelineItem>
-                     <TimelineSeparator>
-                       <TimelineDot className={`timelinedot-completed`} />
-                       <TimelineConnector className={"timeline-line"} />
-
-                     </TimelineSeparator>
-                     <TimelineContent>
-                       <h6 className="content-title2">
-                       Profile
-                       </h6>
-                     </TimelineContent>
-                   </TimelineItem>
-                   <TimelineItem>
-                     <TimelineSeparator>
-                       <TimelineDot className={`timelinedot-completed`} />
-                       <TimelineConnector className={"timeline-line"} />
-                     </TimelineSeparator>
-                     <TimelineContent>
-                       <h6 className="content-title2">
-                       Link Wallet
-                       </h6>
-                     </TimelineContent>
-                   </TimelineItem>
-                 </Timeline> */}
+                
                     <div>
                       <ul class="timeline m-0 p-0" id="timeline">
                         <li class="col-3 li complete">
@@ -846,12 +787,12 @@ const BetaPassNFT = ({
                             <h4 className="listtext"> Create </h4>
                           </div>
                         </li>
-                        <li class="col-3 li">
+                        <li class={`col-3 li ${emailVerify && 'complete'} `}>
                           <div class="status">
                             <h4 className="listtext"> Verify </h4>
                           </div>
                         </li>
-                        <li class="col-3 li">
+                        <li class={`col-3 li ${playerCreation && 'complete'} `}>
                           <div class="status">
                             <h4 className="listtext"> Profile </h4>
                           </div>
@@ -872,7 +813,10 @@ const BetaPassNFT = ({
                       <SingUpGecko
                         onSuccessVerify={(value) => {
                           setplayerCreation(value);
+                          
                         }}
+                        
+                        onEmailVerify={(value)=>{setEmailVerify(value)}}
                       />
                     )}
                     {playerCreation === true && linkWallet === false && (
@@ -884,6 +828,10 @@ const BetaPassNFT = ({
                     )}
 
                     {linkWallet === true && (
+                    <div className="d-flex flex-column gap-4 justify-content-between p-4">
+                      <span className={"createplayertxt"}>
+                      *Make sure to connect the same wallet address as the one you used for CoinGecko Candy Rewards.
+                      </span>
                       <div
                         className="walletconnectBtn w-100"
                         // onClick={onLinkWallet}
@@ -904,6 +852,13 @@ const BetaPassNFT = ({
                           <img src={circleArrow} alt="" />
                         </div>
                       </div>
+                      <span className="footertxt-coingecko mt-4">
+                        Users who have claimed the CoinGecko Beta Pass NFT are
+                        required to create a WoD Account to receive the NFT and
+                        participate in the exclusive event.
+                      </span>
+                      <div className="summaryseparator"></div>
+                    </div>
                     )}
                   </div>
                 )}
