@@ -1,5 +1,14 @@
+.containergecko {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    justify-content: center;
+}
+
 .container {
     padding: 50px 60px 32px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }

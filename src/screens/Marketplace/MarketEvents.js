@@ -20,6 +20,8 @@ import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg"
 import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
+import avaxLogo from "./assets/avaxLogo.svg";
+
 import betaMyEarnings from "./assets/betaMyEarnings.png";
 import DragonPopup from "../../components/PackagePopups/DragonPopup";
 import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
@@ -31,12 +33,17 @@ import confluxUpcoming from "./assets/confluxUpcoming.png";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
+import avaxUpcoming from "./assets/avaxUpcoming.png";
+
 import liveDot from "./assets/liveDot.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import whitePickaxe from "./assets/whitePickAxe.svg";
 import whiteCalendar from "./assets/whiteCalendar.svg";
 import BetaEventCard from "./components/BetaEventCard";
 import eventPopupImage from "../Account/src/Components/WalletBalance/assets/eventPopupImage.png";
+import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
+import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
+
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
 import twitter from "./assets/greenTwitter.svg";
@@ -110,7 +117,7 @@ const MarketEvents = ({
       },
     },
     {
-      title: "Coingecko",
+      title: "CoinGecko",
       logo: coingecko,
       eventStatus: "Expired",
       totalRewards: "$5,000 in BNB Rewards",
@@ -119,11 +126,11 @@ const MarketEvents = ({
       eventDate: "Expired",
       backgroundImage: coingeckoUpcoming,
       popupInfo: {
-        title: "Coingecko Pass",
+        title: "CoinGecko",
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Expired",
+        status: "Coming Soon",
         id: "event3",
       },
     },
@@ -145,6 +152,67 @@ const MarketEvents = ({
         id: "event4",
       },
     },
+  ];
+
+  const dummyBetaPassData2 = [
+    // {
+    //   title: "Avalanche",
+    //   logo: avaxLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$3,000 in AVAX Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "September xx, 2023",
+    //   backgroundImage: avaxUpcoming,
+    //   popupInfo: {
+    //     title: "Avalanche",
+    //     chain: "Avalanche",
+    //     linkState: "coingecko",
+    //     rewards: "AVAX",
+    //     status: "Coming Soon",
+    //     id: "event5",
+    //   eventType: "Explore & Mine",
+
+    //   },
+    // },
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Coming Soon",
+      totalRewards: "$3,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "September 25, 2023",
+      backgroundImage: coingeckoUpcoming,
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event3",
+        eventType: "Explore & Mine",
+      },
+    },
+    // {
+    //   title: "Conflux (CFX)",
+    //   logo: conflux,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$3,000 in CFX Rewards",
+    //   myEarnings: 0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "September xx, 2023",
+    //   backgroundImage: confluxUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Conflux Pass",
+    //     chain: "Conflux Network",
+    //     linkState: "conflux",
+    //     rewards: "CFX",
+    //     status: "Coming Soon",
+    //     id: "event1",
+    //   },
+    // },
   ];
 
   const dragonData = {
@@ -343,7 +411,7 @@ const MarketEvents = ({
       html.classList.remove("hidescroll");
     }
   }, [popup]);
-  
+
   return (
     <>
       <div
@@ -396,6 +464,28 @@ const MarketEvents = ({
                 <>
                   <div className="d-flex justify-content-center">
                     <div className="new-packages-grid mb-3">
+                      <NavLink to="/marketplace/events/betapass">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                              selectedPackage === "betaPass" &&
+                              eventId === "betapass" &&
+                              "selected-event-package"
+                            }`}
+                            onClick={() => setSelectedPackage("betaPass")}
+                          >
+                            <img
+                              src={require("./assets/treasure.jpg")}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Treasure Hunt
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
                       <NavLink to="/marketplace/events/dragon-ruins">
                         <div className="">
                           <div
@@ -484,34 +574,12 @@ const MarketEvents = ({
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/betapass">
-                        <div className="">
-                          <div
-                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                              selectedPackage === "betaPass" &&
-                              eventId === "betapass" &&
-                              "selected-event-package"
-                            }`}
-                            onClick={() => setSelectedPackage("betaPass")}
-                          >
-                            <img
-                              src={require("./assets/treasure.jpg")}
-                              className="w-100"
-                              style={{ borderRadius: "16px" }}
-                              alt=""
-                            />
-                            <span className="event-package-title">
-                              Beta Pass
-                            </span>
-                          </div>
-                        </div>
-                      </NavLink>
                     </div>
                   </div>
 
                   {selectedPackage === "betaPass" ? (
                     <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                      {dummyBetaPassData.map((item, index) => (
+                      {dummyBetaPassData2.map((item, index) => (
                         <BetaEventCard
                           data={item}
                           key={index}
@@ -621,14 +689,29 @@ const MarketEvents = ({
             </div>
             <div className="profile-event-popup-wrapper p-3 d-flex align-items-center justify-content-between mb-3">
               <div className="d-flex gap-2">
-                <img src={eventPopupImage} alt="" />
+                <img
+                  src={
+                    dummyEvent?.chain === "Avalanche"
+                      ? eventPopupImageAvax
+                      : dummyEvent?.linkState === "coingecko"
+                      ? eventPopupImageGecko
+                      : eventPopupImage
+                  }
+                  alt=""
+                  style={{ width: 80, height: 80 }}
+                />
                 <div className="d-flex flex-column justify-content-between">
                   <div className="d-flex flex-column">
                     <h6 className="popup-second-title m-0">
                       {dummyEvent?.title}
                     </h6>
                     <span className="popup-rewards">
-                      $5,000 in {dummyEvent?.rewards} rewards
+                      $3,000 in {dummyEvent?.rewards} rewards
+                    </span>
+                  </div>
+                  <div className="d-flex">
+                    <span className="event-popup-chain mb-0">
+                      Gameplay: {dummyEvent?.eventType}
                     </span>
                   </div>
                   <div className="d-flex">
@@ -656,6 +739,24 @@ const MarketEvents = ({
                   </div>
                 </div>
               )}
+              {dummyEvent?.status === "Coming Soon" && (
+                <div className="d-flex align-items-start gap-1">
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6 className="profile-time-number-2 mb-0">00</h6>
+                    <span className="profile-time-desc-2 mb-0">Days</span>
+                  </div>
+                  <h6 className="profile-time-number-2 mb-0">:</h6>
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6 className="profile-time-number-2 mb-0">00</h6>
+                    <span className="profile-time-desc-2 mb-0">Hours</span>
+                  </div>
+                  <h6 className="profile-time-number-2 mb-0">:</h6>
+                  <div className="d-flex flex-column align-items-center gap-3">
+                    <h6 className="profile-time-number-2 mb-0">00</h6>
+                    <span className="profile-time-desc-2 mb-0">Minutes</span>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
@@ -670,50 +771,62 @@ const MarketEvents = ({
                   <h6 className="popup-green-text">Details</h6>
                   {dummyEvent.id === "event1" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to{" "}
+                      To participate in the event, players are required to&nbsp;
                       <b>hold a Conflux Beta Pass NFT</b>. You can get the
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX tokens or earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Conflux area to uncover hidden treasures.
+                      chance to secure daily rewards in CFX or earn points for
+                      their placement on the global leaderboard. Remember to log
+                      in to the game daily and venture into the Conflux area to
+                      uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event2" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to{" "}
+                      To participate in the event, players are required to&nbsp;
                       <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Coin98 area, players not only stand a chance to secure
-                      daily rewards in C98 tokens or earn points for their
-                      placement on the global leaderboard. Remember to log in to
-                      the game daily and venture into the Coin98 area to uncover
-                      hidden treasures.
+                      daily rewards in C98 or earn points for their placement on
+                      the global leaderboard. Remember to log in to the game
+                      daily and venture into the Coin98 area to uncover hidden
+                      treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to
-                      <b>hold a Coingecko Beta Pass NFT</b>. You can get the
-                      Coingecko Beta Pass NFT from the World of Dypians
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a CoinGecko Beta Pass NFT</b>. You can get the
+                      CoinGecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
-                      exploring the Coingecko area, players not only stand a
-                      chance to secure daily rewards in BNB tokens or earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Coingecko area to uncover hidden treasures.
+                      exploring the CoinGecko area, players not only stand a
+                      chance to secure daily rewards in BNB or earn points for
+                      their placement on the global leaderboard. Remember to log
+                      in to the game daily and venture into the CoinGecko area
+                      to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event5" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold an Avalanche Beta Pass NFT</b>. You can get the
+                      Avalanche Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Avalanche area, players not only stand a
+                      chance to secure daily rewards in AVAX or earn points for
+                      their placement on the global leaderboard. Remember to log
+                      in to the game daily and venture into the Avalanche area
+                      to uncover hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to{" "}
+                      To participate in the event, players are required to&nbsp;
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE tokens or earn points for their placement
-                      on the global leaderboard. Remember to log in to the game
-                      daily and venture into the Base area to uncover hidden
+                      rewards in BASE or earn points for their placement on the
+                      global leaderboard. Remember to log in to the game daily
+                      and venture into the Base area to uncover hidden
                       treasures.
                     </p>
                   )}
@@ -733,6 +846,8 @@ const MarketEvents = ({
                         ? "C98"
                         : dummyEvent.id === "event3"
                         ? "BNB"
+                        : dummyEvent.id === "event5"
+                        ? "AVAX"
                         : "BASE"}{" "}
                       rewards
                     </li>
@@ -752,7 +867,9 @@ const MarketEvents = ({
                 : dummyEvent.id === "event2"
                 ? "Coin98"
                 : dummyEvent.id === "event3"
-                ? "Coingecko"
+                ? "CoinGecko"
+                : dummyEvent.id === "event5"
+                ? "Avalanche"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -786,7 +903,22 @@ const MarketEvents = ({
               >
                 CoinGecko is the world's largest independent cryptocurrency data
                 aggregator with over 10,000+ different cryptoassets tracked
-                across more than 800+ exchanges worldwide.
+                across more than 800+ exchanges worldwide. CoinGecko provides a
+                fundamental analysis of the digital currency market. In addition
+                to tracking price, volume, and market capitalization, CoinGecko
+                tracks community growth, open source code development, major
+                events, and on-chain metrics.
+              </p>
+            ) : dummyEvent.id === "event5" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Avalanche is a smart contracts platform that scales infinitely
+                and regularly finalizes transactions in less than one second.
+                Its novel consensus protocol, Subnet infrastructure, and
+                HyperSDK toolkit enable web3 developers to easily launch
+                powerful, custom blockchain solutions.
               </p>
             ) : (
               <p
@@ -863,18 +995,20 @@ const MarketEvents = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">1,500,250</h6>
-                  <span className="mb-0 event-earnings-usd">Points</span>
+                  <h6 className="mb-0 event-earnings-coin2">0 Points</h6>
+                  <span className="mb-0 event-earnings-usd">Leaderboard</span>
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">
-                    250.62{" "}
+                    0{" "}
                     {dummyEvent.id === "event1"
                       ? "CFX"
                       : dummyEvent.id === "event2"
                       ? "C98"
                       : dummyEvent.id === "event3"
                       ? "BNB"
+                      : dummyEvent.id === "event5"
+                      ? "AVAX"
                       : "BASE"}
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>

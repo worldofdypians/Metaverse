@@ -1114,6 +1114,38 @@
   }
 }
 
+.coingeckonft-wrapper {
+  background: url(./MarketNFTs/assets/coingeckonftBg.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  aspect-ratio: 0.1/0.04;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.coingecko-nft-number {
+  color: #f2f2f2;
+  text-align: center;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.coingecko-nft-desc {
+  color: #91eeeb;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
 .market-stake-banner {
   width: 50%;
   @media screen and (max-width: 786px) {
@@ -1893,6 +1925,20 @@
   height: 104px;
 }
 
+.upcoming-mint-img2 {
+  height: 130px;
+}
+
+.coingecko-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #007f82 -13.56%, #8bc53f 129.3%);
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
 .mybetaearnings {
   background: url(./assets/betaMyEarnings.png);
   background-size: 100% 100%;
@@ -2008,21 +2054,26 @@
   border: 1px solid #11fed2;
 }
 
-.upcoming-mint-wrapper:first-child {
+.upcoming-mint-wrapper-coingecko {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181b38 0%, #11503d 100%);
+  background: linear-gradient(90deg, #181b38 0%, #27a330 168.67%);
 }
-.upcoming-mint-wrapper:nth-child(2) {
+.upcoming-mint-wrapper-coin98 {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #503e11 100%);
 }
-.upcoming-mint-wrapper:nth-child(3) {
+.upcoming-mint-wrapper-avax {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #481150 100%);
 }
-.upcoming-mint-wrapper:nth-child(4) {
+.upcoming-mint-wrapper-base {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
+}
+
+.upcoming-mint-wrapper-conflux {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #11503d 168.67%);
 }
 
 .upcoming-mint-title {
@@ -2064,11 +2115,11 @@
 }
 
 .mint-2 {
-  background: linear-gradient(90deg, #181B38 0%, #12A272 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #12a272 168.67%);
 }
 
 .mint-3 {
-  background: linear-gradient(90deg, #181B38 0%, #000B6E 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #000b6e 168.67%);
 }
 
 .mint-4 {
@@ -2261,4 +2312,94 @@
   font-style: normal;
   line-height: normal;
   font-family: "Montserrat", sans-serif;
+}
+
+.footertxt-coingecko {
+  color: #c0cbf7;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.timeline {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .li {
+    transition: all 200ms ease-in;
+    .listtext {
+      color: #c0cbf7;
+      text-align: center;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      letter-spacing: -0.18px;
+      position: relative;
+      left: -11px;
+    }
+    .timestamp {
+      margin-bottom: 20px;
+      padding: 0px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 100;
+    }
+    .status {
+      padding: 10px 0 0 0;
+      display: flex;
+      border-top: 2px solid #565891;
+      position: relative;
+      transition: all 200ms ease-in;
+
+      &:before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background-color: #26264f;
+        border-radius: 25px;
+        border: 2px solid #565891;
+        position: absolute;
+        top: -10px;
+        left: -2%;
+        transition: all 200ms ease-in;
+      }
+    }
+
+    @media (min-device-width: 320px) and (max-device-width: 700px) {
+      .timeline {
+        list-style-type: none;
+        display: block;
+        .li {
+          transition: all 200ms ease-in;
+          display: flex;
+          width: inherit;
+        }
+        .timestamp {
+          width: 100px;
+          .status {
+            &:before {
+              left: -8%;
+              top: 30%;
+              transition: all 200ms ease-in;
+            }
+          }
+        }
+      }
+    }
+  }
+  .complete {
+    .status {
+      border-top: 2px solid #48b4bd;
+      &:before {
+        background-color: #48b4bd;
+        border: none;
+        transition: all 200ms ease-in;
+      }
+    }
+  }
 }

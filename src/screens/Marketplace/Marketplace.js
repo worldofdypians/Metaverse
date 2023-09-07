@@ -574,6 +574,24 @@ const Marketplace = ({
             <div className="nft-outer-wrapper row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
               {windowSize.width > 786 ? (
                 <>
+                   <NavLink
+                    to="/marketplace/events/betapass"
+                    state={{ package: "betaPass" }}
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="position-relative package-blur">
+                      <div className="first-box-blur d-flex align-items-end justify-content-center">
+                        <span className="blur-package-title">Tresure Hunt</span>
+                      </div>
+                      <div className="second-box-blur"></div>
+                      <img
+                        src={require("./assets/treasure.jpg")}
+                        alt=""
+                        className="blur-img"
+                      />
+                    </div>
+                  </NavLink>
                   <NavLink
                     to="/marketplace/events/dragon-ruins"
                     state={{ package: "dragon" }}
@@ -649,24 +667,7 @@ const Marketplace = ({
                       />
                     </div>
                   </NavLink>
-                  <NavLink
-                    to="/marketplace/events/betapass"
-                    state={{ package: "betaPass" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="position-relative package-blur">
-                      <div className="first-box-blur d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">Beta Pass</span>
-                      </div>
-                      <div className="second-box-blur"></div>
-                      <img
-                        src={require("./assets/treasure.jpg")}
-                        alt=""
-                        className="blur-img"
-                      />
-                    </div>
-                  </NavLink>
+               
                 </>
               ) : (
                 <div className="d-flex justify-content-center">

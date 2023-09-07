@@ -7,7 +7,21 @@ import whiteCalendar from "../assets/whiteCalendar.svg";
 
 const BetaEventCard = ({ data, onOpenPopup }) => {
   return (
-    <div className="upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row d-flex align-items-center justify-content-between px-0" onClick={onOpenPopup} style={{cursor: 'pointer'}} >
+    <div
+      className={` ${
+        data.title === "Avalanche"
+          ? "upcoming-mint-wrapper-avax"
+          : data.title === "CoinGecko"
+          ? "upcoming-mint-wrapper-coingecko"
+          : data.title === "Conflux (CFX)"
+          ? "upcoming-mint-wrapper-conflux"
+          : data.title === "Base"
+          ? "upcoming-mint-wrapper-base"
+          : "upcoming-mint-wrapper-coin98"
+      } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row d-flex align-items-center justify-content-between px-0`}
+      onClick={onOpenPopup}
+      style={{ cursor: "pointer" }}
+    >
       <div className="d-flex col col-lg-5 align-items-start align-items-lg-center  p-3 gap-3">
         <img src={data.logo} width={36} height={36} alt="" />
         <div className="d-flex flex-column justify-content-between gap-2 gap-lg-0">

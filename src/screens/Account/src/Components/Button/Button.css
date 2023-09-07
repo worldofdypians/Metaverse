@@ -12,6 +12,16 @@
     justify-content: center;
 }
 
+.coingeckoButton {
+    width: fit-content;
+    cursor: pointer;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: end;
+}
+
 .titleButton {
     font-size: 20px;
     color: #0B0B2E;
@@ -20,6 +30,16 @@
     color: #0B0B2E;
     opacity: 1;
     text-align: left;
+}
+
+.coingeckotitleButton {
+    color: #7DD9AF;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0;
 }
 
 .lds-dual-ring {

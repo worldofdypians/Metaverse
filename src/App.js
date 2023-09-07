@@ -1146,6 +1146,10 @@ function App() {
   //   setmyNftsOffer(recievedOffers);
   // };
 
+  const handleSwitchNetwork=(chain)=>{
+    setChainId(chain)
+  }
+
   const handleDisconnect = async () => {
     localStorage.setItem("logout", "true");
     setSuccess(false)
@@ -1260,7 +1264,8 @@ function App() {
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
             isConnected={isConnected}
-
+            chainId={chainId}
+            handleSwitchNetwork={handleSwitchNetwork}
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1494,6 +1499,34 @@ function App() {
               element={
                 <BetaPassNFT
                 type={"conflux"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
+                />
+              }
+            />
+
+<Route
+              exact
+              path="/marketplace/beta-pass/avalanche"
+              element={
+                <BetaPassNFT
+                type={"avalanche"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   isConnected={isConnected}
