@@ -247,6 +247,8 @@ const MarketEvents = ({
       setSelectedPackage("criticalHit");
     } else if (eventId === "betapass") {
       setSelectedPackage("betaPass");
+    }else if (eventId === "treasure-hunt"){
+      setActiveTab("upcoming")
     }
   }, []);
 
@@ -278,14 +280,21 @@ const MarketEvents = ({
                   >
                     Live
                   </h6>
+                  <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                   <h6
-                    className={`new-stake-tab ${
+                    className={`new-stake-tab  ${
                       activeTab === "upcoming" && "stake-tab-active"
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
+                    
                     Upcoming
                   </h6>
+                  </div>
+                 
                   <h6
                     className={`new-stake-tab ${
                       activeTab === "past" && "stake-tab-active"
@@ -302,7 +311,7 @@ const MarketEvents = ({
                 <>
                   <div className="d-flex justify-content-center">
                     <div className="new-packages-grid mb-3">
-                    {/* <NavLink to="/marketplace/events/betapass">
+                    {/* <NavLink to="/marketplace/events/treasure-hunt">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${

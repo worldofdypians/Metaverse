@@ -2039,3 +2039,20 @@
     width: 100%;
   }
 }
+
+.new-upcoming-tag{
+  position: absolute;
+  top: -12px;
+  right: 0px;
+  border-radius: 6px;
+// background: linear-gradient(109deg, rgba(136, 29, 237, 0.40) 0.96%, rgba(193, 0, 101, 0.40) 101.51%);
+background: linear-gradient(90deg, #a80000 -13.56%, #c5533f 129.3%);
+z-index: 2;
+span{
+  color: #FFF;
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+}
