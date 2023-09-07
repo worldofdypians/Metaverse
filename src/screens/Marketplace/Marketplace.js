@@ -651,7 +651,7 @@ const Marketplace = ({
                       </div>
                       <div className="second-box-blur"></div>
                       <img
-                        src={require("./assets/goldenPass.png")}
+                        src={require("../Account/src/Components/BundleCard/assets/goldenPass.webp")}
                         alt=""
                         className="blur-img"
                       />
