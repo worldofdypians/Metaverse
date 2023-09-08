@@ -87,13 +87,13 @@ const MarketMint = ({
     background: "kucoin-mint-bg",
     mobileBg: "kucoinMobileBg.png",
   };
-  const confluxData = {
-    id: "conflux",
-    cardTitle: "Conflux Beta Pass",
-    title: "Conflux Beta Pass",
-    background: "conflux-mint-bg",
-    mobileBg: "confluxMobileBg.png",
-  };
+  // const confluxData = {
+  //   id: "conflux",
+  //   cardTitle: "Conflux Beta Pass",
+  //   title: "Conflux Beta Pass",
+  //   background: "conflux-mint-bg",
+  //   mobileBg: "confluxMobileBg.png",
+  // };
 
   const timepieceData = {
     id: "timepiece",
@@ -357,15 +357,15 @@ const MarketMint = ({
   useEffect(() => {
   html.classList.remove("hidescroll");
 
-    if (locationState === "conflux") {
-      setSelectedMint(confluxData);
-      setMintTitle("conflux");
-    } 
+    // if (locationState === "conflux") {
+    //   setSelectedMint(confluxData);
+    //   setMintTitle("conflux");
+    // } 
     // else if (locationState === "coingecko") {
     //   setSelectedMint(coingeckoData);
     //   setMintTitle("coingecko");
     // } 
-   else if (locationState === "avax") {
+    if (locationState === "avax") {
       setSelectedMint(avaxData);
       setMintTitle("avax");
     } else if (locationState === "coin98") {
@@ -403,14 +403,14 @@ const MarketMint = ({
       class: "mint-3",
     },
    
-    {
-      title: "Conflux Pass",
-      eventId: "conflux",
-      desc: "Gain entry to metaverse, and join exclusive Conflux event with special ticket.",
-      img: confluxActive,
-      data: confluxData,
-      class: "mint-4",
-    },
+    // {
+    //   title: "Conflux Pass",
+    //   eventId: "conflux",
+    //   desc: "Gain entry to metaverse, and join exclusive Conflux event with special ticket.",
+    //   img: confluxActive,
+    //   data: confluxData,
+    //   class: "mint-4",
+    // },
     {
       title: "Coin98 Pass",
       eventId: "coin98",
@@ -524,7 +524,7 @@ const MarketMint = ({
                     )}
                     {showFirstNext === activeSlide
                       ? null
-                      : 8 > sliderCut && (
+                      : dummyCards.length > sliderCut && (
                           <div className="next-arrow-nft" onClick={firstNext}>
                             <img src={nextArrow} alt="1" />
                           </div>
