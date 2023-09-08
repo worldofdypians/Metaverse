@@ -490,7 +490,7 @@ const BetaPassNFT = ({
                     {mintTitle === "coingecko" && (
                       <>
                         Get Your CoinGecko Beta Pass
-                        <br /> via{" "}
+                        <br  className="d-none d-lg-flex" /> via
                         <span className="marketmintnewtitle-marked mx-2">
                           Candy Rewards!
                         </span>
@@ -860,7 +860,7 @@ const BetaPassNFT = ({
                       playerCreation
                         ? "justify-content-center"
                         : "justify-content-between"
-                    } p-4 mint-wrappernew d-flex flex-column staking-height gap-2`}
+                    } p-4 mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                   >
                     {/* <h6
                       className="land-placeholder mb-0"
@@ -885,7 +885,7 @@ const BetaPassNFT = ({
                     </div> */}
                     {!alreadyRegistered && (
                       <h6 className="land-name">Create account</h6>
-                    )}
+                    )} 
                     {!alreadyRegistered && (
                       <div>
                         <ul class="timeline m-0 p-0" id="timeline">

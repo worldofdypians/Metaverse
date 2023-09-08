@@ -53,6 +53,10 @@
     height: auto;
     min-height: 600px;
   }
+  @media screen and (max-width: 786px) {
+    height: auto;
+    min-height: fit-content;
+  }
 }
 .staking-height-2 {
   height: 480px;
