@@ -6,7 +6,7 @@ import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
 
-function SingUpGecko({ onSuccessVerify }) {
+function SingUpGecko({ onSuccessVerify, onEmailVerify }) {
   const {
     isAuthenticated,
     login: LoginGlobal,
@@ -32,6 +32,7 @@ function SingUpGecko({ onSuccessVerify }) {
     await Auth.confirmSignUp(username, verifyCode)
       .then(() => {
         login();
+        onEmailVerify(true)
       })
       .catch((e) => {
         console.log("failed with error", e);
@@ -96,21 +97,28 @@ function SingUpGecko({ onSuccessVerify }) {
 
   if (code === "UserNotConfirmedException") {
     return (
-      <div className={classes.container}>
+      <div className={classes.containergecko}>
+        <span className={classes.createplayertxt}>
+          *The verification code has been sent to your email address.
+        </span>
         <Input
-          style={{
-            marginBottom: 24,
-          }}
+          type={"coingecko"}
           placeHolder="Verify"
           value={verifyCode}
           onChange={setVerifyCode}
         />
+        <span className="footertxt-coingecko mt-4">
+          Users who have claimed the CoinGecko Beta Pass NFT are required to
+          create a WoD Account to receive the NFT and participate in the
+          exclusive event.
+        </span>
 
+        <div className="summaryseparator"></div>
         <Button
           disabled={disabled}
-          style={{ margin: "auto" }}
           onPress={verifyEmailValidationCode}
-          title={"Verify"}
+          title={"Continue  >"}
+          type={"coingecko"}
         />
       </div>
     );

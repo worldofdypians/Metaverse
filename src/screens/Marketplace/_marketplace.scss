@@ -2316,9 +2316,18 @@
 
 .footertxt-coingecko {
   color: #c0cbf7;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 300;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.createplayertxt {
+  color: #18ffff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
   line-height: normal;
   letter-spacing: -0.18px;
 }
