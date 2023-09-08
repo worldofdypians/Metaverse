@@ -53,6 +53,10 @@
     height: auto;
     min-height: 600px;
   }
+  @media screen and (max-width: 786px) {
+    height: auto;
+    min-height: fit-content;
+  }
 }
 .staking-height-2 {
   height: 480px;
@@ -452,8 +456,8 @@
 .coingecko-mint-bg {
   background-image: url("./assets/coingeckoBackground.png");
 
- background-size: 100% 100%;
-  background-position: center;
+ background-size: cover;
+  background-position: right;
   background-repeat: no-repeat;
 
   @media screen and (max-width: 786px) {
