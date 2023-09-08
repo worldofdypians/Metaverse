@@ -26,6 +26,8 @@ import subtractInactive from "../../../assets/landAssets/subtractInactive.svg";
 import dummyBadge from "../../../assets/landAssets/dummyBadge.png";
 import avaxLogo from "./assets/avaxLogo.svg";
 import betapassBanner from "./assets/betaPassBanner.png";
+import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
+
 import avaxbetapassBanner from "./assets/betapassAvax.png";
 import geckobetapassBanner from "./assets/betaPassBannerGecko.png";
 import SingUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
@@ -35,6 +37,9 @@ import walletImg from "./assets/wallet.svg";
 import circleArrow from "./assets/arrow-circle.svg";
 import termsArrow from "./assets/termsArrow.svg";
 import popupXmark from "../assets/popupXmark.svg";
+import user from "./assets/user.svg";
+import downloadArrow from "./assets/downloadArrow.svg";
+
 import {
   GENERATE_NONCE,
   GET_PLAYER,
@@ -53,6 +58,7 @@ const BetaPassNFT = ({
   handleRefreshListing,
   chainId,
   totalCreated,
+  totalCoingeckoNft,
   mintloading,
   showWalletConnect,
   cawsArray,
@@ -142,7 +148,6 @@ const BetaPassNFT = ({
   const [alreadyRegistered, setalreadyRegistered] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
 
-
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
   useEffect(() => {
@@ -154,8 +159,6 @@ const BetaPassNFT = ({
       html.classList.remove("hidescroll");
     }
   }, [openTerms]);
-
-
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
@@ -300,8 +303,6 @@ const BetaPassNFT = ({
     }
   }, [data]);
 
-  console.log(data);
-
   useEffect(() => {
     if (dataNonce?.generateWalletNonce) {
       signWalletPublicAddress();
@@ -350,6 +351,8 @@ const BetaPassNFT = ({
                         ? avaxbetapassBanner
                         : mintTitle === "coingecko"
                         ? geckobetapassBanner
+                        : mintTitle === "conflux"
+                        ? betapassBannerConflux
                         : betapassBanner
                     }
                     className="w-100"
@@ -999,14 +1002,63 @@ const BetaPassNFT = ({
                         </div>
                       )}
                       {alreadyRegistered && (
-                        <div>
-                          <h1>Success</h1>
+                        <div className="d-flex flex-column justify-content-between h-100">
+                          <h6 className="land-name">Registered</h6>
+                          <div className="col-5 d-flex flex-column mx-auto position-relative">
+                            <div
+                              className={`coingeckoempty-wrapper ${
+                                mintTitle !== "timepiece" &&
+                                totalCoingeckoNft === 0
+                                  ? "conflux-empty"
+                                  : totalCoingeckoNft > 0
+                                  ? "coingecko-active"
+                                  : "conflux-empty"
+                              } d-flex justify-content-center align-items-center p-3 position-relative`}
+                              style={{ height: 210 }}
+                            ></div>
+                            <div
+                              className="genesis-desc px-3 py-2 position-relative"
+                              style={{
+                                bottom: totalCoingeckoNft > 0 ? "20px" : "5px",
+                              }}
+                            >
+                              <h6
+                                className="land-desc w-75 m-auto text-center"
+                                style={{ fontWeight: 500, fontSize: 16 }}
+                              >
+                                {selectedMint.cardTitle}
+                              </h6>
+                            </div>
+                          </div>
+                          <span className="footertxt-coingecko">
+                            After NFT distribution, you can view CoinGecko Beta
+                            Pass.
+                          </span>
+                          <div className="summaryseparator mt-3 mb-3"></div>
+                          <div className="d-flex align-items-center gap-2 justify-content-between">
+                            <a
+                              href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                              target="_blank"
+                              rel="noreferrer"
+                              className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
+                            >
+                              <img src={downloadArrow} alt="" /> Download
+                            </a>
+                            <NavLink
+                              to="/account"
+                              className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                            >
+                              <img src={user} alt="" />
+                              My Account
+                            </NavLink>
+                          </div>
                         </div>
                       )}
                     </div>
                   )}
                 </div>
               </div>
+
               <div
                 className="d-flex align-items-center gap-2 terms-wrap"
                 style={{ cursor: "pointer" }}
@@ -1015,66 +1067,72 @@ const BetaPassNFT = ({
                 <span className="terms-and-conditions mb-0">
                   Terms & Conditions
                 </span>
-                <img src={termsArrow} alt="" />
+                {/* <img src={termsArrow} alt="" /> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-     <OutsideClickHandler onOutsideClick={() => setOpenTerms(false)}>
-     <div
-        className={`popup-wrapper ${
-          openTerms && "popup-active"
-        } p-4 d-flex flex-column`}
-        style={{ borderRadius: "12px" }}
-        id="terms"
-      >
-        <div className="d-flex align-items-center justify-content-between mb-4">
-          <h6
-            className="nft-page-title mb-0"
-            style={{ fontSize: "27px", fontWeight: "600" }}
-          >
-            Terms & Conditions
-          </h6>
-          <img src={popupXmark} onClick={() => setOpenTerms(false)} alt="" style={{cursor: "pointer"}} />
+      <OutsideClickHandler onOutsideClick={() => setOpenTerms(false)}>
+        <div
+          className={`popup-wrapper ${
+            openTerms && "popup-active"
+          } p-4 d-flex flex-column`}
+          style={{ borderRadius: "12px" }}
+          id="terms"
+        >
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <h6
+              className="nft-page-title mb-0"
+              style={{ fontSize: "27px", fontWeight: "600" }}
+            >
+              Terms & Conditions
+            </h6>
+            <img
+              src={popupXmark}
+              onClick={() => setOpenTerms(false)}
+              alt=""
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+          <ul className="terms-list">
+            <li className="collection-desc mb-2 mb-lg-3">
+              Users are required to create a game account using the same email
+              and BEP20 wallet address as the one used for CoinGecko Candy
+              Rewards.
+            </li>
+            <li className="collection-desc mb-2 mb-lg-3">
+              Users must maintain ownership of the CoinGecko Beta Pass NFT in
+              their wallet address at all times in order to access the game and
+              its associated benefits.
+            </li>
+            <li className="collection-desc mb-2 mb-lg-3">
+              The CoinGecko Beta Pass NFT eligibility is limited to one per
+              wallet.
+            </li>
+            <li className="collection-desc mb-2 mb-lg-3">
+              All benefits associated with the Beta Pass NFT are transferable if
+              the NFT is transferred to another wallet.
+            </li>
+            <li className="collection-desc mb-2 mb-lg-3">
+              A total of 5,000 CoinGecko Beta Pass NFTs are eligible to be
+              redeemed by users.
+            </li>
+            <li className="collection-desc mb-2 mb-lg-3">
+              The redemption period begins on September 18 and concludes once
+              all the NFTs have been distributed.
+            </li>
+            <li className="collection-desc mb-2 mb-lg-3">
+              The special event will be available from September 25 to November
+              25.
+            </li>
+            <li className="collection-desc mb-2 mb-lg-3">
+              World of Dypians reserves the right to organise additional events
+              in the future for all Beta Pass NFT holders.
+            </li>
+          </ul>
         </div>
-        <ul className="terms-list">
-          <li className="collection-desc mb-2 mb-lg-3">
-            Users are required to create a game account using the same email and
-            BEP20 wallet address as the one used for CoinGecko Candy Rewards.
-          </li>
-          <li className="collection-desc mb-2 mb-lg-3">
-            Users must maintain ownership of the CoinGecko Beta Pass NFT in
-            their wallet address at all times in order to access the game and
-            its associated benefits.
-          </li>
-          <li className="collection-desc mb-2 mb-lg-3">
-            The CoinGecko Beta Pass NFT eligibility is limited to one per
-            wallet.
-          </li>
-          <li className="collection-desc mb-2 mb-lg-3">
-            All benefits associated with the Beta Pass NFT are transferable if
-            the NFT is transferred to another wallet.
-          </li>
-          <li className="collection-desc mb-2 mb-lg-3">
-            A total of 5,000 CoinGecko Beta Pass NFTs are eligible to be
-            redeemed by users.
-          </li>
-          <li className="collection-desc mb-2 mb-lg-3">
-            The redemption period begins on September 18 and concludes once all
-            the NFTs have been distributed.
-          </li>
-          <li className="collection-desc mb-2 mb-lg-3">
-            The special event will be available from September 25 to November
-            25.
-          </li>
-          <li className="collection-desc mb-2 mb-lg-3">
-            World of Dypians reserves the right to organise additional events in
-            the future for all Beta Pass NFT holders.
-          </li>
-        </ul>
-      </div>
-     </OutsideClickHandler>
+      </OutsideClickHandler>
     </>
   );
 };

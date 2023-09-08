@@ -2470,3 +2470,30 @@ letter-spacing: -0.18px;
     overflow-y:  scroll;
   }
 }
+.downloadbtn-coingecko {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #5e54a0 0%, #00fecf 100%);
+  padding: 8px 15px;
+  width: fit-content;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.accountbtn-coingecko {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #830e48 0.18%, #5065c3 99.81%);
+  padding: 8px 15px;
+  width: fit-content;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
