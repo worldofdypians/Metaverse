@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Web3 from "web3";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../../../hooks/useWindowSize";
 import arrowRight from "./assets/arrowRight.svg";
-
+import { useMutation, useQuery } from "@apollo/client";
+import { ethers } from "ethers";
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import conflux from "./assets/conflux.svg";
@@ -31,7 +33,11 @@ import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/Pla
 import pinkArea from "./assets/pinkArea.svg";
 import walletImg from "./assets/wallet.svg";
 import circleArrow from "./assets/arrow-circle.svg";
-
+import {
+  GENERATE_NONCE,
+  GET_PLAYER,
+  VERIFY_WALLET,
+} from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 
 const BetaPassNFT = ({
   isConnected,
@@ -128,17 +134,86 @@ const BetaPassNFT = ({
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
   const [viewCollection, setViewCollection] = useState(false);
   const [playerCreation, setplayerCreation] = useState(false);
-  const [emailVerify, setEmailVerify] = useState(false)
+  const [emailVerify, setEmailVerify] = useState(false);
   const [linkWallet, setLinkWallet] = useState(false);
+  const [alreadyRegistered, setalreadyRegistered] = useState(false);
+
+  const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
+    useMutation(GENERATE_NONCE);
+  const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
+    useMutation(VERIFY_WALLET);
 
   const handleViewCollection = () => {
     setViewCollection(true);
   };
 
+  const {
+    data,
+    refetch: refetchPlayer,
+    loading: loadingPlayer,
+  } = useQuery(GET_PLAYER, {
+    fetchPolicy: "network-only",
+  });
+
   const handleCreate = () => {
     handleMint({
       numberOfTokens: parseInt(nftCount),
     });
+  };
+
+  async function connectWallet() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum?.enable();
+        console.log("Connected!");
+
+        let coinbase_address;
+        await window.ethereum
+          .request({
+            method: "eth_requestAccounts",
+          })
+          .then((data) => {
+            coinbase_address = data[0];
+          });
+        // window.coinbase_address = coinbase_address.pop();
+        await generateNonce({
+          variables: {
+            publicAddress: coinbase_address,
+          },
+        });
+        return true;
+      } catch (e) {
+        console.error(e);
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", e);
+        throw new Error("User denied wallet connection!");
+      }
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+      console.log("connected to old web3");
+      // onConnect();
+      return true;
+    } else {
+      throw new Error("No web3 detected!");
+    }
+  }
+
+  const signWalletPublicAddress = async () => {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner(coinbase);
+      const signature = await signer.signMessage(
+        `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+      );
+      verifyWallet({
+        variables: {
+          publicAddress: coinbase,
+          signature: signature,
+        },
+      }).then(() => {});
+    } catch (error) {
+      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+    }
   };
 
   const addNft = () => {
@@ -183,6 +258,36 @@ const BetaPassNFT = ({
       setMintTitle("avalanche");
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      !data.getPlayer.wallet
+    ) {
+      setLinkWallet(true);
+      setEmailVerify(true);
+      setplayerCreation(true);
+    } else if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      setalreadyRegistered(true);
+    }
+  }, [data]);
+
+  console.log(data);
+
+  useEffect(() => {
+    if (dataNonce?.generateWalletNonce) {
+      signWalletPublicAddress();
+    }
+  }, [dataNonce]);
 
   return (
     <div
@@ -778,87 +883,100 @@ const BetaPassNFT = ({
                         Get Beta Pass
                       </button>
                     </div> */}
-                    <h6 className="land-name">Create account</h6>
-                
-                    <div>
-                      <ul class="timeline m-0 p-0" id="timeline">
-                        <li class="col-3 li complete">
-                          <div class="status">
-                            <h4 className="listtext"> Create </h4>
-                          </div>
-                        </li>
-                        <li class={`col-3 li ${emailVerify && 'complete'} `}>
-                          <div class="status">
-                            <h4 className="listtext"> Verify </h4>
-                          </div>
-                        </li>
-                        <li class={`col-3 li ${playerCreation && 'complete'} `}>
-                          <div class="status">
-                            <h4 className="listtext"> Profile </h4>
-                          </div>
-                        </li>
-                        <li class="col-2 li" style={{ width: 0 }}>
-                          <div class="status">
-                            <h4
-                              className="listtext"
-                              style={{ width: 0, whiteSpace: "nowrap" }}
-                            >
-                              Link Wallet
-                            </h4>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    {playerCreation === false && (
+                    {!alreadyRegistered && (
+                      <h6 className="land-name">Create account</h6>
+                    )}
+                    {!alreadyRegistered && (
+                      <div>
+                        <ul class="timeline m-0 p-0" id="timeline">
+                          <li class="col-3 li complete">
+                            <div class="status">
+                              <h4 className="listtext"> Create </h4>
+                            </div>
+                          </li>
+                          <li class={`col-3 li ${emailVerify && "complete"} `}>
+                            <div class="status">
+                              <h4 className="listtext"> Verify </h4>
+                            </div>
+                          </li>
+                          <li
+                            class={`col-3 li ${playerCreation && "complete"} `}
+                          >
+                            <div class="status">
+                              <h4 className="listtext"> Profile </h4>
+                            </div>
+                          </li>
+                          <li class="col-2 li" style={{ width: 0 }}>
+                            <div class="status">
+                              <h4
+                                className="listtext"
+                                style={{ width: 0, whiteSpace: "nowrap" }}
+                              >
+                                Link Wallet
+                              </h4>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                    {playerCreation === false && !alreadyRegistered && (
                       <SingUpGecko
                         onSuccessVerify={(value) => {
                           setplayerCreation(value);
-                          
                         }}
-                        
-                        onEmailVerify={(value)=>{setEmailVerify(value)}}
-                      />
-                    )}
-                    {playerCreation === true && linkWallet === false && (
-                      <PlayerCreationGecko
-                        onSuccessCreation={() => {
-                          setLinkWallet(true);
+                        onEmailVerify={(value) => {
+                          setEmailVerify(value);
                         }}
                       />
                     )}
+                    {playerCreation === true &&
+                      linkWallet === false &&
+                      !alreadyRegistered && (
+                        <PlayerCreationGecko
+                          onSuccessCreation={() => {
+                            setLinkWallet(true);
+                          }}
+                        />
+                      )}
 
-                    {linkWallet === true && (
-                    <div className="d-flex flex-column gap-4 justify-content-between p-4">
-                      <span className={"createplayertxt"}>
-                      *Make sure to connect the same wallet address as the one you used for CoinGecko Candy Rewards.
-                      </span>
-                      <div
-                        className="walletconnectBtn w-100"
-                        // onClick={onLinkWallet}
-                      >
-                        <div className="d-flex gap-2 justify-content-between align-items-center">
-                          <div className="d-flex gap-2 align-items-center">
-                            <img src={walletImg} alt="" />
-                            <div className="d-flex flex-column">
-                              <span className="secondTitle">
-                                Connect wallet
-                              </span>
+                    {linkWallet === true && !alreadyRegistered && (
+                      <div className="d-flex flex-column gap-4 justify-content-between p-4">
+                        <span className={"createplayertxt"}>
+                          *Make sure to connect the same wallet address as the
+                          one you used for CoinGecko Candy Rewards.
+                        </span>
+                        <div
+                          className="walletconnectBtn w-100"
+                          onClick={connectWallet}
+                        >
+                          <div className="d-flex gap-2 justify-content-between align-items-center">
+                            <div className="d-flex gap-2 align-items-center">
+                              <img src={walletImg} alt="" />
+                              <div className="d-flex flex-column">
+                                <span className="secondTitle">
+                                  Connect wallet
+                                </span>
 
-                              <span className="firsttitle">
-                                Link your wallet
-                              </span>
+                                <span className="firsttitle">
+                                  Link your wallet
+                                </span>
+                              </div>
                             </div>
+                            <img src={circleArrow} alt="" />
                           </div>
-                          <img src={circleArrow} alt="" />
                         </div>
+                        <span className="footertxt-coingecko mt-4">
+                          Users who have claimed the CoinGecko Beta Pass NFT are
+                          required to create a WoD Account to receive the NFT
+                          and participate in the exclusive event.
+                        </span>
+                        <div className="summaryseparator"></div>
                       </div>
-                      <span className="footertxt-coingecko mt-4">
-                        Users who have claimed the CoinGecko Beta Pass NFT are
-                        required to create a WoD Account to receive the NFT and
-                        participate in the exclusive event.
-                      </span>
-                      <div className="summaryseparator"></div>
-                    </div>
+                    )}
+                    {alreadyRegistered && (
+                      <div>
+                        <h1>Success</h1>
+                      </div>
                     )}
                   </div>
                 )}
