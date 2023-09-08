@@ -232,7 +232,10 @@ const BetaPassNFT = ({
           publicAddress: coinbase,
           signature: signature,
         },
-      }).then(() => {});
+      }).then(() => {
+      setalreadyRegistered(true);
+
+      });
     } catch (error) {
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
