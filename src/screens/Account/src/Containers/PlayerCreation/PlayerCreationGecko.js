@@ -13,7 +13,7 @@ import {
 } from "../../Components";
 import classes from "./PlayerCreation.module.css";
 
-function PlayerCreationGecko({ onSuccessCreation }) {
+function PlayerCreationGecko({ onSuccessCreation, mintTitle }) {
   const { getUpdatedUser } = useAuth();
 
   const [onCreatePlayer, { loading }] = useMutation(CREATE_PLAYER);
@@ -84,7 +84,7 @@ function PlayerCreationGecko({ onSuccessCreation }) {
           type={"coingecko"}
         />{" "}
         <span className="footertxt-coingecko mt-4">
-          Users who have claimed the CoinGecko Beta Pass NFT are required to
+          Users who have claimed the {mintTitle} NFT are required to
           create a WoD Account to receive the NFT and participate in the
           exclusive event.
         </span>

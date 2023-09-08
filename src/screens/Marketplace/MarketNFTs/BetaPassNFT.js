@@ -68,6 +68,7 @@ const BetaPassNFT = ({
   mintStatus,
   nftName,
   handleMint,
+  totalConfluxNft,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -935,9 +936,7 @@ const BetaPassNFT = ({
                                 <h4 className="listtext"> Create </h4>
                               </div>
                             </li>
-                            <li
-                              class={`col-3 li ${showVerify && "complete"} `}
-                            >
+                            <li class={`col-3 li ${showVerify && "complete"} `}>
                               <div class="status">
                                 <h4 className="listtext"> Verify </h4>
                               </div>
@@ -951,7 +950,10 @@ const BetaPassNFT = ({
                                 <h4 className="listtext"> Profile </h4>
                               </div>
                             </li>
-                            <li class={`col-2 li ${linkWallet && 'complete'}`} style={{ width: 0 }}>
+                            <li
+                              class={`col-2 li ${linkWallet && "complete"}`}
+                              style={{ width: 0 }}
+                            >
                               <div class="status">
                                 <h4
                                   className="listtext"
@@ -972,7 +974,13 @@ const BetaPassNFT = ({
                           onEmailVerify={(value) => {
                             setEmailVerify(value);
                           }}
-                          onShowVerify={(value)=>{setShowVerify(value)}}
+                          onShowVerify={(value) => {
+                            setShowVerify(value);
+                          }}
+                          onSuccessLogin={(value) => {
+                            setalreadyRegistered(true);
+                          }}
+                          mintTitle={selectedMint.cardTitle}
                         />
                       )}
                       {playerCreation === true &&
@@ -982,6 +990,7 @@ const BetaPassNFT = ({
                             onSuccessCreation={() => {
                               setLinkWallet(true);
                             }}
+                            mintTitle={selectedMint.cardTitle}
                           />
                         )}
 
@@ -989,7 +998,11 @@ const BetaPassNFT = ({
                         <div className="d-flex flex-column gap-4 justify-content-between p-4">
                           <span className={"createplayertxt"}>
                             *Make sure to connect the same wallet address as the
-                            one you used for CoinGecko Candy Rewards.
+                            one you used for{" "}
+                            {mintTitle === "coingecko"
+                              ? "CoinGecko Candy Rewards"
+                              : "Conflux Giveaway"}
+                            .
                           </span>
                           <div
                             className="walletconnectBtn w-100"
@@ -1012,9 +1025,9 @@ const BetaPassNFT = ({
                             </div>
                           </div>
                           <span className="footertxt-coingecko mt-4">
-                            Users who have claimed the CoinGecko Beta Pass NFT
-                            are required to create a WoD Account to receive the
-                            NFT and participate in the exclusive event.
+                            Users who have claimed the {selectedMint.cardTitle}{" "}
+                            NFT are required to create a WoD Account to receive
+                            the NFT and participate in the exclusive event.
                           </span>
                           <div className="summaryseparator"></div>
                         </div>
@@ -1026,10 +1039,15 @@ const BetaPassNFT = ({
                             <div
                               className={`coingeckoempty-wrapper ${
                                 mintTitle !== "timepiece" &&
-                                totalCoingeckoNft === 0
+                                totalCoingeckoNft === 0 &&
+                                mintTitle === "coingecko"
                                   ? "conflux-empty"
-                                  : totalCoingeckoNft > 0
+                                  : totalCoingeckoNft > 0 &&
+                                    mintTitle === "coingecko"
                                   ? "coingecko-active"
+                                  : totalConfluxNft > 0 &&
+                                    mintTitle === "conflux"
+                                  ? "conflux-active"
                                   : "conflux-empty"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 210 }}
@@ -1037,7 +1055,10 @@ const BetaPassNFT = ({
                             <div
                               className="genesis-desc px-3 py-2 position-relative"
                               style={{
-                                bottom: totalCoingeckoNft > 0 ? "20px" : "5px",
+                                bottom:
+                                  totalCoingeckoNft > 0 || totalConfluxNft > 0
+                                    ? "20px"
+                                    : "5px",
                               }}
                             >
                               <h6
@@ -1049,8 +1070,8 @@ const BetaPassNFT = ({
                             </div>
                           </div>
                           <span className="footertxt-coingecko">
-                            After NFT distribution, you can view CoinGecko Beta
-                            Pass.
+                            After NFT distribution, you can view{" "}
+                            {selectedMint.cardTitle}.
                           </span>
                           <div className="summaryseparator mt-3 mb-3"></div>
                           <div className="d-flex align-items-center gap-2 justify-content-between">

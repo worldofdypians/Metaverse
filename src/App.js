@@ -98,6 +98,8 @@ function App() {
   const [username, setUsername] = useState("");
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
   const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
+  const [totalConfluxNft, setTotalConfluxNft] = useState(0);
+
 
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
@@ -1529,6 +1531,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                 />
               }
@@ -1558,6 +1561,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                 />
               }
@@ -1580,6 +1584,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
@@ -1608,6 +1613,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
@@ -1636,6 +1642,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
