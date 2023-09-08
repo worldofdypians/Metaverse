@@ -33,6 +33,8 @@ import geckobetapassBanner from "./assets/betaPassBannerGecko.png";
 import SingUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
 import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/PlayerCreationGecko";
 import pinkArea from "./assets/pinkArea.svg";
+import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
+
 import walletImg from "./assets/wallet.svg";
 import circleArrow from "./assets/arrow-circle.svg";
 import termsArrow from "./assets/termsArrow.svg";
@@ -93,7 +95,7 @@ const BetaPassNFT = ({
     id: "conflux",
     cardTitle: "Conflux Beta Pass",
     title: "Conflux Beta Pass",
-    background: "conflux-mint-bg",
+    background: "conflux-mint-bg2",
   };
 
   const avaxData = {
@@ -233,8 +235,7 @@ const BetaPassNFT = ({
           signature: signature,
         },
       }).then(() => {
-      setalreadyRegistered(true);
-
+        setalreadyRegistered(true);
       });
     } catch (error) {
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -435,7 +436,7 @@ const BetaPassNFT = ({
             </div> */}
 
               <div className=" nft-page-wrapper d-flex flex-column flex-xl-row gap-3 mb-3">
-                {mintTitle !== "coingecko" && (
+                {mintTitle !== "coingecko" && mintTitle !== "conflux" && (
                   <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                     <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                       <div className="d-flex flex-column position-relative">
@@ -502,7 +503,7 @@ const BetaPassNFT = ({
                 )}
                 <div
                   className={
-                    mintTitle === "coingecko"
+                    mintTitle === "coingecko" || mintTitle === "conflux"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
                   }
@@ -549,19 +550,7 @@ const BetaPassNFT = ({
                               </span>
                             </div>
                           ))}
-                          {mintTitle === "conflux" ? (
-                            <div className="d-flex align-items-center gap-2">
-                              <img
-                                src={blockChainIcon}
-                                width={32}
-                                height={32}
-                                alt=""
-                              />
-                              <span className="mint-benefits-title">
-                                Minting is available on Conflux Network
-                              </span>
-                            </div>
-                          ) : mintTitle === "base" ? (
+                          {mintTitle === "base" ? (
                             <div className="d-flex align-items-center gap-2">
                               <img
                                 src={blockChainIcon}
@@ -592,6 +581,11 @@ const BetaPassNFT = ({
                             <img src={pinkArea} alt="" />
                           </div>
                         )}
+                        {mintTitle === "conflux" && (
+                          <div className="position-relative">
+                            <img src={pinkAreaConflux} alt="" />
+                          </div>
+                        )}
                       </div>
                       {mintTitle === "coingecko" && (
                         <button
@@ -610,17 +604,35 @@ const BetaPassNFT = ({
                           />{" "}
                         </button>
                       )}
+
+                      {mintTitle === "conflux" && (
+                        <button
+                          className={`btn conflux-btn px-3 d-flex align-items-center justify-content-center gap-2`}
+                        >
+                          <img
+                            src={conflux}
+                            alt=""
+                            style={{ width: 16, height: 16 }}
+                          />{" "}
+                          Conflux Giveaway
+                          <img
+                            src={arrowRight}
+                            alt=""
+                            style={{ width: 16, height: 16 }}
+                          />{" "}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
                 <div
                   className={
-                    mintTitle === "coingecko"
+                    mintTitle === "coingecko" || mintTitle === "conflux"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
                 >
-                  {mintTitle !== "coingecko" ? (
+                  {mintTitle !== "coingecko" && mintTitle !== "conflux" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -1061,17 +1073,18 @@ const BetaPassNFT = ({
                   )}
                 </div>
               </div>
-
-              <div
-                className="d-flex align-items-center gap-2 terms-wrap"
-                style={{ cursor: "pointer" }}
-                onClick={() => setOpenTerms(true)}
-              >
-                <span className="terms-and-conditions mb-0">
-                  Terms & Conditions
-                </span>
-                {/* <img src={termsArrow} alt="" /> */}
-              </div>
+              {mintTitle === "coingecko" && (
+                <div
+                  className="d-flex align-items-center gap-2 terms-wrap"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setOpenTerms(true)}
+                >
+                  <span className="terms-and-conditions mb-0">
+                    Terms & Conditions
+                  </span>
+                  <img src={termsArrow} alt="" />
+                </div>
+              )}
             </div>
           </div>
         </div>
