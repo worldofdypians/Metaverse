@@ -1004,7 +1004,7 @@ const BetaPassNFT = ({
                       {alreadyRegistered && (
                         <div className="d-flex flex-column justify-content-between h-100">
                           <h6 className="land-name">Registered</h6>
-                          <div className="col-5 d-flex flex-column mx-auto position-relative">
+                          <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                             <div
                               className={`coingeckoempty-wrapper ${
                                 mintTitle !== "timepiece" &&
@@ -1020,6 +1020,8 @@ const BetaPassNFT = ({
                               className="genesis-desc px-3 py-2 position-relative"
                               style={{
                                 bottom: totalCoingeckoNft > 0 ? "20px" : "5px",
+                                minWidth: "100%",
+                                maxWidth: "100%"
                               }}
                             >
                               <h6
