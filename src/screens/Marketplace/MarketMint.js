@@ -109,13 +109,13 @@ const MarketMint = ({
     background: "coin98-mint-bg",
     mobileBg: "coin98MobileBg.png",
   };
-  const coingeckoData = {
-    id: "coingecko",
-    cardTitle: "Coingecko Beta Pass",
-    title: "Coingecko Beta Pass",
-    background: "coingecko-mint-bg",
-    mobileBg: "coingeckoMobileBg.png",
-  };
+  // const coingeckoData = {
+  //   id: "coingecko",
+  //   cardTitle: "Coingecko Beta Pass",
+  //   title: "Coingecko Beta Pass",
+  //   background: "coingecko-mint-bg",
+  //   mobileBg: "coingeckoMobileBg.png",
+  // };
 
   const baseData = {
     id: "base",
@@ -360,10 +360,11 @@ const MarketMint = ({
     if (locationState === "conflux") {
       setSelectedMint(confluxData);
       setMintTitle("conflux");
-    } else if (locationState === "coingecko") {
-      setSelectedMint(coingeckoData);
-      setMintTitle("coingecko");
     } 
+    // else if (locationState === "coingecko") {
+    //   setSelectedMint(coingeckoData);
+    //   setMintTitle("coingecko");
+    // } 
    else if (locationState === "avax") {
       setSelectedMint(avaxData);
       setMintTitle("avax");
@@ -418,14 +419,14 @@ const MarketMint = ({
       data: coin98Data,
       class: "mint-5",
     },
-    {
-      title: "Coingecko Pass",
-      eventId: "coingecko",
-      desc: "Gain entry to metaverse, and join exclusive Coingecko event with special ticket.",
-      img: coingeckoActive,
-      data: coingeckoData,
-      class: "mint-6",
-    },
+    // {
+    //   title: "Coingecko Pass",
+    //   eventId: "coingecko",
+    //   desc: "Gain entry to metaverse, and join exclusive Coingecko event with special ticket.",
+    //   img: coingeckoActive,
+    //   data: coingeckoData,
+    //   class: "mint-6",
+    // },
     {
       title: "Base Pass",
       eventId: "base",
