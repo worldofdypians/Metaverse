@@ -97,6 +97,8 @@ function App() {
   const [timepieceMetadata, settimepieceMetadata] = useState([]);
   const [username, setUsername] = useState("");
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
+  const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
+
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
@@ -133,7 +135,6 @@ function App() {
   const [landBought, setLandBought] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [success, setSuccess] = useState(false);
-
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -302,10 +303,10 @@ function App() {
         setCoinbase(data);
       });
       setShowForms(true);
-      setSuccess(true)
+      setSuccess(true);
     } catch (e) {
       setShowWalletModal(false);
-      setSuccess(true)
+      setSuccess(true);
 
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
@@ -945,7 +946,6 @@ function App() {
         setIsConnected(false);
         setCoinbase();
         localStorage.setItem("logout", "true");
-        
       }
       checkNetworkId();
     }
@@ -1146,62 +1146,74 @@ function App() {
   //   setmyNftsOffer(recievedOffers);
   // };
 
-  const handleSwitchNetwork=(chain)=>{
-    setChainId(chain)
-  }
+  const handleSwitchNetwork = (chain) => {
+    setChainId(chain);
+  };
 
   const handleDisconnect = async () => {
     localStorage.setItem("logout", "true");
-    setSuccess(false)
+    setSuccess(false);
     setCoinbase();
     setIsConnected(false);
   };
 
   const API_BASE_URL = "https://api.worldofdypians.com";
 
-  async function addNewUserIfNotExists(walletAddress, title, description, redirect_link) {
+  async function addNewUserIfNotExists(
+    walletAddress,
+    title,
+    description,
+    redirect_link
+  ) {
     try {
-        const response = await axios.get(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`);
-        
-      
-        if (response.data.length === 0) {
-            const newUserResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
-                tokenId: '', 
-                nftAddress: '', 
-                timestamp: Date.now(),
-                read: false,
-                offer: 'no',
-                offerAccepted: 'no',
-                buy: 'no',
-                event: 'no',    
-                news: 'no',    
-                welcome: 'yes', 
-                update: 'no',  
-                title: 'Welcome', 
-                description: 'Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!' , 
-                redirect_link: '',
-            });
+      const response = await axios.get(
+        `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+          walletAddress
+        )}`
+      );
 
-            console.log('New user added:', newUserResponse.data);
-            let lso = newUserResponse.sort((a, b) => {
-              return new Date(b.timestamp) - new Date(a.timestamp);
-            });
-            setmyNftsOffer(lso);
-        } else {
-            console.log('User already exists:', response.data);
-          
-            const notifications = response.data[0]?.notifications || [];
-            let lso = notifications.sort((a, b) => {
-              return new Date(b.timestamp) - new Date(a.timestamp);
-            });
-            setmyNftsOffer(lso);
-        }
+      if (response.data.length === 0) {
+        const newUserResponse = await axios.post(
+          `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+            walletAddress
+          )}`,
+          {
+            tokenId: "",
+            nftAddress: "",
+            timestamp: Date.now(),
+            read: false,
+            offer: "no",
+            offerAccepted: "no",
+            buy: "no",
+            event: "no",
+            news: "no",
+            welcome: "yes",
+            update: "no",
+            title: "Welcome",
+            description:
+              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
+            redirect_link: "",
+          }
+        );
+
+        console.log("New user added:", newUserResponse.data);
+        let lso = newUserResponse.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+        setmyNftsOffer(lso);
+      } else {
+        console.log("User already exists:", response.data);
+
+        const notifications = response.data[0]?.notifications || [];
+        let lso = notifications.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+        setmyNftsOffer(lso);
+      }
     } catch (error) {
-        console.error('Error adding new user:', error.message);
+      console.error("Error adding new user:", error.message);
     }
-}
- 
-
+  }
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -1230,11 +1242,11 @@ function App() {
     }
   }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
 
-  useEffect(()=>{
-    if(latest20BoughtNFTS.length > 0) {
+  useEffect(() => {
+    if (latest20BoughtNFTS.length > 0) {
       getCawsSold();
     }
-  },[latest20BoughtNFTS.length])
+  }, [latest20BoughtNFTS.length]);
 
   useEffect(() => {
     if (coinbase) {
@@ -1498,7 +1510,7 @@ function App() {
               path="/marketplace/beta-pass/conflux"
               element={
                 <BetaPassNFT
-                type={"conflux"}
+                  type={"conflux"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   isConnected={isConnected}
@@ -1516,17 +1528,18 @@ function App() {
                   textColor={textColor}
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
                   timepieceMetadata={timepieceMetadata}
                 />
               }
             />
 
-<Route
+            <Route
               exact
               path="/marketplace/beta-pass/avalanche"
               element={
                 <BetaPassNFT
-                type={"avalanche"}
+                  type={"avalanche"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   isConnected={isConnected}
@@ -1544,6 +1557,7 @@ function App() {
                   textColor={textColor}
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
                   timepieceMetadata={timepieceMetadata}
                 />
               }
@@ -1553,7 +1567,7 @@ function App() {
               path="/marketplace/beta-pass/coin98"
               element={
                 <BetaPassNFT
-                type={"coin98"}
+                  type={"coin98"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   cawsArray={allCawsForTimepieceMint}
@@ -1565,6 +1579,7 @@ function App() {
                   textColor={textColor}
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
@@ -1580,7 +1595,7 @@ function App() {
               path="/marketplace/beta-pass/coingecko"
               element={
                 <BetaPassNFT
-                type={"coingecko"}
+                  type={"coingecko"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   cawsArray={allCawsForTimepieceMint}
@@ -1592,6 +1607,7 @@ function App() {
                   textColor={textColor}
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
@@ -1607,7 +1623,7 @@ function App() {
               path="/marketplace/beta-pass/base"
               element={
                 <BetaPassNFT
-                type={"base"}
+                  type={"base"}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   cawsArray={allCawsForTimepieceMint}
@@ -1619,6 +1635,7 @@ function App() {
                   textColor={textColor}
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
