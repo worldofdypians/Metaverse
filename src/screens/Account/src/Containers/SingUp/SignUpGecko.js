@@ -67,8 +67,6 @@ function SingUpGecko({ onSuccessVerify, onEmailVerify }) {
     });
   }, []);
 
-  console.log(username, password);
-
   useEffect(() => {
     if (username && password) {
       setDisabled(false);
