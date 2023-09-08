@@ -6,7 +6,7 @@ import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
 
-function SingUpGecko({ onSuccessVerify, onEmailVerify }) {
+function SingUpGecko({ onSuccessVerify, onEmailVerify, onShowVerify }) {
   const {
     isAuthenticated,
     login: LoginGlobal,
@@ -32,7 +32,7 @@ function SingUpGecko({ onSuccessVerify, onEmailVerify }) {
     await Auth.confirmSignUp(username, verifyCode)
       .then(() => {
         login();
-        onEmailVerify(true)
+        onEmailVerify(true);
       })
       .catch((e) => {
         console.log("failed with error", e);
@@ -94,6 +94,7 @@ function SingUpGecko({ onSuccessVerify, onEmailVerify }) {
   }
 
   if (code === "UserNotConfirmedException") {
+    onShowVerify(true);
     return (
       <div className={classes.containergecko}>
         <span className={classes.createplayertxt}>

@@ -146,6 +146,8 @@ const BetaPassNFT = ({
   const [viewCollection, setViewCollection] = useState(false);
   const [playerCreation, setplayerCreation] = useState(false);
   const [emailVerify, setEmailVerify] = useState(false);
+  const [showVerify, setShowVerify] = useState(false);
+
   const [linkWallet, setLinkWallet] = useState(false);
   const [alreadyRegistered, setalreadyRegistered] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
@@ -934,7 +936,7 @@ const BetaPassNFT = ({
                               </div>
                             </li>
                             <li
-                              class={`col-3 li ${emailVerify && "complete"} `}
+                              class={`col-3 li ${showVerify && "complete"} `}
                             >
                               <div class="status">
                                 <h4 className="listtext"> Verify </h4>
@@ -949,7 +951,7 @@ const BetaPassNFT = ({
                                 <h4 className="listtext"> Profile </h4>
                               </div>
                             </li>
-                            <li class="col-2 li" style={{ width: 0 }}>
+                            <li class={`col-2 li ${linkWallet && 'complete'}`} style={{ width: 0 }}>
                               <div class="status">
                                 <h4
                                   className="listtext"
@@ -970,6 +972,7 @@ const BetaPassNFT = ({
                           onEmailVerify={(value) => {
                             setEmailVerify(value);
                           }}
+                          onShowVerify={(value)=>{setShowVerify(value)}}
                         />
                       )}
                       {playerCreation === true &&
