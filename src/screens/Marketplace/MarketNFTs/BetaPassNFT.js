@@ -33,6 +33,9 @@ import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/Pla
 import pinkArea from "./assets/pinkArea.svg";
 import walletImg from "./assets/wallet.svg";
 import circleArrow from "./assets/arrow-circle.svg";
+import user from "./assets/user.svg";
+import downloadArrow from "./assets/downloadArrow.svg";
+
 import {
   GENERATE_NONCE,
   GET_PLAYER,
@@ -408,7 +411,7 @@ const BetaPassNFT = ({
               </div>
             </div> */}
 
-            <div className=" nft-page-wrapper d-flex flex-column flex-xl-row gap-3 mb-3">
+            <div className=" nft-page-wrapper d-flex flex-column flex-xxl-row gap-3 mb-3">
               {mintTitle !== "coingecko" && (
                 <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                   <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
@@ -974,8 +977,45 @@ const BetaPassNFT = ({
                       </div>
                     )}
                     {alreadyRegistered && (
-                      <div>
-                        <h1>Success</h1>
+                      <div className="d-flex flex-column justify-content-between h-100">
+                        <h6 className="land-name">Registered</h6>
+                        <div className="col-5 d-flex flex-column mx-auto position-relative">
+                          <div
+                            className={`coingeckoempty-wrapper ${
+                              mintTitle !== "timepiece"
+                                ? "conflux-empty"
+                                : totalCreated > 0
+                                ? "genesis-land"
+                                : "genesis-land-empty"
+                            } d-flex justify-content-center align-items-center p-3 position-relative`}
+                            style={{ height: 195 }}
+                          ></div>
+                          <div
+                            className="genesis-desc px-3 py-2 position-relative"
+                            style={{ bottom: "5px" }}
+                          >
+                            <h6
+                              className="land-desc w-75 m-auto text-center"
+                              style={{ fontWeight: 500, fontSize: 16 }}
+                            >
+                              {selectedMint.cardTitle}
+                            </h6>
+                          </div>
+                        </div>
+                        <span className="footertxt-coingecko">
+                          After NFT distribution, you can view CoinGecko Beta
+                          Pass.
+                        </span>
+                        <div className="summaryseparator mt-3 mb-3"></div>
+                        <div className="d-flex align-items-center gap-2 justify-content-between">
+                          <button className="downloadbtn-coingecko btn d-flex align-items-center gap-1">
+                            <img src={downloadArrow} alt="" /> Download
+                          </button>
+                          <button className="accountbtn-coingecko btn d-flex align-items-center gap-1">
+                            <img src={user} alt="" />
+                            My Account
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
