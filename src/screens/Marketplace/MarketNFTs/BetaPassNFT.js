@@ -30,7 +30,7 @@ import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
 
 import avaxbetapassBanner from "./assets/betapassAvax.png";
 import geckobetapassBanner from "./assets/betaPassBannerGecko.png";
-import SingUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
+import SignUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
 import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/PlayerCreationGecko";
 import pinkArea from "./assets/pinkArea.svg";
 import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
@@ -967,7 +967,7 @@ const BetaPassNFT = ({
                         </div>
                       )}
                       {playerCreation === false && !alreadyRegistered && (
-                        <SingUpGecko
+                        <SignUpGecko
                           onSuccessVerify={(value) => {
                             setplayerCreation(value);
                           }}
@@ -977,8 +977,9 @@ const BetaPassNFT = ({
                           onShowVerify={(value) => {
                             setShowVerify(value);
                           }}
-                          onSuccessLogin={(value) => {
+                          onSuccessLogin={() => {
                             setalreadyRegistered(true);
+                            refetchPlayer();
                           }}
                           mintTitle={selectedMint.cardTitle}
                         />
