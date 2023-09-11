@@ -6,6 +6,7 @@ import { getErrorMessage } from '../../Utils.js/Helpers'
 import { CREATE_PLAYER } from './PlayerCreation.schema'
 import { Input, LoginCard, Button, LoginWrapper, ErrorAlert } from '../../Components'
 import classes from './PlayerCreation.module.css'
+import { useNavigate } from 'react-router-dom'
 
 function PlayerCreation() {
     const { getUpdatedUser } = useAuth()
@@ -34,6 +35,7 @@ function PlayerCreation() {
 
 
     const { displayName, password } = creationState
+    const navigate = useNavigate();
 
     const _onCreatePlayer = async () => {
         try {
@@ -44,6 +46,9 @@ function PlayerCreation() {
                 }
             })
             getUpdatedUser()
+            setTimeout(() => {
+                navigate('/account')
+            }, 1000);
         } catch (error) {
             setCreateError(getErrorMessage(error))
         }
@@ -58,7 +63,7 @@ function PlayerCreation() {
     }, [creationState])
 
     return (
-        <LoginWrapper>
+        <LoginWrapper style={{marginTop: '9rem', marginBottom: '9rem'}}>
             <LoginCard>
                 <div className={classes.container}>
                     <p className={classes.playerCreationTitle}>

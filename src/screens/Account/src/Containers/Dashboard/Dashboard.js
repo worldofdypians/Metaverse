@@ -27,7 +27,6 @@ import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 
 function Dashboard({
@@ -95,9 +94,7 @@ function Dashboard({
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
   const [showSyncModal, setshowSyncModal] = useState(false);
-
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [isonlink, setIsOnLink] = useState(false);
 
   const override2 = {
     display: "block",
@@ -217,6 +214,7 @@ function Dashboard({
   };
 
   async function connectWallet() {
+    setIsOnLink(true);
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       try {
@@ -237,7 +235,13 @@ function Dashboard({
             coinbase_address = data[0];
           });
         // window.coinbase_address = coinbase_address.pop();
-
+        await generateNonce({
+          variables: {
+            publicAddress: coinbase_address,
+          },
+        }).then(() => {
+          setshowWalletModal(false);
+        });
         return true;
       } catch (e) {
         console.error(e);
@@ -272,6 +276,12 @@ function Dashboard({
           setshowSyncModal(false);
           setsyncStatus("initial");
         }, 1000);
+
+        setTimeout(() => {
+          if (isonlink) {
+            window.location.reload();
+          }
+        }, 2000);
       });
     } catch (error) {
       setsyncStatus("error");
@@ -450,8 +460,7 @@ function Dashboard({
         console.error("Error fetching user favorites:", error);
         throw error;
       }
-    }
-    else {
+    } else {
       setFavorites([]);
     }
   }
@@ -546,7 +555,7 @@ function Dashboard({
               console.error(e);
             });
 
-          if (result && result.length > 0) { 
+          if (result && result.length > 0) {
             if (coinbase) {
               result.map((item) => {
                 if (
@@ -566,7 +575,6 @@ function Dashboard({
                   });
                 }
               });
-              
             }
           }
         })
@@ -615,10 +623,10 @@ function Dashboard({
 
   useEffect(() => {
     // if (coinbase) {
-      getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
-      getMyOffers();
+    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
+    getMyOffers();
     // }
-  }, [coinbase,isConnected]);
+  }, [coinbase, isConnected]);
 
   const logoutItem = localStorage.getItem("logout");
 
@@ -695,6 +703,7 @@ function Dashboard({
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
+                        onLinkWallet={connectWallet}
                         onSigninClick={onSigninClick}
                         onLogoutClick={logout}
                         onSyncClick={handleShowSyncModal}

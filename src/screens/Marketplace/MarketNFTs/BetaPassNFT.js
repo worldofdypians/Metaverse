@@ -31,7 +31,6 @@ import betapassBanner from "./assets/betaPassBanner.png";
 import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
 import betapassBannerGate from "./assets/betaPassBannerGate.webp";
 
-
 import avaxbetapassBanner from "./assets/betapassAvax.png";
 import geckobetapassBanner from "./assets/betaPassBannerGecko.png";
 import SignUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
@@ -423,7 +422,8 @@ const BetaPassNFT = ({
                         ? geckobetapassBanner
                         : mintTitle === "conflux"
                         ? betapassBannerConflux
-                        : mintTitle === 'gate' ? betapassBannerGate
+                        : mintTitle === "gate"
+                        ? betapassBannerGate
                         : betapassBanner
                     }
                     className="w-100"
@@ -1262,7 +1262,7 @@ const BetaPassNFT = ({
             <div className="d-flex align-items-center gap-2">
               <img
                 src={
-                  window.ethereum.isMetaMask
+                  window.ethereum.isMetaMask && !window.gatewallet
                     ? metamaskIcon
                     : window.coin98
                     ? coin98Wallet
@@ -1279,7 +1279,19 @@ const BetaPassNFT = ({
                 alt=""
               />
               <div className="d-flex flex-column">
-                <h6 className="metamask-info-title">MetaMask Wallet</h6>
+                <h6 className="metamask-info-title">
+                  {window.ethereum.isMetaMask && !window.gatewallet
+                    ? "MetaMask Wallet"
+                    : window.coin98
+                    ? "Coin98 Wallet"
+                    : window.ethereum.isTrust
+                    ? "Trustwallet"
+                    : window.ethereum.isCoinbaseWallet
+                    ? "Coinbase Wallet"
+                    : window.gatewallet
+                    ? "Gate Wallet"
+                    : "Safepal Wallet"}
+                </h6>
                 <span className="metamask-short-address mb-0">
                   {shortAddress(coinbase)}
                 </span>

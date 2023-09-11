@@ -72,7 +72,7 @@ const Header = ({
   const location = useLocation();
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
-
+  
   let id = Math.random().toString(36);
 
   const manageDisconnect = () => {

@@ -15,7 +15,8 @@ import logouticon from "./assets/logout.svg";
 import player from "./assets/explorePlayer.png";
 import triangle from "./assets/triangle.svg";
 import sync from "./assets/sync.svg";
-
+import walletImg from "../../Images/userProfile/wallet.svg";
+import circleArrow from "../../Images/userProfile/arrow-circle.svg";
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
 //     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
@@ -52,6 +53,7 @@ const ProfileCard = ({
   onLogoutClick,
   onSyncClick,
   syncStatus,
+  onLinkWallet,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -172,7 +174,11 @@ const ProfileCard = ({
                     <img src={walletIcon} alt="" className="wallet-icon" />
                     <div className="d-flex flex-column">
                       <span className="wallet-span d-flex align-items-center gap-2">
-                        Game Wallet address
+                        {coinbase && address && email
+                          ? "Game Wallet address"
+                          : coinbase && !address
+                          ? "Wallet address"
+                          : "Wallet address"}
                       </span>
 
                       <div
@@ -193,11 +199,20 @@ const ProfileCard = ({
                   </Clipboard>
                   {address &&
                     coinbase &&
-                    address.toLowerCase() === coinbase.toLowerCase() && (
+                    email &&
+                    address?.toLowerCase() === coinbase?.toLowerCase() && (
                       <p className="walletassoc-txt m-0">
                         *This wallet is associated to your game account.
                       </p>
                     )}
+
+                  {!address && coinbase && email && username && (
+                    <p className="walletassoc-txt m-0">
+                      *There is no wallet address associated with your game account.
+                      <br /> Link your wallet to finish setup.
+                    </p>
+                  )}
+
                   {address &&
                     email &&
                     coinbase &&
@@ -227,91 +242,130 @@ const ProfileCard = ({
                     <p className="tooltip-content m-0">Copied!</p>
                   </div>
                 </>
-                {!isVerified || !address || !email ? (
-                  // <div
-                  //   className="walletconnectBtn w-100"
-                  //   onClick={handleShowWalletPopup}
-                  // >
-                  //   <div className="d-flex gap-2 justify-content-between align-items-center">
-                  //     <div className="d-flex gap-2 align-items-center">
-                  //       <img src={walletImg} alt="" />
-                  //       <div className="d-flex flex-column">
-                  //         <span className="firsttitle">Connect wallet</span>
-                  //         <span className="secondTitle">Link your wallet</span>
-                  //       </div>
-                  //     </div>
-                  //     <img src={circleArrow} alt="" />
-                  //   </div>
-                  // </div>
+                {!coinbase && (
                   <button
                     className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
                     onClick={() => {
-                      !coinbase
-                        ? handleShowWalletPopup()
-                        : onSigninClick();
+                      handleShowWalletPopup();
                     }}
-                    role="button"
                     style={{ width: "fit-content", fontSize: 14 }}
                   >
-                    {!coinbase
-                      ? "Connect wallet"
-                      : "Sign in "}{" "}
+                    Connect wallet
                     <img src={greenarrow} alt="" />
                   </button>
-                ) : (
-                  <div
-                    className="d-flex align-self-end align-items-center"
-                    style={{
-                      width:
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase()
-                          ? "100%"
-                          : "fit-content",
-                      justifyContent:
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase()
-                          ? "space-between"
-                          : "",
+                )}
+
+                {coinbase && address && !email && (
+                  <button
+                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    onClick={() => {
+                      onSigninClick();
                     }}
+                    style={{ width: "fit-content", fontSize: 14 }}
                   >
-                    {address &&
+                    Sign in
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+
+                {coinbase && !email && !address && !username && (
+                  <button
+                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    onClick={() => {
+                      onSigninClick();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Sign in
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+
+                {coinbase && email && !address && !username && (
+                  <button
+                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    onClick={() => {
+                      onSigninClick();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Create player
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+
+                {coinbase && email && username && !address && (
+                  <div
+                    className="walletconnectBtn w-100"
+                    onClick={onLinkWallet}
+                  >
+                    <div className="d-flex gap-2 justify-content-between align-items-center">
+                      <div className="d-flex gap-2 align-items-center">
+                        <img src={walletImg} alt="" />
+                        <div className="d-flex flex-column">
+                          <span className="secondTitle">Connect wallet</span>
+
+                          <span className="firsttitle">Link your wallet</span>
+                        </div>
+                      </div>
+                      <img src={circleArrow} alt="" />
+                    </div>
+                  </div>
+                )}
+
+                <div
+                  className="d-flex align-self-end align-items-center"
+                  style={{
+                    width:
+                      address &&
                       email &&
                       coinbase &&
                       syncStatus !== "" &&
-                      address.toLowerCase() !== coinbase.toLowerCase() && (
-                        <button
-                          className="d-flex align-items-center gap-1 syncbtn"
-                          onClick={onSyncClick}
-                        >
-                          <img
-                            src={sync}
-                            alt=""
-                            className={syncStatus === "loading" && "syncicon"}
-                          />{" "}
-                          {syncStatus === "initial"
-                            ? "Synchronize"
-                            : syncStatus === "loading"
-                            ? "Synchronising..."
-                            : syncStatus === "success"
-                            ? "Success"
-                            : "Error"}
-                        </button>
-                      )}
+                      address.toLowerCase() !== coinbase.toLowerCase()
+                        ? "100%"
+                        : "fit-content",
+                    justifyContent:
+                      address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address.toLowerCase() !== coinbase.toLowerCase()
+                        ? "space-between"
+                        : "",
+                  }}
+                >
+                  {address &&
+                    email &&
+                    coinbase &&
+                    syncStatus !== "" &&
+                    address.toLowerCase() !== coinbase.toLowerCase() && (
+                      <button
+                        className="d-flex align-items-center gap-1 syncbtn"
+                        onClick={onSyncClick}
+                      >
+                        <img
+                          src={sync}
+                          alt=""
+                          className={syncStatus === "loading" && "syncicon"}
+                        />{" "}
+                        {syncStatus === "initial"
+                          ? "Synchronize"
+                          : syncStatus === "loading"
+                          ? "Synchronising..."
+                          : syncStatus === "success"
+                          ? "Success"
+                          : "Error"}
+                      </button>
+                    )}
+                  {address && email && coinbase && (
                     <button
                       className="failbtn px-3 py-1"
                       onClick={onLogoutClick}
-                      role="button"
                     >
                       <img src={logouticon} alt="" /> Log Out
                     </button>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 {/* : 
                  (
