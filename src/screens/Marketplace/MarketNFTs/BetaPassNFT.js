@@ -48,6 +48,8 @@ import {
   VERIFY_WALLET,
 } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import OutsideClickHandler from "react-outside-click-handler";
+import switchIcon from "./assets/switchIcon.svg";
+import metamaskIcon from "./assets/metamaskIcon.svg";
 
 const BetaPassNFT = ({
   isConnected,
@@ -152,18 +154,33 @@ const BetaPassNFT = ({
   const [linkWallet, setLinkWallet] = useState(false);
   const [alreadyRegistered, setalreadyRegistered] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
+  const [openConflux, setOpenConflux] = useState(false);
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
+  const bgmenu2 = document.querySelector("#switch");
+
+
+
+useEffect(() => {
+  if(mintTitle === "conflux"){
+    setOpenConflux(true)
+  }
+}, [mintTitle])
+
+
+
+
   useEffect(() => {
-    if (openTerms === true) {
+    if (openTerms === true || openConflux === true) {
       html.classList.add("hidescroll");
       bgmenu.style.pointerEvents = "auto";
+      bgmenu2.style.pointerEvents = "auto";
     } else {
       // Enable scroll
       html.classList.remove("hidescroll");
     }
-  }, [openTerms]);
+  }, [openTerms, openConflux]);
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
@@ -1056,9 +1073,12 @@ const BetaPassNFT = ({
                             <div
                               className="genesis-desc px-3 py-2 position-relative"
                               style={{
-                                bottom: totalCoingeckoNft > 0 || totalConfluxNft > 0 ? "20px" : "5px",
+                                bottom:
+                                  totalCoingeckoNft > 0 || totalConfluxNft > 0
+                                    ? "20px"
+                                    : "5px",
                                 minWidth: "100%",
-                                maxWidth: "100%"
+                                maxWidth: "100%",
                               }}
                             >
                               <h6
@@ -1113,6 +1133,43 @@ const BetaPassNFT = ({
           </div>
         </div>
       </div>
+      <OutsideClickHandler onOutsideClick={() => setOpenConflux(false)}>
+        <div
+          className={`popup-wrapper-2 ${
+            openConflux && "popup-active"
+          } p-4 gap-3 d-flex flex-column align-items-center`}
+          id="switch"
+        >
+          <div className="d-flex align-items-center justify-content-end w-100">
+            <img
+              src={popupXmark}
+              onClick={() => setOpenConflux(false)}
+              alt=""
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+          <img src={confluxLogo} width={40} height={40} alt="" />
+          <h6 className="switch-network mb-0">Switch Network</h6>
+          <span className="switch-network-desc">We’ve detected that you’re connected to Ethereum Network.</span>
+          <div className="metamask-info-wrapper mt-2 w-100 d-flex p-3 align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-2">
+            <img src={metamaskIcon} width={32} height={32} alt="" />
+            <div className="d-flex flex-column">
+              <h6 className="metamask-info-title">MetaMask Wallet</h6>
+              <span className="metamask-short-address mb-0">0xa972...fd21</span>
+            </div>
+          </div>
+          <div className="d-flex align-items-center gap-2">
+            <div className="green-dot" style={{width: "5px", height: "5px"}}></div>
+            <span className="popup-chain">Conflux</span>
+          </div>
+          </div>
+          <button className="btn switch-network-btn mt-3 d-flex align-items-center gap-2 px-5 py-2">
+            <img src={switchIcon} alt="" />
+            Switch to Conflux Network
+          </button>
+        </div>
+      </OutsideClickHandler>
       <OutsideClickHandler onOutsideClick={() => setOpenTerms(false)}>
         <div
           className={`popup-wrapper ${
