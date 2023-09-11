@@ -38,6 +38,11 @@ import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/Pla
 import pinkArea from "./assets/pinkArea.svg";
 import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
 import pinkAreaGate from "./assets/pinkAreaGate.svg";
+import avaxBetaBanner from "./assets/avaxBetaBanner.png";
+import coingeckoBetaBanner from "./assets/coingeckoBetaBanner.png";
+import confluxBetaBanner from "./assets/confluxBetaBanner.png";
+import gateBetaBanner from "./assets/gateBetaBanner.png";
+import coin98BetaBanner from "./assets/coin98BetaBanner.png";
 
 import walletImg from "./assets/wallet.svg";
 import circleArrow from "./assets/arrow-circle.svg";
@@ -62,6 +67,10 @@ import gateWallet from "./wallets/gateWallet.png";
 
 import { shortAddress } from "../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
+import avaxMobileBg from "../../../components/TimepieceMint/assets/avaxMobileBg.png";
+import coin98MobileBg from "../../../components/TimepieceMint/assets/coin98MobileBg.png";
+import baseMobileBg from "../../../components/TimepieceMint/assets/baseMobileBg.png";
+import confluxMobileBg from "../../../components/TimepieceMint/assets/confluxMobileBg.png";
 
 const BetaPassNFT = ({
   isConnected,
@@ -417,13 +426,15 @@ const BetaPassNFT = ({
                   <img
                     src={
                       mintTitle === "avalanche"
-                        ? avaxbetapassBanner
+                        ? avaxBetaBanner
                         : mintTitle === "coingecko"
-                        ? geckobetapassBanner
+                        ? coingeckoBetaBanner
                         : mintTitle === "conflux"
-                        ? betapassBannerConflux
+                        ? confluxBetaBanner
                         : mintTitle === "gate"
-                        ? betapassBannerGate
+                        ? gateBetaBanner
+                        : mintTitle === "coin98"
+                        ? coin98BetaBanner
                         : betapassBanner
                     }
                     className="w-100"
@@ -598,7 +609,8 @@ const BetaPassNFT = ({
                         mintTitle !== "conflux" &&
                         mintTitle !== "gate" && (
                           <>
-                            Mint your {selectedMint.title} <br />
+                            Mint your {selectedMint.title}{" "}
+                            <br className="d-none d-lg-flex" />
                             NFT
                             <span className="marketmintnewtitle-marked mx-2">
                               now!
@@ -607,7 +619,8 @@ const BetaPassNFT = ({
                         )}
                       {(mintTitle === "conflux" || mintTitle === "gate") && (
                         <>
-                          Get your {selectedMint.title} <br />
+                          Get your {selectedMint.title}{" "}
+                          <br className="d-none d-lg-flex" />
                           NFT
                           <span className="marketmintnewtitle-marked mx-2">
                             now!
@@ -674,6 +687,19 @@ const BetaPassNFT = ({
                           </div>
                         )}
                       </div>
+                      <img
+                        src={
+                          mintTitle === "avalanche"
+                            ? avaxMobileBg
+                            : mintTitle === "base"
+                            ? baseMobileBg
+                            : mintTitle === "coin98"
+                            ? coin98MobileBg
+                            : null
+                        }
+                        className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
+                        alt=""
+                      />
                       {mintTitle === "coingecko" && (
                         <button
                           className={`btn coingecko-btn px-3 d-flex align-items-center justify-content-center gap-2`}
