@@ -38,7 +38,7 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
 import avaxUpcoming from "./assets/avaxUpcoming.png";
-
+import infoIcon from "./assets/infoIcon.svg";
 import liveDot from "./assets/liveDot.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import whitePickaxe from "./assets/whitePickAxe.svg";
@@ -1077,6 +1077,12 @@ const MarketEvents = ({
                   <span className="mb-0 event-earnings-usd">Rewards</span>
                 </div>
               </div>
+            </div>
+            <div className="d-flex align-items-center gap-2 mt-2">
+              <img src={infoIcon} alt="" />
+              <span className="popup-event-desc">
+                The rewards will be distributed 2-3 days after the event ends.
+              </span>
             </div>
             <div className="w-100 d-flex justify-content-end mt-3">
               <NavLink
