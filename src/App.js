@@ -1539,6 +1539,39 @@ function App() {
                   myNFTSCoingecko={MyNFTSCoingecko}
                   totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                />
+              }
+            />
+
+<Route
+              exact
+              path="/marketplace/beta-pass/gate"
+              element={
+                <BetaPassNFT
+                  type={"gate"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  totalConfluxNft={totalConfluxNft}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
                 />
               }
             />
@@ -1570,6 +1603,7 @@ function App() {
                   myNFTSCoingecko={MyNFTSCoingecko}
                   totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
                 />
               }
             />
@@ -1600,6 +1634,7 @@ function App() {
                   timepieceBought={timepieceBought}
                   handleRefreshListing={handleRefreshList}
                   nftCount={nftCount}
+                  handleSwitchNetwork={handleSwitchNetwork}
                 />
               }
             />
@@ -1630,6 +1665,7 @@ function App() {
                   timepieceBought={timepieceBought}
                   handleRefreshListing={handleRefreshList}
                   nftCount={nftCount}
+                  handleSwitchNetwork={handleSwitchNetwork}
                 />
               }
             />
@@ -1660,6 +1696,7 @@ function App() {
                   timepieceBought={timepieceBought}
                   handleRefreshListing={handleRefreshList}
                   nftCount={nftCount}
+                  handleSwitchNetwork={handleSwitchNetwork}
                 />
               }
             />
