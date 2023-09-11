@@ -83,7 +83,7 @@ function PlayerCreationGecko({ onSuccessCreation, mintTitle }) {
           onChange={setPassword}
           type={"coingecko"}
         />{" "}
-        <span className="footertxt-coingecko mt-4">
+        <span className="footertxt-coingecko mt-1">
           Users who have claimed the {mintTitle} NFT are required to
           create a WoD Account to receive the NFT and participate in the
           exclusive event.

@@ -955,7 +955,7 @@ function App() {
   }, [ethereum, nftCount]);
 
   const logout = localStorage.getItem("logout");
-
+  
   useEffect(() => {
     if (window.ethereum) {
       if (
