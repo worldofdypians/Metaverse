@@ -141,6 +141,7 @@ const NewBundleCard = ({
   const [lastDayofBundleMilliseconds, setlastDayofBundleMilliseconds] =
     useState(0);
   const [dateofBundle, setdateofBundle] = useState(0);
+  const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
   const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
   const [idyptokenData, setIDypTokenData] = useState([]);
@@ -389,6 +390,15 @@ const NewBundleCard = ({
     setbundleExpireMiliseconds(expiringTime_miliseconds);
     const timeofDeposit_miliseconds = timeofDeposit * 1000;
 
+    const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(timeofDeposit_miliseconds);
+
     const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "2-digit",
@@ -399,9 +409,14 @@ const NewBundleCard = ({
     }).format(expiringTime_miliseconds);
 
     const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+    const timeofbundleBought_Date_formatted = new Date(timeofbundleBought_Date);
+
     setdateofBundle(expiringTime_Date_formatted);
 
     const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+    const timeofbundleBought_day = timeofbundleBought_Date_formatted.getDate();
+    setdatewhenBundleBought(timeofbundleBought_day);
+
     const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
     const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
     const final = timeofDeposit_Hours - 11;
@@ -440,10 +455,10 @@ const NewBundleCard = ({
         setDepositState700("success");
         setStatusColor700("#00FECF");
         getDypBalance();
-        checkBundleDates();
-        checkApproval700();
         insertBundle();
         increaseBundle();
+        checkBundleDates();
+        checkApproval700();
       })
       .catch((e) => {
         setStatusColor700("#FE7A00");
@@ -533,8 +548,6 @@ const NewBundleCard = ({
 
   let twentyfiveaugust = new Date("2023-08-25 23:59:00 GMT+02:00");
   let today = new Date();
-
-
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -651,15 +664,20 @@ const NewBundleCard = ({
         handleRefreshCountdown700();
         setisAtlimit(false);
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
-        if (today < dateofBundle) { 
-         
-          setcountdown700(oneSeptember.getTime());
-          handleSetAvailableTime(oneSeptember.getTime());
-          setisAtlimit(true);
-          setStatusColor700("#FE7A00");
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
+        if (today < dateofBundle) {
+          if (bundlesBought <= 3 && datewhenBundleBought < today_date) {
+            setcountdown700(dateofBundle);
+            setisAtlimit(false);
+            handleSetAvailableTime(dateofBundle);
+          } else {
+            setcountdown700(oneSeptember.getTime());
+            handleSetAvailableTime(oneSeptember.getTime());
+            setisAtlimit(true);
+            setStatusColor700("#FE7A00");
+            setStatus700(
+              "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+            );
+          }
         } else if (today > dateofBundle && bundlesBought > 0) {
           setisAtlimit(false);
           setcountdown700();
@@ -704,7 +722,6 @@ const NewBundleCard = ({
     checkApproval3500();
     checkApproval();
     increaseBundle();
-    
   }, [
     coinbase,
     chainId,
@@ -774,7 +791,7 @@ const NewBundleCard = ({
       handleSetAvailableTime(oneSeptember.getTime());
     }
   }, [bundlesBought, countdown700]);
- 
+
   useEffect(() => {
     getTokenData();
     if (today > twentyfiveaugust) {
@@ -790,7 +807,6 @@ const NewBundleCard = ({
   useEffect(() => {
     // getTokenDatabnb();
   }, []);
-
 
   return (
     <>

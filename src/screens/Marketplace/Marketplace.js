@@ -231,12 +231,12 @@ const Marketplace = ({
       });
 
       
-    if (result.data) {
+    if (result.data && result.data !== 'NaN') {
       setTotalTx(result.data);
       localStorage.setItem('cachedTvl', result.data)
     }
-
-    if (result2.data) {
+ 
+    if (result2.data && result2.data !== 'NaN') {
       setTotalVolume(result2.data);
       localStorage.setItem('cachedVolume', result2.data)
     }
@@ -285,7 +285,7 @@ const Marketplace = ({
   };
 
   useEffect(() => {
-    setTopSold(topSales);
+    initialSales()
     setRecentListed(latest20RecentListedNFTS);
     setRecentSalesFilter(recentSales);
     if (topSales && topSales.length === 0) {
@@ -329,6 +329,19 @@ const Marketplace = ({
   var week = moment().subtract(7, "days");
   var month = moment().subtract(30, "days");
   const [topSalesDate, setTopSalesDate] = useState("week");
+
+  const initialSales = ()=>{
+    let datedSales = topSales.map((item) => {
+      return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };
+    });
+
+    const filteredDateSales = datedSales.filter(function (item) {
+      return item.date > week._d && item.date < today._d;
+    });
+
+    setTopSold(filteredDateSales);
+  }
+
 
   const filterTopSales = () => {
     setLoadingTopSales(true);

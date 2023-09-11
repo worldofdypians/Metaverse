@@ -82,37 +82,39 @@ const Header = ({
   };
 
   const setActiveChain = () => {
-    if (chainId === 1) {
-      setAvaxState(false);
-      setBnbState(false);
-      setEthState(true);
-      setBaseState(false);
-    } else if (chainId === 43114) {
-      setAvaxState(true);
-      setBnbState(false);
-      setEthState(false);
-      setBaseState(false);
-    } else if (chainId === 8453) {
-      setAvaxState(false);
-      setBnbState(false);
-      setEthState(false);
-      setBaseState(true);
-    } else if (chainId === 56) {
-      setAvaxState(false);
-      setBnbState(true);
-      setEthState(false);
-      setBaseState(false);
-    }  else if (chainId === 1030) {
-      setAvaxState(false);
-      setBnbState(false);
-      setEthState(false);
-      setBaseState(false);
-      setConfluxState(true)
-    } else {
-      setAvaxState(false);
-      setBnbState(false);
-      setBaseState(false);
-      setEthState(false);
+    if (chainId) {
+      if (chainId === 1) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(true);
+        setBaseState(false);
+      } else if (chainId === 43114) {
+        setAvaxState(true);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+      } else if (chainId === 8453) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(true);
+      } else if (chainId === 56) {
+        setAvaxState(false);
+        setBnbState(true);
+        setEthState(false);
+        setBaseState(false);
+      } else if (chainId === 1030) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(true);
+      } else {
+        setAvaxState(false);
+        setBnbState(false);
+        setBaseState(false);
+        setEthState(false);
+      }
     }
   };
 
@@ -166,8 +168,6 @@ const Header = ({
       });
   };
 
- 
-
   async function markNotificationAsRead(walletAddress, notificationId) {
     try {
       await axios.patch(
@@ -181,8 +181,6 @@ const Header = ({
       console.error("Error marking notification as read:", error.message);
     }
   }
-
- 
 
   const getRelativeTime = (nftTimestamp) => {
     const date = new Date();
@@ -227,7 +225,6 @@ const Header = ({
     }
   };
 
-
   useEffect(() => {
     if (chainId === 1) {
       handleSwitchNetwork(1);
@@ -241,7 +238,6 @@ const Header = ({
       handleSwitchNetwork(43114);
     }
   }, [chainId, coinbase]);
-
 
   useEffect(() => {
     setActiveChain();

@@ -5,13 +5,18 @@ import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import downloadIcon from "../../../assets/downloadIcon.svg";
 import { NavLink } from "react-router-dom";
-import LeaderBoard from '../../../components/LeaderBoard/LeaderBoard'
+import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
 
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
+
+  const gotoDownload = () => {
+    window.location.href =
+      "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing";
+  };
 
   useEffect(() => {
     if (modal === true) {
@@ -24,63 +29,77 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   return (
     <>
       <div className="video-wrapper">
-        <div className="row leaderboard-bg gap-4 gap-lg-0" style={{minHeight: '90vh'}}>
-          
-        <div className="col-12 col-lg-8 video-diagonal">
-
-        <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
-          <div className="row m-0 gap-5 align-items-center justify-content-center">
-        
-            <NavLink to="join-beta"
-              className="pink-linear-border"
-              style={{ width: "fit-content", zIndex: 5, position: "relative", textDecoration: 'none' }}
-            >
-              <button
-                className="btn outline-btn px-5 d-flex align-items-center gap-2"
-                // onClick={handleRegister}
-              >
-                Join Beta
-              </button>
-            </NavLink>
-            <div 
-              className="linear-border"
-              style={{ width: "fit-content", zIndex: 5, position: "relative", textDecoration: 'none' }}
-            >
-              <button
-                onClick={handleDownload}
-                className="btn filled-btn px-5 d-flex align-items-center gap-2"
-              >
-                Download
-                <img src={downloadIcon} alt="download icon" />
-              </button>
+        <div
+          className="row leaderboard-bg gap-4 gap-lg-0"
+          style={{ minHeight: "90vh" }}
+        >
+          <div className="col-12 col-lg-8 video-diagonal">
+            <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
+              <div className="row m-0 gap-5 align-items-center justify-content-center">
+                <NavLink
+                  to="join-beta"
+                  className="pink-linear-border"
+                  style={{
+                    width: "fit-content",
+                    zIndex: 5,
+                    position: "relative",
+                    textDecoration: "none",
+                  }}
+                >
+                  <button
+                    className="btn outline-btn px-5 d-flex align-items-center gap-2"
+                    // onClick={handleRegister}
+                  >
+                    Join Beta
+                  </button>
+                </NavLink>
+                <div
+                  className="linear-border"
+                  style={{
+                    width: "fit-content",
+                    zIndex: 5,
+                    position: "relative",
+                    textDecoration: "none",
+                  }}
+                >
+                  <button
+                    onClick={gotoDownload}
+                    className="btn filled-btn px-5 d-flex align-items-center gap-2"
+                  >
+                    Download
+                    <img src={downloadIcon} alt="download icon" />
+                  </button>
+                </div>
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <img src={sysReq} alt="system requirements" />
+                <span className="sys-req" onClick={() => setModal(true)}>
+                  System requirements
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            <img src={sysReq} alt="system requirements" />
-            <span className="sys-req" onClick={() => setModal(true)}>
-              System requirements
-            </span>
-          </div>
-        </div>
-          <video
-          preload="auto"
-          className="d-none d-lg-flex d-xl-flex elementor-video"
-          src="https://dypmeta.s3.us-east-2.amazonaws.com/dypius.mov"
-          autoPlay={true}
-          loop={true}
-          muted="muted"
-          playsInline={true}
-          controlsList="nodownload"
-          style={{ maxWidth: "2400px", width: "100%", height: '100%', objectFit: 'cover' }}
-        ></video>
+            <video
+              preload="auto"
+              className="d-none d-lg-flex d-xl-flex elementor-video"
+              src="https://dypmeta.s3.us-east-2.amazonaws.com/dypius.mov"
+              autoPlay={true}
+              loop={true}
+              muted="muted"
+              playsInline={true}
+              controlsList="nodownload"
+              style={{
+                maxWidth: "2400px",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            ></video>
           </div>
           <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start">
-          <LeaderBoard />
+            <LeaderBoard />
           </div>
-         
         </div>
-       
-       
+
         {/* <img src={buttonBorder} alt="button-border" className="video-button-border" /> */}
       </div>
       {modal === true ? (

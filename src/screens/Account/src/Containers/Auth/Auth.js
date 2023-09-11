@@ -48,7 +48,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 );
 
 function Auth({ isConnected, coinbase }) {
-  const { isAuthenticated, loginError, setLoginValues } = useAuth();
+  const { isAuthenticated, loginError, setLoginValues, playerId } = useAuth();
 
   const [value, setValue] = React.useState(0);
 
@@ -62,14 +62,20 @@ function Auth({ isConnected, coinbase }) {
     });
   };
 
-
-
-  if (isAuthenticated) {
+  if (isAuthenticated && playerId) {
     return <Navigate to={"/account"} />;
   }
+
+  // if (isAuthenticated && !playerId) {
+  //   return <Navigate to={"/player"} />;
+  // }
+
+  // if (!playerId) {
+  //   return <Navigate to={"/player"} />;
+  // }
   return (
     <>
-      <LoginWrapper style={{marginTop: '4rem'}}>
+      <LoginWrapper style={{ marginTop: "4rem" }}>
         <LoginCard
           containerStyles={{
             height: 500,
