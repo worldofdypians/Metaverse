@@ -13,6 +13,7 @@ function SignUpGecko({
   onShowVerify,
   onSuccessLogin,
   mintTitle,
+  chainId
 }) {
   const {
     isAuthenticated,
@@ -85,6 +86,12 @@ function SignUpGecko({
   }, []);
 
   useEffect(() => {
+   if(chainId !== 1030 && mintTitle === 'Conflux Beta Pass') {
+    setDisabled(true)
+   }
+  }, [chainId, mintTitle]);
+
+  useEffect(() => {
     if (username && password && confirmPassword) {
       setDisabled(false);
       if(password !== confirmPassword) {
@@ -141,6 +148,8 @@ function SignUpGecko({
           title={"Continue  >"}
           type={"coingecko"}
         />
+      <ErrorAlert error={loginError} />
+
       </div>
     );
   }

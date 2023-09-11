@@ -2072,6 +2072,12 @@
   background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
 }
 
+.upcoming-mint-wrapper-gate {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #000E46 168.67%);
+}
+
+
 .upcoming-mint-wrapper-conflux {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #11503d 168.67%);
@@ -2531,6 +2537,16 @@ letter-spacing: -0.18px;
 .conflux-btn {
   border-radius: 20px;
   background: linear-gradient(90deg, #B0176E -13.56%, #49298D 129.3%);
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.gate-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #00A776 -13.56%, #0096D2 129.3%);
   color: #fff;
   font-size: 12px;
   font-style: normal;
