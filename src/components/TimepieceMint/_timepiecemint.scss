@@ -465,7 +465,7 @@
 
 .avalanche-mint-bg {
   background-image: url("./assets/avalanche-mint-bg.png");
-  background-size: cover;
+  background-size: 90%;
   background-position: right;
   background-repeat: no-repeat;
   @media screen and (max-width: 786px) {
@@ -490,8 +490,9 @@
 }
 .base-mint-bg {
   background-image: url("./assets/baseBackground.png");
-
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
 
   @media screen and (max-width: 786px) {
     background-image: none;
