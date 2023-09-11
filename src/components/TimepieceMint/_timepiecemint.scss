@@ -463,11 +463,10 @@
   }
 }
 
-
 .coingecko-mint-bg {
   background-image: url("./assets/coingeckoBackground.png");
 
- background-size: cover;
+  background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
 
@@ -859,6 +858,13 @@
   background-position: center;
 }
 
+.conflux-active {
+  background-image: url("../../assets/confluxActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
 .genesis-land-empty {
   background-image: url("../../assets/cawsplaceholder.svg"),
     linear-gradient(141.14deg, #5e17cc 11.06%, #381486 34.42%, #1f164c 56.62%);
@@ -884,7 +890,6 @@
   box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.32);
   border-radius: 6px;
 }
-
 
 .community-image {
   --mask: linear-gradient(-135deg, #0000 30px, #000 0);
@@ -1493,24 +1498,23 @@ input::-webkit-inner-spin-button {
     line-height: normal;
     margin-bottom: 0 !important;
     @media screen and (max-width: 786px) {
-    font-size: 16px;
+      font-size: 16px;
     }
     @media screen and (max-width: 400px) {
-    font-size: 13px;
+      font-size: 13px;
     }
   }
 }
 
-.mint-popup-img{
+.mint-popup-img {
   position: relative;
   bottom: 25px;
 }
 
-.popup-active{
-  box-shadow:0 0 0 10000px rgba(0,0,0,.50);
+.popup-active {
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
   top: 0% !important;
 }
-
 
 @keyframes pulseDot {
   0% {
