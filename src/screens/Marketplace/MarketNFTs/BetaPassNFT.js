@@ -69,6 +69,7 @@ const BetaPassNFT = ({
   nftName,
   handleMint,
   totalConfluxNft,
+  myNFTSCoingecko,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -152,9 +153,20 @@ const BetaPassNFT = ({
   const [linkWallet, setLinkWallet] = useState(false);
   const [alreadyRegistered, setalreadyRegistered] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
+  const [coingeckoSymbol, setCoingeckoSymbol] = useState("");
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
+
+  const getNftSymbol = async () => {
+    const contract = new window.bscWeb3.eth.Contract(
+      window.COINGECKO_NFT_ABI,
+      window.config.nft_coingecko_address
+    );
+    const symbol = await contract.methods.symbol().call();
+    setCoingeckoSymbol(symbol);
+  };
+
   useEffect(() => {
     if (openTerms === true) {
       html.classList.add("hidescroll");
@@ -265,7 +277,7 @@ const BetaPassNFT = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     // getAllCawsCollection();
-    // fetchFilters();
+    getNftSymbol();
     document.title = "Beta Pass";
   }, []);
 
@@ -1056,16 +1068,23 @@ const BetaPassNFT = ({
                             <div
                               className="genesis-desc px-3 py-2 position-relative"
                               style={{
-                                bottom: totalCoingeckoNft > 0 || totalConfluxNft > 0 ? "20px" : "5px",
+                                bottom:
+                                  totalCoingeckoNft > 0 || totalConfluxNft > 0
+                                    ? "20px"
+                                    : "5px",
                                 minWidth: "100%",
-                                maxWidth: "100%"
+                                maxWidth: "100%",
                               }}
                             >
                               <h6
                                 className="land-desc w-75 m-auto text-center"
                                 style={{ fontWeight: 500, fontSize: 16 }}
                               >
-                                {selectedMint.cardTitle}
+                                {mintTitle === "coingecko"
+                                  ? coingeckoSymbol
+                                  : selectedMint.cardTitle}{" "}
+                                {totalCoingeckoNft > 0 &&
+                                  `#${myNFTSCoingecko[0]}`}
                               </h6>
                             </div>
                           </div>

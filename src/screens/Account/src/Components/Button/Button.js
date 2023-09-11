@@ -13,7 +13,7 @@ const Button = ({
 }) => {
   return (
     <div
-      className={`${type}Button`}
+      className={`${type}Button ${disabled && 'disabledBtn'} `}
       onClick={loading || disabled ? () => {} : onPress}
       {...rest}
     >
