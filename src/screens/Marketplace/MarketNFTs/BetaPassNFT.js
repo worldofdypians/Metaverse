@@ -461,7 +461,7 @@ const BetaPassNFT = ({
               </div>
             </div> */}
 
-              <div className=" nft-page-wrapper d-flex flex-column flex-xl-row gap-3 mb-3">
+              <div className=" nft-page-wrapper d-flex flex-column flex-xxl-row gap-3 mb-3">
                 {mintTitle !== "coingecko" && mintTitle !== "conflux" && (
                   <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                     <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">

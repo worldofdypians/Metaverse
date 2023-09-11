@@ -947,6 +947,7 @@
   line-height: 21px;
   letter-spacing: 0.03em;
   color: #b8b8e0;
+  white-space: nowrap;
 }
 
 .nft-active {
@@ -2349,6 +2350,7 @@
       letter-spacing: -0.18px;
       position: relative;
       left: -11px;
+      width: 35px;
     }
     .timestamp {
       margin-bottom: 20px;

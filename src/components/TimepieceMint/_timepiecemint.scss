@@ -403,7 +403,9 @@
 
 .conflux-mint-bg2 {
   background-image: url("./assets/confluxBackground.webp");
-  background-size: 100% 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
 
   @media screen and (max-width: 786px) {
     background-image: none;
