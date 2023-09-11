@@ -120,7 +120,7 @@ const MakeOffer = ({
         token_address
       );
       const contract2 = new web3eth.eth.Contract(
-        window.WETH_ABI,
+        window.TOKEN_ABI,
         window.config.weth2_address
       );
 

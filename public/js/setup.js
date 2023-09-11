@@ -3946,7 +3946,7 @@ window.approveOffer = async (amount, priceType) => {
       .send({ from: await getCoinbase() });
   } else if (priceType === 0) {
     const contract = new window.web3.eth.Contract(
-      window.WETH_ABI,
+      window.TOKEN_ABI,
       window.config.weth2_address
     );
 
@@ -4024,7 +4024,7 @@ window.isApprovedOffer = async (amount, priceType) => {
     return Number(allowance) >= Number(amount);
   } else if (priceType === 0) {
     const contract = new window.web3.eth.Contract(
-      window.WETH_ABI,
+      window.TOKEN_ABI,
       window.config.weth2_address
     );
 
