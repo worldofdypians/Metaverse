@@ -85,12 +85,18 @@ function SignUpGecko({
   }, []);
 
   useEffect(() => {
-    if (username && password) {
+    if (username && password && confirmPassword) {
       setDisabled(false);
+      if(password !== confirmPassword) {
+        setDisabled(true)
+      }
+      else {
+        setDisabled(false);
+      }
     } else {
       setDisabled(true);
     }
-  }, [username, password]);
+  }, [username, password,confirmPassword]);
 
   useEffect(() => {
     if (loginError) {

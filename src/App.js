@@ -100,7 +100,6 @@ function App() {
   const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
 
-
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
@@ -116,6 +115,8 @@ function App() {
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+
+  const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -388,6 +389,10 @@ function App() {
       getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
 
       getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
+      getMyNFTS(coinbase, "coingecko").then((NFTS) => {
+        setMyNFTSCoingecko(NFTS);
+        setTotalCoingeckoNft(NFTS.length);
+      });
     }
   };
 
@@ -1531,6 +1536,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
                   totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                 />
@@ -1561,6 +1567,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
                   totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                 />
@@ -1584,6 +1591,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
                   totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
@@ -1613,6 +1621,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
                   totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}
@@ -1642,6 +1651,7 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
                   totalConfluxNft={totalConfluxNft}
                   timepieceMetadata={timepieceMetadata}
                   handleConnect={handleShowWalletModal}

@@ -71,6 +71,7 @@ const BetaPassNFT = ({
   nftName,
   handleMint,
   totalConfluxNft,
+  myNFTSCoingecko,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -155,21 +156,26 @@ const BetaPassNFT = ({
   const [alreadyRegistered, setalreadyRegistered] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
   const [openConflux, setOpenConflux] = useState(false);
+  const [coingeckoSymbol, setCoingeckoSymbol] = useState("");
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
   const bgmenu2 = document.querySelector("#switch");
 
+  useEffect(() => {
+    if (mintTitle === "conflux") {
+      setOpenConflux(true);
+    }
+  }, [mintTitle]);
 
-
-useEffect(() => {
-  if(mintTitle === "conflux"){
-    setOpenConflux(true)
-  }
-}, [mintTitle])
-
-
-
+  const getNftSymbol = async () => {
+    const contract = new window.bscWeb3.eth.Contract(
+      window.COINGECKO_NFT_ABI,
+      window.config.nft_coingecko_address
+    );
+    const symbol = await contract.methods.symbol().call();
+    setCoingeckoSymbol(symbol);
+  };
 
   useEffect(() => {
     if (openTerms === true || openConflux === true) {
@@ -282,7 +288,7 @@ useEffect(() => {
   useEffect(() => {
     window.scrollTo(0, 0);
     // getAllCawsCollection();
-    // fetchFilters();
+    getNftSymbol();
     document.title = "Beta Pass";
   }, []);
 
@@ -1085,7 +1091,11 @@ useEffect(() => {
                                 className="land-desc w-75 m-auto text-center"
                                 style={{ fontWeight: 500, fontSize: 16 }}
                               >
-                                {selectedMint.cardTitle}
+                                {mintTitle === "coingecko"
+                                  ? coingeckoSymbol
+                                  : selectedMint.cardTitle}{" "}
+                                {totalCoingeckoNft > 0 &&
+                                  `#${myNFTSCoingecko[0]}`}
                               </h6>
                             </div>
                           </div>
@@ -1150,19 +1160,26 @@ useEffect(() => {
           </div>
           <img src={confluxLogo} width={40} height={40} alt="" />
           <h6 className="switch-network mb-0">Switch Network</h6>
-          <span className="switch-network-desc">We’ve detected that you’re connected to Ethereum Network.</span>
+          <span className="switch-network-desc">
+            We’ve detected that you’re connected to Ethereum Network.
+          </span>
           <div className="metamask-info-wrapper mt-2 w-100 d-flex p-3 align-items-center justify-content-between">
-          <div className="d-flex align-items-center gap-2">
-            <img src={metamaskIcon} width={32} height={32} alt="" />
-            <div className="d-flex flex-column">
-              <h6 className="metamask-info-title">MetaMask Wallet</h6>
-              <span className="metamask-short-address mb-0">0xa972...fd21</span>
+            <div className="d-flex align-items-center gap-2">
+              <img src={metamaskIcon} width={32} height={32} alt="" />
+              <div className="d-flex flex-column">
+                <h6 className="metamask-info-title">MetaMask Wallet</h6>
+                <span className="metamask-short-address mb-0">
+                  0xa972...fd21
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            <div className="green-dot" style={{width: "5px", height: "5px"}}></div>
-            <span className="popup-chain">Conflux</span>
-          </div>
+            <div className="d-flex align-items-center gap-2">
+              <div
+                className="green-dot"
+                style={{ width: "5px", height: "5px" }}
+              ></div>
+              <span className="popup-chain">Conflux</span>
+            </div>
           </div>
           <button className="btn switch-network-btn mt-3 d-flex align-items-center gap-2 px-5 py-2">
             <img src={switchIcon} alt="" />

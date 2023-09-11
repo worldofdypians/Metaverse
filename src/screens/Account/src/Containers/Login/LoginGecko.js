@@ -34,9 +34,8 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
   }, [username, password]);
 
   useEffect(() => {
-    setUserName(newEmail)
+    setUserName(newEmail);
   }, []);
-  
 
   useEffect(() => {
     if (loginError) {
@@ -49,9 +48,8 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
     }
   }, [username, password, verifyCode]);
 
-  
   if (isAuthenticated) {
-  onSuccessLogin()
+    onSuccessLogin();
   }
 
   async function verifyEmailValidationCode() {

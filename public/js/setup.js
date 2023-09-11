@@ -4205,7 +4205,22 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
-  } else {
+  } else if (type === "coingecko") {
+     contract =  new window.bscWeb3.eth.Contract(
+      window.COINGECKO_NFT_ABI,
+      window.config.nft_coingecko_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  }else {
     contract = await new infuraweb3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
