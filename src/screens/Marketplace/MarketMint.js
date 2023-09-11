@@ -77,7 +77,7 @@ const MarketMint = ({
     id: "gate",
     cardTitle: "Gate.Io Beta Pass",
     title: "Gate.Io Beta Pass",
-    background: "gate-mint-bg",
+    background: "gate-mint-bg2",
     mobileBg: "gateMobileBg.png",
   };
   const kucoinData = {
