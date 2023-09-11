@@ -17,6 +17,8 @@ import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMad
 import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
 import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
 import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
+import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
+
 import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
@@ -30,6 +32,8 @@ import CriticalHitPopup from "../../components/PackagePopups/CriticalHitPopup";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useParams } from "react-router-dom";
 import confluxUpcoming from "./assets/confluxUpcoming.png";
+import gateUpcoming from "./assets/gateUpcoming.webp";
+
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
@@ -41,6 +45,7 @@ import whitePickaxe from "./assets/whitePickAxe.svg";
 import whiteCalendar from "./assets/whiteCalendar.svg";
 import BetaEventCard from "./components/BetaEventCard";
 import eventPopupImage from "../Account/src/Components/WalletBalance/assets/eventPopupImage.png";
+import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
 
@@ -194,23 +199,42 @@ const MarketEvents = ({
     //     eventType: "Explore & Mine",
     //   },
     // },
+    // {
+    //   title: "Conflux (CFX)",
+    //   logo: conflux,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$3,000 in CFX Rewards",
+    //   myEarnings: 0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "September xx, 2023",
+    //   backgroundImage: confluxUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Conflux Pass",
+    //     chain: "Conflux Network",
+    //     linkState: "conflux",
+    //     rewards: "CFX",
+    //     status: "Coming Soon",
+    //     id: "event1",
+    //   },
+    // },
     {
-      title: "Conflux (CFX)",
-      logo: conflux,
+      title: "Gate.io (GT)",
+      logo: gate,
       eventStatus: "Coming Soon",
-      totalRewards: "$3,000 in CFX Rewards",
+      totalRewards: "$3,000 in GT Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "September xx, 2023",
-      backgroundImage: confluxUpcoming,
+      backgroundImage: gateUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Conflux Pass",
-        chain: "Conflux Network",
-        linkState: "conflux",
-        rewards: "CFX",
+        title: "Gate",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "GT",
         status: "Coming Soon",
-        id: "event1",
+        id: "event6",
       },
     },
   ];
@@ -695,6 +719,8 @@ const MarketEvents = ({
                       ? eventPopupImageAvax
                       : dummyEvent?.linkState === "coingecko"
                       ? eventPopupImageGecko
+                      : dummyEvent.linkState === "gate"
+                      ? gatePopupImage
                       : eventPopupImage
                   }
                   alt=""
@@ -817,6 +843,18 @@ const MarketEvents = ({
                       in to the game daily and venture into the Avalanche area
                       to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event6" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Gate Beta Pass NFT</b>. You can get the Gate
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Gate.io area, players not only stand a chance to secure
+                      daily rewards in GT or earn points for their placement on
+                      the global leaderboard. Remember to log in to the game
+                      daily and venture into the Gate.io area to uncover hidden
+                      treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -848,6 +886,8 @@ const MarketEvents = ({
                         ? "BNB"
                         : dummyEvent.id === "event5"
                         ? "AVAX"
+                        : dummyEvent.id === "event6"
+                        ? "GT"
                         : "BASE"}{" "}
                       rewards
                     </li>
@@ -870,6 +910,8 @@ const MarketEvents = ({
                 ? "CoinGecko"
                 : dummyEvent.id === "event5"
                 ? "Avalanche"
+                : dummyEvent.id === "event6"
+                ? "Gate.io"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -920,6 +962,19 @@ const MarketEvents = ({
                 HyperSDK toolkit enable web3 developers to easily launch
                 powerful, custom blockchain solutions.
               </p>
+            ) : dummyEvent.id === "event6" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Gate.io is a full-service digital asset exchange platform
+                covering millions of users around the world.The company prides
+                itself on providing industry-leading security in addition to
+                having been audited to show 100% proof of reserves. Gate.io
+                operates in most countries across the world, and is always
+                committed to complying with the applicable laws where it
+                operates.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
@@ -943,6 +998,8 @@ const MarketEvents = ({
                     ? "https://twitter.com/coin98_wallet"
                     : dummyEvent.id === "event3"
                     ? "https://twitter.com/coingecko"
+                    : dummyEvent.id === "event6"
+                    ? "https://twitter.com/gate_io"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -959,6 +1016,8 @@ const MarketEvents = ({
                     ? "https://t.me/coin98wallet"
                     : dummyEvent.id === "event3"
                     ? "https://t.me/coingecko"
+                    : dummyEvent.id === "event6"
+                    ? "https://t.me/gateio_en"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -978,6 +1037,8 @@ const MarketEvents = ({
                     ? "https://coin98.com/"
                     : dummyEvent.id === "event3"
                     ? "https://www.coingecko.com/"
+                    : dummyEvent.id === "event6"
+                    ? "https://www.gate.io/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -1009,6 +1070,8 @@ const MarketEvents = ({
                       ? "BNB"
                       : dummyEvent.id === "event5"
                       ? "AVAX"
+                      : dummyEvent.id === "event6"
+                      ? "GT"
                       : "BASE"}
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>

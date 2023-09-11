@@ -89,7 +89,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
                 ? [BASEPARAMS] : chainID === '0x406' ? [CONFLUXPARAMS]
                 : "",
           });
-          if(window.ethereum && window.ethereum.isTrust === true) {
+          if((window.ethereum && window.ethereum.isTrust === true) || chainID === '0x406') {
             window.location.reload()
           }
         } catch (addError) {
