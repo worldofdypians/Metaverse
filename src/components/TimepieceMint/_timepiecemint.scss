@@ -392,7 +392,9 @@
 }
 .conflux-mint-bg {
   background-image: url("./assets/confluxBackground.png");
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
 
   @media screen and (max-width: 786px) {
     background-image: none;
@@ -415,7 +417,9 @@
 }
 .avax-mint-bg {
   background-image: url("./assets/avaxBackground.png");
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
 
   @media screen and (max-width: 786px) {
     background-image: none;
@@ -425,18 +429,20 @@
 }
 .kucoin-mint-bg {
   background-image: url("./assets/kucoinBackground.png");
-  background-size: 100% 100%;
-
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
   @media screen and (max-width: 786px) {
     background-image: none;
     // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
-
-.gate-mint-bg2 {
+.gate-mint-bg {
   background-image: url("./assets/gateMintBg.webp");
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
 
   @media screen and (max-width: 786px) {
     background-image: none;
@@ -446,7 +452,9 @@
 }
 .coin98-mint-bg {
   background-image: url("./assets/coin98Background1.png");
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
 
   @media screen and (max-width: 786px) {
     background-image: none;
@@ -457,8 +465,9 @@
 
 .avalanche-mint-bg {
   background-image: url("./assets/avalanche-mint-bg.png");
-  background-size: 100% 100%;
-
+  background-size: 90%;
+  background-position: right;
+  background-repeat: no-repeat;
   @media screen and (max-width: 786px) {
     background-image: none;
     // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
@@ -481,8 +490,9 @@
 }
 .base-mint-bg {
   background-image: url("./assets/baseBackground.png");
-
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
 
   @media screen and (max-width: 786px) {
     background-image: none;
