@@ -39,6 +39,12 @@ import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/Pla
 import pinkArea from "./assets/pinkArea.svg";
 import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
 import pinkAreaGate from "./assets/pinkAreaGate.svg";
+import avaxBetaBanner from './assets/avaxBetaBanner.png'
+import coingeckoBetaBanner from './assets/coingeckoBetaBanner.png'
+import confluxBetaBanner from './assets/confluxBetaBanner.png'
+import gateBetaBanner from './assets/gateBetaBanner.png'
+import coin98BetaBanner from './assets/coin98BetaBanner.png'
+
 
 import walletImg from "./assets/wallet.svg";
 import circleArrow from "./assets/arrow-circle.svg";
@@ -418,12 +424,12 @@ const BetaPassNFT = ({
                   <img
                     src={
                       mintTitle === "avalanche"
-                        ? avaxbetapassBanner
+                        ? avaxBetaBanner
                         : mintTitle === "coingecko"
-                        ? geckobetapassBanner
+                        ? coingeckoBetaBanner
                         : mintTitle === "conflux"
-                        ? betapassBannerConflux
-                        : mintTitle === 'gate' ? betapassBannerGate
+                        ? confluxBetaBanner
+                        : mintTitle === 'gate' ? gateBetaBanner
                         : betapassBanner
                     }
                     className="w-100"

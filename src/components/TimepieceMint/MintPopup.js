@@ -23,22 +23,39 @@ const MintPopup = ({ active, onClose, data }) => {
           onClick={onClose}
         />
       </div>
-     
-      <div class="d-flex align-items-center justify-content-center">
-        <div class="pulsatingDot"></div>
-        <h6
-        className="mint-popup-title font-organetto mb-0"
-        style={{ color: "#18FFFF" }}
-      >
-       Live Free Minting
-      </h6>
-      </div>
-      <h6 className="mint-popup-title font-organetto">{data.title} Beta Pass</h6>
 
-      <img src={data.img} className="mint-popup-img" style={{maxWidth: "100%" }} alt="" />
+      {data.title === "CoinGecko" ? (
+        <>
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              Live CoinGecko Beta Pass NFT
+            </h6>
+          </div>
+          <h6 className="mint-popup-title">Candy Rewards</h6>
+        </>
+      ) : (
+        <>
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              Live Free Minting
+            </h6>
+          </div>
+          <h6 className="mint-popup-title">{data.title} Beta Pass</h6>
+        </>
+      )}
+
+      <img
+        src={data.img}
+        className="mint-popup-img"
+        style={{ maxWidth: "100%" }}
+        alt=""
+      />
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
         <span className="popup-available-mint">
-        Gain access to the game and a unique event filled with surprises and rewards!
+          Get access to the game and a unique event filled with surprises and
+          rewards!
         </span>
       </div>
       <Link
