@@ -1287,7 +1287,7 @@ const BetaPassNFT = ({
           <img src={confluxLogo} width={40} height={40} alt="" />
           <h6 className="switch-network mb-0">Switch Network</h6>
           <span className="switch-network-desc">
-            We’ve detected that you’re connected to{" "}
+            We've detected that you're connected to{" "}
             {chainId === 1
               ? "Ethereum Network"
               : chainId === 56
@@ -1301,13 +1301,13 @@ const BetaPassNFT = ({
             <div className="d-flex align-items-center gap-2">
               <img
                 src={
-                  window.ethereum.isMetaMask && !window.gatewallet
+                 window.ethereum?.isMetaMask && !window.gatewallet
                     ? metamaskIcon
                     : window.coin98
                     ? coin98Wallet
-                    : window.ethereum.isTrust
+                    :  window.ethereum?.isTrust
                     ? trustWallet
-                    : window.ethereum.isCoinbaseWallet
+                    :  window.ethereum?.isCoinbaseWallet
                     ? coinbaseWallet
                     : window.gatewallet
                     ? gateWallet
@@ -1319,13 +1319,13 @@ const BetaPassNFT = ({
               />
               <div className="d-flex flex-column">
                 <h6 className="metamask-info-title">
-                  {window.ethereum.isMetaMask && !window.gatewallet
+                  {window.ethereum?.isMetaMask && !window.gatewallet
                     ? "MetaMask Wallet"
                     : window.coin98
                     ? "Coin98 Wallet"
-                    : window.ethereum.isTrust
+                    : window.ethereum?.isTrust
                     ? "Trustwallet"
-                    : window.ethereum.isCoinbaseWallet
+                    : window.ethereum?.isCoinbaseWallet
                     ? "Coinbase Wallet"
                     : window.gatewallet
                     ? "Gate Wallet"
