@@ -1092,7 +1092,7 @@ const WalletBalance = ({
 
   return (
     <>
-      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
+      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0">
           <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5 position-relative">
             <h6
@@ -1299,7 +1299,7 @@ const WalletBalance = ({
               </Slider>
             </div>
           )}
-          <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative">
+          <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}

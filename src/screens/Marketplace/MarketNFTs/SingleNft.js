@@ -1263,11 +1263,11 @@ const SingleNft = ({
           <div className="main-wrapper py-4 w-100 mt-5 mt-xxl-0 mt-lg-0">
             {type === "land" ? (
               <>
-                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                <h6 className="market-banner-title d-flex align-items-xxl-center align-items-lg-center gap-2 px-3">
                   World of Dypians{" "}
                   <h6
                     className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                    style={{ color: "#8C56FF",  }}
                   >
                     Land
                   </h6>
@@ -1293,11 +1293,11 @@ const SingleNft = ({
               </>
             ) : (
               <>
-                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                <h6 className="market-banner-title d-flex align-items-xxl-center align-items-lg-center gap-2 px-3">
                   CAWS{" "}
                   <h6
                     className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                    style={{ color: "#8C56FF"}}
                   >
                     Timepiece
                   </h6>
