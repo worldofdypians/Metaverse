@@ -302,6 +302,19 @@ const SingleNft = ({
 
       setowner(owner);
     }
+
+    else if (type === "gate") {
+      const nft_contract = new window.bscWeb3.eth.Contract(
+        window.GATE_NFT_ABI,
+        window.config.nft_gate_address
+      );
+
+      const owner = await nft_contract.methods.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
+
+      setowner(owner);
+    }
   };
 
   const getOldNftOwner = async (type, Id) => {
@@ -338,6 +351,10 @@ const SingleNft = ({
       setmetaData(result);
     } else if (addr === window.config.nft_coingecko_address) {
       const result = await window.getCoingeckoNft(tokenid);
+      setmetaData(result);
+    }
+    else if (addr === window.config.nft_gate_address) {
+      const result = await window.getGateNft(tokenid);
       setmetaData(result);
     }
   };
@@ -389,6 +406,20 @@ const SingleNft = ({
       }
     } else if (type === "coingecko") {
       let nft_address = window.config.nft_coingecko_address;
+      const listedNFT = await getListedNFTS(
+        0,
+        "",
+        "nftAddress_tokenId",
+        tokenId,
+        nft_address
+      );
+
+      if (listedNFT && listedNFT.length > 0) {
+        setNft(...listedNFT);
+      }
+    }
+    else if (type === "gate") {
+      let nft_address = window.config.nft_gate_address;
       const listedNFT = await getListedNFTS(
         0,
         "",
@@ -491,6 +522,11 @@ const SingleNft = ({
           finalboughtItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_coingecko_address) {
           nft.type = "coingecko";
+          nft.chain = 56;
+          finalboughtItems.push(nft);
+        } 
+        else if (nft.nftAddress === window.config.nft_gate_address) {
+          nft.type = "gate";
           nft.chain = 56;
           finalboughtItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_timepiece_address) {
@@ -644,6 +680,11 @@ const SingleNft = ({
           finalboughtItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_coingecko_address) {
           nft.type = "coingecko";
+          nft.chain = 56;
+          finalboughtItems.push(nft);
+        }
+        else if (nft.nftAddress === window.config.nft_gate_address) {
+          nft.type = "gate";
           nft.chain = 56;
           finalboughtItems.push(nft);
         } else if (nft.nftAddress === window.config.nft_timepiece_address) {
@@ -1169,6 +1210,8 @@ const SingleNft = ({
         ? "land"
         : nftAddress === window.config.nft_coingecko_address
         ? "coingecko"
+        : nftAddress === window.config.nft_gate_address
+        ? "gate"
         : "caws",
       nftId
     );
@@ -1188,6 +1231,8 @@ const SingleNft = ({
         ? "timepiece"
         : nftAddress === window.config.nft_coingecko_address
         ? "coingecko"
+        : nftAddress === window.config.nft_gate_address
+        ? "gate"
         : "land",
       nftId
     );
@@ -1207,6 +1252,9 @@ const SingleNft = ({
     } else if (nftAddress === window.config.nft_coingecko_address) {
       setType("coingecko");
     }
+    else if (nftAddress === window.config.nft_gate_address) {
+      setType("gate");
+    }
     getMetaData(nftAddress, nftId);
   }, [nftId, nftAddress, nft, nftCount]);
 
@@ -1220,6 +1268,8 @@ const SingleNft = ({
         ? "timepiece"
         : nftAddress === window.config.nft_coingecko_address
         ? "coingecko"
+        : nftAddress === window.config.nft_gate_address
+        ? "gate"
         : "land",
       nftId
     );
@@ -1291,6 +1341,18 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
+            ) : type === "gate" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Gate{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
             ) : (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -1309,6 +1371,7 @@ const SingleNft = ({
                 <div className="position-relative package-blur">
                   <div className="first-box-blur first-bigbox-blur d-none d-lg-flex  align-items-end justify-content-center"></div>
                   <div className="second-box-blur d-none d-lg-flex second-bigbox-blur"></div>
+                  {/* todo */}
                   <img
                     className="blur-img blur-img-big"
                     src={
@@ -1317,6 +1380,8 @@ const SingleNft = ({
                         : nftAddress === window.config.nft_land_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
                         : nftAddress === window.config.nft_coingecko_address
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
+                        : nftAddress === window.config.nft_gate_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
@@ -1333,10 +1398,10 @@ const SingleNft = ({
                 >
                   <span className="seller-addr d-flex gap-1 align-items-center">
                     <img
-                      src={type === "coingecko" ? bnbLogo : ethIcon}
+                      src={(type === "coingecko" || type === 'gate') ? bnbLogo : ethIcon}
                       alt=""
                     />{" "}
-                    {type === "coingecko" ? "BNB Chain" : "Ethereum"}
+                    {(type === "coingecko" || type === 'gate') ? "BNB Chain" : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
                     <img src={eye} alt="" /> {viewCount} views
@@ -1354,6 +1419,8 @@ const SingleNft = ({
                         ? "Genesis Land"
                         : type === "coingecko"
                         ? "CoinGecko Beta Pass"
+                        : type === "gate"
+                        ? "Gate Beta Pass"
                         : "CAWS Timepiece"}{" "}
                       #{nftId}
                       <img
@@ -1628,7 +1695,7 @@ const SingleNft = ({
                     {isOwner &&
                       !IsListed &&
                       loadingNft === false &&
-                      type !== "coingecko" && (
+                      type !== "coingecko" && type!== 'gate' && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -1744,7 +1811,7 @@ const SingleNft = ({
                     {isOwner &&
                       !IsListed &&
                       !loadingNft &&
-                      type === "coingecko" && (
+                      type === "coingecko" && type === "gate" && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">
@@ -1759,7 +1826,7 @@ const SingleNft = ({
                         {
                           <a
                             href={
-                              type === "coingecko"
+                              (type === "coingecko" || type === 'gate')
                                 ? `https://bscscan.com/address/${owner}`
                                 : `https://etherscan.io/address/${owner}`
                             }
@@ -1928,7 +1995,7 @@ const SingleNft = ({
                         !IsListed &&
                         coinbase &&
                         isConnected &&
-                        type !== "coingecko" && (
+                        type !== "coingecko" && type !== 'gate' && (
                           <button
                             disabled={
                               sellLoading === true || sellStatus === "failed"
@@ -1985,7 +2052,7 @@ const SingleNft = ({
                         coinbase &&
                         isConnected &&
                         chainId === 1 &&
-                        type !== "coingecko" && (
+                        type !== "coingecko" && type !== 'gate' && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
@@ -1996,7 +2063,7 @@ const SingleNft = ({
                           </button>
                         )}
 
-                      {!isConnected && type !== "coingecko" && (
+                      {!isConnected && type !== "coingecko" && type !== 'gate' && (
                         <button
                           className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                           onClick={() => {
@@ -2027,7 +2094,7 @@ const SingleNft = ({
               </div>
             </div>
           </div>
-          {type !== "coingecko" && (
+          {type !== "coingecko" && type !== 'gate' && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -2282,7 +2349,7 @@ const SingleNft = ({
             </div>
           )}
 
-          {type === "coingecko" && (
+          {(type === "coingecko" || type === 'gate') && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
