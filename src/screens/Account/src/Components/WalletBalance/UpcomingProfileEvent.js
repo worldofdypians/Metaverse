@@ -15,7 +15,7 @@ const UpcomingProfileEvent = ({onOpenEvent, data}) => {
   return (
     <div className="profile-event-item d-flex flex-column position-relative" onClick={onOpenEvent} style={{background: "rgba(140, 86, 255, 0.10)", transform: 'translateX(0px)', borderBottom: "1px solid #8C56FF"}}>
     <div className="profile-event-tag d-flex align-items-center justify-content-center px-1" style={{background: "#8C56FF"}}> 
-    <span className="profile-event-tag-text mb-0" style={{color: "#FFFFFF"}}>Comming Soon</span>
+    <span className="profile-event-tag-text mb-0" style={{color: "#FFFFFF"}}>Coming Soon</span>
     </div>
     <div className="profile-event-top d-flex align-items-center justify-content-between">
       <div className="d-flex align-items-center p-2 gap-2">
