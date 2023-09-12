@@ -3319,7 +3319,7 @@ const WalletBalance = ({
        onClick={() => setEventPopup(false)}
      />
    </div>
-   <div className="profile-event-popup-wrapper p-2 p-lg-3 d-flex align-items-center justify-content-between mb-3">
+   <div className="profile-event-popup-wrapper p-2 p-lg-3 d-flex align-items-start align-items-lg-center justify-content-between mb-3">
      <div className="d-flex gap-2">
        <img src={coingeckoPopupImage} alt="" />
        <div className="d-flex flex-column justify-content-between">

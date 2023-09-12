@@ -1928,6 +1928,9 @@
 
 .upcoming-mint-img2 {
   height: 130px;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
 }
 
 .coingecko-btn {
