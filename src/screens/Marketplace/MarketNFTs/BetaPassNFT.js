@@ -71,6 +71,7 @@ import avaxMobileBg from "../../../components/TimepieceMint/assets/avaxMobileBg.
 import coin98MobileBg from "../../../components/TimepieceMint/assets/coin98MobileBg.png";
 import baseMobileBg from "../../../components/TimepieceMint/assets/baseMobileBg.png";
 import confluxMobileBg from "../../../components/TimepieceMint/assets/confluxMobileBg.png";
+import { useParams } from "react-router-dom";
 
 const BetaPassNFT = ({
   isConnected,
@@ -324,11 +325,17 @@ const BetaPassNFT = ({
     }
   };
 
+  const { terms } = useParams();
+
   useEffect(() => {
     window.scrollTo(0, 0);
     // getAllCawsCollection();
     getNftSymbol();
     document.title = "Beta Pass";
+
+    if (terms) {
+      setOpenTerms(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -1061,7 +1068,10 @@ const BetaPassNFT = ({
                         <h6 className="land-name">Create account</h6>
                       )}
                       {alreadyRegistered && (
-                        <h6 className="land-name">Registered</h6>
+                        <h6 className="land-name">
+                          {" "}
+                          {totalCoingeckoNft > 0 ? "My NFT" : "Registered"}{" "}
+                        </h6>
                       )}
                       {!alreadyRegistered && (
                         <div>
@@ -1246,10 +1256,12 @@ const BetaPassNFT = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => setOpenTerms(true)}
                 >
-                  <span className="terms-and-conditions mb-0">
-                    Terms & Conditions
-                  </span>
-                  <img src={termsArrow} alt="" />
+                  <NavLink to="/marketplace/beta-pass/coingecko/terms-conditions">
+                    <span className="terms-and-conditions mb-0">
+                      Terms & Conditions
+                    </span>
+                    <img src={termsArrow} alt="" />
+                  </NavLink>
                 </div>
               )}
             </div>

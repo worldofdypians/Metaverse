@@ -1719,7 +1719,7 @@ function App() {
               />
               <Route
                 exact
-                path="/marketplace/beta-pass/coingecko"
+                path="/marketplace/beta-pass/coingecko/:terms?"
                 element={
                   <BetaPassNFT
                     type={"coingecko"}
