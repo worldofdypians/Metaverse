@@ -133,13 +133,13 @@ const MobileNav = () => {
           <img src={require(`../MarketSidebar/assets/mintIcon.svg`).default} alt="" />
         </div> */}
       </div>
-        {/* <OutsideClickHandler onOutsideClick={() => setOpenMint(false)}>
+      {/* <OutsideClickHandler onOutsideClick={() => setOpenMint(false)}>
         <div id="bgmenu1" className={` ${openMint && 'comming-soon-mint-active'} d-flex align-items-center justify-content-center px-3 py-2 comming-soon-mint`}>
         <h6 className="comming-soon-mint-text">Comming Soon</h6>
       </div>
         </OutsideClickHandler> */}
-      
-        <OutsideClickHandler onOutsideClick={() => setOpenNav(false)}>
+
+      <OutsideClickHandler onOutsideClick={() => setOpenNav(false)}>
         <div
           id="bgmenu1"
           className={` ${
@@ -157,6 +157,19 @@ const MobileNav = () => {
             openNav && "mobile-nft-wrapper-active"
           } nft-outer-wrapper-1 mobile-nft-wrapper d-flex flex-column p-3 gap-3 w-100`}
         >
+          <NavLink
+            to={"/marketplace/beta-pass/coingecko"}
+            className={({ isActive }) =>
+              isActive
+                ? "nft-link-active d-flex align-items-center justify-content-between"
+                : "nft-link d-flex align-items-center justify-content-between"
+            }
+          >
+            <h6 className="mobile-nft-title">Beta Pass</h6>
+            <div className="new-beta-sidebar">
+              <span className="new-beta-text">New</span>
+            </div>
+          </NavLink>
           <NavLink
             to={"/marketplace/land"}
             className={({ isActive }) =>
@@ -181,14 +194,6 @@ const MobileNav = () => {
             }
           >
             <h6 className="mobile-nft-title">CAWS Timepiece</h6>
-          </NavLink>
-          <NavLink
-            to={"/marketplace/beta-pass/conflux"}
-            className={({ isActive }) =>
-              isActive ? "nft-link-active" : "nft-link"
-            }
-          >
-            <h6 className="mobile-nft-title">Beta Pass</h6>
           </NavLink>
         </div>
       </OutsideClickHandler>

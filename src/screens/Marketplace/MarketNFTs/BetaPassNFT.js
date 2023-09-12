@@ -421,6 +421,8 @@ const BetaPassNFT = ({
                         ? "Confux"
                         : mintTitle === "gate"
                         ? "Gate.io"
+                        : mintTitle === "coingecko"
+                        ? "CoinGecko"
                         : "our partners"}
                       . During this event, players have the opportunity to earn
                       Points for their leaderboard rankings, and also collect
@@ -1181,7 +1183,6 @@ const BetaPassNFT = ({
                       )}
                       {alreadyRegistered && (
                         <div className="d-flex flex-column justify-content-between h-100">
-                          <h6 className="land-name">Registered</h6>
                           <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                             <div
                               className={`coingeckoempty-wrapper ${

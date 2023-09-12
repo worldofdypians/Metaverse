@@ -57,10 +57,17 @@ const Home = ({
   }
 
 
-  const [activePopup, setActivePopup] = useState(true)
+  const [activePopup, setActivePopup] = useState(false)
 
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#popup");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setActivePopup(true)
+    }, 500);
+  }, [])
+  
 
 
   useEffect(() => {
