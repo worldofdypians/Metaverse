@@ -202,8 +202,12 @@ const BetaPassNFT = ({
 
   const getNftSymbol = async () => {
     const contract = new window.bscWeb3.eth.Contract(
-      mintTitle === 'coingecko' ? window.COINGECKO_NFT_ABI : window.GATE_NFT_ABI,
-      mintTitle === 'coingecko' ? window.config.nft_coingecko_address : window.config.nft_gate_address
+      mintTitle === "coingecko"
+        ? window.COINGECKO_NFT_ABI
+        : window.GATE_NFT_ABI,
+      mintTitle === "coingecko"
+        ? window.config.nft_coingecko_address
+        : window.config.nft_gate_address
     );
     const symbol = await contract.methods.symbol().call();
     setnftSymbol(symbol);
@@ -394,9 +398,9 @@ const BetaPassNFT = ({
     <>
       <div
         id="header"
-      // onScroll={onScroll}
-      // ref={listInnerRef}
-      // style={{ overflow: "scroll" }}
+        // onScroll={onScroll}
+        // ref={listInnerRef}
+        // style={{ overflow: "scroll" }}
       >
         <div
           className="container-fluid d-flex justify-content-end p-0"
@@ -422,10 +426,10 @@ const BetaPassNFT = ({
                       {mintTitle === "conflux"
                         ? "Conflux"
                         : mintTitle === "gate"
-                          ? "Gate.io"
-                          : mintTitle === "coingecko"
-                            ? "CoinGecko"
-                            : "our partners"}
+                        ? "Gate.io"
+                        : mintTitle === "coingecko"
+                        ? "CoinGecko"
+                        : "our partners"}
                       . During this event, players have the opportunity to earn
                       Points for their leaderboard rankings, and also collect
                       rewards in different tokens, which are distributed on a
@@ -439,14 +443,14 @@ const BetaPassNFT = ({
                       mintTitle === "avalanche"
                         ? avaxBetaBanner
                         : mintTitle === "coingecko"
-                          ? coingeckoBetaBanner
-                          : mintTitle === "conflux"
-                            ? confluxBetaBanner
-                            : mintTitle === "gate"
-                              ? gateBetaBanner
-                              : mintTitle === "coin98"
-                                ? coin98BetaBanner
-                                : betapassBanner
+                        ? coingeckoBetaBanner
+                        : mintTitle === "conflux"
+                        ? confluxBetaBanner
+                        : mintTitle === "gate"
+                        ? gateBetaBanner
+                        : mintTitle === "coin98"
+                        ? coin98BetaBanner
+                        : betapassBanner
                     }
                     className="w-100"
                     alt=""
@@ -537,12 +541,13 @@ const BetaPassNFT = ({
                             </div>
                           )}
                           <div
-                            className={`genesis-wrapper ${mintTitle !== "timepiece"
+                            className={`genesis-wrapper ${
+                              mintTitle !== "timepiece"
                                 ? "conflux-empty"
                                 : totalCreated > 0
-                                  ? "genesis-land"
-                                  : "genesis-land-empty"
-                              } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                ? "genesis-land"
+                                : "genesis-land-empty"
+                            } d-flex justify-content-center align-items-center p-3 position-relative`}
                             style={{ height: 312 }}
                           >
                             <img
@@ -564,19 +569,20 @@ const BetaPassNFT = ({
                         <div
                           className={
                             isConnected === false ||
-                              activeButton === false ||
-                              totalCreated === 0
+                            activeButton === false ||
+                            totalCreated === 0
                               ? "linear-border-disabled"
                               : "linear-border"
                           }
                         >
                           <button
-                            className={`btn ${isConnected === false ||
-                                activeButton === false ||
-                                totalCreated === 0
+                            className={`btn ${
+                              isConnected === false ||
+                              activeButton === false ||
+                              totalCreated === 0
                                 ? "outline-btn-disabled"
                                 : "outline-btn"
-                              } px-5 w-100`}
+                            } px-5 w-100`}
                             disabled={
                               isConnected === false ||
                               activeButton === false ||
@@ -593,8 +599,8 @@ const BetaPassNFT = ({
                 <div
                   className={
                     mintTitle === "coingecko" ||
-                      mintTitle === "conflux" ||
-                      mintTitle === "gate"
+                    mintTitle === "conflux" ||
+                    mintTitle === "gate"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
                   }
@@ -701,17 +707,20 @@ const BetaPassNFT = ({
                           mintTitle === "avalanche"
                             ? avaxMobileBg
                             : mintTitle === "base"
-                              ? baseMobileBg
-                              : mintTitle === "coin98"
-                                ? coin98MobileBg
-                                : null
+                            ? baseMobileBg
+                            : mintTitle === "coin98"
+                            ? coin98MobileBg
+                            : null
                         }
                         className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
                         alt=""
                       />
                       {mintTitle === "coingecko" && (
-                        <button
+                        <a
                           className={`btn coingecko-btn px-3 d-flex align-items-center justify-content-center gap-2`}
+                          href="https://www.coingecko.com/account/rewards/worldofdypians-nft"
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           <img
                             src={coingecko}
@@ -724,7 +733,7 @@ const BetaPassNFT = ({
                             alt=""
                             style={{ width: 16, height: 16 }}
                           />{" "}
-                        </button>
+                        </a>
                       )}
 
                       {mintTitle === "gate" && (
@@ -768,15 +777,15 @@ const BetaPassNFT = ({
                 <div
                   className={
                     mintTitle === "coingecko" ||
-                      mintTitle === "conflux" ||
-                      mintTitle === "gate"
+                    mintTitle === "conflux" ||
+                    mintTitle === "gate"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
                 >
                   {mintTitle !== "coingecko" &&
-                    mintTitle !== "conflux" &&
-                    mintTitle !== "gate" ? (
+                  mintTitle !== "conflux" &&
+                  mintTitle !== "gate" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -841,9 +850,9 @@ const BetaPassNFT = ({
                           <img
                             src={
                               nftCount > 1 &&
-                                isConnected === true &&
-                                activeButton === true &&
-                                status === ""
+                              isConnected === true &&
+                              activeButton === true &&
+                              status === ""
                                 ? subtractActive
                                 : subtractInactive
                             }
@@ -856,8 +865,8 @@ const BetaPassNFT = ({
                                   : "default",
                               pointerEvents:
                                 isConnected === true &&
-                                  activeButton === true &&
-                                  status === ""
+                                activeButton === true &&
+                                status === ""
                                   ? "auto"
                                   : "none",
                             }}
@@ -865,10 +874,10 @@ const BetaPassNFT = ({
                           <img
                             src={
                               nftCount < cawsArray.length &&
-                                nftCount >= 1 &&
-                                isConnected === true &&
-                                activeButton === true &&
-                                status === ""
+                              nftCount >= 1 &&
+                              isConnected === true &&
+                              activeButton === true &&
+                              status === ""
                                 ? addActive
                                 : addInactive
                             }
@@ -881,8 +890,8 @@ const BetaPassNFT = ({
                                   : "default",
                               pointerEvents:
                                 isConnected === true &&
-                                  activeButton === true &&
-                                  status === ""
+                                activeButton === true &&
+                                status === ""
                                   ? "auto"
                                   : "none",
                             }}
@@ -957,21 +966,22 @@ const BetaPassNFT = ({
                             <div
                               className={
                                 (isConnected === true && chainId !== 56) ||
-                                  (status !== "Connect your wallet." &&
-                                    status !== "") ||
-                                  mintloading === "error"
+                                (status !== "Connect your wallet." &&
+                                  status !== "") ||
+                                mintloading === "error"
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <button
-                                className={`btn ${mintloading === "error"
+                                className={`btn ${
+                                  mintloading === "error"
                                     ? "filled-error-btn"
                                     : status !== "Connect your wallet." &&
                                       status !== ""
-                                      ? "outline-btn-disabled"
-                                      : "filled-btn"
-                                  }  px-4 w-100`}
+                                    ? "outline-btn-disabled"
+                                    : "filled-btn"
+                                }  px-4 w-100`}
                                 onClick={() => {
                                   isConnected === true && chainId === 56
                                     ? handleCreate()
@@ -979,9 +989,9 @@ const BetaPassNFT = ({
                                 }}
                                 disabled={
                                   mintloading === "error" ||
-                                    mintloading === "success" ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "")
+                                  mintloading === "success" ||
+                                  (status !== "Connect your wallet." &&
+                                    status !== "")
                                     ? true
                                     : false
                                 }
@@ -1004,8 +1014,8 @@ const BetaPassNFT = ({
                                   />
                                 )}{" "}
                                 {mintloading === "initial" &&
-                                  isConnected === true &&
-                                  chainId === 56 ? (
+                                isConnected === true &&
+                                chainId === 56 ? (
                                   "Mint"
                                 ) : mintloading === "mint" &&
                                   isConnected === true &&
@@ -1023,7 +1033,7 @@ const BetaPassNFT = ({
                                 ) : mintloading === "success" &&
                                   isConnected === true &&
                                   activeButton ===
-                                  (isConnected === true && chainId === 56) ? (
+                                    (isConnected === true && chainId === 56) ? (
                                   "Success"
                                 ) : isConnected === true && chainId !== 56 ? (
                                   " Switch Chain"
@@ -1038,10 +1048,11 @@ const BetaPassNFT = ({
                     </div>
                   ) : (
                     <div
-                      className={` ${playerCreation
+                      className={` ${
+                        playerCreation
                           ? "justify-content-center"
                           : "justify-content-between"
-                        } p-4 mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
+                      } p-4 mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
                       {/* <h6
                       className="land-placeholder mb-0"
@@ -1069,7 +1080,11 @@ const BetaPassNFT = ({
                       )}
                       {alreadyRegistered && (
                         <h6 className="land-name">
-                          {totalCoingeckoNft > 0 || totalGateNft > 0 || totalConfluxNft > 0 ? "My NFT" : "Registered"}{" "}
+                          {totalCoingeckoNft > 0 ||
+                          totalGateNft > 0 ||
+                          totalConfluxNft > 0
+                            ? "My NFT"
+                            : "Registered"}{" "}
                         </h6>
                       )}
                       {!alreadyRegistered && (
@@ -1086,8 +1101,9 @@ const BetaPassNFT = ({
                               </div>
                             </li>
                             <li
-                              class={`col-3 li ${playerCreation && "complete"
-                                } `}
+                              class={`col-3 li ${
+                                playerCreation && "complete"
+                              } `}
                             >
                               <div class="status">
                                 <h4 className="listtext"> Profile </h4>
@@ -1181,28 +1197,30 @@ const BetaPassNFT = ({
                         <div className="d-flex flex-column justify-content-between h-100">
                           <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                             <div
-                              className={`coingeckoempty-wrapper ${mintTitle !== "timepiece" &&
-                                  totalCoingeckoNft === 0 &&
-                                  mintTitle === "coingecko"
+                              className={`coingeckoempty-wrapper ${
+                                mintTitle !== "timepiece" &&
+                                totalCoingeckoNft === 0 &&
+                                mintTitle === "coingecko"
                                   ? "conflux-empty"
                                   : totalCoingeckoNft > 0 &&
                                     mintTitle === "coingecko"
-                                    ? "coingecko-active"
-                                    : totalGateNft > 0 &&
-                                      mintTitle === "gate"
-                                      ? "gate-active"
-                                      : totalConfluxNft > 0 &&
-                                        mintTitle === "conflux"
-                                        ? "conflux-active"
-                                        : "conflux-empty"
-                                } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                  ? "coingecko-active"
+                                  : totalGateNft > 0 && mintTitle === "gate"
+                                  ? "gate-active"
+                                  : totalConfluxNft > 0 &&
+                                    mintTitle === "conflux"
+                                  ? "conflux-active"
+                                  : "conflux-empty"
+                              } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 210 }}
                             ></div>
                             <div
                               className="genesis-desc px-3 py-2 position-relative"
                               style={{
                                 bottom:
-                                  totalCoingeckoNft > 0 || totalConfluxNft > 0 || totalGateNft > 0
+                                  totalCoingeckoNft > 0 ||
+                                  totalConfluxNft > 0 ||
+                                  totalGateNft > 0
                                     ? "20px"
                                     : "5px",
                                 minWidth: "100%",
@@ -1213,11 +1231,16 @@ const BetaPassNFT = ({
                                 className="land-desc w-75 m-auto text-center"
                                 style={{ fontWeight: 500, fontSize: 16 }}
                               >
-                                {mintTitle === "coingecko" || mintTitle === 'gate'
+                                {mintTitle === "coingecko" ||
+                                mintTitle === "gate"
                                   ? nftSymbol
                                   : selectedMint.cardTitle}{" "}
-                                {mintTitle === 'coingecko' ? totalCoingeckoNft > 0 &&
-                                  `#${myNFTSCoingecko[0]}` : mintTitle === 'gate' ? totalGateNft > 0 && `#${myGateNfts[0]}` : ''}
+                                {mintTitle === "coingecko"
+                                  ? totalCoingeckoNft > 0 &&
+                                    `#${myNFTSCoingecko[0]}`
+                                  : mintTitle === "gate"
+                                  ? totalGateNft > 0 && `#${myGateNfts[0]}`
+                                  : ""}
                               </h6>
                             </div>
                           </div>
@@ -1269,8 +1292,9 @@ const BetaPassNFT = ({
       </div>
       <OutsideClickHandler onOutsideClick={() => setOpenConflux(false)}>
         <div
-          className={`popup-wrapper-2 ${openConflux && "popup-active"
-            } p-4 gap-3 d-flex flex-column align-items-center`}
+          className={`popup-wrapper-2 ${
+            openConflux && "popup-active"
+          } p-4 gap-3 d-flex flex-column align-items-center`}
           id="switch"
         >
           <div className="d-flex align-items-center justify-content-end w-100">
@@ -1288,10 +1312,10 @@ const BetaPassNFT = ({
             {chainId === 1
               ? "Ethereum Network"
               : chainId === 56
-                ? "BNB Chain"
-                : chainId === 43113
-                  ? "Avalanche"
-                  : "Base"}
+              ? "BNB Chain"
+              : chainId === 43113
+              ? "Avalanche"
+              : "Base"}
             .
           </span>
           <div className="metamask-info-wrapper mt-2 w-100 d-flex p-3 align-items-center justify-content-between">
@@ -1301,14 +1325,14 @@ const BetaPassNFT = ({
                   window.ethereum?.isMetaMask && !window.gatewallet
                     ? metamaskIcon
                     : window.coin98
-                      ? coin98Wallet
-                      : window.ethereum?.isTrust
-                        ? trustWallet
-                        : window.ethereum?.isCoinbaseWallet
-                          ? coinbaseWallet
-                          : window.gatewallet
-                            ? gateWallet
-                            : safepalWallet
+                    ? coin98Wallet
+                    : window.ethereum?.isTrust
+                    ? trustWallet
+                    : window.ethereum?.isCoinbaseWallet
+                    ? coinbaseWallet
+                    : window.gatewallet
+                    ? gateWallet
+                    : safepalWallet
                 }
                 width={32}
                 height={32}
@@ -1319,14 +1343,14 @@ const BetaPassNFT = ({
                   {window.ethereum?.isMetaMask && !window.gatewallet
                     ? "MetaMask Wallet"
                     : window.coin98
-                      ? "Coin98 Wallet"
-                      : window.ethereum?.isTrust
-                        ? "Trustwallet"
-                        : window.ethereum?.isCoinbaseWallet
-                          ? "Coinbase Wallet"
-                          : window.gatewallet
-                            ? "Gate Wallet"
-                            : "Safepal Wallet"}
+                    ? "Coin98 Wallet"
+                    : window.ethereum?.isTrust
+                    ? "Trustwallet"
+                    : window.ethereum?.isCoinbaseWallet
+                    ? "Coinbase Wallet"
+                    : window.gatewallet
+                    ? "Gate Wallet"
+                    : "Safepal Wallet"}
                 </h6>
                 <span className="metamask-short-address mb-0">
                   {shortAddress(coinbase)}
@@ -1342,10 +1366,10 @@ const BetaPassNFT = ({
                 {chainId === 1
                   ? "Ethereum Network"
                   : chainId === 56
-                    ? "BNB Chain"
-                    : chainId === 43113
-                      ? "Avalanche"
-                      : "Base"}
+                  ? "BNB Chain"
+                  : chainId === 43113
+                  ? "Avalanche"
+                  : "Base"}
               </span>
             </div>
           </div>
@@ -1360,8 +1384,9 @@ const BetaPassNFT = ({
       </OutsideClickHandler>
       <OutsideClickHandler onOutsideClick={() => setOpenTerms(false)}>
         <div
-          className={`popup-wrapper ${openTerms && "popup-active"
-            } p-4 d-flex flex-column`}
+          className={`popup-wrapper ${
+            openTerms && "popup-active"
+          } p-4 d-flex flex-column`}
           style={{ borderRadius: "12px" }}
           id="terms"
         >
