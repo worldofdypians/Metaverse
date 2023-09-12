@@ -29,3 +29,13 @@
     line-height: normal;
     letter-spacing: -0.18px;
   }
+
+  .errorText {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 21px;
+    text-align: center;
+    letter-spacing: -0.018em;
+    color: #fe7a00;
+  }

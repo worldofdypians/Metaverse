@@ -20,6 +20,7 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
   const [password, setPassword] = useState("");
   const [verifyCode, setVerifyCode] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [errorMsg, seterrorMsg] = useState("");
 
   const login = async () => {
     await LoginGlobal(username, password);
@@ -39,6 +40,8 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
 
   useEffect(() => {
     if (loginError) {
+      seterrorMsg(loginError);
+
       setLoginValues((prev) => {
         return {
           ...prev,
@@ -47,6 +50,12 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
       });
     }
   }, [username, password, verifyCode]);
+
+  useEffect(() => {
+    if (loginError) {
+      seterrorMsg(loginError);
+    }
+  }, [loginError]);
 
   if (isAuthenticated) {
     onSuccessLogin();
@@ -64,6 +73,7 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
             loginError: e?.message,
           };
         });
+        seterrorMsg(e?.message);
       });
   }
 
@@ -113,23 +123,24 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
         value={password}
         onChange={setPassword}
       />
-      <span className="footertxt-coingecko mt-4">
+      <span className="footertxt-coingecko mt-1">
         Users who have claimed the {mintTitle} NFT are required to create a WoD
         Account to receive the NFT and participate in the exclusive event.
       </span>
 
       <div className="summaryseparator"></div>
+      {errorMsg !== "" && <span className={classes.errorText}>{errorMsg}</span>}
+
       <Button
         disabled={disabled}
         onPress={login}
-        loading={isLoginIn}
         title={"Continue  >"}
         type={"coingecko"}
       />
-      <Link className={classes.forgotPasswordText} to="/forgotPassword">
+      {/* <Link className={classes.forgotPasswordText} to="/forgotPassword">
         <span>Forgot your password?</span>
-      </Link>
-      <ErrorAlert error={loginError} />
+      </Link> */}
+      {/* <ErrorAlert error={loginError} /> */}
     </div>
   );
 }
