@@ -163,7 +163,7 @@ const NewBundleCard = ({
         .allowance(coinbase, wodAddress)
         .call()
         .then((data) => {
-          if (data === "0" || data < 50000000000000000000) {
+          if (data === "0" || data < 150000000000000000000) {
             setshowApproval(true);
           } else {
             setshowApproval(false);
@@ -194,7 +194,7 @@ const NewBundleCard = ({
         .allowance(coinbase, dyp700Address)
         .call()
         .then((data) => {
-          if (data === "0" || data < 700000000000000000000) {
+          if (data === "0" || data < 2100000000000000000000) {
             setshowApproval700(true);
             setbundleState700("initial");
           } else {
@@ -215,7 +215,7 @@ const NewBundleCard = ({
         .allowance(coinbase, idyp3500Address)
         .call()
         .then((data) => {
-          if (data === "0" || data < 3500000000000000000000) {
+          if (data === "0" || data < 12600000000000000000000) {
             setshowApproval3500(true);
             setbundleState3500("initial");
           } else {
@@ -237,7 +237,7 @@ const NewBundleCard = ({
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
     await token_abi.methods
-      .approve(wodAddress, "500000000000000000000000")
+      .approve(wodAddress, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus("Succesfully approved!");
@@ -259,7 +259,7 @@ const NewBundleCard = ({
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
     await token_abi.methods
-      .approve(dyp700Address, "500000000000000000000000")
+      .approve(dyp700Address, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus700("Succesfully approved!");
@@ -282,7 +282,7 @@ const NewBundleCard = ({
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
     await idyptoken_abi.methods
-      .approve(idyp3500Address, "500000000000000000000000")
+      .approve(idyp3500Address, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus3500("Succesfully approved!");
