@@ -89,6 +89,7 @@ const WalletBalance = ({
   latestBoughtNFTS,
   myOffers,
   allActiveOffers,
+  myNFTSCoingecko
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -423,6 +424,8 @@ const WalletBalance = ({
     let finalCollection = [];
     let stakeArray = [];
     let recievedOffers = [];
+    let coingeckoNftsArray = [];
+
 
     // console.log(allListed, "allListed");
 
@@ -476,6 +479,25 @@ const WalletBalance = ({
           })
         );
       }
+
+      if (myNFTSCoingecko && myNFTSCoingecko.length > 0) {
+        await Promise.all(
+          myNFTSCoingecko.map(async (i) => {
+            
+
+            coingeckoNftsArray.push({
+              nftAddress: window.config.nft_coingecko_address,
+              buyer:'',
+              tokenId: i,
+              type: "coingecko",
+              chain: 56,
+              isStaked: false,
+              isListed:false,
+            });
+          })
+        );
+      }
+
 
       if (myLandCollected && myLandCollected.length > 0) {
         await Promise.all(
@@ -632,6 +654,7 @@ const WalletBalance = ({
 
       finalCollection = [
         ...finalTimepieceArray,
+        ...coingeckoNftsArray,
         ...finalLandArray,
         ...finalCawsArray,
         ...stakeArray,

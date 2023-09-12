@@ -13,7 +13,7 @@ function SignUpGecko({
   onShowVerify,
   onSuccessLogin,
   mintTitle,
-  chainId
+  chainId,
 }) {
   const {
     isAuthenticated,
@@ -33,6 +33,8 @@ function SignUpGecko({
   const [verifyCode, setVerifyCode] = useState("");
   const [playerCreation, setplayerCreation] = useState(false);
   const [userExists, setuserExists] = useState(false);
+  const [errorMsg, seterrorMsg] = useState("");
+
   const login = () => {
     LoginGlobal(username, password);
   };
@@ -55,9 +57,11 @@ function SignUpGecko({
     })
       .then((user) => {
         login();
+        seterrorMsg("");
       })
       .catch((err) => {
         console.log(typeof err, err.message);
+
         if (
           err?.message?.includes(
             "An account with the given email already exists."
@@ -86,24 +90,39 @@ function SignUpGecko({
   }, []);
 
   useEffect(() => {
-   if(chainId !== 1030 && mintTitle === 'Conflux Beta Pass') {
-    setDisabled(true)
-   }
+    if (
+      username !== "" &&
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(username)
+    ) {
+      seterrorMsg("Email format is Invalid");
+    } else if (
+      username !== "" &&
+      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(username)
+    ) {
+      seterrorMsg("");
+    }
+  }, [username]);
+
+  useEffect(() => {
+    if (chainId !== 1030 && mintTitle === "Conflux Beta Pass") {
+      setDisabled(true);
+    }
   }, [chainId, mintTitle]);
 
   useEffect(() => {
     if (username && password && confirmPassword) {
       setDisabled(false);
-      if(password !== confirmPassword) {
-        setDisabled(true)
-      }
-      else {
+      if (password !== confirmPassword) {
+        setDisabled(true);
+        seterrorMsg("Passwords don't match");
+      } else {
         setDisabled(false);
+        seterrorMsg("");
       }
     } else {
       setDisabled(true);
     }
-  }, [username, password,confirmPassword]);
+  }, [username, password, confirmPassword]);
 
   useEffect(() => {
     if (loginError) {
@@ -136,7 +155,7 @@ function SignUpGecko({
           value={verifyCode}
           onChange={setVerifyCode}
         />
-        <span className="footertxt-coingecko mt-4">
+        <span className="footertxt-coingecko mt-1">
           Users who have claimed the {mintTitle} NFT are required to create a
           WoD Account to receive the NFT and participate in the exclusive event.
         </span>
@@ -148,8 +167,6 @@ function SignUpGecko({
           title={"Continue  >"}
           type={"coingecko"}
         />
-      <ErrorAlert error={loginError} />
-
       </div>
     );
   }
@@ -187,12 +204,13 @@ function SignUpGecko({
         type={"coingecko"}
       />
 
-      <span className="footertxt-coingecko mt-4">
+      <span className="footertxt-coingecko mt-1">
         Users who have claimed the {mintTitle} NFT are required to create a WoD
         Account to receive the NFT and participate in the exclusive event.
       </span>
 
       <div className="summaryseparator"></div>
+      {errorMsg !== "" && <span className={classes.errorText}>{errorMsg}</span>}
 
       <Button
         disabled={disabled}

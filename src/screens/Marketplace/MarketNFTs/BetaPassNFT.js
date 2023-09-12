@@ -71,6 +71,7 @@ import avaxMobileBg from "../../../components/TimepieceMint/assets/avaxMobileBg.
 import coin98MobileBg from "../../../components/TimepieceMint/assets/coin98MobileBg.png";
 import baseMobileBg from "../../../components/TimepieceMint/assets/baseMobileBg.png";
 import confluxMobileBg from "../../../components/TimepieceMint/assets/confluxMobileBg.png";
+import { useParams } from "react-router-dom";
 
 const BetaPassNFT = ({
   isConnected,
@@ -324,11 +325,17 @@ const BetaPassNFT = ({
     }
   };
 
+  const { terms } = useParams();
+
   useEffect(() => {
     window.scrollTo(0, 0);
     // getAllCawsCollection();
     getNftSymbol();
     document.title = "Beta Pass";
+
+    if (terms) {
+      setOpenTerms(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -413,7 +420,9 @@ const BetaPassNFT = ({
                       {mintTitle === "conflux"
                         ? "Confux"
                         : mintTitle === "gate"
-                        ? "Gate.io" : mintTitle === "coingecko" ? "CoinGecko"
+                        ? "Gate.io"
+                        : mintTitle === "coingecko"
+                        ? "CoinGecko"
                         : "our partners"}
                       . During this event, players have the opportunity to earn
                       Points for their leaderboard rankings, and also collect
@@ -1060,6 +1069,12 @@ const BetaPassNFT = ({
                       {!alreadyRegistered && (
                         <h6 className="land-name">Create account</h6>
                       )}
+                      {alreadyRegistered && (
+                        <h6 className="land-name">
+                          {" "}
+                          {totalCoingeckoNft > 0 ? "My NFT" : "Registered"}{" "}
+                        </h6>
+                      )}
                       {!alreadyRegistered && (
                         <div>
                           <ul class="timeline m-0 p-0" id="timeline">
@@ -1168,7 +1183,6 @@ const BetaPassNFT = ({
                       )}
                       {alreadyRegistered && (
                         <div className="d-flex flex-column justify-content-between h-100">
-                          <h6 className="land-name">Registered</h6>
                           <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                             <div
                               className={`coingeckoempty-wrapper ${
@@ -1243,10 +1257,12 @@ const BetaPassNFT = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => setOpenTerms(true)}
                 >
-                  <span className="terms-and-conditions mb-0">
-                    Terms & Conditions
-                  </span>
-                  <img src={termsArrow} alt="" />
+                  <NavLink to="/marketplace/beta-pass/coingecko/terms-conditions">
+                    <span className="terms-and-conditions mb-0">
+                      Terms & Conditions
+                    </span>
+                    <img src={termsArrow} alt="" />
+                  </NavLink>
                 </div>
               )}
             </div>

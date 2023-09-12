@@ -955,7 +955,7 @@ function App() {
   }, [ethereum, nftCount]);
 
   const logout = localStorage.getItem("logout");
-
+  
   useEffect(() => {
     if (window.ethereum) {
       if (
@@ -1719,7 +1719,7 @@ function App() {
               />
               <Route
                 exact
-                path="/marketplace/beta-pass/coingecko"
+                path="/marketplace/beta-pass/coingecko/:terms?"
                 element={
                   <BetaPassNFT
                     type={"coingecko"}
