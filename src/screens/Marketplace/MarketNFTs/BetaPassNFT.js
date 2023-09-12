@@ -420,7 +420,7 @@ const BetaPassNFT = ({
                       enter the metaverse and participate in an exclusive event
                       hosted by{" "}
                       {mintTitle === "conflux"
-                        ? "Confux"
+                        ? "Conflux"
                         : mintTitle === "gate"
                           ? "Gate.io"
                           : mintTitle === "coingecko"
