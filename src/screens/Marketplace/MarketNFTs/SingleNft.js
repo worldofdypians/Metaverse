@@ -30,6 +30,15 @@ import { useParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import whiteTag from "./assets/whiteTag.svg";
 import MakeOffer from "./MakeOffer";
+import inboxStar from './assets/inboxStar.svg'
+import dollarCircle from './assets/dollarCircle.svg'
+import stars from './assets/stars.svg'
+import singleStar from './assets/star.svg'
+import expand from './assets/expand.svg'
+import chart from './assets/chart.svg'
+import users from './assets/users.svg'
+
+
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -1323,8 +1332,11 @@ const SingleNft = ({
                   }}
                 >
                   <span className="seller-addr d-flex gap-1 align-items-center">
-                    <img src={type==='coingecko' ? bnbLogo : ethIcon} alt="" />{" "}
-                    {type==='coingecko' ? "BNB Chain" : "Ethereum"}
+                    <img
+                      src={type === "coingecko" ? bnbLogo : ethIcon}
+                      alt=""
+                    />{" "}
+                    {type === "coingecko" ? "BNB Chain" : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
                     <img src={eye} alt="" /> {viewCount} views
@@ -1747,7 +1759,7 @@ const SingleNft = ({
                         {
                           <a
                             href={
-                              type==='coingecko'
+                              type === "coingecko"
                                 ? `https://bscscan.com/address/${owner}`
                                 : `https://etherscan.io/address/${owner}`
                             }
@@ -1972,7 +1984,8 @@ const SingleNft = ({
                         !IsListed &&
                         coinbase &&
                         isConnected &&
-                        chainId === 1 && type!=='coingecko' &&(
+                        chainId === 1 &&
+                        type !== "coingecko" && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
@@ -1983,7 +1996,7 @@ const SingleNft = ({
                           </button>
                         )}
 
-                      {!isConnected && type!=='coingecko' && (
+                      {!isConnected && type !== "coingecko" && (
                         <button
                           className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                           onClick={() => {
@@ -2264,6 +2277,47 @@ const SingleNft = ({
                       </div>
                     </>
                   )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {type === "coingecko" && (
+            <div className="px-2">
+              <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
+                <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
+                  <h3 className="traits-text">Benefits</h3>
+
+                  <>
+                    <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="traittitle d-flex align-items-center gap-2"> <img src={inboxStar} alt=''/> Exclusive Access</span>
+                      </div>
+                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="traittitle d-flex align-items-center gap-2"> <img src={stars} alt=''/>Daily Rewards</span>
+                      </div>
+                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="traittitle d-flex align-items-center gap-2"> <img src={dollarCircle} alt=''/>Earn BNB rewards</span>
+                      </div>
+                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="traittitle d-flex align-items-center gap-2"> <img src={chart} alt=''/>Global Points</span>
+                      </div>
+                    </div>
+                    <div className="trait-separator"></div>
+                    <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="traittitle d-flex align-items-center gap-2"> <img src={users} alt=''/>Community Engagement</span>
+                      </div>
+                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="traittitle d-flex align-items-center gap-2"> <img src={singleStar} alt=''/> Enhanced Interactions
+                        </span>
+                      </div>
+                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="traittitle d-flex align-items-center gap-2"> <img src={expand} alt=''/>Expanded Functionality
+                        </span>
+                      </div>
+                    </div>
+                  </>
                 </div>
               </div>
             </div>
