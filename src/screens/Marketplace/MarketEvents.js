@@ -711,7 +711,7 @@ const MarketEvents = ({
                 onClick={() => setEventPopup(false)}
               />
             </div>
-            <div className="profile-event-popup-wrapper p-3 d-flex align-items-center justify-content-between mb-3">
+            <div className="profile-event-popup-wrapper p-2 p-lg-3 d-flex align-items-center justify-content-between mb-3">
               <div className="d-flex gap-2">
                 <img
                   src={
@@ -1086,8 +1086,8 @@ const MarketEvents = ({
             </div>
             <div className="w-100 d-flex justify-content-end mt-3">
               <NavLink
-                to={"/marketplace/mint"}
-                state={{ event: dummyEvent?.linkState }}
+                to={`/marketplace/mint/${dummyEvent?.linkState}`}
+           
               >
                 {" "}
                 <button className="btn get-beta-btn">Get Beta Pass</button>

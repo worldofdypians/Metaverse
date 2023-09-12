@@ -3296,7 +3296,7 @@ const WalletBalance = ({
        onClick={() => setEventPopup(false)}
      />
    </div>
-   <div className="profile-event-popup-wrapper p-3 d-flex align-items-center justify-content-between mb-3">
+   <div className="profile-event-popup-wrapper p-2 p-lg-3 d-flex align-items-center justify-content-between mb-3">
      <div className="d-flex gap-2">
        <img src={coingeckoPopupImage} alt="" />
        <div className="d-flex flex-column justify-content-between">
@@ -3335,7 +3335,7 @@ const WalletBalance = ({
         <div className="d-flex flex-column">
           <span className="live-on">Live on</span>
           <div className="d-flex align-items-center gap-2">
-            <img src={require('./assets/greenCalendar.svg').default} alt="" />
+            <img src={require('./assets/greenCalendar.svg').default} className="green-calendar" alt="" />
             <h6 className="live-on-date mb-0">Sept 25, 2023</h6>
           </div>
         </div>

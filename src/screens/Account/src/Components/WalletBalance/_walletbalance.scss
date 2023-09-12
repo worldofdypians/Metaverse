@@ -454,6 +454,9 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 18px;
+  }
 }
 
 .event-popup-status-live {
@@ -470,7 +473,7 @@
 }
 .event-popup-status-upcoming {
   border-radius: 3px;
-  background: #EC8123;
+  background: #ec8123;
   span {
     color: #fff;
     text-align: center;
@@ -482,7 +485,7 @@
 }
 .event-popup-status-expired {
   border-radius: 3px;
-  background: #B8B8E0;
+  background: #b8b8e0;
   span {
     color: #404040;
     text-align: center;
@@ -506,6 +509,9 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
 }
 
 .popup-rewards {
@@ -565,9 +571,9 @@
 }
 
 .event-earnings-coin2 {
-  color: #EEEDFF;
+  color: #eeedff;
   text-align: center;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 21px;
   font-style: normal;
   font-weight: 600;
@@ -610,22 +616,22 @@
 }
 .live-tag {
   border-radius: 3px;
-  background: #18FFFF;
+  background: #18ffff;
   position: absolute;
   top: 0px;
   right: 0;
   .live-text {
-color: #324B4B;
-text-align: center;
-font-size: 8px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+    color: #324b4b;
+    text-align: center;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
   }
 }
 .expired-tag {
   border-radius: 3px;
-  background: #B8B8E0;
+  background: #b8b8e0;
   position: absolute;
   top: 0px;
   right: 0;
@@ -638,27 +644,39 @@ line-height: normal;
     line-height: normal;
   }
 }
-.event-slider-date{
-  color: #B8B8E0;
-font-size: 10px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-}
-
-.live-on{
-  color: #7DD9AF;
+.event-slider-date {
+  color: #b8b8e0;
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.live-on-date{
-  color: #7DD9AF;
+.live-on {
+  color: #7dd9af;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.live-on-date {
+  color: #7dd9af;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
+  @media screen and (max-width: 786px) {
+    font-size: 10px;
+  }
+}
+
+.green-calendar {
+  width: 24px;
+  height: 24px;
+  @media screen and (max-width: 786px) {
+    width: 16px;
+    height: 16px;
+  }
 }
