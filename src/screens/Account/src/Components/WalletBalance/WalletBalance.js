@@ -1103,7 +1103,7 @@ const WalletBalance = ({
 
   return (
     <>
-      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-5 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
+      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0">
           <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5 position-relative">
             <h6
@@ -1309,7 +1309,7 @@ const WalletBalance = ({
               </Slider>
             </div>
           )}
-          <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative">
+          <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
@@ -3363,7 +3363,7 @@ const WalletBalance = ({
                 onClick={() => setEventPopup(false)}
               />
             </div>
-            <div className="profile-event-popup-wrapper p-2 p-lg-3 d-flex align-items-center justify-content-between mb-3">
+            <div className="profile-event-popup-wrapper p-2 p-lg-3 d-flex align-items-start align-items-lg-center justify-content-between mb-3">
               <div className="d-flex gap-2">
                 <img src={coingeckoPopupImage} alt="" />
                 <div className="d-flex flex-column justify-content-between">

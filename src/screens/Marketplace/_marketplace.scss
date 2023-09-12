@@ -930,6 +930,9 @@
   letter-spacing: 0.03em;
   text-transform: capitalize;
   color: #ffffff;
+  @media screen and (max-width: 786px) {
+    font-size: 24px;
+  }
 }
 
 .market-banner-desc {
@@ -1928,6 +1931,9 @@
 
 .upcoming-mint-img2 {
   height: 130px;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
 }
 
 .coingecko-btn {
