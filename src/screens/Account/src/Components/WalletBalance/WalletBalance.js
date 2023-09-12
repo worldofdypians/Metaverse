@@ -54,6 +54,8 @@ import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
+import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
+import coingeckoPopupImage from './assets/coingeckoPopupImage.png'
 
 const WalletBalance = ({
   dypBalance,
@@ -932,6 +934,8 @@ const WalletBalance = ({
     linkState: "conflux",
     rewards: "CFX",
     status: "Live",
+    id: "event1",
+
   };
   const dummyCoingecko = {
     title: "Coingecko Pass",
@@ -939,6 +943,8 @@ const WalletBalance = ({
     linkState: "coingecko",
     rewards: "BNB",
     status: "Coming Soon",
+    id: "event3",
+
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -946,6 +952,8 @@ const WalletBalance = ({
     linkState: "coin98",
     rewards: "BNB",
     status: "Expired",
+    id: "event2",
+
   };
   const dummyBase = {
     title: "Base Pass",
@@ -953,6 +961,8 @@ const WalletBalance = ({
     linkState: "base",
     rewards: "CFX",
     status: "Expired",
+    id: "event4",
+
   };
 
   const dummyBetaPassData = [
@@ -995,18 +1005,18 @@ const WalletBalance = ({
     {
       title: "Coingecko",
       logo: coingecko,
-      eventStatus: "Expired",
+      eventStatus: "Upcoming",
       totalRewards: "$5,000 in BNB Rewards",
       myEarnings: 120.0,
       eventType: "Explore & Mine",
-      eventDate: "Expired",
+      eventDate: "11/09/2023",
       backgroundImage: coingeckoUpcoming,
       popupInfo: {
         title: "Coingecko Pass",
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Expired",
+        status: "Upcoming",
         id: "event3",
       },
     },
@@ -1069,12 +1079,7 @@ const WalletBalance = ({
               Special Events
             </h6>
             <div className="nft-outer-wrapper2 rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
-              <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyConflux);
-                  setEventPopup(true);
-                }}
-              />
+            
               <UpcomingProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCoingecko);
@@ -1091,10 +1096,20 @@ const WalletBalance = ({
                 }}
                 alt=""
               />
+              <img
+                src={eventSkeleton}
+                className="profile-event-item"
+                style={{
+                  background: "none",
+                  borderBottom: "none",
+                  transform: "translateX(0px)",
+                }}
+                alt=""
+              />
               {/* <div className="d-flex w-100 justify-content-center">
                 <span className="seller-addr">Special events comming soon</span>
                 </div> */}
-              <div
+              {/* <div
                 className="d-flex align-items-center justify-content-center gap-2 w-100"
                 onClick={() => openEvents()}
                 style={{
@@ -1112,7 +1127,7 @@ const WalletBalance = ({
                   style={{ rotate: showAllEvents ? "0deg" : "180deg" }}
                   alt=""
                 />
-              </div>
+              </div> */}
             </div>
           </div>
           {showAllEvents && (
@@ -3283,7 +3298,7 @@ const WalletBalance = ({
    </div>
    <div className="profile-event-popup-wrapper p-3 d-flex align-items-center justify-content-between mb-3">
      <div className="d-flex gap-2">
-       <img src={eventPopupImage} alt="" />
+       <img src={coingeckoPopupImage} alt="" />
        <div className="d-flex flex-column justify-content-between">
          <div className="d-flex flex-column">
            <h6 className="popup-second-title m-0">{dummyEvent?.title}</h6>
@@ -3298,7 +3313,7 @@ const WalletBalance = ({
          </div>
        </div>
      </div>
-     {dummyEvent?.status === "Live" && (
+     {dummyEvent?.status === "Live" ? (
        <div className="d-flex align-items-start gap-1">
          <div className="d-flex flex-column align-items-center gap-3">
            <h6 className="profile-time-number-2 mb-0">14</h6>
@@ -3315,7 +3330,16 @@ const WalletBalance = ({
            <span className="profile-time-desc-2 mb-0">Minutes</span>
          </div>
        </div>
-     )}
+        )
+        :
+        <div className="d-flex flex-column">
+          <span className="live-on">Live on</span>
+          <div className="d-flex align-items-center gap-2">
+            <img src={require('./assets/greenCalendar.svg').default} alt="" />
+            <h6 className="live-on-date mb-0">Sept 25, 2023</h6>
+          </div>
+        </div>
+    }
    </div>
    <div className="d-flex align-items-center justify-content-between mb-3">
      <h6 className="how-it-works mb-0">How it works?</h6>
@@ -3520,12 +3544,12 @@ const WalletBalance = ({
      </div>
      <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
        <div className="d-flex flex-column gap-2">
-         <h6 className="mb-0 event-earnings-coin2">1,500,250</h6>
+         <h6 className="mb-0 event-earnings-coin2">0.00</h6>
          <span className="mb-0 event-earnings-usd">Points</span>
        </div>
        <div className="d-flex flex-column gap-2">
          <h6 className="mb-0 event-earnings-coin2">
-           250.62{" "}
+           0.00{" "}
            {dummyEvent.id === "event1"
              ? "CFX"
              : dummyEvent.id === "event2"
@@ -3538,6 +3562,12 @@ const WalletBalance = ({
        </div>
      </div>
    </div>
+   <div className="d-flex align-items-center gap-2 mt-2">
+              <img src={infoIcon} alt="" />
+              <span className="popup-event-desc">
+                The rewards will be distributed 2-3 days after the event ends.
+              </span>
+            </div>
    <div className="w-100 d-flex justify-content-end mt-3">
      <NavLink
        to={"/marketplace/mint"}
