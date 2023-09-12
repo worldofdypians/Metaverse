@@ -685,6 +685,23 @@ const Marketplace = ({
               ) : (
                 <div className="d-flex justify-content-center">
                   <div className="new-packages-grid mb-3">
+                  <div className="">
+                      <NavLink
+                 to="/marketplace/events/beta-pass"
+                 state={{ package: "betaPass" }}
+                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                      >
+                        <img
+                          src={require("./assets/treasure.jpg")}
+                          className="w-100"
+                          style={{ borderRadius: "16px" }}
+                          alt=""
+                        />
+                        <span className="event-package-title">
+                          Treasure Hunt
+                        </span>
+                      </NavLink>
+                    </div>
                     <div className="">
                       <NavLink
                          to="/marketplace/events/dragon-ruins"
@@ -754,23 +771,7 @@ const Marketplace = ({
                       </NavLink>
                     </div>
 
-                    <div className="">
-                      <NavLink
-                 to="/marketplace/events/beta-pass"
-                 state={{ package: "betaPass" }}
-                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                      >
-                        <img
-                          src={require("./assets/criticalHit.webp")}
-                          className="w-100"
-                          style={{ borderRadius: "16px" }}
-                          alt=""
-                        />
-                        <span className="event-package-title">
-                          Beta  pass
-                        </span>
-                      </NavLink>
-                    </div>
+                  
                   </div>
                 </div>
               )}

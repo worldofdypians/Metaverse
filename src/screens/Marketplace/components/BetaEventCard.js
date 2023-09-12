@@ -24,7 +24,7 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
       onClick={onOpenPopup}
       style={{ cursor: "pointer" }}
     >
-      <div className="d-flex col col-lg-5 align-items-start align-items-lg-center  p-3 gap-3">
+      <div className="d-flex col-12 col-lg-5 align-items-start align-items-lg-center  p-3 gap-3">
         <img src={data.logo} width={36} height={36} alt="" />
         <div className="d-flex flex-column justify-content-between gap-2 gap-lg-0">
           <div className="d-flex flex-column">
@@ -46,7 +46,7 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
             <h6 className="events-page-rewards">{data.totalRewards}</h6>
           </div>
           <span
-            className="events-page-details d-flex align-items-center gap-2"
+            className="events-page-details d-none d-lg-flex align-items-center gap-2"
             onClick={onOpenPopup}
           >
             Details
@@ -55,12 +55,13 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
         </div>
       </div>
 
-      <div className="d-flex col col-lg-3 flex-column align-items-center">
-        <div className="mybetaearnings">
-          <h6 className="event-my-earnings3 mb-3">${data.myEarnings}</h6>
+      <div className="d-flex align-items-center gap-3">
+        <div className="d-flex col-6 col-lg-3 flex-column align-items-start align-items-lg-center">
+          <div className="mybetaearnings">
+            <h6 className="event-my-earnings3 mb-3">${data.myEarnings}</h6>
+          </div>
         </div>
-      </div>
-      <div className="d-flex flex-column gap-3 pick-and-calendar">
+        <div className="d-flex flex-column d-flex d-lg-none gap-3">
         <div className="d-flex align-items-center gap-2">
           <img src={whitePickaxe} alt="" />
           <span className="white-events-text mb-0">{data.eventType}</span>
@@ -70,6 +71,24 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
           <span className="white-events-text mb-0">{data.eventDate}</span>
         </div>
       </div>
+      </div>
+      <div className="d-flex flex-column d-none d-lg-flex gap-3 pick-and-calendar">
+        <div className="d-flex align-items-center gap-2">
+          <img src={whitePickaxe} alt="" />
+          <span className="white-events-text mb-0">{data.eventType}</span>
+        </div>
+        <div className="d-flex align-items-center gap-2">
+          <img src={whiteCalendar} alt="" />
+          <span className="white-events-text mb-0">{data.eventDate}</span>
+        </div>
+      </div>
+      <span
+            className="events-page-details d-flex d-lg-none my-3 align-items-center gap-2"
+            onClick={onOpenPopup}
+          >
+            Details
+            <img src={eventsArrow} alt="" />
+          </span>
       <img
         src={data.backgroundImage}
         alt=""

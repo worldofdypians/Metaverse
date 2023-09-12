@@ -711,7 +711,7 @@ const MarketEvents = ({
                 onClick={() => setEventPopup(false)}
               />
             </div>
-            <div className="profile-event-popup-wrapper p-2 p-lg-3 d-flex align-items-start align-items-lg-center justify-content-between mb-3">
+            <div className="profile-event-popup-wrapper p-2 p-lg-3 d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between mb-3">
               <div className="d-flex gap-2">
                 <img
                   src={
@@ -748,7 +748,7 @@ const MarketEvents = ({
                 </div>
               </div>
               {dummyEvent?.status === "Live" && (
-                <div className="d-flex align-items-start gap-1">
+                <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
                   <div className="d-flex flex-column align-items-center gap-3">
                     <h6 className="profile-time-number-2 mb-0">14</h6>
                     <span className="profile-time-desc-2 mb-0">Days</span>
@@ -766,7 +766,7 @@ const MarketEvents = ({
                 </div>
               )}
               {dummyEvent?.status === "Coming Soon" && (
-                <div className="d-flex align-items-start gap-1">
+                <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
                   <div className="d-flex flex-column align-items-center gap-3">
                     <h6 className="profile-time-number-2 mb-0">00</h6>
                     <span className="profile-time-desc-2 mb-0">Days</span>
