@@ -973,6 +973,7 @@ const WalletBalance = ({
     rewards: "CFX",
     status: "Live",
     id: "event1",
+    eventType: "Explore & Mine",
   };
   const dummyCoingecko = {
     title: "Coingecko",
@@ -981,6 +982,7 @@ const WalletBalance = ({
     rewards: "BNB",
     status: "Coming Soon",
     id: "event3",
+    eventType: "Explore & Mine",
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -989,6 +991,7 @@ const WalletBalance = ({
     rewards: "BNB",
     status: "Expired",
     id: "event2",
+    eventType: "Explore & Mine",
   };
   const dummyBase = {
     title: "Base Pass",
@@ -997,6 +1000,7 @@ const WalletBalance = ({
     rewards: "CFX",
     status: "Expired",
     id: "event4",
+    eventType: "Explore & Mine",
   };
 
   const dummyBetaPassData = [
@@ -1016,6 +1020,7 @@ const WalletBalance = ({
         rewards: "CFX",
         status: "Live",
         id: "event1",
+        eventType: "Explore & Mine",
       },
     },
     {
@@ -1034,6 +1039,7 @@ const WalletBalance = ({
         rewards: "BNB",
         status: "Coming Soon",
         id: "event2",
+        eventType: "Explore & Mine",
       },
     },
     {
@@ -1052,6 +1058,7 @@ const WalletBalance = ({
         rewards: "BNB",
         status: "Upcoming",
         id: "event3",
+        eventType: "Explore & Mine",
       },
     },
     {
@@ -1070,6 +1077,7 @@ const WalletBalance = ({
         rewards: "BASE",
         status: "Expired",
         id: "event4",
+        eventType: "Explore & Mine",
       },
     },
   ];
@@ -3377,6 +3385,11 @@ const WalletBalance = ({
                   </div>
                   <div className="d-flex">
                     <span className="event-popup-chain mb-0">
+                      Gameplay: {dummyEvent?.eventType}
+                    </span>
+                  </div>
+                  <div className="d-flex">
+                    <span className="event-popup-chain mb-0">
                       Chain: {dummyEvent?.chain}
                     </span>
                   </div>
@@ -3426,7 +3439,7 @@ const WalletBalance = ({
                   <h6 className="popup-green-text">Details</h6>
                   {dummyEvent.id === "event1" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to{" "}
+                      To participate in the event, players are required to&nbsp;{" "}
                       <b>hold a Conflux Beta Pass NFT</b>. You can get the
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
@@ -3438,7 +3451,7 @@ const WalletBalance = ({
                     </p>
                   ) : dummyEvent.id === "event2" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to{" "}
+                      To participate in the event, players are required to&nbsp;{" "}
                       <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
@@ -3450,19 +3463,19 @@ const WalletBalance = ({
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to
+                      To participate in the event, players are required to&nbsp;
                       <b>hold a Coingecko Beta Pass NFT</b>. You can get the
                       Coingecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Coingecko area, players not only stand a
-                      chance to secure daily rewards in BNB or earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Coingecko area to uncover hidden treasures.
+                      chance to secure daily rewards in BNB or earn points for
+                      their placement on the global leaderboard. Remember to log
+                      in to the game daily and venture into the Coingecko area
+                      to uncover hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to{" "}
+                      To participate in the event, players are required to&nbsp;{" "}
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
@@ -3540,9 +3553,13 @@ const WalletBalance = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                CoinGecko is the world's largest independent cryptocurrency data
+               CoinGecko is the world's largest independent cryptocurrency data
                 aggregator with over 10,000+ different cryptoassets tracked
-                across more than 800+ exchanges worldwide.
+                across more than 800+ exchanges worldwide. CoinGecko provides a
+                fundamental analysis of the digital currency market. In addition
+                to tracking price, volume, and market capitalization, CoinGecko
+                tracks community growth, open source code development, major
+                events, and on-chain metrics.
               </p>
             ) : (
               <p
