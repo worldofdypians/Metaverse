@@ -1079,7 +1079,7 @@ const MarketMint = ({
                 // </div>
                 <div className="d-flex flex-column gap-4">
                   <div className="upcoming-mint-wrapper upcoming-mint-wrapper-conflux d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3">
+                    <div className="d-flex flex-column gap-2 p-3">
                       <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
                       <p className="upcoming-mint-desc">
                         Get access to a special ticket to enter the metaverse
@@ -1094,7 +1094,7 @@ const MarketMint = ({
                     />
                   </div>
                   <div className="upcoming-mint-wrapper upcoming-mint-wrapper-coin98 d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3">
+                    <div className="d-flex flex-column gap-2 p-3">
                       <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
                       <p className="upcoming-mint-desc">
                         Get access to a special ticket to enter the metaverse
@@ -1109,7 +1109,7 @@ const MarketMint = ({
                     />
                   </div>
                   <div className="upcoming-mint-wrapper upcoming-mint-wrapper-coingecko d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3">
+                    <div className="d-flex flex-column gap-2 p-3">
                       <h6 className="upcoming-mint-title">
                         CoinGecko Beta Pass
                       </h6>
@@ -1127,7 +1127,7 @@ const MarketMint = ({
                     />
                   </div>
                   <div className="upcoming-mint-wrapper upcoming-mint-wrapper-base d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3">
+                    <div className="d-flex flex-column gap-2 p-3">
                       <h6 className="upcoming-mint-title">Base Beta Pass</h6>
                       <p className="upcoming-mint-desc">
                         Get access to a special ticket to enter the metaverse
