@@ -330,7 +330,7 @@
   @media screen and (max-width: 786px) {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 20px !important;
+    gap: 10px !important;
     width: 100% !important;
   }
 }
@@ -1174,6 +1174,7 @@
   @media screen and (max-width: 786px) {
     transform: none !important;
     backdrop-filter: none !important;
+    width: 150px;
   }
 }
 
