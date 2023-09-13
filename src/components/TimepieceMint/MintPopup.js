@@ -60,8 +60,7 @@ const MintPopup = ({ active, onClose, data }) => {
       </div>
       <Link
         onClick={onClose}
-        to={"/marketplace/mint"}
-        state={{ event: data.state }}
+        to={`/marketplace/beta-pass/${data.state}`}
         className="linear-border"
       >
         <button className="btn filled-btn px-4">More</button>

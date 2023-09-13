@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import BundleCard from "../Account/src/Components/BundleCard/BundleCard";
 import { ERC20_ABI } from "../Account/src/web3/abis";
 import Web3 from "web3";
@@ -83,6 +83,7 @@ const MarketEvents = ({
   const { eventId } = useParams();
   const [dummyEvent, setDummyEvent] = useState();
   const [eventPopup, setEventPopup] = useState(false);
+  const selected = useRef(null)
 
   const dummyBetaPassData = [
     {
@@ -422,7 +423,18 @@ const MarketEvents = ({
     } else if (eventId === "betapass") {
       setSelectedPackage("betaPass");
     }
+
+  
+
   }, []);
+
+
+  useEffect(() => {
+    if(windowSize.width < 786) {
+      window.scrollTo(0, 750)
+    }
+  }, [selectedPackage])
+  
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#bgmenu");
@@ -601,47 +613,49 @@ const MarketEvents = ({
                     </div>
                   </div>
 
-                  {selectedPackage === "betaPass" ? (
-                    <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                      {dummyBetaPassData2.map((item, index) => (
-                        <BetaEventCard
-                          data={item}
-                          key={index}
-                          onOpenPopup={() => {
-                            setEventPopup(true);
-                            setDummyEvent(item.popupInfo);
-                          }}
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <NewBundleCard
-                      onOpenPopup={onOpenPopup}
-                      coinbase={account}
-                      wallet={data?.getPlayer?.wallet?.publicAddress}
-                      chainId={chainId}
-                      getDypBalance={getDypBalance}
-                      getiDypBalance={getDypBalance}
-                      dyptokenDatabnb={dyptokenDatabnb}
-                      idyptokenDatabnb={idyptokenDatabnb}
-                      packageData={
-                        selectedPackage === "dragon"
-                          ? dragonData
-                          : selectedPackage === "dyp"
-                          ? dypPackageData
-                          : selectedPackage === "criticalHit"
-                          ? criticalHitPackageData
-                          : selectedPackage === "betaPass"
-                          ? betaPassPackageData
-                          : iDypPackageData
-                      }
-                      handleSetAvailableTime={(value) => {
-                        setAvailableTime(value);
-                        handleAvailableTime(value);
-                      }}
-                      availableTime={availableTime}
-                    />
-                  )}
+                  <div id="selected-package" ref={selected}>
+                    {selectedPackage === "betaPass" ? (
+                      <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                        {dummyBetaPassData2.map((item, index) => (
+                          <BetaEventCard
+                            data={item}
+                            key={index}
+                            onOpenPopup={() => {
+                              setEventPopup(true);
+                              setDummyEvent(item.popupInfo);
+                            }}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <NewBundleCard
+                        onOpenPopup={onOpenPopup}
+                        coinbase={account}
+                        wallet={data?.getPlayer?.wallet?.publicAddress}
+                        chainId={chainId}
+                        getDypBalance={getDypBalance}
+                        getiDypBalance={getDypBalance}
+                        dyptokenDatabnb={dyptokenDatabnb}
+                        idyptokenDatabnb={idyptokenDatabnb}
+                        packageData={
+                          selectedPackage === "dragon"
+                            ? dragonData
+                            : selectedPackage === "dyp"
+                            ? dypPackageData
+                            : selectedPackage === "criticalHit"
+                            ? criticalHitPackageData
+                            : selectedPackage === "betaPass"
+                            ? betaPassPackageData
+                            : iDypPackageData
+                        }
+                        handleSetAvailableTime={(value) => {
+                          setAvailableTime(value);
+                          handleAvailableTime(value);
+                        }}
+                        availableTime={availableTime}
+                      />
+                    )}
+                  </div>
                 </>
               )}
               {activeTab === "upcoming" && (
@@ -1072,7 +1086,9 @@ const MarketEvents = ({
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">0</h6>
-                  <span className="mb-0 event-earnings-usd">Leaderboard Points</span>
+                  <span className="mb-0 event-earnings-usd">
+                    Leaderboard Points
+                  </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
