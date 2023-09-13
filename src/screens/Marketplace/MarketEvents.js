@@ -824,7 +824,7 @@ const MarketEvents = ({
                     <div className="d-flex align-items-center gap-2">
                       <img
                         src={
-                          require("./assets/greenCalendar.svg")
+                          require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
                             .default
                         }
                         className="green-calendar"
