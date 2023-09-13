@@ -9,8 +9,6 @@ import SingUp from "../SingUp/SingUp";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import ErrorAlert from "../../Components/ErrorAlert/ErrorAlert";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 const StyledTabs = styled((props) => (
   <Tabs

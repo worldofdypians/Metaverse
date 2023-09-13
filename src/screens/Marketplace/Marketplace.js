@@ -602,7 +602,7 @@ const Marketplace = ({
             <div className="nft-outer-wrapper2 row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
               {windowSize.width > 786 ? (
                 <>
-                  {/* <NavLink
+                   <NavLink
                     to="/marketplace/events/betapass"
                     state={{ package: "betaPass" }}
                     className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
@@ -610,7 +610,7 @@ const Marketplace = ({
                   >
                     <div className="position-relative package-blur">
                       <div className="first-box-blur d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">Treasure Hunt</span>
+                        <span className="blur-package-title">Tresure Hunt</span>
                       </div>
                       <div className="second-box-blur"></div>
                       <img
@@ -619,7 +619,7 @@ const Marketplace = ({
                         className="blur-img"
                       />
                     </div>
-                  </NavLink> */}
+                  </NavLink>
                   <NavLink
                     to="/marketplace/events/dragon-ruins"
                     state={{ package: "dragon" }}
@@ -695,14 +695,15 @@ const Marketplace = ({
                       />
                     </div>
                   </NavLink>
+               
                 </>
               ) : (
                 <div className="d-flex justify-content-center">
                   <div className="new-packages-grid mb-3">
-                    {/* <div className="">
+                  <div className="">
                       <NavLink
-                        to="/marketplace/events/beta-pass"
-                        state={{ package: "betaPass" }}
+                 to="/marketplace/events/beta-pass"
+                 state={{ package: "betaPass" }}
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
                       >
                         <img
@@ -711,9 +712,11 @@ const Marketplace = ({
                           style={{ borderRadius: "16px" }}
                           alt=""
                         />
-                        <span className="event-package-title">Treasure Hunt</span>
+                        <span className="event-package-title">
+                          Treasure Hunt
+                        </span>
                       </NavLink>
-                    </div> */}
+                    </div>
                     <div className="">
                       <NavLink
                         to="/marketplace/events/dragon-ruins"
@@ -780,6 +783,8 @@ const Marketplace = ({
                         </span>
                       </NavLink>
                     </div>
+
+                  
                   </div>
                 </div>
               )}
