@@ -1885,6 +1885,7 @@
   max-height: fit-content;
   @media screen and (max-width: 1024px) {
     height: fit-content;
+    min-height: fit-content;
   }
 }
 

@@ -1987,7 +1987,7 @@ const WalletBalance = ({
               {filterTitle === "Balance" && loading === false && (
                 <div
                   className="d-flex flex-column align-items-center gap-3 balancewrapper3"
-                  style={{ marginTop: "50px" }}
+                  style={{ marginTop: windowSize.width < 991 ? 0 : "50px" }}
                 >
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-2">
