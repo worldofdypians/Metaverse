@@ -3636,19 +3636,26 @@ const WalletBalance = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">0.00</h6>
-                  <span className="mb-0 event-earnings-usd">Points</span>
+                  <h6 className="mb-0 event-earnings-coin2">0</h6>
+                  <span className="mb-0 event-earnings-usd">Leaderboard Points</span>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">
-                    0.00{" "}
-                    {dummyEvent.id === "event1"
-                      ? "CFX"
-                      : dummyEvent.id === "event2"
-                      ? "C98"
-                      : dummyEvent.id === "event3"
-                      ? "BNB"
-                      : "BASE"}
+                  <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
+                    $0.00{" "}
+                    <span className="ethpricerewards">
+                      0.000{" "}
+                      {dummyEvent.id === "event1"
+                        ? "CFX"
+                        : dummyEvent.id === "event2"
+                        ? "C98"
+                        : dummyEvent.id === "event3"
+                        ? "BNB"
+                        : dummyEvent.id === "event5"
+                        ? "AVAX"
+                        : dummyEvent.id === "event6"
+                        ? "GT"
+                        : "BASE"}
+                    </span>
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>
                 </div>
