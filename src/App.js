@@ -1598,7 +1598,7 @@ function App() {
                   />
                 }
               />
-              <Route
+              {/* <Route
                 exact
                 path="/marketplace/beta-pass/conflux"
                 element={
@@ -1630,9 +1630,9 @@ function App() {
                     handleSwitchNetwork={handleSwitchNetwork}
                   />
                 }
-              />
+              /> */}
 
-              <Route
+              {/* <Route
                 exact
                 path="/marketplace/beta-pass/gate"
                 element={
@@ -1664,9 +1664,9 @@ function App() {
                     handleSwitchNetwork={handleSwitchNetwork}
                   />
                 }
-              />
+              /> */}
 
-              <Route
+              {/* <Route
                 exact
                 path="/marketplace/beta-pass/avalanche"
                 element={
@@ -1698,8 +1698,8 @@ function App() {
                     handleSwitchNetwork={handleSwitchNetwork}
                   />
                 }
-              />
-              <Route
+              /> */}
+              {/* <Route
                 exact
                 path="/marketplace/beta-pass/coin98"
                 element={
@@ -1731,7 +1731,7 @@ function App() {
                     handleSwitchNetwork={handleSwitchNetwork}
                   />
                 }
-              />
+              /> */}
               <Route
                 exact
                 path="/marketplace/beta-pass/coingecko/:terms?"
@@ -1765,7 +1765,7 @@ function App() {
                   />
                 }
               />
-              <Route
+              {/* <Route
                 exact
                 path="/marketplace/beta-pass/base"
                 element={
@@ -1797,7 +1797,7 @@ function App() {
                     handleSwitchNetwork={handleSwitchNetwork}
                   />
                 }
-              />
+              /> */}
               <Route
                 exact
                 path="/marketplace/events/:eventId"

@@ -308,7 +308,6 @@ const MarketEvents = ({
     mobileBackground: "criticalBgMobile.webp",
   };
 
-
   const {
     data,
     refetch: refetchPlayer,
@@ -449,8 +448,9 @@ const MarketEvents = ({
       setSelectedPackage("criticalHit");
     } else if (eventId === "betapass") {
       setSelectedPackage("betaPass");
-    }else if (eventId === "treasure-hunt"){
-      setActiveTab("upcoming")
+    } else if (eventId === "treasure-hunt") {
+      // setActiveTab("upcoming")
+      setSelectedPackage("treasure-hunt");
     }
   }, []);
 
@@ -474,29 +474,30 @@ const MarketEvents = ({
               </h6>
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-                  <h6
-                    className={`new-stake-tab ${
-                      activeTab === "live" && "stake-tab-active"
-                    } px-3 py-2`}
-                    onClick={() => setActiveTab("live")}
-                  >
-                    Live
-                  </h6>
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
-                  <h6
-                    className={`new-stake-tab  ${
-                      activeTab === "upcoming" && "stake-tab-active"
-                    } px-3 py-2`}
-                    onClick={() => setActiveTab("upcoming")}
-                  >
-                    
-                    Upcoming
-                  </h6>
+                    <h6
+                      className={`new-stake-tab ${
+                        activeTab === "live" && "stake-tab-active"
+                      } px-3 py-2`}
+                      onClick={() => setActiveTab("live")}
+                    >
+                      Live
+                    </h6>
                   </div>
-                 
+                  <div className="position-relative">
+                    <h6
+                      className={`new-stake-tab  ${
+                        activeTab === "upcoming" && "stake-tab-active"
+                      } px-3 py-2`}
+                      onClick={() => setActiveTab("upcoming")}
+                    >
+                      Upcoming
+                    </h6>
+                  </div>
+
                   <h6
                     className={`new-stake-tab ${
                       activeTab === "past" && "stake-tab-active"
@@ -513,15 +514,15 @@ const MarketEvents = ({
                 <>
                   <div className="d-flex justify-content-center">
                     <div className="new-packages-grid mb-3">
-                    {/* <NavLink to="/marketplace/events/treasure-hunt">
+                      <NavLink to="/marketplace/events/treasure-hunt">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                              selectedPackage === "betaPass" &&
-                              eventId === "betapass" &&
+                              selectedPackage === "treasure-hunt" &&
+                              eventId === "treasure-hunt" &&
                               "selected-event-package"
                             }`}
-                            onClick={() => setSelectedPackage("betaPass")}
+                            onClick={() => setSelectedPackage("treasure-hunt")}
                           >
                             <img
                               src={require("./assets/treasure.jpg")}
@@ -534,7 +535,7 @@ const MarketEvents = ({
                             </span>
                           </div>
                         </div>
-                      </NavLink> */}
+                      </NavLink>
                       <NavLink to="/marketplace/events/dragon-ruins">
                         <div className="">
                           <div
@@ -623,11 +624,10 @@ const MarketEvents = ({
                           </div>
                         </div>
                       </NavLink>
-                     
                     </div>
                   </div>
 
-                  {selectedPackage === "betaPass" ? (
+                  {selectedPackage === "treasure-hunt" ? (
                     <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                       {dummyBetaPassData2.map((item, index) => (
                         <BetaEventCard
@@ -671,16 +671,15 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">New events are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-                    <BetaPassEvents />
-
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">New events are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
+                  </div>
+                </div>
+                // <BetaPassEvents />
               )}
               {activeTab === "past" && (
                 <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
@@ -1113,10 +1112,7 @@ const MarketEvents = ({
               </span>
             </div>
             <div className="w-100 d-flex justify-content-end mt-3">
-              <NavLink
-                to={`/marketplace/mint/${dummyEvent?.linkState}`}
-           
-              >
+              <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
                 {" "}
                 <button className="btn get-beta-btn">Get Beta Pass</button>
               </NavLink>
