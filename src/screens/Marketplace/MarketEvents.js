@@ -765,7 +765,7 @@ const MarketEvents = ({
                   </div>
                 </div>
               )}
-               {dummyEvent?.status === "Live" ? (
+              {dummyEvent?.status === "Live" ? (
                 <div className="d-flex align-items-start gap-1">
                   <div className="d-flex flex-column align-items-center gap-3">
                     <h6 className="profile-time-number-2 mb-0">14</h6>
@@ -787,7 +787,10 @@ const MarketEvents = ({
                   <span className="live-on">Live on</span>
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg").default}
+                      src={
+                        require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
+                          .default
+                      }
                       className="green-calendar"
                       alt=""
                     />
@@ -1068,23 +1071,26 @@ const MarketEvents = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">0 Points</h6>
-                  <span className="mb-0 event-earnings-usd">Leaderboard</span>
+                  <h6 className="mb-0 event-earnings-coin2">0</h6>
+                  <span className="mb-0 event-earnings-usd">Leaderboard Points</span>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">
-                    0{" "}
-                    {dummyEvent.id === "event1"
-                      ? "CFX"
-                      : dummyEvent.id === "event2"
-                      ? "C98"
-                      : dummyEvent.id === "event3"
-                      ? "BNB"
-                      : dummyEvent.id === "event5"
-                      ? "AVAX"
-                      : dummyEvent.id === "event6"
-                      ? "GT"
-                      : "BASE"}
+                  <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
+                    $0.00{" "}
+                    <span className="ethpricerewards">
+                      0.000{" "}
+                      {dummyEvent.id === "event1"
+                        ? "CFX"
+                        : dummyEvent.id === "event2"
+                        ? "C98"
+                        : dummyEvent.id === "event3"
+                        ? "BNB"
+                        : dummyEvent.id === "event5"
+                        ? "AVAX"
+                        : dummyEvent.id === "event6"
+                        ? "GT"
+                        : "BASE"}
+                    </span>
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>
                 </div>
@@ -1097,10 +1103,7 @@ const MarketEvents = ({
               </span>
             </div>
             <div className="w-100 d-flex justify-content-end mt-3">
-              <NavLink
-                to={`/marketplace/mint/${dummyEvent?.linkState}`}
-           
-              >
+              <NavLink to={`/marketplace/mint/${dummyEvent?.linkState}`}>
                 {" "}
                 <button className="btn get-beta-btn">Get Beta Pass</button>
               </NavLink>
