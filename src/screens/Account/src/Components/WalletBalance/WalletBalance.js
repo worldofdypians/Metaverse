@@ -976,7 +976,7 @@ const WalletBalance = ({
     eventType: "Explore & Mine",
   };
   const dummyCoingecko = {
-    title: "Coingecko",
+    title: "CoinGecko",
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
@@ -1043,7 +1043,7 @@ const WalletBalance = ({
       },
     },
     {
-      title: "Coingecko",
+      title: "CoinGecko",
       logo: coingecko,
       eventStatus: "Upcoming",
       totalRewards: "$3,000 in BNB Rewards",
@@ -1052,7 +1052,7 @@ const WalletBalance = ({
       eventDate: "11/09/2023",
       backgroundImage: coingeckoUpcoming,
       popupInfo: {
-        title: "Coingecko",
+        title: "CoinGecko",
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
@@ -3491,13 +3491,13 @@ const WalletBalance = ({
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
-                      <b>hold a Coingecko Beta Pass NFT</b>. You can get the
-                      Coingecko Beta Pass NFT from the World of Dypians
+                      <b>hold a CoinGecko Beta Pass NFT</b>. You can get the
+                      CoinGecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
-                      exploring the Coingecko area, players not only stand a
+                      exploring the CoinGecko area, players not only stand a
                       chance to secure daily rewards in BNB or earn points for
                       their placement on the global leaderboard. Remember to log
-                      in to the game daily and venture into the Coingecko area
+                      in to the game daily and venture into the CoinGecko area
                       to uncover hidden treasures.
                     </p>
                   ) : (
@@ -3548,7 +3548,7 @@ const WalletBalance = ({
                 : dummyEvent.id === "event2"
                 ? "Coin98"
                 : dummyEvent.id === "event3"
-                ? "Coingecko"
+                ? "CoinGecko"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
