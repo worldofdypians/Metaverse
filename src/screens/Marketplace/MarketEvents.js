@@ -792,21 +792,33 @@ const MarketEvents = ({
                   </div>
                 </div>
               )}
-              {dummyEvent?.status === "Coming Soon" && (
-                <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
+              {dummyEvent?.status === "Live" ? (
+                <div className="d-flex align-items-start gap-1">
                   <div className="d-flex flex-column align-items-center gap-3">
-                    <h6 className="profile-time-number-2 mb-0">00</h6>
+                    <h6 className="profile-time-number-2 mb-0">14</h6>
                     <span className="profile-time-desc-2 mb-0">Days</span>
                   </div>
                   <h6 className="profile-time-number-2 mb-0">:</h6>
                   <div className="d-flex flex-column align-items-center gap-3">
-                    <h6 className="profile-time-number-2 mb-0">00</h6>
+                    <h6 className="profile-time-number-2 mb-0">23</h6>
                     <span className="profile-time-desc-2 mb-0">Hours</span>
                   </div>
                   <h6 className="profile-time-number-2 mb-0">:</h6>
                   <div className="d-flex flex-column align-items-center gap-3">
-                    <h6 className="profile-time-number-2 mb-0">00</h6>
+                    <h6 className="profile-time-number-2 mb-0">46</h6>
                     <span className="profile-time-desc-2 mb-0">Minutes</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="d-flex flex-column">
+                  <span className="live-on">Live on</span>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg").default}
+                      className="green-calendar"
+                      alt=""
+                    />
+                    <h6 className="live-on-date mb-0">Sept 25, 2023</h6>
                   </div>
                 </div>
               )}

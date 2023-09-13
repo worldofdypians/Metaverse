@@ -975,7 +975,7 @@ const WalletBalance = ({
     id: "event1",
   };
   const dummyCoingecko = {
-    title: "Coingecko Pass",
+    title: "Coingecko",
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
@@ -1040,13 +1040,13 @@ const WalletBalance = ({
       title: "Coingecko",
       logo: coingecko,
       eventStatus: "Upcoming",
-      totalRewards: "$5,000 in BNB Rewards",
+      totalRewards: "$3,000 in BNB Rewards",
       myEarnings: 120.0,
       eventType: "Explore & Mine",
       eventDate: "11/09/2023",
       backgroundImage: coingeckoUpcoming,
       popupInfo: {
-        title: "Coingecko Pass",
+        title: "Coingecko",
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
@@ -1256,7 +1256,7 @@ const WalletBalance = ({
                       <span className="expired-text">Expired</span>
                     </div>
                     <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                      <h6 className="active-mint-title mb-0">CoinGecko Pass</h6>
+                      <h6 className="active-mint-title mb-0">CoinGecko</h6>
                       <p className="active-mint-desc mb-0">
                         Gain entry to metaverse, and join exclusive CoinGecko
                         event with special ticket.
@@ -3372,7 +3372,7 @@ const WalletBalance = ({
                       {dummyEvent?.title}
                     </h6>
                     <span className="popup-rewards">
-                      $5,000 in {dummyEvent?.rewards} rewards
+                      $3,000 in {dummyEvent?.rewards} rewards
                     </span>
                   </div>
                   <div className="d-flex">
@@ -3455,7 +3455,7 @@ const WalletBalance = ({
                       Coingecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Coingecko area, players not only stand a
-                      chance to secure daily rewards in BNB tokens or earn
+                      chance to secure daily rewards in BNB or earn
                       points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
                       Coingecko area to uncover hidden treasures.
