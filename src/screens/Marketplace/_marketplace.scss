@@ -1510,6 +1510,9 @@
   border-radius: 8px;
   transition: all 0.25s;
   cursor: pointer;
+  @media screen and (max-width: 420px) {
+    font-size: 12px;
+  }
 }
 
 .new-stake-tab:hover {
