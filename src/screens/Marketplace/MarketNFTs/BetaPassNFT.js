@@ -1433,7 +1433,7 @@ const BetaPassNFT = ({
             </li>
             <li className="collection-desc mb-2 mb-lg-3">
               The special event will be available from September 25 to November
-              25.
+              26.
             </li>
             <li className="collection-desc mb-2 mb-lg-3">
               World of Dypians reserves the right to organise additional events

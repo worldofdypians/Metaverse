@@ -973,14 +973,16 @@ const WalletBalance = ({
     rewards: "CFX",
     status: "Live",
     id: "event1",
+    eventType: "Explore & Mine",
   };
   const dummyCoingecko = {
-    title: "Coingecko Pass",
+    title: "Coingecko",
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
     status: "Coming Soon",
     id: "event3",
+    eventType: "Explore & Mine",
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -989,6 +991,7 @@ const WalletBalance = ({
     rewards: "BNB",
     status: "Expired",
     id: "event2",
+    eventType: "Explore & Mine",
   };
   const dummyBase = {
     title: "Base Pass",
@@ -997,6 +1000,7 @@ const WalletBalance = ({
     rewards: "CFX",
     status: "Expired",
     id: "event4",
+    eventType: "Explore & Mine",
   };
 
   const dummyBetaPassData = [
@@ -1016,6 +1020,7 @@ const WalletBalance = ({
         rewards: "CFX",
         status: "Live",
         id: "event1",
+        eventType: "Explore & Mine",
       },
     },
     {
@@ -1034,6 +1039,7 @@ const WalletBalance = ({
         rewards: "BNB",
         status: "Coming Soon",
         id: "event2",
+        eventType: "Explore & Mine",
       },
     },
     {
@@ -1046,12 +1052,13 @@ const WalletBalance = ({
       eventDate: "11/09/2023",
       backgroundImage: coingeckoUpcoming,
       popupInfo: {
-        title: "Coingecko Pass",
+        title: "Coingecko",
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
         status: "Upcoming",
         id: "event3",
+        eventType: "Explore & Mine",
       },
     },
     {
@@ -1070,6 +1077,7 @@ const WalletBalance = ({
         rewards: "BASE",
         status: "Expired",
         id: "event4",
+        eventType: "Explore & Mine",
       },
     },
   ];
@@ -1256,7 +1264,7 @@ const WalletBalance = ({
                       <span className="expired-text">Expired</span>
                     </div>
                     <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                      <h6 className="active-mint-title mb-0">CoinGecko Pass</h6>
+                      <h6 className="active-mint-title mb-0">CoinGecko</h6>
                       <p className="active-mint-desc mb-0">
                         Gain entry to metaverse, and join exclusive CoinGecko
                         event with special ticket.
@@ -3377,6 +3385,11 @@ const WalletBalance = ({
                   </div>
                   <div className="d-flex">
                     <span className="event-popup-chain mb-0">
+                      Gameplay: {dummyEvent?.eventType}
+                    </span>
+                  </div>
+                  <div className="d-flex">
+                    <span className="event-popup-chain mb-0">
                       Chain: {dummyEvent?.chain}
                     </span>
                   </div>
@@ -3431,10 +3444,10 @@ const WalletBalance = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX or earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Conflux area to uncover hidden treasures.
+                      chance to secure daily rewards in CFX or earn points for
+                      their placement on the global leaderboard. Remember to log
+                      in to the game daily and venture into the Conflux area to
+                      uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event2" ? (
                     <p className="popup-event-desc">
@@ -3443,10 +3456,10 @@ const WalletBalance = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Coin98 area, players not only stand a chance to secure
-                      daily rewards in C98 or earn points for their
-                      placement on the global leaderboard. Remember to log in to
-                      the game daily and venture into the Coin98 area to uncover
-                      hidden treasures.
+                      daily rewards in C98 or earn points for their placement on
+                      the global leaderboard. Remember to log in to the game
+                      daily and venture into the Coin98 area to uncover hidden
+                      treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
@@ -3455,10 +3468,10 @@ const WalletBalance = ({
                       Coingecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Coingecko area, players not only stand a
-                      chance to secure daily rewards in BNB or earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Coingecko area to uncover hidden treasures.
+                      chance to secure daily rewards in BNB or earn points for
+                      their placement on the global leaderboard. Remember to log
+                      in to the game daily and venture into the Coingecko area
+                      to uncover hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
@@ -3467,9 +3480,9 @@ const WalletBalance = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE or earn points for their placement
-                      on the global leaderboard. Remember to log in to the game
-                      daily and venture into the Base area to uncover hidden
+                      rewards in BASE or earn points for their placement on the
+                      global leaderboard. Remember to log in to the game daily
+                      and venture into the Base area to uncover hidden
                       treasures.
                     </p>
                   )}
@@ -3542,7 +3555,11 @@ const WalletBalance = ({
               >
                 CoinGecko is the world's largest independent cryptocurrency data
                 aggregator with over 10,000+ different cryptoassets tracked
-                across more than 800+ exchanges worldwide.
+                across more than 800+ exchanges worldwide. CoinGecko provides a
+                fundamental analysis of the digital currency market. In addition
+                to tracking price, volume, and market capitalization, CoinGecko
+                tracks community growth, open source code development, major
+                events, and on-chain metrics.
               </p>
             ) : (
               <p
@@ -3619,19 +3636,26 @@ const WalletBalance = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">0.00</h6>
-                  <span className="mb-0 event-earnings-usd">Points</span>
+                  <h6 className="mb-0 event-earnings-coin2">0</h6>
+                  <span className="mb-0 event-earnings-usd">Leaderboard Points</span>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">
-                    0.00{" "}
-                    {dummyEvent.id === "event1"
-                      ? "CFX"
-                      : dummyEvent.id === "event2"
-                      ? "C98"
-                      : dummyEvent.id === "event3"
-                      ? "BNB"
-                      : "BASE"}
+                  <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
+                    $0.00{" "}
+                    <span className="ethpricerewards">
+                      0.000{" "}
+                      {dummyEvent.id === "event1"
+                        ? "CFX"
+                        : dummyEvent.id === "event2"
+                        ? "C98"
+                        : dummyEvent.id === "event3"
+                        ? "BNB"
+                        : dummyEvent.id === "event5"
+                        ? "AVAX"
+                        : dummyEvent.id === "event6"
+                        ? "GT"
+                        : "BASE"}
+                    </span>
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>
                 </div>
