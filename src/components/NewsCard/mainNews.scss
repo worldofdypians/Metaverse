@@ -52,12 +52,15 @@
 }
 
 .left-col-image {
-  height: 500px;
-  aspect-ratio: 16/9;
-  object-fit: cover;
+  aspect-ratio: 16/8.2;
+  object-fit: fill;
 
   @media only screen and (max-width: 991px) {
     height: auto;
+  }
+
+  @media screen and (max-width: 500px) {
+    aspect-ratio: 16/12;
   }
 }
 
@@ -80,6 +83,10 @@
 
 .left-col-title {
   font-size: 20px;
+
+  @media only screen and (max-width: 575px) {
+    font-size: 18px;
+  }
 }
 
 .left-col-content iframe {
