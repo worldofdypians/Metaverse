@@ -1004,7 +1004,7 @@ const WalletBalance = ({
       title: "Conflux (CFX)",
       logo: conflux,
       eventStatus: "Live",
-      totalRewards: "$5,000 in CFX Rewards",
+      totalRewards: "$3,000 in CFX Rewards",
       myEarnings: 120.45,
       eventType: "Explore & Mine",
       eventDate: "Ends in 28 days",
@@ -1022,7 +1022,7 @@ const WalletBalance = ({
       title: "Coin98 (C98)",
       logo: coin98,
       eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in BNB Rewards",
+      totalRewards: "$3,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "April, 1, 2024",
@@ -1040,7 +1040,7 @@ const WalletBalance = ({
       title: "Coingecko",
       logo: coingecko,
       eventStatus: "Upcoming",
-      totalRewards: "$5,000 in BNB Rewards",
+      totalRewards: "$3,000 in BNB Rewards",
       myEarnings: 120.0,
       eventType: "Explore & Mine",
       eventDate: "11/09/2023",
@@ -1058,7 +1058,7 @@ const WalletBalance = ({
       title: "Base",
       logo: base,
       eventStatus: "Expired",
-      totalRewards: "$5,000 in BASE Rewards",
+      totalRewards: "$3,000 in BASE Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
       eventDate: "Expired",
@@ -3372,7 +3372,7 @@ const WalletBalance = ({
                       {dummyEvent?.title}
                     </h6>
                     <span className="popup-rewards">
-                      $5,000 in {dummyEvent?.rewards} rewards
+                      $3,000 in {dummyEvent?.rewards} rewards
                     </span>
                   </div>
                   <div className="d-flex">
@@ -3431,43 +3431,43 @@ const WalletBalance = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX tokens or earn
+                      chance to secure daily rewards in CFX or earn
                       points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
                       Conflux area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event2" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to{" "}
+                      To participate in the event, players are required to&nbsp;{" "}
                       <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Coin98 area, players not only stand a chance to secure
-                      daily rewards in C98 tokens or earn points for their
+                      daily rewards in C98 or earn points for their
                       placement on the global leaderboard. Remember to log in to
                       the game daily and venture into the Coin98 area to uncover
                       hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to
+                      To participate in the event, players are required to&nbsp;
                       <b>hold a Coingecko Beta Pass NFT</b>. You can get the
                       Coingecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Coingecko area, players not only stand a
-                      chance to secure daily rewards in BNB tokens or earn
+                      chance to secure daily rewards in BNB or earn
                       points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
                       Coingecko area to uncover hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to{" "}
+                      To participate in the event, players are required to&nbsp;{" "}
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE tokens or earn points for their placement
+                      rewards in BASE or earn points for their placement
                       on the global leaderboard. Remember to log in to the game
                       daily and venture into the Base area to uncover hidden
                       treasures.
