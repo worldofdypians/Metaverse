@@ -854,7 +854,7 @@ const MarketEvents = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX or earn points for
+                      chance to secure daily rewards in CFX, but also earn points for
                       their placement on the global leaderboard. Remember to log
                       in to the game daily and venture into the Conflux area to
                       uncover hidden treasures.
@@ -866,7 +866,7 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Coin98 area, players not only stand a chance to secure
-                      daily rewards in C98 or earn points for their placement on
+                      daily rewards in C98, but also earn points for their placement on
                       the global leaderboard. Remember to log in to the game
                       daily and venture into the Coin98 area to uncover hidden
                       treasures.
@@ -878,7 +878,7 @@ const MarketEvents = ({
                       CoinGecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the CoinGecko area, players not only stand a
-                      chance to secure daily rewards in BNB or earn points for
+                      chance to secure daily rewards in BNB, but also earn points for
                       their placement on the global leaderboard. Remember to log
                       in to the game daily and venture into the CoinGecko area
                       to uncover hidden treasures.
@@ -890,7 +890,7 @@ const MarketEvents = ({
                       Avalanche Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Avalanche area, players not only stand a
-                      chance to secure daily rewards in AVAX or earn points for
+                      chance to secure daily rewards in AVAX, but also earn points for
                       their placement on the global leaderboard. Remember to log
                       in to the game daily and venture into the Avalanche area
                       to uncover hidden treasures.
@@ -902,7 +902,7 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Gate.io area, players not only stand a chance to secure
-                      daily rewards in GT or earn points for their placement on
+                      daily rewards in GT, but also earn points for their placement on
                       the global leaderboard. Remember to log in to the game
                       daily and venture into the Gate.io area to uncover hidden
                       treasures.
@@ -914,7 +914,7 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE or earn points for their placement on the
+                      rewards in BASE, but also earn points for their placement on the
                       global leaderboard. Remember to log in to the game daily
                       and venture into the Base area to uncover hidden
                       treasures.

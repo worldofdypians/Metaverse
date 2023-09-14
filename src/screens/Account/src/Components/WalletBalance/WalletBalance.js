@@ -3471,7 +3471,7 @@ const WalletBalance = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX tokens or earn
+                      chance to secure daily rewards in CFX tokens, but also earn
                       points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
                       Conflux area to uncover hidden treasures.
@@ -3483,7 +3483,7 @@ const WalletBalance = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Coin98 area, players not only stand a chance to secure
-                      daily rewards in C98 tokens or earn points for their
+                      daily rewards in C98, but also earn points for their
                       placement on the global leaderboard. Remember to log in to
                       the game daily and venture into the Coin98 area to uncover
                       hidden treasures.
@@ -3495,7 +3495,7 @@ const WalletBalance = ({
                       CoinGecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the CoinGecko area, players not only stand a
-                      chance to secure daily rewards in BNB or earn points for
+                      chance to secure daily rewards in BNB, but also earn points for
                       their placement on the global leaderboard. Remember to log
                       in to the game daily and venture into the CoinGecko area
                       to uncover hidden treasures.
@@ -3507,7 +3507,7 @@ const WalletBalance = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE tokens or earn points for their placement
+                      rewards in BASE, but also earn points for their placement
                       on the global leaderboard. Remember to log in to the game
                       daily and venture into the Base area to uncover hidden
                       treasures.
