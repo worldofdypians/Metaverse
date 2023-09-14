@@ -416,7 +416,7 @@ const Header = ({
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}`
-                                    : nft.description}
+                                    : nft.description?.slice(0,150) + '...'}
                                 </p>
                                 <span className="notification-relative-time mb-0">
                                   {getRelativeTime(nft.timestamp)}
