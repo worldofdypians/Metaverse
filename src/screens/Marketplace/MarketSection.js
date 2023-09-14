@@ -69,26 +69,26 @@ const MarketSection = ({
   const eventData = [
     {
       eventTitle: "Dragon Ruins",
-      eventPrice: "50 DYP",
+      eventPrice: "150 DYP",
       eventImg: "dragon",
       state: "dragon",
-      price: 50,
+      price: 150,
       eventId: "dragon-ruins",
     },
     {
       eventTitle: "Puzzle Madness",
-      eventPrice: "3,500 iDYP",
+      eventPrice: "12,600 iDYP",
       eventImg: "puzzle",
       state: "idyp",
-      price: 3500,
+      price: 12600,
       eventId: "puzzle-madness",
     },
     {
       eventTitle: "Golden Pass",
-      eventPrice: "700 DYP",
+      eventPrice: "2,100 DYP",
       eventImg: "golden",
       state: "dyp",
-      price: 700,
+      price: 2100,
       eventId: "golden-pass",
     },
     {
