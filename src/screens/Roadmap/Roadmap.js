@@ -177,14 +177,20 @@ const Roadmap = () => {
         {
           title: "CAWS NFT transformation",
           desc: "Transform your CAWS to different epic creatures to assist in special abilities and benefits.",
+          completed: true,
+
         },
         {
           title: "Introduction of in-game mounts",
           desc: "Players can journey throughout the world using many types of transportation methods",
+          completed: true,
+
         },
         {
           title: "Addition and development of partnerships",
           desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
+          completed: true,
+
         },
         {
           title: "Introduction of 25,000 Land NFTs",
