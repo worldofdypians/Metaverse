@@ -838,10 +838,10 @@ const MarketEvents = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              <span className="events-page-details d-flex align-items-center gap-2">
+              {/* <span className="events-page-details d-flex align-items-center gap-2">
                 Learn more
                 <img src={eventsArrow} alt="" />
-              </span>
+              </span> */}
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">
