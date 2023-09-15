@@ -1233,7 +1233,7 @@ const BetaPassNFT = ({
                                 }}
                               >
                                 <h6
-                                  className="land-desc w-75 m-auto text-center"
+                                  className="land-desc w-75 m-auto text-center justify-content-center"
                                   style={{ fontWeight: 500, fontSize: 16 }}
                                 >
                                   {mintTitle === "coingecko" ||
@@ -1267,7 +1267,7 @@ const BetaPassNFT = ({
                                   }}
                                 >
                                   <h6
-                                    className="land-desc w-75 m-auto text-center"
+                                    className="land-desc w-75 m-auto text-center justify-content-center"
                                     style={{ fontWeight: 500, fontSize: 16 }}
                                   >
                                     {mintTitle === "coingecko" ||
