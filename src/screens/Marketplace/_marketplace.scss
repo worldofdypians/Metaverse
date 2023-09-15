@@ -2158,6 +2158,13 @@
   line-height: normal;
 }
 
+.coingecko-btn:hover,
+.downloadbtn-coingecko:hover,
+.accountbtn-coingecko:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
 .mybetaearnings {
   background: url(./assets/betaMyEarnings.png);
   background-size: 100% 100%;
@@ -2194,21 +2201,21 @@
   }
 }
 
-.new-upcoming-tag{
+.new-upcoming-tag {
   position: absolute;
   top: -12px;
   right: 0px;
   border-radius: 6px;
-// background: linear-gradient(109deg, rgba(136, 29, 237, 0.40) 0.96%, rgba(193, 0, 101, 0.40) 101.51%);
-background: linear-gradient(90deg, #a80000 -13.56%, #c5533f 129.3%);
-z-index: 2;
-span{
-  color: #FFF;
-font-size: 10px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-}
+  // background: linear-gradient(109deg, rgba(136, 29, 237, 0.40) 0.96%, rgba(193, 0, 101, 0.40) 101.51%);
+  background: linear-gradient(90deg, #a80000 -13.56%, #c5533f 129.3%);
+  z-index: 2;
+  span {
+    color: #fff;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
 }
 .new-beta-sidebar {
   border-radius: 10px;
@@ -2295,8 +2302,7 @@ line-height: normal;
   border-radius: 26px;
   background: linear-gradient(90deg, #181b38 0%, #27a330 168.67%);
   @media screen and (max-width: 786px) {
-  background: linear-gradient(135deg, #181b38 0%, #27a330 168.67%);
-    
+    background: linear-gradient(135deg, #181b38 0%, #27a330 168.67%);
   }
 }
 .upcoming-mint-wrapper-coin98 {
@@ -2314,9 +2320,8 @@ line-height: normal;
 
 .upcoming-mint-wrapper-gate {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #000E46 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #000e46 168.67%);
 }
-
 
 .upcoming-mint-wrapper-conflux {
   border-radius: 20px;
@@ -2661,24 +2666,22 @@ line-height: normal;
   }
 }
 
-
-
-.terms-and-conditions{
-  color: #C0CBF7;
-font-size: 12px;
-font-style: normal;
-font-weight: 300;
-line-height: normal;
-letter-spacing: -0.18px;
+.terms-and-conditions {
+  color: #c0cbf7;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: -0.18px;
 }
 
-.terms-wrap:hover{
-  .terms-and-conditions{
+.terms-wrap:hover {
+  .terms-and-conditions {
     text-decoration: underline;
   }
 }
 
-.popup-wrapper{
+.popup-wrapper {
   position: fixed;
   width: fit-content;
   height: fit-content;
@@ -2688,23 +2691,23 @@ letter-spacing: -0.18px;
   right: 0%;
   margin: auto;
   z-index: 1000;
-  background: #312F69;
+  background: #312f69;
   border-radius: 24px;
-  pointer-events: auto  !important;
-  transition: all .25s ease-in-out;
+  pointer-events: auto !important;
+  transition: all 0.25s ease-in-out;
   width: 50%;
 
   @media screen and (max-width: 1455px) {
-      width: 55%;
+    width: 55%;
   }
   @media screen and (max-width: 1300px) {
-      width: 70% !important;
+    width: 70% !important;
   }
   @media screen and (max-width: 786px) {
-      width: 90% !important;
+    width: 90% !important;
   }
 }
-.popup-wrapper-2{
+.popup-wrapper-2 {
   position: fixed;
   width: fit-content;
   height: fit-content;
@@ -2714,36 +2717,34 @@ letter-spacing: -0.18px;
   right: 0%;
   margin: auto;
   z-index: 1000;
-  background-image: url('../Marketplace/MarketNFTs/assets/switchChainBg.png');
+  background-image: url("../Marketplace/MarketNFTs/assets/switchChainBg.png");
   border-radius: 8px;
-  pointer-events: auto  !important;
-  transition: all .25s ease-in-out;
+  pointer-events: auto !important;
+  transition: all 0.25s ease-in-out;
   width: 25%;
   background-size: 100% 100%;
 
   @media screen and (max-width: 1455px) {
-      width: 55%;
+    width: 55%;
   }
   @media screen and (max-width: 1300px) {
-      width: 70% !important;
+    width: 70% !important;
   }
   @media screen and (max-width: 786px) {
-      width: 90% !important;
+    width: 90% !important;
   }
 }
 
-.popup-active{
-  box-shadow:0 0 0 10000px rgba(0,0,0,.50);
+.popup-active {
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
   top: 0% !important;
 }
 
-
-
 @media screen and (max-width: 786px) {
-  .terms-list{
+  .terms-list {
     max-height: 350px;
     padding-right: 15px;
-    overflow-y:  scroll;
+    overflow-y: scroll;
   }
 }
 .downloadbtn-coingecko {
@@ -2776,7 +2777,7 @@ letter-spacing: -0.18px;
 
 .conflux-btn {
   border-radius: 20px;
-  background: linear-gradient(90deg, #B0176E -13.56%, #49298D 129.3%);
+  background: linear-gradient(90deg, #b0176e -13.56%, #49298d 129.3%);
   color: #fff;
   font-size: 12px;
   font-style: normal;
@@ -2786,7 +2787,7 @@ letter-spacing: -0.18px;
 
 .gate-btn {
   border-radius: 20px;
-  background: linear-gradient(90deg, #00A776 -13.56%, #0096D2 129.3%);
+  background: linear-gradient(90deg, #00a776 -13.56%, #0096d2 129.3%);
   color: #fff;
   font-size: 12px;
   font-style: normal;
@@ -2794,8 +2795,8 @@ letter-spacing: -0.18px;
   line-height: normal;
 }
 
-.switch-network{
-  color: #C0CBF7;
+.switch-network {
+  color: #c0cbf7;
   text-align: center;
   font-size: 22px;
   font-style: normal;
@@ -2804,8 +2805,8 @@ letter-spacing: -0.18px;
   letter-spacing: -0.396px;
 }
 
-.switch-network-desc{
-  color: #C0CBF7;
+.switch-network-desc {
+  color: #c0cbf7;
   text-align: center;
   font-size: 12px;
   font-style: normal;
@@ -2814,14 +2815,14 @@ letter-spacing: -0.18px;
   letter-spacing: -0.216px;
 }
 
-.metamask-info-wrapper{
+.metamask-info-wrapper {
   border-radius: 8px;
-  border: 0.2px solid #C0C9FF;
-  background: #26264F;
+  border: 0.2px solid #c0c9ff;
+  background: #26264f;
 }
 
-.metamask-info-title{
-  color: #C0CBF7;
+.metamask-info-title {
+  color: #c0cbf7;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -2829,8 +2830,8 @@ letter-spacing: -0.18px;
   letter-spacing: -0.252px;
 }
 
-.metamask-short-address{
-  color: #F7F7FC;
+.metamask-short-address {
+  color: #f7f7fc;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -2838,8 +2839,8 @@ letter-spacing: -0.18px;
   letter-spacing: -0.216px;
 }
 
-.popup-chain{
-  color: #C0CBF7;
+.popup-chain {
+  color: #c0cbf7;
   text-align: center;
   font-size: 12px;
   font-style: normal;
@@ -2848,18 +2849,18 @@ letter-spacing: -0.18px;
   letter-spacing: -0.216px;
 }
 
-.switch-network-btn{
+.switch-network-btn {
   border-radius: 8px !important;
-  background: linear-gradient(91deg, #7770E0 0%, #554FD8 100%) !important;
-  color: #FFF !important;
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+  background: linear-gradient(91deg, #7770e0 0%, #554fd8 100%) !important;
+  color: #fff !important;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
-.popup-timer{
-  width: 50%; 
+.popup-timer {
+  width: 50%;
   justify-content: end;
   @media screen and (max-width: 786px) {
     width: 100%;
