@@ -547,12 +547,12 @@ const Header = ({
                           ? eth
                           : bnbState === true
                           ? bnb
-                          : avaxState === true
-                          ? avax
-                          : baseState === true
-                          ? base
-                          : confluxState === true
-                          ? conflux
+                          // : avaxState === true
+                          // ? avax
+                          // : baseState === true
+                          // ? base
+                          // : confluxState === true
+                          // ? conflux
                           : error
                       }
                       height={16}
@@ -564,12 +564,12 @@ const Header = ({
                         ? "Ethereum"
                         : bnbState === true
                         ? "BNB Chain"
-                        : avaxState === true
-                        ? "Avalanche"
-                        : baseState === true
-                        ? "Base"
-                        : confluxState === true
-                        ? "Conflux"
+                        // : avaxState === true
+                        // ? "Avalanche"
+                        // : baseState === true
+                        // ? "Base"
+                        // : confluxState === true
+                        // ? "Conflux"
                         : "Unsupported Chain"}
                     </span>
 
@@ -585,18 +585,18 @@ const Header = ({
                   <img src={bnb} alt="" />
                   BNB Chain
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleAvaxPool()}>
+                {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleConfluxPool()}>
+                </Dropdown.Item> */}
+                {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
                   <img src={conflux} alt="" />
                   Conflux
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
-                </Dropdown.Item>
+                </Dropdown.Item> */}
               </DropdownButton>
               <Clipboard
                 component="div"
