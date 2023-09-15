@@ -814,7 +814,18 @@ const WalletBalance = ({
         (item) => item.nftAddress === window.config.nft_land_address
       );
       setcollectedItemsFiltered(wodFilter);
-    } else if (filter1 === "timepiece" && filter2 === "all") {
+    } 
+    else if (filter1 === "betapass" && filter2 === "all") {
+      let coingeckoFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_coingecko_address
+      );
+      let gateFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_gate_address
+      );
+      const allBetapassArray = [...coingeckoFilter, ...gateFilter]
+      setcollectedItemsFiltered(allBetapassArray);
+    } 
+    else if (filter1 === "timepiece" && filter2 === "all") {
       let timepieceFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_timepiece_address
       );
@@ -2428,6 +2439,19 @@ const WalletBalance = ({
                           }}
                         >
                           <span>All</span>
+                        </li>
+                        <li
+                          className="nft-dropdown-item"
+                          onClick={() => {
+                            setFilter1("betapass");
+                            handleSortCollection();
+                            setFavoritesPage(1);
+                            setListedPage(1);
+                            setCollectedPage(1);
+                            setStakedPage(1);
+                          }}
+                        >
+                          <span>Beta Pass</span>
                         </li>
                         <li
                           className="nft-dropdown-item"
