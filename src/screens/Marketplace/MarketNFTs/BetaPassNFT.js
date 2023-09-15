@@ -417,7 +417,7 @@ const BetaPassNFT = ({
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      {mintTitle} Beta Pass
+                      {mintTitle === 'coingecko' ? 'CoinGecko' : mintTitle} Beta Pass
                     </h6>
                     <p className="collection-desc">
                       The Beta Pass NFT provides you with a special ticket to
