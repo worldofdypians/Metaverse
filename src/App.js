@@ -1301,7 +1301,7 @@ function App() {
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
-    refreshSubscription();
+    // refreshSubscription();
   }, [coinbase, nftCount]);
 
   useEffect(() => {

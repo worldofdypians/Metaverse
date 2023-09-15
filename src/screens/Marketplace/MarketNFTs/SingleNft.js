@@ -349,14 +349,7 @@ const SingleNft = ({
     } else if (addr === window.config.nft_timepiece_address) {
       const result = await window.getTimepieceNft(tokenid);
       setmetaData(result);
-    } else if (addr === window.config.nft_coingecko_address) {
-      const result = await window.getCoingeckoNft(tokenid);
-      setmetaData(result);
-    }
-    else if (addr === window.config.nft_gate_address) {
-      const result = await window.getGateNft(tokenid);
-      setmetaData(result);
-    }
+    } 
   };
 
   const isApprovedBuy = async (amount) => {
@@ -520,16 +513,7 @@ const SingleNft = ({
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_coingecko_address) {
-          nft.type = "coingecko";
-          nft.chain = 56;
-          finalboughtItems.push(nft);
-        } 
-        else if (nft.nftAddress === window.config.nft_gate_address) {
-          nft.type = "gate";
-          nft.chain = 56;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        }  else if (nft.nftAddress === window.config.nft_timepiece_address) {
           nft.type = "timepiece";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -678,16 +662,7 @@ const SingleNft = ({
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_coingecko_address) {
-          nft.type = "coingecko";
-          nft.chain = 56;
-          finalboughtItems.push(nft);
-        }
-        else if (nft.nftAddress === window.config.nft_gate_address) {
-          nft.type = "gate";
-          nft.chain = 56;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        }  else if (nft.nftAddress === window.config.nft_timepiece_address) {
           nft.type = "timepiece";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -1222,7 +1197,7 @@ const SingleNft = ({
     getTokenData();
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
-    getViewCount(nftId, nftAddress);
+   
     getListedNtsAsc();
     getOldNftOwner(
       nftAddress === window.config.nft_caws_address
@@ -1237,6 +1212,10 @@ const SingleNft = ({
       nftId
     );
   }, []);
+
+  useEffect(()=>{
+     getViewCount(nftId, nftAddress);
+  },[nftId, nftAddress])
 
   useEffect(() => {
     if (nft.tokenId) {
@@ -1380,7 +1359,7 @@ const SingleNft = ({
                         : nftAddress === window.config.nft_land_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
                         : nftAddress === window.config.nft_coingecko_address
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
                         : nftAddress === window.config.nft_gate_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
@@ -1811,7 +1790,7 @@ const SingleNft = ({
                     {isOwner &&
                       !IsListed &&
                       !loadingNft &&
-                      type === "coingecko" && type === "gate" && (
+                     ( type === "coingecko" || type === "gate") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">

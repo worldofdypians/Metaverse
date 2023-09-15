@@ -331,6 +331,25 @@ const BetaPassNFT = ({
     }
   };
 
+  async function updateViewCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch("https://api.worldofdypians.com/nft-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokenId, nftAddress }),
+      });
+      const data = await response.json();
+      console.log(
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+      );
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  }
+
+
   const { terms } = useParams();
 
   useEffect(() => {
@@ -1252,6 +1271,9 @@ const BetaPassNFT = ({
                           ) : (
                             <NavLink
                               to={`/marketplace/nft/${myNFTSCoingecko[0]}/${window.config.nft_coingecko_address}`}
+                              onClick={() => {
+                                updateViewCount(myNFTSCoingecko[0], window.config.nft_coingecko_address);
+                              }}
                             >
                               <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                                 <div

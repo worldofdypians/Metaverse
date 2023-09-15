@@ -667,9 +667,9 @@ const WalletBalance = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
-        ...finalTimepieceArray,
         ...coingeckoNftsArray,
-        ...gateNftsArray,
+        // ...gateNftsArray,
+        ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
         ...stakeArray,
@@ -814,18 +814,16 @@ const WalletBalance = ({
         (item) => item.nftAddress === window.config.nft_land_address
       );
       setcollectedItemsFiltered(wodFilter);
-    } 
-    else if (filter1 === "betapass" && filter2 === "all") {
+    } else if (filter1 === "betapass" && filter2 === "all") {
       let coingeckoFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_coingecko_address
       );
       let gateFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_gate_address
       );
-      const allBetapassArray = [...coingeckoFilter, ...gateFilter]
+      const allBetapassArray = [...coingeckoFilter, ...gateFilter];
       setcollectedItemsFiltered(allBetapassArray);
-    } 
-    else if (filter1 === "timepiece" && filter2 === "all") {
+    } else if (filter1 === "timepiece" && filter2 === "all") {
       let timepieceFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_timepiece_address
       );
@@ -841,16 +839,26 @@ const WalletBalance = ({
       );
 
       setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "betapass" && filter2 === "to list") {
+      setcollectedItemsFiltered([]);
     } else if (filter1 === "all" && filter2 === "has offers") {
       setcollectedItemsFiltered(myNftsOffer);
-    } else if (filter1 === "all" && filter2 === "listed") {
+    }
+    else if (filter1 === "betapass" && filter2 === "has offers") {
+      setcollectedItemsFiltered([]);
+    } 
+     else if (filter1 === "all" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
         (item) => item.isListed === true && item.isStaked === false
       );
       setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "betapass" && filter2 === "listed") {
+      setcollectedItemsFiltered([]);
     } else if (filter1 === "all" && filter2 === "in stake") {
       let nftFilter = collectedItems.filter((item) => item.isStaked === true);
       setcollectedItemsFiltered(nftFilter);
+    } else if (filter1 === "betapass" && filter2 === "in stake") {
+      setcollectedItemsFiltered([]);
     } else if (filter1 === "land" && filter2 === "to list") {
       let nftFilter = collectedItems.filter(
         (item) =>
@@ -1661,6 +1669,8 @@ const WalletBalance = ({
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.type === "land"
                                   ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                  : item.type === "coingecko"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -1672,6 +1682,8 @@ const WalletBalance = ({
                                   ? "CAWS"
                                   : item.type === "land"
                                   ? "Genesis"
+                                  : item.type === "coingecko"
+                                  ? "CGBP"
                                   : "Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
@@ -2662,7 +2674,7 @@ const WalletBalance = ({
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
-                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -2678,7 +2690,7 @@ const WalletBalance = ({
                                     ? "Genesis Land"
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
-                                    ? "CoinGecko Beta Pass"
+                                    ? "CGBP"
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
                                     ? "Gate Beta Pass"
@@ -2854,7 +2866,7 @@ const WalletBalance = ({
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
-                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.pngg`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -2872,7 +2884,7 @@ const WalletBalance = ({
                                     ? "Genesis Land"
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
-                                    ? "CoinGecko Beta Pass"
+                                    ? "CGBP"
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
                                     ? "Gate Beta Pass"
@@ -3464,10 +3476,7 @@ const WalletBalance = ({
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">
                       <img
-                        src={
-                          require("./assets/greenCalendar.svg")
-                            .default
-                        }
+                        src={require("./assets/greenCalendar.svg").default}
                         className="green-calendar"
                         alt=""
                       />
@@ -3495,8 +3504,8 @@ const WalletBalance = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX tokens, but also earn
-                      points for their placement on the global leaderboard.
+                      chance to secure daily rewards in CFX tokens, but also
+                      earn points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
                       Conflux area to uncover hidden treasures.
                     </p>
@@ -3519,10 +3528,10 @@ const WalletBalance = ({
                       CoinGecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the CoinGecko area, players not only stand a
-                      chance to secure daily rewards in BNB, but also earn points for
-                      their placement on the global leaderboard. Remember to log
-                      in to the game daily and venture into the CoinGecko area
-                      to uncover hidden treasures.
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      CoinGecko area to uncover hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
@@ -3604,7 +3613,7 @@ const WalletBalance = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-               CoinGecko is the world's largest independent cryptocurrency data
+                CoinGecko is the world's largest independent cryptocurrency data
                 aggregator with over 10,000+ different cryptoassets tracked
                 across more than 800+ exchanges worldwide. CoinGecko provides a
                 fundamental analysis of the digital currency market. In addition
@@ -3688,7 +3697,9 @@ const WalletBalance = ({
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">0</h6>
-                  <span className="mb-0 event-earnings-usd">Leaderboard Points</span>
+                  <span className="mb-0 event-earnings-usd">
+                    Leaderboard Points
+                  </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
