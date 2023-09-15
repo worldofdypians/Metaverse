@@ -624,6 +624,12 @@
   // top: 80%;
 }
 
+.nomask {
+  --mask: none !important;
+  mask: none !important;
+  -webkit-mask: none !important;
+}
+
 .land-desc {
   font-weight: 800;
   font-size: 16px;

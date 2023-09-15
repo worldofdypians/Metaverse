@@ -296,7 +296,7 @@ const SingleNft = ({
         window.config.nft_coingecko_address
       );
 
-      const owner = await nft_contract.methods.ownerOf(Id).catch((e) => {
+      const owner = await nft_contract.methods.ownerOf(Id).call().catch((e) => {
         console.log(e);
       });
 
@@ -309,7 +309,7 @@ const SingleNft = ({
         window.config.nft_gate_address
       );
 
-      const owner = await nft_contract.methods.ownerOf(Id).catch((e) => {
+      const owner = await nft_contract.methods.ownerOf(Id).call().catch((e) => {
         console.log(e);
       });
 

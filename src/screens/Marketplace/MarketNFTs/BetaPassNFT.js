@@ -417,7 +417,8 @@ const BetaPassNFT = ({
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      {mintTitle === 'coingecko' ? 'CoinGecko' : mintTitle} Beta Pass
+                      {mintTitle === "coingecko" ? "CoinGecko" : mintTitle} Beta
+                      Pass
                     </h6>
                     <p className="collection-desc">
                       The Beta Pass NFT provides you with a special ticket to
@@ -1195,55 +1196,94 @@ const BetaPassNFT = ({
                       )}
                       {alreadyRegistered && (
                         <div className="d-flex flex-column justify-content-between h-100">
-                          <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
-                            <div
-                              className={`coingeckoempty-wrapper ${
-                                mintTitle !== "timepiece" &&
-                                totalCoingeckoNft === 0 &&
-                                mintTitle === "coingecko"
-                                  ? "conflux-empty"
-                                  : totalCoingeckoNft > 0 &&
-                                    mintTitle === "coingecko"
-                                  ? "coingecko-active"
-                                  : totalGateNft > 0 && mintTitle === "gate"
-                                  ? "gate-active"
-                                  : totalConfluxNft > 0 &&
-                                    mintTitle === "conflux"
-                                  ? "conflux-active"
-                                  : "conflux-empty"
-                              } d-flex justify-content-center align-items-center p-3 position-relative`}
-                              style={{ height: 210 }}
-                            ></div>
-                            <div
-                              className="genesis-desc px-3 py-2 position-relative"
-                              style={{
-                                bottom:
-                                  totalCoingeckoNft > 0 ||
-                                  totalConfluxNft > 0 ||
-                                  totalGateNft > 0
-                                    ? "20px"
-                                    : "5px",
-                                minWidth: "100%",
-                                maxWidth: "100%",
-                              }}
-                            >
-                              <h6
-                                className="land-desc w-75 m-auto text-center"
-                                style={{ fontWeight: 500, fontSize: 16 }}
+                          {totalCoingeckoNft === 0 &&
+                          mintTitle === "coingecko" ? (
+                            <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
+                              <div
+                                className={`coingeckoempty-wrapper ${
+                                  mintTitle !== "timepiece" &&
+                                  totalCoingeckoNft === 0 &&
+                                  mintTitle === "coingecko"
+                                    ? "conflux-empty"
+                                    : totalCoingeckoNft > 0 &&
+                                      mintTitle === "coingecko"
+                                    ? "coingecko-active"
+                                    : totalGateNft > 0 && mintTitle === "gate"
+                                    ? "gate-active"
+                                    : totalConfluxNft > 0 &&
+                                      mintTitle === "conflux"
+                                    ? "conflux-active"
+                                    : "conflux-empty"
+                                } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                style={{
+                                  height: windowSize.width > 991 ? 210 : 295,
+                                }}
+                              ></div>
+                              <div
+                                className="genesis-desc nomask px-3 py-2 position-relative"
+                                style={{
+                                  bottom:
+                                    totalCoingeckoNft > 0 ||
+                                    totalConfluxNft > 0 ||
+                                    totalGateNft > 0
+                                      ? "20px"
+                                      : "5px",
+                                  minWidth: "100%",
+                                  maxWidth: "100%",
+                                }}
                               >
-                                {mintTitle === "coingecko" ||
-                                mintTitle === "gate"
-                                  ? nftSymbol
-                                  : selectedMint.cardTitle}{" "}
-                                {mintTitle === "coingecko"
-                                  ? totalCoingeckoNft > 0 &&
-                                    `#${myNFTSCoingecko[0]}`
-                                  : mintTitle === "gate"
-                                  ? totalGateNft > 0 && `#${myGateNfts[0]}`
-                                  : ""}
-                              </h6>
+                                <h6
+                                  className="land-desc w-75 m-auto text-center"
+                                  style={{ fontWeight: 500, fontSize: 16 }}
+                                >
+                                  {mintTitle === "coingecko" ||
+                                  mintTitle === "gate"
+                                    ? nftSymbol
+                                    : selectedMint.cardTitle}{" "}
+                                  {mintTitle === "coingecko"
+                                    ? totalCoingeckoNft > 0 &&
+                                      `#${myNFTSCoingecko[0]}`
+                                    : mintTitle === "gate"
+                                    ? totalGateNft > 0 && `#${myGateNfts[0]}`
+                                    : ""}
+                                </h6>
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            <NavLink
+                              to={`/marketplace/nft/${myNFTSCoingecko[0]}/${window.config.nft_coingecko_address}`}
+                            >
+                              <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
+                                <div
+                                  className={`coingeckoempty-wrapper coingecko-active d-flex justify-content-center align-items-center p-3 position-relative`}
+                                  style={{ height: 210 }}
+                                ></div>
+                                <div
+                                  className="genesis-desc nomask px-3 py-2 position-relative"
+                                  style={{
+                                    bottom: "20px",
+                                    minWidth: "100%",
+                                    maxWidth: "100%",
+                                  }}
+                                >
+                                  <h6
+                                    className="land-desc w-75 m-auto text-center"
+                                    style={{ fontWeight: 500, fontSize: 16 }}
+                                  >
+                                    {mintTitle === "coingecko" ||
+                                    mintTitle === "gate"
+                                      ? nftSymbol
+                                      : selectedMint.cardTitle}{" "}
+                                    {mintTitle === "coingecko"
+                                      ? `#${myNFTSCoingecko[0]}`
+                                      : mintTitle === "gate"
+                                      ? `#${myGateNfts[0]}`
+                                      : ""}
+                                  </h6>
+                                </div>
+                              </div>
+                            </NavLink>
+                          )}
                           <span className="footertxt-coingecko">
                             After NFT distribution, you can view{" "}
                             {selectedMint.cardTitle}.
