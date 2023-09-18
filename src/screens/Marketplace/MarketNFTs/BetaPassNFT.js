@@ -682,7 +682,7 @@ const BetaPassNFT = ({
                       )}
                     </h6>
                     <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-center align-items-lg-start position-relative">
-                      <div className="d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row align-items-center gap-2 w-100 justify-content-center justify-content-xxl-between  justify-content-xl-between  justify-content-lg-between ">
+                      <div className="d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row align-items-sm-start align-items-center gap-2 w-100 justify-content-center justify-content-xxl-between  justify-content-xl-between  justify-content-lg-between ">
                         <div className="mint-benefits-grid">
                           {benefits.map((item) => (
                             <div className="d-flex align-items-center gap-2">
