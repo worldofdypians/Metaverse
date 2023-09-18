@@ -358,6 +358,8 @@ function App() {
       });
       setShowForms2(true);
       setwalletModal(false);
+      setSuccess(true);
+
     } catch (e) {
       window.alertify.error(String(e) || "Cannot connect wallet!");
       console.log(e);
@@ -1762,6 +1764,10 @@ function App() {
                     handleRefreshListing={handleRefreshList}
                     nftCount={nftCount}
                     handleSwitchNetwork={handleSwitchNetwork}
+                    success={success}
+                    showWalletConnect={() => {
+                      setwalletModal(true);
+                    }}
                   />
                 }
               />
