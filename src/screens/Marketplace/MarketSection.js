@@ -70,7 +70,7 @@ const MarketSection = ({
     {
       eventTitle: "Dragon Ruins",
       eventPrice: "50 DYP",
-      eventImg: "dragon",
+      eventImg: "dragon.png",
       state: "dragon",
       price: 50,
       eventId: "dragon-ruins",
@@ -78,7 +78,7 @@ const MarketSection = ({
     {
       eventTitle: "Puzzle Madness",
       eventPrice: "3,500 iDYP",
-      eventImg: "puzzle",
+      eventImg: "puzzle.png",
       state: "idyp",
       price: 3500,
       eventId: "puzzle-madness",
@@ -86,18 +86,18 @@ const MarketSection = ({
     {
       eventTitle: "Golden Pass",
       eventPrice: "700 DYP",
-      eventImg: "golden",
+      eventImg: "golden.png",
       state: "dyp",
       price: 700,
       eventId: "golden-pass",
     },
     {
-      eventTitle: "Critical Hit",
+      eventTitle: "Treasure Hunt",
       eventPrice: "",
-      eventDesc: "Event available for Genesis Land NFT owners",
-      eventImg: "critical",
-      state: "criticalHit",
-      eventId: "critical-hit", 
+      eventDesc: "Event available for Beta Pass NFT owners",
+      eventImg: "treasure.jpg",
+      state: "treasure-hunt",
+      eventId: "treasure-hunt", 
     },
   ];
 
