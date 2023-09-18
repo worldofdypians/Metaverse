@@ -14,7 +14,8 @@ function SignUpGecko({
   onSuccessLogin,
   mintTitle,
   chainId,
-  activeTab
+  activeTab,
+  isExistingUser
 }) {
   const {
     isAuthenticated,
@@ -69,6 +70,7 @@ function SignUpGecko({
           )
         ) {
           setuserExists(true);
+          isExistingUser()
           setPassword("");
           setConfirmPassword("");
         }

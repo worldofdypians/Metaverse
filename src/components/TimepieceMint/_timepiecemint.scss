@@ -48,7 +48,7 @@
 }
 
 .staking-height {
-  height: 463px;
+  height: 480px;
   @media screen and (max-width: 991px) {
     height: auto;
     min-height: fit-content;
@@ -375,21 +375,32 @@
   }
 
   .land-name2-active {
+    border-radius: 8px;
+    background: linear-gradient(109deg, #181636 5.26%, #fe53bb 312.84%);
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-    color: #ffffff;
-    text-decoration: underline;
-    cursor: pointer;
+    line-height: normal;
+    border: none;
+    outline: none;
+    padding: 10px;
+
   }
 
   .land-name2-passive {
-    font-weight: 400;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    text-align: center;
     font-size: 14px;
-    line-height: 24px;
-    color: rgba(255,255,255, 0.8);
-    cursor: pointer;
-
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 10px;
   }
 
   .mint-divider {

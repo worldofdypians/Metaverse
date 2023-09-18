@@ -53,33 +53,45 @@ const ForgotPasswordGecko = ({ onResetPass, mintTitle }) => {
       //   </span>
       // </div>
       <div className={classes.containergecko}>
-      <h6 className="land-name">Reset Password</h6>
-       <span className={classes.createplayertxt}>
-          *We sent you a link at your email. Check your inbox and reset your password. Then try to login again.
-         </span>
-      <div className="summaryseparator"></div>
-      <span className="footertxt-coingecko mt-1">
-        Users who have claimed the {mintTitle} NFT are required to create a WoD Account to
-        receive the NFT and participate in the exclusive event.
-      </span>
-      <span
-        onClick={() => {
-          onResetPass();
-        }}
-        className={classes.errorText2}
-      >
-        Back to Sign In
-      </span>
-    </div>
+        <span className={classes.createplayertxt} style={{margin: 'auto'}}>
+          *We sent you a link at your email. Check your inbox and reset your
+          password. Then try to login again.
+        </span>
+        <div className="d-flex flex-column gap-3">
+          <span className="footertxt-coingecko mt-1">
+            Users who have claimed the {mintTitle} NFT are required to create a
+            WoD Account to receive the NFT and participate in the exclusive
+            event.
+          </span>
+          <div className="summaryseparator"></div>
+       
+        <div className="d-flex align-items-center justify-content-between gap-3">
+          <span
+            onClick={() => {
+              onResetPass();
+            }}
+            className={classes.errorText2}
+          >
+         {"<   Back"}
+          </span>
+
+          <Button
+            type={"coingecko"}
+            onPress={() => {
+              onResetPass();
+            }}
+            title={"Continue  >"}
+          />
+        </div> </div>
+      </div>
     );
   }
 
   return (
     <div className={classes.containergecko}>
-      <h6 className="land-name">Reset Password</h6>
       <span className={classes.createplayertxt}>
-        Please put your email address in the field below. After submitting, the
-        password reset link will be sent to your inbox.
+        *Please enter your email address in the field below. After submitting,
+        the password reset link will be sent to your inbox.
       </span>
       <Input
         type={"coingecko"}
@@ -87,20 +99,28 @@ const ForgotPasswordGecko = ({ onResetPass, mintTitle }) => {
         value={email}
         onChange={onChangeEmail}
       />
-      <div className="summaryseparator"></div>
+
       <span className="footertxt-coingecko mt-1">
-        Users who have claimed the {mintTitle} NFT are required to create a WoD Account to
-        receive the NFT and participate in the exclusive event.
+        Users who have claimed the {mintTitle} NFT are required to create a WoD
+        Account to receive the NFT and participate in the exclusive event.
       </span>
-      <Button type={"coingecko"} onPress={handleEmail} title={"Send Email"} />
-      <span
-        onClick={() => {
-          onResetPass();
-        }}
-        className={classes.errorText2}
-      >
-        Back to Sign In
-      </span>
+      <div className="summaryseparator"></div>
+      <div className="d-flex align-items-center gap-2 justify-content-between">
+        <span
+          onClick={() => {
+            onResetPass();
+          }}
+          className={classes.errorText2}
+          style={{ width: "fit-content" }}
+        >
+          {"<   Back"}
+        </span>
+        <Button
+          type={"coingecko"}
+          onPress={handleEmail}
+          title={"Continue  >"}
+        />
+      </div>
     </div>
 
     //   <ErrorAlert error={error} />
