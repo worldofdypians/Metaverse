@@ -349,7 +349,7 @@
   @media screen and (max-width: 786px) {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 20px !important;
+    gap: 10px !important;
     width: 100% !important;
   }
 }
@@ -456,6 +456,49 @@
     transform: none !important;
   }
 }
+
+.nft-outer-wrapper2 {
+  position: relative;
+  z-index: 2;
+  border: 2px solid #41435a;
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+
+  border-radius: 21.4107px;
+  transform: none;
+
+  @media screen and (max-width: 995px) {
+    transform: none !important;
+  }
+}
+
+// .nft-outer-wrapper2::before {
+//   content: "";
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   bottom: 0;
+//   right: 0;
+//   z-index: -1;
+//   padding: 20px;
+//   border: 2px solid #41435a;
+//   background: linear-gradient(
+//     155.14deg,
+//     rgba(255, 255, 255, 0) -2.13%,
+//     rgba(255, 255, 255, 0.15) 136.58%
+//   );
+
+//   border-radius: 21.4107px;
+//   transform: none;
+
+//   @media screen and (max-width: 995px) {
+//     transform: none !important;
+//   }
+// }
+
 .new-bundle-wrapper {
   position: relative;
   z-index: 2;
@@ -944,6 +987,9 @@
   letter-spacing: 0.03em;
   text-transform: capitalize;
   color: #ffffff;
+  @media screen and (max-width: 786px) {
+    font-size: 24px;
+  }
 }
 
 .market-banner-desc {
@@ -961,6 +1007,7 @@
   line-height: 21px;
   letter-spacing: 0.03em;
   color: #b8b8e0;
+  white-space: nowrap;
 }
 
 .nft-active {
@@ -1157,6 +1204,38 @@
   }
 }
 
+.coingeckonft-wrapper {
+  background: url(./MarketNFTs/assets/coingeckonftBg.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  aspect-ratio: 0.1/0.04;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.coingecko-nft-number {
+  color: #f2f2f2;
+  text-align: center;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.coingecko-nft-desc {
+  color: #91eeeb;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
 .market-stake-banner {
   width: 50%;
   @media screen and (max-width: 786px) {
@@ -1170,6 +1249,7 @@
     rgba(255, 255, 255, 0) -2.13%,
     rgba(255, 255, 255, 0.15) 136.58%
   );
+  width: 165px;
   // filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
   // backdrop-filter: blur(13.3817px);
   border-radius: 21.4107px;
@@ -1181,6 +1261,7 @@
   @media screen and (max-width: 786px) {
     transform: none !important;
     backdrop-filter: none !important;
+    width: 150px;
   }
 }
 
@@ -1636,6 +1717,9 @@
   border-radius: 8px;
   transition: all 0.25s;
   cursor: pointer;
+  @media screen and (max-width: 420px) {
+    font-size: 12px;
+  }
 }
 
 .new-stake-tab:hover {
@@ -1709,6 +1793,12 @@
 .currency-wrapper-disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.smallmintbg {
+  position: relative;
+  scale: 1.1;
+  top: -30px;
 }
 
 .past-land-mint {
@@ -1791,10 +1881,11 @@
 }
 
 .custom-height-2 {
-  min-height: 280px;
+  min-height: 400px;
   max-height: fit-content;
   @media screen and (max-width: 1024px) {
     height: fit-content;
+    min-height: fit-content;
   }
 }
 
@@ -2037,6 +2128,72 @@
   }
 }
 
+.greensocial,
+.greensocial:hover {
+  color: #7dd9af;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.upcoming-mint-img {
+  height: 104px;
+}
+
+.upcoming-mint-img2 {
+  height: 130px;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+.coingecko-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #007f82 -13.56%, #8bc53f 129.3%);
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.coingecko-btn:hover,
+.downloadbtn-coingecko:hover,
+.accountbtn-coingecko:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.mybetaearnings {
+  background: url(./assets/betaMyEarnings.png);
+  background-size: 100% 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  top: 28px;
+  margin: auto;
+  width: 200px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  scale: 0.9;
+
+  @media only screen and (max-width: 991px) {
+    position: relative;
+    top: 0px;
+    width: 160px;
+    height: 80px;
+  }
+}
+
+.greensocial:hover {
+  text-decoration: underline;
+}
+
 .price-traits-wrapper {
   width: fit-content;
   @media screen and (max-width: 786px) {
@@ -2044,19 +2201,669 @@
   }
 }
 
-.new-upcoming-tag{
+.new-upcoming-tag {
   position: absolute;
   top: -12px;
   right: 0px;
   border-radius: 6px;
-// background: linear-gradient(109deg, rgba(136, 29, 237, 0.40) 0.96%, rgba(193, 0, 101, 0.40) 101.51%);
-background: linear-gradient(90deg, #a80000 -13.56%, #c5533f 129.3%);
-z-index: 2;
-span{
-  color: #FFF;
-font-size: 10px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  // background: linear-gradient(109deg, rgba(136, 29, 237, 0.40) 0.96%, rgba(193, 0, 101, 0.40) 101.51%);
+  background: linear-gradient(90deg, #a80000 -13.56%, #c5533f 129.3%);
+  z-index: 2;
+  span {
+    color: #fff;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
 }
+.new-beta-sidebar {
+  border-radius: 10px;
+  background: linear-gradient(
+    158deg,
+    rgba(38, 59, 162, 0.4) 0%,
+    rgba(54, 194, 207, 0.4) 100%
+  );
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.new-beta-text {
+  color: #36c2cf;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.beta-pass-item {
+  border-radius: 15px;
+  background: #252743;
+  backdrop-filter: blur(10px);
+  margin: 1px;
+  .beta-pass-chain-img {
+    width: 25px;
+    height: 25px;
+    transition: all 0.25s;
+  }
+
+  span {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(238, 237, 255);
+    text-transform: capitalize;
+    transition: all 0.25s;
+  }
+}
+
+.beta-pass-chain-img {
+  width: 25px;
+  height: 25px;
+  transition: all 0.25s;
+}
+
+.beta-pass-item:hover {
+  margin: 0px;
+  border: 1px solid #11fed2;
+  background: linear-gradient(
+    135deg,
+    rgba(17, 254, 210, 0.1) 0%,
+    rgba(17, 254, 210, 0.05) 100%
+  );
+  span {
+    color: #ffffff;
+  }
+}
+
+.selected-beta-pass-item {
+  margin: 0px;
+  border: 1px solid #11fed2;
+  background: linear-gradient(
+    135deg,
+    rgba(17, 254, 210, 0.1) 0%,
+    rgba(17, 254, 210, 0.05) 100%
+  );
+  span {
+    color: #ffffff;
+  }
+}
+
+.upcoming-mint-wrapper {
+  position: relative;
+  min-height: 100px;
+  border: 1px solid transparent;
+}
+
+.upcoming-mint-wrapper2:hover {
+  border: 1px solid #11fed2;
+}
+
+.upcoming-mint-wrapper-coingecko {
+  border-radius: 26px;
+  background: linear-gradient(90deg, #181b38 0%, #27a330 168.67%);
+  @media screen and (max-width: 786px) {
+    background: linear-gradient(135deg, #181b38 0%, #27a330 168.67%);
+  }
+}
+.upcoming-mint-wrapper-coin98 {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #503e11 100%);
+}
+.upcoming-mint-wrapper-avax {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #481150 100%);
+}
+.upcoming-mint-wrapper-base {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
+}
+
+.upcoming-mint-wrapper-gate {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #000e46 168.67%);
+}
+
+.upcoming-mint-wrapper-conflux {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #11503d 168.67%);
+}
+
+.upcoming-mint-title {
+  color: #fff;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.12px;
+}
+
+.upcoming-mint-desc {
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.active-mint {
+  min-width: 245px !important;
+  min-height: 235px !important;
+  border-radius: 30px;
+  cursor: pointer;
+  border: 2px solid #080b2a;
+  transition: all 0.25s;
+}
+
+.active-mint-selected {
+  border: 2px solid #00fecf;
+}
+
+.active-mint:hover {
+  border: 2px solid #00fecf;
+}
+
+.mint-1 {
+  background: linear-gradient(90deg, #181b38 0%, #7f0817 168.67%);
+}
+
+.mint-2 {
+  background: linear-gradient(90deg, #181b38 0%, #12a272 168.67%);
+}
+
+.mint-3 {
+  background: linear-gradient(90deg, #181b38 0%, #000b6e 168.67%);
+}
+
+.mint-4 {
+  background: linear-gradient(90deg, #181b38 0%, #11503d 100%);
+}
+.mint-5 {
+  background: linear-gradient(90deg, #181b38 0%, #503e11 100%);
+}
+.mint-6 {
+  background: linear-gradient(90deg, #181b38 0%, #481150 100%);
+}
+.mint-7 {
+  background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
+}
+.mint-8 {
+  background: linear-gradient(90deg, #181b38 0%, #5daaa6 168.67%);
+}
+
+.active-mint-title {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.08px;
+}
+
+.active-mint-desc {
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.buywod-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #1829bd 0%, #a420e2 100%);
+  span {
+    color: #fff !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.buyopensea-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #00a7f3 0%, #6375d3 100%);
+  span {
+    color: #fff !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.events-page-title {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.12px;
+  white-space: pre;
+}
+
+.events-page-status-tag-live {
+  background: #18ffff;
+  border-radius: 3px;
+  span {
+    color: #b71061;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+.events-page-status-tag-upcoming {
+  border-radius: 3px;
+  background: #ec8123;
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+.events-page-status-tag-expired {
+  background: #b8b8e0;
+  border-radius: 3px;
+  span {
+    color: #404040;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.events-page-rewards {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.events-page-details {
+  color: #18ffff;
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.events-page-details:hover {
+  text-decoration: underline;
+}
+
+.event-my-earnings3 {
+  color: #fff;
+  text-align: center;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.event-my-earnings2 {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.white-events-text {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.pick-and-calendar {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 17%;
+  height: fit-content;
+  margin: auto;
+  @media screen and (max-width: 786px) {
+    position: relative !important;
+    bottom: auto !important;
+    top: auto !important;
+    right: auto !important;
+    padding-bottom: 15px;
+    padding-top: 15px;
+  }
+}
+
+.how-it-works {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.popup-green-text {
+  color: #7dd9af;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.popup-event-desc {
+  color: #eeedff;
+  font-size: 13px;
+  font-style: normal;
+  line-height: normal;
+  font-family: "Montserrat", sans-serif;
+}
+
+.footertxt-coingecko {
+  color: #c0cbf7;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.createplayertxt {
+  color: #18ffff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.timeline {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .li {
+    transition: all 200ms ease-in;
+    .listtext {
+      color: #c0cbf7;
+      text-align: center;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      letter-spacing: -0.18px;
+      position: relative;
+      left: -11px;
+      width: 35px;
+    }
+    .timestamp {
+      margin-bottom: 20px;
+      padding: 0px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 100;
+    }
+    .status {
+      padding: 10px 0 0 0;
+      display: flex;
+      border-top: 2px solid #565891;
+      position: relative;
+      transition: all 200ms ease-in;
+
+      &:before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background-color: #26264f;
+        border-radius: 25px;
+        border: 2px solid #565891;
+        position: absolute;
+        top: -10px;
+        left: -2%;
+        transition: all 200ms ease-in;
+      }
+    }
+
+    @media (min-device-width: 320px) and (max-device-width: 700px) {
+      .timeline {
+        list-style-type: none;
+        display: block;
+        .li {
+          transition: all 200ms ease-in;
+          display: flex;
+          width: inherit;
+        }
+        .timestamp {
+          width: 100px;
+          .status {
+            &:before {
+              left: -8%;
+              top: 30%;
+              transition: all 200ms ease-in;
+            }
+          }
+        }
+      }
+    }
+  }
+  .complete {
+    .status {
+      border-top: 2px solid #48b4bd;
+      &:before {
+        background-color: #48b4bd;
+        border: none;
+        transition: all 200ms ease-in;
+      }
+    }
+  }
+}
+
+.terms-and-conditions {
+  color: #c0cbf7;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.terms-wrap:hover {
+  .terms-and-conditions {
+    text-decoration: underline;
+  }
+}
+
+.popup-wrapper {
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  top: -10000px;
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  margin: auto;
+  z-index: 1000;
+  background: #312f69;
+  border-radius: 24px;
+  pointer-events: auto !important;
+  transition: all 0.25s ease-in-out;
+  width: 50%;
+
+  @media screen and (max-width: 1455px) {
+    width: 55%;
+  }
+  @media screen and (max-width: 1300px) {
+    width: 70% !important;
+  }
+  @media screen and (max-width: 786px) {
+    width: 90% !important;
+  }
+}
+.popup-wrapper-2 {
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  top: -10000px;
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  margin: auto;
+  z-index: 1000;
+  background-image: url("../Marketplace/MarketNFTs/assets/switchChainBg.png");
+  border-radius: 8px;
+  pointer-events: auto !important;
+  transition: all 0.25s ease-in-out;
+  width: 25%;
+  background-size: 100% 100%;
+
+  @media screen and (max-width: 1455px) {
+    width: 55%;
+  }
+  @media screen and (max-width: 1300px) {
+    width: 70% !important;
+  }
+  @media screen and (max-width: 786px) {
+    width: 90% !important;
+  }
+}
+
+.popup-active {
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+  top: 0% !important;
+}
+
+@media screen and (max-width: 786px) {
+  .terms-list {
+    max-height: 350px;
+    padding-right: 15px;
+    overflow-y: scroll;
+  }
+}
+.downloadbtn-coingecko {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #5e54a0 0%, #00fecf 100%);
+  padding: 8px 15px;
+  width: fit-content;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.accountbtn-coingecko {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #830e48 0.18%, #5065c3 99.81%);
+  padding: 8px 15px;
+  width: fit-content;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.conflux-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #b0176e -13.56%, #49298d 129.3%);
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.gate-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #00a776 -13.56%, #0096d2 129.3%);
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.switch-network {
+  color: #c0cbf7;
+  text-align: center;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 12px; /* 54.545% */
+  letter-spacing: -0.396px;
+}
+
+.switch-network-desc {
+  color: #c0cbf7;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px; /* 100% */
+  letter-spacing: -0.216px;
+}
+
+.metamask-info-wrapper {
+  border-radius: 8px;
+  border: 0.2px solid #c0c9ff;
+  background: #26264f;
+}
+
+.metamask-info-title {
+  color: #c0cbf7;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 12px; /* 85.714% */
+  letter-spacing: -0.252px;
+}
+
+.metamask-short-address {
+  color: #f7f7fc;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px; /* 100% */
+  letter-spacing: -0.216px;
+}
+
+.popup-chain {
+  color: #c0cbf7;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px; /* 100% */
+  letter-spacing: -0.216px;
+}
+
+.switch-network-btn {
+  border-radius: 8px !important;
+  background: linear-gradient(91deg, #7770e0 0%, #554fd8 100%) !important;
+  color: #fff !important;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.popup-timer {
+  width: 50%;
+  justify-content: end;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    justify-content: center;
+  }
 }
