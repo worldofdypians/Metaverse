@@ -8,8 +8,6 @@ export default function validateHelpInfo(values) {
   }
   if (!values.discord.trim()) {
     errors.discord = "Discord username is Required";
-  } else if (!/^@?[^#@:]{2,32}#[0-9]{4}/i.test(values.discord)) {
-    errors.discord = "Discord username is Invalid";
   }
   return errors;
 }
