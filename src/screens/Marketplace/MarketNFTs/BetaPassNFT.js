@@ -419,7 +419,8 @@ const BetaPassNFT = ({
 
   console.log(success, isConnected, coinbase)
   useEffect(() => {
-    if (success === true) {
+    if (success === true &&
+      !data.getPlayer.wallet) {
       setTimeout(() => {
         connectWallet();
       }, 2000);
