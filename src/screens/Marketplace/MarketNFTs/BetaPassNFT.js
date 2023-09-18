@@ -417,15 +417,19 @@ const BetaPassNFT = ({
     }
   }, [dataNonce,isConnected]);
 
-  console.log(success, isConnected, coinbase)
+  
   useEffect(() => {
     if (success === true &&
-      !data.getPlayer.wallet) {
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      !data.getPlayer.wallet.publicAddress) {
       setTimeout(() => {
         connectWallet();
       }, 2000);
     }
-  }, [success]);
+  }, [success,data]);
 
   return (
     <>
