@@ -81,6 +81,9 @@ function Dashboard({
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+  const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
+  const [myGateNfts, setmyGateNfts] = useState([]);
+
 
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
@@ -327,6 +330,10 @@ function Dashboard({
     getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
 
     getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
+    getMyNFTS(coinbase, "coingecko").then((NFTS) => setMyNFTSCoingecko(NFTS));
+    getMyNFTS(coinbase, "gate").then((NFTS) => setmyGateNfts(NFTS));
+
+
   };
 
   const getOtherNfts = async () => {
@@ -739,6 +746,8 @@ function Dashboard({
                         landStaked={landstakes}
                         myCawsWodStakes={myCawsWodStakesAll}
                         myWodWodStakes={myWodWodStakesAll}
+                        myNFTSCoingecko={MyNFTSCoingecko}
+                        myGateNfts={myGateNfts}
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}

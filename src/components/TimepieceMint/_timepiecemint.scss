@@ -48,12 +48,17 @@
 }
 
 .staking-height {
-  height: 480px;
+  height: 463px;
   @media screen and (max-width: 991px) {
     height: auto;
-    min-height: 500px;
+    min-height: fit-content;
+  }
+  @media screen and (max-width: 786px) {
+    height: auto;
+    min-height: fit-content;
   }
 }
+
 .staking-height-2 {
   height: 480px;
   @media screen and (max-width: 786px) {
@@ -384,8 +389,130 @@
 
   @media screen and (max-width: 786px) {
     background-image: none;
-// background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
-background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.conflux-mint-bg {
+  background-image: url("./assets/confluxBackground.png");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.conflux-mint-bg2 {
+  background-image: url("./assets/confluxBackground.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.avax-mint-bg {
+  background-image: url("./assets/avaxBackground.png");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.kucoin-mint-bg {
+  background-image: url("./assets/kucoinBackground.png");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.gate-mint-bg2 {
+  background-image: url("./assets/gateMintBg.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.coin98-mint-bg {
+  background-image: url("./assets/coin98Background1.png");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.avalanche-mint-bg {
+  background-image: url("./assets/avalanche-mint-bg.png");
+  background-size: 90%;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.coingecko-mint-bg {
+  background-image: url("./assets/coingeckoBackground.png");
+
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.base-mint-bg {
+  background-image: url("./assets/baseBackground.png");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.gate-mint-bg {
+  background-image: url("./assets/gateBackground.webp");
+
+  background-size: 100% 100%;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
 
@@ -498,6 +625,12 @@ background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   // top: 80%;
 }
 
+.nomask {
+  --mask: none !important;
+  mask: none !important;
+  -webkit-mask: none !important;
+}
+
 .land-desc {
   font-weight: 800;
   font-size: 16px;
@@ -517,6 +650,7 @@ background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   @media screen and (max-width: 434px) {
     display: flex;
     white-space: nowrap;
+    font-size: 12px;
   }
 }
 
@@ -752,12 +886,51 @@ background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   background-position: center;
 }
 
+.coingecko-active {
+  background-image: url("../../assets/coingeckoActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.conflux-active {
+  background-image: url("../../assets/confluxActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.gate-active {
+  background-image: url("../../assets/gateActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
 .genesis-land-empty {
   background-image: url("../../assets/cawsplaceholder.svg"),
     linear-gradient(141.14deg, #5e17cc 11.06%, #381486 34.42%, #1f164c 56.62%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+.conflux-empty {
+  background-image: url("./assets/confluxPlaceholder.svg"),
+    linear-gradient(141.14deg, #5e17cc 11.06%, #381486 34.42%, #1f164c 56.62%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.coingeckoempty-wrapper {
+  --mask: linear-gradient(-150deg, #0000 25.57px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  background-size: contain;
+
+  box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.32);
+  border-radius: 6px;
 }
 
 .community-image {
@@ -1291,4 +1464,122 @@ input::-webkit-inner-spin-button {
   color: #fff;
   font-size: 16px;
   letter-spacing: 0.48px;
+}
+
+.mint-popup {
+  border-radius: 8px;
+  background: linear-gradient(127deg, #181636 35.2%, #7133e5 191.04%);
+
+  width: 30%;
+  position: fixed;
+  top: -10000px;
+  height: fit-content;
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  margin: auto;
+  z-index: 1000;
+  pointer-events: auto !important;
+  transition: all 0.25s ease-in-out;
+
+  @media screen and (max-width: 1455px) {
+    width: 40%;
+  }
+  @media screen and (max-width: 1300px) {
+    width: 50% !important;
+  }
+  @media screen and (max-width: 786px) {
+    width: 90% !important;
+  }
+}
+
+.mint-popup-title {
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 400px) {
+    font-size: 13px;
+  }
+}
+
+.mint-popup-desc {
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.288px;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
+}
+
+.available-mint-bg {
+  border-radius: 6px;
+  background: linear-gradient(
+    270deg,
+    rgba(86, 80, 216, 0) 0.07%,
+    #5650d8 51.44%,
+    rgba(86, 80, 216, 0) 100.72%
+  );
+  position: relative;
+  bottom: 20px;
+  .popup-available-mint {
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    margin-bottom: 0 !important;
+    @media screen and (max-width: 786px) {
+      font-size: 16px;
+    }
+    @media screen and (max-width: 400px) {
+      font-size: 13px;
+    }
+  }
+}
+
+.mint-popup-img {
+  position: relative;
+  bottom: 25px;
+}
+
+.popup-active {
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+  top: 0% !important;
+}
+
+@keyframes pulseDot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(183, 16, 97, 1);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(183, 16, 97, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(183, 16, 97, 0);
+  }
+}
+
+.pulsatingDot {
+  width: 11px;
+  height: 11px;
+  margin-right: 8px;
+  background-color: #b71061;
+  border-radius: 50%;
+  animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
 }

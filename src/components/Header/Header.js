@@ -35,6 +35,18 @@ import welcomeIcon from "../../screens/Marketplace/Notifications/assets/welcomeI
 import welcomeIconActive from "../../screens/Marketplace/Notifications/assets/welcomeIconActive.svg";
 import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
 
+import avax from "./assets/avax.svg";
+import bnb from "./assets/bnb.svg";
+import eth from "./assets/eth.svg";
+import base from "./assets/base.svg";
+import conflux from "./assets/conflux.svg";
+
+import error from "./assets/error.svg";
+import dropdown from "./assets/dropdown.svg";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import { handleSwitchNetworkhook } from "../../hooks/hooks";
+
 const Header = ({
   handleSignUp,
   handleRedirect,
@@ -44,16 +56,22 @@ const Header = ({
   myOffers,
   handleRefreshList,
   nftCount,
+  chainId,
+  handleSwitchNetwork,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
   const [isUnread, setisUnread] = useState(false);
   const [unreadNotifications, setunreadNotifications] = useState(0);
+  const [ethState, setEthState] = useState(true);
+  const [bnbState, setBnbState] = useState(false);
+  const [avaxState, setAvaxState] = useState(false);
+  const [baseState, setBaseState] = useState(false);
+  const [confluxState, setConfluxState] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
-  const domain = "https://www.worldofdypians.com";
 
   let id = Math.random().toString(36);
 
@@ -63,23 +81,92 @@ const Header = ({
     } else handleDisconnect();
   };
 
-  async function updateViewCount(tokenId, nftAddress) {
-    try {
-      const response = await fetch("https://api.worldofdypians.com/nft-view", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ tokenId, nftAddress }),
-      });
-      const data = await response.json();
-      console.log(
-        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
-      );
-    } catch (error) {
-      console.error("Error updating view count:", error);
+  const setActiveChain = () => {
+    if (chainId) {
+      if (chainId === 1) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(true);
+        setBaseState(false);
+      } else if (chainId === 43114) {
+        setAvaxState(true);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+      } else if (chainId === 8453) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(true);
+      } else if (chainId === 56) {
+        setAvaxState(false);
+        setBnbState(true);
+        setEthState(false);
+        setBaseState(false);
+      } else if (chainId === 1030) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(true);
+      } else {
+        setAvaxState(false);
+        setBnbState(false);
+        setBaseState(false);
+        setEthState(false);
+      }
     }
-  }
+  };
+
+  const handleEthPool = async () => {
+    await handleSwitchNetworkhook("0x1")
+      .then(() => {
+        handleSwitchNetwork(1);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleBnbPool = async () => {
+    await handleSwitchNetworkhook("0x38")
+      .then(() => {
+        handleSwitchNetwork(56);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleAvaxPool = async () => {
+    await handleSwitchNetworkhook("0xa86a")
+      .then(() => {
+        handleSwitchNetwork(43114);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleBasePool = async () => {
+    await handleSwitchNetworkhook("0x2105")
+      .then(() => {
+        handleSwitchNetwork(8453);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleConfluxPool = async () => {
+    await handleSwitchNetworkhook("0x406")
+      .then(() => {
+        handleSwitchNetwork(1030);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   async function markNotificationAsRead(walletAddress, notificationId) {
     try {
@@ -92,20 +179,6 @@ const Header = ({
       handleRefreshList();
     } catch (error) {
       console.error("Error marking notification as read:", error.message);
-    }
-  }
-
-  async function deleteNotification(notificationId) {
-    try {
-      await axios.delete(
-        `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-          coinbase
-        )}/${notificationId}`
-      );
-      console.log("Notification deleted");
-      handleRefreshList();
-    } catch (error) {
-      console.error("Error deleting notification:", error.message);
     }
   }
 
@@ -153,9 +226,27 @@ const Header = ({
   };
 
   useEffect(() => {
+    if (chainId === 1) {
+      handleSwitchNetwork(1);
+    }
+
+    if (chainId === 56) {
+      handleSwitchNetwork(56);
+    }
+
+    if (chainId === 43114) {
+      handleSwitchNetwork(43114);
+    }
+  }, [chainId, coinbase]);
+
+  useEffect(() => {
+    setActiveChain();
+  }, [chainId, ethState]);
+
+  useEffect(() => {
     checkRead();
   }, [myOffers, coinbase, nftCount]);
- 
+
   return (
     <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
@@ -286,26 +377,21 @@ const Header = ({
                               className="position-relative header-notification"
                               key={index}
                             >
-                              <NavLink
-                                to={
-                                  nft.welcome === 'yes' ? '/marketplace' :
-                                  nft.redirect_link 
-                                    ? nft.redirect_link.slice(
-                                      domain.length,
-                                      nft.redirect_link.length
-                                    )
-                                    : `/marketplace/nft/${
+                              <a
+                                href={
+                                  nft.welcome === "yes"
+                                    ? "https://www.worldofdypians.com/marketplace"
+                                    : nft.redirect_link
+                                    ? nft.redirect_link
+                                    : `https://www.worldofdypians.com/marketplace/nft/${
                                         nft.tokenId
                                       }/${nft.nftAddress.toLowerCase()}`
                                 }
-                                 
-                                rel='noreferrer'
+                                rel="noreferrer"
                                 style={{ textDecoration: "none" }}
-                                
                                 onClick={() => {
                                   setOpenNotifications(false);
-                                    markNotificationAsRead(coinbase, nft._id);
-                                 
+                                  markNotificationAsRead(coinbase, nft._id);
                                 }}
                                 className="d-flex flex-column gap-1 p-3 header-notification-item"
                               >
@@ -316,7 +402,8 @@ const Header = ({
                                     src={
                                       nft.bought === "yes" && nft.read === false
                                         ? cartIconActive
-                                        : nft.bought === "yes" && nft.read === true
+                                        : nft.bought === "yes" &&
+                                          nft.read === true
                                         ? cartIcon
                                         : nft.offer === "yes" &&
                                           nft.read === false
@@ -327,8 +414,7 @@ const Header = ({
                                         : nft.buy === "yes" &&
                                           nft.read === false
                                         ? transferIconActive
-                                        : nft.buy === "yes" &&
-                                          nft.read === true
+                                        : nft.buy === "yes" && nft.read === true
                                         ? transferIcon
                                         : //welcome
                                         nft.welcome === "yes" &&
@@ -394,8 +480,7 @@ const Header = ({
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}.`
-                                    :
-                                    nft.buy === "yes"
+                                    : nft.buy === "yes"
                                     ? `Your  ${
                                         nft.nftAddress.toLowerCase() ===
                                         window.config.nft_caws_address.toLowerCase()
@@ -405,8 +490,7 @@ const Header = ({
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId} was sold.`
-                                    :
-                                     nft.offer === "yes"
+                                    : nft.offer === "yes"
                                     ? `There is a new offer for your ${
                                         nft.nftAddress.toLowerCase() ===
                                         window.config.nft_caws_address.toLowerCase()
@@ -416,12 +500,12 @@ const Header = ({
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}`
-                                    : nft.description}
+                                    : nft.description?.slice(0,150) + '...'}
                                 </p>
                                 <span className="notification-relative-time mb-0">
                                   {getRelativeTime(nft.timestamp)}
                                 </span>
-                              </NavLink>
+                              </a>
                               {/* <div
                                 className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
                                 onClick={() => {
@@ -452,6 +536,68 @@ const Header = ({
                   </div>
                 </OutsideClickHandler>
               </div>
+              <DropdownButton
+                id="dropdown-basic-button"
+                className="d-flex align-items-center justify-content-center"
+                title={
+                  <span className="dropdown-title">
+                    <img
+                      src={
+                        ethState === true
+                          ? eth
+                          : bnbState === true
+                          ? bnb
+                          // : avaxState === true
+                          // ? avax
+                          // : baseState === true
+                          // ? base
+                          // : confluxState === true
+                          // ? conflux
+                          : error
+                      }
+                      height={16}
+                      width={16}
+                      alt=""
+                    />
+                    <span className="change-chain-text d-none d-lg-flex">
+                      {ethState === true
+                        ? "Ethereum"
+                        : bnbState === true
+                        ? "BNB Chain"
+                        // : avaxState === true
+                        // ? "Avalanche"
+                        // : baseState === true
+                        // ? "Base"
+                        // : confluxState === true
+                        // ? "Conflux"
+                        : "Unsupported Chain"}
+                    </span>
+
+                    <img src={dropdown} alt="" />
+                  </span>
+                }
+              >
+                <Dropdown.Item onClick={() => handleEthPool()}>
+                  <img src={eth} alt="" />
+                  Ethereum
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleBnbPool()}>
+                  <img src={bnb} alt="" />
+                  BNB Chain
+                </Dropdown.Item>
+                {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
+                  <img src={avax} alt="" />
+                  Avalanche
+                </Dropdown.Item> */}
+                {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
+                  <img src={conflux} alt="" />
+                  Conflux
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleBasePool()}>
+                  <img src={base} alt="" />
+                  Base
+                </Dropdown.Item> */}
+              </DropdownButton>
               <Clipboard
                 component="div"
                 data-event="click"
