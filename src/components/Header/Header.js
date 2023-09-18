@@ -551,8 +551,8 @@ const Header = ({
                           // ? avax
                           // : baseState === true
                           // ? base
-                          // : confluxState === true
-                          // ? conflux
+                          : confluxState === true
+                          ? conflux
                           : error
                       }
                       height={16}
@@ -568,8 +568,8 @@ const Header = ({
                         // ? "Avalanche"
                         // : baseState === true
                         // ? "Base"
-                        // : confluxState === true
-                        // ? "Conflux"
+                        : confluxState === true
+                        ? "Conflux"
                         : "Unsupported Chain"}
                     </span>
 
@@ -589,11 +589,11 @@ const Header = ({
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-                {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
+                 <Dropdown.Item onClick={() => handleConfluxPool()}>
                   <img src={conflux} alt="" />
                   Conflux
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBasePool()}>
+              {/*  <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
                 </Dropdown.Item> */}
