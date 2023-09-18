@@ -97,6 +97,7 @@ const BetaPassNFT = ({
   totalConfluxNft,
   myNFTSCoingecko,
   handleSwitchNetwork,
+  success,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -258,7 +259,11 @@ const BetaPassNFT = ({
   };
 
   async function connectWallet() {
-    if (window.ethereum) {
+    if (!isConnected) {
+      showWalletConnect();
+    }
+    else if(isConnected)
+   { if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       try {
         await window.ethereum?.enable();
@@ -291,7 +296,7 @@ const BetaPassNFT = ({
       return true;
     } else {
       throw new Error("No web3 detected!");
-    }
+    }}
   }
 
   const signWalletPublicAddress = async () => {
@@ -348,7 +353,6 @@ const BetaPassNFT = ({
       console.error("Error updating view count:", error);
     }
   }
-
 
   const { terms } = useParams();
 
@@ -408,10 +412,20 @@ const BetaPassNFT = ({
   }, [data]);
 
   useEffect(() => {
-    if (dataNonce?.generateWalletNonce) {
+    if (dataNonce?.generateWalletNonce && isConnected) {
       signWalletPublicAddress();
     }
-  }, [dataNonce]);
+  }, [dataNonce,isConnected]);
+
+  console.log(success, isConnected, coinbase)
+  useEffect(() => {
+    if (success === true &&
+      !data.getPlayer.wallet) {
+      setTimeout(() => {
+        connectWallet();
+      }, 2000);
+    }
+  }, [success]);
 
   return (
     <>
@@ -1272,7 +1286,10 @@ const BetaPassNFT = ({
                             <NavLink
                               to={`/marketplace/nft/${myNFTSCoingecko[0]}/${window.config.nft_coingecko_address}`}
                               onClick={() => {
-                                updateViewCount(myNFTSCoingecko[0], window.config.nft_coingecko_address);
+                                updateViewCount(
+                                  myNFTSCoingecko[0],
+                                  window.config.nft_coingecko_address
+                                );
                               }}
                             >
                               <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">

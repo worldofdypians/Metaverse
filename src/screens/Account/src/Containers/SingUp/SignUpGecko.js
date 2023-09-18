@@ -162,7 +162,6 @@ function SignUpGecko({
 
         <div className="summaryseparator"></div>
         <Button
-          disabled={disabled}
           onPress={verifyEmailValidationCode}
           title={"Continue  >"}
           type={"coingecko"}
