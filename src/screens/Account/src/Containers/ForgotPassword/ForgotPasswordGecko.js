@@ -10,7 +10,7 @@ import {
 } from "../../Components";
 import classes from "./ForgotPassword.module.css";
 
-const ForgotPasswordGecko = () => {
+const ForgotPasswordGecko = ({onResetPass}) => {
   const [email, setEmail] = useState("");
   const [isEmailSentSucces, setEmailSentSucces] = useState(false);
   const [error, setError] = useState("");
@@ -41,50 +41,39 @@ const ForgotPasswordGecko = () => {
     return (
       <div className={classes.containergecko}>
         <span className={classes.createplayertxt}>
-          We sent you a link at your email.
+          *We sent you a link at your email.
         </span>
-        <h1
-          onClick={() => {
-            history("/");
-          }}
-          className={classes.succesfulBack}
-        >
-          Back to Sign In
-        </h1>
+        <span
+        onClick={() => {
+          onResetPass();
+        }}
+        className={classes.errorText2}
+      >
+        Back to Sign In
+      </span>
       </div>
     );
   }
 
   return (
     <div className={classes.containergecko}>
-      <h1
-        style={{
-          fontSize: 24,
-          marginBottom: 40,
-          fontWeight: 500,
-        }}
-      >
-        Reset Password
-      </h1>
+      <h6 className="land-name">Reset Password</h6>
       <Input
-       type={"coingecko"}
+        type={"coingecko"}
         placeHolder="Email"
         value={email}
         onChange={onChangeEmail}
       />
-      <Button
-       type={"coingecko"}
-        onPress={handleEmail}
-        title={"Send Email"}
-      />
-      <h1
+       <div className="summaryseparator"></div>
+      <Button type={"coingecko"} onPress={handleEmail} title={"Send Email"} />
+      <span
         onClick={() => {
-          history("/");
+          onResetPass();
         }}
-        className={classes.succesfulBack}
+        className={classes.errorText2}
       >
         Back to Sign In
-      </h1>
+      </span>
     </div>
 
     //   <ErrorAlert error={error} />
