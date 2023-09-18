@@ -1323,6 +1323,12 @@ function App() {
     getallNfts();
   }, [nftCount]);
 
+  const checkData = async () => {
+    if (coinbase) {
+      navigate("/auth");
+    }
+  };
+
   useEffect(() => {
     if (listedNFTS2.length > 0 && recentListedNFTS2.length > 0) {
       getOtherNfts();
@@ -1494,9 +1500,7 @@ function App() {
                     isConnected={isConnected}
                     chainId={chainId}
                     handleConnect={handleConnection}
-                    onSigninClick={() => {
-                      setShowWalletModalRegister2(true);
-                    }}
+                    onSigninClick={checkData}
                     success={success}
                     availableTime={availTime}
                   />
