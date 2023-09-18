@@ -190,6 +190,7 @@ const BetaPassNFT = ({
   const [openTerms, setOpenTerms] = useState(false);
   const [openConflux, setOpenConflux] = useState(false);
   const [nftSymbol, setnftSymbol] = useState("");
+  const [activeTab, setactiveTab] = useState("create");
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
@@ -261,42 +262,42 @@ const BetaPassNFT = ({
   async function connectWallet() {
     if (!isConnected) {
       showWalletConnect();
-    }
-    else if(isConnected)
-   { if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      try {
-        await window.ethereum?.enable();
-        console.log("Connected!");
+    } else if (isConnected) {
+      if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        try {
+          await window.ethereum?.enable();
+          console.log("Connected!");
 
-        let coinbase_address;
-        await window.ethereum
-          .request({
-            method: "eth_requestAccounts",
-          })
-          .then((data) => {
-            coinbase_address = data[0];
+          let coinbase_address;
+          await window.ethereum
+            .request({
+              method: "eth_requestAccounts",
+            })
+            .then((data) => {
+              coinbase_address = data[0];
+            });
+          // window.coinbase_address = coinbase_address.pop();
+          await generateNonce({
+            variables: {
+              publicAddress: coinbase_address,
+            },
           });
-        // window.coinbase_address = coinbase_address.pop();
-        await generateNonce({
-          variables: {
-            publicAddress: coinbase_address,
-          },
-        });
+          return true;
+        } catch (e) {
+          console.error(e);
+          console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", e);
+          throw new Error("User denied wallet connection!");
+        }
+      } else if (window.web3) {
+        window.web3 = new Web3(window.web3.currentProvider);
+        console.log("connected to old web3");
+        // onConnect();
         return true;
-      } catch (e) {
-        console.error(e);
-        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", e);
-        throw new Error("User denied wallet connection!");
+      } else {
+        throw new Error("No web3 detected!");
       }
-    } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-      console.log("connected to old web3");
-      // onConnect();
-      return true;
-    } else {
-      throw new Error("No web3 detected!");
-    }}
+    }
   }
 
   const signWalletPublicAddress = async () => {
@@ -415,21 +416,22 @@ const BetaPassNFT = ({
     if (dataNonce?.generateWalletNonce && isConnected) {
       signWalletPublicAddress();
     }
-  }, [dataNonce,isConnected]);
+  }, [dataNonce, isConnected]);
 
-  
   useEffect(() => {
-    if (success === true &&
+    if (
+      success === true &&
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
       data.getPlayer.playerId &&
-      !data.getPlayer.wallet.publicAddress) {
+      !data.getPlayer.wallet.publicAddress
+    ) {
       setTimeout(() => {
         connectWallet();
       }, 2000);
     }
-  }, [success,data]);
+  }, [success, data]);
 
   return (
     <>
@@ -1114,7 +1116,32 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
                       {!alreadyRegistered && (
-                        <h6 className="land-name">Create account</h6>
+                        <div className="d-flex align-items-center justify-content-around gap-2">
+                          <h6
+                            className={
+                              activeTab === "create"
+                                ? "land-name2-active"
+                                : "land-name2-passive"
+                            }
+                            onClick={() => {
+                              setactiveTab("create");
+                            }}
+                          >
+                            Create account
+                          </h6>
+                          <h6
+                            className={
+                              activeTab === "login"
+                                ? "land-name2-active"
+                                : "land-name2-passive"
+                            }
+                            onClick={() => {
+                              setactiveTab("login");
+                            }}
+                          >
+                            Login
+                          </h6>
+                        </div>
                       )}
                       {alreadyRegistered && (
                         <h6 className="land-name">
@@ -1125,7 +1152,7 @@ const BetaPassNFT = ({
                             : "Registered"}{" "}
                         </h6>
                       )}
-                      {!alreadyRegistered && (
+                      {!alreadyRegistered && activeTab === "create" && (
                         <div>
                           <ul class="timeline m-0 p-0" id="timeline">
                             <li class="col-3 li complete">
@@ -1180,6 +1207,7 @@ const BetaPassNFT = ({
                           }}
                           mintTitle={selectedMint.cardTitle}
                           chainId={chainId}
+                          activeTab={activeTab}
                         />
                       )}
                       {playerCreation === true &&

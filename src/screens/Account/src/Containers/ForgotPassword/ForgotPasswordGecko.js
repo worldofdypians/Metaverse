@@ -10,7 +10,7 @@ import {
 } from "../../Components";
 import classes from "./ForgotPassword.module.css";
 
-const ForgotPasswordGecko = ({onResetPass}) => {
+const ForgotPasswordGecko = ({ onResetPass, mintTitle }) => {
   const [email, setEmail] = useState("");
   const [isEmailSentSucces, setEmailSentSucces] = useState(false);
   const [error, setError] = useState("");
@@ -39,11 +39,30 @@ const ForgotPasswordGecko = ({onResetPass}) => {
 
   if (isEmailSentSucces) {
     return (
+      // <div className={classes.containergecko}>
+      //   <span className={classes.createplayertxt}>
+      //     *We sent you a link at your email.
+      //   </span>
+      //   <span
+      //     onClick={() => {
+      //       onResetPass();
+      //     }}
+      //     className={classes.errorText2}
+      //   >
+      //     Back to Sign In
+      //   </span>
+      // </div>
       <div className={classes.containergecko}>
-        <span className={classes.createplayertxt}>
-          *We sent you a link at your email.
-        </span>
-        <span
+      <h6 className="land-name">Reset Password</h6>
+       <span className={classes.createplayertxt}>
+          *We sent you a link at your email. Check your inbox and reset your password. Then try to login again.
+         </span>
+      <div className="summaryseparator"></div>
+      <span className="footertxt-coingecko mt-1">
+        Users who have claimed the {mintTitle} NFT are required to create a WoD Account to
+        receive the NFT and participate in the exclusive event.
+      </span>
+      <span
         onClick={() => {
           onResetPass();
         }}
@@ -51,20 +70,28 @@ const ForgotPasswordGecko = ({onResetPass}) => {
       >
         Back to Sign In
       </span>
-      </div>
+    </div>
     );
   }
 
   return (
     <div className={classes.containergecko}>
       <h6 className="land-name">Reset Password</h6>
+      <span className={classes.createplayertxt}>
+        Please put your email address in the field below. After submitting, the
+        password reset link will be sent to your inbox.
+      </span>
       <Input
         type={"coingecko"}
         placeHolder="Email"
         value={email}
         onChange={onChangeEmail}
       />
-       <div className="summaryseparator"></div>
+      <div className="summaryseparator"></div>
+      <span className="footertxt-coingecko mt-1">
+        Users who have claimed the {mintTitle} NFT are required to create a WoD Account to
+        receive the NFT and participate in the exclusive event.
+      </span>
       <Button type={"coingecko"} onPress={handleEmail} title={"Send Email"} />
       <span
         onClick={() => {

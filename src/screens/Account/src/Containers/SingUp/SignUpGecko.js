@@ -14,6 +14,7 @@ function SignUpGecko({
   onSuccessLogin,
   mintTitle,
   chainId,
+  activeTab
 }) {
   const {
     isAuthenticated,
@@ -170,7 +171,7 @@ function SignUpGecko({
     );
   }
 
-  if (userExists) {
+  if (userExists || activeTab === 'login') {
     return (
       <LoginGecko
         mintTitle={mintTitle}

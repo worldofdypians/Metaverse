@@ -155,7 +155,7 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
 
         </>
       ) : (
-        <ForgotPasswordGecko onResetPass={()=>{setshowForgotPassword(false)}}/>
+        <ForgotPasswordGecko onResetPass={()=>{setshowForgotPassword(false)}} mintTitle={mintTitle}/>
       )}
       {/* <ErrorAlert error={loginError} /> */}
     </div>
