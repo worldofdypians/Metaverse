@@ -190,6 +190,7 @@ const BetaPassNFT = ({
   const [openTerms, setOpenTerms] = useState(false);
   const [openConflux, setOpenConflux] = useState(false);
   const [nftSymbol, setnftSymbol] = useState("");
+  const [activeTab, setactiveTab] = useState("create");
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
@@ -261,42 +262,42 @@ const BetaPassNFT = ({
   async function connectWallet() {
     if (!isConnected) {
       showWalletConnect();
-    }
-    else if(isConnected)
-   { if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      try {
-        await window.ethereum?.enable();
-        console.log("Connected!");
+    } else if (isConnected) {
+      if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        try {
+          await window.ethereum?.enable();
+          console.log("Connected!");
 
-        let coinbase_address;
-        await window.ethereum
-          .request({
-            method: "eth_requestAccounts",
-          })
-          .then((data) => {
-            coinbase_address = data[0];
+          let coinbase_address;
+          await window.ethereum
+            .request({
+              method: "eth_requestAccounts",
+            })
+            .then((data) => {
+              coinbase_address = data[0];
+            });
+          // window.coinbase_address = coinbase_address.pop();
+          await generateNonce({
+            variables: {
+              publicAddress: coinbase_address,
+            },
           });
-        // window.coinbase_address = coinbase_address.pop();
-        await generateNonce({
-          variables: {
-            publicAddress: coinbase_address,
-          },
-        });
+          return true;
+        } catch (e) {
+          console.error(e);
+          console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", e);
+          throw new Error("User denied wallet connection!");
+        }
+      } else if (window.web3) {
+        window.web3 = new Web3(window.web3.currentProvider);
+        console.log("connected to old web3");
+        // onConnect();
         return true;
-      } catch (e) {
-        console.error(e);
-        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", e);
-        throw new Error("User denied wallet connection!");
+      } else {
+        throw new Error("No web3 detected!");
       }
-    } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-      console.log("connected to old web3");
-      // onConnect();
-      return true;
-    } else {
-      throw new Error("No web3 detected!");
-    }}
+    }
   }
 
   const signWalletPublicAddress = async () => {
@@ -415,21 +416,22 @@ const BetaPassNFT = ({
     if (dataNonce?.generateWalletNonce && isConnected) {
       signWalletPublicAddress();
     }
-  }, [dataNonce,isConnected]);
+  }, [dataNonce, isConnected]);
 
-  
   useEffect(() => {
-    if (success === true &&
+    if (
+      success === true &&
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
       data.getPlayer.playerId &&
-      !data.getPlayer.wallet.publicAddress) {
+      !data.getPlayer.wallet.publicAddress
+    ) {
       setTimeout(() => {
         connectWallet();
       }, 2000);
     }
-  }, [success,data]);
+  }, [success, data]);
 
   return (
     <>
@@ -1086,13 +1088,39 @@ const BetaPassNFT = ({
                     </div>
                   ) : (
                     <div
-                      className={` ${
-                        playerCreation
-                          ? "justify-content-center"
-                          : "justify-content-between"
-                      } p-4 mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
+                      className={`  justify-content-start
+                     mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
-                      {/* <h6
+                      {!alreadyRegistered && (
+                        <div className="d-flex align-items-center justify-content-around gap-2">
+                          <button
+                            className={
+                              activeTab === "create"
+                                ? "land-name2-active w-100"
+                                : "land-name2-passive w-100"
+                            }
+                            onClick={() => {
+                              setactiveTab("create");
+                            }}
+                          >
+                            Create Account
+                          </button>
+                          <button
+                            className={
+                              activeTab === "login"
+                                ? "land-name2-active w-100"
+                                : "land-name2-passive w-100"
+                            }
+                            onClick={() => {
+                              setactiveTab("login");
+                            }}
+                          >
+                            Sign in
+                          </button>
+                        </div>
+                      )}
+                      <div className="p-4 d-flex flex-column gap-3 h-100">
+                        {/* <h6
                       className="land-placeholder mb-0"
                       style={{ marginLeft: 11 }}
                     >
@@ -1113,198 +1141,164 @@ const BetaPassNFT = ({
                         Get Beta Pass
                       </button>
                     </div> */}
-                      {!alreadyRegistered && (
-                        <h6 className="land-name">Create account</h6>
-                      )}
-                      {alreadyRegistered && (
-                        <h6 className="land-name">
-                          {totalCoingeckoNft > 0 ||
-                          totalGateNft > 0 ||
-                          totalConfluxNft > 0
-                            ? "My NFT"
-                            : "Registered"}{" "}
-                        </h6>
-                      )}
-                      {!alreadyRegistered && (
-                        <div>
-                          <ul class="timeline m-0 p-0" id="timeline">
-                            <li class="col-3 li complete">
-                              <div class="status">
-                                <h4 className="listtext"> Create </h4>
-                              </div>
-                            </li>
-                            <li class={`col-3 li ${showVerify && "complete"} `}>
-                              <div class="status">
-                                <h4 className="listtext"> Verify </h4>
-                              </div>
-                            </li>
-                            <li
-                              class={`col-3 li ${
-                                playerCreation && "complete"
-                              } `}
-                            >
-                              <div class="status">
-                                <h4 className="listtext"> Profile </h4>
-                              </div>
-                            </li>
-                            <li
-                              class={`col-2 li ${linkWallet && "complete"}`}
-                              style={{ width: 0 }}
-                            >
-                              <div class="status">
-                                <h4
-                                  className="listtext"
-                                  style={{ width: 0, whiteSpace: "nowrap" }}
-                                >
-                                  Link Wallet
-                                </h4>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                      {playerCreation === false && !alreadyRegistered && (
-                        <SignUpGecko
-                          onSuccessVerify={(value) => {
-                            setplayerCreation(value);
-                          }}
-                          onEmailVerify={(value) => {
-                            setEmailVerify(value);
-                          }}
-                          onShowVerify={(value) => {
-                            setShowVerify(value);
-                          }}
-                          onSuccessLogin={() => {
-                            setalreadyRegistered(true);
-                            refetchPlayer();
-                          }}
-                          mintTitle={selectedMint.cardTitle}
-                          chainId={chainId}
-                        />
-                      )}
-                      {playerCreation === true &&
-                        linkWallet === false &&
-                        !alreadyRegistered && (
-                          <PlayerCreationGecko
-                            onSuccessCreation={() => {
-                              setLinkWallet(true);
+
+                        {alreadyRegistered && (
+                          <h6 className="land-name">
+                            {totalCoingeckoNft > 0 ||
+                            totalGateNft > 0 ||
+                            totalConfluxNft > 0
+                              ? "My NFT"
+                              : "Registered"}{" "}
+                          </h6>
+                        )}
+                       
+                        {!alreadyRegistered && activeTab === "create" && (
+                          <div>
+                            <ul class="timeline m-0 p-0" id="timeline">
+                              <li class="col-3 li complete">
+                                <div class="status">
+                                  <h4 className="listtext"> Create </h4>
+                                </div>
+                              </li>
+                              <li
+                                class={`col-3 li ${showVerify && "complete"} `}
+                              >
+                                <div class="status">
+                                  <h4 className="listtext"> Verify </h4>
+                                </div>
+                              </li>
+                              <li
+                                class={`col-3 li ${
+                                  playerCreation && "complete"
+                                } `}
+                              >
+                                <div class="status">
+                                  <h4 className="listtext"> Profile </h4>
+                                </div>
+                              </li>
+                              <li
+                                class={`col-2 li ${linkWallet && "complete"}`}
+                                style={{ width: 0 }}
+                              >
+                                <div class="status">
+                                  <h4
+                                    className="listtext"
+                                    style={{ width: 0, whiteSpace: "nowrap" }}
+                                  >
+                                    Link Wallet
+                                  </h4>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+                        {playerCreation === false && !alreadyRegistered && (
+                          <SignUpGecko
+                            onSuccessVerify={(value) => {
+                              setplayerCreation(value);
+                            }}
+                            onEmailVerify={(value) => {
+                              setEmailVerify(value);
+                            }}
+                            onShowVerify={(value) => {
+                              setShowVerify(value);
+                            }}
+                            onSuccessLogin={() => {
+                              setalreadyRegistered(true);
+                              refetchPlayer();
                             }}
                             mintTitle={selectedMint.cardTitle}
+                            chainId={chainId}
+                            activeTab={activeTab}
+                            isExistingUser={() => {
+                              setactiveTab("login");
+                            }}
                           />
                         )}
-
-                      {linkWallet === true && !alreadyRegistered && (
-                        <div className="d-flex flex-column gap-4 justify-content-between p-4">
-                          <span className={"createplayertxt"}>
-                            *Make sure to connect the same wallet address as the
-                            one you used for{" "}
-                            {mintTitle === "coingecko"
-                              ? "CoinGecko Candy Rewards"
-                              : "Conflux Giveaway"}
-                            .
-                          </span>
-                          <div
-                            className="walletconnectBtn w-100"
-                            onClick={connectWallet}
-                          >
-                            <div className="d-flex gap-2 justify-content-between align-items-center">
-                              <div className="d-flex gap-2 align-items-center">
-                                <img src={walletImg} alt="" />
-                                <div className="d-flex flex-column">
-                                  <span className="secondTitle">
-                                    Connect wallet
-                                  </span>
-
-                                  <span className="firsttitle">
-                                    Link your wallet
-                                  </span>
-                                </div>
-                              </div>
-                              <img src={circleArrow} alt="" />
-                            </div>
-                          </div>
-                          <span className="footertxt-coingecko mt-4">
-                            Users who have claimed the {selectedMint.cardTitle}{" "}
-                            NFT are required to create a WoD Account to receive
-                            the NFT and participate in the exclusive event.
-                          </span>
-                          <div className="summaryseparator"></div>
-                        </div>
-                      )}
-                      {alreadyRegistered && (
-                        <div className="d-flex flex-column justify-content-between h-100">
-                          {totalCoingeckoNft === 0 &&
-                          mintTitle === "coingecko" ? (
-                            <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
-                              <div
-                                className={`coingeckoempty-wrapper ${
-                                  mintTitle !== "timepiece" &&
-                                  totalCoingeckoNft === 0 &&
-                                  mintTitle === "coingecko"
-                                    ? "conflux-empty"
-                                    : totalCoingeckoNft > 0 &&
-                                      mintTitle === "coingecko"
-                                    ? "coingecko-active"
-                                    : totalGateNft > 0 && mintTitle === "gate"
-                                    ? "gate-active"
-                                    : totalConfluxNft > 0 &&
-                                      mintTitle === "conflux"
-                                    ? "conflux-active"
-                                    : "conflux-empty"
-                                } d-flex justify-content-center align-items-center p-3 position-relative`}
-                                style={{
-                                  height: windowSize.width > 991 ? 210 : 295,
-                                }}
-                              ></div>
-                              <div
-                                className="genesis-desc nomask px-3 py-2 position-relative"
-                                style={{
-                                  bottom:
-                                    totalCoingeckoNft > 0 ||
-                                    totalConfluxNft > 0 ||
-                                    totalGateNft > 0
-                                      ? "20px"
-                                      : "5px",
-                                  minWidth: "100%",
-                                  maxWidth: "100%",
-                                }}
-                              >
-                                <h6
-                                  className="land-desc w-75 m-auto text-center justify-content-center"
-                                  style={{ fontWeight: 500, fontSize: 16 }}
-                                >
-                                  {mintTitle === "coingecko" ||
-                                  mintTitle === "gate"
-                                    ? nftSymbol
-                                    : selectedMint.cardTitle}{" "}
-                                  {mintTitle === "coingecko"
-                                    ? totalCoingeckoNft > 0 &&
-                                      `#${myNFTSCoingecko[0]}`
-                                    : mintTitle === "gate"
-                                    ? totalGateNft > 0 && `#${myGateNfts[0]}`
-                                    : ""}
-                                </h6>
-                              </div>
-                            </div>
-                          ) : (
-                            <NavLink
-                              to={`/marketplace/nft/${myNFTSCoingecko[0]}/${window.config.nft_coingecko_address}`}
-                              onClick={() => {
-                                updateViewCount(
-                                  myNFTSCoingecko[0],
-                                  window.config.nft_coingecko_address
-                                );
+                        {playerCreation === true &&
+                          linkWallet === false &&
+                          !alreadyRegistered && (
+                            <PlayerCreationGecko
+                              onSuccessCreation={() => {
+                                setLinkWallet(true);
                               }}
+                              mintTitle={selectedMint.cardTitle}
+                            />
+                          )}
+
+                        {linkWallet === true && !alreadyRegistered && (
+                          <div className="d-flex flex-column gap-4 justify-content-between p-4">
+                            <span className={"createplayertxt"}>
+                              *Make sure to connect the same wallet address as
+                              the one you used for{" "}
+                              {mintTitle === "coingecko"
+                                ? "CoinGecko Candy Rewards"
+                                : "Conflux Giveaway"}
+                              .
+                            </span>
+                            <div
+                              className="walletconnectBtn w-100"
+                              onClick={connectWallet}
                             >
-                              <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
+                              <div className="d-flex gap-2 justify-content-between align-items-center">
+                                <div className="d-flex gap-2 align-items-center">
+                                  <img src={walletImg} alt="" />
+                                  <div className="d-flex flex-column">
+                                    <span className="secondTitle">
+                                      Connect wallet
+                                    </span>
+
+                                    <span className="firsttitle">
+                                      Link your wallet
+                                    </span>
+                                  </div>
+                                </div>
+                                <img src={circleArrow} alt="" />
+                              </div>
+                            </div>
+                            <span className="footertxt-coingecko mt-4">
+                              Users who have claimed the{" "}
+                              {selectedMint.cardTitle} NFT are required to
+                              create a WoD Account to receive the NFT and
+                              participate in the exclusive event.
+                            </span>
+                            <div className="summaryseparator"></div>
+                          </div>
+                        )}
+                        {alreadyRegistered && (
+                          <div className="d-flex flex-column justify-content-between h-100">
+                            {totalCoingeckoNft === 0 &&
+                            mintTitle === "coingecko" ? (
+                              <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
                                 <div
-                                  className={`coingeckoempty-wrapper coingecko-active d-flex justify-content-center align-items-center p-3 position-relative`}
-                                  style={{ height: 210 }}
+                                  className={`coingeckoempty-wrapper ${
+                                    mintTitle !== "timepiece" &&
+                                    totalCoingeckoNft === 0 &&
+                                    mintTitle === "coingecko"
+                                      ? "conflux-empty"
+                                      : totalCoingeckoNft > 0 &&
+                                        mintTitle === "coingecko"
+                                      ? "coingecko-active"
+                                      : totalGateNft > 0 && mintTitle === "gate"
+                                      ? "gate-active"
+                                      : totalConfluxNft > 0 &&
+                                        mintTitle === "conflux"
+                                      ? "conflux-active"
+                                      : "conflux-empty"
+                                  } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                  style={{
+                                    height: windowSize.width > 991 ? 210 : 295,
+                                  }}
                                 ></div>
                                 <div
                                   className="genesis-desc nomask px-3 py-2 position-relative"
                                   style={{
-                                    bottom: "20px",
+                                    bottom:
+                                      totalCoingeckoNft > 0 ||
+                                      totalConfluxNft > 0 ||
+                                      totalGateNft > 0
+                                        ? "20px"
+                                        : "5px",
                                     minWidth: "100%",
                                     maxWidth: "100%",
                                   }}
@@ -1318,39 +1312,80 @@ const BetaPassNFT = ({
                                       ? nftSymbol
                                       : selectedMint.cardTitle}{" "}
                                     {mintTitle === "coingecko"
-                                      ? `#${myNFTSCoingecko[0]}`
+                                      ? totalCoingeckoNft > 0 &&
+                                        `#${myNFTSCoingecko[0]}`
                                       : mintTitle === "gate"
-                                      ? `#${myGateNfts[0]}`
+                                      ? totalGateNft > 0 && `#${myGateNfts[0]}`
                                       : ""}
                                   </h6>
                                 </div>
                               </div>
-                            </NavLink>
-                          )}
-                          <span className="footertxt-coingecko">
-                            After NFT distribution, you can view{" "}
-                            {selectedMint.cardTitle}.
-                          </span>
-                          <div className="summaryseparator mt-3 mb-3"></div>
-                          <div className="d-flex align-items-center gap-2 justify-content-between">
-                            <a
-                              href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                              target="_blank"
-                              rel="noreferrer"
-                              className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
-                            >
-                              <img src={downloadArrow} alt="" /> Download
-                            </a>
-                            <NavLink
-                              to="/account"
-                              className="accountbtn-coingecko btn d-flex align-items-center gap-1"
-                            >
-                              <img src={user} alt="" />
-                              My Account
-                            </NavLink>
+                            ) : (
+                              <NavLink
+                                to={`/marketplace/nft/${myNFTSCoingecko[0]}/${window.config.nft_coingecko_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myNFTSCoingecko[0],
+                                    window.config.nft_coingecko_address
+                                  );
+                                }}
+                              >
+                                <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
+                                  <div
+                                    className={`coingeckoempty-wrapper coingecko-active d-flex justify-content-center align-items-center p-3 position-relative`}
+                                    style={{ height: 210 }}
+                                  ></div>
+                                  <div
+                                    className="genesis-desc nomask px-3 py-2 position-relative"
+                                    style={{
+                                      bottom: "20px",
+                                      minWidth: "100%",
+                                      maxWidth: "100%",
+                                    }}
+                                  >
+                                    <h6
+                                      className="land-desc w-75 m-auto text-center justify-content-center"
+                                      style={{ fontWeight: 500, fontSize: 16 }}
+                                    >
+                                      {mintTitle === "coingecko" ||
+                                      mintTitle === "gate"
+                                        ? nftSymbol
+                                        : selectedMint.cardTitle}{" "}
+                                      {mintTitle === "coingecko"
+                                        ? `#${myNFTSCoingecko[0]}`
+                                        : mintTitle === "gate"
+                                        ? `#${myGateNfts[0]}`
+                                        : ""}
+                                    </h6>
+                                  </div>
+                                </div>
+                              </NavLink>
+                            )}
+                            <span className="footertxt-coingecko">
+                              After NFT distribution, you can view{" "}
+                              {selectedMint.cardTitle}.
+                            </span>
+                            <div className="summaryseparator mt-3 mb-3"></div>
+                            <div className="d-flex align-items-center gap-2 justify-content-between">
+                              <a
+                                href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
+                              >
+                                <img src={downloadArrow} alt="" /> Download
+                              </a>
+                              <NavLink
+                                to="/account"
+                                className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                              >
+                                <img src={user} alt="" />
+                                My Account
+                              </NavLink>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>

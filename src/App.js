@@ -56,8 +56,8 @@ import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
-import { useEagerlyConnect } from "web3-connector";
-import { getConnectors, Web3ReactProvider } from "web3-connector";
+// import { useEagerlyConnect } from "web3-connector";
+// import { getConnectors, Web3ReactProvider } from "web3-connector";
 
 function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -147,10 +147,10 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  useEagerlyConnect();
-  const connectors = getConnectors({
-    1: [`${window.config.infura_endpoint}`],
-  });
+  // useEagerlyConnect();
+  // const connectors = getConnectors({
+  //   1: [`${window.config.infura_endpoint}`],
+  // });
 
 
 
@@ -1355,7 +1355,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <Web3ReactProvider connectors={connectors}>
+        {/* <Web3ReactProvider connectors={connectors}> */}
           <div className="container-fluid p-0 main-wrapper position-relative">
             <Header
               handleSignUp={handleShowWalletModal}
@@ -1875,7 +1875,7 @@ function App() {
               <Footer />
             )}
           </div>
-        </Web3ReactProvider>
+        {/* </Web3ReactProvider> */}
 
         {showWalletModal === true && (
           <RegisterModal
