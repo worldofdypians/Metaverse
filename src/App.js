@@ -414,6 +414,7 @@ function App() {
       });
 
       getMyNFTS(coinbase, "conflux").then((NFTS) => {
+        console.log(NFTS.length)
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
       });
