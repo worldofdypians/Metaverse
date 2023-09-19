@@ -308,17 +308,16 @@ function App() {
 
   const handleConnection = async () => {
     try {
-      // localStorage.setItem("logout", "false");
-      // await window.connectWallet().then((data) => {
-      //   setIsConnected(true);
-      // });
-      // await window.getCoinbase().then((data) => {
-      //   console.log(data);
-      //   setCoinbase(data);
-      // });
-      // setShowForms(true);
-      // setSuccess(true);
-      // connectWallet(ConnectionType.WALLET_CONNECT_NOTQR);
+      localStorage.setItem("logout", "false");
+      await window.connectWallet().then((data) => {
+        setIsConnected(true);
+      });
+      await window.getCoinbase().then((data) => {
+        console.log(data);
+        setCoinbase(data);
+      });
+      setShowForms(true);
+      setSuccess(true);
     } catch (e) {
       setShowWalletModal(false);
       setSuccess(true);
