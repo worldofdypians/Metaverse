@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Auth } from "aws-amplify";
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+// import { Link, Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
-import { ErrorAlert } from "../../Components";
+// import { ErrorAlert } from "../../Components";
 import ForgotPasswordGecko from "../ForgotPassword/ForgotPasswordGecko";
 
 function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
@@ -112,7 +112,7 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
       {showForgotPassword === false ? (
         <>
           <span className={classes.createplayertxt}>
-            *You already have an account. Please login to view details.
+          *Make sure to use the existing account details to log in to your account.
           </span>
           <Input
             type={"coingecko"}
@@ -126,14 +126,7 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
             placeHolder="Password"
             value={password}
             onChange={setPassword}
-          />
-          <span className="footertxt-coingecko mt-1">
-            Users who have claimed the {mintTitle} NFT are required to create a
-            WoD Account to receive the NFT and participate in the exclusive
-            event.
-          </span>
-
-          <span
+          />      <span
             className={classes.errorText2}
             onClick={() => {
               setshowForgotPassword(true);
@@ -141,6 +134,13 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
           >
             Forgot your password?
           </span>
+          <span className="footertxt-coingecko mt-1">
+            Users who have claimed the {mintTitle} NFT are required to create a
+            WoD Account to receive the NFT and participate in the exclusive
+            event.
+          </span>
+
+    
           <div className="summaryseparator"></div>
           {errorMsg !== "" && (
             <span className={classes.errorText}>{errorMsg}</span>
@@ -155,7 +155,7 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
 
         </>
       ) : (
-        <ForgotPasswordGecko onResetPass={()=>{setshowForgotPassword(false)}}/>
+        <ForgotPasswordGecko onResetPass={()=>{setshowForgotPassword(false)}} mintTitle={mintTitle}/>
       )}
       {/* <ErrorAlert error={loginError} /> */}
     </div>
