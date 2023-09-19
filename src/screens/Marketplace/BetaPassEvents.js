@@ -3,10 +3,10 @@ import greenArrow from "./assets/greenArrow.svg";
 
 const BetaPassEvents = () => {
   return (
-    <div class="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-      <div class="d-flex flex-column p-3">
-        <h6 class="upcoming-mint-title">Treasure Hunt</h6>
-        <p class="upcoming-mint-desc">
+    <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+      <div className="d-flex flex-column p-3">
+        <h6 className="upcoming-mint-title">Treasure Hunt</h6>
+        <p className="upcoming-mint-desc">
           Discover hidden treasures and local partner rewards in our exciting
           Treasure Hunt event!
         </p>
@@ -20,7 +20,7 @@ const BetaPassEvents = () => {
       <img
         src={require("./assets/treasurebg.png")}
         alt=""
-        class="upcoming-mint-img d-flex"
+        className="upcoming-mint-img d-flex"
       />
     </div>
   );

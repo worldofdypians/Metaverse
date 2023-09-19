@@ -34025,7 +34025,7 @@ async function connectWallet() {
     try {
       console.log("yes");
       await window.gatewallet.enable();
-      console.log("Connected!");
+      console.log("Connected2!");
       let coinbase_address = await window.gatewallet?.request({
         method: "eth_accounts",
       });

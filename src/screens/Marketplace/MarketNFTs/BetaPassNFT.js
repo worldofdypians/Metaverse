@@ -1141,14 +1141,14 @@ const BetaPassNFT = ({
                       )}
                       {!alreadyRegistered && (
                         <div>
-                          <ul class="timeline m-0 p-0" id="timeline">
-                            <li class="col-3 li complete">
-                              <div class="status">
+                          <ul className="timeline m-0 p-0" id="timeline">
+                            <li className="col-3 li complete">
+                              <div className="status">
                                 <h4 className="listtext"> Create </h4>
                               </div>
                             </li>
                             <li class={`col-3 li ${showVerify && "complete"} `}>
-                              <div class="status">
+                              <div className="status">
                                 <h4 className="listtext"> Verify </h4>
                               </div>
                             </li>
@@ -1157,7 +1157,7 @@ const BetaPassNFT = ({
                                 playerCreation && "complete"
                               } `}
                             >
-                              <div class="status">
+                              <div className="status">
                                 <h4 className="listtext"> Profile </h4>
                               </div>
                             </li>
@@ -1165,7 +1165,7 @@ const BetaPassNFT = ({
                               class={`col-2 li ${linkWallet && "complete"}`}
                               style={{ width: 0 }}
                             >
-                              <div class="status">
+                              <div className="status">
                                 <h4
                                   className="listtext"
                                   style={{ width: 0, whiteSpace: "nowrap" }}

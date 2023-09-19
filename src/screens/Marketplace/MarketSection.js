@@ -97,7 +97,7 @@ const MarketSection = ({
       eventDesc: "Event available for Beta Pass NFT owners",
       eventImg: "treasure.jpg",
       state: "treasure-hunt",
-      eventId: "treasure-hunt", 
+      eventId: "treasure-hunt",
     },
   ];
 
@@ -105,8 +105,11 @@ const MarketSection = ({
     const cawsNft = await getCawsNfts();
     let cawsNft_ETH = cawsNft.filter((item) => item.payment_priceType === 0);
     let latestCaws = cawsNft_ETH.sort((a, b) => {
-      return new Date(Number(b.blockTimestamp) * 1000) - new Date(Number(a.blockTimestamp) * 1000)
-    })
+      return (
+        new Date(Number(b.blockTimestamp) * 1000) -
+        new Date(Number(a.blockTimestamp) * 1000)
+      );
+    });
     setcawsListed(latestCaws);
   };
 
@@ -114,8 +117,11 @@ const MarketSection = ({
     const wodNft = await getWodNfts();
     let wodNft_ETH = wodNft.filter((item) => item.payment_priceType === 0);
     let latestWod = wodNft_ETH.sort((a, b) => {
-      return new Date(Number(b.blockTimestamp) * 1000) - new Date(Number(a.blockTimestamp) * 1000)
-    })
+      return (
+        new Date(Number(b.blockTimestamp) * 1000) -
+        new Date(Number(a.blockTimestamp) * 1000)
+      );
+    });
     setwodListed(latestWod);
   };
 
@@ -125,8 +131,11 @@ const MarketSection = ({
       (item) => item.payment_priceType === 0
     );
     let latestTimepiece = timepieceNft_ETH.sort((a, b) => {
-      return new Date(Number(b.blockTimestamp) * 1000) - new Date(Number(a.blockTimestamp) * 1000)
-    })
+      return (
+        new Date(Number(b.blockTimestamp) * 1000) -
+        new Date(Number(a.blockTimestamp) * 1000)
+      );
+    });
 
     settimepieceListed(latestTimepiece);
   };
@@ -225,10 +234,10 @@ const MarketSection = ({
                     to={`/marketplace/events/${item.eventId}`}
                     state={{ package: item.state }}
                     style={{ textDecoration: "none" }}
+                    key={index}
                   >
                     <MarketCards
                       activebtn={"events"}
-                      key={index}
                       eventTitle={item.eventTitle}
                       eventPrice={item.eventPrice}
                       eventImg={item.eventImg}
@@ -259,10 +268,10 @@ const MarketSection = ({
                       updateViewCount(item.tokenId, item.nftAddress);
                     }}
                     style={{ textDecoration: "none" }}
+                    key={index}
                   >
                     <MarketCards
                       activebtn={"land"}
-                      key={index}
                       nft={item}
                       ethTokenData={ethTokenData}
                       coinbase={coinbase}
@@ -289,10 +298,10 @@ const MarketSection = ({
                       updateViewCount(item.tokenId, item.nftAddress);
                     }}
                     style={{ textDecoration: "none" }}
+                    key={index}
                   >
                     <MarketCards
                       activebtn={"caws"}
-                      key={index}
                       nft={item}
                       ethTokenData={ethTokenData}
                       coinbase={coinbase}
@@ -318,10 +327,10 @@ const MarketSection = ({
                       updateViewCount(item.tokenId, item.nftAddress);
                     }}
                     style={{ textDecoration: "none" }}
+                    key={index}
                   >
                     <MarketCards
                       activebtn={"timepiece"}
-                      key={index}
                       nft={item}
                       ethTokenData={ethTokenData}
                       coinbase={coinbase}
@@ -342,15 +351,14 @@ const MarketSection = ({
                       to={`/marketplace/events/${item.eventId}`}
                       state={{ package: item.state }}
                       style={{ textDecoration: "none" }}
+                      key={index}
                     >
                       <MarketCards
                         activebtn={"events"}
-                        key={index}
                         eventTitle={item.eventTitle}
                         eventPrice={item.eventPrice}
                         eventImg={item.eventImg}
-                      eventDesc={item?.eventDesc}
-
+                        eventDesc={item?.eventDesc}
                         dyptokenDatabnb={dyptokenDatabnb}
                         idyptokenDatabnb={idyptokenDatabnb}
                         price={item.price}
@@ -377,10 +385,10 @@ const MarketSection = ({
                         updateViewCount(item.tokenId, item.nftAddress);
                       }}
                       style={{ textDecoration: "none" }}
+                      key={index}
                     >
                       <MarketCards
                         activebtn={"land"}
-                        key={index}
                         nft={item}
                         ethTokenData={ethTokenData}
                         coinbase={coinbase}
@@ -407,10 +415,10 @@ const MarketSection = ({
                         updateViewCount(item.tokenId, item.nftAddress);
                       }}
                       style={{ textDecoration: "none" }}
+                      key={index}
                     >
                       <MarketCards
                         activebtn={"caws"}
-                        key={index}
                         nft={item}
                         ethTokenData={ethTokenData}
                         coinbase={coinbase}
@@ -436,10 +444,10 @@ const MarketSection = ({
                         updateViewCount(item.tokenId, item.nftAddress);
                       }}
                       style={{ textDecoration: "none" }}
+                      key={index}
                     >
                       <MarketCards
                         activebtn={"timepiece"}
-                        key={index}
                         nft={item}
                         ethTokenData={ethTokenData}
                         coinbase={coinbase}

@@ -1072,7 +1072,7 @@ const Marketplace = ({
               style={{ minHeight: "420px" }}
             >
               <div className="d-flex col-12 position-relative flex-column px-3 py-4 nft-outer-wrapper3 flex-lg-row align-items-start align-items-lg-center gap-4 justify-content-between w-100 position-relative">
-                <div class=" events-page-status-tag-live px-2 d-flex align-items-center justify-content-center">
+                <div className=" events-page-status-tag-live px-2 d-flex align-items-center justify-content-center">
                   <div className="pulsatingDot"></div>
                   <span>Live</span>
                 </div>

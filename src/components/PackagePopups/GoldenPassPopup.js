@@ -76,7 +76,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
             Example: Leaderboard Reward Distribution
           </span>
           <div className="table-responsive">
-            <table class="table">
+            <table className="table">
               <thead>
                 <tr>
                   <th
