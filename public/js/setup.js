@@ -4306,33 +4306,10 @@ async function getTimepieceNft(id) {
   });
 }
 
-//todo
-async function getCoingeckoNft(id) {
-  return await window.$.get(
-    `https://timepiece.worldofdypians.com/metadata/${id}`
-  ).then((result) => {
-    return result;
-  });
-}
+ 
 
-//todo
-async function getGateNft(id) {
-  return await window.$.get(
-    `https://timepiece.worldofdypians.com/metadata/${id}`
-  ).then((result) => {
-    return result;
-  });
-}
-
-//todo
-async function getConfluxNft(id) {
-  return await window.$.get(
-    `https://timepiece.worldofdypians.com/metadata/${id}`
-  ).then((result) => {
-    return result;
-  });
-}
-
+ 
+ 
 async function getMyNFTs(address, type = "") {
   let contract;
   const infuraweb3 = new Web3(window.ethereum);
