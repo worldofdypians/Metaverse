@@ -1,14 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./_videowrapper.scss";
 import sysReq from "../../../assets/sysReq.svg";
 import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import downloadIcon from "../../../assets/downloadIcon.svg";
+import downloadIconWhite from "../../../assets/downloadIconWhite.svg";
+import windowsIcon from "../../../assets/windowsIcon.svg";
+import windowsIconWhite from "../../../assets/windowsIconWhite.svg";
 import { NavLink } from "react-router-dom";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
+  const [icons, setIcons] = useState(false);
+
+
+  const downloader = useRef()
+
+
+  downloader?.current?.addEventListener('mouseenter', () => {
+    setIcons(true)
+  })
+  downloader?.current?.addEventListener('mouseleave', () => {
+    setIcons(false)
+  })
 
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
@@ -63,11 +78,14 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   }}
                 >
                   <button
+                  ref={downloader}
                     onClick={gotoDownload}
                     className="btn filled-btn px-5 d-flex align-items-center gap-2"
                   >
+                    <img src={icons ? windowsIconWhite : windowsIcon} width={16} height={16} alt="windows icon" />
+
                     Download
-                    <img src={downloadIcon} alt="download icon" />
+                    <img src={icons ? downloadIconWhite : downloadIcon} alt="download icon" />
                   </button>
                 </div>
               </div>
