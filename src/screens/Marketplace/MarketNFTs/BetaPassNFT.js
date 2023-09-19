@@ -95,6 +95,7 @@ const BetaPassNFT = ({
   nftName,
   handleMint,
   totalConfluxNft,
+  myConfluxNfts,
   myNFTSCoingecko,
   handleSwitchNetwork,
 }) => {
@@ -201,16 +202,25 @@ const BetaPassNFT = ({
   }, [mintTitle, coinbase, chainId]);
 
   const getNftSymbol = async () => {
-    const contract = new window.bscWeb3.eth.Contract(
-      mintTitle === "coingecko"
-        ? window.COINGECKO_NFT_ABI
-        : window.GATE_NFT_ABI,
-      mintTitle === "coingecko"
-        ? window.config.nft_coingecko_address
-        : window.config.nft_gate_address
-    );
-    const symbol = await contract.methods.symbol().call();
-    setnftSymbol(symbol);
+    if (mintTitle !== "conflux") {
+      const contract = new window.bscWeb3.eth.Contract(
+        mintTitle === "coingecko"
+          ? window.COINGECKO_NFT_ABI
+          : window.GATE_NFT_ABI,
+        mintTitle === "coingecko"
+          ? window.config.nft_coingecko_address
+          : window.config.nft_gate_address
+      );
+      const symbol = await contract.methods.symbol().call();
+      setnftSymbol(symbol);
+    } else if (mintTitle === "conflux") {
+      const contract = new window.confluxWeb3.eth.Contract(
+        window.CONFLUX_NFT_ABI,
+        window.config.nft_conflux_address
+      );
+      const symbol = await contract.methods.symbol().call();
+      setnftSymbol(symbol);
+    }
   };
 
   const handleConfluxPool = async () => {
@@ -355,7 +365,6 @@ const BetaPassNFT = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     // getAllCawsCollection();
-    getNftSymbol();
     document.title = "Beta Pass";
 
     if (terms) {
@@ -412,6 +421,10 @@ const BetaPassNFT = ({
       signWalletPublicAddress();
     }
   }, [dataNonce]);
+
+  useEffect(() => {
+    getNftSymbol();
+  }, [mintTitle]);
 
   return (
     <>
@@ -1292,15 +1305,20 @@ const BetaPassNFT = ({
                                     className="land-desc w-75 m-auto text-center justify-content-center"
                                     style={{ fontWeight: 500, fontSize: 16 }}
                                   >
-                                    {mintTitle === "coingecko" ||
-                                    mintTitle === "gate"
-                                      ? nftSymbol
-                                      : selectedMint.cardTitle}{" "}
-                                    {mintTitle === "coingecko"
-                                      ? `#${myNFTSCoingecko[0]}`
-                                      : mintTitle === "gate"
-                                      ? `#${myGateNfts[0]}`
-                                      : ""}
+                                  {mintTitle === "coingecko" ||
+                                mintTitle === "gate" ||
+                                mintTitle === "conflux"
+                                  ? nftSymbol
+                                  : selectedMint.cardTitle}{" "}
+                                {mintTitle === "coingecko"
+                                  ? totalCoingeckoNft > 0 &&
+                                    `#${myNFTSCoingecko[0]}`
+                                  : mintTitle === "gate"
+                                  ? totalGateNft > 0 && `#${myGateNfts[0]}`
+                                  : mintTitle === "conflux"
+                                  ? totalConfluxNft > 0 &&
+                                    `#${myConfluxNfts[0]}`
+                                  : ""}
                                   </h6>
                                 </div>
                               </div>
