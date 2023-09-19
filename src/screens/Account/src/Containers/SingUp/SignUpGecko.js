@@ -15,7 +15,7 @@ function SignUpGecko({
   mintTitle,
   chainId,
   activeTab,
-  isExistingUser
+  isExistingUser,
 }) {
   const {
     isAuthenticated,
@@ -49,6 +49,7 @@ function SignUpGecko({
       })
       .catch((e) => {
         console.log("failed with error", e);
+        seterrorMsg(e?.message);
       });
   }
 
@@ -63,14 +64,14 @@ function SignUpGecko({
       })
       .catch((err) => {
         console.log(typeof err, err.message);
-
+        seterrorMsg(err?.message);
         if (
           err?.message?.includes(
             "An account with the given email already exists."
           )
         ) {
           setuserExists(true);
-          isExistingUser()
+          isExistingUser();
           setPassword("");
           setConfirmPassword("");
         }
@@ -164,6 +165,10 @@ function SignUpGecko({
         </span>
 
         <div className="summaryseparator"></div>
+        {errorMsg !== "" && (
+          <span className={classes.errorText}>{errorMsg}</span>
+        )}
+
         <Button
           onPress={verifyEmailValidationCode}
           title={"Continue  >"}
@@ -173,7 +178,7 @@ function SignUpGecko({
     );
   }
 
-  if (userExists || activeTab === 'login') {
+  if (userExists || activeTab === "login") {
     return (
       <LoginGecko
         mintTitle={mintTitle}
