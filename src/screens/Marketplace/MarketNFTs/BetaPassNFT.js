@@ -1289,7 +1289,8 @@ const BetaPassNFT = ({
                                   style={{ fontWeight: 500, fontSize: 16 }}
                                 >
                                   {mintTitle === "coingecko" ||
-                                  mintTitle === "gate"
+                                  mintTitle === "gate" ||
+                                  mintTitle === "conflux"
                                     ? nftSymbol
                                     : selectedMint.cardTitle}{" "}
                                   {mintTitle === "coingecko"

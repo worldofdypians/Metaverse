@@ -151,7 +151,7 @@ function App() {
     useWeb3React();
 
   useEagerlyConnect();
-  console.log(account, accounts, isActive, isActivating, provider);
+  // console.log(account, accounts, isActive, isActivating, provider);
   const getTokenData = async () => {
     await axios
       .get("https://api.dyp.finance/api/the_graph_eth_v2")
