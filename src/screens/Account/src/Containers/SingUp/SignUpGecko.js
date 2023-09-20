@@ -24,7 +24,6 @@ function SignUpGecko({
     loginError,
     setLoginValues,
     playerId,
-    isLoginIn,
   } = useAuth();
 
   const [username, setUserName] = useState("");
@@ -36,6 +35,7 @@ function SignUpGecko({
   const [playerCreation, setplayerCreation] = useState(false);
   const [userExists, setuserExists] = useState(false);
   const [errorMsg, seterrorMsg] = useState("");
+  const [isLogin, setisLogin] = useState(false);
 
   const login = () => {
     LoginGlobal(username, password);
@@ -82,6 +82,12 @@ function SignUpGecko({
           };
         });
       });
+  };
+
+  const resendCode = async () => {
+    await Auth.resendSignUp(username).catch((err)=>{
+      seterrorMsg(err?.message);
+    })
   };
 
   useEffect(() => {
@@ -139,6 +145,12 @@ function SignUpGecko({
     }
   }, [username, password]);
 
+  useEffect(() => {
+    if (code === "UserNotConfirmedException" && isLogin) {
+      resendCode();
+    }
+  }, [code, isLogin]);
+
   if (isAuthenticated) {
     if (!playerId) {
       setplayerCreation(true);
@@ -184,6 +196,13 @@ function SignUpGecko({
         mintTitle={mintTitle}
         onSuccessLogin={onSuccessLogin}
         newEmail={username}
+        onUsernameChange={(value) => {
+          setUserName(value);
+        }}
+        onLoginTry={() => {
+          setisLogin(true);
+        }}
+        onPassChange={(value)=>{setPassword(value)}}
       />
     );
   }
