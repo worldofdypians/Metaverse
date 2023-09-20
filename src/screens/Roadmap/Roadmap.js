@@ -18,6 +18,9 @@ import timepieceRoadmap from "./assets/timepieceRoadmap.webp";
 import wodPartnership from "./assets/wodPartnership.webp";
 import multichainIntegration from "./assets/multichainIntegration.webp";
 import caws3d from './assets/caws3d.webp'
+import betaPassCollection from './assets/betaPassCollection.png';
+import marketplaceIntroduction from './assets/marketplaceIntroduction.png';
+import newEvents from './assets/newEvents.png';
 
 const Roadmap = () => {
   useEffect(() => {
@@ -186,23 +189,37 @@ const Roadmap = () => {
           completed: true,
 
         },
+        
+        {
+          title: "Multiplayer PVE DEMO",
+          desc: "Experience cooperative gameplay with the multiplayer PVE demo, offering exciting challenges and teamwork opportunities.",
+          completed: true,
+        },
+        {
+          title: "Multiplayer PVP DEMO",
+          desc: "Engage in thrilling player-versus-player action with the multiplayer PVP demo, where you'll battle against other skilled players.",
+          completed: true,
+        },
+        {
+          title: "Expansion to Conflux Network",
+          desc: "Our platform extends its reach to the Conflux Network, offering users more blockchain choices and opportunities.",
+          completed: true,
+        },
+        {
+          title: "Introduction of Beta Passes NFT collection",
+          desc: "Discover the exclusive Beta Passes NFT collection, a limited edition of digital collectibles for our valued users.",
+          completed: true,
+        },
+        {
+          title: "Introduction of New Events",
+          desc: "A variety of engaging global and local events designed to engage and reward players.",
+          completed: true,
+        },
         {
           title: "Addition and development of partnerships",
           desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
           completed: true,
 
-        },
-        {
-          title: "Introduction of 25,000 Land NFTs",
-          desc: "The creation of a multi-tiered NFT Land collection with different features such as special rewards, futuristic buildings, AI driven NPCs, and much more.  Each user can preview the in-game land before purchasing the associated NFT.",
-        },
-        {
-          title: "Introduction of tutorial guide v1",
-          desc: "In-depth tips and tricks to help players master World of Dypians.",
-        },
-        {
-          title: "Introduction of Mall and shopping centers",
-          desc: "Users can acquire game items, skins, and much more.",
         },
       ],
     },
@@ -211,6 +228,14 @@ const Roadmap = () => {
       image: "quarterFourImage",
 
       content: [
+        {
+          title: "Introduction of tutorial guide v1",
+          desc: "In-depth tips and tricks to help players master World of Dypians.",
+        },
+        {
+          title: "Introduction of Mall and shopping centers",
+          desc: "Users can acquire game items, skins, and much more.",
+        },
         {
           title: "Multiplayer PVE",
           desc: "Adventure with other players to complete quests, fight bosses, survive against waves of enemies, earn rewards and much more.",
@@ -269,6 +294,21 @@ const Roadmap = () => {
   ];
 
   const mainUpdate = [
+    {
+      title: "Introduction of Beta Passes NFT collection",
+      date: "Sept 2023",
+      image: betaPassCollection,
+    },
+    {
+      title: "Introduction of New Events",
+      date: "Sept 2023",
+      image: newEvents,
+    },
+    {
+      title: "Introduction of marketplace",
+      date: "Jun 2023",
+      image: marketplaceIntroduction,
+    },
     {
       title: "Caws NFT 3D Rendering",
       date: "May 2023",
@@ -454,7 +494,26 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  {mainUpdate.slice(9, mainUpdate.length).map((item) => (
+                  {mainUpdate.slice(9, 12).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  {mainUpdate.slice(12, mainUpdate.length).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}
