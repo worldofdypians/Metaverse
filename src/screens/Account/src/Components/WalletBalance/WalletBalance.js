@@ -1690,6 +1690,8 @@ const WalletBalance = ({
                                   ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
                                   : item.type === "coingecko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                  : item.type === "conflux"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -1703,6 +1705,8 @@ const WalletBalance = ({
                                   ? "Genesis"
                                   : item.type === "coingecko"
                                   ? "CGBP"
+                                  : item.type === "conflux"
+                                  ? "CFBP"
                                   : "Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
@@ -2655,6 +2659,7 @@ const WalletBalance = ({
                                 : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
+                                
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -2696,7 +2701,7 @@ const WalletBalance = ({
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
-                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -2721,7 +2726,7 @@ const WalletBalance = ({
                                     ? "Gate Beta Pass"
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
-                                    ? "Conflux Beta Pass"
+                                    ? "CFBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -2897,7 +2902,7 @@ const WalletBalance = ({
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                     window.config.nft_conflux_address
-                                  ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.pngg`
@@ -2924,7 +2929,7 @@ const WalletBalance = ({
                                     ? "Gate Beta Pass"
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
-                                    ? "Conflux Beta Pass"
+                                    ? "CFBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>

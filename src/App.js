@@ -57,9 +57,49 @@ import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserMo
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import { useEagerlyConnect } from "web3-connector";
-import { useWeb3React } from "web3-connector";
+import {
+  useWeb3React,
+  disconnect,
+  connectWallet,
+  ConnectionType,
+} from "web3-connector";
 
 function App() {
+  const ETHPARAMS_GATE = {
+    chainId: 1,
+    chainName: "Ethereum",
+    nativeCurrency: {
+      name: "Ethereum",
+      symbol: "ETH", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://mainnet.infura.io/v3/"],
+    blockExplorerUrls: ["https://etherscan.io"],
+  };
+
+  const CHAINLIST = {
+    1: {
+      chainId: 1,
+      chainName: "Ethereum",
+      nativeCurrency: {
+        symbol: "ETH", // 2-6 characters long
+        decimals: 18,
+      },
+      rpcUrls: ["https://mainnet.infura.io/v3/"],
+      blockExplorerUrls: ["https://etherscan.io"],
+    },
+    56: {
+      chainId: 56,
+      chainName: "BSC",
+      nativeCurrency: {
+        symbol: "BNB", // 2-6 characters long
+        decimals: 18,
+      },
+      rpcUrls: ["https://bsc-dataseed.binance.org/"],
+      blockExplorerUrls: ["https://bscscan.com"],
+    },
+  };
+
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showWalletModalDownload, setShowWalletModalDownload] = useState(false);
   const [showWalletModalRegister, setShowWalletModalRegister] = useState(false);
@@ -147,7 +187,7 @@ function App() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { account, accounts, isActive, isActivating, provider } =
+  const { connector, account, accounts, isActive, isActivating, provider } =
     useWeb3React();
 
   useEagerlyConnect();
@@ -269,6 +309,10 @@ function App() {
   const checkConnection2 = async () => {
     const logout = localStorage.getItem("logout");
     if (logout !== "true") {
+      if (window.gatewallet) {
+        setCoinbase(account);
+        setIsConnected(isActive);
+      }
       await window.getCoinbase().then((data) => {
         if (data) {
           setCoinbase(data);
@@ -318,6 +362,7 @@ function App() {
       });
       setShowForms(true);
       setSuccess(true);
+      // connectWallet(ConnectionType.WALLET_CONNECT_NOTQR);
     } catch (e) {
       setShowWalletModal(false);
       setSuccess(true);
@@ -345,18 +390,29 @@ function App() {
 
   const handleConnectWallet = async () => {
     try {
-      localStorage.setItem("logout", "false");
-      await window.connectWallet().then((data) => {
-        setIsConnected(data);
-      });
-      checkConnection();
+      if (!window.gatewallet) {
+        localStorage.setItem("logout", "false");
+        await window.connectWallet().then((data) => {
+          setIsConnected(data);
+        });
 
-      await window.getCoinbase().then((data) => {
-        setCoinbase(data);
-      });
-      setwalletModal(false);
-      setShowForms2(true);
-      // connectWallet(ConnectionType.INJECTED);
+        await window.getCoinbase().then((data) => {
+          setCoinbase(data);
+        });
+        setwalletModal(false);
+        setShowForms2(true);
+
+        checkConnection();
+      } else {
+        connectWallet(ConnectionType.INJECTED);
+        setCoinbase(account);
+        setIsConnected(isActive);
+        setwalletModal(false);
+        setShowForms2(true);
+        setChainId(parseInt(window.gatewallet.chainId));
+      }
+
+      //
       // window.gatewallet.enable()
       // setCoinbase(account);
       //
@@ -974,28 +1030,27 @@ function App() {
   const logout = localStorage.getItem("logout");
 
   useEffect(() => {
-    if (window.ethereum) {
-      if (
-        window.ethereum.isConnected() === true &&
-        logout === "false" &&
-        !window.gatewallet
-      ) {
-        checkConnection2();
-      } else if (window.gatewallet &&
-        logout === "false") {
-        setIsConnected(isActive);
-        if (account) {
-          setCoinbase(account);
-        }
-      } else {
-        setIsConnected(false);
-        setCoinbase();
-        localStorage.setItem("logout", "true");
+    if (
+      window.ethereum &&
+      window.ethereum.isConnected() === true &&
+      logout === "false" &&
+      !window.gatewallet
+    ) {
+      checkConnection2();
+    } else if (window.gatewallet && isActive) {
+      setIsConnected(isActive);
+      if (account) {
+        setCoinbase(account);
       }
-      checkNetworkId();
+    } else {
+      setIsConnected(false);
+      setCoinbase();
+      localStorage.setItem("logout", "true");
     }
+    checkNetworkId();
   }, [coinbase, chainId, isActive, account]);
 
+console.log(provider)
   useEffect(() => {
     checkNetworkId();
   }, [isConnected, coinbase, chainId]);
@@ -1248,14 +1303,25 @@ function App() {
   // };
 
   const handleSwitchNetwork = (chain) => {
-    setChainId(chain);
+    if (!window.gatewallet) {
+      setChainId(chain);
+    } else {
+      // const params = CHAINLIST[Number(chain)];
+      // connector?.activate(params);
+      // setChainId(chain);
+    }
   };
 
   const handleDisconnect = async () => {
-    localStorage.setItem("logout", "true");
-    setSuccess(false);
-    setCoinbase();
-    setIsConnected(false);
+    if (!window.gatewallet) {
+      localStorage.setItem("logout", "true");
+      setSuccess(false);
+      setCoinbase();
+      setIsConnected(false);
+    } else {
+      disconnect(connector);
+      localStorage.setItem("logout", "true");
+    }
   };
 
   const API_BASE_URL = "https://api.worldofdypians.com";
@@ -1329,12 +1395,12 @@ function App() {
 
     getLatest20BoughtNFTS();
 
-    getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
-      settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
-    );
-    getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
-      settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
-    );
+    // getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
+    //   settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
+    // );
+    // getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
+    //   settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
+    // );
     getallNfts();
   }, [nftCount]);
 
@@ -1379,6 +1445,7 @@ function App() {
             isConnected={isConnected}
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
+            handleSwitchChainGateWallet={handleSwitchNetwork}
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}

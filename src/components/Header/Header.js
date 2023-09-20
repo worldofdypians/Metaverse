@@ -58,6 +58,7 @@ const Header = ({
   nftCount,
   chainId,
   handleSwitchNetwork,
+  handleSwitchChainGateWallet
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -119,53 +120,74 @@ const Header = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
+    if(!window.gatewallet)
+   { await handleSwitchNetworkhook("0x1")
       .then(() => {
         handleSwitchNetwork(1);
       })
       .catch((e) => {
         console.log(e);
-      });
+      });}
+
+      else {
+        handleSwitchChainGateWallet(1)
+      }
   };
 
   const handleBnbPool = async () => {
-    await handleSwitchNetworkhook("0x38")
+    if(!window.gatewallet)
+   { await handleSwitchNetworkhook("0x38")
       .then(() => {
         handleSwitchNetwork(56);
       })
       .catch((e) => {
         console.log(e);
-      });
+      });}
+      else {
+        handleSwitchChainGateWallet(56)
+      }
   };
 
   const handleAvaxPool = async () => {
-    await handleSwitchNetworkhook("0xa86a")
+    if(!window.gatewallet)
+    {await handleSwitchNetworkhook("0xa86a")
       .then(() => {
         handleSwitchNetwork(43114);
       })
       .catch((e) => {
         console.log(e);
-      });
+      });}
+      else {
+        handleSwitchChainGateWallet()
+      }
   };
 
   const handleBasePool = async () => {
-    await handleSwitchNetworkhook("0x2105")
+    if(!window.gatewallet)
+   { await handleSwitchNetworkhook("0x2105")
       .then(() => {
         handleSwitchNetwork(8453);
       })
       .catch((e) => {
         console.log(e);
-      });
+      });}
+      else {
+        handleSwitchChainGateWallet()
+      }
   };
 
   const handleConfluxPool = async () => {
-    await handleSwitchNetworkhook("0x406")
+    if(!window.gatewallet)
+   { await handleSwitchNetworkhook("0x406")
       .then(() => {
         handleSwitchNetwork(1030);
       })
       .catch((e) => {
         console.log(e);
-      });
+      });}
+      else {
+        handleSwitchChainGateWallet()
+      }
   };
 
   async function markNotificationAsRead(walletAddress, notificationId) {
