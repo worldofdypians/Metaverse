@@ -36,7 +36,7 @@ const MarketCards = ({
         <div className="position-relative">
           {activebtn === "events" && (
             <img
-              src={require(`./assets/${eventImg}.png`)}
+              src={require(`./assets/${eventImg}`)}
               alt=""
               className="marketicon"
             />
@@ -112,7 +112,7 @@ const MarketCards = ({
         </div>
         <div className="d-flex justify-content-between gap-2 align-items-center">
           {activebtn === "events" ? (
-            eventDesc === "Event available for Genesis Land NFT owners" 
+            eventDesc === "Event available for Beta Pass NFT owners" 
             ?
             <div className="d-flex flex-column">
             <span className="nftcard-name">{eventTitle}</span>
@@ -138,11 +138,11 @@ const MarketCards = ({
               {activebtn !== "events" && "ETH"}
             </span>
             <span className="nftcard-usd">
-              {eventImg !== "critical" && "$"}
+              {eventImg !== "treasure.jpg" && "$"}
               {activebtn === "events"
                 ? eventImg === "puzzle"
                   ? getFormattedNumber(idyptokenDatabnb * price, 2)
-                  : eventImg === "critical"
+                  : eventImg === "treasure.jpg"
                   ? ""
                   : getFormattedNumber(dyptokenDatabnb * price, 2)
                 : getFormattedNumber(ethTokenData * (nft.price / 1e18), 2)}

@@ -138,7 +138,7 @@ const ProfileCard = ({
 
   return (
     <div className="main-wrapper py-4 w-100">
-      <div className="row justify-content-center gap-5 gap-lg-0">
+      <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-0 px-lg-3 col-12 col-lg-5 col-xxl-5">
           <div className={"user-cardImg"}>
             <div className="d-flex flex-column justify-content-between gap-2">

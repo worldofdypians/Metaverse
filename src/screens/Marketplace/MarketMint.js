@@ -297,7 +297,7 @@ const MarketMint = ({
                     style={{ overflowX: "hidden" }}
                   >
                     <div
-                      className="p-4 mint-wrappernew market-mint-bg w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height"
+                      className="p-4 mint-wrappernew market-mint-bg w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height"
                       style={{ minHeight: "463px" }}
                     >
                       {/* <img
@@ -330,6 +330,8 @@ const MarketMint = ({
                           ))}
                         </div>
                       </div>
+          <img src={require('./assets/smallMintBg.png')} alt='' className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"/>
+
                     </div>
                   </div>
                   <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">

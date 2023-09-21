@@ -101,26 +101,17 @@ function SingUp() {
   return (
     <div className={classes.container}>
       <Input
-        style={{
-          marginBottom: 24,
-        }}
         placeHolder="Email"
         value={username}
         onChange={setUserName}
       />
       <Input
-        style={{
-          marginBottom: 24,
-        }}
         inputType="password"
         placeHolder="Password"
         value={password}
         onChange={setPassword}
       />
       <Input
-        style={{
-          marginBottom: 48,
-        }}
         inputType="password"
         placeHolder="Confirm Password"
         value={confirmPassword}
