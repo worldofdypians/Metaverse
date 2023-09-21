@@ -56,6 +56,7 @@ import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
+import confluxPopupImage from "./assets/eventPopupImage.png";
 
 const WalletBalance = ({
   dypBalance,
@@ -1009,9 +1010,11 @@ const WalletBalance = ({
     chain: "Conflux Network",
     linkState: "conflux",
     rewards: "CFX",
-    status: "Live",
+    status: "Coming Soon",
     id: "event1",
     eventType: "Explore & Mine",
+    date: "Oct 6, 2023",
+    logo: conflux
   };
   const dummyCoingecko = {
     title: "CoinGecko",
@@ -1021,6 +1024,8 @@ const WalletBalance = ({
     status: "Coming Soon",
     id: "event3",
     eventType: "Explore & Mine",
+    date: "Sept 25, 2023",
+    logo: coingecko,
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -1164,16 +1169,15 @@ const WalletBalance = ({
                   setDummyEvent(dummyCoingecko);
                   setEventPopup(true);
                 }}
+                data={dummyCoingecko}
               />
-              <img
-                src={eventSkeleton}
-                className="profile-event-item"
-                style={{
-                  background: "none",
-                  borderBottom: "none",
-                  transform: "translateX(0px)",
+              <UpcomingProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyConflux);
+                  setEventPopup(true);
                 }}
-                alt=""
+                data={dummyConflux}
+
               />
               <img
                 src={eventSkeleton}
@@ -3453,7 +3457,7 @@ const WalletBalance = ({
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
                 <div className="d-flex gap-2">
                   <img
-                    src={coingeckoPopupImage}
+                    src={dummyEvent?.linkState === "conflux" ? confluxPopupImage : coingeckoPopupImage}
                     alt=""
                     style={{ width: 80, height: 80 }}
                   />
@@ -3522,7 +3526,7 @@ const WalletBalance = ({
                         className="green-calendar"
                         alt=""
                       />
-                      <h6 className="live-on-date mb-0">Sept 25, 2023</h6>
+                      <h6 className="live-on-date mb-0">{dummyEvent?.date}</h6>
                     </div>
                   </div>
                 )}
