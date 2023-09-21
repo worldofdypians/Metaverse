@@ -60,7 +60,7 @@ const MintPopup = ({ active, onClose, data }) => {
       </div>
       <Link
         onClick={onClose}
-        to={"/marketplace/beta-pass/coingecko"}
+        to={`/marketplace/beta-pass/${data.state}`}
         state={{ event: data.state }}
         className="linear-border"
       >

@@ -89,7 +89,7 @@ const Home = ({
   return (
   <>
   <OutsideClickHandler id="popup" onOutsideClick={() => setActivePopup(false)}>
-  <MintPopup active={activePopup} data={coingeckoPopupInfo} onClose={() => setActivePopup(false)} />
+  <MintPopup active={activePopup} data={confluxPopupInfo} onClose={() => setActivePopup(false)} />
   </OutsideClickHandler>
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex flex-column home-main-wrapper">
