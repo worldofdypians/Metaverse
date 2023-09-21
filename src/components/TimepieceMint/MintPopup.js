@@ -35,15 +35,15 @@ const MintPopup = ({ active, onClose, data }) => {
           <h6 className="mint-popup-title">Candy Rewards</h6>
         </>
       ) : (
-        <>
+        <div className="d-flex align-items-center gap-2">
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              Live Free Minting
+              Live
             </h6>
           </div>
-          <h6 className="mint-popup-title">{data.title} Beta Pass</h6>
-        </>
+          <h6 className="mint-popup-title m-0">{data.title} Beta Pass</h6>
+        </div>
       )}
 
       <img

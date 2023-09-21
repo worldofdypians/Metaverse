@@ -512,6 +512,21 @@ const BetaPassNFT = ({
                     />
                     <span>Avalanche</span>
                   </NavLink> */}
+
+                  <NavLink
+                    to={"/marketplace/beta-pass/conflux"}
+                    className={`${
+                      location.pathname.includes("conflux") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(confluxData);
+                      setMintTitle("conflux");
+                    }}
+                  >
+                    <img src={conflux} className="beta-pass-chain-img" alt="" />
+                    <span>Conflux</span>
+                  </NavLink>
                   <NavLink
                     to={"/marketplace/beta-pass/coingecko"}
                     className={`${
@@ -529,20 +544,6 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>CoinGecko</span>
-                  </NavLink>
-                  <NavLink
-                    to={"/marketplace/beta-pass/conflux"}
-                    className={`${
-                      location.pathname.includes("conflux") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                    onClick={() => {
-                      setSelectedMint(confluxData);
-                      setMintTitle("conflux");
-                    }}
-                  >
-                    <img src={conflux} className="beta-pass-chain-img" alt="" />
-                    <span>Conflux</span>
                   </NavLink>
                   {/* <NavLink
                     to={"/marketplace/beta-pass/coin98"}
