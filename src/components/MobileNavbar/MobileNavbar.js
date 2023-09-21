@@ -33,6 +33,7 @@ const MobileNavbar = ({
   nftCount,
   chainId,
   handleSwitchNetwork,
+  handleSwitchChainGateWallet
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -111,6 +112,20 @@ const MobileNavbar = ({
       .catch((e) => {
         console.log(e);
       });
+  };
+
+  const handleConfluxPool = async () => {
+    if(!window.gatewallet)
+   { await handleSwitchNetworkhook("0x406")
+      .then(() => {
+        handleSwitchNetwork(1030);
+      })
+      .catch((e) => {
+        console.log(e);
+      });}
+      else {
+        handleSwitchChainGateWallet()
+      }
   };
 
 
@@ -193,8 +208,8 @@ const MobileNavbar = ({
                           // ? avax
                           // : baseState === true
                           // ? base
-                          // : confluxState === true
-                          // ? conflux
+                          : confluxState === true
+                          ? conflux
                           : error
                       }
                       height={16}
@@ -210,8 +225,8 @@ const MobileNavbar = ({
                         // ? "Avalanche"
                         // : baseState === true
                         // ? "Base"
-                        // : confluxState === true
-                        // ? "Conflux"
+                        : confluxState === true
+                        ? "Conflux"
                         : "Unsupported Chain"}
                     </span>
 
@@ -231,11 +246,11 @@ const MobileNavbar = ({
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-                {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
+             <Dropdown.Item onClick={() => handleConfluxPool()}>
                   <img src={conflux} alt="" />
                   Conflux
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBasePool()}>
+                 {/*   <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
                 </Dropdown.Item> */}

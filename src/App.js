@@ -1050,7 +1050,7 @@ function App() {
     checkNetworkId();
   }, [coinbase, chainId, isActive, account]);
 
-console.log(provider)
+
   useEffect(() => {
     checkNetworkId();
   }, [isConnected, coinbase, chainId]);
@@ -1459,6 +1459,8 @@ console.log(provider)
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
             isConnected={isConnected}
+            handleSwitchChainGateWallet={handleSwitchNetwork}
+
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
