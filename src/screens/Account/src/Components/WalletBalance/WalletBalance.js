@@ -3550,7 +3550,7 @@ const WalletBalance = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX or earn points for
+                      chance to secure daily rewards in CFX, but also earn points for
                       their placement on the global leaderboard. Remember to log
                       in to the game daily and venture into the Conflux area to
                       uncover hidden treasures.

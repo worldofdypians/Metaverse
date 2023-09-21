@@ -830,7 +830,7 @@ const MarketEvents = ({
                         className="green-calendar"
                         alt=""
                       />
-                      <h6 className="live-on-date mb-0">Sept 25, 2023</h6>
+                      <h6 className="live-on-date mb-0"> {dummyEvent?.linkState === "coingecko" ? 'Sept 25, 2023' : 'Oct 6, 2023'} </h6>
                     </div>
                   </div>
                 )}
