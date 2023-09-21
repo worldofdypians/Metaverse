@@ -76,7 +76,7 @@ const MobileNav = () => {
           />
         </div>
         <NavLink
-          to="/marketplace/events/dragon"
+          to="/marketplace/events/treasure-hunt"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
