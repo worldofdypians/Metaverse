@@ -30,7 +30,7 @@ const WalletModal = ({ handleClose, show, handleConnection }) => {
                   />
                 </div>
               </button>
-              <button
+              {/* <button
                 onClick={handleConnection}
                 id="connect-METAMASK"
                 className="walletbutton"
@@ -48,7 +48,7 @@ const WalletModal = ({ handleClose, show, handleConnection }) => {
                     style={{ borderRadius: "50%" }}
                   />
                 </div>
-              </button>
+              </button> */}
               <button
                 onClick={handleConnection}
                 id="connect-METAMASK"

@@ -1036,6 +1036,7 @@ function App() {
       logout === "false" &&
       !window.gatewallet
     ) {
+      localStorage.setItem("logout", "false");
       checkConnection2();
     } else if (window.gatewallet && isActive) {
       setIsConnected(isActive);
