@@ -14,23 +14,21 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
   const [icons, setIcons] = useState(false);
 
+  const downloader = useRef();
 
-  const downloader = useRef()
-
-
-  downloader?.current?.addEventListener('mouseenter', () => {
-    setIcons(true)
-  })
-  downloader?.current?.addEventListener('mouseleave', () => {
-    setIcons(false)
-  })
+  downloader?.current?.addEventListener("mouseenter", () => {
+    setIcons(true);
+  });
+  downloader?.current?.addEventListener("mouseleave", () => {
+    setIcons(false);
+  });
 
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
 
   const gotoDownload = () => {
     window.location.href =
-      "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing";
+      "https://game.worldofdypians.com/downloads/WorldOfDypians%200.2.1.zip";
   };
 
   useEffect(() => {
@@ -78,14 +76,21 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   }}
                 >
                   <button
-                  ref={downloader}
+                    ref={downloader}
                     onClick={gotoDownload}
                     className="btn filled-btn px-5 d-flex align-items-center gap-2"
                   >
-                    <img src={icons ? windowsIconWhite : windowsIcon} width={16} height={16} alt="windows icon" />
-
+                    <img
+                      src={icons ? windowsIconWhite : windowsIcon}
+                      width={16}
+                      height={16}
+                      alt="windows icon"
+                    />
                     Download
-                    <img src={icons ? downloadIconWhite : downloadIcon} alt="download icon" />
+                    <img
+                      src={icons ? downloadIconWhite : downloadIcon}
+                      alt="download icon"
+                    />
                   </button>
                 </div>
               </div>
