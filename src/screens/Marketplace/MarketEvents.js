@@ -56,6 +56,7 @@ import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
+import axios from "axios";
 
 const MarketEvents = ({
   account,
@@ -407,24 +408,31 @@ const MarketEvents = ({
     console.log("hello");
   };
 
+  const fetchTreasureHuntData = async () => {
+    let headersList = {
+      "Content-Type": "application/json" 
+     }
+     
+     let bodyContent = JSON.stringify({ 
+         "email": "renato@outerlynx.com", 
+         "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0" 
+     });
+     
+     let reqOptions = {
+       headers: headersList,
+       body: bodyContent,
+     }
+     
+     axios.get("https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData", reqOptions).then(function (response) {
+       console.log(response.data);
+     })
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Events";
   }, []);
 
-  useEffect(() => {
-    if (eventId === "dragon-ruins") {
-      setSelectedPackage("dragon");
-    } else if (eventId === "golden-pass") {
-      setSelectedPackage("dyp");
-    } else if (eventId === "puzzle-maddness") {
-      setSelectedPackage("idyp");
-    } else if (eventId === "critical-hit") {
-      setSelectedPackage("criticalHit");
-    } else if (eventId === "betapass") {
-      setSelectedPackage("betaPass");
-    }
-  }, []);
 
   useEffect(() => {
     if (windowSize.width < 786) {
@@ -456,7 +464,7 @@ const MarketEvents = ({
     } else if (eventId === "betapass") {
       setSelectedPackage("betaPass");
     } else if (eventId === "treasure-hunt") {
-      // setActiveTab("upcoming")
+      fetchTreasureHuntData()
       setSelectedPackage("treasure-hunt");
     }
   }, []);
@@ -749,19 +757,19 @@ const MarketEvents = ({
             <div className="profile-event-popup-wrapper mb-3 p-2 p-lg-3 h-auto">
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
                 <div className="d-flex gap-2">
-                <img
-                  src={
-                    dummyEvent?.chain === "Avalanche"
-                      ? eventPopupImageAvax
-                      : dummyEvent?.linkState === "coingecko"
-                      ? eventPopupImageGecko
-                      : dummyEvent.linkState === "gate"
-                      ? gatePopupImage
-                      : eventPopupImage
-                  }
-                  alt=""
-                  style={{ width: 80, height: 80 }}
-                />
+                  <img
+                    src={
+                      dummyEvent?.chain === "Avalanche"
+                        ? eventPopupImageAvax
+                        : dummyEvent?.linkState === "coingecko"
+                        ? eventPopupImageGecko
+                        : dummyEvent.linkState === "gate"
+                        ? gatePopupImage
+                        : eventPopupImage
+                    }
+                    alt=""
+                    style={{ width: 80, height: 80 }}
+                  />
                   <div className="d-flex flex-column justify-content-between">
                     <div className="d-flex flex-column">
                       <h6 className="popup-second-title m-0">
@@ -854,10 +862,10 @@ const MarketEvents = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX, but also earn points for
-                      their placement on the global leaderboard. Remember to log
-                      in to the game daily and venture into the Conflux area to
-                      uncover hidden treasures.
+                      chance to secure daily rewards in CFX, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Conflux area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event2" ? (
                     <p className="popup-event-desc">
@@ -866,10 +874,10 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Coin98 area, players not only stand a chance to secure
-                      daily rewards in C98, but also earn points for their placement on
-                      the global leaderboard. Remember to log in to the game
-                      daily and venture into the Coin98 area to uncover hidden
-                      treasures.
+                      daily rewards in C98, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Coin98 area to uncover
+                      hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
@@ -878,10 +886,10 @@ const MarketEvents = ({
                       CoinGecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the CoinGecko area, players not only stand a
-                      chance to secure daily rewards in BNB, but also earn points for
-                      their placement on the global leaderboard. Remember to log
-                      in to the game daily and venture into the CoinGecko area
-                      to uncover hidden treasures.
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      CoinGecko area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event5" ? (
                     <p className="popup-event-desc">
@@ -890,10 +898,10 @@ const MarketEvents = ({
                       Avalanche Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Avalanche area, players not only stand a
-                      chance to secure daily rewards in AVAX, but also earn points for
-                      their placement on the global leaderboard. Remember to log
-                      in to the game daily and venture into the Avalanche area
-                      to uncover hidden treasures.
+                      chance to secure daily rewards in AVAX, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Avalanche area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event6" ? (
                     <p className="popup-event-desc">
@@ -902,10 +910,10 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Gate.io area, players not only stand a chance to secure
-                      daily rewards in GT, but also earn points for their placement on
-                      the global leaderboard. Remember to log in to the game
-                      daily and venture into the Gate.io area to uncover hidden
-                      treasures.
+                      daily rewards in GT, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Gate.io area to
+                      uncover hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
@@ -914,9 +922,9 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE, but also earn points for their placement on the
-                      global leaderboard. Remember to log in to the game daily
-                      and venture into the Base area to uncover hidden
+                      rewards in BASE, but also earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the Base area to uncover hidden
                       treasures.
                     </p>
                   )}
