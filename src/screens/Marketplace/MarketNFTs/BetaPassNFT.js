@@ -1368,7 +1368,7 @@ const BetaPassNFT = ({
                             <div className="summaryseparator mt-3 mb-3"></div>
                             <div className="d-flex align-items-center gap-2 justify-content-between">
                               <a
-                                href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                href="https://game.worldofdypians.com/downloads/WorldOfDypians%200.2.1.zip"
                                 target="_blank"
                                 rel="noreferrer"
                                 className="downloadbtn-coingecko btn d-flex align-items-center gap-1"

@@ -206,8 +206,8 @@ const Roadmap = () => {
           completed: true,
         },
         {
-          title: "Introduction of Beta Passes NFT collection",
-          desc: "Discover the exclusive Beta Passes NFT collection, a limited edition of digital collectibles for our valued users.",
+          title: "Introduction of Beta Pass NFT collection",
+          desc: "Discover the exclusive Beta Pass NFT collection, a limited edition of digital collectibles for our valued users.",
           completed: true,
         },
         {
