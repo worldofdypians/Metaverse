@@ -404,12 +404,13 @@ function App() {
 
         checkConnection();
       } else {
-        connectWallet(ConnectionType.INJECTED);
-        setCoinbase(account);
-        setIsConnected(isActive);
-        setwalletModal(false);
-        setShowForms2(true);
-        setChainId(parseInt(window.gatewallet.chainId));
+        await connectWallet(ConnectionType.INJECTED);
+          setCoinbase(account);
+          setIsConnected(isActive);
+          setwalletModal(false);
+          setShowForms2(true);
+          setChainId(parseInt(window.gatewallet.chainId));
+      
       }
 
       //
@@ -1036,6 +1037,7 @@ function App() {
       logout === "false" &&
       !window.gatewallet
     ) {
+      localStorage.setItem("logout", "false");
       checkConnection2();
     } else if (window.gatewallet && isActive) {
       setIsConnected(isActive);
@@ -1050,7 +1052,6 @@ function App() {
     checkNetworkId();
   }, [coinbase, chainId, isActive, account]);
 
-console.log(provider)
   useEffect(() => {
     checkNetworkId();
   }, [isConnected, coinbase, chainId]);
@@ -1459,6 +1460,7 @@ console.log(provider)
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
             isConnected={isConnected}
+            handleSwitchChainGateWallet={handleSwitchNetwork}
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1708,7 +1710,7 @@ console.log(provider)
               }
             />
 
-            {/* <Route
+            <Route
                 exact
                 path="/marketplace/beta-pass/gate"
                 element={
@@ -1741,7 +1743,7 @@ console.log(provider)
                     handleSwitchNetwork={handleSwitchNetwork}
                   />
                 }
-              /> */}
+              />
 
             {/* <Route
                 exact
