@@ -63,17 +63,23 @@ const renderer = ({ days, hours, minutes }) => {
     <>
       <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
         <div className="d-flex flex-column align-items-center gap-3">
-          <h6 className="profile-time-number-2 mb-0">{days}</h6>
+          <h6 className="profile-time-number-2 mb-0">
+            {days < 10 ? "0" + days : days}
+          </h6>
           <span className="profile-time-desc-2 mb-0">Days</span>
         </div>
         <h6 className="profile-time-number-2 mb-0">:</h6>
         <div className="d-flex flex-column align-items-center gap-3">
-          <h6 className="profile-time-number-2 mb-0">{hours}</h6>
+          <h6 className="profile-time-number-2 mb-0">
+            {hours < 10 ? "0" + hours : hours}
+          </h6>
           <span className="profile-time-desc-2 mb-0">Hours</span>
         </div>
         <h6 className="profile-time-number-2 mb-0">:</h6>
         <div className="d-flex flex-column align-items-center gap-3">
-          <h6 className="profile-time-number-2 mb-0">{minutes}</h6>
+          <h6 className="profile-time-number-2 mb-0">
+            {minutes < 10 ? "0" + minutes : minutes}
+          </h6>
           <span className="profile-time-desc-2 mb-0">Minutes</span>
         </div>
       </div>
@@ -167,7 +173,6 @@ const WalletBalance = ({
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
-
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -1175,7 +1180,6 @@ const WalletBalance = ({
             coingeckoEvent.reward.earn.multiplier;
           setuserEarnETH(ethValue);
         }
-        
       } else {
         console.log(`Request failed with status ${response.status}`);
       }
@@ -1183,14 +1187,12 @@ const WalletBalance = ({
       console.log("Error:", error);
     }
   };
-  
-  
+
   useEffect(() => {
     if (email && address) {
       fetchTreasureHuntData(email, address);
     }
   }, [email, address]);
-
 
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
@@ -3758,16 +3760,18 @@ const WalletBalance = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">{getFormattedNumber(userPoints,0)}</h6>
+                  <h6 className="mb-0 event-earnings-coin2">
+                    {getFormattedNumber(userPoints, 0)}
+                  </h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
                   </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
-                    ${getFormattedNumber(userEarnUsd,2)}
+                    ${getFormattedNumber(userEarnUsd, 2)}
                     <span className="ethpricerewards">
-                      {getFormattedNumber(userEarnETH,2)}
+                      {getFormattedNumber(userEarnETH, 2)}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"

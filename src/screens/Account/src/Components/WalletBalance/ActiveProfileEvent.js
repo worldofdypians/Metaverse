@@ -14,17 +14,23 @@ const renderer = ({ days, hours, minutes }) => {
     <>
       <div className="d-flex align-items-center gap-1">
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">{days}</h6>
+          <h6 className="profile-time-number mb-0">
+            {days < 10 ? "0" + days : days}
+          </h6>
           <span className="profile-time-desc mb-0">Days</span>
         </div>
         <h6 className="profile-time-number mb-0">:</h6>
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">{hours}</h6>
+          <h6 className="profile-time-number mb-0">
+            {hours < 10 ? "0" + hours : hours}
+          </h6>
           <span className="profile-time-desc mb-0">Hours</span>
         </div>
         <h6 className="profile-time-number mb-0">:</h6>
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">{minutes}</h6>
+          <h6 className="profile-time-number mb-0">
+            {minutes < 10 ? "0" + minutes : minutes}
+          </h6>
           <span className="profile-time-desc mb-0">Minutes</span>
         </div>
       </div>
@@ -60,7 +66,6 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
             coingeckoEvent.reward.earn.multiplier;
           setuserEarnUsd(usdValue);
         }
-        
       } else {
         console.log(`Request failed with status ${response.status}`);
       }
