@@ -435,54 +435,31 @@ const MarketEvents = ({
   };
 
   const fetchTreasureHuntData = async () => {
-    // try {
-    //   const response = await fetch(
-    //     "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-    //     {
-    //       body: JSON.stringify({
-    //         email: "renato@outerlynx.com",
-    //         publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
-    //       }),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       method: "POST",
-    //       redirect: 'follow'
-    //     }
-    //   );
-    //   if (response.status === 200) {
-    //     const responseData = await response.json();
-    //     console.log(responseData);
-    //   } else {
-    //     console.log(`Request failed with status ${response.status}`);
-    //   }
-    // } catch (error) {
-    //   console.log("Error:", error);
-    // }
-
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw =
-      '{\r\n    "email": "renato@outerlynx.com",\r\n    publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",\r\n}';
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: JSON.stringify({
-        email: "renato@outerlynx.com",
-        publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
-      }),
-      redirect: "follow",
-    };
-
-    fetch(
-      "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    try {
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify({
+            email: "renato@outerlynx.com",
+            publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        console.log(responseData);
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
   };
 
   useEffect(() => {
