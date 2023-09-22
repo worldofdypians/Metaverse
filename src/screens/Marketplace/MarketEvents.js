@@ -186,7 +186,7 @@ const MarketEvents = ({
       title: "CoinGecko",
       logo: coingecko,
       eventStatus: "Coming Soon",
-      totalRewards: "$3,000 in BNB Rewards",
+      totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "September 25, 2023",
@@ -768,7 +768,7 @@ const MarketEvents = ({
                         {dummyEvent?.title}
                       </h6>
                       <span className="popup-rewards">
-                        $3,000 in {dummyEvent?.rewards} rewards
+                        $10,000 in {dummyEvent?.rewards} rewards
                       </span>
                     </div>
                     <div className="d-flex">
