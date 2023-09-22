@@ -37,9 +37,14 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
                     : data.eventStatus === "Expired"
                     ? "events-page-status-tag-expired"
                     : "events-page-status-tag-upcoming"
-                } px-2 d-flex align-items-center justify-content-center gap-2`}
+                } px-2 d-flex align-items-center justify-content-center gap-0`}
               >
-                {data.eventStatus === "Live" && <img src={liveDot} alt="" />}
+                {data.eventStatus === "Live" && (
+                  <div
+                    class="pulsatingDot"
+                    style={{ width: 7, height: 7, marginRight: 5 }}
+                  ></div>
+                )}
                 <span>{data.eventStatus}</span>
               </div>
             </div>
@@ -62,15 +67,15 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
           </div>
         </div>
         <div className="d-flex flex-column d-flex d-lg-none gap-3">
-        <div className="d-flex align-items-center gap-2">
-          <img src={whitePickaxe} alt="" />
-          <span className="white-events-text mb-0">{data.eventType}</span>
+          <div className="d-flex align-items-center gap-2">
+            <img src={whitePickaxe} alt="" />
+            <span className="white-events-text mb-0">{data.eventType}</span>
+          </div>
+          <div className="d-flex align-items-center gap-2">
+            <img src={whiteCalendar} alt="" />
+            <span className="white-events-text mb-0">{data.eventDate}</span>
+          </div>
         </div>
-        <div className="d-flex align-items-center gap-2">
-          <img src={whiteCalendar} alt="" />
-          <span className="white-events-text mb-0">{data.eventDate}</span>
-        </div>
-      </div>
       </div>
       <div className="d-flex flex-column d-none d-lg-flex gap-3 pick-and-calendar">
         <div className="d-flex align-items-center gap-2">
@@ -83,12 +88,12 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
         </div>
       </div>
       <span
-            className="events-page-details d-flex d-lg-none my-3 align-items-center gap-2"
-            onClick={onOpenPopup}
-          >
-            Details
-            <img src={eventsArrow} alt="" />
-          </span>
+        className="events-page-details d-flex d-lg-none my-3 align-items-center gap-2"
+        onClick={onOpenPopup}
+      >
+        Details
+        <img src={eventsArrow} alt="" />
+      </span>
       <img
         src={data.backgroundImage}
         alt=""

@@ -57,6 +57,30 @@ import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import axios from "axios";
+import Countdown from "react-countdown";
+
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <>
+      <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">{days}</h6>
+          <span className="profile-time-desc-2 mb-0">Days</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">{hours}</h6>
+          <span className="profile-time-desc-2 mb-0">Hours</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">{minutes}</h6>
+          <span className="profile-time-desc-2 mb-0">Minutes</span>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const MarketEvents = ({
   account,
@@ -161,6 +185,7 @@ const MarketEvents = ({
       },
     },
   ];
+  let coingeckoLastDay = new Date("2023-12-21 23:59:59 GMT+02:00");
 
   const dummyBetaPassData2 = [
     // {
@@ -186,8 +211,8 @@ const MarketEvents = ({
     {
       title: "CoinGecko",
       logo: coingecko,
-      eventStatus: "Coming Soon",
-      totalRewards: "$3,000 in BNB Rewards",
+      eventStatus: "Live",
+      totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "September 25, 2023",
@@ -197,9 +222,11 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event3",
         eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
       },
     },
     // {
@@ -405,34 +432,63 @@ const MarketEvents = ({
   const onClosePopup = () => {
     setPopup(false);
     setPackagePopup("");
-    console.log("hello");
   };
 
   const fetchTreasureHuntData = async () => {
-    let headersList = {
-      "Content-Type": "application/json" 
-     }
-     
-     let bodyContent = JSON.stringify({ 
-         "email": "renato@outerlynx.com", 
-         "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0" 
-     });
-     
-     let reqOptions = {
-       headers: headersList,
-       body: bodyContent,
-     }
-     
-     axios.get("https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData", reqOptions).then(function (response) {
-       console.log(response.data);
-     })
+    // try {
+    //   const response = await fetch(
+    //     "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+    //     {
+    //       body: JSON.stringify({
+    //         email: "renato@outerlynx.com",
+    //         publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
+    //       }),
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       method: "POST",
+    //       redirect: 'follow'
+    //     }
+    //   );
+    //   if (response.status === 200) {
+    //     const responseData = await response.json();
+    //     console.log(responseData);
+    //   } else {
+    //     console.log(`Request failed with status ${response.status}`);
+    //   }
+    // } catch (error) {
+    //   console.log("Error:", error);
+    // }
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw =
+      '{\r\n    "email": "renato@outerlynx.com",\r\n    publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",\r\n}';
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        email: "renato@outerlynx.com",
+        publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
+      }),
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Events";
   }, []);
-
 
   useEffect(() => {
     if (windowSize.width < 786) {
@@ -464,7 +520,7 @@ const MarketEvents = ({
     } else if (eventId === "betapass") {
       setSelectedPackage("betaPass");
     } else if (eventId === "treasure-hunt") {
-      fetchTreasureHuntData()
+      fetchTreasureHuntData();
       setSelectedPackage("treasure-hunt");
     }
   }, []);
@@ -744,6 +800,12 @@ const MarketEvents = ({
                       : "event-popup-status-expired"
                   }  d-flex align-items-center justify-content-center p-1`}
                 >
+                  {dummyEvent.status === "Live" && (
+                    <div
+                      class="pulsatingDot"
+                      style={{ width: 7, height: 7, marginRight: 5 }}
+                    ></div>
+                  )}
                   <span className="mb-0">{dummyEvent?.status}</span>
                 </div>
               </div>
@@ -776,7 +838,7 @@ const MarketEvents = ({
                         {dummyEvent?.title}
                       </h6>
                       <span className="popup-rewards">
-                        $3,000 in {dummyEvent?.rewards} rewards
+                        $10,000 in {dummyEvent?.rewards} rewards
                       </span>
                     </div>
                     <div className="d-flex">
@@ -792,41 +854,12 @@ const MarketEvents = ({
                   </div>
                 </div>
                 {dummyEvent?.status === "Live" && (
-                  <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
+                  <Countdown
+                    renderer={renderer}
+                    date={dummyEvent.eventDuration}
+                  />
                 )}
-                {dummyEvent?.status === "Live" ? (
-                  <div className="d-flex align-items-start gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
-                ) : (
+                {dummyEvent?.status !== "Live" && (
                   <div className="d-flex flex-column">
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">

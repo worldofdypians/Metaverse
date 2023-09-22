@@ -56,6 +56,30 @@ import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
+import Countdown from "react-countdown";
+
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <>
+      <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">{days}</h6>
+          <span className="profile-time-desc-2 mb-0">Days</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">{hours}</h6>
+          <span className="profile-time-desc-2 mb-0">Hours</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">{minutes}</h6>
+          <span className="profile-time-desc-2 mb-0">Minutes</span>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const WalletBalance = ({
   dypBalance,
@@ -843,11 +867,9 @@ const WalletBalance = ({
       setcollectedItemsFiltered([]);
     } else if (filter1 === "all" && filter2 === "has offers") {
       setcollectedItemsFiltered(myNftsOffer);
-    }
-    else if (filter1 === "betapass" && filter2 === "has offers") {
+    } else if (filter1 === "betapass" && filter2 === "has offers") {
       setcollectedItemsFiltered([]);
-    } 
-     else if (filter1 === "all" && filter2 === "listed") {
+    } else if (filter1 === "all" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
         (item) => item.isListed === true && item.isStaked === false
       );
@@ -985,6 +1007,8 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
+  let coingeckoLastDay = new Date("2023-12-21 23:59:59 GMT+02:00");
+
   const dummyConflux = {
     title: "Conflux Pass",
     chain: "Conflux Network",
@@ -999,9 +1023,11 @@ const WalletBalance = ({
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
-    status: "Coming Soon",
+    status: "Live",
     id: "event3",
     eventType: "Explore & Mine",
+    totalRewards: "$10,000 in BNB Rewards",
+    eventDuration: coingeckoLastDay,
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -1065,7 +1091,7 @@ const WalletBalance = ({
       title: "CoinGecko",
       logo: coingecko,
       eventStatus: "Upcoming",
-      totalRewards: "$3,000 in BNB Rewards",
+      totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 120.0,
       eventType: "Explore & Mine",
       eventDate: "11/09/2023",
@@ -1140,11 +1166,12 @@ const WalletBalance = ({
               Special Events
             </h6>
             <div className="nft-outer-wrapper2 rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCoingecko);
                   setEventPopup(true);
                 }}
+                event={dummyCoingecko}
               />
               <img
                 src={eventSkeleton}
@@ -3397,6 +3424,12 @@ const WalletBalance = ({
                       : "event-popup-status-expired"
                   }  d-flex align-items-center justify-content-center p-1`}
                 >
+                  {dummyEvent.status === "Live" && (
+                    <div
+                      class="pulsatingDot"
+                      style={{ width: 7, height: 7, marginRight: 5 }}
+                    ></div>
+                  )}
                   <span className="mb-0">{dummyEvent?.status}</span>
                 </div>
               </div>
@@ -3421,7 +3454,7 @@ const WalletBalance = ({
                         {dummyEvent?.title}
                       </h6>
                       <span className="popup-rewards">
-                        $3,000 in {dummyEvent?.rewards} rewards
+                        $10,000 in {dummyEvent?.rewards} rewards
                       </span>
                     </div>
                     <div className="d-flex">
@@ -3437,41 +3470,12 @@ const WalletBalance = ({
                   </div>
                 </div>
                 {dummyEvent?.status === "Live" && (
-                  <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
+                  <Countdown
+                    renderer={renderer}
+                    date={dummyEvent.eventDuration}
+                  />
                 )}
-                {dummyEvent?.status === "Live" ? (
-                  <div className="d-flex align-items-start gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
-                ) : (
+                {dummyEvent?.status === "Coming Soon" && (
                   <div className="d-flex flex-column">
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">
