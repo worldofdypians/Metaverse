@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import cyanArrow from "./assets/cyanArrow.svg";
@@ -7,6 +7,7 @@ import cyanDate from "./assets/cyanDate.svg";
 import cyanDollar from "./assets/cyanDollar.svg";
 import cyanExplore from "./assets/cyanExplore.svg";
 import Countdown from "react-countdown";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -30,7 +31,50 @@ const renderer = ({ days, hours, minutes }) => {
     </>
   );
 };
-const ActiveProfileEvent = ({ onOpenEvent, event }) => {
+const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
+  const [userEarnUsd, setuserEarnUsd] = useState(0);
+
+  const fetchTreasureHuntData = async (email, userAddress) => {
+    try {
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify({
+            email: email,
+            publicAddress: userAddress,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events[0];
+          const usdValue =
+            coingeckoEvent.reward.earn.value /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnUsd(usdValue);
+        }
+        
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (userEmail && userWallet) {
+      fetchTreasureHuntData(userEmail, userWallet);
+    }
+  }, [userEmail, userWallet]);
+
   return (
     <div
       className="profile-event-item d-flex flex-column position-relative"
@@ -80,7 +124,9 @@ const ActiveProfileEvent = ({ onOpenEvent, event }) => {
         </div>
         <div className="d-flex align-items-center gap-1">
           <img src={cyanDollar} height={15} width={15} alt="" />
-          <span className="mb-0 event-bottom-text">$253.07</span>
+          <span className="mb-0 event-bottom-text">
+            ${getFormattedNumber(userEarnUsd, 2)}
+          </span>
         </div>
         <div className="d-flex align-items-center gap-1">
           <img src={cyanDate} height={15} width={15} alt="" />

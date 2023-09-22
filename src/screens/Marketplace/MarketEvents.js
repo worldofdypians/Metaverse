@@ -58,7 +58,8 @@ import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import axios from "axios";
 import Countdown from "react-countdown";
-
+import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import { useAuth } from "../Account/src/Utils.js/Auth/AuthDetails";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <>
@@ -109,8 +110,12 @@ const MarketEvents = ({
   const { eventId } = useParams();
   const [dummyEvent, setDummyEvent] = useState();
   const [eventPopup, setEventPopup] = useState(false);
-  const selected = useRef(null);
+  const [userPoints, setuserPoints] = useState(0);
+  const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [userEarnETH, setuserEarnETH] = useState(0);
 
+  const selected = useRef(null);
+  const { email } = useAuth();
   const dummyBetaPassData = [
     {
       title: "Conflux (CFX)",
@@ -434,14 +439,14 @@ const MarketEvents = ({
     setPackagePopup("");
   };
 
-  const fetchTreasureHuntData = async () => {
+  const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
-            email: "renato@outerlynx.com",
-            publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
+            email: email,
+            publicAddress: userAddress,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -453,7 +458,22 @@ const MarketEvents = ({
       );
       if (response.status === 200) {
         const responseData = await response.json();
-        console.log(responseData);
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events[0];
+          const points = coingeckoEvent.reward.earn.totalPoints;
+          setuserPoints(points);
+
+          const usdValue =
+            coingeckoEvent.reward.earn.value /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnUsd(usdValue);
+
+          const ethValue =
+            coingeckoEvent.reward.earn.total /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnETH(ethValue);
+        }
+        
       } else {
         console.log(`Request failed with status ${response.status}`);
       }
@@ -497,10 +517,22 @@ const MarketEvents = ({
     } else if (eventId === "betapass") {
       setSelectedPackage("betaPass");
     } else if (eventId === "treasure-hunt") {
-      fetchTreasureHuntData();
       setSelectedPackage("treasure-hunt");
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      email &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+    }
+  }, [email, data]);
 
   return (
     <>
@@ -1126,16 +1158,16 @@ const MarketEvents = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">0</h6>
+                  <h6 className="mb-0 event-earnings-coin2">{getFormattedNumber(userPoints,0)}</h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
                   </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
-                    $0.00{" "}
+                    ${getFormattedNumber(userEarnUsd, 2)}
                     <span className="ethpricerewards">
-                      0.000{" "}
+                      {getFormattedNumber(userEarnETH, 2)}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"

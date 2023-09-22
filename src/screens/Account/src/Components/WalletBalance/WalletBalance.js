@@ -164,6 +164,10 @@ const WalletBalance = ({
   const windowSize = useWindowSize();
   const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
+  const [userPoints, setuserPoints] = useState(0);
+  const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [userEarnETH, setuserEarnETH] = useState(0);
+
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -1136,6 +1140,58 @@ const WalletBalance = ({
     setShowAllEvents(!showAllEvents);
     setShowNfts(false);
   };
+
+  const fetchTreasureHuntData = async (email, userAddress) => {
+    try {
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify({
+            email: email,
+            publicAddress: userAddress,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events[0];
+          const points = coingeckoEvent.reward.earn.totalPoints;
+          setuserPoints(points);
+
+          const usdValue =
+            coingeckoEvent.reward.earn.value /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnUsd(usdValue);
+
+          const ethValue =
+            coingeckoEvent.reward.earn.total /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnETH(ethValue);
+        }
+        
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+  
+  
+  useEffect(() => {
+    if (email && address) {
+      fetchTreasureHuntData(email, address);
+    }
+  }, [email, address]);
+
+
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
       releaseContent.current?.scrollIntoView({
@@ -1172,6 +1228,8 @@ const WalletBalance = ({
                   setEventPopup(true);
                 }}
                 event={dummyCoingecko}
+                userEmail={email}
+                userWallet={address}
               />
               <img
                 src={eventSkeleton}
@@ -3700,16 +3758,16 @@ const WalletBalance = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">0</h6>
+                  <h6 className="mb-0 event-earnings-coin2">{getFormattedNumber(userPoints,0)}</h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
                   </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
-                    $0.00{" "}
+                    ${getFormattedNumber(userEarnUsd,2)}
                     <span className="ethpricerewards">
-                      0.000{" "}
+                      {getFormattedNumber(userEarnETH,2)}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"
