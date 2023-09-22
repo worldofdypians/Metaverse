@@ -1065,7 +1065,7 @@ const WalletBalance = ({
       title: "CoinGecko",
       logo: coingecko,
       eventStatus: "Upcoming",
-      totalRewards: "$3,000 in BNB Rewards",
+      totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 120.0,
       eventType: "Explore & Mine",
       eventDate: "11/09/2023",
@@ -3421,7 +3421,7 @@ const WalletBalance = ({
                         {dummyEvent?.title}
                       </h6>
                       <span className="popup-rewards">
-                        $3,000 in {dummyEvent?.rewards} rewards
+                        $10,000 in {dummyEvent?.rewards} rewards
                       </span>
                     </div>
                     <div className="d-flex">

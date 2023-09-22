@@ -44,7 +44,7 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
             </h6>
 
             <span className="profile-event-rewards mb-0">
-              $3,000 in BNB rewards
+              $10,000 in BNB rewards
             </span>
           </div>
         </div>
