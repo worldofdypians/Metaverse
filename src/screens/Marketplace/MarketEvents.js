@@ -722,6 +722,7 @@ const MarketEvents = ({
                               setEventPopup(true);
                               setDummyEvent(item.popupInfo);
                             }}
+                            userEarnUsd={userEarnUsd}
                           />
                         ))}
                       </div>

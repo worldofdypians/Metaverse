@@ -3,9 +3,10 @@ import liveDot from "../assets/liveDot.svg";
 import eventsArrow from "../assets/eventsArrow.svg";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
+import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
-const BetaEventCard = ({ data, onOpenPopup }) => {
+const BetaEventCard = ({ data, onOpenPopup,userEarnUsd }) => {
   return (
     <div
       className={` ${
@@ -31,13 +32,14 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
             <div className="d-flex align-items-center gap-2">
               <h6 className="events-page-title mb-0">{data.title}</h6>
               <div
-                className={` ${
+                className={`position-relative ${
                   data.eventStatus === "Live"
                     ? "events-page-status-tag-live"
                     : data.eventStatus === "Expired"
                     ? "events-page-status-tag-expired"
                     : "events-page-status-tag-upcoming"
                 } px-2 d-flex align-items-center justify-content-center gap-0`}
+                style={{top: 0}}
               >
                 {data.eventStatus === "Live" && (
                   <div
@@ -63,7 +65,7 @@ const BetaEventCard = ({ data, onOpenPopup }) => {
       <div className="d-flex align-items-center gap-3">
         <div className="d-flex col-6 col-lg-3 flex-column align-items-start align-items-lg-center">
           <div className="mybetaearnings">
-            <h6 className="event-my-earnings3 mb-3">${data.myEarnings}</h6>
+            <h6 className="event-my-earnings3 mb-3">${getFormattedNumber(userEarnUsd, 2)}</h6>
           </div>
         </div>
         <div className="d-flex flex-column d-flex d-lg-none gap-3">
