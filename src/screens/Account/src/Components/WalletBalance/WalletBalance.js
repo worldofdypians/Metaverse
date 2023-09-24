@@ -1016,7 +1016,7 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
-  let coingeckoLastDay = new Date("2023-12-21 23:59:59 GMT+02:00");
+  let coingeckoLastDay = new Date("2023-12-24T14:48:00.000+02:00");
 
   const dummyConflux = {
     title: "Conflux Pass",
