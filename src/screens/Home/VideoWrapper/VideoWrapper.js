@@ -67,7 +67,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   </button>
                 </NavLink>
                 <div
-                  className="linear-border"
+                  className="linear-border-download"
                   style={{
                     width: "fit-content",
                     zIndex: 5,
@@ -78,7 +78,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   <button
                     ref={downloader}
                     onClick={gotoDownload}
-                    className="btn filled-btn px-5 d-flex align-items-center gap-2"
+                    className="btn filled-btn-download px-5 d-flex align-items-center gap-2"
                   >
                     <img
                       src={icons ? windowsIconWhite : windowsIcon}
@@ -87,10 +87,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                       alt="windows icon"
                     />
                     Download
-                    <img
-                      src={icons ? downloadIconWhite : downloadIcon}
-                      alt="download icon"
-                    />
+                    
                   </button>
                 </div>
               </div>

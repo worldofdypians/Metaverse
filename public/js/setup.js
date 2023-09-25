@@ -4115,7 +4115,7 @@ window.isApprovedOffer = async (amount, priceType) => {
 window.getAllOffers = async (nftAddress, tokenId) => {
   //getActiveOffers
 
-  const marketplace = new window.web3.eth.Contract(
+  const marketplace = new window.infuraWeb3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );

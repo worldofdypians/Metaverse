@@ -49,7 +49,8 @@ import circleArrow from "./assets/arrow-circle.svg";
 import termsArrow from "./assets/termsArrow.svg";
 import popupXmark from "../assets/popupXmark.svg";
 import user from "./assets/user.svg";
-import downloadArrow from "./assets/downloadArrow.svg";
+import windowIcon from "./assets/windowIcon.svg";
+import windowsIconWhite from "../../../assets/windowsIconWhite.svg";
 
 import {
   GENERATE_NONCE,
@@ -191,6 +192,7 @@ const BetaPassNFT = ({
   const [openConflux, setOpenConflux] = useState(false);
   const [nftSymbol, setnftSymbol] = useState("");
   const [activeTab, setactiveTab] = useState("create");
+  const [icons, setIcons] = useState(false);
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
@@ -1151,7 +1153,7 @@ const BetaPassNFT = ({
                               : "Registered"}{" "}
                           </h6>
                         )}
-                       
+
                         {!alreadyRegistered && activeTab === "create" && (
                           <div>
                             <ul class="timeline m-0 p-0" id="timeline">
@@ -1372,8 +1374,19 @@ const BetaPassNFT = ({
                                 target="_blank"
                                 rel="noreferrer"
                                 className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
+                                onMouseEnter={() => {
+                                  setIcons(true);
+                                }}
+                                onMouseLeave={() => {
+                                  setIcons(false);
+                                }}
                               >
-                                <img src={downloadArrow} alt="" /> Download
+                                <img
+                                  src={icons ? windowsIconWhite : windowIcon}
+                                  alt=""
+                                  style={{ height: 12, width: 12 }}
+                                />
+                                Download
                               </a>
                               <NavLink
                                 to="/account"
