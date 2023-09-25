@@ -18,6 +18,7 @@ import coin98Popup from '../../components/TimepieceMint/assets/coin98Popup.png'
 import basePopup from '../../components/TimepieceMint/assets/basePopup.png'
 import confluxPopup from '../../components/TimepieceMint/assets/confluxPopup.png'
 import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup.png'
+import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHuntPopup.png'
 
 
 const Home = ({
@@ -53,6 +54,11 @@ const Home = ({
   const coingeckoPopupInfo = {
     title: "CoinGecko",
     img: coingeckoPopup,
+    state: "coingecko",
+  }
+  const treasureHuntPopupInfo = {
+    title: "Treasure Hunt",
+    img: treasureHuntPopup,
     state: "coingecko",
   }
 

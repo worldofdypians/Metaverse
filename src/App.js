@@ -148,6 +148,8 @@ function App() {
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
+   
+
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
@@ -1030,18 +1032,16 @@ function App() {
   const logout = localStorage.getItem("logout");
 
   useEffect(() => {
-    if (
-      window.ethereum &&
-      window.ethereum.isConnected() === true &&
-      logout === "false" &&
-      !window.gatewallet
-    ) {
-      localStorage.setItem("logout", "false");
-      checkConnection2();
-    } else if (window.gatewallet && isActive) {
-      setIsConnected(isActive);
-      if (account) {
-        setCoinbase(account);
+    if (window.ethereum && !window.coin98) {
+      if (
+        (window.ethereum.isConnected() === true && logout === "false") ||
+        window.gatewallet
+      ) {
+        checkConnection2();
+      } else {
+        setIsConnected(false);
+        setCoinbase();
+        localStorage.setItem("logout", "true");
       }
     } else {
       setIsConnected(false);
@@ -1063,8 +1063,9 @@ function App() {
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
-      fetchAllMyNfts();
+    
     }
+      fetchAllMyNfts();
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
   // useEffect(() => {
@@ -1404,6 +1405,12 @@ function App() {
     // );
     getallNfts();
   }, [nftCount]);
+
+  const checkData = async () => {
+    if (coinbase) {
+      navigate("/auth");
+    }
+  };
 
   useEffect(() => {
     if (listedNFTS2.length > 0 && recentListedNFTS2.length > 0) {

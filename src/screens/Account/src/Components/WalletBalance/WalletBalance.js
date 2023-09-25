@@ -57,6 +57,36 @@ import eventsArrow from "./assets/eventsArrow.svg";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
 import confluxPopupImage from "./assets/eventPopupImage.png";
+import Countdown from "react-countdown";
+
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <>
+      <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {days < 10 ? "0" + days : days}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Days</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {hours < 10 ? "0" + hours : hours}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Hours</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {minutes < 10 ? "0" + minutes : minutes}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Minutes</span>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const WalletBalance = ({
   dypBalance,
@@ -107,6 +137,8 @@ const WalletBalance = ({
   const [listedItems, setlistedItems] = useState([]);
 
   const [dyptokenData, setDypTokenData] = useState([]);
+  const [bnbPrice, setBnbPrice] = useState(0);
+
   const [idyptokenData, setIDypTokenData] = useState([]);
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
@@ -142,6 +174,9 @@ const WalletBalance = ({
   const windowSize = useWindowSize();
   const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
+  const [userPoints, setuserPoints] = useState(0);
+  const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [userEarnETH, setuserEarnETH] = useState(0);
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -796,6 +831,8 @@ const WalletBalance = ({
         const propertyDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
         );
+        const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
+        setBnbPrice(bnb);
         setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
 
         const propertyIDyp = Object.entries(
@@ -863,11 +900,9 @@ const WalletBalance = ({
       setcollectedItemsFiltered([]);
     } else if (filter1 === "all" && filter2 === "has offers") {
       setcollectedItemsFiltered(myNftsOffer);
-    }
-    else if (filter1 === "betapass" && filter2 === "has offers") {
+    } else if (filter1 === "betapass" && filter2 === "has offers") {
       setcollectedItemsFiltered([]);
-    } 
-     else if (filter1 === "all" && filter2 === "listed") {
+    } else if (filter1 === "all" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
         (item) => item.isListed === true && item.isStaked === false
       );
@@ -1005,6 +1040,8 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
+  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+
   const dummyConflux = {
     title: "Conflux Pass",
     chain: "Conflux Network",
@@ -1021,11 +1058,13 @@ const WalletBalance = ({
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
-    status: "Coming Soon",
+    status: "Live",
     id: "event3",
     eventType: "Explore & Mine",
     date: "Sept 25, 2023",
     logo: coingecko,
+    totalRewards: "$10,000 in BNB Rewards",
+    eventDuration: coingeckoLastDay,
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -1089,7 +1128,7 @@ const WalletBalance = ({
       title: "CoinGecko",
       logo: coingecko,
       eventStatus: "Upcoming",
-      totalRewards: "$3,000 in BNB Rewards",
+      totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 120.0,
       eventType: "Explore & Mine",
       eventDate: "11/09/2023",
@@ -1134,6 +1173,52 @@ const WalletBalance = ({
     setShowAllEvents(!showAllEvents);
     setShowNfts(false);
   };
+
+  const fetchTreasureHuntData = async (email, userAddress) => {
+    try {
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify({
+            email:  email,
+            publicAddress: userAddress,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events.filter((obj)=>{return obj.betapassId==='coingecko'});
+     
+          const points = coingeckoEvent[0].reward.earn.totalPoints;
+          setuserPoints(points);
+
+          const usdValue =
+          coingeckoEvent[0].reward.earn.value /
+          coingeckoEvent[0].reward.earn.multiplier;
+          setuserEarnUsd(usdValue);
+          setuserEarnETH(usdValue / bnbPrice);
+        }
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (email && address) {
+      fetchTreasureHuntData(email, address);
+    }
+  }, [email, address]);
+
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
       releaseContent.current?.scrollIntoView({
@@ -1164,12 +1249,15 @@ const WalletBalance = ({
               Special Events
             </h6>
             <div className="nft-outer-wrapper2 rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCoingecko);
                   setEventPopup(true);
                 }}
                 data={dummyCoingecko}
+                event={dummyCoingecko}
+                userEmail={email}
+                userWallet={address}
               />
               <UpcomingProfileEvent
                 onOpenEvent={() => {
@@ -3443,6 +3531,12 @@ const WalletBalance = ({
                       : "event-popup-status-expired"
                   }  d-flex align-items-center justify-content-center p-1`}
                 >
+                  {dummyEvent.status === "Live" && (
+                    <div
+                      class="pulsatingDot"
+                      style={{ width: 7, height: 7, marginRight: 5 }}
+                    ></div>
+                  )}
                   <span className="mb-0">{dummyEvent?.status}</span>
                 </div>
               </div>
@@ -3467,7 +3561,7 @@ const WalletBalance = ({
                         {dummyEvent?.title}
                       </h6>
                       <span className="popup-rewards">
-                        $3,000 in {dummyEvent?.rewards} rewards
+                        $10,000 in {dummyEvent?.rewards} rewards
                       </span>
                     </div>
                     <div className="d-flex">
@@ -3483,41 +3577,12 @@ const WalletBalance = ({
                   </div>
                 </div>
                 {dummyEvent?.status === "Live" && (
-                  <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
+                  <Countdown
+                    renderer={renderer}
+                    date={dummyEvent.eventDuration}
+                  />
                 )}
-                {dummyEvent?.status === "Live" ? (
-                  <div className="d-flex align-items-start gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
-                ) : (
+                {dummyEvent?.status === "Coming Soon" && (
                   <div className="d-flex flex-column">
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">
@@ -3534,10 +3599,10 @@ const WalletBalance = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {/* <span className="events-page-details d-flex align-items-center gap-2">
-       Learn more
-       <img src={eventsArrow} alt="" />
-     </span> */}
+              <NavLink to='/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event' className="events-page-details d-flex align-items-center gap-2">
+                Learn more
+                <img src={eventsArrow} alt="" />
+              </NavLink>
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">
@@ -3599,7 +3664,18 @@ const WalletBalance = ({
                   <h6 className="popup-green-text">Benefits</h6>
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
-                    <li className="popup-event-desc">Daily Rewards</li>
+                    {dummyEvent.id === "event3" ? (
+                      <>
+                        <li className="popup-event-desc">
+                          Daily Rewards range from $1 to $100
+                        </li>
+                        <li className="popup-event-desc">
+                          Daily Points range from 5,000 to 50,000
+                        </li>
+                      </>
+                    ) : (
+                      <li className="popup-event-desc">Daily Rewards</li>
+                    )}
                     <li className="popup-event-desc">
                       Earn{" "}
                       {dummyEvent.id === "event1"
@@ -3693,6 +3769,7 @@ const WalletBalance = ({
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
+                rel='noreferrer'
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img alt="" src={twitter} /> Twitter
@@ -3709,6 +3786,8 @@ const WalletBalance = ({
                     : "https://base.org/discord"
                 }
                 target="_blank"
+                rel='noreferrer'
+                
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img
@@ -3728,6 +3807,8 @@ const WalletBalance = ({
                     : "https://base.org/"
                 }
                 target="_blank"
+                rel='noreferrer'
+
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img alt="" src={website} />
@@ -3742,16 +3823,18 @@ const WalletBalance = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">0</h6>
+                  <h6 className="mb-0 event-earnings-coin2">
+                    {getFormattedNumber(userPoints, 0)}
+                  </h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
                   </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
-                    $0.00{" "}
-                    <span className="ethpricerewards">
-                      0.000{" "}
+                  <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
+                    ${getFormattedNumber(userEarnUsd, 2)}
+                    <span className="ethpricerewards specialstyle-wrapper-eth">
+                      {getFormattedNumber(userEarnETH, 2)}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"
@@ -3775,12 +3858,12 @@ const WalletBalance = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            <div className="w-100 d-flex justify-content-end mt-3">
+            {/* <div className="w-100 d-flex justify-content-end mt-3">
               <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
                 {" "}
                 <button className="btn get-beta-btn">Get Beta Pass</button>
               </NavLink>
-            </div>
+            </div> */}
           </div>
         </OutsideClickHandler>
       )}

@@ -641,15 +641,15 @@ function Dashboard({
 
   const logoutItem = localStorage.getItem("logout");
 
-  // useEffect(() => {
-  //   if (window.ethereum) {
-  //     if (window.ethereum.isConnected() === true) {
-  //       localStorage.setItem("logout", "false");
-  //     } else {
-  //       localStorage.setItem("logout", "true");
-  //     }
-  //   }
-  // }, [coinbase, chainId]);
+  useEffect(() => {
+    if (window.ethereum && !window.coin98) {
+      if (window.ethereum.isConnected() === true) {
+        localStorage.setItem("logout", "false");
+      } else {
+        localStorage.setItem("logout", "true");
+      }
+    }
+  }, [coinbase, chainId]);
 
   useEffect(() => {
     if (success === true) {

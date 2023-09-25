@@ -123,7 +123,8 @@ const JoinBetaModal = ({
           .catch(function (error) {
             console.error(error);
           });
-        if (emailCheck.status === 1) {
+          
+        if (emailCheck && emailCheck.status === 1) {
           setStatus("Already joined");
         } else {
           setStatus("");
@@ -138,7 +139,9 @@ const JoinBetaModal = ({
             .catch(function (error) {
               console.error(error);
             });
-          if (emailBetaCheck.status === 1) {
+     
+
+          if (emailBetaCheck && emailBetaCheck.status === 1) {
             setStatus("Already joined");
           } else {
             setStatus("");
@@ -180,8 +183,7 @@ const JoinBetaModal = ({
     if (allErrors.email === undefined && allErrors.discord === undefined) {
       if (
         values.discord !== "" &&
-        values.email !== "" &&
-        values.discord.includes("#")
+        values.email !== ""
       ) {
         setLoading(true);
         let signature = "";

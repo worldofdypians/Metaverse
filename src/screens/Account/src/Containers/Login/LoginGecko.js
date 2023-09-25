@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Auth } from "aws-amplify";
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+// import { Link, Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
-import { ErrorAlert } from "../../Components";
+// import { ErrorAlert } from "../../Components";
+import ForgotPasswordGecko from "../ForgotPassword/ForgotPasswordGecko";
 
-function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
+function LoginGecko({ mintTitle, onSuccessLogin, newEmail, onUsernameChange,onPassChange, onLoginTry }) {
   const {
     isAuthenticated,
     login: LoginGlobal,
@@ -21,8 +22,10 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
   const [verifyCode, setVerifyCode] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [errorMsg, seterrorMsg] = useState("");
+  const [showForgotPassword, setshowForgotPassword] = useState(false);
 
   const login = async () => {
+    onLoginTry();
     await LoginGlobal(username, password);
   };
 
@@ -107,39 +110,60 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail }) {
 
   return (
     <div className={classes.containergecko}>
-      <span className={classes.createplayertxt}>
-        *You already have an account. Please login to view details.
-      </span>
-      <Input
-        type={"coingecko"}
-        placeHolder="Email"
-        value={username}
-        onChange={setUserName}
-      />
-      <Input
-        type={"coingecko"}
-        inputType="password"
-        placeHolder="Password"
-        value={password}
-        onChange={setPassword}
-      />
-      <span className="footertxt-coingecko mt-1">
-        Users who have claimed the {mintTitle} NFT are required to create a WoD
-        Account to receive the NFT and participate in the exclusive event.
-      </span>
-
-      <div className="summaryseparator"></div>
-      {errorMsg !== "" && <span className={classes.errorText}>{errorMsg}</span>}
-
-      <Button
-        disabled={disabled}
-        onPress={login}
-        title={"Continue  >"}
-        type={"coingecko"}
-      />
-      {/* <Link className={classes.forgotPasswordText} to="/forgotPassword">
-        <span>Forgot your password?</span>
-      </Link> */}
+      {showForgotPassword === false ? (
+        <>
+          <span className={classes.createplayertxt}>
+            *Make sure to use the existing account details to log in to your
+            account.
+          </span>
+          <Input
+            type={"coingecko"}
+            placeHolder="Email"
+            value={username}
+            onChange={(e) => {
+              setUserName(e);
+              onUsernameChange(e)
+            }}
+          />
+          <Input
+            type={"coingecko"}
+            inputType="password"
+            placeHolder="Password"
+            value={password}
+            onChange={(e)=>{setPassword(e);onPassChange(e)}}
+          />{" "}
+          <span
+            className={classes.errorText2}
+            onClick={() => {
+              setshowForgotPassword(true);
+            }}
+          >
+            Forgot your password?
+          </span>
+          <span className="footertxt-coingecko mt-1">
+            Users who have claimed the {mintTitle} NFT are required to create a
+            WoD Account to receive the NFT and participate in the exclusive
+            event.
+          </span>
+          <div className="summaryseparator"></div>
+          {errorMsg !== "" && (
+            <span className={classes.errorText}>{errorMsg}</span>
+          )}
+          <Button
+            disabled={disabled}
+            onPress={login}
+            title={"Continue  >"}
+            type={"coingecko"}
+          />
+        </>
+      ) : (
+        <ForgotPasswordGecko
+          onResetPass={() => {
+            setshowForgotPassword(false);
+          }}
+          mintTitle={mintTitle}
+        />
+      )}
       {/* <ErrorAlert error={loginError} /> */}
     </div>
   );
