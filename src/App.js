@@ -994,8 +994,9 @@ function App() {
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
-      fetchAllMyNfts();
+    
     }
+      fetchAllMyNfts();
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
   // useEffect(() => {
