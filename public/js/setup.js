@@ -4115,7 +4115,7 @@ window.isApprovedOffer = async (amount, priceType) => {
 window.getAllOffers = async (nftAddress, tokenId) => {
   //getActiveOffers
 
-  const marketplace = new window.web3.eth.Contract(
+  const marketplace = new window.infuraWeb3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
@@ -4252,7 +4252,7 @@ async function getGateNft(id) {
 
 async function getMyNFTs(address, type = "") {
   let contract;
-  const infuraweb3 = new Web3(window.ethereum);
+  const infuraweb3 = window.infuraWeb3;
   // window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     contract = await new infuraweb3.eth.Contract(

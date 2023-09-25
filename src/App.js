@@ -108,6 +108,8 @@ function App() {
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
+   
+
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
@@ -966,7 +968,7 @@ function App() {
   const logout = localStorage.getItem("logout");
   
   useEffect(() => {
-    if (window.ethereum) {
+    if (window.ethereum && !window.coin98) {
       if (
         (window.ethereum.isConnected() === true && logout === "false") ||
         window.gatewallet
