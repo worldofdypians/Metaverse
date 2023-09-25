@@ -56,6 +56,36 @@ import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
+import Countdown from "react-countdown";
+
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <>
+      <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {days < 10 ? "0" + days : days}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Days</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {hours < 10 ? "0" + hours : hours}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Hours</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {minutes < 10 ? "0" + minutes : minutes}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Minutes</span>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const WalletBalance = ({
   dypBalance,
@@ -140,6 +170,9 @@ const WalletBalance = ({
   const windowSize = useWindowSize();
   const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
+  const [userPoints, setuserPoints] = useState(0);
+  const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [userEarnETH, setuserEarnETH] = useState(0);
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -843,11 +876,9 @@ const WalletBalance = ({
       setcollectedItemsFiltered([]);
     } else if (filter1 === "all" && filter2 === "has offers") {
       setcollectedItemsFiltered(myNftsOffer);
-    }
-    else if (filter1 === "betapass" && filter2 === "has offers") {
+    } else if (filter1 === "betapass" && filter2 === "has offers") {
       setcollectedItemsFiltered([]);
-    } 
-     else if (filter1 === "all" && filter2 === "listed") {
+    } else if (filter1 === "all" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
         (item) => item.isListed === true && item.isStaked === false
       );
@@ -985,6 +1016,8 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
+  let coingeckoLastDay = new Date("2023-12-24T14:48:00.000+02:00");
+
   const dummyConflux = {
     title: "Conflux Pass",
     chain: "Conflux Network",
@@ -999,9 +1032,11 @@ const WalletBalance = ({
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
-    status: "Coming Soon",
+    status: "Live",
     id: "event3",
     eventType: "Explore & Mine",
+    totalRewards: "$10,000 in BNB Rewards",
+    eventDuration: coingeckoLastDay,
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -1110,6 +1145,55 @@ const WalletBalance = ({
     setShowAllEvents(!showAllEvents);
     setShowNfts(false);
   };
+
+  const fetchTreasureHuntData = async (email, userAddress) => {
+    try {
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify({
+            email: email,
+            publicAddress: userAddress,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events[0];
+          const points = coingeckoEvent.reward.earn.totalPoints;
+          setuserPoints(points);
+
+          const usdValue =
+            coingeckoEvent.reward.earn.value /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnUsd(usdValue);
+
+          const ethValue =
+            coingeckoEvent.reward.earn.total /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnETH(ethValue);
+        }
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (email && address) {
+      fetchTreasureHuntData(email, address);
+    }
+  }, [email, address]);
+
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
       releaseContent.current?.scrollIntoView({
@@ -1140,11 +1224,14 @@ const WalletBalance = ({
               Special Events
             </h6>
             <div className="nft-outer-wrapper2 rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCoingecko);
                   setEventPopup(true);
                 }}
+                event={dummyCoingecko}
+                userEmail={email}
+                userWallet={address}
               />
               <img
                 src={eventSkeleton}
@@ -3397,6 +3484,12 @@ const WalletBalance = ({
                       : "event-popup-status-expired"
                   }  d-flex align-items-center justify-content-center p-1`}
                 >
+                  {dummyEvent.status === "Live" && (
+                    <div
+                      class="pulsatingDot"
+                      style={{ width: 7, height: 7, marginRight: 5 }}
+                    ></div>
+                  )}
                   <span className="mb-0">{dummyEvent?.status}</span>
                 </div>
               </div>
@@ -3437,41 +3530,12 @@ const WalletBalance = ({
                   </div>
                 </div>
                 {dummyEvent?.status === "Live" && (
-                  <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
+                  <Countdown
+                    renderer={renderer}
+                    date={dummyEvent.eventDuration}
+                  />
                 )}
-                {dummyEvent?.status === "Live" ? (
-                  <div className="d-flex align-items-start gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
-                ) : (
+                {dummyEvent?.status === "Coming Soon" && (
                   <div className="d-flex flex-column">
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">
@@ -3696,16 +3760,18 @@ const WalletBalance = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">0</h6>
+                  <h6 className="mb-0 event-earnings-coin2">
+                    {getFormattedNumber(userPoints, 0)}
+                  </h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
                   </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
-                    $0.00{" "}
+                    ${getFormattedNumber(userEarnUsd, 2)}
                     <span className="ethpricerewards">
-                      0.000{" "}
+                      {getFormattedNumber(userEarnETH, 2)}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"

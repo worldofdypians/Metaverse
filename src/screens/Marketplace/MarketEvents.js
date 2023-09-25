@@ -56,6 +56,38 @@ import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
+import axios from "axios";
+import Countdown from "react-countdown";
+import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import { useAuth } from "../Account/src/Utils.js/Auth/AuthDetails";
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <>
+      <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {days < 10 ? "0" + days : days}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Days</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {hours < 10 ? "0" + hours : hours}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Hours</span>
+        </div>
+        <h6 className="profile-time-number-2 mb-0">:</h6>
+        <div className="d-flex flex-column align-items-center gap-3">
+          <h6 className="profile-time-number-2 mb-0">
+            {minutes < 10 ? "0" + hours : hours}
+          </h6>
+          <span className="profile-time-desc-2 mb-0">Minutes</span>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const MarketEvents = ({
   account,
@@ -84,8 +116,12 @@ const MarketEvents = ({
   const { eventId } = useParams();
   const [dummyEvent, setDummyEvent] = useState();
   const [eventPopup, setEventPopup] = useState(false);
-  const selected = useRef(null);
+  const [userPoints, setuserPoints] = useState(0);
+  const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [userEarnETH, setuserEarnETH] = useState(0);
 
+  const selected = useRef(null);
+  const { email } = useAuth();
   const dummyBetaPassData = [
     {
       title: "Conflux (CFX)",
@@ -160,6 +196,7 @@ const MarketEvents = ({
       },
     },
   ];
+  let coingeckoLastDay = new Date("2023-12-24T14:48:00.000+02:00");
 
   const dummyBetaPassData2 = [
     // {
@@ -185,7 +222,7 @@ const MarketEvents = ({
     {
       title: "CoinGecko",
       logo: coingecko,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -196,9 +233,11 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event3",
         eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
       },
     },
     // {
@@ -404,26 +443,53 @@ const MarketEvents = ({
   const onClosePopup = () => {
     setPopup(false);
     setPackagePopup("");
-    console.log("hello");
+  };
+
+  const fetchTreasureHuntData = async (email, userAddress) => {
+    try {
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify({
+            email: email,
+            publicAddress: userAddress,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events[0];
+          const points = coingeckoEvent.reward.earn.totalPoints;
+          setuserPoints(points);
+
+          const usdValue =
+            coingeckoEvent.reward.earn.value /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnUsd(usdValue);
+
+          const ethValue =
+            coingeckoEvent.reward.earn.total /
+            coingeckoEvent.reward.earn.multiplier;
+          setuserEarnETH(ethValue);
+        }
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Events";
-  }, []);
-
-  useEffect(() => {
-    if (eventId === "dragon-ruins") {
-      setSelectedPackage("dragon");
-    } else if (eventId === "golden-pass") {
-      setSelectedPackage("dyp");
-    } else if (eventId === "puzzle-maddness") {
-      setSelectedPackage("idyp");
-    } else if (eventId === "critical-hit") {
-      setSelectedPackage("criticalHit");
-    } else if (eventId === "betapass") {
-      setSelectedPackage("betaPass");
-    }
   }, []);
 
   useEffect(() => {
@@ -456,10 +522,22 @@ const MarketEvents = ({
     } else if (eventId === "betapass") {
       setSelectedPackage("betaPass");
     } else if (eventId === "treasure-hunt") {
-      // setActiveTab("upcoming")
       setSelectedPackage("treasure-hunt");
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      email &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+    }
+  }, [email, data]);
 
   return (
     <>
@@ -644,6 +722,7 @@ const MarketEvents = ({
                               setEventPopup(true);
                               setDummyEvent(item.popupInfo);
                             }}
+                            userEarnUsd={userEarnUsd}
                           />
                         ))}
                       </div>
@@ -736,6 +815,12 @@ const MarketEvents = ({
                       : "event-popup-status-expired"
                   }  d-flex align-items-center justify-content-center p-1`}
                 >
+                  {dummyEvent.status === "Live" && (
+                    <div
+                      class="pulsatingDot"
+                      style={{ width: 7, height: 7, marginRight: 5 }}
+                    ></div>
+                  )}
                   <span className="mb-0">{dummyEvent?.status}</span>
                 </div>
               </div>
@@ -749,19 +834,19 @@ const MarketEvents = ({
             <div className="profile-event-popup-wrapper mb-3 p-2 p-lg-3 h-auto">
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
                 <div className="d-flex gap-2">
-                <img
-                  src={
-                    dummyEvent?.chain === "Avalanche"
-                      ? eventPopupImageAvax
-                      : dummyEvent?.linkState === "coingecko"
-                      ? eventPopupImageGecko
-                      : dummyEvent.linkState === "gate"
-                      ? gatePopupImage
-                      : eventPopupImage
-                  }
-                  alt=""
-                  style={{ width: 80, height: 80 }}
-                />
+                  <img
+                    src={
+                      dummyEvent?.chain === "Avalanche"
+                        ? eventPopupImageAvax
+                        : dummyEvent?.linkState === "coingecko"
+                        ? eventPopupImageGecko
+                        : dummyEvent.linkState === "gate"
+                        ? gatePopupImage
+                        : eventPopupImage
+                    }
+                    alt=""
+                    style={{ width: 80, height: 80 }}
+                  />
                   <div className="d-flex flex-column justify-content-between">
                     <div className="d-flex flex-column">
                       <h6 className="popup-second-title m-0">
@@ -784,41 +869,12 @@ const MarketEvents = ({
                   </div>
                 </div>
                 {dummyEvent?.status === "Live" && (
-                  <div className="d-flex align-items-start popup-timer mt-4 mt-lg-0 gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
+                  <Countdown
+                    renderer={renderer}
+                    date={dummyEvent.eventDuration}
+                  />
                 )}
-                {dummyEvent?.status === "Live" ? (
-                  <div className="d-flex align-items-start gap-1">
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">14</h6>
-                      <span className="profile-time-desc-2 mb-0">Days</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">23</h6>
-                      <span className="profile-time-desc-2 mb-0">Hours</span>
-                    </div>
-                    <h6 className="profile-time-number-2 mb-0">:</h6>
-                    <div className="d-flex flex-column align-items-center gap-3">
-                      <h6 className="profile-time-number-2 mb-0">46</h6>
-                      <span className="profile-time-desc-2 mb-0">Minutes</span>
-                    </div>
-                  </div>
-                ) : (
+                {dummyEvent?.status !== "Live" && (
                   <div className="d-flex flex-column">
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">
@@ -854,10 +910,10 @@ const MarketEvents = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX, but also earn points for
-                      their placement on the global leaderboard. Remember to log
-                      in to the game daily and venture into the Conflux area to
-                      uncover hidden treasures.
+                      chance to secure daily rewards in CFX, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Conflux area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event2" ? (
                     <p className="popup-event-desc">
@@ -866,10 +922,10 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Coin98 area, players not only stand a chance to secure
-                      daily rewards in C98, but also earn points for their placement on
-                      the global leaderboard. Remember to log in to the game
-                      daily and venture into the Coin98 area to uncover hidden
-                      treasures.
+                      daily rewards in C98, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Coin98 area to uncover
+                      hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
@@ -878,10 +934,10 @@ const MarketEvents = ({
                       CoinGecko Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the CoinGecko area, players not only stand a
-                      chance to secure daily rewards in BNB, but also earn points for
-                      their placement on the global leaderboard. Remember to log
-                      in to the game daily and venture into the CoinGecko area
-                      to uncover hidden treasures.
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      CoinGecko area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event5" ? (
                     <p className="popup-event-desc">
@@ -890,10 +946,10 @@ const MarketEvents = ({
                       Avalanche Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Avalanche area, players not only stand a
-                      chance to secure daily rewards in AVAX, but also earn points for
-                      their placement on the global leaderboard. Remember to log
-                      in to the game daily and venture into the Avalanche area
-                      to uncover hidden treasures.
+                      chance to secure daily rewards in AVAX, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Avalanche area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event6" ? (
                     <p className="popup-event-desc">
@@ -902,10 +958,10 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Gate.io area, players not only stand a chance to secure
-                      daily rewards in GT, but also earn points for their placement on
-                      the global leaderboard. Remember to log in to the game
-                      daily and venture into the Gate.io area to uncover hidden
-                      treasures.
+                      daily rewards in GT, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Gate.io area to
+                      uncover hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
@@ -914,9 +970,9 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE, but also earn points for their placement on the
-                      global leaderboard. Remember to log in to the game daily
-                      and venture into the Base area to uncover hidden
+                      rewards in BASE, but also earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the Base area to uncover hidden
                       treasures.
                     </p>
                   )}
@@ -1108,16 +1164,18 @@ const MarketEvents = ({
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">0</h6>
+                  <h6 className="mb-0 event-earnings-coin2">
+                    {getFormattedNumber(userPoints, 0)}
+                  </h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
                   </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
-                    $0.00{" "}
+                    ${getFormattedNumber(userEarnUsd, 2)}
                     <span className="ethpricerewards">
-                      0.000{" "}
+                      {getFormattedNumber(userEarnETH, 2)}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"
