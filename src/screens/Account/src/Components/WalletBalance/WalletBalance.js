@@ -1156,8 +1156,8 @@ const WalletBalance = ({
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
-            email: "renato@outerlynx.com",
-            publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
+            email: email,
+            publicAddress: userAddress,
           }),
           headers: {
             "Content-Type": "application/json",
