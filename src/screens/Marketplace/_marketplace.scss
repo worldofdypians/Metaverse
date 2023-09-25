@@ -351,6 +351,7 @@
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
     width: 100% !important;
+    place-items: center;
   }
 }
 
@@ -2158,7 +2159,7 @@
   line-height: normal;
 }
 
-.coingecko-btn:hover,
+.coingecko-btn:hover, .conflux-btn:hover,
 .downloadbtn-coingecko:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;

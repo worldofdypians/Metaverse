@@ -56,6 +56,7 @@ import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
+import confluxPopupImage from "./assets/eventPopupImage.png";
 import Countdown from "react-countdown";
 
 const renderer = ({ days, hours, minutes }) => {
@@ -121,6 +122,7 @@ const WalletBalance = ({
   allActiveOffers,
   myNFTSCoingecko,
   myGateNfts,
+  myConfluxNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -462,6 +464,7 @@ const WalletBalance = ({
     let recievedOffers = [];
     let coingeckoNftsArray = [];
     let gateNftsArray = [];
+    let confluxNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -541,6 +544,22 @@ const WalletBalance = ({
               tokenId: i,
               type: "gate",
               chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myConfluxNfts && myConfluxNfts.length > 0) {
+        await Promise.all(
+          myConfluxNfts.map(async (i) => {
+            confluxNftsArray.push({
+              nftAddress: window.config.nft_conflux_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "conflux",
+              chain: 1030,
               isStaked: false,
               isListed: false,
             });
@@ -703,7 +722,8 @@ const WalletBalance = ({
 
       finalCollection = [
         ...coingeckoNftsArray,
-        // ...gateNftsArray,
+        ...confluxNftsArray,
+        ...gateNftsArray,
         ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
@@ -1027,9 +1047,11 @@ const WalletBalance = ({
     chain: "Conflux Network",
     linkState: "conflux",
     rewards: "CFX",
-    status: "Live",
+    status: "Coming Soon",
     id: "event1",
     eventType: "Explore & Mine",
+    date: "Oct 6, 2023",
+    logo: conflux
   };
   const dummyCoingecko = {
     title: "CoinGecko",
@@ -1039,6 +1061,8 @@ const WalletBalance = ({
     status: "Live",
     id: "event3",
     eventType: "Explore & Mine",
+    date: "Sept 25, 2023",
+    logo: coingecko,
     totalRewards: "$10,000 in BNB Rewards",
     eventDuration: coingeckoLastDay,
   };
@@ -1066,7 +1090,7 @@ const WalletBalance = ({
       title: "Conflux (CFX)",
       logo: conflux,
       eventStatus: "Live",
-      totalRewards: "$5,000 in CFX Rewards",
+      totalRewards: "$3,000 in CFX Rewards",
       myEarnings: 120.45,
       eventType: "Explore & Mine",
       eventDate: "Ends in 28 days",
@@ -1085,7 +1109,7 @@ const WalletBalance = ({
       title: "Coin98 (C98)",
       logo: coin98,
       eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in BNB Rewards",
+      totalRewards: "$3,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "April, 1, 2024",
@@ -1123,7 +1147,7 @@ const WalletBalance = ({
       title: "Base",
       logo: base,
       eventStatus: "Expired",
-      totalRewards: "$5,000 in BASE Rewards",
+      totalRewards: "$3,000 in BASE Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
       eventDate: "Expired",
@@ -1230,19 +1254,18 @@ const WalletBalance = ({
                   setDummyEvent(dummyCoingecko);
                   setEventPopup(true);
                 }}
+                data={dummyCoingecko}
                 event={dummyCoingecko}
                 userEmail={email}
                 userWallet={address}
               />
-              <img
-                src={eventSkeleton}
-                className="profile-event-item"
-                style={{
-                  background: "none",
-                  borderBottom: "none",
-                  transform: "translateX(0px)",
+              <UpcomingProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyConflux);
+                  setEventPopup(true);
                 }}
-                alt=""
+                data={dummyConflux}
+
               />
               <img
                 src={eventSkeleton}
@@ -1759,6 +1782,8 @@ const WalletBalance = ({
                                   ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
                                   : item.type === "coingecko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                  : item.type === "conflux"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -1772,6 +1797,8 @@ const WalletBalance = ({
                                   ? "Genesis"
                                   : item.type === "coingecko"
                                   ? "CGBP"
+                                  : item.type === "conflux"
+                                  ? "CFBP"
                                   : "Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
@@ -2511,9 +2538,9 @@ const WalletBalance = ({
                     Total NFTs: {collectedItemsFiltered.length}
                   </span>
                   <div className="d-flex gap-3 align-items-center">
-                    <div class="dropdown" style={{ width: "150px" }}>
+                    <div className="dropdown" style={{ width: "150px" }}>
                       <button
-                        class="btn btn-secondary nft-dropdown w-100
+                        className="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
                         type="button"
                         data-bs-toggle="dropdown"
@@ -2526,7 +2553,7 @@ const WalletBalance = ({
                         </div>
                         <img src={dropdownIcon} alt="" />
                       </button>
-                      <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                      <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                         <li
                           className="nft-dropdown-item"
                           onClick={() => {
@@ -2597,9 +2624,9 @@ const WalletBalance = ({
                       </ul>
                     </div>
 
-                    <div class="dropdown" style={{ width: "150px" }}>
+                    <div className="dropdown" style={{ width: "150px" }}>
                       <button
-                        class="btn btn-secondary nft-dropdown w-100
+                        className="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
                         type="button"
                         data-bs-toggle="dropdown"
@@ -2612,7 +2639,7 @@ const WalletBalance = ({
                         </div>
                         <img src={dropdownIcon} alt="" />
                       </button>
-                      <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                      <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                         <li
                           className="nft-dropdown-item"
                           onClick={() => {
@@ -2719,8 +2746,12 @@ const WalletBalance = ({
                                   window.config.nft_gate_address
                                 ? "gate"
                                 : nft.nftAddress ===
+                                  window.config.nft_conflux_address
+                                ? "conflux"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
+                                
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -2761,6 +2792,9 @@ const WalletBalance = ({
                                       window.config.nft_gate_address
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_conflux_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -2782,6 +2816,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
                                     ? "Gate Beta Pass"
+                                    : nft.nftAddress ===
+                                      window.config.nft_conflux_address
+                                    ? "CFBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -2909,6 +2946,9 @@ const WalletBalance = ({
                                   window.config.nft_gate_address
                                 ? "gate"
                                 : nft.nftAddress ===
+                                window.config.nft_conflux_address
+                              ? "conflux"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -2953,6 +2993,9 @@ const WalletBalance = ({
                                       window.config.nft_gate_address
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
+                                    window.config.nft_conflux_address
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.pngg`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -2976,6 +3019,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
                                     ? "Gate Beta Pass"
+                                    : nft.nftAddress ===
+                                      window.config.nft_conflux_address
+                                    ? "CFBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3505,7 +3551,7 @@ const WalletBalance = ({
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
                 <div className="d-flex gap-2">
                   <img
-                    src={coingeckoPopupImage}
+                    src={dummyEvent?.linkState === "conflux" ? confluxPopupImage : coingeckoPopupImage}
                     alt=""
                     style={{ width: 80, height: 80 }}
                   />
@@ -3545,7 +3591,7 @@ const WalletBalance = ({
                         className="green-calendar"
                         alt=""
                       />
-                      <h6 className="live-on-date mb-0">Sept 25, 2023</h6>
+                      <h6 className="live-on-date mb-0">{dummyEvent?.date}</h6>
                     </div>
                   </div>
                 )}
@@ -3569,10 +3615,10 @@ const WalletBalance = ({
                       Conflux Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
-                      chance to secure daily rewards in CFX tokens, but also
-                      earn points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Conflux area to uncover hidden treasures.
+                      chance to secure daily rewards in CFX, but also earn points for
+                      their placement on the global leaderboard. Remember to log
+                      in to the game daily and venture into the Conflux area to
+                      uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event2" ? (
                     <p className="popup-event-desc">
@@ -3723,6 +3769,7 @@ const WalletBalance = ({
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
+                rel='noreferrer'
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img alt="" src={twitter} /> Twitter
@@ -3739,6 +3786,8 @@ const WalletBalance = ({
                     : "https://base.org/discord"
                 }
                 target="_blank"
+                rel='noreferrer'
+                
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img
@@ -3758,6 +3807,8 @@ const WalletBalance = ({
                     : "https://base.org/"
                 }
                 target="_blank"
+                rel='noreferrer'
+
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img alt="" src={website} />

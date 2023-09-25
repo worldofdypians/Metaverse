@@ -251,26 +251,25 @@ const MarketEvents = ({
         eventDuration: coingeckoLastDay,
       },
     },
-    // {
-    //   title: "Conflux",
-    //   logo: conflux,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$3,000 in CFX Rewards",
-    //   myEarnings: 0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "October 06, 2023",
-    //   backgroundImage: confluxUpcoming,
-    //   popupInfo: {
-    //     eventType: "Explore & Mine",
-    //     title: "Conflux",
-    //     chain: "Conflux Network",
-    //     linkState: "conflux",
-    //     rewards: "CFX",
-    //     status: "Coming Soon",
-    //     id: "event1",
-    //   eventDate: "October 06, 2023",
-    //   },
-    // },
+    {
+      title: "Conflux (CFX)",
+      logo: conflux,
+      eventStatus: "Coming Soon",
+      totalRewards: "$3,000 in CFX Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "October 6, 2023",
+      backgroundImage: confluxUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Conflux Pass",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
+        status: "Coming Soon",
+        id: "event1",
+      },
+    },
     // {
     //   title: "Gate.io (GT)",
     //   logo: gate,
@@ -1137,6 +1136,8 @@ const MarketEvents = ({
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
+                rel='noreferrer'
+
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img alt="" src={twitter} /> Twitter
@@ -1155,6 +1156,7 @@ const MarketEvents = ({
                     : "https://base.org/discord"
                 }
                 target="_blank"
+                rel='noreferrer'
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img
@@ -1176,6 +1178,8 @@ const MarketEvents = ({
                     : "https://base.org/"
                 }
                 target="_blank"
+                rel='noreferrer'
+
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img alt="" src={website} />

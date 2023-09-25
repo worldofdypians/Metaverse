@@ -873,9 +873,9 @@ const TimepieceNFT = ({
               className="filters-container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between my-4 p-3 position-relative gap-3"
               style={{ zIndex: 2 }}
             >
-              <div class="dropdown filters-dropdown">
+              <div className="dropdown filters-dropdown">
                 <button
-                  class="btn btn-secondary nft-dropdown w-100
+                  className="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
                   type="button"
                   data-bs-toggle="dropdown"
@@ -887,7 +887,7 @@ const TimepieceNFT = ({
                   </div>
                   <img src={dropdownIcon} alt="" />
                 </button>
-                <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                   <li
                     className="nft-dropdown-item"
                     onClick={() => {

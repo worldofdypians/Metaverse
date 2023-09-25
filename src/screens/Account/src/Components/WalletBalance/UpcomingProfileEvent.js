@@ -11,7 +11,6 @@ import orangeExplore from "./assets/orangeExplore.svg";
 import purpleFind from "./assets/purpleFind.svg";
 import confluxProfileBanner from "./assets/confluxProfileBanner.png";
 import coingeckoProfileBanner from "./assets/coingeckoProfileBanner.png";
-import coingeckoLogo from "./assets/coingeckoLogo.svg";
 
 const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
   return (
@@ -26,10 +25,10 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
     >
       <div className="profile-event-top d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center p-2 gap-2">
-          <img src={coingeckoLogo} height={16} width={16} alt="" />
+          <img src={data.logo} height={16} width={16} alt="" />
           <div className="d-flex flex-column ">
             <h6 className="profile-event-title mb-0 d-flex align-items-center gap-1">
-              CoinGecko{" "}
+              {data.title}{" "}
               <div
                 className="profile-event-tag position-relative d-flex align-items-center justify-content-center px-1"
                 style={{ background: "#EC8123", top: 0, right: 0 }}
@@ -42,13 +41,12 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
                 </span>
               </div>
             </h6>
-
             <span className="profile-event-rewards mb-0">
-              $10,000 in BNB rewards
+              $3,000 in {data.rewards} rewards
             </span>
           </div>
         </div>
-        <img src={coingeckoProfileBanner} style={{ height: "50px" }} alt="" />
+        <img src={data.linkState == "conflux" ? confluxProfileBanner : coingeckoProfileBanner} style={{ height: "50px", width: "25%" }} alt="" />
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
@@ -61,7 +59,7 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
         <div className="d-flex align-items-center gap-1">
           <img src={orangeDate} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text" style={{ color: "#EC8123" }}>
-            Sept 25, 2023
+           {data.date}
           </span>
         </div>
         <img src={orangeArrow} height={15} width={15} alt="" />
