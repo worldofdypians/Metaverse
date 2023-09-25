@@ -135,6 +135,8 @@ const WalletBalance = ({
   const [listedItems, setlistedItems] = useState([]);
 
   const [dyptokenData, setDypTokenData] = useState([]);
+  const [bnbPrice, setBnbPrice] = useState(0);
+
   const [idyptokenData, setIDypTokenData] = useState([]);
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
@@ -809,6 +811,8 @@ const WalletBalance = ({
         const propertyDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
         );
+        const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
+        setBnbPrice(bnb);
         setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
 
         const propertyIDyp = Object.entries(
@@ -1016,7 +1020,7 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
-  let coingeckoLastDay = new Date("2023-12-24T14:48:00.000+02:00");
+  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
 
   const dummyConflux = {
     title: "Conflux Pass",
@@ -1152,8 +1156,8 @@ const WalletBalance = ({
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
-            email: email,
-            publicAddress: userAddress,
+            email: "renato@outerlynx.com",
+            publicAddress: "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0",
           }),
           headers: {
             "Content-Type": "application/json",
@@ -1166,7 +1170,7 @@ const WalletBalance = ({
       if (response.status === 200) {
         const responseData = await response.json();
         if (responseData.events) {
-          const coingeckoEvent = responseData.events[0];
+          const coingeckoEvent = responseData.events.filter((obj)=>{return obj.betapassId==='coingecko'});
           const points = coingeckoEvent.reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -1178,7 +1182,7 @@ const WalletBalance = ({
           const ethValue =
             coingeckoEvent.reward.earn.total /
             coingeckoEvent.reward.earn.multiplier;
-          setuserEarnETH(ethValue);
+          setuserEarnETH(usdValue / bnbPrice);
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -3552,10 +3556,10 @@ const WalletBalance = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              <span className="events-page-details d-flex align-items-center gap-2">
-       Learn more
-       <img src={eventsArrow} alt="" />
-     </span>
+              <NavLink to='/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event' className="events-page-details d-flex align-items-center gap-2">
+                Learn more
+                <img src={eventsArrow} alt="" />
+              </NavLink>
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">
