@@ -1177,9 +1177,7 @@ const BetaPassNFT = ({
                         Get Beta Pass
                       </button>
                     </div> */}
-                      {!alreadyRegistered && (
-                        <h6 className="land-name">Create account</h6>
-                      )}
+                      
                       {alreadyRegistered && (
                         <h6 className="land-name">
                           {totalCoingeckoNft > 0 ||

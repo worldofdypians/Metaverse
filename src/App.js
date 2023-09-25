@@ -148,7 +148,6 @@ function App() {
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
-   
 
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
@@ -1033,15 +1032,18 @@ function App() {
 
   useEffect(() => {
     if (window.ethereum && !window.coin98) {
-      if (
-        (window.ethereum.isConnected() === true && logout === "false") ||
-        window.gatewallet
-      ) {
-        checkConnection2();
-      } else {
-        setIsConnected(false);
-        setCoinbase();
-        localStorage.setItem("logout", "true");
+      if (window.ethereum.isConnected() === true || window.gatewallet) {
+        if (
+          logout === "false" ||
+          window.coinbase_address ===
+            "0x0000000000000000000000000000000000000000"
+        ) {
+          checkConnection2();
+        } else {
+          setIsConnected(false);
+          setCoinbase();
+          localStorage.setItem("logout", "true");
+        }
       }
     } else {
       setIsConnected(false);
@@ -1050,7 +1052,6 @@ function App() {
     }
     checkNetworkId();
   }, [coinbase, chainId, isActive, account]);
-
 
   useEffect(() => {
     checkNetworkId();
@@ -1063,9 +1064,8 @@ function App() {
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
-    
     }
-      fetchAllMyNfts();
+    fetchAllMyNfts();
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
   // useEffect(() => {
@@ -1316,6 +1316,7 @@ function App() {
 
   const handleDisconnect = async () => {
     if (!window.gatewallet) {
+      await window.disconnectWallet();
       localStorage.setItem("logout", "true");
       setSuccess(false);
       setCoinbase();
@@ -1468,7 +1469,6 @@ function App() {
             nftCount={nftCount}
             isConnected={isConnected}
             handleSwitchChainGateWallet={handleSwitchNetwork}
-
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1577,9 +1577,7 @@ function App() {
                   isConnected={isConnected}
                   chainId={chainId}
                   handleConnect={handleConnection}
-                  onSigninClick={() => {
-                    setShowWalletModalRegister2(true);
-                  }}
+                  onSigninClick={checkData}
                   success={success}
                   availableTime={availTime}
                 />

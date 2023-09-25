@@ -134,7 +134,7 @@ const MarketEvents = ({
       eventDate: "Ends in 28 days",
       backgroundImage: confluxUpcoming,
       popupInfo: {
-        title: "Conflux Pass",
+        title: "Conflux",
         chain: "Conflux Network",
         linkState: "conflux",
         rewards: "CFX",
@@ -202,12 +202,13 @@ const MarketEvents = ({
     await axios
       .get("https://api.dyp.finance/api/the_graph_bsc_v2")
       .then((data) => {
-        const bnb =  data.data.the_graph_bsc_v2.usd_per_eth;
+        const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
         setBnbPrice(bnb);
       });
   };
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let confluxLastDay = new Date("2023-12-24T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
     // {
@@ -252,22 +253,25 @@ const MarketEvents = ({
       },
     },
     {
-      title: "Conflux (CFX)",
+      title: "Conflux",
       logo: conflux,
       eventStatus: "Coming Soon",
       totalRewards: "$3,000 in CFX Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "October 6, 2023",
+      eventDate: "October 06, 2023",
       backgroundImage: confluxUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Conflux Pass",
+        title: "Conflux",
         chain: "Conflux Network",
         linkState: "conflux",
         rewards: "CFX",
         status: "Coming Soon",
         id: "event1",
+        totalRewards: "$3,000 in CFX Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "October 06, 2023",
       },
     },
     // {
@@ -462,7 +466,7 @@ const MarketEvents = ({
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
-            email:  email,
+            email: email,
             publicAddress: userAddress,
           }),
           headers: {
@@ -476,18 +480,20 @@ const MarketEvents = ({
       if (response.status === 200) {
         const responseData = await response.json();
         if (responseData.events) {
-          const coingeckoEvent = responseData.events.filter((obj)=>{return obj.betapassId==='coingecko'});
+          const coingeckoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "coingecko";
+          });
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
           const usdValue =
-          coingeckoEvent[0].reward.earn.value /
-          coingeckoEvent[0].reward.earn.multiplier;
+            coingeckoEvent[0].reward.earn.value /
+            coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
- 
+
           const ethValue =
-          coingeckoEvent[0].reward.earn.total /
-          coingeckoEvent[0].reward.earn.multiplier;
+            coingeckoEvent[0].reward.earn.total /
+            coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnETH(usdValue / bnbPrice);
         }
       } else {
@@ -865,7 +871,7 @@ const MarketEvents = ({
                         {dummyEvent?.title}
                       </h6>
                       <span className="popup-rewards">
-                        $10,000 in {dummyEvent?.rewards} rewards
+                        {dummyEvent?.totalRewards}
                       </span>
                     </div>
                     <div className="d-flex">
@@ -908,10 +914,15 @@ const MarketEvents = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              <NavLink to='/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event' className="events-page-details d-flex align-items-center gap-2">
-                Learn more
-                <img src={eventsArrow} alt="" />
-              </NavLink>
+              {dummyEvent.id === "event3" && (
+                <NavLink
+                  to="/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event"
+                  className="events-page-details d-flex align-items-center gap-2"
+                >
+                  Learn more
+                  <img src={eventsArrow} alt="" />
+                </NavLink>
+              )}
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">
@@ -1136,8 +1147,7 @@ const MarketEvents = ({
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
-                rel='noreferrer'
-
+                rel="noreferrer"
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img alt="" src={twitter} /> Twitter
@@ -1156,7 +1166,7 @@ const MarketEvents = ({
                     : "https://base.org/discord"
                 }
                 target="_blank"
-                rel='noreferrer'
+                rel="noreferrer"
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img
@@ -1178,8 +1188,7 @@ const MarketEvents = ({
                     : "https://base.org/"
                 }
                 target="_blank"
-                rel='noreferrer'
-
+                rel="noreferrer"
                 className="d-flex gap-1 align-items-center greensocial"
               >
                 <img alt="" src={website} />
@@ -1229,11 +1238,13 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {/* <div className="w-100 d-flex justify-content-end mt-3">
-              <NavLink to={`/account`}>
-                <button className="btn get-beta-btn">My Account</button>
-              </NavLink>
-            </div> */}
+            {dummyEvent.id === "event1" && (
+              <div className="w-100 d-flex justify-content-end mt-3">
+                <NavLink to={`/marketplace/beta-pass/conflux`}>
+                  <button className="btn get-beta-btn">Get Beta Pass</button>
+                </NavLink>
+              </div>
+            )}
           </div>
         </OutsideClickHandler>
       )}

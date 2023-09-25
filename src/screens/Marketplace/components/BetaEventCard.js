@@ -14,7 +14,7 @@ const BetaEventCard = ({ data, onOpenPopup,userEarnUsd }) => {
           ? "upcoming-mint-wrapper-avax"
           : data.title === "CoinGecko"
           ? "upcoming-mint-wrapper-coingecko"
-          : data.title === "Conflux (CFX)"
+          : data.title === "Conflux"
           ? "upcoming-mint-wrapper-conflux"
           : data.title === "Base"
           ? "upcoming-mint-wrapper-base"
