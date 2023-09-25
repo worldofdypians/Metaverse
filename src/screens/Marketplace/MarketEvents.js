@@ -241,22 +241,23 @@ const MarketEvents = ({
       },
     },
     // {
-    //   title: "Conflux (CFX)",
+    //   title: "Conflux",
     //   logo: conflux,
     //   eventStatus: "Coming Soon",
     //   totalRewards: "$3,000 in CFX Rewards",
     //   myEarnings: 0,
     //   eventType: "Explore & Mine",
-    //   eventDate: "September xx, 2023",
+    //   eventDate: "October 06, 2023",
     //   backgroundImage: confluxUpcoming,
     //   popupInfo: {
     //     eventType: "Explore & Mine",
-    //     title: "Conflux Pass",
+    //     title: "Conflux",
     //     chain: "Conflux Network",
     //     linkState: "conflux",
     //     rewards: "CFX",
     //     status: "Coming Soon",
     //     id: "event1",
+    //   eventDate: "October 06, 2023",
     //   },
     // },
     // {
@@ -886,7 +887,9 @@ const MarketEvents = ({
                         className="green-calendar"
                         alt=""
                       />
-                      <h6 className="live-on-date mb-0">Sept 25, 2023</h6>
+                      <h6 className="live-on-date mb-0">
+                        {dummyEvent.eventDate}
+                      </h6>
                     </div>
                   </div>
                 )}
