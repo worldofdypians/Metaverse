@@ -46,7 +46,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
-            email: email,
+            email:  email,
             publicAddress: userAddress,
           }),
           headers: {
@@ -62,8 +62,8 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         if (responseData.events) {
           const coingeckoEvent = responseData.events.filter((obj)=>{return obj.betapassId==='coingecko'});
           const usdValue =
-            coingeckoEvent.reward.earn.value /
-            coingeckoEvent.reward.earn.multiplier;
+          coingeckoEvent[0].reward.earn.value /
+          coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
         }
       } else {

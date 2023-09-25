@@ -463,7 +463,7 @@ const MarketEvents = ({
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
-            email: email,
+            email:  email,
             publicAddress: userAddress,
           }),
           headers: {
@@ -478,17 +478,17 @@ const MarketEvents = ({
         const responseData = await response.json();
         if (responseData.events) {
           const coingeckoEvent = responseData.events.filter((obj)=>{return obj.betapassId==='coingecko'});
-          const points = coingeckoEvent.reward.earn.totalPoints;
+          const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
           const usdValue =
-            coingeckoEvent.reward.earn.value /
-            coingeckoEvent.reward.earn.multiplier;
+          coingeckoEvent[0].reward.earn.value /
+          coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
  
           const ethValue =
-            coingeckoEvent.reward.earn.total /
-            coingeckoEvent.reward.earn.multiplier;
+          coingeckoEvent[0].reward.earn.total /
+          coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnETH(usdValue / bnbPrice);
         }
       } else {
