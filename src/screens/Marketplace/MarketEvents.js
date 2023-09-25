@@ -80,7 +80,7 @@ const renderer = ({ days, hours, minutes }) => {
         <h6 className="profile-time-number-2 mb-0">:</h6>
         <div className="d-flex flex-column align-items-center gap-3">
           <h6 className="profile-time-number-2 mb-0">
-            {minutes < 10 ? "0" + hours : hours}
+            {minutes < 10 ? "0" + minutes : minutes}
           </h6>
           <span className="profile-time-desc-2 mb-0">Minutes</span>
         </div>
