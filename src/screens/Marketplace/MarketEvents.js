@@ -545,7 +545,7 @@ const MarketEvents = ({
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
+      data.getPlayer.playerId && data.getPlayer.wallet && 
       data.getPlayer.wallet.publicAddress
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
