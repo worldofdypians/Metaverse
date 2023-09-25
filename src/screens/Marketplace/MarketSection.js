@@ -68,6 +68,14 @@ const MarketSection = ({
 
   const eventData = [
     {
+      eventTitle: "Treasure Hunt",
+      eventPrice: "",
+      eventDesc: "Event available for Beta Pass NFT owners",
+      eventImg: "treasureHunt",
+      state: "treasurehunt",
+      eventId: "treasure-hunt",
+    },
+    {
       eventTitle: "Dragon Ruins",
       eventPrice: "150 DYP",
       eventImg: "dragon",
@@ -83,14 +91,14 @@ const MarketSection = ({
       price: 12600,
       eventId: "puzzle-madness",
     },
-    {
-      eventTitle: "Golden Pass",
-      eventPrice: "2,100 DYP",
-      eventImg: "golden",
-      state: "dyp",
-      price: 2100,
-      eventId: "golden-pass",
-    },
+    // {
+    //   eventTitle: "Golden Pass",
+    //   eventPrice: "2,100 DYP",
+    //   eventImg: "golden",
+    //   state: "dyp",
+    //   price: 2100,
+    //   eventId: "golden-pass",
+    // },
     {
       eventTitle: "Critical Hit",
       eventPrice: "",
