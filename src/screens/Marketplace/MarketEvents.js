@@ -1213,11 +1213,11 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            <div className="w-100 d-flex justify-content-end mt-3">
+            {/* <div className="w-100 d-flex justify-content-end mt-3">
               <NavLink to={`/account`}>
                 <button className="btn get-beta-btn">My Account</button>
               </NavLink>
-            </div>
+            </div> */}
           </div>
         </OutsideClickHandler>
       )}

@@ -966,7 +966,7 @@ function App() {
   const logout = localStorage.getItem("logout");
   
   useEffect(() => {
-    if (window.ethereum) {
+    if (window.ethereum && !window.coin98) {
       if (
         (window.ethereum.isConnected() === true && logout === "false") ||
         window.gatewallet
