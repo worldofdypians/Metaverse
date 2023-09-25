@@ -3552,10 +3552,10 @@ const WalletBalance = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {/* <span className="events-page-details d-flex align-items-center gap-2">
+              <span className="events-page-details d-flex align-items-center gap-2">
        Learn more
        <img src={eventsArrow} alt="" />
-     </span> */}
+     </span>
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">
@@ -3806,12 +3806,12 @@ const WalletBalance = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            <div className="w-100 d-flex justify-content-end mt-3">
+            {/* <div className="w-100 d-flex justify-content-end mt-3">
               <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
                 {" "}
                 <button className="btn get-beta-btn">Get Beta Pass</button>
               </NavLink>
-            </div>
+            </div> */}
           </div>
         </OutsideClickHandler>
       )}

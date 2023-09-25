@@ -241,22 +241,23 @@ const MarketEvents = ({
       },
     },
     // {
-    //   title: "Conflux (CFX)",
+    //   title: "Conflux",
     //   logo: conflux,
     //   eventStatus: "Coming Soon",
     //   totalRewards: "$3,000 in CFX Rewards",
     //   myEarnings: 0,
     //   eventType: "Explore & Mine",
-    //   eventDate: "September xx, 2023",
+    //   eventDate: "October 06, 2023",
     //   backgroundImage: confluxUpcoming,
     //   popupInfo: {
     //     eventType: "Explore & Mine",
-    //     title: "Conflux Pass",
+    //     title: "Conflux",
     //     chain: "Conflux Network",
     //     linkState: "conflux",
     //     rewards: "CFX",
     //     status: "Coming Soon",
     //     id: "event1",
+    //   eventDate: "October 06, 2023",
     //   },
     // },
     // {
@@ -886,7 +887,9 @@ const MarketEvents = ({
                         className="green-calendar"
                         alt=""
                       />
-                      <h6 className="live-on-date mb-0">Sept 25, 2023</h6>
+                      <h6 className="live-on-date mb-0">
+                        {dummyEvent.eventDate}
+                      </h6>
                     </div>
                   </div>
                 )}
@@ -894,10 +897,10 @@ const MarketEvents = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {/* <span className="events-page-details d-flex align-items-center gap-2">
+              <span className="events-page-details d-flex align-items-center gap-2">
                 Learn more
                 <img src={eventsArrow} alt="" />
-              </span> */}
+              </span>
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">
@@ -1210,12 +1213,11 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            <div className="w-100 d-flex justify-content-end mt-3">
-              <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
-                {" "}
-                <button className="btn get-beta-btn">Get Beta Pass</button>
+            {/* <div className="w-100 d-flex justify-content-end mt-3">
+              <NavLink to={`/account`}>
+                <button className="btn get-beta-btn">My Account</button>
               </NavLink>
-            </div>
+            </div> */}
           </div>
         </OutsideClickHandler>
       )}

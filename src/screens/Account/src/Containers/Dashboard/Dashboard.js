@@ -638,7 +638,7 @@ function Dashboard({
   const logoutItem = localStorage.getItem("logout");
 
   useEffect(() => {
-    if (window.ethereum) {
+    if (window.ethereum && !window.coin98) {
       if (window.ethereum.isConnected() === true) {
         localStorage.setItem("logout", "false");
       } else {
