@@ -1186,9 +1186,9 @@ const MarketEvents = ({
                   </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2 d-flex align-items-baseline gap-1">
+                  <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
                     ${getFormattedNumber(userEarnUsd, 2)}
-                    <span className="ethpricerewards">
+                    <span className="ethpricerewards specialstyle-wrapper-eth">
                       {getFormattedNumber(userEarnETH, 2)}
                       {dummyEvent.id === "event1"
                         ? "CFX"
