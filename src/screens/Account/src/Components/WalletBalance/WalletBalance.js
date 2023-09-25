@@ -3617,7 +3617,18 @@ const WalletBalance = ({
                   <h6 className="popup-green-text">Benefits</h6>
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
-                    <li className="popup-event-desc">Daily Rewards</li>
+                    {dummyEvent.id === "event3" ? (
+                      <>
+                        <li className="popup-event-desc">
+                          Daily Rewards range from $1 to $100
+                        </li>
+                        <li className="popup-event-desc">
+                          Daily Points range from 5,000 to 50,000
+                        </li>
+                      </>
+                    ) : (
+                      <li className="popup-event-desc">Daily Rewards</li>
+                    )}
                     <li className="popup-event-desc">
                       Earn{" "}
                       {dummyEvent.id === "event1"
