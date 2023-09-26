@@ -586,9 +586,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+
                     <h6
                       className={`new-stake-tab ${
                         activeTab === "live" && "stake-tab-active"
@@ -599,6 +597,9 @@ const MarketEvents = ({
                     </h6>
                   </div>
                   <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <h6
                       className={`new-stake-tab  ${
                         activeTab === "upcoming" && "stake-tab-active"
@@ -740,7 +741,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.map((item, index) => (
+                        {dummyBetaPassData2.slice(0,1).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -784,14 +785,28 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">New events are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
-                  </div>
-                </div>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">New events are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
+                //   </div>
+                // </div>
+
+                <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                        {dummyBetaPassData2.slice(1,2).map((item, index) => (
+                          <BetaEventCard
+                            data={item}
+                            key={index}
+                            onOpenPopup={() => {
+                              setEventPopup(true);
+                              setDummyEvent(item.popupInfo);
+                            }}
+                            userEarnUsd={userEarnUsd}
+                          />
+                        ))}
+                      </div>
                 // <BetaPassEvents />
               )}
               {activeTab === "past" && (
