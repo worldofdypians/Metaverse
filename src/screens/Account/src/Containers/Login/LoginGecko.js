@@ -124,6 +124,8 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail, onUsernameChange,onPa
               setUserName(e);
               onUsernameChange(e)
             }}
+        inputType="email"
+
           />
           <Input
             type={"coingecko"}
