@@ -403,11 +403,12 @@ const BetaPassNFT = ({
       setLinkWallet(true);
       setEmailVerify(true);
       setplayerCreation(true);
+      setShowVerify(true)
     } else if (
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
+      data.getPlayer.playerId && data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
       setalreadyRegistered(true);
@@ -425,13 +426,12 @@ const BetaPassNFT = ({
       success === true &&
       data &&
       data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
-      !data.getPlayer.wallet.publicAddress
+      data.getPlayer.displayName && 
+      data.getPlayer.playerId &&  !data.getPlayer.wallet
     ) {
       setTimeout(() => {
         connectWallet();
-      }, 2000);
+      }, 1000);
     }
   }, [success, data]);
 
@@ -1335,7 +1335,7 @@ const BetaPassNFT = ({
                                 <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper coingecko-active d-flex justify-content-center align-items-center p-3 position-relative`}
-                                    style={{ height: 210 }}
+                                    style={{ height: windowSize.width > 991 ? 210 : 295 }}
                                   ></div>
                                   <div
                                     className="genesis-desc nomask px-3 py-2 position-relative"

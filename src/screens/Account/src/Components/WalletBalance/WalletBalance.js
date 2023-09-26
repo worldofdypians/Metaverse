@@ -1176,10 +1176,11 @@ const WalletBalance = ({
           setuserPoints(points);
 
           const usdValue =
-          coingeckoEvent[0].reward.earn.value /
+          coingeckoEvent[0].reward.earn.total /
           coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
-          setuserEarnETH(usdValue / bnbPrice);
+          if(bnbPrice!== 0)
+         { setuserEarnETH(usdValue / bnbPrice);}
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -1193,7 +1194,7 @@ const WalletBalance = ({
     if (email && address) {
       fetchTreasureHuntData(email, address);
     }
-  }, [email, address]);
+  }, [email, address, bnbPrice]);
 
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
