@@ -74,6 +74,8 @@ import baseMobileBg from "../../../components/TimepieceMint/assets/baseMobileBg.
 import confluxMobileBg from "../../../components/TimepieceMint/assets/confluxMobileBg.png";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
+import SignUpConflux from "../../Account/src/Containers/SingUp/SignUpConflux";
+import PlayerCreationConflux from "../../Account/src/Containers/PlayerCreation/PlayerCreationConflux";
 
 const BetaPassNFT = ({
   isConnected,
@@ -214,12 +216,18 @@ const BetaPassNFT = ({
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
   const bgmenu2 = document.querySelector("#switch");
- 
+
   useEffect(() => {
-    if (mintTitle === "conflux" && coinbase && chainId && chainId !== 1030 && !email) {
+    if (
+      mintTitle === "conflux" &&
+      coinbase &&
+      chainId &&
+      chainId !== 1030 &&
+      !email
+    ) {
       setOpenConflux(true);
     } else setOpenConflux(false);
-  }, [mintTitle, coinbase, chainId,email]);
+  }, [mintTitle, coinbase, chainId, email]);
 
   const getNftSymbol = async () => {
     if (mintTitle !== "conflux") {
@@ -281,39 +289,45 @@ const BetaPassNFT = ({
     if (!isConnected) {
       showWalletConnect();
     } else if (isConnected) {
-      if (window.ethereum) {
-        window.web3 = new Web3(window.ethereum);
-        try {
-          await window.ethereum?.enable();
-          console.log("Connected!");
-
-          let coinbase_address;
-          await window.ethereum
-            .request({
-              method: "eth_requestAccounts",
-            })
-            .then((data) => {
-              coinbase_address = data[0];
-            });
-          // window.coinbase_address = coinbase_address.pop();
-          await generateNonce({
-            variables: {
-              publicAddress: coinbase_address,
-            },
-          });
-          return true;
-        } catch (e) {
-          console.error(e);
-          console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", e);
-          throw new Error("User denied wallet connection!");
-        }
-      } else if (window.web3) {
-        window.web3 = new Web3(window.web3.currentProvider);
-        console.log("connected to old web3");
-        // onConnect();
-        return true;
+      if (mintTitle === "conflux" && chainId !== 1030) {
+        window.alertify.error(
+          "You should be on Conflux network to link your account!"
+        );
       } else {
-        throw new Error("No web3 detected!");
+        if (window.ethereum) {
+          window.web3 = new Web3(window.ethereum);
+          try {
+            await window.ethereum?.enable();
+            console.log("Connected!");
+
+            let coinbase_address;
+            await window.ethereum
+              .request({
+                method: "eth_requestAccounts",
+              })
+              .then((data) => {
+                coinbase_address = data[0];
+              });
+            // window.coinbase_address = coinbase_address.pop();
+            await generateNonce({
+              variables: {
+                publicAddress: coinbase_address,
+              },
+            });
+            return true;
+          } catch (e) {
+            console.error(e);
+            console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", e);
+            throw new Error("User denied wallet connection!");
+          }
+        } else if (window.web3) {
+          window.web3 = new Web3(window.web3.currentProvider);
+          console.log("connected to old web3");
+          // onConnect();
+          return true;
+        } else {
+          throw new Error("No web3 detected!");
+        }
       }
     }
   }
@@ -406,7 +420,7 @@ const BetaPassNFT = ({
       setMintTitle("gate");
     }
   }, []);
- 
+
   useEffect(() => {
     if (
       data &&
@@ -1233,35 +1247,22 @@ const BetaPassNFT = ({
                             </ul>
                           </div>
                         )}
-                        {playerCreation === false && !alreadyRegistered && (
-                          <SignUpGecko
-                          onSuccessVerify={(value) => {
-                            setplayerCreation(value);
-                          }}
-                          onEmailVerify={(value) => {
-                            setEmailVerify(value);
-                          }}
-                          onShowVerify={(value) => {
-                            setShowVerify(value);
-                          }}
-                          onSuccessLogin={() => {
-                            setalreadyRegistered(true);
-                            refetchPlayer();
-                          }}
-                          mintTitle={selectedMint.cardTitle}
-                          chainId={chainId}
-                          activeTab={activeTab}
-                          isExistingUser={() => {
-                            setactiveTab("login");
-                          }}
-                        />
-                        )}
-                        {playerCreation === true &&
-                          linkWallet === false &&
-                          !alreadyRegistered && (
-                            <PlayerCreationGecko
-                              onSuccessCreation={() => {
-                                setLinkWallet(true);
+                        {playerCreation === false &&
+                          !alreadyRegistered &&
+                          mintTitle === "coingecko" && (
+                            <SignUpGecko
+                              onSuccessVerify={(value) => {
+                                setplayerCreation(value);
+                              }}
+                              onEmailVerify={(value) => {
+                                setEmailVerify(value);
+                              }}
+                              onShowVerify={(value) => {
+                                setShowVerify(value);
+                              }}
+                              onSuccessLogin={() => {
+                                setalreadyRegistered(true);
+                                refetchPlayer();
                               }}
                               mintTitle={selectedMint.cardTitle}
                               chainId={chainId}
@@ -1271,10 +1272,50 @@ const BetaPassNFT = ({
                               }}
                             />
                           )}
+
                         {playerCreation === true &&
                           linkWallet === false &&
-                          !alreadyRegistered && (
+                          !alreadyRegistered &&
+                          mintTitle === "coingecko" && (
                             <PlayerCreationGecko
+                              onSuccessCreation={() => {
+                                setLinkWallet(true);
+                              }}
+                              mintTitle={selectedMint.cardTitle}
+                            />
+                          )}
+
+                        {playerCreation === false &&
+                          !alreadyRegistered &&
+                          mintTitle === "conflux" && (
+                            <SignUpConflux
+                              onSuccessVerify={(value) => {
+                                setplayerCreation(value);
+                              }}
+                              onEmailVerify={(value) => {
+                                setEmailVerify(value);
+                              }}
+                              onShowVerify={(value) => {
+                                setShowVerify(value);
+                              }}
+                              onSuccessLogin={() => {
+                                setalreadyRegistered(true);
+                                refetchPlayer();
+                              }}
+                              mintTitle={selectedMint.cardTitle}
+                              chainId={chainId}
+                              activeTab={activeTab}
+                              isExistingUser={() => {
+                                setactiveTab("login");
+                              }}
+                            />
+                          )}
+
+                        {playerCreation === true &&
+                          linkWallet === false &&
+                          !alreadyRegistered &&
+                          mintTitle === "conflux" && (
+                            <PlayerCreationConflux
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
                               }}
@@ -1312,18 +1353,20 @@ const BetaPassNFT = ({
                                 <img src={circleArrow} alt="" />
                               </div>
                             </div>
-                            {selectedMint.cardTitle === "Conflux" ? 
-                          <span className="footertxt-coingecko mt-4">
-                          Users that joined in the Conflux Giveaway are required to create a WoD Account to receive the NFT and participate in the exclusive event.
-                        </span>
-                        :
-                        <span className="footertxt-coingecko mt-4">
-                              Users who have claimed the{" "}
-                              {selectedMint.cardTitle} NFT are required to
-                              create a WoD Account to receive the NFT and
-                              participate in the exclusive event.
-                            </span>  
-                          } 
+                            {selectedMint.cardTitle === "Conflux" ? (
+                              <span className="footertxt-coingecko mt-4">
+                                Users that joined in the Conflux Giveaway are
+                                required to create a WoD Account to receive the
+                                NFT and participate in the exclusive event.
+                              </span>
+                            ) : (
+                              <span className="footertxt-coingecko mt-4">
+                                Users who have claimed the{" "}
+                                {selectedMint.cardTitle} NFT are required to
+                                create a WoD Account to receive the NFT and
+                                participate in the exclusive event.
+                              </span>
+                            )}
                             <div className="summaryseparator"></div>
                           </div>
                         )}
@@ -1403,7 +1446,8 @@ const BetaPassNFT = ({
                                         : totalCoingeckoNft > 0 &&
                                           mintTitle === "coingecko"
                                         ? "coingecko-active"
-                                        : totalGateNft > 0 && mintTitle === "gate"
+                                        : totalGateNft > 0 &&
+                                          mintTitle === "gate"
                                         ? "gate-active"
                                         : totalConfluxNft > 0 &&
                                           mintTitle === "conflux"
@@ -1541,8 +1585,11 @@ const BetaPassNFT = ({
           <div className="metamask-info-wrapper mt-2 w-100 d-flex p-3 align-items-center justify-content-between">
             <div className="d-flex align-items-center gap-2">
               <img
-                 src={
-                  window.ethereum && window.ethereum.isMetaMask && !window.gatewallet && !window.coin98
+                src={
+                  window.ethereum &&
+                  window.ethereum.isMetaMask &&
+                  !window.gatewallet &&
+                  !window.coin98
                     ? metamaskIcon
                     : window.coin98
                     ? coin98Wallet
@@ -1560,7 +1607,10 @@ const BetaPassNFT = ({
               />
               <div className="d-flex flex-column">
                 <h6 className="metamask-info-title">
-                {window.ethereum && window.ethereum.isMetaMask && !window.gatewallet && !window.coin98
+                  {window.ethereum &&
+                  window.ethereum.isMetaMask &&
+                  !window.gatewallet &&
+                  !window.coin98
                     ? "MetaMask Wallet"
                     : window.coin98
                     ? "Coin98 Wallet"

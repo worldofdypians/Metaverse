@@ -154,6 +154,7 @@ const SingleNft = ({
   const [offeracceptStatus, setOfferacceptStatus] = useState("initial");
   const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
   const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
+  const [myOffers, setmyOffers] = useState([]);
 
   const { nftId, nftAddress } = useParams();
 
@@ -205,6 +206,14 @@ const SingleNft = ({
       const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
         console.error(e);
       });
+
+      if (result && coinbase) {
+        const my_offers = result.filter((object) => {
+          return object.offer.buyer.toLowerCase() === coinbase.toLowerCase();
+        });
+        console.log(my_offers[0]);
+        setmyOffers(my_offers[0] ? my_offers[0].offer : []);
+      }
 
       await Promise.all(
         result.map(async (item) => {
@@ -284,26 +293,20 @@ const SingleNft = ({
 
   const getNftOwner = async (type, Id) => {
     if (type === "timepiece") {
-      const nftowner = await window.caws_timepiece
-        .ownerOf(Id)
-        .catch((e) => {
-          console.log(e);
-        });
+      const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
 
       setowner(nftowner);
     } else if (type === "land") {
-      const nftowner = await window.landnft
-        .ownerOf(Id)
-        .catch((e) => {
-          console.log(e);
-        });
+      const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
       setowner(nftowner);
     } else if (type === "caws") {
-      const nftowner = await window.nft
-        .ownerOf(Id)
-        .catch((e) => {
-          console.log(e);
-        });
+      const nftowner = await window.nft.ownerOf(Id).catch((e) => {
+        console.log(e);
+      });
 
       setowner(nftowner);
     } else if (type === "coingecko") {
@@ -1251,7 +1254,6 @@ const SingleNft = ({
   }, [nftId, nftAddress, nft, nftCount]);
 
   useEffect(() => {
-    getOffer();
     checkisListedNFT(nftId, nftAddress);
     handleRefreshList(
       nftAddress === window.config.nft_caws_address
@@ -1262,6 +1264,10 @@ const SingleNft = ({
       nftId
     );
   }, [nftCount]);
+
+  useEffect(() => {
+    getOffer();
+  }, [coinbase, nftCount]);
 
   useEffect(() => {
     if (favorites && favorites.length > 0) {
@@ -1911,7 +1917,10 @@ const SingleNft = ({
                                 setshowMakeOffer(true);
                               }}
                             >
-                              <img src={whiteTag} alt="" /> Make offer
+                              <img src={whiteTag} alt="" />{" "}
+                              {myOffers.length > 0
+                                ? "View your offer"
+                                : "Make offer"}
                             </button>
                           )}
                         </div>
@@ -2083,7 +2092,10 @@ const SingleNft = ({
                               setshowMakeOffer(true);
                             }}
                           >
-                            <img src={whiteTag} alt="" /> Make offer
+                            <img src={whiteTag} alt="" />{" "}
+                            {myOffers.length > 0
+                              ? "View your offer"
+                              : "Make offer"}
                           </button>
                         )}
 

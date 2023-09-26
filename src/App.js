@@ -1716,6 +1716,10 @@ function App() {
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
                   handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
                 />
               }
             />
@@ -1854,6 +1858,10 @@ function App() {
                   handleRefreshListing={handleRefreshList}
                   nftCount={nftCount}
                   handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
                 />
               }
             />
