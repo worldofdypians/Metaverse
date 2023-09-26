@@ -119,6 +119,7 @@ const MarketEvents = ({
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
+  const [bnbPrice, setBnbPrice] = useState(0);
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -196,7 +197,17 @@ const MarketEvents = ({
       },
     },
   ];
-  let coingeckoLastDay = new Date("2023-12-24T14:48:00.000+02:00");
+
+  const getTokenDatabnb = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
+      .then((data) => {
+        const bnb =  data.data.the_graph_bsc_v2.usd_per_eth;
+        setBnbPrice(bnb);
+      });
+  };
+
+  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
     // {
@@ -452,7 +463,7 @@ const MarketEvents = ({
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
-            email: email,
+            email:  email,
             publicAddress: userAddress,
           }),
           headers: {
@@ -466,19 +477,16 @@ const MarketEvents = ({
       if (response.status === 200) {
         const responseData = await response.json();
         if (responseData.events) {
-          const coingeckoEvent = responseData.events[0];
-          const points = coingeckoEvent.reward.earn.totalPoints;
+          const coingeckoEvent = responseData.events.filter((obj)=>{return obj.betapassId==='coingecko'});
+          const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
           const usdValue =
-            coingeckoEvent.reward.earn.value /
-            coingeckoEvent.reward.earn.multiplier;
+          coingeckoEvent[0].reward.earn.total /
+          coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
-
-          const ethValue =
-            coingeckoEvent.reward.earn.total /
-            coingeckoEvent.reward.earn.multiplier;
-          setuserEarnETH(ethValue);
+ 
+          setuserEarnETH(usdValue / bnbPrice);
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -494,6 +502,7 @@ const MarketEvents = ({
   }, []);
 
   useEffect(() => {
+    getTokenDatabnb();
     if (windowSize.width < 786) {
       window.scrollTo(0, 750);
     }
@@ -533,7 +542,7 @@ const MarketEvents = ({
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
+      data.getPlayer.playerId && data.getPlayer.wallet && 
       data.getPlayer.wallet.publicAddress
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
@@ -897,10 +906,10 @@ const MarketEvents = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              <span className="events-page-details d-flex align-items-center gap-2">
+              <NavLink to='/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event' className="events-page-details d-flex align-items-center gap-2">
                 Learn more
                 <img src={eventsArrow} alt="" />
-              </span>
+              </NavLink>
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">

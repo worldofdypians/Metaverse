@@ -108,6 +108,8 @@ function App() {
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
+   
+
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
@@ -992,8 +994,9 @@ function App() {
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
-      fetchAllMyNfts();
+    
     }
+      fetchAllMyNfts();
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
   // useEffect(() => {

@@ -403,11 +403,12 @@ const BetaPassNFT = ({
       setLinkWallet(true);
       setEmailVerify(true);
       setplayerCreation(true);
+      setShowVerify(true)
     } else if (
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
+      data.getPlayer.playerId && data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
       setalreadyRegistered(true);
@@ -425,13 +426,12 @@ const BetaPassNFT = ({
       success === true &&
       data &&
       data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
-      !data.getPlayer.wallet.publicAddress
+      data.getPlayer.displayName && 
+      data.getPlayer.playerId &&  !data.getPlayer.wallet
     ) {
       setTimeout(() => {
         connectWallet();
-      }, 2000);
+      }, 1000);
     }
   }, [success, data]);
 
