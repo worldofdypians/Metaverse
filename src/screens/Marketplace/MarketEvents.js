@@ -1204,7 +1204,7 @@ const MarketEvents = ({
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">
-                    {getFormattedNumber(userPoints, 0)}
+                    {getFormattedNumber(dummyEvent.id === "event1" ? 0 : userPoints, 0)}
                   </h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
@@ -1212,9 +1212,9 @@ const MarketEvents = ({
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
-                    ${getFormattedNumber(userEarnUsd, 2)}
+                    ${getFormattedNumber( dummyEvent.id === "event1" ? 0 : userEarnUsd, 2)}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
-                      {getFormattedNumber(userEarnETH, 2)}
+                      {getFormattedNumber(dummyEvent.id === "event1" ? 0 : userEarnETH, 2)}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"
