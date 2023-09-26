@@ -878,7 +878,10 @@ const WalletBalance = ({
       let gateFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_gate_address
       );
-      const allBetapassArray = [...coingeckoFilter, ...gateFilter];
+      let confluxFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_conflux_address
+      );
+      const allBetapassArray = [...coingeckoFilter, ...confluxFilter, ...gateFilter];
       setcollectedItemsFiltered(allBetapassArray);
     } else if (filter1 === "timepiece" && filter2 === "all") {
       let timepieceFilter = collectedItems.filter(

@@ -472,11 +472,10 @@ function App() {
         setMyGateNfts(NFTS);
       });
 
-      // getMyNFTS(coinbase, "conflux").then((NFTS) => {
-      //   console.log(NFTS.length);
-      //   setTotalConfluxNft(NFTS.length);
-      //   setMyConfluxNfts(NFTS);
-      // });
+      getMyNFTS(coinbase, "conflux").then((NFTS) => {
+        setTotalConfluxNft(NFTS.length);
+        setMyConfluxNfts(NFTS);
+      });
     }
   };
 
