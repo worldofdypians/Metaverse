@@ -112,10 +112,15 @@ function SignUpGecko({
       seterrorMsg("");
     }
   }, [username]);
-
+console.log(mintTitle)
   useEffect(() => {
     if (chainId !== 1030 && mintTitle === "Conflux Beta Pass") {
       setDisabled(true);
+      seterrorMsg("You should be on Conflux network to register.");
+    }
+    else {
+      seterrorMsg("");
+      setDisabled(false);
     }
   }, [chainId, mintTitle]);
 

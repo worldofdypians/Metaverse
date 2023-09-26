@@ -21,7 +21,6 @@ import conflux from "../Header/assets/conflux.svg";
 import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
 
-
 const MobileNavbar = ({
   handleSignUp,
   handleRedirect,
@@ -33,7 +32,7 @@ const MobileNavbar = ({
   nftCount,
   chainId,
   handleSwitchNetwork,
-  handleSwitchChainGateWallet
+  handleSwitchChainGateWallet,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -56,7 +55,6 @@ const MobileNavbar = ({
     }
   };
 
-  
   const setActiveChain = () => {
     if (chainId) {
       if (chainId === 1) {
@@ -115,21 +113,19 @@ const MobileNavbar = ({
   };
 
   const handleConfluxPool = async () => {
-    if(!window.gatewallet)
-   { await handleSwitchNetworkhook("0x406")
-      .then(() => {
-        handleSwitchNetwork(1030);
-      })
-      .catch((e) => {
-        console.log(e);
-      });}
-      else {
-        handleSwitchChainGateWallet()
-      }
+    if (!window.gatewallet) {
+      await handleSwitchNetworkhook("0x406")
+        .then(() => {
+          handleSwitchNetwork(1030);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      handleSwitchChainGateWallet();
+    }
   };
 
-
-  
   useEffect(() => {
     if (chainId === 1) {
       handleSwitchNetwork(1);
@@ -147,7 +143,6 @@ const MobileNavbar = ({
   useEffect(() => {
     setActiveChain();
   }, [chainId, ethState]);
-
 
   useEffect(() => {
     checkRead();
@@ -174,107 +169,108 @@ const MobileNavbar = ({
           <img src={metaverse} alt="metaverse" width={126} />
         </NavLink>
         <div className="d-flex align-items-center gap-3 justify-content-between">
-        <NavLink to="/notifications">
-          <div className="position-relative">
-            <img
-              src={bellIcon}
-              width={30}
-              style={{ cursor: "pointer" }}
-              height={30}
-              alt=""
-            />
+          <NavLink to="/notifications">
+            <div className="position-relative">
+              <img
+                src={bellIcon}
+                width={30}
+                style={{ cursor: "pointer" }}
+                height={30}
+                alt=""
+              />
 
-            {unreadNotifications > 0 && (
-              <div className="bell-amount">
-                <span className="mb-0">
-                  {unreadNotifications > 99 ? "99+" : unreadNotifications}
-                </span>
-              </div>
-            )}
-          </div>
-        </NavLink>
-        <DropdownButton
-                id="dropdown-basic-button"
-                className="d-flex align-items-center justify-content-center"
-                title={
-                  <span className="dropdown-title">
-                    <img
-                      src={
-                        ethState === true
-                          ? eth
-                          : bnbState === true
-                          ? bnb
-                          // : avaxState === true
-                          // ? avax
-                          // : baseState === true
-                          // ? base
-                          : confluxState === true
-                          ? conflux
-                          : error
-                      }
-                      height={16}
-                      width={16}
-                      alt=""
-                    />
-                    <span className="change-chain-text d-none d-lg-flex">
-                      {ethState === true
-                        ? "Ethereum"
-                        : bnbState === true
-                        ? "BNB Chain"
-                        // : avaxState === true
-                        // ? "Avalanche"
-                        // : baseState === true
-                        // ? "Base"
-                        : confluxState === true
-                        ? "Conflux"
-                        : "Unsupported Chain"}
-                    </span>
-
-                    <img src={dropdown} alt="" />
+              {unreadNotifications > 0 && (
+                <div className="bell-amount">
+                  <span className="mb-0">
+                    {unreadNotifications > 99 ? "99+" : unreadNotifications}
                   </span>
-                }
-              >
-                <Dropdown.Item onClick={() => handleEthPool()}>
-                  <img src={eth} alt="" />
-                  Ethereum
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBnbPool()}>
-                  <img src={bnb} alt="" />
-                  BNB Chain
-                </Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
+                </div>
+              )}
+            </div>
+          </NavLink>
+          <DropdownButton
+            id="dropdown-basic-button"
+            className="d-flex align-items-center justify-content-center"
+            title={
+              <span className="dropdown-title">
+                <img
+                  src={
+                    ethState === true
+                      ? eth
+                      : bnbState === true
+                      ? bnb
+                      : // : avaxState === true
+                      // ? avax
+                      // : baseState === true
+                      // ? base
+                      confluxState === true
+                      ? conflux
+                      : error
+                  }
+                  height={16}
+                  width={16}
+                  alt=""
+                />
+                <span className="change-chain-text d-none d-lg-flex">
+                  {ethState === true
+                    ? "Ethereum"
+                    : bnbState === true
+                    ? "BNB Chain"
+                    : // : avaxState === true
+                    // ? "Avalanche"
+                    // : baseState === true
+                    // ? "Base"
+                    confluxState === true
+                    ? "Conflux"
+                    : "Unsupported Chain"}
+                </span>
+
+                <img src={dropdown} alt="" />
+              </span>
+            }
+          >
+            <Dropdown.Item onClick={() => handleEthPool()}>
+              <img src={eth} alt="" />
+              Ethereum
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => handleBnbPool()}>
+              <img src={bnb} alt="" />
+              BNB Chain
+            </Dropdown.Item>
+            {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-             <Dropdown.Item onClick={() => handleConfluxPool()}>
-                  <img src={conflux} alt="" />
-                  Conflux
-                </Dropdown.Item>
-                 {/*   <Dropdown.Item onClick={() => handleBasePool()}>
+            <Dropdown.Item onClick={() => handleConfluxPool()}>
+              <img src={conflux} alt="" />
+              Conflux
+            </Dropdown.Item>
+            {/*   <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
                 </Dropdown.Item> */}
-              </DropdownButton>
-        {openNavbar === false ? (
-          <div className="linear-border" onClick={() => setOpenNavbar(true)}>
-            <button
-              className="px-4 bg-transparent"
-              style={{ clipPath: "none", border: "none" }}
-              id="hamburgermenu"
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </button>
-          </div>
-        ) : (
-          <img
-            src={xMark}
-            alt="x mark"
-            style={{ position: "relative", right: "18px", marginLeft: 10 }}
-            onClick={() => setOpenNavbar(false)}
-          />
-        )}</div>
+          </DropdownButton>
+          {openNavbar === false ? (
+            <div className="linear-border" onClick={() => setOpenNavbar(true)}>
+              <button
+                className="px-4 bg-transparent"
+                style={{ clipPath: "none", border: "none" }}
+                id="hamburgermenu"
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          ) : (
+            <img
+              src={xMark}
+              alt="x mark"
+              style={{ position: "relative", right: "18px", marginLeft: 10 }}
+              onClick={() => setOpenNavbar(false)}
+            />
+          )}
+        </div>
       </div>
       <div
         className={`mobile-menu ${
