@@ -1176,7 +1176,7 @@ const WalletBalance = ({
           setuserPoints(points);
 
           const usdValue =
-          coingeckoEvent[0].reward.earn.value /
+          coingeckoEvent[0].reward.earn.total /
           coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
           if(bnbPrice!== 0)

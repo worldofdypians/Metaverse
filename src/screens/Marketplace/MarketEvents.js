@@ -482,13 +482,10 @@ const MarketEvents = ({
           setuserPoints(points);
 
           const usdValue =
-          coingeckoEvent[0].reward.earn.value /
+          coingeckoEvent[0].reward.earn.total /
           coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
  
-          const ethValue =
-          coingeckoEvent[0].reward.earn.total /
-          coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnETH(usdValue / bnbPrice);
         }
       } else {
