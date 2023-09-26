@@ -1030,8 +1030,8 @@ function App() {
   const logout = localStorage.getItem("logout");
 
   useEffect(() => {
-    if (window.ethereum && !window.coin98) {
-      if (window.ethereum.isConnected() === true || window.gatewallet) {
+    if (window.ethereum) {
+      if (!window.coin98 && window.ethereum.isConnected() === true || window.gatewallet) {
         if (
           logout === "false" ||
           window.coinbase_address ===
@@ -1043,6 +1043,9 @@ function App() {
           setCoinbase();
           localStorage.setItem("logout", "true");
         }
+      }
+      else {
+        checkConnection2();
       }
     } else {
       setIsConnected(false);

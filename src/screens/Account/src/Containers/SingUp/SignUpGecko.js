@@ -229,6 +229,8 @@ function SignUpGecko({
         value={username}
         onChange={setUserName}
         type={"coingecko"}
+        inputType="email"
+
       />
       <Input
         inputType="password"

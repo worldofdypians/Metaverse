@@ -1537,14 +1537,14 @@ const BetaPassNFT = ({
           <div className="metamask-info-wrapper mt-2 w-100 d-flex p-3 align-items-center justify-content-between">
             <div className="d-flex align-items-center gap-2">
               <img
-                src={
-                  window.ethereum?.isMetaMask && !window.gatewallet
+                 src={
+                  window.ethereum && window.ethereum.isMetaMask && !window.gatewallet && !window.coin98
                     ? metamaskIcon
                     : window.coin98
                     ? coin98Wallet
-                    : window.ethereum?.isTrust
+                    : window.ethereum && window.ethereum.isTrust
                     ? trustWallet
-                    : window.ethereum?.isCoinbaseWallet
+                    : window.ethereum && window.ethereum.isCoinbaseWallet
                     ? coinbaseWallet
                     : window.gatewallet
                     ? gateWallet
@@ -1556,13 +1556,13 @@ const BetaPassNFT = ({
               />
               <div className="d-flex flex-column">
                 <h6 className="metamask-info-title">
-                  {window.ethereum?.isMetaMask && !window.gatewallet
+                {window.ethereum && window.ethereum.isMetaMask && !window.gatewallet && !window.coin98
                     ? "MetaMask Wallet"
                     : window.coin98
                     ? "Coin98 Wallet"
-                    : window.ethereum?.isTrust
+                    : window.ethereum && window.ethereum.isTrust
                     ? "Trustwallet"
-                    : window.ethereum?.isCoinbaseWallet
+                    : window.ethereum && window.ethereum.isCoinbaseWallet
                     ? "Coinbase Wallet"
                     : window.gatewallet
                     ? "Gate Wallet"
