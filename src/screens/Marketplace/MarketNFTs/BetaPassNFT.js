@@ -1235,22 +1235,26 @@ const BetaPassNFT = ({
                         )}
                         {playerCreation === false && !alreadyRegistered && (
                           <SignUpGecko
-                            onSuccessVerify={(value) => {
-                              setplayerCreation(value);
-                            }}
-                            onEmailVerify={(value) => {
-                              setEmailVerify(value);
-                            }}
-                            onShowVerify={(value) => {
-                              setShowVerify(value);
-                            }}
-                            onSuccessLogin={() => {
-                              setalreadyRegistered(true);
-                              refetchPlayer();
-                            }}
-                            mintTitle={selectedMint.cardTitle}
-                            chainId={chainId}
-                          />
+                          onSuccessVerify={(value) => {
+                            setplayerCreation(value);
+                          }}
+                          onEmailVerify={(value) => {
+                            setEmailVerify(value);
+                          }}
+                          onShowVerify={(value) => {
+                            setShowVerify(value);
+                          }}
+                          onSuccessLogin={() => {
+                            setalreadyRegistered(true);
+                            refetchPlayer();
+                          }}
+                          mintTitle={selectedMint.cardTitle}
+                          chainId={chainId}
+                          activeTab={activeTab}
+                          isExistingUser={() => {
+                            setactiveTab("login");
+                          }}
+                        />
                         )}
                         {playerCreation === true &&
                           linkWallet === false &&

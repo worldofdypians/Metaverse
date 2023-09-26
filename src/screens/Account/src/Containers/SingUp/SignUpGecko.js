@@ -130,6 +130,7 @@ function SignUpGecko({
         }
       } else {
         setDisabled(true);
+        seterrorMsg("");
       }
     }
   }, [chainId, mintTitle,username, password, confirmPassword]);
