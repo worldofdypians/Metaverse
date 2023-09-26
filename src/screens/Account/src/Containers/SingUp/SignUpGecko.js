@@ -112,32 +112,42 @@ function SignUpGecko({
       seterrorMsg("");
     }
   }, [username]);
-console.log(mintTitle)
+
   useEffect(() => {
     if (chainId !== 1030 && mintTitle === "Conflux Beta Pass") {
       setDisabled(true);
       seterrorMsg("You should be on Conflux network to register.");
     }
     else {
-      seterrorMsg("");
-      setDisabled(false);
-    }
-  }, [chainId, mintTitle]);
-
-  useEffect(() => {
-    if (username && password && confirmPassword) {
-      setDisabled(false);
-      if (password !== confirmPassword) {
-        setDisabled(true);
-        seterrorMsg("Passwords don't match");
-      } else {
+      if (username && password && confirmPassword) {
         setDisabled(false);
-        seterrorMsg("");
+        if (password !== confirmPassword) {
+          setDisabled(true);
+          seterrorMsg("Passwords don't match");
+        } else {
+          setDisabled(false);
+          seterrorMsg("");
+        }
+      } else {
+        setDisabled(true);
       }
-    } else {
-      setDisabled(true);
     }
-  }, [username, password, confirmPassword]);
+  }, [chainId, mintTitle,username, password, confirmPassword]);
+
+  // useEffect(() => {
+  //   if (username && password && confirmPassword) {
+  //     setDisabled(false);
+  //     if (password !== confirmPassword) {
+  //       setDisabled(true);
+  //       seterrorMsg("Passwords don't match");
+  //     } else {
+  //       setDisabled(false);
+  //       seterrorMsg("");
+  //     }
+  //   } else {
+  //     setDisabled(true);
+  //   }
+  // }, [username, password, confirmPassword]);
 
   useEffect(() => {
     if (loginError) {
