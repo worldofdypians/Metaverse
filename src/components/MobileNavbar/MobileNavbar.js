@@ -372,29 +372,28 @@ const MobileNavbar = ({
                   <img src={tooltip ? check : copy} alt="" />
                 </div>
               </Clipboard>
-
-              {avatar === null ? (
-                <img
-                  src={person}
-                  className="account-icon"
-                  alt=""
-                  onClick={() => {
-                    handleRedirect();
-                    setOpenNavbar(false);
-                  }}
-                />
-              ) : (
-                <img
-                  src={avatar}
-                  className="account-icon"
-                  alt=""
-                  onClick={() => {
-                    handleRedirect();
-                    setOpenNavbar(false);
-                  }}
-                />
-              )}
             </div>
+          )}
+
+          {!coinbase ? (
+            <NavLink
+              to={"/account"}
+              onClick={() => {
+                setOpenNavbar(false);
+              }}
+            >
+              <img src={person} className="account-icon" alt="" />
+            </NavLink>
+          ) : (
+            <img
+              src={avatar === null ? person : avatar}
+              className="account-icon"
+              alt=""
+              // onClick={handleRedirect}
+              onClick={() => {
+                setOpenNavbar(false);
+              }}
+            />
           )}
         </div>
       </div>
