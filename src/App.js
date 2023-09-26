@@ -1467,6 +1467,8 @@ function App() {
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
             isConnected={isConnected}
+            chainId={chainId}
+            handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
           />
           <Routes>
