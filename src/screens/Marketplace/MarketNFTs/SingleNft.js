@@ -286,7 +286,6 @@ const SingleNft = ({
     if (type === "timepiece") {
       const nftowner = await window.caws_timepiece
         .ownerOf(Id)
-        .call()
         .catch((e) => {
           console.log(e);
         });
@@ -295,7 +294,6 @@ const SingleNft = ({
     } else if (type === "land") {
       const nftowner = await window.landnft
         .ownerOf(Id)
-        .call()
         .catch((e) => {
           console.log(e);
         });
@@ -303,7 +301,6 @@ const SingleNft = ({
     } else if (type === "caws") {
       const nftowner = await window.nft
         .ownerOf(Id)
-        .call()
         .catch((e) => {
           console.log(e);
         });
