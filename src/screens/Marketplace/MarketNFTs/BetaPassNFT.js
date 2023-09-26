@@ -1308,12 +1308,18 @@ const BetaPassNFT = ({
                                 <img src={circleArrow} alt="" />
                               </div>
                             </div>
-                            <span className="footertxt-coingecko mt-4">
+                            {selectedMint.cardTitle === "Conflux" ? 
+                          <span className="footertxt-coingecko mt-4">
+                          Users that joined in the Conflux Giveaway are required to create a WoD Account to receive the NFT and participate in the exclusive event.
+                        </span>
+                        :
+                        <span className="footertxt-coingecko mt-4">
                               Users who have claimed the{" "}
                               {selectedMint.cardTitle} NFT are required to
                               create a WoD Account to receive the NFT and
                               participate in the exclusive event.
-                            </span>
+                            </span>  
+                          } 
                             <div className="summaryseparator"></div>
                           </div>
                         )}

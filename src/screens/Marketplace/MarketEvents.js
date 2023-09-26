@@ -250,13 +250,17 @@ const MarketEvents = ({
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in BNB Rewards",
         eventDuration: coingeckoLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000"
       },
     },
     {
       title: "Conflux",
       logo: conflux,
       eventStatus: "Coming Soon",
-      totalRewards: "$3,000 in CFX Rewards",
+      totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "October 06, 2023",
@@ -269,9 +273,13 @@ const MarketEvents = ({
         rewards: "CFX",
         status: "Coming Soon",
         id: "event1",
-        totalRewards: "$3,000 in CFX Rewards",
+        totalRewards: "$2,000 in CFX Rewards",
         eventDuration: confluxLastDay,
         eventDate: "October 06, 2023",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000"
       },
     },
     // {
@@ -1008,18 +1016,15 @@ const MarketEvents = ({
                   <h6 className="popup-green-text">Benefits</h6>
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
-                    {dummyEvent.id === "event3" ? (
                       <>
                         <li className="popup-event-desc">
-                          Daily Rewards range from $1 to $100
+                          Daily Rewards range from ${dummyEvent.minRewards} to ${dummyEvent.maxRewards}
                         </li>
                         <li className="popup-event-desc">
-                          Daily Points range from 5,000 to 50,000
+                          Daily Points range from {dummyEvent.minPoints} to {dummyEvent.maxPoints}
                         </li>
                       </>
-                    ) : (
-                      <li className="popup-event-desc">Daily Rewards</li>
-                    )}
+                 
                     <li className="popup-event-desc">
                       Earn{" "}
                       {dummyEvent.id === "event1"

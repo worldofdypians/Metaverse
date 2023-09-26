@@ -42,7 +42,7 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
               </div>
             </h6>
             <span className="profile-event-rewards mb-0">
-              $3,000 in {data.rewards} rewards
+              {data.totalRewards}
             </span>
           </div>
         </div>
