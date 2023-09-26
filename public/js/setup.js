@@ -34020,7 +34020,7 @@ async function connectWallet() {
     onConnect();
     return true;
   } else {
-    throw new Error("No web3 detected!");
+    throw new Error("No web3 detected! Please Install MetaMask!");
   }
 }
 
