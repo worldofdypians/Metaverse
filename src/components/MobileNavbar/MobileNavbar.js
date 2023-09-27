@@ -93,36 +93,48 @@ const MobileNavbar = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
-      .then(() => {
-        handleSwitchNetwork(1);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const handleBnbPool = async () => {
-    await handleSwitchNetworkhook("0x38")
-      .then(() => {
-        handleSwitchNetwork(56);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const handleConfluxPool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x406")
+    if (window.ethereum) {
+      await handleSwitchNetworkhook("0x1")
         .then(() => {
-          handleSwitchNetwork(1030);
+          handleSwitchNetwork(1);
         })
         .catch((e) => {
           console.log(e);
         });
     } else {
-      handleSwitchChainGateWallet();
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleBnbPool = async () => {
+    if (window.ethereum) {
+      await handleSwitchNetworkhook("0x38")
+        .then(() => {
+          handleSwitchNetwork(56);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleConfluxPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x406")
+          .then(() => {
+            handleSwitchNetwork(1030);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet();
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 

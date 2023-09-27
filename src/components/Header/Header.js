@@ -120,30 +120,38 @@ const Header = ({
   };
 
   const handleEthPool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x1")
-        .then(() => {
-          handleSwitchNetwork(1);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x1")
+          .then(() => {
+            handleSwitchNetwork(1);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(1);
+      }
     } else {
-      handleSwitchChainGateWallet(1);
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleBnbPool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x38")
-        .then(() => {
-          handleSwitchNetwork(56);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x38")
+          .then(() => {
+            handleSwitchNetwork(56);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(56);
+      }
     } else {
-      handleSwitchChainGateWallet(56);
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -176,16 +184,20 @@ const Header = ({
   };
 
   const handleConfluxPool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x406")
-        .then(() => {
-          handleSwitchNetwork(1030);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x406")
+          .then(() => {
+            handleSwitchNetwork(1030);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet();
+      }
     } else {
-      handleSwitchChainGateWallet();
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
