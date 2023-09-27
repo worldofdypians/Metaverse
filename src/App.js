@@ -65,23 +65,11 @@ import {
 } from "web3-connector";
 
 function App() {
-  const ETHPARAMS_GATE = {
-    chainId: 1,
-    chainName: "Ethereum",
-    nativeCurrency: {
-      name: "Ethereum",
-      symbol: "ETH", // 2-6 characters long
-      decimals: 18,
-    },
-    rpcUrls: ["https://mainnet.infura.io/v3/"],
-    blockExplorerUrls: ["https://etherscan.io"],
-  };
-
   const CHAINLIST = {
     1: {
       chainId: 1,
       chainName: "Ethereum",
-      rpcUrls: [window.config.infura_endpoint],
+      rpcUrls: ["https://mainnet.infura.io/v3/"],
       nativeCurrency: {
         symbol: "eth",
         decimals: 18,
@@ -91,12 +79,22 @@ function App() {
     56: {
       chainId: 56,
       chainName: "BSC",
-      rpcUrls: [window.config.bsc_endpoint],
+      rpcUrls: ["https://bsc-dataseed.binance.org/"],
       nativeCurrency: {
         symbol: "bnb",
         decimals: 18,
       },
       blockExplorerUrls: ["https://bscscan.com"],
+    },
+    1030: {
+      chainId: 1030,
+      chainName: "CFX",
+      rpcUrls: ["https://evm.confluxrpc.com"],
+      nativeCurrency: {
+        symbol: "cfx",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://evm.confluxscan.net"],
     },
   };
 
@@ -385,10 +383,16 @@ function App() {
         })
         .catch(console.error);
     } else if (window.ethereum && window.gatewallet) {
-      console.log('test')
-      await provider?.getNetwork().then((data) => {
-        setChainId(data.chainId);
-      });
+      console.log("test");
+      await provider
+        ?.detectNetwork()
+        .then((data) => {
+          console.log("getnetwork", data);
+          setChainId(data.chainId);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     } else {
       setChainId(1);
     }
@@ -1332,9 +1336,38 @@ function App() {
     if (!window.gatewallet) {
       setChainId(chain);
     } else {
-      const params = CHAINLIST[Number(chain)];
-      connector?.activate(params);
+      // const params = CHAINLIST[Number(chain)];
+      // connector?.activate(params);
       setChainId(chain);
+      try {
+        await ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [
+            { chainId: chain === 1 ? "0x1" : chain === 56 ? "0x38" : "0x406" },
+          ],
+        });
+        // if (window.ethereum && window.gatewallet) {
+        //   window.location.reload();
+        // }
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        console.log(switchError, "switch");
+        if (switchError.code === 4902) {
+          try {
+            await ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: CHAINLIST[Number(chain)],
+            });
+            // if (window.ethereum && window.gatewallet) {
+            //   window.location.reload();
+            // }
+          } catch (addError) {
+            console.log(addError);
+          }
+        }
+        // handle other "switch" errors
+      }
+      // window.location.reload();
     }
   };
 
@@ -1926,6 +1959,45 @@ function App() {
               path="/marketplace/events/:eventId"
               element={
                 <MarketEvents
+                tabState={"live"}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  account={coinbase}
+                  chainId={chainId}
+                  dyptokenDatabnb={dyptokenDatabnb}
+                  idyptokenDatabnb={idyptokenDatabnb}
+                  handleAvailableTime={(value) => {
+                    setavailTime(value);
+                  }}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/events/upcoming"
+              element={
+                <MarketEvents
+                  tabState={"upcoming"}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  account={coinbase}
+                  chainId={chainId}
+                  dyptokenDatabnb={dyptokenDatabnb}
+                  idyptokenDatabnb={idyptokenDatabnb}
+                  handleAvailableTime={(value) => {
+                    setavailTime(value);
+                  }}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/events/past"
+              element={
+                <MarketEvents
+                  tabState={"past"}
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}

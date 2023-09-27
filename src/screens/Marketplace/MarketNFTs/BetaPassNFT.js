@@ -255,13 +255,18 @@ const BetaPassNFT = ({
   };
 
   const handleConfluxPool = async () => {
-    await handleSwitchNetworkhook("0x406")
+    if(!window.gatewallet)
+    {await handleSwitchNetworkhook("0x406")
       .then(() => {
-        handleSwitchNetwork(1030);
+       
       })
       .catch((e) => {
         console.log(e);
       });
+    }
+    else {
+       handleSwitchNetwork(1030);
+    }
   };
 
   useEffect(() => {
