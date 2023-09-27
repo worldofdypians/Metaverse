@@ -14,7 +14,7 @@ const BetaEventCard = ({ data, onOpenPopup,userEarnUsd }) => {
           ? "upcoming-mint-wrapper-avax"
           : data.title === "CoinGecko"
           ? "upcoming-mint-wrapper-coingecko"
-          : data.title === "Conflux (CFX)"
+          : data.title === "Conflux"
           ? "upcoming-mint-wrapper-conflux"
           : data.title === "Base"
           ? "upcoming-mint-wrapper-base"
@@ -65,7 +65,7 @@ const BetaEventCard = ({ data, onOpenPopup,userEarnUsd }) => {
       <div className="d-flex align-items-center gap-3">
         <div className="d-flex col-6 col-lg-3 flex-column align-items-start align-items-lg-center">
           <div className="mybetaearnings">
-            <h6 className="event-my-earnings3 mb-3">${getFormattedNumber(userEarnUsd, 2)}</h6>
+            <h6 className="event-my-earnings3 mb-3">${getFormattedNumber(data.title === "Conflux" ? 0 : userEarnUsd, 2)}</h6>
           </div>
         </div>
         <div className="d-flex flex-column d-flex d-lg-none gap-3">

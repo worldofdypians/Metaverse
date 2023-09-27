@@ -358,6 +358,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     }
   }, [nftModal, rewardModal, landStakeModal, landunStakeModal]);
 
+
   return (
     <div
       className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
