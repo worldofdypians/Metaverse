@@ -1959,6 +1959,45 @@ function App() {
               path="/marketplace/events/:eventId"
               element={
                 <MarketEvents
+                tabState={"live"}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  account={coinbase}
+                  chainId={chainId}
+                  dyptokenDatabnb={dyptokenDatabnb}
+                  idyptokenDatabnb={idyptokenDatabnb}
+                  handleAvailableTime={(value) => {
+                    setavailTime(value);
+                  }}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/events/upcoming"
+              element={
+                <MarketEvents
+                  tabState={"upcoming"}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  account={coinbase}
+                  chainId={chainId}
+                  dyptokenDatabnb={dyptokenDatabnb}
+                  idyptokenDatabnb={idyptokenDatabnb}
+                  handleAvailableTime={(value) => {
+                    setavailTime(value);
+                  }}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/events/past"
+              element={
+                <MarketEvents
+                  tabState={"past"}
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
