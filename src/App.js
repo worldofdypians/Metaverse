@@ -405,12 +405,13 @@ function App() {
 
         checkConnection();
       } else {
-        connectWallet(ConnectionType.INJECTED);
-        setCoinbase(account);
-        setIsConnected(isActive);
-        setwalletModal(false);
-        setShowForms2(true);
-        setChainId(parseInt(window.gatewallet.chainId));
+        await connectWallet(ConnectionType.INJECTED);
+          setCoinbase(account);
+          setIsConnected(isActive);
+          setwalletModal(false);
+          setShowForms2(true);
+          setChainId(parseInt(window.gatewallet.chainId));
+      
       }
 
       //
@@ -1030,22 +1031,26 @@ function App() {
   const logout = localStorage.getItem("logout");
 
   useEffect(() => {
-    if (window.ethereum) {
-      if (!window.coin98 && window.ethereum.isConnected() === true || window.gatewallet) {
-        if (
-          logout === "false" ||
-          window.coinbase_address ===
-            "0x0000000000000000000000000000000000000000"
-        ) {
-          checkConnection2();
-        } else {
-          setIsConnected(false);
-          setCoinbase();
-          localStorage.setItem("logout", "true");
-        }
-      }
-      else {
+    if (
+      !window.coin98 && window.ethereum &&
+      window.ethereum.isConnected() === true  &&
+      !window.gatewallet
+    ) {
+      if (
+        logout === "false" ||
+        window.coinbase_address ===
+          "0x0000000000000000000000000000000000000000"
+      ) {
         checkConnection2();
+      } else {
+        setIsConnected(false);
+        setCoinbase();
+        localStorage.setItem("logout", "true");
+      }
+    } else if (window.gatewallet && isActive) {
+      setIsConnected(isActive);
+      if (account) {
+        setCoinbase(account);
       }
     } else {
       setIsConnected(false);
@@ -1724,7 +1729,7 @@ function App() {
               }
             />
 
-            {/* <Route
+            <Route
                 exact
                 path="/marketplace/beta-pass/gate"
                 element={
@@ -1757,7 +1762,7 @@ function App() {
                     handleSwitchNetwork={handleSwitchNetwork}
                   />
                 }
-              /> */}
+              />
 
             {/* <Route
                 exact
