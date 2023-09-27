@@ -226,9 +226,9 @@ const MobileNavbar = ({
                             // ? avax
                             // : baseState === true
                             // ? base
-                            // confluxState === true
-                            // ? conflux
-                            error
+                            confluxState === true
+                            ? conflux
+                           : error
                       }
                       height={16}
                       width={16}
@@ -243,9 +243,9 @@ const MobileNavbar = ({
                           // ? "Avalanche"
                           // : baseState === true
                           // ? "Base"
-                          // confluxState === true
-                          // ? "Conflux"
-                          "Unsupported Chain"}
+                          confluxState === true
+                          ? "Conflux"
+                         : "Unsupported Chain"}
                     </span>
 
                     <img src={dropdown} alt="" />
@@ -264,10 +264,10 @@ const MobileNavbar = ({
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-                {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
+                <Dropdown.Item onClick={() => handleConfluxPool()}>
               <img src={conflux} alt="" />
               Conflux
-            </Dropdown.Item> */}
+            </Dropdown.Item>
                 {/*   <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
