@@ -432,12 +432,13 @@ const BetaPassNFT = ({
       setLinkWallet(true);
       setEmailVerify(true);
       setplayerCreation(true);
-      setShowVerify(true)
+      setShowVerify(true);
     } else if (
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
-      data.getPlayer.playerId && data.getPlayer.wallet &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
       setalreadyRegistered(true);
@@ -455,8 +456,9 @@ const BetaPassNFT = ({
       success === true &&
       data &&
       data.getPlayer &&
-      data.getPlayer.displayName && 
-      data.getPlayer.playerId &&  !data.getPlayer.wallet
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      !data.getPlayer.wallet
     ) {
       setTimeout(() => {
         connectWallet();
@@ -1147,7 +1149,7 @@ const BetaPassNFT = ({
                       className={`  justify-content-start
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
-                      {!alreadyRegistered && (
+                      {(!alreadyRegistered && mintTitle === "conflux") && (
                         <div className="d-flex align-items-center justify-content-around gap-2">
                           <button
                             className={
@@ -1198,7 +1200,7 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
 
-                        {alreadyRegistered && (
+                        {(alreadyRegistered || mintTitle === "coingecko") && (
                           <h6 className="land-name">
                             {totalCoingeckoNft > 0 ||
                             totalGateNft > 0 ||
@@ -1207,47 +1209,51 @@ const BetaPassNFT = ({
                               : "Registered"}{" "}
                           </h6>
                         )}
-                        {!alreadyRegistered && activeTab === "create" && (
-                          <div>
-                            <ul class="timeline m-0 p-0" id="timeline">
-                              <li class="col-3 li complete">
-                                <div class="status">
-                                  <h4 className="listtext"> Create </h4>
-                                </div>
-                              </li>
-                              <li
-                                class={`col-3 li ${showVerify && "complete"} `}
-                              >
-                                <div class="status">
-                                  <h4 className="listtext"> Verify </h4>
-                                </div>
-                              </li>
-                              <li
-                                class={`col-3 li ${
-                                  playerCreation && "complete"
-                                } `}
-                              >
-                                <div class="status">
-                                  <h4 className="listtext"> Profile </h4>
-                                </div>
-                              </li>
-                              <li
-                                class={`col-2 li ${linkWallet && "complete"}`}
-                                style={{ width: 0 }}
-                              >
-                                <div class="status">
-                                  <h4
-                                    className="listtext"
-                                    style={{ width: 0, whiteSpace: "nowrap" }}
-                                  >
-                                    Link Wallet
-                                  </h4>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        )}
-                        {playerCreation === false &&
+                        {!alreadyRegistered &&
+                          activeTab === "create" &&
+                          mintTitle === "conflux" && (
+                            <div>
+                              <ul class="timeline m-0 p-0" id="timeline">
+                                <li class="col-3 li complete">
+                                  <div class="status">
+                                    <h4 className="listtext"> Create </h4>
+                                  </div>
+                                </li>
+                                <li
+                                  class={`col-3 li ${
+                                    showVerify && "complete"
+                                  } `}
+                                >
+                                  <div class="status">
+                                    <h4 className="listtext"> Verify </h4>
+                                  </div>
+                                </li>
+                                <li
+                                  class={`col-3 li ${
+                                    playerCreation && "complete"
+                                  } `}
+                                >
+                                  <div class="status">
+                                    <h4 className="listtext"> Profile </h4>
+                                  </div>
+                                </li>
+                                <li
+                                  class={`col-2 li ${linkWallet && "complete"}`}
+                                  style={{ width: 0 }}
+                                >
+                                  <div class="status">
+                                    <h4
+                                      className="listtext"
+                                      style={{ width: 0, whiteSpace: "nowrap" }}
+                                    >
+                                      Link Wallet
+                                    </h4>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                        {/* {playerCreation === false &&
                           !alreadyRegistered &&
                           mintTitle === "coingecko" && (
                             <SignUpGecko
@@ -1271,9 +1277,9 @@ const BetaPassNFT = ({
                                 setactiveTab("login");
                               }}
                             />
-                          )}
+                          )} */}
 
-                        {playerCreation === true &&
+                        {/* {playerCreation === true &&
                           linkWallet === false &&
                           !alreadyRegistered &&
                           mintTitle === "coingecko" && (
@@ -1283,7 +1289,7 @@ const BetaPassNFT = ({
                               }}
                               mintTitle={selectedMint.cardTitle}
                             />
-                          )}
+                          )} */}
 
                         {playerCreation === false &&
                           !alreadyRegistered &&
@@ -1323,7 +1329,7 @@ const BetaPassNFT = ({
                             />
                           )}
 
-                        {linkWallet === true && !alreadyRegistered && (
+                        {linkWallet === true && !alreadyRegistered && mintTitle === "conflux" && (
                           <div className="d-flex flex-column gap-4 justify-content-between p-4">
                             <span className={"createplayertxt"}>
                               *Make sure to connect the same wallet address as
@@ -1370,7 +1376,7 @@ const BetaPassNFT = ({
                             <div className="summaryseparator"></div>
                           </div>
                         )}
-                        {alreadyRegistered && (
+                        {(alreadyRegistered || mintTitle === 'coingecko') && (
                           <div className="d-flex flex-column justify-content-between h-100">
                             {(totalCoingeckoNft === 0 &&
                               mintTitle === "coingecko") ||

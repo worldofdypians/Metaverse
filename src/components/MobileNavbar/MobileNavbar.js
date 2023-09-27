@@ -94,13 +94,17 @@ const MobileNavbar = ({
 
   const handleEthPool = async () => {
     if (window.ethereum) {
-      await handleSwitchNetworkhook("0x1")
-        .then(() => {
-          handleSwitchNetwork(1);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x1")
+          .then(() => {
+            handleSwitchNetwork(1);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(1);
+      }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -108,13 +112,17 @@ const MobileNavbar = ({
 
   const handleBnbPool = async () => {
     if (window.ethereum) {
-      await handleSwitchNetworkhook("0x38")
-        .then(() => {
-          handleSwitchNetwork(56);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x38")
+          .then(() => {
+            handleSwitchNetwork(56);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(56);
+      }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -131,7 +139,7 @@ const MobileNavbar = ({
             console.log(e);
           });
       } else {
-        handleSwitchChainGateWallet();
+        handleSwitchChainGateWallet(1030);
       }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");

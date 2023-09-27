@@ -81,21 +81,21 @@ function App() {
     1: {
       chainId: 1,
       chainName: "Ethereum",
+      rpcUrls: [window.config.infura_endpoint],
       nativeCurrency: {
-        symbol: "ETH", // 2-6 characters long
+        symbol: "eth",
         decimals: 18,
       },
-      rpcUrls: ["https://mainnet.infura.io/v3/"],
       blockExplorerUrls: ["https://etherscan.io"],
     },
     56: {
       chainId: 56,
       chainName: "BSC",
+      rpcUrls: [window.config.bsc_endpoint],
       nativeCurrency: {
-        symbol: "BNB", // 2-6 characters long
+        symbol: "bnb",
         decimals: 18,
       },
-      rpcUrls: ["https://bsc-dataseed.binance.org/"],
       blockExplorerUrls: ["https://bscscan.com"],
     },
   };
@@ -192,7 +192,7 @@ function App() {
     useWeb3React();
 
   useEagerlyConnect();
-  // console.log(account, accounts, isActive, isActivating, provider);
+
   const getTokenData = async () => {
     await axios
       .get("https://api.dyp.finance/api/the_graph_eth_v2")
@@ -376,14 +376,19 @@ function App() {
     return isConnected;
   };
 
-  const checkNetworkId = () => {
-    if (window.ethereum) {
+  const checkNetworkId = async () => {
+    if (window.ethereum && !window.gatewallet) {
       window.ethereum
         .request({ method: "net_version" })
         .then((data) => {
           setChainId(parseInt(data));
         })
         .catch(console.error);
+    } else if (window.ethereum && window.gatewallet) {
+      console.log('test')
+      await provider?.getNetwork().then((data) => {
+        setChainId(data.chainId);
+      });
     } else {
       setChainId(1);
     }
@@ -406,12 +411,11 @@ function App() {
         checkConnection();
       } else {
         await connectWallet(ConnectionType.INJECTED);
-          setCoinbase(account);
-          setIsConnected(isActive);
-          setwalletModal(false);
-          setShowForms2(true);
-          setChainId(parseInt(window.gatewallet.chainId));
-      
+        setCoinbase(account);
+        setIsConnected(isActive);
+        setwalletModal(false);
+        setShowForms2(true);
+        setChainId(parseInt(window.gatewallet.chainId));
       }
 
       //
@@ -477,6 +481,16 @@ function App() {
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
       });
+    } else {
+      setMyNFTSCaws([]);
+      setMyNFTSTimepiece([]);
+      setMyNFTSLand([]);
+      setMyNFTSCoingecko([]);
+      setTotalCoingeckoNft(0);
+      setTotalGateNft(0);
+      setMyGateNfts([]);
+      setTotalConfluxNft(0);
+      setMyConfluxNfts([]);
     }
   };
 
@@ -1023,8 +1037,11 @@ function App() {
   ethereum?.on("accountsChanged", checkConnection2);
 
   useEffect(() => {
-    if (ethereum) {
+    if (ethereum && !window.gatewallet) {
       ethereum.on("chainChanged", checkNetworkId);
+    }
+    if (window.gatewallet) {
+      window.gatewallet.on("changed", checkNetworkId);
     }
   }, [ethereum, nftCount]);
 
@@ -1032,14 +1049,14 @@ function App() {
 
   useEffect(() => {
     if (
-      !window.coin98 && window.ethereum &&
-      window.ethereum.isConnected() === true  &&
+      !window.coin98 &&
+      window.ethereum &&
+      window.ethereum.isConnected() === true &&
       !window.gatewallet
     ) {
       if (
         logout === "false" ||
-        window.coinbase_address ===
-          "0x0000000000000000000000000000000000000000"
+        window.coinbase_address === "0x0000000000000000000000000000000000000000"
       ) {
         checkConnection2();
       } else {
@@ -1311,13 +1328,13 @@ function App() {
   //   setmyNftsOffer(recievedOffers);
   // };
 
-  const handleSwitchNetwork = (chain) => {
+  const handleSwitchNetwork = async (chain) => {
     if (!window.gatewallet) {
       setChainId(chain);
     } else {
-      // const params = CHAINLIST[Number(chain)];
-      // connector?.activate(params);
-      // setChainId(chain);
+      const params = CHAINLIST[Number(chain)];
+      connector?.activate(params);
+      setChainId(chain);
     }
   };
 
@@ -1730,39 +1747,39 @@ function App() {
             />
 
             <Route
-                exact
-                path="/marketplace/beta-pass/gate"
-                element={
-                  <BetaPassNFT
-                    type={"gate"}
-                    ethTokenData={ethTokenData}
-                    dypTokenData={dypTokenData}
-                    isConnected={isConnected}
-                    handleConnect={handleShowWalletModal}
-                    listedNFTS={listedNFTS}
-                    coinbase={coinbase}
-                    timepieceBought={timepieceBought}
-                    handleRefreshListing={handleRefreshList}
-                    nftCount={nftCount}
-                    cawsArray={allCawsForTimepieceMint}
-                    mintloading={mintloading}
-                    chainId={chainId}
-                    handleMint={handleTimepieceMint}
-                    mintStatus={mintStatus}
-                    textColor={textColor}
-                    calculateCaws={calculateCaws}
-                    totalCreated={totalTimepieceCreated}
-                    totalCoingeckoNft={totalCoingeckoNft}
-                    myNFTSCoingecko={MyNFTSCoingecko}
-                    myGateNfts={myGateNfts}
-                    totalGateNft={totalGateNft}
-                    totalConfluxNft={totalConfluxNft}
-                    myConfluxNfts={myConfluxNfts}
-                    timepieceMetadata={timepieceMetadata}
-                    handleSwitchNetwork={handleSwitchNetwork}
-                  />
-                }
-              />
+              exact
+              path="/marketplace/beta-pass/gate"
+              element={
+                <BetaPassNFT
+                  type={"gate"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                />
+              }
+            />
 
             {/* <Route
                 exact
