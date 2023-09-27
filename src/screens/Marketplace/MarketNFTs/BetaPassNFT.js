@@ -199,7 +199,7 @@ const BetaPassNFT = ({
   const [status, setStatus] = useState("Connect your wallet.");
   const [activeButton, setactiveButton] = useState(false);
   const [selectedMint, setSelectedMint] = useState(coingeckoData);
-  const [mintTitle, setMintTitle] = useState("coingecko");
+  const [mintTitle, setMintTitle] = useState("conflux");
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
   const [viewCollection, setViewCollection] = useState(false);
@@ -590,12 +590,12 @@ const BetaPassNFT = ({
                   />
                 </div>
               </div>
-              {/* <div
+              <div
                 className="filters-container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-center my-4 p-3 position-relative gap-3"
                 style={{ zIndex: 2 }}
               >
                 <div className="d-flex align-items-center gap-4 justify-content-center flex-wrap">
-                  <NavLink
+                  {/* <NavLink
                     to={"/marketplace/beta-pass/avalanche"}
                     className={`${
                       location.pathname.includes("avalanche") &&
@@ -612,7 +612,7 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>Avalanche</span>
-                  </NavLink>
+                  </NavLink> */}
 
                   <NavLink
                     to={"/marketplace/beta-pass/conflux"}
@@ -646,7 +646,7 @@ const BetaPassNFT = ({
                     />
                     <span>CoinGecko</span>
                   </NavLink>
-                  <NavLink
+                  {/* <NavLink
                     to={"/marketplace/beta-pass/coin98"}
                     className={`${
                       location.pathname.includes("coin98") &&
@@ -659,9 +659,9 @@ const BetaPassNFT = ({
                   >
                     <img src={coin98} className="beta-pass-chain-img" alt="" />
                     <span>Coin98</span>
-                  </NavLink>
+                  </NavLink> */}
 
-                  <NavLink
+                  {/* <NavLink
                     to={"/marketplace/beta-pass/base"}
                     className={`${
                       location.pathname.includes("base") &&
@@ -678,9 +678,9 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>Base</span>
-                  </NavLink>
+                  </NavLink> */}
                 </div>
-              </div> */}
+              </div>
 
               <div className=" nft-page-wrapper d-flex flex-column flex-xxl-row gap-3 mb-3">
                 {mintTitle !== "coingecko" &&

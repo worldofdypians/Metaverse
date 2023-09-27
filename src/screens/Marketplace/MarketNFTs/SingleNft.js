@@ -211,7 +211,6 @@ const SingleNft = ({
         const my_offers = result.filter((object) => {
           return object.offer.buyer.toLowerCase() === coinbase.toLowerCase();
         });
-        console.log(my_offers[0]);
         setmyOffers(my_offers[0] ? my_offers[0].offer : []);
       }
 

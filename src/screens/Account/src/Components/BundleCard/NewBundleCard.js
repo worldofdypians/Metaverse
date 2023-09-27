@@ -334,6 +334,7 @@ const NewBundleCard = ({
         setStatusColor("#FE7A00");
         setStatus(e?.message);
         setDepositState("failDeposit");
+        console.log(e)
       });
     handleRefreshCountdown();
   };

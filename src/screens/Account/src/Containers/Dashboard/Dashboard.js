@@ -334,7 +334,7 @@ function Dashboard({
     getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
     getMyNFTS(coinbase, "coingecko").then((NFTS) => setMyNFTSCoingecko(NFTS));
     getMyNFTS(coinbase, "gate").then((NFTS) => setmyGateNfts(NFTS));
-    // getMyNFTS(coinbase, "conflux").then((NFTS) => setmyConfluxNfts(NFTS));
+    getMyNFTS(coinbase, "conflux").then((NFTS) => setmyConfluxNfts(NFTS));
 
 
 

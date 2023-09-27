@@ -4,6 +4,9 @@ import "./_header.scss";
 import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import person from "./assets/person.svg";
+import personCoinbase from "./assets/personCoinbase.png";
+import personNoCoinbase from "./assets/personNoCoinbase.png";
+
 import copy from "./assets/copy.svg";
 import check from "./assets/check.svg";
 import user from "./assets/user.svg";
@@ -136,7 +139,7 @@ const Header = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
+  // console.log(avatar);
   const handleBnbPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -580,13 +583,13 @@ const Header = ({
                           ? eth
                           : bnbState === true
                           ? bnb
-                           //: : avaxState === true
-                          // ? avax
-                          // : baseState === true
-                          // ? base
-                          // confluxState === true
-                          // ? conflux
-                          : error
+                          : //: : avaxState === true
+                            // ? avax
+                            // : baseState === true
+                            // ? base
+                            confluxState === true
+                            ? conflux
+                           : error
                       }
                       height={16}
                       width={16}
@@ -597,13 +600,13 @@ const Header = ({
                         ? "Ethereum"
                         : bnbState === true
                         ? "BNB Chain"
-                        //:  : avaxState === true
-                        // ? "Avalanche"
-                        // : baseState === true
-                        // ? "Base"
-                        // confluxState === true
-                        // ? "Conflux"
-                        : "Unsupported Chain"}
+                        : //:  : avaxState === true
+                          // ? "Avalanche"
+                          // : baseState === true
+                          // ? "Base"
+                          confluxState === true
+                          ? "Conflux"
+                          :"Unsupported Chain"}
                     </span>
 
                     <img src={dropdown} alt="" />
@@ -622,10 +625,10 @@ const Header = ({
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-                {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
+                <Dropdown.Item onClick={() => handleConfluxPool()}>
                   <img src={conflux} alt="" />
                   Conflux
-                </Dropdown.Item> */}
+                </Dropdown.Item>
                 {/*  <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
@@ -643,34 +646,30 @@ const Header = ({
                   className="btn connected px-3"
                   style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
                   onClick={() => {
-                    setTooltip(true);
-                    setTimeout(() => setTooltip(false), 2000);
+                    setShowMenu(true);
                   }}
                 >
-                  {shortAddress(coinbase)}{" "}
-                  <img src={tooltip ? check : copy} alt="" />
+                  {shortAddress(coinbase)} <img src={dropdown} alt="" />
                 </div>
               </Clipboard>
             </div>
           )}
           {!coinbase ? (
             <NavLink to={"/account"}>
-              <img src={person} className="account-icon" alt="" />
+              <img src={personNoCoinbase} className="account-icon" alt="" />
             </NavLink>
           ) : (
-            <img
-              src={avatar === null ? person : avatar}
-              className="account-icon"
-              alt=""
-              // onClick={handleRedirect}
-              onClick={() => {
-                setShowMenu(true);
-              }}
-            />
+            <NavLink to={"/account"}>
+              <img
+                src={avatar ? avatar : personCoinbase}
+                className="account-icon"
+                alt=""
+              />
+            </NavLink>
           )}
 
           {showmenu === true && (
-            <div className="position-absolute" style={{ width: "150px" }}>
+            <div className="position-absolute" style={{ width: "210px" }}>
               <OutsideClickHandler
                 onOutsideClick={() => {
                   setShowMenu(false);
@@ -681,11 +680,11 @@ const Header = ({
                     <span
                       className="menuitem2"
                       onClick={() => {
-                        setShowMenu(false);
-                        handleRedirect();
+                        setTooltip(true);
+                        setTimeout(() => setTooltip(false), 2000);
                       }}
                     >
-                      <img src={user} alt="" /> My Account{" "}
+                      <img src={tooltip ? check : copy} alt="" /> Copy{" "}
                     </span>
 
                     <span
@@ -695,7 +694,7 @@ const Header = ({
                         manageDisconnect();
                       }}
                     >
-                      <img src={logout} alt="" /> Disconnect wallet{" "}
+                      <img src={logout} alt="" /> Disconnect{" "}
                     </span>
                   </div>
                 </div>
