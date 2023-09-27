@@ -2564,6 +2564,9 @@
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
+  @media screen and (max-width: 786px) {
+    font-size: 9px;
+  }
 }
 .pick-and-calendar {
   position: absolute;
