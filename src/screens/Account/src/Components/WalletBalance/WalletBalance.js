@@ -1284,14 +1284,14 @@ const WalletBalance = ({
                 userEmail={email}
                 userWallet={address}
               />
-              {/* <UpcomingProfileEvent
+              <UpcomingProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyConflux);
                   setEventPopup(true);
                 }}
                 data={dummyConflux}
-              /> */}
-              <img
+              />
+              {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
                 style={{
@@ -1300,7 +1300,7 @@ const WalletBalance = ({
                   transform: "translateX(0px)",
                 }}
                 alt=""
-              />
+              /> */}
               <img
                 src={eventSkeleton}
                 className="profile-event-item"
