@@ -383,7 +383,7 @@ function App() {
         })
         .catch(console.error);
     } else if (window.ethereum && window.gatewallet) {
-      console.log("test");
+     
       await provider
         ?.detectNetwork()
         .then((data) => {
