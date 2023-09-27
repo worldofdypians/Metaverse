@@ -104,6 +104,8 @@ function SingUp() {
         placeHolder="Email"
         value={username}
         onChange={setUserName}
+        inputType="email"
+
       />
       <Input
         inputType="password"

@@ -94,6 +94,7 @@ function Login() {
         placeHolder="Email"
         value={username}
         onChange={setUserName}
+        inputType="email"
       />
       <Input
         style={{

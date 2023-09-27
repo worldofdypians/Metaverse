@@ -5,9 +5,9 @@ import { Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
-import LoginGecko from "../Login/LoginGecko";
+import LoginConflux from "../Login/LoginConflux";
 import { ErrorAlert } from "../../Components";
-function SignUpGecko({
+function SignUpConflux({
   onSuccessVerify,
   onEmailVerify,
   onShowVerify,
@@ -85,9 +85,9 @@ function SignUpGecko({
   };
 
   const resendCode = async () => {
-    await Auth.resendSignUp(username).catch((err)=>{
+    await Auth.resendSignUp(username).catch((err) => {
       seterrorMsg(err?.message);
-    })
+    });
   };
 
   useEffect(() => {
@@ -117,8 +117,7 @@ function SignUpGecko({
     if (chainId !== 1030 && mintTitle === "Conflux Beta Pass") {
       setDisabled(true);
       seterrorMsg("You should be on Conflux network to register.");
-    }
-    else {
+    } else {
       if (username && password && confirmPassword) {
         setDisabled(false);
         if (password !== confirmPassword) {
@@ -133,7 +132,7 @@ function SignUpGecko({
         seterrorMsg("");
       }
     }
-  }, [chainId, mintTitle,username, password, confirmPassword]);
+  }, [chainId, mintTitle, username, password, confirmPassword]);
 
   // useEffect(() => {
   //   if (username && password && confirmPassword) {
@@ -208,7 +207,7 @@ function SignUpGecko({
 
   if (userExists || activeTab === "login") {
     return (
-      <LoginGecko
+      <LoginConflux
         mintTitle={mintTitle}
         onSuccessLogin={onSuccessLogin}
         newEmail={username}
@@ -218,7 +217,9 @@ function SignUpGecko({
         onLoginTry={() => {
           setisLogin(true);
         }}
-        onPassChange={(value)=>{setPassword(value)}}
+        onPassChange={(value) => {
+          setPassword(value);
+        }}
       />
     );
   }
@@ -231,7 +232,6 @@ function SignUpGecko({
         onChange={setUserName}
         type={"coingecko"}
         inputType="email"
-
       />
       <Input
         inputType="password"
@@ -272,4 +272,4 @@ function SignUpGecko({
   );
 }
 
-export default SignUpGecko;
+export default SignUpConflux;

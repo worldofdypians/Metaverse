@@ -351,6 +351,7 @@
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
     width: 100% !important;
+    place-items: center;
   }
 }
 
@@ -2159,6 +2160,7 @@
 }
 
 .coingecko-btn:hover,
+.conflux-btn:hover,
 .downloadbtn-coingecko:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
@@ -2235,11 +2237,49 @@
   font-weight: 600;
   line-height: normal;
 }
+.coingecko-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #181636 15.48%, #E40188 254.86%);
+}
+
+.coingecko-eventh6 {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.coingecko-eventname {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.06px;
+}
+
+.coingecko-eventusd {
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.coingecko-eventdetails {
+  color: #fff;
+  text-align: right;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
 
 .beta-pass-item {
   border-radius: 15px;
   background: #252743;
-  backdrop-filter: blur(10px);
+  // backdrop-filter: blur(10px);
   margin: 1px;
   .beta-pass-chain-img {
     width: 25px;
@@ -2524,6 +2564,9 @@
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
+  @media screen and (max-width: 786px) {
+    font-size: 9px;
+  }
 }
 .pick-and-calendar {
   position: absolute;
@@ -2749,7 +2792,7 @@
 }
 .downloadbtn-coingecko {
   border-radius: 20px;
-  background: linear-gradient(90deg, #8EEE86 -13.56%, #0078D4 129.3%);
+  background: linear-gradient(90deg, #8eee86 -13.56%, #0078d4 129.3%);
   padding: 8px 15px;
   width: fit-content;
   border: none;

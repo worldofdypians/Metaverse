@@ -342,9 +342,9 @@ const MakeOffer = ({
                 )}
               </span>
             </div>
-            <div class="dropdown" style={{ width: "150px" }}>
+            <div className="dropdown" style={{ width: "150px" }}>
               <button
-                class="btn btn-secondary nft-dropdown w-100
+                className="btn btn-secondary nft-dropdown w-100
                  d-flex align-items-center justify-content-between dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
@@ -360,7 +360,7 @@ const MakeOffer = ({
                 </div>
                 <img src={dropdownIcon} alt="" />
               </button>
-              <ul class="dropdown-menu nft-dropdown-menu  p-2 w-100">
+              <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                 <li
                   className="nft-dropdown-item"
                   onClick={() => {

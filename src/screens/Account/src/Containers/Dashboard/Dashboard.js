@@ -83,6 +83,8 @@ function Dashboard({
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setmyGateNfts] = useState([]);
+  const [myConfluxNfts, setmyConfluxNfts] = useState([]);
+
 
 
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
@@ -332,6 +334,8 @@ function Dashboard({
     getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
     getMyNFTS(coinbase, "coingecko").then((NFTS) => setMyNFTSCoingecko(NFTS));
     getMyNFTS(coinbase, "gate").then((NFTS) => setmyGateNfts(NFTS));
+    // getMyNFTS(coinbase, "conflux").then((NFTS) => setmyConfluxNfts(NFTS));
+
 
 
   };
@@ -637,15 +641,15 @@ function Dashboard({
 
   const logoutItem = localStorage.getItem("logout");
 
-  useEffect(() => {
-    if (window.ethereum && !window.coin98) {
-      if (window.ethereum.isConnected() === true) {
-        localStorage.setItem("logout", "false");
-      } else {
-        localStorage.setItem("logout", "true");
-      }
-    }
-  }, [coinbase, chainId]);
+  // useEffect(() => {
+  //   if (window.ethereum && !window.coin98) {
+  //     if (window.ethereum.isConnected() === true) {
+  //       localStorage.setItem("logout", "false");
+  //     } else {
+  //       localStorage.setItem("logout", "true");
+  //     }
+  //   }
+  // }, [coinbase, chainId]);
 
   useEffect(() => {
     if (success === true) {
@@ -748,6 +752,7 @@ function Dashboard({
                         myWodWodStakes={myWodWodStakesAll}
                         myNFTSCoingecko={MyNFTSCoingecko}
                         myGateNfts={myGateNfts}
+                        myConfluxNfts={myConfluxNfts}
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}

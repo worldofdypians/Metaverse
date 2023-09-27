@@ -8,7 +8,7 @@ import classes from "./Login.module.css";
 // import { ErrorAlert } from "../../Components";
 import ForgotPasswordGecko from "../ForgotPassword/ForgotPasswordGecko";
 
-function LoginGecko({ mintTitle, onSuccessLogin, newEmail, onUsernameChange,onPassChange, onLoginTry }) {
+function LoginConflux({ mintTitle, onSuccessLogin, newEmail, onUsernameChange,onPassChange, onLoginTry }) {
   const {
     isAuthenticated,
     login: LoginGlobal,
@@ -171,4 +171,4 @@ function LoginGecko({ mintTitle, onSuccessLogin, newEmail, onUsernameChange,onPa
   );
 }
 
-export default LoginGecko;
+export default LoginConflux;

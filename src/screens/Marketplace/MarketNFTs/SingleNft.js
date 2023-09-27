@@ -19,6 +19,8 @@ import eye from "../assets/eye.svg";
 import heart from "../assets/heart.svg";
 import ethIcon from "../assets/ethIcon.svg";
 import bnbLogo from "../assets/bnbLogo.svg";
+import confluxLogo from "../assets/confluxLogo.svg";
+
 import { GET_PLAYER } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import { useQuery } from "@apollo/client";
 import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
@@ -30,15 +32,13 @@ import { useParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import whiteTag from "./assets/whiteTag.svg";
 import MakeOffer from "./MakeOffer";
-import inboxStar from './assets/inboxStar.svg'
-import dollarCircle from './assets/dollarCircle.svg'
-import stars from './assets/stars.svg'
-import singleStar from './assets/star.svg'
-import expand from './assets/expand.svg'
-import chart from './assets/chart.svg'
-import users from './assets/users.svg'
-
-
+import inboxStar from "./assets/inboxStar.svg";
+import dollarCircle from "./assets/dollarCircle.svg";
+import stars from "./assets/stars.svg";
+import singleStar from "./assets/star.svg";
+import expand from "./assets/expand.svg";
+import chart from "./assets/chart.svg";
+import users from "./assets/users.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -154,6 +154,7 @@ const SingleNft = ({
   const [offeracceptStatus, setOfferacceptStatus] = useState("initial");
   const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
   const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
+  const [myOffers, setmyOffers] = useState([]);
 
   const { nftId, nftAddress } = useParams();
 
@@ -190,71 +191,89 @@ const SingleNft = ({
 
   const getOffer = async () => {
     let finalArray = [];
-    const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
+    if (type !== "conflux" && type !== "coingecko" && type !== "gate") {
+      const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
 
-    const contract1 = new window.infuraWeb3.eth.Contract(
-      window.ERC20_ABI,
-      token_address
-    );
-    const contract2 = new window.infuraWeb3.eth.Contract(
-      window.TOKEN_ABI,
-      window.config.weth2_address
-    );
+      const contract1 = new window.infuraWeb3.eth.Contract(
+        window.ERC20_ABI,
+        token_address
+      );
+      const contract2 = new window.infuraWeb3.eth.Contract(
+        window.TOKEN_ABI,
+        window.config.weth2_address
+      );
 
-    const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
-      console.error(e);
-    });
+      const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
+        console.error(e);
+      });
 
-    await Promise.all(
-      result.map(async (item) => {
-        if (item.offer.payment.priceType === "1") {
-          const balance = await contract1.methods
-            .balanceOf(item.offer.buyer)
-            .call()
-            .then((data) => {
-              return window.infuraWeb3.utils.fromWei(data, "ether");
+      if (result && coinbase) {
+        const my_offers = result.filter((object) => {
+          return object.offer.buyer.toLowerCase() === coinbase.toLowerCase();
+        });
+        console.log(my_offers[0]);
+        setmyOffers(my_offers[0] ? my_offers[0].offer : []);
+      }
+
+      await Promise.all(
+        result.map(async (item) => {
+          if (item.offer.payment.priceType === "1") {
+            const balance = await contract1.methods
+              .balanceOf(item.offer.buyer)
+              .call()
+              .then((data) => {
+                return window.infuraWeb3.utils.fromWei(data, "ether");
+              });
+
+            const allowance = await contract1.methods
+              .allowance(
+                item.offer.buyer,
+                window.config.nft_marketplace_address
+              )
+              .call()
+              .then((data) => {
+                return window.infuraWeb3.utils.fromWei(data, "ether");
+              });
+
+            const priceFormatted = item.offer.price / 1e18;
+            // console.log(balance >= priceFormatted && allowance >= priceFormatted)
+            return finalArray.push({
+              offer: item.offer,
+              index: item.index,
+              isAllowed:
+                balance >= priceFormatted && allowance >= priceFormatted,
             });
+          } else if (item.offer.payment.priceType === "0") {
+            const balance = await contract2.methods
+              .balanceOf(item.offer.buyer)
+              .call()
+              .then((data) => {
+                return window.infuraWeb3.utils.fromWei(data, "ether");
+              });
 
-          const allowance = await contract1.methods
-            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
-            .call()
-            .then((data) => {
-              return window.infuraWeb3.utils.fromWei(data, "ether");
+            const allowance = await contract2.methods
+              .allowance(
+                item.offer.buyer,
+                window.config.nft_marketplace_address
+              )
+              .call()
+              .then((data) => {
+                return window.infuraWeb3.utils.fromWei(data, "ether");
+              });
+
+            const priceFormatted = item.offer.price / 1e18;
+            return finalArray.push({
+              offer: item.offer,
+              index: item.index,
+              isAllowed:
+                balance >= priceFormatted && allowance >= priceFormatted,
             });
-
-          const priceFormatted = item.offer.price / 1e18;
-          // console.log(balance >= priceFormatted && allowance >= priceFormatted)
-          return finalArray.push({
-            offer: item.offer,
-            index: item.index,
-            isAllowed: balance >= priceFormatted && allowance >= priceFormatted,
-          });
-        } else if (item.offer.payment.priceType === "0") {
-          const balance = await contract2.methods
-            .balanceOf(item.offer.buyer)
-            .call()
-            .then((data) => {
-              return window.infuraWeb3.utils.fromWei(data, "ether");
-            });
-
-          const allowance = await contract2.methods
-            .allowance(item.offer.buyer, window.config.nft_marketplace_address)
-            .call()
-            .then((data) => {
-              return window.infuraWeb3.utils.fromWei(data, "ether");
-            });
-
-          const priceFormatted = item.offer.price / 1e18;
-          return finalArray.push({
-            offer: item.offer,
-            index: item.index,
-            isAllowed: balance >= priceFormatted && allowance >= priceFormatted,
-          });
-        }
-      })
-    );
-    finalArray.reverse();
-    setofferData(finalArray);
+          }
+        })
+      );
+      finalArray.reverse();
+      setofferData(finalArray);
+    }
   };
   // console.log(offerData)
   const getTokenData = async () => {
@@ -296,22 +315,41 @@ const SingleNft = ({
         window.config.nft_coingecko_address
       );
 
-      const owner = await nft_contract.methods.ownerOf(Id).call().catch((e) => {
-        console.log(e);
-      });
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
       setowner(owner);
-    }
-
-    else if (type === "gate") {
+    } else if (type === "gate") {
       const nft_contract = new window.bscWeb3.eth.Contract(
         window.GATE_NFT_ABI,
         window.config.nft_gate_address
       );
 
-      const owner = await nft_contract.methods.ownerOf(Id).call().catch((e) => {
-        console.log(e);
-      });
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      setowner(owner);
+    } else if (type === "conflux") {
+      const nft_contract = new window.confluxWeb3.eth.Contract(
+        window.CONFLUX_NFT_ABI,
+        window.config.nft_conflux_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
 
       setowner(owner);
     }
@@ -349,7 +387,7 @@ const SingleNft = ({
     } else if (addr === window.config.nft_timepiece_address) {
       const result = await window.getTimepieceNft(tokenid);
       setmetaData(result);
-    } 
+    }
   };
 
   const isApprovedBuy = async (amount) => {
@@ -386,33 +424,6 @@ const SingleNft = ({
       }
     } else if (type === "land") {
       let nft_address = window.config.nft_land_address;
-      const listedNFT = await getListedNFTS(
-        0,
-        "",
-        "nftAddress_tokenId",
-        tokenId,
-        nft_address
-      );
-
-      if (listedNFT && listedNFT.length > 0) {
-        setNft(...listedNFT);
-      }
-    } else if (type === "coingecko") {
-      let nft_address = window.config.nft_coingecko_address;
-      const listedNFT = await getListedNFTS(
-        0,
-        "",
-        "nftAddress_tokenId",
-        tokenId,
-        nft_address
-      );
-
-      if (listedNFT && listedNFT.length > 0) {
-        setNft(...listedNFT);
-      }
-    }
-    else if (type === "gate") {
-      let nft_address = window.config.nft_gate_address;
       const listedNFT = await getListedNFTS(
         0,
         "",
@@ -513,7 +524,7 @@ const SingleNft = ({
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        }  else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
           nft.type = "timepiece";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -662,7 +673,7 @@ const SingleNft = ({
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        }  else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
           nft.type = "timepiece";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -1187,17 +1198,19 @@ const SingleNft = ({
         ? "coingecko"
         : nftAddress === window.config.nft_gate_address
         ? "gate"
+        : nftAddress === window.config.nft_conflux_address
+        ? "conflux"
         : "caws",
       nftId
     );
-  }, [type, nftId, nftAddress, nftCount, nft]);
+  }, [nftId, nftAddress, nftCount]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
-   
+
     getListedNtsAsc();
     getOldNftOwner(
       nftAddress === window.config.nft_caws_address
@@ -1208,14 +1221,16 @@ const SingleNft = ({
         ? "coingecko"
         : nftAddress === window.config.nft_gate_address
         ? "gate"
+        : nftAddress === window.config.nft_conflux_address
+        ? "conflux"
         : "land",
       nftId
     );
   }, []);
 
-  useEffect(()=>{
-     getViewCount(nftId, nftAddress);
-  },[nftId, nftAddress])
+  useEffect(() => {
+    getViewCount(nftId, nftAddress);
+  }, [nftId, nftAddress]);
 
   useEffect(() => {
     if (nft.tokenId) {
@@ -1230,29 +1245,29 @@ const SingleNft = ({
       setType("land");
     } else if (nftAddress === window.config.nft_coingecko_address) {
       setType("coingecko");
-    }
-    else if (nftAddress === window.config.nft_gate_address) {
+    } else if (nftAddress === window.config.nft_conflux_address) {
+      setType("conflux");
+    } else if (nftAddress === window.config.nft_gate_address) {
       setType("gate");
     }
     getMetaData(nftAddress, nftId);
   }, [nftId, nftAddress, nft, nftCount]);
 
   useEffect(() => {
-    getOffer();
     checkisListedNFT(nftId, nftAddress);
     handleRefreshList(
       nftAddress === window.config.nft_caws_address
         ? "caws"
         : nftAddress === window.config.nft_timepiece_address
         ? "timepiece"
-        : nftAddress === window.config.nft_coingecko_address
-        ? "coingecko"
-        : nftAddress === window.config.nft_gate_address
-        ? "gate"
         : "land",
       nftId
     );
   }, [nftCount]);
+
+  useEffect(() => {
+    getOffer();
+  }, [coinbase, nftCount]);
 
   useEffect(() => {
     if (favorites && favorites.length > 0) {
@@ -1296,7 +1311,7 @@ const SingleNft = ({
                   World of Dypians{" "}
                   <h6
                     className="market-banner-title m-0"
-                    style={{ color: "#8C56FF",  }}
+                    style={{ color: "#8C56FF" }}
                   >
                     Land
                   </h6>
@@ -1311,7 +1326,7 @@ const SingleNft = ({
             ) : type === "coingecko" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                CoinGecko{" "}
+                  CoinGecko{" "}
                   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
@@ -1332,13 +1347,25 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
+            ) : type === "conflux" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Conflux{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
             ) : (
               <>
                 <h6 className="market-banner-title d-flex align-items-xxl-center align-items-lg-center gap-2 px-3">
                   CAWS{" "}
                   <h6
                     className="market-banner-title m-0"
-                    style={{ color: "#8C56FF"}}
+                    style={{ color: "#8C56FF" }}
                   >
                     Timepiece
                   </h6>
@@ -1362,6 +1389,8 @@ const SingleNft = ({
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
                         : nftAddress === window.config.nft_gate_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
+                        : nftAddress === window.config.nft_conflux_address
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -1377,10 +1406,20 @@ const SingleNft = ({
                 >
                   <span className="seller-addr d-flex gap-1 align-items-center">
                     <img
-                      src={(type === "coingecko" || type === 'gate') ? bnbLogo : ethIcon}
+                      src={
+                        type === "coingecko" || type === "gate"
+                          ? bnbLogo
+                          : type === "conflux"
+                          ? confluxLogo
+                          : ethIcon
+                      }
                       alt=""
                     />{" "}
-                    {(type === "coingecko" || type === 'gate') ? "BNB Chain" : "Ethereum"}
+                    {type === "coingecko" || type === "gate"
+                      ? "BNB Chain"
+                      : type === "conflux"
+                      ? "Conflux"
+                      : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
                     <img src={eye} alt="" /> {viewCount} views
@@ -1400,6 +1439,8 @@ const SingleNft = ({
                         ? "CoinGecko Beta Pass"
                         : type === "gate"
                         ? "Gate Beta Pass"
+                        : type === "conflux"
+                        ? "Conflux Beta Pass"
                         : "CAWS Timepiece"}{" "}
                       #{nftId}
                       <img
@@ -1674,7 +1715,9 @@ const SingleNft = ({
                     {isOwner &&
                       !IsListed &&
                       loadingNft === false &&
-                      type !== "coingecko" && type!== 'gate' && (
+                      type !== "coingecko" &&
+                      type !== "gate" &&
+                      type !== "conflux" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -1790,7 +1833,9 @@ const SingleNft = ({
                     {isOwner &&
                       !IsListed &&
                       !loadingNft &&
-                     ( type === "coingecko" || type === "gate") && (
+                      (type === "coingecko" ||
+                        type === "gate" ||
+                        type === "conflux") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">
@@ -1805,8 +1850,10 @@ const SingleNft = ({
                         {
                           <a
                             href={
-                              (type === "coingecko" || type === 'gate')
+                              type === "coingecko" || type === "gate"
                                 ? `https://bscscan.com/address/${owner}`
+                                : type === "conflux"
+                                ? `https://evm.confluxscan.net/address/${owner}`
                                 : `https://etherscan.io/address/${owner}`
                             }
                             target="_blank"
@@ -1870,7 +1917,10 @@ const SingleNft = ({
                                 setshowMakeOffer(true);
                               }}
                             >
-                              <img src={whiteTag} alt="" /> Make offer
+                              <img src={whiteTag} alt="" />{" "}
+                              {myOffers.length > 0
+                                ? "View your offer"
+                                : "Make offer"}
                             </button>
                           )}
                         </div>
@@ -1974,7 +2024,9 @@ const SingleNft = ({
                         !IsListed &&
                         coinbase &&
                         isConnected &&
-                        type !== "coingecko" && type !== 'gate' && (
+                        type !== "coingecko" &&
+                        type !== "gate" &&
+                        type !== "conflux" && (
                           <button
                             disabled={
                               sellLoading === true || sellStatus === "failed"
@@ -2031,27 +2083,35 @@ const SingleNft = ({
                         coinbase &&
                         isConnected &&
                         chainId === 1 &&
-                        type !== "coingecko" && type !== 'gate' && (
+                        type !== "coingecko" &&
+                        type !== "gate" &&
+                        type !== "conflux" && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
                               setshowMakeOffer(true);
                             }}
                           >
-                            <img src={whiteTag} alt="" /> Make offer
+                            <img src={whiteTag} alt="" />{" "}
+                            {myOffers.length > 0
+                              ? "View your offer"
+                              : "Make offer"}
                           </button>
                         )}
 
-                      {!isConnected && type !== "coingecko" && type !== 'gate' && (
-                        <button
-                          className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
-                          onClick={() => {
-                            showWalletConnect();
-                          }}
-                        >
-                          Connect Wallet
-                        </button>
-                      )}
+                      {!isConnected &&
+                        type !== "coingecko" &&
+                        type !== "gate" &&
+                        type !== "conflux" && (
+                          <button
+                            className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
+                            onClick={() => {
+                              showWalletConnect();
+                            }}
+                          >
+                            Connect Wallet
+                          </button>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -2073,7 +2133,7 @@ const SingleNft = ({
               </div>
             </div>
           </div>
-          {type !== "coingecko" && type !== 'gate' && (
+          {type !== "coingecko" && type !== "gate" && type !== "conflux" && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -2328,7 +2388,7 @@ const SingleNft = ({
             </div>
           )}
 
-          {(type === "coingecko" || type === 'gate') && (
+          {(type === "coingecko" || type === "gate" || type === "conflux") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -2337,29 +2397,51 @@ const SingleNft = ({
                   <>
                     <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                        <span className="traittitle d-flex align-items-center gap-2"> <img src={inboxStar} alt=''/> Exclusive Access</span>
+                        <span className="traittitle d-flex align-items-center gap-2">
+                          {" "}
+                          <img src={inboxStar} alt="" /> Exclusive Access
+                        </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                        <span className="traittitle d-flex align-items-center gap-2"> <img src={stars} alt=''/>Daily Rewards</span>
+                        <span className="traittitle d-flex align-items-center gap-2">
+                          {" "}
+                          <img src={stars} alt="" />
+                          Daily Rewards
+                        </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                        <span className="traittitle d-flex align-items-center gap-2"> <img src={dollarCircle} alt=''/>Earn BNB rewards</span>
+                        <span className="traittitle d-flex align-items-center gap-2">
+                          <img src={dollarCircle} alt="" />
+                          Earn {type === "conflux" ? "CFX" : "BNB"} rewards
+                        </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                        <span className="traittitle d-flex align-items-center gap-2"> <img src={chart} alt=''/>Global Points</span>
+                        <span className="traittitle d-flex align-items-center gap-2">
+                          <img src={chart} alt="" />
+                          Global Points
+                        </span>
                       </div>
                     </div>
                     <div className="trait-separator"></div>
                     <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                        <span className="traittitle d-flex align-items-center gap-2"> <img src={users} alt=''/>Community Engagement</span>
-                      </div>
-                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                        <span className="traittitle d-flex align-items-center gap-2"> <img src={singleStar} alt=''/> Enhanced Interactions
+                        <span className="traittitle d-flex align-items-center gap-2">
+                          {" "}
+                          <img src={users} alt="" />
+                          Community Engagement
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                        <span className="traittitle d-flex align-items-center gap-2"> <img src={expand} alt=''/>Expanded Functionality
+                        <span className="traittitle d-flex align-items-center gap-2">
+                          {" "}
+                          <img src={singleStar} alt="" /> Enhanced Interactions
+                        </span>
+                      </div>
+                      <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="traittitle d-flex align-items-center gap-2">
+                          {" "}
+                          <img src={expand} alt="" />
+                          Expanded Functionality
                         </span>
                       </div>
                     </div>
