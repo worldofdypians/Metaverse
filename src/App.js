@@ -481,10 +481,10 @@ function App() {
         setMyGateNfts(NFTS);
       });
 
-      getMyNFTS(coinbase, "conflux").then((NFTS) => {
-        setTotalConfluxNft(NFTS.length);
-        setMyConfluxNfts(NFTS);
-      });
+      // getMyNFTS(coinbase, "conflux").then((NFTS) => {
+      //   setTotalConfluxNft(NFTS.length);
+      //   setMyConfluxNfts(NFTS);
+      // });
     } else {
       setMyNFTSCaws([]);
       setMyNFTSTimepiece([]);
