@@ -2159,7 +2159,8 @@
   line-height: normal;
 }
 
-.coingecko-btn:hover, .conflux-btn:hover,
+.coingecko-btn:hover,
+.conflux-btn:hover,
 .downloadbtn-coingecko:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
@@ -2234,6 +2235,44 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
+  line-height: normal;
+}
+.coingecko-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(97deg, #181636 15.48%, #5e31b2 254.86%);
+}
+
+.coingecko-eventh6 {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.coingecko-eventname {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.06px;
+}
+
+.coingecko-eventusd {
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.coingecko-eventdetails {
+  color: #fff;
+  text-align: right;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
   line-height: normal;
 }
 
@@ -2750,7 +2789,7 @@
 }
 .downloadbtn-coingecko {
   border-radius: 20px;
-  background: linear-gradient(90deg, #8EEE86 -13.56%, #0078D4 129.3%);
+  background: linear-gradient(90deg, #8eee86 -13.56%, #0078d4 129.3%);
   padding: 8px 15px;
   width: fit-content;
   border: none;
