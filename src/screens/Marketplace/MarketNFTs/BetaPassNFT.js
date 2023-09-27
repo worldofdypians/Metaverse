@@ -909,8 +909,11 @@ const BetaPassNFT = ({
                       )}
 
                       {mintTitle === "conflux" && (
-                        <button
+                        <a
                           className={`btn conflux-btn px-3 d-flex align-items-center justify-content-center gap-2`}
+                          href='https://sweepwidget.com/c/conflux-beta-pass-nft'
+                          target='_blank'
+                          rel='noreferrer'
                         >
                           <img
                             src={conflux}
@@ -923,7 +926,7 @@ const BetaPassNFT = ({
                             alt=""
                             style={{ width: 16, height: 16 }}
                           />{" "}
-                        </button>
+                        </a>
                       )}
                     </div>
                   </div>
