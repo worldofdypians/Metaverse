@@ -101,7 +101,7 @@ const MarketSidebar = () => {
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
-                      to="/marketplace/beta-pass/coingecko"
+                      to="/marketplace/beta-pass/conflux"
                       end
                       className={({ isActive }) =>
                         isActive

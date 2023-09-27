@@ -27,8 +27,8 @@ const MintPopup = ({ active, onClose, data }) => {
 
       {data.title === "CoinGecko" ? (
         <>
-          <div class="d-flex align-items-center justify-content-center">
-            <div class="pulsatingDot"></div>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
               Live CoinGecko Beta Pass NFT
             </h6>
@@ -46,15 +46,15 @@ const MintPopup = ({ active, onClose, data }) => {
           <h6 className="mint-popup-title">CoinGecko Treasure Hunt</h6>
         </>
       ) : (
-        <>
-          <div class="d-flex align-items-center justify-content-center">
-            <div class="pulsatingDot"></div>
+        <div className="d-flex align-items-center gap-2">
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              Live Free Minting
+              Live
             </h6>
           </div>
-          <h6 className="mint-popup-title">{data.title} Beta Pass</h6>
-        </>
+          <h6 className="mint-popup-title m-0">{data.title} Beta Pass</h6>
+        </div>
       )}
 
       <img
@@ -87,7 +87,7 @@ const MintPopup = ({ active, onClose, data }) => {
       ) : (
         <Link
           onClick={onClose}
-          to={"/marketplace/beta-pass/coingecko"}
+          to={`/marketplace/beta-pass/${data.state}`}
           state={{ event: data.state }}
           className="linear-border"
         >

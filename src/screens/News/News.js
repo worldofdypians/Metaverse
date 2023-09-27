@@ -340,8 +340,8 @@ const News = (props) => {
               <>
                 {loadingMain === true ? (
                   <div className="d-flex align-items-center justify-content-center">
-                    <div class="spinner-border text-info" role="status">
-                      <span class="visually-hidden">Loading...</span>
+                    <div className="spinner-border text-info" role="status">
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   </div>
                 ) : (
@@ -442,8 +442,8 @@ const News = (props) => {
                 <div className="col-xxl-12 col-lg-12 col-12 d-flex flex-column align-items-center gap-2 mt-2 justify-content-center">
                   {loadingOther === true ? (
                     <div className="d-flex align-items-center justify-content-center">
-                      <div class="spinner-border text-info" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                      <div className="spinner-border text-info" role="status">
+                        <span className="visually-hidden">Loading...</span>
                       </div>
                     </div>
                   ) : null}

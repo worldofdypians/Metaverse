@@ -351,6 +351,7 @@
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
     width: 100% !important;
+    place-items: center;
   }
 }
 
@@ -2158,7 +2159,7 @@
   line-height: normal;
 }
 
-.coingecko-btn:hover,
+.coingecko-btn:hover, .conflux-btn:hover,
 .downloadbtn-coingecko:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
@@ -2239,7 +2240,7 @@
 .beta-pass-item {
   border-radius: 15px;
   background: #252743;
-  backdrop-filter: blur(10px);
+  // backdrop-filter: blur(10px);
   margin: 1px;
   .beta-pass-chain-img {
     width: 25px;

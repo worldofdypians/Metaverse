@@ -58,6 +58,7 @@ const Header = ({
   nftCount,
   chainId,
   handleSwitchNetwork,
+  handleSwitchChainGateWallet,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -119,53 +120,85 @@ const Header = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
-      .then(() => {
-        handleSwitchNetwork(1);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x1")
+          .then(() => {
+            handleSwitchNetwork(1);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(1);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
   };
 
   const handleBnbPool = async () => {
-    await handleSwitchNetworkhook("0x38")
-      .then(() => {
-        handleSwitchNetwork(56);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x38")
+          .then(() => {
+            handleSwitchNetwork(56);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(56);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
   };
 
   const handleAvaxPool = async () => {
-    await handleSwitchNetworkhook("0xa86a")
-      .then(() => {
-        handleSwitchNetwork(43114);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (!window.gatewallet) {
+      await handleSwitchNetworkhook("0xa86a")
+        .then(() => {
+          handleSwitchNetwork(43114);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      handleSwitchChainGateWallet();
+    }
   };
 
   const handleBasePool = async () => {
-    await handleSwitchNetworkhook("0x2105")
-      .then(() => {
-        handleSwitchNetwork(8453);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (!window.gatewallet) {
+      await handleSwitchNetworkhook("0x2105")
+        .then(() => {
+          handleSwitchNetwork(8453);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      handleSwitchChainGateWallet();
+    }
   };
 
   const handleConfluxPool = async () => {
-    await handleSwitchNetworkhook("0x406")
-      .then(() => {
-        handleSwitchNetwork(1030);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x406")
+          .then(() => {
+            handleSwitchNetwork(1030);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet();
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
   };
 
   async function markNotificationAsRead(walletAddress, notificationId) {
@@ -308,7 +341,7 @@ const Header = ({
             News
           </NavLink>
         </div>
-        <div className="col-3 d-flex align-items-center justify-content-end gap-4 pe-0 position-relative ">
+        <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
           {!coinbase ? (
             <div className="linearborder2">
               <button className="btn connectwallet px-3" onClick={handleSignUp}>
@@ -500,7 +533,7 @@ const Header = ({
                                           ? "WOD"
                                           : "Timepiece"
                                       } #${nft.tokenId}`
-                                    : nft.description?.slice(0,150) + '...'}
+                                    : nft.description?.slice(0, 150) + "..."}
                                 </p>
                                 <span className="notification-relative-time mb-0">
                                   {getRelativeTime(nft.timestamp)}
@@ -547,12 +580,12 @@ const Header = ({
                           ? eth
                           : bnbState === true
                           ? bnb
-                          // : avaxState === true
+                          : // : avaxState === true
                           // ? avax
                           // : baseState === true
                           // ? base
-                          // : confluxState === true
-                          // ? conflux
+                          confluxState === true
+                          ? conflux
                           : error
                       }
                       height={16}
@@ -564,12 +597,12 @@ const Header = ({
                         ? "Ethereum"
                         : bnbState === true
                         ? "BNB Chain"
-                        // : avaxState === true
+                        : // : avaxState === true
                         // ? "Avalanche"
                         // : baseState === true
                         // ? "Base"
-                        // : confluxState === true
-                        // ? "Conflux"
+                        confluxState === true
+                        ? "Conflux"
                         : "Unsupported Chain"}
                     </span>
 
@@ -589,11 +622,11 @@ const Header = ({
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-                {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
+                <Dropdown.Item onClick={() => handleConfluxPool()}>
                   <img src={conflux} alt="" />
                   Conflux
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBasePool()}>
+                {/*  <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
                 </Dropdown.Item> */}
@@ -618,30 +651,22 @@ const Header = ({
                   <img src={tooltip ? check : copy} alt="" />
                 </div>
               </Clipboard>
-
-              {avatar === null ? (
-                <img
-                  src={person}
-                  className="account-icon"
-                  alt=""
-                  // onClick={handleRedirect}
-                  onClick={() => {
-                    setShowMenu(true);
-                  }}
-                />
-              ) : (
-                <img
-                  src={avatar}
-                  className="account-icon"
-                  alt=""
-                  onClick={() => {
-                    setShowMenu(true);
-                  }}
-
-                  // onClick={handleRedirect}
-                />
-              )}
             </div>
+          )}
+          {!coinbase ? (
+            <NavLink to={"/account"}>
+              <img src={person} className="account-icon" alt="" />
+            </NavLink>
+          ) : (
+            <img
+              src={avatar === null ? person : avatar}
+              className="account-icon"
+              alt=""
+              // onClick={handleRedirect}
+              onClick={() => {
+                setShowMenu(true);
+              }}
+            />
           )}
 
           {showmenu === true && (
@@ -662,6 +687,7 @@ const Header = ({
                     >
                       <img src={user} alt="" /> My Account{" "}
                     </span>
+
                     <span
                       className="menuitem2"
                       onClick={() => {
