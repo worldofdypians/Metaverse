@@ -3856,7 +3856,7 @@ const WalletBalance = ({
                 <img src={grayDollar} width={36} height={36} alt="" />
                 <span className="event-my-earnings2 mb-0">My earnings</span>
               </div>
-              <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
+              <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">
                     {getFormattedNumber(dummyEvent.id === "event1" ? 0 : userPoints, 0)}
