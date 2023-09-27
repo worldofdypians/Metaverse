@@ -96,6 +96,7 @@ const MarketEvents = ({
   idyptokenDatabnb,
   handleAvailableTime,
   remainingTime,
+  tabState,
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -253,7 +254,7 @@ const MarketEvents = ({
         minRewards: "1",
         maxRewards: "100",
         minPoints: "5,000",
-        maxPoints: "50,000"
+        maxPoints: "50,000",
       },
     },
     {
@@ -279,7 +280,7 @@ const MarketEvents = ({
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000"
+        maxPoints: "50,000",
       },
     },
     // {
@@ -495,10 +496,10 @@ const MarketEvents = ({
           setuserPoints(points);
 
           const usdValue =
-          coingeckoEvent[0].reward.earn.total /
-          coingeckoEvent[0].reward.earn.multiplier;
+            coingeckoEvent[0].reward.earn.total /
+            coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
- 
+
           setuserEarnETH(usdValue / bnbPrice);
         }
       } else {
@@ -555,12 +556,19 @@ const MarketEvents = ({
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
-      data.getPlayer.playerId && data.getPlayer.wallet && 
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
   }, [email, data]);
+
+  useEffect(() => {
+    if (tabState !== null) {
+      setActiveTab(tabState);
+    }
+  }, []);
 
   return (
     <>
@@ -583,7 +591,6 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-
                     <h6
                       className={`new-stake-tab ${
                         activeTab === "live" && "stake-tab-active"
@@ -594,7 +601,7 @@ const MarketEvents = ({
                     </h6>
                   </div>
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     <h6
@@ -738,7 +745,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0,1).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 1).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -792,18 +799,18 @@ const MarketEvents = ({
                 // </div>
 
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(1,2).map((item, index) => (
-                          <BetaEventCard
-                            data={item}
-                            key={index}
-                            onOpenPopup={() => {
-                              setEventPopup(true);
-                              setDummyEvent(item.popupInfo);
-                            }}
-                            userEarnUsd={userEarnUsd}
-                          />
-                        ))}
-                      </div>
+                  {dummyBetaPassData2.slice(1, 2).map((item, index) => (
+                    <BetaEventCard
+                      data={item}
+                      key={index}
+                      onOpenPopup={() => {
+                        setEventPopup(true);
+                        setDummyEvent(item.popupInfo);
+                      }}
+                      userEarnUsd={userEarnUsd}
+                    />
+                  ))}
+                </div>
                 // <BetaPassEvents />
               )}
               {activeTab === "past" && (
@@ -1028,15 +1035,17 @@ const MarketEvents = ({
                   <h6 className="popup-green-text">Benefits</h6>
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
-                      <>
-                        <li className="popup-event-desc">
-                          Daily Rewards range from ${dummyEvent.minRewards} to ${dummyEvent.maxRewards}
-                        </li>
-                        <li className="popup-event-desc">
-                          Daily Points range from {dummyEvent.minPoints} to {dummyEvent.maxPoints}
-                        </li>
-                      </>
-                 
+                    <>
+                      <li className="popup-event-desc">
+                        Daily Rewards range from ${dummyEvent.minRewards} to $
+                        {dummyEvent.maxRewards}
+                      </li>
+                      <li className="popup-event-desc">
+                        Daily Points range from {dummyEvent.minPoints} to{" "}
+                        {dummyEvent.maxPoints}
+                      </li>
+                    </>
+
                     <li className="popup-event-desc">
                       Earn{" "}
                       {dummyEvent.id === "event1"
@@ -1221,7 +1230,10 @@ const MarketEvents = ({
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">
-                    {getFormattedNumber(dummyEvent.id === "event1" ? 0 : userPoints, 0)}
+                    {getFormattedNumber(
+                      dummyEvent.id === "event1" ? 0 : userPoints,
+                      0
+                    )}
                   </h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
@@ -1229,9 +1241,16 @@ const MarketEvents = ({
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
-                    ${getFormattedNumber( dummyEvent.id === "event1" ? 0 : userEarnUsd, 2)}
+                    $
+                    {getFormattedNumber(
+                      dummyEvent.id === "event1" ? 0 : userEarnUsd,
+                      2
+                    )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
-                      {getFormattedNumber(dummyEvent.id === "event1" ? 0 : userEarnETH, 2)}
+                      {getFormattedNumber(
+                        dummyEvent.id === "event1" ? 0 : userEarnETH,
+                        2
+                      )}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"
