@@ -62,7 +62,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         if (responseData.events) {
           const coingeckoEvent = responseData.events.filter((obj)=>{return obj.betapassId==='coingecko'});
           const usdValue =
-          coingeckoEvent[0].reward.earn.value /
+          coingeckoEvent[0].reward.earn.total /
           coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
         }

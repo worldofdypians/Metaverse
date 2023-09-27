@@ -495,13 +495,10 @@ const MarketEvents = ({
           setuserPoints(points);
 
           const usdValue =
-            coingeckoEvent[0].reward.earn.value /
-            coingeckoEvent[0].reward.earn.multiplier;
+          coingeckoEvent[0].reward.earn.total /
+          coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
-
-          const ethValue =
-            coingeckoEvent[0].reward.earn.total /
-            coingeckoEvent[0].reward.earn.multiplier;
+ 
           setuserEarnETH(usdValue / bnbPrice);
         }
       } else {
@@ -558,7 +555,7 @@ const MarketEvents = ({
       data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
+      data.getPlayer.playerId && data.getPlayer.wallet && 
       data.getPlayer.wallet.publicAddress
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
