@@ -116,7 +116,7 @@ function App() {
 
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState();
   const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
@@ -269,15 +269,11 @@ function App() {
     }
   };
 
-  const fetchAvatar = async (coinbase) => {
-    const response = await fetch(
-      `https://api-image.dyp.finance/api/v1/avatar/${coinbase}`
-    )
-      .then((res) => {
-        return res.json();
-      })
+  const fetchAvatar = async (userAddr) => {
+    const response = axios
+      .get(`https://api-image.dyp.finance/api/v1/avatar/${userAddr}`)
       .then((data) => {
-        if (data?.avatar) {
+        if (data.data.avatar) {
           setAvatar(data.avatar);
         } else {
           setAvatar(null);
@@ -291,8 +287,6 @@ function App() {
   const checkConnection = async () => {
     await window.getCoinbase().then((data) => {
       setCoinbase(data);
-
-      fetchAvatar(data);
       axios
         .get(`https://api-image.dyp.finance/api/v1/username/${data}`)
         .then((res) => {
@@ -311,17 +305,20 @@ function App() {
       if (window.gatewallet) {
         setCoinbase(account);
         setIsConnected(isActive);
+        fetchAvatar(account);
+      } else {
+        await window.getCoinbase().then((data) => {
+          if (data) {
+            fetchAvatar(data);
+
+            setCoinbase(data);
+            setIsConnected(true);
+          } else {
+            setCoinbase();
+            setIsConnected(false);
+          }
+        });
       }
-      await window.getCoinbase().then((data) => {
-        if (data) {
-          setCoinbase(data);
-          setIsConnected(true);
-          fetchAvatar(data);
-        } else {
-          setCoinbase();
-          setIsConnected(false);
-        }
-      });
     } else {
       setIsConnected(false);
       setCoinbase();
@@ -383,11 +380,9 @@ function App() {
         })
         .catch(console.error);
     } else if (window.ethereum && window.gatewallet) {
-     
       await provider
         ?.detectNetwork()
         .then((data) => {
-          console.log("getnetwork", data);
           setChainId(data.chainId);
         })
         .catch((e) => {
@@ -411,7 +406,7 @@ function App() {
         });
         setwalletModal(false);
         setShowForms2(true);
-
+        setSuccess(true);
         checkConnection();
       } else {
         await connectWallet(ConnectionType.INJECTED);
@@ -419,6 +414,7 @@ function App() {
         setIsConnected(isActive);
         setwalletModal(false);
         setShowForms2(true);
+        setSuccess(true);
         setChainId(parseInt(window.gatewallet.chainId));
       }
 
@@ -481,10 +477,10 @@ function App() {
         setMyGateNfts(NFTS);
       });
 
-      // getMyNFTS(coinbase, "conflux").then((NFTS) => {
-      //   setTotalConfluxNft(NFTS.length);
-      //   setMyConfluxNfts(NFTS);
-      // });
+      getMyNFTS(coinbase, "conflux").then((NFTS) => {
+        setTotalConfluxNft(NFTS.length);
+        setMyConfluxNfts(NFTS);
+      });
     } else {
       setMyNFTSCaws([]);
       setMyNFTSTimepiece([]);
@@ -1071,6 +1067,7 @@ function App() {
     } else if (window.gatewallet && isActive) {
       setIsConnected(isActive);
       if (account) {
+        fetchAvatar(account);
         setCoinbase(account);
       }
     } else {
@@ -1635,7 +1632,7 @@ function App() {
                   account={coinbase}
                   isConnected={isConnected}
                   chainId={chainId}
-                  handleConnect={handleConnection}
+                  handleConnect={handleConnectWallet}
                   onSigninClick={checkData}
                   success={success}
                   availableTime={availTime}
@@ -1740,7 +1737,7 @@ function App() {
                 />
               }
             />
-            {/* <Route
+            <Route
               exact
               path="/marketplace/beta-pass/conflux"
               element={
@@ -1777,9 +1774,9 @@ function App() {
                   }}
                 />
               }
-            /> */}
+            />
 
-            <Route
+            {/* <Route
               exact
               path="/marketplace/beta-pass/gate"
               element={
@@ -1812,7 +1809,7 @@ function App() {
                   handleSwitchNetwork={handleSwitchNetwork}
                 />
               }
-            />
+            /> */}
 
             {/* <Route
                 exact
@@ -1959,11 +1956,11 @@ function App() {
               path="/marketplace/events/:eventId"
               element={
                 <MarketEvents
-                tabState={"live"}
+                  tabState={"live"}
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
-                  account={coinbase}
+                  account={coinbase?.toLowerCase()}
                   chainId={chainId}
                   dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}
@@ -1982,7 +1979,7 @@ function App() {
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
-                  account={coinbase}
+                  account={coinbase?.toLowerCase()}
                   chainId={chainId}
                   dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}
@@ -2001,7 +1998,7 @@ function App() {
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
-                  account={coinbase}
+                  account={coinbase?.toLowerCase()}
                   chainId={chainId}
                   dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}

@@ -189,87 +189,93 @@ const MobileNavbar = ({
           <img src={metaverse} alt="metaverse" width={126} />
         </NavLink>
         <div className="d-flex align-items-center gap-3 justify-content-between">
-          <NavLink to="/notifications">
-            <div className="position-relative">
-              <img
-                src={bellIcon}
-                width={30}
-                style={{ cursor: "pointer" }}
-                height={30}
-                alt=""
-              />
+          {coinbase && (
+            <>
+              {" "}
+              <NavLink to="/notifications">
+                <div className="position-relative">
+                  <img
+                    src={bellIcon}
+                    width={30}
+                    style={{ cursor: "pointer" }}
+                    height={30}
+                    alt=""
+                  />
 
-              {unreadNotifications > 0 && (
-                <div className="bell-amount">
-                  <span className="mb-0">
-                    {unreadNotifications > 99 ? "99+" : unreadNotifications}
-                  </span>
+                  {unreadNotifications > 0 && (
+                    <div className="bell-amount">
+                      <span className="mb-0">
+                        {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                      </span>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </NavLink>
-          <DropdownButton
-            id="dropdown-basic-button"
-            className="d-flex align-items-center justify-content-center"
-            title={
-              <span className="dropdown-title">
-                <img
-                  src={
-                    ethState === true
-                      ? eth
-                      : bnbState === true
-                      ? bnb
-                      //:  : avaxState === true
-                      // ? avax
-                      // : baseState === true
-                      // ? base
-                      // confluxState === true
-                      // ? conflux
-                      : error
-                  }
-                  height={16}
-                  width={16}
-                  alt=""
-                />
-                <span className="change-chain-text d-none d-lg-flex">
-                  {ethState === true
-                    ? "Ethereum"
-                    : bnbState === true
-                    ? "BNB Chain"
-                     //: : avaxState === true
-                    // ? "Avalanche"
-                    // : baseState === true
-                    // ? "Base"
-                    // confluxState === true
-                    // ? "Conflux"
-                    : "Unsupported Chain"}
-                </span>
+              </NavLink>
+              <DropdownButton
+                id="dropdown-basic-button"
+                className="d-flex align-items-center justify-content-center"
+                title={
+                  <span className="dropdown-title">
+                    <img
+                      src={
+                        ethState === true
+                          ? eth
+                          : bnbState === true
+                          ? bnb
+                          : //:  : avaxState === true
+                            // ? avax
+                            // : baseState === true
+                            // ? base
+                            confluxState === true
+                            ? conflux
+                           : error
+                      }
+                      height={16}
+                      width={16}
+                      alt=""
+                    />
+                    <span className="change-chain-text d-none d-lg-flex">
+                      {ethState === true
+                        ? "Ethereum"
+                        : bnbState === true
+                        ? "BNB Chain"
+                        : //: : avaxState === true
+                          // ? "Avalanche"
+                          // : baseState === true
+                          // ? "Base"
+                          confluxState === true
+                          ? "Conflux"
+                         : "Unsupported Chain"}
+                    </span>
 
-                <img src={dropdown} alt="" />
-              </span>
-            }
-          >
-            <Dropdown.Item onClick={() => handleEthPool()}>
-              <img src={eth} alt="" />
-              Ethereum
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleBnbPool()}>
-              <img src={bnb} alt="" />
-              BNB Chain
-            </Dropdown.Item>
-            {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
+                    <img src={dropdown} alt="" />
+                  </span>
+                }
+              >
+                <Dropdown.Item onClick={() => handleEthPool()}>
+                  <img src={eth} alt="" />
+                  Ethereum
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleBnbPool()}>
+                  <img src={bnb} alt="" />
+                  BNB Chain
+                </Dropdown.Item>
+                {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-            {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
+                <Dropdown.Item onClick={() => handleConfluxPool()}>
               <img src={conflux} alt="" />
               Conflux
-            </Dropdown.Item> */}
-            {/*   <Dropdown.Item onClick={() => handleBasePool()}>
+            </Dropdown.Item>
+                {/*   <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
                 </Dropdown.Item> */}
-          </DropdownButton>
+              </DropdownButton>
+            </>
+          )}
+
           {openNavbar === false ? (
             <div className="linear-border" onClick={() => setOpenNavbar(true)}>
               <button
@@ -405,15 +411,22 @@ const MobileNavbar = ({
               <img src={person} className="account-icon" alt="" />
             </NavLink>
           ) : (
-            <img
-              src={avatar === null ? person : avatar}
-              className="account-icon"
-              alt=""
-              // onClick={handleRedirect}
+            <NavLink
+              to={"/account"}
               onClick={() => {
                 setOpenNavbar(false);
               }}
-            />
+            >
+              <img
+                src={avatar === null ? person : avatar}
+                className="account-icon"
+                alt=""
+                // onClick={handleRedirect}
+                onClick={() => {
+                  setOpenNavbar(false);
+                }}
+              />
+            </NavLink>
           )}
         </div>
       </div>
