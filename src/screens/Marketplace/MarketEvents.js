@@ -565,10 +565,8 @@ const MarketEvents = ({
   }, [email, data]);
 
   useEffect(() => {
-    if (tabState !== null) {
-      setActiveTab(tabState);
-    }
-  }, []);
+    setActiveTab(tabState);
+  }, [window.location.href]);
 
   return (
     <>
@@ -591,37 +589,44 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <h6
-                      className={`new-stake-tab ${
-                        activeTab === "live" && "stake-tab-active"
-                      } px-3 py-2`}
-                      onClick={() => setActiveTab("live")}
-                    >
-                      Live
-                    </h6>
-                  </div>
-                  <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
-                    <h6
-                      className={`new-stake-tab  ${
-                        activeTab === "upcoming" && "stake-tab-active"
-                      } px-3 py-2`}
-                      onClick={() => setActiveTab("upcoming")}
+                    <NavLink
+                      to={`/marketplace/events/treasure-hunt`}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "new-stake-tab stake-tab-active px-3 py-2"
+                          : "new-stake-tab px-3 py-2"
+                      }
+                    >
+                      Live
+                    </NavLink>
+                  </div>
+                  <div className="position-relative">
+                   
+                    <NavLink
+                      to={"/marketplace/events/upcoming"}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "new-stake-tab stake-tab-active px-3 py-2"
+                          : "new-stake-tab px-3 py-2"
+                      }
                     >
                       Upcoming
-                    </h6>
+                    </NavLink>
                   </div>
 
-                  <h6
-                    className={`new-stake-tab ${
-                      activeTab === "past" && "stake-tab-active"
-                    } px-3 py-2`}
-                    onClick={() => setActiveTab("past")}
+                  <NavLink
+                    to={"/marketplace/events/past"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "new-stake-tab stake-tab-active px-3 py-2"
+                        : "new-stake-tab px-3 py-2"
+                    }
                   >
                     Past
-                  </h6>
+                  </NavLink>
                 </div>
                 <span className="w-100 new-stake-divider mt-3 mb-5"></span>
               </div>
@@ -789,28 +794,28 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">New events are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-
-                <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(1, 2).map((item, index) => (
-                    <BetaEventCard
-                      data={item}
-                      key={index}
-                      onOpenPopup={() => {
-                        setEventPopup(true);
-                        setDummyEvent(item.popupInfo);
-                      }}
-                      userEarnUsd={userEarnUsd}
-                    />
-                  ))}
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">New events are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
+                  </div>
                 </div>
+
+                // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                //   {dummyBetaPassData2.slice(1, 2).map((item, index) => (
+                //     <BetaEventCard
+                //       data={item}
+                //       key={index}
+                //       onOpenPopup={() => {
+                //         setEventPopup(true);
+                //         setDummyEvent(item.popupInfo);
+                //       }}
+                //       userEarnUsd={userEarnUsd}
+                //     />
+                //   ))}
+                // </div>
                 // <BetaPassEvents />
               )}
               {activeTab === "past" && (
