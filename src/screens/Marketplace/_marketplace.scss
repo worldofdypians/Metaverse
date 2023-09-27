@@ -2293,6 +2293,13 @@
     color: rgb(238, 237, 255);
     text-transform: capitalize;
     transition: all 0.25s;
+
+    @media screen and (max-width: 435px) {
+      font-size: 14px;
+    }
+    @media screen and (max-width: 410px) {
+      font-size: 10px;
+    }
   }
 }
 
