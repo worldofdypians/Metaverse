@@ -775,7 +775,7 @@ const CawsNFT = ({
       id="header"
       onScroll={onScroll}
       ref={listInnerRef}
-      style={{ overflow: "scroll" }}
+      style={{ overflow: "auto" }}
     >
       <div
         className="container-fluid d-flex justify-content-end p-0"

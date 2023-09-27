@@ -4,21 +4,22 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./app.scss";
 import { BrowserRouter } from "react-router-dom";
-import { getConnectors, Web3ReactProvider } from "web3-connector";
+import { Web3ReactProvider } from "web3-connector";
+import { getConnectors } from "web3-connector";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
-
 const connectors = getConnectors({
   1: [`${window.config.infura_endpoint}`],
 });
 
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Web3ReactProvider connectors={connectors}>
+    <Web3ReactProvider connectors={connectors}>
         <App />
-      </Web3ReactProvider>
+    </Web3ReactProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

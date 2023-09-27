@@ -14,6 +14,8 @@ function SignUpGecko({
   onSuccessLogin,
   mintTitle,
   chainId,
+  activeTab,
+  isExistingUser,
 }) {
   const {
     isAuthenticated,
@@ -22,7 +24,6 @@ function SignUpGecko({
     loginError,
     setLoginValues,
     playerId,
-    isLoginIn,
   } = useAuth();
 
   const [username, setUserName] = useState("");
@@ -34,6 +35,7 @@ function SignUpGecko({
   const [playerCreation, setplayerCreation] = useState(false);
   const [userExists, setuserExists] = useState(false);
   const [errorMsg, seterrorMsg] = useState("");
+  const [isLogin, setisLogin] = useState(false);
 
   const login = () => {
     LoginGlobal(username, password);
@@ -47,6 +49,7 @@ function SignUpGecko({
       })
       .catch((e) => {
         console.log("failed with error", e);
+        seterrorMsg(e?.message);
       });
   }
 
@@ -61,13 +64,14 @@ function SignUpGecko({
       })
       .catch((err) => {
         console.log(typeof err, err.message);
-
+        seterrorMsg(err?.message);
         if (
           err?.message?.includes(
             "An account with the given email already exists."
           )
         ) {
           setuserExists(true);
+          isExistingUser();
           setPassword("");
           setConfirmPassword("");
         }
@@ -78,6 +82,12 @@ function SignUpGecko({
           };
         });
       });
+  };
+
+  const resendCode = async () => {
+    await Auth.resendSignUp(username).catch((err)=>{
+      seterrorMsg(err?.message);
+    })
   };
 
   useEffect(() => {
@@ -106,23 +116,39 @@ function SignUpGecko({
   useEffect(() => {
     if (chainId !== 1030 && mintTitle === "Conflux Beta Pass") {
       setDisabled(true);
+      seterrorMsg("You should be on Conflux network to register.");
     }
-  }, [chainId, mintTitle]);
-
-  useEffect(() => {
-    if (username && password && confirmPassword) {
-      setDisabled(false);
-      if (password !== confirmPassword) {
-        setDisabled(true);
-        seterrorMsg("Passwords don't match");
-      } else {
+    else {
+      if (username && password && confirmPassword) {
         setDisabled(false);
+        if (password !== confirmPassword) {
+          setDisabled(true);
+          seterrorMsg("Passwords don't match");
+        } else {
+          setDisabled(false);
+          seterrorMsg("");
+        }
+      } else {
+        setDisabled(true);
         seterrorMsg("");
       }
-    } else {
-      setDisabled(true);
     }
-  }, [username, password, confirmPassword]);
+  }, [chainId, mintTitle,username, password, confirmPassword]);
+
+  // useEffect(() => {
+  //   if (username && password && confirmPassword) {
+  //     setDisabled(false);
+  //     if (password !== confirmPassword) {
+  //       setDisabled(true);
+  //       seterrorMsg("Passwords don't match");
+  //     } else {
+  //       setDisabled(false);
+  //       seterrorMsg("");
+  //     }
+  //   } else {
+  //     setDisabled(true);
+  //   }
+  // }, [username, password, confirmPassword]);
 
   useEffect(() => {
     if (loginError) {
@@ -134,6 +160,12 @@ function SignUpGecko({
       });
     }
   }, [username, password]);
+
+  useEffect(() => {
+    if (code === "UserNotConfirmedException" && isLogin) {
+      resendCode();
+    }
+  }, [code, isLogin]);
 
   if (isAuthenticated) {
     if (!playerId) {
@@ -161,8 +193,11 @@ function SignUpGecko({
         </span>
 
         <div className="summaryseparator"></div>
+        {errorMsg !== "" && (
+          <span className={classes.errorText}>{errorMsg}</span>
+        )}
+
         <Button
-          disabled={disabled}
           onPress={verifyEmailValidationCode}
           title={"Continue  >"}
           type={"coingecko"}
@@ -171,12 +206,19 @@ function SignUpGecko({
     );
   }
 
-  if (userExists) {
+  if (userExists || activeTab === "login") {
     return (
       <LoginGecko
         mintTitle={mintTitle}
         onSuccessLogin={onSuccessLogin}
         newEmail={username}
+        onUsernameChange={(value) => {
+          setUserName(value);
+        }}
+        onLoginTry={() => {
+          setisLogin(true);
+        }}
+        onPassChange={(value)=>{setPassword(value)}}
       />
     );
   }
@@ -188,6 +230,8 @@ function SignUpGecko({
         value={username}
         onChange={setUserName}
         type={"coingecko"}
+        inputType="email"
+
       />
       <Input
         inputType="password"
@@ -203,7 +247,13 @@ function SignUpGecko({
         onChange={setConfirmPassword}
         type={"coingecko"}
       />
-
+      <span
+        className={classes.errorText}
+        style={{ fontSize: "11px", textAlign: "start" }}
+      >
+        *Password must be at least 8 characters with numbers, symbols, and
+        uppercase letters.
+      </span>
       <span className="footertxt-coingecko mt-1">
         Users who have claimed the {mintTitle} NFT are required to create a WoD
         Account to receive the NFT and participate in the exclusive event.

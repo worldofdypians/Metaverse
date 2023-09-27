@@ -77,7 +77,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
   } catch (switchError) {
     // This error code indicates that the chain has not been added to MetaMask.
     console.log(switchError, "switch");
-    if (switchError.code === 4902) {
+    if (switchError.code === 4902 || (chainID === "0x406" && switchError.code.toString().includes('32603'))) {
       try {
         await ethereum.request({
           method: "wallet_addEthereumChain",
@@ -95,8 +95,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
               : "",
         });
         if (
-          (window.ethereum && window.ethereum.isTrust === true) ||
-          chainID === "0x406"
+          (window.ethereum && window.ethereum.isTrust === true) 
         ) {
           window.location.reload();
         }

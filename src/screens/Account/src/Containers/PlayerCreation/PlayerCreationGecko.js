@@ -61,7 +61,7 @@ function PlayerCreationGecko({ onSuccessCreation, mintTitle }) {
   }, [creationState]);
 
   return (
-    <div>
+    <div className="d-flex h-100">
       <div className={classes.containergecko}>
         {/* <form autocomplete="off"> */}
         <span className={classes.createplayertxt}>

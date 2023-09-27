@@ -79,6 +79,34 @@ body {
     height: fit-content;
   }
 
+  .linear-border::before {
+    content: "";
+  }
+
+
+  
+
+  .linear-border-download {
+    position: relative;
+    padding: 3px;
+    background: linear-gradient(90deg, #8EEE86 -13.56%, #0078D4 129.3%);
+    border-radius: 8px;
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+    height: fit-content;
+  }
+
+  .linear-border-download::before {
+    content: "";
+  }
+
+
   .timepiece-border {
     position: relative;
     padding: 3px;
@@ -95,9 +123,6 @@ body {
     height: fit-content;
   }
 
-  .linear-border::before {
-    content: "";
-  }
 
   .linear-border-purp {
     position: relative;
@@ -271,6 +296,31 @@ body {
     color: #ffffff;
     outline: none;
     border: none;
+    text-decoration: underline;
+  }
+
+  .filled-btn-download {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(90deg, #8EEE86 -13.56%, #0078D4 129.3%);
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border: none !important;
+    white-space: pre;
+    transition: all .25s;
+  }
+
+  .filled-btn-download:hover {
+    color: #fff;
     text-decoration: underline;
   }
 

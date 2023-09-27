@@ -148,6 +148,7 @@ function App() {
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
+
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
@@ -472,11 +473,10 @@ function App() {
         setMyGateNfts(NFTS);
       });
 
-      // getMyNFTS(coinbase, "conflux").then((NFTS) => {
-      //   console.log(NFTS.length);
-      //   setTotalConfluxNft(NFTS.length);
-      //   setMyConfluxNfts(NFTS);
-      // });
+      getMyNFTS(coinbase, "conflux").then((NFTS) => {
+        setTotalConfluxNft(NFTS.length);
+        setMyConfluxNfts(NFTS);
+      });
     }
   };
 
@@ -1032,13 +1032,21 @@ function App() {
 
   useEffect(() => {
     if (
-      window.ethereum &&
-      window.ethereum.isConnected() === true &&
-      logout === "false" &&
+      !window.coin98 && window.ethereum &&
+      window.ethereum.isConnected() === true  &&
       !window.gatewallet
     ) {
-      localStorage.setItem("logout", "false");
-      checkConnection2();
+      if (
+        logout === "false" ||
+        window.coinbase_address ===
+          "0x0000000000000000000000000000000000000000"
+      ) {
+        checkConnection2();
+      } else {
+        setIsConnected(false);
+        setCoinbase();
+        localStorage.setItem("logout", "true");
+      }
     } else if (window.gatewallet && isActive) {
       setIsConnected(isActive);
       if (account) {
@@ -1063,8 +1071,8 @@ function App() {
       getmyCawsWodStakes();
       myCAWNft();
       myNft();
-      fetchAllMyNfts();
     }
+    fetchAllMyNfts();
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
   // useEffect(() => {
@@ -1315,6 +1323,7 @@ function App() {
 
   const handleDisconnect = async () => {
     if (!window.gatewallet) {
+      await window.disconnectWallet();
       localStorage.setItem("logout", "true");
       setSuccess(false);
       setCoinbase();
@@ -1405,6 +1414,12 @@ function App() {
     getallNfts();
   }, [nftCount]);
 
+  const checkData = async () => {
+    if (coinbase) {
+      navigate("/auth");
+    }
+  };
+
   useEffect(() => {
     if (listedNFTS2.length > 0 && recentListedNFTS2.length > 0) {
       getOtherNfts();
@@ -1460,6 +1475,8 @@ function App() {
             handleRefreshList={handleRefreshList}
             nftCount={nftCount}
             isConnected={isConnected}
+            chainId={chainId}
+            handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
           />
           <Routes>
@@ -1569,9 +1586,7 @@ function App() {
                   isConnected={isConnected}
                   chainId={chainId}
                   handleConnect={handleConnection}
-                  onSigninClick={() => {
-                    setShowWalletModalRegister2(true);
-                  }}
+                  onSigninClick={checkData}
                   success={success}
                   availableTime={availTime}
                 />
@@ -1706,6 +1721,10 @@ function App() {
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
                   handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
                 />
               }
             />
@@ -1844,6 +1863,10 @@ function App() {
                   handleRefreshListing={handleRefreshList}
                   nftCount={nftCount}
                   handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
                 />
               }
             />

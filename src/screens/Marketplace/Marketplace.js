@@ -250,7 +250,7 @@ const Marketplace = ({
       });
 
     if (result.data && result.data !== "NaN") {
-      setTotalTx(result.data);
+      setTotalTx(result.data + 5000);
       localStorage.setItem("cachedTvl", result.data);
     }
 
@@ -587,7 +587,7 @@ const Marketplace = ({
                 <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
                     {" "}
-                    {getFormattedNumber(11000 + totalSupply).slice(
+                    {getFormattedNumber(11000 + totalSupply + 5000).slice(
                       0,
                       getFormattedNumber(11000).length - 3
                     )}

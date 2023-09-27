@@ -232,7 +232,7 @@
   object-fit: contain;
   right: -80px;
 
-  @media screen and (max-width: 786px) {
-    display: none;
+  @media screen and (max-width: 991px) {
+    display: none !important;
   }
 }

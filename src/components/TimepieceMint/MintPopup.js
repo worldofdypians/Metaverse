@@ -5,6 +5,7 @@ import baseMobileBg from "./assets/baseMobileBg.png";
 import confluxMobileBg from "./assets/confluxMobileBg.png";
 import closePopup from "../LandPopup/closePopup.svg";
 import { Link, NavLink } from "react-router-dom";
+import whiteExplore from '../../screens/Account/src/Components/WalletBalance/assets/whiteExplore.svg'
 
 const MintPopup = ({ active, onClose, data }) => {
   return (
@@ -34,6 +35,16 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">Candy Rewards</h6>
         </>
+      ) : data.title === "Treasure Hunt" ? (
+        <>
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              $10,000 BNB Rewards
+            </h6>
+          </div>
+          <h6 className="mint-popup-title">CoinGecko Treasure Hunt</h6>
+        </>
       ) : (
         <div className="d-flex align-items-center gap-2">
           <div className="d-flex align-items-center justify-content-center">
@@ -53,19 +64,36 @@ const MintPopup = ({ active, onClose, data }) => {
         alt=""
       />
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-        <span className="popup-available-mint">
-          Get access to the game and a unique event filled with surprises and
-          rewards!
-        </span>
+        {data.title === "Treasure Hunt" ? (
+          <span className="popup-available-mint">
+            Explore the CoinGecko area and use your <img src={whiteExplore} width={20} height={20} alt="" /> to generate rewards.
+          </span>
+        ) : (
+          <span className="popup-available-mint">
+            Get access to the game and a unique event filled with surprises and
+            rewards!
+          </span>
+        )}
       </div>
-      <Link
-        onClick={onClose}
-        to={`/marketplace/beta-pass/${data.state}`}
-        state={{ event: data.state }}
-        className="linear-border"
-      >
-        <button className="btn filled-btn px-4">More</button>
-      </Link>
+      {data.title === "Treasure Hunt" ? (
+        <Link
+          onClick={onClose}
+          to={"/marketplace/events/treasure-hunt"}
+          state={{ event: data.state }}
+          className="linear-border"
+        >
+          <button className="btn filled-btn px-4">More</button>
+        </Link>
+      ) : (
+        <Link
+          onClick={onClose}
+          to={`/marketplace/beta-pass/${data.state}`}
+          state={{ event: data.state }}
+          className="linear-border"
+        >
+          <button className="btn filled-btn px-4">More</button>
+        </Link>
+      )}
     </div>
   );
 };

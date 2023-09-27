@@ -74,7 +74,7 @@ const RegisterModal = ({
         handleActiveUser(true)
         if (donwloadSelected === true)
           window.location.href =
-            "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing";
+            "https://game.worldofdypians.com/downloads/WorldOfDypians%200.2.1.zip";
         else {
           handleRedirect();
           onClose();

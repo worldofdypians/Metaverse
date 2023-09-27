@@ -154,6 +154,7 @@ const SingleNft = ({
   const [offeracceptStatus, setOfferacceptStatus] = useState("initial");
   const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
   const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
+  const [myOffers, setmyOffers] = useState([]);
 
   const { nftId, nftAddress } = useParams();
 
@@ -205,6 +206,14 @@ const SingleNft = ({
       const result = await window.getAllOffers(nftAddress, nftId).catch((e) => {
         console.error(e);
       });
+
+      if (result && coinbase) {
+        const my_offers = result.filter((object) => {
+          return object.offer.buyer.toLowerCase() === coinbase.toLowerCase();
+        });
+        console.log(my_offers[0]);
+        setmyOffers(my_offers[0] ? my_offers[0].offer : []);
+      }
 
       await Promise.all(
         result.map(async (item) => {
@@ -306,9 +315,12 @@ const SingleNft = ({
         window.config.nft_coingecko_address
       );
 
-      const owner = await nft_contract.methods.ownerOf(Id).call().catch((e) => {
-        console.log(e);
-      });
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
       setowner(owner);
     } else if (type === "gate") {
@@ -317,9 +329,12 @@ const SingleNft = ({
         window.config.nft_gate_address
       );
 
-      const owner = await nft_contract.methods.ownerOf(Id).call().catch((e) => {
-        console.log(e);
-      });
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
       setowner(owner);
     } else if (type === "conflux") {
@@ -327,9 +342,14 @@ const SingleNft = ({
         window.CONFLUX_NFT_ABI,
         window.config.nft_conflux_address
       );
-      const owner = await nft_contract.methods.ownerOf(Id).catch((e) => {
-        console.log(e);
-      });
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
 
       setowner(owner);
     }
@@ -367,7 +387,7 @@ const SingleNft = ({
     } else if (addr === window.config.nft_timepiece_address) {
       const result = await window.getTimepieceNft(tokenid);
       setmetaData(result);
-    } 
+    }
   };
 
   const isApprovedBuy = async (amount) => {
@@ -504,7 +524,7 @@ const SingleNft = ({
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        }  else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
           nft.type = "timepiece";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -653,7 +673,7 @@ const SingleNft = ({
           nft.type = "land";
           nft.chain = 1;
           finalboughtItems.push(nft);
-        }  else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
           nft.type = "timepiece";
           nft.chain = 1;
           finalboughtItems.push(nft);
@@ -1183,14 +1203,14 @@ const SingleNft = ({
         : "caws",
       nftId
     );
-  }, [type, nftId, nftAddress, nftCount, nft]);
+  }, [nftId, nftAddress, nftCount]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
-   
+
     getListedNtsAsc();
     getOldNftOwner(
       nftAddress === window.config.nft_caws_address
@@ -1208,9 +1228,9 @@ const SingleNft = ({
     );
   }, []);
 
-  useEffect(()=>{
-     getViewCount(nftId, nftAddress);
-  },[nftId, nftAddress])
+  useEffect(() => {
+    getViewCount(nftId, nftAddress);
+  }, [nftId, nftAddress]);
 
   useEffect(() => {
     if (nft.tokenId) {
@@ -1234,7 +1254,6 @@ const SingleNft = ({
   }, [nftId, nftAddress, nft, nftCount]);
 
   useEffect(() => {
-    getOffer();
     checkisListedNFT(nftId, nftAddress);
     handleRefreshList(
       nftAddress === window.config.nft_caws_address
@@ -1245,6 +1264,10 @@ const SingleNft = ({
       nftId
     );
   }, [nftCount]);
+
+  useEffect(() => {
+    getOffer();
+  }, [coinbase, nftCount]);
 
   useEffect(() => {
     if (favorites && favorites.length > 0) {
@@ -1303,7 +1326,7 @@ const SingleNft = ({
             ) : type === "coingecko" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                CoinGecko{" "}
+                  CoinGecko{" "}
                   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
@@ -1894,7 +1917,10 @@ const SingleNft = ({
                                 setshowMakeOffer(true);
                               }}
                             >
-                              <img src={whiteTag} alt="" /> Make offer
+                              <img src={whiteTag} alt="" />{" "}
+                              {myOffers.length > 0
+                                ? "View your offer"
+                                : "Make offer"}
                             </button>
                           )}
                         </div>
@@ -2066,7 +2092,10 @@ const SingleNft = ({
                               setshowMakeOffer(true);
                             }}
                           >
-                            <img src={whiteTag} alt="" /> Make offer
+                            <img src={whiteTag} alt="" />{" "}
+                            {myOffers.length > 0
+                              ? "View your offer"
+                              : "Make offer"}
                           </button>
                         )}
 
@@ -2382,14 +2411,12 @@ const SingleNft = ({
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
-                          {" "}
                           <img src={dollarCircle} alt="" />
-                          Earn BNB rewards
+                          Earn {type === "conflux" ? "CFX" : "BNB"} rewards
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
-                          {" "}
                           <img src={chart} alt="" />
                           Global Points
                         </span>

@@ -1500,7 +1500,7 @@ window.config = {
     "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e",
   bsc_endpoint: "https://bsc-dataseed.binance.org/",
   avax_endpoint: "https://api.avax.network/ext/bc/C/rpc",
-  conflux_endpoint: 'https://conflux-espace-public.unifra.io/',
+  conflux_endpoint: 'https://evm.confluxrpc.com/',
 
   BUSD_address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
   USDCe_address: "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
@@ -4312,7 +4312,7 @@ async function getTimepieceNft(id) {
  
 async function getMyNFTs(address, type = "") {
   let contract;
-  const infuraweb3 = new Web3(window.ethereum);
+  const infuraweb3 = window.infuraWeb3;
   // window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     contract = await new infuraweb3.eth.Contract(
@@ -4378,7 +4378,7 @@ async function getMyNFTs(address, type = "") {
       window.CONFLUX_NFT_ABI,
       window.config.nft_conflux_address
     );
-
+ 
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
@@ -34020,7 +34020,7 @@ async function connectWallet() {
     onConnect();
     return true;
   } else {
-    throw new Error("No web3 detected!");
+    throw new Error("No web3 detected! Please Install MetaMask!");
   }
 }
 
