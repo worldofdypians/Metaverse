@@ -383,7 +383,7 @@ function App() {
         })
         .catch(console.error);
     } else if (window.ethereum && window.gatewallet) {
-      console.log("test");
+     
       await provider
         ?.detectNetwork()
         .then((data) => {
@@ -1740,7 +1740,7 @@ function App() {
                 />
               }
             />
-            <Route
+            {/* <Route
               exact
               path="/marketplace/beta-pass/conflux"
               element={
@@ -1777,7 +1777,7 @@ function App() {
                   }}
                 />
               }
-            />
+            /> */}
 
             <Route
               exact

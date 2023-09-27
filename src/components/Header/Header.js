@@ -580,12 +580,12 @@ const Header = ({
                           ? eth
                           : bnbState === true
                           ? bnb
-                          : // : avaxState === true
+                           //: : avaxState === true
                           // ? avax
                           // : baseState === true
                           // ? base
-                          confluxState === true
-                          ? conflux
+                          // confluxState === true
+                          // ? conflux
                           : error
                       }
                       height={16}
@@ -597,12 +597,12 @@ const Header = ({
                         ? "Ethereum"
                         : bnbState === true
                         ? "BNB Chain"
-                        : // : avaxState === true
+                        //:  : avaxState === true
                         // ? "Avalanche"
                         // : baseState === true
                         // ? "Base"
-                        confluxState === true
-                        ? "Conflux"
+                        // confluxState === true
+                        // ? "Conflux"
                         : "Unsupported Chain"}
                     </span>
 
@@ -622,10 +622,10 @@ const Header = ({
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-                <Dropdown.Item onClick={() => handleConfluxPool()}>
+                {/* <Dropdown.Item onClick={() => handleConfluxPool()}>
                   <img src={conflux} alt="" />
                   Conflux
-                </Dropdown.Item>
+                </Dropdown.Item> */}
                 {/*  <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
