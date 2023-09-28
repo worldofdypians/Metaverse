@@ -2848,7 +2848,7 @@ const WalletBalance = ({
                                     ? "CGBP"
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
-                                    ? "Gate Beta Pass"
+                                    ? "GTBP"
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
                                     ? "CFBP"
@@ -3051,7 +3051,7 @@ const WalletBalance = ({
                                     ? "CGBP"
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
-                                    ? "Gate Beta Pass"
+                                    ? "GTBP"
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
                                     ? "CFBP"
