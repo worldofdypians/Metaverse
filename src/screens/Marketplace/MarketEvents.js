@@ -985,7 +985,6 @@ const MarketEvents = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {dummyEvent.id === "event3" && (
                 <NavLink
                   to="/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event"
                   className="events-page-details d-flex align-items-center gap-2"
@@ -993,7 +992,6 @@ const MarketEvents = ({
                   Learn more
                   <img src={eventsArrow} alt="" />
                 </NavLink>
-              )}
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">
