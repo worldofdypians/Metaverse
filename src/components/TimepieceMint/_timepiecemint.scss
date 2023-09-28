@@ -535,9 +535,9 @@
 
 .gate-mint-bg {
   background-image: url("./assets/gateBackground.webp");
-
-  background-size: 100% 100%;
-
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
   @media screen and (max-width: 786px) {
     background-image: none;
     // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
