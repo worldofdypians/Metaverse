@@ -74,6 +74,8 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
     }
   };
 
+  
+
   useEffect(() => {
     if (userEmail && userWallet) {
       fetchTreasureHuntData(userEmail, userWallet);
@@ -135,7 +137,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         </div>
         <div className="d-flex align-items-center gap-1">
           <img src={cyanDate} height={15} width={15} alt="" />
-          <span className="mb-0 event-bottom-text">Aug 1, 2023</span>
+          <span className="mb-0 event-bottom-text">{event.date}</span>
         </div>
         <img src={cyanArrow} height={15} width={15} alt="" />
       </div>
