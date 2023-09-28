@@ -50,7 +50,8 @@ const LeaderBoard = ({
   dypBalancebnb,
   address,
   availableTime,
-  email
+  email,
+  coinbase,
 }) => {
   const playerData = [
     {
@@ -343,7 +344,18 @@ const LeaderBoard = ({
   const [genesisData, setgenesisData] = useState([]);
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
+  const [bundlesBought, setbundlesBought] = useState(0);
 
+  const getBundles = async () => {
+    if (address) {
+      const result = await axios.get(
+        `https://api3.dyp.finance/api/bundles/count/${address}`
+      );
+      const result_formatted = result.data.count;
+      setbundlesBought(result_formatted);
+    }
+  };
+ 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
@@ -737,7 +749,11 @@ const LeaderBoard = ({
     } else setisActive(true);
   }, [availableTime]);
 
-  const today1 = new Date()
+  useEffect(() => {
+    getBundles();
+  }, [address]);
+
+  const today1 = new Date();
 
   return (
     <>
@@ -748,7 +764,10 @@ const LeaderBoard = ({
           <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
         </h2>
       </div>
-      <div className="main-wrapper py-4 w-100 d-flex gap-4 mt-xxl-0 mt-lg-0 justify-content-center align-items-start" style={{minHeight: '600px'}}>
+      <div
+        className="main-wrapper py-4 w-100 d-flex gap-4 mt-xxl-0 mt-lg-0 justify-content-center align-items-start"
+        style={{ minHeight: "600px" }}
+      >
         <div className="row w-100 align-items-start gap-4 gap-lg-0">
           <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 leaderboard-wrapper">
             <div className="d-none">
@@ -863,9 +882,7 @@ const LeaderBoard = ({
                               {playerData[index].position}
                             </td>
                             <td className="playerName col-5">
-                              {availableTime !== "0" &&
-                              availableTime && availableTime >= today1.getTime() &&
-                              availableTime !== undefined &&
+                              {bundlesBought !== 0 &&
                               item.displayName === username ? (
                                 <div className="position-relative">
                                   <img
@@ -899,9 +916,7 @@ const LeaderBoard = ({
                             {optionText !== "genesis" && (
                               <td
                                 className={`playerReward text-center col-2 ${
-                                  availableTime !== "0" &&
-                                  availableTime && availableTime >= today1.getTime() &&
-                                  availableTime !== undefined &&
+                                  bundlesBought !== 0 &&
                                   username === item.displayName
                                     ? "goldenscore"
                                     : "playerReward"
@@ -912,9 +927,7 @@ const LeaderBoard = ({
                             )}
                             <td
                               className={`playerScore col-2 ${
-                                availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
+                                bundlesBought !== 0 &&
                                 username === item.displayName
                                   ? "goldenscore"
                                   : "goldenscore-inactive"
@@ -955,7 +968,8 @@ const LeaderBoard = ({
                             </td>
                             <td className="playerName col-5">
                               {availableTime !== "0" &&
-                              availableTime && availableTime >= today1.getTime() &&
+                              availableTime &&
+                              availableTime >= today1.getTime() &&
                               availableTime !== undefined &&
                               item.displayName === username ? (
                                 <div className="position-relative">
@@ -984,7 +998,8 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward text-center col-2 ${
                                 availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -996,7 +1011,8 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward col-2 ${
                                 availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1032,7 +1048,8 @@ const LeaderBoard = ({
                             </td>
                             <td className="playerName col-5">
                               {availableTime !== "0" &&
-                              availableTime && availableTime >= today1.getTime() &&
+                              availableTime &&
+                              availableTime >= today1.getTime() &&
                               availableTime !== undefined &&
                               item.displayName === username ? (
                                 <div className="position-relative">
@@ -1060,7 +1077,8 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward text-center col-2 ${
                                 availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1072,7 +1090,8 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward col-2 ${
                                 availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1105,7 +1124,8 @@ const LeaderBoard = ({
                             </td>
                             <td className="playerName col-5">
                               {availableTime !== "0" &&
-                              availableTime && availableTime >= today1.getTime() &&
+                              availableTime &&
+                              availableTime >= today1.getTime() &&
                               availableTime !== undefined &&
                               item.displayName === username ? (
                                 <div className="position-relative">
@@ -1133,7 +1153,8 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward text-center col-2 ${
                                 availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1145,7 +1166,8 @@ const LeaderBoard = ({
                             <td
                               className={`playerReward col-2 ${
                                 availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
@@ -1183,7 +1205,8 @@ const LeaderBoard = ({
               )}
             </div>
 
-            {activePlayer === false && email &&
+            {activePlayer === false &&
+              email &&
               inactiveBoard === false &&
               optionText !== "genesis" && (
                 <table className="playerTable" style={{ marginTop: "-33px" }}>
@@ -1199,7 +1222,8 @@ const LeaderBoard = ({
                       <td className="playerName col-5">
                         <div className="position-relative">
                           {availableTime !== "0" &&
-                          availableTime && availableTime >= today1.getTime() &&
+                          availableTime &&
+                          availableTime >= today1.getTime() &&
                           availableTime !== undefined ? (
                             <div className="position-relative">
                               <img
@@ -1234,7 +1258,8 @@ const LeaderBoard = ({
                       <td
                         className={`playerReward text-center ${
                           availableTime !== "0" &&
-                          availableTime && availableTime >= today1.getTime() &&
+                          availableTime &&
+                          availableTime >= today1.getTime() &&
                           availableTime !== undefined &&
                           username === userData.displayName
                             ? "goldenscore"
@@ -1250,7 +1275,8 @@ const LeaderBoard = ({
                         <td
                           className={`playerScore col-2 ${
                             availableTime !== "0" &&
-                            availableTime && availableTime >= today1.getTime() &&
+                            availableTime &&
+                            availableTime >= today1.getTime() &&
                             availableTime !== undefined &&
                             username === userData.displayName
                               ? "goldenscore"
@@ -1308,7 +1334,8 @@ const LeaderBoard = ({
                         {optionText === "daily"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[1]?.displayName
                                 ? parseInt(prizes[1]) +
@@ -1319,7 +1346,8 @@ const LeaderBoard = ({
                           : optionText === "weekly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[1]?.displayName
                                 ? parseInt(prizes[1]) +
@@ -1330,7 +1358,8 @@ const LeaderBoard = ({
                           : optionText === "monthly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[1]?.displayName
                                 ? parseInt(prizes[1]) +
@@ -1378,7 +1407,8 @@ const LeaderBoard = ({
                         {optionText === "daily"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[0]?.displayName
                                 ? parseInt(prizes[0]) +
@@ -1389,7 +1419,8 @@ const LeaderBoard = ({
                           : optionText === "weekly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[0]?.displayName
                                 ? parseInt(prizes[0]) +
@@ -1400,7 +1431,8 @@ const LeaderBoard = ({
                           : optionText === "monthly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[0]?.displayName
                                 ? parseInt(prizes[0]) +
@@ -1448,7 +1480,8 @@ const LeaderBoard = ({
                         {optionText === "daily"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[2]?.displayName
                                 ? parseInt(prizes[2]) +
@@ -1459,7 +1492,8 @@ const LeaderBoard = ({
                           : optionText === "weekly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[2]?.displayName
                                 ? parseInt(prizes[2]) +
@@ -1470,7 +1504,8 @@ const LeaderBoard = ({
                           : optionText === "monthly"
                           ? getFormattedNumber(
                               availableTime !== "0" &&
-                                availableTime && availableTime >= today1.getTime() &&
+                                availableTime &&
+                                availableTime >= today1.getTime() &&
                                 availableTime !== undefined &&
                                 username === dailyrecords[2]?.displayName
                                 ? parseInt(prizes[2]) +
