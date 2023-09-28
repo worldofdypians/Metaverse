@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
+
 import cyanArrow from "./assets/cyanArrow.svg";
 import conflux from "./assets/conflux.svg";
 import cyanDate from "./assets/cyanDate.svg";
@@ -60,10 +61,10 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
       if (response.status === 200) {
         const responseData = await response.json();
         if (responseData.events) {
-          const coingeckoEvent = responseData.events.filter((obj)=>{return obj.betapassId==='coingecko'});
+          const eventRewards = responseData.events.filter((obj)=>{return obj.betapassId === event.linkState});
           const usdValue =
-          coingeckoEvent[0].reward.earn.total /
-          coingeckoEvent[0].reward.earn.multiplier;
+          eventRewards[0].reward.earn.total /
+          eventRewards[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
         }
       } else {
@@ -89,7 +90,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
       <div className="profile-event-top d-flex align-items-center justify-content-between p-2">
         <div className="d-flex align-items-center gap-2">
           <img
-            src={event.title === "CoinGecko" ? coingecko : coin98}
+            src={event.title === "CoinGecko" ? coingecko : event.title === "Conflux" ? conflux : coin98}
             height={16}
             width={16}
             alt=""
