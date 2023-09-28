@@ -310,7 +310,6 @@ function App() {
         await window.getCoinbase().then((data) => {
           if (data) {
             fetchAvatar(data);
-
             setCoinbase(data);
             setIsConnected(true);
           } else {
@@ -1056,7 +1055,7 @@ function App() {
     ) {
       if (
         logout === "false" ||
-        window.coinbase_address === "0x0000000000000000000000000000000000000000"
+        window.coinbase_address === "0x0000000000000000000000000000000000000000" || window.coin98
       ) {
         checkConnection2();
       } else {
