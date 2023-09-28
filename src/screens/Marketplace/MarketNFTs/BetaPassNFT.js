@@ -221,17 +221,17 @@ const BetaPassNFT = ({
   const bgmenu = document.querySelector("#terms");
   const bgmenu2 = document.querySelector("#switch");
 
-  useEffect(() => {
-    if (
-      mintTitle === "conflux" &&
-      coinbase &&
-      chainId &&
-      chainId !== 1030 &&
-      !email
-    ) {
-      setOpenConflux(true);
-    } else setOpenConflux(false);
-  }, [mintTitle, coinbase, chainId, email]);
+  // useEffect(() => {
+  //   if (
+  //     mintTitle === "conflux" &&
+  //     coinbase &&
+  //     chainId &&
+  //     chainId !== 1030 &&
+  //     !email
+  //   ) {
+  //     setOpenConflux(true);
+  //   } else setOpenConflux(false);
+  // }, [mintTitle, coinbase, chainId, email]);
 
   const getNftSymbol = async () => {
     if (mintTitle === "gate") {
@@ -1624,7 +1624,7 @@ const BetaPassNFT = ({
                         {playerCreation === false &&
                           !alreadyRegistered &&
                           mintTitle === "gate" && (
-                            <SignUpConflux
+                            <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
                               }}
@@ -1651,7 +1651,7 @@ const BetaPassNFT = ({
                           linkWallet === false &&
                           !alreadyRegistered &&
                           mintTitle === "gate" && (
-                            <PlayerCreationConflux
+                            <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
                               }}

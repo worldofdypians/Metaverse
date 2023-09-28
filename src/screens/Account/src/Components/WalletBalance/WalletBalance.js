@@ -2000,7 +2000,7 @@ const WalletBalance = ({
                                   : item.type === "conflux"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "gate"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -3008,7 +3008,7 @@ const WalletBalance = ({
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
@@ -3209,7 +3209,7 @@ const WalletBalance = ({
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
