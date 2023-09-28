@@ -177,6 +177,10 @@ const WalletBalance = ({
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
+  const [cfxPrice, setCfxPrice] = useState(0);
+  const [confluxUserPoints, setConfluxUserPoints] = useState(0);
+  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
+  const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -881,7 +885,11 @@ const WalletBalance = ({
       let confluxFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_conflux_address
       );
-      const allBetapassArray = [...coingeckoFilter, ...confluxFilter, ...gateFilter];
+      const allBetapassArray = [
+        ...coingeckoFilter,
+        ...confluxFilter,
+        ...gateFilter,
+      ];
       setcollectedItemsFiltered(allBetapassArray);
     } else if (filter1 === "timepiece" && filter2 === "all") {
       let timepieceFilter = collectedItems.filter(
@@ -1044,14 +1052,14 @@ const WalletBalance = ({
   }, [landStaked, myCawsWodStakes]);
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
-  let confluxLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
 
   const dummyConflux = {
     title: "Conflux",
     chain: "Conflux Network",
     linkState: "conflux",
     rewards: "CFX",
-    status: "Coming Soon",
+    status: "Live",
     id: "event1",
     eventType: "Explore & Mine",
     date: "Oct 06, 2023",
@@ -1061,7 +1069,7 @@ const WalletBalance = ({
     minRewards: "1",
     maxRewards: "20",
     minPoints: "5,000",
-    maxPoints: "50,000"
+    maxPoints: "50,000",
   };
   const dummyCoingecko = {
     title: "CoinGecko",
@@ -1078,7 +1086,7 @@ const WalletBalance = ({
     minRewards: "1",
     maxRewards: "100",
     minPoints: "5,000",
-    maxPoints: "50,000"
+    maxPoints: "50,000",
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -1120,7 +1128,7 @@ const WalletBalance = ({
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000"
+        maxPoints: "50,000",
       },
     },
     {
@@ -1162,7 +1170,7 @@ const WalletBalance = ({
         minRewards: "1",
         maxRewards: "100",
         minPoints: "5,000",
-        maxPoints: "50,000"
+        maxPoints: "50,000",
       },
     },
     {
@@ -1196,6 +1204,20 @@ const WalletBalance = ({
     setShowNfts(false);
   };
 
+  const fetchCFXPrice = async () => {
+    await axios
+      .get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd"
+      )
+      .then((obj) => {
+        setCfxPrice(obj.data["conflux-token"].usd);
+      });
+  };
+
+  useEffect(() => {
+    fetchCFXPrice();
+  }, []);
+
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
@@ -1219,16 +1241,33 @@ const WalletBalance = ({
           const coingeckoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "coingecko";
           });
+          const confluxEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "conflux";
+          });
+
 
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
           const usdValue =
-          coingeckoEvent[0].reward.earn.total /
-          coingeckoEvent[0].reward.earn.multiplier;
+            coingeckoEvent[0].reward.earn.total /
+            coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
-          if(bnbPrice!== 0)
-         { setuserEarnETH(usdValue / bnbPrice);}
+          if (bnbPrice !== 0) {
+            setuserEarnETH(usdValue / bnbPrice);
+          }
+
+          const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
+          setConfluxUserPoints(cfxPoints);
+
+          if(confluxEvent[0].reward.earn.multiplier !== 0){
+            const cfxUsdValue =
+            confluxEvent[0].reward.earn.total /
+            confluxEvent[0].reward.earn.multiplier;
+            setConfluxEarnUSD(cfxUsdValue);
+          }
+          setConfluxEarnCFX(confluxEarnUSD / cfxPrice);
+
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -1284,13 +1323,17 @@ const WalletBalance = ({
                 userEmail={email}
                 userWallet={address}
               />
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyConflux);
                   setEventPopup(true);
                 }}
                 data={dummyConflux}
+                event={dummyConflux}
+                userEmail={email}
+                userWallet={address}
               />
+
               {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
@@ -3706,13 +3749,15 @@ const WalletBalance = ({
                   <h6 className="popup-green-text">Benefits</h6>
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
-                        <li className="popup-event-desc">
-                          Daily Rewards range from ${dummyEvent.minRewards} to ${dummyEvent.maxRewards}
-                        </li>
-                        <li className="popup-event-desc">
-                          Daily Points range from {dummyEvent.minPoints} to {dummyEvent.maxPoints}
-                        </li>
-                
+                    <li className="popup-event-desc">
+                      Daily Rewards range from ${dummyEvent.minRewards} to $
+                      {dummyEvent.maxRewards}
+                    </li>
+                    <li className="popup-event-desc">
+                      Daily Points range from {dummyEvent.minPoints} to{" "}
+                      {dummyEvent.maxPoints}
+                    </li>
+
                     <li className="popup-event-desc">
                       Earn{" "}
                       {dummyEvent.id === "event1"
@@ -3859,7 +3904,12 @@ const WalletBalance = ({
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">
-                    {getFormattedNumber(dummyEvent.id === "event1" ? 0 : userPoints, 0)}
+                    {getFormattedNumber(
+                      dummyEvent.id === "event1"
+                        ? confluxUserPoints
+                        : userPoints,
+                      0
+                    )}
                   </h6>
                   <span className="mb-0 event-earnings-usd">
                     Leaderboard Points
@@ -3867,9 +3917,18 @@ const WalletBalance = ({
                 </div>
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
-                    ${getFormattedNumber(dummyEvent.id === "event1" ? 0 : userEarnUsd, 2)}
+                    $
+                    {getFormattedNumber(
+                      dummyEvent.id === "event1" ? confluxEarnUSD : userEarnUsd,
+                      2
+                    )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
-                      {getFormattedNumber(dummyEvent.id === "event1" ? 0 : userEarnETH, 2)}
+                      {getFormattedNumber(
+                        dummyEvent.id === "event1"
+                          ? confluxEarnCFX
+                          : userEarnETH,
+                        2
+                      )}
                       {dummyEvent.id === "event1"
                         ? "CFX"
                         : dummyEvent.id === "event2"
@@ -3893,7 +3952,7 @@ const WalletBalance = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.id === "event1" && (
+            {dummyEvent.id === "event4" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
                   {" "}

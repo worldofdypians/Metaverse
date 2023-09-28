@@ -121,6 +121,11 @@ const MarketEvents = ({
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
   const [bnbPrice, setBnbPrice] = useState(0);
+  const [cfxPrice, setCfxPrice] = useState(0);
+  const [confluxUserPoints, setConfluxUserPoints] = useState(0);
+  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
+  const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
+
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -209,7 +214,7 @@ const MarketEvents = ({
   };
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
-  let confluxLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
     // {
@@ -260,7 +265,7 @@ const MarketEvents = ({
     {
       title: "Conflux",
       logo: conflux,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
@@ -272,7 +277,7 @@ const MarketEvents = ({
         chain: "Conflux Network",
         linkState: "conflux",
         rewards: "CFX",
-        status: "Coming Soon",
+        status: "Live",
         id: "event1",
         totalRewards: "$2,000 in CFX Rewards",
         eventDuration: confluxLastDay,
@@ -469,6 +474,22 @@ const MarketEvents = ({
     setPackagePopup("");
   };
 
+  
+  const fetchCFXPrice = async () => {
+    await axios
+      .get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd"
+      )
+      .then((obj) => {
+        setCfxPrice(obj.data["conflux-token"].usd);
+      });
+  };
+
+  useEffect(() => {
+    fetchCFXPrice();
+  }, []);
+
+
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
@@ -492,6 +513,11 @@ const MarketEvents = ({
           const coingeckoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "coingecko";
           });
+          const confluxEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "conflux";
+          });
+
+
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -499,8 +525,21 @@ const MarketEvents = ({
             coingeckoEvent[0].reward.earn.total /
             coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
+          if (bnbPrice !== 0) {
+            setuserEarnETH(usdValue / bnbPrice);
+          }
 
-          setuserEarnETH(usdValue / bnbPrice);
+          const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
+          setConfluxUserPoints(cfxPoints);
+
+          if(confluxEvent[0].reward.earn.multiplier !== 0){
+            const cfxUsdValue =
+            confluxEvent[0].reward.earn.total /
+            confluxEvent[0].reward.earn.multiplier;
+            setConfluxEarnUSD(cfxUsdValue);
+          }
+          setConfluxEarnCFX(confluxEarnUSD / cfxPrice);
+
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -589,7 +628,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                 
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -602,9 +643,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                 
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -750,7 +789,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 1).map((item, index) => (
+                        {dummyBetaPassData2.map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -758,7 +797,7 @@ const MarketEvents = ({
                               setEventPopup(true);
                               setDummyEvent(item.popupInfo);
                             }}
-                            userEarnUsd={userEarnUsd}
+                            userEarnUsd={item.title === "Conflux" ? confluxEarnUSD : userEarnUsd}
                           />
                         ))}
                       </div>
@@ -794,28 +833,28 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">New events are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-
-                <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(1, 2).map((item, index) => (
-                    <BetaEventCard
-                      data={item}
-                      key={index}
-                      onOpenPopup={() => {
-                        setEventPopup(true);
-                        setDummyEvent(item.popupInfo);
-                      }}
-                      userEarnUsd={userEarnUsd}
-                    />
-                  ))}
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">New events are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
+                  </div>
                 </div>
+
+                // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                //   {dummyBetaPassData2.slice(1, 2).map((item, index) => (
+                //     <BetaEventCard
+                //       data={item}
+                //       key={index}
+                //       onOpenPopup={() => {
+                //         setEventPopup(true);
+                //         setDummyEvent(item.popupInfo);
+                //       }}
+                //       userEarnUsd={userEarnUsd}
+                //     />
+                //   ))}
+                // </div>
                 // <BetaPassEvents />
               )}
               {activeTab === "past" && (
@@ -1236,7 +1275,7 @@ const MarketEvents = ({
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">
                     {getFormattedNumber(
-                      dummyEvent.id === "event1" ? 0 : userPoints,
+                      dummyEvent.id === "event1" ? confluxUserPoints : userPoints,
                       0
                     )}
                   </h6>
@@ -1248,12 +1287,12 @@ const MarketEvents = ({
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
                     $
                     {getFormattedNumber(
-                      dummyEvent.id === "event1" ? 0 : userEarnUsd,
+                      dummyEvent.id === "event1" ? confluxEarnUSD : userEarnUsd,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
                       {getFormattedNumber(
-                        dummyEvent.id === "event1" ? 0 : userEarnETH,
+                        dummyEvent.id === "event1" ? confluxEarnCFX : userEarnETH,
                         2
                       )}
                       {dummyEvent.id === "event1"
@@ -1279,7 +1318,7 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.id === "event1" && (
+            {dummyEvent.id === "event4" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/conflux`}>
                   <button className="btn get-beta-btn">Get Beta Pass</button>
