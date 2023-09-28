@@ -1070,6 +1070,7 @@ const WalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "50,000",
+    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
   };
   const dummyCoingecko = {
     title: "CoinGecko",
@@ -1087,6 +1088,7 @@ const WalletBalance = ({
     maxRewards: "100",
     minPoints: "5,000",
     maxPoints: "50,000",
+    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
   };
   const dummyCoin98 = {
     title: "Coin98 Pass",
@@ -3679,13 +3681,15 @@ const WalletBalance = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
+              {dummyEvent.status === "Live" && (
                 <NavLink
-                  to="/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event"
+                  to={dummyEvent.learnMore}
                   className="events-page-details d-flex align-items-center gap-2"
                 >
                   Learn more
                   <img src={eventsArrow} alt="" />
                 </NavLink>
+              )}
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
               <div className="col-12 col-lg-6">
