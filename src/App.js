@@ -274,7 +274,7 @@ function App() {
       .get(`https://api-image.dyp.finance/api/v1/avatar/${userAddr}`)
       .then((data) => {
         if (data.data.avatar) {
-          setAvatar(data.avatar);
+          setAvatar(data.data.avatar);
         } else {
           setAvatar(null);
         }
