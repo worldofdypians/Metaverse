@@ -185,8 +185,8 @@
 .playerInnerRow-inactive {
   background: rgba(0, 254, 207, 0.1);
 
-  .goldenscore-inactive {
-    color: #09F3D2 !important;
+  .goldenscore-inactive2 {
+    color: #48465e !important;
   }
 
   .inactivegold {
@@ -227,8 +227,11 @@ border: 1px solid #4C4E64;
   line-height: 21px;
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
-}
 
+}
+  .goldenscore-inactive2 {
+    color: #48465e !important;
+  }
 .playerName {
   font-style: normal;
   font-weight: 400;
