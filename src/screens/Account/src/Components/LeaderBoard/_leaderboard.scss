@@ -211,7 +211,10 @@
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
 }
-
+.goldenscore-inactive2 {
+  color: #48465e !important;
+  text-align: center;
+}
 .playerName {
   font-style: normal;
   font-weight: 400;
@@ -234,7 +237,7 @@
   padding: 20px;
   height: 475px;
   border-radius: 20px;
-  border: 1px solid #4C4E64;
+  border: 1px solid #4c4e64;
 }
 
 .medalinnerwrapper {
