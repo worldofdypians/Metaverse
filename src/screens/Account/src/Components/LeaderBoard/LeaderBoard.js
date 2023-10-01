@@ -930,7 +930,7 @@ const LeaderBoard = ({
                                 bundlesBought !== 0 &&
                                 username === item.displayName
                                   ? "goldenscore"
-                                  : "goldenscore-inactive"
+                                  : "goldenscore-inactive2"
                               }`}
                             >
                               +$
@@ -1016,7 +1016,7 @@ const LeaderBoard = ({
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
-                                  : "goldenscore-inactive"
+                                  : "goldenscore-inactive2"
                               }`}
                             >
                               +$
@@ -1095,7 +1095,7 @@ const LeaderBoard = ({
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
-                                  : "goldenscore-inactive"
+                                  : "goldenscore-inactive2"
                               }`}
                             >
                               +$
@@ -1171,7 +1171,7 @@ const LeaderBoard = ({
                                 availableTime !== undefined &&
                                 username === item.displayName
                                   ? "goldenscore"
-                                  : "goldenscore-inactive"
+                                  : "goldenscore-inactive2"
                               }`}
                             >
                               +$
