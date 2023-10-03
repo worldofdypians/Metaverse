@@ -28,7 +28,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
   const gotoDownload = () => {
     window.location.href =
-      "https://game.worldofdypians.com/downloads/WorldOfDypians%200.2.1.zip";
+      "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp";
   };
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                     Join Beta
                   </button>
                 </NavLink>
-                <div
+                {/* <div
                   className="linear-border-download"
                   style={{
                     width: "fit-content",
@@ -89,7 +89,33 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                     Download
                     
                   </button>
-                </div>
+                </div> */}
+                <a
+                  className="linear-border-download"
+                  style={{
+                    width: "fit-content",
+                    zIndex: 5,
+                    position: "relative",
+                    textDecoration: "none",
+                  }}
+                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                  target="_blank"
+                >
+                  <button
+                    ref={downloader}
+                    // onClick={gotoDownload}
+                    className="btn filled-btn-download px-5 d-flex align-items-center gap-2"
+                  >
+                    <img
+                      src={icons ? windowsIconWhite : windowsIcon}
+                      width={16}
+                      height={16}
+                      alt="windows icon"
+                    />
+                    Download
+                    
+                  </button>
+                </a>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <img src={sysReq} alt="system requirements" />
