@@ -616,7 +616,7 @@ const MarketMint = ({
                       className="upcoming-mint-img"
                     />
                   </div>
-                  <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -661,7 +661,7 @@ const MarketMint = ({
                       alt=""
                       className="upcoming-mint-img"
                     />
-                  </div>
+                  </div> */}
                 </div>
               )}
               {activeTab === "past" && (
