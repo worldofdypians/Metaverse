@@ -40,10 +40,10 @@ const MintPopup = ({ active, onClose, data }) => {
           <div class="d-flex align-items-center justify-content-center">
             <div class="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              $10,000 BNB Rewards
+              $2,000 CFX Rewards
             </h6>
           </div>
-          <h6 className="mint-popup-title">CoinGecko Treasure Hunt</h6>
+          <h6 className="mint-popup-title">Conflux Treasure Hunt</h6>
         </>
       ) : (
         <div className="d-flex align-items-center gap-2">
@@ -66,7 +66,7 @@ const MintPopup = ({ active, onClose, data }) => {
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
         {data.title === "Treasure Hunt" ? (
           <span className="popup-available-mint">
-            Explore the CoinGecko area and use your <img src={whiteExplore} width={20} height={20} alt="" /> to generate rewards.
+            Explore the Conflux area and use your <img src={whiteExplore} width={20} height={20} alt="" /> to generate rewards.
           </span>
         ) : (
           <span className="popup-available-mint">

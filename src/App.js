@@ -1776,7 +1776,7 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
               exact
               path="/marketplace/beta-pass/gate"
               element={
@@ -1813,7 +1813,7 @@ function App() {
                   }}
                 />
               }
-            />
+            /> */}
 
             {/* <Route
                 exact

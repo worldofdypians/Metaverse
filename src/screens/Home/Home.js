@@ -21,6 +21,7 @@ import gatePopup from '../../components/TimepieceMint/assets/gatePopup.webp'
 
 import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup.png'
 import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHuntPopup.png'
+import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
 
 
 const Home = ({
@@ -67,8 +68,8 @@ const Home = ({
   }
   const treasureHuntPopupInfo = {
     title: "Treasure Hunt",
-    img: treasureHuntPopup,
-    state: "coingecko",
+    img: confluxTreasureHunt,
+    state: "conflux",
   }
 
 
@@ -104,7 +105,7 @@ const Home = ({
   return (
   <>
   <OutsideClickHandler id="popup" onOutsideClick={() => setActivePopup(false)}>
-  <MintPopup active={activePopup} data={gatePopupInfo} onClose={() => setActivePopup(false)} />
+  <MintPopup active={activePopup} data={treasureHuntPopupInfo} onClose={() => setActivePopup(false)} />
   </OutsideClickHandler>
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex flex-column home-main-wrapper">
