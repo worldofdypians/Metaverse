@@ -1166,7 +1166,6 @@
   }
   .upcoming-mint-img {
     height: 150px;
-    width: 25%;
     @media screen and (max-width: 786px) {
       height: auto !important;
       width: 100% !important;
@@ -1174,24 +1173,6 @@
   }
 }
 
-.upcoming-mint-wrapper:nth-child(1){
-  border-radius: 20px;
-background: linear-gradient(90deg, #181B38 0%, #11503D 168.67%);
-}
-.upcoming-mint-wrapper:nth-child(2){
-  border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #503E11 168.67%);
-}
-.upcoming-mint-wrapper:nth-child(3){
-  border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #481150 168.67%);
-}
-.upcoming-mint-wrapper:nth-child(4){
-  border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #1D438D 168.67%);
-
-  
-}
 
 .nft-dropdown-item:hover {
   background: linear-gradient(
