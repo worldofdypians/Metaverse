@@ -1324,6 +1324,33 @@ const WalletBalance = ({
         maxPoints: "50,000",
       },
     },
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Coming Soon",
+      totalRewards: "$5,000 in BASE Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "October 20, 2023",
+      backgroundImage: baseUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "BNB Chain",
+        linkState: "base",
+        rewards: "BASE",
+        status: "Coming Soon",
+        id: "event4",
+        date: "Oct 20, 2023",
+        totalRewards: "$3,000 in BASE Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "October 20, 2023",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+      },
+    },
   ];
 
   const [dummyEvent, setDummyEvent] = useState({});
@@ -4093,9 +4120,9 @@ const WalletBalance = ({
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
                         ? confluxUserPoints
-                        : dummyEvent.id === "event6"
-                        ? 0
-                        : userPoints,
+                        : dummyEvent.id === "event3" 
+                        ? userPoints
+                        : 0,
                       0
                     )}
                   </h6>
@@ -4109,18 +4136,18 @@ const WalletBalance = ({
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
                         ? confluxEarnUSD
-                        : dummyEvent.id === "event6"
-                        ? 0
-                        : userEarnUsd,
+                        : dummyEvent.id === "event3"
+                        ? userEarnUsd
+                        : 0,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
                       {getFormattedNumber(
                         dummyEvent.id === "event1"
                           ? confluxEarnCFX
-                          : dummyEvent.id === "event6"
-                          ? 0
-                          : userEarnETH,
+                          : dummyEvent.id === "event3"
+                          ? userEarnETH
+                          : 0,
                         2
                       )}
                       {dummyEvent.id === "event1"

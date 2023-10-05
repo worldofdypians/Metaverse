@@ -318,6 +318,32 @@ const MarketEvents = ({
         maxPoints: "50,000",
       },
     },
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Coming Soon",
+      totalRewards: "$5,000 in BASE Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "October 20, 2023",
+      backgroundImage: baseUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "BNB Chain",
+        linkState: "base",
+        rewards: "BASE",
+        status: "Coming Soon",
+        id: "event4",
+        totalRewards: "$3,000 in BASE Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "October 20, 2023",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+      },
+    },
   ];
 
   const dragonData = {
@@ -854,7 +880,7 @@ const MarketEvents = ({
                 // </div>
 
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(2, 3).map((item, index) => (
+                  {dummyBetaPassData2.slice(2, 4).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
@@ -1287,8 +1313,8 @@ const MarketEvents = ({
                   <h6 className="mb-0 event-earnings-coin2">
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
-                        ? confluxUserPoints
-                        : userPoints,
+                        ? confluxUserPoints : dummyEvent.id === 'event3' ?
+                         userPoints : 0,
                       0
                     )}
                   </h6>
@@ -1300,14 +1326,15 @@ const MarketEvents = ({
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
                     $
                     {getFormattedNumber(
-                      dummyEvent.id === "event1" ? confluxEarnUSD : userEarnUsd,
+                      dummyEvent.id === "event1" ? confluxEarnUSD  : dummyEvent.id === 'event3' ? userEarnUsd : 0,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
                       {getFormattedNumber(
                         dummyEvent.id === "event1"
                           ? confluxEarnCFX
-                          : userEarnETH,
+                          : dummyEvent.id === 'event3' ? 
+                           userEarnETH : 0,
                         2
                       )}
                       {dummyEvent.id === "event1"
