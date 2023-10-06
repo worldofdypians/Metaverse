@@ -250,7 +250,7 @@ const Marketplace = ({
       });
 
     if (result.data && result.data !== "NaN") {
-      setTotalTx(result.data + 5000);
+      setTotalTx(result.data);
       localStorage.setItem("cachedTvl", result.data);
     }
 
