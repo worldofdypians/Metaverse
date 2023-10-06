@@ -126,7 +126,6 @@ const MarketEvents = ({
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
 
-
   const selected = useRef(null);
   const { email } = useAuth();
   const dummyBetaPassData = [
@@ -146,7 +145,8 @@ const MarketEvents = ({
         rewards: "CFX",
         status: "Live",
         id: "event1",
-        learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
     {
@@ -183,7 +183,8 @@ const MarketEvents = ({
         rewards: "BNB",
         status: "Coming Soon",
         id: "event3",
-        learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
     {
@@ -262,7 +263,8 @@ const MarketEvents = ({
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
     {
@@ -288,8 +290,9 @@ const MarketEvents = ({
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+        maxPoints: "20,000",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
     // {
@@ -478,21 +481,21 @@ const MarketEvents = ({
     setPackagePopup("");
   };
 
-  
   const fetchCFXPrice = async () => {
     await axios
       .get(
-        "https://api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd"
+        "https://pro-api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
       )
       .then((obj) => {
-        setCfxPrice(obj.data["conflux-token"].usd);
+        if (obj.data["conflux-token"] && obj.data["conflux-token"] !== NaN) {
+          setCfxPrice(obj.data["conflux-token"].usd);
+        }
       });
   };
 
   useEffect(() => {
     fetchCFXPrice();
   }, []);
-
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
@@ -521,7 +524,6 @@ const MarketEvents = ({
             return obj.betapassId === "conflux";
           });
 
-
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -536,14 +538,16 @@ const MarketEvents = ({
           const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
           setConfluxUserPoints(cfxPoints);
 
-          if(confluxEvent[0].reward.earn.multiplier !== 0){
+          if (confluxEvent[0].reward.earn.multiplier !== 0) {
             const cfxUsdValue =
-            confluxEvent[0].reward.earn.total /
-            confluxEvent[0].reward.earn.multiplier;
+              confluxEvent[0].reward.earn.total /
+              confluxEvent[0].reward.earn.multiplier;
             setConfluxEarnUSD(cfxUsdValue);
-          }
-          setConfluxEarnCFX(confluxEarnUSD / cfxPrice);
 
+            if (cfxPrice !== 0) {
+              setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+            }
+          }
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -605,7 +609,7 @@ const MarketEvents = ({
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
-  }, [email, data]);
+  }, [email, data, cfxPrice, bnbPrice]);
 
   useEffect(() => {
     setActiveTab(tabState);
@@ -632,7 +636,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     <NavLink
@@ -647,7 +651,6 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                 
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -801,7 +804,11 @@ const MarketEvents = ({
                               setEventPopup(true);
                               setDummyEvent(item.popupInfo);
                             }}
-                            userEarnUsd={item.title === "Conflux" ? confluxEarnUSD : userEarnUsd}
+                            userEarnUsd={
+                              item.title === "Conflux"
+                                ? confluxEarnUSD
+                                : userEarnUsd
+                            }
                           />
                         ))}
                       </div>
@@ -1279,7 +1286,9 @@ const MarketEvents = ({
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2">
                     {getFormattedNumber(
-                      dummyEvent.id === "event1" ? confluxUserPoints : userPoints,
+                      dummyEvent.id === "event1"
+                        ? confluxUserPoints
+                        : userPoints,
                       0
                     )}
                   </h6>
@@ -1296,7 +1305,9 @@ const MarketEvents = ({
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
                       {getFormattedNumber(
-                        dummyEvent.id === "event1" ? confluxEarnCFX : userEarnETH,
+                        dummyEvent.id === "event1"
+                          ? confluxEarnCFX
+                          : userEarnETH,
                         2
                       )}
                       {dummyEvent.id === "event1"

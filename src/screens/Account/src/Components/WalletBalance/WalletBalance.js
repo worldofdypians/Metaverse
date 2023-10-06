@@ -1015,12 +1015,24 @@ const WalletBalance = ({
     }
   };
 
+  const fetchCFXPrice = async () => {
+    await axios
+      .get(
+        "https://pro-api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+      )
+      .then((obj) => {
+        if (obj.data["conflux-token"] && obj.data["conflux-token"] !== NaN) {
+          setCfxPrice(obj.data["conflux-token"].usd);
+        }
+      });
+  };
   useEffect(() => {
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
     getTokenData();
     getTokenDataavax();
     getTokenDatabnb();
+    fetchCFXPrice();
     getListed();
   }, []);
 
@@ -1069,7 +1081,7 @@ const WalletBalance = ({
     minRewards: "1",
     maxRewards: "20",
     minPoints: "5,000",
-    maxPoints: "50,000",
+    maxPoints: "20,000",
     learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
   };
   const dummyCoingecko = {
@@ -1130,7 +1142,7 @@ const WalletBalance = ({
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
+        maxPoints: "20,000",
       },
     },
     {
@@ -1206,20 +1218,6 @@ const WalletBalance = ({
     setShowNfts(false);
   };
 
-  const fetchCFXPrice = async () => {
-    await axios
-      .get(
-        "https://api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd"
-      )
-      .then((obj) => {
-        setCfxPrice(obj.data["conflux-token"].usd);
-      });
-  };
-
-  useEffect(() => {
-    fetchCFXPrice();
-  }, []);
-
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
@@ -1247,7 +1245,6 @@ const WalletBalance = ({
             return obj.betapassId === "conflux";
           });
 
-
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -1262,14 +1259,15 @@ const WalletBalance = ({
           const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
           setConfluxUserPoints(cfxPoints);
 
-          if(confluxEvent[0].reward.earn.multiplier !== 0){
+          if (confluxEvent[0].reward.earn.multiplier !== 0) {
             const cfxUsdValue =
-            confluxEvent[0].reward.earn.total /
-            confluxEvent[0].reward.earn.multiplier;
+              confluxEvent[0].reward.earn.total /
+              confluxEvent[0].reward.earn.multiplier;
             setConfluxEarnUSD(cfxUsdValue);
+            if (cfxPrice !== 0) {
+              setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+            }
           }
-          setConfluxEarnCFX(confluxEarnUSD / cfxPrice);
-
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -1283,7 +1281,7 @@ const WalletBalance = ({
     if (email && address) {
       fetchTreasureHuntData(email, address);
     }
-  }, [email, address, bnbPrice]);
+  }, [email, address, bnbPrice, cfxPrice]);
 
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
