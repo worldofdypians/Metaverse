@@ -27,6 +27,8 @@ import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import moment from "moment";
 import { Skeleton } from "@mui/material";
 import greenArrow from "./assets/greenArrow.svg";
+import timepieceHome from './assets/timepieceHome.png'
+import confluxHome from './assets/confluxHome.png'
 
 const Marketplace = ({
   listedNFTS,
@@ -1077,7 +1079,7 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="mintleft-side mt-0 px-0 d-flex flex-column gap-3">
-                  <NavLink
+                  {/* <NavLink
                     to={"/marketplace/mint"}
                     className="w-100 m-0 d-flex flex-column gap-5"
                   >
@@ -1113,7 +1115,28 @@ const Marketplace = ({
                         className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
                       />
                     </div>
-                  </NavLink>
+                  </NavLink> */}
+
+                  <div className="d-flex flex-column gap-4">
+                    <NavLink to={'/marketplace/mint/conflux'} className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                      <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 py-3 py-lg-0">
+                        <div className="homepage-nft-mint-tag px-4 py-1 d-flex align-items-center justify-content-center">
+                          <span className="mb-0">NFT Minting</span>
+                        </div>
+                        <h6 className="homepage-minting-title">Conflux Beta Pass</h6>
+                      </div>
+                      <img src={confluxHome}  alt="" />
+                    </NavLink>
+                    <NavLink to={'/marketplace/mint/timepiece'} className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                      <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 py-3 py-lg-0">
+                        <div  className="homepage-nft-mint-tag px-4 py-1 d-flex align-items-center justify-content-center">
+                          <span className="mb-0">NFT Minting</span>
+                        </div>
+                        <h6 className="homepage-minting-title">CAWS Timepiece</h6>
+                      </div>
+                      <img src={timepieceHome} alt="" />
+                    </NavLink>
+                  </div>
                   <NavLink to="/marketplace/mint/conflux">
                     <span
                       className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"

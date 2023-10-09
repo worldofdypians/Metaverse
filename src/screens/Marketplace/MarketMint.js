@@ -38,6 +38,22 @@ import { NavLink, useLocation, useParams } from "react-router-dom";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
+import Countdown from "react-countdown";
+
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <h6 className="latest-mint-number mb-0 font-organetto">
+      {hours} hours : {minutes} minutes
+    </h6>
+  );
+};
+const renderer2 = ({ days, hours, minutes }) => {
+  return (
+    <h6 className="latest-mint-number mb-0">
+      {days}d:{hours}h:{minutes}m
+    </h6>
+  );
+};
 
 const MarketMint = ({
   showWalletConnect,
@@ -139,6 +155,7 @@ const MarketMint = ({
   const [selectedMint, setSelectedMint] = useState(confluxData);
   const [mintTitle, setMintTitle] = useState(params.mintId);
   const [sliderCut, setSliderCut] = useState();
+  const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
 
   useEffect(() => {
@@ -148,6 +165,9 @@ const MarketMint = ({
       setSelectedMint(timepieceData);
     }
   }, [params.mintId]);
+
+  let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
+  let countToExpireConflux = new Date("2023-10-24T11:00:00.000+02:00");
 
   const dummyCards = [
     // {
@@ -436,7 +456,6 @@ const MarketMint = ({
     document.title = "NFT Mint";
   }, []);
 
-  
   return (
     <>
       <div
@@ -1045,29 +1064,50 @@ const MarketMint = ({
                                 </span>
                               </div>
                             </div>
-                            <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
-                              <span className="mb-0 latest-mint">
-                                Latest Mint
-                              </span>
-                              <div className="d-flex align-items-center gap-2">
-                                <h6 className="latest-mint-number mb-0">
-                                  #{latestConfluxMintId}
-                                </h6>
-                                <span className="latest-mint-currency mb-0">
-                                  CFBP
+                            {confluxLive === false ? (
+                              <>
+                                  <div className="dark-wrapper d-flex flex-column gap-2 py-5 align-items-center justify-content-center p-2" style={{position: "relative", top: "20px"}}>
+                                <span className="mb-0 latest-mint">
+                                  Minting opens in
                                 </span>
+                                <div className="d-flex align-items-center gap-2">
+                                  <Countdown
+                                    date={countToLiveConflux}
+                                    onComplete={() => setConfluxLive(true)}
+                                    renderer={renderer}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
-                              <span className="mb-0 latest-mint">
-                                Available to Mint
-                              </span>
-                              <div className="d-flex align-items-center gap-2">
-                                <h6 className="latest-mint-number mb-0">
-                                  {confluxMintAllowed} NFT
-                                </h6>
+                                <div className="dark-wrapper d-flex align-items-center justify-content-between p-4" style={{visibility: "hidden"}}>
+                               
                               </div>
-                            </div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                                  <span className="mb-0 latest-mint">
+                                    Available to Mint
+                                  </span>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <h6 className="latest-mint-number mb-0">
+                                      {confluxMintAllowed} NFT
+                                    </h6>
+                                  </div>
+                                </div>
+                                <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                                  <span className="mb-0 latest-mint">
+                                    Minting ends in
+                                  </span>
+                                  <div className="d-flex align-items-center gap-2">
+                                  <Countdown
+                                    date={countToExpireConflux}
+                                    renderer={renderer2}
+                                  />
+                                  </div>
+                                </div>
+                              </>
+                            )}
+
                             <span className="latest-mint-currency mb-0">
                               *Important: You can only mint one Conflux Beta
                               Pass NFT per wallet.
@@ -1094,98 +1134,100 @@ const MarketMint = ({
                             )}
                             <hr className="gray-divider" />
                             <div className="d-flex w-100 justify-content-center">
-                              <div
-                                className={
-                                  (isConnected === true && chainId !== 1030) ||
-                                  (status !== "Connect your wallet." &&
-                                    status !== "") ||
-                                  mintloading === "error" ||
-                                  confluxMintAllowed === 0
-                                    ? "linear-border-disabled"
-                                    : "linear-border"
-                                }
-                              >
-                                <button
-                                  className={`btn ${
-                                    mintloading === "error"
-                                      ? "filled-error-btn"
-                                      : (isConnected === true &&
-                                          chainId !== 1030) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
-                                        confluxMintAllowed === 0
-                                      ? "outline-btn-disabled"
-                                      : "filled-btn"
-                                  }  px-4 w-100`}
-                                  onClick={() => {
-                                    isConnected === true && chainId === 1030
-                                      ? handleConfluxMint()
-                                      : showWalletConnect();
-                                  }}
-                                  disabled={
-                                    mintloading === "error" ||
-                                    mintloading === "success" ||
-                                    (isConnected === true &&
-                                      chainId !== 1030) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    confluxMintAllowed === 0
-                                      ? true
-                                      : false
-                                  }
-                                  onMouseEnter={() => {
-                                    setMouseOver(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    setMouseOver(false);
-                                  }}
-                                >
-                                  {(isConnected === false ||
-                                    chainId !== 1030) && (
-                                    <img
-                                      src={
-                                        mouseOver === false
-                                          ? blackWallet
-                                          : whitewallet
-                                      }
-                                      alt=""
-                                      style={{
-                                        width: "23px",
-                                        height: "23px",
-                                      }}
-                                    />
-                                  )}{" "}
-                                  {mintloading === "initial" &&
-                                  isConnected === true &&
-                                  chainId === 1030 ? (
-                                    "Mint"
-                                  ) : mintloading === "mint" &&
-                                    isConnected === true &&
-                                    chainId === 1030 ? (
-                                    <>
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                      ></div>
-                                    </>
-                                  ) : mintloading === "error" &&
-                                    isConnected === true &&
-                                    chainId === 1030 ? (
-                                    "Failed"
-                                  ) : mintloading === "success" &&
-                                    isConnected === true &&
-                                    activeButton ===
-                                      (isConnected === true &&
-                                        chainId === 1030) ? (
-                                    "Success"
-                                  ) : isConnected === true &&
-                                    chainId !== 1030 ? (
-                                    " Switch Chain"
-                                  ) : (
-                                    "Connect wallet"
-                                  )}
-                                </button>
-                              </div>
+                              {confluxLive && 
+                                 <div
+                                 className={
+                                   (isConnected === true && chainId !== 1030) ||
+                                   (status !== "Connect your wallet." &&
+                                     status !== "") ||
+                                   mintloading === "error" ||
+                                   confluxMintAllowed === 0
+                                     ? "linear-border-disabled"
+                                     : "linear-border"
+                                 }
+                               >
+                                 <button
+                                   className={`btn ${
+                                     mintloading === "error"
+                                       ? "filled-error-btn"
+                                       : (isConnected === true &&
+                                           chainId !== 1030) ||
+                                         (status !== "Connect your wallet." &&
+                                           status !== "") ||
+                                         confluxMintAllowed === 0
+                                       ? "outline-btn-disabled"
+                                       : "filled-btn"
+                                   }  px-4 w-100`}
+                                   onClick={() => {
+                                     isConnected === true && chainId === 1030
+                                       ? handleConfluxMint()
+                                       : showWalletConnect();
+                                   }}
+                                   disabled={
+                                     mintloading === "error" ||
+                                     mintloading === "success" ||
+                                     (isConnected === true &&
+                                       chainId !== 1030) ||
+                                     (status !== "Connect your wallet." &&
+                                       status !== "") ||
+                                     confluxMintAllowed === 0
+                                       ? true
+                                       : false
+                                   }
+                                   onMouseEnter={() => {
+                                     setMouseOver(true);
+                                   }}
+                                   onMouseLeave={() => {
+                                     setMouseOver(false);
+                                   }}
+                                 >
+                                   {(isConnected === false ||
+                                     chainId !== 1030) && (
+                                     <img
+                                       src={
+                                         mouseOver === false
+                                           ? blackWallet
+                                           : whitewallet
+                                       }
+                                       alt=""
+                                       style={{
+                                         width: "23px",
+                                         height: "23px",
+                                       }}
+                                     />
+                                   )}{" "}
+                                   {mintloading === "initial" &&
+                                   isConnected === true &&
+                                   chainId === 1030 ? (
+                                     "Mint"
+                                   ) : mintloading === "mint" &&
+                                     isConnected === true &&
+                                     chainId === 1030 ? (
+                                     <>
+                                       <div
+                                         className="spinner-border "
+                                         role="status"
+                                       ></div>
+                                     </>
+                                   ) : mintloading === "error" &&
+                                     isConnected === true &&
+                                     chainId === 1030 ? (
+                                     "Failed"
+                                   ) : mintloading === "success" &&
+                                     isConnected === true &&
+                                     activeButton ===
+                                       (isConnected === true &&
+                                         chainId === 1030) ? (
+                                     "Success"
+                                   ) : isConnected === true &&
+                                     chainId !== 1030 ? (
+                                     " Switch Chain"
+                                   ) : (
+                                     "Connect wallet"
+                                   )}
+                                 </button>
+                               </div>
+                              }
                             </div>
                           </div>
                         </div>
