@@ -2942,6 +2942,10 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+
+  @media screen and (max-width: 420px) {
+    font-size: 13px;
+  }
 }
 .latest-mint-currency {
   color: #7dd9af;
