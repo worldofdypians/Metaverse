@@ -483,6 +483,7 @@ function App() {
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
         setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmyConfluxNFTsCreated(NFTS); 
       });
     } else {
       setMyNFTSCaws([]);
