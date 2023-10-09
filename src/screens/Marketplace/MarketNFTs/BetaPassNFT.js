@@ -1555,7 +1555,7 @@ const BetaPassNFT = ({
                               >
                                 <span
                                   className="profile-event-tag-text mb-0"
-                                  style={{ color: "#FFFFFF" }}
+                                  style={{ color: "#FFFFFF", fontSize: '16px' }}
                                 >
                                   Coming Soon
                                 </span>
