@@ -11,6 +11,8 @@ import orangeExplore from "./assets/orangeExplore.svg";
 import purpleFind from "./assets/purpleFind.svg";
 import confluxProfileBanner from "./assets/confluxProfileBanner.png";
 import coingeckoProfileBanner from "./assets/coingeckoProfileBanner.png";
+import gateProfileBanner from "./assets/gateProfileBanner.png";
+
 
 const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
   return (
@@ -46,7 +48,7 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
             </span>
           </div>
         </div>
-        <img src={data.linkState == "conflux" ? confluxProfileBanner : coingeckoProfileBanner} style={{ height: "50px", width: "25%" }} alt="" />
+        <img src={data.linkState == "conflux" ? confluxProfileBanner : data.linkState == "gate" ? gateProfileBanner :coingeckoProfileBanner} style={{ height: "50px", width: "25%" }} alt="" />
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">

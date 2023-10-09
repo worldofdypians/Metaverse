@@ -85,9 +85,9 @@ function SignUpGecko({
   };
 
   const resendCode = async () => {
-    await Auth.resendSignUp(username).catch((err)=>{
+    await Auth.resendSignUp(username).catch((err) => {
       seterrorMsg(err?.message);
-    })
+    });
   };
 
   useEffect(() => {
@@ -99,56 +99,46 @@ function SignUpGecko({
     });
   }, []);
 
-  useEffect(() => {
-    if (
-      username !== "" &&
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(username)
-    ) {
-      seterrorMsg("Email format is Invalid");
-    } else if (
-      username !== "" &&
-      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(username)
-    ) {
-      seterrorMsg("");
-    }
-  }, [username]);
+  // useEffect(() => {
+  //   if (
+  //     username !== "" &&
+  //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(username)
+  //   ) {
+  //     seterrorMsg("Email format is Invalid");
+  //   } else if (
+  //     username !== "" &&
+  //     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(username)
+  //   ) {
+  //     seterrorMsg("");
+  //   }
+  // }, [username]);
 
   useEffect(() => {
-    if (chainId !== 1030 && mintTitle === "Conflux Beta Pass") {
-      setDisabled(true);
-      seterrorMsg("You should be on Conflux network to register.");
-    }
-    else {
-      if (username && password && confirmPassword) {
-        setDisabled(false);
-        if (password !== confirmPassword) {
-          setDisabled(true);
-          seterrorMsg("Passwords don't match");
-        } else {
-          setDisabled(false);
-          seterrorMsg("");
-        }
-      } else {
+    if (username && password && confirmPassword) {
+      setDisabled(false);
+      if (password !== confirmPassword) {
         setDisabled(true);
+        seterrorMsg("Passwords don't match");
+      }
+      if (
+        username !== "" &&
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(username)
+      ) {
+        seterrorMsg("Email format is Invalid");
+        setDisabled(true);
+      } else if (
+        username !== "" &&
+        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(username)
+      ) {
+        seterrorMsg("");
+      } else {
+        setDisabled(false);
         seterrorMsg("");
       }
+    } else {
+      setDisabled(true);
     }
-  }, [chainId, mintTitle,username, password, confirmPassword]);
-
-  // useEffect(() => {
-  //   if (username && password && confirmPassword) {
-  //     setDisabled(false);
-  //     if (password !== confirmPassword) {
-  //       setDisabled(true);
-  //       seterrorMsg("Passwords don't match");
-  //     } else {
-  //       setDisabled(false);
-  //       seterrorMsg("");
-  //     }
-  //   } else {
-  //     setDisabled(true);
-  //   }
-  // }, [username, password, confirmPassword]);
+  }, [username, password, confirmPassword]);
 
   useEffect(() => {
     if (loginError) {
@@ -218,7 +208,9 @@ function SignUpGecko({
         onLoginTry={() => {
           setisLogin(true);
         }}
-        onPassChange={(value)=>{setPassword(value)}}
+        onPassChange={(value) => {
+          setPassword(value);
+        }}
       />
     );
   }
@@ -231,7 +223,6 @@ function SignUpGecko({
         onChange={setUserName}
         type={"coingecko"}
         inputType="email"
-
       />
       <Input
         inputType="password"

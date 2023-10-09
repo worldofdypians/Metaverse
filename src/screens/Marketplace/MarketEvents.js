@@ -218,6 +218,7 @@ const MarketEvents = ({
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
+  let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
     // {
@@ -296,24 +297,57 @@ const MarketEvents = ({
       },
     },
     // {
-    //   title: "Gate.io (GT)",
+    //   title: "Gate.io",
     //   logo: gate,
     //   eventStatus: "Coming Soon",
     //   totalRewards: "$3,000 in GT Rewards",
     //   myEarnings: 0,
     //   eventType: "Explore & Mine",
-    //   eventDate: "September xx, 2023",
+    //   eventDate: "October 20, 2023",
     //   backgroundImage: gateUpcoming,
     //   popupInfo: {
     //     eventType: "Explore & Mine",
-    //     title: "Gate",
+    //     title: "Gate.io",
     //     chain: "BNB Chain",
     //     linkState: "gate",
     //     rewards: "GT",
     //     status: "Coming Soon",
     //     id: "event6",
+    //     totalRewards: "$3,000 in GT Rewards",
+    //     eventDuration: gateLastDay,
+    //     eventDate: "October 20, 2023",
+    //     minRewards: "1",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
     //   },
     // },
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Coming Soon",
+      totalRewards: "$5,000 in BASE Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "October 20, 2023",
+      backgroundImage: baseUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "BNB Chain",
+        linkState: "base",
+        rewards: "BASE",
+        status: "Coming Soon",
+        id: "event4",
+        totalRewards: "$3,000 in BASE Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "October 20, 2023",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+      },
+    },
   ];
 
   const dragonData = {
@@ -636,9 +670,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -651,6 +683,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -796,7 +831,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -844,28 +879,28 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">New events are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
-                  </div>
-                </div>
-
-                // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                //   {dummyBetaPassData2.slice(1, 2).map((item, index) => (
-                //     <BetaEventCard
-                //       data={item}
-                //       key={index}
-                //       onOpenPopup={() => {
-                //         setEventPopup(true);
-                //         setDummyEvent(item.popupInfo);
-                //       }}
-                //       userEarnUsd={userEarnUsd}
-                //     />
-                //   ))}
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">New events are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
+                //   </div>
                 // </div>
+
+                <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                  {dummyBetaPassData2.slice(2, 4).map((item, index) => (
+                    <BetaEventCard
+                      data={item}
+                      key={index}
+                      onOpenPopup={() => {
+                        setEventPopup(true);
+                        setDummyEvent(item.popupInfo);
+                      }}
+                      userEarnUsd={userEarnUsd}
+                    />
+                  ))}
+                </div>
                 // <BetaPassEvents />
               )}
               {activeTab === "past" && (
@@ -1287,8 +1322,8 @@ const MarketEvents = ({
                   <h6 className="mb-0 event-earnings-coin2">
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
-                        ? confluxUserPoints
-                        : userPoints,
+                        ? confluxUserPoints : dummyEvent.id === 'event3' ?
+                         userPoints : 0,
                       0
                     )}
                   </h6>
@@ -1300,14 +1335,15 @@ const MarketEvents = ({
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
                     $
                     {getFormattedNumber(
-                      dummyEvent.id === "event1" ? confluxEarnUSD : userEarnUsd,
+                      dummyEvent.id === "event1" ? confluxEarnUSD  : dummyEvent.id === 'event3' ? userEarnUsd : 0,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
                       {getFormattedNumber(
                         dummyEvent.id === "event1"
                           ? confluxEarnCFX
-                          : userEarnETH,
+                          : dummyEvent.id === 'event3' ? 
+                           userEarnETH : 0,
                         2
                       )}
                       {dummyEvent.id === "event1"
@@ -1333,9 +1369,9 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.id === "event4" && (
+            {dummyEvent.id === "event9" && (
               <div className="w-100 d-flex justify-content-end mt-3">
-                <NavLink to={`/marketplace/beta-pass/conflux`}>
+                <NavLink to={`/marketplace/beta-pass/gate`}>
                   <button className="btn get-beta-btn">Get Beta Pass</button>
                 </NavLink>
               </div>
