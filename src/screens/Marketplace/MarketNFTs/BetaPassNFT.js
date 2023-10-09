@@ -1572,6 +1572,8 @@ const BetaPassNFT = ({
                                  px-3 py-2 position-relative"
                                   style={{
                                     bottom: "5px",
+                                    minWidth: "100%",
+                                    maxWidth: "100%",
                                   }}
                                 >
                                   <h6 className="land-desc w-75 m-auto text-center justify-content-center">
