@@ -644,134 +644,347 @@ const MarketMint = ({
                           />
                         </div>
                       </div>
-                      <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
-                        <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
-                          <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
-                            <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
-                              <span className="land-name">
-                                Available NFTs to mint:{" "}
-                                <span
-                                  className="addr-text"
-                                  style={{ color: "rgb(123, 216, 176)" }}
-                                >
-                                  {cawsArray.length}
+                      {params.mintId === "timepiece" ? (
+                        <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
+                          <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
+                            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+                              <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
+                                <span className="land-name">
+                                  Available NFTs to mint:{" "}
+                                  <span
+                                    className="addr-text"
+                                    style={{ color: "rgb(123, 216, 176)" }}
+                                  >
+                                    {cawsArray.length}
+                                  </span>
                                 </span>
-                              </span>
+                              </div>
                             </div>
-                          </div>
 
-                          <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
-                            <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-                              <span className="land-name">Name</span>
-                              <div
-                                className="borderText borderText2"
-                                style={{ width: "100%" }}
-                              >
-                                <h6
-                                  className="land-placeholder mb-0"
-                                  style={{ marginLeft: 11 }}
+                            <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
+                              <div className="d-flex flex-column gap-2 col-12 col-lg-6">
+                                <span className="land-name">Name</span>
+                                <div
+                                  className="borderText borderText2"
+                                  style={{ width: "100%" }}
                                 >
-                                  {nftName === "" ? "" : selectedMint?.title}
+                                  <h6
+                                    className="land-placeholder mb-0"
+                                    style={{ marginLeft: 11 }}
+                                  >
+                                    {nftName === "" ? "" : selectedMint?.title}
+                                  </h6>
+                                </div>
+                              </div>
+                              <div className="d-flex flex-column gap-2 col-12 col-lg-6">
+                                <span className="land-name">Latest Mint</span>
+                                <h6
+                                  className="land-placeholder borderText"
+                                  style={{
+                                    fontSize: "12px",
+                                    paddingLeft: 14,
+                                    lineHeight: "40px",
+                                  }}
+                                >
+                                  # {latestMintId}
                                 </h6>
                               </div>
                             </div>
-                            <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-                              <span className="land-name">Latest Mint</span>
-                              <h6
-                                className="land-placeholder borderText"
+                            <hr className="mint-divider m-0" />
+                            <div className="d-flex align-items-center justify-content-between position-relative gap-3">
+                              <div className="input-container position-relative col-8 col-lg-6">
+                                <input
+                                  type="number"
+                                  placeholder="Nr. of CAWS Timepiece NFT to create"
+                                  max={cawsArray.length}
+                                  min={1}
+                                  className="land-input w-100"
+                                  value={parseInt(nftCount)}
+                                  onChange={(e) =>
+                                    setNftCount(parseInt(e.target.value))
+                                  }
+                                />
+                              </div>
+
+                              <div className="d-flex align-items-center gap-3">
+                                <img
+                                  src={
+                                    nftCount > 1 &&
+                                    isConnected === true &&
+                                    activeButton === true &&
+                                    status === ""
+                                      ? subtractActive
+                                      : subtractInactive
+                                  }
+                                  alt="subtract"
+                                  onClick={subtractNft}
+                                  style={{
+                                    cursor:
+                                      isConnected === true &&
+                                      activeButton === true
+                                        ? "pointer"
+                                        : "default",
+                                    pointerEvents:
+                                      isConnected === true &&
+                                      activeButton === true &&
+                                      status === ""
+                                        ? "auto"
+                                        : "none",
+                                  }}
+                                />
+                                <img
+                                  src={
+                                    nftCount < cawsArray.length &&
+                                    nftCount >= 1 &&
+                                    isConnected === true &&
+                                    activeButton === true &&
+                                    status === ""
+                                      ? addActive
+                                      : addInactive
+                                  }
+                                  alt="add"
+                                  onClick={addNft}
+                                  style={{
+                                    cursor:
+                                      isConnected === true &&
+                                      activeButton === true
+                                        ? "pointer"
+                                        : "default",
+                                    pointerEvents:
+                                      isConnected === true &&
+                                      activeButton === true &&
+                                      status === ""
+                                        ? "auto"
+                                        : "none",
+                                  }}
+                                />
+                              </div>
+                            </div>
+                            {mintTitle === "timepiece" ? (
+                              <span
+                                className="limit-span position-relative"
                                 style={{
-                                  fontSize: "12px",
-                                  paddingLeft: 14,
-                                  lineHeight: "40px",
+                                  color: nftStatus.includes("Exceeded")
+                                    ? "#D87B7B"
+                                    : "#FFFFFF",
+                                  bottom: "auto",
                                 }}
                               >
-                                # {latestMintId}
-                              </h6>
+                                {nftStatus}
+                              </span>
+                            ) : mintTitle === "conflux" ? (
+                              <span
+                                className="limit-span position-relative d-flex align-items-center gap-2"
+                                style={{ bottom: "0px" }}
+                              >
+                                Available only on Conflux Network
+                                <img src={confluxLogo} alt="" />
+                              </span>
+                            ) : mintTitle === "avax" ? (
+                              <span
+                                className="limit-span position-relative d-flex align-items-center gap-2"
+                                style={{ bottom: "0px" }}
+                              >
+                                Available only on Avalanche Network
+                                <img
+                                  src={avaxLogo}
+                                  alt=""
+                                  width={16}
+                                  height={16}
+                                />
+                              </span>
+                            ) : mintTitle === "base" ? (
+                              <span
+                                className="limit-span position-relative d-flex align-items-center gap-2"
+                                style={{ bottom: "0px" }}
+                              >
+                                Available only on Base Network
+                                <img src={baseLogo} alt="" />
+                              </span>
+                            ) : mintTitle === "coin98" ||
+                              mintTitle === "coingecko" ||
+                              mintTitle === "kucoin" ||
+                              mintTitle === "gate" ? (
+                              <span
+                                className="limit-span position-relative d-flex align-items-center gap-2"
+                                style={{ bottom: "0px" }}
+                              >
+                                Available only on BNB Chain
+                                <img src={bnbLogo} alt="" />
+                              </span>
+                            ) : null}
+                            <hr className="mint-divider m-0" />
+                            {/* {cawsArray.length > 0 && nftCount > 0 && (
+         <span className="land-name">
+           Number of CAWS NFTs left after minting:{" "}
+           <span
+             className="addr-text"
+             style={{ color: "rgb(123, 216, 176)" }}
+           >
+             {cawsArray.length - nftCount}
+           </span>
+         </span>
+       )}  */}
+                            {mintStatus.length > 0 && (
+                              <span
+                                style={{ color: textColor }}
+                                className={
+                                  mintStatus.includes("Success")
+                                    ? "mint-span-success"
+                                    : "mint-span"
+                                }
+                              >
+                                {mintStatus}
+                              </span>
+                            )}
+                            <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
+                              <div className="d-flex flex-column flex-lg-row align-items-center align-items-lg-center justify-content-xxl-end justify-content-lg-end justify-content-center w-100">
+                                <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
+                                  <div
+                                    className={
+                                      (isConnected === true &&
+                                        chainId !== 1 &&
+                                        cawsArray.length === 0) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      (isConnected === true &&
+                                        chainId === 1 &&
+                                        cawsArray.length === 0)
+                                        ? "linear-border-disabled"
+                                        : "linear-border"
+                                    }
+                                  >
+                                    <button
+                                      className={`btn ${
+                                        mintloading === "error"
+                                          ? "filled-error-btn"
+                                          : (isConnected === true &&
+                                              chainId !== 1 &&
+                                              cawsArray.length === 0) ||
+                                            (status !==
+                                              "Connect your wallet." &&
+                                              status !== "") ||
+                                            (isConnected === true &&
+                                              chainId === 1 &&
+                                              cawsArray.length === 0)
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
+                                      onClick={() => {
+                                        isConnected === true && chainId === 1
+                                          ? handleCreate()
+                                          : showWalletConnect();
+                                      }}
+                                      disabled={
+                                        mintloading === "error" ||
+                                        mintloading === "success" ||
+                                        (isConnected === true &&
+                                          chainId !== 1) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        (isConnected === true &&
+                                          chainId === 1 &&
+                                          cawsArray.length === 0)
+                                          ? true
+                                          : false
+                                      }
+                                      onMouseEnter={() => {
+                                        setMouseOver(true);
+                                      }}
+                                      onMouseLeave={() => {
+                                        setMouseOver(false);
+                                      }}
+                                    >
+                                      {(isConnected === false ||
+                                        chainId !== 1) && (
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
+                                      {mintloading === "initial" &&
+                                      isConnected === true &&
+                                      chainId === 1 ? (
+                                        "Mint"
+                                      ) : mintloading === "mint" &&
+                                        isConnected === true &&
+                                        chainId === 1 ? (
+                                        <>
+                                          <div
+                                            className="spinner-border "
+                                            role="status"
+                                          ></div>
+                                        </>
+                                      ) : mintloading === "error" &&
+                                        isConnected === true &&
+                                        chainId === 1 ? (
+                                        "Failed"
+                                      ) : mintloading === "success" &&
+                                        isConnected === true &&
+                                        activeButton ===
+                                          (isConnected === true &&
+                                            chainId === 1) ? (
+                                        "Success"
+                                      ) : isConnected === true &&
+                                        chainId !== 1 ? (
+                                        " Switch Chain"
+                                      ) : (
+                                        "Connect wallet"
+                                      )}
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          <hr className="mint-divider m-0" />
-                          <div className="d-flex align-items-center justify-content-between position-relative gap-3">
-                            <div className="input-container position-relative col-8 col-lg-6">
-                              <input
-                                type="number"
-                                placeholder="Nr. of CAWS Timepiece NFT to create"
-                                max={cawsArray.length}
-                                min={1}
-                                className="land-input w-100"
-                                value={parseInt(nftCount)}
-                                onChange={(e) =>
-                                  setNftCount(parseInt(e.target.value))
-                                }
-                              />
+                        </div>
+                      ) : (
+                        <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
+                          <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
+                            <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+                              <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
+                                <span className="land-name">
+                                  Mint your NFT{" "}
+                                </span>
+                              </div>
                             </div>
-
-                            <div className="d-flex align-items-center gap-3">
-                              <img
-                                src={
-                                  nftCount > 1 &&
-                                  isConnected === true &&
-                                  activeButton === true &&
-                                  status === ""
-                                    ? subtractActive
-                                    : subtractInactive
-                                }
-                                alt="subtract"
-                                onClick={subtractNft}
-                                style={{
-                                  cursor:
-                                    isConnected === true &&
-                                    activeButton === true
-                                      ? "pointer"
-                                      : "default",
-                                  pointerEvents:
-                                    isConnected === true &&
-                                    activeButton === true &&
-                                    status === ""
-                                      ? "auto"
-                                      : "none",
-                                }}
-                              />
-                              <img
-                                src={
-                                  nftCount < cawsArray.length &&
-                                  nftCount >= 1 &&
-                                  isConnected === true &&
-                                  activeButton === true &&
-                                  status === ""
-                                    ? addActive
-                                    : addInactive
-                                }
-                                alt="add"
-                                onClick={addNft}
-                                style={{
-                                  cursor:
-                                    isConnected === true &&
-                                    activeButton === true
-                                      ? "pointer"
-                                      : "default",
-                                  pointerEvents:
-                                    isConnected === true &&
-                                    activeButton === true &&
-                                    status === ""
-                                      ? "auto"
-                                      : "none",
-                                }}
-                              />
+                            <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                              <span className="mb-0 latest-mint">
+                                Latest Mint
+                              </span>
+                              <div className="d-flex align-items-center gap-2">
+                                <h6 className="latest-mint-number mb-0">
+                                  #1225
+                                </h6>
+                                <span className="latest-mint-currency mb-0">
+                                  CFBP
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                          {mintTitle === "timepiece" ? (
-                            <span
-                              className="limit-span position-relative"
-                              style={{
-                                color: nftStatus.includes("Exceeded")
-                                  ? "#D87B7B"
-                                  : "#FFFFFF",
-                                bottom: "auto",
-                              }}
-                            >
-                              {nftStatus}
+                            <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                              <span className="mb-0 latest-mint">
+                                Available to Mint
+                              </span>
+                              <div className="d-flex align-items-center gap-2">
+                                <h6 className="latest-mint-number mb-0">
+                                  1 NFT
+                                </h6>
+                              </div>
+                            </div>
+                            <span className="latest-mint-currency mb-0">
+                              *Important: You can only mint one Conflux Beta
+                              Pass NFT per wallet.
                             </span>
-                          ) : mintTitle === "conflux" ? (
+                            <hr className="gray-divider" />
                             <span
                               className="limit-span position-relative d-flex align-items-center gap-2"
                               style={{ bottom: "0px" }}
@@ -779,171 +992,15 @@ const MarketMint = ({
                               Available only on Conflux Network
                               <img src={confluxLogo} alt="" />
                             </span>
-                          ) : mintTitle === "avax" ? (
-                            <span
-                              className="limit-span position-relative d-flex align-items-center gap-2"
-                              style={{ bottom: "0px" }}
-                            >
-                              Available only on Avalanche Network
-                              <img
-                                src={avaxLogo}
-                                alt=""
-                                width={16}
-                                height={16}
-                              />
-                            </span>
-                          ) : mintTitle === "base" ? (
-                            <span
-                              className="limit-span position-relative d-flex align-items-center gap-2"
-                              style={{ bottom: "0px" }}
-                            >
-                              Available only on Base Network
-                              <img src={baseLogo} alt="" />
-                            </span>
-                          ) : mintTitle === "coin98" ||
-                            mintTitle === "coingecko" ||
-                            mintTitle === "kucoin" ||
-                            mintTitle === "gate" ? (
-                            <span
-                              className="limit-span position-relative d-flex align-items-center gap-2"
-                              style={{ bottom: "0px" }}
-                            >
-                              Available only on BNB Chain
-                              <img src={bnbLogo} alt="" />
-                            </span>
-                          ) : null}
-                          <hr className="mint-divider m-0" />
-                          {/* {cawsArray.length > 0 && nftCount > 0 && (
-            <span className="land-name">
-              Number of CAWS NFTs left after minting:{" "}
-              <span
-                className="addr-text"
-                style={{ color: "rgb(123, 216, 176)" }}
-              >
-                {cawsArray.length - nftCount}
-              </span>
-            </span>
-          )}  */}
-                          {mintStatus.length > 0 && (
-                            <span
-                              style={{ color: textColor }}
-                              className={
-                                mintStatus.includes("Success")
-                                  ? "mint-span-success"
-                                  : "mint-span"
-                              }
-                            >
-                              {mintStatus}
-                            </span>
-                          )}
-                          <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
-                            <div className="d-flex flex-column flex-lg-row align-items-center align-items-lg-center justify-content-xxl-end justify-content-lg-end justify-content-center w-100">
-                              <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
-                                <div
-                                  className={
-                                    (isConnected === true &&
-                                      chainId !== 1 &&
-                                      cawsArray.length === 0) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    (isConnected === true &&
-                                      chainId === 1 &&
-                                      cawsArray.length === 0)
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }
-                                >
-                                  <button
-                                    className={`btn ${
-                                      mintloading === "error"
-                                        ? "filled-error-btn"
-                                        : (isConnected === true &&
-                                            chainId !== 1 &&
-                                            cawsArray.length === 0) ||
-                                          (status !== "Connect your wallet." &&
-                                            status !== "") ||
-                                          (isConnected === true &&
-                                            chainId === 1 &&
-                                            cawsArray.length === 0)
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
-                                    onClick={() => {
-                                      isConnected === true && chainId === 1
-                                        ? handleCreate()
-                                        : showWalletConnect();
-                                    }}
-                                    disabled={
-                                      mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true && chainId !== 1) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      (isConnected === true &&
-                                        chainId === 1 &&
-                                        cawsArray.length === 0)
-                                        ? true
-                                        : false
-                                    }
-                                    onMouseEnter={() => {
-                                      setMouseOver(true);
-                                    }}
-                                    onMouseLeave={() => {
-                                      setMouseOver(false);
-                                    }}
-                                  >
-                                    {(isConnected === false ||
-                                      chainId !== 1) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
-                                    {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 1 ? (
-                                      "Mint"
-                                    ) : mintloading === "mint" &&
-                                      isConnected === true &&
-                                      chainId === 1 ? (
-                                      <>
-                                        <div
-                                          className="spinner-border "
-                                          role="status"
-                                        ></div>
-                                      </>
-                                    ) : mintloading === "error" &&
-                                      isConnected === true &&
-                                      chainId === 1 ? (
-                                      "Failed"
-                                    ) : mintloading === "success" &&
-                                      isConnected === true &&
-                                      activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 1) ? (
-                                      "Success"
-                                    ) : isConnected === true &&
-                                      chainId !== 1 ? (
-                                      " Switch Chain"
-                                    ) : (
-                                      "Connect wallet"
-                                    )}
-                                  </button>
-                                </div>
+                            <hr className="gray-divider" />
+                            <div className="d-flex w-100 justify-content-center">
+                              <div className="linear-border ">
+                                <button className="filled-btn px-4 py-1">Mint</button>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </>
                   )}
                 </>

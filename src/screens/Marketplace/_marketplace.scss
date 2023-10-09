@@ -2923,3 +2923,38 @@
     justify-content: center;
   }
 }
+
+.dark-wrapper{
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.12);
+}
+.latest-mint{
+  color: #B8B8E0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.latest-mint-number{
+  color: #FFF;
+  text-align: right;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.latest-mint-currency{
+  color: #7DD9AF;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.gray-divider{
+  background: #4F4770;
+  width: 100%;
+  height: 3px;
+  margin: 0;
+}
