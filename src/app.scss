@@ -289,6 +289,8 @@ body {
     white-space: pre;
     border: none;
     outline: none;
+    pointer-events: none;
+    opacity: 0.4;
   }
 
   .simple-btn {

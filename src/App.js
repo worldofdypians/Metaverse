@@ -142,6 +142,7 @@ function App() {
   const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
   const [totalGateNft, setTotalGateNft] = useState(0);
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
+  const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
@@ -481,6 +482,8 @@ function App() {
       getMyNFTS(coinbase, "conflux").then((NFTS) => {
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
+        setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmyConfluxNFTsCreated(NFTS); 
       });
     } else {
       setMyNFTSCaws([]);
@@ -765,8 +768,8 @@ function App() {
     }
   };
 
-  const handleConfluxNftMint = async()=>{
-    if(isConnected && coinbase) {
+  const handleConfluxNftMint = async () => {
+    if (isConnected && coinbase) {
       try {
         //Check Whitelist
         let whitelist = 1;
@@ -786,6 +789,11 @@ function App() {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
+              getMyNFTS(coinbase, "conflux").then((NFTS) => {
+                setmyConfluxNFTsCreated(NFTS);
+                setTotalConfluxNft(NFTS.length);
+                setconfluxMintAllowed(0);
+              });
             })
             .catch((e) => {
               console.error(e);
@@ -804,11 +812,6 @@ function App() {
                 setmintStatus("");
               }, 5000);
             });
-
-          if (tokenId) {
-            let getNftData = await window.getMyNFTs(coinbase,'conflux');
-            setmyConfluxNFTsCreated(getNftData);
-          }
         } else {
           // setShowWhitelistLoadingModal(true);
         }
@@ -835,7 +838,7 @@ function App() {
         }, 5000);
       }
     }
-  }
+  };
 
   const getBoughtNFTS = async () => {
     let boughtItems = [];
@@ -1108,6 +1111,7 @@ function App() {
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
   ethereum?.on("accountsChanged", checkConnection2);
+  // ethereum?.on("accountsChanged", fetchAllMyNfts);
 
   useEffect(() => {
     if (ethereum && !window.gatewallet) {
@@ -2121,6 +2125,7 @@ function App() {
                   timepieceMetadata={timepieceMetadata}
                   myConfluxNFTsCreated={myConfluxNFTsCreated}
                   handleConfluxMint={handleConfluxNftMint}
+                  confluxMintAllowed={confluxMintAllowed}
                 />
               }
             />
