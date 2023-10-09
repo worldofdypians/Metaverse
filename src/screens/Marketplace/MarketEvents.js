@@ -1115,10 +1115,10 @@ const MarketEvents = ({
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
-                      Base area, players not only stand a chance to secure daily
+                      downtown area, players not only stand a chance to secure daily
                       rewards in ETH, but also earn points for their placement
                       on the global leaderboard. Remember to log in to the game
-                      daily and venture into the Base area to uncover hidden
+                      daily and venture into the downtown area to uncover hidden
                       treasures.
                     </p>
                   )}
