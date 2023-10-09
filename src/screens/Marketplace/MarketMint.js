@@ -51,6 +51,8 @@ const MarketMint = ({
   cawsArray,
   calculateCaws,
   timepieceMetadata,
+  handleConfluxMint,
+  myConfluxNFTsCreated
 }) => {
   // const avaxData = {
   //   id: "avax",
