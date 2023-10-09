@@ -1146,7 +1146,7 @@
 
 .upcoming-mint-wrapper {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181b38 0%, #3e2313 168.67%);
+  // background: linear-gradient(90deg, #181b38 0%, #3e2313 168.67%);
 
   .upcoming-mint-title {
     color: #fff;
@@ -1172,6 +1172,7 @@
     }
   }
 }
+
 
 .nft-dropdown-item:hover {
   background: linear-gradient(
