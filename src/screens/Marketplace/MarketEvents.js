@@ -49,6 +49,8 @@ import eventPopupImage from "../Account/src/Components/WalletBalance/assets/even
 import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
+import eventPopupImageBase from "../Account/src/Components/WalletBalance/assets/eventPopupImageBase.png";
+
 
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
@@ -326,26 +328,26 @@ const MarketEvents = ({
       title: "Base",
       logo: base,
       eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in BASE Rewards",
+      totalRewards: "$5,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
+      eventDate: "Coming Soon",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
         title: "Base",
-        chain: "BNB Chain",
+        chain: "Base Network",
         linkState: "base",
         rewards: "BASE",
         status: "Coming Soon",
         id: "event4",
-        totalRewards: "$3,000 in BASE Rewards",
+        totalRewards: "$5,000 in ETH Rewards",
         eventDuration: gateLastDay,
-        eventDate: "October 20, 2023",
-        minRewards: "1",
+        eventDate: "Coming Soon",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
+        maxPoints: "30,000",
       },
     },
   ];
@@ -977,6 +979,8 @@ const MarketEvents = ({
                         ? eventPopupImageGecko
                         : dummyEvent.linkState === "gate"
                         ? gatePopupImage
+                        : dummyEvent.linkState === "base"
+                        ? eventPopupImageBase
                         : eventPopupImage
                     }
                     alt=""
@@ -1009,7 +1013,7 @@ const MarketEvents = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status !== "Live" && (
+                {dummyEvent?.status !== "Live" && dummyEvent.id !== 'event4' && (
                   <div className="d-flex flex-column">
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">
@@ -1112,7 +1116,7 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE, but also earn points for their placement
+                      rewards in ETH, but also earn points for their placement
                       on the global leaderboard. Remember to log in to the game
                       daily and venture into the Base area to uncover hidden
                       treasures.
@@ -1148,7 +1152,7 @@ const MarketEvents = ({
                         ? "AVAX"
                         : dummyEvent.id === "event6"
                         ? "GT"
-                        : "BASE"}{" "}
+                        : "ETH"}{" "}
                       rewards
                     </li>
                     <li className="popup-event-desc">
@@ -1356,7 +1360,7 @@ const MarketEvents = ({
                         ? "AVAX"
                         : dummyEvent.id === "event6"
                         ? "GT"
-                        : "BASE"}
+                        : "ETH"}
                     </span>
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>

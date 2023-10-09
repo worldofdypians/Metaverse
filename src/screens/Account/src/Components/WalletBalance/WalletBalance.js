@@ -60,6 +60,8 @@ import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
+import eventPopupImageBase from "./assets/eventPopupImageBase.png";
+
 import gatePopupImage from "./assets/gatePopupImage.png";
 import confluxPopupImage from "./assets/eventPopupImage.png";
 import Countdown from "react-countdown";
@@ -1137,13 +1139,23 @@ const WalletBalance = ({
     eventType: "Explore & Mine",
   };
   const dummyBase = {
-    title: "Base Pass",
-    chain: "BNB Chain",
-    linkState: "base",
-    rewards: "CFX",
-    status: "Expired",
-    id: "event4",
-    eventType: "Explore & Mine",
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Coming Soon",
+        id: "event4",
+        date: "Coming Soon",
+        totalRewards: "$5,000 in ETH Rewards",
+        eventDuration: gateLastDay,
+        backgroundImage: baseUpcoming,
+        logo: base,
+        date: "Coming Soon",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
   };
 
   const dummyBetaPassData = [
@@ -1309,58 +1321,58 @@ const WalletBalance = ({
 
       },
     },
-    {
-      title: "Gate.io",
-      logo: gate,
-      eventStatus: "Coming Soon",
-      totalRewards: "$3,000 in GT Rewards",
-      myEarnings: 0,
-      eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
-      backgroundImage: gateUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Gate.io",
-        chain: "BNB Chain",
-        linkState: "gate",
-        rewards: "GT",
-        status: "Coming Soon",
-        id: "event6",
-        totalRewards: "$3,000 in GT Rewards",
-        eventDuration: gateLastDay,
-        eventDate: "October 20, 2023",
-        date: "Oct 20, 2023",
-        minRewards: "1",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-      },
-    },
+    // {
+    //   title: "Gate.io",
+    //   logo: gate,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$3,000 in GT Rewards",
+    //   myEarnings: 0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "October 20, 2023",
+    //   backgroundImage: gateUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Gate.io",
+    //     chain: "BNB Chain",
+    //     linkState: "gate",
+    //     rewards: "GT",
+    //     status: "Coming Soon",
+    //     id: "event6",
+    //     totalRewards: "$3,000 in GT Rewards",
+    //     eventDuration: gateLastDay,
+    //     eventDate: "October 20, 2023",
+    //     date: "Oct 20, 2023",
+    //     minRewards: "1",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //   },
+    // },
     {
       title: "Base",
       logo: base,
       eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in BASE Rewards",
+      totalRewards: "$5,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
+      eventDate: "Coming Soon",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
         title: "Base",
-        chain: "BNB Chain",
+        chain: "Base Chain",
         linkState: "base",
-        rewards: "BASE",
+        rewards: "ETH",
         status: "Coming Soon",
         id: "event4",
-        date: "Oct 20, 2023",
-        totalRewards: "$3,000 in BASE Rewards",
+        date: "Coming Soon",
+        totalRewards: "$5,000 in ETH Rewards",
         eventDuration: gateLastDay,
-        eventDate: "October 20, 2023",
-        minRewards: "1",
+        eventDate: "Coming Soon",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
+        maxPoints: "30,000",
       },
     },
   ];
@@ -1492,10 +1504,10 @@ const WalletBalance = ({
               />
               <UpcomingProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyGate);
+                  setDummyEvent(dummyBase);
                   setEventPopup(true);
                 }}
-                data={dummyGate}
+                data={dummyBase}
               />
               {/* <img
                 src={eventSkeleton}
@@ -3808,6 +3820,8 @@ const WalletBalance = ({
                         ? confluxPopupImage
                         : dummyEvent?.linkState === "gate"
                         ? gatePopupImage
+                        : dummyEvent?.linkState === "base"
+                        ? eventPopupImageBase
                         : coingeckoPopupImage
                     }
                     alt=""
@@ -3840,7 +3854,7 @@ const WalletBalance = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status === "Coming Soon" && (
+                {dummyEvent?.status === "Coming Soon" && dummyEvent?.id !== 'event4' && (
                   <div className="d-flex flex-column">
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">
@@ -3926,7 +3940,7 @@ const WalletBalance = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Base area, players not only stand a chance to secure daily
-                      rewards in BASE, but also earn points for their placement
+                      rewards in ETH, but also earn points for their placement
                       on the global leaderboard. Remember to log in to the game
                       daily and venture into the Base area to uncover hidden
                       treasures.
@@ -4160,7 +4174,7 @@ const WalletBalance = ({
                         ? "AVAX"
                         : dummyEvent.id === "event6"
                         ? "GT"
-                        : "BASE"}
+                        : "ETH"}
                     </span>
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>
