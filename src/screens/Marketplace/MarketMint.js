@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
@@ -16,6 +16,25 @@ import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import marketMintBanner from "./assets/marketMintBanner.png";
 import confluxUpcoming from "./assets/confluxUpcoming.png";
+import EventSliderCard from "./components/EventSliderCard";
+import Slider from "react-slick";
+import nextArrow from "./assets/nextArrow1.svg";
+import confluxActive from "./assets/confluxActive.png";
+import coin98Active from "./assets/coin98Active.png";
+import coingeckoActive from "./assets/coingeckoActive.png";
+import baseActive from "./assets/baseActive.png";
+import timepieceActive from "./assets/timepieceActive.png";
+import gateActive from "./assets/gateActive.png";
+import kucoinActive from "./assets/kucoinActive.png";
+import blockChainIcon from "./assets/blockChainIcon.svg";
+import confluxLogo from "./assets/confluxLogo.svg";
+import baseLogo from "./assets/baseLogo.svg";
+import avaxLogo from "./assets/avaxLogo.svg";
+import bnbLogo from "./assets/bnbLogo.svg";
+import wodLogo from "./assets/wodIcon.png";
+import openSeaLogo from "./assets/openSeaLogo.png";
+import BetaEventCard from "./components/BetaEventCard";
+import { useLocation, useParams } from "react-router-dom";
 
 const MarketMint = ({
   showWalletConnect,
@@ -33,7 +52,67 @@ const MarketMint = ({
   calculateCaws,
   timepieceMetadata,
 }) => {
+  // const avaxData = {
+  //   id: "avax",
+  //   cardTitle: "Avalanche Beta Pass",
+  //   title: "Avalanche Beta Pass",
+  //   background: "avax-mint-bg",
+  //   mobileBg: "avaxMobileBg.png",
+  // };
+  // const gateData = {
+  //   id: "gate",
+  //   cardTitle: "Gate.Io Beta Pass",
+  //   title: "Gate.Io Beta Pass",
+  //   background: "gate-mint-bg2",
+  //   mobileBg: "gateMobileBg.png",
+  // };
+  // const kucoinData = {
+  //   id: "kucoin",
+  //   cardTitle: "KuCoin Beta Pass",
+  //   title: "KuCoin Beta Pass",
+  //   background: "kucoin-mint-bg",
+  //   mobileBg: "kucoinMobileBg.png",
+  // };
+  const confluxData = {
+    id: "conflux",
+    cardTitle: "Conflux Beta Pass",
+    title: "Conflux Beta Pass",
+    background: "conflux-mint-bg",
+    mobileBg: "confluxMobileBg.png",
+  };
+
+  const timepieceData = {
+    id: "timepiece",
+    cardTitle: "Caws Timepiece",
+    title: "Timepiece",
+    background: "market-mint-bg",
+    mobileBg: "timepieceMobileBg.png",
+  };
+  // const coin98Data = {
+  //   id: "coin98",
+  //   cardTitle: "Coin98 Beta Pass",
+  //   title: "Coin98 Beta Pass",
+  //   background: "coin98-mint-bg",
+  //   mobileBg: "coin98MobileBg.png",
+  // };
+  // const coingeckoData = {
+  //   id: "coingecko",
+  //   cardTitle: "Coingecko Beta Pass",
+  //   title: "Coingecko Beta Pass",
+  //   background: "coingecko-mint-bg",
+  //   mobileBg: "coingeckoMobileBg.png",
+  // };
+
+  // const baseData = {
+  //   id: "base",
+  //   cardTitle: "Base Beta Pass",
+  //   title: "Base Beta Pass",
+  //   background: "base-mint-bg",
+  //   mobileBg: "baseMobileBg.png",
+  // };
+
   const windowSize = useWindowSize();
+  const params = useParams();
   const [viewCollection, setViewCollection] = useState(false);
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
@@ -47,6 +126,154 @@ const MarketMint = ({
   const [countdownFinished, setCountdownFinished] = useState(true);
   const [latestMintId, setlatestMintId] = useState(0);
   const [activeTab, setActiveTab] = useState("live");
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [showFirstNext, setShowFirstNext] = useState(false);
+  const [selectedMint, setSelectedMint] = useState();
+  const [mintTitle, setMintTitle] = useState(params.mintId);
+  const [sliderCut, setSliderCut] = useState();
+  const slider = useRef(null);
+
+  useEffect(() => {
+    if (params.mintId === "conflux") {
+      setSelectedMint(confluxData);
+    } else if (params.mintId === "timepiece") {
+      setSelectedMint(timepieceData);
+    }
+    console.log(selectedMint, params.mintId, "location");
+  }, [params.mintId]);
+
+  const dummyCards = [
+    // {
+    //   title: "Avalanche Pass",
+    //   eventId: "avax",
+    //   desc: "Gain entry to metaverse, and join exclusive Avalanche event with special ticket.",
+    //   img: baseActive,
+    //   data: avaxData,
+    //   class: "mint-1",
+    // },
+    // {
+    //   title: "KuCoin Pass",
+    //   eventId: "kucoin",
+    //   desc: "Gain entry to metaverse, and join exclusive KuCoin event with special ticket.",
+    //   img: kucoinActive,
+    //   data: kucoinData,
+    //   class: "mint-2",
+    // },
+    // {
+    //   title: "Gate.Io Pass",
+    //   eventId: "gate",
+    //   desc: "Gain entry to metaverse, and join exclusive Gate.Io event with special ticket.",
+    //   img: gateActive,
+    //   data: gateData,
+    //   class: "mint-3",
+    // },
+
+    {
+      title: "Conflux Pass",
+      eventId: "conflux",
+      desc: "Gain entry to metaverse, and join exclusive Conflux event with special ticket.",
+      img: confluxActive,
+      data: confluxData,
+      class: "mint-4",
+    },
+    // {
+    //   title: "Coin98 Pass",
+    //   eventId: "coin98",
+    //   desc: "Gain entry to metaverse, and join exclusive Coin98 event with special ticket.",
+    //   img: coin98Active,
+    //   data: coin98Data,
+    //   class: "mint-5",
+    // },
+    // {
+    //   title: "Coingecko Pass",
+    //   eventId: "coingecko",
+    //   desc: "Gain entry to metaverse, and join exclusive Coingecko event with special ticket.",
+    //   img: coingeckoActive,
+    //   data: coingeckoData,
+    //   class: "mint-6",
+    // },
+    // {
+    //   title: "Base Pass",
+    //   eventId: "base",
+    //   desc: "Gain entry to metaverse, and join exclusive Base event with special ticket.",
+    //   img: baseActive,
+    //   data: baseData,
+    //   class: "mint-7",
+    // },
+    {
+      title: "Caws Timepiece",
+      eventId: "timepiece",
+      desc: "Access the metaverse, experience enhanced interactions, and enjoy diverse benefits.",
+      img: timepieceActive,
+      data: timepieceData,
+      class: "mint-8",
+    },
+  ];
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    beforeChange: (current, next) => {
+      setActiveSlide(next);
+      setShowFirstNext(current);
+    },
+    afterChange: (current) => setActiveSlide(current),
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
+
+  const firstNext = () => {
+    slider.current.slickNext();
+  };
+  const firstPrev = () => {
+    slider.current.slickPrev();
+  };
 
   const handleViewCollection = () => {
     setViewCollection(true);
@@ -164,8 +391,7 @@ const MarketMint = ({
     <>
       <div
         className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
-        style={{ minHeight: "72vh", maxWidth: '2400px' }}
-
+        style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
         <div
@@ -200,270 +426,392 @@ const MarketMint = ({
               <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
                 NFT <span style={{ color: "#8c56ff" }}> Minting</span>
               </h6>
-            <div className="d-flex flex-column">
-            <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-                <h6
-                  className={`new-stake-tab ${
-                    activeTab === "live" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("live")}
-                >
-                  Live
-                </h6>
-                <h6
-                  className={`new-stake-tab position-relative ${
-                    activeTab === "upcoming" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("upcoming")}
-                >
+              <div className="d-flex flex-column">
+                <div className="d-flex w-100 align-items-center justify-content-center gap-4">
+                  <h6
+                    className={`new-stake-tab position-relative ${
+                      activeTab === "live" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("live")}
+                  >
                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
-                  Upcoming
-                </h6>
-                <h6
-                  className={`new-stake-tab ${
-                    activeTab === "past" && "stake-tab-active"
-                  } px-3 py-2`}
-                  onClick={() => setActiveTab("past")}
-                >
-                  Past
-                </h6>
+                    Live
+                  </h6>
+                  <h6
+                    className={`new-stake-tab position-relative ${
+                      activeTab === "upcoming" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("upcoming")}
+                  >
+                    Upcoming
+                  </h6>
+                  <h6
+                    className={`new-stake-tab ${
+                      activeTab === "past" && "stake-tab-active"
+                    } px-3 py-2`}
+                    onClick={() => setActiveTab("past")}
+                  >
+                    Past
+                  </h6>
+                </div>
+                <span className="w-100 new-stake-divider mt-3 mb-5"></span>
               </div>
-              <span className="w-100 new-stake-divider mt-3 mb-5"></span>
-            </div>
 
               {activeTab === "live" && (
                 <>
-                  <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
-                    <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
-                      <div className="d-flex flex-column position-relative">
-                        {showBadge && totalCreated > 0 && (
-                          <div className="totalcreated">
-                            <span>{totalCreated}</span>
+                  <div className="pb-5 px-0 position-relative">
+                    {/* {activeSlide > 0 && (
+                      <div className="prev-arrow-nft" onClick={firstPrev}>
+                        <img src={nextArrow} alt="" />
+                      </div>
+                    )}
+                    {showFirstNext === activeSlide
+                      ? null
+                      : dummyCards.length > sliderCut && (
+                          <div className="next-arrow-nft" onClick={firstNext}>
+                            <img src={nextArrow} alt="1" />
                           </div>
-                        )}
-                        <div
-                          className={`genesis-wrapper ${
-                            totalCreated > 0
-                              ? "genesis-land"
-                              : "genesis-land-empty"
-                          } d-flex justify-content-center align-items-center p-3 position-relative`}
-                          style={{ height: 312 }}
-                        >
-                          <img
-                            src={dummyBadge}
-                            className="genesis-badge"
-                            style={{ visibility: "hidden" }}
-                            alt="badge"
-                          />
+                        )} */}
+                    {windowSize.width < 480 && (
+                      <>
+                        <div className="prev-arrow-nft" onClick={firstPrev}>
+                          <img src={nextArrow} alt="" />
                         </div>
-                        <div
-                          className="genesis-desc position-relative"
-                          style={{ bottom: "5px" }}
-                        >
-                          <h6 className="font-organetto land-desc w-75">
-                            CAWS TIMEPIECE
-                          </h6>
+                        <div className="next-arrow-nft" onClick={firstNext}>
+                          <img src={nextArrow} alt="1" />
+                        </div>
+                      </>
+                    )}
+                    <Slider ref={(c) => (slider.current = c)} {...settings}>
+                      {dummyCards.map((item, index) => (
+                        <EventSliderCard
+                          key={index}
+                          data={item}
+                          onSelectCard={() => {
+                            setSelectedMint(item.data);
+                            setMintTitle(item.eventId);
+                          }}
+                          mintTitle={mintTitle}
+                        />
+                      ))}
+                    </Slider>
+                  </div>
+                  {selectedMint && (
+                    <>
+                      <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
+                        <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
+                          <div className="d-flex flex-column position-relative">
+                            {showBadge && totalCreated > 0 && (
+                              <div className="totalcreated">
+                                <span>{totalCreated}</span>
+                              </div>
+                            )}
+                            <div
+                              className={`genesis-wrapper ${
+                                mintTitle !== "timepiece"
+                                  ? "conflux-empty"
+                                  : totalCreated > 0
+                                  ? "genesis-land"
+                                  : "genesis-land-empty"
+                              } d-flex justify-content-center align-items-center p-3 position-relative`}
+                              style={{ height: 312 }}
+                            >
+                              <img
+                                src={dummyBadge}
+                                className="genesis-badge"
+                                style={{ visibility: "hidden" }}
+                                alt="badge"
+                              />
+                            </div>
+                            <div
+                              className="genesis-desc position-relative"
+                              style={{ bottom: "5px" }}
+                            >
+                              <h6 className="font-organetto land-desc w-75">
+                                {selectedMint?.cardTitle}
+                              </h6>
+                            </div>
+                          </div>
+                          <div
+                            className={
+                              isConnected === false ||
+                              activeButton === false ||
+                              totalCreated === 0
+                                ? "linear-border-disabled"
+                                : "linear-border"
+                            }
+                          >
+                            <button
+                              className={`btn ${
+                                isConnected === false ||
+                                activeButton === false ||
+                                totalCreated === 0
+                                  ? "outline-btn-disabled"
+                                  : "outline-btn"
+                              } px-5 w-100`}
+                              disabled={
+                                isConnected === false ||
+                                activeButton === false ||
+                                totalCreated === 0
+                              }
+                              onClick={handleViewCollection}
+                            >
+                              View collection
+                            </button>
+                          </div>
                         </div>
                       </div>
                       <div
-                        className={
-                          isConnected === false ||
-                          activeButton === false ||
-                          totalCreated === 0
-                            ? "linear-border-disabled"
-                            : "linear-border"
-                        }
+                        className="col-12 col-md-12 col-xxl-5 mt-0 px-0"
+                        style={{ overflowX: "hidden" }}
                       >
-                        <button
-                          className={`btn ${
-                            isConnected === false ||
-                            activeButton === false ||
-                            totalCreated === 0
-                              ? "outline-btn-disabled"
-                              : "outline-btn"
-                          } px-5 w-100`}
-                          disabled={
-                            isConnected === false ||
-                            activeButton === false ||
-                            totalCreated === 0
-                          }
-                          onClick={handleViewCollection}
+                        <div
+                          className={`p-4 mint-wrappernew ${selectedMint?.background} w-100 m-0 d-flex flex-column gap-5 justify-content-start staking-height`}
+                          style={{ minHeight: "463px" }}
                         >
-                          View collection
-                        </button>
+                          <h6 className="marketmintnewtitle position-relative">
+                            Mint your {selectedMint?.title} <br />
+                            NFT
+                            <span className="marketmintnewtitle-marked mx-2">
+                              now!
+                            </span>
+                          </h6>
+                          <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
+                            <div className="mint-benefits-grid">
+                              {benefits.map((item) => (
+                                <div className="d-flex align-items-center gap-2">
+                                  <img
+                                    src={require(`../../components/TimepieceMint/assets/${item.icon}.png`)}
+                                    alt=""
+                                    style={{
+                                      scale:
+                                        item.icon === "expand" ? "0.8" : "1",
+                                    }}
+                                  />
+                                  <span className="mint-benefits-title">
+                                    {item.title}
+                                  </span>
+                                </div>
+                              ))}
+                              {mintTitle === "conflux" ? (
+                                <div className="d-flex align-items-center gap-2">
+                                  <img
+                                    src={blockChainIcon}
+                                    width={40}
+                                    height={40}
+                                    alt=""
+                                  />
+                                  <span className="mint-benefits-title">
+                                    Minting is available on Conflux Network
+                                  </span>
+                                </div>
+                              ) : mintTitle === "base" ? (
+                                <div className="d-flex align-items-center gap-2">
+                                  <img
+                                    src={blockChainIcon}
+                                    width={40}
+                                    height={40}
+                                    alt=""
+                                  />
+                                  <span className="mint-benefits-title">
+                                    Minting is available on Base Network
+                                  </span>
+                                </div>
+                              ) : mintTitle === "coingecko" ||
+                                mintTitle === "coin98" ? (
+                                <div className="d-flex align-items-center gap-2">
+                                  <img
+                                    src={blockChainIcon}
+                                    width={40}
+                                    height={40}
+                                    alt=""
+                                  />
+                                  <span className="mint-benefits-title">
+                                    Minting is available on BNB Chain
+                                  </span>
+                                </div>
+                              ) : null}
+                            </div>
+                          </div>
+                          <img
+                            src={require(`../../components/TimepieceMint/assets/${selectedMint?.mobileBg}`)}
+                            className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
+                            alt=""
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div
-                    className="col-12 col-md-12 col-xxl-5 mt-0 px-0"
-                    style={{ overflowX: "hidden" }}
-                  >
-                    <div
-                      className="p-4 mint-wrappernew market-mint-bg w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height"
-                      style={{ minHeight: "463px" }}
-                    >
-                      {/* <img
-            src={require("../../components/TimepieceMint/assets/timepiecehero.webp")}
-            alt=""
-            className="minthero d-none d-xl-flex d-lg-flex"
-          /> */}
-                      <h6 className="marketmintnewtitle position-relative">
-                        Mint your Timepiece <br />
-                        NFT
-                        <span className="marketmintnewtitle-marked mx-2">
-                          now!
-                        </span>
-                      </h6>
-                      <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
-                        <div className="mint-benefits-grid">
-                          {benefits.map((item) => (
-                            <div className="d-flex align-items-center gap-2">
-                              <img
-                                src={require(`../../components/TimepieceMint/assets/${item.icon}.png`)}
-                                alt=""
-                                style={{
-                                  scale: item.icon === "expand" ? "0.8" : "1",
-                                }}
-                              />
-                              <span className="mint-benefits-title">
-                                {item.title}
+                      <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
+                        <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
+                          <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
+                            <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
+                              <span className="land-name">
+                                Available NFTs to mint:{" "}
+                                <span
+                                  className="addr-text"
+                                  style={{ color: "rgb(123, 216, 176)" }}
+                                >
+                                  {cawsArray.length}
+                                </span>
                               </span>
                             </div>
-                          ))}
-                        </div>
-                      </div>
-          <img src={require('./assets/smallMintBg.png')} alt='' className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"/>
-
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
-                    <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
-                      <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
-                        <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
-                          <span className="land-name">
-                            Available NFTs to mint:{" "}
-                            <span
-                              className="addr-text"
-                              style={{ color: "rgb(123, 216, 176)" }}
-                            >
-                              {cawsArray.length}
-                            </span>
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
-                        <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-                          <span className="land-name">Name</span>
-                          <div
-                            className="borderText borderText2"
-                            style={{ width: "100%" }}
-                          >
-                            <h6
-                              className="land-placeholder mb-0"
-                              style={{ marginLeft: 11 }}
-                            >
-                              {nftName === "" ? "" : `Caws Timepiece`}
-                            </h6>
                           </div>
-                        </div>
-                        <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-                          <span className="land-name">Latest Mint</span>
-                          <h6
-                            className="land-placeholder borderText"
-                            style={{
-                              fontSize: "12px",
-                              paddingLeft: 14,
-                              lineHeight: "40px",
-                            }}
-                          >
-                            # {latestMintId}
-                          </h6>
-                        </div>
-                      </div>
-                      <hr className="mint-divider m-0" />
-                      <div className="d-flex align-items-center justify-content-between position-relative gap-3">
-                        <div className="input-container position-relative col-8 col-lg-6">
-                          <input
-                            type="number"
-                            placeholder="Nr. of CAWS Timepiece NFT to create"
-                            max={cawsArray.length}
-                            min={1}
-                            className="land-input w-100"
-                            value={parseInt(nftCount)}
-                            onChange={(e) =>
-                              setNftCount(parseInt(e.target.value))
-                            }
-                          />
-                        </div>
 
-                        <div className="d-flex align-items-center gap-3">
-                          <img
-                            src={
-                              nftCount > 1 &&
-                              isConnected === true &&
-                              activeButton === true &&
-                              status === ""
-                                ? subtractActive
-                                : subtractInactive
-                            }
-                            alt="subtract"
-                            onClick={subtractNft}
-                            style={{
-                              cursor:
-                                isConnected === true && activeButton === true
-                                  ? "pointer"
-                                  : "default",
-                              pointerEvents:
-                                isConnected === true &&
-                                activeButton === true &&
-                                status === ""
-                                  ? "auto"
-                                  : "none",
-                            }}
-                          />
-                          <img
-                            src={
-                              nftCount < cawsArray.length &&
-                              nftCount >= 1 &&
-                              isConnected === true &&
-                              activeButton === true &&
-                              status === ""
-                                ? addActive
-                                : addInactive
-                            }
-                            alt="add"
-                            onClick={addNft}
-                            style={{
-                              cursor:
-                                isConnected === true && activeButton === true
-                                  ? "pointer"
-                                  : "default",
-                              pointerEvents:
-                                isConnected === true &&
-                                activeButton === true &&
-                                status === ""
-                                  ? "auto"
-                                  : "none",
-                            }}
-                          />
-                        </div>
-                      </div>
-                      <span
-                        className="limit-span position-relative"
-                        style={{
-                          color: nftStatus.includes("Exceeded")
-                            ? "#D87B7B"
-                            : "#FFFFFF",
-                          bottom: "auto",
-                        }}
-                      >
-                        {nftStatus}
-                      </span>
-                      <hr className="mint-divider m-0" />
-                      {/* {cawsArray.length > 0 && nftCount > 0 && (
+                          <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
+                            <div className="d-flex flex-column gap-2 col-12 col-lg-6">
+                              <span className="land-name">Name</span>
+                              <div
+                                className="borderText borderText2"
+                                style={{ width: "100%" }}
+                              >
+                                <h6
+                                  className="land-placeholder mb-0"
+                                  style={{ marginLeft: 11 }}
+                                >
+                                  {nftName === "" ? "" : selectedMint?.title}
+                                </h6>
+                              </div>
+                            </div>
+                            <div className="d-flex flex-column gap-2 col-12 col-lg-6">
+                              <span className="land-name">Latest Mint</span>
+                              <h6
+                                className="land-placeholder borderText"
+                                style={{
+                                  fontSize: "12px",
+                                  paddingLeft: 14,
+                                  lineHeight: "40px",
+                                }}
+                              >
+                                # {latestMintId}
+                              </h6>
+                            </div>
+                          </div>
+                          <hr className="mint-divider m-0" />
+                          <div className="d-flex align-items-center justify-content-between position-relative gap-3">
+                            <div className="input-container position-relative col-8 col-lg-6">
+                              <input
+                                type="number"
+                                placeholder="Nr. of CAWS Timepiece NFT to create"
+                                max={cawsArray.length}
+                                min={1}
+                                className="land-input w-100"
+                                value={parseInt(nftCount)}
+                                onChange={(e) =>
+                                  setNftCount(parseInt(e.target.value))
+                                }
+                              />
+                            </div>
+
+                            <div className="d-flex align-items-center gap-3">
+                              <img
+                                src={
+                                  nftCount > 1 &&
+                                  isConnected === true &&
+                                  activeButton === true &&
+                                  status === ""
+                                    ? subtractActive
+                                    : subtractInactive
+                                }
+                                alt="subtract"
+                                onClick={subtractNft}
+                                style={{
+                                  cursor:
+                                    isConnected === true &&
+                                    activeButton === true
+                                      ? "pointer"
+                                      : "default",
+                                  pointerEvents:
+                                    isConnected === true &&
+                                    activeButton === true &&
+                                    status === ""
+                                      ? "auto"
+                                      : "none",
+                                }}
+                              />
+                              <img
+                                src={
+                                  nftCount < cawsArray.length &&
+                                  nftCount >= 1 &&
+                                  isConnected === true &&
+                                  activeButton === true &&
+                                  status === ""
+                                    ? addActive
+                                    : addInactive
+                                }
+                                alt="add"
+                                onClick={addNft}
+                                style={{
+                                  cursor:
+                                    isConnected === true &&
+                                    activeButton === true
+                                      ? "pointer"
+                                      : "default",
+                                  pointerEvents:
+                                    isConnected === true &&
+                                    activeButton === true &&
+                                    status === ""
+                                      ? "auto"
+                                      : "none",
+                                }}
+                              />
+                            </div>
+                          </div>
+                          {mintTitle === "timepiece" ? (
+                            <span
+                              className="limit-span position-relative"
+                              style={{
+                                color: nftStatus.includes("Exceeded")
+                                  ? "#D87B7B"
+                                  : "#FFFFFF",
+                                bottom: "auto",
+                              }}
+                            >
+                              {nftStatus}
+                            </span>
+                          ) : mintTitle === "conflux" ? (
+                            <span
+                              className="limit-span position-relative d-flex align-items-center gap-2"
+                              style={{ bottom: "0px" }}
+                            >
+                              Available only on Conflux Network
+                              <img src={confluxLogo} alt="" />
+                            </span>
+                          ) : mintTitle === "avax" ? (
+                            <span
+                              className="limit-span position-relative d-flex align-items-center gap-2"
+                              style={{ bottom: "0px" }}
+                            >
+                              Available only on Avalanche Network
+                              <img
+                                src={avaxLogo}
+                                alt=""
+                                width={16}
+                                height={16}
+                              />
+                            </span>
+                          ) : mintTitle === "base" ? (
+                            <span
+                              className="limit-span position-relative d-flex align-items-center gap-2"
+                              style={{ bottom: "0px" }}
+                            >
+                              Available only on Base Network
+                              <img src={baseLogo} alt="" />
+                            </span>
+                          ) : mintTitle === "coin98" ||
+                            mintTitle === "coingecko" ||
+                            mintTitle === "kucoin" ||
+                            mintTitle === "gate" ? (
+                            <span
+                              className="limit-span position-relative d-flex align-items-center gap-2"
+                              style={{ bottom: "0px" }}
+                            >
+                              Available only on BNB Chain
+                              <img src={bnbLogo} alt="" />
+                            </span>
+                          ) : null}
+                          <hr className="mint-divider m-0" />
+                          {/* {cawsArray.length > 0 && nftCount > 0 && (
             <span className="land-name">
               Number of CAWS NFTs left after minting:{" "}
               <span
@@ -474,193 +822,201 @@ const MarketMint = ({
               </span>
             </span>
           )}  */}
-                      {mintStatus.length > 0 && (
-                        <span
-                          style={{ color: textColor }}
-                          className={
-                            mintStatus.includes("Success")
-                              ? "mint-span-success"
-                              : "mint-span"
-                          }
-                        >
-                          {mintStatus}
-                        </span>
-                      )}
-                      <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
-                        <div className="d-flex flex-column flex-lg-row align-items-center align-items-lg-center justify-content-xxl-end justify-content-lg-end justify-content-center w-100">
-                          <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
-                            <div
+                          {mintStatus.length > 0 && (
+                            <span
+                              style={{ color: textColor }}
                               className={
-                                (isConnected === true &&
-                                  chainId !== 1 &&
-                                  cawsArray.length === 0) ||
-                                (status !== "Connect your wallet." &&
-                                  status !== "") ||
-                                mintloading === "error" ||
-                                (isConnected === true &&
-                                  chainId === 1 &&
-                                  cawsArray.length === 0)
-                                  ? "linear-border-disabled"
-                                  : "linear-border"
+                                mintStatus.includes("Success")
+                                  ? "mint-span-success"
+                                  : "mint-span"
                               }
                             >
-                              <button
-                                className={`btn ${
-                                  mintloading === "error"
-                                    ? "filled-error-btn"
-                                    : (isConnected === true &&
-                                        chainId !== 1 &&
-                                        cawsArray.length === 0) ||
+                              {mintStatus}
+                            </span>
+                          )}
+                          <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
+                            <div className="d-flex flex-column flex-lg-row align-items-center align-items-lg-center justify-content-xxl-end justify-content-lg-end justify-content-center w-100">
+                              <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
+                                <div
+                                  className={
+                                    (isConnected === true &&
+                                      chainId !== 1 &&
+                                      cawsArray.length === 0) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    mintloading === "error" ||
+                                    (isConnected === true &&
+                                      chainId === 1 &&
+                                      cawsArray.length === 0)
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }
+                                >
+                                  <button
+                                    className={`btn ${
+                                      mintloading === "error"
+                                        ? "filled-error-btn"
+                                        : (isConnected === true &&
+                                            chainId !== 1 &&
+                                            cawsArray.length === 0) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                          (isConnected === true &&
+                                            chainId === 1 &&
+                                            cawsArray.length === 0)
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true && chainId === 1
+                                        ? handleCreate()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true && chainId !== 1) ||
                                       (status !== "Connect your wallet." &&
                                         status !== "") ||
                                       (isConnected === true &&
                                         chainId === 1 &&
                                         cawsArray.length === 0)
-                                    ? "outline-btn-disabled"
-                                    : "filled-btn"
-                                }  px-4 w-100`}
-                                onClick={() => {
-                                  isConnected === true && chainId === 1
-                                    ? handleCreate()
-                                    : showWalletConnect();
-                                }}
-                                disabled={
-                                  mintloading === "error" ||
-                                  mintloading === "success" ||
-                                  (isConnected === true && chainId !== 1) ||
-                                  (status !== "Connect your wallet." &&
-                                    status !== "") ||
-                                  (isConnected === true &&
-                                    chainId === 1 &&
-                                    cawsArray.length === 0)
-                                    ? true
-                                    : false
-                                }
-                                onMouseEnter={() => {
-                                  setMouseOver(true);
-                                }}
-                                onMouseLeave={() => {
-                                  setMouseOver(false);
-                                }}
-                              >
-                                {(isConnected === false || chainId !== 1) && (
-                                  <img
-                                    src={
-                                      mouseOver === false
-                                        ? blackWallet
-                                        : whitewallet
+                                        ? true
+                                        : false
                                     }
-                                    alt=""
-                                    style={{ width: "23px", height: "23px" }}
-                                  />
-                                )}{" "}
-                                {mintloading === "initial" &&
-                                isConnected === true &&
-                                chainId === 1 ? (
-                                  "Mint"
-                                ) : mintloading === "mint" &&
-                                  isConnected === true &&
-                                  chainId === 1 ? (
-                                  <>
-                                    <div
-                                      className="spinner-border "
-                                      role="status"
-                                    ></div>
-                                  </>
-                                ) : mintloading === "error" &&
-                                  isConnected === true &&
-                                  chainId === 1 ? (
-                                  "Failed"
-                                ) : mintloading === "success" &&
-                                  isConnected === true &&
-                                  activeButton ===
-                                    (isConnected === true && chainId === 1) ? (
-                                  "Success"
-                                ) : isConnected === true && chainId !== 1 ? (
-                                  " Switch Chain"
-                                ) : (
-                                  "Connect wallet"
-                                )}
-                              </button>
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {(isConnected === false ||
+                                      chainId !== 1) && (
+                                      <img
+                                        src={
+                                          mouseOver === false
+                                            ? blackWallet
+                                            : whitewallet
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    chainId === 1 ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      chainId === 1 ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      chainId === 1 ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          chainId === 1) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      chainId !== 1 ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    </>
+                  )}
                 </>
               )}
-             {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">Mints are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-                <div className="d-flex flex-column gap-4">
-                  <div className="upcoming-mint-wrapper-conflux upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by Conflux
-                      </p>
-                    </div>
-                    <img
-                      src={confluxUpcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
+              {activeTab === "upcoming" && (
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">Mints are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
                   </div>
-                  {/* <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by Coin98
-                      </p>
-                    </div>
-                    <img
-                      src={coin98Upcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
-                  </div>
-                  <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">
-                        CoinGecko Beta Pass
-                      </h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by
-                        CoinGecko
-                      </p>
-                    </div>
-                    <img
-                      src={coingeckoUpcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
-                  </div>
-                  <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Base Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted on Base
-                        Network
-                      </p>
-                    </div>
-                    <img
-                      src={baseUpcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
-                  </div> */}
                 </div>
+                // <div className="d-flex flex-column gap-4">
+                //   <div className="upcoming-mint-wrapper-conflux upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by Conflux
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={confluxUpcoming}
+                //       alt=""
+                //       className="upcoming-mint-img"
+                //     />
+                //   </div>
+                //   {/* <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by Coin98
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={coin98Upcoming}
+                //       alt=""
+                //       className="upcoming-mint-img"
+                //     />
+                //   </div>
+                //   <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">
+                //         CoinGecko Beta Pass
+                //       </h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by
+                //         CoinGecko
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={coingeckoUpcoming}
+                //       alt=""
+                //       className="upcoming-mint-img"
+                //     />
+                //   </div>
+                //   <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">Base Beta Pass</h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted on Base
+                //         Network
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={baseUpcoming}
+                //       alt=""
+                //       className="upcoming-mint-img"
+                //     />
+                //   </div> */}
+                // </div>
               )}
               {activeTab === "past" && (
                 <div className="row w-100 align-items-center gap-4 gap-lg-0 px-0">
@@ -674,7 +1030,7 @@ const MarketMint = ({
                         <div className="d-flex flex-column align-items-center">
                           <h6 className="past-land-mint-amount">1,000</h6>
                           <span className="past-caws-mint-desc">
-                          Minted World of Dypians Genesis Land NFTs
+                            Minted World of Dypians Genesis Land NFTs
                           </span>
                         </div>
                       </div>
