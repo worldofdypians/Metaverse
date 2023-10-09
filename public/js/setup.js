@@ -3375,8 +3375,7 @@ async function getContractConfluxNFT(key) {
 
   let address = window.config[key.toLowerCase() + "_address"];
   if (!window.cached_contracts[key]) {
-    window.web3 = new Web3(window.ethereum);
-    window.cached_contracts[key] = new window.web3.eth.Contract(
+    window.cached_contracts[key] = new window.confluxWeb3.eth.Contract(
       window.CONFLUX_NFT_ABI,
       address,
       {
@@ -3396,19 +3395,15 @@ class CONFLUX_NFT {
       "balanceOf",
       "baseURI",
       "ownerOf",
-      "betaPassPrice",
-      "costSaleIsActive",
       "getApproved",
       "isApprovedForAll",
       "maxBetaPassPurchase",
       "name",
-      "nextOwnerToExplicitlySet",
       "owner",
       "ownerOf",
       "saleIsActive",
       "startingIndex",
       "startingIndexBlock",
-      "supportsInterface",
       "symbol",
       "tokenByIndex",
       "tokenOfOwnerByIndex",
@@ -3421,14 +3416,14 @@ class CONFLUX_NFT {
       };
     });
 
-    // ["approve, costSaleState, flipSaleState, mintBetaPass, mintBetaPassCost, renounceOwnership, reserveBetaPass, safeTransferFrom, setApprovalForAll, setBaseURI, setBetaPassPrice, setProvernanceHash, setRevealTimestamp, transferFrom, withdraw "].forEach((fn_name) => {
-    //   this[fn_name] = async function (...args) {
-    //     let contract = await getContractCoingeckoNFT(this.key);
-    //     return await contract.methods[fn_name](...args).send({
-    //       from: await getCoinbase(),
-    //     });
-    //   };
-    // });
+    ["mintBetaPass"].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractConfluxNFT(this.key);
+        return await contract.methods[fn_name](...args).send({
+          from: await getCoinbase(),
+        });
+      };
+    });
   }
 }
 

@@ -727,7 +727,7 @@ const WalletBalance = ({
       finalCollection = [
         ...coingeckoNftsArray,
         ...confluxNftsArray,
-        ...gateNftsArray,
+        // ...gateNftsArray,
         ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
