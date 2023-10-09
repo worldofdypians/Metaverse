@@ -38,6 +38,8 @@ import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/Pla
 import pinkArea from "./assets/pinkArea.svg";
 import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
 import pinkAreaGate from "./assets/pinkAreaGate.svg";
+import pinkAreaBase from "./assets/pinkAreaBase.svg";
+
 import avaxBetaBanner from "./assets/avaxBetaBanner.png";
 import coingeckoBetaBanner from "./assets/coingeckoBetaBanner.png";
 import confluxBetaBanner from "./assets/confluxBetaBanner.png";
@@ -165,7 +167,7 @@ const BetaPassNFT = ({
     id: "base",
     cardTitle: "Base Beta Pass",
     title: "Base Beta Pass",
-    background: "base-mint-bg",
+    background: "base-mint-bg2",
   };
 
   const gateData = {
@@ -692,7 +694,7 @@ const BetaPassNFT = ({
                     <span>Coin98</span>
                   </NavLink> */}
 
-                  {/* <NavLink
+                  <NavLink
                     to={"/marketplace/beta-pass/base"}
                     className={`${
                       location.pathname.includes("base") &&
@@ -709,14 +711,15 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>Base</span>
-                  </NavLink> */}
+                  </NavLink>
                 </div>
               </div>
 
               <div className=" nft-page-wrapper d-flex flex-column flex-xxl-row gap-3 mb-3">
                 {mintTitle !== "coingecko" &&
                   mintTitle !== "conflux" &&
-                  mintTitle !== "gate" && (
+                  mintTitle !== "gate" &&
+                  mintTitle !== "base" && (
                     <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                       <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                         <div className="d-flex flex-column position-relative">
@@ -785,7 +788,8 @@ const BetaPassNFT = ({
                   className={
                     mintTitle === "coingecko" ||
                     mintTitle === "conflux" ||
-                    mintTitle === "gate"
+                    mintTitle === "gate" ||
+                    mintTitle === "base"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
                   }
@@ -807,7 +811,8 @@ const BetaPassNFT = ({
                       )}
                       {mintTitle !== "coingecko" &&
                         mintTitle !== "conflux" &&
-                        mintTitle !== "gate" && (
+                        mintTitle !== "gate" &&
+                        mintTitle !== "base" && (
                           <>
                             Mint your {selectedMint.title}{" "}
                             <br className="d-none d-lg-flex" />
@@ -817,7 +822,9 @@ const BetaPassNFT = ({
                             </span>{" "}
                           </>
                         )}
-                      {(mintTitle === "conflux" || mintTitle === "gate") && (
+                      {(mintTitle === "conflux" ||
+                        mintTitle === "gate" ||
+                        mintTitle === "base") && (
                         <>
                           Get your {selectedMint.title}{" "}
                           <br className="d-none d-lg-flex" />
@@ -845,31 +852,34 @@ const BetaPassNFT = ({
                               </span>
                             </div>
                           ))}
-                          {mintTitle === "base" ? (
-                            <div className="d-flex align-items-center gap-2">
-                              <img
-                                src={blockChainIcon}
-                                width={32}
-                                height={32}
-                                alt=""
-                              />
-                              <span className="mint-benefits-title">
-                                Minting is available on Base Network
-                              </span>
-                            </div>
-                          ) : mintTitle === "coin98" ? (
-                            <div className="d-flex align-items-center gap-2">
-                              <img
-                                src={blockChainIcon}
-                                width={32}
-                                height={32}
-                                alt=""
-                              />
-                              <span className="mint-benefits-title">
-                                Minting is available on BNB Chain
-                              </span>
-                            </div>
-                          ) : null}
+                          {
+                            // mintTitle === "base" ? (
+                            //   <div className="d-flex align-items-center gap-2">
+                            //     <img
+                            //       src={blockChainIcon}
+                            //       width={32}
+                            //       height={32}
+                            //       alt=""
+                            //     />
+                            //     <span className="mint-benefits-title">
+                            //       Minting is available on Base Network
+                            //     </span>
+                            //   </div>
+                            // ) :
+                            mintTitle === "coin98" ? (
+                              <div className="d-flex align-items-center gap-2">
+                                <img
+                                  src={blockChainIcon}
+                                  width={32}
+                                  height={32}
+                                  alt=""
+                                />
+                                <span className="mint-benefits-title">
+                                  Minting is available on BNB Chain
+                                </span>
+                              </div>
+                            ) : null
+                          }
                         </div>
                         {mintTitle === "coingecko" && (
                           <div className="position-relative">
@@ -884,6 +894,11 @@ const BetaPassNFT = ({
                         {mintTitle === "conflux" && (
                           <div className="position-relative">
                             <img src={pinkAreaConflux} alt="" />
+                          </div>
+                        )}
+                        {mintTitle === "base" && (
+                          <div className="position-relative">
+                            <img src={pinkAreaBase} alt="" />
                           </div>
                         )}
                       </div>
@@ -966,14 +981,16 @@ const BetaPassNFT = ({
                   className={
                     mintTitle === "coingecko" ||
                     mintTitle === "conflux" ||
-                    mintTitle === "gate"
+                    mintTitle === "gate" ||
+                    mintTitle === "base"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
                 >
                   {mintTitle !== "coingecko" &&
                   mintTitle !== "conflux" &&
-                  mintTitle !== "gate" ? (
+                  mintTitle !== "gate" &&
+                  mintTitle !== "base" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -1520,6 +1537,47 @@ const BetaPassNFT = ({
                                   <img src={user} alt="" />
                                   My Account
                                 </NavLink>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {mintTitle === "base" && (
+                          <div className="">
+                            <div className="d-flex flex-column gap-3">
+                              <div
+                                className="profile-event-tag position-relative d-flex align-items-center justify-content-center px-1"
+                                style={{
+                                  background: "#EC8123",
+                                  top: 0,
+                                  right: 0,
+                                  width: "fit-content",
+                                }}
+                              >
+                                <span
+                                  className="profile-event-tag-text mb-0"
+                                  style={{ color: "#FFFFFF" }}
+                                >
+                                  Coming Soon
+                                </span>
+                              </div>
+                              <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
+                                <div
+                                  className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
+                                  style={{
+                                    height: 295,
+                                  }}
+                                ></div>
+                                <div
+                                  className="genesis-desc 
+                                 px-3 py-2 position-relative"
+                                  style={{
+                                    bottom: "5px",
+                                  }}
+                                >
+                                  <h6 className="land-desc w-75 m-auto text-center justify-content-center">
+                                    {selectedMint.cardTitle}{" "}
+                                  </h6>
+                                </div>
                               </div>
                             </div>
                           </div>
