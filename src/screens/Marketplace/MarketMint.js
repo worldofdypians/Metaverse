@@ -34,7 +34,7 @@ import bnbLogo from "./assets/bnbLogo.svg";
 import wodLogo from "./assets/wodIcon.png";
 import openSeaLogo from "./assets/openSeaLogo.png";
 import BetaEventCard from "./components/BetaEventCard";
-import { useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 
 const MarketMint = ({
   showWalletConnect,
@@ -52,7 +52,8 @@ const MarketMint = ({
   calculateCaws,
   timepieceMetadata,
   handleConfluxMint,
-  myConfluxNFTsCreated
+  myConfluxNFTsCreated,
+  confluxMintAllowed,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -127,10 +128,12 @@ const MarketMint = ({
   const [discountprice, setdiscountprice] = useState(0);
   const [countdownFinished, setCountdownFinished] = useState(true);
   const [latestMintId, setlatestMintId] = useState(0);
+  const [latestConfluxMintId, setlatestConfluxMintId] = useState(0);
+
   const [activeTab, setActiveTab] = useState("live");
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
-  const [selectedMint, setSelectedMint] = useState();
+  const [selectedMint, setSelectedMint] = useState(confluxData);
   const [mintTitle, setMintTitle] = useState(params.mintId);
   const [sliderCut, setSliderCut] = useState();
   const slider = useRef(null);
@@ -141,7 +144,6 @@ const MarketMint = ({
     } else if (params.mintId === "timepiece") {
       setSelectedMint(timepieceData);
     }
-    console.log(selectedMint, params.mintId, "location");
   }, [params.mintId]);
 
   const dummyCards = [
@@ -177,6 +179,7 @@ const MarketMint = ({
       img: confluxActive,
       data: confluxData,
       class: "mint-4",
+      id: "conflux",
     },
     // {
     //   title: "Coin98 Pass",
@@ -209,6 +212,7 @@ const MarketMint = ({
       img: timepieceActive,
       data: timepieceData,
       class: "mint-8",
+      id: "timepiece",
     },
   ];
 
@@ -309,6 +313,29 @@ const MarketMint = ({
     setlatestMintId(result - 1);
   };
 
+  const getConfluxLatestMint = async () => {
+    const result = await window.conflux_nft.getConfluxLatestMint();
+    setlatestConfluxMintId(result - 1);
+  };
+
+  async function updateViewCount(tokenId, nftAddress) {
+    try {
+      const response = await fetch("https://api.worldofdypians.com/nft-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokenId, nftAddress }),
+      });
+      const data = await response.json();
+      console.log(
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+      );
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  }
+
   const benefits = [
     {
       title: "Exclusive Access",
@@ -355,18 +382,31 @@ const MarketMint = ({
   useEffect(() => {
     if (isConnected) {
       if (chainId !== undefined) {
-        if (chainId !== 1) {
-          setactiveButton(false);
-          setStatus("Switch to Ethereum Chain to continue minting.");
-        }
-        if (chainId === 1) {
-          setactiveButton(true);
-          setStatus("");
+        if (selectedMint.id === "timepiece") {
+          if (chainId !== 1) {
+            setactiveButton(false);
+            setStatus("Switch to Ethereum Chain to continue minting.");
+          } else if (chainId === 1) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        } else if (selectedMint.id === "conflux") {
+          if (chainId !== 1030) {
+            setactiveButton(false);
+            setStatus("Switch to Conflux Network to continue minting.");
+          } else if (chainId === 1030) {
+            setactiveButton(true);
+            setStatus("");
+          }
         }
       }
     }
+  }, [isConnected, chainId, coinbase, selectedMint]);
+
+  useEffect(() => {
     getTimepieceLatestMint();
-  }, [isConnected, chainId, coinbase]);
+    getConfluxLatestMint();
+  }, [myConfluxNFTsCreated, totalCreated]);
 
   useEffect(() => {
     if (isConnected) {
@@ -381,14 +421,19 @@ const MarketMint = ({
       if (totalCreated > 0) {
         setshowBadge(true);
       }
+    } else if (coinbase && isConnected && selectedMint.id === "conflux") {
+      if (myConfluxNFTsCreated > 0) {
+        setshowBadge(true);
+      }
     }
-  }, [coinbase, chainId, isConnected, totalCreated]);
+  }, [coinbase, chainId, isConnected, totalCreated, selectedMint]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Timepiece Mint";
+    document.title = "NFT Mint";
   }, []);
 
+  
   return (
     <>
       <div
@@ -505,18 +550,32 @@ const MarketMint = ({
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                         <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                           <div className="d-flex flex-column position-relative">
-                            {showBadge && totalCreated > 0 && (
-                              <div className="totalcreated">
-                                <span>{totalCreated}</span>
-                              </div>
-                            )}
+                            {showBadge &&
+                              totalCreated > 0 &&
+                              selectedMint.id === "timepiece" && (
+                                <div className="totalcreated">
+                                  <span>{totalCreated}</span>
+                                </div>
+                              )}
+                            {showBadge &&
+                              myConfluxNFTsCreated.length > 0 &&
+                              selectedMint.id === "conflux" && (
+                                <div className="totalcreated">
+                                  <span>{myConfluxNFTsCreated.length}</span>
+                                </div>
+                              )}
                             <div
                               className={`genesis-wrapper ${
-                                mintTitle !== "timepiece"
-                                  ? "conflux-empty"
-                                  : totalCreated > 0
+                                selectedMint.id === "timepiece" &&
+                                totalCreated > 0
                                   ? "genesis-land"
-                                  : "genesis-land-empty"
+                                  : selectedMint.id === "timepiece" &&
+                                    totalCreated === 0
+                                  ? "genesis-land-empty"
+                                  : selectedMint.id === "conflux" &&
+                                    myConfluxNFTsCreated.length === 0
+                                  ? "conflux-empty"
+                                  : "conflux-active"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
@@ -536,33 +595,71 @@ const MarketMint = ({
                               </h6>
                             </div>
                           </div>
-                          <div
-                            className={
-                              isConnected === false ||
-                              activeButton === false ||
-                              totalCreated === 0
-                                ? "linear-border-disabled"
-                                : "linear-border"
-                            }
-                          >
-                            <button
-                              className={`btn ${
+
+                          {selectedMint.id === "timepiece" && (
+                            <div
+                              className={
                                 isConnected === false ||
                                 activeButton === false ||
                                 totalCreated === 0
-                                  ? "outline-btn-disabled"
-                                  : "outline-btn"
-                              } px-5 w-100`}
-                              disabled={
-                                isConnected === false ||
-                                activeButton === false ||
-                                totalCreated === 0
+                                  ? "linear-border-disabled"
+                                  : "linear-border"
                               }
-                              onClick={handleViewCollection}
                             >
-                              View collection
-                            </button>
-                          </div>
+                              <button
+                                className={`btn ${
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  totalCreated === 0
+                                    ? "outline-btn-disabled"
+                                    : "outline-btn"
+                                } px-5 w-100`}
+                                disabled={
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  totalCreated === 0
+                                }
+                                onClick={handleViewCollection}
+                              >
+                                View collection
+                              </button>
+                            </div>
+                          )}
+                          {selectedMint.id === "conflux" && (
+                            <div
+                              className={
+                                isConnected === false ||
+                                activeButton === false ||
+                                myConfluxNFTsCreated.length === 0
+                                  ? "linear-border-disabled"
+                                  : "linear-border"
+                              }
+                            >
+                              <NavLink
+                                className={`btn ${
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myConfluxNFTsCreated.length === 0
+                                    ? "outline-btn-disabled"
+                                    : "outline-btn"
+                                } px-5 w-100`}
+                                disabled={
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myConfluxNFTsCreated.length === 0
+                                }
+                                to={`/marketplace/nft/${myConfluxNFTsCreated[0]}/${window.config.nft_conflux_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myConfluxNFTsCreated[0],
+                                    window.config.nft_conflux_address
+                                  );
+                                }}
+                              >
+                                View NFT
+                              </NavLink>
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div
@@ -597,19 +694,7 @@ const MarketMint = ({
                                   </span>
                                 </div>
                               ))}
-                              {mintTitle === "conflux" ? (
-                                <div className="d-flex align-items-center gap-2">
-                                  <img
-                                    src={blockChainIcon}
-                                    width={40}
-                                    height={40}
-                                    alt=""
-                                  />
-                                  <span className="mint-benefits-title">
-                                    Minting is available on Conflux Network
-                                  </span>
-                                </div>
-                              ) : mintTitle === "base" ? (
+                              {mintTitle === "base" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
                                     src={blockChainIcon}
@@ -963,7 +1048,7 @@ const MarketMint = ({
                               </span>
                               <div className="d-flex align-items-center gap-2">
                                 <h6 className="latest-mint-number mb-0">
-                                  #1225
+                                  #{latestConfluxMintId}
                                 </h6>
                                 <span className="latest-mint-currency mb-0">
                                   CFBP
@@ -976,7 +1061,7 @@ const MarketMint = ({
                               </span>
                               <div className="d-flex align-items-center gap-2">
                                 <h6 className="latest-mint-number mb-0">
-                                  1 NFT
+                                  {confluxMintAllowed} NFT
                                 </h6>
                               </div>
                             </div>
@@ -992,10 +1077,111 @@ const MarketMint = ({
                               Available only on Conflux Network
                               <img src={confluxLogo} alt="" />
                             </span>
+                            {mintStatus.length > 0 && (
+                              <span
+                                style={{ color: textColor }}
+                                className={
+                                  mintStatus.includes("Success")
+                                    ? "mint-span-success"
+                                    : "mint-span"
+                                }
+                              >
+                                {mintStatus}
+                              </span>
+                            )}
                             <hr className="gray-divider" />
                             <div className="d-flex w-100 justify-content-center">
-                              <div className="linear-border ">
-                                <button className="filled-btn px-4 py-1">Mint</button>
+                              <div
+                                className={
+                                  (isConnected === true && chainId !== 1030) ||
+                                  (status !== "Connect your wallet." &&
+                                    status !== "") ||
+                                  mintloading === "error" ||
+                                  confluxMintAllowed === 0
+                                    ? "linear-border-disabled"
+                                    : "linear-border"
+                                }
+                              >
+                                <button
+                                  className={`btn ${
+                                    mintloading === "error"
+                                      ? "filled-error-btn"
+                                      : (isConnected === true &&
+                                          chainId !== 1030) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        confluxMintAllowed === 0
+                                      ? "outline-btn-disabled"
+                                      : "filled-btn"
+                                  }  px-4 w-100`}
+                                  onClick={() => {
+                                    isConnected === true && chainId === 1030
+                                      ? handleConfluxMint()
+                                      : showWalletConnect();
+                                  }}
+                                  disabled={
+                                    mintloading === "error" ||
+                                    mintloading === "success" ||
+                                    (isConnected === true &&
+                                      chainId !== 1030) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    confluxMintAllowed === 0
+                                      ? true
+                                      : false
+                                  }
+                                  onMouseEnter={() => {
+                                    setMouseOver(true);
+                                  }}
+                                  onMouseLeave={() => {
+                                    setMouseOver(false);
+                                  }}
+                                >
+                                  {(isConnected === false ||
+                                    chainId !== 1030) && (
+                                    <img
+                                      src={
+                                        mouseOver === false
+                                          ? blackWallet
+                                          : whitewallet
+                                      }
+                                      alt=""
+                                      style={{
+                                        width: "23px",
+                                        height: "23px",
+                                      }}
+                                    />
+                                  )}{" "}
+                                  {mintloading === "initial" &&
+                                  isConnected === true &&
+                                  chainId === 1030 ? (
+                                    "Mint"
+                                  ) : mintloading === "mint" &&
+                                    isConnected === true &&
+                                    chainId === 1030 ? (
+                                    <>
+                                      <div
+                                        className="spinner-border "
+                                        role="status"
+                                      ></div>
+                                    </>
+                                  ) : mintloading === "error" &&
+                                    isConnected === true &&
+                                    chainId === 1030 ? (
+                                    "Failed"
+                                  ) : mintloading === "success" &&
+                                    isConnected === true &&
+                                    activeButton ===
+                                      (isConnected === true &&
+                                        chainId === 1030) ? (
+                                    "Success"
+                                  ) : isConnected === true &&
+                                    chainId !== 1030 ? (
+                                    " Switch Chain"
+                                  ) : (
+                                    "Connect wallet"
+                                  )}
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -1126,8 +1312,13 @@ const MarketMint = ({
           onClose={() => {
             setViewCollection(false);
           }}
-          nftItem={timepieceMetadata}
+          nftItem={
+            selectedMint.id === "timepiece"
+              ? timepieceMetadata
+              : myConfluxNFTsCreated
+          }
           open={viewCollection}
+          type={selectedMint.id}
         />
       )}
     </>

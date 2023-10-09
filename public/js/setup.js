@@ -3375,9 +3375,11 @@ async function getContractConfluxNFT(key) {
 
   let address = window.config[key.toLowerCase() + "_address"];
   if (!window.cached_contracts[key]) {
-    window.cached_contracts[key] = new window.confluxWeb3.eth.Contract(
+    window.web3 = new Web3(window.ethereum);
+
+    window.cached_contracts[key] = new window.web3.eth.Contract(
       window.CONFLUX_NFT_ABI,
-      address,
+      window.config.nft_conflux_address,
       {
         from: await getCoinbase(),
       }
@@ -3425,6 +3427,10 @@ class CONFLUX_NFT {
       };
     });
     
+  }
+  async getConfluxLatestMint() {
+    let nft_contract = await getContractConfluxNFT("CONFLUX_NFT");
+    return await nft_contract.methods.totalSupply().call();
   }
   async mintConfluxNFT() {
     let nft_contract = await getContractConfluxNFT("CONFLUX_NFT");
