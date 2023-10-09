@@ -2139,7 +2139,6 @@ function App() {
           {location.pathname.includes("marketplace") ||
           location.pathname.includes("notifications") ||
           location.pathname.includes("account") ? (
-            location.pathname.includes("timepiece") ||
             location.pathname.includes("caws") ||
             location.pathname.includes("land") ? null : (
               <MarketplaceFooter />
