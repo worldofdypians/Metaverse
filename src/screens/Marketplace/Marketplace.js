@@ -1114,7 +1114,7 @@ const Marketplace = ({
                       />
                     </div>
                   </NavLink>
-                  <NavLink to="/marketplace/mint">
+                  <NavLink to="/marketplace/mint/conflux">
                     <span
                       className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                       style={{ width: "fit-content" }}
