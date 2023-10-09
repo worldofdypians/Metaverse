@@ -850,7 +850,7 @@ const TimepieceNFT = ({
                       <button className="btn pill-btn">Explore</button>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/mint"
+                      to="/marketplace/mint/conflux"
                       style={{ textDecoration: "none" }}
                     >
                       <button className="btn mint-now-btn gap-2">

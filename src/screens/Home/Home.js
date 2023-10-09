@@ -17,6 +17,8 @@ import avalanchePopup from '../../components/TimepieceMint/assets/avalanchePopup
 import coin98Popup from '../../components/TimepieceMint/assets/coin98Popup.png'
 import basePopup from '../../components/TimepieceMint/assets/basePopup.png'
 import confluxPopup from '../../components/TimepieceMint/assets/confluxPopup.png'
+import gatePopup from '../../components/TimepieceMint/assets/gatePopup.webp'
+
 import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup.png'
 import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHuntPopup.png'
 import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
@@ -41,6 +43,13 @@ const Home = ({
     img: confluxPopup,
     state: "conflux",
   }
+
+  const gatePopupInfo = {
+    title: "Gate",
+    img: gatePopup,
+    state: "gate",
+  }
+
   const coin98PopupInfo = {
     title: "Coin98", 
     img: coin98Popup,

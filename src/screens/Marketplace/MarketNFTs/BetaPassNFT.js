@@ -38,6 +38,8 @@ import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/Pla
 import pinkArea from "./assets/pinkArea.svg";
 import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
 import pinkAreaGate from "./assets/pinkAreaGate.svg";
+import pinkAreaBase from "./assets/pinkAreaBase.svg";
+
 import avaxBetaBanner from "./assets/avaxBetaBanner.png";
 import coingeckoBetaBanner from "./assets/coingeckoBetaBanner.png";
 import confluxBetaBanner from "./assets/confluxBetaBanner.png";
@@ -65,6 +67,7 @@ import trustWallet from "./wallets/trustwallet.png";
 import coinbaseWallet from "./wallets/coinbase.png";
 import safepalWallet from "./wallets/safepal.png";
 import gateWallet from "./wallets/gateWallet.png";
+import mintNowIcon from "./assets/mintNowIcon.svg";
 
 import { shortAddress } from "../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
@@ -164,7 +167,7 @@ const BetaPassNFT = ({
     id: "base",
     cardTitle: "Base Beta Pass",
     title: "Base Beta Pass",
-    background: "base-mint-bg",
+    background: "base-mint-bg2",
   };
 
   const gateData = {
@@ -198,7 +201,7 @@ const BetaPassNFT = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [status, setStatus] = useState("Connect your wallet.");
   const [activeButton, setactiveButton] = useState(false);
-  const [selectedMint, setSelectedMint] = useState(coingeckoData);
+  const [selectedMint, setSelectedMint] = useState(confluxData);
   const [mintTitle, setMintTitle] = useState("conflux");
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
@@ -215,44 +218,37 @@ const BetaPassNFT = ({
   const [activeTab, setactiveTab] = useState("create");
   const [icons, setIcons] = useState(false);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [userEarnUsdConflux, setuserEarnUsdConflux] = useState(0);
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
   const bgmenu2 = document.querySelector("#switch");
 
-  useEffect(() => {
-    if (
-      mintTitle === "conflux" &&
-      coinbase &&
-      chainId &&
-      chainId !== 1030 &&
-      !email
-    ) {
-      setOpenConflux(true);
-    } else setOpenConflux(false);
-  }, [mintTitle, coinbase, chainId, email]);
+  // useEffect(() => {
+  //   if (
+  //     mintTitle === "conflux" &&
+  //     coinbase &&
+  //     chainId &&
+  //     chainId !== 1030 &&
+  //     !email
+  //   ) {
+  //     setOpenConflux(true);
+  //   } else setOpenConflux(false);
+  // }, [mintTitle, coinbase, chainId, email]);
 
   const getNftSymbol = async () => {
-    if (mintTitle !== "conflux") {
+    if (mintTitle === "gate") {
       const contract = new window.bscWeb3.eth.Contract(
-        // mintTitle === "coingecko"
-        //   ?
-        window.COINGECKO_NFT_ABI,
-        // : window.GATE_NFT_ABI
-        // mintTitle === "coingecko"
-        // ?
-        window.config.nft_coingecko_address
-        // : window.config.nft_gate_address
+        window.GATE_NFT_ABI,
+        window.config.nft_gate_address
       );
       const symbol = await contract.methods.symbol().call();
       setnftSymbol(symbol);
     } else if (mintTitle === "conflux") {
-      // const contract = new window.confluxWeb3.eth.Contract(
-      //   window.CONFLUX_NFT_ABI,
-      //   window.config.nft_conflux_address
-      // );
-      // const symbol = await contract.methods.symbol().call();
       const symbol = "CFBP";
+      setnftSymbol(symbol);
+    } else if (mintTitle === "coingecko") {
+      const symbol = "CGBP";
       setnftSymbol(symbol);
     }
   };
@@ -307,10 +303,19 @@ const BetaPassNFT = ({
           const coingeckoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "coingecko";
           });
+          const confluxEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "conflux";
+          });
           const usdValue =
             coingeckoEvent[0].reward.earn.total /
             coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
+          if (confluxEvent[0].reward.earn.multiplier !== 0) {
+            const usdValueConflux =
+              confluxEvent[0].reward.earn.total /
+              confluxEvent[0].reward.earn.multiplier;
+            setuserEarnUsdConflux(usdValueConflux);
+          }
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -568,6 +573,17 @@ const BetaPassNFT = ({
                       rewards in different tokens, which are distributed on a
                       monthly basis.
                     </p>
+                    {mintTitle === "conflux" && (
+                      <NavLink
+                        to="/marketplace/mint/conflux"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <button className="btn mint-now-btn gap-2">
+                          <img src={mintNowIcon} alt="" />
+                          Available minting
+                        </button>
+                      </NavLink>
+                    )}
                   </div>
                 </div>
                 <div className="col-12 col-lg-4 px-0">
@@ -613,7 +629,24 @@ const BetaPassNFT = ({
                     />
                     <span>Avalanche</span>
                   </NavLink> */}
-
+                  {/* <NavLink
+                    to={"/marketplace/beta-pass/gate"}
+                    className={`${
+                      location.pathname.includes("gate") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(gateData);
+                      setMintTitle("gate");
+                    }}
+                  >
+                    <img
+                      src={gateWallet}
+                      className="beta-pass-chain-img"
+                      alt=""
+                    />
+                    <span>Gate</span>
+                  </NavLink> */}
                   <NavLink
                     to={"/marketplace/beta-pass/conflux"}
                     className={`${
@@ -661,7 +694,7 @@ const BetaPassNFT = ({
                     <span>Coin98</span>
                   </NavLink> */}
 
-                  {/* <NavLink
+                  <NavLink
                     to={"/marketplace/beta-pass/base"}
                     className={`${
                       location.pathname.includes("base") &&
@@ -678,14 +711,15 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>Base</span>
-                  </NavLink> */}
+                  </NavLink>
                 </div>
               </div>
 
               <div className=" nft-page-wrapper d-flex flex-column flex-xxl-row gap-3 mb-3">
                 {mintTitle !== "coingecko" &&
                   mintTitle !== "conflux" &&
-                  mintTitle !== "gate" && (
+                  mintTitle !== "gate" &&
+                  mintTitle !== "base" && (
                     <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                       <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                         <div className="d-flex flex-column position-relative">
@@ -754,7 +788,8 @@ const BetaPassNFT = ({
                   className={
                     mintTitle === "coingecko" ||
                     mintTitle === "conflux" ||
-                    mintTitle === "gate"
+                    mintTitle === "gate" ||
+                    mintTitle === "base"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
                   }
@@ -776,7 +811,8 @@ const BetaPassNFT = ({
                       )}
                       {mintTitle !== "coingecko" &&
                         mintTitle !== "conflux" &&
-                        mintTitle !== "gate" && (
+                        mintTitle !== "gate" &&
+                        mintTitle !== "base" && (
                           <>
                             Mint your {selectedMint.title}{" "}
                             <br className="d-none d-lg-flex" />
@@ -786,7 +822,9 @@ const BetaPassNFT = ({
                             </span>{" "}
                           </>
                         )}
-                      {(mintTitle === "conflux" || mintTitle === "gate") && (
+                      {(mintTitle === "conflux" ||
+                        mintTitle === "gate" ||
+                        mintTitle === "base") && (
                         <>
                           Get your {selectedMint.title}{" "}
                           <br className="d-none d-lg-flex" />
@@ -814,31 +852,34 @@ const BetaPassNFT = ({
                               </span>
                             </div>
                           ))}
-                          {mintTitle === "base" ? (
-                            <div className="d-flex align-items-center gap-2">
-                              <img
-                                src={blockChainIcon}
-                                width={32}
-                                height={32}
-                                alt=""
-                              />
-                              <span className="mint-benefits-title">
-                                Minting is available on Base Network
-                              </span>
-                            </div>
-                          ) : mintTitle === "coin98" ? (
-                            <div className="d-flex align-items-center gap-2">
-                              <img
-                                src={blockChainIcon}
-                                width={32}
-                                height={32}
-                                alt=""
-                              />
-                              <span className="mint-benefits-title">
-                                Minting is available on BNB Chain
-                              </span>
-                            </div>
-                          ) : null}
+                          {
+                            // mintTitle === "base" ? (
+                            //   <div className="d-flex align-items-center gap-2">
+                            //     <img
+                            //       src={blockChainIcon}
+                            //       width={32}
+                            //       height={32}
+                            //       alt=""
+                            //     />
+                            //     <span className="mint-benefits-title">
+                            //       Minting is available on Base Network
+                            //     </span>
+                            //   </div>
+                            // ) :
+                            mintTitle === "coin98" ? (
+                              <div className="d-flex align-items-center gap-2">
+                                <img
+                                  src={blockChainIcon}
+                                  width={32}
+                                  height={32}
+                                  alt=""
+                                />
+                                <span className="mint-benefits-title">
+                                  Minting is available on BNB Chain
+                                </span>
+                              </div>
+                            ) : null
+                          }
                         </div>
                         {mintTitle === "coingecko" && (
                           <div className="position-relative">
@@ -853,6 +894,11 @@ const BetaPassNFT = ({
                         {mintTitle === "conflux" && (
                           <div className="position-relative">
                             <img src={pinkAreaConflux} alt="" />
+                          </div>
+                        )}
+                        {mintTitle === "base" && (
+                          <div className="position-relative">
+                            <img src={pinkAreaBase} alt="" />
                           </div>
                         )}
                       </div>
@@ -908,12 +954,12 @@ const BetaPassNFT = ({
                         </button>
                       )}
 
-                      {mintTitle === "conflux" && (
+                      {/* {mintTitle === "conflux" && (
                         <a
                           className={`btn conflux-btn px-3 d-flex align-items-center justify-content-center gap-2`}
-                          href='https://sweepwidget.com/c/conflux-beta-pass-nft'
-                          target='_blank'
-                          rel='noreferrer'
+                          href="https://sweepwidget.com/c/conflux-beta-pass-nft"
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           <img
                             src={conflux}
@@ -927,7 +973,7 @@ const BetaPassNFT = ({
                             style={{ width: 16, height: 16 }}
                           />{" "}
                         </a>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
@@ -935,14 +981,16 @@ const BetaPassNFT = ({
                   className={
                     mintTitle === "coingecko" ||
                     mintTitle === "conflux" ||
-                    mintTitle === "gate"
+                    mintTitle === "gate" ||
+                    mintTitle === "base"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
                 >
                   {mintTitle !== "coingecko" &&
                   mintTitle !== "conflux" &&
-                  mintTitle !== "gate" ? (
+                  mintTitle !== "gate" &&
+                  mintTitle !== "base" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -1208,7 +1256,7 @@ const BetaPassNFT = ({
                       className={`  justify-content-start
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
-                      {!alreadyRegistered && mintTitle === "conflux" && (
+                      {!alreadyRegistered && mintTitle === "gate" && (
                         <div className="d-flex align-items-center justify-content-around gap-2">
                           <button
                             className={
@@ -1328,41 +1376,214 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <span className="footertxt-coingecko">
-                              Earn daily BNB rewards and global leaderboard points.
-                            </span>
-                            <div className="summaryseparator mt-3 mb-3"></div>
-                            <div className="d-flex align-items-center gap-2 justify-content-between">
-                              <a
-                                href="https://game.worldofdypians.com/downloads/WorldOfDypians%200.2.1.zip"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
-                                onMouseEnter={() => {
-                                  setIcons(true);
-                                }}
-                                onMouseLeave={() => {
-                                  setIcons(false);
-                                }}
-                              >
-                                <img
-                                  src={icons ? windowsIconWhite : windowIcon}
-                                  alt=""
-                                  style={{ height: 12, width: 12 }}
-                                />
-                                Download
-                              </a>
-                              <NavLink
-                                to="/account"
-                                className="accountbtn-coingecko btn d-flex align-items-center gap-1"
-                              >
-                                <img src={user} alt="" />
-                                My Account
-                              </NavLink>
-                            </div>
+                                Earn daily BNB rewards and global leaderboard
+                                points.
+                              </span>
+                              <div className="summaryseparator mt-3 mb-3"></div>
+                              <div className="d-flex align-items-center gap-2 justify-content-between">
+                                <a
+                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
+                                  onMouseEnter={() => {
+                                    setIcons(true);
+                                  }}
+                                  onMouseLeave={() => {
+                                    setIcons(false);
+                                  }}
+                                >
+                                  <img
+                                    src={icons ? windowsIconWhite : windowIcon}
+                                    alt=""
+                                    style={{ height: 12, width: 12 }}
+                                  />
+                                  Download
+                                </a>
+                                <NavLink
+                                  to="/account"
+                                  className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                                >
+                                  <img src={user} alt="" />
+                                  My Account
+                                </NavLink>
+                              </div>
                             </div>
                           </div>
                         )}
+                        {mintTitle === "conflux" && (
+                          <div className="">
+                            <div className="d-flex flex-column gap-3">
+                              <div className="d-flex align-items-center position-relative gap-2">
+                                <h6 className="coingecko-eventh6 m-0">
+                                  Conflux Teasure Hunt
+                                </h6>{" "}
+                                <div
+                                  className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
+                                  style={{ top: 0 }}
+                                >
+                                  <div
+                                    class="pulsatingDot"
+                                    style={{
+                                      width: 7,
+                                      height: 7,
+                                      marginRight: 5,
+                                    }}
+                                  ></div>
 
+                                  <span>Live</span>
+                                </div>
+                              </div>
+                              <div className="conflux-eventwrapper p-3">
+                                <div className="d-flex flex-column gap-4">
+                                  <div className="d-flex gap-2">
+                                    <img src={conflux} alt="" />
+                                    <div className="d-flex flex-column gap-1">
+                                      <span className="coingecko-eventname">
+                                        Conflux
+                                      </span>
+                                      <span className="coingecko-eventusd">
+                                        $2,000 in CFX rewards
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                                    <div
+                                      className="mybetaearnings position-relative m-0"
+                                      style={{ top: 0, bottom: 0 }}
+                                    >
+                                      <h6 className="event-my-earnings3 mb-3">
+                                        $
+                                        {getFormattedNumber(
+                                          userEarnUsdConflux,
+                                          2
+                                        )}
+                                      </h6>
+                                    </div>
+                                    <div className="d-flex flex-column gap-2">
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whitePickaxe} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          Explore &amp; Mine
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whiteCalendar} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          Start: Oct. 06, 2023
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whiteCalendar} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          End: Nov. 06, 2023
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="d-flex gap-1 align-items-center justify-content-center">
+                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                      <span className="coingecko-eventdetails">
+                                        Event details
+                                      </span>
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 12 12"
+                                        fill="none"
+                                      >
+                                        <path
+                                          d="M4.5 9L7.5 6L4.5 3"
+                                          stroke="white"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                        />
+                                      </svg>
+                                    </NavLink>
+                                  </div>
+                                </div>
+                              </div>
+                              <span className="footertxt-coingecko">
+                                Earn daily CFX rewards and global leaderboard
+                                points.
+                              </span>
+                              <div className="summaryseparator mt-3 mb-3"></div>
+                              <div className="d-flex align-items-center gap-2 justify-content-between">
+                                <a
+                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
+                                  onMouseEnter={() => {
+                                    setIcons(true);
+                                  }}
+                                  onMouseLeave={() => {
+                                    setIcons(false);
+                                  }}
+                                >
+                                  <img
+                                    src={icons ? windowsIconWhite : windowIcon}
+                                    alt=""
+                                    style={{ height: 12, width: 12 }}
+                                  />
+                                  Download
+                                </a>
+                                <NavLink
+                                  to="/account"
+                                  className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                                >
+                                  <img src={user} alt="" />
+                                  My Account
+                                </NavLink>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {mintTitle === "base" && (
+                          <div className="">
+                            <div className="d-flex flex-column gap-3">
+                              <div
+                                className="profile-event-tag position-relative d-flex align-items-center justify-content-center px-1"
+                                style={{
+                                  background: "#EC8123",
+                                  top: 0,
+                                  right: 0,
+                                  width: "fit-content",
+                                }}
+                              >
+                                <span
+                                  className="profile-event-tag-text mb-0"
+                                  style={{ color: "#FFFFFF", fontSize: '16px' }}
+                                >
+                                  Coming Soon
+                                </span>
+                              </div>
+                              <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
+                                <div
+                                  className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
+                                  style={{
+                                    height: 295,
+                                  }}
+                                ></div>
+                                <div
+                                  className="genesis-desc 
+                                 px-3 py-2 position-relative"
+                                  style={{
+                                    bottom: "5px",
+                                    minWidth: "100%",
+                                    maxWidth: "100%",
+                                  }}
+                                >
+                                  <h6 className="land-desc w-75 m-auto text-center justify-content-center">
+                                    {selectedMint.cardTitle}{" "}
+                                  </h6>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                         {/* <h6
                       className="land-placeholder mb-0"
                       style={{ marginLeft: 11 }}
@@ -1385,7 +1606,7 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
 
-                        {alreadyRegistered && mintTitle === "conflux" && (
+                        {alreadyRegistered && mintTitle === "gate" && (
                           <h6 className="land-name">
                             {totalCoingeckoNft > 0 ||
                             totalGateNft > 0 ||
@@ -1396,7 +1617,7 @@ const BetaPassNFT = ({
                         )}
                         {!alreadyRegistered &&
                           activeTab === "create" &&
-                          mintTitle === "conflux" && (
+                          mintTitle === "gate" && (
                             <div>
                               <ul class="timeline m-0 p-0" id="timeline">
                                 <li class="col-3 li complete">
@@ -1478,8 +1699,8 @@ const BetaPassNFT = ({
 
                         {playerCreation === false &&
                           !alreadyRegistered &&
-                          mintTitle === "conflux" && (
-                            <SignUpConflux
+                          mintTitle === "gate" && (
+                            <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
                               }}
@@ -1505,8 +1726,8 @@ const BetaPassNFT = ({
                         {playerCreation === true &&
                           linkWallet === false &&
                           !alreadyRegistered &&
-                          mintTitle === "conflux" && (
-                            <PlayerCreationConflux
+                          mintTitle === "gate" && (
+                            <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
                               }}
@@ -1516,7 +1737,7 @@ const BetaPassNFT = ({
 
                         {linkWallet === true &&
                           !alreadyRegistered &&
-                          mintTitle === "conflux" && (
+                          mintTitle === "gate" && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
@@ -1564,12 +1785,13 @@ const BetaPassNFT = ({
                               <div className="summaryseparator"></div>
                             </div>
                           )}
-                        {alreadyRegistered && mintTitle === "conflux" && (
+                        {alreadyRegistered && mintTitle === "gate" && (
                           <div className="d-flex flex-column justify-content-between h-100">
                             {(totalCoingeckoNft === 0 &&
                               mintTitle === "coingecko") ||
                             (totalConfluxNft === 0 &&
-                              mintTitle === "conflux") ? (
+                              mintTitle === "conflux") ||
+                            (totalGateNft === 0 && mintTitle === "gate") ? (
                               <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
                                 <div
                                   className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
@@ -1613,19 +1835,27 @@ const BetaPassNFT = ({
                                 to={`/marketplace/nft/${
                                   mintTitle === "conflux"
                                     ? myConfluxNfts[0]
+                                    : mintTitle === "gate"
+                                    ? myGateNfts[0]
                                     : myNFTSCoingecko[0]
                                 }/${
                                   mintTitle === "conflux"
                                     ? window.config.nft_conflux_address
+                                    : mintTitle === "gate"
+                                    ? window.config.nft_gate_address
                                     : window.config.nft_coingecko_address
                                 }`}
                                 onClick={() => {
                                   updateViewCount(
                                     mintTitle === "conflux"
                                       ? myConfluxNfts[0]
+                                      : mintTitle === "gate"
+                                      ? myGateNfts[0]
                                       : myNFTSCoingecko[0],
                                     mintTitle === "conflux"
                                       ? window.config.nft_conflux_address
+                                      : mintTitle === "gate"
+                                      ? window.config.nft_gate_address
                                       : window.config.nft_coingecko_address
                                   );
                                 }}
@@ -1697,7 +1927,7 @@ const BetaPassNFT = ({
                             <div className="summaryseparator mt-3 mb-3"></div>
                             <div className="d-flex align-items-center gap-2 justify-content-between">
                               <a
-                                href="https://game.worldofdypians.com/downloads/WorldOfDypians%200.2.1.zip"
+                                href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
                                 target="_blank"
                                 rel="noreferrer"
                                 className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
