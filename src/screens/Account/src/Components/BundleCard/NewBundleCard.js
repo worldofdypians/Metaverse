@@ -544,10 +544,10 @@ const NewBundleCard = ({
     setcountdown3500(remainingTime);
   };
 
-  let twentyfiveseptember = new Date("2023-09-25 23:59:00 GMT+02:00");
+  let twentyfiveOctober = new Date("2023-10-25 23:59:00 GMT+02:00");
   let today = new Date();
   let oneOctober = new Date("2023-10-01 11:11:00 GMT+02:00");
-  let oneSeptember = new Date("2023-09-01 11:11:00 GMT+02:00");
+  let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -670,8 +670,8 @@ const NewBundleCard = ({
             setisAtlimit(false);
             handleSetAvailableTime(dateofBundle);
           } else {
-            setcountdown700(oneOctober.getTime());
-            handleSetAvailableTime(oneOctober.getTime());
+            setcountdown700( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
+            handleSetAvailableTime( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
             setisAtlimit(true);
             setStatusColor700("#FE7A00");
             setStatus700(
@@ -691,8 +691,8 @@ const NewBundleCard = ({
     } else if (today_date > 25) {
       if (today < dateofBundle) {
         setisAtlimit(true);
-        setcountdown700(oneOctober.getTime());
-        handleSetAvailableTime(oneOctober.getTime());
+        setcountdown700( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
+        handleSetAvailableTime( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
         );
@@ -787,18 +787,18 @@ const NewBundleCard = ({
   useEffect(() => {
     if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
       setisAtlimit(true);
-      setcountdown700(oneOctober.getTime());
-      handleSetAvailableTime(oneOctober.getTime());
+      setcountdown700( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
+      handleSetAvailableTime( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
     }
   }, [bundlesBought, countdown700]);
 
   useEffect(() => {
     getTokenData();
-    if (today > twentyfiveseptember) {
+    if (today > twentyfiveOctober) {
       setisAtlimit(true);
     }
 
-    if (today < oneSeptember) {
+    if (today < oneOctober) {
       setisAtlimit(true);
     }
 

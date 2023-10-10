@@ -12,6 +12,7 @@ import purpleFind from "./assets/purpleFind.svg";
 import confluxProfileBanner from "./assets/confluxProfileBanner.png";
 import coingeckoProfileBanner from "./assets/coingeckoProfileBanner.png";
 import gateProfileBanner from "./assets/gateProfileBanner.png";
+import baseProfileBanner from "./assets/baseProfileBanner.png";
 
 
 const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
@@ -48,7 +49,19 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
             </span>
           </div>
         </div>
-        <img src={data.linkState == "conflux" ? confluxProfileBanner : data.linkState == "gate" ? gateProfileBanner :coingeckoProfileBanner} style={{ height: "50px", width: "25%" }} alt="" />
+        <img
+          src={
+            data.linkState == "conflux"
+              ? confluxProfileBanner
+              : data.linkState == "gate"
+              ? gateProfileBanner
+              : data.linkState == "base"
+              ? baseProfileBanner
+              : coingeckoProfileBanner
+          }
+          style={{ height: "50px", width: "25%" }}
+          alt=""
+        />
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
@@ -61,7 +74,7 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
         <div className="d-flex align-items-center gap-1">
           <img src={orangeDate} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text" style={{ color: "#EC8123" }}>
-           {data.date}
+            {data.date}
           </span>
         </div>
         <img src={orangeArrow} height={15} width={15} alt="" />

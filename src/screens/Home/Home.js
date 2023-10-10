@@ -23,7 +23,6 @@ import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup
 import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHuntPopup.png'
 import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
 
-
 const Home = ({
   handleRegister,
   handleDownload,

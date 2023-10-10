@@ -17,11 +17,11 @@ const Utilities = () => {
       image: "idyp.svg",
       desc: `
       <ul class="utility desc">
-      <li style="text-align: left" class="utility-desc">Beta demo game with 2,800 beta testers currently enjoying it.</li>
-      <li style="text-align: left" class="utility-desc">7,000 applicants are waiting for beta access.</li>
-      <li style="text-align: left" class="utility-desc">1,300 bundles sold of Dragon Ruins Event.</li>
-      <li style="text-align: left" class="utility-desc">4 new events are currently available for users to participate in.</li>
-      <li style="text-align: left" class="utility-desc">Over $70,000 in distributed rewards, the equivalent of more than 210 BNB.</li>
+      <li style="text-align: left" class="utility-desc">Beta demo game with 12,500 beta testers currently enjoying it.</li>
+      <li style="text-align: left" class="utility-desc">8,357 applicants are waiting for beta access.</li>
+      <li style="text-align: left" class="utility-desc">11,615 bundles sold of Dragon Ruins Event.</li>
+      <li style="text-align: left" class="utility-desc">5 new events are currently available for users to participate in.</li>
+      <li style="text-align: left" class="utility-desc">Over $85,000 in distributed rewards, the equivalent of more than 210 BNB.</li>
 
       </ul>
       `,

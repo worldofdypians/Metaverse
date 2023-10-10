@@ -1173,7 +1173,6 @@
   }
 }
 
-
 .nft-dropdown-item:hover {
   background: linear-gradient(
     268deg,
@@ -2240,14 +2239,13 @@
 }
 .coingecko-eventwrapper {
   border-radius: 20px;
-  background: linear-gradient(to bottom, #181636 15.48%, #E40188 254.86%);
+  background: linear-gradient(to bottom, #181636 15.48%, #e40188 254.86%);
 }
 
 .conflux-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #181636 15.48%, #00f3ff 254.86%);
 }
-
 
 .coingecko-eventh6 {
   color: #fff;
@@ -2923,4 +2921,94 @@
     width: 100%;
     justify-content: center;
   }
+}
+
+.dark-wrapper {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.12);
+}
+.latest-mint {
+  color: #b8b8e0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.latest-mint-number {
+  color: #fff;
+  text-align: right;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  @media screen and (max-width: 420px) {
+    font-size: 13px;
+  }
+}
+.latest-mint-currency {
+  color: #7dd9af;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.gray-divider {
+  background: #4f4770;
+  width: 100%;
+  height: 3px;
+  margin: 0;
+}
+
+.homepage-mint-wrapper {
+  height: 184.5px;
+  border-radius: 20px;
+  cursor: pointer;
+
+  img {
+    height: 184.5px !important;
+    aspect-ratio: 1.88/1;
+  }
+
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  img{
+    height: 100% !important;
+    width: 100% !important;
+  }
+  }
+
+}
+
+.homepage-mint-wrapper:nth-child(1) {
+  background: linear-gradient(90deg, #181b38 0%, #11503d 168.67%);
+}
+
+.homepage-mint-wrapper:nth-child(2) {
+  background: linear-gradient(90deg, #181b38 0%, #111750 168.67%);
+}
+
+.homepage-nft-mint-tag {
+  width: fit-content !important;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #5e54a0 -10.16%, #00fecf 129.3%);
+  backdrop-filter: blur(13px);
+  span {
+    color: #fff;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.homepage-minting-title {
+  color: #fff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.1px;
 }

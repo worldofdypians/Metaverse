@@ -40,6 +40,7 @@ const renderer = ({ days, hours, minutes }) => {
 };
 const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
   const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
@@ -62,10 +63,22 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         const responseData = await response.json();
         if (responseData.events) {
           const eventRewards = responseData.events.filter((obj)=>{return obj.betapassId === event.linkState});
+          const confluxEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "conflux";
+          });
+          if(confluxEvent[0].reward.earn.multiplier !== 0){
+            const cfxUsdValue =
+            confluxEvent[0].reward.earn.total /
+            confluxEvent[0].reward.earn.multiplier;
+            setConfluxEarnUSD(cfxUsdValue);
+          }
+
           const usdValue =
           eventRewards[0].reward.earn.total /
           eventRewards[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
+
+          
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -74,6 +87,8 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
       console.log("Error:", error);
     }
   };
+
+  
 
   useEffect(() => {
     if (userEmail && userWallet) {
@@ -131,12 +146,12 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         <div className="d-flex align-items-center gap-1">
           <img src={cyanDollar} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text">
-            ${getFormattedNumber(userEarnUsd, 2)}
+            ${getFormattedNumber(event.title === "CoinGecko" ? userEarnUsd : confluxEarnUSD , 2)}
           </span>
         </div>
         <div className="d-flex align-items-center gap-1">
           <img src={cyanDate} height={15} width={15} alt="" />
-          <span className="mb-0 event-bottom-text">Aug 1, 2023</span>
+          <span className="mb-0 event-bottom-text">{event.date}</span>
         </div>
         <img src={cyanArrow} height={15} width={15} alt="" />
       </div>

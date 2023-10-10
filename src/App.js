@@ -125,6 +125,8 @@ function App() {
 
   const [myCAWstakes, setCAWMystakes] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
+  const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
+
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -140,6 +142,7 @@ function App() {
   const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
   const [totalGateNft, setTotalGateNft] = useState(0);
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
+  const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
@@ -274,7 +277,7 @@ function App() {
       .get(`https://api-image.dyp.finance/api/v1/avatar/${userAddr}`)
       .then((data) => {
         if (data.data.avatar) {
-          setAvatar(data.avatar);
+          setAvatar(data.data.avatar);
         } else {
           setAvatar(null);
         }
@@ -310,7 +313,6 @@ function App() {
         await window.getCoinbase().then((data) => {
           if (data) {
             fetchAvatar(data);
-
             setCoinbase(data);
             setIsConnected(true);
           } else {
@@ -480,6 +482,8 @@ function App() {
       getMyNFTS(coinbase, "conflux").then((NFTS) => {
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
+        setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmyConfluxNFTsCreated(NFTS); 
       });
     } else {
       setMyNFTSCaws([]);
@@ -764,6 +768,78 @@ function App() {
     }
   };
 
+  const handleConfluxNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.conflux_nft
+            .mintConfluxNFT()
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "conflux").then((NFTS) => {
+                setmyConfluxNFTsCreated(NFTS);
+                setTotalConfluxNft(NFTS.length);
+                setconfluxMintAllowed(0);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+
   const getBoughtNFTS = async () => {
     let boughtItems = [];
     let finalboughtItems = [];
@@ -1035,6 +1111,7 @@ function App() {
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
   ethereum?.on("accountsChanged", checkConnection2);
+  // ethereum?.on("accountsChanged", fetchAllMyNfts);
 
   useEffect(() => {
     if (ethereum && !window.gatewallet) {
@@ -1064,6 +1141,13 @@ function App() {
         setCoinbase();
         localStorage.setItem("logout", "true");
       }
+    } else if (
+      logout === "false" ||
+      window.coinbase_address ===
+        "0x0000000000000000000000000000000000000000" ||
+      window.coin98
+    ) {
+      checkConnection2();
     } else if (window.gatewallet && isActive) {
       setIsConnected(isActive);
       if (account) {
@@ -1921,7 +2005,7 @@ function App() {
                 />
               }
             />
-            {/* <Route
+            <Route
                 exact
                 path="/marketplace/beta-pass/base"
                 element={
@@ -1954,7 +2038,7 @@ function App() {
                     handleSwitchNetwork={handleSwitchNetwork}
                   />
                 }
-              /> */}
+              />
             <Route
               exact
               path="/marketplace/events/:eventId"
@@ -2026,7 +2110,7 @@ function App() {
             />
             <Route
               exact
-              path="/marketplace/mint"
+              path="/marketplace/mint/:mintId"
               element={
                 <MarketMint
                   coinbase={coinbase}
@@ -2043,6 +2127,9 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   timepieceMetadata={timepieceMetadata}
+                  myConfluxNFTsCreated={myConfluxNFTsCreated}
+                  handleConfluxMint={handleConfluxNftMint}
+                  confluxMintAllowed={confluxMintAllowed}
                 />
               }
             />
@@ -2052,7 +2139,6 @@ function App() {
           {location.pathname.includes("marketplace") ||
           location.pathname.includes("notifications") ||
           location.pathname.includes("account") ? (
-            location.pathname.includes("timepiece") ||
             location.pathname.includes("caws") ||
             location.pathname.includes("land") ? null : (
               <MarketplaceFooter />
