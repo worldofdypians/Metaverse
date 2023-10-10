@@ -67,7 +67,7 @@ const Home = ({
   }
   const treasureHuntPopupInfo = {
     title: "Treasure Hunt",
-    img: confluxTreasureHunt,
+    img: confluxPopup,
     state: "conflux",
   }
 
