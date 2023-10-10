@@ -51,7 +51,7 @@ import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
 
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
-import baseUpcoming from "./assets/baseUpcoming.png";
+import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.png";
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
