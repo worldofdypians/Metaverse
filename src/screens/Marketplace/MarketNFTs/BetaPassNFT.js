@@ -43,6 +43,8 @@ import pinkAreaBase from "./assets/pinkAreaBase.svg";
 import avaxBetaBanner from "./assets/avaxBetaBanner.png";
 import coingeckoBetaBanner from "./assets/coingeckoBetaBanner.png";
 import confluxBetaBanner from "./assets/confluxBetaBanner.png";
+import baseBetaBanner from "./assets/baseBetaBanner.png";
+
 import gateBetaBanner from "./assets/gateBetaBanner.png";
 import coin98BetaBanner from "./assets/coin98BetaBanner.png";
 
@@ -599,6 +601,8 @@ const BetaPassNFT = ({
                         ? gateBetaBanner
                         : mintTitle === "coin98"
                         ? coin98BetaBanner
+                        : mintTitle === "base"
+                        ? baseBetaBanner
                         : betapassBanner
                     }
                     className="w-100"
