@@ -73,7 +73,8 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
-  const [totalSupply, setTotalSupply] = useState(0);
+  const [totalSupply, setTotalSupply] = useState(0); 
+
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -235,8 +236,10 @@ const Marketplace = ({
       .catch((e) => {
         console.error(e);
       });
+    const confluxresult = await window.conflux_nft.getConfluxLatestMint();
+    setTotalSupply(parseInt(result) + parseInt(confluxresult));
 
-    setTotalSupply(parseInt(result));
+ 
   };
 
   const getAllData = async () => {
