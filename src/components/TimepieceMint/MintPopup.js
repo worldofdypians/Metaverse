@@ -40,10 +40,10 @@ const MintPopup = ({ active, onClose, data }) => {
           <div class="d-flex align-items-center justify-content-center">
             <div class="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              $2,000 CFX Rewards
+              FREE MINTING
             </h6>
           </div>
-          <h6 className="mint-popup-title">Conflux Treasure Hunt</h6>
+          <h6 className="mint-popup-title">CONFLUX BETA PASS</h6>
         </>
       ) : (
         <div className="d-flex align-items-center gap-2">
@@ -66,7 +66,8 @@ const MintPopup = ({ active, onClose, data }) => {
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
         {data.title === "Treasure Hunt" ? (
           <span className="popup-available-mint">
-            Explore the Conflux area and use your <img src={whiteExplore} width={20} height={20} alt="" /> to generate rewards.
+            Get access to the game and a unique event filled with surprises and
+            rewards!
           </span>
         ) : (
           <span className="popup-available-mint">
@@ -78,7 +79,7 @@ const MintPopup = ({ active, onClose, data }) => {
       {data.title === "Treasure Hunt" ? (
         <Link
           onClick={onClose}
-          to={"/marketplace/events/treasure-hunt"}
+          to={"/marketplace/mint/conflux"}
           state={{ event: data.state }}
           className="linear-border"
         >
