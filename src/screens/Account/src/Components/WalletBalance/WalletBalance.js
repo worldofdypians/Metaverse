@@ -1321,33 +1321,33 @@ const WalletBalance = ({
 
       },
     },
-    // {
-    //   title: "Gate.io",
-    //   logo: gate,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$3,000 in GT Rewards",
-    //   myEarnings: 0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "October 20, 2023",
-    //   backgroundImage: gateUpcoming,
-    //   popupInfo: {
-    //     eventType: "Explore & Mine",
-    //     title: "Gate.io",
-    //     chain: "BNB Chain",
-    //     linkState: "gate",
-    //     rewards: "GT",
-    //     status: "Coming Soon",
-    //     id: "event6",
-    //     totalRewards: "$3,000 in GT Rewards",
-    //     eventDuration: gateLastDay,
-    //     eventDate: "October 20, 2023",
-    //     date: "Oct 20, 2023",
-    //     minRewards: "1",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //   },
-    // },
+    {
+      title: "Gate.io",
+      logo: gate,
+      eventStatus: "Coming Soon",
+      totalRewards: "$3,000 in GT Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "October 20, 2023",
+      backgroundImage: gateUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Gate.io",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "GT",
+        status: "Coming Soon",
+        id: "event6",
+        totalRewards: "$3,000 in GT Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "October 20, 2023",
+        date: "Oct 20, 2023",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+      },
+    },
     {
       title: "Base",
       logo: base,
@@ -1504,10 +1504,10 @@ const WalletBalance = ({
               />
               <UpcomingProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyBase);
+                  setDummyEvent(dummyGate);
                   setEventPopup(true);
                 }}
-                data={dummyBase}
+                data={dummyGate}
               />
               {/* <img
                 src={eventSkeleton}

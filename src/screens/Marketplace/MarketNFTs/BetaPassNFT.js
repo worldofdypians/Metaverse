@@ -629,7 +629,7 @@ const BetaPassNFT = ({
                     />
                     <span>Avalanche</span>
                   </NavLink> */}
-                  {/* <NavLink
+                  <NavLink
                     to={"/marketplace/beta-pass/gate"}
                     className={`${
                       location.pathname.includes("gate") &&
@@ -646,7 +646,7 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>Gate</span>
-                  </NavLink> */}
+                  </NavLink>
                   <NavLink
                     to={"/marketplace/beta-pass/conflux"}
                     className={`${
