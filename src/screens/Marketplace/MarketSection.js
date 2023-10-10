@@ -91,22 +91,22 @@ const MarketSection = ({
       price: 12600,
       eventId: "puzzle-madness",
     },
-    // {
-    //   eventTitle: "Golden Pass",
-    //   eventPrice: "2,100 DYP",
-    //   eventImg: "golden",
-    //   state: "dyp",
-    //   price: 2100,
-    //   eventId: "golden-pass",
-    // },
     {
-      eventTitle: "Treasure Hunt",
-      eventPrice: "",
-      eventDesc: "Event available for Beta Pass NFT owners",
-      eventImg: "treasure.jpg",
-      state: "treasure-hunt",
-      eventId: "treasure-hunt",
+      eventTitle: "Golden Pass",
+      eventPrice: "2,100 DYP",
+      eventImg: "golden",
+      state: "dyp",
+      price: 2100,
+      eventId: "golden-pass",
     },
+    // {
+    //   eventTitle: "Treasure Hunt",
+    //   eventPrice: "",
+    //   eventDesc: "Event available for Beta Pass NFT owners",
+    //   eventImg: "treasureHunt",
+    //   state: "treasure-hunt",
+    //   eventId: "treasure-hunt",
+    // },
   ];
 
   const fetchCawsNfts = async () => {
