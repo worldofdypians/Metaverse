@@ -1316,8 +1316,8 @@ const WalletBalance = ({
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
-    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+        maxPoints: "20,000",
+    learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
 
       },
     },
