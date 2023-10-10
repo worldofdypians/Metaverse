@@ -36,7 +36,7 @@ const MarketCards = ({
         <div className="position-relative">
           {activebtn === "events" && (
             <img
-              src={require(`./assets/${eventImg}`)}
+              src={require(`./assets/${eventImg}.png`)}
               alt=""
               className="marketicon"
             />
