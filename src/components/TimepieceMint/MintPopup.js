@@ -53,7 +53,7 @@ const MintPopup = ({ active, onClose, data }) => {
               Live
             </h6>
           </div>
-          <h6 className="mint-popup-title m-0">{data.title} Beta Pass</h6>
+          <h6 className="mint-popup-title m-0">{data.title} Beta Pass NFT Giveaway</h6>
         </div>
       )}
 
