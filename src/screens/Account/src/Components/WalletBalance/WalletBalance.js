@@ -1557,7 +1557,7 @@ const WalletBalance = ({
               )}
             </div>
           </div>
-          {showAllEvents && (
+          {showAllEvents && windowSize.width < 786 ? (
             <div className="col-12 p-lg-3">
             <div
               className="nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-2"
@@ -1589,139 +1589,9 @@ const WalletBalance = ({
                 ))}
               </div>
 
-              {/* {activeSlide > 0 && (
-              <div className="prev-arrow-nft" onClick={firstPrev}>
-                <img src={nextArrow} alt="" />
-              </div>
-            )}
-            {showFirstNext === activeSlide
-              ? null
-              : 4 > sliderCut && (
-                  <div className="next-arrow-nft" onClick={firstNext}>
-                    <img src={nextArrow} alt="1" />
-                  </div>
-                )} */}
-              {/* <Slider ref={(c) => (slider.current = c)} {...settings}> */}
-              {/* <div className="d-flex flex-column gap-1">
-                <div
-                  className={`active-mint mint-1 justify-content-between d-flex flex-column position-relative`}
-                  onClick={() => {
-                    setDummyEvent(dummyConflux);
-                    setEventPopup(true);
-                  }}
-                >
-                  <div className="upcoming-tag d-flex align-items-center justify-content-center p-1">
-                    <span className="upcoming-text">Coming soon</span>
-                  </div>
-                  <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                    <h6 className="active-mint-title mb-0">Conflux</h6>
-                    <p className="active-mint-desc mb-0">
-                      Gain entry to metaverse, and join exclusive Conflux event
-                      with special ticket.
-                    </p>
-                  </div>
-                  <div className="second-half h-50 w-100">
-                    <img src={confluxActive} className="w-100 h-100" alt="" />
-                  </div>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <img src={grayCalendar} width={14} height={14} alt="" />
-                  <span className="event-slider-date">
-                    Aug 1, 2023 - Aug 31, 2023{" "}
-                  </span>
-                </div>
-              </div>
-              <div className="d-flex flex-column gap-1">
-                <div
-                  className={`active-mint mint-2 justify-content-between d-flex flex-column position-relative`}
-                  onClick={() => {
-                    setDummyEvent(dummyCoin98);
-                    setEventPopup(true);
-                  }}
-                >
-                  <div className="live-tag d-flex align-items-center justify-content-center p-1">
-                    <span className="live-text">Live</span>
-                  </div>
-                  <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                    <h6 className="active-mint-title mb-0">Coin98 Pass</h6>
-                    <p className="active-mint-desc mb-0">
-                      Gain entry to metaverse, and join exclusive Coin98 event
-                      with special ticket.
-                    </p>
-                  </div>
-                  <div className="second-half h-50 w-100">
-                    <img src={coin98Active} className="w-100 h-100" alt="" />
-                  </div>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <img src={grayCalendar} width={14} height={14} alt="" />
-                  <span className="event-slider-date">
-                    Aug 1, 2023 - Aug 31, 2023{" "}
-                  </span>
-                </div>
-              </div>
-              <div className="d-flex flex-column gap-1">
-                <div
-                  className={`active-mint mint-3 justify-content-between d-flex flex-column position-relative`}
-                  onClick={() => {
-                    setDummyEvent(dummyCoingecko);
-                    setEventPopup(true);
-                  }}
-                >
-                  <div className="expired-tag d-flex align-items-center justify-content-center p-1">
-                    <span className="expired-text">Expired</span>
-                  </div>
-                  <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                    <h6 className="active-mint-title mb-0">CoinGecko Pass</h6>
-                    <p className="active-mint-desc mb-0">
-                      Gain entry to metaverse, and join exclusive CoinGecko
-                      event with special ticket.
-                    </p>
-                  </div>
-                  <div className="second-half h-50 w-100">
-                    <img src={coingeckoActive} className="w-100 h-100" alt="" />
-                  </div>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <img src={grayCalendar} width={14} height={14} alt="" />
-                  <span className="event-slider-date">
-                    Aug 1, 2023 - Aug 31, 2023{" "}
-                  </span>
-                </div>
-              </div> */}
-              {/* <div className="d-flex flex-column gap-1">
-              <div className={`active-mint mint-4 justify-content-between d-flex flex-column position-relative`} onClick={() => {
-                setDummyEvent(dummyBase);
-                setEventPopup(true);
-              }}>
-                <div className="expired-tag d-flex align-items-center justify-content-center p-1">
-                  <span className="expired-text">Expired</span>
-                </div>
-                <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                  <h6 className="active-mint-title mb-0">Base Pass</h6>
-                  <p className="active-mint-desc mb-0">
-                    Gain entry to metaverse, and join exclusive event
-                    hosted on Base Network with special ticket.
-                  </p>
-                </div>
-                <div className="second-half h-50 w-100">
-                  <img
-                    src={baseActive}
-                    className="w-100 h-100"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                  <img src={grayCalendar} width={14} height={14} alt="" />
-                  <span className="event-slider-date">Aug 1, 2023 - Aug 31, 2023 </span>
-                </div>
-              </div> */}
-              {/* <img src={sliderEventSkeleton} height={235} alt="" /> */}
-              {/* </Slider> */}
             </div>
           </div>
-          )}
+          ) : null}
           <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
