@@ -2290,6 +2290,9 @@
   margin: 0px;
   border: 1px solid transparent;
   justify-content: center;
+  @media screen and (max-width: 450px) {
+    width: 147px;
+  }
   .beta-pass-chain-img {
     width: 25px;
     height: 25px;
