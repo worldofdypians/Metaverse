@@ -37,7 +37,7 @@ import gateUpcoming from "./assets/gateUpcoming.webp";
 
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
-import baseUpcoming from "./assets/baseUpcoming.png";
+import baseUpcoming from "./assets/baseUpcoming.webp";
 import avaxUpcoming from "./assets/avaxUpcoming.png";
 import infoIcon from "./assets/infoIcon.svg";
 import liveDot from "./assets/liveDot.svg";
@@ -298,32 +298,32 @@ const MarketEvents = ({
           "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
-    // {
-    //   title: "Gate.io",
-    //   logo: gate,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$3,000 in GT Rewards",
-    //   myEarnings: 0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "October 20, 2023",
-    //   backgroundImage: gateUpcoming,
-    //   popupInfo: {
-    //     eventType: "Explore & Mine",
-    //     title: "Gate.io",
-    //     chain: "BNB Chain",
-    //     linkState: "gate",
-    //     rewards: "GT",
-    //     status: "Coming Soon",
-    //     id: "event6",
-    //     totalRewards: "$3,000 in GT Rewards",
-    //     eventDuration: gateLastDay,
-    //     eventDate: "October 20, 2023",
-    //     minRewards: "1",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //   },
-    // },
+    {
+      title: "Gate.io",
+      logo: gate,
+      eventStatus: "Coming Soon",
+      totalRewards: "$2,000 in BNB Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "October 20, 2023",
+      backgroundImage: gateUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Gate.io",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event6",
+        totalRewards: "$2,000 in BNB Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "October 20, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+      },
+    },
     {
       title: "Base",
       logo: base,
@@ -1104,7 +1104,7 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Gate.io area, players not only stand a chance to secure
-                      daily rewards in GT, but also earn points for their
+                      daily rewards in BNB, but also earn points for their
                       placement on the global leaderboard. Remember to log in to
                       the game daily and venture into the Gate.io area to
                       uncover hidden treasures.
@@ -1151,7 +1151,7 @@ const MarketEvents = ({
                         : dummyEvent.id === "event5"
                         ? "AVAX"
                         : dummyEvent.id === "event6"
-                        ? "GT"
+                        ? "BNB"
                         : "ETH"}{" "}
                       rewards
                     </li>
@@ -1359,7 +1359,7 @@ const MarketEvents = ({
                         : dummyEvent.id === "event5"
                         ? "AVAX"
                         : dummyEvent.id === "event6"
-                        ? "GT"
+                        ? "BNB"
                         : "ETH"}
                     </span>
                   </h6>
@@ -1373,7 +1373,7 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.id === "event9" && (
+            {dummyEvent.id === "event6" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/gate`}>
                   <button className="btn get-beta-btn">Get Beta Pass</button>

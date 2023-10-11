@@ -203,8 +203,8 @@ const BetaPassNFT = ({
   const [mouseOver, setMouseOver] = useState(false);
   const [status, setStatus] = useState("Connect your wallet.");
   const [activeButton, setactiveButton] = useState(false);
-  const [selectedMint, setSelectedMint] = useState(confluxData);
-  const [mintTitle, setMintTitle] = useState("conflux");
+  const [selectedMint, setSelectedMint] = useState(gateData);
+  const [mintTitle, setMintTitle] = useState("gate");
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
   const [viewCollection, setViewCollection] = useState(false);
@@ -611,10 +611,10 @@ const BetaPassNFT = ({
                 </div>
               </div>
               <div
-                className="filters-container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-center my-4 p-3 position-relative gap-3"
+                className="filters-container d-flex flex-column flex-lg-row align-items-center justify-content-center my-4 p-3 position-relative gap-3"
                 style={{ zIndex: 2 }}
               >
-                <div className="d-flex align-items-center gap-4 justify-content-center flex-wrap">
+                <div className="d-flex align-items-center gap-4 justify-content-center flex-xl-nowrap flex-wrap">
                   {/* <NavLink
                     to={"/marketplace/beta-pass/avalanche"}
                     className={`${
@@ -633,7 +633,7 @@ const BetaPassNFT = ({
                     />
                     <span>Avalanche</span>
                   </NavLink> */}
-                  {/* <NavLink
+                  <NavLink
                     to={"/marketplace/beta-pass/gate"}
                     className={`${
                       location.pathname.includes("gate") &&
@@ -650,7 +650,7 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>Gate</span>
-                  </NavLink> */}
+                  </NavLink>
                   <NavLink
                     to={"/marketplace/beta-pass/conflux"}
                     className={`${
@@ -941,8 +941,11 @@ const BetaPassNFT = ({
                       )} */}
 
                       {mintTitle === "gate" && (
-                        <button
+                        <a
                           className={`btn gate-btn px-3 d-flex align-items-center justify-content-center gap-2`}
+                          href="https://www.gate.io/web3/startup/894"
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           <img
                             src={gateWhite}
@@ -955,7 +958,7 @@ const BetaPassNFT = ({
                             alt=""
                             style={{ width: 16, height: 16 }}
                           />{" "}
-                        </button>
+                        </a>
                       )}
 
                       {/* {mintTitle === "conflux" && (
@@ -1559,7 +1562,7 @@ const BetaPassNFT = ({
                               >
                                 <span
                                   className="profile-event-tag-text mb-0"
-                                  style={{ color: "#FFFFFF", fontSize: '16px' }}
+                                  style={{ color: "#FFFFFF", fontSize: "16px" }}
                                 >
                                   Coming Soon
                                 </span>

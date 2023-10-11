@@ -2162,6 +2162,7 @@
 .coingecko-btn:hover,
 .conflux-btn:hover,
 .downloadbtn-coingecko:hover,
+.gate-btn:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
   color: #fff;
@@ -2284,8 +2285,11 @@
 .beta-pass-item {
   border-radius: 15px;
   background: #252743;
+  width: 157px;
   // backdrop-filter: blur(10px);
   margin: 1px;
+  border: 1px solid transparent;
+  justify-content: center;
   .beta-pass-chain-img {
     width: 25px;
     height: 25px;
@@ -2302,9 +2306,9 @@
     @media screen and (max-width: 435px) {
       font-size: 14px;
     }
-    @media screen and (max-width: 410px) {
-      font-size: 10px;
-    }
+    // @media screen and (max-width: 410px) {
+    //   font-size: 10px;
+    // }
   }
 }
 
@@ -2315,7 +2319,7 @@
 }
 
 .beta-pass-item:hover {
-  margin: 0px;
+  // margin: 0px;
   border: 1px solid #11fed2;
   background: linear-gradient(
     135deg,

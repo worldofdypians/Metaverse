@@ -51,7 +51,7 @@ import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
 
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
-import baseUpcoming from "./assets/baseUpcoming.png";
+import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
@@ -734,7 +734,7 @@ const WalletBalance = ({
       finalCollection = [
         ...coingeckoNftsArray,
         ...confluxNftsArray,
-        // ...gateNftsArray,
+        ...gateNftsArray,
         ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
@@ -1097,18 +1097,18 @@ const WalletBalance = ({
     title: "Gate.io",
     chain: "BNB Chain",
     linkState: "gate",
-    rewards: "GT",
+    rewards: "BNB",
     status: "Coming Soon",
     id: "event6",
     eventType: "Explore & Mine",
     date: "Oct 20, 2023",
     logo: gate,
-    totalRewards: "$3,000 in GT Rewards",
+    totalRewards: "$2,000 in BNB Rewards",
     eventDuration: gateLastDay,
-    minRewards: "1",
+    minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
-    maxPoints: "50,000",
+    maxPoints: "20,000",
   };
 
   const dummyCoingecko = {
@@ -1316,38 +1316,38 @@ const WalletBalance = ({
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
-    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+        maxPoints: "20,000",
+    learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
 
       },
     },
-    // {
-    //   title: "Gate.io",
-    //   logo: gate,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$3,000 in GT Rewards",
-    //   myEarnings: 0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "October 20, 2023",
-    //   backgroundImage: gateUpcoming,
-    //   popupInfo: {
-    //     eventType: "Explore & Mine",
-    //     title: "Gate.io",
-    //     chain: "BNB Chain",
-    //     linkState: "gate",
-    //     rewards: "GT",
-    //     status: "Coming Soon",
-    //     id: "event6",
-    //     totalRewards: "$3,000 in GT Rewards",
-    //     eventDuration: gateLastDay,
-    //     eventDate: "October 20, 2023",
-    //     date: "Oct 20, 2023",
-    //     minRewards: "1",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //   },
-    // },
+    {
+      title: "Gate.io",
+      logo: gate,
+      eventStatus: "Coming Soon",
+      totalRewards: "$2,000 in BNB Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "October 20, 2023",
+      backgroundImage: gateUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Gate.io",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "GT",
+        status: "Coming Soon",
+        id: "event6",
+        totalRewards: "$2,000 in BNB Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "October 20, 2023",
+        date: "Oct 20, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+      },
+    },
     {
       title: "Base",
       logo: base,
@@ -1504,10 +1504,10 @@ const WalletBalance = ({
               />
               <UpcomingProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyBase);
+                  setDummyEvent(dummyGate);
                   setEventPopup(true);
                 }}
-                data={dummyBase}
+                data={dummyGate}
               />
               {/* <img
                 src={eventSkeleton}
@@ -1534,13 +1534,15 @@ const WalletBalance = ({
                 </div> */}
               {dummyBetaPassData2.length > 3 && (
                 <div
-                  className="d-flex align-items-center justify-content-center gap-2 w-100"
+                  className="d-flex align-items-center justify-content-center gap-2"
                   onClick={() => openEvents()}
                   style={{
                     cursor: "pointer",
                     width: "fit-content",
                     position: "absolute",
-                    bottom: "20px",
+                    bottom:  windowSize.width > 650 ? "20px" : '5px',
+                    left:  windowSize.width > 650 ? "43%" : '43%',
+
                   }}
                 >
                   <span className="account-view-all">
@@ -1555,7 +1557,8 @@ const WalletBalance = ({
               )}
             </div>
           </div>
-          {showAllEvents && (
+          {showAllEvents && windowSize.width < 786 ? (
+            <div className="col-12 p-lg-3">
             <div
               className="nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-2"
               style={{
@@ -1565,142 +1568,30 @@ const WalletBalance = ({
               }}
               ref={releaseContent2}
             >
-              {activeSlide > 0 && (
-                <div className="prev-arrow-nft" onClick={firstPrev}>
-                  <img src={nextArrow} alt="" />
-                </div>
-              )}
-              {showFirstNext === activeSlide
-                ? null
-                : 4 > sliderCut && (
-                    <div className="next-arrow-nft" onClick={firstNext}>
-                      <img src={nextArrow} alt="1" />
-                    </div>
-                  )}
-              <Slider ref={(c) => (slider.current = c)} {...settings}>
-                <div className="d-flex flex-column gap-1">
-                  <div
-                    className={`active-mint mint-1 justify-content-between d-flex flex-column position-relative`}
-                    onClick={() => {
-                      setDummyEvent(dummyConflux);
+            
+              <div className="d-flex flex-column gap-4">
+                {dummyBetaPassData2.map((item, index) => (
+                  <BetaEventCard
+                    data={item}
+                    key={index}
+                    onOpenPopup={() => {
                       setEventPopup(true);
+                      setDummyEvent(item.popupInfo);
                     }}
-                  >
-                    <div className="upcoming-tag d-flex align-items-center justify-content-center p-1">
-                      <span className="upcoming-text">Coming soon</span>
-                    </div>
-                    <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                      <h6 className="active-mint-title mb-0">Conflux</h6>
-                      <p className="active-mint-desc mb-0">
-                        Gain entry to metaverse, and join exclusive Conflux
-                        event with special ticket.
-                      </p>
-                    </div>
-                    <div className="second-half h-50 w-100">
-                      <img src={confluxActive} className="w-100 h-100" alt="" />
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={grayCalendar} width={14} height={14} alt="" />
-                    <span className="event-slider-date">
-                      Aug 1, 2023 - Aug 31, 2023{" "}
-                    </span>
-                  </div>
-                </div>
-                <div className="d-flex flex-column gap-1">
-                  <div
-                    className={`active-mint mint-2 justify-content-between d-flex flex-column position-relative`}
-                    onClick={() => {
-                      setDummyEvent(dummyCoin98);
-                      setEventPopup(true);
-                    }}
-                  >
-                    <div className="live-tag d-flex align-items-center justify-content-center p-1">
-                      <span className="live-text">Live</span>
-                    </div>
-                    <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                      <h6 className="active-mint-title mb-0">Coin98 Pass</h6>
-                      <p className="active-mint-desc mb-0">
-                        Gain entry to metaverse, and join exclusive Coin98 event
-                        with special ticket.
-                      </p>
-                    </div>
-                    <div className="second-half h-50 w-100">
-                      <img src={coin98Active} className="w-100 h-100" alt="" />
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={grayCalendar} width={14} height={14} alt="" />
-                    <span className="event-slider-date">
-                      Aug 1, 2023 - Aug 31, 2023{" "}
-                    </span>
-                  </div>
-                </div>
-                <div className="d-flex flex-column gap-1">
-                  <div
-                    className={`active-mint mint-3 justify-content-between d-flex flex-column position-relative`}
-                    onClick={() => {
-                      setDummyEvent(dummyCoingecko);
-                      setEventPopup(true);
-                    }}
-                  >
-                    <div className="expired-tag d-flex align-items-center justify-content-center p-1">
-                      <span className="expired-text">Expired</span>
-                    </div>
-                    <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                      <h6 className="active-mint-title mb-0">CoinGecko</h6>
-                      <p className="active-mint-desc mb-0">
-                        Gain entry to metaverse, and join exclusive CoinGecko
-                        event with special ticket.
-                      </p>
-                    </div>
-                    <div className="second-half h-50 w-100">
-                      <img
-                        src={coingeckoActive}
-                        className="w-100 h-100"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={grayCalendar} width={14} height={14} alt="" />
-                    <span className="event-slider-date">
-                      Aug 1, 2023 - Aug 31, 2023{" "}
-                    </span>
-                  </div>
-                </div>
-                <div className="d-flex flex-column gap-1">
-                  <div
-                    className={`active-mint mint-4 justify-content-between d-flex flex-column position-relative`}
-                    onClick={() => {
-                      setDummyEvent(dummyBase);
-                      setEventPopup(true);
-                    }}
-                  >
-                    <div className="expired-tag d-flex align-items-center justify-content-center p-1">
-                      <span className="expired-text">Expired</span>
-                    </div>
-                    <div className="first-half h-50 p-3 d-flex flex-column justify-content-center gap-2">
-                      <h6 className="active-mint-title mb-0">Base Pass</h6>
-                      <p className="active-mint-desc mb-0">
-                        Gain entry to metaverse, and join exclusive event hosted
-                        on Base Network with special ticket.
-                      </p>
-                    </div>
-                    <div className="second-half h-50 w-100">
-                      <img src={baseActive} className="w-100 h-100" alt="" />
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={grayCalendar} width={14} height={14} alt="" />
-                    <span className="event-slider-date">
-                      Aug 1, 2023 - Aug 31, 2023{" "}
-                    </span>
-                  </div>
-                </div>
-              </Slider>
+                    userEarnUsd={
+                      item.title === "Conflux"
+                        ? confluxEarnUSD
+                        : item.title === "Gate.io"
+                        ? 0
+                        : userEarnUsd
+                    }
+                  />
+                ))}
+              </div>
+
             </div>
-          )}
+          </div>
+          ) : null}
           <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
@@ -3928,7 +3819,7 @@ const WalletBalance = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Gate.io area, players not only stand a chance to secure
-                      daily rewards in GT, but also earn points for their
+                      daily rewards in BNB, but also earn points for their
                       placement on the global leaderboard. Remember to log in to
                       the game daily and venture into the Gate.io area to
                       uncover hidden treasures.
@@ -4173,7 +4064,7 @@ const WalletBalance = ({
                         : dummyEvent.id === "event5"
                         ? "AVAX"
                         : dummyEvent.id === "event6"
-                        ? "GT"
+                        ? "BNB"
                         : "ETH"}
                     </span>
                   </h6>
@@ -4187,7 +4078,7 @@ const WalletBalance = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.id === "event9" && (
+            {dummyEvent.id === "event6" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
                   {" "}
