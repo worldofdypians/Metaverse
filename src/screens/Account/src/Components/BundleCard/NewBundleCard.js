@@ -334,7 +334,7 @@ const NewBundleCard = ({
         setStatusColor("#FE7A00");
         setStatus(e?.message);
         setDepositState("failDeposit");
-        console.log(e)
+        console.log(e);
       });
     handleRefreshCountdown();
   };
@@ -548,6 +548,7 @@ const NewBundleCard = ({
   let today = new Date();
   let oneOctober = new Date("2023-10-01 11:11:00 GMT+02:00");
   let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
+  let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -587,79 +588,91 @@ const NewBundleCard = ({
         setisAtlimit(false);
         handleRefreshCountdown700();
       } else if (week1.includes(today_date.toString()) && bundlesBought > 3) {
-        const remainingTime_day = bundleExpireDay;
-        const remainingTime_miliseconds = bundleExpireMiliseconds;
+        // const remainingTime_day = bundleExpireDay;
+        // const remainingTime_miliseconds = bundleExpireMiliseconds;
 
-        if (parseInt(remainingTime_day) >= 25) {
-          const additional_remainingTime_time = 31 - remainingTime_day;
-          const additional_remaining_time_timestamp =
-            additional_remainingTime_time * 24 * 60 * 60 -
-            lastDayofBundleHours * 60 * 60 -
-            lastDayofBundleMinutes * 60;
+        // if (parseInt(remainingTime_day) >= 25) {
+        //   const additional_remainingTime_time = 31 - remainingTime_day;
+        //   const additional_remaining_time_timestamp =
+        //     additional_remainingTime_time * 24 * 60 * 60 -
+        //     lastDayofBundleHours * 60 * 60 -
+        //     lastDayofBundleMinutes * 60;
 
-          const final =
-            Number(remainingTime_miliseconds) +
-            Number(additional_remaining_time_timestamp * 1000);
+        //   const final =
+        //     Number(remainingTime_miliseconds) +
+        //     Number(additional_remaining_time_timestamp * 1000);
 
-          setcountdown700(final);
-          handleSetAvailableTime(final);
-          setisAtlimit(true);
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
-          setStatusColor700("#FE7A00");
-        }
-      } else if (week2.includes(today_date.toString()) && bundlesBought <= 2) {
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+        setisAtlimit(true);
+        setStatus700(
+          "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+        );
+        setStatusColor700("#FE7A00");
+        // }
+      } else if (week2.includes(today_date.toString()) && bundlesBought <= 3) {
         handleRefreshCountdown700();
         setisAtlimit(false);
-      } else if (week2.includes(today_date.toString()) && bundlesBought >= 3) {
-        const remainingTime2 = lastDayofBundle;
-        if (parseInt(remainingTime2) >= 25) {
-          const additional_remainingTime_time2 = 31 - remainingTime2;
-          const additional_remaining_time_timestamp2 =
-            additional_remainingTime_time2 * 24 * 60 * 60 -
-            lastDayofBundleHours * 60 * 60 -
-            lastDayofBundleMinutes * 60;
-          const remainingTime_miliseconds2 = bundleExpireMiliseconds;
+      } else if (week2.includes(today_date.toString()) && bundlesBought > 3) {
+        // const remainingTime2 = lastDayofBundle;
+        // if (parseInt(remainingTime2) >= 25) {
+        //   const additional_remainingTime_time2 = 31 - remainingTime2;
+        //   const additional_remaining_time_timestamp2 =
+        //     additional_remainingTime_time2 * 24 * 60 * 60 -
+        //     lastDayofBundleHours * 60 * 60 -
+        //     lastDayofBundleMinutes * 60;
+        //   const remainingTime_miliseconds2 = bundleExpireMiliseconds;
 
-          const final =
-            Number(remainingTime_miliseconds2) +
-            Number(additional_remaining_time_timestamp2 * 1000);
+        //   const final =
+        //     Number(remainingTime_miliseconds2) +
+        //     Number(additional_remaining_time_timestamp2 * 1000);
 
-          setcountdown700(final);
-          handleSetAvailableTime(final);
-          setisAtlimit(true);
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
-          setStatusColor700("#FE7A00");
-        }
+        //     setcountdown700( today<oneNovember ? oneNovember.getTime() : oneDecember.getTime());
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+        setisAtlimit(true);
+        setStatus700(
+          "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+        );
+        setStatusColor700("#FE7A00");
+        // }
       } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
         handleRefreshCountdown700();
         setisAtlimit(false);
       } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
-        const remainingTime3 = lastDayofBundle;
-        const remainingTime_miliseconds3 = bundleExpireMiliseconds;
+        // const remainingTime3 = lastDayofBundle;
+        // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
-        if (parseInt(remainingTime3) >= 25) {
-          const additional_remainingTime_time3 = 31 - remainingTime3;
-          const additional_remaining_time_timestamp3 =
-            additional_remainingTime_time3 * 24 * 60 * 60 -
-            lastDayofBundleHours * 60 * 60 -
-            lastDayofBundleMinutes * 60;
+        // if (parseInt(remainingTime3) >= 25) {
+        //   const additional_remainingTime_time3 = 31 - remainingTime3;
+        //   const additional_remaining_time_timestamp3 =
+        //     additional_remainingTime_time3 * 24 * 60 * 60 -
+        //     lastDayofBundleHours * 60 * 60 -
+        //     lastDayofBundleMinutes * 60;
 
-          const final =
-            Number(remainingTime_miliseconds3) +
-            Number(additional_remaining_time_timestamp3 * 1000);
+        //   const final =
+        //     Number(remainingTime_miliseconds3) +
+        //     Number(additional_remaining_time_timestamp3 * 1000);
 
-          setcountdown700(final);
-          handleSetAvailableTime(final);
-          setisAtlimit(true);
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
-          setStatusColor700("#FE7A00");
-        }
+        //   setcountdown700(final);
+        //   handleSetAvailableTime(final);
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+        setisAtlimit(true);
+        setStatus700(
+          "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+        );
+        setStatusColor700("#FE7A00");
+        // }
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
         handleRefreshCountdown700();
         setisAtlimit(false);
@@ -670,8 +683,16 @@ const NewBundleCard = ({
             setisAtlimit(false);
             handleSetAvailableTime(dateofBundle);
           } else {
-            setcountdown700( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
-            handleSetAvailableTime( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
+            setcountdown700(
+              today < oneNovember
+                ? oneNovember.getTime()
+                : oneDecember.getTime()
+            );
+            handleSetAvailableTime(
+              today < oneNovember
+                ? oneNovember.getTime()
+                : oneDecember.getTime()
+            );
             setisAtlimit(true);
             setStatusColor700("#FE7A00");
             setStatus700(
@@ -691,8 +712,12 @@ const NewBundleCard = ({
     } else if (today_date > 25) {
       if (today < dateofBundle) {
         setisAtlimit(true);
-        setcountdown700( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
-        handleSetAvailableTime( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
         );
@@ -732,7 +757,7 @@ const NewBundleCard = ({
   ]);
 
   useEffect(() => {
-    if (chainId !== 56 && coinbase === wallet) {
+    if (chainId !== 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       setStatus(
         "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
       );
@@ -743,7 +768,7 @@ const NewBundleCard = ({
         "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
       );
     }
-    if (chainId === 56 && coinbase !== wallet) {
+    if (chainId === 56 && coinbase?.toLowerCase() !== wallet?.toLowerCase()) {
       setStatus(
         "Please change your wallet address into the wallet associated to your profile"
       );
@@ -754,13 +779,13 @@ const NewBundleCard = ({
         "Please change your wallet address into the wallet associated to your profile"
       );
     }
-    if (chainId === 56 && coinbase === wallet) {
+    if (chainId === 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       setStatus("");
       setStatus3500("");
       setStatus700("");
     }
 
-    if (chainId !== 56 && coinbase !== wallet) {
+    if (chainId !== 56 && coinbase?.toLowerCase() !== wallet?.toLowerCase()) {
       setStatus(
         "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
       );
@@ -787,8 +812,15 @@ const NewBundleCard = ({
   useEffect(() => {
     if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
       setisAtlimit(true);
-      setcountdown700( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
-      handleSetAvailableTime( today<oneOctober ? oneOctober.getTime() : oneNovember.getTime());
+      setcountdown700(
+        today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+      );
+      handleSetAvailableTime(
+        today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+      );
+      setStatus700(
+        "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+      );
     }
   }, [bundlesBought, countdown700]);
 
