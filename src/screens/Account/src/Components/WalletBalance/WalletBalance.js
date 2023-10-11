@@ -1105,10 +1105,10 @@ const WalletBalance = ({
     logo: gate,
     totalRewards: "$2,000 in BNB Rewards",
     eventDuration: gateLastDay,
-    minRewards: "1",
+    minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
-    maxPoints: "50,000",
+    maxPoints: "20,000",
   };
 
   const dummyCoingecko = {
@@ -1342,10 +1342,10 @@ const WalletBalance = ({
         eventDuration: gateLastDay,
         eventDate: "October 20, 2023",
         date: "Oct 20, 2023",
-        minRewards: "1",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
+        maxPoints: "20,000",
       },
     },
     {

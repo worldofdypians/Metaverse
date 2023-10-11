@@ -318,10 +318,10 @@ const MarketEvents = ({
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
         eventDate: "October 20, 2023",
-        minRewards: "1",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
+        maxPoints: "20,000",
       },
     },
     {
