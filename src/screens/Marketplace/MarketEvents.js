@@ -302,7 +302,7 @@ const MarketEvents = ({
       title: "Gate.io",
       logo: gate,
       eventStatus: "Coming Soon",
-      totalRewards: "$3,000 in GT Rewards",
+      totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "October 20, 2023",
@@ -312,10 +312,10 @@ const MarketEvents = ({
         title: "Gate.io",
         chain: "BNB Chain",
         linkState: "gate",
-        rewards: "GT",
+        rewards: "BNB",
         status: "Coming Soon",
         id: "event6",
-        totalRewards: "$3,000 in GT Rewards",
+        totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
         eventDate: "October 20, 2023",
         minRewards: "1",
@@ -1104,7 +1104,7 @@ const MarketEvents = ({
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
                       Gate.io area, players not only stand a chance to secure
-                      daily rewards in GT, but also earn points for their
+                      daily rewards in BNB, but also earn points for their
                       placement on the global leaderboard. Remember to log in to
                       the game daily and venture into the Gate.io area to
                       uncover hidden treasures.
@@ -1151,7 +1151,7 @@ const MarketEvents = ({
                         : dummyEvent.id === "event5"
                         ? "AVAX"
                         : dummyEvent.id === "event6"
-                        ? "GT"
+                        ? "BNB"
                         : "ETH"}{" "}
                       rewards
                     </li>
@@ -1359,7 +1359,7 @@ const MarketEvents = ({
                         : dummyEvent.id === "event5"
                         ? "AVAX"
                         : dummyEvent.id === "event6"
-                        ? "GT"
+                        ? "BNB"
                         : "ETH"}
                     </span>
                   </h6>

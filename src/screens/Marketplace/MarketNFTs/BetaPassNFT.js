@@ -937,8 +937,11 @@ const BetaPassNFT = ({
                       )} */}
 
                       {mintTitle === "gate" && (
-                        <button
+                        <a
                           className={`btn gate-btn px-3 d-flex align-items-center justify-content-center gap-2`}
+                          href='https://www.gate.io/web3/startup/894'
+                          target="_blank"
+                          rel='noreferrer'
                         >
                           <img
                             src={gateWhite}
@@ -951,7 +954,7 @@ const BetaPassNFT = ({
                             alt=""
                             style={{ width: 16, height: 16 }}
                           />{" "}
-                        </button>
+                        </a>
                       )}
 
                       {/* {mintTitle === "conflux" && (
