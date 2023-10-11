@@ -467,7 +467,7 @@ const BetaPassNFT = ({
       setSelectedMint(gateData);
       setMintTitle("gate");
     }
-  }, []);
+  }, [locationState]);
 
   useEffect(() => {
     if (
