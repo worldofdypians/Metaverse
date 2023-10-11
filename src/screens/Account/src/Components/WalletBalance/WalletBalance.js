@@ -51,7 +51,7 @@ import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
 
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
-import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.png";
+import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
@@ -1534,13 +1534,15 @@ const WalletBalance = ({
                 </div> */}
               {dummyBetaPassData2.length > 3 && (
                 <div
-                  className="d-flex align-items-center justify-content-center gap-2 w-100"
+                  className="d-flex align-items-center justify-content-center gap-2"
                   onClick={() => openEvents()}
                   style={{
                     cursor: "pointer",
                     width: "fit-content",
                     position: "absolute",
-                    bottom: "20px",
+                    bottom:  windowSize.width > 650 ? "20px" : '5px',
+                    left:  windowSize.width > 650 ? "43%" : '43%',
+
                   }}
                 >
                   <span className="account-view-all">

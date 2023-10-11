@@ -37,7 +37,7 @@ import gateUpcoming from "./assets/gateUpcoming.webp";
 
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
-import baseUpcoming from "./assets/baseUpcoming.png";
+import baseUpcoming from "./assets/baseUpcoming.webp";
 import avaxUpcoming from "./assets/avaxUpcoming.png";
 import infoIcon from "./assets/infoIcon.svg";
 import liveDot from "./assets/liveDot.svg";
