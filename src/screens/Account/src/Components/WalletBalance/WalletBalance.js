@@ -65,6 +65,7 @@ import eventPopupImageBase from "./assets/eventPopupImageBase.png";
 import gatePopupImage from "./assets/gatePopupImage.png";
 import confluxPopupImage from "./assets/eventPopupImage.png";
 import Countdown from "react-countdown";
+import DailyBonusPopup from "./DailyBonusPopup";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -176,6 +177,8 @@ const WalletBalance = ({
   const [myOffersFiltered, setmyOffersFiltered] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [eventPopup, setEventPopup] = useState(false);
+  const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
+
   const [showAllEvents, setShowAllEvents] = useState(false);
   const slider = useRef(null);
   const windowSize = useWindowSize();
@@ -1139,23 +1142,23 @@ const WalletBalance = ({
     eventType: "Explore & Mine",
   };
   const dummyBase = {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Coming Soon",
-        id: "event4",
-        date: "Coming Soon",
-        totalRewards: "$5,000 in ETH Rewards",
-        eventDuration: gateLastDay,
-        backgroundImage: baseUpcoming,
-        logo: base,
-        date: "Coming Soon",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
+    eventType: "Explore & Mine",
+    title: "Base",
+    chain: "Base Chain",
+    linkState: "base",
+    rewards: "ETH",
+    status: "Coming Soon",
+    id: "event4",
+    date: "Coming Soon",
+    totalRewards: "$5,000 in ETH Rewards",
+    eventDuration: gateLastDay,
+    backgroundImage: baseUpcoming,
+    logo: base,
+    date: "Coming Soon",
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "30,000",
   };
 
   const dummyBetaPassData = [
@@ -1289,8 +1292,8 @@ const WalletBalance = ({
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
     {
@@ -1317,8 +1320,7 @@ const WalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "20,000",
-    learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
-
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
     {
@@ -1478,6 +1480,9 @@ const WalletBalance = ({
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
+              onClick={() => {
+                setdailyBonusPopup(true);
+              }}
             >
               Special Events
             </h6>
@@ -1540,9 +1545,8 @@ const WalletBalance = ({
                     cursor: "pointer",
                     width: "fit-content",
                     position: "absolute",
-                    bottom:  windowSize.width > 650 ? "20px" : '5px',
-                    left:  windowSize.width > 650 ? "43%" : '43%',
-
+                    bottom: windowSize.width > 650 ? "20px" : "5px",
+                    left: windowSize.width > 650 ? "43%" : "43%",
                   }}
                 >
                   <span className="account-view-all">
@@ -1559,38 +1563,36 @@ const WalletBalance = ({
           </div>
           {showAllEvents && windowSize.width < 786 ? (
             <div className="col-12 p-lg-3">
-            <div
-              className="nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-2"
-              style={{
-                maxWidth: "100vw",
-                width: "100%",
-                display: windowSize.width < 786 ? "block" : "none",
-              }}
-              ref={releaseContent2}
-            >
-            
-              <div className="d-flex flex-column gap-4">
-                {dummyBetaPassData2.map((item, index) => (
-                  <BetaEventCard
-                    data={item}
-                    key={index}
-                    onOpenPopup={() => {
-                      setEventPopup(true);
-                      setDummyEvent(item.popupInfo);
-                    }}
-                    userEarnUsd={
-                      item.title === "Conflux"
-                        ? confluxEarnUSD
-                        : item.title === "Gate.io"
-                        ? 0
-                        : userEarnUsd
-                    }
-                  />
-                ))}
+              <div
+                className="nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-2"
+                style={{
+                  maxWidth: "100vw",
+                  width: "100%",
+                  display: windowSize.width < 786 ? "block" : "none",
+                }}
+                ref={releaseContent2}
+              >
+                <div className="d-flex flex-column gap-4">
+                  {dummyBetaPassData2.map((item, index) => (
+                    <BetaEventCard
+                      data={item}
+                      key={index}
+                      onOpenPopup={() => {
+                        setEventPopup(true);
+                        setDummyEvent(item.popupInfo);
+                      }}
+                      userEarnUsd={
+                        item.title === "Conflux"
+                          ? confluxEarnUSD
+                          : item.title === "Gate.io"
+                          ? 0
+                          : userEarnUsd
+                      }
+                    />
+                  ))}
+                </div>
               </div>
-
             </div>
-          </div>
           ) : null}
           <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative mt-3 mt-lg-0">
             <h6
@@ -3745,19 +3747,22 @@ const WalletBalance = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status === "Coming Soon" && dummyEvent?.id !== 'event4' && (
-                  <div className="d-flex flex-column">
-                    <span className="live-on">Live on</span>
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={require("./assets/greenCalendar.svg").default}
-                        className="green-calendar"
-                        alt=""
-                      />
-                      <h6 className="live-on-date mb-0">{dummyEvent?.date}</h6>
+                {dummyEvent?.status === "Coming Soon" &&
+                  dummyEvent?.id !== "event4" && (
+                    <div className="d-flex flex-column">
+                      <span className="live-on">Live on</span>
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={require("./assets/greenCalendar.svg").default}
+                          className="green-calendar"
+                          alt=""
+                        />
+                        <h6 className="live-on-date mb-0">
+                          {dummyEvent?.date}
+                        </h6>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -3830,11 +3835,11 @@ const WalletBalance = ({
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
-                      downtown area, players not only stand a chance to secure daily
-                      rewards in ETH, but also earn points for their placement
-                      on the global leaderboard. Remember to log in to the game
-                      daily and venture into the downtown area to uncover hidden
-                      treasures.
+                      downtown area, players not only stand a chance to secure
+                      daily rewards in ETH, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the downtown area to
+                      uncover hidden treasures.
                     </p>
                   )}
                 </div>
@@ -4025,7 +4030,7 @@ const WalletBalance = ({
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
                         ? confluxUserPoints
-                        : dummyEvent.id === "event3" 
+                        : dummyEvent.id === "event3"
                         ? userPoints
                         : 0,
                       0
@@ -4086,6 +4091,27 @@ const WalletBalance = ({
                 </NavLink>
               </div>
             )}
+          </div>
+        </OutsideClickHandler>
+      )}
+      {dailyBonusPopup && (
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            setdailyBonusPopup(false);
+          }}
+        >
+          <div className="w-100 h-100">
+          <div className="position-absolute">
+            <div className="position-relative">
+              <div className="rewards-hexagon-outer p-2">
+                <div className="rewards-hexagon-inner">
+                  <span>Daily Bonus</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DailyBonusPopup />
           </div>
         </OutsideClickHandler>
       )}
