@@ -4100,16 +4100,7 @@ const WalletBalance = ({
             setdailyBonusPopup(false);
           }}
         >
-          <div className="w-100 h-100">
-          <div className="position-absolute">
-            <div className="position-relative">
-              <div className="rewards-hexagon-outer p-2">
-                <div className="rewards-hexagon-inner">
-                  <span>Daily Bonus</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="w-100 h-100 shadowwrapper">
 
           <DailyBonusPopup />
           </div>

@@ -794,7 +794,7 @@
 }
 
 .daily-rewards-popup {
-  clip-path: polygon(
+  --mask: polygon(
     99.95% 7.803%,
     100% 7.712%,
     100% 7.613%,
@@ -881,43 +881,60 @@
     99.049% 9.433%,
     99.95% 7.803%
   );
-  background: #1A1C39;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  background: #1a1c39;
+}
+
+.mask {
+  // --mask: url("./assets/rewardspopup.svg");
+  // mask-repeat: no-repeat;
+  // mask-size: cover;
+  // -webkit-mask-image: url("./assets/rewardspopup.svg");
+  // mask-image: url("./assets/rewardspopup.svg");
+  // --webkit-mask-repeat: no-repeat;
+  // -webkit-mask-size: cover;
+  // -webkit-mask-position: center;
+  // background: #1a1c39;
+}
+
+.overlay-container {
+  position: fixed;
+  top: 109px;
+  left: 45%;
+  z-index: 2;
+}
+
+.bonustitle {
+  color: #fff;
+  text-align: center;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 10px;
+  top: -45px;
 }
 
 .outerbg {
-  background: linear-gradient(to bottom, #00B9CD, #00D6BE, #00B9CD);
+  background: linear-gradient(to bottom, #00b9cd, #00d6be, #00b9cd);
 }
 
 .chestimg {
-  width: 132px;
+  width: 120px;
 }
 
 .rewardsgrid {
   display: grid;
-  grid-template-columns: repeat(5,1fr);
-  gap: 20px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
   place-items: center;
   margin: auto;
 }
 
 .shadowwrapper {
   box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
-  z-index: 7;
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 100%;
-}
-
-.rewards-hexagon-outer {
-  clip-path: polygon(0 36.00px,36.00px 0,calc(100% - 36.00px) 0,100% 36.00px,100% calc(100% - 36.00px),calc(100% - 36.00px) 100%,36.00px 100%,0 calc(100% - 36.00px),0 36.00px,10px  calc(36.00px + 4.14px),10px calc(100% - 36.00px - 4.14px),calc(36.00px + 4.14px) calc(100% - 10px),calc(100% - 36.00px - 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 36.00px - 4.14px),calc(100% - 10px) calc(36.00px + 4.14px),calc(100% - 36.00px - 4.14px) 10px,calc(36.00px + 4.14px) 10px,10px calc(36.00px + 4.14px));
-  background: #51F8DF;
-  width:332px;
-  height: 75px;
-}
-
-.rewards-hexagon-inner {
-  clip-path: polygon(49px 60.5px, 0.5px 30.5px, 55px 0.5px, 284px 0.5px, 332px 29.5px, 275.237px 60.5px, 49px 60.5px); 
- background: linear-gradient(to bottom right, #017676 0%, #10938D 50%) bottom right / 50% 50% no-repeat, linear-gradient(to bottom left, #017676 0%, #10938D 50%) bottom left / 50% 50% no-repeat, linear-gradient(to top left, #017676 0%, #10938D 50%) top left / 50% 50% no-repeat, linear-gradient(to top right, #017676 0%, #10938D 50%) top right / 50% 50% no-repeat;
-
-
 }
