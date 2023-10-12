@@ -46,7 +46,7 @@ const MintPopup = ({ active, onClose, data }) => {
           <h6 className="mint-popup-title">CONFLUX BETA PASS</h6>
         </>
       ) : (
-        <div className="d-flex align-items-center gap-2">
+        <div className="d-flex align-items-center gap-2 mb-4 mb-lg-0">
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
