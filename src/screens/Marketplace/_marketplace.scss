@@ -1623,6 +1623,11 @@
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
 }
 
+.package-popup-wrapper2 {
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
 .dragon-popup {
   // background-image: url("./assets/dragonPopup.webp");
 }
@@ -1686,7 +1691,7 @@
 }
 
 
-.popup-linear2 {
+.popup-linear {
   position: fixed;
   left: 0;
   right: 0;
@@ -1705,7 +1710,7 @@
   }
 }
 
-.popup-linear {
+.popup-linear2 {
   position: fixed;
   left: 0;
   right: 0;

@@ -9,8 +9,9 @@ import chestBgOpen from './assets/chestBgOpen.svg'
 import chestBgClosed from './assets/chestBgClosed.svg'
 import chestTagOpen from './assets/chestTagOpen.svg'
 import chestTagClosed from './assets/chestTagClosed.svg'
+import closeX from "./assets/closeX.svg";
 
-const DailyBonusPopup = ({}) => {
+const DailyBonusPopup = ({onclose}) => {
 
   const dummyChests = [ 
     {
@@ -69,13 +70,11 @@ const DailyBonusPopup = ({}) => {
 
   return (
     <>
-      <div
-        className="package-popup2 dragon-popup px-4 py-5 py-lg-5 px-lg-5"
-      >
+      <div className="package-popup2 dragon-popup px-4 py-5 py-lg-5 px-lg-5">
+        <img src={closeX} alt="" className="closex position-absolute" onClick={onclose}/>
         <div className="position-relative h-100">
           <div className="overlay-container">
             <div className="d-flex flex-column">
-              {/* <img src={hexagon} className="hexagon" alt="" /> */}
               <span className="bonustitle position-relative">Daily Bonus</span>
             </div>
           </div>

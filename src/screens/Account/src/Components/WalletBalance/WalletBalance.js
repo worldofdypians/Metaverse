@@ -193,6 +193,18 @@ const WalletBalance = ({
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
 
+  const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (dailyBonusPopup === true && dailyrewardpopup) {
+      html.classList.add("hidescroll");
+      dailyrewardpopup.style.pointerEvents = "auto";
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [dailyBonusPopup, dailyrewardpopup]);
+
   const cutLength = () => {
     if (windowSize.width > 1600) {
       setSliderCut(4);
@@ -4101,14 +4113,17 @@ const WalletBalance = ({
             setdailyBonusPopup(false);
           }}
         >
-          <div className="package-popup-wrapper">
-            <img
-              src={rewardPopup}
-              alt=""
-              className="popup-linear" 
-            />
+          <div
+            className="package-popup-wrapper2 position-relative"
+            id="dailyrewardpopup"
+          >
+            <img src={rewardPopup} alt="" className="popup-linear2" />
 
-            <DailyBonusPopup />
+            <DailyBonusPopup
+              onclose={() => {
+                setdailyBonusPopup(false);
+              }}
+            />
           </div>
         </OutsideClickHandler>
       )}
