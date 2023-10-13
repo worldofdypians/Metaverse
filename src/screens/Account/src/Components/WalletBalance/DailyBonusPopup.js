@@ -2,18 +2,16 @@ import React from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import chestLocked from "./assets/chest-locked.webp";
 import chestUnLocked from "./assets/chest-unlocked.webp";
-import hexagon from "./assets/hexagon.svg";
+import closeX from "./assets/closeX.svg";
 
-const DailyBonusPopup = ({}) => {
+const DailyBonusPopup = ({onclose}) => {
   return (
     <>
-      <div
-        className="package-popup2 dragon-popup px-4 py-5 py-lg-5 px-lg-5"
-      >
+      <div className="package-popup2 dragon-popup px-4 py-5 py-lg-5 px-lg-5">
+        <img src={closeX} alt="" className="closex position-absolute" onClick={onclose}/>
         <div className="position-relative h-100">
           <div className="overlay-container">
             <div className="d-flex flex-column">
-              {/* <img src={hexagon} className="hexagon" alt="" /> */}
               <span className="bonustitle position-relative">Daily Bonus</span>
             </div>
           </div>
