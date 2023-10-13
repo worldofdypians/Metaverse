@@ -900,20 +900,19 @@
 
 .overlay-container {
   position: fixed;
-  top: 109px;
-  left: 46%;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
 }
 
 .bonustitle {
   color: #fff;
   text-align: center;
-  font-size: 27px;
+  font-size: 23px;
   font-style: normal;
   font-weight: 700;
   line-height: 10px;
-  top: -40px;
-
 }
 
 .outerbg {
