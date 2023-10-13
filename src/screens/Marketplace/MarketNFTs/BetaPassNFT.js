@@ -906,7 +906,7 @@ const BetaPassNFT = ({
                           </div>
                         )}
                       </div>
-                      <img
+                      {/* <img
                         src={
                           mintTitle === "avalanche"
                             ? avaxMobileBg
@@ -918,7 +918,7 @@ const BetaPassNFT = ({
                         }
                         className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
                         alt=""
-                      />
+                      /> */}
                       {/* {mintTitle === "coingecko" && (
                         <a
                           className={`btn coingecko-btn px-3 d-flex align-items-center justify-content-center gap-2`}
