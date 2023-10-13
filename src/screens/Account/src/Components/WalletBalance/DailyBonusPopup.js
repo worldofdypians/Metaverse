@@ -64,17 +64,14 @@ const DailyBonusPopup = ({ onclose }) => {
 
   return (
     <>
-      <div
-        className="package-popup2 dragon-popup p-4"
-        style={{ height: "88%" }}
-      >
+      <div className="package-popup2 dragon-popup p-4">
         <img
           src={closeX}
           alt=""
           className="closex position-absolute"
           onClick={onclose}
         />
-        <div className="position-relative h-100">
+        <div className="position-relative h-100 rewardinnerwrapper">
           <div className="overlay-container">
             <div className="d-flex flex-column">
               <span className="bonustitle position-relative">Daily Bonus</span>
@@ -151,7 +148,7 @@ const DailyBonusPopup = ({ onclose }) => {
               <span className="font-organetto chestprizetitle text-white">
                 CHEST PRIZES
               </span>
-              <div className="d-flex align-items-center gap-2">
+              <div className="d-flex align-items-center gap-2 justify-content-between">
                 <div className="prizeswrapper">
                   <div className="d-flex align-items-center gap-2">
                     <img
