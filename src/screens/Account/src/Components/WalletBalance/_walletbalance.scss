@@ -697,37 +697,48 @@
   }
 }
 
-.chest-event-title{
-  color: #FFF;
-text-align: center;
-font-size: 16px;
-font-style: normal;
-font-weight: 300;
-line-height: 13px; /* 108.333% */
+.chest-event-title {
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 13px; /* 108.333% */
 }
 
-.chest-event-desc{
-  color: #FFF;
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 300;
-line-height: 13px; /* 108.333% */
-width: 70%;
+.chest-event-desc {
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 13px; /* 108.333% */
+  width: 70%;
 }
 
 .reward-chest {
   width: 118px;
   height: 192px;
+  margin: 10px;
+  cursor: pointer;
 }
 
 .reward-chest-open {
   background-image: url("./assets/chestBgOpen.svg");
   background-size: 100% 100%;
 }
+
+.reward-chest-open:hover {
+  filter: drop-shadow(0px 0px 6px #dfb625);
+}
+
 .reward-chest-closed {
   background-image: url("./assets/chestBgClosed.svg");
   background-size: 100% 100%;
+}
+
+.reward-chest-closed:hover {
+  filter: drop-shadow(0px 0px 6px #00BACC);
 }
 
 .chest-image {
@@ -975,7 +986,7 @@ width: 70%;
 
 .overlay-container {
   position: fixed;
-  top: 27px;
+  top: 42px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -1001,12 +1012,23 @@ width: 70%;
 .rewardsgrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  // gap: 16px;
   place-items: center;
-  margin: auto;
-  height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  // margin: auto;
+  // height: 400px;
+  // overflow-y: auto;
+  // overflow-x: hidden;
+
+  @media only screen and (max-width: 991px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media only screen and (max-width: 540px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.rewardinnerwrapper {
+  overflow: auto;
 }
 
 .shadowwrapper {
@@ -1018,7 +1040,7 @@ width: 70%;
 }
 
 .closex {
-  top: -60px;
+  top: -45px;
   right: -25px;
   cursor: pointer;
 }
@@ -1040,38 +1062,44 @@ width: 70%;
 }
 
 .prizeswrapper {
-  background: linear-gradient(270deg, rgba(90, 90, 90, 0.00) 38.72%, rgba(90, 90, 90, 0.40) 104.23%);
-  clip-path: polygon( 100% 0%,94.312% 100%,0% 100%,5.688% 0%,100% 0% );
+  background: linear-gradient(
+    270deg,
+    rgba(90, 90, 90, 0) 38.72%,
+    rgba(90, 90, 90, 0.4) 104.23%
+  );
+  clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
   padding: 10px 24px;
 }
 
-.reward-types{
-  clip-path: polygon( 100% 0%,94.312% 100%,0% 100%,5.688% 0%,100% 0% );
+.reward-types {
+  clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
   padding: 10px 24px;
   cursor: pointer;
 }
 
-.reward-types-active{
-  background: linear-gradient(270deg, rgba(0, 186, 204, 0.40) -59.13%, rgba(0, 186, 204, 0.00) 102.53%);
+.reward-types-active {
+  background: linear-gradient(
+    270deg,
+    rgba(0, 186, 204, 0.4) -59.13%,
+    rgba(0, 186, 204, 0) 102.53%
+  );
 }
-
 
 .chestprizetitle {
   font-size: 17px;
 }
 
-
-.claim-chest-btn{
+.claim-chest-btn {
   width: 169px;
   height: 62.148px;
-  background-image: url('./assets/claimBtnBg.svg');
+  background-image: url("./assets/claimBtnBg.svg");
   background-size: 100% 103%;
-  span{
-    color: #FFF;
-text-align: center;
-font-size: 24px;
-font-style: normal;
-font-weight: 700;
-line-height: 10px; /* 41.667% */
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px; /* 41.667% */
   }
 }
