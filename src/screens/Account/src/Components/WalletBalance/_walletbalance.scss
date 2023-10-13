@@ -697,6 +697,25 @@
   }
 }
 
+.chest-event-title{
+  color: #FFF;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 300;
+line-height: 13px; /* 108.333% */
+}
+
+.chest-event-desc{
+  color: #FFF;
+text-align: center;
+font-size: 12px;
+font-style: normal;
+font-weight: 300;
+line-height: 13px; /* 108.333% */
+width: 70%;
+}
+
 .reward-chest {
   width: 118px;
   height: 192px;
@@ -956,7 +975,7 @@
 
 .overlay-container {
   position: fixed;
-  top: 70px;
+  top: 27px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -1026,6 +1045,33 @@
   padding: 10px 24px;
 }
 
+.reward-types{
+  clip-path: polygon( 100% 0%,94.312% 100%,0% 100%,5.688% 0%,100% 0% );
+  padding: 10px 24px;
+  cursor: pointer;
+}
+
+.reward-types-active{
+  background: linear-gradient(270deg, rgba(0, 186, 204, 0.40) -59.13%, rgba(0, 186, 204, 0.00) 102.53%);
+}
+
+
 .chestprizetitle {
   font-size: 17px;
+}
+
+
+.claim-chest-btn{
+  width: 169px;
+  height: 62.148px;
+  background-image: url('./assets/claimBtnBg.svg');
+  background-size: 100% 103%;
+  span{
+    color: #FFF;
+text-align: center;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 10px; /* 41.667% */
+  }
 }

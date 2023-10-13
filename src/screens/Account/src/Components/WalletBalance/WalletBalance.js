@@ -4117,7 +4117,7 @@ const WalletBalance = ({
             className="package-popup-wrapper2 position-relative"
             id="dailyrewardpopup"
           >
-            <img src={rewardPopup} alt="" className="popup-linear2" />
+            <img src={rewardPopup} alt="" className="popup-linear2" style={{height: "99%"}} />
 
             <DailyBonusPopup
               onclose={() => {
