@@ -887,11 +887,11 @@
 }
 
 .mask {
-  // --mask: url("./assets/rewardspopup.svg");
+  // --mask: url("./assets/innerRewards.webp");
   // mask-repeat: no-repeat;
   // mask-size: cover;
-  // -webkit-mask-image: url("./assets/rewardspopup.svg");
-  // mask-image: url("./assets/rewardspopup.svg");
+  // -webkit-mask-image: url("./assets/innerRewards.webp");
+  // mask-image: url("./assets/innerRewards.webp");
   // --webkit-mask-repeat: no-repeat;
   // -webkit-mask-size: cover;
   // -webkit-mask-position: center;
@@ -901,18 +901,19 @@
 .overlay-container {
   position: fixed;
   top: 109px;
-  left: 45%;
+  left: 46%;
   z-index: 2;
 }
 
 .bonustitle {
   color: #fff;
   text-align: center;
-  font-size: 32px;
+  font-size: 27px;
   font-style: normal;
   font-weight: 700;
   line-height: 10px;
-  top: -45px;
+  top: -40px;
+
 }
 
 .outerbg {

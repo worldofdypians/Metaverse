@@ -66,6 +66,7 @@ import gatePopupImage from "./assets/gatePopupImage.png";
 import confluxPopupImage from "./assets/eventPopupImage.png";
 import Countdown from "react-countdown";
 import DailyBonusPopup from "./DailyBonusPopup";
+import rewardPopup from "./assets/rewardspopup.webp";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -4100,9 +4101,14 @@ const WalletBalance = ({
             setdailyBonusPopup(false);
           }}
         >
-          <div className="w-100 h-100 shadowwrapper">
+          <div className="package-popup-wrapper">
+            <img
+              src={rewardPopup}
+              alt=""
+              className="popup-linear" 
+            />
 
-          <DailyBonusPopup />
+            <DailyBonusPopup />
           </div>
         </OutsideClickHandler>
       )}
