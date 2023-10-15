@@ -685,9 +685,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                  
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
