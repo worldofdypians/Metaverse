@@ -1,10 +1,9 @@
 import React from "react";
-import chestOpen from "./assets/chestOpen.png";
-import chestClosed from "./assets/chestClosed.png";
 import closeX from "./assets/closeX.svg";
 import pointsLogo from "./assets/pointslogo.png";
 import rewardsLogo from "./assets/rewardslogo.png";
 import { useState } from "react";
+import ChestItem from "./ChestItem";
 
 const DailyBonusPopup = ({ onclose }) => {
   const dummyChests = [
@@ -72,11 +71,6 @@ const DailyBonusPopup = ({ onclose }) => {
           onClick={onclose}
         />
         <div className="position-relative h-100 rewardinnerwrapper">
-          <div className="overlay-container">
-            <div className="d-flex flex-column">
-              <span className="bonustitle position-relative">Daily Bonus</span>
-            </div>
-          </div>
           <div className="positon-relative h-100 d-flex flex-column gap-3">
             <div className="d-flex flex-column align-items-center justify-content-center gap-2">
               <h6 className="chest-event-title mb-0 font-organetto">
@@ -115,27 +109,11 @@ const DailyBonusPopup = ({ onclose }) => {
             </div>
             <div className="rewardsgrid">
               {dummyChests.map((item) => (
-                <div
-                  className={` reward-chest ${
-                    item.open ? "reward-chest-open" : "reward-chest-closed"
-                  } position-relative d-flex flex-column align-items-center justify-content-center gap-2`}
-                >
-                  <div
-                    className={`chest-number ${
-                      item.open ? "number-open" : "number-closed"
-                    } d-flex align-items-center justify-content-center`}
-                  >
-                    <span className="chest-number-text mb-0">
-                      {item.chestId}
-                    </span>
-                  </div>
-                  <img
-                    src={item.open ? chestOpen : chestClosed}
-                    className="chest-image"
-                    alt=""
-                  />
-                  <h6 className="chest-title mb-0">{item.chestTitle}</h6>
-                </div>
+                <ChestItem
+                  chestId={item.chestId}
+                  chestTitle={item.chestTitle}
+                  open={item.open}
+                />
               ))}
             </div>
             <div className="d-flex w-100 justify-content-center">
