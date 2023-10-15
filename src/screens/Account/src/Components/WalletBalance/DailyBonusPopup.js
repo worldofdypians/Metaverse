@@ -126,7 +126,7 @@ const DailyBonusPopup = ({ onclose }) => {
               <span className="font-organetto chestprizetitle text-white">
                 CHEST PRIZES
               </span>
-              <div className="d-flex align-items-center gap-2 justify-content-between">
+              <div className="d-flex flex-column flex-lg-row flex-md-row  align-items-center gap-2 justify-content-center justify-content-lg-between justify-content-md-between">
                 <div className="prizeswrapper">
                   <div className="d-flex align-items-center gap-2">
                     <img
