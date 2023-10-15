@@ -672,9 +672,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -687,7 +685,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                 
+                  
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
