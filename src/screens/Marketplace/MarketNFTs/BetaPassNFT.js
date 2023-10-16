@@ -943,16 +943,12 @@ const BetaPassNFT = ({
                       {mintTitle === "gate" && (
                         <a
                           className={`btn gate-btn px-3 d-flex align-items-center justify-content-center gap-2`}
-                          href="https://www.gate.io/web3/startup/894"
+                          href="https://sweepwidget.com/c/world-of-dypians-giveaway"
                           target="_blank"
                           rel="noreferrer"
                         >
-                          <img
-                            src={gateWhite}
-                            alt=""
-                            style={{ width: 16, height: 16 }}
-                          />{" "}
-                          Gate.io Giveaway
+                          
+                          WoD Giveaway
                           <img
                             src={arrowRight}
                             alt=""
