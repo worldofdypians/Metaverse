@@ -948,7 +948,7 @@ const BetaPassNFT = ({
                           rel="noreferrer"
                         >
                           
-                          WoD Giveaway
+                          Enter the Giveaway
                           <img
                             src={arrowRight}
                             alt=""
