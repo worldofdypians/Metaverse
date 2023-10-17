@@ -1449,7 +1449,7 @@ const WalletBalance = ({
 
   useEffect(() => {
     if (email && address) {
-      fetchTreasureHuntData(email, window.infuraWeb3.utils.toChecksumAddress(address));
+      fetchTreasureHuntData(email, address);
     }
   }, [email, address, bnbPrice, cfxPrice]);
 
