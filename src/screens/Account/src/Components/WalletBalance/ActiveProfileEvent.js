@@ -38,64 +38,8 @@ const renderer = ({ days, hours, minutes }) => {
     </>
   );
 };
-const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
-  const [userEarnUsd, setuserEarnUsd] = useState(0);
-  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
-
-  const fetchTreasureHuntData = async (email, userAddress) => {
-    try {
-      const response = await fetch(
-        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-        {
-          body: JSON.stringify({
-            email:  email,
-            publicAddress: userAddress,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          redirect: "follow",
-          mode: "cors",
-        }
-      );
-      if (response.status === 200) {
-        const responseData = await response.json();
-        if (responseData.events) {
-          const eventRewards = responseData.events.filter((obj)=>{return obj.betapassId === event.linkState});
-          const confluxEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "conflux";
-          });
-          if(confluxEvent[0].reward.earn.multiplier !== 0){
-            const cfxUsdValue =
-            confluxEvent[0].reward.earn.total /
-            confluxEvent[0].reward.earn.multiplier;
-            setConfluxEarnUSD(cfxUsdValue);
-          }
-
-          const usdValue =
-          eventRewards[0].reward.earn.total /
-          eventRewards[0].reward.earn.multiplier;
-          setuserEarnUsd(usdValue);
-
-          
-        }
-      } else {
-        console.log(`Request failed with status ${response.status}`);
-      }
-    } catch (error) {
-      console.log("Error:", error);
-    }
-  };
-
-  
-
-  useEffect(() => {
-    if (userEmail && userWallet) {
-      fetchTreasureHuntData(userEmail, userWallet);
-    }
-  }, [userEmail, userWallet]);
-
+const ActiveProfileEvent = ({ onOpenEvent, event,  userEarnedUsd }) => {
+ 
   return (
     <div
       className="profile-event-item d-flex flex-column position-relative"
@@ -105,7 +49,13 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
       <div className="profile-event-top d-flex align-items-center justify-content-between p-2">
         <div className="d-flex align-items-center gap-2">
           <img
-            src={event.title === "CoinGecko" ? coingecko : event.title === "Conflux" ? conflux : coin98}
+            src={
+              event.title === "CoinGecko"
+                ? coingecko
+                : event.title === "Conflux"
+                ? conflux
+                : coin98
+            }
             height={16}
             width={16}
             alt=""
@@ -146,7 +96,11 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         <div className="d-flex align-items-center gap-1">
           <img src={cyanDollar} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text">
-            ${getFormattedNumber(event.title === "CoinGecko" ? userEarnUsd : confluxEarnUSD , 2)}
+            $
+            {getFormattedNumber(
+              userEarnedUsd,
+              2
+            )}
           </span>
         </div>
         <div className="d-flex align-items-center gap-1">
