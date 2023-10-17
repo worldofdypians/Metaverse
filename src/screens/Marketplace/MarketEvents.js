@@ -859,7 +859,7 @@ const MarketEvents = ({
                             userEarnUsd={
                               item.title === "Conflux"
                                 ? confluxEarnUSD
-                                : item.title === "Gate"
+                                : item.title === "Gate.io"
                                 ? gateEarnUSD
                                 : userEarnUsd
                             }

@@ -154,7 +154,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
             {getFormattedNumber(
               event.title === "CoinGecko"
                 ? userEarnUsd
-                : event.title === "Gate"
+                : event.title === "Gate.io"
                 ? gateEarnUSD
                 : confluxEarnUSD,
               2
