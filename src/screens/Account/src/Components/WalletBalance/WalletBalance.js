@@ -4131,6 +4131,8 @@ const WalletBalance = ({
                         ? confluxUserPoints
                         : dummyEvent.id === "event3" 
                         ? userPoints
+                        : dummyEvent.id === "event6" 
+                        ? gateUserPoints
                         : 0,
                       0
                     )}

@@ -42,6 +42,7 @@ const renderer = ({ days, hours, minutes }) => {
 const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
+  const [gateEarnUSD, setGateEarnUSD] = useState(0);
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
@@ -49,7 +50,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
-            email:  email,
+            email: email,
             publicAddress: userAddress,
           }),
           headers: {
@@ -63,23 +64,32 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
       if (response.status === 200) {
         const responseData = await response.json();
         if (responseData.events) {
-          const eventRewards = responseData.events.filter((obj)=>{return obj.betapassId === event.linkState});
+          const eventRewards = responseData.events.filter((obj) => {
+            return obj.betapassId === event.linkState;
+          });
           const confluxEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "conflux";
           });
-          if(confluxEvent[0].reward.earn.multiplier !== 0){
+          const gateEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "gate";
+          });
+          if (confluxEvent[0].reward.earn.multiplier !== 0) {
             const cfxUsdValue =
-            confluxEvent[0].reward.earn.total /
-            confluxEvent[0].reward.earn.multiplier;
+              confluxEvent[0].reward.earn.total /
+              confluxEvent[0].reward.earn.multiplier;
             setConfluxEarnUSD(cfxUsdValue);
+          }
+          if (gateEvent[0].reward.earn.multiplier !== 0) {
+            const gateUsdValue =
+              gateEvent[0].reward.earn.total /
+              gateEvent[0].reward.earn.multiplier;
+            setGateEarnUSD(gateUsdValue);
           }
 
           const usdValue =
-          eventRewards[0].reward.earn.total /
-          eventRewards[0].reward.earn.multiplier;
+            eventRewards[0].reward.earn.total /
+            eventRewards[0].reward.earn.multiplier;
           setuserEarnUsd(usdValue);
-
-          
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -88,8 +98,6 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
       console.log("Error:", error);
     }
   };
-
-  
 
   useEffect(() => {
     if (userEmail && userWallet) {
@@ -105,12 +113,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
     >
       <div className="profile-event-top d-flex align-items-center justify-content-between p-2">
         <div className="d-flex align-items-center gap-2">
-          <img
-            src={event.logo}
-            height={16}
-            width={16}
-            alt=""
-          />
+          <img src={event.logo} height={16} width={16} alt="" />
           <div className="d-flex flex-column">
             <h6 className="profile-event-title d-flex align-items-center gap-1 mb-0">
               {event.title}
@@ -147,7 +150,15 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEmail, userWallet }) => {
         <div className="d-flex align-items-center gap-1">
           <img src={cyanDollar} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text">
-            ${getFormattedNumber(event.title === "CoinGecko" ? userEarnUsd : confluxEarnUSD , 2)}
+            $
+            {getFormattedNumber(
+              event.title === "CoinGecko"
+                ? userEarnUsd
+                : event.title === "Gate"
+                ? gateEarnUSD
+                : confluxEarnUSD,
+              2
+            )}
           </span>
         </div>
         <div className="d-flex align-items-center gap-1">

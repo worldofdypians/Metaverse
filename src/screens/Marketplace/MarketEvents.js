@@ -51,7 +51,6 @@ import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
 import eventPopupImageBase from "../Account/src/Components/WalletBalance/assets/eventPopupImageBase.png";
 
-
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
 import twitter from "./assets/greenTwitter.svg";
@@ -131,7 +130,6 @@ const MarketEvents = ({
   const [gateEarnUSD, setGateEarnUSD] = useState(0);
   const [gateEarnBNB, setGateEarnBNB] = useState(0);
 
-
   const selected = useRef(null);
   const { email } = useAuth();
   const dummyBetaPassData = [
@@ -151,8 +149,7 @@ const MarketEvents = ({
         rewards: "CFX",
         status: "Live",
         id: "event1",
-        learnMore:
-          "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
     {
@@ -298,8 +295,7 @@ const MarketEvents = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "20,000",
-        learnMore:
-          "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
     {
@@ -692,7 +688,6 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -705,7 +700,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     <NavLink
@@ -864,7 +859,9 @@ const MarketEvents = ({
                             userEarnUsd={
                               item.title === "Conflux"
                                 ? confluxEarnUSD
-                                : item.title === "Gate" ? gateEarnUSD : userEarnUsd
+                                : item.title === "Gate"
+                                ? gateEarnUSD
+                                : userEarnUsd
                             }
                           />
                         ))}
@@ -1033,24 +1030,25 @@ const MarketEvents = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status !== "Live" && dummyEvent.id !== 'event4' && (
-                  <div className="d-flex flex-column">
-                    <span className="live-on">Live on</span>
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={
-                          require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
-                            .default
-                        }
-                        className="green-calendar"
-                        alt=""
-                      />
-                      <h6 className="live-on-date mb-0">
-                        {dummyEvent.eventDate}
-                      </h6>
+                {dummyEvent?.status !== "Live" &&
+                  dummyEvent.id !== "event4" && (
+                    <div className="d-flex flex-column">
+                      <span className="live-on">Live on</span>
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={
+                            require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
+                              .default
+                          }
+                          className="green-calendar"
+                          alt=""
+                        />
+                        <h6 className="live-on-date mb-0">
+                          {dummyEvent.eventDate}
+                        </h6>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -1135,11 +1133,11 @@ const MarketEvents = ({
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
-                      downtown area, players not only stand a chance to secure daily
-                      rewards in ETH, but also earn points for their placement
-                      on the global leaderboard. Remember to log in to the game
-                      daily and venture into the downtown area to uncover hidden
-                      treasures.
+                      downtown area, players not only stand a chance to secure
+                      daily rewards in ETH, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the downtown area to
+                      uncover hidden treasures.
                     </p>
                   )}
                 </div>
@@ -1346,8 +1344,12 @@ const MarketEvents = ({
                   <h6 className="mb-0 event-earnings-coin2">
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
-                        ? confluxUserPoints : dummyEvent.id === 'event3' ?
-                         userPoints : 0,
+                        ? confluxUserPoints
+                        : dummyEvent.id === "event3"
+                        ? userPoints
+                        : dummyEvent.id === "event6"
+                        ? gateUserPoints
+                        : 0,
                       0
                     )}
                   </h6>
@@ -1359,16 +1361,24 @@ const MarketEvents = ({
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
                     $
                     {getFormattedNumber(
-                      dummyEvent.id === "event1" ? confluxEarnUSD  : dummyEvent.id === 'event3' ? userEarnUsd : dummyEvent.id === "event6" ? gateEarnUSD : 0,
+                      dummyEvent.id === "event1"
+                        ? confluxEarnUSD
+                        : dummyEvent.id === "event3"
+                        ? userEarnUsd
+                        : dummyEvent.id === "event6"
+                        ? gateEarnUSD
+                        : 0,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
                       {getFormattedNumber(
                         dummyEvent.id === "event1"
                           ? confluxEarnCFX
-                          : dummyEvent.id === 'event3' ? 
-                           userEarnETH  : dummyEvent.id === 'event6' ? 
-                           gateEarnBNB : 0,
+                          : dummyEvent.id === "event3"
+                          ? userEarnETH
+                          : dummyEvent.id === "event6"
+                          ? gateEarnBNB
+                          : 0,
                         2
                       )}
                       {dummyEvent.id === "event1"
