@@ -540,7 +540,7 @@ const MarketEvents = ({
         {
           body: JSON.stringify({
             email: email,
-            publicAddress: userAddress,
+            publicAddress: window.infuraWeb3.utils.toChecksumAddress(userAddress),
           }),
           headers: {
             "Content-Type": "application/json",
