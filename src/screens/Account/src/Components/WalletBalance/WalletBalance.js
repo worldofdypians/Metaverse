@@ -1389,12 +1389,13 @@ const WalletBalance = ({
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
+      // console.log(email, window.infuraWeb3.utils.toChecksumAddress(userAddress))
       const response = await fetch(
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
             email: email,
-            publicAddress: userAddress,
+            publicAddress: window.infuraWeb3.utils.toChecksumAddress(userAddress),
           }),
           headers: {
             "Content-Type": "application/json",
@@ -1448,7 +1449,7 @@ const WalletBalance = ({
 
   useEffect(() => {
     if (email && address) {
-      fetchTreasureHuntData(email, address);
+      fetchTreasureHuntData(email, window.infuraWeb3.utils.toChecksumAddress(address));
     }
   }, [email, address, bnbPrice, cfxPrice]);
 

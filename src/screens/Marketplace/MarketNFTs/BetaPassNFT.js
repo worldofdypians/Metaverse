@@ -289,7 +289,7 @@ const BetaPassNFT = ({
         {
           body: JSON.stringify({
             email: email,
-            publicAddress: userAddress,
+            publicAddress: window.infuraWeb3.utils.toChecksumAddress(userAddress),
           }),
           headers: {
             "Content-Type": "application/json",
@@ -947,7 +947,6 @@ const BetaPassNFT = ({
                           target="_blank"
                           rel="noreferrer"
                         >
-                          
                           Enter the Giveaway
                           <img
                             src={arrowRight}
