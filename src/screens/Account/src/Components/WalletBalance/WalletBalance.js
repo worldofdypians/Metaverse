@@ -40,6 +40,7 @@ import grayCalendar from "./assets/grayCalendar.svg";
 import eventSkeleton from "./assets/eventSkeleton.png";
 import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
 import BetaEventCard from "../../../../Marketplace/components/BetaEventCard";
+import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
 import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
 
@@ -191,6 +192,69 @@ const WalletBalance = ({
   const [gateUserPoints, setGateUserPoints] = useState(0);
   const [gateEarnUSD, setGateEarnUSD] = useState(0);
   const [gateEarnBNB, setGateEarnBNB] = useState(0);  
+  const betaSlider = useRef();
+
+
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    beforeChange: (current, next) => {
+      setActiveSlide(next);
+      setShowFirstNext(current);
+    },
+    afterChange: (current) => setActiveSlide(current),
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
+
+
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -3538,9 +3602,9 @@ const WalletBalance = ({
               }}
               ref={releaseContent}
             >
-              <div className="d-flex flex-column gap-4">
+              {/* <div className="d-flex gap-4">
                 {dummyBetaPassData2.map((item, index) => (
-                  <BetaEventCard
+                  <NewBetaEventCard
                     data={item}
                     key={index}
                     onOpenPopup={() => {
@@ -3556,7 +3620,26 @@ const WalletBalance = ({
                     }
                   />
                 ))}
-              </div>
+              </div> */}
+              <Slider {...settings} ref={betaSlider}>
+              {dummyBetaPassData2.map((item, index) => (
+                  <NewBetaEventCard
+                    data={item}
+                    key={index}
+                    onOpenPopup={() => {
+                      setEventPopup(true);
+                      setDummyEvent(item.popupInfo);
+                    }}
+                    userEarnUsd={
+                      item.title === "Conflux"
+                        ? confluxEarnUSD
+                        : item.title === "Gate.io"
+                        ? gateEarnUSD
+                        : userEarnUsd
+                    }
+                  />
+                ))}
+              </Slider>
 
               {/* {activeSlide > 0 && (
               <div className="prev-arrow-nft" onClick={firstPrev}>

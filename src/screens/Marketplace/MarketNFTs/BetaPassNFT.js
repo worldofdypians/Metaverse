@@ -1269,7 +1269,7 @@ const BetaPassNFT = ({
                       className={`  justify-content-start
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
-                      {!alreadyRegistered && mintTitle === "gate" && (
+                      {/* {!alreadyRegistered && mintTitle === "gate" && (
                         <div className="d-flex align-items-center justify-content-around gap-2">
                           <button
                             className={
@@ -1296,7 +1296,7 @@ const BetaPassNFT = ({
                             Sign in
                           </button>
                         </div>
-                      )}
+                      )} */}
                       <div className="p-4 d-flex flex-column gap-3 h-100">
                         {mintTitle === "coingecko" && (
                           <div className="">
@@ -1649,7 +1649,7 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <span className="footertxt-coingecko">
-                                Earn daily CFX rewards and global leaderboard
+                                Earn daily BNB rewards and global leaderboard
                                 points.
                               </span>
                               <div className="summaryseparator mt-3 mb-3"></div>
@@ -1749,7 +1749,7 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
 
-                        {alreadyRegistered && mintTitle === "gate" && (
+                        {/* {alreadyRegistered && mintTitle === "gate" && (
                           <h6 className="land-name">
                             {totalCoingeckoNft > 0 ||
                             totalGateNft > 0 ||
@@ -1801,7 +1801,7 @@ const BetaPassNFT = ({
                                 </li>
                               </ul>
                             </div>
-                          )}
+                          )} */}
                         {/* {playerCreation === false &&
                           !alreadyRegistered &&
                           mintTitle === "coingecko" && (
@@ -1840,7 +1840,7 @@ const BetaPassNFT = ({
                             />
                           )} */}
 
-                        {playerCreation === false &&
+                        {/* {playerCreation === false &&
                           !alreadyRegistered &&
                           mintTitle === "gate" && (
                             <SignUpGecko
@@ -1927,8 +1927,8 @@ const BetaPassNFT = ({
                               )}
                               <div className="summaryseparator"></div>
                             </div>
-                          )}
-                        {alreadyRegistered && mintTitle === "gate" && (
+                          )} */}
+                        {/* {alreadyRegistered && mintTitle === "gate" && (
                           <div className="d-flex flex-column justify-content-between h-100">
                             {(totalCoingeckoNft === 0 &&
                               mintTitle === "coingecko") ||
@@ -2097,7 +2097,7 @@ const BetaPassNFT = ({
                               </NavLink>
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   )}
