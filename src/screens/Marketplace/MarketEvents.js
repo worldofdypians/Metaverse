@@ -127,6 +127,10 @@ const MarketEvents = ({
   const [confluxUserPoints, setConfluxUserPoints] = useState(0);
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
+  const [gateUserPoints, setGateUserPoints] = useState(0);
+  const [gateEarnUSD, setGateEarnUSD] = useState(0);
+  const [gateEarnBNB, setGateEarnBNB] = useState(0);
+
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -301,7 +305,7 @@ const MarketEvents = ({
     {
       title: "Gate.io",
       logo: gate,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
@@ -313,7 +317,7 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
@@ -559,6 +563,9 @@ const MarketEvents = ({
           const confluxEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "conflux";
           });
+          const gateEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "gate";
+          });
 
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
@@ -582,6 +589,19 @@ const MarketEvents = ({
 
             if (cfxPrice !== 0) {
               setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+            }
+          }
+          const gatePoints = gateEvent[0].reward.earn.totalPoints;
+          setGateUserPoints(gatePoints);
+
+          if (gateEvent[0].reward.earn.multiplier !== 0) {
+            const gateUsdValue =
+              gateEvent[0].reward.earn.total /
+              gateEvent[0].reward.earn.multiplier;
+            setGateEarnUSD(gateUsdValue);
+
+            if (bnbPrice !== 0) {
+              setGateEarnBNB(gateUsdValue / bnbPrice);
             }
           }
         }
@@ -844,7 +864,7 @@ const MarketEvents = ({
                             userEarnUsd={
                               item.title === "Conflux"
                                 ? confluxEarnUSD
-                                : userEarnUsd
+                                : item.title === "Gate" ? gateEarnUSD : userEarnUsd
                             }
                           />
                         ))}
@@ -1339,7 +1359,7 @@ const MarketEvents = ({
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
                     $
                     {getFormattedNumber(
-                      dummyEvent.id === "event1" ? confluxEarnUSD  : dummyEvent.id === 'event3' ? userEarnUsd : 0,
+                      dummyEvent.id === "event1" ? confluxEarnUSD  : dummyEvent.id === 'event3' ? userEarnUsd : dummyEvent.id === "event6" ? gateEarnUSD : 0,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
@@ -1347,7 +1367,8 @@ const MarketEvents = ({
                         dummyEvent.id === "event1"
                           ? confluxEarnCFX
                           : dummyEvent.id === 'event3' ? 
-                           userEarnETH : 0,
+                           userEarnETH  : dummyEvent.id === 'event6' ? 
+                           gateEarnBNB : 0,
                         2
                       )}
                       {dummyEvent.id === "event1"
@@ -1373,7 +1394,7 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.id === "event6" && (
+            {dummyEvent.status !== "Live" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/gate`}>
                   <button className="btn get-beta-btn">Get Beta Pass</button>
