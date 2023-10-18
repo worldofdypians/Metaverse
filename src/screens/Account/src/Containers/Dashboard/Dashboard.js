@@ -28,6 +28,7 @@ import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar
 import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
+import NewWalletBalance from "../../Components/WalletBalance/NewWalletBalance";
 
 function Dashboard({
   account,
@@ -720,7 +721,7 @@ function Dashboard({
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
                       />
-                      <WalletBalance
+                      {/* <WalletBalance
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
@@ -756,7 +757,8 @@ function Dashboard({
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
-                      />
+                      /> */}
+                      <NewWalletBalance />
                     </div>
 
                     {/* <div className="d-flex flex-column align-items-center w-100">
