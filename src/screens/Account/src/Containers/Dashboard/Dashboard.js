@@ -758,7 +758,43 @@ function Dashboard({
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
                       /> */}
-                      <NewWalletBalance />
+                      <NewWalletBalance 
+                         ethTokenData={ethTokenData}
+                         dypTokenData={dypTokenData}
+                         onOpenNfts={onOpenNfts}
+                         listedNFTS={listedNFTS}
+                         myBoughtNfts={myBoughtNfts}
+                         address={data?.getPlayer?.wallet?.publicAddress}
+                         coinbase={account}
+                         isVerified={data?.getPlayer?.wallet}
+                         favoritesArray={favorites}
+                         dypBalance={dypBalance}
+                         dypBalancebnb={dypBalancebnb}
+                         dypBalanceavax={dypBalanceavax}
+                         idypBalance={idypBalance}
+                         idypBalancebnb={idypBalancebnb}
+                         idypBalanceavax={idypBalanceavax}
+                         showNfts={showNfts}
+                         handleShowWalletPopup={() => {
+                           setshowWalletModal(true);
+                         }}
+                         email={email}
+                         userId={data?.getPlayer?.playerId}
+                         username={data?.getPlayer?.displayName}
+                         myCawsCollected={MyNFTSCaws}
+                         myCawsOldCollected={MyNFTSCawsOld}
+                         myLandCollected={MyNFTSLand}
+                         myTimepieceCollected={MyNFTSTimepiece}
+                         landStaked={landstakes}
+                         myCawsWodStakes={myCawsWodStakesAll}
+                         myWodWodStakes={myWodWodStakesAll}
+                         myNFTSCoingecko={MyNFTSCoingecko}
+                         myGateNfts={myGateNfts}
+                         myConfluxNfts={myConfluxNfts}
+                         latestBoughtNFTS={latest20BoughtNFTS}
+                         myOffers={myOffers}
+                         allActiveOffers={allActiveOffers}
+                      />
                     </div>
 
                     {/* <div className="d-flex flex-column align-items-center w-100">

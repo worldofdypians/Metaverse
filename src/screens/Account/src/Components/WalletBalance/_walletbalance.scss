@@ -738,7 +738,7 @@
 }
 
 .reward-chest-closed:hover {
-  filter: drop-shadow(0px 0px 6px #00BACC);
+  filter: drop-shadow(0px 0px 6px #00bacc);
 }
 
 .chest-image {
@@ -1106,5 +1106,328 @@
     font-style: normal;
     font-weight: 700;
     line-height: 10px; /* 41.667% */
+  }
+}
+
+.purple-container {
+  border-radius: 10px;
+  background: rgba(89, 115, 213, 0.15);
+  border: 2px solid #080b2a;
+  transition: all .25s ease;
+}
+
+.purple-container:hover{
+  border: 2px solid #7dd9af;
+}
+.profile-div-title {
+  color: #f7f7fc;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.profile-rank {
+  color: #fff;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.05px;
+  text-transform: uppercase;
+}
+
+.profile-div-link {
+  color: #7dd9af;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.profile-div-chain {
+  text-align: right;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.profile-div-tokens {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.profile-div-usd {
+  color: #7dd9af;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.button__bar-2 {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  margin: auto;
+  padding: 0;
+  // background: rgba(255, 255, 255, 0.3);
+  border-radius: 40px;
+  width: 70px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.button__bar-2 li {
+  list-style: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 3px;
+  padding: 0;
+}
+
+.button__bar-2 li button {
+  border: none;
+  background: #7dd9af66;
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  height: 12px;
+  width: 10px;
+  opacity: 0.3;
+  border-radius: 7.5px;
+}
+
+.button__bar-2 li.slick-active button {
+  width: 12px;
+  height: 12px;
+  opacity: 1;
+  background: #7dd9af;
+  box-shadow: 0px 4px 4px rgba(150, 100, 255, 0.24);
+}
+
+.red-container {
+  border-radius: 10px;
+  cursor: pointer;
+  background: rgba(196, 44, 113, 0.15);
+  border: 2px solid #080b2a;
+  transition: all .25s ease;
+}
+
+.red-container:hover{
+  border: 2px solid #7dd9af;
+}
+
+.daily-bonus-wrapper {
+  position: relative;
+  height: 170px;
+  background: linear-gradient(125deg, #252743 -13.33%, #4e3025 70.47%);
+  border-radius: 10px;
+  border: 2px solid #080b2a;
+  transition: all .25s ease;
+  cursor: pointer;
+}
+
+.daily-bonus-wrapper:hover{
+  border: 2px solid #7dd9af;
+}
+
+.daily-bonus-wrapper:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-image: url("./newAssets/dailyChest.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: right;
+  pointer-events: none;
+
+}
+.game-events-wrapper {
+  position: relative;
+  height: 170px;
+  border-radius: 10px;
+  background: linear-gradient(125deg, #252743 -13.33%, #352412  70.47%);
+  backdrop-filter: blur(26px);
+  border: 2px solid #080b2a;
+  transition: all .25s ease;
+  cursor: pointer;
+}
+
+.game-events-wrapper:hover{
+  border: 2px solid #7dd9af;
+}
+
+.game-events-wrapper:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-image: url("./newAssets/eventDragon.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: right;
+  pointer-events: none;
+
+}
+.profile-staking-wrapper {
+  position: relative;
+  height: 170px;
+  background: linear-gradient(125deg, #252743 -13.33%, rgba(202,116,73, 0.5) 70.47%);
+  border-radius: 10px;
+  border: 2px solid #080b2a;
+  transition: all .25s ease;
+  cursor: pointer;
+}
+
+.profile-staking-wrapper:hover{
+  border: 2px solid #7dd9af;
+}
+.profile-staking-wrapper:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-image: url("./newAssets/stakingBg.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: right;
+  pointer-events: none;
+
+}
+
+
+
+
+.special-rewards-wrapper {
+  position: relative;
+  height: 170px;
+  background: linear-gradient(125deg, #252743 -13.33%, rgba(222,147,0, 0.5) 70.47%);
+  border-radius: 10px;
+  border: 2px solid #080b2a;
+  transition: all .25s ease;
+  cursor: pointer;
+}
+
+.special-rewards-wrapper:hover{
+  border: 2px solid #7dd9af;
+}
+.special-rewards-wrapper:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-image: url("./newAssets/specialRewards.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: right;
+  pointer-events: none;
+
+}
+
+
+.my-rewards-wrapper {
+  position: relative;
+  height: 170px;
+  background: linear-gradient(125deg, #252743 -13.33%, rgba(107,138,152, 0.5) 70.47%);
+  border-radius: 10px;
+  border: 2px solid #080b2a;
+  transition: all .25s ease;
+  cursor: pointer;
+}
+
+.my-rewards-wrapper:hover{
+  border: 2px solid #7dd9af;
+}
+.my-rewards-wrapper:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-image: url("./newAssets/myRewards.svg");
+  background-size: 25%;
+  background-repeat: no-repeat;
+  background-position: right;
+  pointer-events: none;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+  }
+}
+
+
+.my-total-rewards-wrapper{
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+
+}
+
+.my-total-rewards{
+  color: #FFEACE;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.my-total-earned{
+  color: #FFEACE;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.green-div{
+  width: 3px;
+  height: 25px;
+  border-radius: 0px 100px 100px 0px;
+  background: #7DD9AF;
+  position: absolute;
+  left: 0;
+  top: 12.5px;
+}
+
+.green-link{
+  cursor: pointer;
+}
+
+.green-link:hover{
+  .profile-div-link{
+    text-decoration: underline;
   }
 }
