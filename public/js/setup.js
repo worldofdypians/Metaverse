@@ -4417,7 +4417,7 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
-  } else {
+  } else if (type === "caws") {
     contract = await new infuraweb3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
