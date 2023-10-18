@@ -145,9 +145,9 @@ const WalletBalance = ({
   const [listedItemsFiltered, setlistedItemsFiltered] = useState([]);
   const [listedItems, setlistedItems] = useState([]);
 
-  const [dyptokenData, setDypTokenData] = useState([]);
   const [bnbPrice, setBnbPrice] = useState(0);
-
+  
+  const [dyptokenData, setDypTokenData] = useState([]);
   const [idyptokenData, setIDypTokenData] = useState([]);
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
