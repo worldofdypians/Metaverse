@@ -1146,12 +1146,12 @@ const WalletBalance = ({
     rewards: "ETH",
     status: "Coming Soon",
     id: "event4",
-    date: "Coming Soon",
-    totalRewards: "$5,000 in ETH Rewards",
+    date: "November 1, 2023",
+    totalRewards: "$10,000 in ETH Rewards",
     eventDuration: gateLastDay,
     backgroundImage: baseUpcoming,
     logo: base,
-    date: "Coming Soon",
+    date: "November 1, 2023",
     minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
@@ -1354,7 +1354,7 @@ const WalletBalance = ({
       totalRewards: "$5,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "November 1, 2023",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -1364,10 +1364,10 @@ const WalletBalance = ({
         rewards: "ETH",
         status: "Coming Soon",
         id: "event4",
-        date: "Coming Soon",
-        totalRewards: "$5,000 in ETH Rewards",
+        date: "November 1, 2023",
+        totalRewards: "$10,000 in ETH Rewards",
         eventDuration: gateLastDay,
-        eventDate: "Coming Soon",
+        eventDate: "November 1, 2023",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -3798,7 +3798,6 @@ const WalletBalance = ({
                   />
                 )}
                 {dummyEvent?.status === "Coming Soon" &&
-                  dummyEvent?.id !== "event4" && (
                     <div className="d-flex flex-column">
                       <span className="live-on">Live on</span>
                       <div className="d-flex align-items-center gap-2">
@@ -3812,7 +3811,7 @@ const WalletBalance = ({
                         </h6>
                       </div>
                     </div>
-                  )}
+                  }
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
