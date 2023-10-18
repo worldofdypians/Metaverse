@@ -289,7 +289,11 @@ const BetaPassNFT = ({
         {
           body: JSON.stringify({
             email: email,
-            publicAddress: window.infuraWeb3.utils.toChecksumAddress(userAddress),
+            publicAddress: window.infuraWeb3.utils.checkAddressChecksum(
+              userAddress
+            )
+              ? window.infuraWeb3.utils.toChecksumAddress(userAddress)
+              : "",
           }),
           headers: {
             "Content-Type": "application/json",
@@ -318,6 +322,45 @@ const BetaPassNFT = ({
               confluxEvent[0].reward.earn.multiplier;
             setuserEarnUsdConflux(usdValueConflux);
           }
+        }
+      } else if (response.status === 400) {
+        const response2 = await fetch(
+          "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+          {
+            body: JSON.stringify({
+              email: email,
+              publicAddress: userAddress.toLowerCase(),
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            redirect: "follow",
+            mode: "cors",
+          }
+        );
+        if (response2.status === 200) {
+          const responseData2 = await response2.json();
+          if (responseData2.events) {
+            const coingeckoEvent2 = responseData2.events.filter((obj) => {
+              return obj.betapassId === "coingecko";
+            });
+            const confluxEvent2 = responseData2.events.filter((obj) => {
+              return obj.betapassId === "conflux";
+            });
+            const usdValue2 =
+              coingeckoEvent2[0].reward.earn.total /
+              coingeckoEvent2[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue2);
+            if (confluxEvent2[0].reward.earn.multiplier !== 0) {
+              const usdValueConflux2 =
+                confluxEvent2[0].reward.earn.total /
+                confluxEvent2[0].reward.earn.multiplier;
+              setuserEarnUsdConflux(usdValueConflux2);
+            }
+          }
+        } else {
+          console.log(`Request failed with status ${response2.status}`);
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
