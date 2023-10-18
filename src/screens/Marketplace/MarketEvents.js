@@ -325,10 +325,10 @@ const MarketEvents = ({
       title: "Base",
       logo: base,
       eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in ETH Rewards",
+      totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "November 1, 2023",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -338,9 +338,9 @@ const MarketEvents = ({
         rewards: "BASE",
         status: "Coming Soon",
         id: "event4",
-        totalRewards: "$5,000 in ETH Rewards",
+        totalRewards: "$10,000 in ETH Rewards",
         eventDuration: gateLastDay,
-        eventDate: "Coming Soon",
+        eventDate: "November 1, 2023",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -727,6 +727,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -739,9 +742,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                  
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -887,7 +888,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -935,28 +936,28 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">New events are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-
-                <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(3, 4).map((item, index) => (
-                    <BetaEventCard
-                      data={item}
-                      key={index}
-                      onOpenPopup={() => {
-                        setEventPopup(true);
-                        setDummyEvent(item.popupInfo);
-                      }}
-                      userEarnUsd={userEarnUsd}
-                    />
-                  ))}
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">New events are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
+                  </div>
                 </div>
+
+                // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
+                //     <BetaEventCard
+                //       data={item}
+                //       key={index}
+                //       onOpenPopup={() => {
+                //         setEventPopup(true);
+                //         setDummyEvent(item.popupInfo);
+                //       }}
+                //       userEarnUsd={userEarnUsd}
+                //     />
+                //   ))}
+                // </div>
                 // <BetaPassEvents />
               )}
               {activeTab === "past" && (
@@ -1068,7 +1069,6 @@ const MarketEvents = ({
                   />
                 )}
                 {dummyEvent?.status !== "Live" &&
-                  dummyEvent.id !== "event4" && (
                     <div className="d-flex flex-column">
                       <span className="live-on">Live on</span>
                       <div className="d-flex align-items-center gap-2">
@@ -1085,7 +1085,7 @@ const MarketEvents = ({
                         </h6>
                       </div>
                     </div>
-                  )}
+                  }
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
