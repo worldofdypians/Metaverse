@@ -19,18 +19,50 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 20px;
+  border-radius: 10px;
+  border: 1px solid #494b61;
+}
+
+.bordereddiv {
   padding: 20px;
+  border-radius: 10px;
+  border-bottom: 1px solid #494b61;
+}
+
+.logoutbtn {
+  color: #ff6232;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  background: transparent;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .user-cardImg-active {
-  border-radius: 20px;
   background: linear-gradient(
     180deg,
-    rgba(118, 15, 90, 0.03) 0%,
-    rgba(33, 36, 64, 0.15) 100%
+    rgba(27, 245, 255, 0.15) 0%,
+    rgba(118, 15, 90, 0) 100%,
+    rgba(33, 36, 64, 0) 100%
   );
-  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #494b61;
+}
+
+.user-cardImg-alert {
+  background: linear-gradient(
+    180deg,
+    rgba(237, 130, 37, 0.15) 0%,
+    rgba(33, 36, 64, 0) 100%
+  );
+  border-radius: 10px;
+  border: 1px solid #494b61;
 }
 
 .sync-wrapper {
@@ -39,7 +71,7 @@
 }
 
 .sync-txt {
-  color: #ED8225;
+  color: #ed8225;
   font-size: 10px;
 }
 

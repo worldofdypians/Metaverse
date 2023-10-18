@@ -4,27 +4,24 @@
   font-family: "Poppins", sans-serif !important;
 
   .wallet-wrapper {
-    background: rgba(8, 11, 42, 0.30);
+    background: rgba(8, 11, 42, 0.3);
     padding: 10px;
     cursor: pointer;
     border-radius: 6px;
-    .wallet-span {
-      color: #fff;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: -0.18px;
-    }
-
-    .wallet-address {
-      color: #b8b8e0;
-      font-size: 12px;
-      letter-spacing: -0.216px;
-    }
   }
 
-  .walletassoc-txt {
-    color: #b8b8e0;
-    font-size: 10px;
+  .wallet-wrapper-active {
+    background: rgba(27, 245, 255, 0.15);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  .wallet-wrapper-alert {
+    background: rgba(237, 130, 37, 0.15);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
   }
 
   .multipe-wallet {
@@ -52,7 +49,18 @@
     color: #f7f7fc;
   }
 }
+.wallet-span {
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: -0.18px;
+}
 
+.wallet-address {
+  color: #b8b8e0;
+  font-size: 12px;
+  letter-spacing: -0.216px;
+}
 .walletinfo {
   font-family: "Poppins";
   font-style: normal;
@@ -61,6 +69,11 @@
   line-height: 15px;
   color: #f7f7fc;
   opacity: 0.8;
+}
+
+.walletassoc-txt {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
 }
 
 .totalcollection {
@@ -1109,10 +1122,10 @@
   border-radius: 10px;
   background: rgba(89, 115, 213, 0.15);
   border: 2px solid #080b2a;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
 }
 
-.purple-container:hover{
+.purple-container:hover {
   border: 2px solid #7dd9af;
 }
 .profile-div-title {
@@ -1213,10 +1226,10 @@
   cursor: pointer;
   background: rgba(196, 44, 113, 0.15);
   border: 2px solid #080b2a;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
 }
 
-.red-container:hover{
+.red-container:hover {
   border: 2px solid #7dd9af;
 }
 
@@ -1226,16 +1239,16 @@
   background: linear-gradient(125deg, #252743 -13.33%, #4e3025 70.47%);
   border-radius: 10px;
   border: 2px solid #080b2a;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
   cursor: pointer;
 }
 
-.daily-bonus-wrapper:hover{
+.daily-bonus-wrapper:hover {
   border: 2px solid #7dd9af;
 }
 
 .daily-bonus-wrapper:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1248,25 +1261,24 @@
   background-repeat: no-repeat;
   background-position: right;
   pointer-events: none;
-
 }
 .game-events-wrapper {
   position: relative;
   height: 170px;
   border-radius: 10px;
-  background: linear-gradient(125deg, #252743 -13.33%, #352412  70.47%);
+  background: linear-gradient(125deg, #252743 -13.33%, #352412 70.47%);
   backdrop-filter: blur(26px);
   border: 2px solid #080b2a;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
   cursor: pointer;
 }
 
-.game-events-wrapper:hover{
+.game-events-wrapper:hover {
   border: 2px solid #7dd9af;
 }
 
 .game-events-wrapper:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1279,23 +1291,26 @@
   background-repeat: no-repeat;
   background-position: right;
   pointer-events: none;
-
 }
 .profile-staking-wrapper {
   position: relative;
   height: 170px;
-  background: linear-gradient(125deg, #252743 -13.33%, rgba(202,116,73, 0.5) 70.47%);
+  background: linear-gradient(
+    125deg,
+    #252743 -13.33%,
+    rgba(202, 116, 73, 0.5) 70.47%
+  );
   border-radius: 10px;
   border: 2px solid #080b2a;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
   cursor: pointer;
 }
 
-.profile-staking-wrapper:hover{
+.profile-staking-wrapper:hover {
   border: 2px solid #7dd9af;
 }
 .profile-staking-wrapper:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1308,27 +1323,27 @@
   background-repeat: no-repeat;
   background-position: right;
   pointer-events: none;
-
 }
-
-
-
 
 .special-rewards-wrapper {
   position: relative;
   height: 170px;
-  background: linear-gradient(125deg, #252743 -13.33%, rgba(222,147,0, 0.5) 70.47%);
+  background: linear-gradient(
+    125deg,
+    #252743 -13.33%,
+    rgba(222, 147, 0, 0.5) 70.47%
+  );
   border-radius: 10px;
   border: 2px solid #080b2a;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
   cursor: pointer;
 }
 
-.special-rewards-wrapper:hover{
+.special-rewards-wrapper:hover {
   border: 2px solid #7dd9af;
 }
 .special-rewards-wrapper:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1341,25 +1356,27 @@
   background-repeat: no-repeat;
   background-position: right;
   pointer-events: none;
-
 }
-
 
 .my-rewards-wrapper {
   position: relative;
   height: 170px;
-  background: linear-gradient(125deg, #252743 -13.33%, rgba(107,138,152, 0.5) 70.47%);
+  background: linear-gradient(
+    125deg,
+    #252743 -13.33%,
+    rgba(107, 138, 152, 0.5) 70.47%
+  );
   border-radius: 10px;
   border: 2px solid #080b2a;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
   cursor: pointer;
 }
 
-.my-rewards-wrapper:hover{
+.my-rewards-wrapper:hover {
   border: 2px solid #7dd9af;
 }
 .my-rewards-wrapper:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1378,8 +1395,7 @@
   }
 }
 
-
-.my-total-rewards-wrapper{
+.my-total-rewards-wrapper {
   position: absolute;
   bottom: 0;
   top: 0;
@@ -1388,19 +1404,18 @@
   margin: auto;
   width: fit-content;
   height: fit-content;
-
 }
 
-.my-total-rewards{
-  color: #FFEACE;
+.my-total-rewards {
+  color: #ffeace;
   font-size: 32px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 
-.my-total-earned{
-  color: #FFEACE;
+.my-total-earned {
+  color: #ffeace;
   text-align: center;
   font-size: 14px;
   font-style: normal;
@@ -1408,22 +1423,22 @@
   line-height: normal;
 }
 
-.green-div{
+.green-div {
   width: 3px;
   height: 25px;
   border-radius: 0px 100px 100px 0px;
-  background: #7DD9AF;
+  background: #7dd9af;
   position: absolute;
   left: 0;
   top: 12.5px;
 }
 
-.green-link{
+.green-link {
   cursor: pointer;
 }
 
-.green-link:hover{
-  .profile-div-link{
+.green-link:hover {
+  .profile-div-link {
     text-decoration: underline;
   }
 }
