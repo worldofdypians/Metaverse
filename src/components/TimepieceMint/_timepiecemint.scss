@@ -949,6 +949,13 @@
   background-position: center;
 }
 
+.base-active {
+  background-image: url("../../assets/baseActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
 .genesis-land-empty {
   background-image: url("../../assets/cawsplaceholder.svg"),
     linear-gradient(141.14deg, #5e17cc 11.06%, #381486 34.42%, #1f164c 56.62%);

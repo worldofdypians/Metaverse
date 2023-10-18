@@ -127,6 +127,7 @@ function App() {
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
+
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -141,6 +142,8 @@ function App() {
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
   const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
   const [totalGateNft, setTotalGateNft] = useState(0);
+  const [totalBaseNft, settotalBaseNft] = useState(0);
+
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
 
@@ -164,6 +167,7 @@ function App() {
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setMyGateNfts] = useState([]);
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
+  const [myBaseNFTs, setmyBaseNFTs] = useState([]);
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -485,6 +489,15 @@ function App() {
         setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
         setmyConfluxNFTsCreated(NFTS); 
       });
+
+      getMyNFTS(coinbase, "base").then((NFTS) => {
+        settotalBaseNft(NFTS.length);
+        setmyBaseNFTs(NFTS);
+        // setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
+        // setmyConfluxNFTsCreated(NFTS); 
+      });
+
+      //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
       setMyNFTSTimepiece([]);
@@ -1848,6 +1861,9 @@ function App() {
                   myNFTSCoingecko={MyNFTSCoingecko}
                   myGateNfts={myGateNfts}
                   totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -1887,6 +1903,9 @@ function App() {
                   myNFTSCoingecko={MyNFTSCoingecko}
                   myGateNfts={myGateNfts}
                   totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -1988,6 +2007,9 @@ function App() {
                   myNFTSCoingecko={MyNFTSCoingecko}
                   myGateNfts={myGateNfts}
                   totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -2026,6 +2048,8 @@ function App() {
                     myNFTSCoingecko={MyNFTSCoingecko}
                     myGateNfts={myGateNfts}
                     totalGateNft={totalGateNft}
+                    totalBaseNft={totalBaseNft}
+                    myBaseNFTs={myBaseNFTs}
                     totalConfluxNft={totalConfluxNft}
                     myConfluxNfts={myConfluxNfts}
                     timepieceMetadata={timepieceMetadata}
