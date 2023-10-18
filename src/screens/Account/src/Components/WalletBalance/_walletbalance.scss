@@ -357,7 +357,7 @@
 .profile-event-item {
   border-radius: 8px;
   background: rgba(24, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  // backdrop-filter: blur(10px);
   border-bottom: 1px solid #18ffff;
   cursor: pointer;
   height: fit-content;
@@ -366,7 +366,7 @@
 .profile-event-top {
   border-radius: 8px;
   background: #252743;
-  backdrop-filter: blur(10px);
+  // backdrop-filter: blur(10px);
 }
 
 .profile-event-bottom {
