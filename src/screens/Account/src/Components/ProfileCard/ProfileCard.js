@@ -135,7 +135,7 @@ const ProfileCard = ({
   const windowSize = useWindowSize();
   const [tooltip, setTooltip] = useState(false);
   const [tooltip2, setTooltip2] = useState(false);
-console.log(coinbase && address && email)
+  console.log(coinbase && address && email);
   return (
     <div className="main-wrapper py-4 w-100">
       <div className="row justify-content-center gap-3 gap-lg-0">
@@ -171,7 +171,9 @@ console.log(coinbase && address && email)
                     data-clipboard-text={address}
                     className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
                   >
-                  {(coinbase || address) &&  <img src={walletIcon} alt="" className="wallet-icon" /> }
+                    {(coinbase || address) && (
+                      <img src={walletIcon} alt="" className="wallet-icon" />
+                    )}
                     <div className="d-flex flex-column">
                       <span className="wallet-span d-flex align-items-center gap-2">
                         {coinbase && address && email
@@ -179,6 +181,13 @@ console.log(coinbase && address && email)
                           : coinbase && !address
                           ? "Wallet address"
                           : ""}
+                        {coinbase && (
+                          <img
+                            src={copyIcon}
+                            alt="copy"
+                            className="copy-icon"
+                          />
+                        )}
                       </span>
 
                       <div
@@ -189,11 +198,8 @@ console.log(coinbase && address && email)
                         }}
                       >
                         <span className="wallet-address">
-                          {shortAddress(
-                            isVerified && email ? address : coinbase
-                          )}
+                          {isVerified && email ? address : coinbase}
                         </span>
-                        <img src={copyIcon} alt="copy" className="copy-icon" />
                       </div>
                     </div>
                   </Clipboard>
@@ -208,31 +214,12 @@ console.log(coinbase && address && email)
 
                   {!address && coinbase && email && username && (
                     <p className="walletassoc-txt m-0">
-                      *There is no wallet address associated with your game account.
+                      *There is no wallet address associated with your game
+                      account.
                       <br /> Link your wallet to finish setup.
                     </p>
                   )}
 
-                  {address &&
-                    email &&
-                    coinbase &&
-                    syncStatus !== "" &&
-                    address.toLowerCase() !== coinbase.toLowerCase() && (
-                      <div className="sync-wrapper p-3">
-                        <div className="d-flex gap-2 align-items-center">
-                          <img
-                            src={triangle}
-                            alt=""
-                            style={{ width: "21px", height: "20px" }}
-                          />
-                          <span className="sync-txt">
-                            Your gaming account is not linked to the wallet you
-                            connected. To update the game wallet address, press
-                            the synchronize button.
-                          </span>
-                        </div>
-                      </div>
-                    )}
                   <div
                     className={`tooltip-wrapper p-2 ${
                       tooltip && "tooltip-active"
@@ -313,60 +300,6 @@ console.log(coinbase && address && email)
                   </div>
                 )}
 
-                <div
-                  className="d-flex align-items-center"
-                  style={{
-                    width:
-                      address &&
-                      email &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address.toLowerCase() !== coinbase.toLowerCase()
-                        ? "100%"
-                        : "fit-content",
-                    justifyContent:
-                      address &&
-                      email &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address.toLowerCase() !== coinbase.toLowerCase()
-                        ? "space-between"
-                        : "",
-                  }}
-                >
-                  {address &&
-                    email &&
-                    coinbase &&
-                    syncStatus !== "" &&
-                    address.toLowerCase() !== coinbase.toLowerCase() && (
-                      <button
-                        className="d-flex align-items-center gap-1 syncbtn"
-                        onClick={onSyncClick}
-                      >
-                        <img
-                          src={sync}
-                          alt=""
-                          className={syncStatus === "loading" && "syncicon"}
-                        />{" "}
-                        {syncStatus === "initial"
-                          ? "Synchronize"
-                          : syncStatus === "loading"
-                          ? "Synchronising..."
-                          : syncStatus === "success"
-                          ? "Success"
-                          : "Error"}
-                      </button>
-                    )}
-                  {address && email && coinbase && (
-                    <button
-                      className="failbtn px-3 py-1"
-                      onClick={onLogoutClick}
-                    >
-                      <img src={logouticon} alt="" /> Log Out
-                    </button>
-                  )}
-                </div>
-
                 {/* : 
                  (
                   <>
@@ -428,8 +361,73 @@ console.log(coinbase && address && email)
             </div>
           )} */}
             </div>
+            <div className="d-flex align-items-center justify-content-between">
+              {address &&
+                email &&
+                coinbase &&
+                syncStatus !== "" &&
+                address.toLowerCase() !== coinbase.toLowerCase() && (
+                  <div className="sync-wrapper p-3">
+                    <div className="d-flex gap-2 align-items-center">
+                      <img
+                        src={triangle}
+                        alt=""
+                        style={{ width: "21px", height: "20px" }}
+                      />
+                      <span className="sync-txt">
+                        Your gaming account is not linked to the wallet you
+                        connected. To update the game wallet address, press the
+                        synchronize button.
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{
+                  width: "fit-content",
+                  justifyContent:
+                    address &&
+                    email &&
+                    coinbase &&
+                    syncStatus !== "" &&
+                    address.toLowerCase() !== coinbase.toLowerCase()
+                      ? "space-between"
+                      : "",
+                }}
+              >
+                {address &&
+                  email &&
+                  coinbase &&
+                  syncStatus !== "" &&
+                  address.toLowerCase() !== coinbase.toLowerCase() && (
+                    <button
+                      className="d-flex align-items-center gap-1 syncbtn"
+                      onClick={onSyncClick}
+                    >
+                      <img
+                        src={sync}
+                        alt=""
+                        className={syncStatus === "loading" && "syncicon"}
+                      />{" "}
+                      {syncStatus === "initial"
+                        ? "Synchronize"
+                        : syncStatus === "loading"
+                        ? "Synchronising..."
+                        : syncStatus === "success"
+                        ? "Success"
+                        : "Error"}
+                    </button>
+                  )}
+                {address && email && coinbase && (
+                  <button className="failbtn px-3 py-1" onClick={onLogoutClick}>
+                    <img src={logouticon} alt="" /> Log Out
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
-          <img src={dypMedal} alt="" className="position-absolute dypMedal" />
         </div>
         {/* <div className="explorebanner col-12 col-lg-7 col-xxl-7 position-relative">
           <div className="d-flex flex-column gap-2 justify-content-center h-100">
