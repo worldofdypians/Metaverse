@@ -1335,7 +1335,7 @@ const BetaPassNFT = ({
                             <div className="d-flex flex-column gap-3">
                               <div className="d-flex align-items-center position-relative gap-2">
                                 <h6 className="coingecko-eventh6 m-0">
-                                  CoinGecko Teasure Hunt
+                                  CoinGecko Treasure Hunt
                                 </h6>{" "}
                                 <div
                                   className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
@@ -1461,7 +1461,7 @@ const BetaPassNFT = ({
                             <div className="d-flex flex-column gap-3">
                               <div className="d-flex align-items-center position-relative gap-2">
                                 <h6 className="coingecko-eventh6 m-0">
-                                  Conflux Teasure Hunt
+                                  Conflux Treasure Hunt
                                 </h6>{" "}
                                 <div
                                   className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
