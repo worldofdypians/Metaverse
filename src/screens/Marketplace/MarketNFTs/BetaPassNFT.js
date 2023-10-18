@@ -83,6 +83,15 @@ import SignUpConflux from "../../Account/src/Containers/SingUp/SignUpConflux";
 import PlayerCreationConflux from "../../Account/src/Containers/PlayerCreation/PlayerCreationConflux";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
+import Countdown from "react-countdown";
+
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <span className="livein-timer">
+      {days}d : {hours}h : {minutes}m
+    </span>
+  );
+};
 
 const BetaPassNFT = ({
   isConnected,
@@ -227,6 +236,7 @@ const BetaPassNFT = ({
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
   const bgmenu2 = document.querySelector("#switch");
+  let baseLastDay = new Date("2023-10-23T14:00:00.000+02:00");
 
   // useEffect(() => {
   //   if (
@@ -1000,6 +1010,17 @@ const BetaPassNFT = ({
                             style={{ width: 16, height: 16 }}
                           />{" "}
                         </a>
+                      )}
+
+                      {mintTitle === "base" && (
+                        <button
+                          className={`btn base-btn px-3 d-flex align-items-center justify-content-center gap-2`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <span className="liveintext">Live in:</span>
+                          <Countdown date={baseLastDay} renderer={renderer} />
+                        </button>
                       )}
 
                       {/* {mintTitle === "conflux" && (
