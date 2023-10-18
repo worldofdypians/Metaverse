@@ -135,13 +135,13 @@ const ProfileCard = ({
   const windowSize = useWindowSize();
   const [tooltip, setTooltip] = useState(false);
   const [tooltip2, setTooltip2] = useState(false);
-
+console.log(coinbase && address && email)
   return (
     <div className="main-wrapper py-4 w-100">
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-0 px-lg-3 col-12">
           <div className={"user-cardImg"}>
-            <div className="d-flex flex-column justify-content-between gap-2">
+            <div className="d-flex   justify-content-between gap-2">
               <div className="d-flex gap-2 justify-content-between align-items-center">
                 <div className="d-flex align-items-center gap-2">
                   <img src={defaultAvatar} alt="" className="userAvatar" />
@@ -161,7 +161,7 @@ const ProfileCard = ({
                   )}
                 </div>
               </div>
-              <div className="wallet-balance d-flex flex-column gap-2 position-relative">
+              <div className="wallet-balance d-flex align-items-center gap-2 position-relative">
                 <>
                   <Clipboard
                     component="div"
@@ -171,14 +171,14 @@ const ProfileCard = ({
                     data-clipboard-text={address}
                     className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
                   >
-                    <img src={walletIcon} alt="" className="wallet-icon" />
+                  {(coinbase || address) &&  <img src={walletIcon} alt="" className="wallet-icon" /> }
                     <div className="d-flex flex-column">
                       <span className="wallet-span d-flex align-items-center gap-2">
                         {coinbase && address && email
                           ? "Game Wallet address"
                           : coinbase && !address
                           ? "Wallet address"
-                          : "Wallet address"}
+                          : ""}
                       </span>
 
                       <div
@@ -244,7 +244,7 @@ const ProfileCard = ({
                 </>
                 {!coinbase && (
                   <button
-                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    className="d-flex px-3 py-1 align-items-center pill-btn"
                     onClick={() => {
                       handleShowWalletPopup();
                     }}
@@ -257,7 +257,7 @@ const ProfileCard = ({
 
                 {coinbase && address && !email && (
                   <button
-                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    className="d-flex px-3 py-1 align-items-center pill-btn"
                     onClick={() => {
                       onSigninClick();
                     }}
@@ -270,7 +270,7 @@ const ProfileCard = ({
 
                 {coinbase && !email && !address && !username && (
                   <button
-                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    className="d-flex px-3 py-1 align-items-center pill-btn"
                     onClick={() => {
                       onSigninClick();
                     }}
@@ -283,7 +283,7 @@ const ProfileCard = ({
 
                 {coinbase && email && !address && !username && (
                   <button
-                    className="d-flex align-self-end px-3 py-1 align-items-center pill-btn"
+                    className="d-flex px-3 py-1 align-items-center pill-btn"
                     onClick={() => {
                       onSigninClick();
                     }}
@@ -314,7 +314,7 @@ const ProfileCard = ({
                 )}
 
                 <div
-                  className="d-flex align-self-end align-items-center"
+                  className="d-flex align-items-center"
                   style={{
                     width:
                       address &&
