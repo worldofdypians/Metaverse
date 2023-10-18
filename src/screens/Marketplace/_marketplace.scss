@@ -2163,6 +2163,7 @@
 .conflux-btn:hover,
 .downloadbtn-coingecko:hover,
 .gate-btn:hover,
+.base-btn:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
   color: #fff;
@@ -2862,6 +2863,35 @@
   line-height: normal;
 }
 
+.base-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #9e00ff -13.56%, #0052ff 129.3%);
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  pointer-events: none;
+}
+
+.liveintext {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.livein-timer {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
 .switch-network {
   color: #c0cbf7;
   text-align: center;
@@ -2986,12 +3016,11 @@
 
   @media screen and (max-width: 786px) {
     height: auto !important;
-  img{
-    height: 100% !important;
-    width: 100% !important;
+    img {
+      height: 100% !important;
+      width: 100% !important;
+    }
   }
-  }
-
 }
 
 .homepage-mint-wrapper:nth-child(1) {

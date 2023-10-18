@@ -131,6 +131,7 @@ const WalletBalance = ({
   myNFTSCoingecko,
   myGateNfts,
   myConfluxNfts,
+  myBaseNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -543,6 +544,7 @@ const WalletBalance = ({
     let coingeckoNftsArray = [];
     let gateNftsArray = [];
     let confluxNftsArray = [];
+    let baseNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -638,6 +640,22 @@ const WalletBalance = ({
               tokenId: i,
               type: "conflux",
               chain: 1030,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myBaseNfts && myBaseNfts.length > 0) {
+        await Promise.all(
+          myBaseNfts.map(async (i) => {
+            baseNftsArray.push({
+              nftAddress: window.config.nft_base_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "base",
+              chain: 8453,
               isStaked: false,
               isListed: false,
             });
@@ -802,6 +820,7 @@ const WalletBalance = ({
         ...coingeckoNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
+        ...baseNftsArray,
         ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
@@ -959,10 +978,14 @@ const WalletBalance = ({
       let confluxFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_conflux_address
       );
+      let baseFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_base_address
+      );
       const allBetapassArray = [
         ...coingeckoFilter,
         ...confluxFilter,
         ...gateFilter,
+        ...baseFilter
       ];
       setcollectedItemsFiltered(allBetapassArray);
     } else if (filter1 === "timepiece" && filter2 === "all") {
@@ -1206,23 +1229,23 @@ const WalletBalance = ({
     eventType: "Explore & Mine",
   };
   const dummyBase = {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Coming Soon",
-        id: "event4",
-        date: "Coming Soon",
-        totalRewards: "$5,000 in ETH Rewards",
-        eventDuration: gateLastDay,
-        backgroundImage: baseUpcoming,
-        logo: base,
-        date: "Coming Soon",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
+    eventType: "Explore & Mine",
+    title: "Base",
+    chain: "Base Chain",
+    linkState: "base",
+    rewards: "ETH",
+    status: "Coming Soon",
+    id: "event4",
+    date: "November 01, 2023",
+    totalRewards: "$10,000 in ETH Rewards",
+    eventDuration: gateLastDay,
+    backgroundImage: baseUpcoming,
+    logo: base,
+    date: "November 01, 2023",
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "30,000",
   };
 
   const dummyBetaPassData = [
@@ -1304,7 +1327,7 @@ const WalletBalance = ({
         title: "Base Pass",
         chain: "BNB Chain",
         linkState: "base",
-        rewards: "BASE",
+        rewards: "ETH",
         status: "Expired",
         id: "event4",
         eventType: "Explore & Mine",
@@ -1356,8 +1379,8 @@ const WalletBalance = ({
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
     {
@@ -1384,8 +1407,7 @@ const WalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "20,000",
-    learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
-
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
     {
@@ -1419,10 +1441,10 @@ const WalletBalance = ({
       title: "Base",
       logo: base,
       eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in ETH Rewards",
+      totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "November 01, 2023",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -1432,10 +1454,10 @@ const WalletBalance = ({
         rewards: "ETH",
         status: "Coming Soon",
         id: "event4",
-        date: "Coming Soon",
-        totalRewards: "$5,000 in ETH Rewards",
+        date: "November 01, 2023",
+        totalRewards: "$10,000 in ETH Rewards",
         eventDuration: gateLastDay,
-        eventDate: "Coming Soon",
+        eventDate: "November 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -1456,12 +1478,17 @@ const WalletBalance = ({
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
+      // console.log(email, window.infuraWeb3.utils.toChecksumAddress(userAddress))
       const response = await fetch(
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
           body: JSON.stringify({
             email: email,
-            publicAddress: userAddress,
+            publicAddress: window.infuraWeb3.utils.checkAddressChecksum(
+              userAddress
+            )
+              ? window.infuraWeb3.utils.toChecksumAddress(userAddress)
+              : "",
           }),
           headers: {
             "Content-Type": "application/json",
@@ -1520,6 +1547,59 @@ const WalletBalance = ({
             }
           }
         }
+      } else if (response.status === 400) {
+        const response2 = await fetch(
+          "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+          {
+            body: JSON.stringify({
+              email: email,
+              publicAddress: userAddress.toLowerCase(),
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            redirect: "follow",
+            mode: "cors",
+          }
+        );
+        if (response2.status === 200) {
+          const responseData2 = await response2.json();
+          if (responseData2.events) {
+            const coingeckoEvent2 = responseData2.events.filter((obj) => {
+              return obj.betapassId === "coingecko";
+            });
+            const confluxEvent2 = responseData2.events.filter((obj) => {
+              return obj.betapassId === "conflux";
+            });
+
+            const points2 = coingeckoEvent2[0].reward.earn.totalPoints;
+            setuserPoints(points2);
+
+            const usdValue2 =
+              coingeckoEvent2[0].reward.earn.total /
+              coingeckoEvent2[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue2);
+            if (bnbPrice !== 0) {
+              setuserEarnETH(usdValue2 / bnbPrice);
+            }
+
+            const cfxPoints = confluxEvent2[0].reward.earn.totalPoints;
+            setConfluxUserPoints(cfxPoints);
+
+            if (confluxEvent2[0].reward.earn.multiplier !== 0) {
+              const cfxUsdValue =
+                confluxEvent2[0].reward.earn.total /
+                confluxEvent2[0].reward.earn.multiplier;
+              setConfluxEarnUSD(cfxUsdValue);
+              if (cfxPrice !== 0) {
+                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+              }
+            }
+          } else {
+            console.log(`Request failed with status ${response2.status}`);
+          }
+        }
       } else {
         console.log(`Request failed with status ${response.status}`);
       }
@@ -1571,8 +1651,7 @@ const WalletBalance = ({
                 }}
                 data={dummyCoingecko}
                 event={dummyCoingecko}
-                userEmail={email}
-                userWallet={address}
+                userEarnedUsd={userEarnUsd}
               />
               <ActiveProfileEvent
                 onOpenEvent={() => {
@@ -1581,8 +1660,7 @@ const WalletBalance = ({
                 }}
                 data={dummyConflux}
                 event={dummyConflux}
-                userEmail={email}
-                userWallet={address}
+                userEarnedUsd={confluxEarnUSD}
               />
               <ActiveProfileEvent
                 onOpenEvent={() => {
@@ -1625,9 +1703,8 @@ const WalletBalance = ({
                     cursor: "pointer",
                     width: "fit-content",
                     position: "absolute",
-                    bottom:  windowSize.width > 650 ? "20px" : '5px',
-                    left:  windowSize.width > 650 ? "43%" : '43%',
-
+                    bottom: windowSize.width > 650 ? "20px" : "5px",
+                    left: windowSize.width > 650 ? "43%" : "43%",
                   }}
                 >
                   <span className="account-view-all">
@@ -1644,38 +1721,36 @@ const WalletBalance = ({
           </div>
           {showAllEvents && windowSize.width < 786 ? (
             <div className="col-12 p-lg-3">
-            <div
-              className="nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-2"
-              style={{
-                maxWidth: "100vw",
-                width: "100%",
-                display: windowSize.width < 786 ? "block" : "none",
-              }}
-              ref={releaseContent2}
-            >
-            
-              <div className="d-flex flex-column gap-4">
-                {dummyBetaPassData2.map((item, index) => (
-                  <BetaEventCard
-                    data={item}
-                    key={index}
-                    onOpenPopup={() => {
-                      setEventPopup(true);
-                      setDummyEvent(item.popupInfo);
-                    }}
-                    userEarnUsd={
-                      item.title === "Conflux"
-                        ? confluxEarnUSD
-                        : item.title === "Gate.io"
-                        ? gateEarnUSD
-                        : userEarnUsd
-                    }
-                  />
-                ))}
+              <div
+                className="nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-2"
+                style={{
+                  maxWidth: "100vw",
+                  width: "100%",
+                  display: windowSize.width < 786 ? "block" : "none",
+                }}
+                ref={releaseContent2}
+              >
+                <div className="d-flex flex-column gap-4">
+                  {dummyBetaPassData2.map((item, index) => (
+                    <BetaEventCard
+                      data={item}
+                      key={index}
+                      onOpenPopup={() => {
+                        setEventPopup(true);
+                        setDummyEvent(item.popupInfo);
+                      }}
+                      userEarnUsd={
+                        item.title === "Conflux"
+                          ? confluxEarnUSD
+                          : item.title === "Gate.io" || item.title === 'Base'
+                          ? 0
+                          : userEarnUsd
+                      }
+                    />
+                  ))}
+                </div>
               </div>
-
             </div>
-          </div>
           ) : null}
           <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative mt-3 mt-lg-0">
             <h6
@@ -2014,6 +2089,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                   : item.type === "conflux"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                  : item.type === "base"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "gate"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -2031,6 +2108,8 @@ const WalletBalance = ({
                                   ? "CGBP"
                                   : item.type === "conflux"
                                   ? "CFBP"
+                                  : item.type === "base"
+                                  ? "BSBP"
                                   : item.type === "gate"
                                   ? "GTBP"
                                   : "Timepiece"}{" "}
@@ -2983,6 +3062,9 @@ const WalletBalance = ({
                                   window.config.nft_conflux_address
                                 ? "conflux"
                                 : nft.nftAddress ===
+                                window.config.nft_base_address
+                              ? "base"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -3028,6 +3110,9 @@ const WalletBalance = ({
                                       window.config.nft_conflux_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
+                                    window.config.nft_base_address
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -3052,6 +3137,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
                                     ? "CFBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_base_address
+                                    ? "BSBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3182,6 +3270,9 @@ const WalletBalance = ({
                                   window.config.nft_conflux_address
                                 ? "conflux"
                                 : nft.nftAddress ===
+                                  window.config.nft_base_address
+                                ? "base"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -3229,6 +3320,9 @@ const WalletBalance = ({
                                       window.config.nft_conflux_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_base_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.pngg`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -3255,6 +3349,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
                                     ? "CFBP"
+                                    : nft.nftAddress ===
+                                    window.config.nft_base_address
+                                  ? "BSBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3849,19 +3946,21 @@ const WalletBalance = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status === "Coming Soon" && dummyEvent?.id !== 'event4' && (
-                  <div className="d-flex flex-column">
-                    <span className="live-on">Live on</span>
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={require("./assets/greenCalendar.svg").default}
-                        className="green-calendar"
-                        alt=""
-                      />
-                      <h6 className="live-on-date mb-0">{dummyEvent?.date}</h6>
+                {dummyEvent?.status === "Coming Soon" &&
+                    <div className="d-flex flex-column">
+                      <span className="live-on">Live on</span>
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={require("./assets/greenCalendar.svg").default}
+                          className="green-calendar"
+                          alt=""
+                        />
+                        <h6 className="live-on-date mb-0">
+                          {dummyEvent?.date}
+                        </h6>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  }
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -3934,11 +4033,11 @@ const WalletBalance = ({
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
                       Beta Pass NFT from the World of Dypians Marketplace. By
                       engaging in the game on a daily basis and exploring the
-                      downtown area, players not only stand a chance to secure daily
-                      rewards in ETH, but also earn points for their placement
-                      on the global leaderboard. Remember to log in to the game
-                      daily and venture into the downtown area to uncover hidden
-                      treasures.
+                      downtown area, players not only stand a chance to secure
+                      daily rewards in ETH, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the downtown area to
+                      uncover hidden treasures.
                     </p>
                   )}
                 </div>
@@ -3967,7 +4066,7 @@ const WalletBalance = ({
                         ? "BNB"
                         : dummyEvent.id === "event6"
                         ? "GT"
-                        : "BASE"}{" "}
+                        : "ETH"}{" "}
                       rewards
                     </li>
                     <li className="popup-event-desc">
@@ -4129,7 +4228,7 @@ const WalletBalance = ({
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
                         ? confluxUserPoints
-                        : dummyEvent.id === "event3" 
+                        : dummyEvent.id === "event3"
                         ? userPoints
                         : dummyEvent.id === "event6" 
                         ? gateUserPoints

@@ -203,7 +203,7 @@ const MarketEvents = ({
         title: "Base Pass",
         chain: "BNB Chain",
         linkState: "base",
-        rewards: "BASE",
+        rewards: "ETH",
         status: "Expired",
         id: "event4",
       },
@@ -328,22 +328,22 @@ const MarketEvents = ({
       title: "Base",
       logo: base,
       eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in ETH Rewards",
+      totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "November 01, 2023",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
         title: "Base",
         chain: "Base Network",
         linkState: "base",
-        rewards: "BASE",
+        rewards: "ETH",
         status: "Coming Soon",
         id: "event4",
-        totalRewards: "$5,000 in ETH Rewards",
+        totalRewards: "$10,000 in ETH Rewards",
         eventDuration: gateLastDay,
-        eventDate: "Coming Soon",
+        eventDate: "November 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -540,7 +540,11 @@ const MarketEvents = ({
         {
           body: JSON.stringify({
             email: email,
-            publicAddress: userAddress,
+            publicAddress: window.infuraWeb3.utils.checkAddressChecksum(
+              userAddress
+            )
+              ? window.infuraWeb3.utils.toChecksumAddress(userAddress)
+              : "",
           }),
           headers: {
             "Content-Type": "application/json",
@@ -599,6 +603,60 @@ const MarketEvents = ({
             if (bnbPrice !== 0) {
               setGateEarnBNB(gateUsdValue / bnbPrice);
             }
+          }
+        }
+      } else if (response.status === 400) {
+        const response2 = await fetch(
+          "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+          {
+            body: JSON.stringify({
+              email: email,
+              publicAddress: userAddress.toLowerCase(),
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            redirect: "follow",
+            mode: "cors",
+          }
+        );
+        if (response2.status === 200) {
+          const responseData2 = await response2.json();
+          if (responseData2.events) {
+            const coingeckoEvent2 = responseData2.events.filter((obj) => {
+              return obj.betapassId === "coingecko";
+            });
+            const confluxEvent2 = responseData2.events.filter((obj) => {
+              return obj.betapassId === "conflux";
+            });
+
+            const points2 = coingeckoEvent2[0].reward.earn.totalPoints;
+            setuserPoints(points2);
+
+            const usdValue2 =
+              coingeckoEvent2[0].reward.earn.total /
+              coingeckoEvent2[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue2);
+            if (bnbPrice !== 0) {
+              setuserEarnETH(usdValue2 / bnbPrice);
+            }
+
+            const cfxPoints2 = confluxEvent2[0].reward.earn.totalPoints;
+            setConfluxUserPoints(cfxPoints2);
+
+            if (confluxEvent2[0].reward.earn.multiplier !== 0) {
+              const cfxUsdValue2 =
+                confluxEvent2[0].reward.earn.total /
+                confluxEvent2[0].reward.earn.multiplier;
+              setConfluxEarnUSD(cfxUsdValue2);
+
+              if (cfxPrice !== 0) {
+                setConfluxEarnCFX(cfxUsdValue2 / cfxPrice);
+              }
+            }
+          } else {
+            console.log(`Request failed with status ${response2.status}`);
           }
         }
       } else {
@@ -688,6 +746,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -700,9 +761,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                  
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -848,7 +907,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -898,28 +957,28 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">New events are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-
-                <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(3, 4).map((item, index) => (
-                    <BetaEventCard
-                      data={item}
-                      key={index}
-                      onOpenPopup={() => {
-                        setEventPopup(true);
-                        setDummyEvent(item.popupInfo);
-                      }}
-                      userEarnUsd={userEarnUsd}
-                    />
-                  ))}
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">New events are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
+                  </div>
                 </div>
+
+                // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
+                //     <BetaEventCard
+                //       data={item}
+                //       key={index}
+                //       onOpenPopup={() => {
+                //         setEventPopup(true);
+                //         setDummyEvent(item.popupInfo);
+                //       }}
+                //       userEarnUsd={userEarnUsd}
+                //     />
+                //   ))}
+                // </div>
                 // <BetaPassEvents />
               )}
               {activeTab === "past" && (
@@ -1031,7 +1090,6 @@ const MarketEvents = ({
                   />
                 )}
                 {dummyEvent?.status !== "Live" &&
-                  dummyEvent.id !== "event4" && (
                     <div className="d-flex flex-column">
                       <span className="live-on">Live on</span>
                       <div className="d-flex align-items-center gap-2">
@@ -1048,7 +1106,7 @@ const MarketEvents = ({
                         </h6>
                       </div>
                     </div>
-                  )}
+                  }
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
