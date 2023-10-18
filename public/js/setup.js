@@ -1470,6 +1470,7 @@ window.config = {
   nft_coingecko_address: "0x9b7c2B05367A729e0E671a24B8a143C0d4F6A90D",
   nft_gate_address: "0x2FED6783AdA5eA6B2D7cE9aE749c76B9f4858526",
   nft_conflux_address: "0x2deecf2a05f735890eb3ea085d55cec8f1a93895",
+  nft_base_address: '',
 
   nft_land_address: "0xcd60d912655281908ee557ce1add61e983385a03",
   cg_ids: {

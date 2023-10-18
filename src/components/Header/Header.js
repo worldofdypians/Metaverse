@@ -182,7 +182,7 @@ const Header = ({
           console.log(e);
         });
     } else {
-      handleSwitchChainGateWallet();
+      handleSwitchChainGateWallet(8453);
     }
   };
 
@@ -270,8 +270,8 @@ const Header = ({
       handleSwitchNetwork(56);
     }
 
-    if (chainId === 43114) {
-      handleSwitchNetwork(43114);
+    if (chainId === 8453) {
+      handleSwitchNetwork(8453);
     }
   }, [chainId, coinbase]);
 
@@ -585,9 +585,9 @@ const Header = ({
                           ? bnb
                           : //: : avaxState === true
                             // ? avax
-                            // : baseState === true
-                            // ? base
-                            confluxState === true
+                            baseState === true
+                            ? base
+                            : confluxState === true
                             ? conflux
                            : error
                       }
@@ -602,9 +602,9 @@ const Header = ({
                         ? "BNB Chain"
                         : //:  : avaxState === true
                           // ? "Avalanche"
-                          // : baseState === true
-                          // ? "Base"
-                          confluxState === true
+                           baseState === true
+                          ? "Base"
+                          :confluxState === true
                           ? "Conflux"
                           :"Unsupported Chain"}
                     </span>
@@ -629,10 +629,10 @@ const Header = ({
                   <img src={conflux} alt="" />
                   Conflux
                 </Dropdown.Item>
-                {/*  <Dropdown.Item onClick={() => handleBasePool()}>
+                 <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
-                </Dropdown.Item> */}
+                </Dropdown.Item>
               </DropdownButton>
               <Clipboard
                 component="div"
