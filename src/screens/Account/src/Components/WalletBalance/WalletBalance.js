@@ -1669,8 +1669,7 @@ const WalletBalance = ({
                 }}
                 data={dummyGate}
                 event={dummyGate}
-                userEmail={email}
-                userWallet={address}
+                userEarnedUsd={gateEarnUSD}
               />
               {/* <img
                 src={eventSkeleton}
