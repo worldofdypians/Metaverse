@@ -1063,9 +1063,9 @@ function Dashboard({
                         onOutsideClick={() => setmyRewardsPopup(false)}
                       >
                         <div
-                          className="popup-wrapper popup-active p-3"
+                          className="popup-wrapper popup-active p-4"
                           id="leaderboard"
-                          style={{ width: "40%", pointerEvents: "auto" }}
+                          style={{ width: "40%", pointerEvents: "auto", overflowX: 'auto' }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
                             <h2
