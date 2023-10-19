@@ -107,6 +107,7 @@ const NewWalletBalance = ({
   onDailyRewardsPopupOpen,
   onOpenLeaderboard,
   isPremium,
+  onRewardsClick,
 }) => {
   const [userRank, setUserRank] = useState("N/A");
   const [genesisRank, setGenesisRank] = useState("N/A");
@@ -141,7 +142,7 @@ const NewWalletBalance = ({
   };
 
   const handleSubmit = async (e) => {
-    setLoading(true)
+    setLoading(true);
     setErrors(validateUrl(mediaUrl));
     if (Object.keys(validateUrl(mediaUrl)).length === 0) {
       const data = {
@@ -164,7 +165,7 @@ const NewWalletBalance = ({
       }
     }
 
-    setLoading(false)
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -583,7 +584,7 @@ const NewWalletBalance = ({
               </div>
             </div>
             <div className="row gap-3 gap-lg-0">
-              <div className="col-12 col-lg-8">
+              <div className="col-12 col-lg-8" onClick={onRewardsClick}>
                 <div className="my-rewards-wrapper">
                   <div className="green-div"></div>
 
@@ -708,13 +709,21 @@ const NewWalletBalance = ({
                     sx={{ width: "100%" }}
                   />
                   <div
-                    className={`${!email || !address ? "linear-border-disabled" : "linear-border"}`}
+                    className={`${
+                      !email || !address
+                        ? "linear-border-disabled"
+                        : "linear-border"
+                    }`}
                     style={{
                       width: "fit-content",
                     }}
                   >
                     <button
-                      className={`btn ${!email || !address ? "outline-btn-disabled" : "filled-btn"} px-5`}
+                      className={`btn ${
+                        !email || !address
+                          ? "outline-btn-disabled"
+                          : "filled-btn"
+                      } px-5`}
                       onClick={handleSubmit}
                       disabled={!email || !address ? true : false}
                     >

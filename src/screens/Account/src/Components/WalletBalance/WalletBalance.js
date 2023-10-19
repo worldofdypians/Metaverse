@@ -130,7 +130,6 @@ const WalletBalance = ({
   myNFTSCoingecko,
   myGateNfts,
   myConfluxNfts,
-  onRewardsClick,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -1482,7 +1481,6 @@ const WalletBalance = ({
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
-              onClick={onRewardsClick}
             >
               Special Events
             </h6>
