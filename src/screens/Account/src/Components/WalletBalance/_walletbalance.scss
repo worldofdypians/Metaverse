@@ -1139,7 +1139,7 @@
 .profile-rank {
   color: #fff;
   text-align: center;
-  font-size: 10px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -1385,9 +1385,9 @@
   left: 0;
   bottom: 0;
   background-image: url("./newAssets/myRewards.svg");
-  background-size: 25%;
+  background-size: 50%;
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: right -40px center;
   pointer-events: none;
 
   @media screen and (max-width: 786px) {
