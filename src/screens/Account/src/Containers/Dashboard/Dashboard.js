@@ -97,7 +97,7 @@ function Dashboard({
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
-
+  const [leaderboard, setLeaderboard] = useState(false)
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
@@ -662,6 +662,11 @@ function Dashboard({
   //   }
   // }, [coinbase, chainId]);
 
+  const onOpenLeaderboard = () => {
+    setLeaderboard(true)
+    console.log("true");
+  }
+
   useEffect(() => {
     if (success === true) {
       setshowWalletModal(false);
@@ -771,6 +776,8 @@ function Dashboard({
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
+                      onOpenLeaderboard={() => {setLeaderboard(true);}}
+
                       />
                     </div>
                     <WalletBalance
@@ -927,14 +934,16 @@ function Dashboard({
                 />
               </div> */}
 
+                 {leaderboard && 
                     <LeaderBoard
-                      username={data?.getPlayer?.displayName}
-                      userId={data?.getPlayer?.playerId}
-                      dypBalancebnb={dypBalancebnb}
-                      address={data?.getPlayer?.wallet?.publicAddress}
-                      availableTime={availableTime}
-                      email={email}
-                    />
+                    username={data?.getPlayer?.displayName}
+                    userId={data?.getPlayer?.playerId}
+                    dypBalancebnb={dypBalancebnb}
+                    address={data?.getPlayer?.wallet?.publicAddress}
+                    availableTime={availableTime}
+                    email={email}
+                  />
+                 }
                   </div>
                   {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
               <div className={"home-main-wrapper nftBigWrapper"}>
