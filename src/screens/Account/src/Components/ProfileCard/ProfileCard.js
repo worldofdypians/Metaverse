@@ -170,7 +170,7 @@ const ProfileCard = ({
               <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between gap-2">
                 <div className="d-flex gap-2 justify-content-between align-items-center">
                   <div className="d-flex align-items-center gap-2">
-                    {(coinbase && !email) ||
+                    {(coinbase && !email) || (!coinbase && !email) ||
                       (coinbase && email && !address && !username) ||
                       (!address) ? (
                         <img
@@ -279,10 +279,10 @@ const ProfileCard = ({
                         "wallet-wrapper-alert d-flex"
                       } ${
                         (coinbase && email && !address && !username) ||
-                        (coinbase && email && !address && username && "d-none")
+                        (coinbase && email && !address && username) || (!email && !coinbase) && "d-none"
                       }  wallet-wrapper align-items-center gap-2 position-relative`}
                     >
-                      {(coinbase || address) && (
+                      {(!coinbase && !address) && (
                         <img src={walletIcon} alt="" className="wallet-icon" />
                       )}
                       <div className="d-flex flex-column">
