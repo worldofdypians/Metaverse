@@ -232,19 +232,19 @@ const NewWalletBalance = ({
               <div className="d-flex align-items-center gap-4">
                 <div className="d-flex flex-column align-items-center gap-2">
                   <img src={globalRank} alt="" />
-                  <span className="font-organetto profile-rank mb-0">
+                  <span className="font-iceland profile-rank mb-0">
                     #{userRank}
                   </span>
-                  <span className="font-organetto profile-rank mb-0">
+                  <span className="font-iceland profile-rank mb-0">
                     Global
                   </span>
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2">
                   <img src={genesisRankImg} alt="" />
-                  <span className="font-organetto profile-rank mb-0">
+                  <span className="font-iceland profile-rank mb-0">
                     #{genesisRank}
                   </span>
-                  <span className="font-organetto profile-rank mb-0">
+                  <span className="font-iceland profile-rank mb-0">
                     Genesis
                   </span>
                 </div>
@@ -430,15 +430,15 @@ const NewWalletBalance = ({
                 <div className="green-div"></div>
 
                 <div className="my-total-rewards-wrapper d-flex flex-column align-items-center.gap-2">
-                  <h6 className="my-total-rewards mb-0 font-organetto">
+                  <h6 className="my-total-rewards mb-0 font-iceland">
                     $435.25
                   </h6>
-                  <span className="my-total-earned mb-0 font-organetto">
+                  <span className="my-total-earned mb-0 font-iceland">
                     Total Earned
                   </span>
                 </div>
                 <div className="d-flex flex-column justify-content-between h-100 p-3">
-                  <h6 className="profile-div-title mb-0">My Rewards</h6>
+                  <h6 className="profile-div-title mb-0 ">My Rewards</h6>
                   <div className="d-flex align-items-center gap-2 green-link">
                     <span className="profile-div-link mb-0">View All</span>
                     <img src={rightIcon} alt="" />
