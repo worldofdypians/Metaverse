@@ -53,7 +53,8 @@ const NewWalletBalance = ({
   myGateNfts,
   myConfluxNfts,
   onDailyRewardsPopupOpen,
-  onOpenLeaderboard
+  onOpenLeaderboard,
+  isPremium,
 }) => {
   const [userRank, setUserRank] = useState("N/A");
   const [genesisRank, setGenesisRank] = useState("N/A");
@@ -219,7 +220,11 @@ const NewWalletBalance = ({
       <div className="row gap-3 gap-lg-0">
         <div className="col-12 col-lg-4">
           <div className="d-flex flex-column gap-2">
-            <div className="purple-container position-relative p-3 d-flex align-items-center justify-content-between" onClick={onOpenLeaderboard} style={{cursor: "pointer"}}>
+            <div
+              className="purple-container position-relative p-3 d-flex align-items-center justify-content-between"
+              onClick={onOpenLeaderboard}
+              style={{ cursor: "pointer" }}
+            >
               <div className="green-div"></div>
               <div
                 className="d-flex flex-column justify-content-between"
@@ -237,9 +242,7 @@ const NewWalletBalance = ({
                   <span className="font-iceland profile-rank mb-0">
                     #{userRank}
                   </span>
-                  <span className="font-iceland profile-rank mb-0">
-                    Global
-                  </span>
+                  <span className="font-iceland profile-rank mb-0">Global</span>
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2">
                   <img src={genesisRankImg} alt="" />
@@ -370,21 +373,48 @@ const NewWalletBalance = ({
                 </div>
               </Slider>
             </div>
-            <a href="https://app.dypius.com/plans" target="_blank" className="red-container position-relative p-3 d-flex align-items-center justify-content-between">
-              <div className="green-div"></div>
+            {!isPremium ? (
+              <a
+                href="https://app.dypius.com/plans"
+                target="_blank"
+                className="red-container position-relative p-3 d-flex align-items-center justify-content-between"
+              >
+                <div className="green-div"></div>
 
-              <div className="d-flex flex-column gap-4">
-                <h6 className="profile-div-title mb-0">Upgrade to Premium</h6>
-                <a href="https://app.dypius.com/plans" target="_blank" className="d-flex align-items-center gap-2 green-link">
-                  <span className="profile-div-link mb-0">Subscribe</span>
-                  <img src={rightIcon} alt="" />
-                </a>
+                <div className="d-flex flex-column gap-4">
+                  <h6 className="profile-div-title mb-0">Upgrade to Premium</h6>
+                  <a
+                    href="https://app.dypius.com/plans"
+                    target="_blank"
+                    className="d-flex align-items-center gap-2 green-link"
+                  >
+                    <span className="profile-div-link mb-0">Subscribe</span>
+                    <img src={rightIcon} alt="" />
+                  </a>
+                </div>
+                <img src={nonPremium} alt="" />
+              </a>
+            ) : (
+              <div className="premium-active-container position-relative p-3 d-flex align-items-center justify-content-between">
+                <div className="green-div"></div>
+
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="profile-div-title mb-0">Premium Member</h6>
+                  <div className="d-flex align-items-center gap-2 col-7 ">
+                    <span className="profile-div-link mb-0 text-white">
+                      Enjoy premium access in World of Dypians
+                    </span>
+                  </div>
+                </div>
+                <img src={premium} alt="" className="premium-img"/>
               </div>
-              <img src={nonPremium} alt="" />
-            </a>
+            )}
           </div>
         </div>
-        <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 gap-lg-0" onClick={onDailyRewardsPopupOpen}>
+        <div
+          className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 gap-lg-0"
+          onClick={onDailyRewardsPopupOpen}
+        >
           <div className="row gap-3 gap-lg-0">
             <div className="col-12 col-lg-4">
               <div className="daily-bonus-wrapper">
@@ -400,7 +430,10 @@ const NewWalletBalance = ({
               </div>
             </div>
             <div className="col-12 col-lg-4">
-              <NavLink to="/marketplace/events/treasure-hunt" className="game-events-wrapper d-flex">
+              <NavLink
+                to="/marketplace/events/treasure-hunt"
+                className="game-events-wrapper d-flex"
+              >
                 <div className="green-div"></div>
 
                 <div className="d-flex flex-column justify-content-between h-100 p-3">
@@ -413,7 +446,10 @@ const NewWalletBalance = ({
               </NavLink>
             </div>
             <div className="col-12 col-lg-4">
-              <NavLink to={"/marketplace/stake"} className="profile-staking-wrapper d-flex">
+              <NavLink
+                to={"/marketplace/stake"}
+                className="profile-staking-wrapper d-flex"
+              >
                 <div className="green-div"></div>
 
                 <div className="d-flex flex-column justify-content-between h-100 p-3">

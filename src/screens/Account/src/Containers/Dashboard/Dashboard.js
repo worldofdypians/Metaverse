@@ -331,7 +331,7 @@ function Dashboard({
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
 
-    if (userAddr) {
+    if (userAddr && email) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
         .subscriptionPlatformTokenAmount(userAddr)
         .call();
@@ -684,6 +684,8 @@ function Dashboard({
       email
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
+    } else {
+      setIsPremium(false);
     }
   }, [data, email]);
 
@@ -856,6 +858,7 @@ function Dashboard({
                         onOpenLeaderboard={() => {
                           setLeaderboard(true);
                         }}
+                        isPremium={isPremium}
                       />
                     </div>
                     <WalletBalance

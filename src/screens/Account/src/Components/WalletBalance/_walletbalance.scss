@@ -1232,11 +1232,24 @@
   transition: all 0.25s ease;
 }
 
+
+.premium-active-container {
+  border-radius: 10px;
+  background: rgba(246, 198, 0, 0.15);
+  border: 2px solid #080b2a;
+  transition: all 0.25s ease;
+}
+
 .red-container:hover {
   border: 2px solid #7dd9af;
   .profile-div-link {
     text-decoration: underline;
   }
+}
+
+.premium-img {
+  position: absolute;
+  right: 0px;
 }
 
 .daily-bonus-wrapper {
