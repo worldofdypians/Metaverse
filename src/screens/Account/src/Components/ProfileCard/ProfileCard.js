@@ -17,6 +17,8 @@ import triangle from "./assets/triangle.svg";
 import sync from "./assets/sync.svg";
 import walletImg from "../../Images/userProfile/wallet.svg";
 import circleArrow from "../../Images/userProfile/arrow-circle.svg";
+import blackWallet from "../../Images/userProfile/wallet-black.svg";
+
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
 //     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
@@ -135,17 +137,27 @@ const ProfileCard = ({
   const windowSize = useWindowSize();
   const [tooltip, setTooltip] = useState(false);
   const [tooltip2, setTooltip2] = useState(false);
-  console.log(coinbase && address && email);
+
   return (
     <div className="main-wrapper py-4 w-100">
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-0 px-lg-3 col-12">
-          <div className={` ${isVerified && email && address.toLowerCase() === coinbase.toLowerCase() && 'user-cardImg-active'} ${address &&
-                  email &&
-                  coinbase &&
-                  syncStatus !== "" &&
-                  address.toLowerCase() !== coinbase.toLowerCase() && 'user-cardImg-alert'}  user-cardImg`}>
-            <div className="bordereddiv">
+          <div
+            className={` ${
+              isVerified &&
+              email &&
+              address?.toLowerCase() === coinbase?.toLowerCase() &&
+              "user-cardImg-active"
+            } ${
+              address &&
+              email &&
+              coinbase &&
+              syncStatus !== "" &&
+              address?.toLowerCase() !== coinbase?.toLowerCase() &&
+              "user-cardImg-alert"
+            }  user-cardImg`}
+          >
+            <div className={`bordereddiv ${ email && coinbase ? '' : 'border-bottom-0'}`}>
               <div className="d-flex   justify-content-between gap-2">
                 <div className="d-flex gap-2 justify-content-between align-items-center">
                   <div className="d-flex align-items-center gap-2">
@@ -158,7 +170,7 @@ const ProfileCard = ({
                         <span className="emailtext">{email}</span>
                       </div>
                     ) : (
-                      <div className="d-flex flex-column gap-1">
+                      <div className="d-flex flex-column gap-1 col-lg-7">
                         <span className="usernametext font-organetto">
                           Start your journey now!
                         </span>
@@ -166,7 +178,7 @@ const ProfileCard = ({
                     )}
                   </div>
                 </div>
-                <div className="wallet-balance d-flex align-items-center gap-2 position-relative">
+                <div className="wallet-balance d-flex align-items-center gap-3 position-relative">
                   <>
                     <Clipboard
                       component="div"
@@ -174,11 +186,19 @@ const ProfileCard = ({
                       data-for={id}
                       data-tip="Copied To Clipboard!"
                       data-clipboard-text={address}
-                      className={`${isVerified && email && address.toLowerCase() === coinbase.toLowerCase() && 'wallet-wrapper-active'} ${address &&
+                      className={`${
+                        isVerified &&
+                        email &&
+                        address?.toLowerCase() === coinbase?.toLowerCase() &&
+                        "wallet-wrapper-active"
+                      } ${
+                        address &&
                         email &&
                         coinbase &&
                         syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase() && 'wallet-wrapper-alert'} wallet-wrapper d-flex align-items-center gap-2 position-relative`}
+                        address.toLowerCase() !== coinbase.toLowerCase() &&
+                        "wallet-wrapper-alert"
+                      } wallet-wrapper d-flex align-items-center gap-2 position-relative`}
                     >
                       {(coinbase || address) && (
                         <img src={walletIcon} alt="" className="wallet-icon" />
@@ -187,8 +207,10 @@ const ProfileCard = ({
                         <span className="wallet-span d-flex align-items-center gap-2">
                           {coinbase && address && email
                             ? "Game Wallet address"
-                            : coinbase && !address
+                            : coinbase && !email
                             ? "Wallet address"
+                            : !coinbase && address && email
+                            ? "Game Wallet address"
                             : ""}
                           {coinbase && (
                             <img
@@ -224,20 +246,21 @@ const ProfileCard = ({
                   </>
                   {!coinbase && (
                     <button
-                      className="d-flex px-3 py-1 align-items-center pill-btn"
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
                       onClick={() => {
                         handleShowWalletPopup();
                       }}
                       style={{ width: "fit-content", fontSize: 14 }}
                     >
+                      <img src={blackWallet} alt="" style={{width: 18}}/>
                       Connect wallet
-                      <img src={greenarrow} alt="" />
+                      
                     </button>
                   )}
 
                   {coinbase && address && !email && (
                     <button
-                      className="d-flex px-3 py-1 align-items-center pill-btn"
+                      className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
                       onClick={() => {
                         onSigninClick();
                       }}
@@ -250,7 +273,7 @@ const ProfileCard = ({
 
                   {coinbase && !email && !address && !username && (
                     <button
-                      className="d-flex px-3 py-1 align-items-center pill-btn"
+                      className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
                       onClick={() => {
                         onSigninClick();
                       }}
@@ -355,7 +378,7 @@ const ProfileCard = ({
           )} */}
               </div>
             </div>
-            <div className="bordereddiv border-0 py-2">
+            <div className={`bordereddiv border-0 ${ email && coinbase ? 'py-2' : 'p-0'}`}>
               <div className="d-flex align-items-center justify-content-between">
                 {address &&
                   email &&
