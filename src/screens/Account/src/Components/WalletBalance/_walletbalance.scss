@@ -1127,6 +1127,9 @@
 
 .purple-container:hover {
   border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
 }
 .profile-div-title {
   color: #f7f7fc;
@@ -1231,6 +1234,9 @@
 
 .red-container:hover {
   border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
 }
 
 .daily-bonus-wrapper {
@@ -1245,6 +1251,9 @@
 
 .daily-bonus-wrapper:hover {
   border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
 }
 
 .daily-bonus-wrapper:after {
@@ -1275,6 +1284,9 @@
 
 .game-events-wrapper:hover {
   border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
 }
 
 .game-events-wrapper:after {
@@ -1308,6 +1320,9 @@
 
 .profile-staking-wrapper:hover {
   border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
 }
 .profile-staking-wrapper:after {
   content: "";
@@ -1341,6 +1356,9 @@
 
 .special-rewards-wrapper:hover {
   border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
 }
 .special-rewards-wrapper:after {
   content: "";
@@ -1374,6 +1392,9 @@
 
 .my-rewards-wrapper:hover {
   border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
 }
 .my-rewards-wrapper:after {
   content: "";
