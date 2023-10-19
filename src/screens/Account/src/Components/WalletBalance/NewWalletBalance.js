@@ -52,6 +52,7 @@ const NewWalletBalance = ({
   myNFTSCoingecko,
   myGateNfts,
   myConfluxNfts,
+  onDailyRewardsPopupOpen
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -382,7 +383,7 @@ const NewWalletBalance = ({
             </a>
           </div>
         </div>
-        <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 gap-lg-0">
+        <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 gap-lg-0" onClick={onDailyRewardsPopupOpen}>
           <div className="row gap-3 gap-lg-0">
             <div className="col-12 col-lg-4">
               <div className="daily-bonus-wrapper">

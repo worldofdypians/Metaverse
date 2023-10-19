@@ -65,8 +65,6 @@ import eventPopupImageBase from "./assets/eventPopupImageBase.png";
 import gatePopupImage from "./assets/gatePopupImage.png";
 import confluxPopupImage from "./assets/eventPopupImage.png";
 import Countdown from "react-countdown";
-import DailyBonusPopup from "./DailyBonusPopup";
-import rewardPopup from "./assets/rewardspopup.webp";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -153,7 +151,7 @@ const WalletBalance = ({
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [idyptokenDataAvax, setIDypTokenDataAvax] = useState([]);
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
-  const [filterTitle, setFilterTitle] = useState("Balance");
+  const [filterTitle, setFilterTitle] = useState("Collected");
   const [nftItems, setNftItems] = useState([]);
 
   const [collectedItems, setcollectedItems] = useState([]);
@@ -193,17 +191,8 @@ const WalletBalance = ({
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
 
-  const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
-  const html = document.querySelector("html");
 
-  useEffect(() => {
-    if (dailyBonusPopup === true && dailyrewardpopup) {
-      html.classList.add("hidescroll");
-      dailyrewardpopup.style.pointerEvents = "auto";
-    } else {
-      html.classList.remove("hidescroll");
-    }
-  }, [dailyBonusPopup, dailyrewardpopup]);
+
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -323,9 +312,11 @@ const WalletBalance = ({
   };
 
   const sortNfts = (sortValue) => {
-    if (sortValue === "balance") {
-      setFilterTitle("Balance");
-    } else if (sortValue === "collected") {
+    // if (sortValue === "balance") {
+    //   setFilterTitle("Balance");
+    // } else
+    
+    if (sortValue === "collected") {
       setFilterTitle("Collected");
     } else if (sortValue === "favorites") {
       setFilterTitle("Favorites");
@@ -1487,15 +1478,13 @@ const WalletBalance = ({
 
   return (
     <>
-      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 mt-xxl-0 mt-lg-0 justify-content-center align-items-center">
+      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0">
-          <div className="col-12 rankings-outer-wrapper px-0 px-lg-3 col-lg-5 position-relative">
+          <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
-              onClick={() => {
-                setdailyBonusPopup(true);
-              }}
+             
             >
               Special Events
             </h6>
@@ -1607,7 +1596,7 @@ const WalletBalance = ({
               </div>
             </div>
           ) : null}
-          <div className="col-12 px-0 px-lg-3 col-lg-7 position-relative mt-3 mt-lg-0">
+          <div className="col-12 px-0 ps-lg-3 col-lg-8 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
@@ -1616,7 +1605,7 @@ const WalletBalance = ({
             </h6>
             <div className="nft-outer-wrapper2 p-4  d-flex flex-column gap-2 position-relative custom-height-2">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
-                <h6
+                {/* <h6
                   className={`account-nft-sort ${
                     filterTitle === "Balance" && "nft-sort-selected"
                   } `}
@@ -1626,7 +1615,7 @@ const WalletBalance = ({
                   }}
                 >
                   Balance
-                </h6>
+                </h6> */}
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"
@@ -2426,8 +2415,9 @@ const WalletBalance = ({
                 </div>
               )}
 
-              {filterTitle !== "Balance" &&
-                loading === false &&
+              {
+              // filterTitle !== "Balance" &&
+              //   loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
                   (filterTitle === "Listed" && listedItems.length > 0) ||
                   (filterTitle === "Offers" && myOffers.length > 6) ||
@@ -4107,26 +4097,7 @@ const WalletBalance = ({
           </div>
         </OutsideClickHandler>
       )}
-      {dailyBonusPopup && (
-        <OutsideClickHandler
-          onOutsideClick={() => {
-            setdailyBonusPopup(false);
-          }}
-        >
-          <div
-            className="package-popup-wrapper2 position-relative"
-            id="dailyrewardpopup"
-          >
-            <img src={rewardPopup} alt="" className="popup-linear2"/>
-
-            <DailyBonusPopup
-              onclose={() => {
-                setdailyBonusPopup(false);
-              }}
-            />
-          </div>
-        </OutsideClickHandler>
-      )}
+      
     </>
   );
 };
