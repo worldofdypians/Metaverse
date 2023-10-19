@@ -32,6 +32,7 @@ import NewWalletBalance from "../../Components/WalletBalance/NewWalletBalance";
 import DailyBonusPopup from "../../Components/WalletBalance/DailyBonusPopup";
 import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup.webp";
 import OutsideClickHandler from "react-outside-click-handler";
+import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
 
 function Dashboard({
   account,
@@ -97,7 +98,7 @@ function Dashboard({
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
-  const [leaderboard, setLeaderboard] = useState(false)
+  const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
@@ -105,6 +106,7 @@ function Dashboard({
   const [isonlink, setIsOnLink] = useState(false);
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
+  const leaderboardId = document.querySelector("#leaderboard")
   const [isPremium, setIsPremium] = useState(false);
 
   const override2 = {
@@ -341,7 +343,7 @@ function Dashboard({
       subscribedPlatformTokenAmountBNB = await bnbcontract.methods
         .subscriptionPlatformTokenAmount(userAddr)
         .call();
- 
+
       if (
         subscribedPlatformTokenAmountAvax === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
@@ -705,13 +707,17 @@ function Dashboard({
   }, []);
 
   useEffect(() => {
-    if (dailyBonusPopup === true && dailyrewardpopup) {
+    if (
+      (dailyBonusPopup === true && dailyrewardpopup) ||
+      leaderboard === true
+    ) {
       html.classList.add("hidescroll");
-      dailyrewardpopup.style.pointerEvents = "auto";
+      // dailyrewardpopup.style.pointerEvents = "auto";
+      // leaderboardId.style.pointerEvents = "auto";
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [dailyBonusPopup, dailyrewardpopup]);
+  }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
 
   useEffect(() => {
     // if (coinbase) {
@@ -733,9 +739,9 @@ function Dashboard({
   // }, [coinbase, chainId]);
 
   const onOpenLeaderboard = () => {
-    setLeaderboard(true)
+    setLeaderboard(true);
     console.log("true");
-  }
+  };
 
   useEffect(() => {
     if (success === true) {
@@ -847,8 +853,9 @@ function Dashboard({
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
-                      onOpenLeaderboard={() => {setLeaderboard(true);}}
-
+                        onOpenLeaderboard={() => {
+                          setLeaderboard(true);
+                        }}
                       />
                     </div>
                     <WalletBalance
@@ -1005,16 +1012,41 @@ function Dashboard({
                 />
               </div> */}
 
-                 {leaderboard && 
-                    <LeaderBoard
-                    username={data?.getPlayer?.displayName}
-                    userId={data?.getPlayer?.playerId}
-                    dypBalancebnb={dypBalancebnb}
-                    address={data?.getPlayer?.wallet?.publicAddress}
-                    availableTime={availableTime}
-                    email={email}
-                  />
-                 }
+                    {leaderboard && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => setLeaderboard(false)}
+                      >
+                        <div
+                          className="popup-wrapper popup-active p-3" id="leaderboard"
+                          style={{ width: "40%", pointerEvents: "auto" }}
+                        >
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                            >
+                              <mark className={`font-organetto bundletag`}>
+                                WOD
+                              </mark>{" "}
+                              Leaderboard
+                            </h2>
+                            <img
+                              src={xMark}
+                              onClick={() => setLeaderboard(false)}
+                              alt=""
+                              style={{cursor: "pointer"}}
+                            />
+                          </div>
+                          <LeaderBoard
+                            username={data?.getPlayer?.displayName}
+                            userId={data?.getPlayer?.playerId}
+                            dypBalancebnb={dypBalancebnb}
+                            address={data?.getPlayer?.wallet?.publicAddress}
+                            availableTime={availableTime}
+                            email={email}
+                          />
+                        </div>
+                      </OutsideClickHandler>
+                    )}
                   </div>
                   {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
               <div className={"home-main-wrapper nftBigWrapper"}>
@@ -1127,7 +1159,7 @@ function Dashboard({
                   setdailyBonusPopup(false);
                 }}
               >
-                <div className="package-popup-wrapper2" id="dailyrewardpopup">
+                <div className="package-popup-wrapper2" id="dailyrewardpopup" style={{pointerEvents: "auto"}}>
                   <img src={rewardPopup} alt="" className="popup-linear2" />
 
                   <DailyBonusPopup
