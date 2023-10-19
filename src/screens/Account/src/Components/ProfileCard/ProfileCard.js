@@ -18,6 +18,8 @@ import sync from "./assets/sync.svg";
 import walletImg from "../../Images/userProfile/wallet.svg";
 import circleArrow from "../../Images/userProfile/arrow-circle.svg";
 import blackWallet from "../../Images/userProfile/wallet-black.svg";
+import starActive from "./assets/star-active.svg";
+import starAlert from "./assets/star-alert.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -56,6 +58,7 @@ const ProfileCard = ({
   onSyncClick,
   syncStatus,
   onLinkWallet,
+  isPremium,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -157,15 +160,58 @@ const ProfileCard = ({
               "user-cardImg-alert"
             }  user-cardImg`}
           >
-            <div className={`bordereddiv ${ email && coinbase ? '' : 'border-bottom-0'}`}>
+            <div
+              className={`bordereddiv ${
+                email && coinbase ? "" : "border-bottom-0"
+              }`}
+            >
               <div className="d-flex   justify-content-between gap-2">
                 <div className="d-flex gap-2 justify-content-between align-items-center">
                   <div className="d-flex align-items-center gap-2">
                     <img src={defaultAvatar} alt="" className="userAvatar" />
                     {isVerified && email ? (
                       <div className="d-flex flex-column gap-1">
-                        <span className="usernametext font-organetto">
+                        <span className="usernametext font-organetto d-flex align-items-center gap-2">
                           {username}
+                          {isPremium && (
+                            <span
+                              className={`${
+                                address &&
+                                email &&
+                                coinbase &&
+                                syncStatus !== "" &&
+                                address?.toLowerCase() ===
+                                  coinbase?.toLowerCase() &&
+                                "premiumtext-active"
+                              } ${
+                                address &&
+                                email &&
+                                coinbase &&
+                                syncStatus !== "" &&
+                                address?.toLowerCase() !==
+                                  coinbase?.toLowerCase() &&
+                                "premiumtext-alert"
+                              } d-flex align-items-center gap-1`}
+                            >
+                              {address &&
+                                email &&
+                                coinbase &&
+                                syncStatus !== "" &&
+                                address?.toLowerCase() ===
+                                  coinbase?.toLowerCase() && (
+                                  <img src={starActive} />
+                                )}
+                              {address &&
+                                email &&
+                                coinbase &&
+                                syncStatus !== "" &&
+                                address?.toLowerCase() !==
+                                  coinbase?.toLowerCase() && (
+                                  <img src={starAlert} />
+                                )}
+                              Premium
+                            </span>
+                          )}
                         </span>
                         <span className="emailtext">{email}</span>
                       </div>
@@ -252,9 +298,8 @@ const ProfileCard = ({
                       }}
                       style={{ width: "fit-content", fontSize: 14 }}
                     >
-                      <img src={blackWallet} alt="" style={{width: 18}}/>
+                      <img src={blackWallet} alt="" style={{ width: 18 }} />
                       Connect wallet
-                      
                     </button>
                   )}
 
@@ -286,7 +331,7 @@ const ProfileCard = ({
 
                   {coinbase && email && !address && !username && (
                     <button
-                      className="d-flex px-3 py-1 align-items-center pill-btn"
+                      className="d-flex px-3 py-1 align-items-center signinbtn"
                       onClick={() => {
                         onSigninClick();
                       }}
@@ -378,7 +423,11 @@ const ProfileCard = ({
           )} */}
               </div>
             </div>
-            <div className={`bordereddiv border-0 ${ email && coinbase ? 'py-2' : 'p-0'}`}>
+            <div
+              className={`bordereddiv border-0 ${
+                email && coinbase ? "py-2" : "p-0"
+              }`}
+            >
               <div className="d-flex align-items-center justify-content-between">
                 {address &&
                   email &&

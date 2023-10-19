@@ -29,6 +29,26 @@
   border-bottom: 1px solid #494b61;
 }
 
+.premiumtext-active {
+  color: #1bf5ff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  font-family: "Poppins";
+  width: fit-content;
+}
+
+.premiumtext-alert {
+  color: #ed8225;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  width: fit-content;
+  font-family: "Poppins";
+}
+
 .logoutbtn {
   color: #ff6232;
   font-family: "Montserrat";
