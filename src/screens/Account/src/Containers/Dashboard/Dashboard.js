@@ -97,7 +97,7 @@ function Dashboard({
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
-  const [leaderboard, setLeaderboard] = useState(false)
+  const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
@@ -329,7 +329,7 @@ function Dashboard({
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
 
-    if (userAddr) {
+    if (userAddr && email) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
         .subscriptionPlatformTokenAmount(userAddr)
         .call();
@@ -341,7 +341,7 @@ function Dashboard({
       subscribedPlatformTokenAmountBNB = await bnbcontract.methods
         .subscriptionPlatformTokenAmount(userAddr)
         .call();
- 
+
       if (
         subscribedPlatformTokenAmountAvax === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
@@ -682,6 +682,8 @@ function Dashboard({
       email
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
+    } else {
+      setIsPremium(false);
     }
   }, [data, email]);
 
@@ -733,9 +735,9 @@ function Dashboard({
   // }, [coinbase, chainId]);
 
   const onOpenLeaderboard = () => {
-    setLeaderboard(true)
+    setLeaderboard(true);
     console.log("true");
-  }
+  };
 
   useEffect(() => {
     if (success === true) {
@@ -847,8 +849,10 @@ function Dashboard({
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
-                      onOpenLeaderboard={() => {setLeaderboard(true);}}
-
+                        onOpenLeaderboard={() => {
+                          setLeaderboard(true);
+                        }}
+                        isPremium={isPremium}
                       />
                     </div>
                     <WalletBalance
@@ -1005,16 +1009,16 @@ function Dashboard({
                 />
               </div> */}
 
-                 {leaderboard && 
-                    <LeaderBoard
-                    username={data?.getPlayer?.displayName}
-                    userId={data?.getPlayer?.playerId}
-                    dypBalancebnb={dypBalancebnb}
-                    address={data?.getPlayer?.wallet?.publicAddress}
-                    availableTime={availableTime}
-                    email={email}
-                  />
-                 }
+                    {leaderboard && (
+                      <LeaderBoard
+                        username={data?.getPlayer?.displayName}
+                        userId={data?.getPlayer?.playerId}
+                        dypBalancebnb={dypBalancebnb}
+                        address={data?.getPlayer?.wallet?.publicAddress}
+                        availableTime={availableTime}
+                        email={email}
+                      />
+                    )}
                   </div>
                   {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
               <div className={"home-main-wrapper nftBigWrapper"}>

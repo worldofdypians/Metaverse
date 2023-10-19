@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import "./_profilecard.scss";
 import defaultAvatar from "../../Images/userProfile/default-avatar.png";
+import defaultAvatarAlert from "../../Images/userProfile/default-avatar-alert.png";
+
 // import Countdown from "react-countdown";
 import dypMedal from "../../Images/userProfile/dyp-medal.svg";
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
@@ -162,13 +164,44 @@ const ProfileCard = ({
           >
             <div
               className={`bordereddiv ${
-                email && coinbase ? "" : "border-bottom-0"
+                email && coinbase && username ? "" : "border-bottom-0"
               }`}
             >
-              <div className="d-flex   justify-content-between gap-2">
+              <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between gap-2">
                 <div className="d-flex gap-2 justify-content-between align-items-center">
                   <div className="d-flex align-items-center gap-2">
-                    <img src={defaultAvatar} alt="" className="userAvatar" />
+                    {(coinbase && !email) ||
+                      (coinbase && email && !address && !username) ||
+                      (!address) ? (
+                        <img
+                          src={defaultAvatar}
+                          alt=""
+                          className="userAvatar"
+                        />
+                      ) : null}
+                    {address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address?.toLowerCase() === coinbase?.toLowerCase() && (
+                        <img
+                          src={defaultAvatar}
+                          alt=""
+                          className="userAvatar"
+                        />
+                      )}
+                    {address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address?.toLowerCase() !== coinbase?.toLowerCase() && (
+                        <img
+                          src={defaultAvatarAlert}
+                          alt=""
+                          className="userAvatar-alert"
+                        />
+                      )}
+
                     {isVerified && email ? (
                       <div className="d-flex flex-column gap-1">
                         <span className="usernametext font-organetto d-flex align-items-center gap-2">
@@ -224,7 +257,7 @@ const ProfileCard = ({
                     )}
                   </div>
                 </div>
-                <div className="wallet-balance d-flex align-items-center gap-3 position-relative">
+                <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-3 position-relative">
                   <>
                     <Clipboard
                       component="div"
@@ -236,15 +269,18 @@ const ProfileCard = ({
                         isVerified &&
                         email &&
                         address?.toLowerCase() === coinbase?.toLowerCase() &&
-                        "wallet-wrapper-active"
+                        "wallet-wrapper-active d-flex"
                       } ${
                         address &&
                         email &&
                         coinbase &&
                         syncStatus !== "" &&
                         address.toLowerCase() !== coinbase.toLowerCase() &&
-                        "wallet-wrapper-alert"
-                      } wallet-wrapper d-flex align-items-center gap-2 position-relative`}
+                        "wallet-wrapper-alert d-flex"
+                      } ${
+                        (coinbase && email && !address && !username) ||
+                        (coinbase && email && !address && username && "d-none")
+                      }  wallet-wrapper align-items-center gap-2 position-relative`}
                     >
                       {(coinbase || address) && (
                         <img src={walletIcon} alt="" className="wallet-icon" />
@@ -275,7 +311,13 @@ const ProfileCard = ({
                           }}
                         >
                           <span className="wallet-address">
-                            {isVerified && email ? address : coinbase}
+                            {windowSize.width > 991
+                              ? isVerified && email
+                                ? address
+                                : coinbase
+                              : isVerified && email
+                              ? shortAddress(address)
+                              : shortAddress(coinbase)}
                           </span>
                         </div>
                       </div>
@@ -425,10 +467,10 @@ const ProfileCard = ({
             </div>
             <div
               className={`bordereddiv border-0 ${
-                email && coinbase ? "py-2" : "p-0"
+                email && coinbase && username ? "py-2" : "p-0"
               }`}
             >
-              <div className="d-flex align-items-center justify-content-between">
+              <div className="d-flex flex-column flex-xxl-row flex-lg-row  align-items-center justify-content-between gap-2">
                 {address &&
                   email &&
                   coinbase &&
