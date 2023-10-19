@@ -71,11 +71,8 @@ const DailyBonusPopup = ({ onclose }) => {
           onClick={onclose}
         />
         <div className="position-relative h-100 rewardinnerwrapper">
-          <div className="positon-relative h-100 d-flex flex-column gap-3">
+          <div className="positon-relative h-100 d-flex flex-column gap-3 justify-content-between">
             <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-              <h6 className="chest-event-title mb-0 font-organetto">
-                Bounty Rush
-              </h6>
               <p className="chest-event-desc mb-0">
                 Claim 10 chests daily for a chance to win Game Points, exclusive
                 NFTs, and exciting rewards! Don't miss out on your daily dose of

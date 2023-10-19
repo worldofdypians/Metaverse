@@ -29,6 +29,9 @@ import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 import NewWalletBalance from "../../Components/WalletBalance/NewWalletBalance";
+import DailyBonusPopup from '../../Components/WalletBalance/DailyBonusPopup'
+import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup.webp";
+import OutsideClickHandler from "react-outside-click-handler";
 
 function Dashboard({
   account,
@@ -85,8 +88,7 @@ function Dashboard({
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setmyGateNfts] = useState([]);
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
-
-
+  const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
 
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
@@ -101,6 +103,8 @@ function Dashboard({
   const [allActiveOffers, setallOffers] = useState([]);
   const [showSyncModal, setshowSyncModal] = useState(false);
   const [isonlink, setIsOnLink] = useState(false);
+  const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
+  const html = document.querySelector("html");
 
   const override2 = {
     display: "block",
@@ -336,9 +340,6 @@ function Dashboard({
     getMyNFTS(coinbase, "coingecko").then((NFTS) => setMyNFTSCoingecko(NFTS));
     getMyNFTS(coinbase, "gate").then((NFTS) => setmyGateNfts(NFTS));
     getMyNFTS(coinbase, "conflux").then((NFTS) => setmyConfluxNfts(NFTS));
-
-
-
   };
 
   const getOtherNfts = async () => {
@@ -634,6 +635,15 @@ function Dashboard({
   }, []);
 
   useEffect(() => {
+    if (dailyBonusPopup === true && dailyrewardpopup) {
+      html.classList.add("hidescroll");
+      dailyrewardpopup.style.pointerEvents = "auto";
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [dailyBonusPopup, dailyrewardpopup]);
+
+  useEffect(() => {
     // if (coinbase) {
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
     getMyOffers();
@@ -721,7 +731,11 @@ function Dashboard({
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
                       />
-                      {/* <WalletBalance
+
+                      <NewWalletBalance
+                        onDailyRewardsPopupOpen={() => {
+                          setdailyBonusPopup(true);
+                        }}
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
@@ -757,46 +771,45 @@ function Dashboard({
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
-                      /> */}
-                      <NewWalletBalance 
-                         ethTokenData={ethTokenData}
-                         dypTokenData={dypTokenData}
-                         onOpenNfts={onOpenNfts}
-                         listedNFTS={listedNFTS}
-                         myBoughtNfts={myBoughtNfts}
-                         address={data?.getPlayer?.wallet?.publicAddress}
-                         coinbase={account}
-                         isVerified={data?.getPlayer?.wallet}
-                         favoritesArray={favorites}
-                         dypBalance={dypBalance}
-                         dypBalancebnb={dypBalancebnb}
-                         dypBalanceavax={dypBalanceavax}
-                         idypBalance={idypBalance}
-                         idypBalancebnb={idypBalancebnb}
-                         idypBalanceavax={idypBalanceavax}
-                         showNfts={showNfts}
-                         handleShowWalletPopup={() => {
-                           setshowWalletModal(true);
-                         }}
-                         email={email}
-                         userId={data?.getPlayer?.playerId}
-                         username={data?.getPlayer?.displayName}
-                         myCawsCollected={MyNFTSCaws}
-                         myCawsOldCollected={MyNFTSCawsOld}
-                         myLandCollected={MyNFTSLand}
-                         myTimepieceCollected={MyNFTSTimepiece}
-                         landStaked={landstakes}
-                         myCawsWodStakes={myCawsWodStakesAll}
-                         myWodWodStakes={myWodWodStakesAll}
-                         myNFTSCoingecko={MyNFTSCoingecko}
-                         myGateNfts={myGateNfts}
-                         myConfluxNfts={myConfluxNfts}
-                         latestBoughtNFTS={latest20BoughtNFTS}
-                         myOffers={myOffers}
-                         allActiveOffers={allActiveOffers}
                       />
                     </div>
-
+                    <WalletBalance
+                      ethTokenData={ethTokenData}
+                      dypTokenData={dypTokenData}
+                      onOpenNfts={onOpenNfts}
+                      listedNFTS={listedNFTS}
+                      myBoughtNfts={myBoughtNfts}
+                      address={data?.getPlayer?.wallet?.publicAddress}
+                      coinbase={account}
+                      isVerified={data?.getPlayer?.wallet}
+                      favoritesArray={favorites}
+                      dypBalance={dypBalance}
+                      dypBalancebnb={dypBalancebnb}
+                      dypBalanceavax={dypBalanceavax}
+                      idypBalance={idypBalance}
+                      idypBalancebnb={idypBalancebnb}
+                      idypBalanceavax={idypBalanceavax}
+                      showNfts={showNfts}
+                      handleShowWalletPopup={() => {
+                        setshowWalletModal(true);
+                      }}
+                      email={email}
+                      userId={data?.getPlayer?.playerId}
+                      username={data?.getPlayer?.displayName}
+                      myCawsCollected={MyNFTSCaws}
+                      myCawsOldCollected={MyNFTSCawsOld}
+                      myLandCollected={MyNFTSLand}
+                      myTimepieceCollected={MyNFTSTimepiece}
+                      landStaked={landstakes}
+                      myCawsWodStakes={myCawsWodStakesAll}
+                      myWodWodStakes={myWodWodStakesAll}
+                      myNFTSCoingecko={MyNFTSCoingecko}
+                      myGateNfts={myGateNfts}
+                      myConfluxNfts={myConfluxNfts}
+                      latestBoughtNFTS={latest20BoughtNFTS}
+                      myOffers={myOffers}
+                      allActiveOffers={allActiveOffers}
+                    />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
                   <h2
@@ -1027,6 +1040,26 @@ function Dashboard({
             </div> */}
                 </div>
               </div>
+            )}
+            {dailyBonusPopup && (
+              <OutsideClickHandler
+                onOutsideClick={() => {
+                  setdailyBonusPopup(false);
+                }}
+              >
+                <div
+                  className="package-popup-wrapper2"
+                  id="dailyrewardpopup"
+                >
+                  <img src={rewardPopup} alt="" className="popup-linear2" />
+
+                  <DailyBonusPopup
+                    onclose={() => {
+                      setdailyBonusPopup(false);
+                    }}
+                  />
+                </div>
+              </OutsideClickHandler>
             )}
             {showChecklistModal === true && (
               <ChecklistModal

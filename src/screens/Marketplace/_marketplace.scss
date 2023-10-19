@@ -1626,6 +1626,10 @@
 .package-popup-wrapper2 {
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
   z-index: 99;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
 }
 
 .dragon-popup {
@@ -1667,7 +1671,6 @@
   }
 }
 
-
 .package-popup2 {
   pointer-events: auto !important;
   z-index: 9999;
@@ -1689,7 +1692,6 @@
     height: 80%;
   }
 }
-
 
 .popup-linear {
   position: fixed;
@@ -3029,12 +3031,11 @@
 
   @media screen and (max-width: 786px) {
     height: auto !important;
-  img{
-    height: 100% !important;
-    width: 100% !important;
+    img {
+      height: 100% !important;
+      width: 100% !important;
+    }
   }
-  }
-
 }
 
 .homepage-mint-wrapper:nth-child(1) {
