@@ -54,8 +54,8 @@ const NewWalletBalance = ({
   myConfluxNfts,
   onDailyRewardsPopupOpen
 }) => {
-  const [userRank, setUserRank] = useState("");
-  const [genesisRank, setGenesisRank] = useState("");
+  const [userRank, setUserRank] = useState("N/A");
+  const [genesisRank, setGenesisRank] = useState("N/A");
   const [records, setRecords] = useState([]);
   const [activeSlide, setActiveSlide] = useState();
   const [showNext, setShowNext] = useState();

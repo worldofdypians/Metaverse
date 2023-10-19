@@ -29,7 +29,7 @@ import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 import NewWalletBalance from "../../Components/WalletBalance/NewWalletBalance";
-import DailyBonusPopup from '../../Components/WalletBalance/DailyBonusPopup'
+import DailyBonusPopup from "../../Components/WalletBalance/DailyBonusPopup";
 import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup.webp";
 import OutsideClickHandler from "react-outside-click-handler";
 
@@ -105,6 +105,7 @@ function Dashboard({
   const [isonlink, setIsOnLink] = useState(false);
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
+  const [isPremium, setIsPremium] = useState(false);
 
   const override2 = {
     display: "block",
@@ -300,6 +301,61 @@ function Dashboard({
       }, 3000);
 
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+    }
+  };
+
+  const refreshSubscription = async (userAddr) => {
+    let subscribedPlatformTokenAmountETH;
+    let subscribedPlatformTokenAmountAvax;
+    let subscribedPlatformTokenAmountBNB;
+
+    const web3eth = window.infuraWeb3;
+    const web3avax = window.avaxWeb3;
+    const web3bnb = window.bscWeb3;
+
+    const AvaxABI = window.SUBSCRIPTION_ABI;
+    const EthABI = window.SUBSCRIPTIONETH_ABI;
+    const BnbABI = window.SUBSCRIPTIONBNB_ABI;
+
+    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const avaxsubscribeAddress = window.config.subscription_address;
+    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
+
+    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+    const avaxcontract = new web3avax.eth.Contract(
+      AvaxABI,
+      avaxsubscribeAddress
+    );
+
+    const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+
+    if (userAddr) {
+      subscribedPlatformTokenAmountETH = await ethcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+
+      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+
+      subscribedPlatformTokenAmountBNB = await bnbcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+ 
+      if (
+        subscribedPlatformTokenAmountAvax === "0" &&
+        subscribedPlatformTokenAmountETH === "0" &&
+        subscribedPlatformTokenAmountBNB === "0"
+      ) {
+        setIsPremium(false);
+      }
+      if (
+        subscribedPlatformTokenAmountAvax !== "0" ||
+        subscribedPlatformTokenAmountETH !== "0" ||
+        subscribedPlatformTokenAmountBNB !== "0"
+      ) {
+        setIsPremium(true);
+      }
     }
   };
 
@@ -616,6 +672,20 @@ function Dashboard({
   }, [dataNonce]);
 
   useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      email
+    ) {
+      refreshSubscription(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, email]);
+
+  useEffect(() => {
     if (coinbase) {
       setsyncStatus("initial");
       fetchAllMyNfts();
@@ -730,6 +800,7 @@ function Dashboard({
                         onLogoutClick={logout}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
+                        isPremium={isPremium}
                       />
 
                       <NewWalletBalance
@@ -1047,10 +1118,7 @@ function Dashboard({
                   setdailyBonusPopup(false);
                 }}
               >
-                <div
-                  className="package-popup-wrapper2"
-                  id="dailyrewardpopup"
-                >
+                <div className="package-popup-wrapper2" id="dailyrewardpopup">
                   <img src={rewardPopup} alt="" className="popup-linear2" />
 
                   <DailyBonusPopup
