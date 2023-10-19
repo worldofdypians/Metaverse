@@ -167,18 +167,15 @@ const ProfileCard = ({
                 email && coinbase && username ? "" : "border-bottom-0"
               }`}
             >
-              <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between gap-2">
+              <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
                 <div className="d-flex gap-2 justify-content-between align-items-center">
                   <div className="d-flex align-items-center gap-2">
                     {(coinbase && !email) ||
-                      (coinbase && email && !address && !username) ||
-                      (!address) ? (
-                        <img
-                          src={defaultAvatar}
-                          alt=""
-                          className="userAvatar"
-                        />
-                      ) : null}
+                    (!coinbase && !email) ||
+                    (coinbase && email && !address && !username) ||
+                    !address ? (
+                      <img src={defaultAvatar} alt="" className="userAvatar" />
+                    ) : null}
                     {address &&
                       email &&
                       coinbase &&
@@ -204,7 +201,7 @@ const ProfileCard = ({
 
                     {isVerified && email ? (
                       <div className="d-flex flex-column gap-1">
-                        <span className="usernametext font-organetto d-flex align-items-center gap-2">
+                        <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
                           {isPremium && (
                             <span
@@ -279,10 +276,11 @@ const ProfileCard = ({
                         "wallet-wrapper-alert d-flex"
                       } ${
                         (coinbase && email && !address && !username) ||
-                        (coinbase && email && !address && username && "d-none")
+                        (coinbase && email && !address && username) ||
+                        (!email && !coinbase && "d-none")
                       }  wallet-wrapper align-items-center gap-2 position-relative`}
                     >
-                      {(coinbase || address) && (
+                      {!coinbase && !address && (
                         <img src={walletIcon} alt="" className="wallet-icon" />
                       )}
                       <div className="d-flex flex-column">

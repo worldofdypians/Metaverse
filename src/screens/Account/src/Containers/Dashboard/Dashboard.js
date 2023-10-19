@@ -33,7 +33,7 @@ import DailyBonusPopup from "../../Components/WalletBalance/DailyBonusPopup";
 import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup.webp";
 import OutsideClickHandler from "react-outside-click-handler";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
-
+import MyRewardsPopup from "../../Components/WalletBalance/MyRewardsPopup";
 function Dashboard({
   account,
   isConnected,
@@ -104,10 +104,12 @@ function Dashboard({
   const [allActiveOffers, setallOffers] = useState([]);
   const [showSyncModal, setshowSyncModal] = useState(false);
   const [isonlink, setIsOnLink] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
+  const [myRewardsPopup, setmyRewardsPopup] = useState(false);
+
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
-  const leaderboardId = document.querySelector("#leaderboard")
-  const [isPremium, setIsPremium] = useState(false);
+  const leaderboardId = document.querySelector("#leaderboard");
 
   const override2 = {
     display: "block",
@@ -897,6 +899,9 @@ function Dashboard({
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
+                      onRewardsClick={() => {
+                        setmyRewardsPopup(true);
+                      }}
                     />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
@@ -1020,7 +1025,8 @@ function Dashboard({
                         onOutsideClick={() => setLeaderboard(false)}
                       >
                         <div
-                          className="popup-wrapper popup-active p-3" id="leaderboard"
+                          className="popup-wrapper popup-active p-3"
+                          id="leaderboard"
                           style={{ width: "40%", pointerEvents: "auto" }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
@@ -1036,7 +1042,7 @@ function Dashboard({
                               src={xMark}
                               onClick={() => setLeaderboard(false)}
                               alt=""
-                              style={{cursor: "pointer"}}
+                              style={{ cursor: "pointer" }}
                             />
                           </div>
                           <LeaderBoard
@@ -1047,6 +1053,33 @@ function Dashboard({
                             availableTime={availableTime}
                             email={email}
                           />
+                        </div>
+                      </OutsideClickHandler>
+                    )}
+
+                    {myRewardsPopup && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => setmyRewardsPopup(false)}
+                      >
+                        <div
+                          className="popup-wrapper popup-active p-3"
+                          id="leaderboard"
+                          style={{ width: "40%", pointerEvents: "auto" }}
+                        >
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                            >
+                              My Rewards
+                            </h2>
+                            <img
+                              src={xMark}
+                              onClick={() => setmyRewardsPopup(false)}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                            />
+                          </div>
+                        <MyRewardsPopup/>
                         </div>
                       </OutsideClickHandler>
                     )}
@@ -1162,7 +1195,11 @@ function Dashboard({
                   setdailyBonusPopup(false);
                 }}
               >
-                <div className="package-popup-wrapper2" id="dailyrewardpopup" style={{pointerEvents: "auto"}}>
+                <div
+                  className="package-popup-wrapper2"
+                  id="dailyrewardpopup"
+                  style={{ pointerEvents: "auto" }}
+                >
                   <img src={rewardPopup} alt="" className="popup-linear2" />
 
                   <DailyBonusPopup
