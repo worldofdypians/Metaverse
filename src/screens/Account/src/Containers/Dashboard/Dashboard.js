@@ -861,6 +861,9 @@ function Dashboard({
                           setLeaderboard(true);
                         }}
                         isPremium={isPremium}
+                        onRewardsClick={() => {
+                          setmyRewardsPopup(true);
+                        }}
                       />
                     </div>
                     <WalletBalance
@@ -899,9 +902,7 @@ function Dashboard({
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
-                      onRewardsClick={() => {
-                        setmyRewardsPopup(true);
-                      }}
+                      
                     />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
