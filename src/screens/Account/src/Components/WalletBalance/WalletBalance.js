@@ -130,6 +130,7 @@ const WalletBalance = ({
   myNFTSCoingecko,
   myGateNfts,
   myConfluxNfts,
+  onRewardsClick,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -144,7 +145,7 @@ const WalletBalance = ({
   const [listedItems, setlistedItems] = useState([]);
 
   const [bnbPrice, setBnbPrice] = useState(0);
-  
+
   const [dyptokenData, setDypTokenData] = useState([]);
   const [idyptokenData, setIDypTokenData] = useState([]);
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
@@ -190,9 +191,6 @@ const WalletBalance = ({
   const [confluxUserPoints, setConfluxUserPoints] = useState(0);
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
-
-
-
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -315,7 +313,7 @@ const WalletBalance = ({
     // if (sortValue === "balance") {
     //   setFilterTitle("Balance");
     // } else
-    
+
     if (sortValue === "collected") {
       setFilterTitle("Collected");
     } else if (sortValue === "favorites") {
@@ -1484,7 +1482,7 @@ const WalletBalance = ({
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
-             
+              onClick={onRewardsClick}
             >
               Special Events
             </h6>
@@ -2416,8 +2414,8 @@ const WalletBalance = ({
               )}
 
               {
-              // filterTitle !== "Balance" &&
-              //   loading === false &&
+                // filterTitle !== "Balance" &&
+                //   loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
                   (filterTitle === "Listed" && listedItems.length > 0) ||
                   (filterTitle === "Offers" && myOffers.length > 6) ||
@@ -2526,7 +2524,8 @@ const WalletBalance = ({
                       </div>
                     ) : null}
                   </div>
-                )}
+                )
+              }
 
               {loading === true && (
                 // <div className="loader-wrapper">
@@ -4097,7 +4096,6 @@ const WalletBalance = ({
           </div>
         </OutsideClickHandler>
       )}
-      
     </>
   );
 };
