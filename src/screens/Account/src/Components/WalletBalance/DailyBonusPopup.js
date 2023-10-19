@@ -4,62 +4,287 @@ import pointsLogo from "./assets/pointslogo.png";
 import rewardsLogo from "./assets/rewardslogo.png";
 import { useState } from "react";
 import ChestItem from "./ChestItem";
+import { useEffect } from "react";
 
 const DailyBonusPopup = ({ onclose }) => {
+
+
+  const [regularChests, setRegularChests] = useState([]);
+  const [premiumChests, setPremiumChests] = useState([]);
+  const [rewardTypes, setRewardTypes] = useState("standard");
+
+
   const dummyChests = [
     {
-      open: true,
-      chestTitle: "Chest #1",
+      open: false,
+      chestTitle: "Jewel Coffer",
+      closedImg: "jewelCoffer",
       chestId: 1,
     },
     {
       open: false,
-      chestTitle: "Chest #2",
+      chestTitle: "Gold Hoard",
+      closedImg: "goldHoard",
       chestId: 2,
     },
     {
       open: false,
-      chestTitle: "Chest #3",
+      chestTitle: "Pirate's Bounty",
+      closedImg: "piratesBounty",
       chestId: 3,
     },
     {
       open: false,
-      chestTitle: "Chest #4",
+      chestTitle: "Gem Trove",
+      closedImg: "gemTrove",
       chestId: 4,
     },
     {
       open: false,
-      chestTitle: "Chest #5",
+      chestTitle: "Coin Chest",
+      closedImg: "coinChest",
       chestId: 5,
     },
     {
       open: false,
-      chestTitle: "Chest #6",
+      chestTitle: "Silver Cache",
+      closedImg: "silverCache",
       chestId: 6,
     },
     {
       open: false,
-      chestTitle: "Chest #7",
+      chestTitle: "Ruby Stash",
+      closedImg: "rubyStash",
       chestId: 7,
     },
     {
       open: false,
-      chestTitle: "Chest #8",
+      chestTitle: "Mystic Reliquary",
+      closedImg: "mysticReliquary",
       chestId: 8,
     },
     {
       open: false,
-      chestTitle: "Chest #9",
+      chestTitle: "Ancient Relics",
+      closedImg: "ancientRelics",
       chestId: 9,
     },
     {
       open: false,
-      chestTitle: "Chest #10",
+      chestTitle: "Emerald Trove",
+      closedImg: "emeraldTrove",
       chestId: 10,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Casket",
+      closedImg: "crystalCasket",
+      chestId: 11,
+    },
+    {
+      open: false,
+      chestTitle: "Pirate Booty",
+      closedImg: "pirateBooty",
+      chestId: 12,
+    },
+    {
+      open: false,
+      chestTitle: "Enchanted Trunk",
+      closedImg: "enchantedTrunk",
+      chestId: 13,
+    },
+    {
+      open: false,
+      chestTitle: "Lost Treasures",
+      closedImg: "lostTreasures",
+      chestId: 14,
+    },
+    {
+      open: false,
+      chestTitle: "Buccaneer's Fortune",
+      closedImg: "buccaneersFortune",
+      chestId: 15,
+    },
+    {
+      open: false,
+      chestTitle: "Mysterious Chest",
+      closedImg: "mysteriousChest",
+      chestId: 16,
+    },
+    {
+      open: false,
+      chestTitle: "Royal Riches",
+      closedImg: "royalRiches",
+      chestId: 17,
+    },
+    {
+      open: false,
+      chestTitle: "Sea Pearl",
+      closedImg: "seaPearl",
+      chestId: 18,
+    },
+    {
+      open: false,
+      chestTitle: "Magic Box",
+      closedImg: "magicBox",
+      chestId: 19,
+    },
+    {
+      open: false,
+      chestTitle: "Hidden Jewels",
+      closedImg: "hiddenJewels",
+      chestId: 20,
+    },
+    {
+      open: false,
+      chestTitle: "Timeless Trove",
+      closedImg: "timelessTrove",
+      chestId: 21,
+    },
+    {
+      open: false,
+      chestTitle: "Gilded Relics",
+      closedImg: "gildedRelics",
+      chestId: 22,
+    },
+    {
+      open: false,
+      chestTitle: "Mystic Covert",
+      closedImg: "mysticCovert",
+      chestId: 23,
+    },
+    {
+      open: false,
+      chestTitle: "Sapphire Lockbox",
+      closedImg: "sapphireLockbox",
+      chestId: 24,
+    },
+    {
+      open: false,
+      chestTitle: "Black Pearl",
+      closedImg: "blackPearl",
+      chestId: 25,
+    },
+    {
+      open: false,
+      chestTitle: "Dragon's Loot",
+      closedImg: "dragonsLoot",
+      chestId: 26,
+    },
+    {
+      open: false,
+      chestTitle: "Pirate Plunder",
+      closedImg: "piratePlunder",
+      chestId: 27,
+    },
+    {
+      open: false,
+      chestTitle: "Secret Vault",
+      closedImg: "secretVault",
+      chestId: 28,
+    },
+    {
+      open: false,
+      chestTitle: "Sunken Treasures",
+      closedImg: "sunkenTreasures",
+      chestId: 29,
+    },
+    {
+      open: false,
+      chestTitle: "Whispering Chest",
+      closedImg: "whisperingChest",
+      chestId: 30,
+    },
+    {
+      open: false,
+      chestTitle: "Ancient Artifacts",
+      closedImg: "ancientArtifacts",
+      chestId: 31,
+    },
+    {
+      open: false,
+      chestTitle: "Dreamer's Chest",
+      closedImg: "dreamersChest",
+      chestId: 32,
+    },
+    {
+      open: false,
+      chestTitle: "Starlight Coffer",
+      closedImg: "starlightCoffer",
+      chestId: 33,
+    },
+    {
+      open: false,
+      chestTitle: "Golden Trove",
+      closedImg: "goldenTrove",
+      chestId: 34,
+    },
+    {
+      open: false,
+      chestTitle: "Nebula Trunk",
+      closedImg: "nebulaTrunk",
+      chestId: 35,
+    },
+    {
+      open: false,
+      chestTitle: "Ghostly Chest",
+      closedImg: "ghostlyChest",
+      chestId: 36,
+    },
+    {
+      open: false,
+      chestTitle: "Sacred Relic",
+      closedImg: "sacredRelic",
+      chestId: 37,
+    },
+    {
+      open: false,
+      chestTitle: "Ocean's Bounty",
+      closedImg: "oceansBounty",
+      chestId: 38,
+    },
+    {
+      open: false,
+      chestTitle: "Eternal Treasure",
+      closedImg: "eternalTreasure",
+      chestId: 39,
+    },
+    {
+      open: false,
+      chestTitle: "Bloodmoon Chest",
+      closedImg: "bloodmoonChest",
+      chestId: 40,
     },
   ];
 
-  const [rewardTypes, setRewardTypes] = useState("standard");
+
+  function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    setRegularChests(array.slice(0,10))
+    setPremiumChests(array.slice(10, 20))
+    console.log(array.slice(0,10), array.slice(10,20));
+    return array;
+  }
+
+
+  useEffect(() => {
+   shuffle(dummyChests)
+  }, [])
+  
+
 
   return (
     <>
@@ -104,20 +329,36 @@ const DailyBonusPopup = ({ onclose }) => {
               </div>
               <div className="dailyreward-separator"></div>
             </div>
-            <div className="rewardsgrid">
-              {dummyChests.map((item) => (
+                {rewardTypes === "standard" ?
+                <div className="rewardsgrid">
+                {regularChests.map((item, index) => (
+                  <ChestItem
+                    chestId={index + 1}
+                    chestTitle={item.chestTitle}
+                    open={item.open}
+                    closedImg={item.closedImg}
+                    rewardTypes={rewardTypes}
+                  />
+                ))}
+              </div>
+              : 
+              <div className="rewardsgrid">
+              {premiumChests.map((item, index) => (
                 <ChestItem
-                  chestId={item.chestId}
+                  chestId={index + 1}
                   chestTitle={item.chestTitle}
                   open={item.open}
+                  closedImg={item.closedImg}
+                  rewardTypes={rewardTypes}
                 />
               ))}
-            </div>
-            <div className="d-flex w-100 justify-content-center">
+            </div>  
+              }
+            {/* <div className="d-flex w-100 justify-content-center">
               <button className="btn claim-chest-btn d-flex align-items-center justify-content-center">
                 <span className="mb-0">Claim</span>
               </button>
-            </div>
+            </div> */}
             <div className="dailyreward-separator"></div>
             <div className="d-flex flex-column gap-2">
               <span className="font-organetto chestprizetitle text-white">
