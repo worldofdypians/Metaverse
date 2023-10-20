@@ -322,6 +322,7 @@ const MarketEvents = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "20,000",
+        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
       },
     },
     {
