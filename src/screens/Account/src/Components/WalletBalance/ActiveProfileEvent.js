@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
+import gate from "./assets/gate.svg";
 
 import cyanArrow from "./assets/cyanArrow.svg";
 import conflux from "./assets/conflux.svg";
@@ -54,7 +55,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event,  userEarnedUsd }) => {
                 ? coingecko
                 : event.title === "Conflux"
                 ? conflux
-                : coin98
+                : gate
             }
             height={16}
             width={16}
