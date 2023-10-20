@@ -59,7 +59,7 @@ import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import axios from "axios";
 import Countdown from "react-countdown";
-import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 import { useAuth } from "../Account/src/Utils.js/Auth/AuthDetails";
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -630,6 +630,9 @@ const MarketEvents = ({
             const confluxEvent2 = responseData2.events.filter((obj) => {
               return obj.betapassId === "conflux";
             });
+            const gateEvent2 = responseData2.events.filter((obj) => {
+              return obj.betapassId === "gate";
+            });
 
             const points2 = coingeckoEvent2[0].reward.earn.totalPoints;
             setuserPoints(points2);
@@ -653,6 +656,18 @@ const MarketEvents = ({
 
               if (cfxPrice !== 0) {
                 setConfluxEarnCFX(cfxUsdValue2 / cfxPrice);
+              }
+            }
+
+            const gatePoints2 = gateEvent2[0].reward.earn.totalPoints;
+            setGateUserPoints(gatePoints2);
+            if (gateEvent2[0].reward.earn.multiplier !== 0) {
+              const gateUsdValue2 =
+                gateEvent2[0].reward.earn.total /
+                gateEvent2[0].reward.earn.multiplier;
+              setGateEarnUSD(gateUsdValue2);
+              if (bnbPrice !== 0) {
+                setGateEarnBNB(gateUsdValue2 / bnbPrice);
               }
             }
           } else {
@@ -717,7 +732,10 @@ const MarketEvents = ({
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+      fetchTreasureHuntData(
+        email,
+        data.getPlayer.wallet.publicAddress
+      );
     }
   }, [email, data, cfxPrice, bnbPrice]);
 
@@ -746,7 +764,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     <NavLink
@@ -761,7 +779,6 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1089,24 +1106,24 @@ const MarketEvents = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status !== "Live" &&
-                    <div className="d-flex flex-column">
-                      <span className="live-on">Live on</span>
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={
-                            require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
-                              .default
-                          }
-                          className="green-calendar"
-                          alt=""
-                        />
-                        <h6 className="live-on-date mb-0">
-                          {dummyEvent.eventDate}
-                        </h6>
-                      </div>
+                {dummyEvent?.status !== "Live" && (
+                  <div className="d-flex flex-column">
+                    <span className="live-on">Live on</span>
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={
+                          require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
+                            .default
+                        }
+                        className="green-calendar"
+                        alt=""
+                      />
+                      <h6 className="live-on-date mb-0">
+                        {dummyEvent.eventDate}
+                      </h6>
                     </div>
-                  }
+                  </div>
+                )}
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">

@@ -3,7 +3,7 @@ import liveDot from "../assets/liveDot.svg";
 import eventsArrow from "../assets/eventsArrow.svg";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
-import getFormattedNumber from "../../Caws/functions/get-formatted-number";
+import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
 const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
@@ -68,7 +68,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
             <h6 className="event-my-earnings3 mb-3">
               $
               {getFormattedNumber(
-                data.title === "Gate.io" || data.title === "Base"
+                 data.title === "Base"
                   ? 0
                   : userEarnUsd,
                 2

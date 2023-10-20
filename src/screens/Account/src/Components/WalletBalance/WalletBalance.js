@@ -131,7 +131,7 @@ const WalletBalance = ({
   myNFTSCoingecko,
   myGateNfts,
   myConfluxNfts,
-  myBaseNfts
+  myBaseNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -192,10 +192,8 @@ const WalletBalance = ({
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
   const [gateUserPoints, setGateUserPoints] = useState(0);
   const [gateEarnUSD, setGateEarnUSD] = useState(0);
-  const [gateEarnBNB, setGateEarnBNB] = useState(0);  
+  const [gateEarnBNB, setGateEarnBNB] = useState(0);
   const betaSlider = useRef();
-
-
 
   var settings = {
     dots: false,
@@ -254,8 +252,6 @@ const WalletBalance = ({
       },
     ],
   };
-
-
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -985,7 +981,7 @@ const WalletBalance = ({
         ...coingeckoFilter,
         ...confluxFilter,
         ...gateFilter,
-        ...baseFilter
+        ...baseFilter,
       ];
       setcollectedItemsFiltered(allBetapassArray);
     } else if (filter1 === "timepiece" && filter2 === "all") {
@@ -1543,7 +1539,7 @@ const WalletBalance = ({
               gateEvent[0].reward.earn.multiplier;
             setGateEarnUSD(gateUsdValue);
             if (bnbPrice !== 0) {
-              setConfluxEarnCFX(gateUsdValue / bnbPrice);
+              setGateEarnBNB(gateUsdValue / bnbPrice);
             }
           }
         }
@@ -1572,6 +1568,9 @@ const WalletBalance = ({
             const confluxEvent2 = responseData2.events.filter((obj) => {
               return obj.betapassId === "conflux";
             });
+            const gateEvent2 = responseData2.events.filter((obj) => {
+              return obj.betapassId === "gate";
+            });
 
             const points2 = coingeckoEvent2[0].reward.earn.totalPoints;
             setuserPoints(points2);
@@ -1584,8 +1583,8 @@ const WalletBalance = ({
               setuserEarnETH(usdValue2 / bnbPrice);
             }
 
-            const cfxPoints = confluxEvent2[0].reward.earn.totalPoints;
-            setConfluxUserPoints(cfxPoints);
+            const cfxPoints2 = confluxEvent2[0].reward.earn.totalPoints;
+            setConfluxUserPoints(cfxPoints2);
 
             if (confluxEvent2[0].reward.earn.multiplier !== 0) {
               const cfxUsdValue =
@@ -1594,6 +1593,18 @@ const WalletBalance = ({
               setConfluxEarnUSD(cfxUsdValue);
               if (cfxPrice !== 0) {
                 setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+              }
+            }
+
+            const gatePoints2 = gateEvent2[0].reward.earn.totalPoints;
+            setGateUserPoints(gatePoints2);
+            if (gateEvent2[0].reward.earn.multiplier !== 0) {
+              const gateUsdValue2 =
+                gateEvent2[0].reward.earn.total /
+                gateEvent2[0].reward.earn.multiplier;
+              setGateEarnUSD(gateUsdValue2);
+              if (bnbPrice !== 0) {
+                setGateEarnBNB(gateUsdValue2 / bnbPrice);
               }
             }
           } else {
@@ -1610,7 +1621,10 @@ const WalletBalance = ({
 
   useEffect(() => {
     if (email && address) {
-      fetchTreasureHuntData(email, address);
+      fetchTreasureHuntData(
+        email,
+        address
+      );
     }
   }, [email, address, bnbPrice, cfxPrice]);
 
@@ -1741,8 +1755,10 @@ const WalletBalance = ({
                       userEarnUsd={
                         item.title === "Conflux"
                           ? confluxEarnUSD
-                          : item.title === "Gate.io" || item.title === 'Base'
+                          : item.title === "Base"
                           ? 0
+                          : item.title === "Gate.io"
+                          ? gateEarnUSD
                           : userEarnUsd
                       }
                     />
@@ -3061,8 +3077,8 @@ const WalletBalance = ({
                                   window.config.nft_conflux_address
                                 ? "conflux"
                                 : nft.nftAddress ===
-                                window.config.nft_base_address
-                              ? "base"
+                                  window.config.nft_base_address
+                                ? "base"
                                 : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
@@ -3109,8 +3125,8 @@ const WalletBalance = ({
                                       window.config.nft_conflux_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
-                                    window.config.nft_base_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                      window.config.nft_base_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -3349,8 +3365,8 @@ const WalletBalance = ({
                                       window.config.nft_conflux_address
                                     ? "CFBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_base_address
-                                  ? "BSBP"
+                                      window.config.nft_base_address
+                                    ? "BSBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3718,7 +3734,7 @@ const WalletBalance = ({
                 ))}
               </div> */}
               <Slider {...settings} ref={betaSlider}>
-              {dummyBetaPassData2.map((item, index) => (
+                {dummyBetaPassData2.map((item, index) => (
                   <NewBetaEventCard
                     data={item}
                     key={index}
@@ -3945,21 +3961,19 @@ const WalletBalance = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status === "Coming Soon" &&
-                    <div className="d-flex flex-column">
-                      <span className="live-on">Live on</span>
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={require("./assets/greenCalendar.svg").default}
-                          className="green-calendar"
-                          alt=""
-                        />
-                        <h6 className="live-on-date mb-0">
-                          {dummyEvent?.date}
-                        </h6>
-                      </div>
+                {dummyEvent?.status === "Coming Soon" && (
+                  <div className="d-flex flex-column">
+                    <span className="live-on">Live on</span>
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={require("./assets/greenCalendar.svg").default}
+                        className="green-calendar"
+                        alt=""
+                      />
+                      <h6 className="live-on-date mb-0">{dummyEvent?.date}</h6>
                     </div>
-                  }
+                  </div>
+                )}
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -4229,7 +4243,7 @@ const WalletBalance = ({
                         ? confluxUserPoints
                         : dummyEvent.id === "event3"
                         ? userPoints
-                        : dummyEvent.id === "event6" 
+                        : dummyEvent.id === "event6"
                         ? gateUserPoints
                         : 0,
                       0
@@ -4247,8 +4261,9 @@ const WalletBalance = ({
                         ? confluxEarnUSD
                         : dummyEvent.id === "event3"
                         ? userEarnUsd
-                        :  dummyEvent.id === "event6"
-                        ? gateEarnUSD : 0,
+                        : dummyEvent.id === "event6"
+                        ? gateEarnUSD
+                        : 0,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
@@ -4258,7 +4273,8 @@ const WalletBalance = ({
                           : dummyEvent.id === "event3"
                           ? userEarnETH
                           : dummyEvent.id === "event6"
-                          ? gateEarnBNB : 0,
+                          ? gateEarnBNB
+                          : 0,
                         2
                       )}
                       {dummyEvent.id === "event1"
