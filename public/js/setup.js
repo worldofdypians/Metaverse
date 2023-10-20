@@ -3380,7 +3380,7 @@ async function getContractGateNFT(key) {
     window.web3 = new Web3(window.ethereum);
     window.cached_contracts[key] = new window.web3.eth.Contract(
       window.GATE_NFT_ABI,
-      address,
+      window.config.nft_gate_address,
       {
         from: await getCoinbase(),
       }
@@ -3431,6 +3431,11 @@ class GATE_NFT {
     //     });
     //   };
     // });
+  }
+  async getGateLatestMint() {
+    let nft_contract = await getContractGateNFT("GATE_NFT");
+    console.log(nft_contract, 'gate')
+    return await nft_contract.methods.totalSupply().call();
   }
 }
 
