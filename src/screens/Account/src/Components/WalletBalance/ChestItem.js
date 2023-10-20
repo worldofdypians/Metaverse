@@ -3,7 +3,7 @@ import chestOpen from "./assets/chestOpen.png";
 import chestClosed from "./assets/chestClosed.png";
 import chestLock from './chestImages/chestLock.svg'
 
-const ChestItem = ({ chestId, chestTitle, open, closedImg, rewardTypes  }) => {
+const ChestItem = ({ chestId, chestTitle, open, closedImg, rewardTypes, chestIndex  }) => {
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [chestStatus, setchestStatus] = useState('initial');
   const handleOpenChest = () => {
@@ -30,14 +30,14 @@ const ChestItem = ({ chestId, chestTitle, open, closedImg, rewardTypes  }) => {
           open  || ischestOpen ? "number-open" : "number-closed"
         } d-flex align-items-center justify-content-center`}
       >
-        <span className="chest-number-text mb-0">{chestId}</span>
+        <span className="chest-number-text mb-0">{chestIndex}</span>
       </div>
       <div className="position-relative">
         {rewardTypes === "premium" && 
         <img src={chestLock} alt="" className="chest-lock" />
         }
       <img
-        src={ open || ischestOpen ? chestOpen : require(`./chestImages/${closedImg}.png`)}
+        src={ open || ischestOpen ? require(`./chestImages/${closedImg}Open.png`) : require(`./chestImages/${closedImg}.png`)}
         className={`chest-image ${chestStatus === 'loading' && 'shake-bottom-animation'} ${chestStatus === 'success' && 'fade-in-animation'} ${rewardTypes === "premium" && "chest-blur"}`}
         alt=""
       />

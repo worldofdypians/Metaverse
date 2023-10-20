@@ -333,7 +333,8 @@ const DailyBonusPopup = ({ onclose }) => {
                 <div className="rewardsgrid">
                 {regularChests.map((item, index) => (
                   <ChestItem
-                    chestId={index + 1}
+                    chestId={item.chestId}
+                    chestIndex={index + 1}
                     chestTitle={item.chestTitle}
                     open={item.open}
                     closedImg={item.closedImg}
