@@ -59,7 +59,7 @@ import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import axios from "axios";
 import Countdown from "react-countdown";
-import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 import { useAuth } from "../Account/src/Utils.js/Auth/AuthDetails";
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -126,6 +126,9 @@ const MarketEvents = ({
   const [confluxUserPoints, setConfluxUserPoints] = useState(0);
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
+  const [gateUserPoints, setGateUserPoints] = useState(0);
+  const [gateEarnUSD, setGateEarnUSD] = useState(0);
+  const [gateEarnBNB, setGateEarnBNB] = useState(0);
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -298,7 +301,7 @@ const MarketEvents = ({
     {
       title: "Gate.io",
       logo: gate,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
@@ -310,7 +313,7 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
@@ -319,6 +322,7 @@ const MarketEvents = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "20,000",
+        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
       },
     },
     {
@@ -537,11 +541,7 @@ const MarketEvents = ({
         {
           body: JSON.stringify({
             email: email,
-            publicAddress: window.infuraWeb3.utils.checkAddressChecksum(
-              userAddress
-            )
-              ? window.infuraWeb3.utils.toChecksumAddress(userAddress)
-              : "",
+            publicAddress: userAddress,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -559,6 +559,9 @@ const MarketEvents = ({
           });
           const confluxEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "conflux";
+          });
+          const gateEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "gate";
           });
 
           const points = coingeckoEvent[0].reward.earn.totalPoints;
@@ -585,62 +588,21 @@ const MarketEvents = ({
               setConfluxEarnCFX(cfxUsdValue / cfxPrice);
             }
           }
-        }
-      } else if (response.status === 400) {
-        const response2 = await fetch(
-          "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-          {
-            body: JSON.stringify({
-              email: email,
-              publicAddress: userAddress.toLowerCase(),
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-            method: "POST",
-            redirect: "follow",
-            mode: "cors",
-          }
-        );
-        if (response2.status === 200) {
-          const responseData2 = await response2.json();
-          if (responseData2.events) {
-            const coingeckoEvent2 = responseData2.events.filter((obj) => {
-              return obj.betapassId === "coingecko";
-            });
-            const confluxEvent2 = responseData2.events.filter((obj) => {
-              return obj.betapassId === "conflux";
-            });
+          const gatePoints = gateEvent[0].reward.earn.totalPoints;
+          setGateUserPoints(gatePoints);
 
-            const points2 = coingeckoEvent2[0].reward.earn.totalPoints;
-            setuserPoints(points2);
+          if (gateEvent[0].reward.earn.multiplier !== 0) {
+            const gateUsdValue =
+              gateEvent[0].reward.earn.total /
+              gateEvent[0].reward.earn.multiplier;
+            setGateEarnUSD(gateUsdValue);
 
-            const usdValue2 =
-              coingeckoEvent2[0].reward.earn.total /
-              coingeckoEvent2[0].reward.earn.multiplier;
-            setuserEarnUsd(usdValue2);
             if (bnbPrice !== 0) {
-              setuserEarnETH(usdValue2 / bnbPrice);
+              setGateEarnBNB(gateUsdValue / bnbPrice);
             }
-
-            const cfxPoints2 = confluxEvent2[0].reward.earn.totalPoints;
-            setConfluxUserPoints(cfxPoints2);
-
-            if (confluxEvent2[0].reward.earn.multiplier !== 0) {
-              const cfxUsdValue2 =
-                confluxEvent2[0].reward.earn.total /
-                confluxEvent2[0].reward.earn.multiplier;
-              setConfluxEarnUSD(cfxUsdValue2);
-
-              if (cfxPrice !== 0) {
-                setConfluxEarnCFX(cfxUsdValue2 / cfxPrice);
-              }
-            }
-          } else {
-            console.log(`Request failed with status ${response2.status}`);
           }
         }
-      } else {
+      }  else {
         console.log(`Request failed with status ${response.status}`);
       }
     } catch (error) {
@@ -698,7 +660,10 @@ const MarketEvents = ({
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+      fetchTreasureHuntData(
+        email,
+        data.getPlayer.wallet.publicAddress
+      );
     }
   }, [email, data, cfxPrice, bnbPrice]);
 
@@ -727,7 +692,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     <NavLink
@@ -742,7 +707,6 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -899,6 +863,8 @@ const MarketEvents = ({
                             userEarnUsd={
                               item.title === "Conflux"
                                 ? confluxEarnUSD
+                                : item.title === "Gate.io"
+                                ? gateEarnUSD
                                 : userEarnUsd
                             }
                           />
@@ -1068,24 +1034,24 @@ const MarketEvents = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status !== "Live" &&
-                    <div className="d-flex flex-column">
-                      <span className="live-on">Live on</span>
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={
-                            require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
-                              .default
-                          }
-                          className="green-calendar"
-                          alt=""
-                        />
-                        <h6 className="live-on-date mb-0">
-                          {dummyEvent.eventDate}
-                        </h6>
-                      </div>
+                {dummyEvent?.status !== "Live" && (
+                  <div className="d-flex flex-column">
+                    <span className="live-on">Live on</span>
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={
+                          require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
+                            .default
+                        }
+                        className="green-calendar"
+                        alt=""
+                      />
+                      <h6 className="live-on-date mb-0">
+                        {dummyEvent.eventDate}
+                      </h6>
                     </div>
-                  }
+                  </div>
+                )}
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -1384,6 +1350,8 @@ const MarketEvents = ({
                         ? confluxUserPoints
                         : dummyEvent.id === "event3"
                         ? userPoints
+                        : dummyEvent.id === "event6"
+                        ? gateUserPoints
                         : 0,
                       0
                     )}
@@ -1400,6 +1368,8 @@ const MarketEvents = ({
                         ? confluxEarnUSD
                         : dummyEvent.id === "event3"
                         ? userEarnUsd
+                        : dummyEvent.id === "event6"
+                        ? gateEarnUSD
                         : 0,
                       2
                     )}
@@ -1409,6 +1379,8 @@ const MarketEvents = ({
                           ? confluxEarnCFX
                           : dummyEvent.id === "event3"
                           ? userEarnETH
+                          : dummyEvent.id === "event6"
+                          ? gateEarnBNB
                           : 0,
                         2
                       )}
@@ -1435,7 +1407,7 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.id === "event6" && (
+            {dummyEvent.status !== "Live" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/gate`}>
                   <button className="btn get-beta-btn">Get Beta Pass</button>

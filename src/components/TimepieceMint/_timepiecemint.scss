@@ -949,6 +949,15 @@
   background-position: center;
 }
 
+.white-explore {
+  width: 20px;
+  height: 20px;
+  @media only screen and (max-width: 550px) {
+    width: auto;
+    height: auto;
+  }
+}
+
 .base-active {
   background-image: url("../../assets/baseActive.webp");
   background-repeat: no-repeat;
