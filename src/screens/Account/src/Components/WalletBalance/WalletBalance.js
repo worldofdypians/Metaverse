@@ -1482,11 +1482,7 @@ const WalletBalance = ({
         {
           body: JSON.stringify({
             email: email,
-            publicAddress: window.infuraWeb3.utils.checkAddressChecksum(
-              userAddress
-            )
-              ? window.infuraWeb3.utils.toChecksumAddress(userAddress)
-              : "",
+            publicAddress: userAddress,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -1543,74 +1539,6 @@ const WalletBalance = ({
             if (bnbPrice !== 0) {
               setGateEarnBNB(gateUsdValue / bnbPrice);
             }
-          }
-        }
-      } else if (response.status === 400) {
-        const response2 = await fetch(
-          "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-          {
-            body: JSON.stringify({
-              email: email,
-              publicAddress: userAddress.toLowerCase(),
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-            method: "POST",
-            redirect: "follow",
-            mode: "cors",
-          }
-        );
-        if (response2.status === 200) {
-          const responseData2 = await response2.json();
-          if (responseData2.events) {
-            const coingeckoEvent2 = responseData2.events.filter((obj) => {
-              return obj.betapassId === "coingecko";
-            });
-            const confluxEvent2 = responseData2.events.filter((obj) => {
-              return obj.betapassId === "conflux";
-            });
-            const gateEvent2 = responseData2.events.filter((obj) => {
-              return obj.betapassId === "gate";
-            });
-
-            const points2 = coingeckoEvent2[0].reward.earn.totalPoints;
-            setuserPoints(points2);
-
-            const usdValue2 =
-              coingeckoEvent2[0].reward.earn.total /
-              coingeckoEvent2[0].reward.earn.multiplier;
-            setuserEarnUsd(usdValue2);
-            if (bnbPrice !== 0) {
-              setuserEarnETH(usdValue2 / bnbPrice);
-            }
-
-            const cfxPoints2 = confluxEvent2[0].reward.earn.totalPoints;
-            setConfluxUserPoints(cfxPoints2);
-
-            if (confluxEvent2[0].reward.earn.multiplier !== 0) {
-              const cfxUsdValue =
-                confluxEvent2[0].reward.earn.total /
-                confluxEvent2[0].reward.earn.multiplier;
-              setConfluxEarnUSD(cfxUsdValue);
-              if (cfxPrice !== 0) {
-                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
-              }
-            }
-
-            const gatePoints2 = gateEvent2[0].reward.earn.totalPoints;
-            setGateUserPoints(gatePoints2);
-            if (gateEvent2[0].reward.earn.multiplier !== 0) {
-              const gateUsdValue2 =
-                gateEvent2[0].reward.earn.total /
-                gateEvent2[0].reward.earn.multiplier;
-              setGateEarnUSD(gateUsdValue2);
-              if (bnbPrice !== 0) {
-                setGateEarnBNB(gateUsdValue2 / bnbPrice);
-              }
-            }
-          } else {
-            console.log(`Request failed with status ${response2.status}`);
           }
         }
       } else {
