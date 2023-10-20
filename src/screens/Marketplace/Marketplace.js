@@ -248,7 +248,7 @@ const Marketplace = ({
     const gateresult = await gateContract.methods.totalSupply().call();
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
     setTotalSupply(
-      parseInt(result) + parseInt(confluxresult) + 20000
+      parseInt(result) + parseInt(confluxresult) + parseInt(gateresult) + 20000
     ); 
 
   };
