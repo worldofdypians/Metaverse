@@ -63,7 +63,7 @@
 }
 
 .wallet-address {
-  color: #b8b8e0;
+  color: rgba(247, 247, 252, 0.8);
   font-size: 12px;
   letter-spacing: -0.216px;
 }
@@ -1195,6 +1195,7 @@
   background: rgba(89, 115, 213, 0.15);
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
+  cursor: pointer;
 }
 
 .purple-container:hover {
@@ -1469,7 +1470,7 @@
 }
 
 .table-separator {
-  height: 2px;
+  height: 1px;
   width: 100%;
   background: linear-gradient(
     90deg,

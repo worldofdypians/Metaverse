@@ -152,7 +152,6 @@
 }
 
 
-.fly-active2:hover{
   .fly-title2{
     display: flex;
     font-weight: 800;
@@ -160,11 +159,10 @@
     line-height: 18px;
     text-align: center;
     color: #f7f7fc;
-    -webkit-animation: slide-in-right 1s
-      cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    animation: slide-in-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    display: flex;
+    white-space: nowrap;
   }
-}
+  
 
 
 .mainChest {

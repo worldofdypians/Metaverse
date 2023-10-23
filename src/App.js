@@ -64,7 +64,6 @@ import {
   ConnectionType,
 } from "web3-connector";
 
-import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 
 function App() {
   const CHAINLIST = {
@@ -1612,7 +1611,6 @@ function App() {
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
           />
-          <ChestFlyout />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
             <Route

@@ -5,6 +5,7 @@ import closeFly from "./assets/closeFly.svg";
 import { useState } from "react";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import Collapse from "react-bootstrap/Collapse";
 
 const ChestFlyout = () => {
   const [show, setShow] = useState(false);
@@ -26,7 +27,10 @@ const ChestFlyout = () => {
         setshowText(false);
       }}
     >
-      <div className="fly-outer-wrapper2 position-relative" style={{overflow: "hidden"}}>
+      <div
+        className="fly-outer-wrapper2 position-relative"
+        style={{ overflow: "hidden" }}
+      >
         <NavLink
           to="/account"
           className="fly-inner-wrapper2 p-1 d-flex align-items-center gap-2"
@@ -34,11 +38,11 @@ const ChestFlyout = () => {
           onClick={() => setShow(false)}
         >
           <img src={mainChest} alt="" className="mainChest" />
-          <h6
-            className={` font-organetto fly-title2 `}
-          >
-            Daily Bonus
-          </h6>
+          <Collapse in={showText} dimension="width">
+            <div id="example-collapse-text">
+              <h6 className={` font-organetto fly-title2 `}>Daily Bonus</h6>
+            </div>
+          </Collapse>
         </NavLink>
       </div>
     </div>
