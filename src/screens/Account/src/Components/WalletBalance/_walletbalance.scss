@@ -16,6 +16,12 @@
     cursor: pointer;
     border-radius: 6px;
   }
+  .wallet-wrapper-active-premium {
+    background: rgba(255, 191, 0, 0.15);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
 
   .wallet-wrapper-alert {
     background: rgba(237, 130, 37, 0.15);
