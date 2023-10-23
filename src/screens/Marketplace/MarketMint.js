@@ -43,7 +43,8 @@ import Countdown from "react-countdown";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <h6 className="latest-mint-number mb-0 font-organetto">
-      {hours} hours : {minutes} minutes
+      {hours} hours : {minutes} minutesmarketplace/mintnew-upcoming-tag d-flex
+      align-items-center justify-content-center px-1
     </h6>
   );
 };
@@ -152,20 +153,21 @@ const MarketMint = ({
   const [activeTab, setActiveTab] = useState("live");
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
-  const [selectedMint, setSelectedMint] = useState(confluxData);
-  const [mintTitle, setMintTitle] = useState(params.mintId);
+  const [selectedMint, setSelectedMint] = useState(timepieceData);
+  const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
   const html = document.querySelector("html");
 
   useEffect(() => {
-    if (params.mintId === "conflux") {
-      setSelectedMint(confluxData);
-    } else if (params.mintId === "timepiece") {
-      setSelectedMint(timepieceData);
-    }
-  }, [params.mintId]);
+    //   if (params.mintId === "conflux") {
+    //     setSelectedMint(confluxData);
+    //   } else if (params.mintId === "timepiece") {
+    setSelectedMint(timepieceData);
+    setMintTitle("timepiece");
+    //   }
+  }, []);
 
   useEffect(() => {
     html.classList.remove("hidescroll");
@@ -508,9 +510,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
-                    </div>
+                    </div> */}
                     Live
                   </h6>
                   <h6
@@ -535,7 +537,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  <div className="pb-5 px-0 position-relative">
+                  {/* <div className="pb-5 px-0 position-relative"> */}
                     {/* {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -548,7 +550,7 @@ const MarketMint = ({
                             <img src={nextArrow} alt="1" />
                           </div>
                         )} */}
-                    {windowSize.width < 480 && (
+                    {/* {windowSize.width < 480 && (
                       <>
                         <div className="prev-arrow-nft" onClick={firstPrev}>
                           <img src={nextArrow} alt="" />
@@ -570,8 +572,8 @@ const MarketMint = ({
                           mintTitle={mintTitle}
                         />
                       ))}
-                    </Slider>
-                  </div>
+                    </Slider> */}
+                  {/* </div> */}
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -756,7 +758,7 @@ const MarketMint = ({
                           />
                         </div>
                       </div>
-                      {params.mintId === "timepiece" ? (
+                      {mintTitle === "timepiece" ? (
                         <div className="col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2">
                           <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                             <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
@@ -1389,10 +1391,10 @@ const MarketMint = ({
                       </div>
                       <div className="d-flex flex-column justify-content-between past-content-wrapper ">
                         <h6 className="past-mint-title">Genesis Land</h6>
-                        <div className="d-flex flex-column align-items-center">
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-land-mint-amount">1,000</h6>
-                          <span className="past-caws-mint-desc">
-                            Minted World of Dypians Genesis Land NFTs
+                          <span className="past-land-mint-desc">
+                         SOLD OUT
                           </span>
                         </div>
                       </div>
@@ -1407,10 +1409,28 @@ const MarketMint = ({
                         <h6 className="past-mint-title">
                           Cats and Watches Society
                         </h6>
-                        <div className="d-flex flex-column align-items-center">
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-caws-mint-amount">10,000</h6>
                           <span className="past-caws-mint-desc">
-                            Minted Cats and Watches Society (CAWS) NFTs
+                            SOLD OUT
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-conflux-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">
+                          Conflux Beta Pass
+                        </h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-conflux-mint-amount">2,036</h6>
+                          <span className="past-conflux-mint-desc">
+                            SOLD OUT
                           </span>
                         </div>
                       </div>
