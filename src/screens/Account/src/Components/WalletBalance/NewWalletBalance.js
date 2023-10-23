@@ -601,9 +601,9 @@ const NewWalletBalance = ({
                   <div className="green-div"></div>
                   <img src={gameEvents} className="game-events-img" alt="" />
                   <div className="d-flex flex-column gap-3 h-100 p-3">
-                    <h6 className="profile-div-title mb-0">Game Events</h6>
+                    <h6 className="profile-div-title mb-0">Live Events</h6>
                     <p className="profile-div-desc mb-0">
-                      Experience excitement by different on-chain events
+                    Experience excitement by different on-chain events
                     </p>
                     {/* <div className="d-flex align-items-center gap-2 green-link">
                       <span className="profile-div-link mb-0">View</span>
@@ -620,7 +620,7 @@ const NewWalletBalance = ({
                   <div className="green-div"></div>
                   <img src={stakeNft} alt="" className="profile-staking-img" />
                   <div className="d-flex flex-column gap-3 h-100 p-3">
-                    <h6 className="profile-div-title mb-0">NFT Staking</h6>
+                    <h6 className="profile-div-title mb-0">Stake NFT</h6>
                     <p className="profile-div-desc mb-0">
                       Earn $ETH daily rewards by staking your NFTs
                     </p>
@@ -663,9 +663,9 @@ const NewWalletBalance = ({
                   <div className="green-div"></div>
 
                   <div className="d-flex flex-column justify-content-between h-100 p-3">
-                    <h6 className="profile-div-title mb-0">Special Rewards</h6>
+                    <h6 className="profile-div-title mb-0">Special <br/> Rewards</h6>
                     <div className="d-flex align-items-center gap-2 green-link">
-                      <span className="profile-div-link mb-0">Apply</span>
+                      <span className="profile-div-link mb-0">Submit</span>
                       <img src={rightIcon} alt="" />
                     </div>
                   </div>
