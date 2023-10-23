@@ -501,8 +501,8 @@ body {
 }
 
 .hidescroll {
-  overflow: hidden;
-  pointer-events: none;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }
 .elevated-container {
   background-color: $white;

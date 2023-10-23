@@ -1143,6 +1143,13 @@
   padding: 10px 24px;
 }
 
+.prizeswrapper-premium {
+  // background: linear-gradient(270deg, rgba(219, 161, 34, 0.00) 38.72%, rgba(219, 161, 34, 0.40) 104.23%);
+  clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
+  padding: 10px 24px;
+  background: #dba122;
+}
+
 .reward-types {
   clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
   padding: 10px 24px;
@@ -1673,4 +1680,30 @@
   bottom: 0;
   margin: auto;
   z-index: 1;
+}
+
+.chest-prize-title {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1.05px;
+  text-transform: uppercase;
+}
+
+.reward-prize-title {
+  color: #f7f7fc;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.random-reward {
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
