@@ -13,6 +13,7 @@ import cawsIcon from "./newAssets/cawsIcon.png";
 import betaPassIcon from "./newAssets/betaPassIcon.png";
 import xMark from "./newAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
+import warning from "./newAssets/warning.svg";
 
 const DailyBonusPopup = ({ onclose }) => {
   const [regularChests, setRegularChests] = useState([]);
@@ -21,6 +22,7 @@ const DailyBonusPopup = ({ onclose }) => {
   const [randomReward, setRandomReward] = useState({});
   const [rewardPopup, setRewardPopup] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
+  const [popupIndex, setPopupIndex] = useState(0);
 
   const dummyChests = [
     {
@@ -314,25 +316,25 @@ const DailyBonusPopup = ({ onclose }) => {
     {
       title: "Genesis Land NFT",
       image: genesisIcon,
-      premium: true,
+      premium: false,
       won: false,
     },
     {
       title: "CAWS NFT",
       image: cawsIcon,
-      premium: true,
+      premium: false,
       won: false,
     },
     {
       title: "Beta Pass NFT",
       image: betaPassIcon,
-      premium: true,
+      premium: false,
       won: false,
     },
     {
       title: "$100 Reward",
       image: largeRewardsIcon,
-      premium: false,
+      premium: true,
       won: false,
     },
   ];
@@ -347,7 +349,12 @@ const DailyBonusPopup = ({ onclose }) => {
     // }));
 
     // console.log(randomArray, randomReward, "randomreward");
-    setRewardPopup(true);
+
+    if (popupIndex === 0) {
+      setRewardPopup(true);
+    }
+
+    setPopupIndex(1);
   };
 
   function randomNum() {
@@ -416,6 +423,8 @@ const DailyBonusPopup = ({ onclose }) => {
     shuffle(dummyChests);
     shufflePremiums(dummyPremiums);
   }, []);
+
+  const emptyPrizes = [1, 2, 3, 4, 5, 6];
 
   return (
     <>
@@ -500,11 +509,11 @@ const DailyBonusPopup = ({ onclose }) => {
             <div className="dailyreward-separator"></div>
             <div className="d-flex flex-column gap-2">
               <span className="font-organetto chestprizetitle text-white">
-                CHEST PRIZES
+                PRIZES
               </span>
               <div className="container px-3">
                 <div className="row" style={{ rowGap: "10px" }}>
-                  <div className="prizeswrapper prizeswrapper-premium col-12 col-lg-4">
+                  {/* <div className="prizeswrapper  col-12 col-lg-4">
                     <div className="d-flex align-items-center gap-2">
                       <img
                         src={pointsIcon}
@@ -552,7 +561,7 @@ const DailyBonusPopup = ({ onclose }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="prizeswrapper prizeswrapper-premium col-12 col-lg-4">
+                  <div className="prizeswrapper  col-12 col-lg-4">
                     <div className="d-flex align-items-center gap-2">
                       <img
                         src={betaPassIcon}
@@ -575,7 +584,35 @@ const DailyBonusPopup = ({ onclose }) => {
                         $1,000 Rewards
                       </span>
                     </div>
-                  </div>
+                  </div> */}
+                  {dummyRewards.map((reward, index) => (
+                    <div className="col-12 col-lg-4">
+                      <div
+                        className={`prizeswrapper ${
+                          randomArray.includes(index) && "prizeswrapper-premium"
+                        } `}
+                        style={{
+                          opacity: !randomArray.includes(index) && "0.3",
+                        }}
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={reward.image}
+                            alt=""
+                            style={{ width: 40, height: 40 }}
+                          />
+                         <div className="d-flex align-items-center gap-2">
+                          <span className="chest-prize-title mb-0">
+                            {reward.title}
+                          </span>
+                          {randomArray.includes(index) && reward.premium  &&
+                          <img src={warning} alt="" />
+                          }
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -614,38 +651,27 @@ const DailyBonusPopup = ({ onclose }) => {
             <div className="container px-3">
               <div className="row mb-5" style={{ rowGap: "12px" }}>
                 {dummyRewards.map((reward, index) => (
-                  <div
-                    className={`prizeswrapper ${
-                      randomArray.includes(index) && "prizeswrapper-premium"
-                    } col-12 col-lg-4`}
-                    style={{ opacity: !randomArray.includes(index) && "0.3" }}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={reward.image}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
-                      <div className="d-flex flex-column gap-1">
-                        <span
-                          className="chest-prize-title mb-0"
-                          style={{
-                            color:
-                              reward.premium &&
-                              randomArray.includes(index) &&
-                              "red",
-                          }}
-                        >
-                          {reward.title}
-                        </span>
-                        {/* {reward.premium && randomArray.includes(index) && (
-                          <span
-                            className="reward-error mb-0"
-                            style={{ color: "#ED8225", fontSize: "9px" }}
-                          >
-                            You must have a premium account to claim this prize
+                  <div className="col-12 col-lg-4">
+                    <div
+                      className={`prizeswrapper ${
+                         "prizeswrapper-premium"
+                      } `}
+                      style={{ opacity: !randomArray.includes(index) && "0.3" }}
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={reward.image}
+                          alt=""
+                          style={{ width: 40, height: 40 }}
+                        />
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="chest-prize-title mb-0">
+                            {reward.title}
                           </span>
-                        )} */}
+                          {randomArray.includes(index) && reward.premium  &&
+                          <img src={warning} alt="" />
+                          }
+                        </div>
                       </div>
                     </div>
                   </div>

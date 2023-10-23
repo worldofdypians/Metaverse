@@ -21,7 +21,12 @@ import OutsideClickHandler from "react-outside-click-handler";
 import xMark from "./newAssets/xMark.svg";
 import "../../../../../components/LandPopup/_landpopup.scss";
 import TextField from "@mui/material/TextField";
+import dailyRewards from "./newAssets/dailyRewards.png";
+import dailyRewardsFinished from "./newAssets/dailyRewardsFinished.png";
+import gameEvents from "./newAssets/gameEvents.png";
+import readyBorder from "./newAssets/readyBorder.svg";
 import styled from "styled-components";
+import stakeNft from "./newAssets/stakeNft.png";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -108,7 +113,7 @@ const NewWalletBalance = ({
   onOpenLeaderboard,
   isPremium,
   onRewardsClick,
-  onPremiumClick
+  onPremiumClick,
 }) => {
   const [userRank, setUserRank] = useState("N/A");
   const [genesisRank, setGenesisRank] = useState("N/A");
@@ -127,6 +132,7 @@ const NewWalletBalance = ({
   const [loading, setLoading] = useState(false);
   const [mediaUrl, setMediaUrl] = useState("");
   const [success, setSuccess] = useState("");
+  const [finished, setFinished] = useState(true);
   const html = document.querySelector("html");
 
   const validateUrl = (url) => {
@@ -494,7 +500,10 @@ const NewWalletBalance = ({
                 </Slider>
               </div>
               {!isPremium ? (
-                <div className="red-container position-relative p-3 d-flex align-items-center justify-content-between" onClick={onPremiumClick}>
+                <div
+                  className="red-container position-relative p-3 d-flex align-items-center justify-content-between"
+                  onClick={onPremiumClick}
+                >
                   <div className="green-div"></div>
                   <div className="d-flex flex-column gap-4">
                     <h6 className="profile-div-title mb-0">
@@ -532,13 +541,55 @@ const NewWalletBalance = ({
                   onClick={onDailyRewardsPopupOpen}
                 >
                   <div className="green-div"></div>
-
+                  <img
+                    src={finished ? dailyRewardsFinished : dailyRewards}
+                    className="daily-rewards-img"
+                    alt=""
+                  />
+                  <div className="progress-bar-group d-flex align-items-center gap-3">
+                    <div className="green-progress-outer">
+                      <span className="font-iceland mb-0 chest-progress">
+                        10/10
+                      </span>
+                      <div
+                        className="green-progress-inner"
+                        style={{ width: "100%" }}
+                      ></div>
+                    </div>
+                    <div className="yellow-progress-outer">
+                      <span className="font-iceland mb-0 chest-progress">
+                        10/10
+                      </span>
+                      <div
+                        className="yellow-progress-inner"
+                        style={{ width: "100%" }}
+                      ></div>
+                    </div>
+                  </div>
                   <div className="d-flex flex-column justify-content-between h-100 p-3">
                     <h6 className="profile-div-title mb-0">Daily Bonus</h6>
-                    <div className="d-flex align-items-center gap-2 green-link">
-                      <span className="profile-div-link mb-0">View</span>
-                      <img src={rightIcon} alt="" />
+
+                    <div className="d-flex flex-column">
+                      <div
+                        className="position-relative"
+                        style={{ width: "96px", height: "40px", right: "10px" }}
+                      >
+                        <span className="ready-to-claim mb-0">
+                          {finished ? " Reset time" : "Ready to Claim"}
+                        </span>
+                        <img
+                          src={readyBorder}
+                          alt=""
+                          className={`${
+                            finished ? "ready-border-2" : "ready-border"
+                          }`}
+                        />
+                      </div>
+                      {finished && (
+                        <span className="timer-text mb-0">21h : 12m</span>
+                      )}
                     </div>
+                    <div></div>
                   </div>
                 </div>
               </div>
@@ -548,13 +599,16 @@ const NewWalletBalance = ({
                   className="game-events-wrapper d-flex"
                 >
                   <div className="green-div"></div>
-
-                  <div className="d-flex flex-column justify-content-between h-100 p-3">
+                  <img src={gameEvents} className="game-events-img" alt="" />
+                  <div className="d-flex flex-column gap-3 h-100 p-3">
                     <h6 className="profile-div-title mb-0">Game Events</h6>
-                    <div className="d-flex align-items-center gap-2 green-link">
+                    <p className="profile-div-desc mb-0">
+                      Experience excitement by different on-chain events
+                    </p>
+                    {/* <div className="d-flex align-items-center gap-2 green-link">
                       <span className="profile-div-link mb-0">View</span>
                       <img src={rightIcon} alt="" />
-                    </div>
+                    </div> */}
                   </div>
                 </NavLink>
               </div>
@@ -564,13 +618,17 @@ const NewWalletBalance = ({
                   className="profile-staking-wrapper d-flex"
                 >
                   <div className="green-div"></div>
-
-                  <div className="d-flex flex-column justify-content-between h-100 p-3">
+                  <img src={stakeNft} alt="" className="profile-staking-img" />
+                  <div className="d-flex flex-column gap-3 h-100 p-3">
                     <h6 className="profile-div-title mb-0">NFT Staking</h6>
-                    <div className="d-flex align-items-center gap-2 green-link">
+                    <p className="profile-div-desc mb-0">
+                      Earn $ETH daily rewards by staking your NFTs
+                    </p>
+
+                    {/* <div className="d-flex align-items-center gap-2 green-link">
                       <span className="profile-div-link mb-0">Stake Now</span>
                       <img src={rightIcon} alt="" />
-                    </div>
+                    </div> */}
                   </div>
                 </NavLink>
               </div>
