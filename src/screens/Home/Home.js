@@ -23,6 +23,7 @@ import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup
 import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHuntPopup.png'
 import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
 import LandFlyout from '../../components/LandFlyout/LandFlyout'
+import ChestFlyout from "../../components/LandFlyout/ChestFlyout";
 
 const Home = ({
   handleRegister,
@@ -106,6 +107,7 @@ const Home = ({
   <>
   <OutsideClickHandler id="popup" onOutsideClick={() => setActivePopup(false)}>
   <MintPopup active={activePopup} data={gatePopupInfo} onClose={() => setActivePopup(false)} />
+
   </OutsideClickHandler>
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex flex-column home-main-wrapper">
@@ -125,7 +127,7 @@ const Home = ({
         <CawsSociety
           content="The Cats and Watches Society (CAWS) NFT is a unique collection of
             utility NFTs developed by Dypius. Owners of these NFTs will be able
-            to adventure with their CAT companion enhancing the player’s
+            to adventure with their CAT companion enhancing the player's
             abilities and increasing rewards."
         />
         <CawsWorld />
@@ -135,6 +137,8 @@ const Home = ({
       </div>
     </div>
     {/* <LandFlyout /> */}
+  <ChestFlyout />
+
   </>
   );
 };

@@ -27,6 +27,8 @@ import gameEvents from "./newAssets/gameEvents.png";
 import readyBorder from "./newAssets/readyBorder.svg";
 import styled from "styled-components";
 import stakeNft from "./newAssets/stakeNft.png";
+import { shortAddress } from "../../Utils.js/hooks/shortAddress";
+import walletIcon from "../WalletBalance/assets/walletIcon.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -114,6 +116,7 @@ const NewWalletBalance = ({
   isPremium,
   onRewardsClick,
   onPremiumClick,
+  onBalanceClick
 }) => {
   const [userRank, setUserRank] = useState("N/A");
   const [genesisRank, setGenesisRank] = useState("N/A");
@@ -374,7 +377,7 @@ const NewWalletBalance = ({
                   </div>
                 </div>
               </div>
-              <div className="purple-container p-3 position-relative d-flex flex-column gap-3">
+              <div className="purple-container p-3 position-relative d-flex flex-column gap-3" onClick={onBalanceClick} >
                 <div className="green-div"></div>
 
                 <div className="d-flex align-items-center justify-content-between">
@@ -523,9 +526,25 @@ const NewWalletBalance = ({
                   <div className="d-flex flex-column gap-2">
                     <h6 className="profile-div-title mb-0">Premium Member</h6>
                     <div className="d-flex align-items-center gap-2 col-7 ">
-                      <span className="profile-div-link mb-0 text-white">
-                        Enjoy premium access in World of Dypians
-                      </span>
+                      <div
+                        className={` 
+                          wallet-wrapper-active-premium d-flex
+                            d-flex wallet-wrapper align-items-center gap-2 position-relative`}
+                      >
+                        <img src={walletIcon} alt="" className="wallet-icon" />
+
+                        <div className="d-flex flex-column">
+                          <span className="wallet-span d-flex align-items-center gap-2">
+                            Wallet address
+                          </span>
+
+                          <div className="d-flex align-items-center gap-2">
+                            <span className="wallet-address">
+                              {shortAddress(address)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <img src={premium} alt="" className="premium-img" />
@@ -603,7 +622,7 @@ const NewWalletBalance = ({
                   <div className="d-flex flex-column gap-3 h-100 p-3">
                     <h6 className="profile-div-title mb-0">Live Events</h6>
                     <p className="profile-div-desc mb-0">
-                    Experience excitement by different on-chain events
+                      Experience excitement by different on-chain events
                     </p>
                     {/* <div className="d-flex align-items-center gap-2 green-link">
                       <span className="profile-div-link mb-0">View</span>
@@ -663,7 +682,9 @@ const NewWalletBalance = ({
                   <div className="green-div"></div>
 
                   <div className="d-flex flex-column justify-content-between h-100 p-3">
-                    <h6 className="profile-div-title mb-0">Special <br/> Rewards</h6>
+                    <h6 className="profile-div-title mb-0">
+                      Special <br /> Rewards
+                    </h6>
                     <div className="d-flex align-items-center gap-2 green-link">
                       <span className="profile-div-link mb-0">Submit</span>
                       <img src={rightIcon} alt="" />

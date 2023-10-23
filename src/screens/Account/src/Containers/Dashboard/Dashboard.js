@@ -37,6 +37,7 @@ import MyRewardsPopup from "../../Components/WalletBalance/MyRewardsPopup";
 import coinStackIcon from "../../Images/premium/coinStackIcon.svg";
 import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+import MyBalance from "../../Components/WalletBalance/MyBalance";
 
 function Dashboard({
   account,
@@ -111,6 +112,7 @@ function Dashboard({
   const [isPremium, setIsPremium] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
+  const [balancePopup, setBalancePopup] = useState(false);
   const [dropdownIcon, setdropdownIcon] = useState("");
   const [dropdownTitle, setdropdownTitle] = useState("");
   const [status, setstatus] = useState("");
@@ -1103,6 +1105,9 @@ function Dashboard({
                         onPremiumClick={() => {
                           setgetPremiumPopup(true);
                         }}
+                        onBalanceClick={() => {
+                          setBalancePopup(true);
+                        }}
                       />
                     </div>
                     <WalletBalance
@@ -1559,6 +1564,42 @@ function Dashboard({
                               </div>
                             </div>
                           </div>
+                        </div>
+                      </OutsideClickHandler>
+                    )}
+
+                    {balancePopup && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => {
+                          setBalancePopup(false);
+                        }}
+                      >
+                        <div
+                          className="popup-wrapper popup-active p-4"
+                          id="subscribe"
+                          style={{ width: "40%", pointerEvents: "auto" }}
+                        >
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                            >
+                              My Balance
+                            </h2>
+                            <img
+                              src={xMark}
+                              onClick={() => setBalancePopup(false)}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                            />
+                          </div>
+                          <MyBalance
+                            dypBalance={dypBalance}
+                            dypBalancebnb={dypBalancebnb}
+                            dypBalanceavax={dypBalanceavax}
+                            idypBalance={idypBalance}
+                            idypBalancebnb={idypBalancebnb}
+                            idypBalanceavax={idypBalanceavax}
+                          />
                         </div>
                       </OutsideClickHandler>
                     )}
