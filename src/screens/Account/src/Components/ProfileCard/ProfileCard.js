@@ -6,7 +6,6 @@ import defaultAvatar from "../../Images/userProfile/default-avatar.png";
 import defaultAvatarAlert from "../../Images/userProfile/default-avatar-alert.png";
 import defaultAvatarPremium from "../../Images/userProfile/defaultAvatarPremium.png";
 
-
 // import Countdown from "react-countdown";
 import dypMedal from "../../Images/userProfile/dyp-medal.svg";
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
@@ -63,6 +62,7 @@ const ProfileCard = ({
   syncStatus,
   onLinkWallet,
   isPremium,
+  isConnected,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -153,12 +153,14 @@ const ProfileCard = ({
             className={` ${
               isVerified &&
               email &&
-              address?.toLowerCase() === coinbase?.toLowerCase() && !isPremium &&
+              address?.toLowerCase() === coinbase?.toLowerCase() &&
+              !isPremium &&
               "user-cardImg-active"
             } ${
               isVerified &&
               email &&
-              address?.toLowerCase() === coinbase?.toLowerCase() && isPremium &&
+              address?.toLowerCase() === coinbase?.toLowerCase() &&
+              isPremium &&
               "user-cardImg-active-premium"
             } ${
               address &&
@@ -180,25 +182,28 @@ const ProfileCard = ({
                     {(coinbase && !email) ||
                     (!coinbase && !email) ||
                     (coinbase && email && !address && !username) ||
-                    !address ? (
+                    !address ||
+                    !isConnected ? (
                       <img src={defaultAvatar} alt="" className="userAvatar" />
                     ) : null}
                     {address &&
                       email &&
                       coinbase &&
                       syncStatus !== "" &&
-                      address?.toLowerCase() === coinbase?.toLowerCase() && !isPremium && (
+                      address?.toLowerCase() === coinbase?.toLowerCase() &&
+                      !isPremium && (
                         <img
                           src={defaultAvatar}
                           alt=""
                           className="userAvatar"
                         />
                       )}
-                         {address &&
+                    {address &&
                       email &&
                       coinbase &&
                       syncStatus !== "" &&
-                      address?.toLowerCase() === coinbase?.toLowerCase() && isPremium && (
+                      address?.toLowerCase() === coinbase?.toLowerCase() &&
+                      isPremium && (
                         <img
                           src={defaultAvatarPremium}
                           alt=""
@@ -283,12 +288,14 @@ const ProfileCard = ({
                       className={`${
                         isVerified &&
                         email &&
-                        address?.toLowerCase() === coinbase?.toLowerCase() && !isPremium &&
+                        address?.toLowerCase() === coinbase?.toLowerCase() &&
+                        !isPremium &&
                         "wallet-wrapper-active d-flex"
                       } ${
                         isVerified &&
                         email &&
-                        address?.toLowerCase() === coinbase?.toLowerCase() && isPremium &&
+                        address?.toLowerCase() === coinbase?.toLowerCase() &&
+                        isPremium &&
                         "wallet-wrapper-active-premium d-flex"
                       } ${
                         address &&
@@ -301,7 +308,7 @@ const ProfileCard = ({
                         (coinbase && email && !address && !username) ||
                         (coinbase && email && !address && username) ||
                         (!email && !coinbase && "d-none")
-                      }  wallet-wrapper align-items-center gap-2 position-relative`}
+                      }  d-flex wallet-wrapper align-items-center gap-2 position-relative`}
                     >
                       {(coinbase || address) && (
                         <img src={walletIcon} alt="" className="wallet-icon" />

@@ -1799,21 +1799,21 @@ window.config = {
       symbol: "WAVAX",
       decimals: 18,
     },
-    "0x60781c2586d68229fde47564546784ab3faca982": {
-      symbol: "PNG",
-      decimals: 18,
-    },
-    "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab": {
-      symbol: "WETH.e",
-      decimals: 18,
-    },
-    "0xc7198437980c041c805a1edcba50c1ce5db95118": {
-      symbol: "USDT.e",
+    // "0x60781c2586d68229fde47564546784ab3faca982": {
+    //   symbol: "PNG",
+    //   decimals: 18,
+    // },
+    // "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab": {
+    //   symbol: "WETH.e",
+    //   decimals: 18,
+    // },
+    "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7": {
+      symbol: "USDT",
       decimals: 6,
     },
-    "0xd586e7f844cea2f87f50152665bcbc2c279d8d70": {
-      symbol: "DAI.e",
-      decimals: 18,
+    "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E": {
+      symbol: "USDC",
+      decimals: 6,
     },
   },
 
@@ -1824,11 +1824,11 @@ window.config = {
       symbol: "WETH",
       decimals: 18,
     },
-    "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
-      symbol: "WBTC",
-      decimals: 8,
-    },
-    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
+    // "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
+    //   symbol: "WBTC",
+    //   decimals: 8,
+    // },
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
       symbol: "USDC",
       decimals: 6,
     },
@@ -1836,10 +1836,33 @@ window.config = {
       symbol: "USDT",
       decimals: 6,
     },
-    "0x6b175474e89094c44da98b954eedeac495271d0f": {
-      symbol: "DAI",
+    // "0x6b175474e89094c44da98b954eedeac495271d0f": {
+    //   symbol: "DAI",
+    //   decimals: 18,
+    // },
+  },
+
+  subscriptionbnb_tokens: {
+    "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
+      symbol: "WBNB",
       decimals: 18,
     },
+    // "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
+    //   symbol: "WBTC",
+    //   decimals: 8,
+    // },
+    "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56": {
+      symbol: "BUSD",
+      decimals: 18,
+    },
+    "0x55d398326f99059fF775485246999027B3197955": {
+      symbol: "USDT",
+      decimals: 18,
+    },
+    // "0x6b175474e89094c44da98b954eedeac495271d0f": {
+    //   symbol: "DAI",
+    //   decimals: 18,
+    // },
   },
 
   automated_trust_scores: {
@@ -34655,6 +34678,15 @@ async function getEstimatedTokenSubscriptionAmountETH(tokenAddress) {
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
 }
+
+
+async function getEstimatedTokenSubscriptionAmountBNB(tokenAddress) {
+  let subscriptionContract = await getContract({ key: "SUBSCRIPTIONBNB" });
+  return await subscriptionContract.methods
+    .getEstimatedTokenSubscriptionAmount(tokenAddress)
+    .call();
+}
+
 
 // ===================== end subscription contract functions ================================
 
