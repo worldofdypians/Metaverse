@@ -16,6 +16,12 @@
     cursor: pointer;
     border-radius: 6px;
   }
+  .wallet-wrapper-active-premium {
+    background: rgba(255, 191, 0, 0.15);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
 
   .wallet-wrapper-alert {
     background: rgba(237, 130, 37, 0.15);
@@ -713,6 +719,58 @@
   font-style: normal;
   font-weight: 300;
   line-height: 13px; /* 108.333% */
+}
+
+.specialCell {
+  background: linear-gradient(
+    270deg,
+    rgba(255, 234, 206, 0.09) 0%,
+    rgba(255, 234, 206, 0) 100%
+  );
+}
+
+.bottomborder {
+  border-radius: 0px 0px 8px 0;
+}
+
+.topborder {
+  border-radius: 0px 8px 0 0;
+}
+
+.previousRewardsText {
+  color: #ffa60c;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.all-past-total-earned {
+  color: #ffa60c;
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.all-past-total-earned-subtitle {
+  color: #ffa60c;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.previousRewardsText {
+  color: #ffa60c !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: normal !important;
 }
 
 .chest-event-desc {

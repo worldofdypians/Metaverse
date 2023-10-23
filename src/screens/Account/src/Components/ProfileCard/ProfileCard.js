@@ -4,6 +4,8 @@ import "react-tooltip/dist/react-tooltip.css";
 import "./_profilecard.scss";
 import defaultAvatar from "../../Images/userProfile/default-avatar.png";
 import defaultAvatarAlert from "../../Images/userProfile/default-avatar-alert.png";
+import defaultAvatarPremium from "../../Images/userProfile/defaultAvatarPremium.png";
+
 
 // import Countdown from "react-countdown";
 import dypMedal from "../../Images/userProfile/dyp-medal.svg";
@@ -151,8 +153,13 @@ const ProfileCard = ({
             className={` ${
               isVerified &&
               email &&
-              address?.toLowerCase() === coinbase?.toLowerCase() &&
+              address?.toLowerCase() === coinbase?.toLowerCase() && !isPremium &&
               "user-cardImg-active"
+            } ${
+              isVerified &&
+              email &&
+              address?.toLowerCase() === coinbase?.toLowerCase() && isPremium &&
+              "user-cardImg-active-premium"
             } ${
               address &&
               email &&
@@ -180,11 +187,22 @@ const ProfileCard = ({
                       email &&
                       coinbase &&
                       syncStatus !== "" &&
-                      address?.toLowerCase() === coinbase?.toLowerCase() && (
+                      address?.toLowerCase() === coinbase?.toLowerCase() && !isPremium && (
                         <img
                           src={defaultAvatar}
                           alt=""
                           className="userAvatar"
+                        />
+                      )}
+                         {address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address?.toLowerCase() === coinbase?.toLowerCase() && isPremium && (
+                        <img
+                          src={defaultAvatarPremium}
+                          alt=""
+                          className="userAvatarPremium"
                         />
                       )}
                     {address &&
@@ -265,8 +283,13 @@ const ProfileCard = ({
                       className={`${
                         isVerified &&
                         email &&
-                        address?.toLowerCase() === coinbase?.toLowerCase() &&
+                        address?.toLowerCase() === coinbase?.toLowerCase() && !isPremium &&
                         "wallet-wrapper-active d-flex"
+                      } ${
+                        isVerified &&
+                        email &&
+                        address?.toLowerCase() === coinbase?.toLowerCase() && isPremium &&
+                        "wallet-wrapper-active-premium d-flex"
                       } ${
                         address &&
                         email &&
@@ -280,7 +303,7 @@ const ProfileCard = ({
                         (!email && !coinbase && "d-none")
                       }  wallet-wrapper align-items-center gap-2 position-relative`}
                     >
-                      {!coinbase && !address && (
+                      {(coinbase || address) && (
                         <img src={walletIcon} alt="" className="wallet-icon" />
                       )}
                       <div className="d-flex flex-column">
