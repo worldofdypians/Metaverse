@@ -108,6 +108,7 @@ const NewWalletBalance = ({
   onOpenLeaderboard,
   isPremium,
   onRewardsClick,
+  onPremiumClick
 }) => {
   const [userRank, setUserRank] = useState("N/A");
   const [genesisRank, setGenesisRank] = useState("N/A");
@@ -493,28 +494,19 @@ const NewWalletBalance = ({
                 </Slider>
               </div>
               {!isPremium ? (
-                <a
-                  href="https://app.dypius.com/plans"
-                  target="_blank"
-                  className="red-container position-relative p-3 d-flex align-items-center justify-content-between"
-                >
+                <div className="red-container position-relative p-3 d-flex align-items-center justify-content-between" onClick={onPremiumClick}>
                   <div className="green-div"></div>
-
                   <div className="d-flex flex-column gap-4">
                     <h6 className="profile-div-title mb-0">
                       Upgrade to Premium
                     </h6>
-                    <a
-                      href="https://app.dypius.com/plans"
-                      target="_blank"
-                      className="d-flex align-items-center gap-2 green-link"
-                    >
+                    <div className="d-flex align-items-center gap-2 green-link">
                       <span className="profile-div-link mb-0">Subscribe</span>
                       <img src={rightIcon} alt="" />
-                    </a>
+                    </div>
                   </div>
                   <img src={nonPremium} alt="" />
-                </a>
+                </div>
               ) : (
                 <div className="premium-active-container position-relative p-3 d-flex align-items-center justify-content-between">
                   <div className="green-div"></div>

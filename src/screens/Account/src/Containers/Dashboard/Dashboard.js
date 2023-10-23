@@ -864,6 +864,7 @@ function Dashboard({
                         onRewardsClick={() => {
                           setmyRewardsPopup(true);
                         }}
+                        onPremiumClick={()=>{console.log('premium')}}
                       />
                     </div>
                     <WalletBalance
