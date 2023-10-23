@@ -715,6 +715,58 @@
   line-height: 13px; /* 108.333% */
 }
 
+.specialCell {
+  background: linear-gradient(
+    270deg,
+    rgba(255, 234, 206, 0.09) 0%,
+    rgba(255, 234, 206, 0) 100%
+  );
+}
+
+.bottomborder {
+  border-radius: 0px 0px 8px 0;
+}
+
+.topborder {
+  border-radius: 0px 8px 0 0;
+}
+
+.previousRewardsText {
+  color: #ffa60c;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.all-past-total-earned {
+  color: #ffa60c;
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.all-past-total-earned-subtitle {
+  color: #ffa60c;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.previousRewardsText {
+  color: #ffa60c !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: normal !important;
+}
+
 .chest-event-desc {
   color: #fff;
   text-align: center;
@@ -1567,44 +1619,47 @@
   }
 }
 
-
-.linear-divider{
-  background: linear-gradient(90deg, #FFF 45.42%, rgba(255, 255, 255, 0.00) 101.86%);
+.linear-divider {
+  background: linear-gradient(
+    90deg,
+    #fff 45.42%,
+    rgba(255, 255, 255, 0) 101.86%
+  );
   width: 100%;
   height: 3px;
 }
 
-.my-special-rewards{
-  color: #FFF;
-font-size: 11px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.my-special-rewards {
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-.my-special-rewards-value{
-  color: #FFF;
-text-align: right;
-font-size: 24px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.my-special-rewards-value {
+  color: #fff;
+  text-align: right;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-.rewards-success-title{
-  color: #FFF;
-text-align: center;
-font-size: 18px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+.rewards-success-title {
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
 
-.chest-blur{
+.chest-blur {
   filter: blur(5px);
 }
 
-.chest-lock{
+.chest-lock {
   position: absolute;
   left: 0;
   top: 0;

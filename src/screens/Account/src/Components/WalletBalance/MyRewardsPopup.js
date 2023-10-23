@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import criticalHit from "./myrewardsAssets/criticalHit.png";
 import dailyBonus from "./myrewardsAssets/dailyBonus.png";
 import leaderboard from "./myrewardsAssets/leaderboard.png";
@@ -8,6 +8,7 @@ import Switch from "@mui/material/Switch";
 
 const MyRewardsPopup = () => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
+  const [previousRewards, setPreviousRewards] = useState(false);
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -15,9 +16,11 @@ const MyRewardsPopup = () => {
         <thead>
           <tr>
             <th className="myrewards-th border-0">Reward Category</th>
-            <th className="myrewards-th border-0">Available Rewards </th>
-            <th className="myrewards-th border-0">Reward Type</th>
-            <th className="myrewards-th border-0">Total Earned</th>
+            <th className="myrewards-th border-0 text-center">
+              Available Rewards{" "}
+            </th>
+            <th className="myrewards-th border-0 text-center">Reward Type</th>
+            <th className="myrewards-th border-0 text-center">Total Earned</th>
           </tr>
         </thead>
 
@@ -34,18 +37,35 @@ const MyRewardsPopup = () => {
               />{" "}
               NFT Staking
             </td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0 previousRewardsText">
+              {previousRewards && "$500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">CAWS</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 WETH</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 text-center">{previousRewards ? "-" : "$120"}</td>
+            <td className="myrewards-td-second border-0 specialCell topborder text-center">
+              {previousRewards ? "-" : " 0.022 WETH"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " $500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">WoD Land & CAWS </td>
-            <td className="myrewards-td-second border-0">$14</td>
-            <td className="myrewards-td-second border-0">0.022 WETH</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+
+            <td className="myrewards-td-second border-0 text-center">
+              {" "}
+              {previousRewards ? "-" : " $14"}
+            </td>
+            <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+              {previousRewards ? "-" : "0.022 WETH"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " $500.00"}
+            </td>
           </tr>
 
           <tr>
@@ -58,24 +78,59 @@ const MyRewardsPopup = () => {
               />
               Treasure Hunt
             </td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0 previousRewardsText">
+              {previousRewards && "$500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">CoinGecko</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 WBNB</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 specialCell topborder text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "0.022 WBNB"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " $500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">Conflux Network</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 CFX</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 specialCell text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "0.022 CFX"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " $500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">Gate.io</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 WBNB</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 specialCell text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "0.022 WBNB"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " $500.00"}
+            </td>
+          </tr>
+          <tr>
+            <td className="myrewards-td-second border-0">Base</td>
+            <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " 0.022 WBNB"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "$500.00"}
+            </td>
           </tr>
 
           <tr>
@@ -84,24 +139,47 @@ const MyRewardsPopup = () => {
               <img src={leaderboard} alt="" style={{ width: 24, height: 24 }} />
               Leaderboard
             </td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0 previousRewardsText">
+              {previousRewards && "$500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">Daily</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 WBNB</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 specialCell topborder text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " 0.022 WBNB"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "$500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">Weekly</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 CFX</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 specialCell text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "0.022 CFX"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "$500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">Monthly</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 WBNB</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " 0.022 WBNB"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "$500.00"}
+            </td>
           </tr>
 
           <tr>
@@ -110,12 +188,23 @@ const MyRewardsPopup = () => {
               <img src={dailyBonus} alt="" style={{ width: 24, height: 24 }} />
               Daily Bonus
             </td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0 previousRewardsText">
+              {previousRewards && "$500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">Treasure Chests</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 WBNB</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " 0.022 WBNB"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "$500.00"}
+            </td>
           </tr>
 
           <tr>
@@ -124,12 +213,23 @@ const MyRewardsPopup = () => {
               <img src={criticalHit} alt="" style={{ width: 24, height: 24 }} />
               Critical Hit
             </td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0"></td>
+            <td className="myrewards-td-second border-0 previousRewardsText">
+              {previousRewards && "$500.00"}
+            </td>
           </tr>
           <tr>
             <td className="myrewards-td-second border-0">Genesis Gem</td>
-            <td className="myrewards-td-second border-0">$120</td>
-            <td className="myrewards-td-second border-0">0.022 WBNB</td>
-            <td className="myrewards-td-second border-0">$500.00</td>
+            <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
+              {previousRewards ? "-" : "$120"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : " 0.022 WBNB"}
+            </td>
+            <td className="myrewards-td-second border-0 text-center">
+              {previousRewards ? "-" : "$500.00"}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -156,8 +256,22 @@ const MyRewardsPopup = () => {
           </div>
         </div>
         <div className="d-flex flex-column">
-          <h4 className="all-total-earned">$435.25</h4>
-          <span className="all-total-earned-subtitle">Total Earned</span>
+          <h4
+            className={
+              previousRewards ? "all-past-total-earned" : "all-total-earned"
+            }
+          >
+            $435.25
+          </h4>
+          <span
+            className={
+              previousRewards
+                ? "all-past-total-earned-subtitle"
+                : "all-total-earned-subtitle"
+            }
+          >
+            Total Earned
+          </span>
         </div>
       </div>
       <div className="optionsWrapper2 p-2">
@@ -167,7 +281,7 @@ const MyRewardsPopup = () => {
             <Switch
               {...label}
               onChange={() => {
-                console.log("switched");
+                setPreviousRewards(!previousRewards);
               }}
             />
           </div>
