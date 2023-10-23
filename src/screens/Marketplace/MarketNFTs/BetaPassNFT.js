@@ -918,7 +918,7 @@ const BetaPassNFT = ({
                         )}
                         {mintTitle === "gate" && (
                           <div className="position-relative">
-                            <img src={pinkAreaGate} alt="" />
+                            <img src={pinkAreaConflux} alt="" />
                           </div>
                         )}
                         {mintTitle === "conflux" && (
