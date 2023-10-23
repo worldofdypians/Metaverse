@@ -14,6 +14,7 @@ import betaPassIcon from "./newAssets/betaPassIcon.png";
 import xMark from "./newAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import warning from "./newAssets/warning.svg";
+import ToolTip from "../../../../Caws/elements/ToolTip";
 
 const DailyBonusPopup = ({ onclose }) => {
   const [regularChests, setRegularChests] = useState([]);
@@ -601,14 +602,24 @@ const DailyBonusPopup = ({ onclose }) => {
                             alt=""
                             style={{ width: 40, height: 40 }}
                           />
-                         <div className="d-flex align-items-center gap-2">
-                          <span className="chest-prize-title mb-0">
-                            {reward.title}
-                          </span>
-                          {randomArray.includes(index) && reward.premium  &&
-                          <img src={warning} alt="" />
-                          }
-                        </div>
+                          <div className="d-flex align-items-center gap-2">
+                            <span className="chest-prize-title mb-0">
+                              {reward.title}
+                            </span>
+                            {randomArray.includes(index) && reward.premium && (
+                                <ToolTip
+                                title={
+                                  <React.Fragment>
+                                    <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                      You must hold CAWS NFT or Genesis Land NFT to claim this prize 
+                                    </p>
+                                  </React.Fragment>
+                                }
+                                icon={<img src={warning} alt="" />}
+                                color={"#000"}
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -653,9 +664,7 @@ const DailyBonusPopup = ({ onclose }) => {
                 {dummyRewards.map((reward, index) => (
                   <div className="col-12 col-lg-4">
                     <div
-                      className={`prizeswrapper ${
-                         "prizeswrapper-premium"
-                      } `}
+                      className={`prizeswrapper ${"prizeswrapper-premium"} `}
                       style={{ opacity: !randomArray.includes(index) && "0.3" }}
                     >
                       <div className="d-flex align-items-center gap-2">
@@ -668,9 +677,19 @@ const DailyBonusPopup = ({ onclose }) => {
                           <span className="chest-prize-title mb-0">
                             {reward.title}
                           </span>
-                          {randomArray.includes(index) && reward.premium  &&
-                          <img src={warning} alt="" />
-                          }
+                          {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                      You must hold CAWS NFT or Genesis Land NFT to claim this prize 
+                                    </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
