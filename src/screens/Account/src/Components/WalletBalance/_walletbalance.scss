@@ -1568,7 +1568,10 @@
   position: absolute;
   width: 55%;
   right: 0%;
-  top: -10%;
+  top: 0%;
+  @media screen and (max-width: 786px) {
+    width: 40%;
+  }
 }
 
 .progress-bar-group {
@@ -1622,8 +1625,9 @@
 .daily-bonus-wrapper {
   position: relative;
   height: 170px;
-  background: linear-gradient(125deg, #252743 -13.33%, #4e3025 70.47%);
+
   border-radius: 10px;
+  background: linear-gradient(125deg, #252743 -13.33%, #2A303C 70.47%);
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;

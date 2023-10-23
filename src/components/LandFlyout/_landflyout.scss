@@ -103,20 +103,11 @@
       background: #070507;
       border-radius: 8px;
 
-      .fly-title2 {
-        font-weight: 800;
-        font-size: 17px;
-        line-height: 18px;
-        text-align: center;
-        color: #f7f7fc;
-        -webkit-animation: slide-in-right 2s
-          cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-        animation: slide-in-right 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-      }
+    
 
-      .flyTitleHidden {
-        display: none;
-      }
+      // .flyTitleHidden {
+      //   display: none;
+      // }
 
       .fly-action {
         font-weight: 500;
@@ -127,6 +118,20 @@
     }
   }
 }
+
+
+.fly-title2 {
+  // font-weight: 800;
+  // font-size: 17px;
+  // line-height: 18px;
+  // text-align: center;
+  // color: #f7f7fc;
+  // -webkit-animation: slide-in-right 1s
+  //   cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  // animation: slide-in-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  display: none;
+}
+
 
 .fly-active {
   right: 2.5% !important;
@@ -140,10 +145,27 @@
   right: 2.5% !important;
   opacity: 1 !important;
   top: 350px;
+  height: fit-content;
   @media screen and (max-width: 786px) {
     right: 1.5% !important;
   }
 }
+
+
+.fly-active2:hover{
+  .fly-title2{
+    display: flex;
+    font-weight: 800;
+    font-size: 17px;
+    line-height: 18px;
+    text-align: center;
+    color: #f7f7fc;
+    -webkit-animation: slide-in-right 1s
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: slide-in-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+}
+
 
 .mainChest {
   width: 60px;
