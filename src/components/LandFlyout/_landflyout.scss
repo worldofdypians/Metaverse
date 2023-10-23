@@ -1,69 +1,151 @@
-.fly-position{
+.fly-position {
+  position: fixed;
+  right: -300px;
+  bottom: 100px;
+  z-index: 9;
+  opacity: 0;
+  transition: all 1.5s ease-in-out;
+  @media screen and (max-width: 786px) {
+    bottom: 150px;
+  }
 
-    position: fixed;
-    right: -300px;
-    bottom: 100px;
-    z-index: 9;
-    opacity: 0;
-    transition: all 1.5s ease-in-out;
-    @media screen and (max-width: 786px) {
-        bottom: 150px;
+  .fly-outer-wrapper {
+    border-radius: 8px;
+    background-image: url("./assets/landFlyout.svg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 250px;
+    height: 310px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .close-fly {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+      z-index: 10;
     }
-    
-    
-    .fly-outer-wrapper {
-        border-radius: 8px;
-        background-image: url("./assets/landFlyout.svg");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        width: 250px;
-        height: 310px;
-        padding: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
 
-
-      
-        .close-fly{
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-
-        .fly-inner-wrapper {
-          background: #070507;
-        border-radius: 8px;
-        width: 230px;
-        height: 306px;
-          .fly-title {
-            font-weight: 800;
-            font-size: 17px;
-            line-height: 18px;
-            text-align: center;
-            color: #f7f7fc;
-          }
-      
-          .fly-action {
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 21px;
-            color: #09d7b7;
-          }
-        }
+    .fly-inner-wrapper {
+      background: #070507;
+      border-radius: 8px;
+      width: 230px;
+      height: 306px;
+      .fly-title {
+        font-weight: 800;
+        font-size: 17px;
+        line-height: 18px;
+        text-align: center;
+        color: #f7f7fc;
       }
 
-      
+      .fly-action {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 21px;
+        color: #09d7b7;
+      }
+    }
+  }
 }
 
+@-webkit-keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
-.fly-active{
-    right: 2.5% !important;
-    opacity: 1 !important;
-    @media screen and (max-width: 786px) {
-        right: 1.5% !important;
+.fly-position2 {
+  position: fixed;
+  right: -300px;
+  bottom: 100px;
+  z-index: 9;
+  opacity: 0;
+  transition: all 1.5s ease-in-out;
+  @media screen and (max-width: 786px) {
+    bottom: 150px;
+  }
+
+  .fly-outer-wrapper2 {
+    border-radius: 8px;
+
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .fly-inner-wrapper2 {
+      background: #070507;
+      border-radius: 8px;
+
+      .fly-title2 {
+        font-weight: 800;
+        font-size: 17px;
+        line-height: 18px;
+        text-align: center;
+        color: #f7f7fc;
+        -webkit-animation: slide-in-right 2s
+          cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        animation: slide-in-right 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+      }
+
+      .flyTitleHidden {
+        display: none;
+      }
+
+      .fly-action {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 21px;
+        color: #09d7b7;
+      }
     }
+  }
+}
+
+.fly-active {
+  right: 2.5% !important;
+  opacity: 1 !important;
+  @media screen and (max-width: 786px) {
+    right: 1.5% !important;
+  }
+}
+
+.fly-active2 {
+  right: 2.5% !important;
+  opacity: 1 !important;
+  top: 350px;
+  @media screen and (max-width: 786px) {
+    right: 1.5% !important;
+  }
+}
+
+.mainChest {
+  width: 60px;
+  height: 60px;
 }
