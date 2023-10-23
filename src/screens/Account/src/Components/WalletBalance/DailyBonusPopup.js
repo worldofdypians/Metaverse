@@ -5,14 +5,22 @@ import rewardsLogo from "./assets/rewardslogo.png";
 import { useState } from "react";
 import ChestItem from "./ChestItem";
 import { useEffect } from "react";
+import pointsIcon from "./newAssets/pointsIcon.png";
+import largeRewardsIcon from "./newAssets/largeRewardsIcon.png";
+import rewardsIcon from "./newAssets/rewardsIcon.png";
+import genesisIcon from "./newAssets/genesisIcon.png";
+import cawsIcon from "./newAssets/cawsIcon.png";
+import betaPassIcon from "./newAssets/betaPassIcon.png";
+import xMark from "./newAssets/xMark.svg";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const DailyBonusPopup = ({ onclose }) => {
-
-
   const [regularChests, setRegularChests] = useState([]);
   const [premiumChests, setPremiumChests] = useState([]);
   const [rewardTypes, setRewardTypes] = useState("standard");
-
+  const [randomReward, setRandomReward] = useState({});
+  const [rewardPopup, setRewardPopup] = useState(false);
+  const [randomArray, setRandomArray] = useState([]);
 
   const dummyChests = [
     {
@@ -257,38 +265,165 @@ const DailyBonusPopup = ({ onclose }) => {
     },
   ];
 
+  const dummyPremiums = [
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "greenCrystal",
+      chestId: 1,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "blueCrystal",
+      chestId: 2,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "yellowCrystal",
+      chestId: 3,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "purpleCrystal",
+      chestId: 4,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "cyanCrystal",
+      chestId: 5,
+    },
+  ];
+
+  const dummyRewards = [
+    {
+      title: "10,000 Points",
+      image: pointsIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "$5 Reward",
+      image: rewardsIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "Genesis Land NFT",
+      image: genesisIcon,
+      premium: true,
+      won: false,
+    },
+    {
+      title: "CAWS NFT",
+      image: cawsIcon,
+      premium: true,
+      won: false,
+    },
+    {
+      title: "Beta Pass NFT",
+      image: betaPassIcon,
+      premium: true,
+      won: false,
+    },
+    {
+      title: "$100 Reward",
+      image: largeRewardsIcon,
+      premium: false,
+      won: false,
+    },
+  ];
+
+  const onOpenChest = () => {
+    randomNum();
+    // let rewardsAmount = Math.floor(Math.random() * 6);
+
+    // const shuffled = dummyRewards.sort(() => 0.5 - Math.random());
+    // setRandomReward(dummyRewards.map((item, index) => {
+    //   item.won = randomArray.includes(index) ? true : false
+    // }));
+
+    // console.log(randomArray, randomReward, "randomreward");
+    setRewardPopup(true);
+  };
+
+  function randomNum() {
+    var arr = [];
+    let a = Math.floor(Math.random() * 6) + 1;
+    while (arr.length < a) {
+      var r = Math.floor(Math.random() * 6);
+      if (arr.indexOf(r) === -1) arr.push(r);
+    }
+    setRandomArray(arr);
+  }
 
   function shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
-  
+    let currentIndex = array.length,
+      randomIndex;
+
     // While there remain elements to shuffle.
     while (currentIndex > 0) {
-  
       // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-  
+
       // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
+        array[randomIndex],
+        array[currentIndex],
+      ];
     }
-  
-    setRegularChests(array.slice(0,10))
-    setPremiumChests(array.slice(10, 20))
-    console.log(array.slice(0,10), array.slice(10,20));
+
+    setRegularChests(array.slice(0, 10));
+    // setPremiumChests(array.slice(10, 20))
+    // console.log(array.slice(0,10), array.slice(10,20));
     return array;
   }
 
+  const shufflePremiums = (array) => {
+    let currentIndex = array.length,
+      randomIndex;
 
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    // setRegularChests(array.slice(0,10))
+
+    let dummyItem = array.slice(0, 1)[0];
+    let tempArray = [];
+
+    for (let i = 0; i < 10; i++) {
+      tempArray.push(dummyItem);
+    }
+
+    setPremiumChests(tempArray);
+    return array;
+  };
   useEffect(() => {
-   shuffle(dummyChests)
-  }, [])
-  
-
+    shuffle(dummyChests);
+    shufflePremiums(dummyPremiums);
+  }, []);
 
   return (
     <>
-      <div className="package-popup2 dragon-popup p-4">
+      <div
+        className={`package-popup2 dragon-popup p-4 ${
+          rewardPopup && "hidescroll"
+        }`}
+      >
         <img
           src={closeX}
           alt=""
@@ -329,8 +464,8 @@ const DailyBonusPopup = ({ onclose }) => {
               </div>
               <div className="dailyreward-separator"></div>
             </div>
-                {rewardTypes === "standard" ?
-                <div className="rewardsgrid">
+            {rewardTypes === "standard" ? (
+              <div className="rewardsgrid">
                 {regularChests.map((item, index) => (
                   <ChestItem
                     chestId={item.chestId}
@@ -339,22 +474,24 @@ const DailyBonusPopup = ({ onclose }) => {
                     open={item.open}
                     closedImg={item.closedImg}
                     rewardTypes={rewardTypes}
+                    onOpenChest={onOpenChest}
                   />
                 ))}
               </div>
-              : 
+            ) : (
               <div className="rewardsgrid">
-              {premiumChests.map((item, index) => (
-                <ChestItem
-                  chestId={index + 1}
-                  chestTitle={item.chestTitle}
-                  open={item.open}
-                  closedImg={item.closedImg}
-                  rewardTypes={rewardTypes}
-                />
-              ))}
-            </div>  
-              }
+                {premiumChests.map((item, index) => (
+                  <ChestItem
+                    chestId={index + 1}
+                    chestTitle={item.chestTitle}
+                    open={item.open}
+                    closedImg={item.closedImg}
+                    rewardTypes={rewardTypes}
+                    onOpenChest={onOpenChest}
+                  />
+                ))}
+              </div>
+            )}
             {/* <div className="d-flex w-100 justify-content-center">
               <button className="btn claim-chest-btn d-flex align-items-center justify-content-center">
                 <span className="mb-0">Claim</span>
@@ -365,35 +502,79 @@ const DailyBonusPopup = ({ onclose }) => {
               <span className="font-organetto chestprizetitle text-white">
                 CHEST PRIZES
               </span>
-              <div className="d-flex flex-column flex-lg-row flex-md-row  align-items-center gap-2 justify-content-center justify-content-lg-between justify-content-md-between">
-                <div className="prizeswrapper">
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={pointsLogo}
-                      alt=""
-                      style={{ width: 40, height: 40 }}
-                    />
-                    <span className="text-white">10,000 points</span>
+              <div className="container px-3">
+                <div className="row" style={{ rowGap: "10px" }}>
+                  <div className="prizeswrapper prizeswrapper-premium col-12 col-lg-4">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={pointsIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <span className="text-white chest-prize-title">
+                        10,000 points
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="prizeswrapper">
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={rewardsLogo}
-                      alt=""
-                      style={{ width: 40, height: 40 }}
-                    />
-                    <span className="text-white">$2.5 Rewards</span>
+                  <div className="prizeswrapper col-12 col-lg-4">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={rewardsIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <span className="text-white chest-prize-title">
+                        $2.5 Rewards
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="prizeswrapper">
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={rewardsLogo}
-                      alt=""
-                      style={{ width: 40, height: 40 }}
-                    />
-                    <span className="text-white">1 Genesis land Nft</span>
+                  <div className="prizeswrapper col-12 col-lg-4">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={genesisIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <span className="text-white chest-prize-title">
+                        Genesis Land NFT
+                      </span>
+                    </div>
+                  </div>
+                  <div className="prizeswrapper col-12 col-lg-4">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={cawsIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <span className="text-white chest-prize-title">
+                        CAWS NFT
+                      </span>
+                    </div>
+                  </div>
+                  <div className="prizeswrapper prizeswrapper-premium col-12 col-lg-4">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={betaPassIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <span className="text-white chest-prize-title">
+                        1 Beta Pass NFT
+                      </span>
+                    </div>
+                  </div>
+                  <div className="prizeswrapper col-12 col-lg-4">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={largeRewardsIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <span className="text-white chest-prize-title">
+                        $1,000 Rewards
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -401,6 +582,79 @@ const DailyBonusPopup = ({ onclose }) => {
           </div>
         </div>
       </div>
+      {rewardPopup && (
+        <OutsideClickHandler onOutsideClick={() => setRewardPopup(false)}>
+          <div
+            className="popup-wrapper popup-active p-4"
+            style={{ width: "40%" }}
+          >
+            <div className="d-flex align-items-center justify-content-between mb-5">
+              <div></div>
+              <h6 className="reward-prize-title mb-0">You won</h6>
+              <img
+                src={xMark}
+                style={{ cursor: "pointer" }}
+                onClick={() => setRewardPopup(false)}
+                alt=""
+              />
+            </div>
+            {/* <div className="d-flex flex-column align-items-center gap-3 mb-5">
+        {randomReward.map((reward) => (
+          <>
+           <div className="d-flex align-items-center justify-content-center gap-3">
+           <img src={reward.image} alt="" />
+           <span className="random-reward mb-0" style={{color: reward.premium === true && "#ED8225"}}>{reward.title}</span>
+         </div>
+         {reward.premium === true && 
+         <span className="reward-error" style={{color: "#ED8225", fontSize: "9px"}}>You must have a premium account to claim this prize</span>
+         }
+          </>
+        ))}
+       </div> */}
+            <div className="container px-3">
+              <div className="row mb-5" style={{ rowGap: "12px" }}>
+                {dummyRewards.map((reward, index) => (
+                  <div
+                    className={`prizeswrapper ${
+                      randomArray.includes(index) && "prizeswrapper-premium"
+                    } col-12 col-lg-4`}
+                    style={{ opacity: !randomArray.includes(index) && "0.3" }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={reward.image}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <div className="d-flex flex-column gap-1">
+                        <span
+                          className="chest-prize-title mb-0"
+                          style={{
+                            color:
+                              reward.premium &&
+                              randomArray.includes(index) &&
+                              "red",
+                          }}
+                        >
+                          {reward.title}
+                        </span>
+                        {/* {reward.premium && randomArray.includes(index) && (
+                          <span
+                            className="reward-error mb-0"
+                            style={{ color: "#ED8225", fontSize: "9px" }}
+                          >
+                            You must have a premium account to claim this prize
+                          </span>
+                        )} */}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </OutsideClickHandler>
+      )}
     </>
   );
 };
