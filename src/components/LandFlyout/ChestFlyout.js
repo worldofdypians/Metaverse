@@ -19,14 +19,14 @@ const ChestFlyout = () => {
   return (
     <div
       className={`fly-position2 ${show && "fly-active2"}`}
-      onMouseOverCapture={() => {
+      onMouseEnter={() => {
         setshowText(true);
       }}
       onMouseLeave={() => {
         setshowText(false);
       }}
     >
-      <div className="fly-outer-wrapper2 position-relative">
+      <div className="fly-outer-wrapper2 position-relative" style={{overflow: "hidden"}}>
         <NavLink
           to="/account"
           className="fly-inner-wrapper2 p-1 d-flex align-items-center gap-2"
@@ -35,9 +35,7 @@ const ChestFlyout = () => {
         >
           <img src={mainChest} alt="" className="mainChest" />
           <h6
-            className={` font-organetto ${
-              showText ? "fly-title2" : "flyTitleHidden"
-            } `}
+            className={` font-organetto fly-title2 `}
           >
             Daily Bonus
           </h6>

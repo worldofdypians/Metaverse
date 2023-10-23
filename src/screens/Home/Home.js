@@ -22,6 +22,7 @@ import gatePopup from '../../components/TimepieceMint/assets/gatePopup.webp'
 import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup.png'
 import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHuntPopup.png'
 import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
+import LandFlyout from '../../components/LandFlyout/LandFlyout'
 
 const Home = ({
   handleRegister,
@@ -133,6 +134,7 @@ const Home = ({
         {/* <Partners /> */}
       </div>
     </div>
+    {/* <LandFlyout /> */}
   </>
   );
 };
