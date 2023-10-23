@@ -1139,15 +1139,19 @@
     rgba(90, 90, 90, 0) 38.72%,
     rgba(90, 90, 90, 0.4) 104.23%
   );
-  clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
-  padding: 10px 24px;
+  // clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
+  padding: 10px;
+  border-radius: 12px;
 }
 
 .prizeswrapper-premium {
-  // background: linear-gradient(270deg, rgba(219, 161, 34, 0.00) 38.72%, rgba(219, 161, 34, 0.40) 104.23%);
-  clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
-  padding: 10px 24px;
-  background: #dba122;
+  background: linear-gradient(270deg, rgba(219, 161, 34, 0.00) 38.72%, rgba(219, 161, 34, 0.40) 104.23%);
+  // clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
+  padding: 10px;
+  // background: #dba122;
+  border-radius: 12px;
+  border: 1px solid #DBA122;
+
 }
 
 .reward-types {
@@ -1407,6 +1411,61 @@
   right: 0px;
 }
 
+.daily-rewards-img {
+  position: absolute;
+  width: 55%;
+  right: 0%;
+  top: -10%;
+}
+
+.progress-bar-group {
+  position: absolute;
+  right: 2%;
+  bottom: 10%;
+}
+
+.green-progress-outer {
+  position: relative;
+  width: 60px;
+  height: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 186, 204, 1);
+}
+
+.green-progress-inner {
+  height: 100%;
+  border-radius: 12px;
+  background: rgba(0, 186, 204, 0.4);
+}
+.yellow-progress-outer {
+  position: relative;
+  width: 60px;
+  height: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(234, 157, 28, 1);
+}
+
+.yellow-progress-inner {
+  height: 100%;
+  border-radius: 12px;
+  background: rgba(234, 157, 28, 0.4);
+}
+
+.chest-progress {
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
 .daily-bonus-wrapper {
   position: relative;
   height: 170px;
@@ -1415,6 +1474,7 @@
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
+
 }
 
 .daily-bonus-wrapper:hover {
@@ -1433,7 +1493,7 @@
   right: 0;
   left: 0;
   bottom: 0;
-  background-image: url("./newAssets/dailyChest2.png");
+  // background-image: url("./newAssets/dailyChest2.png");
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: right;
@@ -1448,6 +1508,9 @@
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
+  @media screen and (max-width: 786px) {
+    margin-top: 85px;
+  }
 }
 
 .game-events-wrapper:hover {
@@ -1466,7 +1529,7 @@
   right: 0;
   left: 0;
   bottom: 0;
-  background-image: url("./newAssets/eventDragon.png");
+  // background-image: url("./newAssets/eventDragon.png");
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: right;
@@ -1484,6 +1547,9 @@
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
+  @media screen and (max-width: 786px) {
+    margin-top: 85px;
+  }
 }
 
 .profile-staking-wrapper:hover {
@@ -1501,7 +1567,7 @@
   right: 0;
   left: 0;
   bottom: 0;
-  background-image: url("./newAssets/stakingBg.png");
+  // background-image: url("./newAssets/stakingBg.png");
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: right;
@@ -1706,4 +1772,75 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.ready-border {
+  width: 96px;
+  height: 40px;
+  animation: pulsate 1.5s ease-out infinite;
+}
+.ready-border-2 {
+  width: 96px;
+  height: 40px;
+  filter: drop-shadow(0px 0px 10px rgba(202, 64, 22, 0.6));
+}
+
+@keyframes pulsate {
+  0% {
+    filter: drop-shadow(0px 0px 0px rgba(125, 217, 175, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0px 0px 15px rgba(125, 217, 175, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0px 0px 0px rgba(125, 217, 175, 0.6));
+  }
+}
+.ready-to-claim {
+  color: #f7f7fc;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  top: 33%;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: fit-content;
+  z-index: 2;
+}
+
+.timer-text {
+  color: #f7f7fc;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 8px;
+  position: relative;
+  left: 20px;
+}
+
+.game-events-img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+}
+
+.profile-div-desc {
+  color: #f7f7fc;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  width: 40%;
+}
+
+.profile-staking-img {
+  position: absolute;
+  bottom: 15%;
+  right: -5%;
+  width: 70%;
 }

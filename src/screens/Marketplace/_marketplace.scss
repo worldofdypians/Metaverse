@@ -1689,7 +1689,7 @@
 
   @media screen and (max-width: 800px) {
     width: 95%;
-    height: 80%;
+    height: 67%;
   }
 }
 
@@ -1727,6 +1727,7 @@
   pointer-events: none;
   @media screen and (max-width: 800px) {
     width: 95%;
+    height: 80% !important;
   }
 }
 
