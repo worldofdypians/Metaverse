@@ -21,7 +21,7 @@ import ChecklistLandNftModal from "../../Components/ChecklistModal/ChecklistLand
 import EmptyGenesisCard from "../../Components/EmptyGenesisCard/EmptyGenesisCard";
 import Web3 from "web3";
 import { ERC20_ABI } from "../../web3/abis";
-import _ from "lodash";
+import _, { chain } from "lodash";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
@@ -34,6 +34,10 @@ import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup.webp
 import OutsideClickHandler from "react-outside-click-handler";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
 import MyRewardsPopup from "../../Components/WalletBalance/MyRewardsPopup";
+import coinStackIcon from "../../Images/premium/coinStackIcon.svg";
+import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+
 function Dashboard({
   account,
   isConnected,
@@ -106,10 +110,30 @@ function Dashboard({
   const [isonlink, setIsOnLink] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
+  const [getPremiumPopup, setgetPremiumPopup] = useState(false);
+  const [dropdownIcon, setdropdownIcon] = useState("");
+  const [dropdownTitle, setdropdownTitle] = useState("");
+  const [status, setstatus] = useState("");
+  const [approveStatus, setapproveStatus] = useState("initial");
+  const [isApproved, setisApproved] = useState(false);
+  const [tokenBalance, setTokenBalance] = useState(0);
+  const [price, setprice] = useState(0);
+  const [formattedPrice, setformattedPrice] = useState("0");
+  const [loadspinner, setloadspinner] = useState(false);
+  const [loadspinnerSub, setloadspinnerSub] = useState(false);
+  const [selectedSubscriptionToken, setselectedSubscriptionToken] = useState(
+    Object.keys(window.config.subscription_tokens)[0]
+  );
+  const [tokenDecimals, settokenDecimals] = useState(1);
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
+  const { BigNumber } = window;
+
+  let wethAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+  let wavaxAddress = "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7";
+  let wbnbAddress = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
 
   const override2 = {
     display: "block",
@@ -663,6 +687,217 @@ function Dashboard({
     }
   };
 
+  const handleSubscriptionTokenChange = async (tokenAddress) => {
+    const token = tokenAddress;
+    let tokenDecimals =
+      chainId === 1
+        ? window.config.subscriptioneth_tokens[token]?.decimals
+        : chainId === 56
+        ? window.config.subscriptionbnb_tokens[token]?.decimals
+        : window.config.subscription_tokens[token]?.decimals;
+    setprice("");
+    setformattedPrice("");
+    setTokenBalance("");
+    setselectedSubscriptionToken(token);
+
+    let tokenprice =
+      chainId === 1
+        ? await window.getEstimatedTokenSubscriptionAmountETH(token)
+        : chainId === 56
+        ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        : await window.getEstimatedTokenSubscriptionAmount(token);
+    tokenprice = new BigNumber(tokenprice).times(1.1).toFixed(0);
+
+    let formattedTokenPrice = getFormattedNumber(
+      tokenprice / 10 ** tokenDecimals,
+      tokenDecimals
+    );
+    let tokenBalance2 = await window.getTokenHolderBalance(token, coinbase);
+    setprice(tokenprice);
+    setformattedPrice(formattedTokenPrice);
+    setTokenBalance(tokenBalance2);
+  };
+
+  const handleApprove = async (e) => {
+    // e.preventDefault();
+
+    let tokenContract = await window.getContract({
+      address: selectedSubscriptionToken,
+      ABI: window.ERC20_ABI,
+    });
+    setloadspinner(true);
+
+    await tokenContract.methods
+      .approve(selectedSubscriptionToken, price)
+      .send()
+      .then(() => {
+        setloadspinner(false);
+        setisApproved(true);
+        setapproveStatus("deposit");
+      })
+      .catch((e) => {
+        setstatus(e?.message);
+        setloadspinner(false);
+        setapproveStatus("fail");
+
+        setTimeout(() => {
+          setstatus("");
+          setloadspinner(false);
+          setapproveStatus("initial");
+        }, 5000);
+      });
+  };
+
+  const handleCheckIfAlreadyApproved = async (token) => {
+    const web3eth = new Web3(window.config.infura_endpoint);
+    const bscWeb3 = new Web3(window.config.bsc_endpoint);
+    const avaxWeb3 = new Web3(window.config.avax_endpoint);
+
+    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const avaxsubscribeAddress = window.config.subscription_address;
+    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
+
+    const subscribeToken = token;
+    const subscribeTokencontract = new web3eth.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractbnb = new bscWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractavax = new avaxWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    if (coinbase) {
+      if (chainId === 1) {
+        const result = await subscribeTokencontract.methods
+          .allowance(coinbase, ethsubscribeAddress)
+          .call()
+          .then();
+
+        if (result != 0) {
+          setloadspinner(false);
+          setisApproved(true);
+        } else if (result == 0) {
+          setloadspinner(false);
+          setisApproved(false);
+        }
+      }
+      if (chainId === 56) {
+        const result = await subscribeTokencontractbnb.methods
+          .allowance(coinbase, bnbsubscribeAddress)
+          .call()
+          .then();
+        if (result != 0) {
+          setloadspinner(false);
+          setisApproved(true);
+        } else if (result == 0) {
+          setloadspinner(false);
+          setisApproved(false);
+        }
+      } else {
+        const result = await subscribeTokencontractavax.methods
+          .allowance(coinbase, avaxsubscribeAddress)
+          .call()
+          .then();
+
+        if (result != 0) {
+          setloadspinner(false);
+          setisApproved(true);
+        } else if (result == 0) {
+          setloadspinner(false);
+          setisApproved(false);
+        }
+      }
+    }
+  };
+
+  const handleSubscribe = async (e) => {
+    // e.preventDefault();
+    let subscriptionContract = await window.getContract({
+      key:
+        chainId === 1
+          ? "SUBSCRIPTIONETH"
+          : chainId === 56
+          ? "SUBSCRIPTIONBNB"
+          : "SUBSCRIPTION",
+    });
+
+    setloadspinnerSub(true);
+
+    await subscriptionContract.methods
+      .subscribe(selectedSubscriptionToken, price)
+      .send({ from: await window.getCoinbase() })
+      .then(() => {
+        setloadspinnerSub(false);
+        setapproveStatus("success");
+
+        // this.props.onSubscribe();
+        // window.location.href = "https://app.dypius.com/account";
+      })
+      .catch((e) => {
+        setloadspinnerSub(false);
+        setloadspinner(false);
+        setapproveStatus("fail");
+        setstatus(e?.message);
+
+        setTimeout(() => {
+          setloadspinnerSub(false);
+          setloadspinner(false);
+          setapproveStatus("initial");
+          setstatus("");
+        }, 5000);
+      });
+  };
+
+  useEffect(() => {
+    if (chainId === 1) {
+      setdropdownIcon("weth");
+      setdropdownTitle("WETH");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioneth_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wethAddress);
+    } else if (chainId === 56) {
+      setdropdownIcon("wbnb");
+      setdropdownTitle("WBNB");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionbnb_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wbnbAddress);
+    } else if (chainId === 43114) {
+      setdropdownIcon("wavax");
+      setdropdownTitle("WAVAX");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionbnb_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wavaxAddress);
+    }
+  }, [chainId]);
+
+  useEffect(() => {
+    if (chainId === 1 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptioneth_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 56 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionbnb_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 43114 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
+      );
+    }
+  }, [chainId, selectedSubscriptionToken]);
+
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
@@ -816,6 +1051,7 @@ function Dashboard({
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
                         isPremium={isPremium}
+                        isConnected={isConnected}
                       />
 
                       <NewWalletBalance
@@ -864,7 +1100,9 @@ function Dashboard({
                         onRewardsClick={() => {
                           setmyRewardsPopup(true);
                         }}
-                        onPremiumClick={()=>{console.log('premium')}}
+                        onPremiumClick={() => {
+                          setgetPremiumPopup(true);
+                        }}
                       />
                     </div>
                     <WalletBalance
@@ -903,7 +1141,6 @@ function Dashboard({
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
-                      
                     />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
@@ -1066,7 +1303,11 @@ function Dashboard({
                         <div
                           className="popup-wrapper popup-active p-4"
                           id="leaderboard"
-                          style={{ width: "40%", pointerEvents: "auto", overflowX: 'auto' }}
+                          style={{
+                            width: "40%",
+                            pointerEvents: "auto",
+                            overflowX: "auto",
+                          }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
                             <h2
@@ -1081,7 +1322,243 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                        <MyRewardsPopup/>
+                          <MyRewardsPopup />
+                        </div>
+                      </OutsideClickHandler>
+                    )}
+
+                    {getPremiumPopup && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => {
+                          setgetPremiumPopup(false);
+                        }}
+                      >
+                        <div
+                          className="popup-wrapper popup-active p-4"
+                          id="subscribe"
+                          style={{ width: "30%", pointerEvents: "auto" }}
+                        >
+                          <div className="subscribe-container p-2 position-relative">
+                            <div
+                              className=""
+                              style={{ background: "#8E97CD" }}
+                            ></div>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <div className="d-flex align-items-center gap-2">
+                                <img src={coinStackIcon} alt="coin stack" />
+                                <h6 className="free-plan-title">
+                                  Dypian Plan Subscription
+                                </h6>
+                              </div>
+                              <img
+                                src={xMark}
+                                onClick={() => setgetPremiumPopup(false)}
+                                alt=""
+                                style={{ cursor: "pointer" }}
+                              />
+                            </div>
+                            <div className="d-flex mt-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
+                              <div className="d-flex flex-column gap-3 subscribe-input-container">
+                                <span className="token-amount-placeholder">
+                                  Select Subscription Token
+                                </span>
+
+                                <div class="dropdown position relative">
+                                  <button
+                                    class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle w-100`}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ color: "#fff" }}
+                                    >
+                                      <img
+                                        src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                        alt=""
+                                      />
+                                      {dropdownTitle}
+                                    </div>
+                                    <img src={launchpadIndicator} alt="" />
+                                  </button>
+                                  <ul class="dropdown-menu w-100">
+                                    {Object.keys(
+                                      chainId === 1
+                                        ? window.config.subscriptioneth_tokens
+                                        : chainId === 56
+                                        ? window.config.subscriptionbnb_tokens
+                                        : window.config.subscription_tokens
+                                    ).map((t, i) => (
+                                      <li
+                                        key={i}
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={() => {
+                                          window.cached_contracts =
+                                            Object.create(null);
+                                          setTimeout(() => {
+                                            setdropdownIcon(
+                                              chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                            );
+                                            setdropdownTitle(
+                                              chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                            );
+
+                                            // console.log(t);
+                                            handleSubscriptionTokenChange(t);
+                                            handleCheckIfAlreadyApproved(t);
+                                          }, 200);
+                                        }}
+                                      >
+                                        <img
+                                          src={
+                                            chainId === 1
+                                              ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}Icon.svg`)
+                                              : chainId === 56
+                                              ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}Icon.svg`)
+                                              : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}Icon.svg`)
+                                          }
+                                          alt=""
+                                        />
+                                        {chainId === 1
+                                          ? window.config
+                                              .subscriptioneth_tokens[t]?.symbol
+                                          : chainId === 56
+                                          ? window.config
+                                              .subscriptionbnb_tokens[t]?.symbol
+                                          : window.config.subscription_tokens[t]
+                                              ?.symbol}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </div>
+                              <div className="d-flex flex-column align-items-end justify-content-lg-end">
+                                <span className="token-balance-placeholder">
+                                  Token Balance
+                                </span>
+                                <h6 className="account-token-amount">
+                                  {" "}
+                                  {getFormattedNumber(
+                                    tokenBalance / 10 ** tokenDecimals,
+                                    6
+                                  )}
+                                </h6>
+                              </div>
+                            </div>
+                            <div
+                              className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
+                              style={{ width: "100%" }}
+                            >
+                              <span className="token-amount-placeholder">
+                                Subscription price:
+                              </span>
+                              <div className="d-flex align-items-center gap-2">
+                                <span className="usdt-text">
+                                  {formattedPrice.slice(0, 9)}
+                                </span>
+
+                                <img
+                                  src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                  height={24}
+                                  width={24}
+                                  alt="usdt"
+                                />
+                              </div>
+                            </div>
+                            <hr className="form-divider my-4" />
+                            <div
+                              className={`d-flex align-items-center ${
+                                !coinbase
+                                  ? "justify-content-between"
+                                  : "justify-content-end"
+                              }`}
+                            >
+                              {!coinbase && (
+                                <span style={{ color: "rgb(227, 6 ,19)" }}>
+                                  Please connect your wallet first
+                                </span>
+                              )}
+                              <div className="d-flex flex-column gap-2 justify-content-end align-items-center">
+                                <button
+                                  className={
+                                    "btn success-btn px-4 align-self-end"
+                                  }
+                                  disabled={
+                                    approveStatus === "fail" || !coinbase
+                                      ? true
+                                      : false
+                                  }
+                                  style={{
+                                    background:
+                                      approveStatus === "fail"
+                                        ? "linear-gradient(90.74deg, #f8845b 0%, #f0603a 100%)"
+                                        : "linear-gradient(90.74deg, #75CAC2 0%, #57B6AB 100%)",
+                                  }}
+                                  onClick={(e) =>
+                                    isApproved === false
+                                      ? handleApprove(e)
+                                      : handleSubscribe()
+                                  }
+                                >
+                                  {isApproved === true &&
+                                  loadspinner === false &&
+                                  loadspinnerSub === false &&
+                                  (approveStatus === "deposit" ||
+                                    approveStatus === "initial") ? (
+                                    "Subscribe"
+                                  ) : isApproved === false &&
+                                    loadspinner === false &&
+                                    approveStatus === "initial" &&
+                                    loadspinnerSub === false ? (
+                                    "Approve"
+                                  ) : loadspinner === false &&
+                                    approveStatus === "fail" &&
+                                    loadspinnerSub === false ? (
+                                    "Failed"
+                                  ) : (
+                                    <div
+                                      className="spinner-border "
+                                      role="status"
+                                      style={{
+                                        height: "1.5rem",
+                                        width: "1.5rem",
+                                      }}
+                                    ></div>
+                                  )}
+                                </button>
+                                <span style={{ color: "#E30613" }}>
+                                  {status}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </OutsideClickHandler>
                     )}
