@@ -1145,13 +1145,16 @@
 }
 
 .prizeswrapper-premium {
-  background: linear-gradient(270deg, rgba(219, 161, 34, 0.00) 38.72%, rgba(219, 161, 34, 0.40) 104.23%);
+  background: linear-gradient(
+    270deg,
+    rgba(219, 161, 34, 0) 38.72%,
+    rgba(219, 161, 34, 0.4) 104.23%
+  );
   // clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
   padding: 10px;
   // background: #dba122;
   border-radius: 12px;
-  border: 1px solid #DBA122;
-
+  border: 1px solid #dba122;
 }
 
 .reward-types {
@@ -1263,6 +1266,7 @@
   width: 70px;
   text-align: center;
   margin-top: 20px;
+  visibility: hidden;
 }
 
 .button__bar-2 li {
@@ -1271,6 +1275,7 @@
   display: inline-block;
   margin: 0 3px;
   padding: 0;
+  visibility: hidden;
 }
 
 .button__bar-2 li button {
@@ -1283,6 +1288,7 @@
   width: 10px;
   opacity: 0.3;
   border-radius: 7.5px;
+  visibility: hidden;
 }
 
 .button__bar-2 li.slick-active button {
@@ -1291,6 +1297,7 @@
   opacity: 1;
   background: #7dd9af;
   box-shadow: 0px 4px 4px rgba(150, 100, 255, 0.24);
+  visibility: hidden;
 }
 
 .red-container {
@@ -1395,7 +1402,6 @@
   line-height: 18px !important;
 }
 
-
 .token-balance-placeholder {
   font-weight: 400;
   font-size: 14px;
@@ -1404,7 +1410,6 @@
   letter-spacing: -0.018em;
   color: #4cd0cd !important;
 }
-
 
 .account-token-amount {
   font-weight: 500;
@@ -1420,7 +1425,6 @@
   border-radius: 8px;
 }
 
-
 .usdt-text {
   font-style: normal;
   font-weight: 500;
@@ -1429,7 +1433,6 @@
   color: #f7f7fc !important;
 }
 
-
 .form-divider {
   background: #565891 !important;
   border-radius: 50px;
@@ -1437,7 +1440,6 @@
   width: 100% !important;
   opacity: 1 !important;
 }
-
 
 .success-btn {
   color: #ffffff !important;
@@ -1625,7 +1627,6 @@
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
-
 }
 
 .daily-bonus-wrapper:hover {
@@ -1654,7 +1655,7 @@
   position: relative;
   height: 170px;
   border-radius: 10px;
-  background: linear-gradient(to right, #252743 -13.33%,  #124287 70.47%);
+  background: linear-gradient(to right, #252743 -13.33%, #124287 70.47%);
   backdrop-filter: blur(26px);
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
@@ -1689,7 +1690,11 @@
 .profile-staking-wrapper {
   position: relative;
   height: 170px;
-  background: linear-gradient(to right, #252743 -11.81%, rgba(72, 33, 147, 0.8) 130.24%);
+  background: linear-gradient(
+    to right,
+    #252743 -11.81%,
+    rgba(72, 33, 147, 0.8) 130.24%
+  );
   border-radius: 10px;
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
@@ -1724,7 +1729,7 @@
 .special-rewards-wrapper {
   position: relative;
   height: 170px;
-  background: linear-gradient(to right, #252743 -13.33%, #D8302E 70.47%);
+  background: linear-gradient(to right, #252743 -13.33%, #d8302e 70.47%);
   border-radius: 10px;
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
@@ -1756,11 +1761,7 @@
 .my-rewards-wrapper {
   position: relative;
   height: 170px;
-  background: linear-gradient(
-    125deg,
-    #252743 -13.33%,
-    rgba(107, 138, 152, 0.5) 70.47%
-  );
+  background: linear-gradient(to right, #252743, rgba(18, 51, 41, 0.8));
   border-radius: 10px;
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
@@ -1782,10 +1783,10 @@
   right: 0;
   left: 0;
   bottom: 0;
-  background-image: url("./newAssets/myRewards.svg");
-  background-size: 50%;
+  background-image: url("./newAssets/myRewards.png");
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: right -40px center;
+  background-position: right -8px center;
   pointer-events: none;
 
   @media screen and (max-width: 786px) {
