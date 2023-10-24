@@ -5,7 +5,7 @@ import baseMobileBg from "./assets/baseMobileBg.png";
 import confluxMobileBg from "./assets/confluxMobileBg.png";
 import closePopup from "../LandPopup/closePopup.svg";
 import { Link, NavLink } from "react-router-dom";
-import whiteExplore from '../../screens/Account/src/Components/WalletBalance/assets/whiteExplore.svg'
+import whiteExplore from "../../screens/Account/src/Components/WalletBalance/assets/whiteExplore.svg";
 
 const MintPopup = ({ active, onClose, data }) => {
   return (
@@ -40,10 +40,10 @@ const MintPopup = ({ active, onClose, data }) => {
           <div class="d-flex align-items-center justify-content-center">
             <div class="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              FREE MINTING
+              $2,000 BNB Rewards
             </h6>
           </div>
-          <h6 className="mint-popup-title">CONFLUX BETA PASS</h6>
+          <h6 className="mint-popup-title">Gate Treasure Hunt</h6>
         </>
       ) : (
         <div className="d-flex align-items-center gap-2 mb-4 mb-lg-0">
@@ -53,7 +53,7 @@ const MintPopup = ({ active, onClose, data }) => {
               Live
             </h6>
           </div>
-          <h6 className="mint-popup-title m-0">{data.title} Beta Pass NFT</h6>
+          <h6 className="mint-popup-title m-0"> NFT Giveaway</h6>
         </div>
       )}
 
@@ -66,8 +66,8 @@ const MintPopup = ({ active, onClose, data }) => {
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
         {data.title === "Treasure Hunt" ? (
           <span className="popup-available-mint">
-            Get access to the game and a unique event filled with surprises and
-            rewards!
+            Explore the Gate area and use your <img src={whiteExplore} alt="" className="white-explore" />{" "}
+            to generate rewards
           </span>
         ) : (
           <span className="popup-available-mint">
@@ -79,7 +79,7 @@ const MintPopup = ({ active, onClose, data }) => {
       {data.title === "Treasure Hunt" ? (
         <Link
           onClick={onClose}
-          to={"/marketplace/mint/conflux"}
+          to={"/marketplace/events/treasure-hunt"}
           state={{ event: data.state }}
           className="linear-border"
         >

@@ -27,8 +27,8 @@ import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import moment from "moment";
 import { Skeleton } from "@mui/material";
 import greenArrow from "./assets/greenArrow.svg";
-import timepieceHome from './assets/timepieceHome.png'
-import confluxHome from './assets/confluxHome.png'
+import timepieceHome from "./assets/timepieceHome.png";
+import confluxHome from "./assets/confluxHome.png";
 
 const Marketplace = ({
   listedNFTS,
@@ -73,8 +73,7 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
-  const [totalSupply, setTotalSupply] = useState(0); 
-
+  const [totalSupply, setTotalSupply] = useState(0);
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -236,10 +235,21 @@ const Marketplace = ({
       .catch((e) => {
         console.error(e);
       });
-    const confluxresult = await window.conflux_nft.getConfluxLatestMint();
-    setTotalSupply(parseInt(result) + parseInt(confluxresult));
 
- 
+    const confluxContract = new window.confluxWeb3.eth.Contract(
+      window.CONFLUX_NFT_ABI,
+      window.config.nft_conflux_address
+    );
+    const gateContract = new window.bscWeb3.eth.Contract(
+      window.GATE_NFT_ABI,
+      window.config.nft_gate_address
+    );
+    const confluxresult = await confluxContract.methods.totalSupply().call();
+    const gateresult = await gateContract.methods.totalSupply().call();
+    //20000 = 10000 caws + 1000 genesis + 9000 coingecko
+    setTotalSupply(
+      parseInt(result) + parseInt(confluxresult) + parseInt(gateresult) + 20000
+    );
   };
 
   const getAllData = async () => {
@@ -592,10 +602,7 @@ const Marketplace = ({
                 <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
                     {" "}
-                    {getFormattedNumber(11000 + totalSupply + 9000).slice(
-                      0,
-                      getFormattedNumber(11000).length - 3
-                    )}
+                    {getFormattedNumber(totalSupply, 0)}
                   </h6>
                   <span className="stats-desc">Sold NFTs</span>
                 </div>
@@ -1082,8 +1089,8 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="mintleft-side mt-0 px-0 d-flex flex-column gap-3">
-                  {/* <NavLink
-                    to={"/marketplace/mint"}
+                  <NavLink
+                    to={"/marketplace/mint/timepiece"}
                     className="w-100 m-0 d-flex flex-column gap-5"
                   >
                     <div className="p-4 mint-wrappernew market-mint-bg betastyle w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height staking-height2 h-auto">
@@ -1118,24 +1125,41 @@ const Marketplace = ({
                         className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
                       />
                     </div>
-                  </NavLink> */}
-
-                  <div className="d-flex flex-column gap-4">
-                    <NavLink to={'/marketplace/mint/conflux'} className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                  </NavLink>
+                  <NavLink to="/marketplace/mint/timepiece">
+                    <span
+                      className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
+                      style={{ width: "fit-content" }}
+                    >
+                      Mint now <img src={greenArrow} alt="" />{" "}
+                    </span>
+                  </NavLink>
+                  {/* <div className="d-flex flex-column gap-4">
+                    <NavLink
+                      to={"/marketplace/mint/conflux"}
+                      className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between"
+                    >
                       <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 py-3 py-lg-0">
                         <div className="homepage-nft-mint-tag px-4 py-1 d-flex align-items-center justify-content-center">
                           <span className="mb-0">NFT Minting</span>
                         </div>
-                        <h6 className="homepage-minting-title">Conflux Beta Pass</h6>
+                        <h6 className="homepage-minting-title">
+                          Conflux Beta Pass
+                        </h6>
                       </div>
-                      <img src={confluxHome}  alt="" />
+                      <img src={confluxHome} alt="" />
                     </NavLink>
-                    <NavLink to={'/marketplace/mint/timepiece'} className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                    <NavLink
+                      to={"/marketplace/mint/timepiece"}
+                      className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between"
+                    >
                       <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 py-3 py-lg-0">
-                        <div  className="homepage-nft-mint-tag px-4 py-1 d-flex align-items-center justify-content-center">
+                        <div className="homepage-nft-mint-tag px-4 py-1 d-flex align-items-center justify-content-center">
                           <span className="mb-0">NFT Minting</span>
                         </div>
-                        <h6 className="homepage-minting-title">CAWS Timepiece</h6>
+                        <h6 className="homepage-minting-title">
+                          CAWS Timepiece
+                        </h6>
                       </div>
                       <img src={timepieceHome} alt="" />
                     </NavLink>
@@ -1147,7 +1171,7 @@ const Marketplace = ({
                     >
                       Mint now <img src={greenArrow} alt="" />{" "}
                     </span>
-                  </NavLink>
+                  </NavLink> */}
                 </div>
                 <div className="stakeright-side d-flex flex-column gap-3">
                   <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">

@@ -94,8 +94,11 @@ function Dashboard({
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setmyGateNfts] = useState([]);
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
-  const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
+  const [myBaseNfts, setmyBaseNfts] = useState([]);
 
+
+
+  const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
@@ -428,6 +431,9 @@ function Dashboard({
     getMyNFTS(coinbase, "coingecko").then((NFTS) => setMyNFTSCoingecko(NFTS));
     getMyNFTS(coinbase, "gate").then((NFTS) => setmyGateNfts(NFTS));
     getMyNFTS(coinbase, "conflux").then((NFTS) => setmyConfluxNfts(NFTS));
+    getMyNFTS(coinbase, "base").then((NFTS) => setmyBaseNfts(NFTS));
+
+
   };
 
   const getOtherNfts = async () => {
@@ -1105,6 +1111,7 @@ function Dashboard({
                         myNFTSCoingecko={MyNFTSCoingecko}
                         myGateNfts={myGateNfts}
                         myConfluxNfts={myConfluxNfts}
+                        myBaseNfts={myBaseNfts}
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}

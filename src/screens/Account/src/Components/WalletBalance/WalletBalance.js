@@ -40,6 +40,7 @@ import grayCalendar from "./assets/grayCalendar.svg";
 import eventSkeleton from "./assets/eventSkeleton.png";
 import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
 import BetaEventCard from "../../../../Marketplace/components/BetaEventCard";
+import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
 import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
 
@@ -102,6 +103,7 @@ const WalletBalance = ({
   myNFTSCoingecko,
   myGateNfts,
   myConfluxNfts,
+  myBaseNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -155,7 +157,6 @@ const WalletBalance = ({
   const windowSize = useWindowSize();
   const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
-
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -444,6 +445,7 @@ const WalletBalance = ({
     let coingeckoNftsArray = [];
     let gateNftsArray = [];
     let confluxNftsArray = [];
+    let baseNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -539,6 +541,22 @@ const WalletBalance = ({
               tokenId: i,
               type: "conflux",
               chain: 1030,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myBaseNfts && myBaseNfts.length > 0) {
+        await Promise.all(
+          myBaseNfts.map(async (i) => {
+            baseNftsArray.push({
+              nftAddress: window.config.nft_base_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "base",
+              chain: 8453,
               isStaked: false,
               isListed: false,
             });
@@ -703,6 +721,7 @@ const WalletBalance = ({
         ...coingeckoNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
+        ...baseNftsArray,
         ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
@@ -860,10 +879,14 @@ const WalletBalance = ({
       let confluxFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_conflux_address
       );
+      let baseFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_base_address
+      );
       const allBetapassArray = [
         ...coingeckoFilter,
         ...confluxFilter,
         ...gateFilter,
+        ...baseFilter,
       ];
       setcollectedItemsFiltered(allBetapassArray);
     } else if (filter1 === "timepiece" && filter2 === "all") {
@@ -1055,7 +1078,7 @@ const WalletBalance = ({
     chain: "BNB Chain",
     linkState: "gate",
     rewards: "BNB",
-    status: "Coming Soon",
+    status: "Live",
     id: "event6",
     eventType: "Explore & Mine",
     date: "Oct 20, 2023",
@@ -1066,6 +1089,7 @@ const WalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "20,000",
+    learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
   };
 
   const dummyCoingecko = {
@@ -1103,12 +1127,12 @@ const WalletBalance = ({
     rewards: "ETH",
     status: "Coming Soon",
     id: "event4",
-    date: "Coming Soon",
-    totalRewards: "$5,000 in ETH Rewards",
+    date: "November 01, 2023",
+    totalRewards: "$10,000 in ETH Rewards",
     eventDuration: gateLastDay,
     backgroundImage: baseUpcoming,
     logo: base,
-    date: "Coming Soon",
+    date: "November 01, 2023",
     minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
@@ -1194,7 +1218,7 @@ const WalletBalance = ({
         title: "Base Pass",
         chain: "BNB Chain",
         linkState: "base",
-        rewards: "BASE",
+        rewards: "ETH",
         status: "Expired",
         id: "event4",
         eventType: "Explore & Mine",
@@ -1280,7 +1304,7 @@ const WalletBalance = ({
     {
       title: "Gate.io",
       logo: gate,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
@@ -1292,7 +1316,7 @@ const WalletBalance = ({
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "GT",
-        status: "Coming Soon",
+        status: "Live",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
@@ -1302,16 +1326,17 @@ const WalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "20,000",
+        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
       },
     },
     {
       title: "Base",
       logo: base,
       eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in ETH Rewards",
+      totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "November 01, 2023",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -1321,10 +1346,10 @@ const WalletBalance = ({
         rewards: "ETH",
         status: "Coming Soon",
         id: "event4",
-        date: "Coming Soon",
-        totalRewards: "$5,000 in ETH Rewards",
+        date: "November 01, 2023",
+        totalRewards: "$10,000 in ETH Rewards",
         eventDuration: gateLastDay,
-        eventDate: "Coming Soon",
+        eventDate: "November 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -1704,6 +1729,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                   : item.type === "conflux"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                  : item.type === "base"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "gate"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -1721,6 +1748,8 @@ const WalletBalance = ({
                                   ? "CGBP"
                                   : item.type === "conflux"
                                   ? "CFBP"
+                                  : item.type === "base"
+                                  ? "BSBP"
                                   : item.type === "gate"
                                   ? "GTBP"
                                   : "Timepiece"}{" "}
@@ -2670,6 +2699,9 @@ const WalletBalance = ({
                                   window.config.nft_conflux_address
                                 ? "conflux"
                                 : nft.nftAddress ===
+                                  window.config.nft_base_address
+                                ? "base"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -2715,6 +2747,9 @@ const WalletBalance = ({
                                       window.config.nft_conflux_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_base_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -2739,6 +2774,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
                                     ? "CFBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_base_address
+                                    ? "BSBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -2869,6 +2907,9 @@ const WalletBalance = ({
                                   window.config.nft_conflux_address
                                 ? "conflux"
                                 : nft.nftAddress ===
+                                  window.config.nft_base_address
+                                ? "base"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -2916,6 +2957,9 @@ const WalletBalance = ({
                                       window.config.nft_conflux_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_base_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.pngg`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -2942,6 +2986,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_conflux_address
                                     ? "CFBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_base_address
+                                    ? "BSBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
