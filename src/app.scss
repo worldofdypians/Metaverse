@@ -10,6 +10,11 @@
   src: url("./fonts/Organetto.ttf");
 }
 
+@font-face {
+  font-family: "Iceland";
+  src: url("./fonts/Iceland.ttf");
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -56,6 +61,10 @@ body {
 
   .font-organetto {
     font-family: "Organetto" !important;
+  }
+
+  .font-iceland {
+    font-family: "Iceland" !important;
   }
 
   .font-raleway{
@@ -492,8 +501,8 @@ body {
 }
 
 .hidescroll {
-  overflow: hidden;
-  pointer-events: none;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }
 .elevated-container {
   background-color: $white;

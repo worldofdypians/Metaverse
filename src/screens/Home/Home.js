@@ -24,6 +24,8 @@ import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHun
 import treasureHuntGate from '../../components/TimepieceMint/assets/treasureHuntGate.webp'
 
 import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
+import LandFlyout from '../../components/LandFlyout/LandFlyout'
+import ChestFlyout from "../../components/LandFlyout/ChestFlyout";
 
 const Home = ({
   handleRegister,
@@ -126,7 +128,7 @@ const Home = ({
         <CawsSociety
           content="The Cats and Watches Society (CAWS) NFT is a unique collection of
             utility NFTs developed by Dypius. Owners of these NFTs will be able
-            to adventure with their CAT companion enhancing the player’s
+            to adventure with their CAT companion enhancing the player's
             abilities and increasing rewards."
         />
         <CawsWorld />
@@ -135,6 +137,9 @@ const Home = ({
         {/* <Partners /> */}
       </div>
     </div>
+    {/* <LandFlyout /> */}
+  <ChestFlyout />
+
   </>
   );
 };

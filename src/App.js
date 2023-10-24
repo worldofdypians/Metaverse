@@ -64,6 +64,7 @@ import {
   ConnectionType,
 } from "web3-connector";
 
+
 function App() {
   const CHAINLIST = {
     1: {
@@ -487,7 +488,7 @@ function App() {
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
         setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
-        setmyConfluxNFTsCreated(NFTS); 
+        setmyConfluxNFTsCreated(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
