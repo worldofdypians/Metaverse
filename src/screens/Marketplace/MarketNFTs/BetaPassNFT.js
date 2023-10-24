@@ -602,7 +602,7 @@ const BetaPassNFT = ({
                       rewards in different tokens, which are distributed on a
                       monthly basis.
                     </p>
-                    {mintTitle === "conflux" && (
+                    {/* {mintTitle === "conflux" && (
                       <NavLink
                         to="/marketplace/mint/conflux"
                         style={{ textDecoration: "none" }}
@@ -612,7 +612,7 @@ const BetaPassNFT = ({
                           Available minting
                         </button>
                       </NavLink>
-                    )}
+                    )} */}
                   </div>
                 </div>
                 <div className="col-12 col-lg-4 px-0">
@@ -918,7 +918,7 @@ const BetaPassNFT = ({
                         )}
                         {mintTitle === "gate" && (
                           <div className="position-relative">
-                            <img src={pinkAreaGate} alt="" />
+                            <img src={pinkAreaConflux} alt="" />
                           </div>
                         )}
                         {mintTitle === "conflux" && (

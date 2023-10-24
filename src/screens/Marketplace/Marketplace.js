@@ -249,8 +249,7 @@ const Marketplace = ({
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
     setTotalSupply(
       parseInt(result) + parseInt(confluxresult) + parseInt(gateresult) + 20000
-    ); 
-
+    );
   };
 
   const getAllData = async () => {
@@ -278,7 +277,7 @@ const Marketplace = ({
 
   const fetchCachedData = () => {
     const cachedVolume = localStorage.getItem("cachedVolume");
-    const cachedTvl = localStorage.getItem("cachedTvl"); 
+    const cachedTvl = localStorage.getItem("cachedTvl");
 
     if (cachedTvl && cachedVolume) {
       setTotalTx(cachedTvl);
@@ -603,7 +602,7 @@ const Marketplace = ({
                 <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
                     {" "}
-                    {getFormattedNumber(totalSupply,0)}
+                    {getFormattedNumber(totalSupply, 0)}
                   </h6>
                   <span className="stats-desc">Sold NFTs</span>
                 </div>
@@ -1090,8 +1089,8 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="mintleft-side mt-0 px-0 d-flex flex-column gap-3">
-                  {/* <NavLink
-                    to={"/marketplace/mint"}
+                  <NavLink
+                    to={"/marketplace/mint/timepiece"}
                     className="w-100 m-0 d-flex flex-column gap-5"
                   >
                     <div className="p-4 mint-wrappernew market-mint-bg betastyle w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height staking-height2 h-auto">
@@ -1126,9 +1125,16 @@ const Marketplace = ({
                         className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
                       />
                     </div>
-                  </NavLink> */}
-
-                  <div className="d-flex flex-column gap-4">
+                  </NavLink>
+                  <NavLink to="/marketplace/mint/timepiece">
+                    <span
+                      className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
+                      style={{ width: "fit-content" }}
+                    >
+                      Mint now <img src={greenArrow} alt="" />{" "}
+                    </span>
+                  </NavLink>
+                  {/* <div className="d-flex flex-column gap-4">
                     <NavLink
                       to={"/marketplace/mint/conflux"}
                       className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between"
@@ -1165,7 +1171,7 @@ const Marketplace = ({
                     >
                       Mint now <img src={greenArrow} alt="" />{" "}
                     </span>
-                  </NavLink>
+                  </NavLink> */}
                 </div>
                 <div className="stakeright-side d-flex flex-column gap-3">
                   <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">

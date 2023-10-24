@@ -112,7 +112,7 @@ const MobileNav = () => {
           }}
         />
         <NavLink
-          to="/marketplace/mint/conflux"
+          to="/marketplace/mint/timepiece"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
