@@ -151,7 +151,7 @@ const WalletBalance = ({
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [idyptokenDataAvax, setIDypTokenDataAvax] = useState([]);
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
-  const [filterTitle, setFilterTitle] = useState("Collected");
+  const [filterTitle, setFilterTitle] = useState("Balance");
   const [nftItems, setNftItems] = useState([]);
 
   const [collectedItems, setcollectedItems] = useState([]);
@@ -309,9 +309,9 @@ const WalletBalance = ({
   };
 
   const sortNfts = (sortValue) => {
-    // if (sortValue === "balance") {
-    //   setFilterTitle("Balance");
-    // } else
+    if (sortValue === "balance") {
+      setFilterTitle("Balance");
+    } else
 
     if (sortValue === "collected") {
       setFilterTitle("Collected");
@@ -1476,89 +1476,8 @@ const WalletBalance = ({
   return (
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
-        <div className="row w-100 gap-5 gap-lg-0">
-          <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
-            <h6
-              className="new-bundle-title ms-0 ms-lg-4"
-              style={{ position: "absolute", top: "-35px" }}
-            >
-              Special Events
-            </h6>
-            <div className="nft-outer-wrapper2 rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
-              <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyCoingecko);
-                  setEventPopup(true);
-                }}
-                data={dummyCoingecko}
-                event={dummyCoingecko}
-                userEmail={email}
-                userWallet={address}
-              />
-              <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyConflux);
-                  setEventPopup(true);
-                }}
-                data={dummyConflux}
-                event={dummyConflux}
-                userEmail={email}
-                userWallet={address}
-              />
-              <UpcomingProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyGate);
-                  setEventPopup(true);
-                }}
-                data={dummyGate}
-              />
-              {/* <img
-                src={eventSkeleton}
-                className="profile-event-item"
-                style={{
-                  background: "none",
-                  borderBottom: "none",
-                  transform: "translateX(0px)",
-                }}
-                alt=""
-              /> */}
-              {/* <img
-                src={eventSkeleton}
-                className="profile-event-item"
-                style={{
-                  background: "none",
-                  borderBottom: "none",
-                  transform: "translateX(0px)",
-                }}
-                alt=""
-              /> */}
-              {/* <div className="d-flex w-100 justify-content-center">
-                <span className="seller-addr">Special events comming soon</span>
-                </div> */}
-              {dummyBetaPassData2.length > 3 && (
-                <div
-                  className="d-flex align-items-center justify-content-center gap-2"
-                  onClick={() => openEvents()}
-                  style={{
-                    cursor: "pointer",
-                    width: "fit-content",
-                    position: "absolute",
-                    bottom: windowSize.width > 650 ? "20px" : "5px",
-                    left: windowSize.width > 650 ? "43%" : "43%",
-                  }}
-                >
-                  <span className="account-view-all">
-                    {showAllEvents ? "View Less" : "View All"}
-                  </span>
-                  <img
-                    src={viewAllArrow}
-                    style={{ rotate: showAllEvents ? "0deg" : "180deg" }}
-                    alt=""
-                  />
-                </div>
-              )}
-            </div>
-          </div>
+        <div className="row w-100 gap-5 gap-lg-0 mx-0">
+         
           {showAllEvents && windowSize.width < 786 ? (
             <div className="col-12 p-lg-3">
               <div
@@ -1592,16 +1511,16 @@ const WalletBalance = ({
               </div>
             </div>
           ) : null}
-          <div className="col-12 px-0 ps-lg-3 col-lg-8 position-relative mt-3 mt-lg-0">
+          <div className="col-12 px-0 ps-lg-3 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
             >
               My Portfolio
             </h6>
-            <div className="nft-outer-wrapper2 p-4  d-flex flex-column gap-2 position-relative custom-height-2">
+            <div className="nft-outer-wrapper2 p-4  d-flex flex-column gap-2 position-relative">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
-                {/* <h6
+                <h6
                   className={`account-nft-sort ${
                     filterTitle === "Balance" && "nft-sort-selected"
                   } `}
@@ -1611,7 +1530,7 @@ const WalletBalance = ({
                   }}
                 >
                   Balance
-                </h6> */}
+                </h6>
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"
@@ -2412,8 +2331,8 @@ const WalletBalance = ({
               )}
 
               {
-                // filterTitle !== "Balance" &&
-                //   loading === false &&
+                filterTitle !== "Balance" &&
+                  loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
                   (filterTitle === "Listed" && listedItems.length > 0) ||
                   (filterTitle === "Offers" && myOffers.length > 6) ||

@@ -5,7 +5,8 @@ import "./_profilecard.scss";
 import defaultAvatar from "../../Images/userProfile/default-avatar.png";
 import defaultAvatarAlert from "../../Images/userProfile/default-avatar-alert.png";
 import defaultAvatarPremium from "../../Images/userProfile/defaultAvatarPremium.png";
-
+import genesisRankImg from "../WalletBalance/newAssets/genesisRank.svg";
+import globalRank from "../WalletBalance/newAssets/globalRank.svg";
 // import Countdown from "react-countdown";
 import dypMedal from "../../Images/userProfile/dyp-medal.svg";
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
@@ -23,6 +24,7 @@ import circleArrow from "../../Images/userProfile/arrow-circle.svg";
 import blackWallet from "../../Images/userProfile/wallet-black.svg";
 import starActive from "./assets/star-active.svg";
 import starAlert from "./assets/star-alert.svg";
+import axios from "axios";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -63,50 +65,51 @@ const ProfileCard = ({
   onLinkWallet,
   isPremium,
   isConnected,
+  onOpenLeaderboard,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
-  // const [userRank, setUserRank] = useState("");
-  // const [genesisRank, setGenesisRank] = useState("");
+  const [userRank, setUserRank] = useState("");
+  const [genesisRank, setGenesisRank] = useState("");
   // const [countdown, setcountdown] = useState();
   // const [isactive, setisActive] = useState(false);
   // const [remainingTime, setRemainingTime] = useState("");
 
-  // const fetchMonthlyRecordsAroundPlayer = async () => {
-  //   const data = {
-  //     StatisticName: "MonthlyLeaderboard",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   const result = await axios.post(
-  //     `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-  //     data
-  //   );
-  //   setRecords(result.data.data.leaderboard);
-  //   var testArray = result.data.data.leaderboard.filter(
-  //     (item) => item.displayName === username
-  //   );
+  const fetchMonthlyRecordsAroundPlayer = async () => {
+    const data = {
+      StatisticName: "MonthlyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
 
-  //   setUserRank(testArray[0].position);
-  // };
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
 
-  // const fetchGenesisAroundPlayer = async () => {
-  //   const data = {
-  //     StatisticName: "GenesisLandRewards",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   const result = await axios.post(
-  //     `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-  //     data
-  //   );
+    setUserRank(testArray[0].position);
+  };
 
-  //   var testArray = result.data.data.leaderboard.filter(
-  //     (item) => item.displayName === username
-  //   );
+  const fetchGenesisAroundPlayer = async () => {
+    const data = {
+      StatisticName: "GenesisLandRewards",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
 
-  //   setGenesisRank(testArray[0].position);
-  // };
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+
+    setGenesisRank(testArray[0].position);
+  };
 
   // const setlastDay = async () => {
   //   const timeofDeposit_Date = new Intl.DateTimeFormat("en-UK", {
@@ -121,10 +124,10 @@ const ProfileCard = ({
   //   setRemainingTime(timeofDeposit_Date);
   // };
 
-  // useEffect(() => {
-  // fetchMonthlyRecordsAroundPlayer();
-  // fetchGenesisAroundPlayer();
-  // }, []);
+  useEffect(() => {
+    fetchMonthlyRecordsAroundPlayer();
+    fetchGenesisAroundPlayer();
+  }, []);
 
   // useEffect(() => {
   //   if (
@@ -266,55 +269,48 @@ const ProfileCard = ({
                             </span>
                           )}
                         </span>
-                        <span className="emailtext">{email}</span>
-                      </div>
-                    ) : (
-                      <div className="d-flex flex-column gap-1 col-lg-7">
-                        <span className="usernametext font-organetto">
-                          Start your journey now!
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-3 position-relative">
-                  <>
-                    <Clipboard
-                      component="div"
-                      data-event="click"
-                      data-for={id}
-                      data-tip="Copied To Clipboard!"
-                      data-clipboard-text={address}
-                      className={`${
-                        isVerified &&
-                        email &&
-                        address?.toLowerCase() === coinbase?.toLowerCase() &&
-                        !isPremium &&
-                        "wallet-wrapper-active d-flex"
-                      } ${
-                        isVerified &&
-                        email &&
-                        address?.toLowerCase() === coinbase?.toLowerCase() &&
-                        isPremium &&
-                        "wallet-wrapper-active-premium d-flex"
-                      } ${
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase() &&
-                        "wallet-wrapper-alert d-flex"
-                      } ${
-                        (coinbase && email && !address && !username) ||
-                        (coinbase && email && !address && username) ||
-                        (!email && !coinbase && "d-none")
-                      }  d-flex wallet-wrapper align-items-center gap-2 position-relative`}
-                    >
-                      {(coinbase || address) && (
+
+                        <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-3 position-relative">
+                          <>
+                            <Clipboard
+                              component="div"
+                              data-event="click"
+                              data-for={id}
+                              data-tip="Copied To Clipboard!"
+                              data-clipboard-text={address}
+                              className={`${
+                                isVerified &&
+                                email &&
+                                address?.toLowerCase() ===
+                                  coinbase?.toLowerCase() &&
+                                !isPremium &&
+                                "wallet-wrapper-active d-flex"
+                              } ${
+                                isVerified &&
+                                email &&
+                                address?.toLowerCase() ===
+                                  coinbase?.toLowerCase() &&
+                                isPremium &&
+                                "wallet-wrapper-active-premium d-flex"
+                              } ${
+                                address &&
+                                email &&
+                                coinbase &&
+                                syncStatus !== "" &&
+                                address.toLowerCase() !==
+                                  coinbase.toLowerCase() &&
+                                "wallet-wrapper-alert d-flex"
+                              } ${
+                                (coinbase && email && !address && !username) ||
+                                (coinbase && email && !address && username) ||
+                                (!email && !coinbase && "d-none")
+                              }  d-flex wallet-wrapper align-items-center gap-2 position-relative`}
+                            >
+                              {/* {(coinbase || address) && (
                         <img src={walletIcon} alt="" className="wallet-icon" />
-                      )}
-                      <div className="d-flex flex-column">
-                        <span className="wallet-span d-flex align-items-center gap-2">
+                      )} */}
+                              <div className="d-flex flex-column">
+                                {/* <span className="wallet-span d-flex align-items-center gap-2">
                           {coinbase && address && email
                             ? "Game Wallet address"
                             : coinbase && !email
@@ -329,109 +325,118 @@ const ProfileCard = ({
                               className="copy-icon"
                             />
                           )}
-                        </span>
+                        </span> */}
 
-                        <div
-                          className="d-flex align-items-center gap-2"
-                          onClick={() => {
-                            setTooltip(true);
-                            setTimeout(() => setTooltip(false), 1000);
-                          }}
-                        >
-                          <span className="wallet-address">
-                            {windowSize.width > 991
-                              ? isVerified && email
-                                ? address
-                                : coinbase
-                              : isVerified && email
-                              ? shortAddress(address)
-                              : shortAddress(coinbase)}
-                          </span>
-                        </div>
-                      </div>
-                    </Clipboard>
+                                <div
+                                  className="d-flex flex-column"
+                                  onClick={() => {
+                                    setTooltip(true);
+                                    setTimeout(() => setTooltip(false), 1000);
+                                  }}
+                                >
+                                  <span className="emailtext">{email}</span>
+                                  <span className="wallet-address">
+                                    {windowSize.width > 991
+                                      ? isVerified && email
+                                        ? address
+                                        : coinbase
+                                      : isVerified && email
+                                      ? shortAddress(address)
+                                      : shortAddress(coinbase)}
+                                  </span>
+                                </div>
+                              </div>
+                            </Clipboard>
 
-                    <div
-                      className={`tooltip-wrapper p-2 ${
-                        tooltip && "tooltip-active"
-                      }`}
-                      style={{ top: "auto", right: 0 }}
-                    >
-                      <p className="tooltip-content m-0">Copied!</p>
-                    </div>
-                  </>
-                  {!coinbase && (
-                    <button
-                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                      onClick={() => {
-                        handleShowWalletPopup();
-                      }}
-                      style={{ width: "fit-content", fontSize: 14 }}
-                    >
-                      <img src={blackWallet} alt="" style={{ width: 18 }} />
-                      Connect wallet
-                    </button>
-                  )}
+                            <div
+                              className={`tooltip-wrapper p-2 ${
+                                tooltip && "tooltip-active"
+                              }`}
+                              style={{ top: "auto", right: 0 }}
+                            >
+                              <p className="tooltip-content m-0">Copied!</p>
+                            </div>
+                          </>
+                          {!coinbase && (
+                            <button
+                              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                              onClick={() => {
+                                handleShowWalletPopup();
+                              }}
+                              style={{ width: "fit-content", fontSize: 14 }}
+                            >
+                              <img
+                                src={blackWallet}
+                                alt=""
+                                style={{ width: 18 }}
+                              />
+                              Connect wallet
+                            </button>
+                          )}
 
-                  {coinbase && address && !email && (
-                    <button
-                      className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
-                      onClick={() => {
-                        onSigninClick();
-                      }}
-                      style={{ width: "fit-content", fontSize: 14 }}
-                    >
-                      Sign in
-                      <img src={greenarrow} alt="" />
-                    </button>
-                  )}
+                          {coinbase && address && !email && (
+                            <button
+                              className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
+                              onClick={() => {
+                                onSigninClick();
+                              }}
+                              style={{ width: "fit-content", fontSize: 14 }}
+                            >
+                              Sign in
+                              <img src={greenarrow} alt="" />
+                            </button>
+                          )}
 
-                  {coinbase && !email && !address && !username && (
-                    <button
-                      className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
-                      onClick={() => {
-                        onSigninClick();
-                      }}
-                      style={{ width: "fit-content", fontSize: 14 }}
-                    >
-                      Sign in
-                      <img src={greenarrow} alt="" />
-                    </button>
-                  )}
+                          {coinbase && !email && !address && !username && (
+                            <button
+                              className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
+                              onClick={() => {
+                                onSigninClick();
+                              }}
+                              style={{ width: "fit-content", fontSize: 14 }}
+                            >
+                              Sign in
+                              <img src={greenarrow} alt="" />
+                            </button>
+                          )}
 
-                  {coinbase && email && !address && !username && (
-                    <button
-                      className="d-flex px-3 py-1 align-items-center signinbtn"
-                      onClick={() => {
-                        onSigninClick();
-                      }}
-                      style={{ width: "fit-content", fontSize: 14 }}
-                    >
-                      Create player
-                      <img src={greenarrow} alt="" />
-                    </button>
-                  )}
+                          {coinbase && email && !address && !username && (
+                            <button
+                              className="d-flex px-3 py-1 align-items-center signinbtn"
+                              onClick={() => {
+                                onSigninClick();
+                              }}
+                              style={{ width: "fit-content", fontSize: 14 }}
+                            >
+                              Create player
+                              <img src={greenarrow} alt="" />
+                            </button>
+                          )}
 
-                  {coinbase && email && username && !address && (
-                    <div
-                      className="walletconnectBtn w-100"
-                      onClick={onLinkWallet}
-                    >
-                      <div className="d-flex gap-2 justify-content-between align-items-center">
-                        <div className="d-flex gap-2 align-items-center">
-                          <img src={walletImg} alt="" />
-                          <div className="d-flex flex-column">
-                            <span className="secondTitle">Connect wallet</span>
+                          {coinbase && email && username && !address && (
+                            <div
+                              className="walletconnectBtn w-100"
+                              onClick={onLinkWallet}
+                            >
+                              <div className="d-flex gap-2 justify-content-between align-items-center">
+                                <div className="d-flex gap-2 align-items-center">
+                                  <img src={walletImg} alt="" />
+                                  <div className="d-flex flex-column">
+                                    <span className="secondTitle">
+                                      Connect wallet
+                                    </span>
 
-                            <span className="firsttitle">Link your wallet</span>
-                          </div>
-                        </div>
-                        <img src={circleArrow} alt="" />
-                      </div>
-                    </div>
-                  )}
+                                    <span className="firsttitle">
+                                      Link your wallet
+                                    </span>
+                                  </div>
+                                </div>
+                                <img src={circleArrow} alt="" />
+                              </div>
+                            </div>
+                          )}
 
-                  {/* : 
+                          {/* : 
                  (
                   <>
                      <Clipboard
@@ -472,7 +477,7 @@ const ProfileCard = ({
                   </>
                 ) */}
 
-                  {/* {!address ? (
+                          {/* {!address ? (
                   <span className="walletinfo">
                     *Note that once you link a wallet to your profile, it cannot
                     be changed.
@@ -483,6 +488,40 @@ const ProfileCard = ({
                     changed.
                   </span>
                 )} */}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="d-flex flex-column gap-1 col-lg-7">
+                        <span className="usernametext font-organetto">
+                          Start your journey now!
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="d-flex flex-column align-items-center position-relative gap-2">
+                {/* <div className="table-separator position-absolute"></div> */}
+                  <h6 className="profile-div-title mb-0">Leaderboard</h6>
+                  <div className="d-flex align-items-center gap-4">
+                    <div className="d-flex flex-column align-items-center">
+                      <img src={globalRank} alt="" />
+                      <span className="font-iceland profile-rank mb-0">
+                        #{userRank}
+                      </span>
+                      {/* <span className="font-iceland profile-rank mb-0">
+                        Global
+                      </span> */}
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                      <img src={genesisRankImg} alt="" />
+                      <span className="font-iceland profile-rank mb-0">
+                        #{genesisRank}
+                      </span>
+                      {/* <span className="font-iceland profile-rank mb-0">
+                        Genesis
+                      </span> */}
+                    </div>
+                  </div>
                 </div>
                 {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
             <div className="d-flex flex-column">

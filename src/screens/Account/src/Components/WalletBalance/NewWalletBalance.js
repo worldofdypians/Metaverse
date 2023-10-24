@@ -29,6 +29,36 @@ import styled from "styled-components";
 import stakeNft from "./newAssets/stakeNft.png";
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
 import walletIcon from "../WalletBalance/assets/walletIcon.svg";
+import ActiveProfileEvent from "./ActiveProfileEvent";
+import useWindowSize from "../../Utils.js/hooks/useWindowSize";
+import UpcomingProfileEvent from "./UpcomingProfileEvent";
+
+import conflux from "./assets/conflux.svg";
+import gate from "./assets/gate.svg";
+
+import coin98 from "./assets/coin98.svg";
+import coingecko from "./assets/coingecko.svg";
+import base from "./assets/baseLogo.svg";
+import confluxUpcoming from "./assets/confluxUpcoming.png";
+import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
+
+import coin98Upcoming from "./assets/coin98Upcoming.png";
+import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
+import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
+import twitter from "./assets/greenTwitter.svg";
+import telegram from "./assets/greentg.svg";
+import website from "./assets/greenWebsite.svg";
+import discord from "./assets/greenDiscord.svg";
+import grayDollar from "./assets/grayDollar.svg";
+import eventsArrow from "./assets/eventsArrow.svg";
+import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
+import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
+import eventPopupImageBase from "./assets/eventPopupImageBase.png";
+
+import gatePopupImage from "./assets/gatePopupImage.png";
+import confluxPopupImage from "./assets/eventPopupImage.png";
+import Countdown from "react-countdown";
+import viewAllArrow from "./assets/viewAllArrow.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -116,8 +146,318 @@ const NewWalletBalance = ({
   isPremium,
   onRewardsClick,
   onPremiumClick,
-  onBalanceClick
+  onBalanceClick,
 }) => {
+  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
+  let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
+
+  const dummyConflux = {
+    title: "Conflux",
+    chain: "Conflux Network",
+    linkState: "conflux",
+    rewards: "CFX",
+    status: "Live",
+    id: "event1",
+    eventType: "Explore & Mine",
+    date: "Oct 06, 2023",
+    logo: conflux,
+    totalRewards: "$2,000 in CFX Rewards",
+    eventDuration: confluxLastDay,
+    minRewards: "1",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "20,000",
+    learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+  };
+
+  const dummyGate = {
+    title: "Gate.io",
+    chain: "BNB Chain",
+    linkState: "gate",
+    rewards: "BNB",
+    status: "Coming Soon",
+    id: "event6",
+    eventType: "Explore & Mine",
+    date: "Oct 20, 2023",
+    logo: gate,
+    totalRewards: "$2,000 in BNB Rewards",
+    eventDuration: gateLastDay,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "20,000",
+  };
+
+  const dummyCoingecko = {
+    title: "CoinGecko",
+    chain: "BNB Chain",
+    linkState: "coingecko",
+    rewards: "BNB",
+    status: "Live",
+    id: "event3",
+    eventType: "Explore & Mine",
+    date: "Sept 25, 2023",
+    logo: coingecko,
+    totalRewards: "$10,000 in BNB Rewards",
+    eventDuration: coingeckoLastDay,
+    minRewards: "1",
+    maxRewards: "100",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+  };
+  const dummyCoin98 = {
+    title: "Coin98 Pass",
+    chain: "BNB Chain",
+    linkState: "coin98",
+    rewards: "BNB",
+    status: "Expired",
+    id: "event2",
+    eventType: "Explore & Mine",
+  };
+  const dummyBase = {
+    eventType: "Explore & Mine",
+    title: "Base",
+    chain: "Base Chain",
+    linkState: "base",
+    rewards: "ETH",
+    status: "Coming Soon",
+    id: "event4",
+    date: "Coming Soon",
+    totalRewards: "$5,000 in ETH Rewards",
+    eventDuration: gateLastDay,
+    backgroundImage: baseUpcoming,
+    logo: base,
+    date: "Coming Soon",
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "30,000",
+  };
+
+  const dummyBetaPassData = [
+    {
+      title: "Conflux (CFX)",
+      logo: conflux,
+      eventStatus: "Live",
+      totalRewards: "$2,000 in CFX Rewards",
+      myEarnings: 120.45,
+      eventType: "Explore & Mine",
+      eventDate: "Ends in 28 days",
+      backgroundImage: confluxUpcoming,
+      popupInfo: {
+        title: "Conflux",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
+        status: "Live",
+        id: "event1",
+        eventType: "Explore & Mine",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+      },
+    },
+    {
+      title: "Coin98 (C98)",
+      logo: coin98,
+      eventStatus: "Coming Soon",
+      totalRewards: "$3,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "April, 1, 2024",
+      backgroundImage: coin98Upcoming,
+      popupInfo: {
+        title: "Coin98 Pass",
+        chain: "BNB Chain",
+        linkState: "coin98",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event2",
+        eventType: "Explore & Mine",
+      },
+    },
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Upcoming",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 120.0,
+      eventType: "Explore & Mine",
+      eventDate: "11/09/2023",
+      backgroundImage: coingeckoUpcoming,
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Upcoming",
+        id: "event3",
+        eventType: "Explore & Mine",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+      },
+    },
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Expired",
+      totalRewards: "$3,000 in BASE Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Expired",
+      backgroundImage: baseUpcoming,
+      popupInfo: {
+        title: "Base Pass",
+        chain: "BNB Chain",
+        linkState: "base",
+        rewards: "BASE",
+        status: "Expired",
+        id: "event4",
+        eventType: "Explore & Mine",
+      },
+    },
+  ];
+
+  const dummyBetaPassData2 = [
+    // {
+    //   title: "Avalanche",
+    //   logo: avaxLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$3,000 in AVAX Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "September xx, 2023",
+    //   backgroundImage: avaxUpcoming,
+    //   popupInfo: {
+    //     title: "Avalanche",
+    //     chain: "Avalanche",
+    //     linkState: "coingecko",
+    //     rewards: "AVAX",
+    //     status: "Coming Soon",
+    //     id: "event5",
+    //   eventType: "Explore & Mine",
+
+    //   },
+    // },
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Live",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "September 25, 2023",
+      backgroundImage: coingeckoUpcoming,
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Live",
+        id: "event3",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Conflux",
+      logo: conflux,
+      eventStatus: "Live",
+      totalRewards: "$2,000 in CFX Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "October 06, 2023",
+      backgroundImage: confluxUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Conflux",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
+        status: "Live",
+        id: "event1",
+        totalRewards: "$2,000 in CFX Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "October 06, 2023",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Gate.io",
+      logo: gate,
+      eventStatus: "Coming Soon",
+      totalRewards: "$2,000 in BNB Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "October 20, 2023",
+      backgroundImage: gateUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Gate.io",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "GT",
+        status: "Coming Soon",
+        id: "event6",
+        totalRewards: "$2,000 in BNB Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "October 20, 2023",
+        date: "Oct 20, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+      },
+    },
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Coming Soon",
+      totalRewards: "$5,000 in ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Coming Soon",
+      backgroundImage: baseUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Coming Soon",
+        id: "event4",
+        date: "Coming Soon",
+        totalRewards: "$5,000 in ETH Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "Coming Soon",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+      },
+    },
+  ];
+
+  const [dummyEvent, setDummyEvent] = useState({});
+  const [showAllEvents, setShowAllEvents] = useState(false);
+  const [eventPopup, setEventPopup] = useState(false);
+
   const [userRank, setUserRank] = useState("N/A");
   const [genesisRank, setGenesisRank] = useState("N/A");
   const [records, setRecords] = useState([]);
@@ -137,6 +477,11 @@ const NewWalletBalance = ({
   const [success, setSuccess] = useState("");
   const [finished, setFinished] = useState(true);
   const html = document.querySelector("html");
+  const windowSize = useWindowSize();
+
+  const openEvents = () => {
+    setShowAllEvents(!showAllEvents);
+  };
 
   const validateUrl = (url) => {
     let errors = {};
@@ -335,8 +680,90 @@ const NewWalletBalance = ({
   return (
     <>
       <div className="container px-0">
-        <div className="row gap-3 gap-lg-0">
-          <div className="col-12 col-lg-4">
+        <div className="row gap-3 gap-lg-0 mx-0">
+          <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
+            <div className="nft-outer-wrapper2 rankings-wrapper px-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
+              <h6
+                className="profile-div-title mb-0"
+                // style={{ fontSize: '14px'}}
+              >
+                Special Events
+              </h6>{" "}
+              <ActiveProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyCoingecko);
+                  setEventPopup(true);
+                }}
+                data={dummyCoingecko}
+                event={dummyCoingecko}
+                userEmail={email}
+                userWallet={address}
+              />
+              <ActiveProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyConflux);
+                  setEventPopup(true);
+                }}
+                data={dummyConflux}
+                event={dummyConflux}
+                userEmail={email}
+                userWallet={address}
+              />
+              <UpcomingProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyGate);
+                  setEventPopup(true);
+                }}
+                data={dummyGate}
+              />
+              {/* <img
+                src={eventSkeleton}
+                className="profile-event-item"
+                style={{
+                  background: "none",
+                  borderBottom: "none",
+                  transform: "translateX(0px)",
+                }}
+                alt=""
+              /> */}
+              {/* <img
+                src={eventSkeleton}
+                className="profile-event-item"
+                style={{
+                  background: "none",
+                  borderBottom: "none",
+                  transform: "translateX(0px)",
+                }}
+                alt=""
+              /> */}
+              {/* <div className="d-flex w-100 justify-content-center">
+                <span className="seller-addr">Special events comming soon</span>
+                </div> */}
+              {dummyBetaPassData2.length > 3 && (
+                <div
+                  className="d-flex align-items-center justify-content-center gap-2"
+                  onClick={() => openEvents()}
+                  style={{
+                    cursor: "pointer",
+                    width: "fit-content",
+                    position: "absolute",
+                    bottom: windowSize.width > 650 ? "15px" : "5px",
+                    left: windowSize.width > 650 ? "43%" : "43%",
+                  }}
+                >
+                  <span className="account-view-all">
+                    {showAllEvents ? "View Less" : "View All"}
+                  </span>
+                  <img
+                    src={viewAllArrow}
+                    style={{ rotate: showAllEvents ? "0deg" : "180deg" }}
+                    alt=""
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+          {/* <div className="col-12 col-lg-4">
             <div className="d-flex flex-column gap-2">
               <div
                 className="purple-container position-relative p-3 d-flex align-items-center justify-content-between"
@@ -356,26 +783,7 @@ const NewWalletBalance = ({
                     <img src={rightIcon} alt="" />
                   </div>
                 </div>
-                <div className="d-flex align-items-center gap-4">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <img src={globalRank} alt="" />
-                    <span className="font-iceland profile-rank mb-0">
-                      #{userRank}
-                    </span>
-                    <span className="font-iceland profile-rank mb-0">
-                      Global
-                    </span>
-                  </div>
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <img src={genesisRankImg} alt="" />
-                    <span className="font-iceland profile-rank mb-0">
-                      #{genesisRank}
-                    </span>
-                    <span className="font-iceland profile-rank mb-0">
-                      Genesis
-                    </span>
-                  </div>
-                </div>
+               
               </div>
               <div className="purple-container p-3 position-relative d-flex flex-column gap-3" onClick={onBalanceClick} >
                 <div className="green-div"></div>
@@ -551,8 +959,8 @@ const NewWalletBalance = ({
                 </div>
               )}
             </div>
-          </div>
-          <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 gap-lg-0">
+          </div> */}
+          <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 pe-0 gap-lg-0">
             <div className="row gap-3 gap-lg-0">
               <div className="col-12 col-lg-4">
                 <div
