@@ -30,7 +30,7 @@ import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 import NewWalletBalance from "../../Components/WalletBalance/NewWalletBalance";
 import DailyBonusPopup from "../../Components/WalletBalance/DailyBonusPopup";
-import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup.webp";
+import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup3.webp";
 import OutsideClickHandler from "react-outside-click-handler";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
 import MyRewardsPopup from "../../Components/WalletBalance/MyRewardsPopup";

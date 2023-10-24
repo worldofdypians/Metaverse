@@ -475,7 +475,7 @@ const NewWalletBalance = ({
   const [loading, setLoading] = useState(false);
   const [mediaUrl, setMediaUrl] = useState("");
   const [success, setSuccess] = useState("");
-  const [finished, setFinished] = useState(true);
+  const [finished, setFinished] = useState(false);
   const html = document.querySelector("html");
   const windowSize = useWindowSize();
 
@@ -1002,7 +1002,7 @@ const NewWalletBalance = ({
                         style={{ width: "96px", height: "40px", right: "10px" }}
                       >
                         <span className="ready-to-claim mb-0">
-                          {finished ? " Reset time" : "Ready to Claim"}
+                          {finished ? "Time" : "Ready to Claim"}
                         </span>
                         <img
                           src={readyBorder}

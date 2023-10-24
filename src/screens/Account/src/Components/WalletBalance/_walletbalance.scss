@@ -1569,7 +1569,8 @@
   position: absolute;
   width: 55%;
   right: 0%;
-  top: 0%;
+  top: -20%;
+  animation: pulsate 1.5s ease-out infinite;
   @media screen and (max-width: 786px) {
     width: 40%;
   }
@@ -1992,4 +1993,9 @@
   bottom: 25%;
   right: -5%;
   width: 70%;
+}
+
+.rewards-div{
+  border-radius: 10px;
+background: rgba(5, 3, 3, 0.3);
 }
