@@ -66,7 +66,7 @@ const StyledTextField = styled(TextField)({
     fontFamily: "Poppins",
   },
   "& .MuiInputLabel-root": {
-    color: "#fff",
+    color: "#62688F",
     fontFamily: "Poppins",
     zIndex: "2",
   },
@@ -79,10 +79,10 @@ const StyledTextField = styled(TextField)({
     zIndex: "1",
   },
   "& .MuiInput-underline:after": {
-    borderBottomColor: "#AAA5EB",
+    borderBottomColor: "#62688F",
     fontFamily: "Poppins",
     color: "#fff",
-    background: "#272450",
+    background: "#171932",
     borderRadius: "8px",
   },
   "& .MuiOutlinedInput-input": {
@@ -92,16 +92,16 @@ const StyledTextField = styled(TextField)({
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "#AAA5EB",
+      borderColor: "#62688F",
       fontFamily: "Poppins",
-      background: "#272450",
+      background: "#171932",
       borderRadius: "8px",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#AAA5EB",
+      borderColor: "#62688F",
       fontFamily: "Poppins",
       color: "#fff",
-      background: "#272450",
+      background: "#171932",
       borderRadius: "8px",
     },
   },
@@ -970,7 +970,11 @@ const NewWalletBalance = ({
                   <div className="green-div"></div>
                   <img
                     src={finished ? dailyRewardsFinished : dailyRewards}
-                    className={`${finished ? "daily-rewards-img-finished" : "daily-rewards-img"}`}
+                    className={`${
+                      finished
+                        ? "daily-rewards-img-finished"
+                        : "daily-rewards-img"
+                    }`}
                     alt=""
                   />
                   <div className="progress-bar-group d-flex align-items-center gap-3">
@@ -1162,15 +1166,26 @@ const NewWalletBalance = ({
                   The Special Rewards program is designed to recognize and
                   reward players for sharing their World of Dypians gameplay
                   content on various social media platforms, including X
-                  (formerly Twitter), Instagram, TikTok, YouTube, Facebook,
-                  Reddit, and more.
+                  (Twitter), Instagram, TikTok, YouTube, Facebook, Reddit, and
+                  more.
+                  <ul className="mt-3">
+                    <li>
+                      Minimum requirement of 1,000 followers on social media.
+                    </li>
+                  </ul>
+             
                 </p>
                 <p className="popup-paragraph mb-4">
-                  Eligible posts may include high-quality videos and images. To
-                  apply for these special rewards, simply enter the post URL in
-                  the field below. The WoD Team will review your content and
-                  determine the reward, which is distributed in BNB on a monthly
-                  basis.
+                The WoD Team will review the quality of the content, the
+                  engagement of the post, and other details. If you are
+                  eligible, they will determine the reward, which is distributed
+                  in BNB on a monthly basis.
+                </p>
+                <p className="popup-paragraph mb-4">
+                <b>*Note:</b> You can submit one post per
+                  time. The team will not reply in any form, but if you are
+                  eligible, you will see the reward here. The display of the
+                  rewards will occur every Monday.
                 </p>
                 <div className="d-flex align-items-center gap-4 mb-4">
                   <StyledTextField
