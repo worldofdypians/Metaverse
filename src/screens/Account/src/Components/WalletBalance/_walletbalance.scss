@@ -3,6 +3,32 @@
   border-radius: 8px;
   font-family: "Poppins", sans-serif !important;
 
+  .multipe-wallet {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.018em;
+    color: #ffffff;
+  }
+
+  // .bnb-wrapper {
+  //   background: linear-gradient(90.83deg, #daaa0a 0.71%, #2e2853 65.22%);
+  //   border-radius: 6px;
+  // }
+
+  // .avax-wrapper {
+  //   background: linear-gradient(90.83deg, #df2d2e 0.71%, #2e2853 65.22%);
+  //   border-radius: 6px;
+  // }
+
+  .chain-title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    color: #f7f7fc;
+  }
+}
+
   .wallet-wrapper {
     background: rgba(8, 11, 42, 0.3);
     padding: 10px;
@@ -30,31 +56,6 @@
     border-radius: 6px;
   }
 
-  .multipe-wallet {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    letter-spacing: -0.018em;
-    color: #ffffff;
-  }
-
-  // .bnb-wrapper {
-  //   background: linear-gradient(90.83deg, #daaa0a 0.71%, #2e2853 65.22%);
-  //   border-radius: 6px;
-  // }
-
-  // .avax-wrapper {
-  //   background: linear-gradient(90.83deg, #df2d2e 0.71%, #2e2853 65.22%);
-  //   border-radius: 6px;
-  // }
-
-  .chain-title {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 20px;
-    color: #f7f7fc;
-  }
-}
 .wallet-span {
   color: #fff;
   font-size: 10px;
@@ -271,6 +272,7 @@
   height: auto;
   @media screen and (max-width: 786px) {
     height: fit-content;
+    margin-bottom: 30px;
   }
 }
 .rankings-wrapper {
@@ -1210,6 +1212,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  font-family: "Poppins";
 }
 
 .profile-rank {
@@ -1624,14 +1627,14 @@
 .chest-progress {
   color: #fff;
   text-align: center;
-  font-size: 14px;
+  font-size: 11px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
+  top: -1px;
   bottom: 0;
   margin: auto;
 }
@@ -1641,7 +1644,7 @@
   height: 170px;
 
   border-radius: 10px;
-  background: linear-gradient(125deg, #252743 -13.33%, #2A303C 70.47%);
+  background: linear-gradient(125deg, #252743 -13.33%, #2a303c 70.47%);
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
@@ -1747,11 +1750,36 @@
 .special-rewards-wrapper {
   position: relative;
   height: 170px;
-  background: linear-gradient(to right, #252743 -13.33%, #d8302e 70.47%);
+  background: linear-gradient(to right, #252743 -13.33%, #951c6a 70.47%);
   border-radius: 10px;
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
+}
+.instakeWrapper3 {
+  border-radius: 8px;
+  background: linear-gradient(92deg, #2a6fc4 -6.32%, #951c6a 157.01%);
+  width: fit-content;
+  padding: 5px 10px;
+  height: 16px;
+}
+
+.instaketxt2 {
+  color: #f7f7fc;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 7px;
+  display: flex;
+}
+
+.view-rewards-btn {
+  border-radius: 8px;
+  background: linear-gradient(92deg, #377fbb -6.32%, #137265 157.01%);
+  width: fit-content;
+  padding: 5px 10px;
+  height: 16px;
 }
 
 .special-rewards-wrapper:hover {
@@ -1997,7 +2025,7 @@
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  width: 40%;
+  width: 50%;
 }
 
 .profile-staking-img {
@@ -2007,7 +2035,7 @@
   width: 70%;
 }
 
-.rewards-div{
+.rewards-div {
   border-radius: 10px;
-background: rgba(5, 3, 3, 0.3);
+  background: rgba(5, 3, 3, 0.3);
 }
