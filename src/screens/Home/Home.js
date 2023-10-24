@@ -21,6 +21,8 @@ import gatePopup from '../../components/TimepieceMint/assets/gatePopup.webp'
 
 import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup.png'
 import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHuntPopup.png'
+import treasureHuntGate from '../../components/TimepieceMint/assets/treasureHuntGate.webp'
+
 import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
 import LandFlyout from '../../components/LandFlyout/LandFlyout'
 import ChestFlyout from "../../components/LandFlyout/ChestFlyout";
@@ -69,8 +71,8 @@ const Home = ({
   }
   const treasureHuntPopupInfo = {
     title: "Treasure Hunt",
-    img: confluxPopup,
-    state: "conflux",
+    img: treasureHuntGate,
+    state: "gate",
   }
 
 
@@ -106,8 +108,7 @@ const Home = ({
   return (
   <>
   <OutsideClickHandler id="popup" onOutsideClick={() => setActivePopup(false)}>
-  <MintPopup active={activePopup} data={gatePopupInfo} onClose={() => setActivePopup(false)} />
-
+  <MintPopup active={activePopup} data={basePopupInfo} onClose={() => setActivePopup(false)} />
   </OutsideClickHandler>
     <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex flex-column home-main-wrapper">

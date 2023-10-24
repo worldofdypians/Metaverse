@@ -146,6 +146,24 @@ const MobileNavbar = ({
     }
   };
 
+  const handleBasePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x2105")
+          .then(() => {
+            handleSwitchNetwork(8453);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(8453);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   useEffect(() => {
     if (chainId === 1) {
       handleSwitchNetwork(1);
@@ -155,9 +173,9 @@ const MobileNavbar = ({
       handleSwitchNetwork(56);
     }
 
-    // if (chainId === 43114) {
-    //   handleSwitchNetwork(43114);
-    // }
+    if (chainId === 8453) {
+      handleSwitchNetwork(8453);
+    }
   }, [chainId, coinbase]);
 
   useEffect(() => {
@@ -224,9 +242,9 @@ const MobileNavbar = ({
                           ? bnb
                           : //:  : avaxState === true
                             // ? avax
-                            // : baseState === true
-                            // ? base
-                            confluxState === true
+                             baseState === true
+                            ? base
+                            :confluxState === true
                             ? conflux
                            : error
                       }
@@ -239,11 +257,11 @@ const MobileNavbar = ({
                         ? "Ethereum"
                         : bnbState === true
                         ? "BNB Chain"
-                        : //: : avaxState === true
+                         //: : avaxState === true
                           // ? "Avalanche"
-                          // : baseState === true
-                          // ? "Base"
-                          confluxState === true
+                          : baseState === true
+                          ? "Base"
+                          :confluxState === true
                           ? "Conflux"
                          : "Unsupported Chain"}
                     </span>
@@ -268,10 +286,10 @@ const MobileNavbar = ({
               <img src={conflux} alt="" />
               Conflux
             </Dropdown.Item>
-                {/*   <Dropdown.Item onClick={() => handleBasePool()}>
+                  <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
-                </Dropdown.Item> */}
+                </Dropdown.Item>
               </DropdownButton>
             </>
           )}

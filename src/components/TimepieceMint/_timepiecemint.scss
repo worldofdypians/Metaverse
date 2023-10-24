@@ -949,6 +949,22 @@
   background-position: center;
 }
 
+.white-explore {
+  width: 20px;
+  height: 20px;
+  @media only screen and (max-width: 550px) {
+    width: auto;
+    height: auto;
+  }
+}
+
+.base-active {
+  background-image: url("../../assets/baseActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
 .genesis-land-empty {
   background-image: url("../../assets/cawsplaceholder.svg"),
     linear-gradient(141.14deg, #5e17cc 11.06%, #381486 34.42%, #1f164c 56.62%);
@@ -1538,10 +1554,12 @@ input::-webkit-inner-spin-button {
 .mint-popup-title {
   color: #fff;
   text-align: center;
-  font-size: 24px;
+  font-size: 21px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+  text-wrap: nowrap;
+
   @media screen and (max-width: 786px) {
     font-size: 15px;
   }
