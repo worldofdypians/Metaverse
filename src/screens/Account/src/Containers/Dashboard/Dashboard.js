@@ -1054,6 +1054,9 @@ function Dashboard({
                         syncStatus={syncStatus}
                         isPremium={isPremium}
                         isConnected={isConnected}
+                         onOpenLeaderboard={() => {
+                          setLeaderboard(true);
+                        }}
                       />
 
                       <NewWalletBalance
@@ -1095,9 +1098,7 @@ function Dashboard({
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
-                        onOpenLeaderboard={() => {
-                          setLeaderboard(true);
-                        }}
+                       
                         isPremium={isPremium}
                         onRewardsClick={() => {
                           setmyRewardsPopup(true);
