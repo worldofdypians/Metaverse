@@ -34,7 +34,7 @@ import walletIcon from "../WalletBalance/assets/walletIcon.svg";
 import ActiveProfileEvent from "./ActiveProfileEvent";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import UpcomingProfileEvent from "./UpcomingProfileEvent";
-
+import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
 import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
 
@@ -209,7 +209,7 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "gate",
     rewards: "BNB",
-    status: "Coming Soon",
+    status: "Live",
     id: "event6",
     eventType: "Explore & Mine",
     date: "Oct 20, 2023",
@@ -220,6 +220,7 @@ const NewWalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "20,000",
+    learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
   };
 
   const dummyCoingecko = {
@@ -434,7 +435,7 @@ const NewWalletBalance = ({
     {
       title: "Gate.io",
       logo: gate,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
@@ -446,7 +447,7 @@ const NewWalletBalance = ({
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "GT",
-        status: "Coming Soon",
+        status: "Live",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
@@ -465,7 +466,7 @@ const NewWalletBalance = ({
       totalRewards: "$5,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "November 01, 2023",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -475,10 +476,10 @@ const NewWalletBalance = ({
         rewards: "ETH",
         status: "Coming Soon",
         id: "event4",
-        date: "Coming Soon",
+        date: "November 01, 2023",
         totalRewards: "$5,000 in ETH Rewards",
         eventDuration: gateLastDay,
-        eventDate: "Coming Soon",
+        eventDate: "November 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -516,11 +517,16 @@ const NewWalletBalance = ({
   const [confluxUserPoints, setConfluxUserPoints] = useState(0);
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
-
+  const [gateEarnUSD, setgateEarnUSD] = useState(0);
+  const [gateUserPoints, setgateUserPoints] = useState(0);
+  const [gateEarnBnb, setgateEarnBnb] = useState(0);
+  const slider = useRef(null);
+  const [showFirstNext, setShowFirstNext] = useState(false);
   const html = document.querySelector("html");
   const windowSize = useWindowSize();
   const releaseContent = useRef();
   const releaseContent2 = useRef();
+  const betaSlider = useRef();
 
   const openEvents = () => {
     setShowAllEvents(!showAllEvents);
@@ -605,6 +611,10 @@ const NewWalletBalance = ({
             return obj.betapassId === "conflux";
           });
 
+          const gateEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "gate";
+          });
+
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -627,6 +637,18 @@ const NewWalletBalance = ({
             if (cfxPrice !== 0) {
               setConfluxEarnCFX(cfxUsdValue / cfxPrice);
             }
+          }
+
+          const gatePoints = gateEvent[0].reward.earn.totalPoints;
+          setgateUserPoints(gatePoints);
+
+          if (gateEvent[0].reward.earn.multiplier !== 0) {
+            const gateUsdValue =
+              gateEvent[0].reward.earn.total /
+              gateEvent[0].reward.earn.multiplier;
+            setgateEarnUSD(gateUsdValue);
+
+            setgateEarnBnb(gateUsdValue / bnbPrice);
           }
         }
       } else {
@@ -719,42 +741,60 @@ const NewWalletBalance = ({
       });
   };
 
+  const firstNext = () => {
+    slider.current.slickNext();
+  };
+  const firstPrev = () => {
+    slider.current.slickPrev();
+  };
+
   var settings = {
-    dots: true,
+    dots: false,
     arrows: false,
-    dotsClass: "button__bar-2",
-    speed: 500,
-    slidesToShow: 1,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
-    autoplay: true,
-    autoplaySpeed: 4000,
     beforeChange: (current, next) => {
       setActiveSlide(next);
-      setShowNext(current);
+      setShowFirstNext(current);
     },
-    afterChange: (current) => {
-      setActiveSlide(current);
-    },
-
+    afterChange: (current) => setActiveSlide(current),
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1600,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 4,
           slidesToScroll: 1,
           initialSlide: 0,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 1500,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 4,
           slidesToScroll: 1,
           initialSlide: 0,
         },
       },
-
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
       {
         breakpoint: 480,
         settings: {
@@ -835,8 +875,7 @@ const NewWalletBalance = ({
                 }}
                 data={dummyCoingecko}
                 event={dummyCoingecko}
-                userEmail={email}
-                userWallet={address}
+                userEarnedUsd={userEarnUsd}
               />
               <ActiveProfileEvent
                 onOpenEvent={() => {
@@ -845,15 +884,16 @@ const NewWalletBalance = ({
                 }}
                 data={dummyConflux}
                 event={dummyConflux}
-                userEmail={email}
-                userWallet={address}
+                userEarnedUsd={confluxEarnUSD}
               />
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyGate);
                   setEventPopup(true);
                 }}
                 data={dummyGate}
+                event={dummyGate}
+                userEarnedUsd={gateEarnUSD}
               />
               {/* <img
                 src={eventSkeleton}
@@ -1351,19 +1391,18 @@ const NewWalletBalance = ({
                       Minimum requirement of 1,000 followers on social media.
                     </li>
                   </ul>
-             
                 </p>
                 <p className="popup-paragraph mb-4">
-                The WoD Team will review the quality of the content, the
+                  The WoD Team will review the quality of the content, the
                   engagement of the post, and other details. If you are
                   eligible, they will determine the reward, which is distributed
                   in BNB on a monthly basis.
                 </p>
                 <p className="popup-paragraph mb-4">
-                <b>*Note:</b> You can submit one post per
-                  time. The team will not reply in any form, but if you are
-                  eligible, you will see the reward here. The display of the
-                  rewards will occur every Monday.
+                  <b>*Note:</b> You can submit one post per time. The team will
+                  not reply in any form, but if you are eligible, you will see
+                  the reward here. The display of the rewards will occur every
+                  Monday.
                 </p>
                 <div className="d-flex align-items-center gap-4 mb-4">
                   <StyledTextField
@@ -1433,9 +1472,9 @@ const NewWalletBalance = ({
             }}
             ref={releaseContent}
           >
-            <div className="d-flex flex-column gap-4">
+            <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.map((item, index) => (
-                <BetaEventCard
+                <NewBetaEventCard
                   data={item}
                   key={index}
                   onOpenPopup={() => {
@@ -1446,12 +1485,12 @@ const NewWalletBalance = ({
                     item.title === "Conflux"
                       ? confluxEarnUSD
                       : item.title === "Gate.io"
-                      ? 0
+                      ? gateEarnUSD
                       : userEarnUsd
                   }
                 />
               ))}
-            </div>
+            </Slider>
           </div>
         </div>
       )}
@@ -1530,22 +1569,19 @@ const NewWalletBalance = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status === "Coming Soon" &&
-                  dummyEvent?.id !== "event4" && (
-                    <div className="d-flex flex-column">
-                      <span className="live-on">Live on</span>
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={require("./assets/greenCalendar.svg").default}
-                          className="green-calendar"
-                          alt=""
-                        />
-                        <h6 className="live-on-date mb-0">
-                          {dummyEvent?.date}
-                        </h6>
-                      </div>
+                {dummyEvent?.status === "Coming Soon" && (
+                  <div className="d-flex flex-column">
+                    <span className="live-on">Live on</span>
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={require("./assets/greenCalendar.svg").default}
+                        className="green-calendar"
+                        alt=""
+                      />
+                      <h6 className="live-on-date mb-0">{dummyEvent?.date}</h6>
                     </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -1651,7 +1687,7 @@ const NewWalletBalance = ({
                         ? "BNB"
                         : dummyEvent.id === "event6"
                         ? "GT"
-                        : "BASE"}{" "}
+                        : "ETH"}{" "}
                       rewards
                     </li>
                     <li className="popup-event-desc">
@@ -1815,6 +1851,8 @@ const NewWalletBalance = ({
                         ? confluxUserPoints
                         : dummyEvent.id === "event3"
                         ? userPoints
+                        : dummyEvent.id === "event6"
+                        ? gateUserPoints
                         : 0,
                       0
                     )}
@@ -1831,6 +1869,8 @@ const NewWalletBalance = ({
                         ? confluxEarnUSD
                         : dummyEvent.id === "event3"
                         ? userEarnUsd
+                        : dummyEvent.id === "event6"
+                        ? gateEarnUSD
                         : 0,
                       2
                     )}
@@ -1840,6 +1880,8 @@ const NewWalletBalance = ({
                           ? confluxEarnCFX
                           : dummyEvent.id === "event3"
                           ? userEarnETH
+                          : dummyEvent.id === "event6"
+                          ? gateEarnBnb
                           : 0,
                         2
                       )}
@@ -1866,7 +1908,7 @@ const NewWalletBalance = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.id === "event6" && (
+            {dummyEvent.status !== "Live" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
                   {" "}
