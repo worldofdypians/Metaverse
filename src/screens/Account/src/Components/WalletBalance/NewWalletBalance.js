@@ -1132,7 +1132,7 @@ const NewWalletBalance = ({
               )}
             </div>
           </div> */}
-          <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 pe-0 gap-lg-0">
+          <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 px-0 gap-lg-0">
             <div className="row gap-3 gap-lg-0">
               <div className="col-12 col-lg-4">
                 <div
