@@ -970,7 +970,7 @@ const NewWalletBalance = ({
                   <div className="green-div"></div>
                   <img
                     src={finished ? dailyRewardsFinished : dailyRewards}
-                    className="daily-rewards-img"
+                    className={`${finished ? "daily-rewards-img-finished" : "daily-rewards-img"}`}
                     alt=""
                   />
                   <div className="progress-bar-group d-flex align-items-center gap-3">

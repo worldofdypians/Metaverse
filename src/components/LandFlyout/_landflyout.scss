@@ -145,7 +145,7 @@
   bottom: 25%;
   height: fit-content;
   @media screen and (max-width: 786px) {
-    right: 0% !important;
+    right: -1.5% !important;
   }
 }
 
@@ -167,35 +167,39 @@
   animation: jump-shaking 2s ease-in-out infinite;
 }
 
-@keyframes jump-shaking {
-  0% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateY(-9px);
-  }
-  35% {
-    transform: translateY(-9px) rotate(17deg);
-  }
-  55% {
-    transform: translateY(-9px) rotate(-17deg);
-  }
-  65% {
-    transform: translateY(-9px) rotate(17deg);
-  }
-  75% {
-    transform: translateY(-9px) rotate(-17deg);
-  }
-  100% {
-    transform: translateY(0) rotate(0);
-  }
-}
-
-
 .flyout-sword{
   position: absolute;
   z-index: -1;
   width: 100px;
   top: -35px;
   left: -45px;
+  animation: jump-shaking 3s ease-in-out infinite;
+
 }
+
+
+@keyframes jump-shaking {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateY(3px) ranslateX(-3px);
+  }
+  50% {
+    transform: translateY(-3px) translateX(-3px);
+  }
+  75% {
+    transform: translateY(3px) translateX(3px);
+  }
+  // 65% {
+  //   transform: translateY(-3px) translateX(-3px);
+  // }
+  // 75% {
+  //   transform: translateY(3px) translateX(3px);
+  // }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+
