@@ -9,6 +9,10 @@ import windowsIcon from "../../../assets/windowsIcon.svg";
 import windowsIconWhite from "../../../assets/windowsIconWhite.svg";
 import { NavLink } from "react-router-dom";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
+import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
+import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
+import gateWhite from "../../Marketplace/MarketNFTs/wallets/gateWallet.png";
+import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
@@ -113,7 +117,6 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                       alt="windows icon"
                     />
                     Download
-                    
                   </button>
                 </a>
               </div>
@@ -123,7 +126,74 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   System requirements
                 </span>
               </div>
+              <div className="opacitywrapper">
+                <div
+                  class="profile-event-tag position-absolute d-flex align-items-center justify-content-center px-1"
+                  style={{ top: "-10px", right: "85%" }}
+                >
+                  <div
+                    class="pulsatingDot"
+                    style={{ width: "7px", height: "7px", marginRight: "5px" }}
+                  ></div>
+                  <span
+                    class="profile-event-tag-text mb-0"
+                    style={{ color: "rgb(183, 16, 97)" }}
+                  >
+                    Live
+                  </span>
+                </div>
+                <span
+                  class="popup-rewards d-flex justify-content-center text-white mb-2"
+                  style={{ fontSize: "14px" }}
+                >
+                  Treasure Hunt
+                </span>
+
+                <div className="d-flex align-items-center gap-2 justify-content-between">
+                  <div className="d-flex flex-column align-items-center">
+                    <img
+                      src={coingecko}
+                      alt=""
+                      className="beta-pass-chain-img"
+                    />
+                    <span className="text-white" style={{ fontSize: "12px" }}>
+                      CoinGecko
+                    </span>
+                    <span class="popup-rewards">$10,000 in BNB </span>
+                  </div>
+                  <div className="d-flex flex-column align-items-center">
+                    <img src={conflux} alt="" className="beta-pass-chain-img" />
+                    <span className="text-white" style={{ fontSize: "12px" }}>
+                      Conflux
+                    </span>
+                    <span class="popup-rewards">$2,000 in CFX </span>
+                  </div>
+                  <div className="d-flex flex-column align-items-center">
+                    <img
+                      src={gateWhite}
+                      alt=""
+                      className="beta-pass-chain-img"
+                    />
+                    <span className="text-white" style={{ fontSize: "12px" }}>
+                      Gate.io
+                    </span>
+                    <span class="popup-rewards">$2,000 in BNB </span>
+                  </div>
+                  <div className="d-flex flex-column align-items-center">
+                    <img
+                      src={coinbaseimg}
+                      alt=""
+                      className="beta-pass-chain-img"
+                    />
+                    <span className="text-white" style={{ fontSize: "12px" }}>
+                      Base
+                    </span>
+                    <span class="popup-rewards">$10,000 in ETH </span>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <video
               preload="auto"
               className="d-none d-lg-flex d-xl-flex elementor-video"

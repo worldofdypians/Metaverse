@@ -311,9 +311,7 @@ const WalletBalance = ({
   const sortNfts = (sortValue) => {
     if (sortValue === "balance") {
       setFilterTitle("Balance");
-    } else
-
-    if (sortValue === "collected") {
+    } else if (sortValue === "collected") {
       setFilterTitle("Collected");
     } else if (sortValue === "favorites") {
       setFilterTitle("Favorites");
@@ -1477,7 +1475,6 @@ const WalletBalance = ({
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0 mx-0">
-         
           {showAllEvents && windowSize.width < 786 ? (
             <div className="col-12 p-lg-3">
               <div
@@ -1511,7 +1508,7 @@ const WalletBalance = ({
               </div>
             </div>
           ) : null}
-          <div className="col-12 px-0 ps-lg-3 position-relative mt-3 mt-lg-0">
+          <div className="col-12 px-0 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
@@ -2191,10 +2188,7 @@ const WalletBalance = ({
               )}
 
               {filterTitle === "Balance" && loading === false && (
-                <div
-                  className="d-flex flex-column align-items-center gap-3 balancewrapper3"
-                  style={{ marginTop: windowSize.width < 991 ? 0 : "50px" }}
-                >
+                <div className="d-flex flex-column align-items-center gap-3 balancewrapper3">
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-2">
                       <img src={ethIcon} alt="" className="" />
@@ -2330,9 +2324,8 @@ const WalletBalance = ({
                 </div>
               )}
 
-              {
-                filterTitle !== "Balance" &&
-                  loading === false &&
+              {filterTitle !== "Balance" &&
+                loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
                   (filterTitle === "Listed" && listedItems.length > 0) ||
                   (filterTitle === "Offers" && myOffers.length > 6) ||
@@ -2441,8 +2434,7 @@ const WalletBalance = ({
                       </div>
                     ) : null}
                   </div>
-                )
-              }
+                )}
 
               {loading === true && (
                 // <div className="loader-wrapper">

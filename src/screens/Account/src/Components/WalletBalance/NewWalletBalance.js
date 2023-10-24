@@ -7,6 +7,8 @@ import iDypIcon from "./newAssets/iDypIcon.svg";
 import genesisRankImg from "./newAssets/genesisRank.svg";
 import globalRank from "./newAssets/globalRank.svg";
 import rightIcon from "./newAssets/rightIcon.svg";
+import arrowCircle from "./newAssets/arrowCircle.svg";
+
 import premium from "./newAssets/premium.svg";
 import successMark from "./newAssets/successMark.svg";
 import nonPremium from "./newAssets/nonPremium.svg";
@@ -973,9 +975,9 @@ const NewWalletBalance = ({
                     className="daily-rewards-img"
                     alt=""
                   />
-                  <div className="progress-bar-group d-flex align-items-center gap-3">
+                  <div className="progress-bar-group d-flex align-items-center gap-3 me-2">
                     <div className="green-progress-outer">
-                      <span className="font-iceland mb-0 chest-progress">
+                      <span className="mb-0 chest-progress">
                         10/10
                       </span>
                       <div
@@ -984,7 +986,7 @@ const NewWalletBalance = ({
                       ></div>
                     </div>
                     <div className="yellow-progress-outer">
-                      <span className="font-iceland mb-0 chest-progress">
+                      <span className="mb-0 chest-progress">
                         10/10
                       </span>
                       <div
@@ -999,7 +1001,7 @@ const NewWalletBalance = ({
                     <div className="d-flex flex-column">
                       <div
                         className="position-relative"
-                        style={{ width: "96px", height: "40px", right: "10px" }}
+                        style={{ width: "96px", height: "40px", right: "0px" }}
                       >
                         <span className="ready-to-claim mb-0">
                           {finished ? "Time" : "Ready to Claim"}
@@ -1027,15 +1029,14 @@ const NewWalletBalance = ({
                 >
                   <div className="green-div"></div>
                   <img src={gameEvents} className="game-events-img" alt="" />
-                  <div className="d-flex flex-column gap-3 h-100 p-3">
+                  <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
                     <h6 className="profile-div-title mb-0">Live Events</h6>
                     <p className="profile-div-desc mb-0">
                       Experience excitement by different on-chain events
                     </p>
-                    {/* <div className="d-flex align-items-center gap-2 green-link">
-                      <span className="profile-div-link mb-0">View</span>
-                      <img src={rightIcon} alt="" />
-                    </div> */}
+                    <div className="d-flex align-items-center gap-2 green-link">
+                      <img src={arrowCircle} alt="" />
+                    </div>
                   </div>
                 </NavLink>
               </div>
@@ -1046,16 +1047,15 @@ const NewWalletBalance = ({
                 >
                   <div className="green-div"></div>
                   <img src={stakeNft} alt="" className="profile-staking-img" />
-                  <div className="d-flex flex-column gap-3 h-100 p-3">
+                  <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
                     <h6 className="profile-div-title mb-0">Stake NFT</h6>
                     <p className="profile-div-desc mb-0">
                       Earn $ETH daily rewards by staking your NFTs
                     </p>
 
-                    {/* <div className="d-flex align-items-center gap-2 green-link">
-                      <span className="profile-div-link mb-0">Stake Now</span>
-                      <img src={rightIcon} alt="" />
-                    </div> */}
+                    <div className="d-flex align-items-center gap-2 green-link">
+                      <img src={arrowCircle} alt="" />
+                    </div>
                   </div>
                 </NavLink>
               </div>
@@ -1075,9 +1075,8 @@ const NewWalletBalance = ({
                   </div>
                   <div className="d-flex flex-column justify-content-between h-100 p-3">
                     <h6 className="profile-div-title mb-0 ">My Rewards</h6>
-                    <div className="d-flex align-items-center gap-2 green-link">
-                      <span className="profile-div-link mb-0">View All</span>
-                      <img src={rightIcon} alt="" />
+                    <div className="view-rewards-btn">
+                      <span className="instaketxt2 mb-0">View All</span>
                     </div>
                   </div>
                 </div>
@@ -1093,9 +1092,9 @@ const NewWalletBalance = ({
                     <h6 className="profile-div-title mb-0">
                       Special <br /> Rewards
                     </h6>
-                    <div className="d-flex align-items-center gap-2 green-link">
-                      <span className="profile-div-link mb-0">Submit</span>
-                      <img src={rightIcon} alt="" />
+                    <div className="instakeWrapper3">
+                      <span className="instaketxt2 mb-0">Submit</span>
+                      
                     </div>
                   </div>
                 </div>

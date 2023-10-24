@@ -500,21 +500,19 @@ const ProfileCard = ({
                   </div>
                 </div>
                 <div className="d-flex flex-column align-items-center position-relative gap-2">
-                {/* <div className="table-separator position-absolute"></div> */}
-                  <h6 className="profile-div-title mb-0">Leaderboard</h6>
+                  {/* <div className="table-separator position-absolute"></div> */}
+                  <h6 className="profile-div-title mb-0" style={{fontSize: '14px', fontWeight: '500'}}>Leaderboard</h6>
                   <div className="d-flex align-items-center gap-4">
                     <div className="d-flex flex-column align-items-center">
                       <img src={globalRank} alt="" />
-                      <span className="font-iceland profile-rank mb-0">
-                        #{userRank}
-                      </span>
+                      <span className="  profile-rank mb-0">#{userRank}</span>
                       {/* <span className="font-iceland profile-rank mb-0">
                         Global
                       </span> */}
                     </div>
                     <div className="d-flex flex-column align-items-center">
                       <img src={genesisRankImg} alt="" />
-                      <span className="font-iceland profile-rank mb-0">
+                      <span className="  profile-rank mb-0">
                         #{genesisRank}
                       </span>
                       {/* <span className="font-iceland profile-rank mb-0">
