@@ -1779,15 +1779,24 @@
 }
 
 .past-caws-mint {
-  background-image: url("./assets/pastCawsMintBg.png");
+  background-image: url("./assets/pastCawsMintBg.webp");
   width: 100%;
   aspect-ratio: 2.22/1;
   background-size: 100% 100%;
   position: relative;
 
   @media screen and (max-width: 786px) {
-    background-image: url("./assets/cawsMintMobile.png");
+    background-image: url("./assets/cawsMintMobile.webp");
     aspect-ratio: 1/1;
+  }
+}
+
+.rotatewrapper {
+  transform: rotate(-15deg);
+  margin: auto;
+
+  @media screen and (max-width: 786px) {
+    transform: rotate(0deg);
   }
 }
 
@@ -1803,14 +1812,27 @@
 }
 
 .past-land-mint {
-  background-image: url("./assets/pastLandMintBg.png");
+  background-image: url("./assets/pastLandMintBg.webp");
   width: 100%;
   aspect-ratio: 2.22/1;
   background-size: 100% 100%;
   position: relative;
 
   @media screen and (max-width: 786px) {
-    background-image: url("./assets/landMintMobile.png");
+    background-image: url("./assets/landMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+.past-conflux-mint {
+  background-image: url("./assets/pastConfluxMintBg.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/confluxMintMobile.webp");
     aspect-ratio: 1/1;
   }
 }
@@ -1846,20 +1868,64 @@
 }
 
 .past-caws-mint-amount {
-  color: #ff6232;
+  color: #00fecf;
   text-align: center;
   font-size: 40px;
+  font-style: normal;
   font-weight: 800;
+  margin: 0;
   @media screen and (max-width: 400px) {
     font-size: 26px;
   }
 }
 
 .past-land-mint-amount {
-  color: #00fecf;
+  color: #7d1754;
   text-align: center;
   font-size: 40px;
+  font-style: normal;
   font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-conflux-mint-amount {
+  color: #901c77;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-conflux-mint-desc {
+  color: #FFF;
+  text-shadow: 0px 3px 4px rgba(144, 28, 119, 0.70);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-land-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(125, 23, 84, 0.7);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
   @media screen and (max-width: 400px) {
     font-size: 26px;
   }
@@ -1867,9 +1933,16 @@
 
 .past-caws-mint-desc {
   color: #fff;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 500;
+  text-shadow: 0px 3px 4px rgba(0, 254, 207, 0.7);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
 }
 
 .past-content-wrapper {
@@ -2249,9 +2322,9 @@
   background: linear-gradient(to bottom, #181636 15.48%, #00f3ff 254.86%);
 }
 
-.gate-eventwrapper{
+.gate-eventwrapper {
   border-radius: 20px;
-  background: linear-gradient(to bottom, #181636 15.48%, #1D438D  254.86%);
+  background: linear-gradient(to bottom, #181636 15.48%, #1d438d 254.86%);
 }
 
 .coingecko-eventh6 {
