@@ -36,7 +36,7 @@
       height: 306px;
       .fly-title {
         font-weight: 800;
-        font-size: 17px;
+        font-size: 12px;
         line-height: 18px;
         text-align: center;
         color: #f7f7fc;
@@ -168,4 +168,18 @@
 .mainChest {
   width: 60px;
   height: 60px;
+}
+
+.flyout-chest{
+  animation: jump-shaking 2s ease-in-out infinite;
+}
+
+@keyframes jump-shaking {
+  0% { transform: translateX(0) }
+  25% { transform: translateY(-9px) }
+  35% { transform: translateY(-9px) rotate(17deg) }
+  55% { transform: translateY(-9px) rotate(-17deg) }
+  65% { transform: translateY(-9px) rotate(17deg) }
+  75% { transform: translateY(-9px) rotate(-17deg) }
+  100% { transform: translateY(0) rotate(0) }
 }

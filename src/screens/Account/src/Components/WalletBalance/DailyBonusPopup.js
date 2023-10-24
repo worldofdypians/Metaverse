@@ -441,7 +441,7 @@ const DailyBonusPopup = ({ onclose }) => {
           onClick={onclose}
         />
         <div className="position-relative h-100 rewardinnerwrapper">
-          <div className="positon-relative h-100 d-flex flex-column gap-3 justify-content-between">
+          <div className="positon-relative h-100 d-flex flex-column justify-content-between">
             <div className="d-flex flex-column align-items-center justify-content-center gap-2">
               <p className="chest-event-desc mb-0">
                 Claim 10 chests daily for a chance to win Game Points, exclusive
@@ -508,7 +508,7 @@ const DailyBonusPopup = ({ onclose }) => {
               </button>
             </div> */}
             <div className="dailyreward-separator"></div>
-            <div className="d-flex flex-column gap-2">
+            <div className="d-flex flex-column gap-2 ">
               <span className="font-organetto chestprizetitle text-white">
                 PRIZES
               </span>
@@ -593,7 +593,8 @@ const DailyBonusPopup = ({ onclose }) => {
                           randomArray.includes(index) && "prizeswrapper-premium"
                         } `}
                         style={{
-                          opacity: !randomArray.includes(index) && "0.3",
+                          filter:
+                            !randomArray.includes(index) && "grayscale(1)",
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
@@ -603,15 +604,21 @@ const DailyBonusPopup = ({ onclose }) => {
                             style={{ width: 40, height: 40 }}
                           />
                           <div className="d-flex align-items-center gap-2">
-                            <span className="chest-prize-title mb-0">
+                            <span
+                              className="chest-prize-title mb-0"
+                              style={{
+                                color: !randomArray.includes(index) && "gray",
+                              }}
+                            >
                               {reward.title}
                             </span>
                             {randomArray.includes(index) && reward.premium && (
-                                <ToolTip
+                              <ToolTip
                                 title={
                                   <React.Fragment>
                                     <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                      You must hold CAWS NFT or Genesis Land NFT to claim this prize 
+                                      You must hold CAWS NFT or Genesis Land NFT
+                                      to claim this prize
                                     </p>
                                   </React.Fragment>
                                 }
@@ -665,7 +672,9 @@ const DailyBonusPopup = ({ onclose }) => {
                   <div className="col-12 col-lg-4">
                     <div
                       className={`prizeswrapper ${"prizeswrapper-premium"} `}
-                      style={{ opacity: !randomArray.includes(index) && "0.3" }}
+                      style={{
+                        filter: !randomArray.includes(index) && "grayscale(1)",
+                      }}
                     >
                       <div className="d-flex align-items-center gap-2">
                         <img
@@ -674,7 +683,12 @@ const DailyBonusPopup = ({ onclose }) => {
                           style={{ width: 40, height: 40 }}
                         />
                         <div className="d-flex align-items-center gap-2">
-                          <span className="chest-prize-title mb-0">
+                          <span
+                            className="chest-prize-title mb-0"
+                            style={{
+                              color: !randomArray.includes(index) && "gray",
+                            }}
+                          >
                             {reward.title}
                           </span>
                           {randomArray.includes(index) && reward.premium && (
@@ -682,8 +696,9 @@ const DailyBonusPopup = ({ onclose }) => {
                               title={
                                 <React.Fragment>
                                   <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                      You must hold CAWS NFT or Genesis Land NFT to claim this prize 
-                                    </p>
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
                                 </React.Fragment>
                               }
                               icon={<img src={warning} alt="" />}
