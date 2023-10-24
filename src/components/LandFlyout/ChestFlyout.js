@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Collapse from "react-bootstrap/Collapse";
+import flyoutChest from './assets/flyoutChest.png'
+import flyoutSword from './assets/flyoutSword.png'
 
 const ChestFlyout = () => {
   const [show, setShow] = useState(false);
@@ -29,18 +31,19 @@ const ChestFlyout = () => {
     >
       <div
         className="fly-outer-wrapper2 position-relative"
-        style={{ overflow: "hidden" }}
       >
+        <img src={flyoutSword} alt="" className="flyout-sword" />
         <NavLink
           to="/account"
           className="fly-inner-wrapper2 p-1 d-flex align-items-center gap-2"
           style={{ cursor: "pointer", textDecoration: "none" }}
           onClick={() => setShow(false)}
         >
-          <img src={mainChest} alt="" className="mainChest" />
+          <img src={flyoutChest} alt="" className="mainChest" />
           <Collapse in={showText} dimension="width">
-            <div id="example-collapse-text">
-              <h6 className={` font-organetto fly-title2 `}>Daily Bonus</h6>
+            <div id="d-flex flex-column">
+              <h6 className={`fly-title2 mb-0`}>Daily</h6>
+              <h6 className={`fly-title2 mb-0`}>Bonus</h6>
             </div>
           </Collapse>
         </NavLink>

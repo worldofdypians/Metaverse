@@ -100,10 +100,10 @@
     align-items: center;
 
     .fly-inner-wrapper2 {
-      background: #070507;
-      border-radius: 8px;
-
-    
+      background-image: url("./assets/flyoutBgLarge.svg");
+      background-repeat: no-repeat;
+      border-radius: 12px 0px 0px 12px;
+      background-size: cover;
 
       // .flyTitleHidden {
       //   display: none;
@@ -119,7 +119,6 @@
   }
 }
 
-
 .fly-title2 {
   // font-weight: 800;
   // font-size: 17px;
@@ -132,7 +131,6 @@
   display: none;
 }
 
-
 .fly-active {
   right: 2.5% !important;
   opacity: 1 !important;
@@ -142,44 +140,62 @@
 }
 
 .fly-active2 {
-  right: 2.5% !important;
+  right: -0.3% !important;
   opacity: 1 !important;
-  top: 350px;
+  bottom: 25%;
   height: fit-content;
   @media screen and (max-width: 786px) {
-    right: 1.5% !important;
+    right: 0% !important;
   }
 }
 
-
-  .fly-title2{
-    display: flex;
-    font-weight: 800;
-    font-size: 17px;
-    line-height: 18px;
-    text-align: center;
-    color: #f7f7fc;
-    display: flex;
-    white-space: nowrap;
-  }
-  
-
+.fly-title2 {
+  display: flex;
+  color: #f7f7fc;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
 
 .mainChest {
   width: 60px;
   height: 60px;
 }
 
-.flyout-chest{
+.flyout-chest {
   animation: jump-shaking 2s ease-in-out infinite;
 }
 
 @keyframes jump-shaking {
-  0% { transform: translateX(0) }
-  25% { transform: translateY(-9px) }
-  35% { transform: translateY(-9px) rotate(17deg) }
-  55% { transform: translateY(-9px) rotate(-17deg) }
-  65% { transform: translateY(-9px) rotate(17deg) }
-  75% { transform: translateY(-9px) rotate(-17deg) }
-  100% { transform: translateY(0) rotate(0) }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateY(-9px);
+  }
+  35% {
+    transform: translateY(-9px) rotate(17deg);
+  }
+  55% {
+    transform: translateY(-9px) rotate(-17deg);
+  }
+  65% {
+    transform: translateY(-9px) rotate(17deg);
+  }
+  75% {
+    transform: translateY(-9px) rotate(-17deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+
+.flyout-sword{
+  position: absolute;
+  z-index: -1;
+  width: 100px;
+  top: -35px;
+  left: -45px;
 }
