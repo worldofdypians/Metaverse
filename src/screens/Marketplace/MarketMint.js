@@ -39,6 +39,7 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
 import Countdown from "react-countdown";
+import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -151,6 +152,8 @@ const MarketMint = ({
   const [latestConfluxMintId, setlatestConfluxMintId] = useState(0);
 
   const [activeTab, setActiveTab] = useState("live");
+  const [confluxSold, setconfluxSold] = useState(0);
+
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [selectedMint, setSelectedMint] = useState(timepieceData);
@@ -160,12 +163,26 @@ const MarketMint = ({
   const slider = useRef(null);
   const html = document.querySelector("html");
 
+  const getTotalSupply = async () => {
+
+
+    const confluxContract = new window.confluxWeb3.eth.Contract(
+      window.CONFLUX_NFT_ABI,
+      window.config.nft_conflux_address
+    );
+
+    const confluxresult = await confluxContract.methods.totalSupply().call();
+    setconfluxSold(confluxresult)
+  };
+
+
   useEffect(() => {
     //   if (params.mintId === "conflux") {
     //     setSelectedMint(confluxData);
     //   } else if (params.mintId === "timepiece") {
     setSelectedMint(timepieceData);
     setMintTitle("timepiece");
+    getTotalSupply()
     //   }
   }, []);
 
@@ -1428,7 +1445,7 @@ const MarketMint = ({
                           Conflux Beta Pass
                         </h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
-                          <h6 className="past-conflux-mint-amount">2,036</h6>
+                          <h6 className="past-conflux-mint-amount">{getFormattedNumber(confluxSold,0)}</h6>
                           <span className="past-conflux-mint-desc">
                             SOLD OUT
                           </span>
