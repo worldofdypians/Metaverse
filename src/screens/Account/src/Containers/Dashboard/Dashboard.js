@@ -334,7 +334,7 @@ function Dashboard({
     }
   };
 
-  const refreshSubscription = async (userAddr) => {
+  const refreshSubscription = async (userAddr, email) => {
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBNB;
@@ -386,6 +386,8 @@ function Dashboard({
       ) {
         setIsPremium(true);
       }
+    } else {
+      setIsPremium(false);
     }
   };
 
@@ -879,6 +881,13 @@ function Dashboard({
         Object.keys(window.config.subscriptionbnb_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
+    } else {
+      setdropdownIcon("weth");
+      setdropdownTitle("WETH");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioneth_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wethAddress);
     }
   }, [chainId]);
 
@@ -922,9 +931,7 @@ function Dashboard({
       data.getPlayer.wallet.publicAddress &&
       email
     ) {
-      refreshSubscription(data.getPlayer.wallet.publicAddress);
-    } else {
-      setIsPremium(false);
+      refreshSubscription(data.getPlayer.wallet.publicAddress, email);
     }
   }, [data, email]);
 
@@ -1054,8 +1061,11 @@ function Dashboard({
                         syncStatus={syncStatus}
                         isPremium={isPremium}
                         isConnected={isConnected}
-                         onOpenLeaderboard={() => {
+                        onOpenLeaderboard={() => {
                           setLeaderboard(true);
+                        }}
+                        onPremiumClick={() => {
+                          setgetPremiumPopup(true);
                         }}
                       />
 
@@ -1098,13 +1108,9 @@ function Dashboard({
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
-                       
                         isPremium={isPremium}
                         onRewardsClick={() => {
                           setmyRewardsPopup(true);
-                        }}
-                        onPremiumClick={() => {
-                          setgetPremiumPopup(true);
                         }}
                         onBalanceClick={() => {
                           setBalancePopup(true);

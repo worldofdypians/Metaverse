@@ -3,6 +3,32 @@
   border-radius: 8px;
   font-family: "Poppins", sans-serif !important;
 
+  .multipe-wallet {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.018em;
+    color: #ffffff;
+  }
+
+  // .bnb-wrapper {
+  //   background: linear-gradient(90.83deg, #daaa0a 0.71%, #2e2853 65.22%);
+  //   border-radius: 6px;
+  // }
+
+  // .avax-wrapper {
+  //   background: linear-gradient(90.83deg, #df2d2e 0.71%, #2e2853 65.22%);
+  //   border-radius: 6px;
+  // }
+
+  .chain-title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    color: #f7f7fc;
+  }
+}
+
   .wallet-wrapper {
     background: rgba(8, 11, 42, 0.3);
     padding: 10px;
@@ -30,31 +56,6 @@
     border-radius: 6px;
   }
 
-  .multipe-wallet {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    letter-spacing: -0.018em;
-    color: #ffffff;
-  }
-
-  // .bnb-wrapper {
-  //   background: linear-gradient(90.83deg, #daaa0a 0.71%, #2e2853 65.22%);
-  //   border-radius: 6px;
-  // }
-
-  // .avax-wrapper {
-  //   background: linear-gradient(90.83deg, #df2d2e 0.71%, #2e2853 65.22%);
-  //   border-radius: 6px;
-  // }
-
-  .chain-title {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 20px;
-    color: #f7f7fc;
-  }
-}
 .wallet-span {
   color: #fff;
   font-size: 10px;
@@ -271,6 +272,7 @@
   height: auto;
   @media screen and (max-width: 786px) {
     height: fit-content;
+    margin-bottom: 30px;
   }
 }
 .rankings-wrapper {
@@ -1210,6 +1212,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  font-family: "Poppins";
 }
 
 .profile-rank {
@@ -1764,7 +1767,7 @@
 .instaketxt2 {
   color: #f7f7fc;
   text-align: center;
-  font-size: 8px;
+  font-size: 10px;
   font-style: normal;
   font-weight: 700;
   line-height: 7px;

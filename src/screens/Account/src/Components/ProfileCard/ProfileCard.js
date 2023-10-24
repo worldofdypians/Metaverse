@@ -5,6 +5,8 @@ import "./_profilecard.scss";
 import defaultAvatar from "../../Images/userProfile/default-avatar.png";
 import defaultAvatarAlert from "../../Images/userProfile/default-avatar-alert.png";
 import defaultAvatarPremium from "../../Images/userProfile/defaultAvatarPremium.png";
+import defaultAvatarPremiumAlert from "../../Images/userProfile/defaultAvatarPremiumAlert.png";
+
 import genesisRankImg from "../WalletBalance/newAssets/genesisRank.svg";
 import globalRank from "../WalletBalance/newAssets/globalRank.svg";
 // import Countdown from "react-countdown";
@@ -66,6 +68,7 @@ const ProfileCard = ({
   isPremium,
   isConnected,
   onOpenLeaderboard,
+  onPremiumClick
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -162,7 +165,7 @@ const ProfileCard = ({
             } ${
               isVerified &&
               email &&
-              address?.toLowerCase() === coinbase?.toLowerCase() &&
+              syncStatus !== "" &&
               isPremium &&
               "user-cardImg-active-premium"
             } ${
@@ -179,14 +182,13 @@ const ProfileCard = ({
                 email && coinbase && username ? "" : "border-bottom-0"
               }`}
             >
-              <div className="d-flex flex-column flex-xxl-row flex-lg-row justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                <div className="d-flex gap-2 justify-content-between align-items-center">
-                  <div className="d-flex align-items-center gap-2">
+              <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row flex-sm-row  justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
+                <div className="d-flex gap-2 justify-content-between align-items-center  w-100">
+                  <div className="d-flex align-items-center gap-2 w-100">
                     {(coinbase && !email) ||
                     (!coinbase && !email) ||
                     (coinbase && email && !address && !username) ||
-                    !address ||
-                    !isConnected ? (
+                    !address ? (
                       <img src={defaultAvatar} alt="" className="userAvatar" />
                     ) : null}
                     {address &&
@@ -203,10 +205,9 @@ const ProfileCard = ({
                       )}
                     {address &&
                       email &&
-                      coinbase &&
                       syncStatus !== "" &&
-                      address?.toLowerCase() === coinbase?.toLowerCase() &&
-                      isPremium && (
+                      isPremium &&
+                      !coinbase && (
                         <img
                           src={defaultAvatarPremium}
                           alt=""
@@ -215,6 +216,32 @@ const ProfileCard = ({
                       )}
                     {address &&
                       email &&
+                      syncStatus !== "" &&
+                      isPremium &&
+                      coinbase &&
+                      address?.toLowerCase() === coinbase?.toLowerCase() && (
+                        <img
+                          src={defaultAvatarPremium}
+                          alt=""
+                          className="userAvatarPremium"
+                        />
+                      )}
+                    {address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address?.toLowerCase() !== coinbase?.toLowerCase() &&
+                      isPremium && (
+                        <img
+                          src={defaultAvatarPremiumAlert}
+                          alt=""
+                          className="userAvatarPremium"
+                        />
+                      )}
+
+                    {address &&
+                      email &&
+                      !isPremium &&
                       coinbase &&
                       syncStatus !== "" &&
                       address?.toLowerCase() !== coinbase?.toLowerCase() && (
@@ -226,7 +253,7 @@ const ProfileCard = ({
                       )}
 
                     {isVerified && email ? (
-                      <div className="d-flex flex-column gap-1">
+                      <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
                           {isPremium && (
@@ -234,16 +261,13 @@ const ProfileCard = ({
                               className={`${
                                 address &&
                                 email &&
-                                coinbase &&
                                 syncStatus !== "" &&
-                                address?.toLowerCase() ===
-                                  coinbase?.toLowerCase() &&
                                 "premiumtext-active"
                               } ${
                                 address &&
                                 email &&
-                                coinbase &&
                                 syncStatus !== "" &&
+                                coinbase &&
                                 address?.toLowerCase() !==
                                   coinbase?.toLowerCase() &&
                                 "premiumtext-alert"
@@ -251,12 +275,11 @@ const ProfileCard = ({
                             >
                               {address &&
                                 email &&
-                                coinbase &&
+                                isPremium &&
                                 syncStatus !== "" &&
-                                address?.toLowerCase() ===
-                                  coinbase?.toLowerCase() && (
-                                  <img src={starActive} />
-                                )}
+                                (address?.toLowerCase() ===
+                                  coinbase?.toLowerCase() ||
+                                  !coinbase) && <img src={starActive} />}
                               {address &&
                                 email &&
                                 coinbase &&
@@ -268,9 +291,26 @@ const ProfileCard = ({
                               Premium
                             </span>
                           )}
+                          {!isPremium && email && (
+                            <span
+                              className="profile-div-title mb-0 text-decoration-underline"
+                              style={{
+                                color:
+                                  coinbase &&
+                                  syncStatus !== "" &&
+                                  address?.toLowerCase() !==
+                                    coinbase?.toLowerCase() ?
+                                  "#ED8225" : '#1BF5FF',
+                                  cursor:'pointer'
+                              }}
+                              onClick={onPremiumClick}
+                            >
+                              Upgrade to Premium
+                            </span>
+                          )}
                         </span>
 
-                        <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-3 position-relative">
+                        <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
                           <>
                             <Clipboard
                               component="div"
@@ -288,8 +328,7 @@ const ProfileCard = ({
                               } ${
                                 isVerified &&
                                 email &&
-                                address?.toLowerCase() ===
-                                  coinbase?.toLowerCase() &&
+                                syncStatus === "initial" &&
                                 isPremium &&
                                 "wallet-wrapper-active-premium d-flex"
                               } ${
@@ -357,84 +396,6 @@ const ProfileCard = ({
                               <p className="tooltip-content m-0">Copied!</p>
                             </div>
                           </>
-                          {!coinbase && (
-                            <button
-                              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                              onClick={() => {
-                                handleShowWalletPopup();
-                              }}
-                              style={{ width: "fit-content", fontSize: 14 }}
-                            >
-                              <img
-                                src={blackWallet}
-                                alt=""
-                                style={{ width: 18 }}
-                              />
-                              Connect wallet
-                            </button>
-                          )}
-
-                          {coinbase && address && !email && (
-                            <button
-                              className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
-                              onClick={() => {
-                                onSigninClick();
-                              }}
-                              style={{ width: "fit-content", fontSize: 14 }}
-                            >
-                              Sign in
-                              <img src={greenarrow} alt="" />
-                            </button>
-                          )}
-
-                          {coinbase && !email && !address && !username && (
-                            <button
-                              className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
-                              onClick={() => {
-                                onSigninClick();
-                              }}
-                              style={{ width: "fit-content", fontSize: 14 }}
-                            >
-                              Sign in
-                              <img src={greenarrow} alt="" />
-                            </button>
-                          )}
-
-                          {coinbase && email && !address && !username && (
-                            <button
-                              className="d-flex px-3 py-1 align-items-center signinbtn"
-                              onClick={() => {
-                                onSigninClick();
-                              }}
-                              style={{ width: "fit-content", fontSize: 14 }}
-                            >
-                              Create player
-                              <img src={greenarrow} alt="" />
-                            </button>
-                          )}
-
-                          {coinbase && email && username && !address && (
-                            <div
-                              className="walletconnectBtn w-100"
-                              onClick={onLinkWallet}
-                            >
-                              <div className="d-flex gap-2 justify-content-between align-items-center">
-                                <div className="d-flex gap-2 align-items-center">
-                                  <img src={walletImg} alt="" />
-                                  <div className="d-flex flex-column">
-                                    <span className="secondTitle">
-                                      Connect wallet
-                                    </span>
-
-                                    <span className="firsttitle">
-                                      Link your wallet
-                                    </span>
-                                  </div>
-                                </div>
-                                <img src={circleArrow} alt="" />
-                              </div>
-                            </div>
-                          )}
 
                           {/* : 
                  (
@@ -489,6 +450,22 @@ const ProfileCard = ({
                   </span>
                 )} */}
                         </div>
+                        {!coinbase && email && (
+                          <button
+                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                            onClick={() => {
+                              handleShowWalletPopup();
+                            }}
+                            style={{ width: "fit-content", fontSize: 14 }}
+                          >
+                            <img
+                              src={blackWallet}
+                              alt=""
+                              style={{ width: 18 }}
+                            />
+                            Connect wallet
+                          </button>
+                        )}
                       </div>
                     ) : (
                       <div className="d-flex flex-column gap-1 col-lg-7">
@@ -497,30 +474,112 @@ const ProfileCard = ({
                         </span>
                       </div>
                     )}
-                  </div>
+                  </div>{" "}
                 </div>
-                <div className="d-flex flex-column align-items-center position-relative gap-2">
-                  {/* <div className="table-separator position-absolute"></div> */}
-                  <h6 className="profile-div-title mb-0" style={{fontSize: '14px', fontWeight: '500'}}>Leaderboard</h6>
-                  <div className="d-flex align-items-center gap-4">
-                    <div className="d-flex flex-column align-items-center">
-                      <img src={globalRank} alt="" />
-                      <span className="  profile-rank mb-0">#{userRank}</span>
-                      {/* <span className="font-iceland profile-rank mb-0">
+                {!coinbase && !email && (
+                  <button
+                    className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                    onClick={() => {
+                      handleShowWalletPopup();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    <img src={blackWallet} alt="" style={{ width: 18 }} />
+                    Connect wallet
+                  </button>
+                )}
+                {coinbase && address && !email && (
+                  <button
+                    className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
+                    onClick={() => {
+                      onSigninClick();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Sign in
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+                {coinbase && !email && !address && !username && (
+                  <button
+                    className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
+                    onClick={() => {
+                      onSigninClick();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Sign in
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+                {coinbase && email && !address && !username && (
+                  <button
+                    className="d-flex px-3 py-1 align-items-center signinbtn"
+                    onClick={() => {
+                      onSigninClick();
+                    }}
+                    style={{ width: "fit-content", fontSize: 14 }}
+                  >
+                    Create player
+                    <img src={greenarrow} alt="" />
+                  </button>
+                )}
+                {coinbase && email && username && !address && (
+                  <div
+                    className="walletconnectBtn w-100"
+                    onClick={onLinkWallet}
+                  >
+                    <div className="d-flex gap-2 justify-content-between align-items-center">
+                      <div className="d-flex gap-2 align-items-center">
+                        <img src={walletImg} alt="" />
+                        <div className="d-flex flex-column">
+                          <span className="secondTitle">Connect wallet</span>
+
+                          <span className="firsttitle">Link your wallet</span>
+                        </div>
+                      </div>
+                      <img src={circleArrow} alt="" />
+                    </div>
+                  </div>
+                )}
+                {email && address && (
+                  <div
+                    className={`${
+                      isPremium
+                        ? "wallet-wrapper-active-premium hoverpremium"
+                        : "wallet-wrapper-active hoveractive"
+                    } d-flex flex-column align-items-center position-relative gap-2`}
+                    onClick={onOpenLeaderboard}
+                  >
+                    {/* <div className="table-separator position-absolute"></div> */}
+                    <h6
+                      className="profile-div-title mb-0"
+                      style={{ fontSize: "14px", fontWeight: "500" }}
+                    >
+                      Leaderboard
+                    </h6>
+                    <div className="d-flex align-items-center gap-4">
+                      <div className="d-flex flex-column align-items-center">
+                        <img src={globalRank} alt="" />
+                        <span className="  profile-rank mb-0">
+                          #{userRank + 1}
+                        </span>
+                        {/* <span className="font-iceland profile-rank mb-0">
                         Global
                       </span> */}
-                    </div>
-                    <div className="d-flex flex-column align-items-center">
-                      <img src={genesisRankImg} alt="" />
-                      <span className="  profile-rank mb-0">
-                        #{genesisRank}
-                      </span>
-                      {/* <span className="font-iceland profile-rank mb-0">
+                      </div>
+                      <div className="d-flex flex-column align-items-center">
+                        <img src={genesisRankImg} alt="" />
+                        <span className="  profile-rank mb-0">
+                          #{genesisRank + 1}
+                        </span>
+                        {/* <span className="font-iceland profile-rank mb-0">
                         Genesis
                       </span> */}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
                 {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
             <div className="d-flex flex-column">
             <span className="emailtext" style={{color: '#ffbf00'}}>*Golden Pass</span>
