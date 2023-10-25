@@ -1371,6 +1371,7 @@ function Dashboard({
                             email={email}
                             bnbPrice={bnbPrice}
                             cfxPrice={cfxPrice}
+                            ethTokenData={ethTokenData}
                           />
                         </div>
                       </OutsideClickHandler>

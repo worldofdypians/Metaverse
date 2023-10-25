@@ -15,6 +15,7 @@ const MyRewardsPopup = ({
   email,
   bnbPrice,
   cfxPrice,
+  ethTokenData,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -42,6 +43,9 @@ const MyRewardsPopup = ({
   const [gateEarnUSD, setgateEarnUSD] = useState(0);
   const [gateEarnUSDPrevious, setgateEarnUSDPrevious] = useState(0);
 
+  const [EthRewards, setEthRewards] = useState(0);
+  const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
+
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
   const dailyPrizesGolden = [10, 8, 5, 5, 5, 5, 5, 5, 5, 5];
@@ -62,6 +66,104 @@ const MyRewardsPopup = ({
       const result_formatted = result.data.count;
       setbundlesBought(result_formatted);
     }
+  };
+
+  const getStakesIds = async () => {
+    let stakenft = [];
+
+    if (address) {
+      const contract = new window.infuraWeb3.eth.Contract(
+        window.WOD_CAWS_ABI,
+        window.config.wod_caws_address
+      );
+      const allCawsStakes = await contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          if (result.length > 0) {
+            for (let i = 0; i < result.length; i++)
+              stakenft.push(parseInt(result[i]));
+            return stakenft;
+          }
+        });
+
+      return allCawsStakes;
+    }
+  };
+
+  const getStakesIdsLandPool = async () => {
+    if (address) {
+      let staking_contract = new window.infuraWeb3.eth.Contract(
+        window.LANDSTAKING_ABI,
+        window.config.landnftstake_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
+  const calculateAllRewards = async () => {
+    let myStakes = await getStakesIds();
+    let result = 0;
+    const contract = new window.infuraWeb3.eth.Contract(
+      window.WOD_CAWS_ABI,
+      window.config.wod_caws_address
+    );
+    if (address) {
+      if (myStakes.length > 0) {
+        let rewards = await contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        let finalReward = 0;
+        for (let i = 0; i < rewards.length; i++) {
+          finalReward = rewards[i] / 1e18;
+          result = result + Number(finalReward);
+        }
+      }
+    }
+    setEthRewards(result);
+  };
+
+  const calculateAllRewardsLandPool = async () => {
+    let myStakes = await getStakesIdsLandPool();
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = new window.infuraWeb3.eth.Contract(
+      window.LANDSTAKING_ABI,
+      window.config.landnftstake_address
+    );
+    if (address) {
+      if (myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setEthRewardsLandPool(result);
   };
 
   const fetchTreasureHuntData = async (email, userAddress) => {
@@ -347,6 +449,8 @@ const MyRewardsPopup = ({
 
   useEffect(() => {
     getBundles();
+    calculateAllRewards();
+    calculateAllRewardsLandPool();
   }, [address]);
 
   // useEffect(() => {
@@ -384,12 +488,7 @@ const MyRewardsPopup = ({
 
           <tr>
             <td className="myrewards-td-main border-0">
-              {" "}
-              <img
-                src={nftStake}
-                alt=""
-                style={{ width: 24, height: 24 }}
-              />{" "}
+              <img src={nftStake} alt="" style={{ width: 24, height: 24 }} />{" "}
               NFT Staking
             </td>
             <td className="myrewards-td-second border-0"></td>
@@ -401,12 +500,19 @@ const MyRewardsPopup = ({
           <div className="table-separator position-absolute"></div>
 
           <tr>
-            <td className="myrewards-td-second border-0">CAWS</td>
+            <td className="myrewards-td-second border-0">Genesis Land</td>
             <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : "$120"}
+              {previousRewards
+                ? "-"
+                : `$${getFormattedNumber(
+                    EthRewardsLandPool * ethTokenData,
+                    2
+                  )}`}
             </td>
             <td className="myrewards-td-second border-0 specialCell topborder text-center">
-              {previousRewards ? "-" : " 0.022 WETH"}
+              {previousRewards
+                ? "-"
+                : `${getFormattedNumber(EthRewardsLandPool, 2)} WETH`}
             </td>
             <td className="myrewards-td-second border-0 text-center">
               {previousRewards ? "-" : " $500.00"}
@@ -416,11 +522,14 @@ const MyRewardsPopup = ({
             <td className="myrewards-td-second border-0">WoD Land & CAWS </td>
 
             <td className="myrewards-td-second border-0 text-center">
-              {" "}
-              {previousRewards ? "-" : " $14"}
+              {previousRewards
+                ? "-"
+                : `$${getFormattedNumber(EthRewards * ethTokenData, 2)}`}
             </td>
             <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-              {previousRewards ? "-" : "0.022 WETH"}
+              {previousRewards
+                ? "-"
+                : `${getFormattedNumber(EthRewards, 2)} WETH`}
             </td>
             <td className="myrewards-td-second border-0 text-center">
               {previousRewards ? "-" : " $500.00"}
@@ -454,12 +563,17 @@ const MyRewardsPopup = ({
           <tr>
             <td className="myrewards-td-second border-0">CoinGecko</td>
             <td className="myrewards-td-second border-0 specialCell topborder text-center">
-              {previousRewards ? "-" : `$${getFormattedNumber(userEarnUsd, 2)}`}
+              {previousRewards
+                ? "-"
+                : `$${getFormattedNumber(userEarnUsdPrevious, 2)}`}
             </td>
             <td className="myrewards-td-second border-0 text-center">
               {previousRewards
                 ? "-"
-                : `${getFormattedNumber(userEarnUsd / bnbPrice, 2)} WBNB`}
+                : `${getFormattedNumber(
+                    userEarnUsdPrevious / bnbPrice,
+                    2
+                  )} WBNB`}
             </td>
             <td className="myrewards-td-second border-0 text-center">
               {previousRewards
@@ -472,12 +586,15 @@ const MyRewardsPopup = ({
             <td className="myrewards-td-second border-0 specialCell text-center">
               {previousRewards
                 ? "-"
-                : `$${getFormattedNumber(confluxEarnUSD, 2)}`}
+                : `$${getFormattedNumber(confluxEarnUSDPrevious, 2)}`}
             </td>
             <td className="myrewards-td-second border-0 text-center">
               {previousRewards
                 ? "-"
-                : `${getFormattedNumber(confluxEarnUSD / cfxPrice, 2)} CFX`}
+                : `${getFormattedNumber(
+                    confluxEarnUSDPrevious / cfxPrice,
+                    2
+                  )} CFX`}
             </td>
             <td className="myrewards-td-second border-0 text-center">
               {previousRewards
@@ -488,12 +605,17 @@ const MyRewardsPopup = ({
           <tr>
             <td className="myrewards-td-second border-0">Gate.io</td>
             <td className="myrewards-td-second border-0 specialCell text-center">
-              {previousRewards ? "-" : `$${getFormattedNumber(gateEarnUSD, 2)}`}
+              {previousRewards
+                ? "-"
+                : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
             </td>
             <td className="myrewards-td-second border-0 text-center">
               {previousRewards
                 ? "-"
-                : `${getFormattedNumber(gateEarnUSD / bnbPrice, 2)} WBNB`}
+                : `${getFormattedNumber(
+                    gateEarnUSDPrevious / bnbPrice,
+                    2
+                  )} WBNB`}
             </td>
             <td className="myrewards-td-second border-0 text-center">
               {previousRewards
