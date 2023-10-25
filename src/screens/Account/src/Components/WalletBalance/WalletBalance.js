@@ -53,20 +53,8 @@ import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
-import twitter from "./assets/greenTwitter.svg";
-import telegram from "./assets/greentg.svg";
-import website from "./assets/greenWebsite.svg";
-import discord from "./assets/greenDiscord.svg";
-import grayDollar from "./assets/grayDollar.svg";
-import eventsArrow from "./assets/eventsArrow.svg";
-import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
-import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
-import eventPopupImageBase from "./assets/eventPopupImageBase.png";
-
-import gatePopupImage from "./assets/gatePopupImage.png";
-import confluxPopupImage from "./assets/eventPopupImage.png";
-import Countdown from "react-countdown";
-
+import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
+import arrowCircle from "./newAssets/arrowCircle.svg";
 
 const WalletBalance = ({
   dypBalance,
@@ -151,6 +139,7 @@ const WalletBalance = ({
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [eventPopup, setEventPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
+  const [announcementsNews, setAnnouncementsNews] = useState([]);
 
   const [showAllEvents, setShowAllEvents] = useState(false);
   const slider = useRef(null);
@@ -1013,7 +1002,6 @@ const WalletBalance = ({
     }
   };
 
-
   useEffect(() => {
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
@@ -1368,6 +1356,30 @@ const WalletBalance = ({
     setShowNfts(false);
   };
 
+  const fetchNews = async () => {
+    const announcements = await axios
+      .get("https://api3.dyp.finance/api/wod_announcements?page=1")
+      .then((res) => {
+        return res.data;
+      });
+
+    const announcementsDatedNews = announcements.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
+
+    const sortedAnnouncementsNews = announcementsDatedNews.sort(function (
+      a,
+      b
+    ) {
+      return b.date - a.date;
+    });
+
+    setAnnouncementsNews(sortedAnnouncementsNews[0]);
+  };
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
 
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
@@ -1391,8 +1403,89 @@ const WalletBalance = ({
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0 mx-0">
-          
-          <div className="col-12 px-0 position-relative mt-3 mt-lg-0">
+          <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative mt-3 mt-lg-0">
+            <h6
+              className="new-bundle-title ms-0 ms-lg-4"
+              style={{ position: "absolute", top: "-35px" }}
+            >
+              Game activity
+            </h6>
+            <div className="game-activity-wrapper">
+              <div className="d-flex flex-column gap-5 justify-content-between">
+                <div className="d-flex flex-column gap-2 p-3">
+                  <div className="d-flex flex-column gap-1">
+                    <span className="text-white game-event-title">
+                      World of Dypians
+                    </span>
+                    <span className="game-event-patchtitle">
+                      Latest Patch: v0.2.1{" "}
+                      <img
+                        src={require("./newAssets/orangePatch.svg").default}
+                      />
+                    </span>
+                  </div>
+                  <a
+                    className="game-event-download"
+                    href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                    target="_blank"
+                  >
+                    <img
+                      src={halfCircleArrow}
+                      width={16}
+                      height={16}
+                      alt="icon"
+                    />
+                    Download
+                  </a>
+                </div>
+                <div className="d-flex flex-column">
+                  <div className="requirements-wrapper">
+                    <span className="sys-req-text">
+                      Check system requirements
+                    </span>
+                    <img src={arrowCircle} alt="" />
+                  </div>
+
+                  <div className="news-game-wrapper p-3">
+                    <NavLink
+                      to={`/news/${
+                        announcementsNews?.id
+                      }/${announcementsNews?.title?.replace(/\s/g, "-")}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <div>
+                          <img
+                            src={announcementsNews?.image}
+                            className="game-img-second"
+                          />
+                        </div>
+                        <div className="d-flex flex-column gap-1">
+                          <span className="game-news-title">
+                            {announcementsNews?.title}
+                          </span>
+                          <span
+                            className="game-news-desc"
+                            dangerouslySetInnerHTML={{
+                              __html: announcementsNews?.content?.slice(0, 200),
+                            }}
+                          ></span>
+                          <div className="d-flex align-items-center gap-2 justify-content-between">
+                            <span className="game-news-date">
+                              <img alt="" src={grayCalendar} /> Sept 10, 2022
+                            </span>
+                            <img src={arrowCircle} alt="" />
+                          </div>
+                        </div>
+                      </div>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-12 col-lg-8 px-0 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
@@ -3325,9 +3418,7 @@ const WalletBalance = ({
             )}
           </div>
         )}
-
       </div>
-   
     </>
   );
 };

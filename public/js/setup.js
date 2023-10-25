@@ -1797,6 +1797,10 @@ window.config = {
   // add supported subscription tokens here, lowercase
   // THESE TOKENS MUST HAVE BEEN ALREADY ADDED TO SMART CONTRACT!
   subscription_tokens: {
+    "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7": {
+      symbol: "USDT",
+      decimals: 6,
+    },
     "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7": {
       symbol: "WAVAX",
       decimals: 18,
@@ -1809,10 +1813,7 @@ window.config = {
     //   symbol: "WETH.e",
     //   decimals: 18,
     // },
-    "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7": {
-      symbol: "USDT",
-      decimals: 6,
-    },
+
     "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E": {
       symbol: "USDC",
       decimals: 6,
@@ -1822,6 +1823,10 @@ window.config = {
   // add supported subscription tokens here, lowercase
   // THESE TOKENS MUST HAVE BEEN ALREADY ADDED TO SMART CONTRACT!
   subscriptioneth_tokens: {
+    "0xdac17f958d2ee523a2206206994597c13d831ec7": {
+      symbol: "USDT",
+      decimals: 6,
+    },
     "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
       symbol: "WETH",
       decimals: 18,
@@ -1834,10 +1839,7 @@ window.config = {
       symbol: "USDC",
       decimals: 6,
     },
-    "0xdac17f958d2ee523a2206206994597c13d831ec7": {
-      symbol: "USDT",
-      decimals: 6,
-    },
+
     // "0x6b175474e89094c44da98b954eedeac495271d0f": {
     //   symbol: "DAI",
     //   decimals: 18,
@@ -1845,6 +1847,10 @@ window.config = {
   },
 
   subscriptionbnb_tokens: {
+    "0x55d398326f99059fF775485246999027B3197955": {
+      symbol: "USDT",
+      decimals: 18,
+    },
     "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
       symbol: "WBNB",
       decimals: 18,
@@ -1857,10 +1863,7 @@ window.config = {
       symbol: "BUSD",
       decimals: 18,
     },
-    "0x55d398326f99059fF775485246999027B3197955": {
-      symbol: "USDT",
-      decimals: 18,
-    },
+
     // "0x6b175474e89094c44da98b954eedeac495271d0f": {
     //   symbol: "DAI",
     //   decimals: 18,
@@ -2026,7 +2029,6 @@ window.bscWeb3 = new Web3(window.config.bsc_endpoint);
 window.avaxWeb3 = new Web3(window.config.avax_endpoint);
 window.confluxWeb3 = new Web3(window.config.conflux_endpoint);
 window.baseWeb3 = new Web3(window.config.base_endpoint);
-
 
 window.REWARD_TOKEN_ABI = window.TOKEN_ABI;
 window.REWARD_TOKENAVAX_ABI = window.TOKENAVAX_ABI;
@@ -3455,7 +3457,7 @@ class GATE_NFT {
   }
   async getGateLatestMint() {
     let nft_contract = await getContractGateNFT("GATE_NFT");
-    console.log(nft_contract, 'gate')
+    console.log(nft_contract, "gate");
     return await nft_contract.methods.totalSupply().call();
   }
 }
@@ -19083,10 +19085,6 @@ window.LOCKERETH_ABI = [
   },
   { stateMutability: "payable", type: "receive" },
 ];
-
- 
-
-
 
 window.PANGOLIN_ROUTER_ABI = [
   {
@@ -35158,14 +35156,12 @@ async function getEstimatedTokenSubscriptionAmountETH(tokenAddress) {
     .call();
 }
 
-
 async function getEstimatedTokenSubscriptionAmountBNB(tokenAddress) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTIONBNB" });
   return await subscriptionContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
 }
-
 
 // ===================== end subscription contract functions ================================
 

@@ -1,12 +1,4 @@
 import React, { useState, useRef } from "react";
-import avaxIcon from "./newAssets/avaxIcon.svg";
-import ethIcon from "./newAssets/ethIcon.svg";
-import bnbIcon from "./newAssets/bnbIcon.svg";
-import dypIcon from "./newAssets/dypIcon.svg";
-import iDypIcon from "./newAssets/iDypIcon.svg";
-import genesisRankImg from "./newAssets/genesisRank.svg";
-import globalRank from "./newAssets/globalRank.svg";
-import rightIcon from "./newAssets/rightIcon.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
 
 import premium from "./newAssets/premium.svg";

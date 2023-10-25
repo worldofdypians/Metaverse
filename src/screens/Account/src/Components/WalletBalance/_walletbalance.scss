@@ -1351,7 +1351,7 @@
 .launchpad-dropdown {
   font-size: 12px;
   color: #b3b3b3 !important;
-  background: #1A1C39 !important;
+  background: #1a1c39 !important;
   border: 1px solid #8e97cd !important;
 }
 
@@ -1400,7 +1400,7 @@
 
 .launchpad-item {
   cursor: pointer;
-  background: rgba(23, 25, 50, 0.40) !important;
+  background: rgba(23, 25, 50, 0.4) !important;
   color: #8e97cd !important;
   font-weight: 500 !important;
   font-size: 10px !important;
@@ -1471,6 +1471,112 @@
   .profile-div-link {
     text-decoration: underline;
   }
+}
+
+.game-activity-wrapper {
+  border-radius: 20px;
+  border: 1px solid #4d4f65;
+  background: url(./newAssets/gameEventBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.game-event-title {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.game-event-patchtitle {
+  color: #E2E2E2; 
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.game-event-download {
+  background: linear-gradient(to right, #3dbda7, #067d71);
+  border-radius: 6px;
+  padding: 5px 10px;
+  color: #fff;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: underline;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.game-event-download:hover {
+  text-decoration: underline;
+}
+
+.game-img-second {
+  width: 60px;
+  height: 60px; 
+  border-radius: 8px;
+}
+
+.requirements-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border: 0.2px solid #7dd9af;
+  background: rgba(18, 48, 72, 0.8);
+  cursor: pointer;
+}
+
+.sys-req-text {
+  color: #7dd9af;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+
+.news-game-wrapper {
+  border-radius: 0px 0px 20px 20px;
+  background: rgba(16, 24, 48, 0.9);
+}
+
+.game-news-title {
+  color: #fcfcf7;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 12px;
+}
+
+.game-news-desc {
+  p, span {
+    color: #fcfcf7 !important;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 12px;
+  }
+  color: #fcfcf7;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 12px;
+}
+
+.game-news-date {
+  color: #7dd9af;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.144px;
 }
 
 .table-separator {

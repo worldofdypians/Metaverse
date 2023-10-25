@@ -1734,6 +1734,7 @@ function App() {
                   onSigninClick={checkData}
                   success={success}
                   availableTime={availTime}
+                  handleSwitchNetwork={handleSwitchNetwork} 
                 />
               }
             />
