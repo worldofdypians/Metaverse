@@ -519,6 +519,47 @@ const NewWalletBalance = ({
   const releaseContent = useRef();
   const releaseContent2 = useRef();
   const betaSlider = useRef();
+  const [selectedEvent, setSelectedEvent] = useState({});
+  const [eventsPopup, setEventsPopup] = useState(false);
+  const [stakePopup, setStakePopup] = useState(true)
+
+  const dummyEvents = [
+    {
+      name: "Treasure Hunt",
+      img: "treasureHunt",
+      id: "treasure-hunt",
+      desc: "The Treasure Hunt event is a series of local events organized by Partners in the World of Dypians. Players need to visit partner areas daily to complete tasks and earn rewards. There are different reward pools available for each partner.",
+      button: "Get Beta Pass",
+    },
+    {
+      name: "Dragon Ruins",
+      img: "dragonRuins",
+      id: "dragon-ruins",
+      desc: "The Dragon Ruins event provides players with the opportunity to battle a mystical creature. Players engage in battles with a Dragon, and upon winning, they earn leaderboard points to increase their global rank.",
+      button: "Buy",
+    },
+    {
+      name: "Puzzle Madness",
+      img: "puzzleMadness",
+      id: "puzzle-madness",
+      desc: "In the Puzzle Madness event, players must find 10 hidden pieces in the mining and city maps, earning valuable points to compete on daily, weekly, and monthly leaderboards. These pieces also include a score multiplier, ranging from x2 to x10, which activates after collecting all 10, significantly increasing earned points. ",
+      button: "Buy",
+    },
+    {
+      name: "Golden Pass",
+      img: "goldenPass",
+      id: "golden-pass",
+      desc: "The Golden Pass bundle allows players to earn double rewards based on their leaderboard ranking. The bundle is available for 7 days and can be purchased up to 4 times. When a player acquires the fourth bundle, they will gain access to the event for the remaining duration until the end of the month.",
+      button: "Buy",
+    },
+    {
+      name: "Critical Hit",
+      img: "criticalHit",
+      id: "critical-hit",
+      desc: "The Treasure Hunt event is a series of local events organized by Partners in the World of Dypians. Players need to visit partner areas daily to complete tasks and earn rewards. There are different reward pools available for each partner.",
+      button: "Get Genesis Land",
+    },
+  ];
 
   const openEvents = () => {
     setShowAllEvents(!showAllEvents);
@@ -1225,9 +1266,9 @@ const NewWalletBalance = ({
                 </div>
               </div>
               <div className="col-12 col-lg-4">
-                <NavLink
-                  to="/marketplace/events/treasure-hunt"
+                <div
                   className="game-events-wrapper d-flex"
+                  onClick={() => {setEventsPopup(true); setSelectedEvent(dummyEvents[0])}}
                 >
                   <div className="green-div"></div>
                   <img src={gameEvents} className="game-events-img" alt="" />
@@ -1240,7 +1281,7 @@ const NewWalletBalance = ({
                       <img src={arrowCircle} alt="" />
                     </div>
                   </div>
-                </NavLink>
+                </div>
               </div>
               <div className="col-12 col-lg-4">
                 <NavLink
@@ -1911,6 +1952,176 @@ const NewWalletBalance = ({
           </div>
         </OutsideClickHandler>
       )}
+      {eventsPopup && (
+        <OutsideClickHandler onOutsideClick={() => setEventsPopup(false)}>
+          <div
+          className="popup-wrapper popup-active p-3"
+          style={{ width: "45%" }}
+        >
+          <div className="d-flex align-items-center justify-content-between w-100 mb-4">
+            <h6 className="popup-title-2 mb-0">Live Events</h6>
+            <img
+              src={xMark}
+              style={{ cursor: "pointer" }}
+              onClick={() => setEventsPopup(false)}
+              alt=""
+            />
+          </div>
+          <div className="d-flex align-items-center gap-2 mb-4 popup-events-container" >
+            {dummyEvents.map((item) => (
+              <div className={`p-2 event-popup-item ${selectedEvent.name === item.name && "selected-popup-item"} d-flex flex-column gap-2`} onClick={() => setSelectedEvent(item)}>
+                <img src={require(`./eventAssets/${item.img}.png`)} className="w-100" alt="" />
+                  <h6 className="mb-0">{item.name}</h6>
+              </div>
+            ))}
+          </div>
+            <div className="event-popup-item-2 p-3 mb-4">
+              <p className="mb-0">{selectedEvent.desc}</p>
+            </div>
+
+            <div className="d-flex justify-content-center">
+            <NavLink to={`/marketplace/events/${selectedEvent.id}`}>
+                <div
+                  className="linear-border"
+                >
+                  <button
+                    className="btn filled-btn px-5"
+                   
+                  >
+                    {selectedEvent.button}
+                  </button>
+                </div>
+              </NavLink>
+            </div>
+        </div>
+        </OutsideClickHandler>
+      )}
+      {stakePopup &&
+      <OutsideClickHandler onOutsideClick={() => setStakePopup(false)}>
+        <div className="popup-wrapper popup-active nft-wrapper-popup p-3">
+        <div className="d-flex align-items-center justify-content-between w-100 mb-4">
+            <h6 className="popup-title-2 mb-0">Stake NFT</h6>
+            <img
+              src={xMark}
+              style={{ cursor: "pointer" }}
+              onClick={() => setStakePopup(false)}
+              alt=""
+            />
+          </div>
+            <div className="d-flex flex-column gap-3 mb-4 nft-popup-container" >
+            <div className="row w-100  m-0  position-relative" >
+                {/* {myLandstakes && myLandstakes.length > 0 && (
+                  <div className="instakeWrapper">
+                    <span className="instaketxt">In stake</span>
+                  </div>
+                )} */}
+                <div className="col-12 px-0">
+                  <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                      <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="market-stake-title" style={{fontSize: "16px"}}>
+                            World of Dypians Land & CAWS
+                          </h6>
+                          <span className="market-stake-desc" style={{fontSize: "11px"}}>
+                            Combine your Land and CAWS NFTs to earn daily ETH
+                            rewards.
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-3">
+                          <button
+                            className="btn pill-btn px-3 py-2" style={{fontSize: "12px"}}
+                            // onClick={() => setNftModal(true)}
+                          >
+                            Deposit
+                          </button>
+                          <button
+                            className="btn rewards-btn px-3 py-2" style={{fontSize: "12px"}}
+                            // onClick={() => {
+                            //   setRewardModal(true);
+                            // }}
+                          >
+                            Rewards
+                          </button>
+                        </div>
+                      </div>
+                      <div className="tvl-wrapper" style={{width: "150px", height: "134px"}}>
+                        <h6 className="market-stake-tvl" style={{fontSize: "24px"}}>
+                          {/* ${abbreviateNumber(cawslandTvl)} */}
+                          $15,000
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row w-100 m-0  position-relative">
+                {/* {mystakesLandPool && mystakesLandPool.length > 0 && (
+                  <div className="instakeWrapper">
+                    <span className="instaketxt">In stake</span>
+                  </div>
+                )} */}
+                <div className="col-12 px-0">
+                  <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                      <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="market-stake-title" style={{fontSize: "16px"}}>
+                            World of Dypians Land
+                          </h6>
+                          <span className="market-stake-desc" style={{fontSize: "11px"}}>
+                            Stake your Genesis Land NFTs to earn daily ETH
+                            rewards.
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-3">
+                          <button
+                            className="btn pill-btn px-3 py-2" style={{fontSize: "12px"}}
+                            // onClick={() => {
+                            //   setlandStakeModal(true);
+                            // }}
+                          >
+                            Deposit
+                          </button>
+                          <button
+                            className="btn rewards-btn px-3 py-2" style={{fontSize: "12px"}}
+                            // onClick={() => {
+                            //   setlandunStakeModal(true);
+                            // }}
+                          >
+                            Rewards
+                          </button>
+                        </div>
+                        <div className="tvl-wrapper" style={{width: "150px", height: "134px"}}>
+                          <h6 className="market-stake-tvl" style={{fontSize: "24px"}}>
+                            {/* ${abbreviateNumber(landtvl)} */}
+                            $1,500
+                          </h6>
+                        </div>
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex justify-content-center">
+            <NavLink to={`/marketplace/stake`}>
+                <div
+                  className="linear-border"
+                >
+                  <button
+                    className="btn filled-btn px-5"
+                   
+                  >
+                   Stake
+                  </button>
+                </div>
+              </NavLink>
+            </div>
+        </div>
+      </OutsideClickHandler>
+      }
     </>
   );
 };

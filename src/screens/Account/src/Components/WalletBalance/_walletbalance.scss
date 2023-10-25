@@ -2146,3 +2146,62 @@
   border-radius: 10px;
   background: rgba(5, 3, 3, 0.3);
 }
+
+.event-popup-item{
+  width: 20% !important;
+  border-radius: 10px;
+border: 1px solid #8E97CD;
+background: rgba(23, 25, 50, 0.40);
+box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
+cursor: pointer;
+transition: all .25s;
+  h6{
+    color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+  }
+
+  @media screen and (max-width: 500px) {
+   width: 48% !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+.popup-events-container{
+  flex-wrap: wrap;
+}  
+}
+
+.event-popup-item-2{
+  min-height: 90px;
+  border-radius: 10px;
+border: 1px solid #8E97CD;
+background: rgba(23, 25, 50, 0.40);
+box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
+  p{
+    color: #FFF;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.event-popup-item:hover{
+  border: 1px solid #7DD9AF;
+}
+
+.selected-popup-item{
+  border: 1px solid #7DD9AF !important;
+
+}
+
+
+@media screen and (max-width: 786px) {
+  .nft-wrapper-popup{
+    max-height: 80%;
+    overflow-y: scroll;
+  }
+}
