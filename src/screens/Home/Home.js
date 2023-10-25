@@ -138,7 +138,6 @@ const Home = ({
       </div>
     </div>
     {/* <LandFlyout /> */}
-  <ChestFlyout />
 
   </>
   );
