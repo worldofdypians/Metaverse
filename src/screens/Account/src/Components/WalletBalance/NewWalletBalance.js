@@ -529,6 +529,7 @@ const NewWalletBalance = ({
   const betaSlider = useRef();
   const [selectedEvent, setSelectedEvent] = useState({});
   const [eventsPopup, setEventsPopup] = useState(false);
+  const [stakePopup, setStakePopup] = useState(true)
 
   const dummyEvents = [
     {
@@ -2003,6 +2004,132 @@ const NewWalletBalance = ({
         </div>
         </OutsideClickHandler>
       )}
+      {stakePopup &&
+      <OutsideClickHandler onOutsideClick={() => setStakePopup(false)}>
+        <div className="popup-wrapper popup-active nft-wrapper-popup p-3">
+        <div className="d-flex align-items-center justify-content-between w-100 mb-4">
+            <h6 className="popup-title-2 mb-0">Stake NFT</h6>
+            <img
+              src={xMark}
+              style={{ cursor: "pointer" }}
+              onClick={() => setStakePopup(false)}
+              alt=""
+            />
+          </div>
+            <div className="d-flex flex-column gap-3 mb-4 nft-popup-container" >
+            <div className="row w-100  m-0  position-relative" >
+                {/* {myLandstakes && myLandstakes.length > 0 && (
+                  <div className="instakeWrapper">
+                    <span className="instaketxt">In stake</span>
+                  </div>
+                )} */}
+                <div className="col-12 px-0">
+                  <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                      <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="market-stake-title" style={{fontSize: "16px"}}>
+                            World of Dypians Land & CAWS
+                          </h6>
+                          <span className="market-stake-desc" style={{fontSize: "11px"}}>
+                            Combine your Land and CAWS NFTs to earn daily ETH
+                            rewards.
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-3">
+                          <button
+                            className="btn pill-btn px-3 py-2" style={{fontSize: "12px"}}
+                            // onClick={() => setNftModal(true)}
+                          >
+                            Deposit
+                          </button>
+                          <button
+                            className="btn rewards-btn px-3 py-2" style={{fontSize: "12px"}}
+                            // onClick={() => {
+                            //   setRewardModal(true);
+                            // }}
+                          >
+                            Rewards
+                          </button>
+                        </div>
+                      </div>
+                      <div className="tvl-wrapper" style={{width: "150px", height: "134px"}}>
+                        <h6 className="market-stake-tvl" style={{fontSize: "24px"}}>
+                          {/* ${abbreviateNumber(cawslandTvl)} */}
+                          $15,000
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row w-100 m-0  position-relative">
+                {/* {mystakesLandPool && mystakesLandPool.length > 0 && (
+                  <div className="instakeWrapper">
+                    <span className="instaketxt">In stake</span>
+                  </div>
+                )} */}
+                <div className="col-12 px-0">
+                  <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                      <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="market-stake-title" style={{fontSize: "16px"}}>
+                            World of Dypians Land
+                          </h6>
+                          <span className="market-stake-desc" style={{fontSize: "11px"}}>
+                            Stake your Genesis Land NFTs to earn daily ETH
+                            rewards.
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-3">
+                          <button
+                            className="btn pill-btn px-3 py-2" style={{fontSize: "12px"}}
+                            // onClick={() => {
+                            //   setlandStakeModal(true);
+                            // }}
+                          >
+                            Deposit
+                          </button>
+                          <button
+                            className="btn rewards-btn px-3 py-2" style={{fontSize: "12px"}}
+                            // onClick={() => {
+                            //   setlandunStakeModal(true);
+                            // }}
+                          >
+                            Rewards
+                          </button>
+                        </div>
+                        <div className="tvl-wrapper" style={{width: "150px", height: "134px"}}>
+                          <h6 className="market-stake-tvl" style={{fontSize: "24px"}}>
+                            {/* ${abbreviateNumber(landtvl)} */}
+                            $1,500
+                          </h6>
+                        </div>
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex justify-content-center">
+            <NavLink to={`/marketplace/stake`}>
+                <div
+                  className="linear-border"
+                >
+                  <button
+                    className="btn filled-btn px-5"
+                   
+                  >
+                   Stake
+                  </button>
+                </div>
+              </NavLink>
+            </div>
+        </div>
+      </OutsideClickHandler>
+      }
     </>
   );
 };
