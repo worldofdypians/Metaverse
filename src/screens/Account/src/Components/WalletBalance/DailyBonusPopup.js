@@ -24,6 +24,7 @@ const DailyBonusPopup = ({ onclose }) => {
   const [rewardPopup, setRewardPopup] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
   const [popupIndex, setPopupIndex] = useState(0);
+  const [names, setNames] = useState([])
 
   const dummyChests = [
     {
@@ -340,6 +341,20 @@ const DailyBonusPopup = ({ onclose }) => {
     },
   ];
 
+  const cryptoNames = [
+    "FOMO",
+    "HODL",
+    "FUD",
+    "SHILL",
+    "WHALE",
+    "MOON",
+    "DYOR",
+    "ATH",
+    "PUMP",
+    "SAFU",
+
+  ]
+
   const onOpenChest = () => {
     randomNum();
     // let rewardsAmount = Math.floor(Math.random() * 6);
@@ -384,10 +399,6 @@ const DailyBonusPopup = ({ onclose }) => {
         array[currentIndex],
       ];
     }
-
-    setRegularChests(array.slice(0, 10));
-    // setPremiumChests(array.slice(10, 20))
-    // console.log(array.slice(0,10), array.slice(10,20));
     return array;
   }
 
@@ -421,12 +432,11 @@ const DailyBonusPopup = ({ onclose }) => {
     return array;
   };
   useEffect(() => {
-    shuffle(dummyChests);
+    setRegularChests(shuffle(dummyChests).slice(0,10));
+    setNames(shuffle(cryptoNames))
     shufflePremiums(dummyPremiums);
   }, []);
-
-  const emptyPrizes = [1, 2, 3, 4, 5, 6];
-
+  
   return (
     <>
       <div
@@ -480,7 +490,7 @@ const DailyBonusPopup = ({ onclose }) => {
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
-                    chestTitle={item.chestTitle}
+                    chestTitle={names[index]}
                     open={item.open}
                     closedImg={item.closedImg}
                     rewardTypes={rewardTypes}

@@ -161,6 +161,21 @@
 .mainChest {
   width: 60px;
   height: 60px;
+  animation: pulsate 3s ease-in-out infinite;
+}
+
+
+
+@keyframes pulsate {
+  0% {
+    filter: drop-shadow(0px 0px 0px rgba(125, 203, 217, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0px 0px 15px rgba(125, 203, 217, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0px 0px 0px rgba(125, 203, 217, 0.6));
+  }
 }
 
 .flyout-chest {
