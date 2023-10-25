@@ -6,7 +6,7 @@ import whiteCalendar from "../assets/whiteCalendar.svg";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
-const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
+const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
   return (
     <div
       className={` ${
@@ -21,7 +21,9 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
           : data.title === "Gate.io"
           ? "upcoming-mint-wrapper-gate"
           : "upcoming-mint-wrapper-coin98"
-      } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center justify-content-between px-0`}
+      } ${
+        isFrontPage ? "justify-content-center" : "justify-content-between"
+      } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center px-0`}
       onClick={onOpenPopup}
       style={{ cursor: "pointer" }}
     >
@@ -61,42 +63,62 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
           </span>
         </div>
       </div>
-
-      <div className="d-flex align-items-center gap-3">
-        <div className="d-flex col-6 flex-column align-items-start">
-          <div className="mybetaearnings" style={{width: "160px", height: "80px", top: 0, position: "relative"}}>
-            <h6 className="event-my-earnings3 mb-3">
-              $
-              {getFormattedNumber(
-                 data.title === "Base"
-                  ? 0
-                  : userEarnUsd,
-                2
-              )}
-            </h6>
+      {!isFrontPage && (
+        <div className="d-flex align-items-center gap-3">
+          <div className="d-flex col-6 flex-column align-items-start">
+            <div
+              className="mybetaearnings"
+              style={{
+                width: "160px",
+                height: "80px",
+                top: 0,
+                position: "relative",
+              }}
+            >
+              <h6 className="event-my-earnings3 mb-3">
+                $
+                {getFormattedNumber(data.title === "Base" ? 0 : userEarnUsd, 2)}
+              </h6>
+            </div>
+          </div>
+          <div className="d-flex flex-column d-flex gap-3">
+            <div className="d-flex align-items-center gap-2">
+              <img src={whitePickaxe} alt="" />
+              <span
+                className="white-events-text mb-0"
+                style={{ fontSize: "10px" }}
+              >
+                {data.eventType}
+              </span>
+            </div>
+            <div className="d-flex align-items-center gap-2">
+              <img src={whiteCalendar} alt="" />
+              <span
+                className="white-events-text mb-0"
+                style={{ fontSize: "10px" }}
+              >
+                {data.eventDate}
+              </span>
+            </div>
           </div>
         </div>
-        <div className="d-flex flex-column d-flex gap-3">
-          <div className="d-flex align-items-center gap-2">
-            <img src={whitePickaxe} alt="" />
-            <span className="white-events-text mb-0" style={{fontSize: "10px"}}>{data.eventType}</span>
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            <img src={whiteCalendar} alt="" />
-            <span className="white-events-text mb-0" style={{fontSize: "10px"}}>{data.eventDate}</span>
-          </div>
-        </div>
-      </div>
+      )}
+       {!isFrontPage && (
       <div className="d-flex flex-column d-none gap-3 pick-and-calendar">
         <div className="d-flex align-items-center gap-2">
           <img src={whitePickaxe} alt="" />
-          <span className="white-events-text mb-0" style={{fontSize: "10px"}}>{data.eventType}</span>
+          <span className="white-events-text mb-0" style={{ fontSize: "10px" }}>
+            {data.eventType}
+          </span>
         </div>
         <div className="d-flex align-items-center gap-2">
           <img src={whiteCalendar} alt="" />
-          <span className="white-events-text mb-0" style={{fontSize: "10px"}}>{data.eventDate}</span>
+          <span className="white-events-text mb-0" style={{ fontSize: "10px" }}>
+            {data.eventDate}
+          </span>
         </div>
-      </div>
+      </div>)}
+      {!isFrontPage && (
       <span
         className="events-page-details d-flex my-3 align-items-center gap-2"
         onClick={onOpenPopup}
@@ -104,6 +126,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
         Details
         <img src={eventsArrow} alt="" />
       </span>
+      )}
       <img
         src={data.backgroundImage}
         alt=""
