@@ -19,7 +19,7 @@
     height: auto;
     overflow: hidden;
     position: relative;
-    filter: grayscale(0.5);
+    // filter: grayscale(0.5);
     transition: all .35s;
     --mask: linear-gradient(-135deg, #0000 50px, #000 0);
   -webkit-mask: var(--mask);

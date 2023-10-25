@@ -13,17 +13,17 @@
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
   pointer-events: auto !important;
 
- @media screen and (max-width: 786px) {
-  width: 95%;
-  height: 95%;
-  overflow: hidden;
- }
+  @media screen and (max-width: 786px) {
+    width: 95%;
+    height: 95%;
+    overflow: hidden;
+  }
 
- .overall-requirements{
+  .overall-requirements {
     overflow-y: auto;
     height: 80%;
 
- }
+  }
 
   .sys-req-title {
     font-style: normal;
@@ -118,38 +118,43 @@
     width: 100% !important;
   }
 
- 
+
 }
 
 
-.video-diagonal{
+.video-diagonal {
   position: relative;
-  --mask: linear-gradient(250deg,#0000 25%,#000 0);	
+  --mask: linear-gradient(250deg, #0000 25%, #000 0);
   -webkit-mask: var(--mask);
-          mask: var(--mask);
+  mask: var(--mask);
+
+  @media screen and (max-width: 991px) {
+    -webkit-mask: none;
+    mask: none;
+  }
 }
 
 
-.leaderboard-bg{
+.leaderboard-bg {
   background-image: url('../../../components/LeaderBoard/assets/leaderboardBg.png');
   background-repeat: no-repeat;
   background-position: right;
   background-size: 60% 100%;
-  @media screen and (max-width: 786px) {
+
+  @media screen and (max-width: 991px) {
     background-size: cover;
   }
 }
 
-.download-buttons-wrapper{
+.download-buttons-wrapper {
   position: absolute;
   left: 25%;
   top: 40%;
   bottom: 0;
   margin: auto;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     position: static;
     margin-top: 8rem;
   }
 }
-
