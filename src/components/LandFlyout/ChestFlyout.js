@@ -41,10 +41,7 @@ const ChestFlyout = () => {
         >
           <img src={flyoutChest} alt="" className="mainChest" />
           <Collapse in={showText} dimension="width">
-            <div id="d-flex flex-column">
-              <h6 className={`fly-title2 mb-0`}>Daily</h6>
-              <h6 className={`fly-title2 mb-0`}>Bonus</h6>
-            </div>
+              <h6 className={`fly-title2 mb-0`}>Daily Bonus</h6>
           </Collapse>
         </NavLink>
       </div>

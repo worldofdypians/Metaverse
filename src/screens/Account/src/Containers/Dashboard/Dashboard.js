@@ -74,6 +74,21 @@ function Dashboard({
     fetchPolicy: "network-only",
   });
 
+  const chainDropdowns = [
+    {
+      name: "Ethereum",
+      symbol: "weth",
+    },
+    {
+      name: "BNB Chain",
+      symbol: "wbnb",
+    },
+    {
+      name: "Avalanche",
+      symbol: "wavax",
+    },
+  ];
+
   const [tokensState, setTokensState] = useState({});
   const [showChecklistModal, setshowChecklistModal] = useState(false);
   const [showChecklistLandNftModal, setshowChecklistLandNftModal] =
@@ -130,27 +145,11 @@ function Dashboard({
   const [formattedPrice, setformattedPrice] = useState("0");
   const [loadspinner, setloadspinner] = useState(false);
   const [loadspinnerSub, setloadspinnerSub] = useState(false);
-  const [chainDropdown, setChainDropdown] = useState({})
+  const [chainDropdown, setChainDropdown] = useState(chainDropdowns[0]);
   const [selectedSubscriptionToken, setselectedSubscriptionToken] = useState(
     Object.keys(window.config.subscription_tokens)[0]
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
-
-    const chainDropdowns = [
-      {
-        name: "Ethereum",
-        symbol: "weth",
-      },
-      {
-        name: "Avalanche",
-        symbol: "wavax",
-      },
-      {
-        name: "BNB Chain",
-        symbol: "wbnb",
-      },
-    ]
-
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -902,7 +901,6 @@ function Dashboard({
     await axios
       .get("https://api.dyp.finance/api/the_graph_bsc_v2")
       .then((data) => {
-        
         const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
         setBnbPrice(bnb);
       });
@@ -919,7 +917,6 @@ function Dashboard({
         }
       });
   };
-
 
   useEffect(() => {
     if (chainId === 1) {
@@ -1014,8 +1011,8 @@ function Dashboard({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getTokenDatabnb()
-    fetchCFXPrice()
+    getTokenDatabnb();
+    fetchCFXPrice();
   }, []);
 
   useEffect(() => {
@@ -1469,7 +1466,7 @@ function Dashboard({
                                       alt=""
                                     />
                                     <span className="subscription-chain mb-0">
-                                      BNB Chain Network
+                                      BNB Chain
                                     </span>
                                   </div>
                                   <div className="d-flex align-items-center gap-2">
@@ -1542,85 +1539,25 @@ function Dashboard({
                                       style={{ color: "#fff" }}
                                     >
                                       <img
-                                        src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                        src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
                                         alt=""
                                       />
-                                      {dropdownTitle}
+                                      {chainDropdown.name}
                                     </div>
                                     <img src={launchpadIndicator} alt="" />
                                   </button>
                                   <ul class="dropdown-menu w-100">
-                                    {Object.keys(
-                                      chainId === 1
-                                        ? window.config.subscriptioneth_tokens
-                                        : chainId === 56
-                                        ? window.config.subscriptionbnb_tokens
-                                        : window.config.subscription_tokens
-                                    ).map((t, i) => (
+                                    {chainDropdowns.map((t, i) => (
                                       <li
                                         key={i}
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                        onClick={() => {
-                                          window.cached_contracts =
-                                            Object.create(null);
-                                          setTimeout(() => {
-                                            setdropdownIcon(
-                                              chainId === 1
-                                                ? window.config
-                                                    .subscriptioneth_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 56
-                                                ? window.config
-                                                    .subscriptionbnb_tokens[t]
-                                                    ?.symbol
-                                                : window.config
-                                                    .subscription_tokens[t]
-                                                    ?.symbol
-                                            );
-                                            setdropdownTitle(
-                                              chainId === 1
-                                                ? window.config
-                                                    .subscriptioneth_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 56
-                                                ? window.config
-                                                    .subscriptionbnb_tokens[t]
-                                                    ?.symbol
-                                                : window.config
-                                                    .subscription_tokens[t]
-                                                    ?.symbol
-                                            );
-
-                                            // console.log(t);
-                                            handleSubscriptionTokenChange(t);
-                                            handleCheckIfAlreadyApproved(t);
-                                          }, 200);
-                                        }}
+                                        onClick={() => setChainDropdown(t)}
                                       >
                                         <img
-                                          src={
-                                            chainId === 1
-                                              ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}Icon.svg`)
-                                              : chainId === 56
-                                              ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}Icon.svg`)
-                                              : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}Icon.svg`)
-                                          }
+                                          src={require(`../../Images/premium/tokens/${t.symbol}Icon.svg`)}
                                           alt=""
                                         />
-                                        {chainId === 1
-                                          ? window.config
-                                              .subscriptioneth_tokens[t]?.symbol
-                                          : chainId === 56
-                                          ? window.config
-                                              .subscriptionbnb_tokens[t]?.symbol
-                                          : window.config.subscription_tokens[t]
-                                              ?.symbol}
+                                        {t.name}
                                       </li>
                                     ))}
                                   </ul>
@@ -1732,7 +1669,8 @@ function Dashboard({
                                   {getFormattedNumber(
                                     tokenBalance / 10 ** tokenDecimals,
                                     6
-                                  )} {dropdownIcon.toUpperCase()}
+                                  )}{" "}
+                                  {dropdownIcon.toUpperCase()}
                                 </span>
                                 <div
                                   className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
@@ -1792,6 +1730,31 @@ function Dashboard({
                               </div>
                             </div> */}
                             <hr className="form-divider my-4" />
+
+                            
+                            <div className="d-flex align-items-center gap-3 justify-content-center">
+                                <div className={` ${approveStatus === "fail" || !coinbase ? "linear-border-disabled" : "linear-border"}`}>
+                                  <button
+                                    className={`btn ${approveStatus === "fail" || !coinbase ? "outline-btn-disabled" : "filled-btn"} px-5`}
+                                    disabled={
+                                      approveStatus === "fail" || !coinbase
+                                        ? true
+                                        : false
+                                    }
+                                    onClick={(e) => handleApprove(e)}
+                                  >
+                                    Approve
+                                  </button>
+                                </div>
+                                <div className={` ${isApproved === false ? "linear-border-disabled" : "linear-border"}`}>
+                                  <button
+                                    className={`btn ${isApproved === false ? "outline-btn-disabled" : "filled-btn"} px-5`}
+                                   onClick={() => handleSubscribe()}
+                                  >
+                                    Buy
+                                  </button>
+                                </div>
+                              </div>
                             <div
                               className={`d-flex align-items-center ${
                                 !coinbase
@@ -1804,7 +1767,7 @@ function Dashboard({
                                   Please connect your wallet first
                                 </span>
                               )}
-                              <div className="d-flex flex-column gap-2 justify-content-end align-items-center">
+                              {/* <div className="d-flex flex-column gap-2 justify-content-end align-items-center">
                                 <button
                                   className={
                                     "btn success-btn px-4 align-self-end"
@@ -1855,7 +1818,7 @@ function Dashboard({
                                 <span style={{ color: "#E30613" }}>
                                   {status}
                                 </span>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </div>
