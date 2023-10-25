@@ -527,6 +527,46 @@ const NewWalletBalance = ({
   const releaseContent = useRef();
   const releaseContent2 = useRef();
   const betaSlider = useRef();
+  const [selectedEvent, setSelectedEvent] = useState({});
+  const [eventsPopup, setEventsPopup] = useState(false);
+
+  const dummyEvents = [
+    {
+      name: "Treasure Hunt",
+      img: "treasureHunt",
+      id: "treasure-hunt",
+      desc: "The Treasure Hunt event is a series of local events organized by Partners in the World of Dypians. Players need to visit partner areas daily to complete tasks and earn rewards. There are different reward pools available for each partner.",
+      button: "Get Beta Pass",
+    },
+    {
+      name: "Dragon Ruins",
+      img: "dragonRuins",
+      id: "dragon-ruins",
+      desc: "The Dragon Ruins event provides players with the opportunity to battle a mystical creature. Players engage in battles with a Dragon, and upon winning, they earn leaderboard points to increase their global rank.",
+      button: "Buy",
+    },
+    {
+      name: "Puzzle Madness",
+      img: "puzzleMadness",
+      id: "puzzle-madness",
+      desc: "In the Puzzle Madness event, players must find 10 hidden pieces in the mining and city maps, earning valuable points to compete on daily, weekly, and monthly leaderboards. These pieces also include a score multiplier, ranging from x2 to x10, which activates after collecting all 10, significantly increasing earned points. ",
+      button: "Buy",
+    },
+    {
+      name: "Golden Pass",
+      img: "goldenPass",
+      id: "golden-pass",
+      desc: "The Golden Pass bundle allows players to earn double rewards based on their leaderboard ranking. The bundle is available for 7 days and can be purchased up to 4 times. When a player acquires the fourth bundle, they will gain access to the event for the remaining duration until the end of the month.",
+      button: "Buy",
+    },
+    {
+      name: "Critical Hit",
+      img: "criticalHit",
+      id: "critical-hit",
+      desc: "The Treasure Hunt event is a series of local events organized by Partners in the World of Dypians. Players need to visit partner areas daily to complete tasks and earn rewards. There are different reward pools available for each partner.",
+      button: "Get Genesis Land",
+    },
+  ];
 
   const openEvents = () => {
     setShowAllEvents(!showAllEvents);
@@ -1233,9 +1273,9 @@ const NewWalletBalance = ({
                 </div>
               </div>
               <div className="col-12 col-lg-4">
-                <NavLink
-                  to="/marketplace/events/treasure-hunt"
+                <div
                   className="game-events-wrapper d-flex"
+                  onClick={() => {setEventsPopup(true); setSelectedEvent(dummyEvents[0])}}
                 >
                   <div className="green-div"></div>
                   <img src={gameEvents} className="game-events-img" alt="" />
@@ -1248,7 +1288,7 @@ const NewWalletBalance = ({
                       <img src={arrowCircle} alt="" />
                     </div>
                   </div>
-                </NavLink>
+                </div>
               </div>
               <div className="col-12 col-lg-4">
                 <NavLink
@@ -1917,6 +1957,50 @@ const NewWalletBalance = ({
               </div>
             )}
           </div>
+        </OutsideClickHandler>
+      )}
+      {eventsPopup && (
+        <OutsideClickHandler onOutsideClick={() => setEventsPopup(false)}>
+          <div
+          className="popup-wrapper popup-active p-3"
+          style={{ width: "45%" }}
+        >
+          <div className="d-flex align-items-center justify-content-between w-100 mb-4">
+            <h6 className="popup-title-2 mb-0">Live Events</h6>
+            <img
+              src={xMark}
+              style={{ cursor: "pointer" }}
+              onClick={() => setEventsPopup(false)}
+              alt=""
+            />
+          </div>
+          <div className="d-flex align-items-center gap-2 mb-4 popup-events-container" >
+            {dummyEvents.map((item) => (
+              <div className={`p-2 event-popup-item ${selectedEvent.name === item.name && "selected-popup-item"} d-flex flex-column gap-2`} onClick={() => setSelectedEvent(item)}>
+                <img src={require(`./eventAssets/${item.img}.png`)} className="w-100" alt="" />
+                  <h6 className="mb-0">{item.name}</h6>
+              </div>
+            ))}
+          </div>
+            <div className="event-popup-item-2 p-3 mb-4">
+              <p className="mb-0">{selectedEvent.desc}</p>
+            </div>
+
+            <div className="d-flex justify-content-center">
+            <NavLink to={`/marketplace/events/${selectedEvent.id}`}>
+                <div
+                  className="linear-border"
+                >
+                  <button
+                    className="btn filled-btn px-5"
+                   
+                  >
+                    {selectedEvent.button}
+                  </button>
+                </div>
+              </NavLink>
+            </div>
+        </div>
         </OutsideClickHandler>
       )}
     </>
