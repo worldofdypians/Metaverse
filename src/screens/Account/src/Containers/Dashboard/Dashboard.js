@@ -99,6 +99,8 @@ function Dashboard({
   const [myGateNfts, setmyGateNfts] = useState([]);
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
   const [myBaseNfts, setmyBaseNfts] = useState([]);
+  const [bnbPrice, setBnbPrice] = useState(0);
+  const [cfxPrice, setCfxPrice] = useState(0);
 
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
@@ -896,6 +898,29 @@ function Dashboard({
       });
   };
 
+  const getTokenDatabnb = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
+      .then((data) => {
+        
+        const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
+        setBnbPrice(bnb);
+      });
+  };
+
+  const fetchCFXPrice = async () => {
+    await axios
+      .get(
+        "https://pro-api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+      )
+      .then((obj) => {
+        if (obj.data["conflux-token"] && obj.data["conflux-token"] !== NaN) {
+          setCfxPrice(obj.data["conflux-token"].usd);
+        }
+      });
+  };
+
+
   useEffect(() => {
     if (chainId === 1) {
       setdropdownIcon("weth");
@@ -989,6 +1014,8 @@ function Dashboard({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getTokenDatabnb()
+    fetchCFXPrice()
   }, []);
 
   useEffect(() => {
@@ -1372,7 +1399,15 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                          <MyRewardsPopup />
+                          <MyRewardsPopup
+                            username={data?.getPlayer?.displayName}
+                            userId={data?.getPlayer?.playerId}
+                            address={data?.getPlayer?.wallet?.publicAddress}
+                            email={email}
+                            bnbPrice={bnbPrice}
+                            cfxPrice={cfxPrice}
+                            ethTokenData={ethTokenData}
+                          />
                         </div>
                       </OutsideClickHandler>
                     )}
