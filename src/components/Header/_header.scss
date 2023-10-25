@@ -106,12 +106,12 @@
 }
 
 .dropdown-toggle {
-  background: transparent;
+  background: transparent !important; 
   border-radius: 10px;
   height: 32px;
   padding: 8px;
   height: 34px;
-  border: 1px solid #b8b8e0 !important;
+  border: 1px solid #8E97CD !important;
   display: flex;
   align-items: center;
 }

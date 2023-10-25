@@ -29,32 +29,32 @@
   }
 }
 
-  .wallet-wrapper {
-    background: rgba(8, 11, 42, 0.3);
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 6px;
-  }
+.wallet-wrapper {
+  background: rgba(8, 11, 42, 0.3);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
 
-  .wallet-wrapper-active {
-    background: rgba(27, 245, 255, 0.15);
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 6px;
-  }
-  .wallet-wrapper-active-premium {
-    background: rgba(255, 191, 0, 0.15);
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 6px;
-  }
+.wallet-wrapper-active {
+  background: rgba(27, 245, 255, 0.15);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.wallet-wrapper-active-premium {
+  background: rgba(255, 191, 0, 0.15);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
 
-  .wallet-wrapper-alert {
-    background: rgba(237, 130, 37, 0.15);
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 6px;
-  }
+.wallet-wrapper-alert {
+  background: rgba(237, 130, 37, 0.15);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
 
 .wallet-span {
   color: #fff;
@@ -1333,18 +1333,19 @@
 }
 
 .subscribe-input-container {
-  width: 40%;
+  width: 20%;
   @media screen and (max-width: 786px) {
     width: 100%;
   }
 }
 
 .token-amount-placeholder {
+  color: #d6d8e7;
+  font-size: 10px;
+  font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.018em;
-  color: #d6d8e7 !important;
+  line-height: 24px; /* 240% */
+  letter-spacing: -0.18px;
 }
 
 .launchpad-dropdown {
@@ -1399,7 +1400,7 @@
 
 .launchpad-item {
   cursor: pointer;
-  background: #26264f !important;
+  background: rgba(23, 25, 50, 0.40) !important;
   color: #8e97cd !important;
   font-weight: 500 !important;
   font-size: 10px !important;

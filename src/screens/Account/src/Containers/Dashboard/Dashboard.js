@@ -36,6 +36,10 @@ import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
 import MyRewardsPopup from "../../Components/WalletBalance/MyRewardsPopup";
 import coinStackIcon from "../../Images/premium/coinStackIcon.svg";
 import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
+import dappsIcon from "../../Images/premium/dappsIcon.svg";
+import metaverseIcon from "../../Images/premium/metaverseIcon.svg";
+import greenCheck from "../../Images/premium/greenCheck.svg";
+import premiumIcon from "../../Images/premium/premiumIcon.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 
@@ -96,8 +100,6 @@ function Dashboard({
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
   const [myBaseNfts, setmyBaseNfts] = useState([]);
 
-
-
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
@@ -126,10 +128,27 @@ function Dashboard({
   const [formattedPrice, setformattedPrice] = useState("0");
   const [loadspinner, setloadspinner] = useState(false);
   const [loadspinnerSub, setloadspinnerSub] = useState(false);
+  const [chainDropdown, setChainDropdown] = useState({})
   const [selectedSubscriptionToken, setselectedSubscriptionToken] = useState(
     Object.keys(window.config.subscription_tokens)[0]
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
+
+    const chainDropdowns = [
+      {
+        name: "Ethereum",
+        symbol: "weth",
+      },
+      {
+        name: "Avalanche",
+        symbol: "wavax",
+      },
+      {
+        name: "BNB Chain",
+        symbol: "wbnb",
+      },
+    ]
+
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -139,6 +158,20 @@ function Dashboard({
   let wethAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
   let wavaxAddress = "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7";
   let wbnbAddress = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
+
+  const metaverseBenefits = [
+    "Exclusive access to World of Dypians",
+    "Access to Daily Bonus Event",
+    "Access every Treasure Hunt Event without the need to hold a Beta Pass NFT",
+    "Early access to upcoming features and updates",
+  ];
+
+  const dappsBenefits = [
+    "DYP Tools administrative dashboard",
+    "Voting capabilities in the News section",
+    "Priority allocation to presales of new projects through Dypius Launchpad",
+    "Early access to upcoming features and updates",
+  ];
 
   const override2 = {
     display: "block",
@@ -432,8 +465,6 @@ function Dashboard({
     getMyNFTS(coinbase, "gate").then((NFTS) => setmyGateNfts(NFTS));
     getMyNFTS(coinbase, "conflux").then((NFTS) => setmyConfluxNfts(NFTS));
     getMyNFTS(coinbase, "base").then((NFTS) => setmyBaseNfts(NFTS));
-
-
   };
 
   const getOtherNfts = async () => {
@@ -1355,7 +1386,7 @@ function Dashboard({
                         <div
                           className="popup-wrapper popup-active p-4"
                           id="subscribe"
-                          style={{ width: "30%", pointerEvents: "auto" }}
+                          style={{ width: "40%", pointerEvents: "auto" }}
                         >
                           <div className="subscribe-container p-2 position-relative">
                             <div
@@ -1363,12 +1394,9 @@ function Dashboard({
                               style={{ background: "#8E97CD" }}
                             ></div>
                             <div className="d-flex justify-content-between align-items-center">
-                              <div className="d-flex align-items-center gap-2">
-                                <img src={coinStackIcon} alt="coin stack" />
-                                <h6 className="free-plan-title">
-                                  Dypian Plan Subscription
-                                </h6>
-                              </div>
+                              <h6 className="free-plan-title">
+                                Premium Subscription
+                              </h6>
                               <img
                                 src={xMark}
                                 onClick={() => setgetPremiumPopup(false)}
@@ -1376,12 +1404,97 @@ function Dashboard({
                                 style={{ cursor: "pointer" }}
                               />
                             </div>
+                            <div className="premium-gold-bg d-flex align-items-center justify-content-between p-3">
+                              <div className="d-flex flex-column gap-2">
+                                <span className="lifetime-plan mb-0">
+                                  Lifetime plan
+                                </span>
+                                <h6 className="plan-cost mb-0">$100</h6>
+                              </div>
+                              <div className="d-flex align-items-center gap-3">
+                                <div className="d-flex flex-column gap-2">
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wethIcon.svg`)
+                                          .default
+                                      }
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Ethereum Network
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                                          .default
+                                      }
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      BNB Chain Network
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                          .default
+                                      }
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Avalanche Network
+                                    </span>
+                                  </div>
+                                </div>
+                                <img src={premiumIcon} alt="" />
+                              </div>
+                            </div>
+                            <div className="my-3">
+                              <h6 className="popup-subtitle mb-0">Benefits</h6>
+                            </div>
+                            <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
+                              <div className="d-flex flex-column gap-2">
+                                <div className="d-flex align-items-center gap-2">
+                                  <img src={metaverseIcon} alt="" />
+                                  <h6 className="premium-benefits-title mb-0">
+                                    Metaverse
+                                  </h6>
+                                </div>
+                                {metaverseBenefits.map((item, index) => (
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img src={greenCheck} alt="" />
+                                    <span className="premium-benefits-item mb-0">
+                                      {item}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="d-flex flex-column gap-2">
+                                <div className="d-flex align-items-center gap-2">
+                                  <img src={dappsIcon} alt="" />
+                                  <h6 className="premium-benefits-title mb-0">
+                                    Dapps
+                                  </h6>
+                                </div>
+                                {dappsBenefits.map((item, index) => (
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img src={greenCheck} alt="" />
+                                    <span className="premium-benefits-item mb-0">
+                                      {item}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
                             <div className="d-flex mt-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
                               <div className="d-flex flex-column gap-3 subscribe-input-container">
                                 <span className="token-amount-placeholder">
-                                  Select Subscription Token
+                                  Select chain
                                 </span>
-
                                 <div class="dropdown position relative">
                                   <button
                                     class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle w-100`}
@@ -1478,7 +1591,139 @@ function Dashboard({
                                   </ul>
                                 </div>
                               </div>
-                              <div className="d-flex flex-column align-items-end justify-content-lg-end">
+                              <div className="d-flex flex-column gap-3 subscribe-input-container">
+                                <span className="token-amount-placeholder">
+                                  Select asset
+                                </span>
+                                <div class="dropdown position relative">
+                                  <button
+                                    class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle w-100`}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ color: "#fff" }}
+                                    >
+                                      <img
+                                        src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                        alt=""
+                                      />
+                                      {dropdownTitle}
+                                    </div>
+                                    <img src={launchpadIndicator} alt="" />
+                                  </button>
+                                  <ul class="dropdown-menu w-100">
+                                    {Object.keys(
+                                      chainId === 1
+                                        ? window.config.subscriptioneth_tokens
+                                        : chainId === 56
+                                        ? window.config.subscriptionbnb_tokens
+                                        : window.config.subscription_tokens
+                                    ).map((t, i) => (
+                                      <li
+                                        key={i}
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={() => {
+                                          window.cached_contracts =
+                                            Object.create(null);
+                                          setTimeout(() => {
+                                            setdropdownIcon(
+                                              chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                            );
+                                            setdropdownTitle(
+                                              chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                            );
+
+                                            // console.log(t);
+                                            handleSubscriptionTokenChange(t);
+                                            handleCheckIfAlreadyApproved(t);
+                                          }, 200);
+                                        }}
+                                      >
+                                        <img
+                                          src={
+                                            chainId === 1
+                                              ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}Icon.svg`)
+                                              : chainId === 56
+                                              ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}Icon.svg`)
+                                              : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}Icon.svg`)
+                                          }
+                                          alt=""
+                                        />
+                                        {chainId === 1
+                                          ? window.config
+                                              .subscriptioneth_tokens[t]?.symbol
+                                          : chainId === 56
+                                          ? window.config
+                                              .subscriptionbnb_tokens[t]?.symbol
+                                          : window.config.subscription_tokens[t]
+                                              ?.symbol}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </div>
+                              <div className="d-flex flex-column align-items-end gap-3">
+                                <span className="my-premium-balance-text mb-0">
+                                  My balance:{" "}
+                                  {getFormattedNumber(
+                                    tokenBalance / 10 ** tokenDecimals,
+                                    6
+                                  )} {dropdownIcon.toUpperCase()}
+                                </span>
+                                <div
+                                  className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                                  style={{ height: "34px" }}
+                                >
+                                  <span className="subscription-price-text mb-0">
+                                    Subscription Price:
+                                  </span>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                      height={16}
+                                      width={16}
+                                      alt="usdt"
+                                    />
+                                    <span className="subscription-price-token mb-0">
+                                      {formattedPrice.slice(0, 5)}
+                                    </span>
+                                  </div>
+                                  <span className="subscription-price-usd mb-0">
+                                    $100.00
+                                  </span>
+                                </div>
+                              </div>
+
+                              {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
                                 <span className="token-balance-placeholder">
                                   Token Balance
                                 </span>
@@ -1489,9 +1734,9 @@ function Dashboard({
                                     6
                                   )}
                                 </h6>
-                              </div>
+                              </div> */}
                             </div>
-                            <div
+                            {/* <div
                               className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
                               style={{ width: "100%" }}
                             >
@@ -1510,7 +1755,7 @@ function Dashboard({
                                   alt="usdt"
                                 />
                               </div>
-                            </div>
+                            </div> */}
                             <hr className="form-divider my-4" />
                             <div
                               className={`d-flex align-items-center ${
