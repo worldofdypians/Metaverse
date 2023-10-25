@@ -1446,7 +1446,7 @@ const NewWalletBalance = ({
                           <span class="visually-hidden">Loading...</span>
                         </div>
                       ) : (
-                        "Apply"
+                        "Submit"
                       )}
                     </button>
                   </div>
