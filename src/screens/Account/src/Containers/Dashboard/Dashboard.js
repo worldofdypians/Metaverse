@@ -42,6 +42,7 @@ import greenCheck from "../../Images/premium/greenCheck.svg";
 import premiumIcon from "../../Images/premium/premiumIcon.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
+import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 
 function Dashboard({
   account,
@@ -57,6 +58,7 @@ function Dashboard({
   onLogoutClick,
   availableTime,
   success,
+  handleSwitchNetwork,
 }) {
   const { email, logout } = useAuth();
 
@@ -156,9 +158,9 @@ function Dashboard({
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
 
-  let wethAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
-  let wavaxAddress = "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7";
-  let wbnbAddress = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
+  let wethAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
+  let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
+  let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -918,31 +920,85 @@ function Dashboard({
       });
   };
 
+  const handleEthPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x1")
+          .then(() => {
+            handleSwitchNetwork(1);
+            setChainDropdown(chainDropdowns[0]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  // console.log(avatar);
+  const handleBnbPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x38")
+          .then(() => {
+            handleSwitchNetwork(56);
+            setChainDropdown(chainDropdowns[1]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleAvaxPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa86a")
+          .then(() => {
+            handleSwitchNetwork(43114);
+            setChainDropdown(chainDropdowns[2]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   useEffect(() => {
     if (chainId === 1) {
-      setdropdownIcon("weth");
-      setdropdownTitle("WETH");
+      setChainDropdown(chainDropdowns[0]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptioneth_tokens)[0]
       );
       handleSubscriptionTokenChange(wethAddress);
     } else if (chainId === 56) {
-      setdropdownIcon("wbnb");
-      setdropdownTitle("WBNB");
+      setChainDropdown(chainDropdowns[1]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptionbnb_tokens)[0]
       );
       handleSubscriptionTokenChange(wbnbAddress);
     } else if (chainId === 43114) {
-      setdropdownIcon("wavax");
-      setdropdownTitle("WAVAX");
+      setChainDropdown(chainDropdowns[2]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionbnb_tokens)[0]
+        Object.keys(window.config.subscription_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
     } else {
-      setdropdownIcon("weth");
-      setdropdownTitle("WETH");
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptioneth_tokens)[0]
       );
@@ -1057,6 +1113,8 @@ function Dashboard({
       setshowWalletModal(false);
     }
   }, [success]);
+
+  
 
   return (
     <div
@@ -1547,19 +1605,36 @@ function Dashboard({
                                     <img src={launchpadIndicator} alt="" />
                                   </button>
                                   <ul class="dropdown-menu w-100">
-                                    {chainDropdowns.map((t, i) => (
-                                      <li
-                                        key={i}
-                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                        onClick={() => setChainDropdown(t)}
-                                      >
-                                        <img
-                                          src={require(`../../Images/premium/tokens/${t.symbol}Icon.svg`)}
-                                          alt=""
-                                        />
-                                        {t.name}
-                                      </li>
-                                    ))}
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleEthPool}
+                                    >
+                                      <img
+                                        src={require(`../../Images/premium/tokens/wethIcon.svg`).default}
+                                        alt=""
+                                      />
+                                      Ethereum
+                                    </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleBnbPool}
+                                    >
+                                      <img
+                                        src={require(`../../Images/premium/tokens/wbnbIcon.svg`).default}
+                                        alt=""
+                                      />
+                                      Bnb Chain
+                                    </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleAvaxPool}
+                                    >
+                                      <img
+                                        src={require(`../../Images/premium/tokens/wavaxIcon.svg`).default}
+                                        alt=""
+                                      />
+                                      Avalanche
+                                    </li>
                                   </ul>
                                 </div>
                               </div>
@@ -1691,7 +1766,7 @@ function Dashboard({
                                     </span>
                                   </div>
                                   <span className="subscription-price-usd mb-0">
-                                    $100.00
+                                    $100
                                   </span>
                                 </div>
                               </div>
@@ -1731,30 +1806,49 @@ function Dashboard({
                             </div> */}
                             <hr className="form-divider my-4" />
 
-                            
                             <div className="d-flex align-items-center gap-3 justify-content-center">
-                                <div className={` ${approveStatus === "fail" || !coinbase ? "linear-border-disabled" : "linear-border"}`}>
-                                  <button
-                                    className={`btn ${approveStatus === "fail" || !coinbase ? "outline-btn-disabled" : "filled-btn"} px-5`}
-                                    disabled={
-                                      approveStatus === "fail" || !coinbase
-                                        ? true
-                                        : false
-                                    }
-                                    onClick={(e) => handleApprove(e)}
-                                  >
-                                    Approve
-                                  </button>
-                                </div>
-                                <div className={` ${isApproved === false ? "linear-border-disabled" : "linear-border"}`}>
-                                  <button
-                                    className={`btn ${isApproved === false ? "outline-btn-disabled" : "filled-btn"} px-5`}
-                                   onClick={() => handleSubscribe()}
-                                  >
-                                    Buy
-                                  </button>
-                                </div>
+                              <div
+                                className={` ${
+                                  approveStatus === "fail" || !coinbase
+                                    ? "linear-border-disabled"
+                                    : "linear-border"
+                                }`}
+                              >
+                                <button
+                                  className={`btn ${
+                                    approveStatus === "fail" || !coinbase
+                                      ? "outline-btn-disabled"
+                                      : "filled-btn"
+                                  } px-5`}
+                                  disabled={
+                                    approveStatus === "fail" || !coinbase
+                                      ? true
+                                      : false
+                                  }
+                                  onClick={(e) => handleApprove(e)}
+                                >
+                                  Approve
+                                </button>
                               </div>
+                              <div
+                                className={` ${
+                                  isApproved === false
+                                    ? "linear-border-disabled"
+                                    : "linear-border"
+                                }`}
+                              >
+                                <button
+                                  className={`btn ${
+                                    isApproved === false
+                                      ? "outline-btn-disabled"
+                                      : "filled-btn"
+                                  } px-5`}
+                                  onClick={() => handleSubscribe()}
+                                >
+                                  Buy
+                                </button>
+                              </div>
+                            </div>
                             <div
                               className={`d-flex align-items-center ${
                                 !coinbase
