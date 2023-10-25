@@ -68,7 +68,7 @@ const ProfileCard = ({
   isPremium,
   isConnected,
   onOpenLeaderboard,
-  onPremiumClick
+  onPremiumClick,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -188,6 +188,7 @@ const ProfileCard = ({
                     {(coinbase && !email) ||
                     (!coinbase && !email) ||
                     (coinbase && email && !address && !username) ||
+                    (!coinbase && email && address && username && !isPremium) ||
                     !address ? (
                       <img src={defaultAvatar} alt="" className="userAvatar" />
                     ) : null}
@@ -299,9 +300,10 @@ const ProfileCard = ({
                                   coinbase &&
                                   syncStatus !== "" &&
                                   address?.toLowerCase() !==
-                                    coinbase?.toLowerCase() ?
-                                  "#ED8225" : '#1BF5FF',
-                                  cursor:'pointer'
+                                    coinbase?.toLowerCase()
+                                    ? "#ED8225"
+                                    : "#1BF5FF",
+                                cursor: "pointer",
                               }}
                               onClick={onPremiumClick}
                             >
@@ -490,7 +492,7 @@ const ProfileCard = ({
                 )}
                 {coinbase && address && !email && (
                   <button
-                    className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
+                    className="d-flex px-3 py-1 align-items-center gap-2 signinbtn text-nowrap"
                     onClick={() => {
                       onSigninClick();
                     }}
@@ -502,7 +504,7 @@ const ProfileCard = ({
                 )}
                 {coinbase && !email && !address && !username && (
                   <button
-                    className="d-flex px-3 py-1 align-items-center gap-2 signinbtn"
+                    className="d-flex px-3 py-1 align-items-center gap-2 signinbtn text-nowrap"
                     onClick={() => {
                       onSigninClick();
                     }}
