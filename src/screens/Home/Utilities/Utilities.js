@@ -8,7 +8,7 @@ const Utilities = () => {
       image: "dyp.svg",
       desc: `
       <p class="utility-desc">
-      Launched on December 29, 2022, World of Dypians it is currently live on both the Ethereum and BNB Chain mainnets. By being on the mainnet, users can participate in activities and integrations in real-time and explore the benefits of blockchain technology.
+      Launched on December 29, 2022, World of Dypians it is currently live on Ethereum, BNB Chain, Conflux Network, and Base mainnets. By being on the mainnet, users can participate in activities and integrations in real-time and explore the benefits of blockchain technology.
       </p>`,
       class: "mainnet-card",
     },
@@ -28,11 +28,11 @@ const Utilities = () => {
       class: "stats-card",
     },
     {
-      title: "NFT Integrations",
+      title: "All-In-One Platform",
       image: "caws.png",
       desc: `
       <p class="utility-desc">
-      World of Dypians integrates two NFT collections, CAWS and Genesis Land. CAWS are 3D creatures that act as AI-powered companions, while Genesis Land offers users their own plot of virtual land to develop. These collections enhance the user experience and provide new opportunities for self-expression within the metaverse.      
+      The World of Dypians ecosystem seamlessly integrates the Metaverse, DeFi, NFTs, and Business Development into one platform. We have integrated DeFi, businesses, and NFTs within the Metaverse, providing a unique user journey and experience for our users.     
       </p>`,
       class: "integrations-card",
     },
@@ -50,7 +50,7 @@ const Utilities = () => {
     //   image: "genesis.png",
     //   desc: `
     //   <p class="utility-desc">
-    //   A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.      
+    //   A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.
     //   </p>`,
     //   class: "events-card",
     // },
@@ -59,7 +59,7 @@ const Utilities = () => {
     //   image: "genesis.png",
     //   desc: `
     //   <p class="utility-desc">
-    //   A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.      
+    //   A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.
     //   </p>`,
     //   class: "partners-card",
     // },
