@@ -1194,7 +1194,7 @@
 
 .purple-container {
   border-radius: 10px;
-  background: rgba(89, 115, 213, 0.15);
+  background: rgba(83, 84, 115, 0.15);
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
@@ -1482,6 +1482,10 @@
   background-size: cover;
 }
 
+.game-activity-wrapper:hover {
+  border: 1px solid #7dd9af;
+}
+
 .game-event-title {
   font-size: 16px;
   font-style: normal;
@@ -1502,7 +1506,7 @@
   border-radius: 6px;
   padding: 5px 10px;
   color: #fff;
-  font-size: 9px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -1510,11 +1514,13 @@
   width: fit-content;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 .game-event-download:hover {
   text-decoration: underline;
+  color: #fff;
+
 }
 
 .game-img-second {

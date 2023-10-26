@@ -894,7 +894,9 @@ const NewWalletBalance = ({
       <div className="container px-0">
         <div className="row gap-3 gap-lg-0 mx-0">
           <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
-            <div className="nft-outer-wrapper2 rankings-wrapper px-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
+            <div className="purple-container rankings-wrapper px-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
+            <div className="green-div"></div>
+             
               <h6
                 className="profile-div-title mb-0"
                 // style={{ fontSize: '14px'}}
@@ -1497,7 +1499,7 @@ const NewWalletBalance = ({
       {showAllEvents && (
         <div className="col-12 py-lg-3">
           <div
-            className="nft-outer-wrapper2 position-relative p-3 p-lg-3 gap-2"
+            className="purple-container position-relative p-3 p-lg-3 gap-2"
             style={{
               maxWidth: "100vw",
               width: "100%",
