@@ -988,15 +988,18 @@ function Dashboard({
         Object.keys(window.config.subscriptionbnb_tokens)[0]
       );
       handleSubscriptionTokenChange(wbnbAddress);
-    } else if (chainId === 43114) {
-      setChainDropdown(chainDropdowns[2]);
-      setdropdownIcon("usdt");
-      setdropdownTitle("USDT");
-      setselectedSubscriptionToken(
-        Object.keys(window.config.subscription_tokens)[0]
-      );
-      handleSubscriptionTokenChange(wavaxAddress);
-    } else {
+    }
+    //  else if (chainId === 43114) {
+    //   setChainDropdown(chainDropdowns[2]);
+    //   setdropdownIcon("usdt");
+    //   setdropdownTitle("USDT");
+    //   setselectedSubscriptionToken(
+    //     Object.keys(window.config.subscription_tokens)[0]
+    //   );
+    //   handleSubscriptionTokenChange(wavaxAddress);
+    // } 
+    
+    else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
@@ -1017,11 +1020,12 @@ function Dashboard({
         window.config.subscriptionbnb_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    } else if (chainId === 43114 && selectedSubscriptionToken !== "") {
-      settokenDecimals(
-        window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
-      );
-    }
+    } 
+    // else if (chainId === 43114 && selectedSubscriptionToken !== "") {
+    //   settokenDecimals(
+    //     window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
+    //   );
+    // }
   }, [chainId, selectedSubscriptionToken]);
 
   useEffect(() => {
@@ -1625,7 +1629,7 @@ function Dashboard({
                                       />
                                       Bnb Chain
                                     </li>
-                                    <li
+                                    {/* <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleAvaxPool}
                                     >
@@ -1634,7 +1638,7 @@ function Dashboard({
                                         alt=""
                                       />
                                       Avalanche
-                                    </li>
+                                    </li> */}
                                   </ul>
                                 </div>
                               </div>

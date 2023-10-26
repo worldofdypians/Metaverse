@@ -1495,7 +1495,7 @@ const NewWalletBalance = ({
         </OutsideClickHandler>
       )}
       {showAllEvents && (
-        <div className="col-12 p-lg-3">
+        <div className="col-12 py-lg-3">
           <div
             className="nft-outer-wrapper2 position-relative p-3 p-lg-3 gap-2"
             style={{
