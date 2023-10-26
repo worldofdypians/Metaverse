@@ -35,6 +35,11 @@
     rgba(255, 255, 255, 0.05) 100%
   );
   backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+.live-event-card:hover {
+  border: 2px solid #00fecf;
 }
 
 .live-event-card-title{
