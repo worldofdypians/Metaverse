@@ -521,7 +521,7 @@ const NewWalletBalance = ({
   const betaSlider = useRef();
   const [selectedEvent, setSelectedEvent] = useState({});
   const [eventsPopup, setEventsPopup] = useState(false);
-  const [stakePopup, setStakePopup] = useState(true)
+  const [stakePopup, setStakePopup] = useState(false)
 
   const dummyEvents = [
     {
@@ -1284,9 +1284,9 @@ const NewWalletBalance = ({
                 </div>
               </div>
               <div className="col-12 col-lg-4">
-                <NavLink
-                  to={"/marketplace/stake"}
+                <div
                   className="profile-staking-wrapper d-flex"
+                  onClick={() => setStakePopup(true)}
                 >
                   <div className="green-div"></div>
                   <img src={stakeNft} alt="" className="profile-staking-img" />
@@ -1300,7 +1300,7 @@ const NewWalletBalance = ({
                       <img src={arrowCircle} alt="" />
                     </div>
                   </div>
-                </NavLink>
+                </div>
               </div>
             </div>
             <div className="row gap-3 gap-lg-0">
