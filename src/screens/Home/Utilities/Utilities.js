@@ -45,24 +45,24 @@ const Utilities = () => {
       </p>`,
       class: "coins-card",
     },
-    {
-      title: "Premium Events",
-      image: "genesis.png",
-      desc: `
-      <p class="utility-desc">
-      A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.      
-      </p>`,
-      class: "events-card",
-    },
-    {
-      title: "Partners",
-      image: "genesis.png",
-      desc: `
-      <p class="utility-desc">
-      A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.      
-      </p>`,
-      class: "partners-card",
-    },
+    // {
+    //   title: "Premium Events",
+    //   image: "genesis.png",
+    //   desc: `
+    //   <p class="utility-desc">
+    //   A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.      
+    //   </p>`,
+    //   class: "events-card",
+    // },
+    // {
+    //   title: "Partners",
+    //   image: "genesis.png",
+    //   desc: `
+    //   <p class="utility-desc">
+    //   A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.      
+    //   </p>`,
+    //   class: "partners-card",
+    // },
   ];
 
   const partnerIcons = [
@@ -111,7 +111,7 @@ const Utilities = () => {
         </h2>
       </div>
       <div className="utilities-grid">
-        {utilities.slice(0, 5).map((item, index) => (
+        {utilities.map((item, index) => (
           <div
             key={index}
             className={`${item.class} utility-card flex-column d-flex align-items-center justify-content-center p-4`}
@@ -133,15 +133,11 @@ const Utilities = () => {
             </div>
           </div>
         ))}
-        <div
+        {/* <div
           className={`partners-card utility-card flex-column d-flex align-items-center justify-content-center p-4`}
         >
           <div className="utility-first d-flex align-items-center justify-content-center gap-2 flex-column">
-            {/* <img
-                src={require(`./assets/${item.image}`)}
-                style={{ width: "50px", height: "50px" }}
-                alt=""
-              /> */}
+    
             <h6 className="utility-title">Who builds in WoD?</h6>
           </div>
           <div className="utility-desc-div">
@@ -234,9 +230,8 @@ const Utilities = () => {
                 </div>
               </div>
             </div>
-            {/* <p className="utility-desc">{item.desc}</p> */}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

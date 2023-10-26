@@ -1,0 +1,48 @@
+.marketplace-desc {
+  font-style: normal;
+  color: #fff;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: capitalize;
+  width: 100%;
+}
+
+.live-events-container {
+  width: 1100px;
+
+  @media screen and (max-width: 1200px) {
+    width: 900px;
+  }
+
+  @media screen and (max-width: 950px) {
+    width: 700px;
+  }
+  @media screen and (max-width: 750px) {
+    width: 500px;
+  }
+  @media screen and (max-width: 550px) {
+    width: 80%;
+  }
+}
+
+.live-event-card {
+  border-radius: 15px;
+  background: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(10px);
+}
+
+.live-event-card-title{
+  color: #FFF;
+text-align: center;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-transform: capitalize;
+}

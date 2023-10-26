@@ -24,6 +24,8 @@ import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHun
 import treasureHuntGate from '../../components/TimepieceMint/assets/treasureHuntGate.webp'
 
 import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
+import LiveEvents from "./LiveEvents/LiveEvents";
+import WodBuilders from "./WodBuilders/WodBuilders";
 
 const Home = ({
   handleRegister,
@@ -114,6 +116,8 @@ const Home = ({
           handleRegister={handleRegister}
           handleDownload={handleDownload}
         />
+        <LiveEvents />
+        <WodBuilders />
         <Utilities />
         <MarketSection
           coinbase={coinbase}

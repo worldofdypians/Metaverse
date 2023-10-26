@@ -244,7 +244,7 @@ const MarketSection = ({
           >
             <span className="marketItemText">Timepiece</span>
           </div>
-          <div
+          {/* <div
             onClick={() => {
               setActiveBtn("events");
             }}
@@ -253,7 +253,7 @@ const MarketSection = ({
             } text-white d-flex align-items-center justify-content-center`}
           >
             <span className="marketItemText">Events</span>
-          </div>
+          </div> */}
         </div>
         {windowSize.width > 1400 ? (
           <div className="marketcardwrapper">
@@ -285,7 +285,7 @@ const MarketSection = ({
             {activebtn === "land" &&
               wodListed &&
               wodListed.length > 0 &&
-              wodListed.slice(0, 5).map((item, index) => {
+              wodListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
                     to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
@@ -315,7 +315,7 @@ const MarketSection = ({
             {activebtn === "caws" &&
               cawsListed &&
               cawsListed.length > 0 &&
-              cawsListed.slice(0, 5).map((item, index) => {
+              cawsListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
                     to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
@@ -344,7 +344,7 @@ const MarketSection = ({
             {activebtn === "timepiece" &&
               timepieceListed &&
               timepieceListed.length > 0 &&
-              timepieceListed.slice(0, 5).map((item, index) => {
+              timepieceListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
                     to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
