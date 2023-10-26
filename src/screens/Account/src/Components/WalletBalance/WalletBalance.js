@@ -2324,7 +2324,7 @@ const WalletBalance = ({
                     favoriteItems.length > 0)) && (
                   <div
                     className="row w-100 justify-content-center position-absolute"
-                    style={{ bottom: "25px" }}
+                    style={{ bottom: "15px" }}
                   >
                     {filterTitle === "Collected" &&
                     collectedItems.length >= 3 ? (
