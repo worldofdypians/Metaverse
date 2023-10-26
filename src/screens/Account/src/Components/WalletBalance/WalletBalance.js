@@ -1347,6 +1347,7 @@ const WalletBalance = ({
   ];
 
   const [dummyEvent, setDummyEvent] = useState({});
+  const [reqModal, setReqModal] = useState(false);
   const releaseContent = useRef();
 
   const releaseContent2 = useRef();
@@ -1410,8 +1411,8 @@ const WalletBalance = ({
             >
               Game activity
             </h6>
-            <div className="game-activity-wrapper">
-              <div className="d-flex flex-column gap-5 justify-content-between">
+            <div className="game-activity-wrapper h-100">
+              <div className="d-flex flex-column gap-5 justify-content-between h-100">
                 <div className="d-flex flex-column gap-2 p-3">
                   <div className="d-flex flex-column gap-1">
                     <span className="text-white game-event-title">
@@ -1439,7 +1440,12 @@ const WalletBalance = ({
                   </a>
                 </div>
                 <div className="d-flex flex-column">
-                  <div className="requirements-wrapper">
+                  <div
+                    className="requirements-wrapper"
+                    onClick={() => {
+                      setReqModal(true);
+                    }}
+                  >
                     <span className="sys-req-text">
                       Check system requirements
                     </span>
@@ -1492,7 +1498,7 @@ const WalletBalance = ({
             >
               My Portfolio
             </h6>
-            <div className="nft-outer-wrapper2 p-4  d-flex flex-column gap-2 position-relative">
+            <div className="nft-outer-wrapper2 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
                 <h6
                   className={`account-nft-sort ${
@@ -3417,6 +3423,99 @@ const WalletBalance = ({
               </div>
             )}
           </div>
+        )}
+        {reqModal === true ? (
+          <OutsideClickHandler onOutsideClick={() => setReqModal(false)}>
+            <div className="system-requirements-modal p-3" id="reqmodal">
+              <div className="d-flex align-items-start justify-content-between">
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="sys-req-title font-organetto">System</h6>
+                  <h6
+                    className="sys-req-title font-organetto mb-3"
+                    style={{ color: "#8c56ff" }}
+                  >
+                    Requirements
+                  </h6>
+                </div>
+                <img
+                  src={require("./assets/closeMark.svg").default}
+                  alt="x mark"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setReqModal(false)}
+                />
+              </div>
+
+              <hr className="requirements-divider" />
+              <div className="overall-requirements">
+                <h6 className="requirements-title">World of Dypians</h6>
+                <p className="requirements-content">
+                  A unique digital world where players can explore through
+                  endless maps hunting for rewards, special items and digital
+                  currency. The game features the main character and a cat (NFT)
+                  which will begin the journey to explore different lands
+                  together. World of Dypians is a game where players
+                  continuously shape the game and capture value from their
+                  achievements.
+                </p>
+                <h6 className="requirements-title">
+                  World of Dypians Minimum System Requirements
+                </h6>
+                <ul>
+                  <li className="requirements-content">
+                    Requires a 64-bit processor and operating system
+                  </li>
+                  <li className="requirements-content">OS: Windows 10</li>
+                  <li className="requirements-content">
+                    Processor: INTEL CORE I5-8400 or AMD RYZEN 3 3300X
+                  </li>
+                  <li className="requirements-content">Memory: 8 GB RAM</li>
+                  <li className="requirements-content">
+                    Graphics: NVIDIA GEFORCE GTX 1060 3 GB or AMD RADEON RX 580
+                    4 GB
+                  </li>
+                  <li className="requirements-content">DirectX: Version 12</li>
+                  <li className="requirements-content">
+                    Storage: 12 GB available space
+                  </li>
+                  <li className="requirements-content">
+                    Sound Card: Windows Compatible Audio Device
+                  </li>
+                </ul>
+                <hr className="requirements-divider" />
+                <h6 className="requirements-title">
+                  World of Dypians Recommended Requirements
+                </h6>
+                <ul>
+                  <li className="requirements-content">
+                    Requires a 64-bit processor and operating system
+                  </li>
+                  <li className="requirements-content">OS: Windows 10/11</li>
+                  <li className="requirements-content">
+                    Processor: INTEL CORE I7-8700K or AMD RYZEN 5 3600X
+                  </li>
+                  <li className="requirements-content">Memory: 12 GB RAM</li>
+                  <li className="requirements-content">
+                    Graphics: NVIDIA GEFORCE GTX 1070 8 GB or AMD RADEON RX VEGA
+                    56 8 GB
+                  </li>
+                  <li className="requirements-content">DirectX: Version 12</li>
+                  <li className="requirements-content">
+                    Storage: 20 GB available space
+                  </li>
+                  <li className="requirements-content">
+                    Sound Card: Windows Compatible Audio Device
+                  </li>
+                </ul>
+              </div>
+              <div className="d-flex align-items-center justify-content-center py-3">
+                <h6 className="close-modal" onClick={() => setReqModal(false)}>
+                  Close
+                </h6>
+              </div>
+            </div>
+          </OutsideClickHandler>
+        ) : (
+          <></>
         )}
       </div>
     </>

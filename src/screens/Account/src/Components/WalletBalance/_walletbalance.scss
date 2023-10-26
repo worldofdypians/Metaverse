@@ -1490,7 +1490,7 @@
 }
 
 .game-event-patchtitle {
-  color: #E2E2E2; 
+  color: #e2e2e2;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -1519,7 +1519,7 @@
 
 .game-img-second {
   width: 60px;
-  height: 60px; 
+  height: 60px;
   border-radius: 8px;
 }
 
@@ -1556,12 +1556,14 @@
 }
 
 .game-news-desc {
-  p, span {
+  p,
+  span {
     color: #fcfcf7 !important;
     font-size: 8px;
     font-style: normal;
     font-weight: 300;
     line-height: 12px;
+    margin: 0;
   }
   color: #fcfcf7;
   font-size: 8px;
@@ -2147,41 +2149,41 @@
   background: rgba(5, 3, 3, 0.3);
 }
 
-.event-popup-item{
+.event-popup-item {
   width: 20% !important;
   border-radius: 10px;
-border: 1px solid #8E97CD;
-background: rgba(23, 25, 50, 0.40);
-box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
-cursor: pointer;
-transition: all .25s;
-  h6{
-    color: #FFF;
-font-size: 12px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+  border: 1px solid #8e97cd;
+  background: rgba(23, 25, 50, 0.4);
+  box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
+  cursor: pointer;
+  transition: all 0.25s;
+  h6 {
+    color: #fff;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 
   @media screen and (max-width: 500px) {
-   width: 48% !important;
+    width: 48% !important;
   }
 }
 
 @media screen and (max-width: 500px) {
-.popup-events-container{
-  flex-wrap: wrap;
-}  
+  .popup-events-container {
+    flex-wrap: wrap;
+  }
 }
 
-.event-popup-item-2{
+.event-popup-item-2 {
   min-height: 90px;
   border-radius: 10px;
-border: 1px solid #8E97CD;
-background: rgba(23, 25, 50, 0.40);
-box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
-  p{
-    color: #FFF;
+  border: 1px solid #8e97cd;
+  background: rgba(23, 25, 50, 0.4);
+  box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
+  p {
+    color: #fff;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -2189,18 +2191,16 @@ box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
   }
 }
 
-.event-popup-item:hover{
-  border: 1px solid #7DD9AF;
+.event-popup-item:hover {
+  border: 1px solid #7dd9af;
 }
 
-.selected-popup-item{
-  border: 1px solid #7DD9AF !important;
-
+.selected-popup-item {
+  border: 1px solid #7dd9af !important;
 }
-
 
 @media screen and (max-width: 786px) {
-  .nft-wrapper-popup{
+  .nft-wrapper-popup {
     max-height: 80%;
     overflow-y: scroll;
   }

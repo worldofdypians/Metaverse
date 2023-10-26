@@ -60,8 +60,7 @@ const News = (props) => {
           infinite: false,
           initialSlide: 0,
           dots: false,
-    initialSlide: 0,
-
+          initialSlide: 0,
         },
       },
       {
@@ -107,7 +106,7 @@ const News = (props) => {
   const [fullLenth, setFullLenth] = useState(false);
   const [loadingMain, setLoadingMain] = useState(false);
   const [loadingOther, setLoadingOther] = useState(false);
-  const [allNews, setAllNews] = useState([])
+  const [allNews, setAllNews] = useState([]);
   const navigate = useNavigate();
   function handleGoBack() {
     navigate("/news");
@@ -196,10 +195,10 @@ const News = (props) => {
     setLatestVersion(datedReleasedNews[0]?.version);
   };
 
-  const { newsId, titleId } = useParams();
+  const { newsId } = useParams();
 
   const handleNewsWithParams = () => {
-    if (titleId) {
+    if (newsId && allNews.length > 0) {
       const objId = allNews.find((obj) => obj.id === newsId);
 
       if (objId) {
@@ -242,8 +241,7 @@ const News = (props) => {
 
   useEffect(() => {
     slider.current.innerSlider.slickGoTo(0);
-  }, [releases.length])
-  
+  }, [releases.length]);
 
   useEffect(() => {
     fetchNews();
@@ -296,7 +294,7 @@ const News = (props) => {
 
   useEffect(() => {
     handleNewsWithParams();
-  }, [titleId, newsId, allNews.length]);
+  }, [newsId, allNews.length]);
 
   // console.log(titleId)
 
@@ -485,26 +483,29 @@ const News = (props) => {
                   Notes
                 </h2>
               </h2>
-                <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0" style={{position: 'static'}}>
-                  <img
-                    src={nextButton}
-                    className="prev-button"
-                    width={40}
-                    height={40}
-                    style={{ opacity: "0.8" }}
-                    alt=""
-                    onClick={previous}
-                  />
-                  <img
-                    src={nextButton}
-                    className="next-button"
-                    width={40}
-                    height={40}
-                    style={{ opacity: "0.8" }}
-                    alt=""
-                    onClick={next}
-                  />
-                </div>
+              <div
+                className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0"
+                style={{ position: "static" }}
+              >
+                <img
+                  src={nextButton}
+                  className="prev-button"
+                  width={40}
+                  height={40}
+                  style={{ opacity: "0.8" }}
+                  alt=""
+                  onClick={previous}
+                />
+                <img
+                  src={nextButton}
+                  className="next-button"
+                  width={40}
+                  height={40}
+                  style={{ opacity: "0.8" }}
+                  alt=""
+                  onClick={next}
+                />
+              </div>
             </div>
 
             <Slider ref={(c) => (slider.current = c)} {...settings}>
