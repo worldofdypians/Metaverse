@@ -65,7 +65,7 @@ const WodBuilders = () => {
 
   return (
     <div className='px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center  ' id='wodbuilders'>
-      <div className="d-flex  justify-content-center align-items-center gap-2">
+      <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
         <h2 className="font-organetto builders-title explorer-grid-title px-0">
           <mark className="font-organetto explore-tag pe-2">Pioneers</mark>
           shaping the World of Dypians{" "}
