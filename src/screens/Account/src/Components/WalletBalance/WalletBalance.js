@@ -128,12 +128,12 @@ const WalletBalance = ({
   const [favoritesPage, setFavoritesPage] = useState(1);
   const [favoritesSliceValue, setFavoritesSliceValue] = useState(9);
   const [listedPage, setListedPage] = useState(1);
-  const [listedPageSlice, setListedPageSlice] = useState(9);
+  const [listedPageSlice, setListedPageSlice] = useState(6);
   const [collectedPage, setCollectedPage] = useState(1);
-  const [collectedPageSlice, setCollectedPageSlice] = useState(9);
+  const [collectedPageSlice, setCollectedPageSlice] = useState(6);
   const [stakedPage, setStakedPage] = useState(1);
-  const [stakedPageSlice, setStakedPageSlice] = useState(9);
-  const [offersPageSlice, setoffersPageSlice] = useState(9);
+  const [stakedPageSlice, setStakedPageSlice] = useState(6);
+  const [offersPageSlice, setoffersPageSlice] = useState(6);
   const [offersPage, setoffersPage] = useState(1);
   const [myOffersFiltered, setmyOffersFiltered] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
@@ -1400,6 +1400,8 @@ const WalletBalance = ({
     }
   }, [showAllEvents]);
 
+ 
+
   return (
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
@@ -1498,7 +1500,7 @@ const WalletBalance = ({
             >
               My Portfolio
             </h6>
-            <div className="nft-outer-wrapper2 p-4  d-flex flex-column gap-2 position-relative h-100">
+            <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
                 <h6
                   className={`account-nft-sort ${
@@ -1575,7 +1577,7 @@ const WalletBalance = ({
                   style={{ margin: favoriteItems.length === 0 ? "auto" : 0 }}
                 >
                   {favoriteItems.length > 0 &&
-                    favoriteItems.slice(0, 9).map((item, index) => (
+                    favoriteItems.slice(0, 6).map((item, index) => (
                       <NavLink
                         key={index}
                         to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
@@ -2322,7 +2324,7 @@ const WalletBalance = ({
                     favoriteItems.length > 0)) && (
                   <div
                     className="row w-100 justify-content-center position-absolute"
-                    style={{ bottom: "25px" }}
+                    style={{ bottom: "15px" }}
                   >
                     {filterTitle === "Collected" &&
                     collectedItems.length >= 3 ? (
@@ -2482,30 +2484,6 @@ const WalletBalance = ({
                       animation="wave"
                     />
                   </div>
-                  <div className="col-12 col-lg-6 col-xxl-4 mb-3">
-                    <Skeleton
-                      variant="rounded"
-                      width={"100%"}
-                      height={60}
-                      animation="wave"
-                    />
-                  </div>
-                  <div className="col-12 col-lg-6 col-xxl-4 mb-3">
-                    <Skeleton
-                      variant="rounded"
-                      width={"100%"}
-                      height={60}
-                      animation="wave"
-                    />
-                  </div>
-                  <div className="col-12 col-lg-6 col-xxl-4 mb-3">
-                    <Skeleton
-                      variant="rounded"
-                      width={"100%"}
-                      height={60}
-                      animation="wave"
-                    />
-                  </div>
                 </div>
               )}
             </div>
@@ -2513,7 +2491,7 @@ const WalletBalance = ({
         </div>
         {showNfts && (
           <div
-            className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper position-relative p-3 p-lg-5 gap-2 col-lg-12"
+            className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper2 nft-outer-wrapper22 position-relative p-3 p-lg-5 gap-2 col-lg-12"
             style={{ minHeight: "420px" }}
           >
             <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-end w-100 position-relative">
@@ -3060,7 +3038,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.pngg`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -3348,30 +3326,6 @@ const WalletBalance = ({
               //   />
               // </div>
               <div className="row justify-content-center px-3">
-                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
-                  <Skeleton
-                    variant="rounded"
-                    width={"100%"}
-                    height={60}
-                    animation="wave"
-                  />
-                </div>
-                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
-                  <Skeleton
-                    variant="rounded"
-                    width={"100%"}
-                    height={60}
-                    animation="wave"
-                  />
-                </div>
-                <div className="col-12 col-lg-6 col-xxl-4 mb-3">
-                  <Skeleton
-                    variant="rounded"
-                    width={"100%"}
-                    height={60}
-                    animation="wave"
-                  />
-                </div>
                 <div className="col-12 col-lg-6 col-xxl-4 mb-3">
                   <Skeleton
                     variant="rounded"

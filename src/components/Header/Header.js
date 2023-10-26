@@ -40,6 +40,7 @@ import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/ora
 
 import avax from "./assets/avax.svg";
 import bnb from "./assets/bnb.svg";
+import opbnb from "./assets/bnb.svg";
 import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
@@ -69,6 +70,8 @@ const Header = ({
   const [unreadNotifications, setunreadNotifications] = useState(0);
   const [ethState, setEthState] = useState(true);
   const [bnbState, setBnbState] = useState(false);
+  const [opbnbState, setopBnbState] = useState(false);
+
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
@@ -92,32 +95,44 @@ const Header = ({
         setBnbState(false);
         setEthState(true);
         setBaseState(false);
+        setopBnbState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
+        setopBnbState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(true);
+        setopBnbState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
         setEthState(false);
         setBaseState(false);
+        setopBnbState(false);
+      } else if (chainId === 204) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setopBnbState(true);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
         setConfluxState(true);
+        setopBnbState(false);
       } else {
         setAvaxState(false);
         setBnbState(false);
         setBaseState(false);
         setEthState(false);
+        setopBnbState(false);
       }
     }
   };
@@ -170,6 +185,24 @@ const Header = ({
           });
       } else {
         handleSwitchChainGateWallet(43114);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleOpBnbPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xcc")
+          .then(() => {
+            handleSwitchNetwork(204);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(204);
       }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
@@ -587,9 +620,11 @@ const Header = ({
                           ? eth
                           : bnbState === true
                           ? bnb
-                          : avaxState === true
-                          ? avax
-                          : baseState === true
+                          : opbnbState === true
+                          ? opbnb
+                          : // : avaxState === true
+                          // ? avax
+                          baseState === true
                           ? base
                           : confluxState === true
                           ? conflux
@@ -604,9 +639,11 @@ const Header = ({
                         ? "Ethereum"
                         : bnbState === true
                         ? "BNB Chain"
-                        : avaxState === true
-                        ? "Avalanche"
-                        : baseState === true
+                        : opbnbState === true
+                        ? "opBNB Chain"
+                        : // : avaxState === true
+                        // ? "Avalanche"
+                        baseState === true
                         ? "Base"
                         : confluxState === true
                         ? "Conflux"
@@ -625,10 +662,14 @@ const Header = ({
                   <img src={bnb} alt="" />
                   BNB Chain
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleAvaxPool()}>
+                <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                  <img src={bnb} alt="" />
+                  opBNB Chain
+                </Dropdown.Item>
+                {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche
-                </Dropdown.Item>
+                </Dropdown.Item> */}
                 <Dropdown.Item onClick={() => handleConfluxPool()}>
                   <img src={conflux} alt="" />
                   Conflux

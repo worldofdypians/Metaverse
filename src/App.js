@@ -98,6 +98,16 @@ function App() {
       },
       blockExplorerUrls: ["https://evm.confluxscan.net"],
     },
+    204: {
+      chainId: 204,
+      chainName: "opBNB",
+      rpcUrls: ["https://opBNB-mainnet-rpc.bnbchain.org"],
+      nativeCurrency: {
+        symbol: "bnb",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["http://mainnet.opBNBscan.com/"],
+    },
   };
 
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -1438,7 +1448,16 @@ function App() {
         await ethereum.request({
           method: "wallet_switchEthereumChain",
           params: [
-            { chainId: chain === 1 ? "0x1" : chain === 56 ? "0x38" : "0x406" },
+            {
+              chainId:
+                chain === 1
+                  ? "0x1"
+                  : chain === 56
+                  ? "0x38"
+                  : chain === 204
+                  ? "0xcc"
+                  : "0x406",
+            },
           ],
         });
         // if (window.ethereum && window.gatewallet) {
@@ -1734,7 +1753,7 @@ function App() {
                   onSigninClick={checkData}
                   success={success}
                   availableTime={availTime}
-                  handleSwitchNetwork={handleSwitchNetwork} 
+                  handleSwitchNetwork={handleSwitchNetwork}
                 />
               }
             />

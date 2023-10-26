@@ -471,285 +471,326 @@ const MyRewardsPopup = ({
 
   return (
     <div className="d-flex flex-column gap-3">
-      <table className="myrewards-table table">
-        <thead>
-          <tr>
-            <th className="myrewards-th border-0">Reward Category</th>
-            <th className="myrewards-th border-0 text-center">
-              Available Rewards{" "}
-            </th>
-            <th className="myrewards-th border-0 text-center">Reward Type</th>
-            <th className="myrewards-th border-0 text-center">Total Earned</th>
-          </tr>
-        </thead>
+      <div className="d-grid rewardstable-wrapper">
+        <table className="myrewards-table table">
+          <thead>
+            <tr>
+              <th className="myrewards-th border-0">Reward Category</th>
+              <th className="myrewards-th border-0 text-center">
+                Available Rewards{" "}
+              </th>
+              <th className="myrewards-th border-0 text-center">Reward Type</th>
+              <th className="myrewards-th border-0 text-center">
+                Total Earned
+              </th>
+            </tr>
+          </thead>
 
-        <tbody className="position-relative">
-          <div className="table-separator position-absolute"></div>
+          <tbody className="position-relative">
+            <div className="table-separator position-absolute"></div>
 
-          <tr>
-            <td className="myrewards-td-main border-0">
-              <img src={nftStake} alt="" style={{ width: 24, height: 24 }} />{" "}
-              NFT Staking
-            </td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0 previousRewardsText">
-              {previousRewards && "$500.00"}
-            </td>
-          </tr>
-          <div className="table-separator position-absolute"></div>
+            <tr>
+              <td className="myrewards-td-main border-0">
+                <img src={nftStake} alt="" style={{ width: 24, height: 24 }} />{" "}
+                NFT Staking
+              </td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0 previousRewardsText">
+                {previousRewards && "$500.00"}
+              </td>
+            </tr>
+            <div className="table-separator position-absolute"></div>
 
-          <tr>
-            <td className="myrewards-td-second border-0">Genesis Land</td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `$${getFormattedNumber(
-                    EthRewardsLandPool * ethTokenData,
+            <tr>
+              <td className="myrewards-td-second border-0">Genesis Land</td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(
+                      EthRewardsLandPool * ethTokenData,
+                      2
+                    )}`}
+              </td>
+              <td className="myrewards-td-second border-0 specialCell topborder text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(EthRewardsLandPool, 2)} WETH`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : " $500.00"}
+              </td>
+            </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">WoD Land & CAWS </td>
+
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(EthRewards * ethTokenData, 2)}`}
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(EthRewards, 2)} WETH`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : " $500.00"}
+              </td>
+            </tr>
+            {previousRewards && (
+              <tr>
+                <td className="myrewards-td-second border-0">CAWS </td>
+
+                <td className="myrewards-td-second border-0 text-center">
+                  {previousRewards
+                    ? "-"
+                    : `$${getFormattedNumber(EthRewards * ethTokenData, 2)}`}
+                </td>
+                <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                  {previousRewards
+                    ? "-"
+                    : `${getFormattedNumber(EthRewards, 2)} WETH`}
+                </td>
+                <td className="myrewards-td-second border-0 text-center">
+                  {previousRewards ? "-" : " $500.00"}
+                </td>
+              </tr>
+            )}
+
+            <tr>
+              <td className="myrewards-td-main border-0">
+                {" "}
+                <img
+                  src={treasureHunt}
+                  alt=""
+                  style={{ width: 24, height: 24 }}
+                />
+                Treasure Hunt
+              </td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0 previousRewardsText">
+                {previousRewards &&
+                  `$${getFormattedNumber(
+                    userEarnUsdPrevious +
+                      confluxEarnUSDPrevious +
+                      gateEarnUSDPrevious,
                     2
                   )}`}
-            </td>
-            <td className="myrewards-td-second border-0 specialCell topborder text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(EthRewardsLandPool, 2)} WETH`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : " $500.00"}
-            </td>
-          </tr>
-          <tr>
-            <td className="myrewards-td-second border-0">WoD Land & CAWS </td>
+              </td>
+            </tr>
+            <div className="table-separator position-absolute"></div>
 
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `$${getFormattedNumber(EthRewards * ethTokenData, 2)}`}
-            </td>
-            <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(EthRewards, 2)} WETH`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : " $500.00"}
-            </td>
-          </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">CoinGecko</td>
+              <td className="myrewards-td-second border-0 specialCell topborder text-center">
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(userEarnUsdPrevious, 2)}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(
+                      userEarnUsdPrevious / bnbPrice,
+                      2
+                    )} WBNB`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(userEarnUsdPrevious, 2)}`}
+              </td>
+            </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">Conflux Network</td>
+              <td className="myrewards-td-second border-0 specialCell text-center">
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(confluxEarnUSDPrevious, 2)}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(
+                      confluxEarnUSDPrevious / cfxPrice,
+                      2
+                    )} CFX`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(confluxEarnUSDPrevious, 2)}`}
+              </td>
+            </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">Gate.io</td>
+              <td className="myrewards-td-second border-0 specialCell text-center">
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(
+                      gateEarnUSDPrevious / bnbPrice,
+                      2
+                    )} WBNB`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
+              </td>
+            </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">Base</td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                {previousRewards ? "-" : "0"}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : "0 ETH"}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : "0.00"}
+              </td>
+            </tr>
 
-          <tr>
-            <td className="myrewards-td-main border-0">
-              {" "}
-              <img
-                src={treasureHunt}
-                alt=""
-                style={{ width: 24, height: 24 }}
-              />
-              Treasure Hunt
-            </td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0 previousRewardsText">
-              {previousRewards &&
-                `$${getFormattedNumber(
-                  userEarnUsdPrevious +
-                    confluxEarnUSDPrevious +
-                    gateEarnUSDPrevious,
-                  2
-                )}`}
-            </td>
-          </tr>
-          <div className="table-separator position-absolute"></div>
+            <tr>
+              <td className="myrewards-td-main border-0">
+                {" "}
+                <img
+                  src={leaderboard}
+                  alt=""
+                  style={{ width: 24, height: 24 }}
+                />
+                Leaderboard
+              </td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0 previousRewardsText">
+                {previousRewards && "$500.00"}
+              </td>
+            </tr>
+            <div className="table-separator position-absolute"></div>
 
-          <tr>
-            <td className="myrewards-td-second border-0">CoinGecko</td>
-            <td className="myrewards-td-second border-0 specialCell topborder text-center">
-              {previousRewards
-                ? "-"
-                : `$${getFormattedNumber(userEarnUsdPrevious, 2)}`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(
-                    userEarnUsdPrevious / bnbPrice,
-                    2
-                  )} WBNB`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `$${getFormattedNumber(userEarnUsdPrevious, 2)}`}
-            </td>
-          </tr>
-          <tr>
-            <td className="myrewards-td-second border-0">Conflux Network</td>
-            <td className="myrewards-td-second border-0 specialCell text-center">
-              {previousRewards
-                ? "-"
-                : `$${getFormattedNumber(confluxEarnUSDPrevious, 2)}`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(
-                    confluxEarnUSDPrevious / cfxPrice,
-                    2
-                  )} CFX`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `$${getFormattedNumber(confluxEarnUSDPrevious, 2)}`}
-            </td>
-          </tr>
-          <tr>
-            <td className="myrewards-td-second border-0">Gate.io</td>
-            <td className="myrewards-td-second border-0 specialCell text-center">
-              {previousRewards
-                ? "-"
-                : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(
-                    gateEarnUSDPrevious / bnbPrice,
-                    2
-                  )} WBNB`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
-            </td>
-          </tr>
-          <tr>
-            <td className="myrewards-td-second border-0">Base</td>
-            <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-              {previousRewards ? "-" : "0"}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : "0 ETH"}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : "0.00"}
-            </td>
-          </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">Daily</td>
+              <td className="myrewards-td-second border-0 specialCell topborder text-center">
+                {previousRewards ? "-" : `$${dailyplayerData}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(dailyplayerData / bnbPrice, 2)} WBNB`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : "$500.00"}
+              </td>
+            </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">Weekly</td>
+              <td className="myrewards-td-second border-0 specialCell text-center">
+                {previousRewards ? "-" : `$${weeklyplayerData}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(
+                      weeklyplayerData / bnbPrice,
+                      2
+                    )} WBNB`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : "$500.00"}
+              </td>
+            </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">Monthly</td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                {previousRewards ? "-" : `$${monthlyplayerData}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(
+                      monthlyplayerData / bnbPrice,
+                      2
+                    )} WBNB`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : "$500.00"}
+              </td>
+            </tr>
 
-          <tr>
-            <td className="myrewards-td-main border-0">
-              {" "}
-              <img src={leaderboard} alt="" style={{ width: 24, height: 24 }} />
-              Leaderboard
-            </td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0 previousRewardsText">
-              {previousRewards && "$500.00"}
-            </td>
-          </tr>
-          <div className="table-separator position-absolute"></div>
+            <tr>
+              <td className="myrewards-td-main border-0">
+                {" "}
+                <img
+                  src={dailyBonus}
+                  alt=""
+                  style={{ width: 24, height: 24 }}
+                />
+                Daily Bonus
+              </td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0 previousRewardsText">
+                {previousRewards && "$500.00"}
+              </td>
+            </tr>
+            <div className="table-separator position-absolute"></div>
 
-          <tr>
-            <td className="myrewards-td-second border-0">Daily</td>
-            <td className="myrewards-td-second border-0 specialCell topborder text-center">
-              {previousRewards ? "-" : `$${dailyplayerData}`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(dailyplayerData / bnbPrice, 2)} WBNB`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : "$500.00"}
-            </td>
-          </tr>
-          <tr>
-            <td className="myrewards-td-second border-0">Weekly</td>
-            <td className="myrewards-td-second border-0 specialCell text-center">
-              {previousRewards ? "-" : `$${weeklyplayerData}`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(weeklyplayerData / bnbPrice, 2)} WBNB`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : "$500.00"}
-            </td>
-          </tr>
-          <tr>
-            <td className="myrewards-td-second border-0">Monthly</td>
-            <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-              {previousRewards ? "-" : `$${monthlyplayerData}`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(monthlyplayerData / bnbPrice, 2)} WBNB`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : "$500.00"}
-            </td>
-          </tr>
+            <tr>
+              <td className="myrewards-td-second border-0">Treasure Chests</td>
+              <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
+                {previousRewards ? "-" : "$120"}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : " 0.022 WBNB"}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : "$500.00"}
+              </td>
+            </tr>
 
-          <tr>
-            <td className="myrewards-td-main border-0">
-              {" "}
-              <img src={dailyBonus} alt="" style={{ width: 24, height: 24 }} />
-              Daily Bonus
-            </td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0 previousRewardsText">
-              {previousRewards && "$500.00"}
-            </td>
-          </tr>
-          <div className="table-separator position-absolute"></div>
+            <tr>
+              <td className="myrewards-td-main border-0">
+                {" "}
+                <img
+                  src={criticalHit}
+                  alt=""
+                  style={{ width: 24, height: 24 }}
+                />
+                Critical Hit
+              </td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0 previousRewardsText">
+                {previousRewards && "$500.00"}
+              </td>
+            </tr>
+            <div className="table-separator position-absolute"></div>
 
-          <tr>
-            <td className="myrewards-td-second border-0">Treasure Chests</td>
-            <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
-              {previousRewards ? "-" : "$120"}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : " 0.022 WBNB"}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : "$500.00"}
-            </td>
-          </tr>
-
-          <tr>
-            <td className="myrewards-td-main border-0">
-              {" "}
-              <img src={criticalHit} alt="" style={{ width: 24, height: 24 }} />
-              Critical Hit
-            </td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0"></td>
-            <td className="myrewards-td-second border-0 previousRewardsText">
-              {previousRewards && "$500.00"}
-            </td>
-          </tr>
-          <div className="table-separator position-absolute"></div>
-
-          <tr>
-            <td className="myrewards-td-second border-0">Genesis Gem</td>
-            <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
-              {previousRewards ? "-" : `$${genesisData}`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards
-                ? "-"
-                : `${getFormattedNumber(genesisData / bnbPrice, 2)} WBNB`}
-            </td>
-            <td className="myrewards-td-second border-0 text-center">
-              {previousRewards ? "-" : "$500.00"}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td className="myrewards-td-second border-0">Genesis Gem</td>
+              <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
+                {previousRewards ? "-" : `$${genesisData}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards
+                  ? "-"
+                  : `${getFormattedNumber(genesisData / bnbPrice, 2)} WBNB`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : "$500.00"}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div className="table-separator"></div>
       <div className="d-flex align-items-center gap-2 justify-content-between">
         <div className="d-flex flex-column gap-2">
