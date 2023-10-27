@@ -1989,31 +1989,22 @@ const NewWalletBalance = ({
       {eventsPopup && (
         <OutsideClickHandler onOutsideClick={() => setEventsPopup(false)}>
           <div
-            className="popup-wrapper popup-active p-3"
-            style={{ width: "45%" }}
-          >
-            <div className="d-flex align-items-center justify-content-between w-100 mb-4">
-              <h6 className="popup-title-2 mb-0">Live Events</h6>
-              <img
-                src={xMark}
-                style={{ cursor: "pointer" }}
-                onClick={() => setEventsPopup(false)}
-                alt=""
-              />
-            </div>
-            <div className="d-flex align-items-center gap-2 mb-4 popup-events-container">
-              {dummyEvents.map((item) => (
-                <div
-                  className={`p-2 event-popup-item ${
-                    selectedEvent.name === item.name && "selected-popup-item"
-                  } d-flex flex-column gap-2`}
-                  onClick={() => setSelectedEvent(item)}
-                >
-                  <img
-                    src={require(`./eventAssets/${item.img}.png`)}
-                    className="w-100"
-                    alt=""
-                  />
+          className="popup-wrapper popup-active p-3"
+          style={{ width: "45%" }}
+        >
+          <div className="d-flex align-items-center justify-content-between w-100 mb-4">
+            <h6 className="popup-title-2 mb-0">Live Events</h6>
+            <img
+              src={xMark}
+              style={{ cursor: "pointer" }}
+              onClick={() => setEventsPopup(false)}
+              alt=""
+            />
+          </div>
+          <div className="event-popup-grid" >
+            {dummyEvents.map((item) => (
+              <div className={`p-2 event-popup-item ${selectedEvent.name === item.name && "selected-popup-item"} d-flex flex-column gap-2`} onClick={() => setSelectedEvent(item)}>
+                <img src={require(`./eventAssets/${item.img}.png`)} className="w-100 h-100" alt="" />
                   <h6 className="mb-0">{item.name}</h6>
                 </div>
               ))}

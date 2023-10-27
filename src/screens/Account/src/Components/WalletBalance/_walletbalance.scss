@@ -2171,8 +2171,19 @@
   background: rgba(5, 3, 3, 0.3);
 }
 
+
+.event-popup-grid{
+display: grid;
+grid-template-columns: repeat(5,1fr);
+gap: 10px;
+margin-bottom: 30px;
+@media screen and (max-width: 500px) {
+  grid-template-columns: repeat(3,1fr);
+}
+}
+
 .event-popup-item {
-  width: 20% !important;
+  // width: 20% !important;
   border-radius: 10px;
   border: 1px solid #8e97cd;
   background: rgba(23, 25, 50, 0.4);
@@ -2188,7 +2199,9 @@
   }
 
   @media screen and (max-width: 500px) {
-    width: 48% !important;
+    h6{
+      font-size: 9px;
+    }
   }
 }
 
