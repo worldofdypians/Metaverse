@@ -10,41 +10,49 @@ const WodBuilders = () => {
       name: "Avalanche",
       icon: "avaxIcon",
       banner: "avalancheBanner",
+      link: "https://twitter.com/ArtOnAvax/status/1666852593480658944",
     },
     {
       name: "Chainlink",
       icon: "chainlinkIcon",
       banner: "chainlinkBanner",
+      link: "https://twitter.com/smartcontract/status/1639280913870893056?s=46&t=nb0doR-1o7k9PQ3EaZE8aw",
     },
     {
       name: "Conflux",
       icon: "confluxIcon",
       banner: "confluxBanner",
+      link: "https://twitter.com/Conflux_Network/status/1677017988497563660",
     },
     {
       name: "BNB Chain",
       icon: "bnbIcon",
       banner: "bnbChainBanner",
+      link: "https://twitter.com/BNBCHAIN/status/1705265706747548051?t=7iSDimripaRiwq6A_Z6ViQ&s=19",
     },
     {
-      name: "Coingecko",
+      name: "CoinGecko",
       icon: "coingeckoIcon",
       banner: "coingeckoBanner",
+      link: "https://twitter.com/coingecko/status/1702286607846682909",
     },
     {
       name: "Coin98",
       icon: "coin98Icon",
       banner: "coin98Banner",
+      link: "https://twitter.com/coin98_wallet/status/1628742662047272961",
     },
     {
       name: "Gate.io",
       icon: "gateIcon",
       banner: "gateBanner",
+      link: "https://twitter.com/gate_io/status/1628384476496527361?s=20",
     },
     {
-      name: "Mexc Global",
+      name: "MEXC Global",
       icon: "mexcIcon",
       banner: "mexcBanner",
+      link: "https://twitter.com/MEXC_Official/status/1651888989098455043",
     },
     {
       name: "KuCoin",
@@ -74,7 +82,9 @@ const WodBuilders = () => {
           {builders
             .slice(0, windowSize.width > 786 ? 8 : slice)
             .map((item, index) => (
-              <div
+              <a
+              href={item.link}
+              target="_blank"
                 key={index}
                 className="builder-item p-3 d-flex flex-column gap-2"
               >
@@ -87,7 +97,7 @@ const WodBuilders = () => {
                   <img src={require(`./assets/${item.icon}.svg`)} alt="" />
                   <span className="builder-title mb-0">{item.name}</span>
                 </div>
-              </div>
+              </a>
             ))}
         </div>
         {windowSize.width < 786 && (
