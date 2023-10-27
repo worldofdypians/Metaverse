@@ -152,7 +152,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   ];
 
   var settings = {
-    dots: false,
+    dots: true,
     arrows: false,
     dotsClass: "button__bar",
     infinite: false,
