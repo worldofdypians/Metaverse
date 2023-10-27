@@ -20,9 +20,9 @@ import useWindowSize from "../../../hooks/useWindowSize";
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
   const [icons, setIcons] = useState(false);
-  const betaSlider = useRef(null)
-  const [activeSlide, setActiveSlide] = useState()
-  const [showFirstNext, setShowFirstNext] = useState()
+  const betaSlider = useRef(null);
+  const [activeSlide, setActiveSlide] = useState();
+  const [showFirstNext, setShowFirstNext] = useState();
   const downloader = useRef();
   const windowSize = useWindowSize();
   downloader?.current?.addEventListener("mouseenter", () => {
@@ -125,7 +125,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Base",
       logo: coinbaseimg,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$5,000 in ETH Rewards",
       rewardsAmount: "$5,000",
       rewardsCurrency: "ETH Rewards",
@@ -138,7 +138,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "Base Chain",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event4",
         date: "November 01, 2023",
         totalRewards: "$5,000 in ETH Rewards",
@@ -291,7 +291,6 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                       alt="windows icon"
                     />
                     Download
-                    
                   </button>
                 </a>
               </div>
@@ -303,8 +302,14 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               </div>
             </div>
             {windowSize.width < 992 && (
-              <NavLink to={`/marketplace/events/treasure-hunt`} className="d-flex justify-content-center">
-                <div className="opacitywrapper position-relative" style={{width: "90%"}}>
+              <NavLink
+                to={`/marketplace/events/treasure-hunt`}
+                className="d-flex justify-content-center"
+              >
+                <div
+                  className="opacitywrapper position-relative"
+                  style={{ width: "90%" }}
+                >
                   <span
                     class="popup-rewards d-flex text-white mb-2"
                     style={{

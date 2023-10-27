@@ -115,6 +115,9 @@
   border: 1px solid #b8b8e0 !important;
   display: flex;
   align-items: center;
+  @media screen and (max-width: 991px) {
+    width: auto;
+  }
 }
 
 .dropdown-toggle::after {
@@ -169,8 +172,8 @@
   color: #8e97cd;
 }
 
-#dropdown-basic-button{
-  button{
+#dropdown-basic-button {
+  button {
     width: 100%;
   }
 }

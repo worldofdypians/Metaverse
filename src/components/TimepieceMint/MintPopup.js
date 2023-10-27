@@ -40,10 +40,10 @@ const MintPopup = ({ active, onClose, data }) => {
           <div class="d-flex align-items-center justify-content-center">
             <div class="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              $2,000 BNB Rewards
+              $10,000 ETH Rewards
             </h6>
           </div>
-          <h6 className="mint-popup-title">Gate Treasure Hunt</h6>
+          <h6 className="mint-popup-title">Base Treasure Hunt</h6>
         </>
       ) : (
         <div className="d-flex align-items-center gap-2 mb-4 mb-lg-0">
@@ -66,7 +66,7 @@ const MintPopup = ({ active, onClose, data }) => {
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
         {data.title === "Treasure Hunt" ? (
           <span className="popup-available-mint">
-            Explore the Gate area and use your <img src={whiteExplore} alt="" className="white-explore" />{" "}
+            Explore the downtown area and use your <img src={whiteExplore} alt="" className="white-explore" />{" "}
             to generate rewards
           </span>
         ) : (
