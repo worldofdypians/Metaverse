@@ -251,12 +251,12 @@ const MarketSidebar = () => {
             <img src={dypiansLogo} alt="" />
             <h6 className="build-wod-title mb-0">Build in WoD</h6>
             <p className="build-wod-desc mb-0">
-              Express your creativity and make a mark on the virtual world
+            Become a valued part of our ecosystem by bringing your business to World of Dypians
             </p>
           </div>
-          <NavLink to="/contact-us">
-            <button className="btn join-now-btn">Join now</button>
-          </NavLink>
+          <a href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true" target="_blank">
+            <button className="btn join-now-btn">Apply</button>
+          </a>
         </div>
       </div>
     </div>
