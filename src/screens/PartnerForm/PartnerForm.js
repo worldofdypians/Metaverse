@@ -760,8 +760,7 @@ const PartnerForm = () => {
                   sx={{ width: "100%" }}
                 />
                 <span className="checkbox-title mt-3">
-                  Please describe yourself / your company. What is your field of
-                  focus?*
+                Which part of World of Dypians are you interested in? Select all that apply*
                 </span>
                 <div className="checkbox-grid">
                   <div className="d-flex align-items-center gap-2">
