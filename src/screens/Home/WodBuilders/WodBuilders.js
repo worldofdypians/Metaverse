@@ -64,6 +64,7 @@ const WodBuilders = () => {
 
 
   return (
+   <>
     <div className='px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center  ' id='wodbuilders'>
       <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
         <h2 className="font-organetto builders-title explorer-grid-title px-0">
@@ -110,7 +111,28 @@ const WodBuilders = () => {
             ))}
           </div>
         </div>
+    </div> 
+    <div className='row w-100 px-3 px-lg-5 mx-0 build-business-wrapper gap-4 gap-lg-0 d-flex flex-column flex-lg-row align-items-center justify-content-between mt-5 py-5'>
+      <div className="build-business-title-wrapper">
+        <h6 className="mb-0 font-organetto">
+          Bring your business to World of Dypians
+        </h6>
+      </div>
+      <div className="d-flex align-items-center justify-content-center w-50">
+      <a href='https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true' target='_blank'
+                  className="linear-border"
+                >
+                  <button
+                    className="btn filled-btn px-5"
+                
+                  >
+                  Apply
+                  </button>
+                </a>
+      </div>
     </div>
+    
+   </>
   )
 }
 
