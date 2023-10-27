@@ -57,3 +57,44 @@
         width: 100%;
     }
 }
+
+.build-business-wrapper{
+  background: linear-gradient(262.84deg, #7e39fd 0%, #2f1369 100%);
+    position: relative;
+}
+
+.build-business-title-wrapper{
+  width: 50%;
+  h6{
+    color: #FFF;
+font-size: 32px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+  }
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    h6{
+      font-size: 24px;
+      text-align: center;
+    }
+  }
+}
+
+.build-business-wrapper::before{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  content: "";
+  background-image: url('./assets/businessLines.svg');
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+
+  @media screen and (max-width: 786px) {
+  background-size: 100% 100%;
+   
+  }
+}
