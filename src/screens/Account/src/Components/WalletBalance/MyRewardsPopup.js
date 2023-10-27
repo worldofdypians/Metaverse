@@ -530,7 +530,7 @@ const MyRewardsPopup = ({
           <thead>
             <tr>
               <th className="myrewards-th border-0">Reward Category</th>
-              <th className="myrewards-th border-0 text-center">
+              <th className="myrewards-th border-0 text-center position-relative">
                 Available Rewards
                 <OutsideClickHandler
                   onOutsideClick={() => {
@@ -540,7 +540,7 @@ const MyRewardsPopup = ({
                   <img
                     src={greenInfo}
                     alt=""
-                    className="tooltipicon"
+                    className="tooltipicon headericon"
                     onClick={() => {
                       setTooltip(true);
                     }}
@@ -557,7 +557,7 @@ const MyRewardsPopup = ({
                   </p>
                 </div>
               </th>
-              <th className="myrewards-th border-0 text-center">
+              <th className="myrewards-th border-0 text-center position-relative">
                 Reward Type
                 <OutsideClickHandler
                   onOutsideClick={() => {
@@ -567,7 +567,7 @@ const MyRewardsPopup = ({
                   <img
                     src={greenInfo}
                     alt=""
-                    className="tooltipicon"
+                    className="tooltipicon headericon"
                     onClick={() => {
                       setTooltip2(true);
                     }}
@@ -584,7 +584,7 @@ const MyRewardsPopup = ({
                   </p>
                 </div>
               </th>
-              <th className="myrewards-th border-0 text-center">
+              <th className="myrewards-th border-0 text-center position-relative">
                 Total Earned
                 <OutsideClickHandler
                   onOutsideClick={() => {
@@ -594,7 +594,7 @@ const MyRewardsPopup = ({
                   <img
                     src={greenInfo}
                     alt=""
-                    className="tooltipicon"
+                    className="tooltipicon headericon"
                     onClick={() => {
                       setTooltip3(true);
                     }}
