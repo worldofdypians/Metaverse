@@ -7,6 +7,8 @@ import treasureHunt from "./myrewardsAssets/treasureHunt.png";
 import Switch from "@mui/material/Switch";
 import axios from "axios";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+import greenInfo from "./assets/greenInfo.svg";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const MyRewardsPopup = ({
   username,
@@ -45,6 +47,7 @@ const MyRewardsPopup = ({
 
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
+  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -57,6 +60,9 @@ const MyRewardsPopup = ({
   const monthlyPrizes = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
 
   const monthlyPrizesGolden = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
+  const [tooltip, setTooltip] = useState(false);
+  const [tooltip2, setTooltip2] = useState(false);
+  const [tooltip3, setTooltip3] = useState(false);
 
   const getBundles = async () => {
     if (address) {
@@ -96,6 +102,26 @@ const MyRewardsPopup = ({
       let staking_contract = new window.infuraWeb3.eth.Contract(
         window.LANDSTAKING_ABI,
         window.config.landnftstake_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
+  const getStakesIdsCawsPool = async () => {
+    if (address) {
+      let staking_contract = new window.infuraWeb3.eth.Contract(
+        window.NFTSTAKING_ABI,
+        window.config.nftstaking_address
       );
       let stakenft = [];
       let myStakes = await staking_contract.methods
@@ -164,6 +190,33 @@ const MyRewardsPopup = ({
       }
     }
     setEthRewardsLandPool(result);
+  };
+
+  const calculateAllRewardsCawsPool = async () => {
+    let myStakes = await getStakesIdsCawsPool();
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = new window.infuraWeb3.eth.Contract(
+      window.NFTSTAKING_ABI,
+      window.config.nftstaking_address
+    );
+    if (address) {
+      if (myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setEthRewardsCawsPool(result);
   };
 
   const fetchTreasureHuntData = async (email, userAddress) => {
@@ -451,6 +504,7 @@ const MyRewardsPopup = ({
     getBundles();
     calculateAllRewards();
     calculateAllRewardsLandPool();
+    calculateAllRewardsCawsPool();
   }, [address]);
 
   // useEffect(() => {
@@ -477,11 +531,85 @@ const MyRewardsPopup = ({
             <tr>
               <th className="myrewards-th border-0">Reward Category</th>
               <th className="myrewards-th border-0 text-center">
-                Available Rewards{" "}
+                Available Rewards
+                <OutsideClickHandler
+                  onOutsideClick={() => {
+                    setTooltip(false);
+                  }}
+                >
+                  <img
+                    src={greenInfo}
+                    alt=""
+                    className="tooltipicon"
+                    onClick={() => {
+                      setTooltip(true);
+                    }}
+                  />
+                </OutsideClickHandler>
+                <div
+                  className={`tooltip-wrapper2 p-2 col-11 ${
+                    tooltip && "tooltip-active"
+                  }`}
+                  style={{ top: "-30px", right: "-175px" }}
+                >
+                  <p className="tooltip-content2 m-0">
+                    The amount of rewards available to be withdrawn.
+                  </p>
+                </div>
               </th>
-              <th className="myrewards-th border-0 text-center">Reward Type</th>
+              <th className="myrewards-th border-0 text-center">
+                Reward Type
+                <OutsideClickHandler
+                  onOutsideClick={() => {
+                    setTooltip2(false);
+                  }}
+                >
+                  <img
+                    src={greenInfo}
+                    alt=""
+                    className="tooltipicon"
+                    onClick={() => {
+                      setTooltip2(true);
+                    }}
+                  />
+                </OutsideClickHandler>
+                <div
+                  className={`tooltip-wrapper2 p-2 col-11 ${
+                    tooltip2 && "tooltip-active"
+                  }`}
+                  style={{ top: "-30px", right: "-175px" }}
+                >
+                  <p className="tooltip-content2 m-0">
+                    The type of reward distribution.
+                  </p>
+                </div>
+              </th>
               <th className="myrewards-th border-0 text-center">
                 Total Earned
+                <OutsideClickHandler
+                  onOutsideClick={() => {
+                    setTooltip3(false);
+                  }}
+                >
+                  <img
+                    src={greenInfo}
+                    alt=""
+                    className="tooltipicon"
+                    onClick={() => {
+                      setTooltip3(true);
+                    }}
+                  />
+                </OutsideClickHandler>
+                <div
+                  className={`tooltip-wrapper2 p-2 col-11 ${
+                    tooltip3 && "tooltip-active"
+                  }`}
+                  style={{ top: "-30px", right: "-175px" }}
+                >
+                  <p className="tooltip-content2 m-0">
+                    The total rewards already distributed.
+                  </p>
+                </div>
               </th>
             </tr>
           </thead>
@@ -529,7 +657,7 @@ const MyRewardsPopup = ({
                   ? "-"
                   : `$${getFormattedNumber(EthRewards * ethTokenData, 2)}`}
               </td>
-              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+              <td className="myrewards-td-second border-0 specialCell text-center">
                 {previousRewards
                   ? "-"
                   : `${getFormattedNumber(EthRewards, 2)} WETH`}
@@ -538,25 +666,20 @@ const MyRewardsPopup = ({
                 {previousRewards ? "-" : " $500.00"}
               </td>
             </tr>
-            {previousRewards && (
-              <tr>
-                <td className="myrewards-td-second border-0">CAWS </td>
 
-                <td className="myrewards-td-second border-0 text-center">
-                  {previousRewards
-                    ? "-"
-                    : `$${getFormattedNumber(EthRewards * ethTokenData, 2)}`}
-                </td>
-                <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-                  {previousRewards
-                    ? "-"
-                    : `${getFormattedNumber(EthRewards, 2)} WETH`}
-                </td>
-                <td className="myrewards-td-second border-0 text-center">
-                  {previousRewards ? "-" : " $500.00"}
-                </td>
-              </tr>
-            )}
+            <tr>
+              <td className="myrewards-td-second border-0">CAWS </td>
+
+              <td className="myrewards-td-second border-0 text-center">
+                {`$${getFormattedNumber(EthRewardsCawsPool * ethTokenData, 2)}`}
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                {getFormattedNumber(EthRewardsCawsPool, 2)} WETH
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {"$500.00"}
+              </td>
+            </tr>
 
             <tr>
               <td className="myrewards-td-main border-0">
@@ -793,25 +916,23 @@ const MyRewardsPopup = ({
       </div>
       <div className="table-separator"></div>
       <div className="d-flex align-items-center gap-2 justify-content-between">
-        <div className="d-flex flex-column gap-2">
-          <div className="d-flex align-items-center gap-2 justify-content-start">
-            <span className="leftbold-text">Available Rewards:</span>
-            <span className="rightlight-text">
-              The amount of rewards available to be withdrawn.
-            </span>
-          </div>
-          <div className="d-flex align-items-center gap-2 justify-content-start">
-            <span className="leftbold-text">Reward Type:</span>
-            <span className="rightlight-text">
-              The type of reward distribution.
-            </span>
-          </div>
-          <div className="d-flex align-items-center gap-2 justify-content-start">
-            <span className="leftbold-text ">Total Earned:</span>
-            <span className="rightlight-text">
-              The total rewards evaluated in USD.
-            </span>
-          </div>
+        <div className="d-flex flex-column">
+          <h4
+            className={
+              previousRewards ? "all-past-total-earned" : "all-total-earned"
+            }
+          >
+            $435.25
+          </h4>
+          <span
+            className={
+              previousRewards
+                ? "all-past-total-earned-subtitle"
+                : "all-total-earned-subtitle"
+            }
+          >
+            Total Earned
+          </span>
         </div>
         <div className="d-flex flex-column">
           <h4
@@ -832,7 +953,7 @@ const MyRewardsPopup = ({
           </span>
         </div>
       </div>
-      <div className="optionsWrapper2 p-2">
+      {/* <div className="optionsWrapper2 p-2">
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between gap-2 align-items-center">
             <span className="viewWinners">View past rewards</span>
@@ -844,7 +965,7 @@ const MyRewardsPopup = ({
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

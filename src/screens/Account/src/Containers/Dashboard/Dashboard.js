@@ -152,6 +152,10 @@ function Dashboard({
     Object.keys(window.config.subscription_tokens)[0]
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
+  const [claimedChests, setclaimedChests] = useState(0);
+  const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
+
+  const [count, setCount] = useState(0);
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -427,6 +431,36 @@ function Dashboard({
       }
     } else {
       setIsPremium(false);
+    }
+  };
+
+  const getClaimedChests = async (address) => {
+    const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
+      window.DAILY_BONUS_ABI,
+      window.config.daily_bonus_address
+    );
+    if (address) {
+      const openedchests = await daily_bonus_contract.methods
+        .dailyChestCount(address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const openedPremiumChests = await daily_bonus_contract.methods
+        .dailyPremiumChestCount(address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (openedchests) {
+        setclaimedChests(Number(openedchests));
+      }
+
+      if (openedPremiumChests) {
+        setclaimedPremiumChests(Number(openedPremiumChests));
+      }
     }
   };
 
@@ -997,8 +1031,7 @@ function Dashboard({
     //     Object.keys(window.config.subscription_tokens)[0]
     //   );
     //   handleSubscriptionTokenChange(wavaxAddress);
-    // } 
-    
+    // }
     else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1020,7 +1053,7 @@ function Dashboard({
         window.config.subscriptionbnb_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    } 
+    }
     // else if (chainId === 43114 && selectedSubscriptionToken !== "") {
     //   settokenDecimals(
     //     window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
@@ -1053,6 +1086,20 @@ function Dashboard({
       refreshSubscription(data.getPlayer.wallet.publicAddress, email);
     }
   }, [data, email]);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      email
+    ) {
+      getClaimedChests(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, email, count]);
 
   useEffect(() => {
     if (coinbase) {
@@ -1117,8 +1164,6 @@ function Dashboard({
       setshowWalletModal(false);
     }
   }, [success]);
-
-  
 
   return (
     <div
@@ -1239,6 +1284,8 @@ function Dashboard({
                         onBalanceClick={() => {
                           setBalancePopup(true);
                         }}
+                        claimedChests={claimedChests}
+                        claimedPremiumChests={claimedPremiumChests}
                       />
                     </div>
                     <WalletBalance
@@ -1614,7 +1661,10 @@ function Dashboard({
                                       onClick={handleEthPool}
                                     >
                                       <img
-                                        src={require(`../../Images/premium/tokens/wethIcon.svg`).default}
+                                        src={
+                                          require(`../../Images/premium/tokens/wethIcon.svg`)
+                                            .default
+                                        }
                                         alt=""
                                       />
                                       Ethereum
@@ -1624,7 +1674,10 @@ function Dashboard({
                                       onClick={handleBnbPool}
                                     >
                                       <img
-                                        src={require(`../../Images/premium/tokens/wbnbIcon.svg`).default}
+                                        src={
+                                          require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                                            .default
+                                        }
                                         alt=""
                                       />
                                       Bnb Chain
@@ -2075,11 +2128,23 @@ function Dashboard({
                   id="dailyrewardpopup"
                   style={{ pointerEvents: "auto" }}
                 >
-                  <img src={rewardPopup} alt="" className="popup-linear2" />
+                  <img
+                    src={rewardPopup}
+                    alt=""
+                    className="popup-linear2"
+                    loading="lazy"
+                  />
 
                   <DailyBonusPopup
                     onclose={() => {
                       setdailyBonusPopup(false);
+                    }}
+                    isPremium={isPremium}
+                    address={data?.getPlayer?.wallet?.publicAddress}
+                    claimedChests={claimedChests}
+                    claimedPremiumChests={claimedPremiumChests}
+                    onChestClaimed={() => {
+                      setCount(count + 1);
                     }}
                   />
                 </div>

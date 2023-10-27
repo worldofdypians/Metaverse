@@ -16,7 +16,14 @@ import OutsideClickHandler from "react-outside-click-handler";
 import warning from "./newAssets/warning.svg";
 import ToolTip from "../../../../Caws/elements/ToolTip";
 
-const DailyBonusPopup = ({ onclose }) => {
+const DailyBonusPopup = ({
+  onclose,
+  isPremium,
+  address,
+  claimedChests,
+  onChestClaimed,
+  claimedPremiumChests,
+}) => {
   const [regularChests, setRegularChests] = useState([]);
   const [premiumChests, setPremiumChests] = useState([]);
   const [rewardTypes, setRewardTypes] = useState("standard");
@@ -24,7 +31,8 @@ const DailyBonusPopup = ({ onclose }) => {
   const [rewardPopup, setRewardPopup] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
   const [popupIndex, setPopupIndex] = useState(0);
-  const [names, setNames] = useState([])
+
+  const [names, setNames] = useState([]);
 
   const dummyChests = [
     {
@@ -352,11 +360,11 @@ const DailyBonusPopup = ({ onclose }) => {
     "ATH",
     "PUMP",
     "SAFU",
-
-  ]
+  ];
 
   const onOpenChest = () => {
     randomNum();
+    onChestClaimed();
     // let rewardsAmount = Math.floor(Math.random() * 6);
 
     // const shuffled = dummyRewards.sort(() => 0.5 - Math.random());
@@ -431,12 +439,15 @@ const DailyBonusPopup = ({ onclose }) => {
     setPremiumChests(tempArray);
     return array;
   };
+
   useEffect(() => {
-    setRegularChests(shuffle(dummyChests).slice(0,10));
-    setNames(shuffle(cryptoNames))
+    setRegularChests(shuffle(dummyChests).slice(0, 10));
+    setNames(shuffle(cryptoNames));
     shufflePremiums(dummyPremiums);
   }, []);
-  
+
+  // console.log(claimedChests)
+
   return (
     <>
       <div
@@ -451,7 +462,7 @@ const DailyBonusPopup = ({ onclose }) => {
           onClick={onclose}
         />
         <div className="position-relative h-100 rewardinnerwrapper">
-          <div className="positon-relative h-100 d-flex flex-column justify-content-between">
+          <div className="positon-relative h-100 d-flex flex-column justify-content-start gap-3">
             <div className="d-flex flex-column align-items-center justify-content-center gap-2">
               <p className="chest-event-desc mb-0">
                 Claim 10 chests daily for a chance to win Game Points, exclusive
@@ -495,6 +506,8 @@ const DailyBonusPopup = ({ onclose }) => {
                     closedImg={item.closedImg}
                     rewardTypes={rewardTypes}
                     onOpenChest={onOpenChest}
+                    isPremium={isPremium}
+                    address={address}
                   />
                 ))}
               </div>
@@ -502,12 +515,15 @@ const DailyBonusPopup = ({ onclose }) => {
               <div className="rewardsgrid">
                 {premiumChests.map((item, index) => (
                   <ChestItem
-                    chestId={index + 1}
+                    chestId={item.chestId}
+                    chestIndex={index + 1}
                     chestTitle={item.chestTitle}
                     open={item.open}
                     closedImg={item.closedImg}
                     rewardTypes={rewardTypes}
                     onOpenChest={onOpenChest}
+                    isPremium={isPremium}
+                    address={address}
                   />
                 ))}
               </div>
@@ -517,14 +533,15 @@ const DailyBonusPopup = ({ onclose }) => {
                 <span className="mb-0">Claim</span>
               </button>
             </div> */}
-            <div className="dailyreward-separator"></div>
-            <div className="d-flex flex-column gap-2 ">
-              <span className="font-organetto chestprizetitle text-white">
-                PRIZES
-              </span>
-              <div className="container px-3">
-                <div className="row" style={{ rowGap: "10px" }}>
-                  {/* <div className="prizeswrapper  col-12 col-lg-4">
+            {claimedChests > 0 && <div className="dailyreward-separator"></div>}
+            {claimedChests > 0 && (
+              <div className="d-flex flex-column gap-2 ">
+                <span className="font-organetto chestprizetitle text-white">
+                  PRIZES
+                </span>
+                <div className="container px-3">
+                  <div className="row" style={{ rowGap: "10px" }}>
+                    {/* <div className="prizeswrapper  col-12 col-lg-4">
                     <div className="d-flex align-items-center gap-2">
                       <img
                         src={pointsIcon}
@@ -596,54 +613,57 @@ const DailyBonusPopup = ({ onclose }) => {
                       </span>
                     </div>
                   </div> */}
-                  {dummyRewards.map((reward, index) => (
-                    <div className="col-12 col-lg-4">
-                      <div
-                        className={`prizeswrapper ${
-                          randomArray.includes(index) && "prizeswrapper-premium"
-                        } `}
-                        style={{
-                          filter:
-                            !randomArray.includes(index) && "grayscale(1)",
-                        }}
-                      >
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={reward.image}
-                            alt=""
-                            style={{ width: 40, height: 40 }}
-                          />
+                    {dummyRewards.map((reward, index) => (
+                      <div className="col-12 col-lg-4">
+                        <div
+                          className={`prizeswrapper ${
+                            randomArray.includes(index) &&
+                            "prizeswrapper-premium"
+                          } `}
+                          style={{
+                            filter:
+                              !randomArray.includes(index) && "grayscale(1)",
+                          }}
+                        >
                           <div className="d-flex align-items-center gap-2">
-                            <span
-                              className="chest-prize-title mb-0"
-                              style={{
-                                color: !randomArray.includes(index) && "gray",
-                              }}
-                            >
-                              {reward.title}
-                            </span>
-                            {randomArray.includes(index) && reward.premium && (
-                              <ToolTip
-                                title={
-                                  <React.Fragment>
-                                    <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                      You must hold CAWS NFT or Genesis Land NFT
-                                      to claim this prize
-                                    </p>
-                                  </React.Fragment>
-                                }
-                                icon={<img src={warning} alt="" />}
-                                color={"#000"}
-                              />
-                            )}
+                            <img
+                              src={reward.image}
+                              alt=""
+                              style={{ width: 40, height: 40 }}
+                            />
+                            <div className="d-flex align-items-center gap-2">
+                              <span
+                                className="chest-prize-title mb-0"
+                                style={{
+                                  color: !randomArray.includes(index) && "gray",
+                                }}
+                              >
+                                {reward.title}
+                              </span>
+                              {randomArray.includes(index) &&
+                                reward.premium && (
+                                  <ToolTip
+                                    title={
+                                      <React.Fragment>
+                                        <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                          You must hold CAWS NFT or Genesis Land
+                                          NFT to claim this prize
+                                        </p>
+                                      </React.Fragment>
+                                    }
+                                    icon={<img src={warning} alt="" />}
+                                    color={"#000"}
+                                  />
+                                )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

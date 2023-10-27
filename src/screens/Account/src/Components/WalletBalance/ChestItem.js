@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import chestOpen from "./assets/chestOpen.png";
 import chestClosed from "./assets/chestClosed.png";
 import chestLock from "./chestImages/chestLock.svg";
+import Web3 from "web3";
 
 const ChestItem = ({
   chestId,
@@ -10,19 +11,64 @@ const ChestItem = ({
   closedImg,
   rewardTypes,
   chestIndex,
-  onOpenChest
+  onOpenChest,
+  isPremium,
+  address,
 }) => {
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [chestStatus, setchestStatus] = useState("initial");
   const [openRandom, setOpenRandom] = useState(1);
-  const handleOpenChest = () => {
+
+  const handleOpenChest = async () => {
     setchestStatus("loading");
-    setOpenRandom(Math.floor(Math.random() * 2) + 1);
-    setTimeout(() => {
-      onOpenChest();
-      setchestStatus("success");
-      setIsChestOpen(true);
-    }, 3000);
+    window.web3 = new Web3(window.ethereum);
+    // console.log(window.config.daily_bonus_address, address);
+    const daily_bonus_contract = new window.web3.eth.Contract(
+      window.DAILY_BONUS_ABI,
+      window.config.daily_bonus_address
+    );
+    // console.log(daily_bonus_contract);
+
+    if (rewardTypes === "premium" && isPremium) {
+      await daily_bonus_contract.methods
+        .openPremiumChest()
+        .send({
+          from: address,
+        })
+        .then(() => {
+          setOpenRandom(Math.floor(Math.random() * 2) + 1);
+          setTimeout(() => {
+            onOpenChest();
+            setchestStatus("success");
+            setIsChestOpen(true);
+          }, 3000);
+        })
+        .catch((e) => {
+          window.alertify.error(e?.message);
+          setchestStatus("initial");
+          console.error(e);
+        });
+    } else if (rewardTypes === "standard") {
+      // console.log("standard");
+      await daily_bonus_contract.methods
+        .openChest()
+        .send({
+          from: address,
+        })
+        .then(() => {
+          setOpenRandom(Math.floor(Math.random() * 2) + 1);
+          setTimeout(() => {
+            onOpenChest();
+            setchestStatus("success");
+            setIsChestOpen(true);
+          }, 3000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+          setchestStatus("initial");
+        });
+    }
   };
 
   return (
@@ -31,7 +77,9 @@ const ChestItem = ({
         open || ischestOpen ? "reward-chest-open" : "reward-chest-closed"
       } position-relative d-flex flex-column align-items-center justify-content-center gap-2`}
       onClick={handleOpenChest}
-      style={{ pointerEvents: rewardTypes === "premium" && "none" }}
+      style={{
+        pointerEvents: rewardTypes === "premium" && !isPremium && "none",
+      }}
     >
       <div
         className={`chest-number ${
@@ -41,10 +89,10 @@ const ChestItem = ({
         <span className="chest-number-text mb-0">{chestIndex}</span>
       </div>
       <div className="position-relative">
-        {rewardTypes === "premium" && (
+        {rewardTypes === "premium" && !isPremium && (
           <img src={chestLock} alt="" className="chest-lock" />
         )}
-        {rewardTypes === "premium" ? (
+        {rewardTypes === "premium" && isPremium ? (
           <img
             src={
               open || (ischestOpen && openRandom === 1)
@@ -56,7 +104,7 @@ const ChestItem = ({
             className={`chest-image ${
               chestStatus === "loading" && "shake-bottom-animation"
             } ${chestStatus === "success" && "fade-in-animation"} ${
-              rewardTypes === "premium" && "chest-blur"
+              rewardTypes === "premium" && !isPremium && "chest-blur"
             }`}
             alt=""
           />
@@ -70,7 +118,7 @@ const ChestItem = ({
             className={`chest-image ${
               chestStatus === "loading" && "shake-bottom-animation"
             } ${chestStatus === "success" && "fade-in-animation"} ${
-              rewardTypes === "premium" && "chest-blur"
+              rewardTypes === "premium" && !isPremium && "chest-blur"
             }`}
             alt=""
           />
@@ -79,13 +127,13 @@ const ChestItem = ({
       <div className="d-flex flex-column">
         <h6
           className="chest-title mb-0"
-          style={{ opacity: rewardTypes === "premium" && "0.1" }}
+          style={{ opacity: rewardTypes === "premium" && !isPremium && "0.1" }}
         >
           {chestTitle.split(" ")[0]}
         </h6>
         <h6
           className="chest-title mb-0"
-          style={{ opacity: rewardTypes === "premium" && "0.1" }}
+          style={{ opacity: rewardTypes === "premium" && !isPremium && "0.1" }}
         >
           {chestTitle.split(" ")[1]}
         </h6>
