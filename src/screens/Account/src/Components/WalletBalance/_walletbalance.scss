@@ -1563,6 +1563,7 @@
 .rewardstable-wrapper {
   height: 500px;
   overflow-y: auto;
+  overflow-x: hidden;
   @media only screen and (max-width: 991px) {
     height: auto;
   }
@@ -2133,7 +2134,13 @@
   font-weight: 700;
   line-height: 8px;
   position: relative;
-  left: 20px;
+  // left: 20px;
+}
+
+.headericon {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
 
 .game-events-img {
