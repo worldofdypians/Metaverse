@@ -458,7 +458,7 @@ const ProfileCard = ({
                             onClick={() => {
                               handleShowWalletPopup();
                             }}
-                            style={{ width: "fit-content", fontSize: 14 }}
+                            style={{ width: "fit-content", whiteSpace: 'nowrap',  fontSize: 14 }}
                           >
                             <img
                               src={blackWallet}
@@ -484,7 +484,7 @@ const ProfileCard = ({
                     onClick={() => {
                       handleShowWalletPopup();
                     }}
-                    style={{ width: "fit-content", fontSize: 14 }}
+                    style={{ width: "fit-content", whiteSpace: 'nowrap', fontSize: 14 }}
                   >
                     <img src={blackWallet} alt="" style={{ width: 18 }} />
                     Connect wallet
