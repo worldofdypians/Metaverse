@@ -137,6 +137,7 @@ const ChestItem = ({
         >
           {chestTitle.split(" ")[1]}
         </h6>
+        {/* <button>Claim</button> */}
       </div>
     </div>
   );
