@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import chestOpen from "./assets/chestOpen.png";
 import chestClosed from "./assets/chestClosed.png";
 import chestLock from "./chestImages/chestLock.svg";
@@ -18,12 +18,32 @@ const ChestItem = ({
   address,
   disableBtn,
   email,
-  handleFetchChestReward
+  onClaimRewards,
+  handleShowRewards
 }) => {
-  const [ischestOpen, setIsChestOpen] = useState(false);
   const [chestStatus, setchestStatus] = useState("initial");
   const [openRandom, setOpenRandom] = useState(1);
- 
+  const [ischestOpen, setIsChestOpen] = useState(false);
+
+  const getUserRewardsByChest = async (userEmail, txHash, chestId) => {
+    const rewardArray = [];
+    const userData = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+    };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+      userData
+    );
+    if (result.status === 200) {
+      onClaimRewards(result.data.reward);
+      setIsChestOpen(true);
+      setchestStatus("success");
+      onLoadingChest(false);
+    }
+  };
 
   const handleOpenChest = async () => {
     setchestStatus("loading");
@@ -42,14 +62,17 @@ const ChestItem = ({
         .send({
           from: address,
         })
-        .then(() => {
-          setOpenRandom(Math.floor(Math.random() * 2) + 1);
-          setTimeout(() => {
-            onOpenChest();
-            setchestStatus("success");
-            setIsChestOpen(true);
-            onLoadingChest(false);
-          }, 3000);
+        // .then(() => {
+        //   setOpenRandom(Math.floor(Math.random() * 2) + 1);
+        //   setTimeout(() => {
+        //     onOpenChest();
+        //     setchestStatus("success");
+        //     // setIsChestOpen(true);
+        //     onLoadingChest(false);
+        //   }, 3000);
+        // })
+        .then((data) => {
+          getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
         })
         .catch((e) => {
           window.alertify.error(e?.message);
@@ -66,15 +89,7 @@ const ChestItem = ({
           from: address,
         })
         .then((data) => {
-          handleFetchChestReward(email, data.transactionHash, chestIndex - 1);
-          // setOpenRandom(Math.floor(Math.random() * 2) + 1);
-          // setTimeout(() => {
-          //   onOpenChest();
-          // setchestStatus("success");
-          //   onLoadingChest(false);
-
-          // setIsChestOpen(true);
-          // }, 3000);
+          getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
         })
         .catch((e) => {
           console.error(e);
@@ -84,6 +99,15 @@ const ChestItem = ({
         });
     }
   };
+
+  const handleChestClick = ()=>{
+    if(!open && !ischestOpen) {
+      handleOpenChest()
+    }
+    else if(open || ischestOpen) {
+      handleShowRewards(chestId);
+    }
+  }
 
   return (
     <div
@@ -156,7 +180,7 @@ const ChestItem = ({
         </h6>
         <div className="d-flex w-100 justify-content-center">
           <button
-            onClick={!open && !ischestOpen && handleOpenChest}
+            onClick={handleChestClick}
             className={` ${
               open || ischestOpen ? "claimed-chest-btn" : "claim-chest-btn"
             } btn  d-flex align-items-center justify-content-center`}

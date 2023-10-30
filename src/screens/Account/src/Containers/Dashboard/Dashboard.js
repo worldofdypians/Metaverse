@@ -129,6 +129,8 @@ function Dashboard({
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [standardChests, setStandardChests] = useState([]);
   const [premiumChests, setPremiumChests] = useState([]);
+  const [openedChests, setOpenedChests] = useState([]);
+
   
 
   const [leaderboard, setLeaderboard] = useState(false);
@@ -477,8 +479,12 @@ function Dashboard({
     );
     if (result.status === 200 && result.data) {
       const chestOrder = result.data.chestOrder;
+      const allOpenedChests = result.data.chestsOpened;
+
       let standardChestsArray = [];
       let premiumChestsArray = [];
+      let openedChests = [];
+
 
       if (chestOrder.length > 0) {
         for (let item of chestOrder) {
@@ -489,8 +495,13 @@ function Dashboard({
           }
         }
       }
+
+      if(allOpenedChests.length > 0) {
+        openedChests=[...allOpenedChests]
+      }
       setStandardChests(standardChestsArray);
       setPremiumChests(premiumChestsArray);
+      setOpenedChests(openedChests)
     }
   };
 
@@ -1180,7 +1191,7 @@ function Dashboard({
     if (email) {
       getAllChests(email);
     }
-  }, [email]);
+  }, [email,count]);
 
   // useEffect(() => {
   //   if (window.ethereum && !window.coin98) {
@@ -2187,7 +2198,7 @@ function Dashboard({
                     standardChests={standardChests}
                     premiumChests={premiumChests}
                     email={email}
-                   
+                   openedChests={openedChests}
                   />
                 </div>
               </OutsideClickHandler>

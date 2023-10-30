@@ -101,7 +101,7 @@ function App() {
     204: {
       chainId: 204,
       chainName: "opBNB",
-      rpcUrls: ["https://opBNB-mainnet-rpc.bnbchain.org"],
+      rpcUrls: ["https://opbnb.publicnode.com"],
       nativeCurrency: {
         symbol: "bnb",
         decimals: 18,

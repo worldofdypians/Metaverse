@@ -46,7 +46,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       symbol: "BNB", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://opBNB-mainnet-rpc.bnbchain.org"],
+    rpcUrls: ["https://opbnb.publicnode.com"],
     blockExplorerUrls: ["http://mainnet.opBNBscan.com/"],
   };
 
