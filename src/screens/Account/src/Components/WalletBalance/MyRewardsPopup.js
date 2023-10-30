@@ -630,7 +630,7 @@ const MyRewardsPopup = ({
                 {previousRewards && "$500.00"}
               </td>
             </tr>
-            <div className="table-separator position-absolute"></div>
+            <div className="table-separator"></div>
 
             <tr>
               <td className="myrewards-td-second border-0">Genesis Land</td>
@@ -705,7 +705,7 @@ const MyRewardsPopup = ({
                   )}`}
               </td>
             </tr>
-            <div className="table-separator position-absolute"></div>
+            <div className="table-separator"></div>
 
             <tr>
               <td className="myrewards-td-second border-0">CoinGecko</td>
@@ -799,7 +799,7 @@ const MyRewardsPopup = ({
                 {previousRewards && "$500.00"}
               </td>
             </tr>
-            <div className="table-separator position-absolute"></div>
+            <div className="table-separator"></div>
 
             <tr>
               <td className="myrewards-td-second border-0">Daily</td>
@@ -866,7 +866,7 @@ const MyRewardsPopup = ({
                 {previousRewards && "$500.00"}
               </td>
             </tr>
-            <div className="table-separator position-absolute"></div>
+            <div className="table-separator"></div>
 
             <tr>
               <td className="myrewards-td-second border-0">Treasure Chests</td>
@@ -897,7 +897,7 @@ const MyRewardsPopup = ({
                 {previousRewards && "$500.00"}
               </td>
             </tr>
-            <div className="table-separator position-absolute"></div>
+            <div className="table-separator"></div>
 
             <tr>
               <td className="myrewards-td-second border-0">Genesis Gem</td>

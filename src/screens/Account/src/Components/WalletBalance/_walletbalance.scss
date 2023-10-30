@@ -1118,7 +1118,7 @@ text-transform: capitalize;
   cursor: pointer;
 
   @media only screen and (max-width: 540px) {
-    right: -10px;
+    right: -5px;
     top: -70px;
   }
 }
@@ -1499,7 +1499,7 @@ text-transform: capitalize;
 
 .game-event-patchtitle {
   color: #e2e2e2;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -1544,7 +1544,7 @@ text-transform: capitalize;
 
 .sys-req-text {
   color: #7dd9af;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -1554,6 +1554,12 @@ text-transform: capitalize;
 .news-game-wrapper {
   border-radius: 0px 0px 20px 20px;
   background: rgba(16, 24, 48, 0.9);
+}
+
+.news-game-wrapper:hover {
+  .game-news-title {
+    text-decoration: underline;
+  }
 }
 
 .game-news-title {
@@ -1577,7 +1583,7 @@ text-transform: capitalize;
   p,
   span {
     color: #fcfcf7 !important;
-    font-size: 8px;
+    font-size: 9px;
     font-style: normal;
     font-weight: 300;
     line-height: 12px;
@@ -1592,10 +1598,10 @@ text-transform: capitalize;
 
 .game-news-date {
   color: #7dd9af;
-  font-size: 8px;
+  font-size: 10px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: 1px;
   letter-spacing: -0.144px;
 }
 

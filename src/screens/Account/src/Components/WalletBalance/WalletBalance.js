@@ -1401,6 +1401,7 @@ const WalletBalance = ({
     }
   }, [showAllEvents]);
 
+  var options = { year: "numeric", month: "short", day: "numeric" };
  
 
   return (
@@ -1421,7 +1422,7 @@ const WalletBalance = ({
                     <span className="text-white game-event-title">
                       World of Dypians
                     </span>
-                    <span className="game-event-patchtitle">
+                    <span className="game-event-patchtitle d-flex algin-items-center gap-1">
                       Latest Patch: v0.2.1{" "}
                       <img
                         src={require("./newAssets/orangePatch.svg").default}
@@ -1476,12 +1477,12 @@ const WalletBalance = ({
                           <span
                             className="game-news-desc"
                             dangerouslySetInnerHTML={{
-                              __html: announcementsNews?.content?.slice(0, 200),
+                              __html: announcementsNews?.content?.slice(0, 200) + '...',
                             }}
                           ></span>
                           <div className="d-flex align-items-center gap-2 justify-content-between">
-                            <span className="game-news-date">
-                              <img alt="" src={grayCalendar} /> Sept 10, 2022
+                            <span className="game-news-date d-flex align-items-center gap-1 ">
+                              <img alt="" src={grayCalendar} />{announcementsNews?.date?.toLocaleDateString("en-US", options)}
                             </span>
                             <img src={arrowCircle} alt="" />
                           </div>
