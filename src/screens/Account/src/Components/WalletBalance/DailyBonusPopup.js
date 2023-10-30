@@ -31,6 +31,8 @@ const DailyBonusPopup = ({
   const [rewardPopup, setRewardPopup] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
   const [popupIndex, setPopupIndex] = useState(0);
+  const [disableBtn, setdisableBtn] = useState(false);
+
 
   const [names, setNames] = useState([]);
 
@@ -413,10 +415,8 @@ const DailyBonusPopup = ({
 
     // console.log(randomArray, randomReward, "randomreward");
 
-    if (popupIndex === 0) {
       setRewardPopup(true);
-    }
-
+  
     setPopupIndex(1);
   };
 
@@ -523,7 +523,7 @@ const DailyBonusPopup = ({
                 </div>
                 <div
                   className={`reward-types ${
-                    rewardTypes === "premium" ? "reward-types-active" : null
+                    rewardTypes === "premium" ? "reward-types-active-premium" : null
                   } w-50 d-flex align-items-center justify-content-center`}
                   onClick={() => setRewardTypes("premium")}
                 >
@@ -547,6 +547,9 @@ const DailyBonusPopup = ({
                     onOpenChest={onOpenChest}
                     isPremium={isPremium}
                     address={address}
+                    onLoadingChest={(value)=>{setdisableBtn(value)}}
+                    disableBtn={disableBtn}
+
                   />
                 ))}
               </div>
@@ -563,6 +566,8 @@ const DailyBonusPopup = ({
                     onOpenChest={onOpenChest}
                     isPremium={isPremium}
                     address={address}
+                    onLoadingChest={(value)=>{setdisableBtn(value)}}
+                    disableBtn={disableBtn}
                   />
                 ))}
               </div>
