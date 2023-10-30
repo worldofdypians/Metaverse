@@ -127,6 +127,10 @@ function Dashboard({
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
+  const [standardChests, setStandardChests] = useState([]);
+  const [premiumChests, setPremiumChests] = useState([]);
+  
+
   const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
@@ -465,28 +469,32 @@ function Dashboard({
   };
 
   const getAllChests = async (userEmail) => {
-    const emailData = { email: userEmail };
+    const emailData = { emailAddress: userEmail };
 
     const result = await axios.post(
       "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards",
       emailData
     );
-    console.log(result);
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+
+      if (chestOrder.length > 0) {
+        for (let item of chestOrder) {
+          if (item.chestType === "Standard") {
+            standardChestsArray.push(item);
+          } else if (item.chestType === "Premium") {
+            premiumChestsArray.push(item);
+          }
+        }
+      }
+      setStandardChests(standardChestsArray);
+      setPremiumChests(premiumChestsArray);
+    }
   };
 
-  const getUserRewardsByChest = async (userEmail, txHash, chestId) => {
-    const userData = {
-      transactionHash: txHash,
-      emailAddress: userEmail,
-      chestIndex: chestId,
-    };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-      userData
-    );
-    console.log(result);
-  };
 
   const handleShowSyncModal = () => {
     setshowSyncModal(true);
@@ -1172,7 +1180,7 @@ function Dashboard({
     if (email) {
       getAllChests(email);
     }
-  }, [[email]]);
+  }, [email]);
 
   // useEffect(() => {
   //   if (window.ethereum && !window.coin98) {
@@ -2176,6 +2184,10 @@ function Dashboard({
                     onChestClaimed={() => {
                       setCount(count + 1);
                     }}
+                    standardChests={standardChests}
+                    premiumChests={premiumChests}
+                    email={email}
+                   
                   />
                 </div>
               </OutsideClickHandler>

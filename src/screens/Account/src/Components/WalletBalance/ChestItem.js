@@ -3,6 +3,7 @@ import chestOpen from "./assets/chestOpen.png";
 import chestClosed from "./assets/chestClosed.png";
 import chestLock from "./chestImages/chestLock.svg";
 import Web3 from "web3";
+import axios from "axios";
 
 const ChestItem = ({
   chestId,
@@ -16,10 +17,13 @@ const ChestItem = ({
   isPremium,
   address,
   disableBtn,
+  email,
+  handleFetchChestReward
 }) => {
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [chestStatus, setchestStatus] = useState("initial");
   const [openRandom, setOpenRandom] = useState(1);
+ 
 
   const handleOpenChest = async () => {
     setchestStatus("loading");
@@ -61,15 +65,16 @@ const ChestItem = ({
         .send({
           from: address,
         })
-        .then(() => {
-          setOpenRandom(Math.floor(Math.random() * 2) + 1);
-          setTimeout(() => {
-            onOpenChest();
-            setchestStatus("success");
-            onLoadingChest(false);
+        .then((data) => {
+          handleFetchChestReward(email, data.transactionHash, chestIndex - 1);
+          // setOpenRandom(Math.floor(Math.random() * 2) + 1);
+          // setTimeout(() => {
+          //   onOpenChest();
+          // setchestStatus("success");
+          //   onLoadingChest(false);
 
-            setIsChestOpen(true);
-          }, 3000);
+          // setIsChestOpen(true);
+          // }, 3000);
         })
         .catch((e) => {
           console.error(e);
@@ -108,10 +113,10 @@ const ChestItem = ({
           <img
             src={
               open || (ischestOpen && openRandom === 1)
-                ? require(`./chestImages/${closedImg}OpenCoins.png`)
+                ? require(`./chestImages/premium/${closedImg}OpenCoins.png`)
                 : ischestOpen && openRandom === 2
-                ? require(`./chestImages/${closedImg}OpenGems.png`)
-                : require(`./chestImages/${closedImg}.png`)
+                ? require(`./chestImages/premium/${closedImg}OpenGems.png`)
+                : require(`./chestImages/premium/${closedImg}.png`)
             }
             className={`chest-image ${
               chestStatus === "loading" && "shake-bottom-animation"
@@ -123,8 +128,8 @@ const ChestItem = ({
         ) : (
           <img
             src={
-              open || ischestOpen
-                ? require(`./chestImages/${closedImg}Open.png`)
+              (open || ischestOpen) && closedImg
+                ? require(`./chestImages/${closedImg}open.png`)
                 : require(`./chestImages/${closedImg}.png`)
             }
             className={`chest-image ${
@@ -141,13 +146,13 @@ const ChestItem = ({
           className="chest-title mb-0"
           style={{ opacity: rewardTypes === "premium" && !isPremium && "0.1" }}
         >
-          {chestTitle.split(" ")[0]}
+          {chestTitle?.split(" ")[0]}
         </h6>
         <h6
           className="chest-title mb-0"
           style={{ opacity: rewardTypes === "premium" && !isPremium && "0.1" }}
         >
-          {chestTitle.split(" ")[1]}
+          {chestTitle?.split(" ")[1]}
         </h6>
         <div className="d-flex w-100 justify-content-center">
           <button

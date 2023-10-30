@@ -23,16 +23,16 @@ const DailyBonusPopup = ({
   claimedChests,
   onChestClaimed,
   claimedPremiumChests,
+  standardChests,
+  premiumChests,
+  email,
 }) => {
-  const [regularChests, setRegularChests] = useState([]);
-  const [premiumChests, setPremiumChests] = useState([]);
   const [rewardTypes, setRewardTypes] = useState("standard");
-  const [randomReward, setRandomReward] = useState({});
   const [rewardPopup, setRewardPopup] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
   const [popupIndex, setPopupIndex] = useState(0);
   const [disableBtn, setdisableBtn] = useState(false);
-
+  const [rewardData, setRewardData] = useState([]);
 
   const [names, setNames] = useState([]);
 
@@ -404,20 +404,8 @@ const DailyBonusPopup = ({
   ];
 
   const onOpenChest = () => {
-    randomNum();
     onChestClaimed();
-    // let rewardsAmount = Math.floor(Math.random() * 6);
-
-    // const shuffled = dummyRewards.sort(() => 0.5 - Math.random());
-    // setRandomReward(dummyRewards.map((item, index) => {
-    //   item.won = randomArray.includes(index) ? true : false
-    // }));
-
-    // console.log(randomArray, randomReward, "randomreward");
-
-      setRewardPopup(true);
-  
-    setPopupIndex(1);
+    setRewardPopup(true);
   };
 
   function randomNum() {
@@ -475,17 +463,38 @@ const DailyBonusPopup = ({
       tempArray.push(dummyItem);
     }
 
-    setPremiumChests(tempArray);
+    // setPremiumChests(tempArray);
     return array;
   };
 
-  useEffect(() => {
-    setRegularChests(shuffle(dummyChests).slice(0, 10));
-    setNames(shuffle(cryptoNames));
-    shufflePremiums(dummyPremiums);
-  }, []);
+  const getUserRewardsByChest = async (userEmail, txHash, chestId) => {
+    const rewardArray =[]
+    const userData = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+    };
 
-  // console.log(claimedChests)
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+      userData
+    );
+    if (result.status === 200) {
+      // result.data.reward.map((item,index)=>{
+      //   rewardArray.push({
+      //     rewardType: item.rewardType,
+      //     reward: item.reward,
+      //   })
+      // })
+      setRewardData(result.data.reward);
+    }
+  };
+
+  useEffect(() => {
+    // setRegularChests(shuffle(dummyChests).slice(0, 10));
+    setNames(shuffle(cryptoNames));
+    // shufflePremiums(dummyPremiums);
+  }, []);
 
   return (
     <>
@@ -523,7 +532,9 @@ const DailyBonusPopup = ({
                 </div>
                 <div
                   className={`reward-types ${
-                    rewardTypes === "premium" ? "reward-types-active-premium" : null
+                    rewardTypes === "premium"
+                      ? "reward-types-active-premium"
+                      : null
                   } w-50 d-flex align-items-center justify-content-center`}
                   onClick={() => setRewardTypes("premium")}
                 >
@@ -536,20 +547,25 @@ const DailyBonusPopup = ({
             </div>
             {rewardTypes === "standard" ? (
               <div className="rewardsgrid">
-                {regularChests.map((item, index) => (
+                {standardChests.map((item, index) => (
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
                     chestTitle={names[index]}
-                    open={item.open}
-                    closedImg={item.closedImg}
+                    open={item.isOpened}
+                    closedImg={item.chestId}
                     rewardTypes={rewardTypes}
                     onOpenChest={onOpenChest}
                     isPremium={isPremium}
                     address={address}
-                    onLoadingChest={(value)=>{setdisableBtn(value)}}
+                    onLoadingChest={(value) => {
+                      setdisableBtn(value);
+                    }}
                     disableBtn={disableBtn}
-
+                    email={email}
+                    handleFetchChestReward={(value1, value2, value3) =>
+                      getUserRewardsByChest(value1, value2, value3)
+                    }
                   />
                 ))}
               </div>
@@ -559,15 +575,18 @@ const DailyBonusPopup = ({
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
-                    chestTitle={item.chestTitle}
-                    open={item.open}
-                    closedImg={item.closedImg}
+                    chestTitle={"Crystal Chest"}
+                    open={item.isOpened}
+                    closedImg={"greenCrystal"}
                     rewardTypes={rewardTypes}
                     onOpenChest={onOpenChest}
                     isPremium={isPremium}
                     address={address}
-                    onLoadingChest={(value)=>{setdisableBtn(value)}}
+                    onLoadingChest={(value) => {
+                      setdisableBtn(value);
+                    }}
                     disableBtn={disableBtn}
+                    email={email}
                   />
                 ))}
               </div>

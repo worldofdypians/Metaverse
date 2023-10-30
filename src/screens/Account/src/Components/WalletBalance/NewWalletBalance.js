@@ -1251,7 +1251,7 @@ const NewWalletBalance = ({
                       </span>
                       <div
                         className="green-progress-inner"
-                        style={{ width: "100%" }}
+                        style={{ width: `${claimedChests}0%` }}
                       ></div>
                     </div>
                     <div className="yellow-progress-outer">
@@ -1260,7 +1260,7 @@ const NewWalletBalance = ({
                       </span>
                       <div
                         className="yellow-progress-inner"
-                        style={{ width: "100%" }}
+                        style={{ width:  `${claimedPremiumChests}0%` }}
                       ></div>
                     </div>
                   </div>
