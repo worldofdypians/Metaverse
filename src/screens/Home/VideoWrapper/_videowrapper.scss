@@ -22,7 +22,6 @@
   .overall-requirements {
     overflow-y: auto;
     height: 80%;
-
   }
 
   .sys-req-title {
@@ -71,7 +70,7 @@
 .video-wrapper {
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 100vh;
+  // min-height: 100vh;
   background-position: center;
 
   // @media only screen and (max-width: 991px) {
@@ -117,10 +116,7 @@
     line-height: 32px !important;
     width: 100% !important;
   }
-
-
 }
-
 
 .video-diagonal {
   position: relative;
@@ -134,9 +130,8 @@
   }
 }
 
-
 .leaderboard-bg {
-  background-image: url('../../../components/LeaderBoard/assets/leaderboardBg.png');
+  background-image: url("../../../components/LeaderBoard/assets/leaderboardBg.png");
   background-repeat: no-repeat;
   background-position: right;
   background-size: 60% 100%;

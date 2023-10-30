@@ -1,6 +1,6 @@
 .utilities-grid{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 40px;
 
     @media screen and (max-width: 1300px) {
@@ -32,10 +32,11 @@
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
-    font-size: 32px;
-    line-height: 48px;
+    font-size: 20px;
+    line-height: 20px;
     color: #ffffff;
     text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    margin-bottom: 0;
     @media screen and (max-width: 786px) {
     font-size: 26px;
 
@@ -46,8 +47,8 @@
         font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 12px;
+    line-height: 18px;
     color: #ffffff;
     text-align: center;
     @media screen and (max-width: 786px) {

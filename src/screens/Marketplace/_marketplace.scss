@@ -1148,6 +1148,12 @@
   }
 }
 
+.homecard{
+  border-radius: 8px;
+background: linear-gradient(148deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.05) 100%);
+backdrop-filter: blur(10px);
+}
+
 .upcoming-mint-wrapper {
   border-radius: 20px;
   // background: linear-gradient(90deg, #181b38 0%, #3e2313 168.67%);
@@ -1175,6 +1181,21 @@
       width: 100% !important;
     }
   }
+}
+
+.home-card-rewards-amount{
+  color: #FFEACE;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.home-card-rewards-currency{
+  color: #FFEACE;
+  font-size: 12 px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .nft-dropdown-item:hover {
@@ -2382,6 +2403,11 @@
   background: linear-gradient(to bottom, #181636 15.48%, #1d438d 254.86%);
 }
 
+.base-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #181636 15.48%, #0057ff 254.86%);
+}
+
 .coingecko-eventh6 {
   color: #fff;
   font-size: 14px;
@@ -3280,4 +3306,8 @@
   font-weight: 400;
   line-height: 24px;
   letter-spacing: -0.18px;
+}
+.upcoming-daily-bonus{
+  border-radius: 20px;
+background: linear-gradient(90deg, #181B38 0%, #47352F 168.67%) !important;
 }

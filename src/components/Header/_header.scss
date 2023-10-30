@@ -111,9 +111,13 @@
   height: 32px;
   padding: 8px;
   height: 34px;
-  border: 1px solid #8E97CD !important;
+  width: 134px;
+  border: 1px solid #b8b8e0 !important;
   display: flex;
   align-items: center;
+  @media screen and (max-width: 991px) {
+    width: auto;
+  }
 }
 
 .dropdown-toggle::after {
@@ -159,11 +163,19 @@
   display: flex;
   gap: 5px;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
   line-height: 18px;
   color: #8e97cd;
+}
+
+#dropdown-basic-button {
+  button {
+    width: 100%;
+  }
 }
 
 #dropdown-basic-button2 {

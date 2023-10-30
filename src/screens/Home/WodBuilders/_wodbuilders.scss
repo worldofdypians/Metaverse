@@ -1,0 +1,98 @@
+.wod-builders-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  width: 100%;
+
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 450px) {
+    grid-template-columns: repeat(1, 1fr);
+
+    .builders-title {
+      font-size: 14px !important;
+    }
+  }
+}
+
+.builder-item {
+  border-radius: 8px;
+  background: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(10px);
+}
+
+.builder-title {
+  color: #f7f7f7;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+@media screen and (max-width: 450px) {
+  .builders-title {
+    font-size: 14px !important;
+  }
+}
+
+.builders-first-half {
+  width: fit-content;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+.builders-second-half {
+  // width: 80%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px 16px;
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+}
+
+.build-business-wrapper {
+  background: linear-gradient(262.84deg, #7e39fd 0%, #2f1369 100%);
+  position: relative;
+}
+
+.build-business-title-wrapper {
+  // width: 50%;
+  h6 {
+    color: #fff;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    h6 {
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+}
+
+.build-business-wrapper::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  content: "";
+  background-image: url("./assets/businessLines.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+
+  @media screen and (max-width: 786px) {
+    background-size: 100% 100%;
+  }
+}
