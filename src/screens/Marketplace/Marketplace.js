@@ -236,6 +236,19 @@ const Marketplace = ({
         console.error(e);
       });
 
+      let base_contract = new window.baseWeb3.eth.Contract(
+        window.BASE_NFT_ABI,
+        window.config.nft_base_address,
+      );
+  
+      const result_base = await base_contract.methods
+        .totalSupply()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+  
+
     const confluxContract = new window.confluxWeb3.eth.Contract(
       window.CONFLUX_NFT_ABI,
       window.config.nft_conflux_address
@@ -248,7 +261,7 @@ const Marketplace = ({
     const gateresult = await gateContract.methods.totalSupply().call();
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
     setTotalSupply(
-      parseInt(result) + parseInt(confluxresult) + parseInt(gateresult) + 20000
+      parseInt(result) + parseInt(result_base) + parseInt(confluxresult) + parseInt(gateresult) + 20000
     );
   };
 
