@@ -790,6 +790,7 @@
   height: 192px;
   margin: 10px;
   cursor: pointer;
+  position: relative;
 }
 
 .reward-chest-open {
@@ -813,6 +814,7 @@
 .chest-image {
   width: 70px;
   height: 70px;
+  position: relative;
 }
 
 .chest-title {
@@ -822,6 +824,7 @@
   font-style: normal;
   font-weight: 900;
   line-height: normal;
+  position: relative;
 }
 
 .chest-number {
@@ -1178,14 +1181,19 @@
 }
 
 .claim-chest-btn {
-  width: 169px;
+  width: 90px;
   height: 62.148px;
   background-image: url("./assets/claimBtnBg.svg");
   background-size: 100% 103%;
+  position: absolute;
+  bottom: -7%;
+  right: 0;
+  left: 0;
+  margin: auto;
   span {
     color: #fff;
     text-align: center;
-    font-size: 24px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 700;
     line-height: 10px; /* 41.667% */

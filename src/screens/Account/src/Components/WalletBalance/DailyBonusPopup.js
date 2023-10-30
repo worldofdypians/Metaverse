@@ -349,6 +349,45 @@ const DailyBonusPopup = ({
     },
   ];
 
+  const chanceRewards = [
+    {
+      title: "Points",
+      image: pointsIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "$ Rewards",
+      image: rewardsIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "Genesis Land NFT",
+      image: genesisIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "CAWS NFT",
+      image: cawsIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "Beta Pass NFT",
+      image: betaPassIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "Large $ Rewards",
+      image: largeRewardsIcon,
+      premium: false,
+      won: false,
+    },
+  ];
+
   const cryptoNames = [
     "FOMO",
     "HODL",
@@ -533,8 +572,8 @@ const DailyBonusPopup = ({
                 <span className="mb-0">Claim</span>
               </button>
             </div> */}
-            {claimedChests > 0 && <div className="dailyreward-separator"></div>}
-            {claimedChests > 0 && (
+            <div className="dailyreward-separator"></div>
+            {claimedChests > 0 ? (
               <div className="d-flex flex-column gap-2 ">
                 <span className="font-organetto chestprizetitle text-white">
                   PRIZES
@@ -655,6 +694,47 @@ const DailyBonusPopup = ({
                                     color={"#000"}
                                   />
                                 )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="d-flex flex-column gap-2 ">
+                <span className="font-organetto chestprizetitle text-white">
+                  Open for a chance to win
+                </span>
+                <div className="container px-3">
+                  <div className="row" style={{ rowGap: "10px" }}>
+                    {chanceRewards.map((reward, index) => (
+                      <div className="col-12 col-lg-4">
+                        <div
+                          className={`prizeswrapper ${
+                            randomArray.includes(index) &&
+                            "prizeswrapper-premium"
+                          } `}
+                          style={{
+                            filter: "grayscale(1)",
+                          }}
+                        >
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={reward.image}
+                              alt=""
+                              style={{ width: 40, height: 40 }}
+                            />
+                            <div className="d-flex align-items-center gap-2">
+                              <span
+                                className="chest-prize-title mb-0"
+                                style={{
+                                  color: "gray",
+                                }}
+                              >
+                                {reward.title}
+                              </span>
                             </div>
                           </div>
                         </div>

@@ -76,7 +76,6 @@ const ChestItem = ({
       className={` reward-chest ${
         open || ischestOpen ? "reward-chest-open" : "reward-chest-closed"
       } position-relative d-flex flex-column align-items-center justify-content-center gap-2`}
-      onClick={handleOpenChest}
       style={{
         pointerEvents: rewardTypes === "premium" && !isPremium && "none",
       }}
@@ -137,7 +136,14 @@ const ChestItem = ({
         >
           {chestTitle.split(" ")[1]}
         </h6>
-        {/* <button>Claim</button> */}
+        <div className="d-flex w-100 justify-content-center">
+          <button
+            onClick={handleOpenChest}
+            className="btn claim-chest-btn d-flex align-items-center justify-content-center"
+          >
+            <span className="mb-0">Claim</span>
+          </button>
+        </div>
       </div>
     </div>
   );
