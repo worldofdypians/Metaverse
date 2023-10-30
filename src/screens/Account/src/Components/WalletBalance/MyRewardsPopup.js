@@ -529,10 +529,10 @@ const MyRewardsPopup = ({
         <table className="myrewards-table table">
           <thead>
             <tr>
-              <th className="myrewards-th border-0">Reward Category</th>
-              <th className="myrewards-th border-0 text-center position-relative">
+              <th className="col-3 myrewards-th border-0">Reward Category</th>
+              <th className="col-3 myrewards-th border-0 text-center position-relative">
                 Available Rewards
-                <OutsideClickHandler
+                {/* <OutsideClickHandler
                   onOutsideClick={() => {
                     setTooltip(false);
                   }}
@@ -555,11 +555,11 @@ const MyRewardsPopup = ({
                   <p className="tooltip-content2 m-0">
                     The amount of rewards available to be withdrawn.
                   </p>
-                </div>
+                </div> */}
               </th>
-              <th className="myrewards-th border-0 text-center position-relative">
+              <th className="col-3 myrewards-th border-0 text-center position-relative">
                 Reward Type
-                <OutsideClickHandler
+                {/* <OutsideClickHandler
                   onOutsideClick={() => {
                     setTooltip2(false);
                   }}
@@ -571,6 +571,7 @@ const MyRewardsPopup = ({
                     onClick={() => {
                       setTooltip2(true);
                     }}
+                    style={{ right: "20px" }}
                   />
                 </OutsideClickHandler>
                 <div
@@ -582,11 +583,11 @@ const MyRewardsPopup = ({
                   <p className="tooltip-content2 m-0">
                     The type of reward distribution.
                   </p>
-                </div>
+                </div> */}
               </th>
-              <th className="myrewards-th border-0 text-center position-relative">
+              <th className="col-3 myrewards-th border-0 text-center position-relative">
                 Total Earned
-                <OutsideClickHandler
+                {/* <OutsideClickHandler
                   onOutsideClick={() => {
                     setTooltip3(false);
                   }}
@@ -598,6 +599,7 @@ const MyRewardsPopup = ({
                     onClick={() => {
                       setTooltip3(true);
                     }}
+                    style={{ right: "20px" }}
                   />
                 </OutsideClickHandler>
                 <div
@@ -609,7 +611,7 @@ const MyRewardsPopup = ({
                   <p className="tooltip-content2 m-0">
                     The total rewards already distributed.
                   </p>
-                </div>
+                </div> */}
               </th>
             </tr>
           </thead>
@@ -916,23 +918,25 @@ const MyRewardsPopup = ({
       </div>
       <div className="table-separator"></div>
       <div className="d-flex align-items-center gap-2 justify-content-between">
-        <div className="d-flex flex-column">
-          <h4
-            className={
-              previousRewards ? "all-past-total-earned" : "all-total-earned"
-            }
-          >
-            $435.25
-          </h4>
-          <span
-            className={
-              previousRewards
-                ? "all-past-total-earned-subtitle"
-                : "all-total-earned-subtitle"
-            }
-          >
-            Total Earned
-          </span>
+        <div className="d-flex flex-column gap-2">
+          <div className="d-flex align-items-center gap-2 justify-content-start">
+            <span className="leftbold-text">Available Rewards:</span>
+            <span className="rightlight-text">
+              The amount of rewards available to be withdrawn.
+            </span>
+          </div>
+          <div className="d-flex align-items-center gap-2 justify-content-start">
+            <span className="leftbold-text">Reward Type:</span>
+            <span className="rightlight-text">
+              The type of reward distribution.
+            </span>
+          </div>
+          <div className="d-flex align-items-center gap-2 justify-content-start">
+            <span className="leftbold-text ">Total Earned:</span>
+            <span className="rightlight-text">
+            The total rewards already distributed.
+            </span>
+          </div>
         </div>
         <div className="d-flex flex-column">
           <h4
