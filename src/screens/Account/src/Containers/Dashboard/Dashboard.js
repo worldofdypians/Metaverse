@@ -464,6 +464,30 @@ function Dashboard({
     }
   };
 
+  const getAllChests = async (userEmail) => {
+    const emailData = { email: userEmail };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards",
+      emailData
+    );
+    console.log(result);
+  };
+
+  const getUserRewardsByChest = async (userEmail, txHash, chestId) => {
+    const userData = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+    };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+      userData
+    );
+    console.log(result);
+  };
+
   const handleShowSyncModal = () => {
     setshowSyncModal(true);
   };
@@ -1143,6 +1167,12 @@ function Dashboard({
   }, [coinbase, isConnected]);
 
   const logoutItem = localStorage.getItem("logout");
+
+  useEffect(() => {
+    if (email) {
+      getAllChests(email);
+    }
+  }, [[email]]);
 
   // useEffect(() => {
   //   if (window.ethereum && !window.coin98) {
