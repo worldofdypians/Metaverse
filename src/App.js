@@ -2097,6 +2097,7 @@ function App() {
                   handleAvailableTime={(value) => {
                     setavailTime(value);
                   }}
+                  ethTokenData={ethTokenData}
                 />
               }
             />
@@ -2116,6 +2117,7 @@ function App() {
                   handleAvailableTime={(value) => {
                     setavailTime(value);
                   }}
+                  ethTokenData={ethTokenData}
                 />
               }
             />
@@ -2135,6 +2137,7 @@ function App() {
                   handleAvailableTime={(value) => {
                     setavailTime(value);
                   }}
+                  ethTokenData={ethTokenData}
                 />
               }
             />

@@ -57,6 +57,7 @@ import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
+import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import axios from "axios";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
@@ -98,6 +99,7 @@ const MarketEvents = ({
   handleAvailableTime,
   remainingTime,
   tabState,
+  ethTokenData
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -129,6 +131,9 @@ const MarketEvents = ({
   const [gateUserPoints, setGateUserPoints] = useState(0);
   const [gateEarnUSD, setGateEarnUSD] = useState(0);
   const [gateEarnBNB, setGateEarnBNB] = useState(0);
+  const [baseUserPoints, setBaseUserPoints] = useState(0);
+  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
+  const [baseEarnETH, setBaseEarnETH] = useState(0);
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -222,6 +227,8 @@ const MarketEvents = ({
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
+  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+
 
   const dummyBetaPassData2 = [
     // {
@@ -328,7 +335,7 @@ const MarketEvents = ({
     {
       title: "Base",
       logo: base,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
@@ -340,10 +347,10 @@ const MarketEvents = ({
         chain: "Base Network",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event4",
         totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: gateLastDay,
+        eventDuration: baseLastDay,
         eventDate: "November 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
@@ -564,6 +571,10 @@ const MarketEvents = ({
             return obj.betapassId === "gate";
           });
 
+          const baseEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "base";
+          });
+
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -601,8 +612,21 @@ const MarketEvents = ({
               setGateEarnBNB(gateUsdValue / bnbPrice);
             }
           }
+          if (baseEvent) {
+            const basePoints = baseEvent[0].reward.earn.totalPoints;
+            setBaseUserPoints(basePoints);
+            if (baseEvent[0].reward.earn.multiplier !== 0) {
+              const baseUsdValue =
+                baseEvent[0].reward.earn.total /
+                baseEvent[0].reward.earn.multiplier;
+              setBaseEarnUSD(baseUsdValue);
+              if (ethTokenData !== 0) {
+                setBaseEarnETH(baseUsdValue / ethTokenData);
+              }
+            }
+          }
         }
-      }  else {
+      } else {
         console.log(`Request failed with status ${response.status}`);
       }
     } catch (error) {
@@ -660,10 +684,7 @@ const MarketEvents = ({
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      fetchTreasureHuntData(
-        email,
-        data.getPlayer.wallet.publicAddress
-      );
+      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
   }, [email, data, cfxPrice, bnbPrice]);
 
@@ -692,9 +713,6 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -707,6 +725,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -865,6 +886,8 @@ const MarketEvents = ({
                                 ? confluxEarnUSD
                                 : item.title === "Gate.io"
                                 ? gateEarnUSD
+                                : item.title === "Base"
+                                ? baseEarnUSD
                                 : userEarnUsd
                             }
                           />
@@ -902,15 +925,27 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">New events are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">New events are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
+                //   </div>
+                // </div>
+                <div className="upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                    <h6 className="upcoming-mint-title">Daily Bonus</h6>
+                    <p className="upcoming-mint-desc">
+                    Claim chests daily for a chance to win Game Points, exclusive NFTs, and exciting rewards! Don't miss out on your daily dose of gaming treasures.
+                    </p>
                   </div>
+                  <img
+                      src={upcomingDailyBonus}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
                 </div>
-
                 // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                 //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
                 //     <BetaEventCard
@@ -1352,6 +1387,8 @@ const MarketEvents = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
+                        : dummyEvent.id === "event4"
+                        ? baseUserPoints
                         : 0,
                       0
                     )}
@@ -1370,6 +1407,8 @@ const MarketEvents = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
+                        : dummyEvent.id === "event4"
+                        ? baseEarnUSD
                         : 0,
                       2
                     )}
@@ -1381,6 +1420,8 @@ const MarketEvents = ({
                           ? userEarnETH
                           : dummyEvent.id === "event6"
                           ? gateEarnBNB
+                          : dummyEvent.id === "event4"
+                          ? baseEarnETH
                           : 0,
                         2
                       )}

@@ -611,10 +611,12 @@ const Header = ({
               </div>
               <DropdownButton
                 id="dropdown-basic-button"
+                style={{width: "124px"}}
                 className="d-flex align-items-center justify-content-center"
                 title={
                   <span className="dropdown-title">
-                    <img
+                   <div className="d-flex align-items-center gap-1">
+                   <img
                       src={
                         ethState === true
                           ? eth
@@ -649,6 +651,7 @@ const Header = ({
                         ? "Conflux"
                         : "Unsupported Chain"}
                     </span>
+                   </div>
 
                     <img src={dropdown} alt="" />
                   </span>

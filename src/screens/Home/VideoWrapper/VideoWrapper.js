@@ -13,20 +13,18 @@ import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
 import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
 import gateWhite from "../../Marketplace/MarketNFTs/wallets/gateWallet.png";
 import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
-import NewBetaEventCard from "../../Marketplace/components/NewBetaEventCard";
+import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 import Slider from "react-slick";
 import useWindowSize from "../../../hooks/useWindowSize";
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
   const [icons, setIcons] = useState(false);
+  const betaSlider = useRef(null);
   const [activeSlide, setActiveSlide] = useState();
-  const [showFirstNext, setShowFirstNext] = useState(false);
-  const windowSize = useWindowSize();
-
+  const [showFirstNext, setShowFirstNext] = useState();
   const downloader = useRef();
-  const betaSlider = useRef();
-
+  const windowSize = useWindowSize();
   downloader?.current?.addEventListener("mouseenter", () => {
     setIcons(true);
   });
@@ -48,6 +46,8 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       logo: coingecko,
       eventStatus: "Live",
       totalRewards: "$10,000 in BNB Rewards",
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "September 25, 2023",
@@ -73,6 +73,8 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       logo: conflux,
       eventStatus: "Live",
       totalRewards: "$2,000 in CFX Rewards",
+      rewardsAmount: "$2,000",
+      rewardsCurrency: "CFX Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "October 06, 2023",
@@ -98,6 +100,8 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       logo: gateWhite,
       eventStatus: "Live",
       totalRewards: "$2,000 in BNB Rewards",
+      rewardsAmount: "$2,000",
+      rewardsCurrency: "BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "October 20, 2023",
@@ -121,8 +125,10 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Base",
       logo: coinbaseimg,
-      eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in ETH Rewards",
+      eventStatus: "Live",
+      totalRewards: "$10,000 in ETH Rewards",
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
       eventDate: "November 01, 2023",
@@ -132,10 +138,10 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "Base Chain",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event4",
         date: "November 01, 2023",
-        totalRewards: "$5,000 in ETH Rewards",
+        totalRewards: "$10,000 in ETH Rewards",
         eventDate: "November 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
@@ -146,7 +152,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   ];
 
   var settings = {
-    dots: false,
+    dots: true,
     arrows: false,
     dotsClass: "button__bar",
     infinite: false,
@@ -296,10 +302,16 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               </div>
             </div>
             {windowSize.width < 992 && (
-              <NavLink to={`/marketplace/events/treasure-hunt`}>
-                <div className="opacitywrapper position-relative">
+              <NavLink
+                to={`/marketplace/events/treasure-hunt`}
+                className="d-flex justify-content-center"
+              >
+                <div
+                  className="opacitywrapper position-relative"
+                  style={{ width: "90%" }}
+                >
                   <span
-                    class="popup-rewards d-flex text-white font-organetto mb-2"
+                    class="popup-rewards d-flex text-white mb-2"
                     style={{
                       fontSize: windowSize.width < 992 ? "18px" : "24px",
                     }}
@@ -310,7 +322,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   <Slider {...settings} ref={betaSlider}>
                     {dummyBetaPassData2.map((item, index) => (
                       <NavLink to={`/marketplace/events/treasure-hunt`}>
-                        <NewBetaEventCard
+                        <BetaEventCardHome
                           data={item}
                           key={index}
                           isFrontPage={true}
@@ -346,7 +358,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           <NavLink to={`/marketplace/events/treasure-hunt`}>
             <div className="opacitywrapper">
               <span
-                class="popup-rewards d-flex text-white font-organetto mb-2"
+                class="popup-rewards d-flex text-white mb-2"
                 style={{ fontSize: "24px" }}
               >
                 Treasure Hunt
@@ -355,7 +367,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
                   <NavLink to={`/marketplace/events/treasure-hunt`}>
-                    <NewBetaEventCard
+                    <BetaEventCardHome
                       data={item}
                       key={index}
                       isFrontPage={true}
