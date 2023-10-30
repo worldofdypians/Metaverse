@@ -263,7 +263,7 @@ const MobileNavbar = ({
                           ? "Base"
                           :confluxState === true
                           ? "Conflux"
-                         : "Unsupported Chain"}
+                         : "Unsupported"}
                     </span>
 
                     <img src={dropdown} alt="" />

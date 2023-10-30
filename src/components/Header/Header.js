@@ -608,7 +608,7 @@ const Header = ({
                           ? "Base"
                           :confluxState === true
                           ? "Conflux"
-                          :"Unsupported Chain"}
+                          :"Unsupported"}
                     </span>
                    </div>
 
