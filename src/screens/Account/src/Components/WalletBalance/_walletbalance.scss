@@ -530,16 +530,14 @@
   }
 }
 
-
-
 .popup-rewards {
-  color: #FFF;
-text-align: center;
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-text-transform: capitalize;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
 }
 
 .event-popup-chain {
@@ -793,7 +791,7 @@ text-transform: capitalize;
   width: 118px;
   height: 192px;
   margin: 10px;
-  cursor: pointer;
+  // cursor: pointer;
   position: relative;
 }
 
@@ -806,13 +804,19 @@ text-transform: capitalize;
   filter: drop-shadow(0px 0px 6px #dfb625);
 }
 
-.reward-chest-closed {
+.reward-chest-closed,
+.reward-chest-closed-loading {
   background-image: url("./assets/chestBgClosed.svg");
   background-size: 100% 100%;
 }
 
-.reward-chest-closed:hover {
+.reward-chest-closed:hover,
+.reward-chest-closed-loading {
   filter: drop-shadow(0px 0px 6px #00bacc);
+
+  .claim-chest-btn {
+    filter: drop-shadow(0px 0px 6px #00bacc);
+  }
 }
 
 .chest-image {
@@ -1180,6 +1184,14 @@ text-transform: capitalize;
   );
 }
 
+.reward-types-active-premium {
+  background: linear-gradient(
+    270deg,
+    rgba(255, 191, 0, 0.4) -59.13%,
+    rgba(255, 191, 0, 0) 102.53%
+  );
+}
+
 .chestprizetitle {
   font-size: 17px;
 }
@@ -1194,6 +1206,31 @@ text-transform: capitalize;
   right: 0;
   left: 0;
   margin: auto;
+  border: none;
+  outline: none;
+  filter: grayscale(1);
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px; /* 41.667% */
+  }
+}
+
+.claimed-chest-btn {
+  width: 90px;
+  height: 62.148px;
+  background-image: url("./assets/claimedBtnBg.svg");
+  background-size: 100% 103%;
+  position: absolute;
+  bottom: -7%;
+  right: 0;
+  left: 0;
+  margin: auto;
+  border: none;
+  outline: none;
   span {
     color: #fff;
     text-align: center;
@@ -2196,15 +2233,14 @@ text-transform: capitalize;
   background: rgba(5, 3, 3, 0.3);
 }
 
-
-.event-popup-grid{
-display: grid;
-grid-template-columns: repeat(5,1fr);
-gap: 10px;
-margin-bottom: 30px;
-@media screen and (max-width: 500px) {
-  grid-template-columns: repeat(3,1fr);
-}
+.event-popup-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 30px;
+  @media screen and (max-width: 500px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .event-popup-item {
@@ -2224,7 +2260,7 @@ margin-bottom: 30px;
   }
 
   @media screen and (max-width: 500px) {
-    h6{
+    h6 {
       font-size: 9px;
     }
   }
