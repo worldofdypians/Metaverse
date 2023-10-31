@@ -21,6 +21,7 @@ const ChestItem = ({
   handleShowRewards,
   chainId,
   coinbase,
+  isActive,
 }) => {
   const [chestStatus, setchestStatus] = useState("initial");
   const [openRandom, setOpenRandom] = useState(1);
@@ -104,16 +105,20 @@ const ChestItem = ({
   const handleChestClick = () => {
     if (!open && !ischestOpen) {
       handleOpenChest();
-    } else if (open || ischestOpen) {
-      handleShowRewards(chestId);
     }
   };
- 
+
+  const handleRewardsView = () => {
+    handleShowRewards(chestId);
+  };
+
   return (
     <div
       className={` reward-chest ${
-        open || ischestOpen
+        (open || ischestOpen) && isActive !== chestId
           ? "reward-chest-open"
+          : (open || ischestOpen) && isActive === chestId
+          ? "reward-chest-open-active"
           : !open && !ischestOpen && chestStatus === "loading"
           ? "reward-chest-closed-loading"
           : "reward-chest-closed"
@@ -121,6 +126,7 @@ const ChestItem = ({
       style={{
         pointerEvents: rewardTypes === "premium" && !isPremium && "none",
       }}
+      onClick={handleRewardsView}
     >
       <div
         className={`chest-number ${
@@ -171,7 +177,6 @@ const ChestItem = ({
           style={{ opacity: rewardTypes === "premium" && !isPremium && "0.1" }}
         >
           {chestTitle?.split(" ")[0]}
-       
         </h6>
         <h6
           className="chest-title mb-0"

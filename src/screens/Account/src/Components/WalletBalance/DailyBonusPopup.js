@@ -39,6 +39,7 @@ const DailyBonusPopup = ({
   const [disableBtn, setdisableBtn] = useState(false);
   const [rewardData, setRewardData] = useState([]);
   const [liverewardData, setLiveRewardData] = useState([]);
+  const [isActive, setIsActive] = useState();
 
   const [names, setNames] = useState([]);
 
@@ -95,9 +96,8 @@ const DailyBonusPopup = ({
   ];
 
   const showSingleRewardData = (chestID) => {
-   
     const filteredResult = openedChests.find((el) => el.chestId === chestID);
-
+    setIsActive(chestID);
     if (filteredResult) {
       setLiveRewardData(filteredResult);
     }
@@ -166,26 +166,35 @@ const DailyBonusPopup = ({
     setNames(shuffle(cryptoNames));
   }, []);
 
-  useEffect(()=>{
-    if(rewardTypes === "standard") { console.log(standardChests[0])
-      if(standardChests && standardChests.length > 0 && openedChests && openedChests.length > 0) {
-        if(standardChests[0].isOpened === true) {
-          setLiveRewardData(standardChests[0])
+  useEffect(() => {
+    if (rewardTypes === "standard") {
+      console.log(standardChests[0]);
+      if (
+        standardChests &&
+        standardChests.length > 0 &&
+        openedChests &&
+        openedChests.length > 0
+      ) {
+        if (standardChests[0].isOpened === true) {
+          setLiveRewardData(standardChests[0]);
+          setIsActive(standardChests[0].chestId);
         }
-      }
-      else setLiveRewardData([]);
-    }
-    else if(rewardTypes === "premium") {
-      if(premiumChests && premiumChests.length > 0 && isPremium && openedChests && openedChests.length > 0) {
-        if(premiumChests[0].isOpened === true) {
-          setLiveRewardData(premiumChests[0])
+      } else setLiveRewardData([]);
+    } else if (rewardTypes === "premium") {
+      if (
+        premiumChests &&
+        premiumChests.length > 0 &&
+        isPremium &&
+        openedChests &&
+        openedChests.length > 0
+      ) {
+        if (premiumChests[0].isOpened === true) {
+          setLiveRewardData(premiumChests[0]);
+          setIsActive(premiumChests[0].chestId);
         }
-      }
-      else setLiveRewardData([]);
+      } else setLiveRewardData([]);
     }
-  },[rewardTypes])
-
-
+  }, [rewardTypes]);
 
   return (
     <>
@@ -262,15 +271,19 @@ const DailyBonusPopup = ({
                     email={email}
                     onClaimRewards={(value) => {
                       setRewardData(value);
-                      setLiveRewardData(value)
+                      setLiveRewardData(value);
                       setRewardPopup(true);
                       onChestClaimed();
+                      setIsActive(item.chestId);
                     }}
                     handleShowRewards={(value) => {
                       showSingleRewardData(value);
+                      setIsActive(value);
                     }}
                     chainId={chainId}
                     coinbase={coinbase}
+                    isActive={isActive}
+
                   />
                 ))}
               </div>
@@ -293,13 +306,16 @@ const DailyBonusPopup = ({
                     email={email}
                     onClaimRewards={(value) => {
                       setRewardData(value);
-                      setLiveRewardData(value)
+                      setLiveRewardData(value);
                       setRewardPopup(true);
                       onChestClaimed();
+                      setIsActive(item.chestId);
                     }}
                     handleShowRewards={(value) => {
                       showSingleRewardData(value);
+                      setIsActive(value);
                     }}
+                    isActive={isActive}
                     chainId={chainId}
                     coinbase={coinbase}
                   />

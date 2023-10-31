@@ -795,12 +795,13 @@
   position: relative;
 }
 
-.reward-chest-open {
+.reward-chest-open, .reward-chest-open-active {
   background-image: url("./assets/chestBgOpen.svg");
   background-size: 100% 100%;
+  cursor: pointer;
 }
 
-.reward-chest-open:hover {
+.reward-chest-open:hover, .reward-chest-open-active {
   filter: drop-shadow(0px 0px 6px #dfb625);
 }
 
