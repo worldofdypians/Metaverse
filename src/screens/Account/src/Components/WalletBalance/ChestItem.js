@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import chestOpen from "./assets/chestOpen.png";
 import chestClosed from "./assets/chestClosed.png";
 import chestLock from "./chestImages/chestLock.svg";
 import Web3 from "web3";
+import axios from "axios";
 
 const ChestItem = ({
   chestId,
@@ -11,15 +12,40 @@ const ChestItem = ({
   closedImg,
   rewardTypes,
   chestIndex,
-  onOpenChest,
   onLoadingChest,
   isPremium,
   address,
   disableBtn,
+  email,
+  onClaimRewards,
+  handleShowRewards,
+  chainId,
+  coinbase,
+  isActive,
 }) => {
-  const [ischestOpen, setIsChestOpen] = useState(false);
   const [chestStatus, setchestStatus] = useState("initial");
   const [openRandom, setOpenRandom] = useState(1);
+  const [ischestOpen, setIsChestOpen] = useState(false);
+
+  const getUserRewardsByChest = async (userEmail, txHash, chestId) => {
+    const rewardArray = [];
+    const userData = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+    };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+      userData
+    );
+    if (result.status === 200) {
+      onClaimRewards(result.data.reward);
+      setIsChestOpen(true);
+      setchestStatus("success");
+      onLoadingChest(false);
+    }
+  };
 
   const handleOpenChest = async () => {
     setchestStatus("loading");
@@ -38,14 +64,17 @@ const ChestItem = ({
         .send({
           from: address,
         })
-        .then(() => {
-          setOpenRandom(Math.floor(Math.random() * 2) + 1);
-          setTimeout(() => {
-            onOpenChest();
-            setchestStatus("success");
-            setIsChestOpen(true);
-            onLoadingChest(false);
-          }, 3000);
+        // .then(() => {
+        //   setOpenRandom(Math.floor(Math.random() * 2) + 1);
+        //   setTimeout(() => {
+        //     onOpenChest();
+        //     setchestStatus("success");
+        //     // setIsChestOpen(true);
+        //     onLoadingChest(false);
+        //   }, 3000);
+        // })
+        .then((data) => {
+          getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
         })
         .catch((e) => {
           window.alertify.error(e?.message);
@@ -61,15 +90,8 @@ const ChestItem = ({
         .send({
           from: address,
         })
-        .then(() => {
-          setOpenRandom(Math.floor(Math.random() * 2) + 1);
-          setTimeout(() => {
-            onOpenChest();
-            setchestStatus("success");
-            onLoadingChest(false);
-
-            setIsChestOpen(true);
-          }, 3000);
+        .then((data) => {
+          getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
         })
         .catch((e) => {
           console.error(e);
@@ -80,11 +102,23 @@ const ChestItem = ({
     }
   };
 
+  const handleChestClick = () => {
+    if (!open && !ischestOpen) {
+      handleOpenChest();
+    }
+  };
+
+  const handleRewardsView = () => {
+    handleShowRewards(chestId);
+  };
+
   return (
     <div
       className={` reward-chest ${
-        open || ischestOpen
+        (open || ischestOpen) && isActive !== chestId
           ? "reward-chest-open"
+          : (open || ischestOpen) && isActive === chestId
+          ? "reward-chest-open-active"
           : !open && !ischestOpen && chestStatus === "loading"
           ? "reward-chest-closed-loading"
           : "reward-chest-closed"
@@ -92,6 +126,7 @@ const ChestItem = ({
       style={{
         pointerEvents: rewardTypes === "premium" && !isPremium && "none",
       }}
+      onClick={handleRewardsView}
     >
       <div
         className={`chest-number ${
@@ -104,14 +139,14 @@ const ChestItem = ({
         {rewardTypes === "premium" && !isPremium && (
           <img src={chestLock} alt="" className="chest-lock" />
         )}
-        {rewardTypes === "premium" && isPremium ? (
+        {rewardTypes === "premium" ? (
           <img
             src={
               open || (ischestOpen && openRandom === 1)
-                ? require(`./chestImages/${closedImg}OpenCoins.png`)
+                ? require(`./chestImages/premium/${closedImg}OpenCoins.png`)
                 : ischestOpen && openRandom === 2
-                ? require(`./chestImages/${closedImg}OpenGems.png`)
-                : require(`./chestImages/${closedImg}.png`)
+                ? require(`./chestImages/premium/${closedImg}OpenGems.png`)
+                : require(`./chestImages/premium/${closedImg}.png`)
             }
             className={`chest-image ${
               chestStatus === "loading" && "shake-bottom-animation"
@@ -123,8 +158,8 @@ const ChestItem = ({
         ) : (
           <img
             src={
-              open || ischestOpen
-                ? require(`./chestImages/${closedImg}Open.png`)
+              (open || ischestOpen) && closedImg
+                ? require(`./chestImages/${closedImg}open.png`)
                 : require(`./chestImages/${closedImg}.png`)
             }
             className={`chest-image ${
@@ -141,22 +176,41 @@ const ChestItem = ({
           className="chest-title mb-0"
           style={{ opacity: rewardTypes === "premium" && !isPremium && "0.1" }}
         >
-          {chestTitle.split(" ")[0]}
+          {chestTitle?.split(" ")[0]}
         </h6>
         <h6
           className="chest-title mb-0"
           style={{ opacity: rewardTypes === "premium" && !isPremium && "0.1" }}
         >
-          {chestTitle.split(" ")[1]}
+          {chestTitle?.split(" ")[1]}
         </h6>
-        <div className="d-flex w-100 justify-content-center">
+        <div
+          className="d-flex w-100 justify-content-center position-absolute"
+          style={{
+            cursor:
+              disableBtn ||
+              chainId !== 204 ||
+              !coinbase ||
+              (rewardTypes === "premium" && !isPremium)
+                ? "not-allowed"
+                : "pointer",
+            bottom: "-16px",
+            left: 0,
+          }}
+        >
           <button
-            onClick={!open && !ischestOpen && handleOpenChest}
+            onClick={handleChestClick}
             className={` ${
               open || ischestOpen ? "claimed-chest-btn" : "claim-chest-btn"
-            } btn  d-flex align-items-center justify-content-center`}
+            } btn  d-flex align-items-center justify-content-center position-relative`}
             style={{
-              cursor: disableBtn ? "not-allowed" : "pointer",
+              pointerEvents:
+                disableBtn ||
+                chainId !== 204 ||
+                !coinbase ||
+                (rewardTypes === "premium" && !isPremium)
+                  ? "none"
+                  : "auto",
             }}
           >
             <span className="mb-0">

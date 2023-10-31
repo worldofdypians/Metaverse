@@ -15,6 +15,9 @@ import xMark from "./newAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import warning from "./newAssets/warning.svg";
 import ToolTip from "../../../../Caws/elements/ToolTip";
+import axios from "axios";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+import triangle from "../ProfileCard/assets/triangle.svg";
 
 const DailyBonusPopup = ({
   onclose,
@@ -23,17 +26,22 @@ const DailyBonusPopup = ({
   claimedChests,
   onChestClaimed,
   claimedPremiumChests,
+  standardChests,
+  premiumChests,
+  email,
+  openedChests,
+  chainId,
+  coinbase,
 }) => {
-  const [regularChests, setRegularChests] = useState([]);
-  const [premiumChests, setPremiumChests] = useState([]);
   const [rewardTypes, setRewardTypes] = useState("standard");
-  const [randomReward, setRandomReward] = useState({});
   const [rewardPopup, setRewardPopup] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
-  const [popupIndex, setPopupIndex] = useState(0);
   const [disableBtn, setdisableBtn] = useState(false);
-
-
+  const [rewardData, setRewardData] = useState([]);
+  const [liverewardData, setLiveRewardData] = useState([]);
+  const [isActive, setIsActive] = useState();
+  const [dummyregularChests, setDummyRegularChests] = useState([]);
+  const [dummypremiumChests, setDummyPremiumChests] = useState([]);
   const [names, setNames] = useState([]);
 
   const dummyChests = [
@@ -403,22 +411,42 @@ const DailyBonusPopup = ({
     "SAFU",
   ];
 
-  const onOpenChest = () => {
-    randomNum();
-    onChestClaimed();
-    // let rewardsAmount = Math.floor(Math.random() * 6);
-
-    // const shuffled = dummyRewards.sort(() => 0.5 - Math.random());
-    // setRandomReward(dummyRewards.map((item, index) => {
-    //   item.won = randomArray.includes(index) ? true : false
-    // }));
-
-    // console.log(randomArray, randomReward, "randomreward");
-
-      setRewardPopup(true);
-  
-    setPopupIndex(1);
+  const showSingleRewardData = (chestID) => {
+    const filteredResult = openedChests.find((el) => el.chestId === chestID);
+    setIsActive(chestID);
+    if (filteredResult) {
+      setLiveRewardData(filteredResult);
+    }
   };
+
+  function randomNum() {
+    var arr = [];
+    let a = Math.floor(Math.random() * 6) + 1;
+    while (arr.length < a) {
+      var r = Math.floor(Math.random() * 6);
+      if (arr.indexOf(r) === -1) arr.push(r);
+    }
+    setRandomArray(arr);
+  }
+
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+    return array;
+  }
 
   function randomNum() {
     var arr = [];
@@ -475,17 +503,49 @@ const DailyBonusPopup = ({
       tempArray.push(dummyItem);
     }
 
-    setPremiumChests(tempArray);
+    setDummyPremiumChests(tempArray);
     return array;
   };
 
   useEffect(() => {
-    setRegularChests(shuffle(dummyChests).slice(0, 10));
+    setDummyRegularChests(shuffle(dummyChests).slice(0, 10));
     setNames(shuffle(cryptoNames));
     shufflePremiums(dummyPremiums);
   }, []);
 
-  // console.log(claimedChests)
+  useEffect(() => {
+    setNames(shuffle(cryptoNames));
+  }, []);
+
+  useEffect(() => {
+    if (rewardTypes === "standard") {
+      console.log(standardChests[0]);
+      if (
+        standardChests &&
+        standardChests.length > 0 &&
+        openedChests &&
+        openedChests.length > 0
+      ) {
+        if (standardChests[0].isOpened === true) {
+          setLiveRewardData(standardChests[0]);
+          setIsActive(standardChests[0].chestId);
+        }
+      } else setLiveRewardData([]);
+    } else if (rewardTypes === "premium") {
+      if (
+        premiumChests &&
+        premiumChests.length > 0 &&
+        isPremium &&
+        openedChests &&
+        openedChests.length > 0
+      ) {
+        if (premiumChests[0].isOpened === true) {
+          setLiveRewardData(premiumChests[0]);
+          setIsActive(premiumChests[0].chestId);
+        }
+      } else setLiveRewardData([]);
+    }
+  }, [rewardTypes]);
 
   return (
     <>
@@ -508,6 +568,33 @@ const DailyBonusPopup = ({
                 NFTs, and exciting rewards! Don't miss out on your daily dose of
                 gaming treasures.
               </p>
+              {chainId !== 204 && coinbase ? (
+                <span className="sync-txt d-flex align-items-center gap-1">
+                  <img src={triangle} alt="" />
+                  Please make sure you're using opBnb Chain.
+                </span>
+              ) : !coinbase ? (
+                <span className="sync-txt d-flex align-items-center gap-1">
+                  <img src={triangle} alt="" />
+                  Please connect your wallet in order to claim your rewards.
+                </span>
+              ) : coinbase && !email ? (
+                <span className="sync-txt d-flex align-items-center gap-1">
+                  <img src={triangle} alt="" />
+                  Please connect to your game account in order to claim your
+                  rewards.
+                </span>
+              ) : coinbase &&
+                address &&
+                coinbase?.toLowerCase !== address?.toLowerCase() ? (
+                <span className="sync-txt d-flex align-items-center gap-1">
+                  <img src={triangle} alt="" />
+                  Please make sure you're using the wallet associated to your
+                  game account.
+                </span>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="d-flex flex-column">
               <div className="d-flex align-items-center justify-content-center w-100">
@@ -523,7 +610,9 @@ const DailyBonusPopup = ({
                 </div>
                 <div
                   className={`reward-types ${
-                    rewardTypes === "premium" ? "reward-types-active-premium" : null
+                    rewardTypes === "premium"
+                      ? "reward-types-active-premium"
+                      : null
                   } w-50 d-flex align-items-center justify-content-center`}
                   onClick={() => setRewardTypes("premium")}
                 >
@@ -534,28 +623,95 @@ const DailyBonusPopup = ({
               </div>
               <div className="dailyreward-separator"></div>
             </div>
-            {rewardTypes === "standard" ? (
+            {rewardTypes === "standard" && email ? (
               <div className="rewardsgrid">
-                {regularChests.map((item, index) => (
+                {standardChests.map((item, index) => (
+                  <ChestItem
+                    chestId={item.chestId}
+                    chestIndex={index + 1}
+                    chestTitle={names[index]}
+                    open={item.isOpened}
+                    closedImg={item.chestId}
+                    rewardTypes={rewardTypes}
+                    isPremium={isPremium}
+                    address={address}
+                    onLoadingChest={(value) => {
+                      setdisableBtn(value);
+                    }}
+                    disableBtn={disableBtn}
+                    email={email}
+                    onClaimRewards={(value) => {
+                      setRewardData(value);
+                      setLiveRewardData(value);
+                      setRewardPopup(true);
+                      onChestClaimed();
+                      setIsActive(item.chestId);
+                    }}
+                    handleShowRewards={(value) => {
+                      showSingleRewardData(value);
+                      setIsActive(value);
+                    }}
+                    chainId={chainId}
+                    coinbase={coinbase}
+                    isActive={isActive}
+                  />
+                ))}
+              </div>
+            ) : rewardTypes === "premium" && email ? (
+              <div className="rewardsgrid">
+                {premiumChests.map((item, index) => (
+                  <ChestItem
+                    chestId={item.chestId}
+                    chestIndex={index + 1}
+                    chestTitle={"Crystal Chest"}
+                    open={item.isOpened}
+                    closedImg={"greenCrystal"}
+                    rewardTypes={rewardTypes}
+                    isPremium={isPremium}
+                    address={address}
+                    onLoadingChest={(value) => {
+                      setdisableBtn(value);
+                    }}
+                    disableBtn={disableBtn}
+                    email={email}
+                    onClaimRewards={(value) => {
+                      setRewardData(value);
+                      setLiveRewardData(value);
+                      setRewardPopup(true);
+                      onChestClaimed();
+                      setIsActive(item.chestId);
+                    }}
+                    handleShowRewards={(value) => {
+                      showSingleRewardData(value);
+                      setIsActive(value);
+                    }}
+                    isActive={isActive}
+                    chainId={chainId}
+                    coinbase={coinbase}
+                  />
+                ))}
+              </div>
+            ) : rewardTypes === "standard" && !email ? (
+              <div className="rewardsgrid">
+                {dummyregularChests.map((item, index) => (
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
                     chestTitle={names[index]}
                     open={item.open}
-                    closedImg={item.closedImg}
+                    closedImg={index}
                     rewardTypes={rewardTypes}
-                    onOpenChest={onOpenChest}
+                    onOpenChest={() => {
+                      console.log("open");
+                    }}
                     isPremium={isPremium}
                     address={address}
-                    onLoadingChest={(value)=>{setdisableBtn(value)}}
-                    disableBtn={disableBtn}
-
                   />
                 ))}
               </div>
             ) : (
               <div className="rewardsgrid">
-                {premiumChests.map((item, index) => (
+                {dummypremiumChests.map((item, index) => (
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
@@ -563,11 +719,11 @@ const DailyBonusPopup = ({
                     open={item.open}
                     closedImg={item.closedImg}
                     rewardTypes={rewardTypes}
-                    onOpenChest={onOpenChest}
+                    onOpenChest={() => {
+                      console.log("open");
+                    }}
                     isPremium={isPremium}
                     address={address}
-                    onLoadingChest={(value)=>{setdisableBtn(value)}}
-                    disableBtn={disableBtn}
                   />
                 ))}
               </div>
@@ -657,53 +813,311 @@ const DailyBonusPopup = ({
                       </span>
                     </div>
                   </div> */}
-                    {dummyRewards.map((reward, index) => (
-                      <div className="col-12 col-lg-4">
-                        <div
-                          className={`prizeswrapper ${
-                            randomArray.includes(index) &&
-                            "prizeswrapper-premium"
-                          } `}
-                          style={{
-                            filter:
-                              !randomArray.includes(index) && "grayscale(1)",
-                          }}
-                        >
+                    <div className="col-12 col-lg-4">
+                      <div
+                        className={`prizeswrapper ${
+                          liverewardData?.rewardType?.includes("Points") &&
+                          "prizeswrapper-premium"
+                        } `}
+                        style={{
+                          filter:
+                            !liverewardData?.rewardType?.includes("Points") &&
+                            "grayscale(1)",
+                        }}
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={pointsIcon}
+                            alt=""
+                            style={{ width: 40, height: 40 }}
+                          />
                           <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={reward.image}
-                              alt=""
-                              style={{ width: 40, height: 40 }}
+                            <span
+                              className="chest-prize-title mb-0"
+                              style={{
+                                color:
+                                  !liverewardData?.rewardType?.includes(
+                                    "Points"
+                                  ) && "gray",
+                              }}
+                            >
+                              {getFormattedNumber(
+                                liverewardData?.reward ?? 0,
+                                0
+                              )}{" "}
+                              Points
+                            </span>
+                            {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
                             />
-                            <div className="d-flex align-items-center gap-2">
-                              <span
-                                className="chest-prize-title mb-0"
-                                style={{
-                                  color: !randomArray.includes(index) && "gray",
-                                }}
-                              >
-                                {reward.title}
-                              </span>
-                              {randomArray.includes(index) &&
-                                reward.premium && (
-                                  <ToolTip
-                                    title={
-                                      <React.Fragment>
-                                        <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                          You must hold CAWS NFT or Genesis Land
-                                          NFT to claim this prize
-                                        </p>
-                                      </React.Fragment>
-                                    }
-                                    icon={<img src={warning} alt="" />}
-                                    color={"#000"}
-                                  />
-                                )}
-                            </div>
+                          )}  todo */}
                           </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
+
+                    <div className="col-12 col-lg-4">
+                      <div
+                        className={`prizeswrapper ${
+                          liverewardData?.rewardType?.includes("Money") &&
+                          "prizeswrapper-premium"
+                        } `}
+                        style={{
+                          filter:
+                            !liverewardData?.rewardType?.includes("Money") &&
+                            "grayscale(1)",
+                        }}
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={rewardsIcon}
+                            alt=""
+                            style={{ width: 40, height: 40 }}
+                          />
+                          <div className="d-flex align-items-center gap-2">
+                            <span
+                              className="chest-prize-title mb-0"
+                              style={{
+                                color:
+                                  !liverewardData?.rewardType?.includes(
+                                    "Money"
+                                  ) && "gray",
+                              }}
+                            >
+                              ${" "}
+                              {
+                                (liverewardData?.rewardType?.includes(
+                                  "Money"
+                                ) && getFormattedNumber(liverewardData?.reward),
+                                0)
+                              }{" "}
+                              Reward
+                            </span>
+                            {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} todo */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-lg-4">
+                      <div
+                        className={`prizeswrapper ${
+                          liverewardData?.rewardType?.includes("NFT") &&
+                          "prizeswrapper-premium"
+                        } `}
+                        style={{
+                          filter:
+                            !liverewardData?.rewardType?.includes("NFT") &&
+                            "grayscale(1)",
+                        }}
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={genesisIcon}
+                            alt=""
+                            style={{ width: 40, height: 40 }}
+                          />
+                          <div className="d-flex align-items-center gap-2">
+                            <span
+                              className="chest-prize-title mb-0"
+                              style={{
+                                color:
+                                  !liverewardData?.rewardType?.includes(
+                                    "NFT"
+                                  ) && "gray",
+                              }}
+                            >
+                              Genesis Land NFT
+                            </span>
+                            {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-lg-4">
+                      <div
+                        className={`prizeswrapper ${
+                          liverewardData?.rewardType?.includes("NFT") &&
+                          "prizeswrapper-premium"
+                        } `}
+                        style={{
+                          filter:
+                            !liverewardData?.rewardType?.includes("NFT") &&
+                            "grayscale(1)",
+                        }}
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={cawsIcon}
+                            alt=""
+                            style={{ width: 40, height: 40 }}
+                          />
+                          <div className="d-flex align-items-center gap-2">
+                            <span
+                              className="chest-prize-title mb-0"
+                              style={{
+                                color:
+                                  !liverewardData?.rewardType?.includes(
+                                    "NFT"
+                                  ) && "gray",
+                              }}
+                            >
+                              CAWS NFT
+                            </span>
+                            {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-lg-4">
+                      <div
+                        className={`prizeswrapper ${
+                          liverewardData?.rewardType?.includes("NFT") &&
+                          "prizeswrapper-premium"
+                        } `}
+                        style={{
+                          filter:
+                            !liverewardData?.rewardType?.includes("NFT") &&
+                            "grayscale(1)",
+                        }}
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={betaPassIcon}
+                            alt=""
+                            style={{ width: 40, height: 40 }}
+                          />
+                          <div className="d-flex align-items-center gap-2">
+                            <span
+                              className="chest-prize-title mb-0"
+                              style={{
+                                color:
+                                  !liverewardData?.rewardType?.includes(
+                                    "NFT"
+                                  ) && "gray",
+                              }}
+                            >
+                              Beta Pass NFT
+                            </span>
+                            {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-lg-4">
+                      <div
+                        className={`prizeswrapper ${
+                          liverewardData?.rewardType?.includes("LargeMoney") &&
+                          "prizeswrapper-premium"
+                        } `}
+                        style={{
+                          filter:
+                            !liverewardData?.rewardType?.includes(
+                              "LargeMoney"
+                            ) && "grayscale(1)",
+                        }}
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={largeRewardsIcon}
+                            alt=""
+                            style={{ width: 40, height: 40 }}
+                          />
+                          <div className="d-flex align-items-center gap-2">
+                            <span
+                              className="chest-prize-title mb-0"
+                              style={{
+                                color:
+                                  !liverewardData?.rewardType?.includes(
+                                    "LargeMoney"
+                                  ) && "gray",
+                              }}
+                            >
+                              $0 Reward
+                            </span>
+                            {/* {rewardData?.type?.includes('LargeMoney')  && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -783,30 +1197,36 @@ const DailyBonusPopup = ({
        </div> */}
             <div className="container px-3">
               <div className="row mb-5" style={{ rowGap: "12px" }}>
-                {dummyRewards.map((reward, index) => (
-                  <div className="col-12 col-lg-4">
-                    <div
-                      className={`prizeswrapper ${"prizeswrapper-premium"} `}
-                      style={{
-                        filter: !randomArray.includes(index) && "grayscale(1)",
-                      }}
-                    >
+                <div className="col-12 col-lg-4">
+                  <div
+                    className={`prizeswrapper ${
+                      rewardData?.rewardType?.includes("Points") &&
+                      "prizeswrapper-premium"
+                    } `}
+                    style={{
+                      filter:
+                        !rewardData?.rewardType?.includes("Points") &&
+                        "grayscale(1)",
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={pointsIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
                       <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={reward.image}
-                          alt=""
-                          style={{ width: 40, height: 40 }}
-                        />
-                        <div className="d-flex align-items-center gap-2">
-                          <span
-                            className="chest-prize-title mb-0"
-                            style={{
-                              color: !randomArray.includes(index) && "gray",
-                            }}
-                          >
-                            {reward.title}
-                          </span>
-                          {randomArray.includes(index) && reward.premium && (
+                        <span
+                          className="chest-prize-title mb-0"
+                          style={{
+                            color:
+                              !rewardData?.rewardType?.includes("Points") &&
+                              "gray",
+                          }}
+                        >
+                          {getFormattedNumber(rewardData?.reward, 0)} Points
+                        </span>
+                        {/* {randomArray.includes(index) && reward.premium && (
                             <ToolTip
                               title={
                                 <React.Fragment>
@@ -819,12 +1239,257 @@ const DailyBonusPopup = ({
                               icon={<img src={warning} alt="" />}
                               color={"#000"}
                             />
-                          )}
-                        </div>
+                          )}  todo */}
                       </div>
                     </div>
                   </div>
-                ))}
+                </div>
+
+                <div className="col-12 col-lg-4">
+                  <div
+                    className={`prizeswrapper ${
+                      rewardData?.rewardType?.includes("Money") &&
+                      "prizeswrapper-premium"
+                    } `}
+                    style={{
+                      filter:
+                        !rewardData?.rewardType?.includes("Money") &&
+                        "grayscale(1)",
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={rewardsIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span
+                          className="chest-prize-title mb-0"
+                          style={{
+                            color:
+                              !rewardData?.rewardType?.includes("Money") &&
+                              "gray",
+                          }}
+                        >
+                          ${" "}
+                          {
+                            (rewardData?.type?.includes("Money") &&
+                              getFormattedNumber(rewardData?.reward),
+                            0)
+                          }{" "}
+                          Reward
+                        </span>
+                        {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} todo */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-lg-4">
+                  <div
+                    className={`prizeswrapper ${
+                      rewardData?.rewardType?.includes("NFT") &&
+                      "prizeswrapper-premium"
+                    } `}
+                    style={{
+                      filter:
+                        !rewardData?.rewardType?.includes("NFT") &&
+                        "grayscale(1)",
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={genesisIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span
+                          className="chest-prize-title mb-0"
+                          style={{
+                            color:
+                              !rewardData?.rewardType?.includes("NFT") &&
+                              "gray",
+                          }}
+                        >
+                          Genesis Land NFT
+                        </span>
+                        {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-lg-4">
+                  <div
+                    className={`prizeswrapper ${
+                      rewardData?.rewardType?.includes("NFT") &&
+                      "prizeswrapper-premium"
+                    } `}
+                    style={{
+                      filter:
+                        !rewardData?.rewardType?.includes("NFT") &&
+                        "grayscale(1)",
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={cawsIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span
+                          className="chest-prize-title mb-0"
+                          style={{
+                            color:
+                              !rewardData?.rewardType?.includes("NFT") &&
+                              "gray",
+                          }}
+                        >
+                          CAWS NFT
+                        </span>
+                        {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-lg-4">
+                  <div
+                    className={`prizeswrapper ${
+                      rewardData?.rewardType?.includes("NFT") &&
+                      "prizeswrapper-premium"
+                    } `}
+                    style={{
+                      filter:
+                        !rewardData?.rewardType?.includes("NFT") &&
+                        "grayscale(1)",
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={betaPassIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span
+                          className="chest-prize-title mb-0"
+                          style={{
+                            color:
+                              !rewardData?.rewardType?.includes("NFT") &&
+                              "gray",
+                          }}
+                        >
+                          Beta Pass NFT
+                        </span>
+                        {/* {randomArray.includes(index) && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-lg-4">
+                  <div
+                    className={`prizeswrapper ${
+                      rewardData?.rewardType?.includes("LargeMoney") &&
+                      "prizeswrapper-premium"
+                    } `}
+                    style={{
+                      filter:
+                        !rewardData?.rewardType?.includes("LargeMoney") &&
+                        "grayscale(1)",
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={largeRewardsIcon}
+                        alt=""
+                        style={{ width: 40, height: 40 }}
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span
+                          className="chest-prize-title mb-0"
+                          style={{
+                            color:
+                              !rewardData?.rewardType?.includes("LargeMoney") &&
+                              "gray",
+                          }}
+                        >
+                          $0 Reward
+                        </span>
+                        {/* {rewardData?.type?.includes('LargeMoney')  && reward.premium && (
+                            <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT or Genesis Land NFT
+                                    to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+                          )} */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
