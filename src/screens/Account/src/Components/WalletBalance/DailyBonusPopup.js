@@ -40,8 +40,324 @@ const DailyBonusPopup = ({
   const [rewardData, setRewardData] = useState([]);
   const [liverewardData, setLiveRewardData] = useState([]);
   const [isActive, setIsActive] = useState();
-
+  const [dummyregularChests, setDummyRegularChests] = useState([]);
+  const [dummypremiumChests, setDummyPremiumChests] = useState([]);
   const [names, setNames] = useState([]);
+
+  const dummyChests = [
+    {
+      open: false,
+      chestTitle: "Jewel Coffer",
+      closedImg: "jewelCoffer",
+      chestId: 1,
+    },
+    {
+      open: false,
+      chestTitle: "Gold Hoard",
+      closedImg: "goldHoard",
+      chestId: 2,
+    },
+    {
+      open: false,
+      chestTitle: "Pirate's Bounty",
+      closedImg: "piratesBounty",
+      chestId: 3,
+    },
+    {
+      open: false,
+      chestTitle: "Gem Trove",
+      closedImg: "gemTrove",
+      chestId: 4,
+    },
+    {
+      open: false,
+      chestTitle: "Coin Chest",
+      closedImg: "coinChest",
+      chestId: 5,
+    },
+    {
+      open: false,
+      chestTitle: "Silver Cache",
+      closedImg: "silverCache",
+      chestId: 6,
+    },
+    {
+      open: false,
+      chestTitle: "Ruby Stash",
+      closedImg: "rubyStash",
+      chestId: 7,
+    },
+    {
+      open: false,
+      chestTitle: "Mystic Reliquary",
+      closedImg: "mysticReliquary",
+      chestId: 8,
+    },
+    {
+      open: false,
+      chestTitle: "Ancient Relics",
+      closedImg: "ancientRelics",
+      chestId: 9,
+    },
+    {
+      open: false,
+      chestTitle: "Emerald Trove",
+      closedImg: "emeraldTrove",
+      chestId: 10,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Casket",
+      closedImg: "crystalCasket",
+      chestId: 11,
+    },
+    {
+      open: false,
+      chestTitle: "Pirate Booty",
+      closedImg: "pirateBooty",
+      chestId: 12,
+    },
+    {
+      open: false,
+      chestTitle: "Enchanted Trunk",
+      closedImg: "enchantedTrunk",
+      chestId: 13,
+    },
+    {
+      open: false,
+      chestTitle: "Lost Treasures",
+      closedImg: "lostTreasures",
+      chestId: 14,
+    },
+    {
+      open: false,
+      chestTitle: "Buccaneer's Fortune",
+      closedImg: "buccaneersFortune",
+      chestId: 15,
+    },
+    {
+      open: false,
+      chestTitle: "Mysterious Chest",
+      closedImg: "mysteriousChest",
+      chestId: 16,
+    },
+    {
+      open: false,
+      chestTitle: "Royal Riches",
+      closedImg: "royalRiches",
+      chestId: 17,
+    },
+    {
+      open: false,
+      chestTitle: "Sea Pearl",
+      closedImg: "seaPearl",
+      chestId: 18,
+    },
+    {
+      open: false,
+      chestTitle: "Magic Box",
+      closedImg: "magicBox",
+      chestId: 19,
+    },
+    {
+      open: false,
+      chestTitle: "Hidden Jewels",
+      closedImg: "hiddenJewels",
+      chestId: 20,
+    },
+    {
+      open: false,
+      chestTitle: "Timeless Trove",
+      closedImg: "timelessTrove",
+      chestId: 21,
+    },
+    {
+      open: false,
+      chestTitle: "Gilded Relics",
+      closedImg: "gildedRelics",
+      chestId: 22,
+    },
+    {
+      open: false,
+      chestTitle: "Mystic Covert",
+      closedImg: "mysticCovert",
+      chestId: 23,
+    },
+    {
+      open: false,
+      chestTitle: "Sapphire Lockbox",
+      closedImg: "sapphireLockbox",
+      chestId: 24,
+    },
+    {
+      open: false,
+      chestTitle: "Black Pearl",
+      closedImg: "blackPearl",
+      chestId: 25,
+    },
+    {
+      open: false,
+      chestTitle: "Dragon's Loot",
+      closedImg: "dragonsLoot",
+      chestId: 26,
+    },
+    {
+      open: false,
+      chestTitle: "Pirate Plunder",
+      closedImg: "piratePlunder",
+      chestId: 27,
+    },
+    {
+      open: false,
+      chestTitle: "Secret Vault",
+      closedImg: "secretVault",
+      chestId: 28,
+    },
+    {
+      open: false,
+      chestTitle: "Sunken Treasures",
+      closedImg: "sunkenTreasures",
+      chestId: 29,
+    },
+    {
+      open: false,
+      chestTitle: "Whispering Chest",
+      closedImg: "whisperingChest",
+      chestId: 30,
+    },
+    {
+      open: false,
+      chestTitle: "Ancient Artifacts",
+      closedImg: "ancientArtifacts",
+      chestId: 31,
+    },
+    {
+      open: false,
+      chestTitle: "Dreamer's Chest",
+      closedImg: "dreamersChest",
+      chestId: 32,
+    },
+    {
+      open: false,
+      chestTitle: "Starlight Coffer",
+      closedImg: "starlightCoffer",
+      chestId: 33,
+    },
+    {
+      open: false,
+      chestTitle: "Golden Trove",
+      closedImg: "goldenTrove",
+      chestId: 34,
+    },
+    {
+      open: false,
+      chestTitle: "Nebula Trunk",
+      closedImg: "nebulaTrunk",
+      chestId: 35,
+    },
+    {
+      open: false,
+      chestTitle: "Ghostly Chest",
+      closedImg: "ghostlyChest",
+      chestId: 36,
+    },
+    {
+      open: false,
+      chestTitle: "Sacred Relic",
+      closedImg: "sacredRelic",
+      chestId: 37,
+    },
+    {
+      open: false,
+      chestTitle: "Ocean's Bounty",
+      closedImg: "oceansBounty",
+      chestId: 38,
+    },
+    {
+      open: false,
+      chestTitle: "Eternal Treasure",
+      closedImg: "eternalTreasure",
+      chestId: 39,
+    },
+    {
+      open: false,
+      chestTitle: "Bloodmoon Chest",
+      closedImg: "bloodmoonChest",
+      chestId: 40,
+    },
+  ];
+
+  const dummyPremiums = [
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "greenCrystal",
+      chestId: 1,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "blueCrystal",
+      chestId: 2,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "yellowCrystal",
+      chestId: 3,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "purpleCrystal",
+      chestId: 4,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "cyanCrystal",
+      chestId: 5,
+    },
+  ];
+
+  const dummyRewards = [
+    {
+      title: "10,000 Points",
+      image: pointsIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "$5 Reward",
+      image: rewardsIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "Genesis Land NFT",
+      image: genesisIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "CAWS NFT",
+      image: cawsIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "Beta Pass NFT",
+      image: betaPassIcon,
+      premium: false,
+      won: false,
+    },
+    {
+      title: "$100 Reward",
+      image: largeRewardsIcon,
+      premium: true,
+      won: false,
+    },
+  ];
 
   const chanceRewards = [
     {
@@ -132,6 +448,35 @@ const DailyBonusPopup = ({
     return array;
   }
 
+  function randomNum() {
+    var arr = [];
+    let a = Math.floor(Math.random() * 6) + 1;
+    while (arr.length < a) {
+      var r = Math.floor(Math.random() * 6);
+      if (arr.indexOf(r) === -1) arr.push(r);
+    }
+    setRandomArray(arr);
+  }
+
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+    return array;
+  }
+
   const shufflePremiums = (array) => {
     let currentIndex = array.length,
       randomIndex;
@@ -158,9 +503,15 @@ const DailyBonusPopup = ({
       tempArray.push(dummyItem);
     }
 
-    // setPremiumChests(tempArray);
+    setDummyPremiumChests(tempArray);
     return array;
   };
+
+  useEffect(() => {
+    setDummyRegularChests(shuffle(dummyChests).slice(0, 10));
+    setNames(shuffle(cryptoNames));
+    shufflePremiums(dummyPremiums);
+  }, []);
 
   useEffect(() => {
     setNames(shuffle(cryptoNames));
@@ -217,12 +568,32 @@ const DailyBonusPopup = ({
                 NFTs, and exciting rewards! Don't miss out on your daily dose of
                 gaming treasures.
               </p>
-              {(chainId !== 204 || !coinbase) && (
+              {chainId !== 204 && coinbase ? (
+                <span className="sync-txt d-flex align-items-center gap-1">
+                  <img src={triangle} alt="" />
+                  Please make sure you're using opBnb Chain.
+                </span>
+              ) : !coinbase ? (
+                <span className="sync-txt d-flex align-items-center gap-1">
+                  <img src={triangle} alt="" />
+                  Please connect your wallet in order to claim your rewards.
+                </span>
+              ) : coinbase && !email ? (
+                <span className="sync-txt d-flex align-items-center gap-1">
+                  <img src={triangle} alt="" />
+                  Please connect to your game account in order to claim your
+                  rewards.
+                </span>
+              ) : coinbase &&
+                address &&
+                coinbase?.toLowerCase !== address?.toLowerCase() ? (
                 <span className="sync-txt d-flex align-items-center gap-1">
                   <img src={triangle} alt="" />
                   Please make sure you're using the wallet associated to your
-                  game account and be on opBnb Chain
+                  game account.
                 </span>
+              ) : (
+                <></>
               )}
             </div>
             <div className="d-flex flex-column">
@@ -252,7 +623,7 @@ const DailyBonusPopup = ({
               </div>
               <div className="dailyreward-separator"></div>
             </div>
-            {rewardTypes === "standard" ? (
+            {rewardTypes === "standard" && email ? (
               <div className="rewardsgrid">
                 {standardChests.map((item, index) => (
                   <ChestItem
@@ -283,11 +654,10 @@ const DailyBonusPopup = ({
                     chainId={chainId}
                     coinbase={coinbase}
                     isActive={isActive}
-
                   />
                 ))}
               </div>
-            ) : (
+            ) : rewardTypes === "premium" && email ? (
               <div className="rewardsgrid">
                 {premiumChests.map((item, index) => (
                   <ChestItem
@@ -318,6 +688,42 @@ const DailyBonusPopup = ({
                     isActive={isActive}
                     chainId={chainId}
                     coinbase={coinbase}
+                  />
+                ))}
+              </div>
+            ) : rewardTypes === "standard" && !email ? (
+              <div className="rewardsgrid">
+                {dummyregularChests.map((item, index) => (
+                  <ChestItem
+                    chestId={item.chestId}
+                    chestIndex={index + 1}
+                    chestTitle={names[index]}
+                    open={item.open}
+                    closedImg={index}
+                    rewardTypes={rewardTypes}
+                    onOpenChest={() => {
+                      console.log("open");
+                    }}
+                    isPremium={isPremium}
+                    address={address}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="rewardsgrid">
+                {dummypremiumChests.map((item, index) => (
+                  <ChestItem
+                    chestId={item.chestId}
+                    chestIndex={index + 1}
+                    chestTitle={item.chestTitle}
+                    open={item.open}
+                    closedImg={item.closedImg}
+                    rewardTypes={rewardTypes}
+                    onOpenChest={() => {
+                      console.log("open");
+                    }}
+                    isPremium={isPremium}
+                    address={address}
                   />
                 ))}
               </div>

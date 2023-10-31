@@ -2162,7 +2162,7 @@ function Dashboard({
                     email={email}
                     openedChests={openedChests}
                     chainId={chainId}
-                    coinbase={coinbase}
+                    coinbase={coinbase} 
                   />
                 </div>
               </OutsideClickHandler>
