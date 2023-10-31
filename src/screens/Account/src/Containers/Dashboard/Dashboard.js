@@ -131,8 +131,6 @@ function Dashboard({
   const [premiumChests, setPremiumChests] = useState([]);
   const [openedChests, setOpenedChests] = useState([]);
 
-  
-
   const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
@@ -440,36 +438,6 @@ function Dashboard({
     }
   };
 
-  const getClaimedChests = async (address) => {
-    const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
-      window.DAILY_BONUS_ABI,
-      window.config.daily_bonus_address
-    );
-    if (address) {
-      const openedchests = await daily_bonus_contract.methods
-        .dailyChestCount(address)
-        .call()
-        .catch((e) => {
-          console.error(e);
-        });
-
-      const openedPremiumChests = await daily_bonus_contract.methods
-        .dailyPremiumChestCount(address)
-        .call()
-        .catch((e) => {
-          console.error(e);
-        });
-
-      if (openedchests) {
-        setclaimedChests(Number(openedchests));
-      }
-
-      if (openedPremiumChests) {
-        setclaimedPremiumChests(Number(openedPremiumChests));
-      }
-    }
-  };
-
   const getAllChests = async (userEmail) => {
     const emailData = { emailAddress: userEmail };
 
@@ -478,34 +446,42 @@ function Dashboard({
       emailData
     );
     if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
-      const allOpenedChests = result.data.chestsOpened;
+      const chestOrder = result.data.chestOrder; 
 
       let standardChestsArray = [];
       let premiumChestsArray = [];
       let openedChests = [];
-
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
 
       if (chestOrder.length > 0) {
-        for (let item of chestOrder) {
-          if (item.chestType === "Standard") {
-            standardChestsArray.push(item);
-          } else if (item.chestType === "Premium") {
-            premiumChestsArray.push(item);
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
           }
         }
+        setOpenedChests(openedChests);
+        setStandardChests(standardChestsArray);
+        setPremiumChests(premiumChestsArray);
+        setclaimedChests(openedStandardChests.length);
+        setclaimedPremiumChests(openedPremiumChests.length);
       }
-
-      if(allOpenedChests.length > 0) {
-        openedChests=[...allOpenedChests]
-      }
-      setStandardChests(standardChestsArray);
-      setPremiumChests(premiumChestsArray);
-      setOpenedChests(openedChests)
     }
   };
-
-
 
   const handleShowSyncModal = () => {
     setshowSyncModal(true);
@@ -1131,20 +1107,6 @@ function Dashboard({
   }, [data, email]);
 
   useEffect(() => {
-    if (
-      data &&
-      data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-      email
-    ) {
-      getClaimedChests(data.getPlayer.wallet.publicAddress);
-    }
-  }, [data, email, count]);
-
-  useEffect(() => {
     if (coinbase) {
       setsyncStatus("initial");
       fetchAllMyNfts();
@@ -1191,7 +1153,7 @@ function Dashboard({
     if (email) {
       getAllChests(email);
     }
-  }, [email,count]);
+  }, [email, count]);
 
   // useEffect(() => {
   //   if (window.ethereum && !window.coin98) {
@@ -2198,7 +2160,9 @@ function Dashboard({
                     standardChests={standardChests}
                     premiumChests={premiumChests}
                     email={email}
-                   openedChests={openedChests}
+                    openedChests={openedChests}
+                    chainId={chainId}
+                    coinbase={coinbase}
                   />
                 </div>
               </OutsideClickHandler>

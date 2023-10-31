@@ -187,6 +187,7 @@ const NewWalletBalance = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
+  
 
   const dummyConflux = {
     title: "Conflux",
@@ -901,14 +902,15 @@ const NewWalletBalance = ({
   }, []);
 
   useEffect(() => {
-    if (claimedChests === 10 && !isPremium) {
+    if (claimedChests === 10 && claimedPremiumChests === 0 && !isPremium) {
       setFinished(true);
     }
 
     if (claimedChests === 10 && claimedPremiumChests === 10 && isPremium) {
       setFinished(true);
     }
-  }, [claimedChests, claimedPremiumChests]);
+  }, [claimedChests, claimedPremiumChests,isPremium]);
+
 
   return (
     <>

@@ -17,6 +17,7 @@ import warning from "./newAssets/warning.svg";
 import ToolTip from "../../../../Caws/elements/ToolTip";
 import axios from "axios";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+import triangle from "../ProfileCard/assets/triangle.svg";
 
 const DailyBonusPopup = ({
   onclose,
@@ -29,333 +30,17 @@ const DailyBonusPopup = ({
   premiumChests,
   email,
   openedChests,
+  chainId,
+  coinbase,
 }) => {
   const [rewardTypes, setRewardTypes] = useState("standard");
   const [rewardPopup, setRewardPopup] = useState(false);
   const [randomArray, setRandomArray] = useState([]);
-  const [popupIndex, setPopupIndex] = useState(0);
   const [disableBtn, setdisableBtn] = useState(false);
   const [rewardData, setRewardData] = useState([]);
   const [liverewardData, setLiveRewardData] = useState([]);
 
-  const [ischestOpen, setIsChestOpen] = useState(false);
-
   const [names, setNames] = useState([]);
-
-  const dummyChests = [
-    {
-      open: false,
-      chestTitle: "Jewel Coffer",
-      closedImg: "jewelCoffer",
-      chestId: 1,
-    },
-    {
-      open: false,
-      chestTitle: "Gold Hoard",
-      closedImg: "goldHoard",
-      chestId: 2,
-    },
-    {
-      open: false,
-      chestTitle: "Pirate's Bounty",
-      closedImg: "piratesBounty",
-      chestId: 3,
-    },
-    {
-      open: false,
-      chestTitle: "Gem Trove",
-      closedImg: "gemTrove",
-      chestId: 4,
-    },
-    {
-      open: false,
-      chestTitle: "Coin Chest",
-      closedImg: "coinChest",
-      chestId: 5,
-    },
-    {
-      open: false,
-      chestTitle: "Silver Cache",
-      closedImg: "silverCache",
-      chestId: 6,
-    },
-    {
-      open: false,
-      chestTitle: "Ruby Stash",
-      closedImg: "rubyStash",
-      chestId: 7,
-    },
-    {
-      open: false,
-      chestTitle: "Mystic Reliquary",
-      closedImg: "mysticReliquary",
-      chestId: 8,
-    },
-    {
-      open: false,
-      chestTitle: "Ancient Relics",
-      closedImg: "ancientRelics",
-      chestId: 9,
-    },
-    {
-      open: false,
-      chestTitle: "Emerald Trove",
-      closedImg: "emeraldTrove",
-      chestId: 10,
-    },
-    {
-      open: false,
-      chestTitle: "Crystal Casket",
-      closedImg: "crystalCasket",
-      chestId: 11,
-    },
-    {
-      open: false,
-      chestTitle: "Pirate Booty",
-      closedImg: "pirateBooty",
-      chestId: 12,
-    },
-    {
-      open: false,
-      chestTitle: "Enchanted Trunk",
-      closedImg: "enchantedTrunk",
-      chestId: 13,
-    },
-    {
-      open: false,
-      chestTitle: "Lost Treasures",
-      closedImg: "lostTreasures",
-      chestId: 14,
-    },
-    {
-      open: false,
-      chestTitle: "Buccaneer's Fortune",
-      closedImg: "buccaneersFortune",
-      chestId: 15,
-    },
-    {
-      open: false,
-      chestTitle: "Mysterious Chest",
-      closedImg: "mysteriousChest",
-      chestId: 16,
-    },
-    {
-      open: false,
-      chestTitle: "Royal Riches",
-      closedImg: "royalRiches",
-      chestId: 17,
-    },
-    {
-      open: false,
-      chestTitle: "Sea Pearl",
-      closedImg: "seaPearl",
-      chestId: 18,
-    },
-    {
-      open: false,
-      chestTitle: "Magic Box",
-      closedImg: "magicBox",
-      chestId: 19,
-    },
-    {
-      open: false,
-      chestTitle: "Hidden Jewels",
-      closedImg: "hiddenJewels",
-      chestId: 20,
-    },
-    {
-      open: false,
-      chestTitle: "Timeless Trove",
-      closedImg: "timelessTrove",
-      chestId: 21,
-    },
-    {
-      open: false,
-      chestTitle: "Gilded Relics",
-      closedImg: "gildedRelics",
-      chestId: 22,
-    },
-    {
-      open: false,
-      chestTitle: "Mystic Covert",
-      closedImg: "mysticCovert",
-      chestId: 23,
-    },
-    {
-      open: false,
-      chestTitle: "Sapphire Lockbox",
-      closedImg: "sapphireLockbox",
-      chestId: 24,
-    },
-    {
-      open: false,
-      chestTitle: "Black Pearl",
-      closedImg: "blackPearl",
-      chestId: 25,
-    },
-    {
-      open: false,
-      chestTitle: "Dragon's Loot",
-      closedImg: "dragonsLoot",
-      chestId: 26,
-    },
-    {
-      open: false,
-      chestTitle: "Pirate Plunder",
-      closedImg: "piratePlunder",
-      chestId: 27,
-    },
-    {
-      open: false,
-      chestTitle: "Secret Vault",
-      closedImg: "secretVault",
-      chestId: 28,
-    },
-    {
-      open: false,
-      chestTitle: "Sunken Treasures",
-      closedImg: "sunkenTreasures",
-      chestId: 29,
-    },
-    {
-      open: false,
-      chestTitle: "Whispering Chest",
-      closedImg: "whisperingChest",
-      chestId: 30,
-    },
-    {
-      open: false,
-      chestTitle: "Ancient Artifacts",
-      closedImg: "ancientArtifacts",
-      chestId: 31,
-    },
-    {
-      open: false,
-      chestTitle: "Dreamer's Chest",
-      closedImg: "dreamersChest",
-      chestId: 32,
-    },
-    {
-      open: false,
-      chestTitle: "Starlight Coffer",
-      closedImg: "starlightCoffer",
-      chestId: 33,
-    },
-    {
-      open: false,
-      chestTitle: "Golden Trove",
-      closedImg: "goldenTrove",
-      chestId: 34,
-    },
-    {
-      open: false,
-      chestTitle: "Nebula Trunk",
-      closedImg: "nebulaTrunk",
-      chestId: 35,
-    },
-    {
-      open: false,
-      chestTitle: "Ghostly Chest",
-      closedImg: "ghostlyChest",
-      chestId: 36,
-    },
-    {
-      open: false,
-      chestTitle: "Sacred Relic",
-      closedImg: "sacredRelic",
-      chestId: 37,
-    },
-    {
-      open: false,
-      chestTitle: "Ocean's Bounty",
-      closedImg: "oceansBounty",
-      chestId: 38,
-    },
-    {
-      open: false,
-      chestTitle: "Eternal Treasure",
-      closedImg: "eternalTreasure",
-      chestId: 39,
-    },
-    {
-      open: false,
-      chestTitle: "Bloodmoon Chest",
-      closedImg: "bloodmoonChest",
-      chestId: 40,
-    },
-  ];
-
-  const dummyPremiums = [
-    {
-      open: false,
-      chestTitle: "Crystal Chest",
-      closedImg: "greenCrystal",
-      chestId: 1,
-    },
-    {
-      open: false,
-      chestTitle: "Crystal Chest",
-      closedImg: "blueCrystal",
-      chestId: 2,
-    },
-    {
-      open: false,
-      chestTitle: "Crystal Chest",
-      closedImg: "yellowCrystal",
-      chestId: 3,
-    },
-    {
-      open: false,
-      chestTitle: "Crystal Chest",
-      closedImg: "purpleCrystal",
-      chestId: 4,
-    },
-    {
-      open: false,
-      chestTitle: "Crystal Chest",
-      closedImg: "cyanCrystal",
-      chestId: 5,
-    },
-  ];
-
-  const dummyRewards = [
-    {
-      title: "10,000 Points",
-      image: pointsIcon,
-      premium: false,
-      won: false,
-    },
-    {
-      title: "$5 Reward",
-      image: rewardsIcon,
-      premium: false,
-      won: false,
-    },
-    {
-      title: "Genesis Land NFT",
-      image: genesisIcon,
-      premium: false,
-      won: false,
-    },
-    {
-      title: "CAWS NFT",
-      image: cawsIcon,
-      premium: false,
-      won: false,
-    },
-    {
-      title: "Beta Pass NFT",
-      image: betaPassIcon,
-      premium: false,
-      won: false,
-    },
-    {
-      title: "$100 Reward",
-      image: largeRewardsIcon,
-      premium: true,
-      won: false,
-    },
-  ];
 
   const chanceRewards = [
     {
@@ -409,14 +94,9 @@ const DailyBonusPopup = ({
     "SAFU",
   ];
 
-  const onOpenChest = () => {
-    onChestClaimed();
-  };
-
   const showSingleRewardData = (chestID) => {
-    const filteredResult = openedChests.find(
-      (el) => el.chest.chestLooksIndex === chestID
-    );
+   
+    const filteredResult = openedChests.find((el) => el.chestId === chestID);
 
     if (filteredResult) {
       setLiveRewardData(filteredResult);
@@ -483,10 +163,29 @@ const DailyBonusPopup = ({
   };
 
   useEffect(() => {
-    // setRegularChests(shuffle(dummyChests).slice(0, 10));
     setNames(shuffle(cryptoNames));
-    // shufflePremiums(dummyPremiums);
   }, []);
+
+  useEffect(()=>{
+    if(rewardTypes === "standard") { console.log(standardChests[0])
+      if(standardChests && standardChests.length > 0 && openedChests && openedChests.length > 0) {
+        if(standardChests[0].isOpened === true) {
+          setLiveRewardData(standardChests[0])
+        }
+      }
+      else setLiveRewardData([]);
+    }
+    else if(rewardTypes === "premium") {
+      if(premiumChests && premiumChests.length > 0 && isPremium && openedChests && openedChests.length > 0) {
+        if(premiumChests[0].isOpened === true) {
+          setLiveRewardData(premiumChests[0])
+        }
+      }
+      else setLiveRewardData([]);
+    }
+  },[rewardTypes])
+
+
 
   return (
     <>
@@ -509,6 +208,13 @@ const DailyBonusPopup = ({
                 NFTs, and exciting rewards! Don't miss out on your daily dose of
                 gaming treasures.
               </p>
+              {(chainId !== 204 || !coinbase) && (
+                <span className="sync-txt d-flex align-items-center gap-1">
+                  <img src={triangle} alt="" />
+                  Please make sure you're using the wallet associated to your
+                  game account and be on opBnb Chain
+                </span>
+              )}
             </div>
             <div className="d-flex flex-column">
               <div className="d-flex align-items-center justify-content-center w-100">
@@ -547,7 +253,6 @@ const DailyBonusPopup = ({
                     open={item.isOpened}
                     closedImg={item.chestId}
                     rewardTypes={rewardTypes}
-                    onOpenChest={onOpenChest}
                     isPremium={isPremium}
                     address={address}
                     onLoadingChest={(value) => {
@@ -557,11 +262,15 @@ const DailyBonusPopup = ({
                     email={email}
                     onClaimRewards={(value) => {
                       setRewardData(value);
+                      setLiveRewardData(value)
                       setRewardPopup(true);
+                      onChestClaimed();
                     }}
                     handleShowRewards={(value) => {
                       showSingleRewardData(value);
                     }}
+                    chainId={chainId}
+                    coinbase={coinbase}
                   />
                 ))}
               </div>
@@ -570,12 +279,11 @@ const DailyBonusPopup = ({
                 {premiumChests.map((item, index) => (
                   <ChestItem
                     chestId={item.chestId}
-                    chestIndex={index+1}
+                    chestIndex={index + 1}
                     chestTitle={"Crystal Chest"}
                     open={item.isOpened}
                     closedImg={"greenCrystal"}
                     rewardTypes={rewardTypes}
-                    onOpenChest={onOpenChest}
                     isPremium={isPremium}
                     address={address}
                     onLoadingChest={(value) => {
@@ -585,11 +293,15 @@ const DailyBonusPopup = ({
                     email={email}
                     onClaimRewards={(value) => {
                       setRewardData(value);
+                      setLiveRewardData(value)
                       setRewardPopup(true);
+                      onChestClaimed();
                     }}
                     handleShowRewards={(value) => {
                       showSingleRewardData(value);
                     }}
+                    chainId={chainId}
+                    coinbase={coinbase}
                   />
                 ))}
               </div>
@@ -682,15 +394,13 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.chest?.reward?.rewardType?.includes(
-                            "Points"
-                          ) && "prizeswrapper-premium"
+                          liverewardData?.rewardType?.includes("Points") &&
+                          "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.chest?.reward?.rewardType?.includes(
-                              "Points"
-                            ) && "grayscale(1)",
+                            !liverewardData?.rewardType?.includes("Points") &&
+                            "grayscale(1)",
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
@@ -704,13 +414,13 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.chest?.reward?.rewardType?.includes(
+                                  !liverewardData?.rewardType?.includes(
                                     "Points"
                                   ) && "gray",
                               }}
                             >
                               {getFormattedNumber(
-                                liverewardData?.chest?.reward?.reward,
+                                liverewardData?.reward ?? 0,
                                 0
                               )}{" "}
                               Points
@@ -737,15 +447,13 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.chest?.reward?.rewardType?.includes(
-                            "Money"
-                          ) && "prizeswrapper-premium"
+                          liverewardData?.rewardType?.includes("Money") &&
+                          "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.chest?.reward?.rewardType?.includes(
-                              "Money"
-                            ) && "grayscale(1)",
+                            !liverewardData?.rewardType?.includes("Money") &&
+                            "grayscale(1)",
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
@@ -759,19 +467,16 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.chest?.reward?.rewardType?.includes(
+                                  !liverewardData?.rewardType?.includes(
                                     "Money"
                                   ) && "gray",
                               }}
                             >
                               ${" "}
                               {
-                                (liverewardData?.chest?.reward?.rewardType?.includes(
+                                (liverewardData?.rewardType?.includes(
                                   "Money"
-                                ) &&
-                                  getFormattedNumber(
-                                    liverewardData?.chest?.reward?.reward
-                                  ),
+                                ) && getFormattedNumber(liverewardData?.reward),
                                 0)
                               }{" "}
                               Reward
@@ -798,15 +503,13 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.chest?.reward?.rewardType?.includes(
-                            "NFT"
-                          ) && "prizeswrapper-premium"
+                          liverewardData?.rewardType?.includes("NFT") &&
+                          "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.chest?.reward?.rewardType?.includes(
-                              "NFT"
-                            ) && "grayscale(1)",
+                            !liverewardData?.rewardType?.includes("NFT") &&
+                            "grayscale(1)",
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
@@ -820,7 +523,7 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.chest?.reward?.rewardType?.includes(
+                                  !liverewardData?.rewardType?.includes(
                                     "NFT"
                                   ) && "gray",
                               }}
@@ -849,15 +552,13 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.chest?.reward?.rewardType?.includes(
-                            "NFT"
-                          ) && "prizeswrapper-premium"
+                          liverewardData?.rewardType?.includes("NFT") &&
+                          "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.chest?.reward?.rewardType?.includes(
-                              "NFT"
-                            ) && "grayscale(1)",
+                            !liverewardData?.rewardType?.includes("NFT") &&
+                            "grayscale(1)",
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
@@ -871,7 +572,7 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.chest?.reward?.rewardType?.includes(
+                                  !liverewardData?.rewardType?.includes(
                                     "NFT"
                                   ) && "gray",
                               }}
@@ -900,15 +601,13 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.chest?.reward?.rewardType?.includes(
-                            "NFT"
-                          ) && "prizeswrapper-premium"
+                          liverewardData?.rewardType?.includes("NFT") &&
+                          "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.chest?.reward?.rewardType?.includes(
-                              "NFT"
-                            ) && "grayscale(1)",
+                            !liverewardData?.rewardType?.includes("NFT") &&
+                            "grayscale(1)",
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
@@ -922,7 +621,7 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.chest?.reward?.rewardType?.includes(
+                                  !liverewardData?.rewardType?.includes(
                                     "NFT"
                                   ) && "gray",
                               }}
@@ -951,13 +650,12 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.chest?.reward?.rewardType?.includes(
-                            "LargeMoney"
-                          ) && "prizeswrapper-premium"
+                          liverewardData?.rewardType?.includes("LargeMoney") &&
+                          "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.chest?.reward?.rewardType?.includes(
+                            !liverewardData?.rewardType?.includes(
                               "LargeMoney"
                             ) && "grayscale(1)",
                         }}
@@ -973,12 +671,12 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.chest?.reward?.rewardType?.includes(
+                                  !liverewardData?.rewardType?.includes(
                                     "LargeMoney"
                                   ) && "gray",
                               }}
                             >
-                              $100 Reward
+                              $0 Reward
                             </span>
                             {/* {rewardData?.type?.includes('LargeMoney')  && reward.premium && (
                             <ToolTip
@@ -1350,7 +1048,7 @@ const DailyBonusPopup = ({
                               "gray",
                           }}
                         >
-                          $100 Reward
+                          $0 Reward
                         </span>
                         {/* {rewardData?.type?.includes('LargeMoney')  && reward.premium && (
                             <ToolTip
