@@ -2298,7 +2298,13 @@
 
 @media screen and (max-width: 786px) {
   .nft-wrapper-popup {
-    max-height: 80%;
+    height: 80%;
+    overflow-y: hidden;
+  }
+}
+@media screen and (max-width: 786px) {
+  .nft-popup-container {
+    max-height: 540px;
     overflow-y: scroll;
   }
 }
