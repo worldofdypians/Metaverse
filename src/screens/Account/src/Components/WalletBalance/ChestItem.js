@@ -106,11 +106,11 @@ const ChestItem = ({
     if (!open && !ischestOpen) {
       handleOpenChest();
     }
+    else{
+        handleShowRewards(chestId);
+    }
   };
 
-  const handleRewardsView = () => {
-    handleShowRewards(chestId);
-  };
 
   return (
     <div
@@ -126,7 +126,7 @@ const ChestItem = ({
       style={{
         pointerEvents: rewardTypes === "premium" && !isPremium && "none",
       }}
-      onClick={handleRewardsView}
+      onClick={handleChestClick}
     >
       <div
         className={`chest-number ${
@@ -199,7 +199,6 @@ const ChestItem = ({
           }}
         >
           <button
-            onClick={handleChestClick}
             className={` ${
               open || ischestOpen ? "claimed-chest-btn" : "claim-chest-btn"
             } btn  d-flex align-items-center justify-content-center position-relative`}

@@ -113,8 +113,8 @@
 }
 
 .sync-txt {
-  color: #ed8225;
-  font-size: 10px;
+  color: #ffffff;
+  font-size: 12px;
 }
 
 .syncbtn {
@@ -322,4 +322,32 @@
   @media screen and (max-width: 991px) {
     display: none !important;
   }
+}
+
+.golden-pass-wrapper{
+  background-image: url('./assets/goldenPassBorder.png');
+  background-repeat: no-repeat;
+  background-size: 100% 90%;
+  padding: 0px;
+  position: absolute;
+  width: 130%;
+  height: 138%;
+  top: 0;
+  right: 0;
+  left: -14%;
+  bottom: 0;
+  margin: auto;
+
+
+  @media screen and (max-width: 786px) {
+display: none;
+   
+  }
+}
+
+.golden-pass-tag{
+  position: absolute;
+  right: 0;
+  top: -10%;
+  margin: auto;
 }

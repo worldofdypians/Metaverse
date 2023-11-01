@@ -1225,6 +1225,7 @@ function Dashboard({
                         email={email}
                         username={data?.getPlayer?.displayName}
                         address={data?.getPlayer?.wallet?.publicAddress}
+                        
                         userId={data?.getPlayer?.playerId}
                         balance={dypBalancebnb}
                         availableTime={availableTime}

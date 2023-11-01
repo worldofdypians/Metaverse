@@ -561,14 +561,44 @@ const DailyBonusPopup = ({
           onClick={onclose}
         />
         <div className="position-relative h-100 rewardinnerwrapper">
-          <div className="positon-relative h-100 d-flex flex-column justify-content-start gap-3">
-            <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+          <div className="positon-relative h-100 d-flex flex-column justify-content-start ">
+            <div className="d-flex flex-column align-items-center justify-content-center gap-2 mb-3">
               <p className="chest-event-desc mb-0">
                 Claim 10 chests daily for a chance to win Game Points, exclusive
                 NFTs, and exciting rewards! Don't miss out on your daily dose of
                 gaming treasures.
               </p>
-              {chainId !== 204 && coinbase ? (
+             
+            </div>
+            <div className="d-flex flex-column mb-3">
+              <div className="d-flex align-items-center justify-content-center w-100">
+                <div
+                  className={`reward-types ${
+                    rewardTypes === "standard" ? "reward-types-active" : null
+                  } w-50 d-flex align-items-center justify-content-center`}
+                  onClick={() => setRewardTypes("standard")}
+                >
+                  <h6 className="chest-event-title mb-0 font-organetto">
+                    Standard
+                  </h6>
+                </div>
+                <div
+                  className={`reward-types ${
+                    rewardTypes === "premium"
+                      ? "reward-types-active-premium"
+                      : null
+                  } w-50 d-flex align-items-center justify-content-center`}
+                  onClick={() => setRewardTypes("premium")}
+                >
+                  <h6 className="chest-event-title mb-0 font-organetto">
+                    Premium
+                  </h6>
+                </div>
+              </div>
+              <div className="dailyreward-separator"></div>
+             <div className="d-flex w-100 justify-content-center">
+             <div className="p-2 mt-2 daily-error-text-wrapper d-flex justify-content-center">
+             {chainId !== 204 && coinbase ? (
                 <span className="sync-txt d-flex align-items-center gap-1">
                   <img src={triangle} alt="" />
                   Please make sure you're using opBnb Chain.
@@ -595,33 +625,8 @@ const DailyBonusPopup = ({
               ) : (
                 <></>
               )}
-            </div>
-            <div className="d-flex flex-column">
-              <div className="d-flex align-items-center justify-content-center w-100">
-                <div
-                  className={`reward-types ${
-                    rewardTypes === "standard" ? "reward-types-active" : null
-                  } w-50 d-flex align-items-center justify-content-center`}
-                  onClick={() => setRewardTypes("standard")}
-                >
-                  <h6 className="chest-event-title mb-0 font-organetto">
-                    Standard
-                  </h6>
-                </div>
-                <div
-                  className={`reward-types ${
-                    rewardTypes === "premium"
-                      ? "reward-types-active-premium"
-                      : null
-                  } w-50 d-flex align-items-center justify-content-center`}
-                  onClick={() => setRewardTypes("premium")}
-                >
-                  <h6 className="chest-event-title mb-0 font-organetto">
-                    Premium
-                  </h6>
-                </div>
-              </div>
-              <div className="dailyreward-separator"></div>
+             </div>
+             </div>
             </div>
             {rewardTypes === "standard" && email ? (
               <div className="rewardsgrid">
@@ -733,7 +738,7 @@ const DailyBonusPopup = ({
                 <span className="mb-0">Claim</span>
               </button>
             </div> */}
-            <div className="dailyreward-separator"></div>
+            <div className="dailyreward-separator mb-3"></div>
             {claimedChests > 0 ? (
               <div className="d-flex flex-column gap-2 ">
                 <span className="font-organetto chestprizetitle text-white">
