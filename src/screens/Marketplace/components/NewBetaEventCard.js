@@ -68,9 +68,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
             <h6 className="event-my-earnings3 mb-3">
               $
               {getFormattedNumber(
-                 data.title === "Base"
-                  ? 0
-                  : userEarnUsd,
+                 userEarnUsd,
                 2
               )}
             </h6>

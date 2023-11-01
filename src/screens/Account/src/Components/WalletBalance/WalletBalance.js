@@ -1664,7 +1664,7 @@ const WalletBalance = ({
                     cursor: "pointer",
                     width: "fit-content",
                     position: "absolute",
-                    bottom: windowSize.width > 650 ? "20px" : "5px",
+                    bottom: windowSize.width > 992 ? "20px" : "5px",
                     left: windowSize.width > 650 ? "43%" : "43%",
                   }}
                 >
