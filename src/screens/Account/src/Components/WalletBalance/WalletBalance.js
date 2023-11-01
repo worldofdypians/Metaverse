@@ -1239,7 +1239,7 @@ const WalletBalance = ({
     id: "event4",
     date: "November 01, 2023",
     totalRewards: "$10,000 in ETH Rewards",
-    eventDuration: gateLastDay,
+    eventDuration: baseLastDay,
     backgroundImage: baseUpcoming,
     logo: base,
     date: "November 01, 2023",
