@@ -193,6 +193,9 @@ const WalletBalance = ({
   const [gateUserPoints, setGateUserPoints] = useState(0);
   const [gateEarnUSD, setGateEarnUSD] = useState(0);
   const [gateEarnBNB, setGateEarnBNB] = useState(0);
+  const [baseUserPoints, setBaseUserPoints] = useState(0);
+  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
+  const [baseEarnETH, setBaseEarnETH] = useState(0);
   const betaSlider = useRef();
 
   var settings = {
@@ -1159,6 +1162,7 @@ const WalletBalance = ({
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
+  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
 
   const dummyConflux = {
     title: "Conflux",
@@ -1231,7 +1235,7 @@ const WalletBalance = ({
     chain: "Base Chain",
     linkState: "base",
     rewards: "ETH",
-    status: "Coming Soon",
+    status: "Live",
     id: "event4",
     date: "November 01, 2023",
     totalRewards: "$10,000 in ETH Rewards",
@@ -1438,7 +1442,7 @@ const WalletBalance = ({
     {
       title: "Base",
       logo: base,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
@@ -1450,11 +1454,11 @@ const WalletBalance = ({
         chain: "Base Chain",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event4",
         date: "November 01, 2023",
         totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: gateLastDay,
+        eventDuration: baseLastDay,
         eventDate: "November 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
@@ -1505,6 +1509,10 @@ const WalletBalance = ({
             return obj.betapassId === "gate";
           });
 
+          const baseEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "base";
+          });
+
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -1540,6 +1548,19 @@ const WalletBalance = ({
               setGateEarnBNB(gateUsdValue / bnbPrice);
             }
           }
+          if (baseEvent) {
+            const basePoints = baseEvent[0].reward.earn.totalPoints;
+            setBaseUserPoints(basePoints);
+            if (baseEvent[0].reward.earn.multiplier !== 0) {
+              const baseUsdValue =
+                baseEvent[0].reward.earn.total /
+                baseEvent[0].reward.earn.multiplier;
+              setBaseEarnUSD(baseUsdValue);
+              if (ethTokenData !== 0) {
+                setBaseEarnETH(baseUsdValue / ethTokenData);
+              }
+            }
+          }
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -1551,10 +1572,7 @@ const WalletBalance = ({
 
   useEffect(() => {
     if (email && address) {
-      fetchTreasureHuntData(
-        email,
-        address
-      );
+      fetchTreasureHuntData(email, address);
     }
   }, [email, address, bnbPrice, cfxPrice]);
 
@@ -2035,7 +2053,7 @@ const WalletBalance = ({
                                   : item.type === "conflux"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "base"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -3056,7 +3074,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_base_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -3266,7 +3284,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_base_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.pngg`
@@ -3677,6 +3695,8 @@ const WalletBalance = ({
                         ? confluxEarnUSD
                         : item.title === "Gate.io"
                         ? gateEarnUSD
+                        : item.title === "Base"
+                        ? baseEarnUSD 
                         : userEarnUsd
                     }
                   />
@@ -4175,6 +4195,8 @@ const WalletBalance = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
+                        : dummyEvent.id === "event4"
+                        ? baseUserPoints
                         : 0,
                       0
                     )}
@@ -4193,6 +4215,8 @@ const WalletBalance = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
+                        : dummyEvent.id === "event4"
+                        ? baseEarnUSD
                         : 0,
                       2
                     )}
@@ -4204,6 +4228,8 @@ const WalletBalance = ({
                           ? userEarnETH
                           : dummyEvent.id === "event6"
                           ? gateEarnBNB
+                          : dummyEvent.id === "event4"
+                          ? baseEarnETH
                           : 0,
                         2
                       )}
