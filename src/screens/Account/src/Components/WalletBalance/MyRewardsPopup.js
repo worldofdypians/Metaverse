@@ -27,6 +27,8 @@ const MyRewardsPopup = ({
   const [dailyplayerData, setdailyplayerData] = useState(0);
   const [weeklyplayerData, setweeklyplayerData] = useState(0);
   const [monthlyplayerData, setmonthlyplayerData] = useState(0);
+  const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
+
   const [genesisData, setgenesisData] = useState(0);
 
   const [previousVersion, setpreviousVersion] = useState(0);
@@ -36,14 +38,14 @@ const MyRewardsPopup = ({
 
   const [bundlesBought, setbundlesBought] = useState(0);
 
-  const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnUsdPrevious, setuserEarnUsdPrevious] = useState(0);
 
-  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnUSDPrevious, setConfluxEarnUSDPrevious] = useState(0);
 
-  const [gateEarnUSD, setgateEarnUSD] = useState(0);
   const [gateEarnUSDPrevious, setgateEarnUSDPrevious] = useState(0);
+
+  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
+  const [baseEarnETH, setBaseEarnETH] = useState(0);
 
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
@@ -252,26 +254,20 @@ const MyRewardsPopup = ({
             return obj.betapassId === "gate";
           });
 
+          const baseEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "base";
+          });
+
           const usdValue_previous =
             coingeckoEvent[0].reward.earn.total /
             coingeckoEvent[0].reward.earn.multiplier;
           setuserEarnUsdPrevious(usdValue_previous);
-
-          const usdValue =
-            coingeckoEvent[0].reward.earn.value /
-            coingeckoEvent[0].reward.earn.multiplier;
-          setuserEarnUsd(usdValue);
 
           if (confluxEvent[0].reward.earn.multiplier !== 0) {
             const cfxUsdValue_previous =
               confluxEvent[0].reward.earn.total /
               confluxEvent[0].reward.earn.multiplier;
             setConfluxEarnUSDPrevious(cfxUsdValue_previous);
-
-            const cfxUsdValue =
-              confluxEvent[0].reward.earn.value /
-              confluxEvent[0].reward.earn.multiplier;
-            setConfluxEarnUSD(cfxUsdValue);
           }
 
           if (gateEvent[0].reward.earn.multiplier !== 0) {
@@ -279,11 +275,18 @@ const MyRewardsPopup = ({
               gateEvent[0].reward.earn.total /
               gateEvent[0].reward.earn.multiplier;
             setgateEarnUSDPrevious(gateUsdValue_previous);
+          }
 
-            const gateUsdValue =
-              gateEvent[0].reward.earn.value /
-              gateEvent[0].reward.earn.multiplier;
-            setgateEarnUSD(gateUsdValue);
+          if (baseEvent) {
+            if (baseEvent[0].reward.earn.multiplier !== 0) {
+              const baseUsdValue =
+                baseEvent[0].reward.earn.total /
+                baseEvent[0].reward.earn.multiplier;
+              setBaseEarnUSD(baseUsdValue);
+              if (ethTokenData !== 0) {
+                setBaseEarnETH(baseUsdValue / ethTokenData);
+              }
+            }
           }
         }
       } else {
@@ -409,92 +412,6 @@ const MyRewardsPopup = ({
     }
   };
 
-  const fetchPreviousWinners = async () => {
-    let userPosition_daily = 0;
-    let userPosition_genesis = 0;
-    let userPosition_weekly = 0;
-    let userPosition_monthly = 0;
-
-    const data_daily = {
-      StatisticName: "DailyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousVersion - 1,
-    };
-
-    const result_daily = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data_daily
-    );
-
-    var testArray_daily = result_daily.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (testArray_daily.length > 0) {
-      userPosition_daily = testArray_daily[0].position + 1;
-    }
-
-    const data_genesis = {
-      StatisticName: "GenesisLandRewards",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousGenesisVersion - 1,
-    };
-    const result_genesis = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data_genesis
-    );
-
-    var testArray_genesis = result_genesis.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (testArray_genesis.length > 0) {
-      userPosition_genesis = testArray_genesis[0].position + 1;
-    }
-
-    const data_weekly = {
-      StatisticName: "WeeklyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousWeeklyVersion - 1,
-    };
-    const result_weekly = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data_weekly
-    );
-
-    var testArray_weekly = result_weekly.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (testArray_weekly.length > 0) {
-      userPosition_weekly = testArray_weekly[0].position + 1;
-    }
-
-    const data_monthly = {
-      StatisticName: "MonthlyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousMonthlyVersion - 1,
-    };
-    const result_monthly = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data_monthly
-    );
-
-    var testArray_monthly = result_monthly.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (testArray_monthly.length > 0) {
-      userPosition_monthly = testArray_monthly[0].position + 1;
-    }
-
-    // setdailyplayerData(result.data.data.leaderboard);
-  };
-
   const fetchNftRewards = async (userAddr) => {
     if (userAddr) {
       const cawsResult = await axios.get(
@@ -533,6 +450,16 @@ const MyRewardsPopup = ({
     }
   };
 
+  const fetchLeaderboardData = async (userAddr) => {
+    const result = await axios.get(
+      `https://api.worldofdypians.com/api/leaderboard_rewards/${userAddr}`
+    );
+    if (result && result.status === 200) {
+      const leaderboard_earnings = result.data.userRewards;
+      setleaderboardTotalData(leaderboard_earnings);
+    }
+  };
+
   useEffect(() => {
     fetchDailyRecordsAroundPlayer();
     fetchWeeklyRecordsAroundPlayer();
@@ -546,6 +473,8 @@ const MyRewardsPopup = ({
     calculateAllRewardsLandPool();
     calculateAllRewardsCawsPool();
     fetchNftRewards(address);
+    fetchGenesisGem(address);
+    fetchLeaderboardData(address);
   }, [address]);
 
   // useEffect(() => {
@@ -667,9 +596,7 @@ const MyRewardsPopup = ({
               </td>
               <td className="myrewards-td-second border-0"></td>
               <td className="myrewards-td-second border-0"></td>
-              <td className="myrewards-td-second border-0 previousRewardsText">
-                {previousRewards && "$500.00"}
-              </td>
+              <td className="myrewards-td-second border-0 previousRewardsText"></td>
             </tr>
             <div className="table-separator"></div>
 
@@ -814,13 +741,13 @@ const MyRewardsPopup = ({
             <tr>
               <td className="myrewards-td-second border-0">Base</td>
               <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-                {previousRewards ? "-" : "0"}
+                ${getFormattedNumber(baseEarnUSD, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : "0 ETH"}
+                ${getFormattedNumber(baseEarnETH, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : "0.00"}
+                ${getFormattedNumber(baseEarnUSD, 2)}
               </td>
             </tr>
 
@@ -836,9 +763,7 @@ const MyRewardsPopup = ({
               </td>
               <td className="myrewards-td-second border-0"></td>
               <td className="myrewards-td-second border-0"></td>
-              <td className="myrewards-td-second border-0 previousRewardsText">
-                {previousRewards && "$500.00"}
-              </td>
+              <td className="myrewards-td-second border-0 previousRewardsText"></td>
             </tr>
             <div className="table-separator"></div>
 
@@ -865,7 +790,7 @@ const MyRewardsPopup = ({
                     )} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : "$500.00"}
+                ${getFormattedNumber(leaderboardTotalData, 2)}
               </td>
             </tr>
 
@@ -881,9 +806,7 @@ const MyRewardsPopup = ({
               </td>
               <td className="myrewards-td-second border-0"></td>
               <td className="myrewards-td-second border-0"></td>
-              <td className="myrewards-td-second border-0 previousRewardsText">
-                {previousRewards && "$500.00"}
-              </td>
+              <td className="myrewards-td-second border-0 previousRewardsText"></td>
             </tr>
             <div className="table-separator"></div>
 
@@ -963,7 +886,18 @@ const MyRewardsPopup = ({
               previousRewards ? "all-past-total-earned" : "all-total-earned"
             }
           >
-            $435.25
+            $
+            {getFormattedNumber(
+              gemRewards +
+                leaderboardTotalData +
+                baseEarnUSD +
+                gateEarnUSDPrevious +
+                confluxEarnUSDPrevious +
+                userEarnUsdPrevious +
+                cawsRewards +
+                wodCawsRewards +
+                wodRewards, 2
+            )}
           </h4>
           <span
             className={
