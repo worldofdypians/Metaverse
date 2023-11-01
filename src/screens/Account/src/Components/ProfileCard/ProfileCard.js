@@ -27,6 +27,16 @@ import blackWallet from "../../Images/userProfile/wallet-black.svg";
 import starActive from "./assets/star-active.svg";
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
+import {
+  wod_abi,
+  token_abi,
+  idyptoken_abi,
+  dyp700_abi,
+  idyp3500_abi,
+  wodAddress,
+  dyp700Address,
+  idyp3500Address,
+} from "../../web3";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -96,6 +106,27 @@ const ProfileCard = ({
     setUserRank(testArray[0].position);
   };
 
+  const increaseBundle = async () => {
+    const result = await axios.get(
+      `https://api3.dyp.finance/api/bundles/count/${address}`
+    );
+
+    const result_formatted = result.data.count;
+    if (result_formatted <= 4) {
+      if (parseInt(result_formatted) === 0) {
+        setbundlesBought(0);
+      } else if (parseInt(result_formatted) === 1) {
+        setbundlesBought(1);
+      } else if (parseInt(result_formatted) === 2) {
+        setbundlesBought(2);
+      } else if (parseInt(result_formatted) === 3) {
+        setbundlesBought(3);
+      } else if (parseInt(result_formatted) === 4) {
+        setbundlesBought(4);
+      }
+    }
+  };
+
   const fetchGenesisAroundPlayer = async () => {
     const data = {
       StatisticName: "GenesisLandRewards",
@@ -150,7 +181,257 @@ const ProfileCard = ({
   const windowSize = useWindowSize();
   const [tooltip, setTooltip] = useState(false);
   const [tooltip2, setTooltip2] = useState(false);
+  const [countdown700, setcountdown700] = useState();
+  const [bundlesBought, setbundlesBought] = useState(0);
+  const [dateofBundle, setdateofBundle] = useState(0);
+  const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
+  const [bundleExpireDay, setbundleExpireDay] = useState(0);
+  const [bundleExpireMiliseconds, setbundleExpireMiliseconds] = useState(0);
+  const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
+  const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
+  const [lastDayofBundleMilliseconds, setlastDayofBundleMilliseconds] = useState(0);
+  const [lastDayofBundle, setlastDayofBundle] = useState(0);
+  
 
+  let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
+  let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
+
+  const handleRefreshCountdown700 = async () => {
+    const remainingTime = await dyp700_abi.methods
+      .getTimeOfExpireBuff(address)
+      .call();
+
+    const remainingTime_miliseconds = remainingTime * 1000;
+    const timeofDeposit = await dyp700_abi.methods
+      .getTimeOfDeposit(address)
+      .call();
+    if (timeofDeposit !== 0) {
+      const timeofDeposit_miliseconds = timeofDeposit * 1000;
+
+      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(remainingTime_miliseconds);
+
+      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
+      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
+      const finalHours = timeofDeposit_Hours - 11;
+
+      const finalMinutes = timeofDeposit_Minutes - 11;
+
+      const result = remainingTime - finalHours * 60 * 60 - finalMinutes * 60;
+      setcountdown700(result * 1000);
+    } else {
+      setcountdown700();
+    }
+  };
+
+  const checkBundleDates = async () => {
+    //you can check how many bundles the user has bought
+    //he can buy until the 22 regular bundles (7days)
+    //on the 23rd the bundle will be 7+4
+    //last week rule: 32 - date => buy on 24rth=>7+1, 25=> 7+0, 26=> 7-1
+
+    const week1 = ["1", "2", "3", "4", "5", "6", "7"];
+    const week2 = ["8", "9", "10", "11", "12", "13", "14"];
+    const week3 = ["15", "16", "17", "18", "19", "20", "21"];
+    const week4 = ["22", "23", "24", "25"];
+
+    const timeofDeposit = await dyp700_abi.methods
+      .getTimeOfDeposit(address)
+      .call();
+    const timeofDeposit_miliseconds = timeofDeposit * 1000;
+
+    const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(timeofDeposit_miliseconds);
+
+    const today = new Date();
+    const today_date = today.getDate();
+
+    const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+    const timeofDeposit_date = timeofDeposit_Date_formatted
+      .getDate()
+      .toString();
+
+    if (today_date <= 25) {
+      if (week1.includes(today_date.toString()) && bundlesBought <= 3) {
+        handleRefreshCountdown700();
+      } else if (week1.includes(today_date.toString()) && bundlesBought > 3) {
+        // const remainingTime_day = bundleExpireDay;
+        // const remainingTime_miliseconds = bundleExpireMiliseconds;
+
+        // if (parseInt(remainingTime_day) >= 25) {
+        //   const additional_remainingTime_time = 31 - remainingTime_day;
+        //   const additional_remaining_time_timestamp =
+        //     additional_remainingTime_time * 24 * 60 * 60 -
+        //     lastDayofBundleHours * 60 * 60 -
+        //     lastDayofBundleMinutes * 60;
+
+        //   const final =
+        //     Number(remainingTime_miliseconds) +
+        //     Number(additional_remaining_time_timestamp * 1000);
+
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+
+        // }
+      } else if (week2.includes(today_date.toString()) && bundlesBought <= 3) {
+        handleRefreshCountdown700();
+      } else if (week2.includes(today_date.toString()) && bundlesBought > 3) {
+        // const remainingTime2 = lastDayofBundle;
+        // if (parseInt(remainingTime2) >= 25) {
+        //   const additional_remainingTime_time2 = 31 - remainingTime2;
+        //   const additional_remaining_time_timestamp2 =
+        //     additional_remainingTime_time2 * 24 * 60 * 60 -
+        //     lastDayofBundleHours * 60 * 60 -
+        //     lastDayofBundleMinutes * 60;
+        //   const remainingTime_miliseconds2 = bundleExpireMiliseconds;
+
+        //   const final =
+        //     Number(remainingTime_miliseconds2) +
+        //     Number(additional_remaining_time_timestamp2 * 1000);
+
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+
+        // }
+      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
+        handleRefreshCountdown700();
+      } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
+        // const remainingTime3 = lastDayofBundle;
+        // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
+
+        // if (parseInt(remainingTime3) >= 25) {
+        //   const additional_remainingTime_time3 = 31 - remainingTime3;
+        //   const additional_remaining_time_timestamp3 =
+        //     additional_remainingTime_time3 * 24 * 60 * 60 -
+        //     lastDayofBundleHours * 60 * 60 -
+        //     lastDayofBundleMinutes * 60;
+
+        //   const final =
+        //     Number(remainingTime_miliseconds3) +
+        //     Number(additional_remaining_time_timestamp3 * 1000);
+
+        //   setcountdown700(final);
+        //   handleSetAvailableTime(final);
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+
+        // }
+      } else if (week4.includes(today_date.toString()) && today_date <= 22) {
+        handleRefreshCountdown700();
+      } else if (week4.includes(today_date.toString()) && today_date > 22) {
+        if (today < dateofBundle) {
+          if (bundlesBought <= 3 && datewhenBundleBought < today_date) {
+            setcountdown700(dateofBundle);
+          } else {
+            setcountdown700(
+              today < oneNovember
+                ? oneNovember.getTime()
+                : oneDecember.getTime()
+            );
+          }
+        } else if (today > dateofBundle && bundlesBought > 0) {
+          setcountdown700();
+        }
+      }
+    } else if (today_date > 25) {
+      if (today < dateofBundle) {
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
+      } else {
+        setcountdown700();
+      }
+    }
+  };
+  const setlastDay = async () => {
+    const timeofDeposit = await dyp700_abi.methods
+      .getTimeOfDeposit(address)
+      .call();
+
+    const expiringTime = await dyp700_abi.methods
+      .getTimeOfExpireBuff(address)
+      .call();
+
+    const expiringTime_miliseconds = expiringTime * 1000;
+
+    const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(expiringTime_miliseconds);
+
+    const expiringTime_Date_formatted = new Date(expiringTime_Date);
+    const expiringTime_day = expiringTime_Date_formatted.getDate();
+    setbundleExpireDay(expiringTime_day);
+    setbundleExpireMiliseconds(expiringTime_miliseconds);
+    const timeofDeposit_miliseconds = timeofDeposit * 1000;
+
+    const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(timeofDeposit_miliseconds);
+
+    const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(expiringTime_miliseconds);
+
+    const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+    const timeofbundleBought_Date_formatted = new Date(timeofbundleBought_Date);
+
+    setdateofBundle(expiringTime_Date_formatted);
+
+    const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+    const timeofbundleBought_day = timeofbundleBought_Date_formatted.getDate();
+    setdatewhenBundleBought(timeofbundleBought_day);
+
+    const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
+    const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
+    const final = timeofDeposit_Hours - 11;
+    setlastDayofBundleHours(final);
+
+    const finalMinutes = timeofDeposit_Minutes - 11;
+
+    setlastDayofBundleMinutes(finalMinutes);
+    setlastDayofBundle(timeofDeposit_day);
+    setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+  };
+
+
+  useEffect(() => {
+    checkBundleDates();
+    setlastDay();
+  }, [])
+  
+console.log(countdown700, "Countdown700")
   return (
     <div className="main-wrapper py-4 w-100">
       <div className="row justify-content-center gap-3 gap-lg-0">
@@ -458,7 +739,11 @@ const ProfileCard = ({
                             onClick={() => {
                               handleShowWalletPopup();
                             }}
-                            style={{ width: "fit-content", whiteSpace: 'nowrap',  fontSize: 14 }}
+                            style={{
+                              width: "fit-content",
+                              whiteSpace: "nowrap",
+                              fontSize: 14,
+                            }}
                           >
                             <img
                               src={blackWallet}
@@ -484,7 +769,11 @@ const ProfileCard = ({
                     onClick={() => {
                       handleShowWalletPopup();
                     }}
-                    style={{ width: "fit-content", whiteSpace: 'nowrap', fontSize: 14 }}
+                    style={{
+                      width: "fit-content",
+                      whiteSpace: "nowrap",
+                      fontSize: 14,
+                    }}
                   >
                     <img src={blackWallet} alt="" style={{ width: 18 }} />
                     Connect wallet
@@ -550,9 +839,13 @@ const ProfileCard = ({
                       isPremium
                         ? "wallet-wrapper-active-premium hoverpremium"
                         : "wallet-wrapper-active hoveractive"
-                    } d-flex flex-column align-items-center position-relative gap-2`}
+                    }
+                    position-relative
+                    d-flex flex-column align-items-center position-relative mt-3 mt-lg-0 gap-2`}
                     onClick={onOpenLeaderboard}
                   >
+                    <div className="golden-pass-wrapper"></div>
+                    <img src={require('./assets/goldenPassTag.png')} alt="" className="golden-pass-tag d-flex d-lg-none" />
                     {/* <div className="table-separator position-absolute"></div> */}
                     <h6
                       className="profile-div-title mb-0"
