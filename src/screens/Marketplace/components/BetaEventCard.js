@@ -66,7 +66,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
         <div className="d-flex col-6 col-lg-3 flex-column align-items-start align-items-lg-center">
           <div className="mybetaearnings">
             <h6 className="event-my-earnings3 mb-3">
-              ${getFormattedNumber(data.title === "Base" ? 0 : userEarnUsd, 2)}
+              ${getFormattedNumber(userEarnUsd, 2)}
             </h6>
           </div>
         </div>

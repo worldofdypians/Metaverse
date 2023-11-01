@@ -1118,7 +1118,7 @@ const WalletBalance = ({
     id: "event4",
     date: "November 01, 2023",
     totalRewards: "$10,000 in ETH Rewards",
-    eventDuration: gateLastDay,
+    eventDuration: baseLastDay,
     backgroundImage: baseUpcoming,
     logo: base,
     date: "November 01, 2023",
@@ -1126,6 +1126,7 @@ const WalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
   };
 
   const dummyBetaPassData = [
@@ -1211,6 +1212,8 @@ const WalletBalance = ({
         status: "Expired",
         id: "event4",
         eventType: "Explore & Mine",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+
       },
     },
   ];
@@ -1264,30 +1267,32 @@ const WalletBalance = ({
       },
     },
     {
-      title: "Conflux",
-      logo: conflux,
+      title: "Base",
+      logo: base,
       eventStatus: "Live",
-      totalRewards: "$2,000 in CFX Rewards",
-      myEarnings: 0,
+      totalRewards: "$10,000 in ETH Rewards",
+      myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "October 06, 2023",
-      backgroundImage: confluxUpcoming,
+      eventDate: "November 01, 2023",
+      backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Conflux",
-        chain: "Conflux Network",
-        linkState: "conflux",
-        rewards: "CFX",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
         status: "Live",
-        id: "event1",
-        totalRewards: "$2,000 in CFX Rewards",
-        eventDuration: confluxLastDay,
-        eventDate: "October 06, 2023",
-        minRewards: "1",
+        id: "event4",
+        date: "November 01, 2023",
+        totalRewards: "$10,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        eventDate: "November 01, 2023",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "20,000",
-        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+        maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+
       },
     },
     {
@@ -1319,30 +1324,30 @@ const WalletBalance = ({
       },
     },
     {
-      title: "Base",
-      logo: base,
+      title: "Conflux",
+      logo: conflux,
       eventStatus: "Live",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
+      totalRewards: "$2,000 in CFX Rewards",
+      myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
-      backgroundImage: baseUpcoming,
+      eventDate: "October 06, 2023",
+      backgroundImage: confluxUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
+        title: "Conflux",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
         status: "Live",
-        id: "event4",
-        date: "November 01, 2023",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "November 01, 2023",
-        minRewards: "0.5",
+        id: "event1",
+        totalRewards: "$2,000 in CFX Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "October 06, 2023",
+        minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "30,000",
+        maxPoints: "20,000",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
   ];
@@ -1833,7 +1838,7 @@ const WalletBalance = ({
                                   : item.type === "conflux"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "base"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
@@ -2827,7 +2832,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_base_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -3037,7 +3042,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_base_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
