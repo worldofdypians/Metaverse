@@ -185,6 +185,8 @@ const NewWalletBalance = ({
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
+  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
   
@@ -260,18 +262,19 @@ const NewWalletBalance = ({
     chain: "Base Chain",
     linkState: "base",
     rewards: "ETH",
-    status: "Coming Soon",
+    status: "Live",
     id: "event4",
-    date: "Coming Soon",
-    totalRewards: "$5,000 in ETH Rewards",
-    eventDuration: gateLastDay,
+    date: "November 01, 2023",
+    totalRewards: "$10,000 in ETH Rewards",
+    eventDuration:baseLastDay,
     backgroundImage: baseUpcoming,
     logo: base,
-    date: "Coming Soon",
+    date: "November 01, 2023",
     minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
   };
 
   const dummyBetaPassData = [
@@ -410,30 +413,32 @@ const NewWalletBalance = ({
       },
     },
     {
-      title: "Conflux",
-      logo: conflux,
+      title: "Base",
+      logo: base,
       eventStatus: "Live",
-      totalRewards: "$2,000 in CFX Rewards",
-      myEarnings: 0,
+      totalRewards: "$10,000 in ETH Rewards",
+      myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "October 06, 2023",
-      backgroundImage: confluxUpcoming,
+      eventDate: "November 01, 2023",
+      backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Conflux",
-        chain: "Conflux Network",
-        linkState: "conflux",
-        rewards: "CFX",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
         status: "Live",
-        id: "event1",
-        totalRewards: "$2,000 in CFX Rewards",
-        eventDuration: confluxLastDay,
-        eventDate: "October 06, 2023",
-        minRewards: "1",
+        id: "event4",
+        date: "November 01, 2023",
+        totalRewards: "$10,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        eventDate: "November 01, 2023",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "20,000",
-        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+        maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+
       },
     },
     {
@@ -461,33 +466,34 @@ const NewWalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "20,000",
+        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
       },
     },
     {
-      title: "Base",
-      logo: base,
-      eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in ETH Rewards",
-      myEarnings: 126.45,
+      title: "Conflux",
+      logo: conflux,
+      eventStatus: "Live",
+      totalRewards: "$2,000 in CFX Rewards",
+      myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
-      backgroundImage: baseUpcoming,
+      eventDate: "October 06, 2023",
+      backgroundImage: confluxUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Coming Soon",
-        id: "event4",
-        date: "November 01, 2023",
-        totalRewards: "$5,000 in ETH Rewards",
-        eventDuration: gateLastDay,
-        eventDate: "November 01, 2023",
-        minRewards: "0.5",
+        title: "Conflux",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
+        status: "Live",
+        id: "event1",
+        totalRewards: "$2,000 in CFX Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "October 06, 2023",
+        minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "30,000",
+        maxPoints: "20,000",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
   ];
@@ -514,16 +520,24 @@ const NewWalletBalance = ({
   const [mediaUrl, setMediaUrl] = useState("");
   const [success, setSuccess] = useState("");
   const [finished, setFinished] = useState(false);
+
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
+
   const [cfxPrice, setCfxPrice] = useState(0);
   const [confluxUserPoints, setConfluxUserPoints] = useState(0);
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
-  const [gateEarnUSD, setgateEarnUSD] = useState(0);
-  const [gateUserPoints, setgateUserPoints] = useState(0);
-  const [gateEarnBnb, setgateEarnBnb] = useState(0);
+
+  const [gateEarnUSD, setGateEarnUSD] = useState(0);
+  const [gateUserPoints, setGateUserPoints] = useState(0);
+  const [gateEarnBnb, setGateEarnBNB] = useState(0);
+
+  const [baseUserPoints, setBaseUserPoints] = useState(0);
+  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
+  const [baseEarnETH, setBaseEarnETH] = useState(0);
+
   const slider = useRef(null);
   const [showFirstNext, setShowFirstNext] = useState(false);
   const html = document.querySelector("html");
@@ -631,6 +645,7 @@ const NewWalletBalance = ({
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
+      // console.log(email, window.infuraWeb3.utils.toChecksumAddress(userAddress))
       const response = await fetch(
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
@@ -655,9 +670,12 @@ const NewWalletBalance = ({
           const confluxEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "conflux";
           });
-
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
+          });
+
+          const baseEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "base";
           });
 
           const points = coingeckoEvent[0].reward.earn.totalPoints;
@@ -683,17 +701,30 @@ const NewWalletBalance = ({
               setConfluxEarnCFX(cfxUsdValue / cfxPrice);
             }
           }
-
           const gatePoints = gateEvent[0].reward.earn.totalPoints;
-          setgateUserPoints(gatePoints);
+          setGateUserPoints(gatePoints);
 
           if (gateEvent[0].reward.earn.multiplier !== 0) {
             const gateUsdValue =
               gateEvent[0].reward.earn.total /
               gateEvent[0].reward.earn.multiplier;
-            setgateEarnUSD(gateUsdValue);
-
-            setgateEarnBnb(gateUsdValue / bnbPrice);
+            setGateEarnUSD(gateUsdValue);
+            if (bnbPrice !== 0) {
+              setGateEarnBNB(gateUsdValue / bnbPrice);
+            }
+          }
+          if (baseEvent) {
+            const basePoints = baseEvent[0].reward.earn.totalPoints;
+            setBaseUserPoints(basePoints);
+            if (baseEvent[0].reward.earn.multiplier !== 0) {
+              const baseUsdValue =
+                baseEvent[0].reward.earn.total /
+                baseEvent[0].reward.earn.multiplier;
+              setBaseEarnUSD(baseUsdValue);
+              if (ethTokenData !== 0) {
+                setBaseEarnETH(baseUsdValue / ethTokenData);
+              }
+            }
           }
         }
       } else {
@@ -936,12 +967,12 @@ const NewWalletBalance = ({
               />
               <ActiveProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyConflux);
+                  setDummyEvent(dummyBase);
                   setEventPopup(true);
                 }}
-                data={dummyConflux}
-                event={dummyConflux}
-                userEarnedUsd={confluxEarnUSD}
+                data={dummyBase}
+                event={dummyBase}
+                userEarnedUsd={baseEarnUSD}
               />
               <ActiveProfileEvent
                 onOpenEvent={() => {
@@ -1543,21 +1574,23 @@ const NewWalletBalance = ({
           >
             <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.map((item, index) => (
-                <NewBetaEventCard
-                  data={item}
-                  key={index}
-                  onOpenPopup={() => {
-                    setEventPopup(true);
-                    setDummyEvent(item.popupInfo);
-                  }}
-                  userEarnUsd={
-                    item.title === "Conflux"
-                      ? confluxEarnUSD
-                      : item.title === "Gate.io"
-                      ? gateEarnUSD
-                      : userEarnUsd
-                  }
-                />
+               <NewBetaEventCard
+               data={item}
+               key={index}
+               onOpenPopup={() => {
+                 setEventPopup(true);
+                 setDummyEvent(item.popupInfo);
+               }}
+               userEarnUsd={
+                 item.title === "Conflux"
+                   ? confluxEarnUSD
+                   : item.title === "Gate.io"
+                   ? gateEarnUSD
+                   : item.title === "Base"
+                   ? baseEarnUSD
+                   : userEarnUsd
+               }
+             />
               ))}
             </Slider>
           </div>
@@ -1920,6 +1953,8 @@ const NewWalletBalance = ({
                         ? confluxUserPoints
                         : dummyEvent.id === "event3"
                         ? userPoints
+                        : dummyEvent.id === "event4"
+                        ? baseUserPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
                         : 0,
@@ -1938,6 +1973,8 @@ const NewWalletBalance = ({
                         ? confluxEarnUSD
                         : dummyEvent.id === "event3"
                         ? userEarnUsd
+                        : dummyEvent.id === "event4"
+                        ? baseEarnUSD
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
                         : 0,
@@ -1949,6 +1986,8 @@ const NewWalletBalance = ({
                           ? confluxEarnCFX
                           : dummyEvent.id === "event3"
                           ? userEarnETH
+                          : dummyEvent.id === "event4"
+                          ? baseEarnETH
                           : dummyEvent.id === "event6"
                           ? gateEarnBnb
                           : 0,
