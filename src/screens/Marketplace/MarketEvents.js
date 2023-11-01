@@ -99,7 +99,7 @@ const MarketEvents = ({
   handleAvailableTime,
   remainingTime,
   tabState,
-  ethTokenData
+  ethTokenData,
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -229,7 +229,6 @@ const MarketEvents = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
 
-
   const dummyBetaPassData2 = [
     // {
     //   title: "Avalanche",
@@ -279,32 +278,34 @@ const MarketEvents = ({
       },
     },
     {
-      title: "Conflux",
-      logo: conflux,
+      title: "Base",
+      logo: base,
       eventStatus: "Live",
-      totalRewards: "$2,000 in CFX Rewards",
-      myEarnings: 0,
+      totalRewards: "$10,000 in ETH Rewards",
+      myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "October 06, 2023",
-      backgroundImage: confluxUpcoming,
+      eventDate: "November 01, 2023",
+      backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Conflux",
-        chain: "Conflux Network",
-        linkState: "conflux",
-        rewards: "CFX",
+        title: "Base",
+        chain: "Base Network",
+        linkState: "base",
+        rewards: "ETH",
         status: "Live",
-        id: "event1",
-        totalRewards: "$2,000 in CFX Rewards",
-        eventDuration: confluxLastDay,
-        eventDate: "October 06, 2023",
-        minRewards: "1",
+        id: "event4",
+        totalRewards: "$10,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        eventDate: "November 01, 2023",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "20,000",
-        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+        maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+
       },
     },
+
     {
       title: "Gate.io",
       logo: gate,
@@ -333,29 +334,30 @@ const MarketEvents = ({
       },
     },
     {
-      title: "Base",
-      logo: base,
+      title: "Conflux",
+      logo: conflux,
       eventStatus: "Live",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
+      totalRewards: "$2,000 in CFX Rewards",
+      myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
-      backgroundImage: baseUpcoming,
+      eventDate: "October 06, 2023",
+      backgroundImage: confluxUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Network",
-        linkState: "base",
-        rewards: "ETH",
+        title: "Conflux",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
         status: "Live",
-        id: "event4",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "November 01, 2023",
-        minRewards: "0.5",
+        id: "event1",
+        totalRewards: "$2,000 in CFX Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "October 06, 2023",
+        minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "30,000",
+        maxPoints: "20,000",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
   ];
@@ -937,14 +939,16 @@ const MarketEvents = ({
                   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                     <h6 className="upcoming-mint-title">Daily Bonus</h6>
                     <p className="upcoming-mint-desc">
-                    Claim chests daily for a chance to win Game Points, exclusive NFTs, and exciting rewards! Don't miss out on your daily dose of gaming treasures.
+                      Claim chests daily for a chance to win Game Points,
+                      exclusive NFTs, and exciting rewards! Don't miss out on
+                      your daily dose of gaming treasures.
                     </p>
                   </div>
                   <img
-                      src={upcomingDailyBonus}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
+                    src={upcomingDailyBonus}
+                    alt=""
+                    className="upcoming-mint-img"
+                  />
                 </div>
                 // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                 //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (

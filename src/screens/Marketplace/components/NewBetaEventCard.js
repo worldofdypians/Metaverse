@@ -76,8 +76,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
               }}
             >
               <h6 className="event-my-earnings3 mb-3">
-                $
-                {getFormattedNumber(data.title === "Base" ? 0 : userEarnUsd, 2)}
+                ${getFormattedNumber(userEarnUsd, 2)}
               </h6>
             </div>
           </div>
@@ -103,29 +102,36 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
           </div>
         </div>
       )}
-       {!isFrontPage && (
-      <div className="d-flex flex-column d-none gap-3 pick-and-calendar">
-        <div className="d-flex align-items-center gap-2">
-          <img src={whitePickaxe} alt="" />
-          <span className="white-events-text mb-0" style={{ fontSize: "10px" }}>
-            {data.eventType}
-          </span>
-        </div>
-        <div className="d-flex align-items-center gap-2">
-          <img src={whiteCalendar} alt="" />
-          <span className="white-events-text mb-0" style={{ fontSize: "10px" }}>
-            {data.eventDate}
-          </span>
-        </div>
-      </div>)}
       {!isFrontPage && (
-      <span
-        className="events-page-details d-flex my-3 align-items-center gap-2"
-        onClick={onOpenPopup}
-      >
-        Details
-        <img src={eventsArrow} alt="" />
-      </span>
+        <div className="d-flex flex-column d-none gap-3 pick-and-calendar">
+          <div className="d-flex align-items-center gap-2">
+            <img src={whitePickaxe} alt="" />
+            <span
+              className="white-events-text mb-0"
+              style={{ fontSize: "10px" }}
+            >
+              {data.eventType}
+            </span>
+          </div>
+          <div className="d-flex align-items-center gap-2">
+            <img src={whiteCalendar} alt="" />
+            <span
+              className="white-events-text mb-0"
+              style={{ fontSize: "10px" }}
+            >
+              {data.eventDate}
+            </span>
+          </div>
+        </div>
+      )}
+      {!isFrontPage && (
+        <span
+          className="events-page-details d-flex my-3 align-items-center gap-2"
+          onClick={onOpenPopup}
+        >
+          Details
+          <img src={eventsArrow} alt="" />
+        </span>
       )}
       <img
         src={data.backgroundImage}
