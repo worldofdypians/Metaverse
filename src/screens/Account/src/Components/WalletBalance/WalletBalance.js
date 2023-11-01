@@ -1247,6 +1247,7 @@ const WalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
   };
 
   const dummyBetaPassData = [
@@ -1332,6 +1333,8 @@ const WalletBalance = ({
         status: "Expired",
         id: "event4",
         eventType: "Explore & Mine",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+
       },
     },
   ];
@@ -1409,6 +1412,8 @@ const WalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+
       },
     },
     {

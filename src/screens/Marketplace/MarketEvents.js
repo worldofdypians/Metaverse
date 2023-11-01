@@ -301,6 +301,8 @@ const MarketEvents = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+
       },
     },
 
