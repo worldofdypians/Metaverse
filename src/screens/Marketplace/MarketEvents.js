@@ -99,6 +99,7 @@ const MarketEvents = ({
   handleAvailableTime,
   remainingTime,
   tabState,
+  ethTokenData,
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -130,6 +131,9 @@ const MarketEvents = ({
   const [gateUserPoints, setGateUserPoints] = useState(0);
   const [gateEarnUSD, setGateEarnUSD] = useState(0);
   const [gateEarnBNB, setGateEarnBNB] = useState(0);
+  const [baseUserPoints, setBaseUserPoints] = useState(0);
+  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
+  const [baseEarnETH, setBaseEarnETH] = useState(0);
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -223,6 +227,7 @@ const MarketEvents = ({
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
+  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
     // {
@@ -273,32 +278,34 @@ const MarketEvents = ({
       },
     },
     {
-      title: "Conflux",
-      logo: conflux,
+      title: "Base",
+      logo: base,
       eventStatus: "Live",
-      totalRewards: "$2,000 in CFX Rewards",
-      myEarnings: 0,
+      totalRewards: "$10,000 in ETH Rewards",
+      myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "October 06, 2023",
-      backgroundImage: confluxUpcoming,
+      eventDate: "November 01, 2023",
+      backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Conflux",
-        chain: "Conflux Network",
-        linkState: "conflux",
-        rewards: "CFX",
+        title: "Base",
+        chain: "Base Network",
+        linkState: "base",
+        rewards: "ETH",
         status: "Live",
-        id: "event1",
-        totalRewards: "$2,000 in CFX Rewards",
-        eventDuration: confluxLastDay,
-        eventDate: "October 06, 2023",
-        minRewards: "1",
+        id: "event4",
+        totalRewards: "$10,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        eventDate: "November 01, 2023",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "20,000",
-        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+        maxPoints: "30,000",
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+
       },
     },
+
     {
       title: "Gate.io",
       logo: gate,
@@ -327,29 +334,30 @@ const MarketEvents = ({
       },
     },
     {
-      title: "Base",
-      logo: base,
-      eventStatus: "Coming Soon",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
+      title: "Conflux",
+      logo: conflux,
+      eventStatus: "Live",
+      totalRewards: "$2,000 in CFX Rewards",
+      myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
-      backgroundImage: baseUpcoming,
+      eventDate: "October 06, 2023",
+      backgroundImage: confluxUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Network",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Coming Soon",
-        id: "event4",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: gateLastDay,
-        eventDate: "November 01, 2023",
-        minRewards: "0.5",
+        title: "Conflux",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
+        status: "Live",
+        id: "event1",
+        totalRewards: "$2,000 in CFX Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "October 06, 2023",
+        minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "30,000",
+        maxPoints: "20,000",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
   ];
@@ -565,6 +573,10 @@ const MarketEvents = ({
             return obj.betapassId === "gate";
           });
 
+          const baseEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "base";
+          });
+
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -600,6 +612,19 @@ const MarketEvents = ({
 
             if (bnbPrice !== 0) {
               setGateEarnBNB(gateUsdValue / bnbPrice);
+            }
+          }
+          if (baseEvent) {
+            const basePoints = baseEvent[0].reward.earn.totalPoints;
+            setBaseUserPoints(basePoints);
+            if (baseEvent[0].reward.earn.multiplier !== 0) {
+              const baseUsdValue =
+                baseEvent[0].reward.earn.total /
+                baseEvent[0].reward.earn.multiplier;
+              setBaseEarnUSD(baseUsdValue);
+              if (ethTokenData !== 0) {
+                setBaseEarnETH(baseUsdValue / ethTokenData);
+              }
             }
           }
         }
@@ -863,6 +888,8 @@ const MarketEvents = ({
                                 ? confluxEarnUSD
                                 : item.title === "Gate.io"
                                 ? gateEarnUSD
+                                : item.title === "Base"
+                                ? baseEarnUSD
                                 : userEarnUsd
                             }
                           />
@@ -912,14 +939,16 @@ const MarketEvents = ({
                   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                     <h6 className="upcoming-mint-title">Daily Bonus</h6>
                     <p className="upcoming-mint-desc">
-                    Claim chests daily for a chance to win Game Points, exclusive NFTs, and exciting rewards! Don't miss out on your daily dose of gaming treasures.
+                      Claim chests daily for a chance to win Game Points,
+                      exclusive NFTs, and exciting rewards! Don't miss out on
+                      your daily dose of gaming treasures.
                     </p>
                   </div>
                   <img
-                      src={upcomingDailyBonus}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
+                    src={upcomingDailyBonus}
+                    alt=""
+                    className="upcoming-mint-img"
+                  />
                 </div>
                 // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                 //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
@@ -1362,6 +1391,8 @@ const MarketEvents = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
+                        : dummyEvent.id === "event4"
+                        ? baseUserPoints
                         : 0,
                       0
                     )}
@@ -1380,6 +1411,8 @@ const MarketEvents = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
+                        : dummyEvent.id === "event4"
+                        ? baseEarnUSD
                         : 0,
                       2
                     )}
@@ -1391,6 +1424,8 @@ const MarketEvents = ({
                           ? userEarnETH
                           : dummyEvent.id === "event6"
                           ? gateEarnBNB
+                          : dummyEvent.id === "event4"
+                          ? baseEarnETH
                           : 0,
                         2
                       )}

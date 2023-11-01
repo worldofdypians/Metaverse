@@ -41,6 +41,22 @@ const MarketSection = ({
     afterChange: (current) => setActiveSlide(current),
     responsive: [
       {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1100,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
         breakpoint: 777,
         settings: {
           slidesToShow: 2,
@@ -67,6 +83,14 @@ const MarketSection = ({
   };
 
   const eventData = [
+    // {
+    //   eventTitle: "Daily Bonus",
+    //   eventPrice: "",
+    //   eventDesc: "Daily Bonus Event is available for all users",
+    //   eventImg: "dailyBonus",
+    //   state: "dailyBonus",
+    //   eventId: "account",
+    // },
     {
       eventTitle: "Treasure Hunt",
       eventPrice: "",
@@ -99,14 +123,14 @@ const MarketSection = ({
       price: 2100,
       eventId: "golden-pass",
     },
-    // {
-    //   eventTitle: "Treasure Hunt",
-    //   eventPrice: "",
-    //   eventDesc: "Event available for Beta Pass NFT owners",
-    //   eventImg: "treasureHunt",
-    //   state: "treasure-hunt",
-    //   eventId: "treasure-hunt",
-    // },
+    {
+      eventTitle: "Critical Hit",
+      eventPrice: "",
+      eventDesc: "Event available for Genesis Land NFT owners",
+      eventImg: "critical",
+      state: "critical-hit",
+      eventId: "critical-hit",
+    },
   ];
 
   const fetchCawsNfts = async () => {
@@ -220,7 +244,7 @@ const MarketSection = ({
           >
             <span className="marketItemText">Timepiece</span>
           </div>
-          <div
+          {/* <div
             onClick={() => {
               setActiveBtn("events");
             }}
@@ -229,9 +253,9 @@ const MarketSection = ({
             } text-white d-flex align-items-center justify-content-center`}
           >
             <span className="marketItemText">Events</span>
-          </div>
+          </div> */}
         </div>
-        {windowSize.width > 777 ? (
+        {windowSize.width > 1400 ? (
           <div className="marketcardwrapper">
             {activebtn === "events" &&
               eventData &&
@@ -239,7 +263,7 @@ const MarketSection = ({
               eventData.map((item, index) => {
                 return (
                   <NavLink
-                    to={`/marketplace/events/${item.eventId}`}
+                    to={item.eventId === "account" ? `/${item.eventId}` : `/marketplace/events/${item.eventId}`}
                     state={{ package: item.state }}
                     style={{ textDecoration: "none" }}
                     key={index}
