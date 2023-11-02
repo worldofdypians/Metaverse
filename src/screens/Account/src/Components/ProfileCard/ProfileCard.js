@@ -27,16 +27,9 @@ import blackWallet from "../../Images/userProfile/wallet-black.svg";
 import starActive from "./assets/star-active.svg";
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
-import {
-  wod_abi,
-  token_abi,
-  idyptoken_abi,
-  dyp700_abi,
-  idyp3500_abi,
-  wodAddress,
-  dyp700Address,
-  idyp3500Address,
-} from "../../web3";
+import Countdown from "react-countdown";
+import { dyp700Address } from "../../web3";
+import { DYP_700_ABI } from "../../web3/abis";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -79,6 +72,7 @@ const ProfileCard = ({
   isConnected,
   onOpenLeaderboard,
   onPremiumClick,
+  handleSetAvailableTime
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -189,20 +183,24 @@ const ProfileCard = ({
   const [bundleExpireMiliseconds, setbundleExpireMiliseconds] = useState(0);
   const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
-  const [lastDayofBundleMilliseconds, setlastDayofBundleMilliseconds] = useState(0);
+  const [lastDayofBundleMilliseconds, setlastDayofBundleMilliseconds] =
+    useState(0);
   const [lastDayofBundle, setlastDayofBundle] = useState(0);
-  
 
   let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
   let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
 
   const handleRefreshCountdown700 = async () => {
-    const remainingTime = await dyp700_abi.methods
+    const goldenpassAbi = new window.bscWeb3.eth.Contract(
+      DYP_700_ABI,
+      dyp700Address
+    );
+    const remainingTime = await goldenpassAbi.methods
       .getTimeOfExpireBuff(address)
       .call();
 
     const remainingTime_miliseconds = remainingTime * 1000;
-    const timeofDeposit = await dyp700_abi.methods
+    const timeofDeposit = await goldenpassAbi.methods
       .getTimeOfDeposit(address)
       .call();
     if (timeofDeposit !== 0) {
@@ -226,9 +224,13 @@ const ProfileCard = ({
       const finalMinutes = timeofDeposit_Minutes - 11;
 
       const result = remainingTime - finalHours * 60 * 60 - finalMinutes * 60;
+       
       setcountdown700(result * 1000);
+      handleSetAvailableTime(result*1000)
     } else {
       setcountdown700();
+      handleSetAvailableTime()
+
     }
   };
 
@@ -242,8 +244,12 @@ const ProfileCard = ({
     const week2 = ["8", "9", "10", "11", "12", "13", "14"];
     const week3 = ["15", "16", "17", "18", "19", "20", "21"];
     const week4 = ["22", "23", "24", "25"];
+    const goldenpassAbi = new window.bscWeb3.eth.Contract(
+      DYP_700_ABI,
+      dyp700Address
+    );
 
-    const timeofDeposit = await dyp700_abi.methods
+    const timeofDeposit = await goldenpassAbi.methods
       .getTimeOfDeposit(address)
       .call();
     const timeofDeposit_miliseconds = timeofDeposit * 1000;
@@ -286,6 +292,8 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
+      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
+
 
         // }
       } else if (week2.includes(today_date.toString()) && bundlesBought <= 3) {
@@ -307,6 +315,8 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
+      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
+
 
         // }
       } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
@@ -331,6 +341,8 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
+      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
+
 
         // }
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
@@ -339,15 +351,21 @@ const ProfileCard = ({
         if (today < dateofBundle) {
           if (bundlesBought <= 3 && datewhenBundleBought < today_date) {
             setcountdown700(dateofBundle);
+      handleSetAvailableTime(dateofBundle)
+
           } else {
             setcountdown700(
               today < oneNovember
                 ? oneNovember.getTime()
                 : oneDecember.getTime()
             );
+      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
+
           }
         } else if (today > dateofBundle && bundlesBought > 0) {
           setcountdown700();
+      handleSetAvailableTime()
+
         }
       }
     } else if (today_date > 25) {
@@ -355,17 +373,25 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
+      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
+
       } else {
         setcountdown700();
+      handleSetAvailableTime()
+
       }
     }
   };
   const setlastDay = async () => {
-    const timeofDeposit = await dyp700_abi.methods
+    const goldenpassAbi = new window.bscWeb3.eth.Contract(
+      DYP_700_ABI,
+      dyp700Address
+    );
+    const timeofDeposit = await goldenpassAbi.methods
       .getTimeOfDeposit(address)
       .call();
 
-    const expiringTime = await dyp700_abi.methods
+    const expiringTime = await goldenpassAbi.methods
       .getTimeOfExpireBuff(address)
       .call();
 
@@ -425,15 +451,24 @@ const ProfileCard = ({
     setlastDayofBundleMilliseconds(expiringTime_miliseconds);
   };
 
-
   useEffect(() => {
     checkBundleDates();
     setlastDay();
-  }, [])
-  
-console.log(countdown700, "Countdown700")
+  }, []);
+
+
   return (
     <div className="main-wrapper py-4 w-100">
+      {countdown700 !== 0 && countdown700 && (
+        <Countdown
+          date={Number(countdown700)}
+          onComplete={() => {
+            setcountdown700();
+      handleSetAvailableTime()
+
+          }}
+        />
+      )}
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-lg-3 col-12">
           <div
@@ -844,8 +879,16 @@ console.log(countdown700, "Countdown700")
                     d-flex flex-column align-items-center position-relative mt-3 mt-lg-0 gap-2`}
                     onClick={onOpenLeaderboard}
                   >
-                    <div className="golden-pass-wrapper"></div>
-                    <img src={require('./assets/goldenPassTag.png')} alt="" className="golden-pass-tag d-flex d-lg-none" />
+                    {countdown700 && (
+                      <div className="golden-pass-wrapper"></div>
+                    )}
+                    {countdown700 && (
+                      <img
+                        src={require("./assets/goldenPassTag.png")}
+                        alt=""
+                        className="golden-pass-tag d-flex d-lg-none"
+                      />
+                    )}
                     {/* <div className="table-separator position-absolute"></div> */}
                     <h6
                       className="profile-div-title mb-0"

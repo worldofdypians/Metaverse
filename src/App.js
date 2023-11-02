@@ -106,7 +106,8 @@ function App() {
         symbol: "bnb",
         decimals: 18,
       },
-      blockExplorerUrls: ["http://mainnet.opBNBscan.com/"],
+
+      blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
   };
 

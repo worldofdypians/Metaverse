@@ -447,6 +447,9 @@ const DailyBonusPopup = ({
     if (filteredResult) {
       setLiveRewardData(filteredResult);
     }
+    else {
+      setLiveRewardData([])
+    }
   };
 
   function randomNum() {
@@ -549,7 +552,7 @@ const DailyBonusPopup = ({
 
   useEffect(() => {
     if (rewardTypes === "standard") {
-      console.log(standardChests[0]);
+   
       if (
         standardChests &&
         standardChests.length > 0 &&
@@ -598,7 +601,6 @@ const DailyBonusPopup = ({
                 NFTs, and exciting rewards! Don't miss out on your daily dose of
                 gaming treasures.
               </p>
-             
             </div>
             <div className="d-flex flex-column mb-3">
               <div className="d-flex align-items-center justify-content-center w-100">
@@ -626,37 +628,39 @@ const DailyBonusPopup = ({
                 </div>
               </div>
               <div className="dailyreward-separator"></div>
-             <div className="d-flex w-100 justify-content-center">
-             <div className="p-2 mt-2 daily-error-text-wrapper d-flex justify-content-center">
-             {chainId !== 204 && coinbase ? (
-                <span className="sync-txt d-flex align-items-center gap-1">
-                  <img src={triangle} alt="" />
-                  Please make sure you're using opBnb Chain.
-                </span>
-              ) : !coinbase ? (
-                <span className="sync-txt d-flex align-items-center gap-1">
-                  <img src={triangle} alt="" />
-                  Please connect your wallet in order to claim your rewards.
-                </span>
-              ) : coinbase && !email ? (
-                <span className="sync-txt d-flex align-items-center gap-1">
-                  <img src={triangle} alt="" />
-                  Please connect to your game account in order to claim your
-                  rewards.
-                </span>
-              ) : coinbase &&
-                address &&
-                coinbase?.toLowerCase !== address?.toLowerCase() ? (
-                <span className="sync-txt d-flex align-items-center gap-1">
-                  <img src={triangle} alt="" />
-                  Please make sure you're using the wallet associated to your
-                  game account.
-                </span>
-              ) : (
-                <></>
-              )}
-             </div>
-             </div>
+              <div className="d-flex w-100 justify-content-center">
+                <div className="p-2 mt-2 daily-error-text-wrapper d-flex justify-content-center">
+                  {chainId !== 204 && chainId !== 56 && coinbase ? (
+                    <span className="sync-txt d-flex align-items-center gap-1">
+                      <img src={triangle} alt="" />
+                      The event is available on BNB and on opBNB chains. <br />
+                      Please change the chain in your wallet to unlock the
+                      chests.
+                    </span>
+                  ) : !coinbase ? (
+                    <span className="sync-txt d-flex align-items-center gap-1">
+                      <img src={triangle} alt="" />
+                      Please connect your wallet in order to claim your rewards.
+                    </span>
+                  ) : coinbase && !email ? (
+                    <span className="sync-txt d-flex align-items-center gap-1">
+                      <img src={triangle} alt="" />
+                      Please connect to your game account in order to claim your
+                      rewards.
+                    </span>
+                  ) : coinbase &&
+                    address &&
+                    coinbase?.toLowerCase() !== address?.toLowerCase() ? (
+                    <span className="sync-txt d-flex align-items-center gap-1">
+                      <img src={triangle} alt="" />
+                      Please make sure you're using the wallet associated to
+                      your game account.
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
             </div>
             {rewardTypes === "standard" && email ? (
               <div className="rewardsgrid">
