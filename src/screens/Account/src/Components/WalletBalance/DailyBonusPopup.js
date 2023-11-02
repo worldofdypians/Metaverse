@@ -446,9 +446,8 @@ const DailyBonusPopup = ({
     setIsActive(chestID);
     if (filteredResult) {
       setLiveRewardData(filteredResult);
-    }
-    else {
-      setLiveRewardData([])
+    } else {
+      setLiveRewardData([]);
     }
   };
 
@@ -552,7 +551,6 @@ const DailyBonusPopup = ({
 
   useEffect(() => {
     if (rewardTypes === "standard") {
-   
       if (
         standardChests &&
         standardChests.length > 0 &&
@@ -629,7 +627,17 @@ const DailyBonusPopup = ({
               </div>
               <div className="dailyreward-separator"></div>
               <div className="d-flex w-100 justify-content-center">
-                <div className="p-2 mt-2 daily-error-text-wrapper d-flex justify-content-center">
+                <div
+                  className={` ${
+                    (chainId === 204 || chainId === 56) &&
+                    coinbase &&
+                    email &&
+                    address &&
+                    coinbase?.toLowerCase() === address?.toLowerCase()
+                      ? "d-none"
+                      : "d-flex"
+                  } p-2 mt-2 daily-error-text-wrapper justify-content-center`}
+                >
                   {chainId !== 204 && chainId !== 56 && coinbase ? (
                     <span className="sync-txt d-flex align-items-center gap-1">
                       <img src={triangle} alt="" />
@@ -1236,36 +1244,37 @@ const DailyBonusPopup = ({
        </div> */}
             <div className="container px-3">
               <div className="row mb-5" style={{ rowGap: "12px" }}>
-                <div className="col-12 col-lg-4">
-                  <div
-                    className={`prizeswrapper ${
-                      rewardData?.rewardType?.includes("Points") &&
-                      "prizeswrapper-premium"
-                    } `}
-                    style={{
-                      filter:
-                        !rewardData?.rewardType?.includes("Points") &&
-                        "grayscale(1)",
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={pointsIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
+                {rewardData?.rewardType?.includes("Points") && (
+                  <div className="col-12 col-lg-4">
+                    <div
+                      className={`prizeswrapper ${
+                        rewardData?.rewardType?.includes("Points") &&
+                        "prizeswrapper-premium"
+                      } `}
+                      style={{
+                        filter:
+                          !rewardData?.rewardType?.includes("Points") &&
+                          "grayscale(1)",
+                      }}
+                    >
                       <div className="d-flex align-items-center gap-2">
-                        <span
-                          className="chest-prize-title mb-0"
-                          style={{
-                            color:
-                              !rewardData?.rewardType?.includes("Points") &&
-                              "gray",
-                          }}
-                        >
-                          {getFormattedNumber(rewardData?.reward, 0)} Points
-                        </span>
-                        {/* {randomArray.includes(index) && reward.premium && (
+                        <img
+                          src={pointsIcon}
+                          alt=""
+                          style={{ width: 40, height: 40 }}
+                        />
+                        <div className="d-flex align-items-center gap-2">
+                          <span
+                            className="chest-prize-title mb-0"
+                            style={{
+                              color:
+                                !rewardData?.rewardType?.includes("Points") &&
+                                "gray",
+                            }}
+                          >
+                            {getFormattedNumber(rewardData?.reward, 0)} Points
+                          </span>
+                          {/* {randomArray.includes(index) && reward.premium && (
                             <ToolTip
                               title={
                                 <React.Fragment>
@@ -1279,47 +1288,48 @@ const DailyBonusPopup = ({
                               color={"#000"}
                             />
                           )}  todo */}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="col-12 col-lg-4">
-                  <div
-                    className={`prizeswrapper ${
-                      rewardData?.rewardType?.includes("Money") &&
-                      "prizeswrapper-premium"
-                    } `}
-                    style={{
-                      filter:
-                        !rewardData?.rewardType?.includes("Money") &&
-                        "grayscale(1)",
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={rewardsIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
+                )}
+                {rewardData?.rewardType?.includes("Money") && (
+                  <div className="col-12 col-lg-4">
+                    <div
+                      className={`prizeswrapper ${
+                        rewardData?.rewardType?.includes("Money") &&
+                        "prizeswrapper-premium"
+                      } `}
+                      style={{
+                        filter:
+                          !rewardData?.rewardType?.includes("Money") &&
+                          "grayscale(1)",
+                      }}
+                    >
                       <div className="d-flex align-items-center gap-2">
-                        <span
-                          className="chest-prize-title mb-0"
-                          style={{
-                            color:
-                              !rewardData?.rewardType?.includes("Money") &&
-                              "gray",
-                          }}
-                        >
-                          ${" "}
-                          {
-                            (rewardData?.type?.includes("Money") &&
-                              getFormattedNumber(rewardData?.reward),
-                            0)
-                          }{" "}
-                          Reward
-                        </span>
-                        {/* {randomArray.includes(index) && reward.premium && (
+                        <img
+                          src={rewardsIcon}
+                          alt=""
+                          style={{ width: 40, height: 40 }}
+                        />
+                        <div className="d-flex align-items-center gap-2">
+                          <span
+                            className="chest-prize-title mb-0"
+                            style={{
+                              color:
+                                !rewardData?.rewardType?.includes("Money") &&
+                                "gray",
+                            }}
+                          >
+                            ${" "}
+                            {
+                              (rewardData?.type?.includes("Money") &&
+                                getFormattedNumber(rewardData?.reward),
+                              0)
+                            }{" "}
+                            Reward
+                          </span>
+                          {/* {randomArray.includes(index) && reward.premium && (
                             <ToolTip
                               title={
                                 <React.Fragment>
@@ -1333,41 +1343,43 @@ const DailyBonusPopup = ({
                               color={"#000"}
                             />
                           )} todo */}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className="col-12 col-lg-4">
-                  <div
-                    className={`prizeswrapper ${
-                      rewardData?.rewardType?.includes("NFT") &&
-                      "prizeswrapper-premium"
-                    } `}
-                    style={{
-                      filter:
-                        !rewardData?.rewardType?.includes("NFT") &&
-                        "grayscale(1)",
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={genesisIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
+                {rewardData?.rewardType?.includes("NFT") && (
+                  <div className="col-12 col-lg-4">
+                    <div
+                      className={`prizeswrapper ${
+                        rewardData?.rewardType?.includes("NFT") &&
+                        "prizeswrapper-premium"
+                      } `}
+                      style={{
+                        filter:
+                          !rewardData?.rewardType?.includes("NFT") &&
+                          "grayscale(1)",
+                      }}
+                    >
                       <div className="d-flex align-items-center gap-2">
-                        <span
-                          className="chest-prize-title mb-0"
-                          style={{
-                            color:
-                              !rewardData?.rewardType?.includes("NFT") &&
-                              "gray",
-                          }}
-                        >
-                          Genesis Land NFT
-                        </span>
-                        {/* {randomArray.includes(index) && reward.premium && (
+                        <img
+                          src={genesisIcon}
+                          alt=""
+                          style={{ width: 40, height: 40 }}
+                        />
+                        <div className="d-flex align-items-center gap-2">
+                          <span
+                            className="chest-prize-title mb-0"
+                            style={{
+                              color:
+                                !rewardData?.rewardType?.includes("NFT") &&
+                                "gray",
+                            }}
+                          >
+                            Genesis Land NFT
+                          </span>
+                          {/* {randomArray.includes(index) && reward.premium && (
                             <ToolTip
                               title={
                                 <React.Fragment>
@@ -1381,41 +1393,43 @@ const DailyBonusPopup = ({
                               color={"#000"}
                             />
                           )} */}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className="col-12 col-lg-4">
-                  <div
-                    className={`prizeswrapper ${
-                      rewardData?.rewardType?.includes("NFT") &&
-                      "prizeswrapper-premium"
-                    } `}
-                    style={{
-                      filter:
-                        !rewardData?.rewardType?.includes("NFT") &&
-                        "grayscale(1)",
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={cawsIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
+                {rewardData?.rewardType?.includes("NFT") && (
+                  <div className="col-12 col-lg-4">
+                    <div
+                      className={`prizeswrapper ${
+                        rewardData?.rewardType?.includes("NFT") &&
+                        "prizeswrapper-premium"
+                      } `}
+                      style={{
+                        filter:
+                          !rewardData?.rewardType?.includes("NFT") &&
+                          "grayscale(1)",
+                      }}
+                    >
                       <div className="d-flex align-items-center gap-2">
-                        <span
-                          className="chest-prize-title mb-0"
-                          style={{
-                            color:
-                              !rewardData?.rewardType?.includes("NFT") &&
-                              "gray",
-                          }}
-                        >
-                          CAWS NFT
-                        </span>
-                        {/* {randomArray.includes(index) && reward.premium && (
+                        <img
+                          src={cawsIcon}
+                          alt=""
+                          style={{ width: 40, height: 40 }}
+                        />
+                        <div className="d-flex align-items-center gap-2">
+                          <span
+                            className="chest-prize-title mb-0"
+                            style={{
+                              color:
+                                !rewardData?.rewardType?.includes("NFT") &&
+                                "gray",
+                            }}
+                          >
+                            CAWS NFT
+                          </span>
+                          {/* {randomArray.includes(index) && reward.premium && (
                             <ToolTip
                               title={
                                 <React.Fragment>
@@ -1429,41 +1443,43 @@ const DailyBonusPopup = ({
                               color={"#000"}
                             />
                           )} */}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className="col-12 col-lg-4">
-                  <div
-                    className={`prizeswrapper ${
-                      rewardData?.rewardType?.includes("NFT") &&
-                      "prizeswrapper-premium"
-                    } `}
-                    style={{
-                      filter:
-                        !rewardData?.rewardType?.includes("NFT") &&
-                        "grayscale(1)",
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={betaPassIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
+                {rewardData?.rewardType?.includes("NFT") && (
+                  <div className="col-12 col-lg-4">
+                    <div
+                      className={`prizeswrapper ${
+                        rewardData?.rewardType?.includes("NFT") &&
+                        "prizeswrapper-premium"
+                      } `}
+                      style={{
+                        filter:
+                          !rewardData?.rewardType?.includes("NFT") &&
+                          "grayscale(1)",
+                      }}
+                    >
                       <div className="d-flex align-items-center gap-2">
-                        <span
-                          className="chest-prize-title mb-0"
-                          style={{
-                            color:
-                              !rewardData?.rewardType?.includes("NFT") &&
-                              "gray",
-                          }}
-                        >
-                          Beta Pass NFT
-                        </span>
-                        {/* {randomArray.includes(index) && reward.premium && (
+                        <img
+                          src={betaPassIcon}
+                          alt=""
+                          style={{ width: 40, height: 40 }}
+                        />
+                        <div className="d-flex align-items-center gap-2">
+                          <span
+                            className="chest-prize-title mb-0"
+                            style={{
+                              color:
+                                !rewardData?.rewardType?.includes("NFT") &&
+                                "gray",
+                            }}
+                          >
+                            Beta Pass NFT
+                          </span>
+                          {/* {randomArray.includes(index) && reward.premium && (
                             <ToolTip
                               title={
                                 <React.Fragment>
@@ -1477,41 +1493,44 @@ const DailyBonusPopup = ({
                               color={"#000"}
                             />
                           )} */}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className="col-12 col-lg-4">
-                  <div
-                    className={`prizeswrapper ${
-                      rewardData?.rewardType?.includes("LargeMoney") &&
-                      "prizeswrapper-premium"
-                    } `}
-                    style={{
-                      filter:
-                        !rewardData?.rewardType?.includes("LargeMoney") &&
-                        "grayscale(1)",
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={largeRewardsIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
+                {rewardData?.rewardType?.includes("LargeMoney") && (
+                  <div className="col-12 col-lg-4">
+                    <div
+                      className={`prizeswrapper ${
+                        rewardData?.rewardType?.includes("LargeMoney") &&
+                        "prizeswrapper-premium"
+                      } `}
+                      style={{
+                        filter:
+                          !rewardData?.rewardType?.includes("LargeMoney") &&
+                          "grayscale(1)",
+                      }}
+                    >
                       <div className="d-flex align-items-center gap-2">
-                        <span
-                          className="chest-prize-title mb-0"
-                          style={{
-                            color:
-                              !rewardData?.rewardType?.includes("LargeMoney") &&
-                              "gray",
-                          }}
-                        >
-                          $0 Reward
-                        </span>
-                        {/* {rewardData?.type?.includes('LargeMoney')  && reward.premium && (
+                        <img
+                          src={largeRewardsIcon}
+                          alt=""
+                          style={{ width: 40, height: 40 }}
+                        />
+                        <div className="d-flex align-items-center gap-2">
+                          <span
+                            className="chest-prize-title mb-0"
+                            style={{
+                              color:
+                                !rewardData?.rewardType?.includes(
+                                  "LargeMoney"
+                                ) && "gray",
+                            }}
+                          >
+                            $0 Reward
+                          </span>
+                          {/* {rewardData?.type?.includes('LargeMoney')  && reward.premium && (
                             <ToolTip
                               title={
                                 <React.Fragment>
@@ -1525,10 +1544,11 @@ const DailyBonusPopup = ({
                               color={"#000"}
                             />
                           )} */}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
