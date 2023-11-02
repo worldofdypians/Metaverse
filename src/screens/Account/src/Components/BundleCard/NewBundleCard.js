@@ -544,7 +544,7 @@ const NewBundleCard = ({
     setcountdown3500(remainingTime);
   };
 
-  let twentyfiveOctober = new Date("2023-10-25 23:59:00 GMT+02:00");
+  let twentyfiveNovember = new Date("2023-11-25 23:59:00 GMT+02:00");
   let today = new Date();
   let oneOctober = new Date("2023-10-01 11:11:00 GMT+02:00");
   let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
@@ -631,7 +631,7 @@ const NewBundleCard = ({
         //     Number(remainingTime_miliseconds2) +
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
-        //     setcountdown700( today<oneNovember ? oneNovember.getTime() : oneDecember.getTime());
+        setcountdown700( today<oneNovember ? oneNovember.getTime() : oneDecember.getTime());
         handleSetAvailableTime(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
@@ -826,13 +826,10 @@ const NewBundleCard = ({
 
   useEffect(() => {
     getTokenData();
-    if (today > twentyfiveOctober) {
+    if (today > twentyfiveNovember) {
       setisAtlimit(true);
     }
 
-    if (today < oneOctober) {
-      setisAtlimit(true);
-    }
 
     convertPrice();
   }, [today]);
