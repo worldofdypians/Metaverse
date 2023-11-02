@@ -18,6 +18,7 @@ import ToolTip from "../../../../Caws/elements/ToolTip";
 import axios from "axios";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import triangle from "../ProfileCard/assets/triangle.svg";
+import bnbIcon from "./assets/bnbIcon.svg";
 
 const DailyBonusPopup = ({
   onclose,
@@ -442,8 +443,9 @@ const DailyBonusPopup = ({
   ];
 
   const showSingleRewardData = (chestID) => {
-    console.log(chestID)
+    console.log(chestID);
     const filteredResult = openedChests.find((el) => el.chestId === chestID);
+    console.log(filteredResult)
     setIsActive(chestID);
     if (filteredResult) {
       setLiveRewardData(filteredResult);
@@ -628,6 +630,30 @@ const DailyBonusPopup = ({
               </div>
               <div className="dailyreward-separator"></div>
               <div className="d-flex w-100 justify-content-center">
+                {/* <div className="d-flex flex-column">
+                  <span className="text-white">Select Chain</span>
+                  <div className="d-flex align-items-center gap-2">
+                    <button
+                      className={` ${
+                        chainId === 56
+                          ? "chain-active-btn"
+                          : "chain-inactive-btn"
+                      } d-flex gap-1 align-items-center`}
+                    >
+                      {" "}
+                      <img src={bnbIcon} alt="" /> BNB Chain
+                    </button>
+                    <button
+                      className={` ${
+                        chainId === 204
+                          ? "chain-active-btn"
+                          : "chain-inactive-btn"
+                      } d-flex gap-1 align-items-center`}
+                    >
+                      <img src={bnbIcon} alt="" /> opBNB Chain
+                    </button>
+                  </div>
+                </div> */}
                 <div
                   className={` ${
                     (chainId === 204 || chainId === 56) &&
@@ -1251,7 +1277,10 @@ const DailyBonusPopup = ({
             <div className="container px-3">
               <div className="d-flex flex-column" style={{ rowGap: "12px" }}>
                 {rewardData?.rewardType?.includes("Points") && (
-                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
+                  <div
+                    className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
+                    style={{ width: "fit-content" }}
+                  >
                     <div
                       className={`prizeswrapper py-2 px-3  ${
                         rewardData?.rewardType?.includes("Points") &&
@@ -1276,7 +1305,7 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("Points") &&
                                 "gray",
-                                fontSize:'14px'
+                              fontSize: "14px",
                             }}
                           >
                             {getFormattedNumber(rewardData?.reward, 0)} Points
@@ -1307,7 +1336,10 @@ const DailyBonusPopup = ({
                   </span>
                 )}
                 {rewardData?.rewardType?.includes("Money") && (
-                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
+                  <div
+                    className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
+                    style={{ width: "fit-content" }}
+                  >
                     <div
                       className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("Money") &&
@@ -1332,8 +1364,7 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("Money") &&
                                 "gray",
-                                fontSize:'14px'
-
+                              fontSize: "14px",
                             }}
                           >
                             ${getFormattedNumber(rewardData?.reward, 0)}
@@ -1366,7 +1397,10 @@ const DailyBonusPopup = ({
                 )}
 
                 {rewardData?.rewardType?.includes("NFT") && (
-                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
+                  <div
+                    className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
+                    style={{ width: "fit-content" }}
+                  >
                     <div
                       className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("NFT") &&
@@ -1391,10 +1425,8 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("NFT") &&
                                 "gray",
-                                fontSize:'14px'
-
+                              fontSize: "14px",
                             }}
-                            
                           >
                             Genesis Land NFT
                           </span>
@@ -1424,7 +1456,10 @@ const DailyBonusPopup = ({
                 )}
 
                 {rewardData?.rewardType?.includes("NFT") && (
-                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
+                  <div
+                    className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
+                    style={{ width: "fit-content" }}
+                  >
                     <div
                       className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("NFT") &&
@@ -1434,7 +1469,6 @@ const DailyBonusPopup = ({
                         filter:
                           !rewardData?.rewardType?.includes("NFT") &&
                           "grayscale(1)",
-                          
                       }}
                     >
                       <div className="d-flex align-items-center gap-2">
@@ -1450,8 +1484,7 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("NFT") &&
                                 "gray",
-                                fontSize:'14px'
-
+                              fontSize: "14px",
                             }}
                           >
                             CAWS NFT
@@ -1483,7 +1516,10 @@ const DailyBonusPopup = ({
                 )}
 
                 {rewardData?.rewardType?.includes("NFT") && (
-                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
+                  <div
+                    className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
+                    style={{ width: "fit-content" }}
+                  >
                     <div
                       className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("NFT") &&
@@ -1508,8 +1544,7 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("NFT") &&
                                 "gray",
-                                fontSize:'14px'
-
+                              fontSize: "14px",
                             }}
                           >
                             Beta Pass NFT
@@ -1541,7 +1576,10 @@ const DailyBonusPopup = ({
                 )}
 
                 {rewardData?.rewardType?.includes("LargeMoney") && (
-                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
+                  <div
+                    className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
+                    style={{ width: "fit-content" }}
+                  >
                     <div
                       className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("LargeMoney") &&
@@ -1567,8 +1605,7 @@ const DailyBonusPopup = ({
                                 !rewardData?.rewardType?.includes(
                                   "LargeMoney"
                                 ) && "gray",
-                                fontSize:'14px'
-
+                              fontSize: "14px",
                             }}
                           >
                             $0 Reward

@@ -173,7 +173,13 @@ const ChestItem = ({
           : "reward-chest-closed"
       } position-relative d-flex flex-column align-items-center justify-content-center gap-2`}
       style={{
-        pointerEvents: rewardTypes === "premium" && !isPremium && "none",
+        pointerEvents:
+          (rewardTypes === "premium" && !isPremium) ||
+          ((disableBtn ||
+            (chainId !== 204 && chainId !== 56) ||
+            !coinbase ||
+            (rewardTypes === "premium" && !isPremium)) &&
+            "none"),
       }}
       onClick={handleChestClick}
     >
