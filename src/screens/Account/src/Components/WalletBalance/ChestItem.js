@@ -56,61 +56,110 @@ const ChestItem = ({
       window.DAILY_BONUS_ABI,
       window.config.daily_bonus_address
     );
+
+    const daily_bonus_contract_bnb = new window.web3.eth.Contract(
+      window.DAILY_BONUS_BNB_ABI,
+      window.config.daily_bonus_bnb_address
+    );
+
     // console.log(daily_bonus_contract);
+    if (chainId === 204) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          // .then(() => {
+          //   setOpenRandom(Math.floor(Math.random() * 2) + 1);
+          //   setTimeout(() => {
+          //     onOpenChest();
+          //     setchestStatus("success");
+          //     // setIsChestOpen(true);
+          //     onLoadingChest(false);
+          //   }, 3000);
+          // })
+          .then((data) => {
+            getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            setchestStatus("initial");
+            onLoadingChest(false);
 
-    if (rewardTypes === "premium" && isPremium) {
-      await daily_bonus_contract.methods
-        .openPremiumChest()
-        .send({
-          from: address,
-        })
-        // .then(() => {
-        //   setOpenRandom(Math.floor(Math.random() * 2) + 1);
-        //   setTimeout(() => {
-        //     onOpenChest();
-        //     setchestStatus("success");
-        //     // setIsChestOpen(true);
-        //     onLoadingChest(false);
-        //   }, 3000);
-        // })
-        .then((data) => {
-          getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
-        })
-        .catch((e) => {
-          window.alertify.error(e?.message);
-          setchestStatus("initial");
-          onLoadingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        // console.log("standard");
+        await daily_bonus_contract.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            setchestStatus("initial");
+            onLoadingChest(false);
+          });
+      }
+    } else if (chainId === 56) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract_bnb.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          // .then(() => {
+          //   setOpenRandom(Math.floor(Math.random() * 2) + 1);
+          //   setTimeout(() => {
+          //     onOpenChest();
+          //     setchestStatus("success");
+          //     // setIsChestOpen(true);
+          //     onLoadingChest(false);
+          //   }, 3000);
+          // })
+          .then((data) => {
+            getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            setchestStatus("initial");
+            onLoadingChest(false);
 
-          console.error(e);
-        });
-    } else if (rewardTypes === "standard") {
-      // console.log("standard");
-      await daily_bonus_contract.methods
-        .openChest()
-        .send({
-          from: address,
-        })
-        .then((data) => {
-          getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
-        })
-        .catch((e) => {
-          console.error(e);
-          window.alertify.error(e?.message);
-          setchestStatus("initial");
-          onLoadingChest(false);
-        });
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        // console.log("standard");
+        await daily_bonus_contract_bnb.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            setchestStatus("initial");
+            onLoadingChest(false);
+          });
+      }
     }
   };
 
   const handleChestClick = () => {
     if (!open && !ischestOpen) {
       handleOpenChest();
-    }
-    else{
-        handleShowRewards(chestId);
+      handleShowRewards(100);
+    } else {
+      handleShowRewards(chestId);
     }
   };
-
 
   return (
     <div
@@ -189,7 +238,7 @@ const ChestItem = ({
           style={{
             cursor:
               disableBtn ||
-              chainId !== 204 ||
+              (chainId !== 204 && chainId !== 56) ||
               !coinbase ||
               (rewardTypes === "premium" && !isPremium)
                 ? "not-allowed"
@@ -205,7 +254,7 @@ const ChestItem = ({
             style={{
               pointerEvents:
                 disableBtn ||
-                chainId !== 204 ||
+                (chainId !== 204 && chainId !== 56) ||
                 !coinbase ||
                 (rewardTypes === "premium" && !isPremium)
                   ? "none"

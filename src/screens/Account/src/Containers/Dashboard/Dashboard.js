@@ -106,6 +106,7 @@ function Dashboard({
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
   const [showNfts, setShowNfts] = useState(false);
   const [showWalletModal, setshowWalletModal] = useState(false);
+  const [ goldenPassRemainingTime ,setGoldenPassRemainingTime] = useState()
   const [stakes, setStakes] = useState([]);
   const [landstakes, setLandStakes] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -1225,7 +1226,6 @@ function Dashboard({
                         email={email}
                         username={data?.getPlayer?.displayName}
                         address={data?.getPlayer?.wallet?.publicAddress}
-                        
                         userId={data?.getPlayer?.playerId}
                         balance={dypBalancebnb}
                         availableTime={availableTime}
@@ -1247,6 +1247,7 @@ function Dashboard({
                         onPremiumClick={() => {
                           setgetPremiumPopup(true);
                         }}
+                        handleSetAvailableTime={(value)=>{setGoldenPassRemainingTime(value)}}
                       />
 
                       <NewWalletBalance
@@ -1484,7 +1485,7 @@ function Dashboard({
                             userId={data?.getPlayer?.playerId}
                             dypBalancebnb={dypBalancebnb}
                             address={data?.getPlayer?.wallet?.publicAddress}
-                            availableTime={availableTime}
+                            availableTime={goldenPassRemainingTime}
                             email={email}
                           />
                         </div>
@@ -2144,7 +2145,7 @@ function Dashboard({
                     src={rewardPopup}
                     alt=""
                     className="popup-linear2"
-                    loading="lazy"
+                    loading="eager"
                   />
 
                   <DailyBonusPopup

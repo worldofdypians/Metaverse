@@ -40,14 +40,15 @@ export const handleSwitchNetworkhook = async (chainID) => {
 
   const OPBNBPARAMS = {
     chainId: "0xcc", // A 0x-prefixed hexadecimal string
-    chainName: "opBNB Mainnet",
+     rpcUrls: ["https://opbnb.publicnode.com"],
+     chainName: "opBNB Mainnet",
     nativeCurrency: {
       name: "opBNB",
       symbol: "BNB", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://opbnb.publicnode.com"],
-    blockExplorerUrls: ["http://mainnet.opBNBscan.com/"],
+   
+    blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
   };
 
   const BASEPARAMS = {
@@ -89,7 +90,9 @@ export const handleSwitchNetworkhook = async (chainID) => {
       switchError.code === 4902 ||
       (chainID === "0x406" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2105" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0xcc" && switchError.code.toString().includes("32603"))
+      (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
+      (switchError.code === 4902 &&
+        switchError.message.includes("Unrecognized chainID"))
     ) {
       try {
         await ethereum.request({
