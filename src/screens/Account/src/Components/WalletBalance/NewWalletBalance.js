@@ -1564,11 +1564,12 @@ const NewWalletBalance = ({
       {showAllEvents && (
         <div className="col-12 py-lg-3">
           <div
-            className="purple-container position-relative p-3 p-lg-3 gap-2"
+            className="purple-container position-relative p-3 p-lg-3 gap-2 "
             style={{
               maxWidth: "100vw",
               width: "100%",
               display: windowSize.width > 786 ? "block" : "none",
+              border: "2px solid #080b2a",
             }}
             ref={releaseContent}
           >
@@ -2087,6 +2088,20 @@ const NewWalletBalance = ({
                 )} */}
                 <div className="col-12 px-0">
                   <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                    <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>50%</h6>
+                        <span>APR</span>
+                      </div>
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>ETH</h6>
+                        <span>Rewards</span>
+                      </div>
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>No Lock</h6>
+                        <span>Lock Time</span>
+                      </div>
+                    </div>
                     <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                       <div className="d-flex flex-column gap-4">
                         <div className="d-flex flex-column gap-2">
@@ -2147,6 +2162,20 @@ const NewWalletBalance = ({
                 )} */}
                 <div className="col-12 px-0">
                   <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                  <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>25%</h6>
+                        <span>APR</span>
+                      </div>
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>ETH</h6>
+                        <span>Rewards</span>
+                      </div>
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>No Lock</h6>
+                        <span>Lock Time</span>
+                      </div>
+                    </div>
                     <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                       <div className="d-flex flex-column gap-4">
                         <div className="d-flex flex-column gap-2">

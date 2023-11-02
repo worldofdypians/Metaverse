@@ -1148,10 +1148,14 @@
   }
 }
 
-.homecard{
+.homecard {
   border-radius: 8px;
-background: linear-gradient(148deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.05) 100%);
-backdrop-filter: blur(10px);
+  background: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(10px);
 }
 
 .upcoming-mint-wrapper {
@@ -1183,15 +1187,15 @@ backdrop-filter: blur(10px);
   }
 }
 
-.home-card-rewards-amount{
-  color: #FFEACE;
+.home-card-rewards-amount {
+  color: #ffeace;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
-.home-card-rewards-currency{
-  color: #FFEACE;
+.home-card-rewards-currency {
+  color: #ffeace;
   font-size: 12 px;
   font-style: normal;
   font-weight: 500;
@@ -1373,25 +1377,176 @@ backdrop-filter: blur(10px);
 }
 
 .caws-wod-stake-wrapper {
-  background-image: url("./assets/cawsWodBanner1.png");
-  background-size: 100% 100%;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #181b38 0.01%, #481150 168%);
+  position: relative;
+
   aspect-ratio: 4.52/1;
 
   @media screen and (max-width: 786px) {
     aspect-ratio: 0.63/1;
-    background-image: url("./assets/cawsWodBannerMobile.png");
+  }
+}
+
+.caws-wod-stake-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-image: url("./assets/landCawsStakeBg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/landCawsStakeBgMobile.png");
+    background-position: bottom;
   }
 }
 .wod-stake-wrapper {
-  background-image: url("./assets/wodBanner1.png");
-  background-size: 100% 100%;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #181b38 0%, #76473c 168.67%);
+  position: relative;
+
   aspect-ratio: 4.52/1;
 
   @media screen and (max-width: 786px) {
     aspect-ratio: 0.63/1;
-    background-image: url("./assets/wodBannerMobile.png");
   }
 }
+
+.wod-stake-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-image: url("./assets/landStakeBg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/landStakeBgMobile.png");
+    background-position: bottom;
+  }
+}
+
+.stake-stats-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 24%;
+  margin: auto;
+  height: fit-content;
+  @media screen and (max-width: 786px) {
+    right: 0;
+    left: 0;
+    bottom: -25%;
+  }
+}
+
+.stake-stats-item {
+  position: relative;
+  width: 70px;
+  height: 50px;
+  border-radius: 8px;
+  background: rgba(8, 11, 42, 0.25);
+  backdrop-filter: blur(3.7028565406799316px);
+  h6 {
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin-bottom: 0;
+  }
+
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+.stake-stats-item-2 {
+  position: relative;
+  width: 100px;
+  height: 65px;
+  border-radius: 8px;
+  background: rgba(8, 11, 42, 0.25);
+  backdrop-filter: blur(3.7028565406799316px);
+  h6 {
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin-bottom: 0;
+    @media screen and (max-width: 786px) {
+      font-size: 12px;
+    }
+  }
+
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    @media screen and (max-width: 786px) {
+      font-size: 10px;
+    }
+  }
+  @media screen and (max-width: 786px) {
+    width: 70px;
+    height: 50px;
+  }
+}
+
+.stake-stats-item:nth-child(1) {
+  left: 15px;
+  @media screen and (max-width: 786px) {
+    left: 0;
+  }
+}
+.stake-stats-item:nth-child(3) {
+  right: 15px;
+  @media screen and (max-width: 786px) {
+    right: 0;
+  }
+}
+.stake-stats-item-2:nth-child(1) {
+  left: 15px;
+  @media screen and (max-width: 786px) {
+    left: 0;
+  }
+}
+.stake-stats-item-2:nth-child(3) {
+  right: 15px;
+  @media screen and (max-width: 786px) {
+    right: 0;
+  }
+}
+
+// .wod-stake-wrapper {
+//   background-image: url("./assets/wodBanner1.png");
+//   background-size: 100% 100%;
+//   aspect-ratio: 4.52/1;
+
+//   @media screen and (max-width: 786px) {
+//     aspect-ratio: 0.63/1;
+//     background-image: url("./assets/wodBannerMobile.png");
+//   }
+// }
 
 .caws-wod-stake-wrapper2 {
   background-image: url("./assets/cawsWodBannerSmall.png");
@@ -3307,12 +3462,16 @@ backdrop-filter: blur(10px);
   line-height: 24px;
   letter-spacing: -0.18px;
 }
-.upcoming-daily-bonus{
+.upcoming-daily-bonus {
   border-radius: 20px;
-background: linear-gradient(90deg, #181B38 0%, #47352F 168.67%) !important;
+  background: linear-gradient(90deg, #181b38 0%, #47352f 168.67%) !important;
 }
 
-.base-upcoming-mint-wrapper{
+.base-upcoming-mint-wrapper {
   border-radius: 20px;
-background: linear-gradient(90deg, #181B38 0%, rgba(16, 93, 255, 0.5) 168.67%);
+  background: linear-gradient(
+    90deg,
+    #181b38 0%,
+    rgba(16, 93, 255, 0.5) 168.67%
+  );
 }
