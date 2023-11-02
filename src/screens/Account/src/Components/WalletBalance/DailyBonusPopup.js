@@ -318,6 +318,36 @@ const DailyBonusPopup = ({
       closedImg: "cyanCrystal",
       chestId: 5,
     },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "greenCrystal",
+      chestId: 6,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "blueCrystal",
+      chestId: 7,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "yellowCrystal",
+      chestId: 8,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "purpleCrystal",
+      chestId: 9,
+    },
+    {
+      open: false,
+      chestTitle: "Crystal Chest",
+      closedImg: "cyanCrystal",
+      chestId: 10,
+    },
   ];
 
   const dummyRewards = [
@@ -668,9 +698,9 @@ const DailyBonusPopup = ({
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
-                    chestTitle={"Crystal Chest"}
+                    chestTitle={dummyPremiums[index].chestTitle}
                     open={item.isOpened}
-                    closedImg={"greenCrystal"}
+                    closedImg={dummyPremiums[index].closedImg}
                     rewardTypes={rewardTypes}
                     isPremium={isPremium}
                     address={address}
