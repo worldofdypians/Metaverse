@@ -2247,7 +2247,7 @@
 .event-popup-item {
   // width: 20% !important;
   border-radius: 10px;
-  border: 1px solid #8e97cd;
+  border: 2px solid #8e97cd;
   background: rgba(23, 25, 50, 0.4);
   box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
   cursor: pointer;
@@ -2276,7 +2276,7 @@
 .event-popup-item-2 {
   min-height: 90px;
   border-radius: 10px;
-  border: 1px solid #8e97cd;
+  border: 2px solid #8e97cd;
   background: rgba(23, 25, 50, 0.4);
   box-shadow: 0px 0px 8px 0px rgba(142, 151, 205, 0.15);
   p {
@@ -2289,11 +2289,11 @@
 }
 
 .event-popup-item:hover {
-  border: 1px solid #7dd9af;
+  border: 2px solid #7dd9af;
 }
 
 .selected-popup-item {
-  border: 1px solid #7dd9af !important;
+  border: 2px solid #25e08c !important;
 }
 
 @media screen and (max-width: 786px) {
