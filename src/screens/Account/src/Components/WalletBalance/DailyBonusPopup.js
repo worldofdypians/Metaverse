@@ -442,6 +442,7 @@ const DailyBonusPopup = ({
   ];
 
   const showSingleRewardData = (chestID) => {
+    console.log(chestID)
     const filteredResult = openedChests.find((el) => el.chestId === chestID);
     setIsActive(chestID);
     if (filteredResult) {
@@ -788,7 +789,7 @@ const DailyBonusPopup = ({
                 </span>
                 <div className="container px-3">
                   <div className="row" style={{ rowGap: "10px" }}>
-                    {/* <div className="prizeswrapper  col-12 col-lg-4">
+                    {/* <div className="prizeswrapper  col-12">
                     <div className="d-flex align-items-center gap-2">
                       <img
                         src={pointsIcon}
@@ -1217,11 +1218,16 @@ const DailyBonusPopup = ({
         <OutsideClickHandler onOutsideClick={() => setRewardPopup(false)}>
           <div
             className="popup-wrapper popup-active p-4"
-            style={{ width: "40%" }}
+            style={{ width: "fit-content" }}
           >
-            <div className="d-flex align-items-center justify-content-between mb-5">
+            <div className="d-flex align-items-center justify-content-between mb-3 gap-4">
               <div></div>
-              <h6 className="reward-prize-title mb-0">You won</h6>
+              <h6 className="reward-prize-title mb-0 font-organetto">
+                You{" "}
+                <span className="font-organetto" style={{ color: "#8C56FF" }}>
+                  won
+                </span>
+              </h6>
               <img
                 src={xMark}
                 style={{ cursor: "pointer" }}
@@ -1243,11 +1249,11 @@ const DailyBonusPopup = ({
         ))}
        </div> */}
             <div className="container px-3">
-              <div className="row mb-5" style={{ rowGap: "12px" }}>
+              <div className="d-flex flex-column" style={{ rowGap: "12px" }}>
                 {rewardData?.rewardType?.includes("Points") && (
-                  <div className="col-12 col-lg-4">
+                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
                     <div
-                      className={`prizeswrapper ${
+                      className={`prizeswrapper py-2 px-3  ${
                         rewardData?.rewardType?.includes("Points") &&
                         "prizeswrapper-premium"
                       } `}
@@ -1270,6 +1276,7 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("Points") &&
                                 "gray",
+                                fontSize:'14px'
                             }}
                           >
                             {getFormattedNumber(rewardData?.reward, 0)} Points
@@ -1293,10 +1300,16 @@ const DailyBonusPopup = ({
                     </div>
                   </div>
                 )}
+                {rewardData?.rewardType?.includes("Points") && (
+                  <span className="text-white d-flex m-auto reward-subtitle">
+                    Congratulations, you have earned{" "}
+                    {getFormattedNumber(rewardData?.reward, 0)} Points.
+                  </span>
+                )}
                 {rewardData?.rewardType?.includes("Money") && (
-                  <div className="col-12 col-lg-4">
+                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
                     <div
-                      className={`prizeswrapper ${
+                      className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("Money") &&
                         "prizeswrapper-premium"
                       } `}
@@ -1319,14 +1332,11 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("Money") &&
                                 "gray",
+                                fontSize:'14px'
+
                             }}
                           >
-                            ${" "}
-                            {
-                              (rewardData?.type?.includes("Money") &&
-                                getFormattedNumber(rewardData?.reward),
-                              0)
-                            }{" "}
+                            ${getFormattedNumber(rewardData?.reward, 0)}
                             Reward
                           </span>
                           {/* {randomArray.includes(index) && reward.premium && (
@@ -1348,11 +1358,17 @@ const DailyBonusPopup = ({
                     </div>
                   </div>
                 )}
+                {rewardData?.rewardType?.includes("Money") && (
+                  <span className="text-white d-flex m-auto reward-subtitle">
+                    Congratulations, you have earned $
+                    {getFormattedNumber(rewardData?.reward, 0)} Reward.
+                  </span>
+                )}
 
                 {rewardData?.rewardType?.includes("NFT") && (
-                  <div className="col-12 col-lg-4">
+                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
                     <div
-                      className={`prizeswrapper ${
+                      className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("NFT") &&
                         "prizeswrapper-premium"
                       } `}
@@ -1375,7 +1391,10 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("NFT") &&
                                 "gray",
+                                fontSize:'14px'
+
                             }}
+                            
                           >
                             Genesis Land NFT
                           </span>
@@ -1398,11 +1417,16 @@ const DailyBonusPopup = ({
                     </div>
                   </div>
                 )}
+                {rewardData?.rewardType?.includes("NFT") && (
+                  <span className="text-white d-flex m-auto reward-subtitle">
+                    Congratulations, you have earned Genesis Land NFT.
+                  </span>
+                )}
 
                 {rewardData?.rewardType?.includes("NFT") && (
-                  <div className="col-12 col-lg-4">
+                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
                     <div
-                      className={`prizeswrapper ${
+                      className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("NFT") &&
                         "prizeswrapper-premium"
                       } `}
@@ -1410,6 +1434,7 @@ const DailyBonusPopup = ({
                         filter:
                           !rewardData?.rewardType?.includes("NFT") &&
                           "grayscale(1)",
+                          
                       }}
                     >
                       <div className="d-flex align-items-center gap-2">
@@ -1425,6 +1450,8 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("NFT") &&
                                 "gray",
+                                fontSize:'14px'
+
                             }}
                           >
                             CAWS NFT
@@ -1450,9 +1477,15 @@ const DailyBonusPopup = ({
                 )}
 
                 {rewardData?.rewardType?.includes("NFT") && (
-                  <div className="col-12 col-lg-4">
+                  <span className="text-white d-flex m-auto reward-subtitle">
+                    Congratulations, you have earned CAWS NFT.
+                  </span>
+                )}
+
+                {rewardData?.rewardType?.includes("NFT") && (
+                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
                     <div
-                      className={`prizeswrapper ${
+                      className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("NFT") &&
                         "prizeswrapper-premium"
                       } `}
@@ -1475,6 +1508,8 @@ const DailyBonusPopup = ({
                               color:
                                 !rewardData?.rewardType?.includes("NFT") &&
                                 "gray",
+                                fontSize:'14px'
+
                             }}
                           >
                             Beta Pass NFT
@@ -1499,10 +1534,16 @@ const DailyBonusPopup = ({
                   </div>
                 )}
 
+                {rewardData?.rewardType?.includes("NFT") && (
+                  <span className="text-white d-flex m-auto reward-subtitle">
+                    Congratulations, you have earned Beta Pass NFT.
+                  </span>
+                )}
+
                 {rewardData?.rewardType?.includes("LargeMoney") && (
-                  <div className="col-12 col-lg-4">
+                  <div className="m-auto py-4 px-5 m-0 prizepopup-wrapper" style={{width: 'fit-content'}}>
                     <div
-                      className={`prizeswrapper ${
+                      className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("LargeMoney") &&
                         "prizeswrapper-premium"
                       } `}
@@ -1526,6 +1567,8 @@ const DailyBonusPopup = ({
                                 !rewardData?.rewardType?.includes(
                                   "LargeMoney"
                                 ) && "gray",
+                                fontSize:'14px'
+
                             }}
                           >
                             $0 Reward
@@ -1548,6 +1591,11 @@ const DailyBonusPopup = ({
                       </div>
                     </div>
                   </div>
+                )}
+                {rewardData?.rewardType?.includes("LargeMoney") && (
+                  <span className="text-white d-flex m-auto reward-subtitle">
+                    Congratulations, you have earned $0 Reward.
+                  </span>
                 )}
               </div>
             </div>

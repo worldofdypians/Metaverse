@@ -1706,7 +1706,7 @@ function Dashboard({
                                 </span>
                                 <div class="dropdown position relative">
                                   <button
-                                    class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle w-100`}
+                                    class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
                                     type="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
@@ -1797,7 +1797,7 @@ function Dashboard({
                                   My balance:{" "}
                                   {getFormattedNumber(
                                     tokenBalance / 10 ** tokenDecimals,
-                                    6
+                                    3
                                   )}{" "}
                                   {dropdownIcon.toUpperCase()}
                                 </span>
@@ -1811,7 +1811,7 @@ function Dashboard({
                                   <div className="d-flex align-items-center gap-2">
                                     <div class="dropdown position relative">
                                       <button
-                                        class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle w-100`}
+                                        class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
                                         type="button"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
