@@ -880,7 +880,7 @@ function App() {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
-              getMyNFTS(coinbase, "conflux").then((NFTS) => {
+              getMyNFTS(coinbase, "base").then((NFTS) => {
                 setmybaseNFTsCreated(NFTS);
                 settotalBaseNft(NFTS.length);
                 setbaseMintAllowed(0);
