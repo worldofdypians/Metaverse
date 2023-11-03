@@ -40,7 +40,7 @@ const MintPopup = ({ active, onClose, data }) => {
           <div class="d-flex align-items-center justify-content-center">
             <div class="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-Beta Pass NFT
+Base Beta Pass NFT
             </h6>
           </div>
           <h6 className="mint-popup-title">Live Free Minting</h6>
