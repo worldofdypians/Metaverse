@@ -38,7 +38,7 @@ const DailyBonusPopup = ({
   myNFTSCaws,
   myNFTSLand,
   myNFTSTimepiece,
-  allChests
+  allChests,
 }) => {
   const [rewardTypes, setRewardTypes] = useState("standard");
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -454,9 +454,9 @@ const DailyBonusPopup = ({
     const filteredResult = openedChests.find(
       (el) => el.chestId === chestID && allChests.indexOf(el) === chestIndex
     );
-   
+
     setIsActive(chestID);
-    setIsActiveIndex(chestIndex+1)
+    setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
       setLiveRewardData(filteredResult);
     } else {
@@ -622,7 +622,6 @@ const DailyBonusPopup = ({
           setLiveRewardData(premiumChests[0]);
           setIsActive(premiumChests[0].chestId);
           setIsActiveIndex(1);
-
         }
       } else setLiveRewardData([]);
     }
@@ -656,7 +655,10 @@ const DailyBonusPopup = ({
                   className={`reward-types ${
                     rewardTypes === "standard" ? "reward-types-active" : null
                   } w-50 d-flex align-items-center justify-content-center`}
-                  onClick={() => setRewardTypes("standard")}
+                  onClick={() => {
+                    setRewardTypes("standard");
+                    setLiveRewardData([]);
+                  }}
                 >
                   <h6 className="chest-event-title mb-0 font-organetto">
                     Standard
@@ -668,7 +670,10 @@ const DailyBonusPopup = ({
                       ? "reward-types-active-premium"
                       : null
                   } w-50 d-flex align-items-center justify-content-center`}
-                  onClick={() => setRewardTypes("premium")}
+                  onClick={() => {
+                    setRewardTypes("premium");
+                    setLiveRewardData([]);
+                  }}
                 >
                   <h6 className="chest-event-title mb-0 font-organetto">
                     Premium
@@ -677,6 +682,35 @@ const DailyBonusPopup = ({
               </div>
               <div className="dailyreward-separator"></div>
               <div className="d-flex w-100 justify-content-center">
+                {(chainId === 56 || chainId === 204) && (
+                  <div
+                    className="d-flex align-items-center gap-2 mt-2"
+                    style={{ width: "fit-content" }}
+                  >
+                    <button
+                      onClick={handleBnbPool}
+                      className={` ${
+                        chainId === 56
+                          ? "chain-active-btn"
+                          : "chain-inactive-btn"
+                      } d-flex gap-1 align-items-center`}
+                    >
+                      {" "}
+                      <img src={bnbIcon} alt="" /> BNB Chain
+                    </button>
+
+                    <button
+                      onClick={handleOpBnbPool}
+                      className={` ${
+                        chainId === 204
+                          ? "chain-active-btn"
+                          : "chain-inactive-btn"
+                      } d-flex gap-1 align-items-center`}
+                    >
+                      <img src={bnbIcon} alt="" /> opBNB Chain
+                    </button>
+                  </div>
+                )}
                 <div
                   className={` ${
                     (chainId === 204 || chainId === 56) &&
@@ -787,18 +821,17 @@ const DailyBonusPopup = ({
                       setRewardPopup(true);
                       onChestClaimed();
                       setIsActive(item.chestId);
-                      setIsActiveIndex(index + 1)
+                      setIsActiveIndex(index + 1);
                     }}
                     handleShowRewards={(value, value2) => {
                       showSingleRewardData(value, value2);
                       setIsActive(value);
-                      setIsActiveIndex(index + 1)
+                      setIsActiveIndex(index + 1);
                     }}
                     chainId={chainId}
                     coinbase={coinbase}
                     isActive={isActive}
                     isActiveIndex={isActiveIndex}
-
                   />
                 ))}
               </div>
@@ -825,16 +858,15 @@ const DailyBonusPopup = ({
                       setRewardPopup(true);
                       onChestClaimed();
                       setIsActive(item.chestId);
-                      setIsActiveIndex(index +1)
+                      setIsActiveIndex(index + 1);
                     }}
                     handleShowRewards={(value, value2) => {
                       showSingleRewardData(value, value2);
                       setIsActive(value);
-                      setIsActiveIndex(index + 1)
+                      setIsActiveIndex(index + 1);
                     }}
                     isActive={isActive}
                     isActiveIndex={isActiveIndex}
-
                     chainId={chainId}
                     coinbase={coinbase}
                   />
