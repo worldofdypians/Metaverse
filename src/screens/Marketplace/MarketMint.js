@@ -22,7 +22,7 @@ import nextArrow from "./assets/nextArrow1.svg";
 import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
-import baseActive from "./assets/baseActive.png";
+import baseActive from "./assets/baseActive.webp";
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
 import kucoinActive from "./assets/kucoinActive.png";
@@ -72,9 +72,9 @@ const MarketMint = ({
   cawsArray,
   calculateCaws,
   timepieceMetadata,
-  handleConfluxMint,
-  myConfluxNFTsCreated,
-  confluxMintAllowed,
+  handleBaseNftMint,
+  mybaseNFTsCreated,
+  baseMintAllowed,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -127,13 +127,13 @@ const MarketMint = ({
   //   mobileBg: "coingeckoMobileBg.png",
   // };
 
-  // const baseData = {
-  //   id: "base",
-  //   cardTitle: "Base Beta Pass",
-  //   title: "Base Beta Pass",
-  //   background: "base-mint-bg",
-  //   mobileBg: "baseMobileBg.png",
-  // };
+  const baseData = {
+    id: "base",
+    cardTitle: "Base Beta Pass",
+    title: "Base Beta Pass",
+    background: "base-mint-bg",
+    mobileBg: "baseMobileBg.png",
+  };
 
   const windowSize = useWindowSize();
   const params = useParams();
@@ -156,8 +156,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
-  const [selectedMint, setSelectedMint] = useState(timepieceData);
-  const [mintTitle, setMintTitle] = useState("timepiece");
+  const [selectedMint, setSelectedMint] = useState(baseData);
+  const [mintTitle, setMintTitle] = useState("base");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -168,7 +168,7 @@ const MarketMint = ({
 
     const confluxContract = new window.confluxWeb3.eth.Contract(
       window.CONFLUX_NFT_ABI,
-      window.config.nft_conflux_address
+      window.config.nft_base_address
     );
 
     const confluxresult = await confluxContract.methods.totalSupply().call();
@@ -177,13 +177,13 @@ const MarketMint = ({
 
 
   useEffect(() => {
-    //   if (params.mintId === "conflux") {
-    //     setSelectedMint(confluxData);
-    //   } else if (params.mintId === "timepiece") {
+      if (params.id === "base") {
+        setSelectedMint(baseData);
+      } else if (params.id === "timepiece") {
     setSelectedMint(timepieceData);
     setMintTitle("timepiece");
     getTotalSupply()
-    //   }
+      }
   }, []);
 
   useEffect(() => {
@@ -191,7 +191,7 @@ const MarketMint = ({
   }, []);
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
-  let countToExpireConflux = new Date("2023-10-24T11:00:00.000+02:00");
+  let countToExpireConflux = new Date("2023-11-17T11:00:00.000+02:00");
 
   const dummyCards = [
     // {
@@ -219,15 +219,15 @@ const MarketMint = ({
     //   class: "mint-3",
     // },
 
-    {
-      title: "Conflux Pass",
-      eventId: "conflux",
-      desc: "Gain entry to metaverse, and join exclusive Conflux event with special ticket.",
-      img: confluxActive,
-      data: confluxData,
-      class: "mint-4",
-      id: "conflux",
-    },
+    // {
+    //   title: "Conflux Pass",
+    //   eventId: "conflux",
+    //   desc: "Gain entry to metaverse, and join exclusive Conflux event with special ticket.",
+    //   img: confluxActive,
+    //   data: confluxData,
+    //   class: "mint-4",
+    //   id: "conflux",
+    // },
     // {
     //   title: "Coin98 Pass",
     //   eventId: "coin98",
@@ -244,14 +244,14 @@ const MarketMint = ({
     //   data: coingeckoData,
     //   class: "mint-6",
     // },
-    // {
-    //   title: "Base Pass",
-    //   eventId: "base",
-    //   desc: "Gain entry to metaverse, and join exclusive Base event with special ticket.",
-    //   img: baseActive,
-    //   data: baseData,
-    //   class: "mint-7",
-    // },
+    {
+      title: "Base Pass",
+      eventId: "base",
+      desc: "Gain entry to metaverse, and join exclusive Base event with special ticket.",
+      img: baseActive,
+      data: baseData,
+      class: "mint-7",
+    },
     {
       title: "Caws Timepiece",
       eventId: "timepiece",
@@ -437,11 +437,11 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
-        } else if (selectedMint.id === "conflux") {
-          if (chainId !== 1030) {
+        } else if (selectedMint.id === "base") {
+          if (chainId !== 8453) {
             setactiveButton(false);
-            setStatus("Switch to Conflux Network to continue minting.");
-          } else if (chainId === 1030) {
+            setStatus("Switch to Base Network to continue minting.");
+          } else if (chainId === 8453) {
             setactiveButton(true);
             setStatus("");
           }
@@ -453,7 +453,7 @@ const MarketMint = ({
   useEffect(() => {
     getTimepieceLatestMint();
     getConfluxLatestMint();
-  }, [myConfluxNFTsCreated, totalCreated]);
+  }, [mybaseNFTsCreated, totalCreated]);
 
   useEffect(() => {
     if (isConnected) {
@@ -468,8 +468,8 @@ const MarketMint = ({
       if (totalCreated > 0) {
         setshowBadge(true);
       }
-    } else if (coinbase && isConnected && selectedMint.id === "conflux") {
-      if (myConfluxNFTsCreated > 0) {
+    } else if (coinbase && isConnected && selectedMint.id === "base") {
+      if (mybaseNFTsCreated > 0) {
         setshowBadge(true);
       }
     }
@@ -536,9 +536,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                     {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
-                    </div>
+                    </div> */}
                     Upcoming
                   </h6>
                   <h6
@@ -555,8 +555,8 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  {/* <div className="pb-5 px-0 position-relative"> */}
-                    {/* {activeSlide > 0 && (
+                  <div className="pb-5 px-0 position-relative">
+                    {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
                       </div>
@@ -567,8 +567,8 @@ const MarketMint = ({
                           <div className="next-arrow-nft" onClick={firstNext}>
                             <img src={nextArrow} alt="1" />
                           </div>
-                        )} */}
-                    {/* {windowSize.width < 480 && (
+                        )}
+                    {windowSize.width < 480 && (
                       <>
                         <div className="prev-arrow-nft" onClick={firstPrev}>
                           <img src={nextArrow} alt="" />
@@ -590,8 +590,8 @@ const MarketMint = ({
                           mintTitle={mintTitle}
                         />
                       ))}
-                    </Slider> */}
-                  {/* </div> */}
+                    </Slider>
+                  </div>
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -605,10 +605,10 @@ const MarketMint = ({
                                 </div>
                               )}
                             {showBadge &&
-                              myConfluxNFTsCreated.length > 0 &&
-                              selectedMint.id === "conflux" && (
+                              mybaseNFTsCreated.length > 0 &&
+                              selectedMint.id === "base" && (
                                 <div className="totalcreated">
-                                  <span>{myConfluxNFTsCreated.length}</span>
+                                  <span>{mybaseNFTsCreated.length}</span>
                                 </div>
                               )}
                             <div
@@ -619,10 +619,13 @@ const MarketMint = ({
                                   : selectedMint.id === "timepiece" &&
                                     totalCreated === 0
                                   ? "genesis-land-empty"
-                                  : selectedMint.id === "conflux" &&
-                                    myConfluxNFTsCreated.length === 0
+                                  : selectedMint.id === "base" &&
+                                    mybaseNFTsCreated.length === 0
                                   ? "conflux-empty"
-                                  : "conflux-active"
+                                  : selectedMint.id === "base" &&
+                                    mybaseNFTsCreated.length === 0
+                                  ? "conflux-empty"
+                                  : "base-active"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
@@ -672,12 +675,12 @@ const MarketMint = ({
                               </button>
                             </div>
                           )}
-                          {selectedMint.id === "conflux" && (
+                          {selectedMint.id === "base" && (
                             <div
                               className={
                                 isConnected === false ||
                                 activeButton === false ||
-                                myConfluxNFTsCreated.length === 0
+                                mybaseNFTsCreated.length === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
@@ -686,20 +689,20 @@ const MarketMint = ({
                                 className={`btn ${
                                   isConnected === false ||
                                   activeButton === false ||
-                                  myConfluxNFTsCreated.length === 0
+                                  mybaseNFTsCreated.length === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
                                 } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
-                                  myConfluxNFTsCreated.length === 0
+                                  mybaseNFTsCreated.length === 0
                                 }
-                                to={`/marketplace/nft/${myConfluxNFTsCreated[0]}/${window.config.nft_conflux_address}`}
+                                to={`/marketplace/nft/${mybaseNFTsCreated[0]}/${window.config.nft_base_address}`}
                                 onClick={() => {
                                   updateViewCount(
-                                    myConfluxNFTsCreated[0],
-                                    window.config.nft_conflux_address
+                                    mybaseNFTsCreated[0],
+                                    window.config.nft_base_address
                                   );
                                 }}
                               >
@@ -1119,7 +1122,7 @@ const MarketMint = ({
                                   </span>
                                   <div className="d-flex align-items-center gap-2">
                                     <h6 className="latest-mint-number mb-0">
-                                      {confluxMintAllowed} NFT
+                                      {baseMintAllowed} NFT
                                     </h6>
                                   </div>
                                 </div>
@@ -1138,7 +1141,7 @@ const MarketMint = ({
                             )}
 
                             <span className="latest-mint-currency mb-0">
-                              *Important: You can only mint one Conflux Beta
+                              *Important: You can only mint one Base Beta
                               Pass NFT per wallet.
                             </span>
                             <hr className="gray-divider" />
@@ -1146,8 +1149,8 @@ const MarketMint = ({
                               className="limit-span position-relative d-flex align-items-center gap-2"
                               style={{ bottom: "0px" }}
                             >
-                              Available only on Conflux Network
-                              <img src={confluxLogo} alt="" />
+                              Available only on Base Network
+                              <img src={baseLogo} alt="" />
                             </span>
                             {mintStatus.length > 0 && (
                               <span
@@ -1167,11 +1170,11 @@ const MarketMint = ({
                                 <div
                                   className={
                                     (isConnected === true &&
-                                      chainId !== 1030) ||
+                                      chainId !== 8453) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
                                     mintloading === "error" ||
-                                    confluxMintAllowed === 0
+                                    baseMintAllowed === 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
@@ -1181,26 +1184,26 @@ const MarketMint = ({
                                       mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 1030) ||
+                                            chainId !== 8453) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
-                                          confluxMintAllowed === 0
+                                          baseMintAllowed === 0
                                         ? "outline-btn-disabled"
                                         : "filled-btn"
                                     }  px-4 w-100`}
                                     onClick={() => {
-                                      isConnected === true && chainId === 1030
-                                        ? handleConfluxMint()
+                                      isConnected === true && chainId === 8453
+                                        ? handleBaseNftMint()
                                         : showWalletConnect();
                                     }}
                                     disabled={
                                       mintloading === "error" ||
                                       mintloading === "success" ||
                                       (isConnected === true &&
-                                        chainId !== 1030) ||
+                                        chainId !== 8453) ||
                                       (status !== "Connect your wallet." &&
                                         status !== "") ||
-                                      confluxMintAllowed === 0
+                                      baseMintAllowed === 0
                                         ? true
                                         : false
                                     }
@@ -1212,7 +1215,7 @@ const MarketMint = ({
                                     }}
                                   >
                                     {(isConnected === false ||
-                                      chainId !== 1030) && (
+                                      chainId !== 8453) && (
                                       <img
                                         src={
                                           mouseOver === false
@@ -1228,11 +1231,11 @@ const MarketMint = ({
                                     )}{" "}
                                     {mintloading === "initial" &&
                                     isConnected === true &&
-                                    chainId === 1030 ? (
+                                    chainId === 8453 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
-                                      chainId === 1030 ? (
+                                      chainId === 8453 ? (
                                       <>
                                         <div
                                           className="spinner-border "
@@ -1241,16 +1244,16 @@ const MarketMint = ({
                                       </>
                                     ) : mintloading === "error" &&
                                       isConnected === true &&
-                                      chainId === 1030 ? (
+                                      chainId === 8453 ? (
                                       "Failed"
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
                                         (isConnected === true &&
-                                          chainId === 1030) ? (
+                                          chainId === 8453) ? (
                                       "Success"
                                     ) : isConnected === true &&
-                                      chainId !== 1030 ? (
+                                      chainId !== 8453 ? (
                                       " Switch Chain"
                                     ) : (
                                       "Connect wallet"
@@ -1267,76 +1270,76 @@ const MarketMint = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">Mints are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-                <div className="d-flex flex-column gap-4">
-                  {/* <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by Conflux
-                      </p>
-                    </div>
-                    <img
-                      src={confluxUpcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
-                  </div>
-                  <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by Coin98
-                      </p>
-                    </div>
-                    <img
-                      src={coin98Upcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
-                  </div>
-                  <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">
-                        CoinGecko Beta Pass
-                      </h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by
-                        CoinGecko
-                      </p>
-                    </div>
-                    <img
-                      src={coingeckoUpcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
-                  </div> */}
-                  <div className="upcoming-mint-wrapper base-upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Base Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted on Base
-                        Network
-                      </p>
-                    </div>
-                    <img
-                      src={baseUpcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">Mints are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
                   </div>
                 </div>
+                // <div className="d-flex flex-column gap-4">
+                //   {/* <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">Conflux Beta Pass</h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by Conflux
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={confluxUpcoming}
+                //       alt=""
+                //       className="upcoming-mint-img"
+                //     />
+                //   </div>
+                //   <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">Coin98 Beta Pass</h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by Coin98
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={coin98Upcoming}
+                //       alt=""
+                //       className="upcoming-mint-img"
+                //     />
+                //   </div>
+                //   <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">
+                //         CoinGecko Beta Pass
+                //       </h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by
+                //         CoinGecko
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={coingeckoUpcoming}
+                //       alt=""
+                //       className="upcoming-mint-img"
+                //     />
+                //   </div> */}
+                //   {/* <div className="upcoming-mint-wrapper base-upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">Base Beta Pass</h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted on Base
+                //         Network
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={baseUpcoming}
+                //       alt=""
+                //       className="upcoming-mint-img"
+                //     />
+                //   </div> */}
+                // </div>
                 // <div className="d-flex flex-column gap-4">
                 //   <div className="upcoming-mint-wrapper-conflux upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                 //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -1470,7 +1473,7 @@ const MarketMint = ({
           nftItem={
             selectedMint.id === "timepiece"
               ? timepieceMetadata
-              : myConfluxNFTsCreated
+              : mybaseNFTsCreated
           }
           open={viewCollection}
           type={selectedMint.id}
