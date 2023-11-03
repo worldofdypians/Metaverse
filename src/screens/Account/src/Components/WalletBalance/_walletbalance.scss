@@ -795,13 +795,15 @@
   position: relative;
 }
 
-.reward-chest-open, .reward-chest-open-active {
+.reward-chest-open,
+.reward-chest-open-active {
   background-image: url("./assets/chestBgOpen.svg");
   background-size: 100% 100%;
   cursor: pointer;
 }
 
-.reward-chest-open:hover, .reward-chest-open-active {
+.reward-chest-open:hover,
+.reward-chest-open-active {
   filter: drop-shadow(0px 0px 6px #dfb625);
 }
 
@@ -1163,40 +1165,29 @@
   }
 }
 
-.chain-active-btn {
+.chain-active-btn,
+.chain-inactive-btn:hover {
   border-radius: 12px;
-  border: 1px solid #dba122;
-  background: linear-gradient(
-    270deg,
-    rgba(219, 161, 34, 0) 38.72%,
-    rgba(219, 161, 34, 0.4) 104.23%
-  );
+  border: 1px solid #ed8225;
+  background: rgba(237, 130, 37, 0.4);
   color: #fff;
   font-size: 12px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
-  letter-spacing: 1.05px;
-  text-transform: uppercase;
+  padding: 5px 10px;
 }
 
 .chain-inactive-btn {
-  background: linear-gradient(
-    270deg,
-    rgba(90, 90, 90, 0) 38.72%,
-    rgba(90, 90, 90, 0.4) 104.23%
-  );
-  // clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
-  padding: 10px;
   border-radius: 12px;
-  border: 1px solid #000;
+  border: 1px solid rgba(237, 130, 37, 0.4);
+  background: rgba(237, 130, 37, 0.4);
   color: #fff;
   font-size: 12px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
-  letter-spacing: 1.05px;
-  text-transform: uppercase;
+  padding: 5px 10px;
 }
 
 .prizeswrapper-premium {
@@ -2196,12 +2187,12 @@
 
 .reward-subtitle {
   text-align: center;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    display: flex;
-    width: fit-content;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  width: fit-content;
 }
 
 .ready-border {
@@ -2368,9 +2359,8 @@
   }
 }
 
-
-.daily-error-text-wrapper{
+.daily-error-text-wrapper {
   border-radius: 8px;
-background: rgba(237, 130, 37, 0.20);
-width: fit-content;
+  background: rgba(237, 130, 37, 0.2);
+  width: fit-content;
 }

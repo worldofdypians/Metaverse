@@ -161,6 +161,8 @@ function Dashboard({
   const [tokenDecimals, settokenDecimals] = useState(1);
   const [claimedChests, setclaimedChests] = useState(0);
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
+  const [allChests, setallChests] = useState(0);
+
 
   const [count, setCount] = useState(0);
 
@@ -482,6 +484,7 @@ function Dashboard({
         setPremiumChests(premiumChestsArray);
         setclaimedChests(openedStandardChests.length);
         setclaimedPremiumChests(openedPremiumChests.length);
+        setallChests(chestOrder)
       }
     }
   };
@@ -2255,6 +2258,12 @@ function Dashboard({
                     openedChests={openedChests}
                     chainId={chainId}
                     coinbase={coinbase}
+                    handleSwitchNetwork={handleSwitchNetwork}
+                    myNFTSCaws={MyNFTSCaws.length}
+                    myNFTSLand={MyNFTSLand.length}
+                    myNFTSTimepiece={MyNFTSTimepiece.length}
+                    allChests={allChests}
+
                   />
                 </div>
               </OutsideClickHandler>

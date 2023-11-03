@@ -22,6 +22,7 @@ const ChestItem = ({
   chainId,
   coinbase,
   isActive,
+  isActiveIndex,
 }) => {
   const [chestStatus, setchestStatus] = useState("initial");
   const [openRandom, setOpenRandom] = useState(1);
@@ -155,18 +156,32 @@ const ChestItem = ({
   const handleChestClick = () => {
     if (!open && !ischestOpen) {
       handleOpenChest();
-      handleShowRewards(100);
+      handleShowRewards(100, 100);
     } else {
-      handleShowRewards(chestId);
+      handleShowRewards(chestId,  rewardTypes === 'standard'? chestIndex - 1 : chestIndex + 9);
+      console.log();
     }
   };
+
+  useEffect(() => {
+    if (!isPremium && rewardTypes === "premium") {
+      setIsChestOpen(false);
+    }
+  }, [isPremium, rewardTypes]);
+
+  useEffect(() => {
+    setIsChestOpen(false);
+  }, [isPremium, rewardTypes]);
 
   return (
     <div
       className={` reward-chest ${
-        (open || ischestOpen) && isActive !== chestId
+        (open || ischestOpen) &&
+        (isActive !== chestId || isActiveIndex !== chestIndex)
           ? "reward-chest-open"
-          : (open || ischestOpen) && isActive === chestId
+          : (open || ischestOpen) &&
+            isActive === chestId &&
+            isActiveIndex === chestIndex
           ? "reward-chest-open-active"
           : !open && !ischestOpen && chestStatus === "loading"
           ? "reward-chest-closed-loading"
@@ -175,11 +190,11 @@ const ChestItem = ({
       style={{
         pointerEvents:
           (rewardTypes === "premium" && !isPremium) ||
-          ((disableBtn ||
-            (chainId !== 204 && chainId !== 56) ||
-            !coinbase ||
-            (rewardTypes === "premium" && !isPremium)) &&
-            "none"),
+          disableBtn ||
+          (chainId !== 204 && chainId !== 56 && !open && !ischestOpen) ||
+          !coinbase
+            ? "none"
+            : "auto",
       }}
       onClick={handleChestClick}
     >
@@ -244,7 +259,7 @@ const ChestItem = ({
           style={{
             cursor:
               disableBtn ||
-              (chainId !== 204 && chainId !== 56) ||
+              (chainId !== 204 && chainId !== 56 && !open && !ischestOpen) ||
               !coinbase ||
               (rewardTypes === "premium" && !isPremium)
                 ? "not-allowed"
