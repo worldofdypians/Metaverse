@@ -1611,7 +1611,7 @@ function Dashboard({
                                       alt=""
                                     />
                                     <span className="subscription-chain mb-0">
-                                      Ethereum Network
+                                      Ethereum
                                     </span>
                                   </div>
                                   <div className="d-flex align-items-center gap-2">
@@ -1634,7 +1634,7 @@ function Dashboard({
                                       style={{ width: 18, height: 18 }}
                                     />
                                     <span className="subscription-chain mb-0">
-                                      Base Chain
+                                      Base
                                     </span>
                                   </div>
 
@@ -1645,7 +1645,7 @@ function Dashboard({
                                       style={{ width: 18, height: 18 }}
                                     />
                                     <span className="subscription-chain mb-0">
-                                      Conflux Chain
+                                      Conflux
                                     </span>
                                   </div>
 
@@ -1827,7 +1827,7 @@ function Dashboard({
                                             src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                             alt=""
                                           />
-                                          {dropdownTitle}
+                                          {/* {dropdownTitle} */}
                                         </div>
                                         <img src={launchpadIndicator} alt="" />
                                       </button>
@@ -1982,7 +1982,7 @@ function Dashboard({
                                     approveStatus === "fail" || !coinbase
                                       ? "outline-btn-disabled"
                                       : "filled-btn"
-                                  } px-5`}
+                                  } px-4`}
                                   disabled={
                                     approveStatus === "fail" || !coinbase
                                       ? true
@@ -2005,7 +2005,7 @@ function Dashboard({
                                     isApproved === false
                                       ? "outline-btn-disabled"
                                       : "filled-btn"
-                                  } px-5`}
+                                  } px-4`}
                                   onClick={() => handleSubscribe()}
                                 >
                                   Buy

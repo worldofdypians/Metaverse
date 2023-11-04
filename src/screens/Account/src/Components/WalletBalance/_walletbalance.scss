@@ -785,6 +785,10 @@
   font-weight: 300;
   line-height: 13px; /* 108.333% */
   width: 70%;
+
+  @media only screen and (max-width: 991px) {
+    width: 100%;
+  }
 }
 
 .reward-chest {
@@ -1396,6 +1400,9 @@
 
 .subscribe-container {
   border-radius: 12px;
+  height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .purplediv {

@@ -681,7 +681,7 @@ const DailyBonusPopup = ({
                 </div>
               </div>
               <div className="dailyreward-separator"></div>
-              <div className="d-flex w-100 justify-content-center">
+              <div className="d-flex flex-column-reverse w-100 justify-content-center">
                 {(chainId === 56 || chainId === 204) && (
                   <div
                     className="d-flex align-items-center gap-2 mt-2"
