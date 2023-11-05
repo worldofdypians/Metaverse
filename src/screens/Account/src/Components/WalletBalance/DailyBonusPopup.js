@@ -627,6 +627,8 @@ const DailyBonusPopup = ({
     }
   }, [rewardTypes]);
 
+  // console.log(standardChests, dummyregularChests)
+
   return (
     <>
       <div
@@ -681,7 +683,7 @@ const DailyBonusPopup = ({
                 </div>
               </div>
               <div className="dailyreward-separator"></div>
-              <div className="d-flex flex-column-reverse w-100 justify-content-center">
+              <div className="d-flex flex-column-reverse w-100 justify-content-center align-items-center">
                 {(chainId === 56 || chainId === 204) && (
                   <div
                     className="d-flex align-items-center gap-2 mt-2"
@@ -872,7 +874,7 @@ const DailyBonusPopup = ({
                   />
                 ))}
               </div>
-            ) : rewardTypes === "standard" && !email ? (
+            ) : rewardTypes === "standard" && (!email || standardChests.length === 0) ? (
               <div className="rewardsgrid">
                 {dummyregularChests.map((item, index) => (
                   <ChestItem
