@@ -1144,10 +1144,14 @@
   }
 }
 
-.homecard{
+.homecard {
   border-radius: 8px;
-background: linear-gradient(148deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.05) 100%);
-backdrop-filter: blur(10px);
+  background: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(10px);
 }
 
 .upcoming-mint-wrapper {
@@ -1179,15 +1183,15 @@ backdrop-filter: blur(10px);
   }
 }
 
-.home-card-rewards-amount{
-  color: #FFEACE;
+.home-card-rewards-amount {
+  color: #ffeace;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
-.home-card-rewards-currency{
-  color: #FFEACE;
+.home-card-rewards-currency {
+  color: #ffeace;
   font-size: 12 px;
   font-style: normal;
   font-weight: 500;
@@ -1925,8 +1929,8 @@ backdrop-filter: blur(10px);
 }
 
 .past-conflux-mint-desc {
-  color: #FFF;
-  text-shadow: 0px 3px 4px rgba(144, 28, 119, 0.70);
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(144, 28, 119, 0.7);
   font-family: Poppins;
   font-size: 40px;
   font-style: normal;
@@ -3122,7 +3126,7 @@ backdrop-filter: blur(10px);
 }
 
 .homepage-mint-wrapper:nth-child(1) {
-  background: linear-gradient(90deg, #181b38 0%, #1d438d 100%)
+  background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
 }
 
 .homepage-mint-wrapper:nth-child(2) {
@@ -3152,12 +3156,21 @@ backdrop-filter: blur(10px);
   letter-spacing: 0.1px;
 }
 
-.upcoming-daily-bonus{
+.upcoming-daily-bonus {
   border-radius: 20px;
-background: linear-gradient(90deg, #181B38 0%, #47352F 168.67%) !important;
+  background: linear-gradient(90deg, #181b38 0%, #47352f 168.67%) !important;
 }
 
-.base-upcoming-mint-wrapper{
+.upcoming-doge-event {
   border-radius: 20px;
-background: linear-gradient(90deg, #181B38 0%, rgba(16, 93, 255, 0.5) 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #ac5426 168.67%) !important;
+}
+
+.base-upcoming-mint-wrapper {
+  border-radius: 20px;
+  background: linear-gradient(
+    90deg,
+    #181b38 0%,
+    rgba(16, 93, 255, 0.5) 168.67%
+  );
 }
