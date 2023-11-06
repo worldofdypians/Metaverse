@@ -1169,6 +1169,18 @@
   }
 }
 
+.paddingLeftCell {
+ padding-left: 40px !important;
+}
+
+.specialRow {
+  height: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+}
+
 .chain-active-btn,
 .chain-inactive-btn:hover {
   border-radius: 12px;
