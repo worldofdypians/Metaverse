@@ -513,9 +513,9 @@ const NewWalletBalance = ({
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [eventPopup, setEventPopup] = useState(false);
 
-  const [userRank, setUserRank] = useState("N/A");
+  const [userRank, setUserRank] = useState(0);
 
-  const [genesisRank, setGenesisRank] = useState("N/A");
+  const [genesisRank, setGenesisRank] = useState(0);
   const [records, setRecords] = useState([]);
   const [activeSlide, setActiveSlide] = useState();
   const [showNext, setShowNext] = useState();
@@ -1169,7 +1169,11 @@ const NewWalletBalance = ({
       setFinished(true);
     }
 
-    if (claimedChests === 10 && claimedPremiumChests === 10 && isPremium) {
+    else if (claimedChests === 10 && claimedPremiumChests === 0 && isPremium) {
+      setFinished(false);
+    }
+
+    else if (claimedChests === 10 && claimedPremiumChests === 10 && isPremium) {
       setFinished(true);
     }
   }, [claimedChests, claimedPremiumChests, isPremium]);
@@ -1809,7 +1813,7 @@ const NewWalletBalance = ({
                 <hr className="linear-divider" />
                 <div className="d-flex align-items-center justify-content-between">
                   <span className="my-special-rewards mb-0">My Rewards</span>
-                  <h6 className="my-special-rewards-value mb-0">$12</h6>
+                  <h6 className="my-special-rewards-value mb-0">$0.00</h6>
                 </div>
               </>
             )}
