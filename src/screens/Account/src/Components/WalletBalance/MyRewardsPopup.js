@@ -30,12 +30,6 @@ const MyRewardsPopup = ({
   const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
 
   const [genesisData, setgenesisData] = useState(0);
-
-  const [previousVersion, setpreviousVersion] = useState(0);
-  const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
-  const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
-  const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
-
   const [bundlesBought, setbundlesBought] = useState(0);
 
   const [userEarnUsdPrevious, setuserEarnUsdPrevious] = useState(0);
@@ -308,7 +302,7 @@ const MyRewardsPopup = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      setpreviousVersion(parseInt(result.data.data.version));
+
 
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
@@ -339,7 +333,7 @@ const MyRewardsPopup = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      setpreviousWeeklyVersion(parseInt(result.data.data.version));
+   
 
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
@@ -369,7 +363,7 @@ const MyRewardsPopup = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      setpreviousMonthlyVersion(parseInt(result.data.data.version));
+
 
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
@@ -401,8 +395,6 @@ const MyRewardsPopup = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      setpreviousGenesisVersion(parseInt(result.data.data.version));
-
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -477,21 +469,11 @@ const MyRewardsPopup = ({
     fetchLeaderboardData(address);
   }, [address]);
 
-  // useEffect(() => {
-  //   if (
-  //     previousGenesisVersion > 0 &&
-  //     previousMonthlyVersion > 0 &&
-  //     previousVersion > 0 &&
-  //     previousWeeklyVersion > 0
-  //   ) {
-  //     fetchPreviousWinners();
-  //   }
-  // }, [
-  //   previousGenesisVersion,
-  //   previousMonthlyVersion,
-  //   previousVersion,
-  //   previousWeeklyVersion,
-  // ]);
+  useEffect(() => {
+    if (email && address) {
+      fetchTreasureHuntData(email, address);
+    }
+  }, [email, address]);
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -896,7 +878,8 @@ const MyRewardsPopup = ({
                 userEarnUsdPrevious +
                 cawsRewards +
                 wodCawsRewards +
-                wodRewards, 2
+                wodRewards,
+              2
             )}
           </h4>
           <span

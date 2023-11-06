@@ -1334,6 +1334,7 @@ function Dashboard({
                         }}
                         claimedChests={claimedChests}
                         claimedPremiumChests={claimedPremiumChests}
+                        availableTime={goldenPassRemainingTime}
                       />
                     </div>
                     <WalletBalance
