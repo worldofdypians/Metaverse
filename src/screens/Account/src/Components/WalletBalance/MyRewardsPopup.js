@@ -30,12 +30,6 @@ const MyRewardsPopup = ({
   const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
 
   const [genesisData, setgenesisData] = useState(0);
-
-  const [previousVersion, setpreviousVersion] = useState(0);
-  const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
-  const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
-  const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
-
   const [bundlesBought, setbundlesBought] = useState(0);
 
   const [userEarnUsdPrevious, setuserEarnUsdPrevious] = useState(0);
@@ -308,7 +302,6 @@ const MyRewardsPopup = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      setpreviousVersion(parseInt(result.data.data.version));
 
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
@@ -339,7 +332,6 @@ const MyRewardsPopup = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      setpreviousWeeklyVersion(parseInt(result.data.data.version));
 
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
@@ -369,7 +361,6 @@ const MyRewardsPopup = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      setpreviousMonthlyVersion(parseInt(result.data.data.version));
 
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
@@ -401,8 +392,6 @@ const MyRewardsPopup = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      setpreviousGenesisVersion(parseInt(result.data.data.version));
-
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -477,21 +466,11 @@ const MyRewardsPopup = ({
     fetchLeaderboardData(address);
   }, [address]);
 
-  // useEffect(() => {
-  //   if (
-  //     previousGenesisVersion > 0 &&
-  //     previousMonthlyVersion > 0 &&
-  //     previousVersion > 0 &&
-  //     previousWeeklyVersion > 0
-  //   ) {
-  //     fetchPreviousWinners();
-  //   }
-  // }, [
-  //   previousGenesisVersion,
-  //   previousMonthlyVersion,
-  //   previousVersion,
-  //   previousWeeklyVersion,
-  // ]);
+  useEffect(() => {
+    if (email && address) {
+      fetchTreasureHuntData(email, address);
+    }
+  }, [email, address]);
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -502,93 +481,20 @@ const MyRewardsPopup = ({
               <th className="col-3 myrewards-th border-0">Reward Category</th>
               <th className="col-3 myrewards-th border-0 text-center position-relative">
                 Available Rewards
-                {/* <OutsideClickHandler
-                  onOutsideClick={() => {
-                    setTooltip(false);
-                  }}
-                >
-                  <img
-                    src={greenInfo}
-                    alt=""
-                    className="tooltipicon headericon"
-                    onClick={() => {
-                      setTooltip(true);
-                    }}
-                  />
-                </OutsideClickHandler>
-                <div
-                  className={`tooltip-wrapper2 p-2 col-11 ${
-                    tooltip && "tooltip-active"
-                  }`}
-                  style={{ top: "-30px", right: "-175px" }}
-                >
-                  <p className="tooltip-content2 m-0">
-                    The amount of rewards available to be withdrawn.
-                  </p>
-                </div> */}
               </th>
               <th className="col-3 myrewards-th border-0 text-center position-relative">
                 Reward Type
-                {/* <OutsideClickHandler
-                  onOutsideClick={() => {
-                    setTooltip2(false);
-                  }}
-                >
-                  <img
-                    src={greenInfo}
-                    alt=""
-                    className="tooltipicon headericon"
-                    onClick={() => {
-                      setTooltip2(true);
-                    }}
-                    style={{ right: "20px" }}
-                  />
-                </OutsideClickHandler>
-                <div
-                  className={`tooltip-wrapper2 p-2 col-11 ${
-                    tooltip2 && "tooltip-active"
-                  }`}
-                  style={{ top: "-30px", right: "-175px" }}
-                >
-                  <p className="tooltip-content2 m-0">
-                    The type of reward distribution.
-                  </p>
-                </div> */}
               </th>
               <th className="col-3 myrewards-th border-0 text-center position-relative">
                 Total Earned
-                {/* <OutsideClickHandler
-                  onOutsideClick={() => {
-                    setTooltip3(false);
-                  }}
-                >
-                  <img
-                    src={greenInfo}
-                    alt=""
-                    className="tooltipicon headericon"
-                    onClick={() => {
-                      setTooltip3(true);
-                    }}
-                    style={{ right: "20px" }}
-                  />
-                </OutsideClickHandler>
-                <div
-                  className={`tooltip-wrapper2 p-2 col-11 ${
-                    tooltip3 && "tooltip-active"
-                  }`}
-                  style={{ top: "-30px", right: "-175px" }}
-                >
-                  <p className="tooltip-content2 m-0">
-                    The total rewards already distributed.
-                  </p>
-                </div> */}
               </th>
             </tr>
           </thead>
 
           <tbody className="position-relative">
-            <div className="table-separator position-absolute"></div>
-
+            <tr className="specialRow">
+            <div className="table-separator position-absolute p-0" style={{left: 0}}></div>
+</tr>
             <tr>
               <td className="myrewards-td-main border-0">
                 <img src={nftStake} alt="" style={{ width: 24, height: 24 }} />{" "}
@@ -601,7 +507,9 @@ const MyRewardsPopup = ({
             <div className="table-separator"></div>
 
             <tr>
-              <td className="myrewards-td-second border-0">Genesis Land</td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Genesis Land
+              </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
@@ -620,7 +528,9 @@ const MyRewardsPopup = ({
               </td>
             </tr>
             <tr>
-              <td className="myrewards-td-second border-0">WoD Land & CAWS </td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                WoD Land & CAWS{" "}
+              </td>
 
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
@@ -638,7 +548,9 @@ const MyRewardsPopup = ({
             </tr>
 
             <tr>
-              <td className="myrewards-td-second border-0">CAWS </td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                CAWS{" "}
+              </td>
 
               <td className="myrewards-td-second border-0 text-center">
                 {`$${getFormattedNumber(EthRewardsCawsPool * ethTokenData, 2)}`}
@@ -676,7 +588,9 @@ const MyRewardsPopup = ({
             <div className="table-separator"></div>
 
             <tr>
-              <td className="myrewards-td-second border-0">CoinGecko</td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                CoinGecko
+              </td>
               <td className="myrewards-td-second border-0 specialCell topborder text-center">
                 {previousRewards
                   ? "-"
@@ -697,7 +611,9 @@ const MyRewardsPopup = ({
               </td>
             </tr>
             <tr>
-              <td className="myrewards-td-second border-0">Conflux Network</td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Conflux Network
+              </td>
               <td className="myrewards-td-second border-0 specialCell text-center">
                 {previousRewards
                   ? "-"
@@ -718,7 +634,9 @@ const MyRewardsPopup = ({
               </td>
             </tr>
             <tr>
-              <td className="myrewards-td-second border-0">Gate.io</td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Gate.io
+              </td>
               <td className="myrewards-td-second border-0 specialCell text-center">
                 {previousRewards
                   ? "-"
@@ -739,7 +657,9 @@ const MyRewardsPopup = ({
               </td>
             </tr>
             <tr>
-              <td className="myrewards-td-second border-0">Base</td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Base
+              </td>
               <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
                 ${getFormattedNumber(baseEarnUSD, 2)}
               </td>
@@ -768,7 +688,7 @@ const MyRewardsPopup = ({
             <div className="table-separator"></div>
 
             <tr>
-              <td className="myrewards-td-second border-0">
+              <td className="myrewards-td-second border-0 paddingLeftCell">
                 Daily/Weekly/Monthly
               </td>
               <td className="myrewards-td-second border-0 specialCell topborder text-center">
@@ -811,7 +731,9 @@ const MyRewardsPopup = ({
             <div className="table-separator"></div>
 
             <tr>
-              <td className="myrewards-td-second border-0">Treasure Chests</td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Treasure Chests
+              </td>
               <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
                 {previousRewards ? "-" : "$120"}
               </td>
@@ -842,7 +764,9 @@ const MyRewardsPopup = ({
             <div className="table-separator"></div>
 
             <tr>
-              <td className="myrewards-td-second border-0">Genesis Gem</td>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Genesis Gem
+              </td>
               <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
                 {previousRewards ? "-" : `$${genesisData}`}
               </td>
@@ -896,7 +820,8 @@ const MyRewardsPopup = ({
                 userEarnUsdPrevious +
                 cawsRewards +
                 wodCawsRewards +
-                wodRewards, 2
+                wodRewards,
+              2
             )}
           </h4>
           <span

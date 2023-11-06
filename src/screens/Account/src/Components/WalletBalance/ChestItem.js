@@ -72,15 +72,15 @@ const ChestItem = ({
             from: address,
           })
           // .then(() => {
-          //   setOpenRandom(Math.floor(Math.random() * 2) + 1);
           //   setTimeout(() => {
-          //     onOpenChest();
+          //     // onOpenChest();
           //     setchestStatus("success");
           //     // setIsChestOpen(true);
           //     onLoadingChest(false);
           //   }, 3000);
           // })
           .then((data) => {
+            setOpenRandom(Math.floor(Math.random() * 2) + 1);
             getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
           })
           .catch((e) => {
@@ -115,7 +115,7 @@ const ChestItem = ({
             from: address,
           })
           // .then(() => {
-          //   setOpenRandom(Math.floor(Math.random() * 2) + 1);
+          // 
           //   setTimeout(() => {
           //     onOpenChest();
           //     setchestStatus("success");
@@ -124,6 +124,7 @@ const ChestItem = ({
           //   }, 3000);
           // })
           .then((data) => {
+              setOpenRandom(Math.floor(Math.random() * 2) + 1);
             getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
           })
           .catch((e) => {
@@ -141,6 +142,8 @@ const ChestItem = ({
             from: address,
           })
           .then((data) => {
+            setOpenRandom(Math.floor(Math.random() * 2) + 1);
+            
             getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
           })
           .catch((e) => {

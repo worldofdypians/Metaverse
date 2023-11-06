@@ -181,6 +181,7 @@ const NewWalletBalance = ({
   onBalanceClick,
   claimedChests,
   claimedPremiumChests,
+  availableTime,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -189,7 +190,6 @@ const NewWalletBalance = ({
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
-  
 
   const dummyConflux = {
     title: "Conflux",
@@ -266,7 +266,7 @@ const NewWalletBalance = ({
     id: "event4",
     date: "November 01, 2023",
     totalRewards: "$10,000 in ETH Rewards",
-    eventDuration:baseLastDay,
+    eventDuration: baseLastDay,
     backgroundImage: baseUpcoming,
     logo: base,
     date: "November 01, 2023",
@@ -274,7 +274,7 @@ const NewWalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
   };
 
   const dummyBetaPassData = [
@@ -437,8 +437,7 @@ const NewWalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
-
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
     {
@@ -498,12 +497,25 @@ const NewWalletBalance = ({
     },
   ];
 
+  const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
+
+  const dailyPrizesGolden = [10, 8, 5, 5, 5, 5, 5, 5, 5, 5];
+
+  const weeklyPrizes = [25, 15, 10, 8, 0, 0, 0, 0, 0, 0];
+
+  const weeklyPrizesGolden = [25, 15, 10, 8, 5, 5, 5, 5, 5, 5, 5];
+
+  const monthlyPrizes = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
+
+  const monthlyPrizesGolden = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
+
   const [dummyEvent, setDummyEvent] = useState({});
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [eventPopup, setEventPopup] = useState(false);
 
-  const [userRank, setUserRank] = useState("N/A");
-  const [genesisRank, setGenesisRank] = useState("N/A");
+  const [userRank, setUserRank] = useState(0);
+
+  const [genesisRank, setGenesisRank] = useState(0);
   const [records, setRecords] = useState([]);
   const [activeSlide, setActiveSlide] = useState();
   const [showNext, setShowNext] = useState();
@@ -537,6 +549,11 @@ const NewWalletBalance = ({
   const [baseUserPoints, setBaseUserPoints] = useState(0);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [baseEarnETH, setBaseEarnETH] = useState(0);
+  const [dailyplayerData, setdailyplayerData] = useState(0);
+  const [weeklyplayerData, setweeklyplayerData] = useState(0);
+  const [EthRewards, setEthRewards] = useState(0);
+  const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
+  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
 
   const slider = useRef(null);
   const [showFirstNext, setShowFirstNext] = useState(false);
@@ -548,6 +565,8 @@ const NewWalletBalance = ({
   const [selectedEvent, setSelectedEvent] = useState({});
   const [eventsPopup, setEventsPopup] = useState(false);
   const [stakePopup, setStakePopup] = useState(false);
+  const backendApi =
+    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
   const dummyEvents = [
     {
@@ -898,7 +917,16 @@ const NewWalletBalance = ({
         (item) => item.displayName === username
       );
 
-      setUserRank(testArray[0].position);
+      const userPosition = testArray[0].position + 1;
+      if (availableTime) {
+        setUserRank(
+          userPosition > 10
+            ? 0
+            : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+        );
+      } else if (!availableTime) {
+        setUserRank(userPosition > 10 ? 0 : monthlyPrizes[userPosition]);
+      }
     }
   };
 
@@ -919,8 +947,212 @@ const NewWalletBalance = ({
         (item) => item.displayName === username
       );
 
-      setGenesisRank(testArray[0].position);
+      setGenesisRank(testArray[0].statValue);
     }
+  };
+
+  const fetchDailyRecordsAroundPlayer = async () => {
+    const data = {
+      StatisticName: "DailyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position + 1;
+
+      if (availableTime) {
+        setdailyplayerData(
+          userPosition > 10
+            ? 0
+            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
+        );
+      } else if (!availableTime) {
+        setdailyplayerData(userPosition > 10 ? 0 : dailyPrizes[userPosition]);
+      }
+    }
+  };
+
+  const fetchWeeklyRecordsAroundPlayer = async () => {
+    const data = {
+      StatisticName: "WeeklyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position + 1;
+      if (availableTime) {
+        setweeklyplayerData(
+          userPosition > 10
+            ? 0
+            : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
+        );
+      } else if (!availableTime) {
+        setweeklyplayerData(userPosition > 10 ? 0 : weeklyPrizes[userPosition]);
+      }
+    }
+  };
+
+  const getStakesIds = async () => {
+    let stakenft = [];
+
+    if (address) {
+      const contract = new window.infuraWeb3.eth.Contract(
+        window.WOD_CAWS_ABI,
+        window.config.wod_caws_address
+      );
+      const allCawsStakes = await contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          if (result.length > 0) {
+            for (let i = 0; i < result.length; i++)
+              stakenft.push(parseInt(result[i]));
+            return stakenft;
+          }
+        });
+
+      return allCawsStakes;
+    }
+  };
+
+  const getStakesIdsLandPool = async () => {
+    if (address) {
+      let staking_contract = new window.infuraWeb3.eth.Contract(
+        window.LANDSTAKING_ABI,
+        window.config.landnftstake_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
+  const getStakesIdsCawsPool = async () => {
+    if (address) {
+      let staking_contract = new window.infuraWeb3.eth.Contract(
+        window.NFTSTAKING_ABI,
+        window.config.nftstaking_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
+  const calculateAllRewards = async () => {
+    let myStakes = await getStakesIds();
+    let result = 0;
+    const contract = new window.infuraWeb3.eth.Contract(
+      window.WOD_CAWS_ABI,
+      window.config.wod_caws_address
+    );
+    if (address) {
+      if (myStakes.length > 0) {
+        let rewards = await contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        let finalReward = 0;
+        for (let i = 0; i < rewards.length; i++) {
+          finalReward = rewards[i] / 1e18;
+          result = result + Number(finalReward);
+        }
+      }
+    }
+    setEthRewards(result);
+  };
+
+  const calculateAllRewardsLandPool = async () => {
+    let myStakes = await getStakesIdsLandPool();
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = new window.infuraWeb3.eth.Contract(
+      window.LANDSTAKING_ABI,
+      window.config.landnftstake_address
+    );
+    if (address) {
+      if (myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setEthRewardsLandPool(result);
+  };
+
+  const calculateAllRewardsCawsPool = async () => {
+    let myStakes = await getStakesIdsCawsPool();
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = new window.infuraWeb3.eth.Contract(
+      window.NFTSTAKING_ABI,
+      window.config.nftstaking_address
+    );
+    if (address) {
+      if (myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setEthRewardsCawsPool(result);
   };
 
   useEffect(() => {
@@ -937,11 +1169,24 @@ const NewWalletBalance = ({
       setFinished(true);
     }
 
-    if (claimedChests === 10 && claimedPremiumChests === 10 && isPremium) {
+    else if (claimedChests === 10 && claimedPremiumChests === 0 && isPremium) {
+      setFinished(false);
+    }
+
+    else if (claimedChests === 10 && claimedPremiumChests === 10 && isPremium) {
       setFinished(true);
     }
-  }, [claimedChests, claimedPremiumChests,isPremium]);
+  }, [claimedChests, claimedPremiumChests, isPremium]);
 
+  useEffect(() => {
+    if (address) {
+      calculateAllRewards();
+      calculateAllRewardsCawsPool();
+      calculateAllRewardsLandPool();
+      fetchDailyRecordsAroundPlayer();
+      fetchWeeklyRecordsAroundPlayer();
+    }
+  }, [address]);
 
   return (
     <>
@@ -1293,7 +1538,7 @@ const NewWalletBalance = ({
                       </span>
                       <div
                         className="yellow-progress-inner"
-                        style={{ width:  `${claimedPremiumChests}0%` }}
+                        style={{ width: `${claimedPremiumChests}0%` }}
                       ></div>
                     </div>
                   </div>
@@ -1321,7 +1566,7 @@ const NewWalletBalance = ({
                       </div>
                       {finished && (
                         <span className="timer-text mb-0">
-                          <Countdown date={midnight} renderer={renderer2} /> 
+                          <Countdown date={midnight} renderer={renderer2} />
                         </span>
                       )}
                     </div>
@@ -1377,10 +1622,24 @@ const NewWalletBalance = ({
 
                   <div className="my-total-rewards-wrapper d-flex flex-column align-items-center gap-2">
                     <h6 className="my-total-rewards mb-0 font-iceland">
-                      $435.25
+                      $
+                      {getFormattedNumber(
+                        weeklyplayerData +
+                          dailyplayerData +
+                          userRank +
+                          genesisRank +
+                          baseEarnUSD +
+                          confluxEarnUSD +
+                          gateEarnUSD +
+                          userEarnUsd +
+                          EthRewardsLandPool * ethTokenData +
+                          EthRewardsCawsPool * ethTokenData +
+                          EthRewards * ethTokenData,
+                        2
+                      )}
                     </h6>
                     <span className="my-total-earned mb-0 font-iceland">
-                      Total Earned
+                      Total Available
                     </span>
                   </div>
                   <div className="d-flex flex-column justify-content-between h-100 p-3">
@@ -1407,7 +1666,7 @@ const NewWalletBalance = ({
                         className="my-total-rewards mb-0 font-iceland"
                         style={{ fontSize: "20px" }}
                       >
-                        $435.25
+                        $0.00
                       </h6>
                       <span
                         className="my-total-earned mb-0 font-iceland"
@@ -1554,7 +1813,7 @@ const NewWalletBalance = ({
                 <hr className="linear-divider" />
                 <div className="d-flex align-items-center justify-content-between">
                   <span className="my-special-rewards mb-0">My Rewards</span>
-                  <h6 className="my-special-rewards-value mb-0">$12</h6>
+                  <h6 className="my-special-rewards-value mb-0">$0.00</h6>
                 </div>
               </>
             )}
@@ -1575,23 +1834,23 @@ const NewWalletBalance = ({
           >
             <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.map((item, index) => (
-               <NewBetaEventCard
-               data={item}
-               key={index}
-               onOpenPopup={() => {
-                 setEventPopup(true);
-                 setDummyEvent(item.popupInfo);
-               }}
-               userEarnUsd={
-                 item.title === "Conflux"
-                   ? confluxEarnUSD
-                   : item.title === "Gate.io"
-                   ? gateEarnUSD
-                   : item.title === "Base"
-                   ? baseEarnUSD
-                   : userEarnUsd
-               }
-             />
+                <NewBetaEventCard
+                  data={item}
+                  key={index}
+                  onOpenPopup={() => {
+                    setEventPopup(true);
+                    setDummyEvent(item.popupInfo);
+                  }}
+                  userEarnUsd={
+                    item.title === "Conflux"
+                      ? confluxEarnUSD
+                      : item.title === "Gate.io"
+                      ? gateEarnUSD
+                      : item.title === "Base"
+                      ? baseEarnUSD
+                      : userEarnUsd
+                  }
+                />
               ))}
             </Slider>
           </div>
@@ -2031,22 +2290,31 @@ const NewWalletBalance = ({
       {eventsPopup && (
         <OutsideClickHandler onOutsideClick={() => setEventsPopup(false)}>
           <div
-          className="popup-wrapper popup-active p-3"
-          style={{ width: "45%" }}
-        >
-          <div className="d-flex align-items-center justify-content-between w-100 mb-4">
-            <h6 className="popup-title-2 mb-0">Live Events</h6>
-            <img
-              src={xMark}
-              style={{ cursor: "pointer" }}
-              onClick={() => setEventsPopup(false)}
-              alt=""
-            />
-          </div>
-          <div className="event-popup-grid" >
-            {dummyEvents.map((item) => (
-              <div className={`p-2 event-popup-item ${selectedEvent.name === item.name && "selected-popup-item"} d-flex flex-column gap-2`} onClick={() => setSelectedEvent(item)}>
-                <img src={require(`./eventAssets/${item.img}.png`)} className="w-100 h-100" alt="" />
+            className="popup-wrapper popup-active p-3"
+            style={{ width: "45%" }}
+          >
+            <div className="d-flex align-items-center justify-content-between w-100 mb-4">
+              <h6 className="popup-title-2 mb-0">Live Events</h6>
+              <img
+                src={xMark}
+                style={{ cursor: "pointer" }}
+                onClick={() => setEventsPopup(false)}
+                alt=""
+              />
+            </div>
+            <div className="event-popup-grid">
+              {dummyEvents.map((item) => (
+                <div
+                  className={`p-2 event-popup-item ${
+                    selectedEvent.name === item.name && "selected-popup-item"
+                  } d-flex flex-column gap-2`}
+                  onClick={() => setSelectedEvent(item)}
+                >
+                  <img
+                    src={require(`./eventAssets/${item.img}.png`)}
+                    className="w-100 h-100"
+                    alt=""
+                  />
                   <h6 className="mb-0">{item.name}</h6>
                 </div>
               ))}
@@ -2162,7 +2430,7 @@ const NewWalletBalance = ({
                 )} */}
                 <div className="col-12 px-0">
                   <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
-                  <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
+                    <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
                       <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
                         <h6>25%</h6>
                         <span>APR</span>
