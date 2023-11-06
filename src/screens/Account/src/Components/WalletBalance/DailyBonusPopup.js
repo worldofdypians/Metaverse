@@ -651,7 +651,7 @@ const DailyBonusPopup = ({
                 gaming treasures.
               </p>
             </div>
-            <div className="d-flex flex-column mb-3">
+            <div className="d-flex flex-column mb-1">
               <div className="d-flex align-items-center justify-content-center w-100">
                 <div
                   className={`reward-types ${
@@ -716,8 +716,8 @@ const DailyBonusPopup = ({
                 <div
                   className={` ${
                     (chainId === 204 || chainId === 56) &&
-                    rewardTypes === "premium" &&
-                    isPremium &&
+                    ((rewardTypes === "premium" && isPremium) ||
+                      rewardTypes === "standard") &&
                     coinbase &&
                     email &&
                     address &&
@@ -874,7 +874,8 @@ const DailyBonusPopup = ({
                   />
                 ))}
               </div>
-            ) : rewardTypes === "standard" && (!email || standardChests.length === 0) ? (
+            ) : rewardTypes === "standard" &&
+              (!email || standardChests.length === 0) ? (
               <div className="rewardsgrid">
                 {dummyregularChests.map((item, index) => (
                   <ChestItem
