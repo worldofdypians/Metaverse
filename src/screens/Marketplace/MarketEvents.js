@@ -58,6 +58,8 @@ import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
+import upcomingDoge from "./assets/upcomingDoge.webp";
+
 import axios from "axios";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
@@ -137,83 +139,6 @@ const MarketEvents = ({
 
   const selected = useRef(null);
   const { email } = useAuth();
-  const dummyBetaPassData = [
-    {
-      title: "Conflux (CFX)",
-      logo: conflux,
-      eventStatus: "Live",
-      totalRewards: "$5,000 in CFX Rewards",
-      myEarnings: 120.45,
-      eventType: "Explore & Mine",
-      eventDate: "Ends in 28 days",
-      backgroundImage: confluxUpcoming,
-      popupInfo: {
-        title: "Conflux",
-        chain: "Conflux Network",
-        linkState: "conflux",
-        rewards: "CFX",
-        status: "Live",
-        id: "event1",
-        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
-      },
-    },
-    {
-      title: "Coin98 (C98)",
-      logo: coin98,
-      eventStatus: "Coming Soon",
-      totalRewards: "$5,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "April, 1, 2024",
-      backgroundImage: coin98Upcoming,
-      popupInfo: {
-        title: "Coin98 Pass",
-        chain: "BNB Chain",
-        linkState: "coin98",
-        rewards: "BNB",
-        status: "Coming Soon",
-        id: "event2",
-      },
-    },
-    {
-      title: "CoinGecko",
-      logo: coingecko,
-      eventStatus: "Expired",
-      totalRewards: "$5,000 in BNB Rewards",
-      myEarnings: 120.0,
-      eventType: "Explore & Mine",
-      eventDate: "Expired",
-      backgroundImage: coingeckoUpcoming,
-      popupInfo: {
-        title: "CoinGecko",
-        chain: "BNB Chain",
-        linkState: "coingecko",
-        rewards: "BNB",
-        status: "Coming Soon",
-        id: "event3",
-        learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      },
-    },
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Expired",
-      totalRewards: "$5,000 in BASE Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Expired",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        title: "Base Pass",
-        chain: "BNB Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-      },
-    },
-  ];
 
   const getTokenDatabnb = async () => {
     await axios
@@ -301,8 +226,7 @@ const MarketEvents = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
-
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
 
@@ -336,11 +260,11 @@ const MarketEvents = ({
     {
       title: "Conflux",
       logo: conflux,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "October 06, 2023",
+      eventDate: "Ended",
       backgroundImage: confluxUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -348,11 +272,11 @@ const MarketEvents = ({
         chain: "Conflux Network",
         linkState: "conflux",
         rewards: "CFX",
-        status: "Live",
+        status: "Expired",
         id: "event1",
         totalRewards: "$2,000 in CFX Rewards",
         eventDuration: confluxLastDay,
-        eventDate: "October 06, 2023",
+        eventDate: "Ended",
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
@@ -674,7 +598,7 @@ const MarketEvents = ({
     } else if (eventId === "treasure-hunt") {
       setSelectedPackage("treasure-hunt");
     }
-  }, []);
+  }, [eventId, activeTab]);
 
   useEffect(() => {
     if (
@@ -875,7 +799,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -935,20 +859,35 @@ const MarketEvents = ({
                 //     </span>
                 //   </div>
                 // </div>
-                <div className="upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                  <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                    <h6 className="upcoming-mint-title">Daily Bonus</h6>
-                    <p className="upcoming-mint-desc">
-                      Claim chests daily for a chance to win Game Points,
-                      exclusive NFTs, and exciting rewards! Don't miss out on
-                      your daily dose of gaming treasures.
-                    </p>
+                <div className="d-flex flex-column gap-4">
+                  <div className=" border-0 upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Daily Bonus</h6>
+                      <p className="upcoming-mint-desc">
+                        Claim chests daily for a chance to win Game Points,
+                        exclusive NFTs, and exciting rewards! Don't miss out on
+                        your daily dose of gaming treasures.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingDailyBonus}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
                   </div>
-                  <img
-                    src={upcomingDailyBonus}
-                    alt=""
-                    className="upcoming-mint-img"
-                  />
+                  <div className="border-0 upcoming-mint-wrapper upcoming-doge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Dogecoin</h6>
+                      <p className="upcoming-mint-desc">
+                      Join the Dogecoin event for a chance to grab a share of DOGE rewards.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingDoge}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
+                  </div>
                 </div>
                 // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                 //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
@@ -966,12 +905,33 @@ const MarketEvents = ({
                 // <BetaPassEvents />
               )}
               {activeTab === "past" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">
-                      There are no previous events!
-                    </h6>
-                  </div>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">
+                //       There are no previous events!
+                //     </h6>
+                //   </div>
+                // </div>
+                <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                  {dummyBetaPassData2.slice(3, 4).map((item, index) => (
+                    <BetaEventCard
+                      data={item}
+                      key={index}
+                      onOpenPopup={() => {
+                        setEventPopup(true);
+                        setDummyEvent(item.popupInfo);
+                      }}
+                      userEarnUsd={
+                        item.title === "Conflux"
+                          ? confluxEarnUSD
+                          : item.title === "Gate.io"
+                          ? gateEarnUSD
+                          : item.title === "Base"
+                          ? baseEarnUSD
+                          : userEarnUsd
+                      }
+                    />
+                  ))}
                 </div>
               )}
             </div>
@@ -1073,7 +1033,7 @@ const MarketEvents = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status !== "Live" && (
+                {dummyEvent?.status === "Coming Soon" && (
                   <div className="d-flex flex-column">
                     <span className="live-on">Live on</span>
                     <div className="d-flex align-items-center gap-2">
@@ -1452,7 +1412,7 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.status !== "Live" && (
+            {dummyEvent.status === "Coming Soon" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/gate`}>
                   <button className="btn get-beta-btn">Get Beta Pass</button>
