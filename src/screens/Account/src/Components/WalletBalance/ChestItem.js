@@ -115,7 +115,7 @@ const ChestItem = ({
             from: address,
           })
           // .then(() => {
-          // 
+          //
           //   setTimeout(() => {
           //     onOpenChest();
           //     setchestStatus("success");
@@ -124,7 +124,7 @@ const ChestItem = ({
           //   }, 3000);
           // })
           .then((data) => {
-              setOpenRandom(Math.floor(Math.random() * 2) + 1);
+            setOpenRandom(Math.floor(Math.random() * 2) + 1);
             getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
           })
           .catch((e) => {
@@ -143,7 +143,7 @@ const ChestItem = ({
           })
           .then((data) => {
             setOpenRandom(Math.floor(Math.random() * 2) + 1);
-            
+
             getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
           })
           .catch((e) => {
@@ -157,12 +157,17 @@ const ChestItem = ({
   };
 
   const handleChestClick = () => {
-    if (!open && !ischestOpen) {
-      handleOpenChest();
-      handleShowRewards(100, 100);
-    } else {
-      handleShowRewards(chestId,  rewardTypes === 'standard'? chestIndex - 1 : chestIndex + 9);
-      console.log();
+    if (!disableBtn) {
+      if (!open && !ischestOpen) {
+        handleOpenChest();
+        handleShowRewards(100, 100);
+      } else {
+        handleShowRewards(
+          chestId,
+          rewardTypes === "standard" ? chestIndex - 1 : chestIndex + 9
+        );
+        console.log();
+      }
     }
   };
 

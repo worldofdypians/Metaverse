@@ -464,7 +464,7 @@ const MyRewardsPopup = ({
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
-  }, [address]);
+  }, [address,email]);
 
   useEffect(() => {
     if (email && address) {
@@ -735,13 +735,13 @@ const MyRewardsPopup = ({
                 Treasure Chests
               </td>
               <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
-                {previousRewards ? "-" : "$120"}
+                {previousRewards ? "-" : "0"}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : " 0.022 WBNB"}
+                {previousRewards ? "-" : " 0"}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : "$500.00"}
+                {previousRewards ? "-" : "0"}
               </td>
             </tr>
 

@@ -54,6 +54,7 @@ import confluxPopupImage from "./assets/eventPopupImage.png";
 import Countdown from "react-countdown";
 import viewAllArrow from "./assets/viewAllArrow.svg";
 import BetaEventCard from "../../../../Marketplace/components/BetaEventCard";
+import ReCaptchaV2 from "react-google-recaptcha";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -638,19 +639,22 @@ const NewWalletBalance = ({
   const handleSubmit = async (e) => {
     setLoading(true);
     setErrors(validateUrl(mediaUrl));
+    const captchaToken = await recaptchaRef.current.executeAsync();
     if (Object.keys(validateUrl(mediaUrl)).length === 0) {
       const data = {
         email: email,
         url: mediaUrl,
         walletAddress: address,
+        username: username,
+        recaptcha: captchaToken,
       };
 
       if (email !== "" && mediaUrl !== "" && address !== "") {
         const send = await axios
-          .post("https://api.worldofdypians.com/api/new-submission", data)
+          .post("https://api.worldofdypians.com/api/submissions", data)
           .then(function (result) {
             console.log(result.data);
-            setSuccess(result.data.message);
+            setSuccess("Email sent successfully");
             return result.data;
           })
           .catch(function (error) {
@@ -1167,13 +1171,17 @@ const NewWalletBalance = ({
   useEffect(() => {
     if (claimedChests === 10 && claimedPremiumChests === 0 && !isPremium) {
       setFinished(true);
-    }
-
-    else if (claimedChests === 10 && claimedPremiumChests === 0 && isPremium) {
+    } else if (
+      claimedChests === 10 &&
+      claimedPremiumChests === 0 &&
+      isPremium
+    ) {
       setFinished(false);
-    }
-
-    else if (claimedChests === 10 && claimedPremiumChests === 10 && isPremium) {
+    } else if (
+      claimedChests === 10 &&
+      claimedPremiumChests === 10 &&
+      isPremium
+    ) {
       setFinished(true);
     }
   }, [claimedChests, claimedPremiumChests, isPremium]);
@@ -1187,6 +1195,8 @@ const NewWalletBalance = ({
       fetchWeeklyRecordsAroundPlayer();
     }
   }, [address]);
+
+  const recaptchaRef = useRef(null);
 
   return (
     <>
@@ -1808,6 +1818,13 @@ const NewWalletBalance = ({
                         "Submit"
                       )}
                     </button>
+                    <ReCaptchaV2
+                      sitekey="6LflZgEgAAAAAO-psvqdoreRgcDdtkQUmYXoHuy2"
+                      style={{ display: "inline-block" }}
+                      theme="dark"
+                      size="invisible"
+                      ref={recaptchaRef}
+                    />
                   </div>
                 </div>
                 <hr className="linear-divider" />
