@@ -21,13 +21,30 @@ import ChecklistLandNftModal from "../../Components/ChecklistModal/ChecklistLand
 import EmptyGenesisCard from "../../Components/EmptyGenesisCard/EmptyGenesisCard";
 import Web3 from "web3";
 import { ERC20_ABI } from "../../web3/abis";
-import _ from "lodash";
+import _, { chain } from "lodash";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
+import NewWalletBalance from "../../Components/WalletBalance/NewWalletBalance";
+import DailyBonusPopup from "../../Components/WalletBalance/DailyBonusPopup";
+import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup3.webp";
+import OutsideClickHandler from "react-outside-click-handler";
+import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
+import MyRewardsPopup from "../../Components/WalletBalance/MyRewardsPopup";
+import coinStackIcon from "../../Images/premium/coinStackIcon.svg";
+import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
+import dappsIcon from "../../Images/premium/dappsIcon.svg";
+import metaverseIcon from "../../Images/premium/metaverseIcon.svg";
+import greenCheck from "../../Images/premium/greenCheck.svg";
+import premiumIcon from "../../Images/premium/premiumIcon.svg";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+import MyBalance from "../../Components/WalletBalance/MyBalance";
+import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
+import conflux from "../../Components/WalletBalance/assets/conflux.svg";
+import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 
 function Dashboard({
   account,
@@ -43,6 +60,7 @@ function Dashboard({
   onLogoutClick,
   availableTime,
   success,
+  handleSwitchNetwork,
 }) {
   const { email, logout } = useAuth();
 
@@ -60,6 +78,21 @@ function Dashboard({
     fetchPolicy: "network-only",
   });
 
+  const chainDropdowns = [
+    {
+      name: "Ethereum",
+      symbol: "weth",
+    },
+    {
+      name: "BNB Chain",
+      symbol: "wbnb",
+    },
+    {
+      name: "Avalanche",
+      symbol: "wavax",
+    },
+  ];
+
   const [tokensState, setTokensState] = useState({});
   const [showChecklistModal, setshowChecklistModal] = useState(false);
   const [showChecklistLandNftModal, setshowChecklistLandNftModal] =
@@ -75,6 +108,7 @@ function Dashboard({
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
   const [showNfts, setShowNfts] = useState(false);
   const [showWalletModal, setshowWalletModal] = useState(false);
+  const [goldenPassRemainingTime, setGoldenPassRemainingTime] = useState();
   const [stakes, setStakes] = useState([]);
   const [landstakes, setLandStakes] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -85,10 +119,10 @@ function Dashboard({
   const [myGateNfts, setmyGateNfts] = useState([]);
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
   const [myBaseNfts, setmyBaseNfts] = useState([]);
+  const [bnbPrice, setBnbPrice] = useState(0);
+  const [cfxPrice, setCfxPrice] = useState(0);
 
-
-
-
+  const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
@@ -96,12 +130,72 @@ function Dashboard({
   const [listedNFTS, setListedNFTS] = useState([]);
   const [myBoughtNfts, setmyBoughtNfts] = useState([]);
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
+  const [standardChests, setStandardChests] = useState([]);
+  const [premiumChests, setPremiumChests] = useState([]);
+  const [openedChests, setOpenedChests] = useState([]);
 
+  const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
   const [showSyncModal, setshowSyncModal] = useState(false);
   const [isonlink, setIsOnLink] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
+  const [myRewardsPopup, setmyRewardsPopup] = useState(false);
+  const [getPremiumPopup, setgetPremiumPopup] = useState(false);
+  const [balancePopup, setBalancePopup] = useState(false);
+  const [dropdownIcon, setdropdownIcon] = useState("");
+  const [dropdownTitle, setdropdownTitle] = useState("");
+  const [status, setstatus] = useState("");
+  const [approveStatus, setapproveStatus] = useState("initial");
+  const [isApproved, setisApproved] = useState(false);
+  const [tokenBalance, setTokenBalance] = useState(0);
+  const [price, setprice] = useState(0);
+  const [formattedPrice, setformattedPrice] = useState("0");
+  const [loadspinner, setloadspinner] = useState(false);
+  const [loadspinnerSub, setloadspinnerSub] = useState(false);
+  const [chainDropdown, setChainDropdown] = useState(chainDropdowns[0]);
+  const [selectedSubscriptionToken, setselectedSubscriptionToken] = useState(
+    Object.keys(window.config.subscription_tokens)[0]
+  );
+  const [tokenDecimals, settokenDecimals] = useState(1);
+  const [userWallet, setuserWallet] = useState("");
+
+  const [claimedChests, setclaimedChests] = useState(0);
+  const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
+
+  const [walletClaimedChests, setWalletclaimedChests] = useState(0);
+  const [walletClaimedPremiumChests, setWalletclaimedPremiumChests] =
+    useState(0);
+
+  const [canBuy, setCanBuy] = useState(false);
+
+  const [allChests, setallChests] = useState(0);
+
+  const [count, setCount] = useState(0);
+
+  const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
+  const html = document.querySelector("html");
+  const leaderboardId = document.querySelector("#leaderboard");
+  const { BigNumber } = window;
+
+  let wethAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
+  let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
+  let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
+
+  const metaverseBenefits = [
+    "Exclusive access to World of Dypians",
+    "Access to Daily Bonus Event",
+    "Access every Treasure Hunt Event without the need to hold a Beta Pass NFT",
+    "Early access to upcoming features and updates",
+  ];
+
+  const dappsBenefits = [
+    "DYP Tools administrative dashboard",
+    "Voting capabilities in the News section",
+    "Priority allocation to presales of new projects through Dypius Launchpad",
+    "Early access to upcoming features and updates",
+  ];
 
   const override2 = {
     display: "block",
@@ -300,6 +394,189 @@ function Dashboard({
     }
   };
 
+  const refreshSubscription = async (userAddr, email) => {
+    let subscribedPlatformTokenAmountETH;
+    let subscribedPlatformTokenAmountAvax;
+    let subscribedPlatformTokenAmountBNB;
+
+    const web3eth = window.infuraWeb3;
+    const web3avax = window.avaxWeb3;
+    const web3bnb = window.bscWeb3;
+
+    const AvaxABI = window.SUBSCRIPTION_ABI;
+    const EthABI = window.SUBSCRIPTIONETH_ABI;
+    const BnbABI = window.SUBSCRIPTIONBNB_ABI;
+
+    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const avaxsubscribeAddress = window.config.subscription_address;
+    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
+
+    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+    const avaxcontract = new web3avax.eth.Contract(
+      AvaxABI,
+      avaxsubscribeAddress
+    );
+
+    const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+
+    if (userAddr && email) {
+      subscribedPlatformTokenAmountETH = await ethcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+
+      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+
+      subscribedPlatformTokenAmountBNB = await bnbcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+
+      if (
+        subscribedPlatformTokenAmountAvax === "0" &&
+        subscribedPlatformTokenAmountETH === "0" &&
+        subscribedPlatformTokenAmountBNB === "0"
+      ) {
+        setIsPremium(false);
+      }
+      if (
+        subscribedPlatformTokenAmountAvax !== "0" ||
+        subscribedPlatformTokenAmountETH !== "0" ||
+        subscribedPlatformTokenAmountBNB !== "0"
+      ) {
+        setIsPremium(true);
+      }
+    } else {
+      setIsPremium(false);
+    }
+  };
+
+  const getOpenedChestPerWallet = async (walletAddr) => {
+    const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
+      window.DAILY_BONUS_ABI,
+      window.config.daily_bonus_address
+    );
+
+    const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
+      window.DAILY_BONUS_BNB_ABI,
+      window.config.daily_bonus_bnb_address
+    );
+
+    const regular_opened_chests = await daily_bonus_contract.methods
+      .dailyChestCount(walletAddr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+
+    const premium_opened_chests = await daily_bonus_contract.methods
+      .dailyPremiumChestCount(walletAddr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+
+    const regular_opened_chests_bnb = await daily_bonus_contract_bnb.methods
+      .dailyChestCount(walletAddr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+
+    const premium_opened_chests_bnb = await daily_bonus_contract_bnb.methods
+      .dailyPremiumChestCount(walletAddr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+
+    setWalletclaimedChests(
+      parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb)
+    );
+    setWalletclaimedPremiumChests(
+      parseInt(premium_opened_chests) + parseInt(premium_opened_chests_bnb)
+    );
+    if (isPremium) {
+      if (
+        parseInt(regular_opened_chests) +
+          parseInt(premium_opened_chests) +
+          parseInt(regular_opened_chests_bnb) +
+          parseInt(premium_opened_chests_bnb) <
+        20
+      ) {
+        setCanBuy(true);
+      }
+      if (
+        parseInt(regular_opened_chests) +
+          parseInt(premium_opened_chests) +
+          parseInt(regular_opened_chests_bnb) +
+          parseInt(premium_opened_chests_bnb) ===
+        20
+      ) {
+        setCanBuy(false);
+      }
+    } else if (!isPremium) {
+      if (
+        parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb) <
+        10
+      ) {
+        setCanBuy(true);
+      }
+      if (
+        parseInt(regular_opened_chests) +
+        parseInt(regular_opened_chests_bnb === 10)
+      ) {
+        setCanBuy(false);
+      }
+    }
+  };
+
+  const getAllChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedChests(openedChests);
+        setStandardChests(standardChestsArray);
+        setPremiumChests(premiumChestsArray);
+        setclaimedChests(openedStandardChests.length);
+        setclaimedPremiumChests(openedPremiumChests.length);
+        setallChests(chestOrder);
+      }
+    }
+  };
+
   const handleShowSyncModal = () => {
     setshowSyncModal(true);
   };
@@ -329,17 +606,29 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
-    getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "caws").then((NFTS) =>
+      setMyNFTSCaws(NFTS)
+    );
 
-    getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
+      (NFTS) => setMyNFTSTimepiece(NFTS)
+    );
 
-    getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
-    getMyNFTS(coinbase, "coingecko").then((NFTS) => setMyNFTSCoingecko(NFTS));
-    getMyNFTS(coinbase, "gate").then((NFTS) => setmyGateNfts(NFTS));
-    getMyNFTS(coinbase, "conflux").then((NFTS) => setmyConfluxNfts(NFTS));
-    getMyNFTS(coinbase, "base").then((NFTS) => setmyBaseNfts(NFTS));
-
-
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
+      setMyNFTSLand(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
+      (NFTS) => setMyNFTSCoingecko(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "gate").then((NFTS) =>
+      setmyGateNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "conflux").then(
+      (NFTS) => setmyConfluxNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "base").then((NFTS) =>
+      setmyBaseNfts(NFTS)
+    );
   };
 
   const getOtherNfts = async () => {
@@ -603,6 +892,330 @@ function Dashboard({
     }
   };
 
+  const handleSubscriptionTokenChange = async (tokenAddress) => {
+    const token = tokenAddress;
+    let tokenDecimals =
+      chainId === 1
+        ? window.config.subscriptioneth_tokens[token]?.decimals
+        : chainId === 56
+        ? window.config.subscriptionbnb_tokens[token]?.decimals
+        : window.config.subscription_tokens[token]?.decimals;
+    setprice("");
+    setformattedPrice("");
+    setTokenBalance("");
+    setselectedSubscriptionToken(token);
+
+    let tokenprice =
+      chainId === 1
+        ? await window.getEstimatedTokenSubscriptionAmountETH(token)
+        : chainId === 56
+        ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        : await window.getEstimatedTokenSubscriptionAmount(token);
+    tokenprice = new BigNumber(tokenprice).times(1.1).toFixed(0);
+
+    let formattedTokenPrice = getFormattedNumber(
+      tokenprice / 10 ** tokenDecimals,
+      tokenDecimals
+    );
+    let tokenBalance2 = await window.getTokenHolderBalance(token, coinbase);
+    setprice(tokenprice);
+    setformattedPrice(formattedTokenPrice);
+    setTokenBalance(tokenBalance2);
+  };
+
+  const handleApprove = async (e) => {
+    // e.preventDefault();
+
+    let tokenContract = await window.getContract({
+      address: selectedSubscriptionToken,
+      ABI: window.ERC20_ABI,
+    });
+    setloadspinner(true);
+
+    await tokenContract.methods
+      .approve(selectedSubscriptionToken, price)
+      .send()
+      .then(() => {
+        setloadspinner(false);
+        setisApproved(true);
+        setapproveStatus("deposit");
+      })
+      .catch((e) => {
+        setstatus(e?.message);
+        setloadspinner(false);
+        setapproveStatus("fail");
+
+        setTimeout(() => {
+          setstatus("");
+          setloadspinner(false);
+          setapproveStatus("initial");
+        }, 5000);
+      });
+  };
+
+  const handleCheckIfAlreadyApproved = async (token) => {
+    const web3eth = new Web3(window.config.infura_endpoint);
+    const bscWeb3 = new Web3(window.config.bsc_endpoint);
+    const avaxWeb3 = new Web3(window.config.avax_endpoint);
+
+    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const avaxsubscribeAddress = window.config.subscription_address;
+    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
+
+    const subscribeToken = token;
+    const subscribeTokencontract = new web3eth.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractbnb = new bscWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractavax = new avaxWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    if (coinbase) {
+      if (chainId === 1) {
+        const result = await subscribeTokencontract.methods
+          .allowance(coinbase, ethsubscribeAddress)
+          .call()
+          .then();
+
+        if (result != 0) {
+          setloadspinner(false);
+          setisApproved(true);
+        } else if (result == 0) {
+          setloadspinner(false);
+          setisApproved(false);
+        }
+      }
+      if (chainId === 56) {
+        const result = await subscribeTokencontractbnb.methods
+          .allowance(coinbase, bnbsubscribeAddress)
+          .call()
+          .then();
+        if (result != 0) {
+          setloadspinner(false);
+          setisApproved(true);
+        } else if (result == 0) {
+          setloadspinner(false);
+          setisApproved(false);
+        }
+      } else {
+        const result = await subscribeTokencontractavax.methods
+          .allowance(coinbase, avaxsubscribeAddress)
+          .call()
+          .then();
+
+        if (result != 0) {
+          setloadspinner(false);
+          setisApproved(true);
+        } else if (result == 0) {
+          setloadspinner(false);
+          setisApproved(false);
+        }
+      }
+    }
+  };
+
+  const handleSubscribe = async (e) => {
+    // e.preventDefault();
+    let subscriptionContract = await window.getContract({
+      key:
+        chainId === 1
+          ? "SUBSCRIPTIONETH"
+          : chainId === 56
+          ? "SUBSCRIPTIONBNB"
+          : "SUBSCRIPTION",
+    });
+
+    setloadspinnerSub(true);
+
+    await subscriptionContract.methods
+      .subscribe(selectedSubscriptionToken, price)
+      .send({ from: await window.getCoinbase() })
+      .then(() => {
+        setloadspinnerSub(false);
+        setapproveStatus("success");
+
+        // this.props.onSubscribe();
+        // window.location.href = "https://app.dypius.com/account";
+      })
+      .catch((e) => {
+        setloadspinnerSub(false);
+        setloadspinner(false);
+        setapproveStatus("fail");
+        setstatus(e?.message);
+
+        setTimeout(() => {
+          setloadspinnerSub(false);
+          setloadspinner(false);
+          setapproveStatus("initial");
+          setstatus("");
+        }, 5000);
+      });
+  };
+
+  const getTokenDatabnb = async () => {
+    await axios
+      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
+      .then((data) => {
+        const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
+        setBnbPrice(bnb);
+      });
+  };
+
+  const fetchCFXPrice = async () => {
+    await axios
+      .get(
+        "https://pro-api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+      )
+      .then((obj) => {
+        if (obj.data["conflux-token"] && obj.data["conflux-token"] !== NaN) {
+          setCfxPrice(obj.data["conflux-token"].usd);
+        }
+      });
+  };
+
+  const handleEthPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x1")
+          .then(() => {
+            handleSwitchNetwork(1);
+            setChainDropdown(chainDropdowns[0]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  // console.log(avatar);
+  const handleBnbPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x38")
+          .then(() => {
+            handleSwitchNetwork(56);
+            setChainDropdown(chainDropdowns[1]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleAvaxPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa86a")
+          .then(() => {
+            handleSwitchNetwork(43114);
+            setChainDropdown(chainDropdowns[2]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleBasePool = async () => {
+    if (!window.gatewallet) {
+      await handleSwitchNetworkhook("0x2105")
+        .then(() => {
+          handleSwitchNetwork(8453);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleConfluxPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x406")
+          .then(() => {
+            handleSwitchNetwork(1030);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  useEffect(() => {
+    if (chainId === 1) {
+      setChainDropdown(chainDropdowns[0]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioneth_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wethAddress);
+    } else if (chainId === 56) {
+      setChainDropdown(chainDropdowns[1]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionbnb_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wbnbAddress);
+    }
+    //  else if (chainId === 43114) {
+    //   setChainDropdown(chainDropdowns[2]);
+    //   setdropdownIcon("usdt");
+    //   setdropdownTitle("USDT");
+    //   setselectedSubscriptionToken(
+    //     Object.keys(window.config.subscription_tokens)[0]
+    //   );
+    //   handleSubscriptionTokenChange(wavaxAddress);
+    // }
+    else {
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioneth_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wethAddress);
+    }
+  }, [chainId]);
+
+  useEffect(() => {
+    if (chainId === 1 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptioneth_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 56 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionbnb_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    }
+    // else if (chainId === 43114 && selectedSubscriptionToken !== "") {
+    //   settokenDecimals(
+    //     window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
+    //   );
+    // }
+  }, [chainId, selectedSubscriptionToken]);
+
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
@@ -614,6 +1227,35 @@ function Dashboard({
       signWalletPublicAddress();
     }
   }, [dataNonce]);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      email
+    ) {
+      refreshSubscription(data.getPlayer.wallet.publicAddress, email);
+    }
+  }, [data, email]);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      email
+    ) {
+      getOpenedChestPerWallet(data.getPlayer.wallet.publicAddress);
+      setuserWallet(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, email, count, isPremium]);
 
   useEffect(() => {
     if (coinbase) {
@@ -632,7 +1274,22 @@ function Dashboard({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getTokenDatabnb();
+    fetchCFXPrice();
   }, []);
+
+  useEffect(() => {
+    if (
+      (dailyBonusPopup === true && dailyrewardpopup) ||
+      leaderboard === true
+    ) {
+      html.classList.add("hidescroll");
+      // dailyrewardpopup.style.pointerEvents = "auto";
+      // leaderboardId.style.pointerEvents = "auto";
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
 
   useEffect(() => {
     // if (coinbase) {
@@ -643,6 +1300,12 @@ function Dashboard({
 
   const logoutItem = localStorage.getItem("logout");
 
+  useEffect(() => {
+    if (email) {
+      getAllChests(email);
+    }
+  }, [email, count]);
+
   // useEffect(() => {
   //   if (window.ethereum && !window.coin98) {
   //     if (window.ethereum.isConnected() === true) {
@@ -652,6 +1315,11 @@ function Dashboard({
   //     }
   //   }
   // }, [coinbase, chainId]);
+
+  const onOpenLeaderboard = () => {
+    setLeaderboard(true);
+    console.log("true");
+  };
 
   useEffect(() => {
     if (success === true) {
@@ -721,8 +1389,23 @@ function Dashboard({
                         onLogoutClick={logout}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
+                        isPremium={isPremium}
+                        isConnected={isConnected}
+                        onOpenLeaderboard={() => {
+                          setLeaderboard(true);
+                        }}
+                        onPremiumClick={() => {
+                          setgetPremiumPopup(true);
+                        }}
+                        handleSetAvailableTime={(value) => {
+                          setGoldenPassRemainingTime(value);
+                        }}
                       />
-                      <WalletBalance
+
+                      <NewWalletBalance
+                        onDailyRewardsPopupOpen={() => {
+                          setdailyBonusPopup(true);
+                        }}
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
@@ -759,9 +1442,55 @@ function Dashboard({
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
                         allActiveOffers={allActiveOffers}
+                        isPremium={isPremium}
+                        onRewardsClick={() => {
+                          setmyRewardsPopup(true);
+                        }}
+                        onBalanceClick={() => {
+                          setBalancePopup(true);
+                        }}
+                        claimedChests={claimedChests}
+                        claimedPremiumChests={claimedPremiumChests}
+                        availableTime={goldenPassRemainingTime}
                       />
                     </div>
-
+                    <WalletBalance
+                      ethTokenData={ethTokenData}
+                      dypTokenData={dypTokenData}
+                      onOpenNfts={onOpenNfts}
+                      listedNFTS={listedNFTS}
+                      myBoughtNfts={myBoughtNfts}
+                      address={data?.getPlayer?.wallet?.publicAddress}
+                      coinbase={account}
+                      isVerified={data?.getPlayer?.wallet}
+                      favoritesArray={favorites}
+                      dypBalance={dypBalance}
+                      dypBalancebnb={dypBalancebnb}
+                      dypBalanceavax={dypBalanceavax}
+                      idypBalance={idypBalance}
+                      idypBalancebnb={idypBalancebnb}
+                      idypBalanceavax={idypBalanceavax}
+                      showNfts={showNfts}
+                      handleShowWalletPopup={() => {
+                        setshowWalletModal(true);
+                      }}
+                      email={email}
+                      userId={data?.getPlayer?.playerId}
+                      username={data?.getPlayer?.displayName}
+                      myCawsCollected={MyNFTSCaws}
+                      myCawsOldCollected={MyNFTSCawsOld}
+                      myLandCollected={MyNFTSLand}
+                      myTimepieceCollected={MyNFTSTimepiece}
+                      landStaked={landstakes}
+                      myCawsWodStakes={myCawsWodStakesAll}
+                      myWodWodStakes={myWodWodStakesAll}
+                      myNFTSCoingecko={MyNFTSCoingecko}
+                      myGateNfts={myGateNfts}
+                      myConfluxNfts={myConfluxNfts}
+                      latestBoughtNFTS={latest20BoughtNFTS}
+                      myOffers={myOffers}
+                      allActiveOffers={allActiveOffers}
+                    />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
                   <h2
@@ -879,14 +1608,633 @@ function Dashboard({
                 />
               </div> */}
 
-                    <LeaderBoard
-                      username={data?.getPlayer?.displayName}
-                      userId={data?.getPlayer?.playerId}
-                      dypBalancebnb={dypBalancebnb}
-                      address={data?.getPlayer?.wallet?.publicAddress}
-                      availableTime={availableTime}
-                      email={email}
-                    />
+                    {leaderboard && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => setLeaderboard(false)}
+                      >
+                        <div
+                          className="popup-wrapper popup-active p-3"
+                          id="leaderboard"
+                          style={{ width: "40%", pointerEvents: "auto" }}
+                        >
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                            >
+                              <mark className={`font-organetto bundletag`}>
+                                WOD
+                              </mark>{" "}
+                              Leaderboard
+                            </h2>
+                            <img
+                              src={xMark}
+                              onClick={() => setLeaderboard(false)}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                            />
+                          </div>
+                          <LeaderBoard
+                            username={data?.getPlayer?.displayName}
+                            userId={data?.getPlayer?.playerId}
+                            dypBalancebnb={dypBalancebnb}
+                            address={data?.getPlayer?.wallet?.publicAddress}
+                            availableTime={goldenPassRemainingTime}
+                            email={email}
+                          />
+                        </div>
+                      </OutsideClickHandler>
+                    )}
+
+                    {myRewardsPopup && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => setmyRewardsPopup(false)}
+                      >
+                        <div
+                          className="popup-wrapper popup-active p-4"
+                          id="leaderboard"
+                          style={{
+                            width: "40%",
+                            pointerEvents: "auto",
+                            overflowX: "auto",
+                          }}
+                        >
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                            >
+                              My Rewards
+                            </h2>
+                            <img
+                              src={xMark}
+                              onClick={() => setmyRewardsPopup(false)}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                            />
+                          </div>
+                          <MyRewardsPopup
+                            username={data?.getPlayer?.displayName}
+                            userId={data?.getPlayer?.playerId}
+                            address={data?.getPlayer?.wallet?.publicAddress}
+                            email={email}
+                            bnbPrice={bnbPrice}
+                            cfxPrice={cfxPrice}
+                            ethTokenData={ethTokenData}
+                          />
+                        </div>
+                      </OutsideClickHandler>
+                    )}
+
+                    {getPremiumPopup && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => {
+                          setgetPremiumPopup(false);
+                        }}
+                      >
+                        <div
+                          className="popup-wrapper popup-active p-4"
+                          id="subscribe"
+                          style={{ width: "40%", pointerEvents: "auto" }}
+                        >
+                          <div className="subscribe-container p-2 position-relative">
+                            <div
+                              className=""
+                              style={{ background: "#8E97CD" }}
+                            ></div>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <h6 className="free-plan-title">
+                                Premium Subscription
+                              </h6>
+                              <img
+                                src={xMark}
+                                onClick={() => setgetPremiumPopup(false)}
+                                alt=""
+                                style={{ cursor: "pointer" }}
+                              />
+                            </div>
+                            <div className="premium-gold-bg d-flex align-items-center justify-content-between p-3">
+                              <div className="d-flex flex-column gap-2">
+                                <span className="lifetime-plan mb-0">
+                                  Lifetime plan
+                                </span>
+                                <h6 className="plan-cost mb-0">$100</h6>
+                              </div>
+                              <div className="d-flex align-items-center gap-3">
+                                <div className="d-flex flex-column gap-2">
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wethIcon.svg`)
+                                          .default
+                                      }
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Ethereum
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                                          .default
+                                      }
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      BNB Chain
+                                    </span>
+                                  </div>
+
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={baseLogo}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Base
+                                    </span>
+                                  </div>
+
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={conflux}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Conflux
+                                    </span>
+                                  </div>
+
+                                  {/* <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                          .default
+                                      }
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Avalanche Network
+                                    </span>
+                                  </div> */}
+                                </div>
+                                <img src={premiumIcon} alt="" />
+                              </div>
+                            </div>
+                            <div className="my-3">
+                              <h6 className="popup-subtitle mb-0">Benefits</h6>
+                            </div>
+                            <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
+                              <div className="d-flex flex-column gap-2">
+                                <div className="d-flex align-items-center gap-2">
+                                  <img src={metaverseIcon} alt="" />
+                                  <h6 className="premium-benefits-title mb-0">
+                                    Metaverse
+                                  </h6>
+                                </div>
+                                {metaverseBenefits.map((item, index) => (
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img src={greenCheck} alt="" />
+                                    <span className="premium-benefits-item mb-0">
+                                      {item}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="d-flex flex-column gap-2">
+                                <div className="d-flex align-items-center gap-2">
+                                  <img src={dappsIcon} alt="" />
+                                  <h6 className="premium-benefits-title mb-0">
+                                    Dapps
+                                  </h6>
+                                </div>
+                                {dappsBenefits.map((item, index) => (
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img src={greenCheck} alt="" />
+                                    <span className="premium-benefits-item mb-0">
+                                      {item}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="d-flex mt-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
+                              <div className="d-flex flex-column gap-3 subscribe-input-container">
+                                <span className="token-amount-placeholder">
+                                  Select chain
+                                </span>
+                                <div class="dropdown position relative">
+                                  <button
+                                    class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ color: "#fff" }}
+                                    >
+                                      <img
+                                        src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
+                                        alt=""
+                                      />
+                                      {chainDropdown.name}
+                                    </div>
+                                    <img src={launchpadIndicator} alt="" />
+                                  </button>
+                                  <ul class="dropdown-menu w-100">
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleEthPool}
+                                    >
+                                      <img
+                                        src={
+                                          require(`../../Images/premium/tokens/wethIcon.svg`)
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      Ethereum
+                                    </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleBnbPool}
+                                    >
+                                      <img
+                                        src={
+                                          require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      Bnb Chain
+                                    </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleBasePool}
+                                    >
+                                      <img
+                                        src={baseLogo}
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      Base Chain
+                                    </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleConfluxPool}
+                                    >
+                                      <img
+                                        src={conflux}
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      Conflux Chain
+                                    </li>
+                                    {/* <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleAvaxPool}
+                                    >
+                                      <img
+                                        src={require(`../../Images/premium/tokens/wavaxIcon.svg`).default}
+                                        alt=""
+                                      />
+                                      Avalanche
+                                    </li> */}
+                                  </ul>
+                                </div>
+                              </div>
+                              <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
+                              <div className="d-flex flex-column align-items-end gap-3">
+                                <span className="my-premium-balance-text mb-0">
+                                  My balance:{" "}
+                                  {getFormattedNumber(
+                                    tokenBalance / 10 ** tokenDecimals,
+                                    3
+                                  )}{" "}
+                                  {dropdownIcon.toUpperCase()}
+                                </span>
+                                <div
+                                  className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                                  style={{ height: "34px" }}
+                                >
+                                  <span className="subscription-price-text mb-0">
+                                    Subscription Price:
+                                  </span>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <div class="dropdown position relative">
+                                      <button
+                                        class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                      >
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          style={{ color: "#fff" }}
+                                        >
+                                          <img
+                                            src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                            alt=""
+                                          />
+                                          {/* {dropdownTitle} */}
+                                        </div>
+                                        <img src={launchpadIndicator} alt="" />
+                                      </button>
+                                      <ul class="dropdown-menu w-100">
+                                        {Object.keys(
+                                          chainId === 1
+                                            ? window.config
+                                                .subscriptioneth_tokens
+                                            : chainId === 56
+                                            ? window.config
+                                                .subscriptionbnb_tokens
+                                            : window.config.subscription_tokens
+                                        ).map((t, i) => (
+                                          <li
+                                            key={i}
+                                            className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                            onClick={() => {
+                                              window.cached_contracts =
+                                                Object.create(null);
+                                              setTimeout(() => {
+                                                setdropdownIcon(
+                                                  chainId === 1
+                                                    ? window.config
+                                                        .subscriptioneth_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 56
+                                                    ? window.config
+                                                        .subscriptionbnb_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
+                                                );
+                                                setdropdownTitle(
+                                                  chainId === 1
+                                                    ? window.config
+                                                        .subscriptioneth_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 56
+                                                    ? window.config
+                                                        .subscriptionbnb_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
+                                                );
+
+                                                // console.log(t);
+                                                handleSubscriptionTokenChange(
+                                                  t
+                                                );
+                                                handleCheckIfAlreadyApproved(t);
+                                              }, 200);
+                                            }}
+                                          >
+                                            <img
+                                              src={
+                                                chainId === 1
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 56
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                              }
+                                              alt=""
+                                            />
+                                            {chainId === 1
+                                              ? window.config
+                                                  .subscriptioneth_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 56
+                                              ? window.config
+                                                  .subscriptionbnb_tokens[t]
+                                                  ?.symbol
+                                              : window.config
+                                                  .subscription_tokens[t]
+                                                  ?.symbol}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                    {/* <img
+                                      src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                      height={16}
+                                      width={16}
+                                      alt="usdt"
+                                    /> */}
+                                    <span className="subscription-price-token mb-0">
+                                      {formattedPrice.slice(0, 5)}
+                                    </span>
+                                  </div>
+                                  <span className="subscription-price-usd mb-0">
+                                    $100
+                                  </span>
+                                </div>
+                              </div>
+
+                              {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
+                                <span className="token-balance-placeholder">
+                                  Token Balance
+                                </span>
+                                <h6 className="account-token-amount">
+                                  {" "}
+                                  {getFormattedNumber(
+                                    tokenBalance / 10 ** tokenDecimals,
+                                    6
+                                  )}
+                                </h6>
+                              </div> */}
+                            </div>
+                            {/* <div
+                              className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
+                              style={{ width: "100%" }}
+                            >
+                              <span className="token-amount-placeholder">
+                                Subscription price:
+                              </span>
+                              <div className="d-flex align-items-center gap-2">
+                                <span className="usdt-text">
+                                  {formattedPrice.slice(0, 9)}
+                                </span>
+
+                                <img
+                                  src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                  height={24}
+                                  width={24}
+                                  alt="usdt"
+                                />
+                              </div>
+                            </div> */}
+                            <hr className="form-divider my-4" />
+
+                            <div className="d-flex align-items-center gap-3 justify-content-center">
+                              <div
+                                className={` ${
+                                  approveStatus === "fail" || !coinbase
+                                    ? "linear-border-disabled"
+                                    : "linear-border"
+                                }`}
+                              >
+                                <button
+                                  className={`btn ${
+                                    approveStatus === "fail" || !coinbase
+                                      ? "outline-btn-disabled"
+                                      : "filled-btn"
+                                  } px-4`}
+                                  disabled={
+                                    approveStatus === "fail" || !coinbase
+                                      ? true
+                                      : false
+                                  }
+                                  onClick={(e) => handleApprove(e)}
+                                >
+                                  Approve
+                                </button>
+                              </div>
+                              <div
+                                className={` ${
+                                  isApproved === false
+                                    ? "linear-border-disabled"
+                                    : "linear-border"
+                                }`}
+                              >
+                                <button
+                                  className={`btn ${
+                                    isApproved === false
+                                      ? "outline-btn-disabled"
+                                      : "filled-btn"
+                                  } px-4`}
+                                  onClick={() => handleSubscribe()}
+                                >
+                                  Buy
+                                </button>
+                              </div>
+                            </div>
+                            <div
+                              className={`d-flex align-items-center ${
+                                !coinbase
+                                  ? "justify-content-between"
+                                  : "justify-content-end"
+                              }`}
+                            >
+                              {!coinbase && (
+                                <span style={{ color: "rgb(227, 6 ,19)" }}>
+                                  Please connect your wallet first
+                                </span>
+                              )}
+                              {/* <div className="d-flex flex-column gap-2 justify-content-end align-items-center">
+                                <button
+                                  className={
+                                    "btn success-btn px-4 align-self-end"
+                                  }
+                                  disabled={
+                                    approveStatus === "fail" || !coinbase
+                                      ? true
+                                      : false
+                                  }
+                                  style={{
+                                    background:
+                                      approveStatus === "fail"
+                                        ? "linear-gradient(90.74deg, #f8845b 0%, #f0603a 100%)"
+                                        : "linear-gradient(90.74deg, #75CAC2 0%, #57B6AB 100%)",
+                                  }}
+                                  onClick={(e) =>
+                                    isApproved === false
+                                      ? handleApprove(e)
+                                      : handleSubscribe()
+                                  }
+                                >
+                                  {isApproved === true &&
+                                  loadspinner === false &&
+                                  loadspinnerSub === false &&
+                                  (approveStatus === "deposit" ||
+                                    approveStatus === "initial") ? (
+                                    "Subscribe"
+                                  ) : isApproved === false &&
+                                    loadspinner === false &&
+                                    approveStatus === "initial" &&
+                                    loadspinnerSub === false ? (
+                                    "Approve"
+                                  ) : loadspinner === false &&
+                                    approveStatus === "fail" &&
+                                    loadspinnerSub === false ? (
+                                    "Failed"
+                                  ) : (
+                                    <div
+                                      className="spinner-border "
+                                      role="status"
+                                      style={{
+                                        height: "1.5rem",
+                                        width: "1.5rem",
+                                      }}
+                                    ></div>
+                                  )}
+                                </button>
+                                <span style={{ color: "#E30613" }}>
+                                  {status}
+                                </span>
+                              </div> */}
+                            </div>
+                          </div>
+                        </div>
+                      </OutsideClickHandler>
+                    )}
+
+                    {balancePopup && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => {
+                          setBalancePopup(false);
+                        }}
+                      >
+                        <div
+                          className="popup-wrapper popup-active p-4"
+                          id="subscribe"
+                          style={{ width: "40%", pointerEvents: "auto" }}
+                        >
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                            >
+                              My Balance
+                            </h2>
+                            <img
+                              src={xMark}
+                              onClick={() => setBalancePopup(false)}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                            />
+                          </div>
+                          <MyBalance
+                            dypBalance={dypBalance}
+                            dypBalancebnb={dypBalancebnb}
+                            dypBalanceavax={dypBalanceavax}
+                            idypBalance={idypBalance}
+                            idypBalancebnb={idypBalancebnb}
+                            idypBalanceavax={idypBalanceavax}
+                          />
+                        </div>
+                      </OutsideClickHandler>
+                    )}
                   </div>
                   {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
               <div className={"home-main-wrapper nftBigWrapper"}>
@@ -992,6 +2340,53 @@ function Dashboard({
             </div> */}
                 </div>
               </div>
+            )}
+            {dailyBonusPopup && (
+              <OutsideClickHandler
+                onOutsideClick={() => {
+                  setdailyBonusPopup(false);
+                }}
+              >
+                <div
+                  className="package-popup-wrapper2"
+                  id="dailyrewardpopup"
+                  style={{ pointerEvents: "auto" }}
+                >
+                  <img
+                    src={rewardPopup}
+                    alt=""
+                    className="popup-linear2"
+                    loading="eager"
+                  />
+
+                  <DailyBonusPopup
+                    onclose={() => {
+                      setdailyBonusPopup(false);
+                    }}
+                    isPremium={isPremium}
+                    address={data?.getPlayer?.wallet?.publicAddress}
+                    claimedChests={claimedChests}
+                    claimedPremiumChests={claimedPremiumChests}
+                    onChestClaimed={() => {
+                      setCount(count + 1);
+                    }}
+                    standardChests={standardChests}
+                    premiumChests={premiumChests}
+                    email={email}
+                    openedChests={openedChests}
+                    chainId={chainId}
+                    coinbase={coinbase}
+                    handleSwitchNetwork={handleSwitchNetwork}
+                    myNFTSCaws={MyNFTSCaws.length}
+                    myNFTSLand={MyNFTSLand.length}
+                    myNFTSTimepiece={MyNFTSTimepiece.length}
+                    allChests={allChests}
+                    walletClaimedPremiumChests={walletClaimedPremiumChests}
+                    walletClaimedChests={walletClaimedChests}
+                    canBuy={canBuy}
+                  />
+                </div>
+              </OutsideClickHandler>
             )}
             {showChecklistModal === true && (
               <ChecklistModal

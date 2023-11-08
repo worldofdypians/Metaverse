@@ -106,7 +106,7 @@
 }
 
 .dropdown-toggle {
-  background: transparent;
+  background: transparent !important; 
   border-radius: 10px;
   height: 32px;
   padding: 8px;
@@ -121,6 +121,26 @@
 }
 
 .dropdown-toggle::after {
+  display: none !important;
+}
+
+
+.dropdown-toggle2 {
+  background: transparent !important; 
+  border-radius: 10px;
+  height: 32px;
+  padding: 8px;
+  height: 34px;
+  width: 134px;
+  border: none !important;
+  display: flex;
+  align-items: center;
+  @media screen and (max-width: 991px) {
+    width: auto;
+  }
+}
+
+.dropdown-toggle2::after {
   display: none !important;
 }
 

@@ -758,18 +758,18 @@ const LeaderBoard = ({
   return (
     <>
       <div className="row w-100 justify-content-start">
-        <h2
+        {/* <h2
           className={`font-organetto d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
         >
           <mark className={`font-organetto bundletag`}>WOD</mark> Leaderboard
-        </h2>
+        </h2> */}
       </div>
       <div
         className="main-wrapper py-4 w-100 d-flex gap-4 mt-xxl-0 mt-lg-0 justify-content-center align-items-start"
-        style={{ minHeight: "600px" }}
+        style={{ minHeight: "560px" }}
       >
         <div className="row w-100 align-items-start gap-4 gap-lg-0">
-          <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 leaderboard-wrapper">
+          <div className="d-flex flex-column gap-3 col-12  px-0 px-lg-3 leaderboard-wrapper">
             <div className="d-none">
               {availableTime !== "0" && availableTime && (
                 <Countdown
@@ -1304,7 +1304,7 @@ const LeaderBoard = ({
               </div>
             </div>
           </div>
-          <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 medal-wrapper align-items-center justify-content-center position-relative">
+          {/* <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 medal-wrapper align-items-center justify-content-center position-relative">
             <div className="d-flex justify-content-center w-100 position-relative medalinnerwrapper">
               <div className="secondaryplayer-wrapper col-3">
                 <div className="position-relative d-flex h-100 flex-column justify-content-end gap-2 align-items-center">
@@ -1526,7 +1526,7 @@ const LeaderBoard = ({
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

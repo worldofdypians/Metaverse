@@ -19,28 +19,102 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #494b61;
+}
+
+.bordereddiv {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border-bottom: 1px solid #494b61;
+}
+
+.premiumtext-active {
+  color: #ffbf00;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  font-family: "Poppins";
+  width: fit-content;
+}
+
+.premiumtext-alert {
+  color: #ed8225;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  width: fit-content;
+  font-family: "Poppins";
+}
+
+.logoutbtn {
+  color: #ff6232;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  background: transparent;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .user-cardImg-active {
-  border-radius: 20px;
   background: linear-gradient(
     180deg,
-    rgba(118, 15, 90, 0.03) 0%,
-    rgba(33, 36, 64, 0.15) 100%
+    rgba(27, 245, 255, 0.15) 0%,
+    rgba(118, 15, 90, 0) 100%,
+    rgba(33, 36, 64, 0) 100%
   );
-  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #494b61;
+}
+
+.user-cardImg-active-premium {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 191, 0, 0.3) 0%,
+    rgba(33, 36, 64, 0.01) 100%
+  );
+  border-radius: 10px;
+  border: 1px solid #494b61;
+}
+
+.hoverpremium:hover {
+  filter: drop-shadow(0px 4px 25px #dfb625);
+}
+.hoveractive {
+  @media only screen and (max-width: 576px) {
+    width: 100%;
+  }
+}
+.hoveractive:hover {
+  filter: drop-shadow(0px 0px 6px #00bacc);
+}
+
+.user-cardImg-alert {
+  background: linear-gradient(
+    180deg,
+    rgba(237, 130, 37, 0.15) 0%,
+    rgba(33, 36, 64, 0) 100%
+  );
+  border-radius: 10px;
+  border: 1px solid #494b61;
 }
 
 .sync-wrapper {
   border-radius: 10px;
-  background: rgba(237, 130, 37, 0.08);
+  // background: rgba(237, 130, 37, 0.08);
 }
 
 .sync-txt {
-  color: #fff;
-  font-size: 10px;
+  color: #ffffff;
+  font-size: 12px;
 }
 
 .syncbtn {
@@ -93,9 +167,22 @@
   color: #f7f7ff;
 }
 
+.userAvatar-alert {
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0px 4px 16px rgba(237, 130, 37, 0.6));
+}
+
 .userAvatar {
   width: 80px;
   height: 80px;
+  filter: drop-shadow(0px 4px 16px rgba(0, 254, 207, 0.3));
+}
+
+.userAvatarPremium {
+  width: 80px;
+  // height: 80px;
+  filter: drop-shadow(0px 4px 16px rgba(253, 157, 8, 0.3));
 }
 
 .ranktitle {
@@ -235,4 +322,32 @@
   @media screen and (max-width: 991px) {
     display: none !important;
   }
+}
+
+.golden-pass-wrapper{
+  background-image: url('./assets/goldenPassBorder.png');
+  background-repeat: no-repeat;
+  background-size: 100% 90%;
+  padding: 0px;
+  position: absolute;
+  width: 130%;
+  height: 138%;
+  top: 0;
+  right: 0;
+  left: -14%;
+  bottom: 0;
+  margin: auto;
+
+
+  @media screen and (max-width: 786px) {
+display: none;
+   
+  }
+}
+
+.golden-pass-tag{
+  position: absolute;
+  right: 0;
+  top: -10%;
+  margin: auto;
 }
