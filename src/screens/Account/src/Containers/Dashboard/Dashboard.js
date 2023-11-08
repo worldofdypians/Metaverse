@@ -159,10 +159,18 @@ function Dashboard({
     Object.keys(window.config.subscription_tokens)[0]
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
+  const [userWallet, setuserWallet] = useState("");
+
   const [claimedChests, setclaimedChests] = useState(0);
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
-  const [allChests, setallChests] = useState(0);
 
+  const [walletClaimedChests, setWalletclaimedChests] = useState(0);
+  const [walletClaimedPremiumChests, setWalletclaimedPremiumChests] =
+    useState(0);
+
+  const [canBuy, setCanBuy] = useState(false);
+
+  const [allChests, setallChests] = useState(0);
 
   const [count, setCount] = useState(0);
 
@@ -443,6 +451,86 @@ function Dashboard({
     }
   };
 
+  const getOpenedChestPerWallet = async (walletAddr) => {
+    const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
+      window.DAILY_BONUS_ABI,
+      window.config.daily_bonus_address
+    );
+
+    const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
+      window.DAILY_BONUS_BNB_ABI,
+      window.config.daily_bonus_bnb_address
+    );
+
+    const regular_opened_chests = await daily_bonus_contract.methods
+      .dailyChestCount(walletAddr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+
+    const premium_opened_chests = await daily_bonus_contract.methods
+      .dailyPremiumChestCount(walletAddr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+
+    const regular_opened_chests_bnb = await daily_bonus_contract_bnb.methods
+      .dailyChestCount(walletAddr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+
+    const premium_opened_chests_bnb = await daily_bonus_contract_bnb.methods
+      .dailyPremiumChestCount(walletAddr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+
+    setWalletclaimedChests(
+      parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb)
+    );
+    setWalletclaimedPremiumChests(
+      parseInt(premium_opened_chests) + parseInt(premium_opened_chests_bnb)
+    );
+    if (isPremium) {
+      if (
+        parseInt(regular_opened_chests) +
+          parseInt(premium_opened_chests) +
+          parseInt(regular_opened_chests_bnb) +
+          parseInt(premium_opened_chests_bnb) <
+        20
+      ) {
+        setCanBuy(true);
+      }
+      if (
+        parseInt(regular_opened_chests) +
+          parseInt(premium_opened_chests) +
+          parseInt(regular_opened_chests_bnb) +
+          parseInt(premium_opened_chests_bnb) ===
+        20
+      ) {
+        setCanBuy(false);
+      }
+    } else if (!isPremium) {
+      if (
+        parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb) <
+        10
+      ) {
+        setCanBuy(true);
+      }
+      if (
+        parseInt(regular_opened_chests) +
+        parseInt(regular_opened_chests_bnb === 10)
+      ) {
+        setCanBuy(false);
+      }
+    }
+  };
+
   const getAllChests = async (userEmail) => {
     const emailData = { emailAddress: userEmail };
 
@@ -484,7 +572,7 @@ function Dashboard({
         setPremiumChests(premiumChestsArray);
         setclaimedChests(openedStandardChests.length);
         setclaimedPremiumChests(openedPremiumChests.length);
-        setallChests(chestOrder)
+        setallChests(chestOrder);
       }
     }
   };
@@ -518,15 +606,29 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
-    getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "caws").then((NFTS) =>
+      setMyNFTSCaws(NFTS)
+    );
 
-    getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
+      (NFTS) => setMyNFTSTimepiece(NFTS)
+    );
 
-    getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
-    getMyNFTS(coinbase, "coingecko").then((NFTS) => setMyNFTSCoingecko(NFTS));
-    getMyNFTS(coinbase, "gate").then((NFTS) => setmyGateNfts(NFTS));
-    getMyNFTS(coinbase, "conflux").then((NFTS) => setmyConfluxNfts(NFTS));
-    getMyNFTS(coinbase, "base").then((NFTS) => setmyBaseNfts(NFTS));
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
+      setMyNFTSLand(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
+      (NFTS) => setMyNFTSCoingecko(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "gate").then((NFTS) =>
+      setmyGateNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "conflux").then(
+      (NFTS) => setmyConfluxNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "base").then((NFTS) =>
+      setmyBaseNfts(NFTS)
+    );
   };
 
   const getOtherNfts = async () => {
@@ -1139,6 +1241,21 @@ function Dashboard({
       refreshSubscription(data.getPlayer.wallet.publicAddress, email);
     }
   }, [data, email]);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      email
+    ) {
+      getOpenedChestPerWallet(data.getPlayer.wallet.publicAddress);
+      setuserWallet(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, email, count, isPremium]);
 
   useEffect(() => {
     if (coinbase) {
@@ -2264,7 +2381,9 @@ function Dashboard({
                     myNFTSLand={MyNFTSLand.length}
                     myNFTSTimepiece={MyNFTSTimepiece.length}
                     allChests={allChests}
-
+                    walletClaimedPremiumChests={walletClaimedPremiumChests}
+                    walletClaimedChests={walletClaimedChests}
+                    canBuy={canBuy}
                   />
                 </div>
               </OutsideClickHandler>

@@ -39,6 +39,9 @@ const DailyBonusPopup = ({
   myNFTSLand,
   myNFTSTimepiece,
   allChests,
+  walletClaimedPremiumChests,
+  walletClaimedChests,
+  canBuy,
 }) => {
   const [rewardTypes, setRewardTypes] = useState("standard");
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -627,6 +630,18 @@ const DailyBonusPopup = ({
     }
   }, [rewardTypes]);
 
+  useEffect(() => {
+    if (!canBuy) {
+      setdisableBtn(true);
+    } else if (
+      coinbase &&
+      email &&
+      address &&
+      coinbase?.toLowerCase() !== address?.toLowerCase()
+    ) {
+      setdisableBtn(true);
+    }
+  }, [canBuy, address, coinbase]);
   // console.log(standardChests, dummyregularChests)
 
   return (
@@ -716,6 +731,7 @@ const DailyBonusPopup = ({
                 <div
                   className={` ${
                     (chainId === 204 || chainId === 56) &&
+                    canBuy &&
                     ((rewardTypes === "premium" && isPremium) ||
                       rewardTypes === "standard") &&
                     coinbase &&
@@ -793,6 +809,12 @@ const DailyBonusPopup = ({
                       <img src={triangle} alt="" />
                       You need to be a Premium Subscriber in order to unlock the
                       Chests
+                    </span>
+                  ) : !canBuy ? (
+                    <span className="sync-txt d-flex align-items-center gap-1">
+                      <img src={triangle} alt="" />
+                      This wallet has completed the daily bonus for today.
+                      Please come back tomorrow.
                     </span>
                   ) : (
                     <></>
@@ -925,78 +947,6 @@ const DailyBonusPopup = ({
                 </span>
                 <div className="container px-3">
                   <div className="row" style={{ rowGap: "10px" }}>
-                    {/* <div className="prizeswrapper  col-12">
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={pointsIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
-                      <span className="text-white chest-prize-title">
-                        10,000 points
-                      </span>
-                    </div>
-                  </div>
-                  <div className="prizeswrapper col-12 col-lg-4">
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={rewardsIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
-                      <span className="text-white chest-prize-title">
-                        $2.5 Rewards
-                      </span>
-                    </div>
-                  </div>
-                  <div className="prizeswrapper col-12 col-lg-4">
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={genesisIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
-                      <span className="text-white chest-prize-title">
-                        Genesis Land NFT
-                      </span>
-                    </div>
-                  </div>
-                  <div className="prizeswrapper col-12 col-lg-4">
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={cawsIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
-                      <span className="text-white chest-prize-title">
-                        CAWS NFT
-                      </span>
-                    </div>
-                  </div>
-                  <div className="prizeswrapper  col-12 col-lg-4">
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={betaPassIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
-                      <span className="text-white chest-prize-title">
-                        1 Beta Pass NFT
-                      </span>
-                    </div>
-                  </div>
-                  <div className="prizeswrapper col-12 col-lg-4">
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={largeRewardsIcon}
-                        alt=""
-                        style={{ width: 40, height: 40 }}
-                      />
-                      <span className="text-white chest-prize-title">
-                        $1,000 Rewards
-                      </span>
-                    </div>
-                  </div> */}
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
@@ -1033,20 +983,6 @@ const DailyBonusPopup = ({
                               )}{" "}
                               Points
                             </span>
-                            {/* {randomArray.includes(index) && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )}  todo */}
                           </div>
                         </div>
                       </div>
@@ -1089,20 +1025,23 @@ const DailyBonusPopup = ({
                               }{" "}
                               Reward
                             </span>
-                            {/* {randomArray.includes(index) && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )} todo */}
+                            {myNFTSCaws === 0 &&
+                              myNFTSLand === 0 &&
+                              myNFTSTimepiece === 0 &&
+                              liverewardData?.reward?.includes("WoD") && (
+                                <ToolTip
+                                  title={
+                                    <React.Fragment>
+                                      <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                        You must hold CAWS NFT, Timepiece NFT or
+                                        Genesis Land NFT to claim this prize
+                                      </p>
+                                    </React.Fragment>
+                                  }
+                                  icon={<img src={warning} alt="" />}
+                                  color={"#000"}
+                                />
+                              )}
                           </div>
                         </div>
                       </div>
@@ -1150,23 +1089,6 @@ const DailyBonusPopup = ({
                             >
                               Genesis Land NFT
                             </span>
-                            {myNFTSCaws === 0 &&
-                              myNFTSLand === 0 &&
-                              myNFTSTimepiece === 0 &&
-                              liverewardData?.reward?.includes("WoD") && (
-                                <ToolTip
-                                  title={
-                                    <React.Fragment>
-                                      <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                        You must hold CAWS NFT, Timepiece NFT or
-                                        Genesis Land NFT to claim this prize
-                                      </p>
-                                    </React.Fragment>
-                                  }
-                                  icon={<img src={warning} alt="" />}
-                                  color={"#000"}
-                                />
-                              )}
                           </div>
                         </div>
                       </div>
@@ -1214,23 +1136,6 @@ const DailyBonusPopup = ({
                             >
                               CAWS NFT
                             </span>
-                            {myNFTSCaws === 0 &&
-                              myNFTSLand === 0 &&
-                              myNFTSTimepiece === 0 &&
-                              liverewardData?.reward?.includes("CAWS") && (
-                                <ToolTip
-                                  title={
-                                    <React.Fragment>
-                                      <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                        You must hold CAWS NFT, Timepiece NFT or
-                                        Genesis Land NFT to claim this prize
-                                      </p>
-                                    </React.Fragment>
-                                  }
-                                  icon={<img src={warning} alt="" />}
-                                  color={"#000"}
-                                />
-                              )}
                           </div>
                         </div>
                       </div>
@@ -1280,23 +1185,6 @@ const DailyBonusPopup = ({
                             >
                               Beta Pass NFT
                             </span>
-                            {myNFTSCaws === 0 &&
-                              myNFTSLand === 0 &&
-                              myNFTSTimepiece === 0 &&
-                              liverewardData?.reward?.includes("BetaPass") && (
-                                <ToolTip
-                                  title={
-                                    <React.Fragment>
-                                      <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                        You must hold CAWS NFT, Timepiece NFT or
-                                        Genesis Land NFT to claim this prize
-                                      </p>
-                                    </React.Fragment>
-                                  }
-                                  icon={<img src={warning} alt="" />}
-                                  color={"#000"}
-                                />
-                              )}
                           </div>
                         </div>
                       </div>
@@ -1333,20 +1221,23 @@ const DailyBonusPopup = ({
                             >
                               $0 Reward
                             </span>
-                            {/* {rewardData?.type?.includes('LargeMoney')  && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )} */}
+                            {myNFTSCaws === 0 &&
+                              myNFTSLand === 0 &&
+                              myNFTSTimepiece === 0 &&
+                              liverewardData?.reward?.includes("BetaPass") && (
+                                <ToolTip
+                                  title={
+                                    <React.Fragment>
+                                      <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                        You must hold CAWS NFT, Timepiece NFT or
+                                        Genesis Land NFT to claim this prize
+                                      </p>
+                                    </React.Fragment>
+                                  }
+                                  icon={<img src={warning} alt="" />}
+                                  color={"#000"}
+                                />
+                              )}
                           </div>
                         </div>
                       </div>
@@ -1420,19 +1311,7 @@ const DailyBonusPopup = ({
                 alt=""
               />
             </div>
-            {/* <div className="d-flex flex-column align-items-center gap-3 mb-5">
-        {randomReward.map((reward) => (
-          <>
-           <div className="d-flex align-items-center justify-content-center gap-3">
-           <img src={reward.image} alt="" />
-           <span className="random-reward mb-0" style={{color: reward.premium === true && "#ED8225"}}>{reward.title}</span>
-         </div>
-         {reward.premium === true && 
-         <span className="reward-error" style={{color: "#ED8225", fontSize: "9px"}}>You must have a premium account to claim this prize</span>
-         }
-          </>
-        ))}
-       </div> */}
+
             <div className="container px-3">
               <div className="d-flex flex-column" style={{ rowGap: "12px" }}>
                 {rewardData?.rewardType?.includes("Points") && (
@@ -1469,20 +1348,6 @@ const DailyBonusPopup = ({
                           >
                             {getFormattedNumber(rewardData?.reward, 0)} Points
                           </span>
-                          {/* {randomArray.includes(index) && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )}  todo */}
                         </div>
                       </div>
                     </div>
@@ -1502,11 +1367,17 @@ const DailyBonusPopup = ({
                     <div
                       className={`prizeswrapper py-2 px-3 ${
                         rewardData?.rewardType?.includes("Money") &&
+                        (myNFTSCaws > 0 ||
+                          myNFTSLand > 0 ||
+                          myNFTSTimepiece > 0) &&
                         "prizeswrapper-premium"
                       } `}
                       style={{
                         filter:
                           !rewardData?.rewardType?.includes("Money") &&
+                          myNFTSCaws === 0 &&
+                          myNFTSLand === 0 &&
+                          myNFTSTimepiece === 0 &&
                           "grayscale(1)",
                       }}
                     >
@@ -1522,38 +1393,42 @@ const DailyBonusPopup = ({
                             style={{
                               color:
                                 !rewardData?.rewardType?.includes("Money") &&
+                                myNFTSCaws === 0 &&
+                                myNFTSLand === 0 &&
+                                myNFTSTimepiece === 0 &&
                                 "gray",
                               fontSize: "14px",
                             }}
                           >
-                            ${getFormattedNumber(rewardData?.reward, 0)}
+                            ${getFormattedNumber(rewardData?.reward ?? 0, 0)}
                             Reward
                           </span>
-                          {/* {randomArray.includes(index) && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )} todo */}
+                         
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
-                {rewardData?.rewardType?.includes("Money") && (
-                  <span className="text-white d-flex m-auto reward-subtitle">
-                    Congratulations, you have earned $
-                    {getFormattedNumber(rewardData?.reward, 0)} Reward.
-                  </span>
-                )}
+                {rewardData?.rewardType?.includes("Money") &&
+                  (myNFTSCaws > 0 || myNFTSLand > 0 || myNFTSTimepiece > 0) && (
+                    <span className="text-white d-flex m-auto reward-subtitle">
+                      Congratulations, you have earned $
+                      {getFormattedNumber(rewardData?.reward, 2)} Reward.
+                    </span>
+                  )}
+
+                {rewardData?.rewardType?.includes("Money") &&
+                  myNFTSCaws === 0 &&
+                  myNFTSLand === 0 &&
+                  myNFTSTimepiece === 0 && (
+                    <div className="d-flex flex-column w-100 gap-2 p-2 daily-error-text-wrapper justify-content-center">
+                      <img src={triangle} alt="" />
+                      <span className="text-white d-flex m-auto reward-subtitle">
+                        You must hold CAWS NFT, Timepiece NFT or Genesis Land
+                        NFT to claim this prize.
+                      </span>
+                    </div>
+                  )}
 
                 {rewardData?.rewardType?.includes("NFT") &&
                   rewardData?.reward?.includes("WoD") && (
@@ -1565,18 +1440,12 @@ const DailyBonusPopup = ({
                         className={`prizeswrapper py-2 px-3 ${
                           rewardData?.rewardType?.includes("NFT") &&
                           rewardData?.reward?.includes("WoD") &&
-                          (myNFTSCaws > 0 ||
-                            myNFTSLand > 0 ||
-                            myNFTSTimepiece > 0) &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
                             !rewardData?.rewardType?.includes("NFT") &&
                             !rewardData?.reward?.includes("WoD") &&
-                            myNFTSCaws === 0 &&
-                            myNFTSLand === 0 &&
-                            myNFTSTimepiece === 0 &&
                             "grayscale(1)",
                         }}
                       >
@@ -1593,54 +1462,22 @@ const DailyBonusPopup = ({
                                 color:
                                   !rewardData?.rewardType?.includes("NFT") &&
                                   !rewardData?.reward?.includes("WoD") &&
-                                  myNFTSCaws === 0 &&
-                                  myNFTSLand === 0 &&
-                                  myNFTSTimepiece === 0 &&
                                   "gray",
                                 fontSize: "14px",
                               }}
                             >
                               Genesis Land NFT
                             </span>
-                            {/* {randomArray.includes(index) && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )} */}
                           </div>
                         </div>
                       </div>
                     </div>
                   )}
                 {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("WoD") &&
-                  (myNFTSCaws > 0 || myNFTSLand > 0 || myNFTSTimepiece > 0) && (
+                  rewardData?.reward?.includes("WoD") && (
                     <span className="text-white d-flex m-auto reward-subtitle">
                       Congratulations, you have earned Genesis Land NFT.
                     </span>
-                  )}
-
-                {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("WoD") &&
-                  myNFTSCaws === 0 &&
-                  myNFTSLand === 0 &&
-                  myNFTSTimepiece === 0 && (
-                    <div className="d-flex flex-column w-100 gap-2 p-2 daily-error-text-wrapper justify-content-center">
-                      <img src={triangle} alt="" />
-                      <span className="text-white d-flex m-auto reward-subtitle">
-                        You must hold CAWS NFT, Timepiece NFT or Genesis Land
-                        NFT to claim this prize.
-                      </span>
-                    </div>
                   )}
 
                 {rewardData?.rewardType?.includes("NFT") &&
@@ -1653,18 +1490,12 @@ const DailyBonusPopup = ({
                         className={`prizeswrapper py-2 px-3 ${
                           rewardData?.rewardType?.includes("NFT") &&
                           rewardData?.reward?.includes("CAWS") &&
-                          (myNFTSCaws > 0 ||
-                            myNFTSLand > 0 ||
-                            myNFTSTimepiece > 0) &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
                             !rewardData?.rewardType?.includes("NFT") &&
                             !rewardData?.reward?.includes("CAWS") &&
-                            myNFTSCaws === 0 &&
-                            myNFTSLand === 0 &&
-                            myNFTSTimepiece === 0 &&
                             "grayscale(1)",
                         }}
                       >
@@ -1681,29 +1512,12 @@ const DailyBonusPopup = ({
                                 color:
                                   !rewardData?.rewardType?.includes("NFT") &&
                                   !rewardData?.reward?.includes("CAWS") &&
-                                  myNFTSCaws === 0 &&
-                                  myNFTSLand === 0 &&
-                                  myNFTSTimepiece === 0 &&
                                   "gray",
                                 fontSize: "14px",
                               }}
                             >
                               CAWS NFT
                             </span>
-                            {/* {randomArray.includes(index) && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )} */}
                           </div>
                         </div>
                       </div>
@@ -1719,20 +1533,6 @@ const DailyBonusPopup = ({
                   )}
 
                 {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("CAWS") &&
-                  myNFTSCaws === 0 &&
-                  myNFTSLand === 0 &&
-                  myNFTSTimepiece === 0 && (
-                    <div className="d-flex flex-column w-100 gap-2 p-2 daily-error-text-wrapper justify-content-center">
-                      <img src={triangle} alt="" />
-                      <span className="text-white d-flex m-auto reward-subtitle">
-                        You must hold CAWS NFT, Timepiece NFT or Genesis Land
-                        NFT to claim this prize.
-                      </span>
-                    </div>
-                  )}
-
-                {rewardData?.rewardType?.includes("NFT") &&
                   rewardData?.reward?.includes("BetaPass") && (
                     <div
                       className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
@@ -1742,18 +1542,12 @@ const DailyBonusPopup = ({
                         className={`prizeswrapper py-2 px-3 ${
                           rewardData?.rewardType?.includes("NFT") &&
                           rewardData?.reward?.includes("BetaPass") &&
-                          (myNFTSCaws > 0 ||
-                            myNFTSLand > 0 ||
-                            myNFTSTimepiece > 0) &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
                             !rewardData?.rewardType?.includes("NFT") &&
                             !rewardData?.reward?.includes("BetaPass") &&
-                            myNFTSCaws === 0 &&
-                            myNFTSLand === 0 &&
-                            myNFTSTimepiece === 0 &&
                             "grayscale(1)",
                         }}
                       >
@@ -1770,29 +1564,12 @@ const DailyBonusPopup = ({
                                 color:
                                   !rewardData?.rewardType?.includes("NFT") &&
                                   !rewardData?.reward?.includes("BetaPass") &&
-                                  myNFTSCaws === 0 &&
-                                  myNFTSLand === 0 &&
-                                  myNFTSTimepiece === 0 &&
                                   "gray",
                                 fontSize: "14px",
                               }}
                             >
                               Beta Pass NFT
                             </span>
-                            {/* {randomArray.includes(index) && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )} */}
                           </div>
                         </div>
                       </div>
@@ -1800,25 +1577,10 @@ const DailyBonusPopup = ({
                   )}
 
                 {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("BetaPass") &&
-                  (myNFTSCaws > 0 || myNFTSLand > 0 || myNFTSTimepiece > 0) && (
+                  rewardData?.reward?.includes("BetaPass") && (
                     <span className="text-white d-flex m-auto reward-subtitle">
                       Congratulations, you have earned Beta Pass NFT.
                     </span>
-                  )}
-
-                {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("BetaPass") &&
-                  myNFTSCaws === 0 &&
-                  myNFTSLand === 0 &&
-                  myNFTSTimepiece === 0 && (
-                    <div className="d-flex flex-column w-100 gap-2 p-2 daily-error-text-wrapper justify-content-center">
-                      <img src={triangle} alt="" />
-                      <span className="text-white d-flex m-auto reward-subtitle">
-                        You must hold CAWS NFT, Timepiece NFT or Genesis Land
-                        NFT to claim this prize.
-                      </span>
-                    </div>
                   )}
 
                 {rewardData?.rewardType?.includes("LargeMoney") && (
@@ -1854,32 +1616,32 @@ const DailyBonusPopup = ({
                               fontSize: "14px",
                             }}
                           >
-                            $0 Reward
+                            ${getFormattedNumber(rewardData.reward ?? 0, 2)} Reward
                           </span>
-                          {/* {rewardData?.type?.includes('LargeMoney')  && reward.premium && (
-                            <ToolTip
-                              title={
-                                <React.Fragment>
-                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
-                                    You must hold CAWS NFT or Genesis Land NFT
-                                    to claim this prize
-                                  </p>
-                                </React.Fragment>
-                              }
-                              icon={<img src={warning} alt="" />}
-                              color={"#000"}
-                            />
-                          )} */}
+                         
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
-                {rewardData?.rewardType?.includes("LargeMoney") && (
-                  <span className="text-white d-flex m-auto reward-subtitle">
-                    Congratulations, you have earned $0 Reward.
-                  </span>
-                )}
+                {rewardData?.rewardType?.includes("LargeMoney") &&
+                  (myNFTSCaws > 0 || myNFTSLand > 0 || myNFTSTimepiece > 0) && (
+                    <span className="text-white d-flex m-auto reward-subtitle">
+                      Congratulations, you have earned ${getFormattedNumber(rewardData.reward ?? 0, 2)} Reward.
+                    </span>
+                  )}
+                {rewardData?.rewardType?.includes("LargeMoney") &&
+                  myNFTSCaws === 0 &&
+                  myNFTSLand === 0 &&
+                  myNFTSTimepiece === 0 && (
+                    <div className="d-flex flex-column w-100 gap-2 p-2 daily-error-text-wrapper justify-content-center">
+                      <img src={triangle} alt="" />
+                      <span className="text-white d-flex m-auto reward-subtitle">
+                        You must hold CAWS NFT, Timepiece NFT or Genesis Land
+                        NFT to claim this prize.
+                      </span>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
