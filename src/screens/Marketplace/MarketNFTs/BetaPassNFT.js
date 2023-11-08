@@ -1502,19 +1502,12 @@ const BetaPassNFT = ({
                                   Conflux Treasure Hunt
                                 </h6>{" "}
                                 <div
-                                  className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
+                                  className={`position-relative events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
                                   style={{ top: 0 }}
                                 >
-                                  <div
-                                    class="pulsatingDot"
-                                    style={{
-                                      width: 7,
-                                      height: 7,
-                                      marginRight: 5,
-                                    }}
-                                  ></div>
+                                  
 
-                                  <span>Live</span>
+                                  <span>Expired</span>
                                 </div>
                               </div>
                               <div className="conflux-eventwrapper p-3">
@@ -1566,7 +1559,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/marketplace/events/past">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>

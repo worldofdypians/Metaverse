@@ -220,7 +220,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/marketplace/mint/timepiece"
+            to="/marketplace/mint/base"
             end
             className={({ isActive }) =>
               isActive
