@@ -140,6 +140,8 @@ function App() {
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
+  const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
+  
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -157,7 +159,9 @@ function App() {
   const [totalBaseNft, settotalBaseNft] = useState(0);
 
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
+  const [baseMintAllowed, setbaseMintAllowed] = useState(1);
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
+
 
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
@@ -505,8 +509,9 @@ function App() {
       getMyNFTS(coinbase, "base").then((NFTS) => {
         settotalBaseNft(NFTS.length);
         setmyBaseNFTs(NFTS);
-        // setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
-        // setmyConfluxNFTsCreated(NFTS);
+        setbaseMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmybaseNFTsCreated(NFTS); 
+
       });
 
       //setmyBaseNFTs
@@ -818,6 +823,78 @@ function App() {
                 setmyConfluxNFTsCreated(NFTS);
                 setTotalConfluxNft(NFTS.length);
                 setconfluxMintAllowed(0);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+
+  const handleBaseNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.base_nft
+            .mintBaseNFT()
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "base").then((NFTS) => {
+                setmybaseNFTsCreated(NFTS);
+                settotalBaseNft(NFTS.length);
+                setbaseMintAllowed(0);
               });
             })
             .catch((e) => {
@@ -2156,7 +2233,7 @@ function App() {
             />
             <Route
               exact
-              path="/marketplace/mint/timepiece"
+              path="/marketplace/mint/:id"
               element={
                 <MarketMint
                   coinbase={coinbase}
@@ -2174,8 +2251,12 @@ function App() {
                   totalCreated={totalTimepieceCreated}
                   timepieceMetadata={timepieceMetadata}
                   myConfluxNFTsCreated={myConfluxNFTsCreated}
+                  mybaseNFTsCreated={mybaseNFTsCreated}
+
                   handleConfluxMint={handleConfluxNftMint}
+                  handleBaseNftMint={handleBaseNftMint}
                   confluxMintAllowed={confluxMintAllowed}
+                  baseMintAllowed={baseMintAllowed}
                 />
               }
             />
