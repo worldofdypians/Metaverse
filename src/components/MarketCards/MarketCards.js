@@ -144,7 +144,8 @@ const MarketCards = ({
                   ? getFormattedNumber(idyptokenDatabnb * price, 2)
                   : eventImg === "critical" || eventImg === "treasureHunt" || eventImg === "dailyBonus"
                   ? ""
-                  : getFormattedNumber(dyptokenDatabnb * price, 2)
+                  : 'N/A'
+                  //  getFormattedNumber(dyptokenDatabnb * price, 2)
                 : getFormattedNumber(ethTokenData * (nft.price / 1e18), 2)}
             </span>
           </div>

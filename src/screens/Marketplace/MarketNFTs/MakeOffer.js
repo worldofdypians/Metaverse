@@ -239,15 +239,16 @@ const MakeOffer = ({
                     {getFormattedNumber(nft.price / 1e18, 2)}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                   </span>
+                  {nft.payment_priceType === 0 &&
                   <span className="itemcollectionName">
                     $
                     {getFormattedNumber(
                       nft.payment_priceType === 0
-                        ? ethTokenData * (nft.price / 1e18)
-                        : dypTokenData * (nft.price / 1e18),
+                        && ethTokenData * (nft.price / 1e18),
+                        // : dypTokenData * (nft.price / 1e18),
                       nft.payment_priceType === 0 ? 3 : 0
                     )}
-                  </span>
+                  </span>  }
                 </div>
               )}
             </div>
@@ -300,15 +301,16 @@ const MakeOffer = ({
                       ? "ETH"
                       : "DYP"}
                   </span>
+                  {offerData[0].offer.payment.priceType === "0" &&
                   <span className="itemcollectionName">
                     $
                     {getFormattedNumber(
                       offerData[0].offer.payment.priceType === "0"
-                        ? ethTokenData * (offerData[0].offer[0] / 1e18)
-                        : dypTokenData * (offerData[0].offer[0] / 1e18),
+                        && ethTokenData * (offerData[0].offer[0] / 1e18),
+                        // : dypTokenData * (offerData[0].offer[0] / 1e18),
                       offerData[0].offer.payment.priceType === "0" ? 3 : 0
                     )}
-                  </span>
+                  </span> }
                 </div>
               </div>
             </div>
@@ -333,14 +335,16 @@ const MakeOffer = ({
                   );
                 }}
               />
+              { filter1 === "weth" &&
               <span className="itemcollectionName">
                 $
                 {getFormattedNumber(
                   filter1 === "weth"
-                    ? ethTokenData * price
-                    : dypTokenData * price, 3 
+                    && ethTokenData * price,
+                    // : dypTokenData * price,
+                     3 
                 )}
-              </span>
+              </span> }
             </div>
             <div className="dropdown" style={{ width: "150px" }}>
               <button
