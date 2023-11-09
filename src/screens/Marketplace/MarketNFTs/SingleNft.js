@@ -1539,15 +1539,16 @@ const SingleNft = ({
                               )}{" "}
                               {nft?.payment_priceType === 0 ? "ETH" : "DYP"}
                             </span>
+                            {nft?.payment_priceType === 0 &&
                             <span className="nft-price-usd">
                               $
                               {getFormattedNumber(
                                 nft?.payment_priceType === 0
-                                  ? ethtokenData * (nft?.price / 1e18)
-                                  : dyptokenData * (nft?.price / 1e18),
+                                  && ethtokenData * (nft?.price / 1e18),
+                                  // : dyptokenData * (nft?.price / 1e18),
                                 2
                               )}
-                            </span>
+                            </span> }
                           </div>
                         </div>
                       )}
@@ -1576,15 +1577,17 @@ const SingleNft = ({
                                 )}{" "}
                                 {nft?.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                               </span>
+                              {nft?.payment_priceType === 0 &&
                               <span className="nft-price-usd">
                                 $
                                 {getFormattedNumber(
+
                                   nft?.payment_priceType === 0
-                                    ? ethtokenData * (nft?.price / 1e18)
-                                    : dyptokenData * (nft?.price / 1e18),
+                                    && ethtokenData * (nft?.price / 1e18),
+                                    // : dyptokenData * (nft?.price / 1e18),
                                   2
                                 )}
-                              </span>
+                              </span> }
                             </div>
                           </div>
                         </div>
@@ -1664,15 +1667,16 @@ const SingleNft = ({
                                 <span className="nft-price-eth gap-3 d-flex">
                                   {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
                                 </span>
+                                {nft.payment_priceType === 0 &&
                                 <span className="nft-price-usd">
                                   $
                                   {getFormattedNumber(
                                     nft.payment_priceType === 0
-                                      ? ethtokenData * nftPrice
-                                      : dyptokenData * nftPrice,
+                                      && ethtokenData * nftPrice,
+                                      // : dyptokenData * nftPrice,
                                     2
                                   )}
-                                </span>
+                                </span> }
                               </div>
                             </div>
                           </div>
@@ -1787,15 +1791,16 @@ const SingleNft = ({
                                   <span className="nft-price-eth gap-3 d-flex">
                                     {priceType === 0 ? "ETH" : "DYP"}{" "}
                                   </span>
+                                  {priceType === 0 &&
                                   <span className="nft-price-usd">
                                     $
                                     {getFormattedNumber(
                                       priceType === 0
-                                        ? ethtokenData * nftPrice
-                                        : dyptokenData * nftPrice,
+                                        && ethtokenData * nftPrice,
+                                        // : dyptokenData * nftPrice,
                                       2
                                     )}
-                                  </span>
+                                  </span> }
                                 </div>
                               </div>
                             </div>
@@ -2521,17 +2526,18 @@ const SingleNft = ({
                                 ? "ETH"
                                 : "DYP"}
                             </td>
+                            {item.offer.payment.priceType === "0" ?
                             <td className="saleprice">
                               $
                               {getFormattedNumber(
                                 item.offer.payment.priceType === "0"
-                                  ? ethtokenData * (item.offer[0] / 1e18)
-                                  : dyptokenData * (item.offer[0] / 1e18),
-                                item.offer.payment.priceType === "0" ? 3 : 0
+                                  && ethtokenData * (item.offer[0] / 1e18),
+                                  // : dyptokenData * (item.offer[0] / 1e18),
+                                item.offer.payment.priceType === "0" && 3
                               )}
-                            </td>
+                            </td> :  <td className="saleprice">N/A</td>}
                             <td className="greendata">
-                              {item.offer.payment.priceType === "0"
+                              {/* {item.offer.payment.priceType === "0"
                                 ? lowestPriceNftListed / 1e18 >
                                   item.offer[0] / 1e18
                                   ? (lowestPriceNftListed / 1e18 -
@@ -2547,7 +2553,25 @@ const SingleNft = ({
                                   100
                                 : (item.offer[0] / 1e18 -
                                     lowestPriceNftListedDYP / 1e18) /
-                                  100}
+                                  100} */}
+                                  {item.offer.payment.priceType === "0"
+                                && lowestPriceNftListed / 1e18 >
+                                  item.offer[0] / 1e18
+                                  ? (lowestPriceNftListed / 1e18 -
+                                      item.offer[0] / 1e18) /
+                                    100
+                                  : (item.offer[0] / 1e18 -
+                                      lowestPriceNftListed / 1e18) /
+                                    100
+                                // : lowestPriceNftListedDYP / 1e18 >
+                                //   item.offer[0] / 1e18
+                                // ? (lowestPriceNftListedDYP / 1e18 -
+                                //     item.offer[0] / 1e18) /
+                                //   100
+                                // : (item.offer[0] / 1e18 -
+                                //     lowestPriceNftListedDYP / 1e18) /
+                                //   100
+                                  }
                               %
                             </td>
                             <td className="greendata">

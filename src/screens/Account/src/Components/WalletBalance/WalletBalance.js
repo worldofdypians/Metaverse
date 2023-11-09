@@ -2333,12 +2333,12 @@ const WalletBalance = ({
                           {getFormattedNumber(dypBalance, 2)}
                         </h6>
                       </div>
-                      <span
+                      {/* <span
                         className="nft-price-usd"
                         style={{ color: "#7DD9AF" }}
                       >
                         ${getFormattedNumber(dypBalance * dyptokenData, 2)}
-                      </span>
+                      </span> */}
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
                       <div className="d-flex align-items-center gap-2">
@@ -2373,13 +2373,13 @@ const WalletBalance = ({
                           {getFormattedNumber(dypBalancebnb, 2)}
                         </h6>
                       </div>
-                      <span
+                      {/* <span
                         className="nft-price-usd"
                         style={{ color: "#7DD9AF" }}
                       >
                         $
                         {getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
-                      </span>
+                      </span> */}
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
                       <div className="d-flex align-items-center gap-2">
@@ -2418,7 +2418,7 @@ const WalletBalance = ({
                           {getFormattedNumber(dypBalanceavax, 2)}
                         </h6>
                       </div>
-                      <span
+                      {/* <span
                         className="nft-price-usd"
                         style={{ color: "#7DD9AF" }}
                       >
@@ -2427,7 +2427,7 @@ const WalletBalance = ({
                           dypBalanceavax * dyptokenDataAvax,
                           2
                         )}
-                      </span>
+                      </span> */}
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
                       <div className="d-flex align-items-center gap-2">

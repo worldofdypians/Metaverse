@@ -631,7 +631,9 @@ const NewBundleCard = ({
         //     Number(remainingTime_miliseconds2) +
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
-        setcountdown700( today<oneNovember ? oneNovember.getTime() : oneDecember.getTime());
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
         handleSetAvailableTime(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
@@ -758,43 +760,43 @@ const NewBundleCard = ({
 
   useEffect(() => {
     if (chainId !== 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      setStatus(
-        "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
-      );
+      // setStatus(
+      //   "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
+      // );
       setStatus3500(
         "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
       );
-      setStatus700(
-        "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
-      );
+      // setStatus700(
+      //   "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
+      // );
     }
     if (chainId === 56 && coinbase?.toLowerCase() !== wallet?.toLowerCase()) {
-      setStatus(
-        "Please change your wallet address into the wallet associated to your profile"
-      );
+      // setStatus(
+      //   "Please change your wallet address into the wallet associated to your profile"
+      // );
       setStatus3500(
         "Please change your wallet address into the wallet associated to your profile"
       );
-      setStatus700(
-        "Please change your wallet address into the wallet associated to your profile"
-      );
+      // setStatus700(
+      //   "Please change your wallet address into the wallet associated to your profile"
+      // );
     }
     if (chainId === 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      setStatus("");
+      setStatus("This event will be avaliable with DYPv2. Please come back soon.");
       setStatus3500("");
-      setStatus700("");
+      setStatus700("This event will be avaliable with DYPv2. Please come back soon.");
     }
 
     if (chainId !== 56 && coinbase?.toLowerCase() !== wallet?.toLowerCase()) {
-      setStatus(
-        "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
-      );
+      // setStatus(
+      //   "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
+      // );
       setStatus3500(
         "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
       );
-      setStatus700(
-        "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
-      );
+      // setStatus700(
+      //   "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
+      // );
     }
   }, [coinbase, chainId, wallet]);
 
@@ -829,7 +831,6 @@ const NewBundleCard = ({
     if (today > twentyfiveNovember) {
       setisAtlimit(true);
     }
-
 
     convertPrice();
   }, [today]);
@@ -946,14 +947,15 @@ const NewBundleCard = ({
                             {getFormattedNumber(packageData.price, 0)}
                           </h6>
                         </div>
-                        <span className="purchase-price-usd mb-0">
-                          $
-                          {getFormattedNumber(
-                            packageData.title === "Puzzle Madness"
-                              ? packageData.price * idyptokenDatabnb
-                              : packageData.price * dyptokenDatabnb
-                          )}
-                        </span>
+                        {packageData.title === "Puzzle Madness" && (
+                          <span className="purchase-price-usd mb-0">
+                            $
+                            {getFormattedNumber(
+                              packageData.title === "Puzzle Madness" &&
+                                packageData.price * idyptokenDatabnb
+                            )}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="d-flex align-items-center gap-2">
@@ -978,19 +980,21 @@ const NewBundleCard = ({
                     packageData.title === "Dragon Ruins" && (
                       <>
                         <button
-                          disabled={
-                            bundleState === "deposit" || checkWallet === false
-                              ? true
-                              : false
-                          }
-                          className={`btn ${
-                            bundleState === "deposit" || checkWallet === false
-                              ? "inactive-pill-btn"
-                              : "pill-btn"
-                          }  py-2 px-4`}
-                          onClick={() => {
-                            handleApproval();
-                          }}
+                          // disabled={
+                          //   bundleState === "deposit" || checkWallet === false
+                          //     ? true
+                          //     : false
+                          // }
+                          disabled
+                          // className={`btn ${
+                          //   bundleState === "deposit" || checkWallet === false
+                          //     ? "inactive-pill-btn"
+                          //     : "pill-btn"
+                          // }  py-2 px-4`}
+                          className={`btn inactive-pill-btn py-2 px-4`}
+                          // onClick={() => {
+                          //   handleApproval();
+                          // }}
                         >
                           {bundleState === "loading" ? (
                             <CircularProgress
@@ -1006,20 +1010,23 @@ const NewBundleCard = ({
                   {packageData.title === "Dragon Ruins" && (
                     <>
                       <button
-                        disabled={
-                          bundleState === "deposit" && checkWallet === true
-                            ? false
-                            : true
-                        }
-                        className={`btn ${
-                          bundleState === "deposit" ||
-                          (showApproval === false && checkWallet === true)
-                            ? "pill-btn"
-                            : "inactive-pill-btn"
-                        }  py-2 px-4`}
-                        onClick={() => {
-                          handleDeposit();
-                        }}
+                        // disabled={
+                        //   bundleState === "deposit" && checkWallet === true
+                        //     ? false
+                        //     : true
+                        // }
+                        disabled
+                        // className={`btn ${
+                        //   bundleState === "deposit" ||
+                        //   (showApproval === false && checkWallet === true)
+                        //     ? "pill-btn"
+                        //     : "inactive-pill-btn"
+                        // }  py-2 px-4`}
+                        className={`btn inactive-pill-btn
+                         py-2 px-4`}
+                        // onClick={() => {
+                        //   handleDeposit();
+                        // }}
                       >
                         {depositState === "loading-deposit" ? (
                           <CircularProgress
@@ -1036,23 +1043,25 @@ const NewBundleCard = ({
                     packageData.title === "Golden Pass" && (
                       <>
                         <button
-                          disabled={
-                            bundleState700 === "deposit" ||
-                            checkWallet === false ||
-                            isAtlimit == true
-                              ? true
-                              : false
-                          }
-                          className={`btn ${
-                            bundleState700 === "deposit" ||
-                            checkWallet === false ||
-                            isAtlimit == true
-                              ? "inactive-pill-btn"
-                              : "pill-btn"
-                          }  py-2 px-4`}
-                          onClick={() => {
-                            handleApproval700();
-                          }}
+                          // disabled={
+                          //   bundleState700 === "deposit" ||
+                          //   checkWallet === false ||
+                          //   isAtlimit == true
+                          //     ? true
+                          //     : false
+                          // }
+                          disabled
+                          // className={`btn ${
+                          //   bundleState700 === "deposit" ||
+                          //   checkWallet === false ||
+                          //   isAtlimit == true
+                          //     ? "inactive-pill-btn"
+                          //     : "pill-btn"
+                          // }  py-2 px-4`}
+                          className={`btn inactive-pill-btn py-2 px-4`}
+                          // onClick={() => {
+                          //   handleApproval700();
+                          // }}
                         >
                           {bundleState700 === "loading" ? (
                             <CircularProgress
@@ -1068,29 +1077,31 @@ const NewBundleCard = ({
                   {packageData.title === "Golden Pass" && (
                     <>
                       <button
-                        disabled={
-                          packageData.title !== "Golden Pass"
-                            ? bundleState700 === "deposit" &&
-                              checkWallet === true
-                              ? false
-                              : true
-                            : isAtlimit === true ||
-                              checkWallet === false ||
-                              bundleState700 !== "deposit"
-                            ? true
-                            : false
-                        }
-                        className={`btn ${
-                          (bundleState700 === "deposit" ||
-                            showApproval700 === false) &&
-                          checkWallet === true &&
-                          isAtlimit === false
-                            ? "pill-btn"
-                            : "inactive-pill-btn"
-                        }  py-2 px-4`}
-                        onClick={() => {
-                          handleDeposit700();
-                        }}
+                        // disabled={
+                        //   packageData.title !== "Golden Pass"
+                        //     ? bundleState700 === "deposit" &&
+                        //       checkWallet === true
+                        //       ? false
+                        //       : true
+                        //     : isAtlimit === true ||
+                        //       checkWallet === false ||
+                        //       bundleState700 !== "deposit"
+                        //     ? true
+                        //     : false
+                        // }
+                        disabled
+                        // className={`btn ${
+                        //   (bundleState700 === "deposit" ||
+                        //     showApproval700 === false) &&
+                        //   checkWallet === true &&
+                        //   isAtlimit === false
+                        //     ? "pill-btn"
+                        //     : "inactive-pill-btn"
+                        // }  py-2 px-4`}
+                        className={`btn inactive-pill-btn py-2 px-4`}
+                        // onClick={() => {
+                        //   handleDeposit700();
+                        // }}
                       >
                         {depositState === "loading-deposit" ? (
                           <CircularProgress
@@ -1306,14 +1317,14 @@ const NewBundleCard = ({
             </div>
           </div>
         )}
-      {packageData.title === "Golden Pass" && (
+      {/* {packageData.title === "Golden Pass" && (
         <div className="col-12 mt-3">
           <div className="nft-outer-wrapper new-bundle-wrapper p-3 p-lg-5">
             <div className="d-flex w-100 flex-column flex-lg-row gap-4 align-items-center justify-content-between">
               <div className="d-flex flex-column gap-3  available-time-wrapper">
                 <div className="d-flex align-items-center gap-3">
                   <div className="new-bundle-title">Purchased Bundles</div>
-                  {/* <img src={require("./assets/newTooltip.svg").default} alt="" /> */}
+                 
                 </div>
                 <span
                   className="new-timer-description"
@@ -1365,7 +1376,7 @@ const NewBundleCard = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };
