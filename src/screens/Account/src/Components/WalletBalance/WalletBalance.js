@@ -1169,10 +1169,10 @@ const WalletBalance = ({
     chain: "Conflux Network",
     linkState: "conflux",
     rewards: "CFX",
-    status: "Live",
+    status: "Expired",
     id: "event1",
     eventType: "Explore & Mine",
-    date: "Oct 06, 2023",
+    date: "Ended",
     logo: conflux,
     totalRewards: "$2,000 in CFX Rewards",
     eventDuration: confluxLastDay,
@@ -1250,94 +1250,7 @@ const WalletBalance = ({
     learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
   };
 
-  const dummyBetaPassData = [
-    {
-      title: "Conflux (CFX)",
-      logo: conflux,
-      eventStatus: "Live",
-      totalRewards: "$2,000 in CFX Rewards",
-      myEarnings: 120.45,
-      eventType: "Explore & Mine",
-      eventDate: "Ends in 28 days",
-      backgroundImage: confluxUpcoming,
-      popupInfo: {
-        title: "Conflux",
-        chain: "Conflux Network",
-        linkState: "conflux",
-        rewards: "CFX",
-        status: "Live",
-        id: "event1",
-        eventType: "Explore & Mine",
-        minRewards: "1",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "20,000",
-      },
-    },
-    {
-      title: "Coin98 (C98)",
-      logo: coin98,
-      eventStatus: "Coming Soon",
-      totalRewards: "$3,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "April, 1, 2024",
-      backgroundImage: coin98Upcoming,
-      popupInfo: {
-        title: "Coin98 Pass",
-        chain: "BNB Chain",
-        linkState: "coin98",
-        rewards: "BNB",
-        status: "Coming Soon",
-        id: "event2",
-        eventType: "Explore & Mine",
-      },
-    },
-    {
-      title: "CoinGecko",
-      logo: coingecko,
-      eventStatus: "Upcoming",
-      totalRewards: "$10,000 in BNB Rewards",
-      myEarnings: 120.0,
-      eventType: "Explore & Mine",
-      eventDate: "11/09/2023",
-      backgroundImage: coingeckoUpcoming,
-      popupInfo: {
-        title: "CoinGecko",
-        chain: "BNB Chain",
-        linkState: "coingecko",
-        rewards: "BNB",
-        status: "Upcoming",
-        id: "event3",
-        eventType: "Explore & Mine",
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-      },
-    },
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Expired",
-      totalRewards: "$3,000 in BASE Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Expired",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        title: "Base Pass",
-        chain: "BNB Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-        eventType: "Explore & Mine",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
-
-      },
-    },
-  ];
+ 
 
   const dummyBetaPassData2 = [
     // {
@@ -1447,11 +1360,11 @@ const WalletBalance = ({
     {
       title: "Conflux",
       logo: conflux,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "October 06, 2023",
+      eventDate: "Ended",
       backgroundImage: confluxUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -1459,11 +1372,11 @@ const WalletBalance = ({
         chain: "Conflux Network",
         linkState: "conflux",
         rewards: "CFX",
-        status: "Live",
+        status: "Expired",
         id: "event1",
         totalRewards: "$2,000 in CFX Rewards",
         eventDuration: confluxLastDay,
-        eventDate: "October 06, 2023",
+        eventDate: "Ended",
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
@@ -2420,12 +2333,12 @@ const WalletBalance = ({
                           {getFormattedNumber(dypBalance, 2)}
                         </h6>
                       </div>
-                      <span
+                      {/* <span
                         className="nft-price-usd"
                         style={{ color: "#7DD9AF" }}
                       >
                         ${getFormattedNumber(dypBalance * dyptokenData, 2)}
-                      </span>
+                      </span> */}
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
                       <div className="d-flex align-items-center gap-2">
@@ -2460,13 +2373,13 @@ const WalletBalance = ({
                           {getFormattedNumber(dypBalancebnb, 2)}
                         </h6>
                       </div>
-                      <span
+                      {/* <span
                         className="nft-price-usd"
                         style={{ color: "#7DD9AF" }}
                       >
                         $
                         {getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
-                      </span>
+                      </span> */}
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
                       <div className="d-flex align-items-center gap-2">
@@ -2505,7 +2418,7 @@ const WalletBalance = ({
                           {getFormattedNumber(dypBalanceavax, 2)}
                         </h6>
                       </div>
-                      <span
+                      {/* <span
                         className="nft-price-usd"
                         style={{ color: "#7DD9AF" }}
                       >
@@ -2514,7 +2427,7 @@ const WalletBalance = ({
                           dypBalanceavax * dyptokenDataAvax,
                           2
                         )}
-                      </span>
+                      </span> */}
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
                       <div className="d-flex align-items-center gap-2">
@@ -4261,7 +4174,7 @@ const WalletBalance = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.status !== "Live" && (
+            {dummyEvent.status === "Coming Soon" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
                   {" "}

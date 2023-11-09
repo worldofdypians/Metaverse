@@ -72,7 +72,7 @@ const Home = ({
   }
   const treasureHuntPopupInfo = {
     title: "Treasure Hunt",
-    img: baseTreasureHuntPopup,
+    img: basePopup,
     state: "base",
   }
 
