@@ -193,7 +193,7 @@ const SingleNft = ({
   const getOffer = async () => {
     let finalArray = [];
     if (type !== "conflux" && type !== "coingecko" && type !== "gate" && type !== "base") {
-      const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
+      const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
 
       const contract1 = new window.infuraWeb3.eth.Contract(
         window.ERC20_ABI,
@@ -295,11 +295,6 @@ const SingleNft = ({
     await axios
       .get("https://api.dyp.finance/api/the_graph_eth_v2")
       .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_eth_v2.token_data
-        );
-        
-
         const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
 
         setEthTokenData(propertyETH);
