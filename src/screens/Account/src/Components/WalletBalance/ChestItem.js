@@ -28,7 +28,12 @@ const ChestItem = ({
   const [openRandom, setOpenRandom] = useState(1);
   const [ischestOpen, setIsChestOpen] = useState(false);
 
-  const getUserRewardsByChest = async (userEmail, txHash, chestId) => {
+  const getUserRewardsByChest = async (
+    userEmail,
+    txHash,
+    chestId,
+    chainText
+  ) => {
     const rewardArray = [];
     const userData = {
       transactionHash: txHash,
@@ -36,15 +41,35 @@ const ChestItem = ({
       chestIndex: chestId,
     };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-      userData
-    );
-    if (result.status === 200) {
-      onClaimRewards(result.data.reward);
-      setIsChestOpen(true);
-      setchestStatus("success");
-      onLoadingChest(false);
+    const userData_bnb = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+      chainId: chainText,
+    };
+
+    if (chainText) {
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+        userData_bnb
+      );
+      if (result.status === 200) {
+        onClaimRewards(result.data.reward);
+        setIsChestOpen(true);
+        setchestStatus("success");
+        onLoadingChest(false);
+      }
+    } else {
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+        userData
+      );
+      if (result.status === 200) {
+        onClaimRewards(result.data.reward);
+        setIsChestOpen(true);
+        setchestStatus("success");
+        onLoadingChest(false);
+      }
     }
   };
 
@@ -125,7 +150,12 @@ const ChestItem = ({
           // })
           .then((data) => {
             setOpenRandom(Math.floor(Math.random() * 2) + 1);
-            getUserRewardsByChest(email, data.transactionHash, chestIndex + 9);
+            getUserRewardsByChest(
+              email,
+              data.transactionHash,
+              chestIndex + 9,
+              "bnb"
+            );
           })
           .catch((e) => {
             window.alertify.error(e?.message);
@@ -144,7 +174,12 @@ const ChestItem = ({
           .then((data) => {
             setOpenRandom(Math.floor(Math.random() * 2) + 1);
 
-            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
+            getUserRewardsByChest(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "bnb"
+            );
           })
           .catch((e) => {
             console.error(e);
