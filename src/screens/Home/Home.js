@@ -13,18 +13,17 @@ import MarketSection from "../Marketplace/MarketSection";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useState } from "react";
-import avalanchePopup from '../../components/TimepieceMint/assets/avalanchePopup.png'
-import coin98Popup from '../../components/TimepieceMint/assets/coin98Popup.png'
-import basePopup from '../../components/TimepieceMint/assets/basePopup.png'
-import confluxPopup from '../../components/TimepieceMint/assets/confluxPopup.png'
-import gatePopup from '../../components/TimepieceMint/assets/gatePopup.webp'
-import coingeckoPopup from '../../components/TimepieceMint/assets/coingeckoPopup.png'
-import treasureHuntPopup from '../../components/TimepieceMint/assets/treasureHuntPopup.png'
-import treasureHuntGate from '../../components/TimepieceMint/assets/treasureHuntGate.webp'
-import baseTreasureHuntPopup from '../../components/TimepieceMint/assets/baseTreasureHuntPopup.webp'
+import avalanchePopup from "../../components/TimepieceMint/assets/avalanchePopup.png";
+import coin98Popup from "../../components/TimepieceMint/assets/coin98Popup.png";
+import basePopup from "../../components/TimepieceMint/assets/basePopup.png";
+import confluxPopup from "../../components/TimepieceMint/assets/confluxPopup.png";
+import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
+import coingeckoPopup from "../../components/TimepieceMint/assets/coingeckoPopup.png";
+import treasureHuntPopup from "../../components/TimepieceMint/assets/treasureHuntPopup.png";
+import treasureHuntGate from "../../components/TimepieceMint/assets/treasureHuntGate.webp";
+import baseTreasureHuntPopup from "../../components/TimepieceMint/assets/baseTreasureHuntPopup.webp";
 
-
-import confluxTreasureHunt from '../../components/TimepieceMint/assets/confluxTreasureHunt.png'
+import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
 import WodBuilders from "./WodBuilders/WodBuilders";
 
@@ -36,59 +35,54 @@ const Home = ({
   dyptokenDatabnb,
   idyptokenDatabnb,
 }) => {
-
-
   const avaxPopupInfo = {
     title: "Avalanche",
     img: avalanchePopup,
     state: "avax",
-  }
+  };
   const confluxPopupInfo = {
     title: "Conflux",
     img: confluxPopup,
     state: "conflux",
-  }
+  };
 
   const gatePopupInfo = {
     title: "Gate",
     img: gatePopup,
     state: "gate",
-  }
+  };
 
   const coin98PopupInfo = {
-    title: "Coin98", 
+    title: "Coin98",
     img: coin98Popup,
     state: "coin98",
-  }
+  };
   const basePopupInfo = {
     title: "Base ",
     img: basePopup,
     state: "base",
-  }
+  };
   const coingeckoPopupInfo = {
     title: "CoinGecko",
     img: coingeckoPopup,
     state: "coingecko",
-  }
+  };
   const treasureHuntPopupInfo = {
     title: "Treasure Hunt",
     img: basePopup,
     state: "base",
-  }
+  };
 
-
-  const [activePopup, setActivePopup] = useState(false)
+  const [activePopup, setActivePopup] = useState(false);
 
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#popup");
 
   useEffect(() => {
     setTimeout(() => {
-      setActivePopup(true)
+      setActivePopup(true);
     }, 500);
-  }, [])
-  
-
+  }, []);
 
   useEffect(() => {
     if (activePopup) {
@@ -104,43 +98,48 @@ const Home = ({
     document.title = "World of Dypians";
   }, []);
 
-
-
   return (
-  <>
-  <OutsideClickHandler id="popup" onOutsideClick={() => setActivePopup(false)}>
-  <MintPopup active={activePopup} data={treasureHuntPopupInfo} onClose={() => setActivePopup(false)} />
-  </OutsideClickHandler>
-    <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
-      <div className="d-flex flex-column home-main-wrapper">
-        <VideoWrapper
-          handleRegister={handleRegister}
-          handleDownload={handleDownload}
+    <>
+      <OutsideClickHandler
+        id="popup"
+        onOutsideClick={() => setActivePopup(false)}
+      >
+        <MintPopup
+          active={activePopup}
+          data={treasureHuntPopupInfo}
+          onClose={() => setActivePopup(false)}
         />
-        <LiveEvents />
-        <WodBuilders />
-        <Utilities />
-        <MarketSection
-          coinbase={coinbase}
-          ethTokenData={ethTokenData}
-          dyptokenDatabnb={dyptokenDatabnb}
-          idyptokenDatabnb={idyptokenDatabnb}
-        />
-        <ExplorerGrid />
-        <LandNft />
-        <CawsSociety
-          content="The Cats and Watches Society (CAWS) NFT is a unique collection of
+      </OutsideClickHandler>
+      <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
+        <div className="d-flex flex-column home-main-wrapper">
+          <VideoWrapper
+            handleRegister={handleRegister}
+            handleDownload={handleDownload}
+          />
+          <LiveEvents />
+          <WodBuilders />
+          <Utilities />
+          <MarketSection
+            coinbase={coinbase}
+            ethTokenData={ethTokenData}
+            dyptokenDatabnb={dyptokenDatabnb}
+            idyptokenDatabnb={idyptokenDatabnb}
+          />
+          <ExplorerGrid />
+          <LandNft />
+          <CawsSociety
+            content="The Cats and Watches Society (CAWS) NFT is a unique collection of
             utility NFTs developed by Dypius. Owners of these NFTs will be able
             to adventure with their CAT companion enhancing the player’s
             abilities and increasing rewards."
-        />
-        <CawsWorld />
-        <MarketPlace />
-        <Discord />
-        {/* <Partners /> */}
+          />
+          <CawsWorld />
+          <MarketPlace />
+          <Discord />
+          {/* <Partners /> */}
+        </div>
       </div>
-    </div>
-  </>
+    </>
   );
 };
 
