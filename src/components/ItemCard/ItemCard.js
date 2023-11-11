@@ -389,7 +389,7 @@ const ItemCard = ({
                     )}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                   </span>
-                  {nft.payment_priceType === 0 && (
+                 
                     <span
                       className={`nft-price-usd  ${
                         (location.pathname.includes("/marketplace/caws") ||
@@ -403,14 +403,14 @@ const ItemCard = ({
                     >
                       $
                       {getFormattedNumber(
-                        nft.payment_priceType === 0 && 
-                          // ?
-                           ethTokenData * (nft.price / 1e18),
-                          // : dypTokenData * (nft.price / 1e18),
+                        nft.payment_priceType === 0  
+                          ?
+                           ethTokenData * (nft.price / 1e18)
+                          : dypTokenData * (nft.price / 1e18),
                         2
                       )}
                     </span>
-                  )}
+                 
                 </div>
               </div>
             ) : (

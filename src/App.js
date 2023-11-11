@@ -210,12 +210,28 @@ function App() {
         const propertyDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
-        setDypTokenData(propertyDyp[0][1].token_price_usd);
+        
 
         const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
 
         setEthTokenData(propertyETH);
       });
+  };
+
+  const getPriceDYP = async () => {
+    const dypprice = await axios
+    .get(
+      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+    )
+    .then((res) => {
+      return res.data.data.attributes.base_token_price_usd;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+    setDypTokenData(dypprice);
+    setDypTokenDatabnb(dypprice);
   };
 
   const getTokenDatabnb = async () => {
@@ -234,17 +250,7 @@ function App() {
       });
   };
 
-  const getTokenDatabnbNew = async () => {
-    await axios
-      .get(
-        "https://api.geckoterminal.com/api/v2/networks/bsc/pools/0x3fbca1072fb101e9440bb97be9ef763aac312516"
-      )
-      .then((res) => {
-        setDypTokenDatabnb(res.data.data.attributes.base_token_price_usd);
-        // console.log(res.data.data.attributes.base_token_price_usd, "Base token price");
-      });
-  };
-
+ 
   const handleSwitchChain = async () => {
     const { ethereum } = window;
     const ETHPARAMS = {
@@ -1622,9 +1628,8 @@ function App() {
   useEffect(() => {
     getTokenData();
     getTokenDatabnb();
-    getTokenDatabnbNew();
+    getPriceDYP();
     getListedNfts2();
-
     getLatest20BoughtNFTS();
 
     // getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
