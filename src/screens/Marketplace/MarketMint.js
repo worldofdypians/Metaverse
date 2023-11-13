@@ -153,6 +153,7 @@ const MarketMint = ({
 
   const [activeTab, setActiveTab] = useState("live");
   const [confluxSold, setconfluxSold] = useState(0);
+  const [baseSold, setcBaseSold] = useState(0);
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
@@ -169,8 +170,16 @@ const MarketMint = ({
       window.config.nft_base_address
     );
 
+    const baseContract = new window.baseWeb3.eth.Contract(
+      window.BASE_NFT_ABI,
+      window.config.nft_base_address
+    );
+
     const confluxresult = await confluxContract.methods.totalSupply().call();
     setconfluxSold(confluxresult);
+
+    const baseresult = await baseContract.methods.totalSupply().call();
+    setcBaseSold(baseresult);
   };
 
   useEffect(() => {
@@ -1458,8 +1467,7 @@ const MarketMint = ({
                         <h6 className="past-mint-title">Base Beta Pass</h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-base-mint-amount">
-                            {/* {getFormattedNumber(confluxSold, 0)} */}
-                            10,000
+                            {getFormattedNumber(baseSold, 0)}
                           </h6>
                           <span className="past-conflux-mint-desc">
                             SOLD OUT
