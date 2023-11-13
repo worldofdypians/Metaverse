@@ -602,9 +602,7 @@ const MyRewardsPopup = ({
                     )} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards
-                  ? "-"
-                  : `$${getFormattedNumber(userEarnUsdPrevious, 2)}`}
+                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
               </td>
             </tr>
             <tr>
@@ -643,9 +641,7 @@ const MyRewardsPopup = ({
                     )} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards
-                  ? "-"
-                  : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
+                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
               </td>
             </tr>
             <tr>
@@ -659,7 +655,7 @@ const MyRewardsPopup = ({
                 {getFormattedNumber(baseEarnETH, 4)} WETH
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                ${getFormattedNumber(baseEarnUSD, 2)}
+                ${getFormattedNumber(0, 2)}
               </td>
             </tr>
 
