@@ -164,26 +164,28 @@ const MarketMint = ({
   const html = document.querySelector("html");
 
   const getTotalSupply = async () => {
-
-
     const confluxContract = new window.confluxWeb3.eth.Contract(
       window.CONFLUX_NFT_ABI,
       window.config.nft_base_address
     );
 
-    const confluxresult = await confluxContract.methods.totalSupply().call();
-    setconfluxSold(confluxresult)
+    const confluxresult = await confluxContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.log(e);
+      });
+    setconfluxSold(confluxresult);
   };
 
-
   useEffect(() => {
-      if (params.id === "base") {
-        setSelectedMint(baseData);
-      } else if (params.id === "timepiece") {
-    setSelectedMint(timepieceData);
-    setMintTitle("timepiece");
-    getTotalSupply()
-      }
+    if (params.id === "base") {
+      setSelectedMint(baseData);
+    } else if (params.id === "timepiece") {
+      setSelectedMint(timepieceData);
+      setMintTitle("timepiece");
+    }
+     getTotalSupply();
   }, []);
 
   useEffect(() => {
@@ -527,7 +529,6 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                   
                     Live
                   </h6>
                   <h6
@@ -536,7 +537,7 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                     {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div> */}
                     Upcoming
@@ -1141,8 +1142,8 @@ const MarketMint = ({
                             )}
 
                             <span className="latest-mint-currency mb-0">
-                              *Important: You can only mint one Base Beta
-                              Pass NFT per wallet.
+                              *Important: You can only mint one Base Beta Pass
+                              NFT per wallet.
                             </span>
                             <hr className="gray-divider" />
                             <span
@@ -1414,9 +1415,7 @@ const MarketMint = ({
                         <h6 className="past-mint-title">Genesis Land</h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-land-mint-amount">1,000</h6>
-                          <span className="past-land-mint-desc">
-                         SOLD OUT
-                          </span>
+                          <span className="past-land-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>
@@ -1432,9 +1431,7 @@ const MarketMint = ({
                         </h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-caws-mint-amount">10,000</h6>
-                          <span className="past-caws-mint-desc">
-                            SOLD OUT
-                          </span>
+                          <span className="past-caws-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>
@@ -1445,11 +1442,11 @@ const MarketMint = ({
                         <span className="sold-out-span">Sold Out</span>
                       </div>
                       <div className="d-flex flex-column justify-content-between past-content-wrapper ">
-                        <h6 className="past-mint-title">
-                          Conflux Beta Pass
-                        </h6>
+                        <h6 className="past-mint-title">Conflux Beta Pass</h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
-                          <h6 className="past-conflux-mint-amount">{getFormattedNumber(confluxSold,0)}</h6>
+                          <h6 className="past-conflux-mint-amount">
+                            {getFormattedNumber(confluxSold, 0)}
+                          </h6>
                           <span className="past-conflux-mint-desc">
                             SOLD OUT
                           </span>
