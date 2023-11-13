@@ -2043,6 +2043,10 @@
   background-repeat: no-repeat;
   background-position: right;
   pointer-events: none;
+
+  @media screen and (max-width: 600px) {
+    background-size: contain;
+  }
 }
 
 .my-rewards-wrapper {
