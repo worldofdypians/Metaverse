@@ -1810,15 +1810,10 @@ window.config = {
       symbol: "WAVAX",
       decimals: 18,
     },
-    // "0x60781c2586d68229fde47564546784ab3faca982": {
-    //   symbol: "PNG",
-    //   decimals: 18,
-    // },
-    // "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab": {
-    //   symbol: "WETH.e",
-    //   decimals: 18,
-    // },
-
+    "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
+      symbol: "DYP",
+      decimals: 18,
+    },
     "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E": {
       symbol: "USDC",
       decimals: 6,
@@ -1836,10 +1831,10 @@ window.config = {
       symbol: "WETH",
       decimals: 18,
     },
-    // "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
-    //   symbol: "WBTC",
-    //   decimals: 8,
-    // },
+    "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3": {
+      symbol: "DYP",
+      decimals: 18,
+    },
     "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
       symbol: "USDC",
       decimals: 6,
@@ -1860,10 +1855,10 @@ window.config = {
       symbol: "WBNB",
       decimals: 18,
     },
-    // "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
-    //   symbol: "WBTC",
-    //   decimals: 8,
-    // },
+    "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
+      symbol: "DYP",
+      decimals: 18,
+    },
     "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56": {
       symbol: "BUSD",
       decimals: 18,
