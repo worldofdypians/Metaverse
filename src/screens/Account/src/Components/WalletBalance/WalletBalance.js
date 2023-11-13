@@ -795,6 +795,23 @@ const WalletBalance = ({
     }
   };
 
+  const getPriceDYP = async () => {
+    const dypprice = await axios
+    .get(
+      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+    )
+    .then((res) => {
+      return res.data.data.attributes.base_token_price_usd;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+    setDypTokenData(dypprice);
+    setDypTokenDatabnb(dypprice);
+    setDypTokenDataAvax(dypprice);
+  };
+
   const getTokenData = async () => {
     await axios
       .get("https://api.dyp.finance/api/the_graph_eth_v2")
@@ -802,8 +819,7 @@ const WalletBalance = ({
         const propertyDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
-        setDypTokenData(propertyDyp[0][1].token_price_usd);
-
+      
         const propertyIDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
@@ -820,7 +836,7 @@ const WalletBalance = ({
         );
         const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
         setBnbPrice(bnb);
-        setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
+    
 
         const propertyIDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
@@ -836,7 +852,7 @@ const WalletBalance = ({
         const propertyDyp = Object.entries(
           data.data.the_graph_avax_v2.token_data
         );
-        setDypTokenDataAvax(propertyDyp[0][1].token_price_usd);
+      
 
         const propertyIDyp = Object.entries(
           data.data.the_graph_avax_v2.token_data
@@ -1006,6 +1022,7 @@ const WalletBalance = ({
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
     getTokenData();
+    getPriceDYP()
     getTokenDataavax();
     getTokenDatabnb();
     getListed();

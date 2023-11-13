@@ -201,6 +201,7 @@ const NewBundleCard = ({
             setshowApproval700(false);
             setSliderValue700(2);
             setbundleState700("deposit");
+            setDepositState700("deposit");
           }
         })
         .catch((e) => {
@@ -266,6 +267,7 @@ const NewBundleCard = ({
         setbundleState700("deposit");
         setStatusColor700("#00FECF");
         setSliderValue700(2);
+        setDepositState700("deposit");
       })
       .catch((e) => {
         console.error(e);
@@ -631,7 +633,9 @@ const NewBundleCard = ({
         //     Number(remainingTime_miliseconds2) +
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
-        setcountdown700( today<oneNovember ? oneNovember.getTime() : oneDecember.getTime());
+        setcountdown700(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
         handleSetAvailableTime(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
@@ -830,7 +834,6 @@ const NewBundleCard = ({
       setisAtlimit(true);
     }
 
-
     convertPrice();
   }, [today]);
 
@@ -946,14 +949,15 @@ const NewBundleCard = ({
                             {getFormattedNumber(packageData.price, 0)}
                           </h6>
                         </div>
-                        <span className="purchase-price-usd mb-0">
-                          $
-                          {getFormattedNumber(
-                            packageData.title === "Puzzle Madness"
-                              ? packageData.price * idyptokenDatabnb
-                              : packageData.price * dyptokenDatabnb
-                          )}
-                        </span>
+                        {packageData.title === "Puzzle Madness" && (
+                          <span className="purchase-price-usd mb-0">
+                            $
+                            {getFormattedNumber(
+                              packageData.title === "Puzzle Madness" &&
+                                packageData.price * idyptokenDatabnb
+                            )}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="d-flex align-items-center gap-2">
@@ -1070,18 +1074,18 @@ const NewBundleCard = ({
                       <button
                         disabled={
                           packageData.title !== "Golden Pass"
-                            ? bundleState700 === "deposit" &&
+                            ? depositState700 === "deposit" &&
                               checkWallet === true
                               ? false
                               : true
                             : isAtlimit === true ||
                               checkWallet === false ||
-                              bundleState700 !== "deposit"
+                              depositState700 !== "deposit"
                             ? true
                             : false
                         }
                         className={`btn ${
-                          (bundleState700 === "deposit" ||
+                          (depositState700 === "deposit" ||
                             showApproval700 === false) &&
                           checkWallet === true &&
                           isAtlimit === false
@@ -1092,7 +1096,7 @@ const NewBundleCard = ({
                           handleDeposit700();
                         }}
                       >
-                        {depositState === "loading-deposit" ? (
+                        {depositState700 === "loading-deposit" ? (
                           <CircularProgress
                             size={20}
                             style={{ alignSelf: "center", margin: "auto" }}
@@ -1313,7 +1317,6 @@ const NewBundleCard = ({
               <div className="d-flex flex-column gap-3  available-time-wrapper">
                 <div className="d-flex align-items-center gap-3">
                   <div className="new-bundle-title">Purchased Bundles</div>
-                  {/* <img src={require("./assets/newTooltip.svg").default} alt="" /> */}
                 </div>
                 <span
                   className="new-timer-description"

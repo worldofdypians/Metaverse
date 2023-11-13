@@ -718,12 +718,14 @@ function Dashboard({
     const web3avax = new Web3("https://api.avax.network/ext/bc/C/rpc");
 
     if (account !== undefined) {
-      const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
+      const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
+      const token_address_bsc = "0x1a3264f2e7b1cfc6220ec9348d33ccf02af7aaa4";
+
       const token_addressIDYP = "0xbd100d061e120b2c67a24453cf6368e63f1be056";
 
       const contract1 = new web3eth.eth.Contract(ERC20_ABI, token_address);
-      const contract2 = new web3bsc.eth.Contract(ERC20_ABI, token_address);
-      const contract3 = new web3avax.eth.Contract(ERC20_ABI, token_address);
+      const contract2 = new web3bsc.eth.Contract(ERC20_ABI, token_address_bsc);
+      const contract3 = new web3avax.eth.Contract(ERC20_ABI, token_address_bsc);
 
       const contract1_idyp = new web3eth.eth.Contract(
         ERC20_ABI,

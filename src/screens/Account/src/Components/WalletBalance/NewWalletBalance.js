@@ -475,11 +475,11 @@ const NewWalletBalance = ({
     {
       title: "Conflux",
       logo: conflux,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "October 06, 2023",
+      eventDate: "Ended",
       backgroundImage: confluxUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -487,11 +487,11 @@ const NewWalletBalance = ({
         chain: "Conflux Network",
         linkState: "conflux",
         rewards: "CFX",
-        status: "Live",
+        status: "Expired",
         id: "event1",
         totalRewards: "$2,000 in CFX Rewards",
         eventDuration: confluxLastDay,
-        eventDate: "October 06, 2023",
+        eventDate: "Ended",
         minRewards: "1",
         maxRewards: "20",
         minPoints: "5,000",
@@ -2308,7 +2308,7 @@ const NewWalletBalance = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.status !== "Live" && (
+            {dummyEvent.status === "Coming Soon" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/marketplace/beta-pass/${dummyEvent?.linkState}`}>
                   {" "}
