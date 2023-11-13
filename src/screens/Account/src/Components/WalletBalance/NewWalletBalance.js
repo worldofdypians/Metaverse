@@ -1172,7 +1172,7 @@ const NewWalletBalance = ({
   }, []);
 
   useEffect(() => {
-    if (canBuy) {
+    if (canBuy && email) {
       if (isPremium) {
         if (
           parseInt(claimedChests) + parseInt(claimedPremiumChests) < 20 ||
@@ -1194,10 +1194,12 @@ const NewWalletBalance = ({
           setFinished(true);
         }
       }
-    } else if (!canBuy) {
+    } else if (!canBuy && email) {
       setFinished(true);
+    } else if (!email) {
+      setFinished(false);
     }
-  }, [claimedChests, claimedPremiumChests, isPremium, canBuy]);
+  }, [claimedChests, claimedPremiumChests, isPremium, canBuy, email]);
 
   useEffect(() => {
     if (address) {
