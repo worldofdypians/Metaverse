@@ -617,13 +617,13 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 specialCell text-center">
                 {previousRewards
                   ? "-"
-                  : `$${getFormattedNumber(confluxEarnUSDPrevious, 2)}`}
+                  : `$${getFormattedNumber(0, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
                   : `${getFormattedNumber(
-                      confluxEarnUSDPrevious / cfxPrice,
+                      0 / cfxPrice,
                       4
                     )} CFX`}
               </td>
