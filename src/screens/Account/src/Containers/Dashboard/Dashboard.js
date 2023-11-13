@@ -1305,7 +1305,7 @@ function Dashboard({
       getOpenedChestPerWallet(data.getPlayer.wallet.publicAddress);
       setuserWallet(data.getPlayer.wallet.publicAddress);
     }
-  }, [data, email, count, isPremium]);
+  }, [data, email, count, isPremium, claimedChests, claimedPremiumChests]);
 
   useEffect(() => {
     if (coinbase) {
