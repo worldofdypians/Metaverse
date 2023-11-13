@@ -1192,7 +1192,7 @@
 }
 .home-card-rewards-currency {
   color: #ffeace;
-  font-size: 12 px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -2607,6 +2607,9 @@
   line-height: normal;
   letter-spacing: 0.12px;
   white-space: pre;
+  @media screen and (max-width: 1650px) {
+  font-size: 13px;
+  }
 }
 
 .events-page-status-tag-live {
