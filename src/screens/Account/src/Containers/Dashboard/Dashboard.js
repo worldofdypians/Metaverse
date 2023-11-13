@@ -399,6 +399,10 @@ function Dashboard({
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBNB;
 
+    let subscribedPlatformTokenAmountNewETH;
+    let subscribedPlatformTokenAmountNewAvax;
+    let subscribedPlatformTokenAmountNewBNB;
+
     const web3eth = window.infuraWeb3;
     const web3avax = window.avaxWeb3;
     const web3bnb = window.bscWeb3;
@@ -411,13 +415,33 @@ function Dashboard({
     const avaxsubscribeAddress = window.config.subscription_address;
     const bnbsubscribeAddress = window.config.subscriptionbnb_address;
 
+    const ethsubscribeNewAddress = window.config.subscription_neweth_address;
+    const avaxsubscribeNewAddress = window.config.subscription_newavax_address;
+    const bnbsubscribeNewAddress = window.config.subscription_newbnb_address;
+
+    const AvaxNewABI = window.SUBSCRIPTION_NEWAVAX_ABI;
+    const EthNewABI = window.SUBSCRIPTION_NEWETH_ABI;
+    const BnbNewABI = window.SUBSCRIPTION_NEWBNB_ABI;
+
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+    const ethNewcontract = new web3eth.eth.Contract(
+      EthNewABI,
+      ethsubscribeNewAddress
+    );
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,
       avaxsubscribeAddress
     );
+    const avaxNewcontract = new web3avax.eth.Contract(
+      AvaxNewABI,
+      avaxsubscribeNewAddress
+    );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+    const bnbNewcontract = new web3bnb.eth.Contract(
+      BnbNewABI,
+      bnbsubscribeNewAddress
+    );
 
     if (userAddr && email) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
@@ -432,17 +456,35 @@ function Dashboard({
         .subscriptionPlatformTokenAmount(userAddr)
         .call();
 
+      subscribedPlatformTokenAmountNewETH = await ethNewcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+
+      subscribedPlatformTokenAmountNewAvax = await avaxNewcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+
+      subscribedPlatformTokenAmountNewBNB = await bnbNewcontract.methods
+        .subscriptionPlatformTokenAmount(userAddr)
+        .call();
+
       if (
         subscribedPlatformTokenAmountAvax === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
-        subscribedPlatformTokenAmountBNB === "0"
+        subscribedPlatformTokenAmountBNB === "0" &&
+        subscribedPlatformTokenAmountNewETH === "0" &&
+        subscribedPlatformTokenAmountNewAvax === "0" &&
+        subscribedPlatformTokenAmountNewBNB === "0"
       ) {
         setIsPremium(false);
       }
       if (
         subscribedPlatformTokenAmountAvax !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0"
+        subscribedPlatformTokenAmountBNB !== "0" ||
+        subscribedPlatformTokenAmountNewETH !== "0" ||
+        subscribedPlatformTokenAmountNewAvax !== "0" ||
+        subscribedPlatformTokenAmountNewBNB !== "0"
       ) {
         setIsPremium(true);
       }
@@ -497,34 +539,42 @@ function Dashboard({
       parseInt(premium_opened_chests) + parseInt(premium_opened_chests_bnb)
     );
     if (isPremium) {
-      if (
+      if (claimedChests === 0 && claimedPremiumChests === 0) {
+        setCanBuy(true);
+      } else if (
         parseInt(regular_opened_chests) +
           parseInt(premium_opened_chests) +
           parseInt(regular_opened_chests_bnb) +
           parseInt(premium_opened_chests_bnb) <
-        20
+          20 ||
+        (claimedChests + claimedPremiumChests < 20 &&
+          claimedChests !== 0 &&
+          claimedPremiumChests !== 0)
       ) {
         setCanBuy(true);
-      }
-      if (
+      } else if (
         parseInt(regular_opened_chests) +
           parseInt(premium_opened_chests) +
           parseInt(regular_opened_chests_bnb) +
           parseInt(premium_opened_chests_bnb) ===
-        20
+          20 ||
+        claimedChests + claimedPremiumChests === 20
       ) {
         setCanBuy(false);
       }
     } else if (!isPremium) {
-      if (
+      if (claimedChests === 0) {
+        setCanBuy(true);
+      } else if (
         parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb) <
-        10
+          10 ||
+        (claimedChests < 10 && claimedChests !== 0)
       ) {
         setCanBuy(true);
-      }
-      if (
+      } else if (
         parseInt(regular_opened_chests) +
-        parseInt(regular_opened_chests_bnb === 10)
+          parseInt(regular_opened_chests_bnb === 10) ||
+        claimedChests === 10
       ) {
         setCanBuy(false);
       }
@@ -958,9 +1008,9 @@ function Dashboard({
     const bscWeb3 = new Web3(window.config.bsc_endpoint);
     const avaxWeb3 = new Web3(window.config.avax_endpoint);
 
-    const ethsubscribeAddress = window.config.subscriptioneth_address;
-    const avaxsubscribeAddress = window.config.subscription_address;
-    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
+    const ethsubscribeAddress = window.config.subscription_neweth_address;
+    const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -1027,10 +1077,10 @@ function Dashboard({
     let subscriptionContract = await window.getContract({
       key:
         chainId === 1
-          ? "SUBSCRIPTIONETH"
+          ? "SUBSCRIPTION_NEWETH"
           : chainId === 56
-          ? "SUBSCRIPTIONBNB"
-          : "SUBSCRIPTION",
+          ? "SUBSCRIPTION_NEWBNB"
+          : "SUBSCRIPTION_NEWAVAX",
     });
 
     setloadspinnerSub(true);
@@ -1451,7 +1501,10 @@ function Dashboard({
                         }}
                         claimedChests={claimedChests}
                         claimedPremiumChests={claimedPremiumChests}
+                        walletClaimedPremiumChests={walletClaimedPremiumChests}
+                        walletClaimedChests={walletClaimedChests}
                         availableTime={goldenPassRemainingTime}
+                        canBuy={canBuy}
                       />
                     </div>
                     <WalletBalance

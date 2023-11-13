@@ -183,6 +183,9 @@ const NewWalletBalance = ({
   claimedChests,
   claimedPremiumChests,
   availableTime,
+  walletClaimedPremiumChests,
+  walletClaimedChests,
+  canBuy,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1169,22 +1172,32 @@ const NewWalletBalance = ({
   }, []);
 
   useEffect(() => {
-    if (claimedChests === 10 && claimedPremiumChests === 0 && !isPremium) {
-      setFinished(true);
-    } else if (
-      claimedChests === 10 &&
-      claimedPremiumChests === 0 &&
-      isPremium
-    ) {
-      setFinished(false);
-    } else if (
-      claimedChests === 10 &&
-      claimedPremiumChests === 10 &&
-      isPremium
-    ) {
+    if (canBuy) {
+      if (isPremium) {
+        if (
+          parseInt(claimedChests) + parseInt(claimedPremiumChests) < 20 ||
+          walletClaimedChests + walletClaimedPremiumChests < 20
+        ) {
+          setFinished(false);
+        }
+        if (
+          parseInt(claimedChests) + parseInt(claimedPremiumChests) === 20 ||
+          walletClaimedChests + walletClaimedPremiumChests === 20
+        ) {
+          setFinished(true);
+        }
+      } else if (!isPremium) {
+        if (parseInt(claimedChests) < 10 || walletClaimedChests < 10) {
+          setFinished(false);
+        }
+        if (parseInt(claimedChests) === 10 || walletClaimedChests === 10) {
+          setFinished(true);
+        }
+      }
+    } else if (!canBuy) {
       setFinished(true);
     }
-  }, [claimedChests, claimedPremiumChests, isPremium]);
+  }, [claimedChests, claimedPremiumChests, isPremium, canBuy]);
 
   useEffect(() => {
     if (address) {
