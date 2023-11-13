@@ -521,7 +521,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 specialCell topborder text-center">
                 {previousRewards
                   ? "-"
-                  : `${getFormattedNumber(EthRewardsLandPool, 2)} WETH`}
+                  : `${getFormattedNumber(EthRewardsLandPool, 4)} WETH`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(wodRewards, 2)}
@@ -540,7 +540,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 specialCell text-center">
                 {previousRewards
                   ? "-"
-                  : `${getFormattedNumber(EthRewards, 2)} WETH`}
+                  : `${getFormattedNumber(EthRewards, 4)} WETH`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(wodCawsRewards, 2)}
@@ -556,7 +556,7 @@ const MyRewardsPopup = ({
                 {`$${getFormattedNumber(EthRewardsCawsPool * ethTokenData, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-                {getFormattedNumber(EthRewardsCawsPool, 2)} WETH
+                {getFormattedNumber(EthRewardsCawsPool, 4)} WETH
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(cawsRewards, 2)}
@@ -601,7 +601,7 @@ const MyRewardsPopup = ({
                   ? "-"
                   : `${getFormattedNumber(
                       userEarnUsdPrevious / bnbPrice,
-                      2
+                      4
                     )} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
@@ -624,7 +624,7 @@ const MyRewardsPopup = ({
                   ? "-"
                   : `${getFormattedNumber(
                       confluxEarnUSDPrevious / cfxPrice,
-                      2
+                      4
                     )} CFX`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
@@ -647,7 +647,7 @@ const MyRewardsPopup = ({
                   ? "-"
                   : `${getFormattedNumber(
                       gateEarnUSDPrevious / bnbPrice,
-                      2
+                      4
                     )} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
@@ -664,7 +664,7 @@ const MyRewardsPopup = ({
                 ${getFormattedNumber(baseEarnUSD, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                ${getFormattedNumber(baseEarnETH, 2)}
+                 {getFormattedNumber(baseEarnETH, 4)} WETH
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(baseEarnUSD, 2)}
@@ -703,10 +703,10 @@ const MyRewardsPopup = ({
                 {previousRewards
                   ? "-"
                   : `${getFormattedNumber(
-                      dailyplayerData +
+                      (dailyplayerData +
                         weeklyplayerData +
-                        monthlyplayerData / bnbPrice,
-                      2
+                        monthlyplayerData) / bnbPrice,
+                      4
                     )} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
@@ -773,7 +773,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
-                  : `${getFormattedNumber(genesisData / bnbPrice, 2)} WBNB`}
+                  : `${getFormattedNumber(genesisData / bnbPrice, 4)} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(gemRewards, 2)}

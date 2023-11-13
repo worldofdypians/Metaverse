@@ -150,6 +150,7 @@ const ChestItem = ({
           // })
           .then((data) => {
             setOpenRandom(Math.floor(Math.random() * 2) + 1);
+
             getUserRewardsByChest(
               email,
               data.transactionHash,
@@ -192,7 +193,7 @@ const ChestItem = ({
   };
 
   const handleChestClick = () => {
-    if (!disableBtn) {
+    if (!disableBtn || open) {
       if (!open && !ischestOpen) {
         handleOpenChest();
         handleShowRewards(100, 100);
@@ -233,7 +234,7 @@ const ChestItem = ({
       style={{
         pointerEvents:
           (rewardTypes === "premium" && !isPremium) ||
-          disableBtn ||
+          (disableBtn && !open && !ischestOpen) ||
           (chainId !== 204 && chainId !== 56 && !open && !ischestOpen) ||
           !coinbase
             ? "none"
@@ -255,9 +256,9 @@ const ChestItem = ({
         {rewardTypes === "premium" ? (
           <img
             src={
-              open || (ischestOpen && openRandom === 1)
+              (open || ischestOpen) && chestIndex + 9 <= 14
                 ? require(`./chestImages/premium/${closedImg}OpenCoins.png`)
-                : ischestOpen && openRandom === 2
+                : (open || ischestOpen) && chestIndex + 9 > 14
                 ? require(`./chestImages/premium/${closedImg}OpenGems.png`)
                 : require(`./chestImages/premium/${closedImg}.png`)
             }
@@ -301,7 +302,7 @@ const ChestItem = ({
           className="d-flex w-100 justify-content-center position-absolute"
           style={{
             cursor:
-              disableBtn ||
+              (disableBtn && !open && !ischestOpen) ||
               (chainId !== 204 && chainId !== 56 && !open && !ischestOpen) ||
               !coinbase ||
               (rewardTypes === "premium" && !isPremium)

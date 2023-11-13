@@ -633,7 +633,8 @@ const DailyBonusPopup = ({
   useEffect(() => {
     if (!canBuy) {
       setdisableBtn(true);
-    } else if (
+    } else
+     if (
       coinbase &&
       email &&
       address &&
@@ -699,7 +700,7 @@ const DailyBonusPopup = ({
               </div>
               <div className="dailyreward-separator"></div>
               <div className="d-flex flex-column-reverse w-100 justify-content-center align-items-center">
-                {(chainId === 56 || chainId === 204) && (
+                {canBuy && (chainId === 56 || chainId === 204) && (
                   <div
                     className="d-flex align-items-center gap-2 mt-2"
                     style={{ width: "fit-content" }}
