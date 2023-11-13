@@ -1491,7 +1491,7 @@ window.config = {
   vote_duration_in_seconds: 259200, // 5 minutes for test
   weth_address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7", // LOWERCASE! avax
   weth2_address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", // ethereum
-
+token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
   farmweth_address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", //farm weth
 
   token_weth_address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", //vault weth
@@ -3736,7 +3736,7 @@ window.buyNFT = async (
 window.approveBuy = async (amount) => {
   const contract = new window.web3.eth.Contract(
     window.DYP_ABI,
-    window.config.dyp_token_address
+    window.config.token_dypius_new_address
   );
 
   console.log("amount", amount);
@@ -3755,7 +3755,7 @@ window.isApprovedBuy = async (amount) => {
 
   const contract = new window.web3.eth.Contract(
     window.DYP_ABI,
-    window.config.dyp_token_address
+    window.config.token_dypius_new_address
   );
 
   const coinbase = await getCoinbase();
@@ -3867,7 +3867,7 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType) => {
   }
 
   if (priceType === 1) {
-    price_address = window.config.dyp_token_address;
+    price_address = window.config.token_dypius_new_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -3898,7 +3898,7 @@ window.updateListingNFT = async (token, price, priceType, type) => {
 
   if (priceType === 1) {
     price_nft = 1;
-    price_address = window.config.dyp_token_address;
+    price_address = window.config.token_dypius_new_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -3973,7 +3973,7 @@ window.listNFT = async (token, price, priceType, type = "") => {
 
   if (priceType === 1) {
     price_nft = 1;
-    price_address = window.config.dyp_token_address;
+    price_address = window.config.token_dypius_new_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -4070,7 +4070,7 @@ window.makeOffer = async (nftAddress, tokenId, price, priceType) => {
   }
 
   if (priceType === 1) {
-    price_address = window.config.dyp_token_address;
+    price_address = window.config.token_dypius_new_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -4188,7 +4188,7 @@ window.updateOffer = async (
   }
 
   if (priceType === 1) {
-    price_address = window.config.dyp_token_address;
+    price_address = window.config.token_dypius_new_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -4230,7 +4230,7 @@ window.approveOffer = async (amount, priceType) => {
   if (priceType === 1) {
     const contract = new window.web3.eth.Contract(
       window.DYP_ABI,
-      window.config.dyp_token_address
+      window.config.token_dypius_new_address
     );
 
     console.log("amount", amount);
@@ -4305,7 +4305,7 @@ window.isApprovedOffer = async (amount, priceType) => {
   if (priceType === 1) {
     const contract = new window.web3.eth.Contract(
       window.DYP_ABI,
-      window.config.dyp_token_address
+      window.config.token_dypius_new_address
     );
 
     const coinbase = await getCoinbase();

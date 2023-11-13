@@ -1,4 +1,6 @@
 import getListedNFTS from "./Marketplace";
+import axios from "axios";
+
 let eth_Price;
 let dyp_Price;
 let all_listed_nfts;
@@ -16,18 +18,18 @@ const getEthPrice = async () => {
 };
 
 const getDypPrice = async () => {
-  await fetch(
-    "https://pro-api.coingecko.com/api/v3/simple/price?ids=defi-yield-protocol&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+  const dypprice = await axios
+  .get(
+    "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
   )
-    .then((response) => response.json())
-    .then((data) => {
-      dyp_Price = data["defi-yield-protocol"].usd;
-      dyp_Price = dyp_Price.toFixed(2);
-      return dyp_Price;
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+  .then((res) => {
+    return res.data.data.attributes.base_token_price_usd;
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+
+    return dypprice;
 };
 
 const getListedNftResult = async () => {

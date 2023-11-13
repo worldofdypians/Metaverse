@@ -325,7 +325,7 @@ const ItemCard = ({
           </HtmlTooltip>
           {windowSize.width > 786 ? (
             <img
-            className="w-100 h-100 p-0 nft-img"
+              className="w-100 h-100 p-0 nft-img"
               src={
                 nft.type === "caws"
                   ? `https://mint.dyp.finance/thumbs150/${nft.tokenId}.png`
@@ -389,23 +389,28 @@ const ItemCard = ({
                     )}{" "}
                     {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                   </span>
-                  <span
-                    className={`nft-price-usd  ${
-                      (location.pathname.includes("/marketplace/caws") ||
-                        location.pathname.includes("/marketplace/land") ||
-                        location.pathname.includes("/marketplace/timepiece")) &&
-                      "nft-price-usdhover"
-                    } ${!isListed && "nft-price-usdhover2"}`}
-                    style={{ color: "#7DD9AF" }}
-                  >
-                    $
-                    {getFormattedNumber(
-                      nft.payment_priceType === 0
-                        ? ethTokenData * (nft.price / 1e18)
-                        : dypTokenData * (nft.price / 1e18),
-                      2
-                    )}
-                  </span>
+                 
+                    <span
+                      className={`nft-price-usd  ${
+                        (location.pathname.includes("/marketplace/caws") ||
+                          location.pathname.includes("/marketplace/land") ||
+                          location.pathname.includes(
+                            "/marketplace/timepiece"
+                          )) &&
+                        "nft-price-usdhover"
+                      } ${!isListed && "nft-price-usdhover2"}`}
+                      style={{ color: "#7DD9AF" }}
+                    >
+                      $
+                      {getFormattedNumber(
+                        nft.payment_priceType === 0  
+                          ?
+                           ethTokenData * (nft.price / 1e18)
+                          : dypTokenData * (nft.price / 1e18),
+                        2
+                      )}
+                    </span>
+                 
                 </div>
               </div>
             ) : (
@@ -493,15 +498,14 @@ const ItemCard = ({
             </div>
           )}
       </div>
-      {isListed &&
-        !location.pathname.includes("/account") && (
-          <span
-            className="position-relative top-sale-time"
-            style={{ bottom: "-8%" }}
-          >
-            {getRelativeTime(nft.blockTimestamp)}
-          </span>
-        )}
+      {isListed && !location.pathname.includes("/account") && (
+        <span
+          className="position-relative top-sale-time"
+          style={{ bottom: "-8%" }}
+        >
+          {getRelativeTime(nft.blockTimestamp)}
+        </span>
+      )}
     </div>
   );
 };

@@ -97,15 +97,16 @@ const ConfirmationModal = ({
                       {getFormattedNumber(nft.price / 1e18, 2)}{" "}
                       {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                     </span>
+                    {nft.payment_priceType === 0 &&
                     <span className="itemcollectionName">
                       $
                       {getFormattedNumber(
                         nft.payment_priceType === 0
-                          ? ethTokenData * (nft.price / 1e18)
-                          : dypTokenData * (nft.price / 1e18),
+                          && ethTokenData * (nft.price / 1e18),
+                          // : dypTokenData * (nft.price / 1e18),
                         nft.payment_priceType === 0 ? 3 : 0
                       )}
-                    </span>
+                    </span> }
                   </div>
                 </div>
               </div>
@@ -170,15 +171,16 @@ const ConfirmationModal = ({
                       {getFormattedNumber(nft.price / 1e18, 2)}{" "}
                       {nft.payment_priceType === 0 ? "ETH" : "DYP"}
                     </span>
+                    {nft.payment_priceType === 0 &&
                     <span className="itemcollectionName">
                       $
                       {getFormattedNumber(
                         nft.payment_priceType === 0
-                          ? ethTokenData * (nft.price / 1e18)
-                          : dypTokenData * (nft.price / 1e18),
+                          && ethTokenData * (nft.price / 1e18),
+                          // : dypTokenData * (nft.price / 1e18),
                         nft.payment_priceType === 0 ? 3 : 0
                       )}
-                    </span>
+                    </span> }
                   </div>
                 </div>
               </div>
