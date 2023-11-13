@@ -1438,7 +1438,7 @@ function Dashboard({
                         }}
                         onLinkWallet={connectWallet}
                         onSigninClick={onSigninClick}
-                        onLogoutClick={logout}
+                        onLogoutClick={()=>{logout(); setIsPremium(false)}}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
                         isPremium={isPremium}

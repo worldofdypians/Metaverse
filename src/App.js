@@ -141,7 +141,7 @@ function App() {
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
-  
+
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -161,7 +161,6 @@ function App() {
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
-
 
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
@@ -221,7 +220,6 @@ function App() {
         const propertyDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
-        
 
         const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
 
@@ -231,15 +229,15 @@ function App() {
 
   const getPriceDYP = async () => {
     const dypprice = await axios
-    .get(
-      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-    )
-    .then((res) => {
-      return res.data.data.attributes.base_token_price_usd;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .get(
+        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+      )
+      .then((res) => {
+        return res.data.data.attributes.base_token_price_usd;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
@@ -261,7 +259,6 @@ function App() {
       });
   };
 
- 
   const handleSwitchChain = async () => {
     const { ethereum } = window;
     const ETHPARAMS = {
@@ -516,8 +513,7 @@ function App() {
         settotalBaseNft(NFTS.length);
         setmyBaseNFTs(NFTS);
         setbaseMintAllowed(NFTS.length > 0 ? 0 : 1);
-        setmybaseNFTsCreated(NFTS); 
-
+        setmybaseNFTsCreated(NFTS);
       });
 
       //setmyBaseNFTs
@@ -2257,7 +2253,6 @@ function App() {
                   timepieceMetadata={timepieceMetadata}
                   myConfluxNFTsCreated={myConfluxNFTsCreated}
                   mybaseNFTsCreated={mybaseNFTsCreated}
-
                   handleConfluxMint={handleConfluxNftMint}
                   handleBaseNftMint={handleBaseNftMint}
                   confluxMintAllowed={confluxMintAllowed}
@@ -2280,7 +2275,8 @@ function App() {
           )}
         </div>
 
-        {!location.pathname.includes("account") && <ChestFlyout />}
+        {!location.pathname.includes("account") &&
+          !location.pathname.includes("auth") && <ChestFlyout />}
 
         {showWalletModal === true && (
           <RegisterModal
