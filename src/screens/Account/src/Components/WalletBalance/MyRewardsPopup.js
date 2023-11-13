@@ -464,7 +464,7 @@ const MyRewardsPopup = ({
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
-  }, [address,email]);
+  }, [address, email]);
 
   useEffect(() => {
     if (email && address) {
@@ -491,10 +491,7 @@ const MyRewardsPopup = ({
             </tr>
           </thead>
 
-          <tbody className="position-relative">
-            <tr className="specialRow">
-            <div className="table-separator position-absolute p-0" style={{left: 0}}></div>
-</tr>
+          <tbody className="position-relative myrewards-tbody">
             <tr>
               <td className="myrewards-td-main border-0">
                 <img src={nftStake} alt="" style={{ width: 24, height: 24 }} />{" "}
@@ -615,17 +612,12 @@ const MyRewardsPopup = ({
                 Conflux Network
               </td>
               <td className="myrewards-td-second border-0 specialCell text-center">
-                {previousRewards
-                  ? "-"
-                  : `$${getFormattedNumber(0, 2)}`}
+                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
-                  : `${getFormattedNumber(
-                      0 / cfxPrice,
-                      4
-                    )} CFX`}
+                  : `${getFormattedNumber(0 / cfxPrice, 4)} CFX`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
@@ -664,7 +656,7 @@ const MyRewardsPopup = ({
                 ${getFormattedNumber(baseEarnUSD, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                 {getFormattedNumber(baseEarnETH, 4)} WETH
+                {getFormattedNumber(baseEarnETH, 4)} WETH
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(baseEarnUSD, 2)}
@@ -691,7 +683,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Daily/Weekly/Monthly
               </td>
-              <td className="myrewards-td-second border-0 specialCell topborder text-center">
+              <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
                 {previousRewards
                   ? "-"
                   : `$${getFormattedNumber(
@@ -703,9 +695,8 @@ const MyRewardsPopup = ({
                 {previousRewards
                   ? "-"
                   : `${getFormattedNumber(
-                      (dailyplayerData +
-                        weeklyplayerData +
-                        monthlyplayerData) / bnbPrice,
+                      (dailyplayerData + weeklyplayerData + monthlyplayerData) /
+                        bnbPrice,
                       4
                     )} WBNB`}
               </td>
@@ -734,7 +725,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Treasure Chests
               </td>
-              <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
+              <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
                 {previousRewards ? "-" : "0"}
               </td>
               <td className="myrewards-td-second border-0 text-center">
@@ -767,7 +758,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Genesis Gem
               </td>
-              <td className="myrewards-td-second border-0 specialCell topborder bottomborder text-center">
+              <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
                 {previousRewards ? "-" : `$${genesisData}`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
