@@ -130,7 +130,7 @@ const Home = ({
           <CawsSociety
             content="The Cats and Watches Society (CAWS) NFT is a unique collection of
             utility NFTs developed by Dypius. Owners of these NFTs will be able
-            to adventure with their CAT companion enhancing the player’s
+            to adventure with their CAT companion enhancing the player's
             abilities and increasing rewards."
           />
           <CawsWorld />

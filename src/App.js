@@ -64,6 +64,8 @@ import {
   ConnectionType,
 } from "web3-connector";
 
+import ChestFlyout from "./components/LandFlyout/ChestFlyout";
+
 function App() {
   const CHAINLIST = {
     1: {
@@ -96,6 +98,17 @@ function App() {
       },
       blockExplorerUrls: ["https://evm.confluxscan.net"],
     },
+    204: {
+      chainId: 204,
+      chainName: "opBNB",
+      rpcUrls: ["https://opbnb.publicnode.com"],
+      nativeCurrency: {
+        symbol: "bnb",
+        decimals: 18,
+      },
+
+      blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
+    },
   };
 
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -127,10 +140,8 @@ function App() {
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
-
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   
-
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -498,7 +509,7 @@ function App() {
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
         setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
-        setmyConfluxNFTsCreated(NFTS); 
+        setmyConfluxNFTsCreated(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
@@ -1521,7 +1532,16 @@ function App() {
         await ethereum.request({
           method: "wallet_switchEthereumChain",
           params: [
-            { chainId: chain === 1 ? "0x1" : chain === 56 ? "0x38" : "0x406" },
+            {
+              chainId:
+                chain === 1
+                  ? "0x1"
+                  : chain === 56
+                  ? "0x38"
+                  : chain === 204
+                  ? "0xcc"
+                  : "0x406",
+            },
           ],
         });
         // if (window.ethereum && window.gatewallet) {
@@ -1816,6 +1836,7 @@ function App() {
                   onSigninClick={checkData}
                   success={success}
                   availableTime={availTime}
+                  handleSwitchNetwork={handleSwitchNetwork}
                 />
               }
             />
@@ -1946,7 +1967,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -1988,7 +2008,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -2092,7 +2111,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -2111,41 +2129,41 @@ function App() {
               }
             />
             <Route
-                exact
-                path="/marketplace/beta-pass/base"
-                element={
-                  <BetaPassNFT
-                    type={"base"}
-                    ethTokenData={ethTokenData}
-                    dypTokenData={dypTokenData}
-                    cawsArray={allCawsForTimepieceMint}
-                    mintloading={mintloading}
-                    isConnected={isConnected}
-                    chainId={chainId}
-                    handleMint={handleTimepieceMint}
-                    mintStatus={mintStatus}
-                    textColor={textColor}
-                    calculateCaws={calculateCaws}
-                    totalCreated={totalTimepieceCreated}
-                    totalCoingeckoNft={totalCoingeckoNft}
-                    myNFTSCoingecko={MyNFTSCoingecko}
-                    myGateNfts={myGateNfts}
-                    totalGateNft={totalGateNft}
-                    totalBaseNft={totalBaseNft}
-                    myBaseNFTs={myBaseNFTs}
-                    totalConfluxNft={totalConfluxNft}
-                    myConfluxNfts={myConfluxNfts}
-                    timepieceMetadata={timepieceMetadata}
-                    handleConnect={handleShowWalletModal}
-                    listedNFTS={listedNFTS}
-                    coinbase={coinbase}
-                    timepieceBought={timepieceBought}
-                    handleRefreshListing={handleRefreshList}
-                    nftCount={nftCount}
-                    handleSwitchNetwork={handleSwitchNetwork}
-                  />
-                }
-              />
+              exact
+              path="/marketplace/beta-pass/base"
+              element={
+                <BetaPassNFT
+                  type={"base"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                />
+              }
+            />
             <Route
               exact
               path="/marketplace/events/:eventId"
@@ -2261,6 +2279,8 @@ function App() {
             <Footer />
           )}
         </div>
+
+        {!location.pathname.includes("account") && <ChestFlyout />}
 
         {showWalletModal === true && (
           <RegisterModal

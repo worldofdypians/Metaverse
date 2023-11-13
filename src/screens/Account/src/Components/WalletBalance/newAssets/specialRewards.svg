@@ -1,0 +1,26 @@
+<svg width="93" height="136" viewBox="0 0 93 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Tropy Star" filter="url(#filter0_d_2345_8259)">
+<rect id="Rectangle 27" x="38.4453" y="63.6426" width="5.23219" height="23.307" fill="#BF7F02"/>
+<path id="Rectangle 20" d="M14.5078 105.787C14.5078 97.4023 21.3047 90.6055 29.689 90.6055H52.6189C61.0033 90.6055 67.8002 97.4023 67.8002 105.787V118.095H14.5078V105.787Z" fill="#243B6D"/>
+<path id="Rectangle 28" d="M35.1172 90.7565C35.1172 88.3922 37.0338 86.4756 39.3981 86.4756H42.7277C45.0919 86.4756 47.0085 88.3922 47.0085 90.7565H35.1172Z" fill="#DCAE0C"/>
+<rect id="Rectangle 21" x="23.2791" y="99.5437" width="36.0374" height="10.8278" fill="#F9B50E" stroke="#FFEC86" stroke-width="3.91749"/>
+<path id="Rectangle 29" d="M24.6562 97.585H42.7311L57.0007 112.33H38.9259L24.6562 97.585Z" fill="#FFEC86"/>
+<rect id="Rectangle 22" x="11.1484" y="118.095" width="59.6278" height="5.70784" fill="#DE9300"/>
+<path id="Vector" d="M41 8.82624L51.2028 29.2319L52.0405 30.9073L53.8992 31.1396L73.9507 33.6461L60.0767 49.2039L58.9578 50.4586L59.2378 52.1163L63.0676 74.7873L42.5652 64.5362L41 63.7536L39.4348 64.5362L18.9436 74.7817L22.8058 52.1214L23.0892 50.4584L21.9649 49.2007L8.05896 33.6449L28.1008 31.1396L29.9595 30.9073L30.7972 29.2319L41 8.82624Z" fill="#FFEC86" stroke="#FFB802" stroke-width="7"/>
+<path id="Vector_2" d="M40.9937 19.0459L49.114 35.2865L65.3546 37.3166L54.2027 49.8218L57.2343 67.7677L40.9937 59.6474L24.7531 67.7677L27.8118 49.8218L16.6328 37.3166L32.8734 35.2865L40.9937 19.0459Z" fill="#DE9300"/>
+<path id="Vector_3" d="M41.1742 59.647L57.5351 67.7673C57.5351 67.7673 56.2255 57.5892 42.9317 49.8215C29.6379 42.0538 32.9937 35.2861 32.9937 35.2861L16.6328 37.3162L27.8946 49.8215L24.8133 67.7673L41.1742 59.647Z" fill="#CB8600"/>
+<path id="Vector_4" d="M54.7185 102.936L57.1396 97.608L54.7185 92.2796L60.0469 94.7007L65.3753 92.2796L62.9542 97.608L65.3753 102.936L60.0469 100.515L54.7185 102.936Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_2345_8259" x="0.216502" y="0.216502" width="92.536" height="135.339" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="5.48449" dy="5.48449"/>
+<feGaussianBlur stdDeviation="3.13399"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2345_8259"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2345_8259" result="shape"/>
+</filter>
+</defs>
+</svg>
