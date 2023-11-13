@@ -598,43 +598,46 @@ const DailyBonusPopup = ({
   }, []);
 
   useEffect(() => {
-    if (rewardTypes === "standard") {
-      if (
-        standardChests &&
-        standardChests.length > 0 &&
-        openedChests &&
-        openedChests.length > 0
-      ) {
-        if (standardChests[0].isOpened === true) {
-          setLiveRewardData(standardChests[0]);
-          setIsActive(standardChests[0].chestId);
-          setIsActiveIndex(1);
-        }
-      } else setLiveRewardData([]);
-    }
+    if (email) {
+      if (rewardTypes === "standard") {
+        if (
+          standardChests &&
+          standardChests.length > 0 &&
+          openedChests &&
+          openedChests.length > 0
+        ) {
+          if (standardChests[0].isOpened === true) {
+            setLiveRewardData(standardChests[0]);
+            setIsActive(standardChests[0].chestId);
+            setIsActiveIndex(1);
+          }
+        } else setLiveRewardData([]);
+      }
 
-    if (rewardTypes === "premium") {
-      if (
-        premiumChests &&
-        premiumChests.length > 0 &&
-        isPremium &&
-        openedChests &&
-        openedChests.length > 0
-      ) {
-        if (premiumChests[0].isOpened === true) {
-          setLiveRewardData(premiumChests[0]);
-          setIsActive(premiumChests[0].chestId);
-          setIsActiveIndex(1);
-        }
-      } else setLiveRewardData([]);
+      if (rewardTypes === "premium") {
+        if (
+          premiumChests &&
+          premiumChests.length > 0 &&
+          isPremium &&
+          openedChests &&
+          openedChests.length > 0
+        ) {
+          if (premiumChests[0].isOpened === true) {
+            setLiveRewardData(premiumChests[0]);
+            setIsActive(premiumChests[0].chestId);
+            setIsActiveIndex(1);
+          }
+        } else setLiveRewardData([]);
+      }
+    } else {
+      setLiveRewardData([]);
     }
-  }, [rewardTypes]);
+  }, [rewardTypes, email]);
 
   useEffect(() => {
     if (!canBuy) {
       setdisableBtn(true);
-    } else
-     if (
+    } else if (
       coinbase &&
       email &&
       address &&
@@ -1404,7 +1407,6 @@ const DailyBonusPopup = ({
                             ${getFormattedNumber(rewardData?.reward ?? 0, 0)}
                             Reward
                           </span>
-                         
                         </div>
                       </div>
                     </div>
@@ -1617,9 +1619,9 @@ const DailyBonusPopup = ({
                               fontSize: "14px",
                             }}
                           >
-                            ${getFormattedNumber(rewardData.reward ?? 0, 2)} Reward
+                            ${getFormattedNumber(rewardData.reward ?? 0, 2)}{" "}
+                            Reward
                           </span>
-                         
                         </div>
                       </div>
                     </div>
@@ -1628,7 +1630,8 @@ const DailyBonusPopup = ({
                 {rewardData?.rewardType?.includes("LargeMoney") &&
                   (myNFTSCaws > 0 || myNFTSLand > 0 || myNFTSTimepiece > 0) && (
                     <span className="text-white d-flex m-auto reward-subtitle">
-                      Congratulations, you have earned ${getFormattedNumber(rewardData.reward ?? 0, 2)} Reward.
+                      Congratulations, you have earned $
+                      {getFormattedNumber(rewardData.reward ?? 0, 2)} Reward.
                     </span>
                   )}
                 {rewardData?.rewardType?.includes("LargeMoney") &&
