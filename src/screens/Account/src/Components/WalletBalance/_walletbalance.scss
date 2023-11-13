@@ -741,6 +741,10 @@
   border-radius: 0px 8px 0 0;
 }
 
+.topbottom-border {
+  border-radius: 0px 8px 8px 0;
+}
+
 .previousRewardsText {
   color: #ffa60c;
   text-align: center;
@@ -1170,15 +1174,19 @@
 }
 
 .paddingLeftCell {
- padding-left: 40px !important;
+  padding-left: 40px !important;
 }
 
 .specialRow {
   height: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 !important;
+}
+
+.myrewards-tbody {
+  border-top: 1px solid #fff;
 }
 
 .chain-active-btn,
