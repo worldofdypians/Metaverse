@@ -1104,7 +1104,7 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="mintleft-side mt-0 px-0 d-flex flex-column gap-3">
-                  {/* <NavLink
+                  <NavLink
                     to={"/marketplace/mint/timepiece"}
                     className="w-100 m-0 d-flex flex-column gap-5"
                   >
@@ -1148,8 +1148,8 @@ const Marketplace = ({
                     >
                       Mint now <img src={greenArrow} alt="" />{" "}
                     </span>
-                  </NavLink> */}
-                  <div className="d-flex flex-column gap-4">
+                  </NavLink>
+                  {/* <div className="d-flex flex-column gap-4">
                     <NavLink
                       to={"/marketplace/mint/base"}
                       className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between"
@@ -1186,7 +1186,7 @@ const Marketplace = ({
                     >
                       Mint now <img src={greenArrow} alt="" />{" "}
                     </span>
-                  </NavLink>
+                  </NavLink> */}
                 </div>
                 <div className="stakeright-side d-flex flex-column gap-3">
                   <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">

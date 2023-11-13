@@ -2220,7 +2220,7 @@ function App() {
             />
             <Route
               exact
-              path="/marketplace/mint/:id"
+              path="/marketplace/mint/timepiece"
               element={
                 <MarketMint
                   coinbase={coinbase}

@@ -156,8 +156,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
-  const [selectedMint, setSelectedMint] = useState(baseData);
-  const [mintTitle, setMintTitle] = useState("base");
+  const [selectedMint, setSelectedMint] = useState(timepieceData);
+  const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -551,7 +551,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  <div className="pb-5 px-0 position-relative">
+                  {/* <div className="pb-5 px-0 position-relative">
                     {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -587,7 +587,7 @@ const MarketMint = ({
                         />
                       ))}
                     </Slider>
-                  </div>
+                  </div> */}
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -1406,7 +1406,7 @@ const MarketMint = ({
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
                       </div>
-                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper">
                         <h6 className="past-mint-title">Genesis Land</h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-land-mint-amount">1,000</h6>
@@ -1441,6 +1441,25 @@ const MarketMint = ({
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-conflux-mint-amount">
                             {getFormattedNumber(confluxSold, 0)}
+                          </h6>
+                          <span className="past-conflux-mint-desc">
+                            SOLD OUT
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-base-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Base Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-base-mint-amount">
+                            {/* {getFormattedNumber(confluxSold, 0)} */}
+                            10,000
                           </h6>
                           <span className="past-conflux-mint-desc">
                             SOLD OUT
