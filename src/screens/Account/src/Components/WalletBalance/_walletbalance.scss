@@ -2077,7 +2077,7 @@
   pointer-events: none;
 
   @media screen and (max-width: 786px) {
-    background-image: none;
+    background-position: right center;
   }
 }
 
@@ -2090,6 +2090,9 @@
   margin: auto;
   width: fit-content;
   height: fit-content;
+  @media screen and (max-width: 786px) {
+   margin: auto 15px;
+  }
 }
 
 .my-total-rewards {
