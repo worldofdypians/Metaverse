@@ -494,89 +494,92 @@ function Dashboard({
   };
 
   const getOpenedChestPerWallet = async (walletAddr) => {
-    const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
-      window.DAILY_BONUS_ABI,
-      window.config.daily_bonus_address
-    );
+    if (email) {
+      const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
+        window.DAILY_BONUS_ABI,
+        window.config.daily_bonus_address
+      );
 
-    const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
-      window.DAILY_BONUS_BNB_ABI,
-      window.config.daily_bonus_bnb_address
-    );
+      const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
+        window.DAILY_BONUS_BNB_ABI,
+        window.config.daily_bonus_bnb_address
+      );
 
-    const regular_opened_chests = await daily_bonus_contract.methods
-      .dailyChestCount(walletAddr)
-      .call()
-      .catch((e) => {
-        console.log(e);
-      });
+      const regular_opened_chests = await daily_bonus_contract.methods
+        .dailyChestCount(walletAddr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
-    const premium_opened_chests = await daily_bonus_contract.methods
-      .dailyPremiumChestCount(walletAddr)
-      .call()
-      .catch((e) => {
-        console.log(e);
-      });
+      const premium_opened_chests = await daily_bonus_contract.methods
+        .dailyPremiumChestCount(walletAddr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
-    const regular_opened_chests_bnb = await daily_bonus_contract_bnb.methods
-      .dailyChestCount(walletAddr)
-      .call()
-      .catch((e) => {
-        console.log(e);
-      });
+      const regular_opened_chests_bnb = await daily_bonus_contract_bnb.methods
+        .dailyChestCount(walletAddr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
-    const premium_opened_chests_bnb = await daily_bonus_contract_bnb.methods
-      .dailyPremiumChestCount(walletAddr)
-      .call()
-      .catch((e) => {
-        console.log(e);
-      });
+      const premium_opened_chests_bnb = await daily_bonus_contract_bnb.methods
+        .dailyPremiumChestCount(walletAddr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
-    setWalletclaimedChests(
-      parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb)
-    );
-    setWalletclaimedPremiumChests(
-      parseInt(premium_opened_chests) + parseInt(premium_opened_chests_bnb)
-    );
-    if (isPremium) {
-      if (claimedChests === 0 && claimedPremiumChests === 0) {
-        setCanBuy(true);
-      } else if (
-        parseInt(regular_opened_chests) +
-          parseInt(premium_opened_chests) +
-          parseInt(regular_opened_chests_bnb) +
-          parseInt(premium_opened_chests_bnb) <
-          20 ||
-        (claimedChests + claimedPremiumChests < 20 &&
-          claimedChests !== 0 &&
-          claimedPremiumChests !== 0)
-      ) {
-        setCanBuy(true);
-      } else if (
-        parseInt(regular_opened_chests) +
-          parseInt(premium_opened_chests) +
-          parseInt(regular_opened_chests_bnb) +
-          parseInt(premium_opened_chests_bnb) ===
-          20 ||
-        claimedChests + claimedPremiumChests === 20
-      ) {
-        setCanBuy(false);
-      }
-    } else if (!isPremium) {
-      if (claimedChests === 0) {
-        setCanBuy(true);
-      } else if (
-        parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb) <
-          10 ||
-        (claimedChests < 10 && claimedChests !== 0)
-      ) {
-        setCanBuy(true);
-      } else if (
-        parseInt(regular_opened_chests) +
-          parseInt(regular_opened_chests_bnb === 10) ||
-        claimedChests === 10
-      ) {
-        setCanBuy(false);
+      setWalletclaimedChests(
+        parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb)
+      );
+      setWalletclaimedPremiumChests(
+        parseInt(premium_opened_chests) + parseInt(premium_opened_chests_bnb)
+      );
+      if (isPremium) {
+        if (claimedChests === 0 && claimedPremiumChests === 0) {
+          setCanBuy(true);
+        } else if (
+          parseInt(regular_opened_chests) +
+            parseInt(premium_opened_chests) +
+            parseInt(regular_opened_chests_bnb) +
+            parseInt(premium_opened_chests_bnb) <
+            20 ||
+          (claimedChests + claimedPremiumChests < 20 &&
+            claimedChests !== 0 &&
+            claimedPremiumChests !== 0)
+        ) {
+          setCanBuy(true);
+        } else if (
+          parseInt(regular_opened_chests) +
+            parseInt(premium_opened_chests) +
+            parseInt(regular_opened_chests_bnb) +
+            parseInt(premium_opened_chests_bnb) ===
+            20 ||
+          claimedChests + claimedPremiumChests === 20
+        ) {
+          setCanBuy(false);
+        }
+      } else if (!isPremium) {
+        if (claimedChests === 0) {
+          setCanBuy(true);
+        } else if (
+          parseInt(regular_opened_chests) +
+            parseInt(regular_opened_chests_bnb) <
+            10 ||
+          (claimedChests < 10 && claimedChests !== 0)
+        ) {
+          setCanBuy(true);
+        } else if (
+          parseInt(regular_opened_chests) +
+            parseInt(regular_opened_chests_bnb === 10) ||
+          claimedChests === 10
+        ) {
+          setCanBuy(false);
+        }
       }
     }
   };
@@ -629,9 +632,7 @@ function Dashboard({
 
   const handleShowSyncModal = () => {
     setshowSyncModal(true);
-  }
-
- 
+  };
 
   const handleSync = async () => {
     setsyncStatus("loading");
@@ -1440,7 +1441,14 @@ function Dashboard({
                         }}
                         onLinkWallet={connectWallet}
                         onSigninClick={onSigninClick}
-                        onLogoutClick={()=>{logout(); setIsPremium(false)}}
+                        onLogoutClick={() => {
+                          logout();
+                          setIsPremium(false);
+                          setclaimedChests(0);
+                          setclaimedPremiumChests(0);
+                          setWalletclaimedChests(0);
+                          setWalletclaimedPremiumChests(0);
+                        }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
                         isPremium={isPremium}
