@@ -196,8 +196,8 @@ function App() {
   ] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
-  const [dypTokenData, setDypTokenData] = useState();
-  const [ethTokenData, setEthTokenData] = useState();
+  const [dypTokenData, setDypTokenData] = useState(0);
+  const [ethTokenData, setEthTokenData] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const [cawsBought, setCawsBought] = useState([]);
   const [timepieceBought, setTimepieceBought] = useState([]);

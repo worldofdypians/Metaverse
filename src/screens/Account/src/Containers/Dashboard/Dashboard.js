@@ -629,7 +629,9 @@ function Dashboard({
 
   const handleShowSyncModal = () => {
     setshowSyncModal(true);
-  };
+  }
+
+ 
 
   const handleSync = async () => {
     setsyncStatus("loading");

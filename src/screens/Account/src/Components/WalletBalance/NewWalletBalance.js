@@ -1176,14 +1176,12 @@ const NewWalletBalance = ({
       if (isPremium) {
         if (claimedChests === 0 && claimedPremiumChests === 0) {
           setFinished(false);
-        } 
-       else if (
+        } else if (
           parseInt(claimedChests) + parseInt(claimedPremiumChests) < 20 ||
           walletClaimedChests + walletClaimedPremiumChests < 20
         ) {
           setFinished(false);
-        }
-       else if (
+        } else if (
           parseInt(claimedChests) + parseInt(claimedPremiumChests) === 20 ||
           walletClaimedChests + walletClaimedPremiumChests === 20
         ) {
@@ -1192,11 +1190,12 @@ const NewWalletBalance = ({
       } else if (!isPremium) {
         if (claimedChests === 0) {
           setFinished(false);
-        }
-       else if (parseInt(claimedChests) < 10 || walletClaimedChests < 10) {
+        } else if (parseInt(claimedChests) < 10 || walletClaimedChests < 10) {
           setFinished(false);
-        }
-       else if (parseInt(claimedChests) === 10 || walletClaimedChests === 10) {
+        } else if (
+          parseInt(claimedChests) === 10 ||
+          walletClaimedChests === 10
+        ) {
           setFinished(true);
         }
       }
