@@ -2339,11 +2339,11 @@ const WalletBalance = ({
                   style={{ marginTop: windowSize.width < 991 ? 0 : "50px" }}
                 >
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-2">
+                    <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-3">
                       <img src={ethIcon} alt="" className="" />
                       <span className="eth-chain-text">Ethereum</span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img src={dypIcon} alt="dyp" className="dyp-icon" />
                         <h6 className="wallet-amount mb-0">
@@ -2357,7 +2357,7 @@ const WalletBalance = ({
                         ${getFormattedNumber(dypBalance * dyptokenData, 2)}
                       </span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img
                           src={idyp}
@@ -2379,11 +2379,11 @@ const WalletBalance = ({
                   </div>
                   <div className="balanceseparator"></div>
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-2">
+                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
                       <img src={bnbIcon} alt="" className="" />
                       <span className="bnb-chain-text">BNB Chain</span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img src={dypIcon} alt="dyp" className="dyp-icon" />
                         <h6 className="wallet-amount mb-0">
@@ -2398,7 +2398,7 @@ const WalletBalance = ({
                         {getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
                       </span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img
                           src={idyp}
@@ -2424,11 +2424,11 @@ const WalletBalance = ({
                   </div>
                   <div className="balanceseparator"></div>
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-2">
+                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
                       <img src={avaxIcon} alt="" className="" />
                       <span className="avax-chain-text">Avalanche</span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img src={dypIcon} alt="dyp" className="dyp-icon" />
                         <h6 className="wallet-amount mb-0">
@@ -2446,7 +2446,7 @@ const WalletBalance = ({
                         )}
                       </span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img
                           src={idyp}
