@@ -101,7 +101,7 @@ const ComingSoon = ({ optionText, data }) => {
                   #{Number(index) + 1}
                 </td>
                 <td className="playerName col-5">
-                  <div className="position-relative">
+                  <div className="position-relative d-flex align-items-center">
                     <img src={playerAvatar} alt="" className="playerAvatar" />{" "}
                     {item.displayName}
                   </div>

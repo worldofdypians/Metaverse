@@ -629,7 +629,9 @@ function Dashboard({
 
   const handleShowSyncModal = () => {
     setshowSyncModal(true);
-  };
+  }
+
+ 
 
   const handleSync = async () => {
     setsyncStatus("loading");
@@ -1438,7 +1440,7 @@ function Dashboard({
                         }}
                         onLinkWallet={connectWallet}
                         onSigninClick={onSigninClick}
-                        onLogoutClick={logout}
+                        onLogoutClick={()=>{logout(); setIsPremium(false)}}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
                         isPremium={isPremium}
