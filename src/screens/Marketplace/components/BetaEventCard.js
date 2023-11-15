@@ -20,6 +20,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
           ? "upcoming-mint-wrapper-base"
           : data.title === "Gate.io"
           ? "upcoming-mint-wrapper-gate"
+          : data.title === 'Dypius' ? 'upcoming-dyp-event'
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
