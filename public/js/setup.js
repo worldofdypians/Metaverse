@@ -1516,13 +1516,13 @@ window.config = {
   locker_address: "0x4c695f6198cd4e56efcbf750d0b8961d28885f57",
   lockereth_address: "0x0c5d9AA95329517918AA7b82BfDa25d60446E1ac",
   subscription_address: "0x5078a4912f6e0d74dcf99482ac5910df123e9b4b",
-  subscription_newavax_address: "0x669A026E2d647d78882887691E7c18Da84BCFe7D",
+  subscription_newavax_address: "0xef3819fc5bb5a5468cac4d47e2a1ee6905b8cc7d",
 
   subscriptioneth_address: "0x6cc47d895aa6da6012c2b6bfd2f6af3ebbf1d2e4",
   subscription_neweth_address: "0x29c90c6a1243455266afd7f92649e384213d45b0",
 
   subscriptionbnb_address: "0x0ec59a2d18e1e83ab393b3ac9d7d6d28cbff0d35",
-  subscription_newbnb_address: "0xFE5a91b1F48095ac2943240f8E1A9da19557911d",
+  subscription_newbnb_address: "0xc8adbef45b75ee4f3b5c9d4da2e1a1af408378a2",
   //DYP-ETH 3 days
   token_address: "0xBa7872534a6C9097d805d8BEE97e030f4e372e54",
   staking_address: "0xa7d6F5fa9b0be0e98b3b40E6aC884e53F2F9460e",
@@ -1807,72 +1807,61 @@ window.config = {
   // add supported subscription tokens here, lowercase
   // THESE TOKENS MUST HAVE BEEN ALREADY ADDED TO SMART CONTRACT!
   subscription_tokens: {
-    "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7": {
-      symbol: "USDT",
-      decimals: 6,
-    },
     "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7": {
       symbol: "WAVAX",
       decimals: 18,
     },
-    // "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
-    //   symbol: "DYP",
-    //   decimals: 18,
-    // },
-    "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E": {
-      symbol: "USDC",
+    "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7": {
+      symbol: "USDT",
       decimals: 6,
+    },
+    "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70": {
+      symbol: "DAI",
+      decimals: 18,
+    },
+    "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
+      symbol: "DYP",
+      decimals: 18,
     },
   },
 
   // add supported subscription tokens here, lowercase
   // THESE TOKENS MUST HAVE BEEN ALREADY ADDED TO SMART CONTRACT!
   subscriptioneth_tokens: {
-    "0xdac17f958d2ee523a2206206994597c13d831ec7": {
-      symbol: "USDT",
-      decimals: 6,
-    },
     "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
       symbol: "WETH",
       decimals: 18,
     },
-    // "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3": {
-    //   symbol: "DYP",
-    //   decimals: 18,
-    // },
     "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
       symbol: "USDC",
       decimals: 6,
     },
-
-    // "0x6b175474e89094c44da98b954eedeac495271d0f": {
-    //   symbol: "DAI",
-    //   decimals: 18,
-    // },
-  },
-
-  subscriptionbnb_tokens: {
-    "0x55d398326f99059fF775485246999027B3197955": {
+    "0xdac17f958d2ee523a2206206994597c13d831ec7": {
       symbol: "USDT",
+      decimals: 6,
+    },
+    "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3": {
+      symbol: "DYP",
       decimals: 18,
     },
+  },
+  subscriptionbnb_tokens: {
     "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
       symbol: "WBNB",
       decimals: 18,
     },
-    // "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
-    //   symbol: "DYP",
-    //   decimals: 18,
-    // },
     "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56": {
       symbol: "BUSD",
       decimals: 18,
     },
-
-    // "0x6b175474e89094c44da98b954eedeac495271d0f": {
-    //   symbol: "DAI",
-    //   decimals: 18,
-    // },
+    "0x55d398326f99059fF775485246999027B3197955": {
+      symbol: "USDT",
+      decimals: 18,
+    },
+    "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
+      symbol: "DYP",
+      decimals: 18,
+    },
   },
 
   automated_trust_scores: {
@@ -5736,6 +5725,7 @@ window.SUBSCRIPTION_NEWETH_ABI = [
   },
 ];
 
+
 window.SUBSCRIPTION_NEWBNB_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -6094,7 +6084,35 @@ window.SUBSCRIPTION_NEWAVAX_ABI = [
   },
   {
     inputs: [],
+    name: "TRUSTED_DYP_WAVAX_PAIR",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "TRUSTED_PLATFORM_TOKEN_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_USDT_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_USDT_WAVAX_PAIR",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_WAVAX_ADDRESS",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
@@ -6154,6 +6172,11 @@ window.SUBSCRIPTION_NEWAVAX_ABI = [
         name: "newSubscriptionFeeInDai",
         type: "uint256",
       },
+      {
+        internalType: "uint128",
+        name: "newSubscriptionFeeInUSDT",
+        type: "uint128",
+      },
     ],
     name: "setSubscriptionFee",
     outputs: [],
@@ -6174,6 +6197,13 @@ window.SUBSCRIPTION_NEWAVAX_ABI = [
     inputs: [],
     name: "subscriptionFeeInDai",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "subscriptionFeeInUSDT",
+    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
     stateMutability: "view",
     type: "function",
   },
@@ -36328,7 +36358,6 @@ async function getEstimatedTokenSubscriptionAmountETH(tokenAddress) {
 
 async function getEstimatedTokenSubscriptionAmountBNB(tokenAddress) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB" });
-  console.log(subscriptionContract, tokenAddress)
   return await subscriptionContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();

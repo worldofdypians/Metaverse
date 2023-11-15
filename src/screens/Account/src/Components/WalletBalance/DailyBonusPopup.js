@@ -39,8 +39,6 @@ const DailyBonusPopup = ({
   myNFTSLand,
   myNFTSTimepiece,
   allChests,
-  walletClaimedPremiumChests,
-  walletClaimedChests,
   canBuy,
 }) => {
   const [rewardTypes, setRewardTypes] = useState("standard");
@@ -700,7 +698,7 @@ const DailyBonusPopup = ({
               </div>
               <div className="dailyreward-separator"></div>
               <div className="d-flex flex-column-reverse w-100 justify-content-center align-items-center">
-                {canBuy && (chainId === 56 || chainId === 204) && (
+                {canBuy && (chainId === 56 || chainId === 204) && email && (
                   <div
                     className="d-flex align-items-center gap-2 mt-2"
                     style={{ width: "fit-content" }}
@@ -814,7 +812,7 @@ const DailyBonusPopup = ({
                   ) : !canBuy ? (
                     <span className="sync-txt d-flex align-items-center gap-1">
                       <img src={triangle} alt="" />
-                      This wallet has completed the daily bonus for today.
+                      This account has completed the daily bonus for today.
                       Please come back tomorrow.
                     </span>
                   ) : (
@@ -1018,12 +1016,12 @@ const DailyBonusPopup = ({
                               }}
                             >
                               ${" "}
-                              {
-                                (liverewardData?.rewardType?.includes(
-                                  "Money"
-                                ) && getFormattedNumber(liverewardData?.reward),
-                                0)
-                              }{" "}
+                              {liverewardData?.rewardType?.includes("Money")
+                                ? getFormattedNumber(
+                                    Number(liverewardData?.reward),
+                                    2
+                                  )
+                                : "0"}{" "}
                               Reward
                             </span>
                             {myNFTSCaws === 0 &&
@@ -1401,7 +1399,13 @@ const DailyBonusPopup = ({
                               fontSize: "14px",
                             }}
                           >
-                            ${getFormattedNumber(rewardData?.reward ?? 0, 0)}
+                            $
+                            {rewardData?.rewardType?.includes("Money")
+                              ? getFormattedNumber(
+                                  Number(rewardData?.reward),
+                                  2
+                                )
+                              : "0"}
                             Reward
                           </span>
                         </div>

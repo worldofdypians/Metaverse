@@ -164,10 +164,6 @@ function Dashboard({
   const [claimedChests, setclaimedChests] = useState(0);
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
 
-  const [walletClaimedChests, setWalletclaimedChests] = useState(0);
-  const [walletClaimedPremiumChests, setWalletclaimedPremiumChests] =
-    useState(0);
-
   const [canBuy, setCanBuy] = useState(false);
 
   const [allChests, setallChests] = useState(0);
@@ -458,96 +454,27 @@ function Dashboard({
     }
   };
 
-  const getOpenedChestPerWallet = async (walletAddr) => {
+  const getOpenedChestPerWallet = async () => {
     if (email) {
-      const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
-        window.DAILY_BONUS_ABI,
-        window.config.daily_bonus_address
-      );
-
-      const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
-        window.DAILY_BONUS_BNB_ABI,
-        window.config.daily_bonus_bnb_address
-      );
-
-      const regular_opened_chests = await daily_bonus_contract.methods
-        .dailyChestCount(walletAddr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-        });
-
-      const premium_opened_chests = await daily_bonus_contract.methods
-        .dailyPremiumChestCount(walletAddr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-        });
-
-      const regular_opened_chests_bnb = await daily_bonus_contract_bnb.methods
-        .dailyChestCount(walletAddr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-        });
-
-      const premium_opened_chests_bnb = await daily_bonus_contract_bnb.methods
-        .dailyPremiumChestCount(walletAddr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-        });
-
-      setWalletclaimedChests(
-        parseInt(regular_opened_chests) + parseInt(regular_opened_chests_bnb)
-      );
-      setWalletclaimedPremiumChests(
-        parseInt(premium_opened_chests) + parseInt(premium_opened_chests_bnb)
-      );
       if (isPremium) {
-        if (claimedChests === 0 && claimedPremiumChests === 0) {
+         if (claimedChests + claimedPremiumChests < 20) {
           setCanBuy(true);
-        } else if (
-          parseInt(regular_opened_chests) +
-            parseInt(premium_opened_chests) +
-            parseInt(regular_opened_chests_bnb) +
-            parseInt(premium_opened_chests_bnb) <
-            20 ||
-          (claimedChests + claimedPremiumChests < 20 &&
-            claimedChests !== 0 &&
-            claimedPremiumChests !== 0)
-        ) {
-          setCanBuy(true);
-        } else if (
-          parseInt(regular_opened_chests) +
-            parseInt(premium_opened_chests) +
-            parseInt(regular_opened_chests_bnb) +
-            parseInt(premium_opened_chests_bnb) ===
-            20 ||
-          claimedChests + claimedPremiumChests === 20
-        ) {
+        } else if (claimedChests + claimedPremiumChests === 20) {
           setCanBuy(false);
         }
       } else if (!isPremium) {
-        if (claimedChests === 0) {
+        if (claimedChests < 10) {
           setCanBuy(true);
-        } else if (
-          parseInt(regular_opened_chests) +
-            parseInt(regular_opened_chests_bnb) <
-            10 ||
-          (claimedChests < 10 && claimedChests !== 0)
-        ) {
-          setCanBuy(true);
-        } else if (
-          parseInt(regular_opened_chests) +
-            parseInt(regular_opened_chests_bnb === 10) ||
-          claimedChests === 10
-        ) {
+        } else if (claimedChests === 10) {
           setCanBuy(false);
         }
       }
+    } else {
+      setCanBuy(false);
     }
   };
+
+ 
 
   const getAllChests = async (userEmail) => {
     const emailData = { emailAddress: userEmail };
@@ -931,8 +858,7 @@ function Dashboard({
         : chainId === 56
         ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
-    tokenprice = new BigNumber(tokenprice).times(1.1).toFixed(0);
-    console.log(tokenprice);
+    tokenprice = new BigNumber(tokenprice).toFixed(0);
 
     let formattedTokenPrice = getFormattedNumber(
       tokenprice / 10 ** tokenDecimals,
@@ -1211,7 +1137,6 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wbnbAddress);
       handleCheckIfAlreadyApproved(wbnbAddress);
-
     }
     //  else if (chainId === 43114) {
     //   setChainDropdown(chainDropdowns[2]);
@@ -1230,7 +1155,6 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
-
     }
   }, [chainId]);
 
@@ -1289,7 +1213,7 @@ function Dashboard({
       data.getPlayer.wallet.publicAddress &&
       email
     ) {
-      getOpenedChestPerWallet(data.getPlayer.wallet.publicAddress);
+      getOpenedChestPerWallet();
       setuserWallet(data.getPlayer.wallet.publicAddress);
     }
   }, [data, email, count, isPremium, claimedChests, claimedPremiumChests]);
@@ -1428,8 +1352,6 @@ function Dashboard({
                           setIsPremium(false);
                           setclaimedChests(0);
                           setclaimedPremiumChests(0);
-                          setWalletclaimedChests(0);
-                          setWalletclaimedPremiumChests(0);
                         }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
@@ -1495,8 +1417,6 @@ function Dashboard({
                         }}
                         claimedChests={claimedChests}
                         claimedPremiumChests={claimedPremiumChests}
-                        walletClaimedPremiumChests={walletClaimedPremiumChests}
-                        walletClaimedChests={walletClaimedChests}
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
                       />
@@ -1726,6 +1646,8 @@ function Dashboard({
                             bnbPrice={bnbPrice}
                             cfxPrice={cfxPrice}
                             ethTokenData={ethTokenData}
+                            openedChests={openedChests}
+                            allChests={allChests}
                           />
                         </div>
                       </OutsideClickHandler>
@@ -2138,19 +2060,25 @@ function Dashboard({
                             <div className="d-flex align-items-center gap-3 justify-content-center">
                               <div
                                 className={` ${
-                                  approveStatus === "fail" || !coinbase || isApproved
+                                  approveStatus === "fail" ||
+                                  !coinbase ||
+                                  isApproved
                                     ? "linear-border-disabled"
                                     : "linear-border"
                                 }`}
                               >
                                 <button
                                   className={`btn ${
-                                    approveStatus === "fail" || !coinbase || isApproved
+                                    approveStatus === "fail" ||
+                                    !coinbase ||
+                                    isApproved
                                       ? "outline-btn-disabled"
                                       : "filled-btn"
                                   } px-4`}
                                   disabled={
-                                    approveStatus === "fail" || !coinbase || isApproved
+                                    approveStatus === "fail" ||
+                                    !coinbase ||
+                                    isApproved
                                       ? true
                                       : false
                                   }
@@ -2284,108 +2212,6 @@ function Dashboard({
                       </OutsideClickHandler>
                     )}
                   </div>
-                  {/* <div className="d-flex flex-column flex-xxl-row gap-3 justify-content-between">
-              <div className={"home-main-wrapper nftBigWrapper"}>
-                <h2
-                  className={`font-organetto d-flex gap-1 align-items-center m-0 bundleTitle`}
-                >
-                  Caws
-                  <mark className={`font-organetto bundletag`}>Nft</mark>
-                </h2>
-                <div className="nftcontainer d-flex m-0 flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center position-relative">
-                  <div className="ethwrapper position-absolute d-none d-lg-flex">
-                    <span className="ethText">
-                      <img src={ethereum} alt="" className="ethlogo" /> Ethereum
-                    </span>
-                  </div>
-                  <div className="d-flex gap-5 align-items-end flex-column flex-xxl-row flex-lg-row flex-md-row contentwrapper">
-                    {renderItems()}
-                    {tokensState?.items?.length > 0 ? (
-                      <div
-                        className={"linear-border nftGridItem"}
-                        style={{ width: "fit-content" }}
-                      >
-                        <button
-                          className={"btn filled-btn px-5"}
-                          onClick={() => {
-                            setshowChecklistModal(true);
-                          }}
-                        >
-                          View all
-                        </button>
-                      </div>
-                    ) : (
-                      <div
-                        className={"linear-border nftGridItem"}
-                        style={{ width: "fit-content" }}
-                      >
-                        <a
-                          href="https://opensea.io/collection/catsandwatchessocietycaws"
-                          target="_blank"
-                          rel="noreferrer"
-                          className={"btn filled-btn px-5"}
-                        >
-                          Buy CAWS
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div
-                className={
-                  "home-main-wrapper d-flex justify-content-end nftBigWrapper"
-                }
-              >
-                <h2
-                  className={`font-organetto -flex flex-column flex-xxl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center m-0 bundleTitle`}
-                >
-                  Genesis Land
-                  <mark className={`font-organetto bundletag`}>Nft</mark>
-                </h2>
-                <div className="nftcontainer d-flex m-0 flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center position-relative">
-                  <div className="ethwrapper position-absolute d-none d-lg-flex">
-                    <span className="ethText">
-                      <img src={ethereum} alt="" className="ethlogo" /> Ethereum
-                    </span>
-                  </div>
-                  <div className="d-flex gap-5 align-items-end flex-column flex-xxl-row flex-lg-row flex-md-row contentwrapper">
-                    {renderGenesisItems()}
-
-               
-                    {tokensState?.landItems?.length > 0 ? (
-                      <div
-                        className={"linear-border nftGridItem"}
-                        style={{ width: "fit-content" }}
-                      >
-                        <button
-                          className={"btn filled-btn px-5"}
-                          onClick={() => {
-                            setshowChecklistLandNftModal(true);
-                          }}
-                        >
-                          View all
-                        </button>
-                      </div>
-                    ) : (
-                      <div
-                        className={"linear-border nftGridItem"}
-                        style={{ width: "fit-content" }}
-                      >
-                        <a
-                          href="https://opensea.io/collection/worldofdypians"
-                          target="_blank"
-                          rel="noreferrer"
-                          className={"btn filled-btn px-5"}
-                        >
-                          Buy WoD Land
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div> */}
                 </div>
               </div>
             )}
@@ -2429,8 +2255,6 @@ function Dashboard({
                     myNFTSLand={MyNFTSLand.length}
                     myNFTSTimepiece={MyNFTSTimepiece.length}
                     allChests={allChests}
-                    walletClaimedPremiumChests={walletClaimedPremiumChests}
-                    walletClaimedChests={walletClaimedChests}
                     canBuy={canBuy}
                   />
                 </div>
