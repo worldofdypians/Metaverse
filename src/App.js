@@ -57,12 +57,15 @@ import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserMo
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import { useEagerlyConnect } from "web3-connector";
+import { SIDRegister } from "@web3-name-sdk/register";
+import { providers } from 'ethers'
 import {
   useWeb3React,
   disconnect,
   connectWallet,
   ConnectionType,
 } from "web3-connector";
+import DomainModal from "./components/DomainModal/DomainModal.js";
 
 function App() {
   const CHAINLIST = {
@@ -195,13 +198,25 @@ function App() {
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [success, setSuccess] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
-
+  const [domainPopup, setDomainPopup] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { connector, account, accounts, isActive, isActivating, provider } =
     useWeb3React();
 
   useEagerlyConnect();
+
+  const searchDomain = async (domain) => {
+    // if(window.ethereum){
+    //   const provider = new providers.Web3Provider(window.ethereum)
+    //   const signer = provider.getSigner()
+    //   const register = new SIDRegisterOptions({signer, chainId: 56})
+    //   const available = await register.getAvailable(domain)
+    //   console.log(available, "Available");
+    // }
+  }
+
+
 
   const getTokenData = async () => {
     await axios
@@ -1689,6 +1704,7 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
+            handleOpenDomains={() => setDomainPopup(true)}
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -2261,7 +2277,11 @@ function App() {
             <Footer />
           )}
         </div>
-
+        
+        {domainPopup && 
+        <DomainModal onClose={() => setDomainPopup(false)} onSearch={searchDomain} />
+        }
+        
         {showWalletModal === true && (
           <RegisterModal
             open={showWalletModal}
