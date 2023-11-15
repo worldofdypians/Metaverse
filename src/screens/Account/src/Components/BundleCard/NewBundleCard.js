@@ -949,15 +949,15 @@ const NewBundleCard = ({
                             {getFormattedNumber(packageData.price, 0)}
                           </h6>
                         </div>
-                        {packageData.title === "Puzzle Madness" && (
-                          <span className="purchase-price-usd mb-0">
-                            $
-                            {getFormattedNumber(
-                              packageData.title === "Puzzle Madness" &&
-                                packageData.price * idyptokenDatabnb
-                            )}
-                          </span>
-                        )}
+
+                        <span className="purchase-price-usd mb-0">
+                          $
+                          {getFormattedNumber(
+                            packageData.title === "Puzzle Madness"
+                              ? packageData.price * idyptokenDatabnb
+                              : packageData.price * dyptokenDatabnb
+                          )}
+                        </span>
                       </div>
                     </div>
                     <div className="d-flex align-items-center gap-2">
