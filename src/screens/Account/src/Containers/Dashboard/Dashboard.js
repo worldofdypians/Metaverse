@@ -395,10 +395,6 @@ function Dashboard({
   };
 
   const refreshSubscription = async (userAddr, email) => {
-    let subscribedPlatformTokenAmountETH;
-    let subscribedPlatformTokenAmountAvax;
-    let subscribedPlatformTokenAmountBNB;
-
     let subscribedPlatformTokenAmountNewETH;
     let subscribedPlatformTokenAmountNewAvax;
     let subscribedPlatformTokenAmountNewBNB;
@@ -406,14 +402,6 @@ function Dashboard({
     const web3eth = window.infuraWeb3;
     const web3avax = window.avaxWeb3;
     const web3bnb = window.bscWeb3;
-
-    const AvaxABI = window.SUBSCRIPTION_ABI;
-    const EthABI = window.SUBSCRIPTIONETH_ABI;
-    const BnbABI = window.SUBSCRIPTIONBNB_ABI;
-
-    const ethsubscribeAddress = window.config.subscriptioneth_address;
-    const avaxsubscribeAddress = window.config.subscription_address;
-    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
 
     const ethsubscribeNewAddress = window.config.subscription_neweth_address;
     const avaxsubscribeNewAddress = window.config.subscription_newavax_address;
@@ -423,39 +411,22 @@ function Dashboard({
     const EthNewABI = window.SUBSCRIPTION_NEWETH_ABI;
     const BnbNewABI = window.SUBSCRIPTION_NEWBNB_ABI;
 
-    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const ethNewcontract = new web3eth.eth.Contract(
       EthNewABI,
       ethsubscribeNewAddress
     );
-    const avaxcontract = new web3avax.eth.Contract(
-      AvaxABI,
-      avaxsubscribeAddress
-    );
+
     const avaxNewcontract = new web3avax.eth.Contract(
       AvaxNewABI,
       avaxsubscribeNewAddress
     );
 
-    const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
     const bnbNewcontract = new web3bnb.eth.Contract(
       BnbNewABI,
       bnbsubscribeNewAddress
     );
 
     if (userAddr && email) {
-      subscribedPlatformTokenAmountETH = await ethcontract.methods
-        .subscriptionPlatformTokenAmount(userAddr)
-        .call();
-
-      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
-        .subscriptionPlatformTokenAmount(userAddr)
-        .call();
-
-      subscribedPlatformTokenAmountBNB = await bnbcontract.methods
-        .subscriptionPlatformTokenAmount(userAddr)
-        .call();
-
       subscribedPlatformTokenAmountNewETH = await ethNewcontract.methods
         .subscriptionPlatformTokenAmount(userAddr)
         .call();
@@ -469,9 +440,6 @@ function Dashboard({
         .call();
 
       if (
-        subscribedPlatformTokenAmountAvax === "0" &&
-        subscribedPlatformTokenAmountETH === "0" &&
-        subscribedPlatformTokenAmountBNB === "0" &&
         subscribedPlatformTokenAmountNewETH === "0" &&
         subscribedPlatformTokenAmountNewAvax === "0" &&
         subscribedPlatformTokenAmountNewBNB === "0"
@@ -479,9 +447,6 @@ function Dashboard({
         setIsPremium(false);
       }
       if (
-        subscribedPlatformTokenAmountAvax !== "0" ||
-        subscribedPlatformTokenAmountETH !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0" ||
         subscribedPlatformTokenAmountNewETH !== "0" ||
         subscribedPlatformTokenAmountNewAvax !== "0" ||
         subscribedPlatformTokenAmountNewBNB !== "0"
@@ -967,6 +932,7 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
     tokenprice = new BigNumber(tokenprice).times(1.1).toFixed(0);
+    console.log(tokenprice);
 
     let formattedTokenPrice = getFormattedNumber(
       tokenprice / 10 ** tokenDecimals,
@@ -980,16 +946,27 @@ function Dashboard({
 
   const handleApprove = async (e) => {
     // e.preventDefault();
+    const ethsubscribeAddress = window.config.subscription_neweth_address;
+    const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const web3 = new Web3(window.ethereum);
 
-    let tokenContract = await window.getContract({
-      address: selectedSubscriptionToken,
-      ABI: window.ERC20_ABI,
-    });
+    let tokenContract = new web3.eth.Contract(
+      window.ERC20_ABI,
+      selectedSubscriptionToken
+    );
     setloadspinner(true);
 
     await tokenContract.methods
-      .approve(selectedSubscriptionToken, price)
-      .send()
+      .approve(
+        chainId === 1
+          ? ethsubscribeAddress
+          : chainId === 56
+          ? bnbsubscribeAddress
+          : avaxsubscribeAddress,
+        price
+      )
+      .send({ from: coinbase })
       .then(() => {
         setloadspinner(false);
         setisApproved(true);
@@ -1224,6 +1201,7 @@ function Dashboard({
         Object.keys(window.config.subscriptioneth_tokens)[0]
       );
       handleSubscriptionTokenChange(wethAddress);
+      handleCheckIfAlreadyApproved(wethAddress);
     } else if (chainId === 56) {
       setChainDropdown(chainDropdowns[1]);
       setdropdownIcon("usdt");
@@ -1232,6 +1210,8 @@ function Dashboard({
         Object.keys(window.config.subscriptionbnb_tokens)[0]
       );
       handleSubscriptionTokenChange(wbnbAddress);
+      handleCheckIfAlreadyApproved(wbnbAddress);
+
     }
     //  else if (chainId === 43114) {
     //   setChainDropdown(chainDropdowns[2]);
@@ -1249,6 +1229,8 @@ function Dashboard({
         Object.keys(window.config.subscriptioneth_tokens)[0]
       );
       handleSubscriptionTokenChange(wethAddress);
+      handleCheckIfAlreadyApproved(wethAddress);
+
     }
   }, [chainId]);
 
@@ -1994,6 +1976,7 @@ function Dashboard({
                                   <span className="subscription-price-text mb-0">
                                     Subscription Price:
                                   </span>
+
                                   <div className="d-flex align-items-center gap-2">
                                     <div class="dropdown position relative">
                                       <button
@@ -2155,19 +2138,19 @@ function Dashboard({
                             <div className="d-flex align-items-center gap-3 justify-content-center">
                               <div
                                 className={` ${
-                                  approveStatus === "fail" || !coinbase
+                                  approveStatus === "fail" || !coinbase || isApproved
                                     ? "linear-border-disabled"
                                     : "linear-border"
                                 }`}
                               >
                                 <button
                                   className={`btn ${
-                                    approveStatus === "fail" || !coinbase
+                                    approveStatus === "fail" || !coinbase || isApproved
                                       ? "outline-btn-disabled"
                                       : "filled-btn"
                                   } px-4`}
                                   disabled={
-                                    approveStatus === "fail" || !coinbase
+                                    approveStatus === "fail" || !coinbase || isApproved
                                       ? true
                                       : false
                                   }
