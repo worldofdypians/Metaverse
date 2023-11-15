@@ -1382,6 +1382,16 @@ function Dashboard({
     }
   }, [success]);
 
+
+  
+  useEffect(() => {
+    if (dailyBonusPopup) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [dailyBonusPopup]);
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
@@ -1468,6 +1478,7 @@ function Dashboard({
                         onDailyRewardsPopupOpen={() => {
                           setdailyBonusPopup(true);
                         }}
+                        dailyPopup={dailyBonusPopup}
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
@@ -1508,6 +1519,7 @@ function Dashboard({
                         onRewardsClick={() => {
                           setmyRewardsPopup(true);
                         }}
+                        rewardsPopup={myRewardsPopup}
                         onBalanceClick={() => {
                           setBalancePopup(true);
                         }}
