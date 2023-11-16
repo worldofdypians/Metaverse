@@ -1463,6 +1463,7 @@ class VAULT_NEW {
 // ALL THE ADDRESSES IN CONFIG MUST BE LOWERCASE
 window.config = {
   dyp_token_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
+  token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
   nft_marketplace_address: "0xF55D96735Fa22ba1C119bA37aF76C2c4E3BeC224",
   nft_caws_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
   nft_cawsold_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
@@ -1487,7 +1488,6 @@ window.config = {
   vote_duration_in_seconds: 259200, // 5 minutes for test
   weth_address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7", // LOWERCASE! avax
   weth2_address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", // ethereum
-token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
   farmweth_address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", //farm weth
 
   token_weth_address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", //vault weth
@@ -1887,16 +1887,16 @@ token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dy
 
   //bridge eth-avax
 
-  token_dyp_eth_address: "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17",
-  token_dyp_bsc_address: "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17",
+  token_dyp_eth_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
+  token_dyp_bsc_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
 
   bridge_eth_address: "0xd374c29d98e9A33FA4D08fca1d72d7319EA4Bc58",
   bridge_bsc_address: "0x229eD0B61bEA41710A79A3634E06B1A619a0EBCb",
 
   //bridge eth-bsc
 
-  token_dyp_bsceth_address: "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17",
-  token_dyp_bscbsc_address: "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17",
+  token_dyp_bsceth_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
+  token_dyp_bscbsc_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
 
   bridge_bsceth_address: "0x81A0d2f173590A23636DB6a475BC7E32aAae946C",
   bridge_bscbsc_address: "0x229eD0B61bEA41710A79A3634E06B1A619a0EBCb",
@@ -2005,7 +2005,6 @@ window.bscWeb3 = new Web3(window.config.bsc_endpoint);
 window.avaxWeb3 = new Web3(window.config.avax_endpoint);
 window.confluxWeb3 = new Web3(window.config.conflux_endpoint);
 window.baseWeb3 = new Web3(window.config.base_endpoint);
-
 
 window.REWARD_TOKEN_ABI = window.TOKEN_ABI;
 window.REWARD_TOKENAVAX_ABI = window.TOKENAVAX_ABI;
@@ -3460,7 +3459,7 @@ class GATE_NFT {
   }
   async getGateLatestMint() {
     let nft_contract = await getContractGateNFT("GATE_NFT");
-    console.log(nft_contract, 'gate')
+    console.log(nft_contract, "gate");
     return await nft_contract.methods.totalSupply().call();
   }
 }
@@ -3704,10 +3703,15 @@ window.buyNFT = async (
   }
 };
 
-window.approveBuy = async (amount) => {
+window.approveBuy = async (tokenType, amount) => {
   const contract = new window.web3.eth.Contract(
     window.DYP_ABI,
     window.config.token_dypius_new_address
+  );
+
+  const contract_old = new window.web3.eth.Contract(
+    window.DYP_ABI,
+    window.config.dyp_token_address
   );
 
   console.log("amount", amount);
@@ -3716,13 +3720,23 @@ window.approveBuy = async (amount) => {
     window.config.nft_marketplace_address
   );
 
-  await contract.methods
-    .approve(window.config.nft_marketplace_address, amount)
-    .send({ from: await getCoinbase() });
+  if (tokenType === "dypv2") {
+    await contract.methods
+      .approve(window.config.nft_marketplace_address, amount)
+      .send({ from: await getCoinbase() });
+  } else if (tokenType === "dypv1") {
+    await contract_old.methods
+      .approve(window.config.nft_marketplace_address, amount)
+      .send({ from: await getCoinbase() });
+  }
 };
 
-window.isApprovedBuy = async (amount) => {
+window.isApprovedBuy = async (tokenType, amount) => {
   window.web3 = new Web3(window.ethereum);
+  const contract_old = new window.web3.eth.Contract(
+    window.DYP_ABI,
+    window.config.dyp_token_address
+  );
 
   const contract = new window.web3.eth.Contract(
     window.DYP_ABI,
@@ -3731,16 +3745,23 @@ window.isApprovedBuy = async (amount) => {
 
   const coinbase = await getCoinbase();
 
-  const allowance = await contract.methods
-    .allowance(coinbase, window.config.nft_marketplace_address)
-    .call({ from: await getCoinbase() });
+  if (tokenType === "dypv2") {
+    const allowance = await contract.methods
+      .allowance(coinbase, window.config.nft_marketplace_address)
+      .call({ from: await getCoinbase() });
+    return Number(allowance) >= Number(amount);
+  } else if (tokenType === "dypv1") {
+    const allowance = await contract_old.methods
+      .allowance(coinbase, window.config.nft_marketplace_address)
+      .call({ from: await getCoinbase() });
+    return Number(allowance) >= Number(amount);
+  }
+
   // console.log(
   //   Number(allowance) >= Number(amount),
   //   Number(allowance),
   //   Number(amount)
   // );
-
-  return Number(allowance) >= Number(amount);
 };
 
 window.isApprovedNFT = async (token, type, address) => {
@@ -3830,7 +3851,7 @@ window.approveNFT = async (type) => {
   }
 };
 
-window.cancelListNFT = async (nftAddress, tokenId, priceType) => {
+window.cancelListNFT = async (nftAddress, tokenId, priceType, tokenType) => {
   let price_address;
 
   if (priceType === 0) {
@@ -3838,7 +3859,10 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType) => {
   }
 
   if (priceType === 1) {
-    price_address = window.config.token_dypius_new_address;
+    price_address =
+      tokenType === "dypv2"
+        ? window.config.token_dypius_new_address
+        : window.config.dyp_token_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -3851,7 +3875,7 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType) => {
     .send({ from: window.ethereum.selectedAddress });
 };
 
-window.updateListingNFT = async (token, price, priceType, type) => {
+window.updateListingNFT = async (token, price, priceType, type, tokenType) => {
   let nft_address, price_nft, price_address;
 
   if (type === "timepiece") {
@@ -3869,7 +3893,10 @@ window.updateListingNFT = async (token, price, priceType, type) => {
 
   if (priceType === 1) {
     price_nft = 1;
-    price_address = window.config.token_dypius_new_address;
+    price_address =
+      tokenType === "dypv2"
+        ? window.config.token_dypius_new_address
+        : window.config.dyp_token_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -3926,9 +3953,9 @@ window.updateListingNFT = async (token, price, priceType, type) => {
 //     .send({ from: window.ethereum.selectedAddress });
 // };
 
-window.listNFT = async (token, price, priceType, type = "") => {
+window.listNFT = async (token, price, priceType, type = "", tokenType) => {
   let nft_address, price_nft, price_address;
-
+  console.log(token, price, priceType, type, tokenType);
   if (type === "timepiece") {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
@@ -3944,7 +3971,10 @@ window.listNFT = async (token, price, priceType, type = "") => {
 
   if (priceType === 1) {
     price_nft = 1;
-    price_address = window.config.token_dypius_new_address;
+    price_address =
+      tokenType === "dypv2"
+        ? window.config.token_dypius_new_address
+        : window.config.dyp_token_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -4033,7 +4063,7 @@ window.isApproved = async (token, type) => {
 //     .send({ from: await getCoinbase() });
 // };
 
-window.makeOffer = async (nftAddress, tokenId, price, priceType) => {
+window.makeOffer = async (nftAddress, tokenId, price, priceType, tokenType) => {
   let price_address;
 
   if (priceType === 0) {
@@ -4041,7 +4071,10 @@ window.makeOffer = async (nftAddress, tokenId, price, priceType) => {
   }
 
   if (priceType === 1) {
-    price_address = window.config.token_dypius_new_address;
+    price_address =
+      tokenType === "dypv2"
+        ? window.config.token_dypius_new_address
+        : window.config.dyp_token_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -4150,7 +4183,8 @@ window.updateOffer = async (
   tokenId,
   offerIndex,
   newPrice,
-  priceType
+  priceType,
+  tokenType
 ) => {
   let price_address;
 
@@ -4159,7 +4193,10 @@ window.updateOffer = async (
   }
 
   if (priceType === 1) {
-    price_address = window.config.token_dypius_new_address;
+    price_address =
+      tokenType === "dypv2"
+        ? window.config.token_dypius_new_address
+        : window.config.dyp_token_address;
   }
 
   const marketplace = new window.web3.eth.Contract(
@@ -4196,12 +4233,14 @@ window.updateOffer = async (
     .send({ from: await getCoinbase(), ...transactionParameters });
 };
 
-window.approveOffer = async (amount, priceType) => {
-  console.log(amount, priceType);
+window.approveOffer = async (amount, priceType, tokenType) => {
+  console.log(amount, priceType, tokenType);
   if (priceType === 1) {
     const contract = new window.web3.eth.Contract(
       window.DYP_ABI,
-      window.config.token_dypius_new_address
+      tokenType === "dypv2"
+        ? window.config.token_dypius_new_address
+        : window.config.dyp_token_address
     );
 
     console.log("amount", amount);
@@ -4271,12 +4310,15 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
     .send({ from: await getCoinbase(), ...transactionParameters });
 };
 
-window.isApprovedOffer = async (amount, priceType) => {
+window.isApprovedOffer = async (amount, priceType, tokenType) => {
   window.web3 = new Web3(window.ethereum);
+  console.log(amount, priceType, tokenType);
   if (priceType === 1) {
     const contract = new window.web3.eth.Contract(
       window.DYP_ABI,
-      window.config.token_dypius_new_address
+      tokenType === "dypv2"
+        ? window.config.token_dypius_new_address
+        : window.config.dyp_token_address
     );
 
     const coinbase = await getCoinbase();
@@ -4285,6 +4327,7 @@ window.isApprovedOffer = async (amount, priceType) => {
       .allowance(coinbase, window.config.nft_marketplace_address)
       .call({ from: await getCoinbase() });
     console.log(
+      "appr makeoffer",
       Number(allowance) >= Number(amount),
       Number(allowance),
       Number(amount)

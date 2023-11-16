@@ -102,11 +102,12 @@ const MarketEvents = ({
   account,
   chainId,
   dyptokenDatabnb,
+  dyptokenDatabnb_old,
   idyptokenDatabnb,
   handleAvailableTime,
   remainingTime,
   tabState,
-  ethTokenData,
+  ethTokenData,dyptokenData_old
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -837,6 +838,7 @@ const MarketEvents = ({
                         getDypBalance={getDypBalance}
                         getiDypBalance={getDypBalance}
                         dyptokenDatabnb={dyptokenDatabnb}
+                        dyptokenDatabnb_old={dyptokenDatabnb_old}
                         idyptokenDatabnb={idyptokenDatabnb}
                         packageData={
                           selectedPackage === "dragon"
@@ -854,6 +856,7 @@ const MarketEvents = ({
                           handleAvailableTime(value);
                         }}
                         availableTime={availableTime}
+                        dyptokenData_old={dyptokenData_old}
                       />
                     )}
                   </div>
