@@ -43,12 +43,16 @@ import BetaEventCard from "../../../../Marketplace/components/BetaEventCard";
 import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
 import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
-
+import dypius from "./assets/dypIcon.svg";
+import upcomingDyp from "./assets/upcomingDyp.webp";
+import closeMark from "./assets/closeMark.svg";
+import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
 import confluxUpcoming from "./assets/confluxUpcoming.png";
 import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
+import dypeventPopupImage from "./assets/dypEventImage.png";
 
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
@@ -906,15 +910,15 @@ const WalletBalance = ({
 
   const getPriceDYP = async () => {
     const dypprice = await axios
-    .get(
-      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-    )
-    .then((res) => {
-      return res.data.data.attributes.base_token_price_usd;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .get(
+        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+      )
+      .then((res) => {
+        return res.data.data.attributes.base_token_price_usd;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
@@ -928,7 +932,7 @@ const WalletBalance = ({
         const propertyDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
-      
+
         const propertyIDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
@@ -945,7 +949,6 @@ const WalletBalance = ({
         );
         const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
         setBnbPrice(bnb);
-    
 
         const propertyIDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
@@ -961,7 +964,6 @@ const WalletBalance = ({
         const propertyDyp = Object.entries(
           data.data.the_graph_avax_v2.token_data
         );
-      
 
         const propertyIDyp = Object.entries(
           data.data.the_graph_avax_v2.token_data
@@ -1142,7 +1144,7 @@ const WalletBalance = ({
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
     getTokenData();
-    getPriceDYP()
+    getPriceDYP();
     getTokenDataavax();
     getTokenDatabnb();
     fetchCFXPrice();
@@ -1264,10 +1266,8 @@ const WalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
   };
-
- 
 
   const dummyBetaPassData2 = [
     // {
@@ -1342,8 +1342,7 @@ const WalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
-
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
     {
@@ -1372,6 +1371,31 @@ const WalletBalance = ({
         minPoints: "5,000",
         maxPoints: "20,000",
         learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Coming Soon",
+      totalRewards: "300,000 in DYP Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Coming Soon",
+      backgroundImage: upcomingDyp,
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status: "Coming Soon",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYP Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "",
+        eventDate: "November 01, 2023",
       },
     },
     {
@@ -3772,7 +3796,7 @@ const WalletBalance = ({
           </div>
         )}
       </div>
-      {eventPopup && (
+      {/* {eventPopup && (
         <OutsideClickHandler onOutsideClick={() => setEventPopup(false)}>
           <div className="profile-event-popup p-4">
             <div className="d-flex align-items-center justify-content-between mb-2">
@@ -3808,7 +3832,9 @@ const WalletBalance = ({
                 <div className="d-flex gap-2">
                   <img
                     src={
-                      dummyEvent?.linkState === "conflux"
+                      dummyEvent?.id === "event5"
+                        ? dypeventPopupImage
+                        : dummyEvent?.linkState === "conflux"
                         ? confluxPopupImage
                         : dummyEvent?.linkState === "gate"
                         ? gatePopupImage
@@ -3912,6 +3938,16 @@ const WalletBalance = ({
                       points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
                       CoinGecko area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event5" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to own
+                      at least one of the Beta Pass NFTs (CoinGecko, Conflux,
+                      Gate, or Base). By actively participating in the game on a
+                      daily basis and exploring the downtown area, players have
+                      the opportunity to secure daily rewards in DYP. Remember
+                      to log in to the game daily and venture into the downtown
+                      area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event6" ? (
                     <p className="popup-event-desc">
@@ -4199,6 +4235,496 @@ const WalletBalance = ({
                 </NavLink>
               </div>
             )}
+          </div>
+        </OutsideClickHandler>
+      )} */}
+      {eventPopup && (
+        <OutsideClickHandler onOutsideClick={() => setEventPopup(false)}>
+          <div className="profile-event-popup p-4">
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <div className="d-flex align-items-center gap-2">
+                <h6 className="event-popup-title mb-0">{dummyEvent?.title}</h6>
+                <div
+                  className={`${
+                    dummyEvent?.status === "Live"
+                      ? "event-popup-status-live"
+                      : dummyEvent?.status === "Coming Soon"
+                      ? "event-popup-status-upcoming"
+                      : "event-popup-status-expired"
+                  }  d-flex align-items-center justify-content-center p-1`}
+                >
+                  {dummyEvent.status === "Live" && (
+                    <div
+                      class="pulsatingDot"
+                      style={{ width: 7, height: 7, marginRight: 5 }}
+                    ></div>
+                  )}
+                  <span className="mb-0">{dummyEvent?.status}</span>
+                </div>
+              </div>
+              <img
+                src={closeMark}
+                alt=""
+                style={{ cursor: "pointer" }}
+                onClick={() => setEventPopup(false)}
+              />
+            </div>
+            <div className="profile-event-popup-wrapper mb-3 p-2 p-lg-3 h-auto">
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                <div className="d-flex gap-2">
+                  <img
+                    src={
+                      dummyEvent?.id === "event5"
+                        ? dypeventPopupImage
+                        : dummyEvent?.linkState === "coingecko"
+                        ? eventPopupImageGecko
+                        : dummyEvent.linkState === "gate"
+                        ? gatePopupImage
+                        : dummyEvent.linkState === "base"
+                        ? eventPopupImageBase
+                        : eventPopupImage
+                    }
+                    alt=""
+                    style={{ width: 80, height: 80 }}
+                  />
+                  <div className="d-flex flex-column justify-content-between">
+                    <div className="d-flex flex-column">
+                      <h6 className="popup-second-title m-0">
+                        {dummyEvent?.title}
+                      </h6>
+                      <span className="popup-rewards">
+                        {dummyEvent?.totalRewards}
+                      </span>
+                    </div>
+                    <div className="d-flex">
+                      <span className="event-popup-chain mb-0">
+                        Gameplay: {dummyEvent?.eventType}
+                      </span>
+                    </div>
+                    <div className="d-flex">
+                      <span className="event-popup-chain mb-0">
+                        Chain: {dummyEvent?.chain}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                {dummyEvent?.status === "Live" && (
+                  <Countdown
+                    renderer={renderer}
+                    date={dummyEvent.eventDuration}
+                  />
+                )}
+                {dummyEvent?.status === "Coming Soon" &&
+                  dummyEvent.id !== "event5" && (
+                    <div className="d-flex flex-column">
+                      <span className="live-on">Live on</span>
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={require("./assets/greenCalendar.svg").default}
+                          className="green-calendar"
+                          alt=""
+                        />
+                        <h6 className="live-on-date mb-0">
+                          {dummyEvent.eventDate}
+                        </h6>
+                      </div>
+                    </div>
+                  )}
+
+                {dummyEvent?.status === "Coming Soon" &&
+                  dummyEvent.id === "event5" && (
+                    <div className="d-flex flex-column">
+                      <div className="d-flex align-items-center gap-2">
+                        <h6 className="live-on-date mb-0">
+                          {dummyEvent.status}
+                        </h6>
+                      </div>
+                    </div>
+                  )}
+              </div>
+            </div>
+            <div className="d-flex align-items-center justify-content-between mb-3">
+              <h6 className="how-it-works mb-0">How it works?</h6>
+              {dummyEvent.status === "Live" && (
+                <NavLink
+                  to={dummyEvent.learnMore}
+                  className="events-page-details d-flex align-items-center gap-2"
+                >
+                  Learn more
+                  <img src={eventsArrow} alt="" />
+                </NavLink>
+              )}
+            </div>
+            <div className="row mb-3 gap-3 gap-lg-0">
+              <div className="col-12 col-lg-6">
+                <div className="profile-event-popup-wrapper p-3">
+                  <h6 className="popup-green-text">Details</h6>
+                  {dummyEvent.id === "event1" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Conflux Beta Pass NFT</b>. You can get the
+                      Conflux Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Conflux area, players not only stand a
+                      chance to secure daily rewards in CFX, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Conflux area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event2" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Coin98 area, players not only stand a chance to secure
+                      daily rewards in C98, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Coin98 area to uncover
+                      hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event3" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a CoinGecko Beta Pass NFT</b>. You can get the
+                      CoinGecko Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the CoinGecko area, players not only stand a
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      CoinGecko area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event5" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to own
+                      at least one of the Beta Pass NFTs (CoinGecko, Conflux,
+                      Gate, or Base). By actively participating in the game on a
+                      daily basis and exploring the downtown area, players have
+                      the opportunity to secure daily rewards in DYP. Remember
+                      to log in to the game daily and venture into the downtown
+                      area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event6" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Gate Beta Pass NFT</b>. You can get the Gate
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Gate.io area, players not only stand a chance to secure
+                      daily rewards in BNB, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Gate.io area to
+                      uncover hidden treasures.
+                    </p>
+                  ) : (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Base Beta Pass NFT</b>. You can get the Base
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      downtown area, players not only stand a chance to secure
+                      daily rewards in ETH, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the downtown area to
+                      uncover hidden treasures.
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="col-12 col-lg-6">
+                <div className="profile-event-popup-wrapper p-3">
+                  <h6 className="popup-green-text">Benefits</h6>
+                  <ul>
+                    <li className="popup-event-desc">Exclusive Event Access</li>
+                    <>
+                      {dummyEvent.id !== "event5" ? (
+                        <li className="popup-event-desc">
+                          Daily Rewards range from ${dummyEvent.minRewards} to $
+                          {dummyEvent.maxRewards}
+                        </li>
+                      ) : (
+                        <li className="popup-event-desc">
+                          Daily Rewards range from {dummyEvent.minRewards}DYP to
+                          &nbsp;
+                          {dummyEvent.maxRewards}DYP
+                        </li>
+                      )}
+                      {dummyEvent.id !== "event5" && (
+                        <li className="popup-event-desc">
+                          Daily Points range from {dummyEvent.minPoints} to{" "}
+                          {dummyEvent.maxPoints}
+                        </li>
+                      )}
+                    </>
+                    {dummyEvent.id !== "event5" && (
+                      <li className="popup-event-desc">
+                        Earn{" "}
+                        {dummyEvent.id === "event1"
+                          ? "CFX"
+                          : dummyEvent.id === "event2"
+                          ? "C98"
+                          : dummyEvent.id === "event3"
+                          ? "BNB"
+                          : dummyEvent.id === "event5"
+                          ? "DYP"
+                          : dummyEvent.id === "event6"
+                          ? "BNB"
+                          : "ETH"}{" "}
+                        rewards
+                      </li>
+                    )}
+                    {dummyEvent.id !== "event5" && (
+                      <li className="popup-event-desc">
+                        Get global leaderboard points
+                      </li>
+                    )}
+                    <li className="popup-event-desc">Community Engagement</li>
+                    <li className="popup-event-desc">Exploration Adventures</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <h6 className="how-it-works">
+              Learn more about{" "}
+              {dummyEvent.id === "event1"
+                ? "Conflux Network"
+                : dummyEvent.id === "event2"
+                ? "Coin98"
+                : dummyEvent.id === "event3"
+                ? "CoinGecko"
+                : dummyEvent.id === "event5"
+                ? "Dypius"
+                : dummyEvent.id === "event6"
+                ? "Gate.io"
+                : "Base Network"}
+            </h6>
+            {dummyEvent.id === "event1" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Conflux Network stands as a Layer 1 public blockchain solution,
+                uniquely blending the advantages of both public and private
+                blockchains within its hybrid architecture. It aims to establish
+                a diverse multi-chain ecosystem, fostering seamless global
+                connectivity for creators, communities, and markets across
+                different borders and protocols.
+              </p>
+            ) : dummyEvent.id === "event2" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Coin98 Labs is an Open Infrastructure Financial Services builder
+                focusing on creating and developing an ecosystem of DeFi
+                protocols, applications, NFTs on multiple blockchains. Their
+                mission is to fulfill untapped demand and enhance in-demand
+                utilities in the DeFi space, helping people to access DeFi
+                services effortlessly.
+              </p>
+            ) : dummyEvent.id === "event3" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                CoinGecko is the world's largest independent cryptocurrency data
+                aggregator with over 10,000+ different cryptoassets tracked
+                across more than 800+ exchanges worldwide. CoinGecko provides a
+                fundamental analysis of the digital currency market. In addition
+                to tracking price, volume, and market capitalization, CoinGecko
+                tracks community growth, open source code development, major
+                events, and on-chain metrics.
+              </p>
+            ) : dummyEvent.id === "event5" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Dypius is a powerful, decentralized ecosystem with a focus on
+                scalability, security, and global adoption through next-gen
+                infrastructure. We offer a variety of products and services that
+                cater to both beginners and advanced users in the crypto space
+                including Earn solutions, analytical tools, NFTs, Metaverse and
+                more!
+              </p>
+            ) : dummyEvent.id === "event6" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Gate.io is a full-service digital asset exchange platform
+                covering millions of users around the world.The company prides
+                itself on providing industry-leading security in addition to
+                having been audited to show 100% proof of reserves. Gate.io
+                operates in most countries across the world, and is always
+                committed to complying with the applicable laws where it
+                operates.
+              </p>
+            ) : (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Base is built as an Ethereum L2, with the security, stability,
+                and scalability you need to power your dapps.Base is an easy way
+                for decentralized apps to leverage Coinbase's products and
+                distribution. Seamless Coinbase integrations, easy fiat onramps,
+                and access to the $130B assets on platform in the Coinbase
+                ecosystem.
+              </p>
+            )}
+
+            <div className="d-flex gap-3 align-items-center">
+              <a
+                href={
+                  dummyEvent.id === "event1"
+                    ? "https://twitter.com/Conflux_Network"
+                    : dummyEvent.id === "event5"
+                    ? "https://twitter.com/dypius"
+                    : dummyEvent.id === "event3"
+                    ? "https://twitter.com/coingecko"
+                    : dummyEvent.id === "event6"
+                    ? "https://twitter.com/gate_io"
+                    : "https://twitter.com/buildonbase"
+                }
+                target="_blank"
+                rel="noreferrer"
+                className="d-flex gap-1 align-items-center greensocial"
+              >
+                <img alt="" src={twitter} /> Twitter
+              </a>
+
+              <a
+                href={
+                  dummyEvent.id === "event1"
+                    ? "https://t.me/Conflux_English"
+                    : dummyEvent.id === "event5"
+                    ? "https://t.me/dypius"
+                    : dummyEvent.id === "event3"
+                    ? "https://t.me/coingecko"
+                    : dummyEvent.id === "event6"
+                    ? "https://t.me/gateio_en"
+                    : "https://base.org/discord"
+                }
+                target="_blank"
+                rel="noreferrer"
+                className="d-flex gap-1 align-items-center greensocial"
+              >
+                <img
+                  alt=""
+                  src={dummyEvent.id !== "event4" ? telegram : discord}
+                />
+                {dummyEvent.id !== "event4" ? "Telegram" : "Discord"}
+              </a>
+              <a
+                href={
+                  dummyEvent.id === "event1"
+                    ? "https://confluxnetwork.org/"
+                    : dummyEvent.id === "event5"
+                    ? "https://www.dypius.com/"
+                    : dummyEvent.id === "event3"
+                    ? "https://www.coingecko.com/"
+                    : dummyEvent.id === "event6"
+                    ? "https://www.gate.io/"
+                    : "https://base.org/"
+                }
+                target="_blank"
+                rel="noreferrer"
+                className="d-flex gap-1 align-items-center greensocial"
+              >
+                <img alt="" src={website} />
+                Website
+              </a>
+            </div>
+            <div className="summaryseparator mt-3"></div>
+            <div className="popup-red-wrapper mt-3 p-3 d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row align-items-xxl-center align-items-xl-center align-items-lg-center align-items-md-center justify-content-between">
+              <div className="d-flex align-items-center gap-2">
+                <img src={grayDollar} width={36} height={36} alt="" />
+                <span className="event-my-earnings2 mb-0">My earnings</span>
+              </div>
+              <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
+                {dummyEvent.id !== "event5" && (
+                  <div className="d-flex flex-column gap-2">
+                    <h6 className="mb-0 event-earnings-coin2">
+                      {getFormattedNumber(
+                        dummyEvent.id === "event1"
+                          ? confluxUserPoints
+                          : dummyEvent.id === "event3"
+                          ? userPoints
+                          : dummyEvent.id === "event6"
+                          ? gateUserPoints
+                          : dummyEvent.id === "event4"
+                          ? baseUserPoints
+                          : 0,
+                        0
+                      )}
+                    </h6>
+
+                    <span className="mb-0 event-earnings-usd">
+                      Leaderboard Points
+                    </span>
+                  </div>
+                )}
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
+                    $
+                    {getFormattedNumber(
+                      dummyEvent.id === "event1"
+                        ? confluxEarnUSD
+                        : dummyEvent.id === "event3"
+                        ? userEarnUsd
+                        : dummyEvent.id === "event6"
+                        ? gateEarnUSD
+                        : dummyEvent.id === "event4"
+                        ? baseEarnUSD
+                        : 0,
+                      2
+                    )}
+                    <span className="ethpricerewards specialstyle-wrapper-eth">
+                      {getFormattedNumber(
+                        dummyEvent.id === "event1"
+                          ? confluxEarnCFX
+                          : dummyEvent.id === "event3"
+                          ? userEarnETH
+                          : dummyEvent.id === "event6"
+                          ? gateEarnBNB
+                          : dummyEvent.id === "event4"
+                          ? baseEarnETH
+                          : 0,
+                        2
+                      )}
+                      {dummyEvent.id === "event1"
+                        ? "CFX"
+                        : dummyEvent.id === "event2"
+                        ? "C98"
+                        : dummyEvent.id === "event3"
+                        ? "BNB"
+                        : dummyEvent.id === "event5"
+                        ? "DYP"
+                        : dummyEvent.id === "event6"
+                        ? "BNB"
+                        : "ETH"}
+                    </span>
+                  </h6>
+                  <span className="mb-0 event-earnings-usd">Rewards</span>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex align-items-center gap-2 mt-2">
+              <img src={infoIcon} alt="" />
+              <span className="popup-event-desc">
+                The rewards will be distributed 2-3 days after the event ends.
+              </span>
+            </div>
+            {dummyEvent.status === "Coming Soon" &&
+              dummyEvent.id !== "event5" && (
+                <div className="w-100 d-flex justify-content-end mt-3">
+                  <NavLink to={`/marketplace/beta-pass/gate`}>
+                    <button className="btn get-beta-btn">Get Beta Pass</button>
+                  </NavLink>
+                </div>
+              )}
           </div>
         </OutsideClickHandler>
       )}
