@@ -1359,7 +1359,7 @@ const NewBundleCard = ({
                     <div className="purchase-wrapper p-3">
                       <span className="purchase-price-title">Event price</span>
                       {packageData.title === "Golden Pass" ? (
-                        <div className="d-flex align-items-center gap-4">
+                        <div className="d-flex flex-column flex-lg-row align-items-lg-center align-items-start gap-4">
                           <h6 className="purchase-price mb-0">
                             {getFormattedNumber(
                               priceType === 0 ? 250 : packageData.price,
