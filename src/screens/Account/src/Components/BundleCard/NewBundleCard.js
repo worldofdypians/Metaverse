@@ -23,7 +23,11 @@ import {
   dyp700Address,
   dyp700v1Address,
   idyp3500Address,
+ 
 } from "../../web3";
+
+import { DYP_700V1_ABI, DYP_700_ABI } from "../../web3/abis";
+
 import { CircularProgress } from "@mui/material";
 import Countdown from "react-countdown";
 import tooltipIcon from "./assets/tooltipIcon.svg";
@@ -98,7 +102,8 @@ const NewBundleCard = ({
   onOpenPopup,
   dyptokenDatabnb,
   idyptokenDatabnb,
-  dyptokenDatabnb_old,dyptokenData_old
+  dyptokenDatabnb_old,
+  dyptokenData_old,
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
@@ -251,8 +256,6 @@ const NewBundleCard = ({
       }
     }
   };
-
-
 
   const checkApproval3500 = async () => {
     if (coinbase === wallet && chainId === 56) {
@@ -430,12 +433,19 @@ const NewBundleCard = ({
   };
 
   const setlastDay = async () => {
-    if (chainId === 56 && priceType === 1) {
-      const timeofDeposit = await dyp700_abi.methods
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
+
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+
+    if (priceType === 1) {
+      const timeofDeposit = await dypv2.methods
         .getTimeOfDeposit(coinbase)
         .call();
 
-      const expiringTime = await dyp700_abi.methods
+      const expiringTime = await dypv2.methods
         .getTimeOfExpireBuff(coinbase)
         .call();
 
@@ -496,13 +506,12 @@ const NewBundleCard = ({
       setlastDayofBundleMinutes(finalMinutes);
       setlastDayofBundle(timeofDeposit_day);
       setlastDayofBundleMilliseconds(expiringTime_miliseconds);
-    }
-    else  if (chainId === 1 && priceType === 0) {
-      const timeofDeposit = await dyp700v1_abi.methods
+    } else if (priceType === 0) {
+      const timeofDeposit = await dypv1.methods
         .getTimeOfDeposit(coinbase)
         .call();
 
-      const expiringTime = await dyp700v1_abi.methods
+      const expiringTime = await dypv1.methods
         .getTimeOfExpireBuff(coinbase)
         .call();
 
@@ -750,14 +759,20 @@ const NewBundleCard = ({
     //he can buy until the 22 regular bundles (7days)
     //on the 23rd the bundle will be 7+4
     //last week rule: 32 - date => buy on 24rth=>7+1, 25=> 7+0, 26=> 7-1
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
 
-    if (priceType === 1 && chainId === 56) {
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+
+    if (priceType === 1 ) {
       const week1 = ["1", "2", "3", "4", "5", "6", "7"];
       const week2 = ["8", "9", "10", "11", "12", "13", "14"];
       const week3 = ["15", "16", "17", "18", "19", "20", "21"];
       const week4 = ["22", "23", "24", "25"];
 
-      const timeofDeposit = await dyp700_abi.methods
+      const timeofDeposit = await dypv2.methods
         .getTimeOfDeposit(coinbase)
         .call();
       const timeofDeposit_miliseconds = timeofDeposit * 1000;
@@ -844,11 +859,11 @@ const NewBundleCard = ({
           // }
         } else if (
           week3.includes(today_date.toString()) &&
-          bundlesBought <= 3
+          bundlesBought <= 1
         ) {
           handleRefreshCountdown700();
           setisAtlimit(false);
-        } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
+        } else if (week3.includes(today_date.toString()) && bundlesBought >= 2) {
           // const remainingTime3 = lastDayofBundle;
           // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
@@ -936,13 +951,13 @@ const NewBundleCard = ({
           setStatusColor700("#FE7A00");
         }
       }
-    } else if (priceType === 0 && chainId === 1) {
+    } else if (priceType === 0) {
       const week1 = ["1", "2", "3", "4", "5", "6", "7"];
       const week2 = ["8", "9", "10", "11", "12", "13", "14"];
       const week3 = ["15", "16", "17", "18", "19", "20", "21"];
       const week4 = ["22", "23", "24", "25"];
 
-      const timeofDeposit = await dyp700v1_abi.methods
+      const timeofDeposit = await dypv1.methods
         .getTimeOfDeposit(coinbase)
         .call();
       const timeofDeposit_miliseconds = timeofDeposit * 1000;
@@ -1214,7 +1229,11 @@ const NewBundleCard = ({
   };
 
   useEffect(() => {
-    if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
+    if (
+      bundlesBought === 4 &&
+      lastDayofBundleMilliseconds > 0 &&
+      bundleExpireMiliseconds > 0
+    ) {
       setisAtlimit(true);
       setcountdown700(
         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
@@ -1226,7 +1245,13 @@ const NewBundleCard = ({
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
       );
     }
-  }, [priceType, chainId, bundlesBought, countdown700]);
+  }, [
+    priceType,
+    chainId,
+    bundlesBought,
+    countdown700,
+    bundleExpireMiliseconds,
+  ]);
 
   useEffect(() => {
     getTokenData();
@@ -1336,7 +1361,10 @@ const NewBundleCard = ({
                       {packageData.title === "Golden Pass" ? (
                         <div className="d-flex align-items-center gap-4">
                           <h6 className="purchase-price mb-0">
-                            {getFormattedNumber(priceType === 0 ? 250 : packageData.price, 0)}
+                            {getFormattedNumber(
+                              priceType === 0 ? 250 : packageData.price,
+                              0
+                            )}
                           </h6>
                           <div className="d-flex flex-row justify-content-around w-100 gap-2">
                             <div
@@ -1401,7 +1429,9 @@ const NewBundleCard = ({
                           <span className="purchase-price-usd mb-0">
                             $
                             {getFormattedNumber(
-                             priceType === 1 ? packageData.price * dyptokenDatabnb : 250 * dyptokenData_old
+                              priceType === 1
+                                ? packageData.price * dyptokenDatabnb
+                                : 250 * dyptokenData_old
                             )}
                           </span>
                         </div>
