@@ -150,7 +150,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         minRewards: "25",
         maxRewards: "50",
         learnMore: "",
-        eventDate: "November 01, 2023",
+        eventDate: "November 20, 2023",
       },
     },
     // {

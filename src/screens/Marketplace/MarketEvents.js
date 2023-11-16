@@ -248,14 +248,14 @@ const MarketEvents = ({
       totalRewards: "300,000 in DYP Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "September xx, 2023",
+      eventDate: "November 20, 2023",
       backgroundImage: upcomingDyp,
       popupInfo: {
         title: "Dypius",
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Coming Soon",
+        status:  "Coming Soon",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYP Rewards",
@@ -263,7 +263,7 @@ const MarketEvents = ({
         minRewards: "25",
         maxRewards: "50",
         learnMore: "",
-        eventDate: "November 01, 2023",
+        eventDate: "November 20, 2023",
       },
     },
     {
@@ -1058,7 +1058,7 @@ const MarketEvents = ({
                   />
                 )}
                 {dummyEvent?.status === "Coming Soon" &&
-                  dummyEvent.id !== "event5" && (
+                    (
                     <div className="d-flex flex-column">
                       <span className="live-on">Live on</span>
                       <div className="d-flex align-items-center gap-2">
@@ -1077,16 +1077,7 @@ const MarketEvents = ({
                     </div>
                   )}
 
-                {dummyEvent?.status === "Coming Soon" &&
-                  dummyEvent.id === "event5" && (
-                    <div className="d-flex flex-column">
-                      <div className="d-flex align-items-center gap-2">
-                        <h6 className="live-on-date mb-0">
-                          {dummyEvent.status}
-                        </h6>
-                      </div>
-                    </div>
-                  )}
+                
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
