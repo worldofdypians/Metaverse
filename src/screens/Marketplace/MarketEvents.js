@@ -43,9 +43,13 @@ import infoIcon from "./assets/infoIcon.svg";
 import liveDot from "./assets/liveDot.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import whitePickaxe from "./assets/whitePickAxe.svg";
+import magnifier from "./assets/magnifier.svg";
+
 import whiteCalendar from "./assets/whiteCalendar.svg";
 import BetaEventCard from "./components/BetaEventCard";
 import eventPopupImage from "../Account/src/Components/WalletBalance/assets/eventPopupImage.png";
+import dypeventPopupImage from "../Account/src/Components/WalletBalance/assets/dypEventImage.png";
+
 import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
@@ -157,31 +161,6 @@ const MarketEvents = ({
 
   const dummyBetaPassData2 = [
     {
-      title: "Dypius",
-      logo: dypius,
-      eventStatus: "Coming Soon",
-      totalRewards: "300,000 in DYP Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "September xx, 2023",
-      backgroundImage: upcomingDyp,
-      popupInfo: {
-        title: "Dypius",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "DYP",
-        status: "Coming Soon",
-        id: "event5",
-        eventType: "Explore & Find",
-        totalRewards: "300,000 in DYP Rewards",
-        eventDuration: coingeckoLastDay,
-        minRewards: "25",
-        maxRewards: "50",
-        learnMore: "",
-        eventDate: "November 01, 2023",
-      },
-    },
-    {
       title: "CoinGecko",
       logo: coingecko,
       eventStatus: "Live",
@@ -235,7 +214,6 @@ const MarketEvents = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-
     {
       title: "Gate.io",
       logo: gate,
@@ -261,6 +239,31 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "20,000",
         learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Coming Soon",
+      totalRewards: "300,000 in DYP Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "September xx, 2023",
+      backgroundImage: upcomingDyp,
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status: "Coming Soon",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYP Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "",
+        eventDate: "November 01, 2023",
       },
     },
     {
@@ -1014,8 +1017,8 @@ const MarketEvents = ({
                 <div className="d-flex gap-2">
                   <img
                     src={
-                      dummyEvent?.chain === "Avalanche"
-                        ? eventPopupImageAvax
+                      dummyEvent?.id === "event5"
+                        ? dypeventPopupImage
                         : dummyEvent?.linkState === "coingecko"
                         ? eventPopupImageGecko
                         : dummyEvent.linkState === "gate"
@@ -1054,24 +1057,36 @@ const MarketEvents = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status === "Coming Soon" && (
-                  <div className="d-flex flex-column">
-                    <span className="live-on">Live on</span>
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={
-                          require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
-                            .default
-                        }
-                        className="green-calendar"
-                        alt=""
-                      />
-                      <h6 className="live-on-date mb-0">
-                        {dummyEvent.eventDate}
-                      </h6>
+                {dummyEvent?.status === "Coming Soon" &&
+                  dummyEvent.id !== "event5" && (
+                    <div className="d-flex flex-column">
+                      <span className="live-on">Live on</span>
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={
+                            require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
+                              .default
+                          }
+                          className="green-calendar"
+                          alt=""
+                        />
+                        <h6 className="live-on-date mb-0">
+                          {dummyEvent.eventDate}
+                        </h6>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+
+                {dummyEvent?.status === "Coming Soon" &&
+                  dummyEvent.id === "event5" && (
+                    <div className="d-flex flex-column">
+                      <div className="d-flex align-items-center gap-2">
+                        <h6 className="live-on-date mb-0">
+                          {dummyEvent.status}
+                        </h6>
+                      </div>
+                    </div>
+                  )}
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -1169,10 +1184,18 @@ const MarketEvents = ({
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
                     <>
-                      <li className="popup-event-desc">
-                        Daily Rewards range from ${dummyEvent.minRewards} to $
-                        {dummyEvent.maxRewards}
-                      </li>
+                      {dummyEvent.id !== "event5" ? (
+                        <li className="popup-event-desc">
+                          Daily Rewards range from ${dummyEvent.minRewards} to $
+                          {dummyEvent.maxRewards}
+                        </li>
+                      ) : (
+                        <li className="popup-event-desc">
+                          Daily Rewards range from {dummyEvent.minRewards}DYP to
+                          &nbsp;
+                          {dummyEvent.maxRewards}DYP
+                        </li>
+                      )}
                       {dummyEvent.id !== "event5" && (
                         <li className="popup-event-desc">
                           Daily Points range from {dummyEvent.minPoints} to{" "}
