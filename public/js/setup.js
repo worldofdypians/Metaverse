@@ -1484,8 +1484,8 @@ window.config = {
     "0xbd100d061e120b2c67a24453cf6368e63f1be056": "idefiyieldprotocol",
   },
 
-  daily_bonus_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
-  daily_bonus_bnb_address: "0xf6085aF24f11CE3F76a74498CF2A714dcD096530",
+  daily_bonus_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
+  daily_bonus_bnb_address: "0xF4435c244A292a8E8D56767bf6DF9b9c4D59aEED",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
   vote_duration_in_seconds: 259200, // 5 minutes for test
@@ -4926,12 +4926,6 @@ window.DAILY_BONUS_BNB_ABI = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "count",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
         name: "timestamp",
         type: "uint256",
       },
@@ -4943,12 +4937,6 @@ window.DAILY_BONUS_BNB_ABI = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: "address", name: "user", type: "address" },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "count",
-        type: "uint256",
-      },
       {
         indexed: false,
         internalType: "uint256",
@@ -4993,37 +4981,9 @@ window.DAILY_BONUS_BNB_ABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "dailyChestCount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "dailyPremiumChestCount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "isPremiumUser",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "lastChestResetDay",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "lastChestResetDayPremium",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -5037,13 +4997,6 @@ window.DAILY_BONUS_BNB_ABI = [
   {
     inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "lifetimePremiumChestCount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "maxChestsPerDay",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
@@ -5724,7 +5677,6 @@ window.SUBSCRIPTION_NEWETH_ABI = [
     type: "function",
   },
 ];
-
 
 window.SUBSCRIPTION_NEWBNB_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
