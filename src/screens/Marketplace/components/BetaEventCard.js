@@ -80,7 +80,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
             {data.eventType === "Explore & Mine" ? (
               <img src={whitePickaxe} alt="" />
             ) : (
-              <img src={magnifier} alt="" className="test"/>
+              <img src={magnifier} alt="" className="test" />
             )}
             <span className="white-events-text mb-0">{data.eventType}</span>
           </div>
@@ -92,7 +92,11 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
       </div>
       <div className="d-flex flex-column d-none d-lg-flex gap-3 pick-and-calendar">
         <div className="d-flex align-items-center gap-2">
-          <img src={whitePickaxe} alt="" />
+          {data.eventType === "Explore & Mine" ? (
+            <img src={whitePickaxe} alt="" />
+          ) : (
+            <img src={magnifier} alt="" className="test" />
+          )}
           <span className="white-events-text mb-0">{data.eventType}</span>
         </div>
         <div className="d-flex align-items-center gap-2">
