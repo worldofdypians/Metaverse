@@ -48,6 +48,13 @@
   }
 }
 
+.nft-price-eth2 {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .checkicons {
   left: -8px;
 }
@@ -2222,6 +2229,13 @@
 
 .filters-dropdown {
   width: 200px !important;
+  @media screen and (max-width: 786px) {
+    width: 100% !important;
+  }
+}
+
+.filters-dropdown2 {
+  width: 160px !important;
   @media screen and (max-width: 786px) {
     width: 100% !important;
   }

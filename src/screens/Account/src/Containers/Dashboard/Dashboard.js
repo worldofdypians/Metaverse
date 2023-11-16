@@ -38,7 +38,7 @@ function Dashboard({
   myCawsWodStakes,
   landStaked,
   ethTokenData,
-  dypTokenData,
+  dypTokenData,dypTokenData_old,
   onSigninClick,
   onLogoutClick,
   availableTime,

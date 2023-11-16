@@ -40,6 +40,7 @@ import singleStar from "./assets/star.svg";
 import expand from "./assets/expand.svg";
 import chart from "./assets/chart.svg";
 import users from "./assets/users.svg";
+import dropdownIcon from "./assets/dropdownIcon.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -97,6 +98,7 @@ const SingleNft = ({
   nftCount,
   handleRefreshListing,
   favorites,
+  dyptokenData_old,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -192,12 +194,23 @@ const SingleNft = ({
 
   const getOffer = async () => {
     let finalArray = [];
-    if (type !== "conflux" && type !== "coingecko" && type !== "gate" && type !== "base") {
+    if (
+      type !== "conflux" &&
+      type !== "coingecko" &&
+      type !== "gate" &&
+      type !== "base"
+    ) {
       const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
+      const token_address_old = "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17";
 
       const contract1 = new window.infuraWeb3.eth.Contract(
         window.ERC20_ABI,
         token_address
+      );
+
+      const contract1_old = new window.infuraWeb3.eth.Contract(
+        window.ERC20_ABI,
+        token_address_old
       );
       const contract2 = new window.infuraWeb3.eth.Contract(
         window.TOKEN_ABI,
@@ -214,35 +227,63 @@ const SingleNft = ({
         });
         setmyOffers(my_offers[0] ? my_offers[0].offer : []);
       }
-
+     
       await Promise.all(
         result.map(async (item) => {
           if (item.offer.payment.priceType === "1") {
-            const balance = await contract1.methods
-              .balanceOf(item.offer.buyer)
-              .call()
-              .then((data) => {
-                return window.infuraWeb3.utils.fromWei(data, "ether");
-              });
+            if (item.offer.payment.tokenAddress === token_address_old) {
+              const balance = await contract1_old.methods
+                .balanceOf(item.offer.buyer)
+                .call()
+                .then((data) => {
+                  return window.infuraWeb3.utils.fromWei(data, "ether");
+                });
 
-            const allowance = await contract1.methods
-              .allowance(
-                item.offer.buyer,
-                window.config.nft_marketplace_address
-              )
-              .call()
-              .then((data) => {
-                return window.infuraWeb3.utils.fromWei(data, "ether");
-              });
+              const allowance = await contract1_old.methods
+                .allowance(
+                  item.offer.buyer,
+                  window.config.nft_marketplace_address
+                )
+                .call()
+                .then((data) => {
+                  return window.infuraWeb3.utils.fromWei(data, "ether");
+                });
 
-            const priceFormatted = item.offer.price / 1e18;
-            // console.log(balance >= priceFormatted && allowance >= priceFormatted)
-            return finalArray.push({
-              offer: item.offer,
-              index: item.index,
-              isAllowed:
-                balance >= priceFormatted && allowance >= priceFormatted,
-            });
+              const priceFormatted = item.offer.price / 1e18;
+              // console.log(balance >= priceFormatted && allowance >= priceFormatted)
+              return finalArray.push({
+                offer: item.offer,
+                index: item.index,
+                isAllowed:
+                  balance >= priceFormatted && allowance >= priceFormatted,
+              });
+            } else if (item.offer.payment.tokenAddress === token_address) {
+              const balance = await contract1.methods
+                .balanceOf(item.offer.buyer)
+                .call()
+                .then((data) => {
+                  return window.infuraWeb3.utils.fromWei(data, "ether");
+                });
+
+              const allowance = await contract1.methods
+                .allowance(
+                  item.offer.buyer,
+                  window.config.nft_marketplace_address
+                )
+                .call()
+                .then((data) => {
+                  return window.infuraWeb3.utils.fromWei(data, "ether");
+                });
+
+              const priceFormatted = item.offer.price / 1e18;
+              // console.log(balance >= priceFormatted && allowance >= priceFormatted)
+              return finalArray.push({
+                offer: item.offer,
+                index: item.index,
+                isAllowed:
+                  balance >= priceFormatted && allowance >= priceFormatted,
+              });
+            }
           } else if (item.offer.payment.priceType === "0") {
             const balance = await contract2.methods
               .balanceOf(item.offer.buyer)
@@ -278,17 +319,17 @@ const SingleNft = ({
 
   const getPriceDYP = async () => {
     const dypprice = await axios
-    .get(
-      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-    )
-    .then((res) => {
-      return res.data.data.attributes.base_token_price_usd;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .get(
+        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+      )
+      .then((res) => {
+        return res.data.data.attributes.base_token_price_usd;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
-    setDypTokenData(dypprice); 
+    setDypTokenData(dypprice);
   };
 
   const getTokenData = async () => {
@@ -362,8 +403,7 @@ const SingleNft = ({
       console.log(owner);
 
       setowner(owner);
-    }
-    else if (type === "base") {
+    } else if (type === "base") {
       const nft_contract = new window.baseWeb3.eth.Contract(
         window.BASE_NFT_ABI,
         window.config.nft_base_address
@@ -416,8 +456,8 @@ const SingleNft = ({
     }
   };
 
-  const isApprovedBuy = async (amount) => {
-    const result = await window.isApprovedBuy(amount).catch((e) => {
+  const isApprovedBuy = async (tokenType, amount) => {
+    const result = await window.isApprovedBuy(tokenType, amount).catch((e) => {
       console.error(e);
     });
 
@@ -577,6 +617,9 @@ const SingleNft = ({
     );
     const newPrice = new BigNumber(nftPrice * 1e18).toFixed();
     console.log(newPrice, isApproved);
+    const tokenType =
+      priceType === 1 ? "dypv1" : priceType === 2 ? "dypv2" : "eth";
+    const pricetype2 = priceType === 1 || priceType === 2 ? 1 : 0;
     if (isApproved) {
       console.log("selling");
       setsellLoading(true);
@@ -585,7 +628,7 @@ const SingleNft = ({
       setPurchaseColor("#00FECF");
 
       await window
-        .listNFT(nftId, newPrice, priceType, type)
+        .listNFT(nftId, newPrice, pricetype2, type, tokenType)
         .then((result) => {
           setsellLoading(false);
           setsellStatus("success");
@@ -779,7 +822,14 @@ const SingleNft = ({
   };
 
   async function handleBuy(nft) {
-    const isApproved = await isApprovedBuy(nft.price);
+    const tokenType =
+      nft.payment_tokenAddress === window.config.dyp_token_address
+        ? "dypv1"
+        : nft.payment_tokenAddress === window.config.token_dypius_new_address
+        ? "dypv2"
+        : "eth";
+
+    const isApproved = await isApprovedBuy(tokenType, nft.price);
 
     if (isApproved || nft.payment_priceType === 0) {
       console.log("buying", nft.price);
@@ -842,7 +892,7 @@ const SingleNft = ({
       setPurchaseStatus("Approving in progress...");
       setPurchaseColor("#00FECF");
       await window
-        .approveBuy(nft.price)
+        .approveBuy(tokenType, nft.price)
         .then(() => {
           setTimeout(() => {
             setbuyStatus("buy");
@@ -869,7 +919,7 @@ const SingleNft = ({
     }
   }
 
-  const cancelNFT = (nftAddress, tokenId, type) => {
+  const cancelNFT = (nftAddress, tokenId, type, tokenType) => {
     setcancelLoading(true);
     setcancelStatus("cancel");
     setPurchaseColor("#00FECF");
@@ -877,7 +927,7 @@ const SingleNft = ({
     console.log("cancelling");
 
     return window
-      .cancelListNFT(nftAddress, tokenId, type)
+      .cancelListNFT(nftAddress, tokenId, type, tokenType)
       .then((result) => {
         setTimeout(() => {
           setcancelStatus("");
@@ -905,7 +955,7 @@ const SingleNft = ({
       });
   };
 
-  async function updateListing(nft, price, priceType, type) {
+  async function updateListing(nft, price, priceType, type, tokenType) {
     const newPrice = new BigNumber(price * 1e18).toFixed();
 
     setPurchaseColor("#00FECF");
@@ -915,7 +965,7 @@ const SingleNft = ({
     console.log("updating", nft, newPrice, priceType, type);
 
     return await window
-      .updateListingNFT(nft, newPrice, priceType, type)
+      .updateListingNFT(nft, newPrice, priceType, type, tokenType)
       .then((result) => {
         setTimeout(() => {
           setPurchaseColor("#00FECF");
@@ -1044,12 +1094,11 @@ const SingleNft = ({
     }
   };
 
-  const handleMakeOffer = async (price, pricetype) => {
+  const handleMakeOffer = async (price, pricetype, tokenType) => {
     setOfferStatus("loading");
     const newPrice = new BigNumber(price * 1e18).toFixed();
-
     await window
-      .makeOffer(nftAddress, nftId, newPrice, pricetype)
+      .makeOffer(nftAddress, nftId, newPrice, pricetype, tokenType)
       .then(() => {
         handleRefreshListing();
         setOfferStatus("success");
@@ -1089,12 +1138,19 @@ const SingleNft = ({
       });
   };
 
-  const handleUpdateOffer = async (price, pricetype, offerIndex) => {
+  const handleUpdateOffer = async (price, pricetype, offerIndex, tokenType) => {
     setOfferupdateStatus("loadingupdate");
     const newPrice = new BigNumber(price * 1e18).toFixed();
 
     await window
-      .updateOffer(nftAddress, nftId, offerIndex, newPrice, pricetype)
+      .updateOffer(
+        nftAddress,
+        nftId,
+        offerIndex,
+        newPrice,
+        pricetype,
+        tokenType
+      )
       .then(() => {
         handleRefreshListing();
         setOfferupdateStatus("successupdate");
@@ -1140,7 +1196,15 @@ const SingleNft = ({
     // if (isOwner === false) {
     if (coinbase) {
       if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
-        isApprovedBuy(nft.price).then((isApproved) => {
+        isApprovedBuy(
+          nft.payment_tokenAddress === window.config.dyp_token_address
+            ? "dypv1"
+            : nft.payment_tokenAddress ===
+              window.config.token_dypius_new_address
+            ? "dypv2"
+            : "eth",
+          nft.price
+        ).then((isApproved) => {
           console.log(isApproved);
           if (isApproved === true) {
             setbuyStatus("buy");
@@ -1176,7 +1240,7 @@ const SingleNft = ({
 
   useEffect(() => {
     if (isConnected === true && nft && nft.payment_priceType === 1) {
-      isApprovedBuy(nft.price).then((isApproved) => {
+      isApprovedBuy(nft.payment_tokenAddress, nft.price).then((isApproved) => {
         // console.log(isApproved);
         setIsApprove(isApproved);
       });
@@ -1236,7 +1300,7 @@ const SingleNft = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     getTokenData();
-    getPriceDYP()
+    getPriceDYP();
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
 
@@ -1380,7 +1444,7 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
-            )  : type === "base" ? (
+            ) : type === "base" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   BASE{" "}
@@ -1548,13 +1612,21 @@ const SingleNft = ({
                                 nft?.price / 1e18,
                                 nft?.payment_priceType === 0 ? 3 : 0
                               )}{" "}
-                              {nft?.payment_priceType === 0 ? "ETH" : "DYP"}
+                              {nft?.payment_priceType === 0
+                                ? "ETH"
+                                : nft?.payment_tokenAddress ===
+                                  window.config.dyp_token_address
+                                ? "DYPv1"
+                                : "DYPv2"}
                             </span>
                             <span className="nft-price-usd">
                               $
                               {getFormattedNumber(
                                 nft?.payment_priceType === 0
                                   ? ethtokenData * (nft?.price / 1e18)
+                                  : nft?.payment_tokenAddress ===
+                                    window.config.dyp_token_address
+                                  ? dyptokenData_old * (nft?.price / 1e18)
                                   : dyptokenData * (nft?.price / 1e18),
                                 2
                               )}
@@ -1585,16 +1657,24 @@ const SingleNft = ({
                                   nft?.price / 1e18,
                                   nft?.payment_priceType === 0 ? 3 : 0
                                 )}{" "}
-                                {nft?.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+                                {nft?.payment_priceType === 0
+                                  ? "ETH"
+                                  : nft?.payment_tokenAddress ===
+                                    window.config.dyp_token_address
+                                  ? "DYPv1"
+                                  : "DYPv2"}
                               </span>
                               <span className="nft-price-usd">
                                 $
                                 {getFormattedNumber(
-                                  nft?.payment_priceType === 0
-                                    ? ethtokenData * (nft?.price / 1e18)
-                                    : dyptokenData * (nft?.price / 1e18),
-                                  2
-                                )}
+                                nft?.payment_priceType === 0
+                                  ? ethtokenData * (nft?.price / 1e18)
+                                  : nft?.payment_tokenAddress ===
+                                    window.config.dyp_token_address
+                                  ? dyptokenData_old * (nft?.price / 1e18)
+                                  : dyptokenData * (nft?.price / 1e18),
+                                2
+                              )}
                               </span>
                             </div>
                           </div>
@@ -1673,16 +1753,24 @@ const SingleNft = ({
                               />
                               <div className="d-flex flex-column gap-1">
                                 <span className="nft-price-eth gap-3 d-flex">
-                                  {nft.payment_priceType === 0 ? "ETH" : "DYP"}{" "}
+                                  {nft.payment_priceType === 0
+                                    ? "ETH"
+                                    : nft.payment_tokenAddress ===
+                                      window.config.token_dypius_new_address
+                                    ? "DYPv2"
+                                    : "DYPv1"}{" "}
                                 </span>
                                 <span className="nft-price-usd">
                                   $
                                   {getFormattedNumber(
-                                    nft.payment_priceType === 0
-                                      ? ethtokenData * nftPrice
-                                      : dyptokenData * nftPrice,
-                                    2
-                                  )}
+                                nft?.payment_priceType === 0
+                                  ? ethtokenData * (nft?.price / 1e18)
+                                  : nft?.payment_tokenAddress ===
+                                    window.config.dyp_token_address
+                                  ? dyptokenData_old * (nft?.price / 1e18)
+                                  : dyptokenData * (nft?.price / 1e18),
+                                2
+                              )}
                                 </span>
                               </div>
                             </div>
@@ -1757,7 +1845,11 @@ const SingleNft = ({
                                     height={20}
                                     width={20}
                                   />
-                                  DYP
+                                  {nft.payment_tokenAddress ===
+                                  window.config.token_dypius_new_address
+                                    ? "DYPv2"
+                                    : "DYPv1"}
+                                  
                                 </span>
                               </div>
                             </div>
@@ -1770,7 +1862,8 @@ const SingleNft = ({
                       loadingNft === false &&
                       type !== "coingecko" &&
                       type !== "gate" &&
-                      type !== "conflux" && type !== "base" && (
+                      type !== "conflux" &&
+                      type !== "base" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -1803,7 +1896,7 @@ const SingleNft = ({
                                     {getFormattedNumber(
                                       priceType === 0
                                         ? ethtokenData * nftPrice
-                                        : dyptokenData * nftPrice,
+                                        : priceType === 2 ? dyptokenData * nftPrice : dyptokenData_old * nftPrice,
                                       2
                                     )}
                                   </span>
@@ -1816,8 +1909,74 @@ const SingleNft = ({
                               <span className="currentprice-txt">
                                 Choose currency
                               </span>
-                              <div className="d-flex flex-row justify-content-around w-100 gap-2">
-                                <div
+                              <div className="d-flex flex-row justify-content-start w-100 gap-2">
+                                <div className="dropdown filters-dropdown2">
+                                  <button
+                                    className="btn btn-secondary currencyWrapper nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <div className="d-flex align-items-center gap-2">
+                                      {/* <img src={filterIcon} alt="" /> */}
+                                      <h6 className="filter-nav-title mb-0">
+                                        <img
+                                          src={checkActive}
+                                          alt=""
+                                          style={{ top: "7px" }}
+                                          className={
+                                            "position-absolute checkicons"
+                                          }
+                                        />
+                                        <span className="nft-price-eth2">
+                                          <img
+                                            src={
+                                              priceType === 0 ? topEth : topDyp
+                                            }
+                                            alt=""
+                                            height={20}
+                                            width={20}
+                                          />
+                                          {priceType === 0
+                                            ? "ETH"
+                                            : priceType === 1
+                                            ? "DYPv1"
+                                            : "DYPv2"}
+                                        </span>
+                                      </h6>
+                                    </div>
+                                    <img src={dropdownIcon} alt="" />
+                                  </button>
+                                  <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                                    <li
+                                      className="nft-dropdown-item"
+                                      onClick={() => {
+                                        setPriceType(0);
+                                      }}
+                                    >
+                                      <span>ETH</span>
+                                    </li>
+                                    <li
+                                      className="nft-dropdown-item"
+                                      onClick={() => {
+                                        setPriceType(1);
+                                      }}
+                                    >
+                                      <span>DYPv1</span>
+                                    </li>
+                                    <li
+                                      className="nft-dropdown-item"
+                                      onClick={() => {
+                                        setPriceType(2);
+                                      }}
+                                    >
+                                      <span>DYPv2</span>
+                                    </li>
+                                  </ul>
+                                </div>
+
+                                {/* <div
                                   className={`d-flex gap-2 align-items-center position-relative ${
                                     priceType === 0
                                       ? "currencyWrapper"
@@ -1877,7 +2036,7 @@ const SingleNft = ({
                                     />
                                     DYP
                                   </span>
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           </div>
@@ -1888,7 +2047,7 @@ const SingleNft = ({
                       !loadingNft &&
                       (type === "coingecko" ||
                         type === "gate" ||
-                        type === "conflux"||
+                        type === "conflux" ||
                         type === "base") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -2005,7 +2164,14 @@ const SingleNft = ({
                                     nft.tokenId,
                                     nftPrice,
                                     nft.payment_priceType,
-                                    type
+                                    type,
+                                    nft.payment_tokenAddress ===
+                                      window.config.token_dypius_new_address
+                                      ? "dypv2"
+                                      : nft.payment_tokenAddress ===
+                                        window.config.dyp_token_address
+                                      ? "dypv1"
+                                      : "eth"
                                   );
                             }}
                           >
@@ -2046,7 +2212,14 @@ const SingleNft = ({
                                 : cancelNFT(
                                     nft.nftAddress,
                                     nft.tokenId,
-                                    nft.payment_priceType
+                                    nft.payment_priceType,
+                                    nft.payment_tokenAddress ===
+                                      window.config.token_dypius_new_address
+                                      ? "dypv2"
+                                      : nft.payment_tokenAddress ===
+                                        window.config.dyp_token_address
+                                      ? "dypv1"
+                                      : "eth"
                                   );
                             }}
                           >
@@ -2082,7 +2255,7 @@ const SingleNft = ({
                         isConnected &&
                         type !== "coingecko" &&
                         type !== "gate" &&
-                        type !== "conflux"&&
+                        type !== "conflux" &&
                         type !== "base" && (
                           <button
                             disabled={
@@ -2143,7 +2316,7 @@ const SingleNft = ({
                         type !== "coingecko" &&
                         type !== "gate" &&
                         type !== "conflux" &&
-                        type !== "base"&& (
+                        type !== "base" && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
@@ -2160,7 +2333,7 @@ const SingleNft = ({
                       {!isConnected &&
                         type !== "coingecko" &&
                         type !== "gate" &&
-                        type !== "conflux"&&
+                        type !== "conflux" &&
                         type !== "base" && (
                           <button
                             className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
@@ -2192,262 +2365,268 @@ const SingleNft = ({
               </div>
             </div>
           </div>
-          {type !== "coingecko" && type !== "gate" && type !== "conflux" && type !== "base" && (
-            <div className="px-2">
-              <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
-                <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
-                  <h3 className="traits-text">Traits</h3>
-                  {type === "caws" ? (
-                    <>
-                      <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
-                        <div className="d-flex flex-row flex-xxl-column flex-lg-column gap-2 align-items-center justify-content-between w-100">
-                          <span className="traittitle">Background</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[0]?.value}
-                          </span>
+          {type !== "coingecko" &&
+            type !== "gate" &&
+            type !== "conflux" &&
+            type !== "base" && (
+              <div className="px-2">
+                <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
+                  <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
+                    <h3 className="traits-text">Traits</h3>
+                    {type === "caws" ? (
+                      <>
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                          <div className="d-flex flex-row flex-xxl-column flex-lg-column gap-2 align-items-center justify-content-between w-100">
+                            <span className="traittitle">Background</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[0]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Tail</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[1]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Ears</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[2]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Body</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[3]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Clothes</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[4]?.value}
+                            </span>
+                          </div>
                         </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Tail</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[1]?.value}
-                          </span>
+                        <div className="trait-separator"></div>
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Eyes</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[6]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Mouth</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[7]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Hat</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[8]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Eyewear</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[9]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Watch</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[5]?.value}
+                            </span>
+                          </div>
                         </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Ears</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[2]?.value}
-                          </span>
+                      </>
+                    ) : type === "timepiece" ? (
+                      <>
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                          <div className="d-flex flex-row flex-xxl-column flex-lg-column gap-2 align-items-center justify-content-between w-100">
+                            <span className="traittitle">Background</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[0]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Tail</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[1]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Ears</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[2]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Body</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[3]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Clothes</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[4]?.value}
+                            </span>
+                          </div>
                         </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Body</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[3]?.value}
-                          </span>
+                        <div className="trait-separator"></div>
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Eyes</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[5]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Mouth</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[6]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Hat</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[7]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Eyewear</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[8]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Watch</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[9]?.value}
+                            </span>
+                          </div>
                         </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Clothes</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[4]?.value}
-                          </span>
+                      </>
+                    ) : (
+                      <>
+                        {" "}
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Tier</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[0]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Size</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[1]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Building</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[3]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Workbench</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[4]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">NPC - Attire</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[8]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Gemstone</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[9]?.value}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                      <div className="trait-separator"></div>
-                      <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Eyes</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[6]?.value}
-                          </span>
+                        <div className="trait-separator"></div>
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Artifacts</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[5]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">NPC</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[6]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">NPC - AI Powered</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[7]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">Plot</span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[10]?.value}
+                            </span>
+                          </div>
+                          <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="traittitle">
+                              Multi Functional Building
+                            </span>
+                            <span className="traitsubtitle">
+                              {metaData.attributes &&
+                                metaData?.attributes[2]?.value}
+                            </span>
+                          </div>
                         </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Mouth</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[7]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Hat</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[8]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Eyewear</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[9]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Watch</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[5]?.value}
-                          </span>
-                        </div>
-                      </div>
-                    </>
-                  ) : type === "timepiece" ? (
-                    <>
-                      <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
-                        <div className="d-flex flex-row flex-xxl-column flex-lg-column gap-2 align-items-center justify-content-between w-100">
-                          <span className="traittitle">Background</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[0]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Tail</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[1]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Ears</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[2]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Body</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[3]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Clothes</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[4]?.value}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="trait-separator"></div>
-                      <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Eyes</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[5]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Mouth</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[6]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Hat</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[7]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Eyewear</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[8]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Watch</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[9]?.value}
-                          </span>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {" "}
-                      <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Tier</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[0]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Size</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[1]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Building</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[3]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Workbench</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[4]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">NPC - Attire</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[8]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Gemstone</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[9]?.value}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="trait-separator"></div>
-                      <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center justify-content-between">
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Artifacts</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[5]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">NPC</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[6]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">NPC - AI Powered</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[7]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">Plot</span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[10]?.value}
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="traittitle">
-                            Multi Functional Building
-                          </span>
-                          <span className="traitsubtitle">
-                            {metaData.attributes &&
-                              metaData?.attributes[2]?.value}
-                          </span>
-                        </div>
-                      </div>
-                    </>
-                  )}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {(type === "coingecko" || type === "gate" || type === "conflux"  || type === "base") && (
+          {(type === "coingecko" ||
+            type === "gate" ||
+            type === "conflux" ||
+            type === "base") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -2471,7 +2650,13 @@ const SingleNft = ({
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           <img src={dollarCircle} alt="" />
-                          Earn {type === "conflux" ? "CFX" : type === "base" ? "ETH" : "BNB"} rewards
+                          Earn{" "}
+                          {type === "conflux"
+                            ? "CFX"
+                            : type === "base"
+                            ? "ETH"
+                            : "BNB"}{" "}
+                          rewards
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
@@ -2693,6 +2878,7 @@ const SingleNft = ({
           nftId={nftId}
           ethTokenData={ethtokenData}
           dypTokenData={dyptokenData}
+          dyptokenData_old={dyptokenData_old}
           handleMakeOffer={handleMakeOffer}
           handleDeleteOffer={handleDeleteOffer}
           handleUpdateOffer={handleUpdateOffer}

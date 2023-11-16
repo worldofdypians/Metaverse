@@ -98,6 +98,7 @@ const MarketEvents = ({
   account,
   chainId,
   dyptokenDatabnb,
+  dyptokenDatabnb_old,
   idyptokenDatabnb,
   handleAvailableTime,
   remainingTime,
@@ -829,6 +830,7 @@ const MarketEvents = ({
                         getDypBalance={getDypBalance}
                         getiDypBalance={getDypBalance}
                         dyptokenDatabnb={dyptokenDatabnb}
+                        dyptokenDatabnb_old={dyptokenDatabnb_old}
                         idyptokenDatabnb={idyptokenDatabnb}
                         packageData={
                           selectedPackage === "dragon"
@@ -861,11 +863,12 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                     <div className="border-0 upcoming-mint-wrapper upcoming-dyp-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="border-0 upcoming-mint-wrapper upcoming-dyp-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Dypius</h6>
                       <p className="upcoming-mint-desc">
-                      Join the Dypius event for a chance to grab a share of the DYP v2 rewards.
+                        Join the Dypius event for a chance to grab a share of
+                        the DYP v2 rewards.
                       </p>
                     </div>
                     <img
@@ -893,7 +896,8 @@ const MarketEvents = ({
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Dogecoin</h6>
                       <p className="upcoming-mint-desc">
-                      Join the Dogecoin event for a chance to grab a share of DOGE rewards.
+                        Join the Dogecoin event for a chance to grab a share of
+                        DOGE rewards.
                       </p>
                     </div>
                     <img
@@ -902,7 +906,6 @@ const MarketEvents = ({
                       className="upcoming-mint-img"
                     />
                   </div>
-               
                 </div>
                 // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                 //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (

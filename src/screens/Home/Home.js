@@ -33,7 +33,7 @@ const Home = ({
   coinbase,
   ethTokenData,
   dyptokenDatabnb,
-  idyptokenDatabnb,
+  idyptokenDatabnb,dyptokenDatabnb_old
 }) => {
   const avaxPopupInfo = {
     title: "Avalanche",

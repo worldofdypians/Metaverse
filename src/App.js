@@ -127,9 +127,7 @@ function App() {
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
-
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
-  
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -151,12 +149,12 @@ function App() {
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
 
-
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
+  const [dyptokenDatabnb_old, setDypTokenDatabnb_old] = useState([]);
 
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
@@ -187,6 +185,8 @@ function App() {
 
   const [nftCount, setNftCount] = useState(1);
   const [dypTokenData, setDypTokenData] = useState();
+  const [dypTokenData_old, setDypTokenData_old] = useState();
+
   const [ethTokenData, setEthTokenData] = useState();
   const [favorites, setFavorites] = useState([]);
   const [cawsBought, setCawsBought] = useState([]);
@@ -210,7 +210,8 @@ function App() {
         const propertyDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
-        
+
+        setDypTokenData_old(propertyDyp[0][1].token_price_usd);
 
         const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
 
@@ -220,15 +221,15 @@ function App() {
 
   const getPriceDYP = async () => {
     const dypprice = await axios
-    .get(
-      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-    )
-    .then((res) => {
-      return res.data.data.attributes.base_token_price_usd;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .get(
+        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+      )
+      .then((res) => {
+        return res.data.data.attributes.base_token_price_usd;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
@@ -238,10 +239,11 @@ function App() {
     await axios
       .get("https://api.dyp.finance/api/the_graph_bsc_v2")
       .then((data) => {
-        // const propertyDyp = Object.entries(
-        //   data.data.the_graph_bsc_v2.token_data
-        // );
-        // setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
+        const propertyDyp = Object.entries(
+          data.data.the_graph_bsc_v2.token_data
+        );
+        console.log('propertyDyp', propertyDyp)
+        setDypTokenDatabnb_old(propertyDyp[0][1].token_price_usd);
 
         const propertyIDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
@@ -250,7 +252,6 @@ function App() {
       });
   };
 
- 
   const handleSwitchChain = async () => {
     const { ethereum } = window;
     const ETHPARAMS = {
@@ -498,15 +499,14 @@ function App() {
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
         setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
-        setmyConfluxNFTsCreated(NFTS); 
+        setmyConfluxNFTsCreated(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
         settotalBaseNft(NFTS.length);
         setmyBaseNFTs(NFTS);
         setbaseMintAllowed(NFTS.length > 0 ? 0 : 1);
-        setmybaseNFTsCreated(NFTS); 
-
+        setmybaseNFTsCreated(NFTS);
       });
 
       //setmyBaseNFTs
@@ -1670,6 +1670,7 @@ function App() {
     }
   }, [coinbase, nftCount]);
 
+  console.log(dyptokenDatabnb_old)
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -1722,6 +1723,8 @@ function App() {
                   handleRefreshListing={handleRefreshList}
                   nftCount={nftCount}
                   favorites={favorites}
+                  dyptokenData_old={dypTokenData_old}
+
                 />
               }
             />
@@ -1736,6 +1739,7 @@ function App() {
                   coinbase={coinbase}
                   ethTokenData={ethTokenData}
                   dyptokenDatabnb={dyptokenDatabnb}
+                  dyptokenDatabnb_old={dyptokenDatabnb_old}
                   idyptokenDatabnb={idyptokenDatabnb}
                 />
               }
@@ -1808,6 +1812,7 @@ function App() {
                 <Dashboard
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  dypTokenData_old={dypTokenData_old}
                   coinbase={coinbase}
                   account={coinbase}
                   isConnected={isConnected}
@@ -1848,6 +1853,7 @@ function App() {
                 <Marketplace
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  dypTokenData_old={dypTokenData_old}
                   coinbase={coinbase}
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
@@ -1873,6 +1879,7 @@ function App() {
                 <CawsNFT
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  dypTokenData_old={dypTokenData_old}
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
@@ -1890,6 +1897,7 @@ function App() {
                 <WoDNFT
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  dypTokenData_old={dypTokenData_old}
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
@@ -1907,6 +1915,7 @@ function App() {
                 <TimepieceNFT
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  dypTokenData_old={dypTokenData_old}
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
                   listedNFTS={listedNFTS}
@@ -1946,7 +1955,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -1988,7 +1996,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -2092,7 +2099,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -2111,41 +2117,41 @@ function App() {
               }
             />
             <Route
-                exact
-                path="/marketplace/beta-pass/base"
-                element={
-                  <BetaPassNFT
-                    type={"base"}
-                    ethTokenData={ethTokenData}
-                    dypTokenData={dypTokenData}
-                    cawsArray={allCawsForTimepieceMint}
-                    mintloading={mintloading}
-                    isConnected={isConnected}
-                    chainId={chainId}
-                    handleMint={handleTimepieceMint}
-                    mintStatus={mintStatus}
-                    textColor={textColor}
-                    calculateCaws={calculateCaws}
-                    totalCreated={totalTimepieceCreated}
-                    totalCoingeckoNft={totalCoingeckoNft}
-                    myNFTSCoingecko={MyNFTSCoingecko}
-                    myGateNfts={myGateNfts}
-                    totalGateNft={totalGateNft}
-                    totalBaseNft={totalBaseNft}
-                    myBaseNFTs={myBaseNFTs}
-                    totalConfluxNft={totalConfluxNft}
-                    myConfluxNfts={myConfluxNfts}
-                    timepieceMetadata={timepieceMetadata}
-                    handleConnect={handleShowWalletModal}
-                    listedNFTS={listedNFTS}
-                    coinbase={coinbase}
-                    timepieceBought={timepieceBought}
-                    handleRefreshListing={handleRefreshList}
-                    nftCount={nftCount}
-                    handleSwitchNetwork={handleSwitchNetwork}
-                  />
-                }
-              />
+              exact
+              path="/marketplace/beta-pass/base"
+              element={
+                <BetaPassNFT
+                  type={"base"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                />
+              }
+            />
             <Route
               exact
               path="/marketplace/events/:eventId"
@@ -2158,6 +2164,7 @@ function App() {
                   account={coinbase?.toLowerCase()}
                   chainId={chainId}
                   dyptokenDatabnb={dyptokenDatabnb}
+                  dyptokenDatabnb_old={dyptokenDatabnb_old}
                   idyptokenDatabnb={idyptokenDatabnb}
                   handleAvailableTime={(value) => {
                     setavailTime(value);
@@ -2179,6 +2186,7 @@ function App() {
                   chainId={chainId}
                   dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}
+                  dyptokenDatabnb_old={dyptokenDatabnb_old}
                   handleAvailableTime={(value) => {
                     setavailTime(value);
                   }}
@@ -2198,6 +2206,7 @@ function App() {
                   account={coinbase?.toLowerCase()}
                   chainId={chainId}
                   dyptokenDatabnb={dyptokenDatabnb}
+                  dyptokenDatabnb_old={dyptokenDatabnb_old}
                   idyptokenDatabnb={idyptokenDatabnb}
                   handleAvailableTime={(value) => {
                     setavailTime(value);
@@ -2239,7 +2248,6 @@ function App() {
                   timepieceMetadata={timepieceMetadata}
                   myConfluxNFTsCreated={myConfluxNFTsCreated}
                   mybaseNFTsCreated={mybaseNFTsCreated}
-
                   handleConfluxMint={handleConfluxNftMint}
                   handleBaseNftMint={handleBaseNftMint}
                   confluxMintAllowed={confluxMintAllowed}
