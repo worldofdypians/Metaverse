@@ -43,9 +43,13 @@ import infoIcon from "./assets/infoIcon.svg";
 import liveDot from "./assets/liveDot.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import whitePickaxe from "./assets/whitePickAxe.svg";
+import magnifier from "./assets/magnifier.svg";
+
 import whiteCalendar from "./assets/whiteCalendar.svg";
 import BetaEventCard from "./components/BetaEventCard";
 import eventPopupImage from "../Account/src/Components/WalletBalance/assets/eventPopupImage.png";
+import dypeventPopupImage from "../Account/src/Components/WalletBalance/assets/dypEventImage.png";
+
 import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
@@ -157,26 +161,6 @@ const MarketEvents = ({
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
-    // {
-    //   title: "Avalanche",
-    //   logo: avaxLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$3,000 in AVAX Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "September xx, 2023",
-    //   backgroundImage: avaxUpcoming,
-    //   popupInfo: {
-    //     title: "Avalanche",
-    //     chain: "Avalanche",
-    //     linkState: "coingecko",
-    //     rewards: "AVAX",
-    //     status: "Coming Soon",
-    //     id: "event5",
-    //   eventType: "Explore & Mine",
-
-    //   },
-    // },
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -231,7 +215,6 @@ const MarketEvents = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-
     {
       title: "Gate.io",
       logo: gate,
@@ -257,6 +240,31 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "20,000",
         learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Coming Soon",
+      totalRewards: "300,000 in DYPv2 Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "November 20, 2023",
+      backgroundImage: upcomingDyp,
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status:  "Coming Soon",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYPv2 Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "",
+        eventDate: "November 20, 2023",
       },
     },
     {
@@ -641,6 +649,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -653,9 +664,6 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -801,7 +809,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -864,7 +872,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                  <div className="border-0 upcoming-mint-wrapper upcoming-dyp-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-dyp-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Dypius</h6>
                       <p className="upcoming-mint-desc">
@@ -877,7 +885,7 @@ const MarketEvents = ({
                       alt=""
                       className="upcoming-mint-img"
                     />
-                  </div>
+                  </div> */}
                   <div className=" border-0 upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Daily Bonus</h6>
@@ -932,7 +940,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(3, 4).map((item, index) => (
+                  {dummyBetaPassData2.slice(4, 5).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
@@ -1012,8 +1020,8 @@ const MarketEvents = ({
                 <div className="d-flex gap-2">
                   <img
                     src={
-                      dummyEvent?.chain === "Avalanche"
-                        ? eventPopupImageAvax
+                      dummyEvent?.id === "event5"
+                        ? dypeventPopupImage
                         : dummyEvent?.linkState === "coingecko"
                         ? eventPopupImageGecko
                         : dummyEvent.linkState === "gate"
@@ -1052,24 +1060,27 @@ const MarketEvents = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status === "Coming Soon" && (
-                  <div className="d-flex flex-column">
-                    <span className="live-on">Live on</span>
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={
-                          require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
-                            .default
-                        }
-                        className="green-calendar"
-                        alt=""
-                      />
-                      <h6 className="live-on-date mb-0">
-                        {dummyEvent.eventDate}
-                      </h6>
+                {dummyEvent?.status === "Coming Soon" &&
+                    (
+                    <div className="d-flex flex-column">
+                      <span className="live-on">Live on</span>
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={
+                            require("../Account/src/Components/WalletBalance/assets/greenCalendar.svg")
+                              .default
+                          }
+                          className="green-calendar"
+                          alt=""
+                        />
+                        <h6 className="live-on-date mb-0">
+                          {dummyEvent.eventDate}
+                        </h6>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+
+                
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -1126,15 +1137,13 @@ const MarketEvents = ({
                     </p>
                   ) : dummyEvent.id === "event5" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to&nbsp;
-                      <b>hold an Avalanche Beta Pass NFT</b>. You can get the
-                      Avalanche Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
-                      exploring the Avalanche area, players not only stand a
-                      chance to secure daily rewards in AVAX, but also earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Avalanche area to uncover hidden treasures.
+                      To participate in the event, players are required to own
+                      at least one of the Beta Pass NFTs (CoinGecko, Conflux,
+                      Gate, or Base). By actively participating in the game on a
+                      daily basis and exploring the downtown area, players have
+                      the opportunity to secure daily rewards in DYP. Remember
+                      to log in to the game daily and venture into the downtown
+                      area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event6" ? (
                     <p className="popup-event-desc">
@@ -1169,34 +1178,47 @@ const MarketEvents = ({
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
                     <>
-                      <li className="popup-event-desc">
-                        Daily Rewards range from ${dummyEvent.minRewards} to $
-                        {dummyEvent.maxRewards}
-                      </li>
-                      <li className="popup-event-desc">
-                        Daily Points range from {dummyEvent.minPoints} to{" "}
-                        {dummyEvent.maxPoints}
-                      </li>
+                      {dummyEvent.id !== "event5" ? (
+                        <li className="popup-event-desc">
+                          Daily Rewards range from ${dummyEvent.minRewards} to $
+                          {dummyEvent.maxRewards}
+                        </li>
+                      ) : (
+                        <li className="popup-event-desc">
+                          Daily Rewards range from {dummyEvent.minRewards}DYP to
+                          &nbsp;
+                          {dummyEvent.maxRewards}DYP
+                        </li>
+                      )}
+                      {dummyEvent.id !== "event5" && (
+                        <li className="popup-event-desc">
+                          Daily Points range from {dummyEvent.minPoints} to{" "}
+                          {dummyEvent.maxPoints}
+                        </li>
+                      )}
                     </>
-
-                    <li className="popup-event-desc">
-                      Earn{" "}
-                      {dummyEvent.id === "event1"
-                        ? "CFX"
-                        : dummyEvent.id === "event2"
-                        ? "C98"
-                        : dummyEvent.id === "event3"
-                        ? "BNB"
-                        : dummyEvent.id === "event5"
-                        ? "AVAX"
-                        : dummyEvent.id === "event6"
-                        ? "BNB"
-                        : "ETH"}{" "}
-                      rewards
-                    </li>
-                    <li className="popup-event-desc">
-                      Get global leaderboard points
-                    </li>
+                    {dummyEvent.id !== "event5" && (
+                      <li className="popup-event-desc">
+                        Earn{" "}
+                        {dummyEvent.id === "event1"
+                          ? "CFX"
+                          : dummyEvent.id === "event2"
+                          ? "C98"
+                          : dummyEvent.id === "event3"
+                          ? "BNB"
+                          : dummyEvent.id === "event5"
+                          ? "DYP"
+                          : dummyEvent.id === "event6"
+                          ? "BNB"
+                          : "ETH"}{" "}
+                        rewards
+                      </li>
+                    )}
+                    {dummyEvent.id !== "event5" && (
+                      <li className="popup-event-desc">
+                        Get global leaderboard points
+                      </li>
+                    )}
                     <li className="popup-event-desc">Community Engagement</li>
                     <li className="popup-event-desc">Exploration Adventures</li>
                   </ul>
@@ -1212,7 +1234,7 @@ const MarketEvents = ({
                 : dummyEvent.id === "event3"
                 ? "CoinGecko"
                 : dummyEvent.id === "event5"
-                ? "Avalanche"
+                ? "Dypius"
                 : dummyEvent.id === "event6"
                 ? "Gate.io"
                 : "Base Network"}
@@ -1259,11 +1281,12 @@ const MarketEvents = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                Avalanche is a smart contracts platform that scales infinitely
-                and regularly finalizes transactions in less than one second.
-                Its novel consensus protocol, Subnet infrastructure, and
-                HyperSDK toolkit enable web3 developers to easily launch
-                powerful, custom blockchain solutions.
+                Dypius is a powerful, decentralized ecosystem with a focus on
+                scalability, security, and global adoption through next-gen
+                infrastructure. We offer a variety of products and services that
+                cater to both beginners and advanced users in the crypto space
+                including Earn solutions, analytical tools, NFTs, Metaverse and
+                more!
               </p>
             ) : dummyEvent.id === "event6" ? (
               <p
@@ -1297,8 +1320,8 @@ const MarketEvents = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://twitter.com/Conflux_Network"
-                    : dummyEvent.id === "event2"
-                    ? "https://twitter.com/coin98_wallet"
+                    : dummyEvent.id === "event5"
+                    ? "https://twitter.com/dypius"
                     : dummyEvent.id === "event3"
                     ? "https://twitter.com/coingecko"
                     : dummyEvent.id === "event6"
@@ -1316,8 +1339,8 @@ const MarketEvents = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://t.me/Conflux_English"
-                    : dummyEvent.id === "event2"
-                    ? "https://t.me/coin98wallet"
+                    : dummyEvent.id === "event5"
+                    ? "https://t.me/dypius"
                     : dummyEvent.id === "event3"
                     ? "https://t.me/coingecko"
                     : dummyEvent.id === "event6"
@@ -1338,8 +1361,8 @@ const MarketEvents = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://confluxnetwork.org/"
-                    : dummyEvent.id === "event2"
-                    ? "https://coin98.com/"
+                    : dummyEvent.id === "event5"
+                    ? "https://www.dypius.com/"
                     : dummyEvent.id === "event3"
                     ? "https://www.coingecko.com/"
                     : dummyEvent.id === "event6"
@@ -1361,25 +1384,28 @@ const MarketEvents = ({
                 <span className="event-my-earnings2 mb-0">My earnings</span>
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
-                <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2">
-                    {getFormattedNumber(
-                      dummyEvent.id === "event1"
-                        ? confluxUserPoints
-                        : dummyEvent.id === "event3"
-                        ? userPoints
-                        : dummyEvent.id === "event6"
-                        ? gateUserPoints
-                        : dummyEvent.id === "event4"
-                        ? baseUserPoints
-                        : 0,
-                      0
-                    )}
-                  </h6>
-                  <span className="mb-0 event-earnings-usd">
-                    Leaderboard Points
-                  </span>
-                </div>
+                {dummyEvent.id !== "event5" && (
+                  <div className="d-flex flex-column gap-2">
+                    <h6 className="mb-0 event-earnings-coin2">
+                      {getFormattedNumber(
+                        dummyEvent.id === "event1"
+                          ? confluxUserPoints
+                          : dummyEvent.id === "event3"
+                          ? userPoints
+                          : dummyEvent.id === "event6"
+                          ? gateUserPoints
+                          : dummyEvent.id === "event4"
+                          ? baseUserPoints
+                          : 0,
+                        0
+                      )}
+                    </h6>
+
+                    <span className="mb-0 event-earnings-usd">
+                      Leaderboard Points
+                    </span>
+                  </div>
+                )}
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
                     $
@@ -1415,7 +1441,7 @@ const MarketEvents = ({
                         : dummyEvent.id === "event3"
                         ? "BNB"
                         : dummyEvent.id === "event5"
-                        ? "AVAX"
+                        ? "DYP"
                         : dummyEvent.id === "event6"
                         ? "BNB"
                         : "ETH"}
@@ -1431,13 +1457,14 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.status === "Coming Soon" && (
-              <div className="w-100 d-flex justify-content-end mt-3">
-                <NavLink to={`/marketplace/beta-pass/gate`}>
-                  <button className="btn get-beta-btn">Get Beta Pass</button>
-                </NavLink>
-              </div>
-            )}
+            {dummyEvent.status === "Coming Soon" &&
+              dummyEvent.id !== "event5" && (
+                <div className="w-100 d-flex justify-content-end mt-3">
+                  <NavLink to={`/marketplace/beta-pass/gate`}>
+                    <button className="btn get-beta-btn">Get Beta Pass</button>
+                  </NavLink>
+                </div>
+              )}
           </div>
         </OutsideClickHandler>
       )}
