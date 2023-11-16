@@ -1670,7 +1670,7 @@ function App() {
     }
   }, [coinbase, nftCount]);
 
-  console.log(dyptokenDatabnb_old)
+ 
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -2170,6 +2170,8 @@ function App() {
                     setavailTime(value);
                   }}
                   ethTokenData={ethTokenData}
+                  dyptokenData_old={dypTokenData_old}
+
                 />
               }
             />
@@ -2187,6 +2189,7 @@ function App() {
                   dyptokenDatabnb={dyptokenDatabnb}
                   idyptokenDatabnb={idyptokenDatabnb}
                   dyptokenDatabnb_old={dyptokenDatabnb_old}
+                  dyptokenData_old={dypTokenData_old}
                   handleAvailableTime={(value) => {
                     setavailTime(value);
                   }}
@@ -2211,6 +2214,8 @@ function App() {
                   handleAvailableTime={(value) => {
                     setavailTime(value);
                   }}
+                  dyptokenData_old={dypTokenData_old}
+
                   ethTokenData={ethTokenData}
                 />
               }

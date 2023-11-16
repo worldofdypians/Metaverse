@@ -98,7 +98,7 @@ const NewBundleCard = ({
   onOpenPopup,
   dyptokenDatabnb,
   idyptokenDatabnb,
-  dyptokenDatabnb_old,
+  dyptokenDatabnb_old,dyptokenData_old
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
@@ -252,6 +252,8 @@ const NewBundleCard = ({
     }
   };
 
+
+
   const checkApproval3500 = async () => {
     if (coinbase === wallet && chainId === 56) {
       await idyptoken_abi.methods
@@ -295,7 +297,7 @@ const NewBundleCard = ({
       });
   };
 
-  const handleApproval700 = async (pricetype) => {
+  const handleApproval700 = async () => {
     setbundleState700("loading");
     setStatus700("Approving, please wait");
     setStatusColor700("#00FECF");
@@ -428,68 +430,140 @@ const NewBundleCard = ({
   };
 
   const setlastDay = async () => {
-    const timeofDeposit = await dyp700_abi.methods
-      .getTimeOfDeposit(coinbase)
-      .call();
+    if (chainId === 56 && priceType === 1) {
+      const timeofDeposit = await dyp700_abi.methods
+        .getTimeOfDeposit(coinbase)
+        .call();
 
-    const expiringTime = await dyp700_abi.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
+      const expiringTime = await dyp700_abi.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
 
-    const expiringTime_miliseconds = expiringTime * 1000;
+      const expiringTime_miliseconds = expiringTime * 1000;
 
-    const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }).format(expiringTime_miliseconds);
+      const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
 
-    const expiringTime_Date_formatted = new Date(expiringTime_Date);
-    const expiringTime_day = expiringTime_Date_formatted.getDate();
-    setbundleExpireDay(expiringTime_day);
-    setbundleExpireMiliseconds(expiringTime_miliseconds);
-    const timeofDeposit_miliseconds = timeofDeposit * 1000;
+      const expiringTime_Date_formatted = new Date(expiringTime_Date);
+      const expiringTime_day = expiringTime_Date_formatted.getDate();
+      setbundleExpireDay(expiringTime_day);
+      setbundleExpireMiliseconds(expiringTime_miliseconds);
+      const timeofDeposit_miliseconds = timeofDeposit * 1000;
 
-    const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }).format(timeofDeposit_miliseconds);
+      const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(timeofDeposit_miliseconds);
 
-    const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }).format(expiringTime_miliseconds);
+      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
 
-    const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-    const timeofbundleBought_Date_formatted = new Date(timeofbundleBought_Date);
+      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+      const timeofbundleBought_Date_formatted = new Date(
+        timeofbundleBought_Date
+      );
 
-    setdateofBundle(expiringTime_Date_formatted);
+      setdateofBundle(expiringTime_Date_formatted);
 
-    const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
-    const timeofbundleBought_day = timeofbundleBought_Date_formatted.getDate();
-    setdatewhenBundleBought(timeofbundleBought_day);
+      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+      const timeofbundleBought_day =
+        timeofbundleBought_Date_formatted.getDate();
+      setdatewhenBundleBought(timeofbundleBought_day);
 
-    const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
-    const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
-    const final = timeofDeposit_Hours - 11;
-    setlastDayofBundleHours(final);
+      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
+      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
+      const final = timeofDeposit_Hours - 11;
+      setlastDayofBundleHours(final);
 
-    const finalMinutes = timeofDeposit_Minutes - 11;
+      const finalMinutes = timeofDeposit_Minutes - 11;
 
-    setlastDayofBundleMinutes(finalMinutes);
-    setlastDayofBundle(timeofDeposit_day);
-    setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+      setlastDayofBundleMinutes(finalMinutes);
+      setlastDayofBundle(timeofDeposit_day);
+      setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+    }
+    else  if (chainId === 1 && priceType === 0) {
+      const timeofDeposit = await dyp700v1_abi.methods
+        .getTimeOfDeposit(coinbase)
+        .call();
+
+      const expiringTime = await dyp700v1_abi.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
+
+      const expiringTime_miliseconds = expiringTime * 1000;
+
+      const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
+
+      const expiringTime_Date_formatted = new Date(expiringTime_Date);
+      const expiringTime_day = expiringTime_Date_formatted.getDate();
+      setbundleExpireDay(expiringTime_day);
+      setbundleExpireMiliseconds(expiringTime_miliseconds);
+      const timeofDeposit_miliseconds = timeofDeposit * 1000;
+
+      const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(timeofDeposit_miliseconds);
+
+      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
+
+      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+      const timeofbundleBought_Date_formatted = new Date(
+        timeofbundleBought_Date
+      );
+
+      setdateofBundle(expiringTime_Date_formatted);
+
+      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+      const timeofbundleBought_day =
+        timeofbundleBought_Date_formatted.getDate();
+      setdatewhenBundleBought(timeofbundleBought_day);
+
+      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
+      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
+      const final = timeofDeposit_Hours - 11;
+      setlastDayofBundleHours(final);
+
+      const finalMinutes = timeofDeposit_Minutes - 11;
+
+      setlastDayofBundleMinutes(finalMinutes);
+      setlastDayofBundle(timeofDeposit_day);
+      setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+    }
   };
 
   const insertBundle = async () => {
@@ -619,8 +693,7 @@ const NewBundleCard = ({
         setcountdown700();
         handleSetAvailableTime();
       }
-    }
-    else  if (chainId === 1 && priceType === 0) {
+    } else if (chainId === 1 && priceType === 0) {
       const remainingTime = await dyp700v1_abi.methods
         .getTimeOfExpireBuff(coinbase)
         .call();
@@ -1075,7 +1148,7 @@ const NewBundleCard = ({
 
   useEffect(() => {
     checkApproval700(priceType);
-  }, [coinbase, chainId, packageData, status700, bundlesBought]);
+  }, [coinbase, chainId, packageData, bundlesBought]);
 
   useEffect(() => {
     if (chainId !== 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
@@ -1153,7 +1226,7 @@ const NewBundleCard = ({
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
       );
     }
-  }, [bundlesBought, countdown700]);
+  }, [priceType, chainId, bundlesBought, countdown700]);
 
   useEffect(() => {
     getTokenData();
@@ -1263,7 +1336,7 @@ const NewBundleCard = ({
                       {packageData.title === "Golden Pass" ? (
                         <div className="d-flex align-items-center gap-4">
                           <h6 className="purchase-price mb-0">
-                            {getFormattedNumber(packageData.price, 0)}
+                            {getFormattedNumber(priceType === 0 ? 250 : packageData.price, 0)}
                           </h6>
                           <div className="d-flex flex-row justify-content-around w-100 gap-2">
                             <div
@@ -1328,7 +1401,7 @@ const NewBundleCard = ({
                           <span className="purchase-price-usd mb-0">
                             $
                             {getFormattedNumber(
-                              packageData.price * dyptokenDatabnb
+                             priceType === 1 ? packageData.price * dyptokenDatabnb : 250 * dyptokenData_old
                             )}
                           </span>
                         </div>
@@ -1480,7 +1553,7 @@ const NewBundleCard = ({
                               : "pill-btn"
                           }  py-2 px-4`}
                           onClick={() => {
-                            handleApproval700(priceType);
+                            handleApproval700();
                           }}
                         >
                           {bundleState700 === "loading" ? (

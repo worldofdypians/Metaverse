@@ -103,7 +103,7 @@ const MarketEvents = ({
   handleAvailableTime,
   remainingTime,
   tabState,
-  ethTokenData,
+  ethTokenData,dyptokenData_old
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -848,6 +848,7 @@ const MarketEvents = ({
                           handleAvailableTime(value);
                         }}
                         availableTime={availableTime}
+                        dyptokenData_old={dyptokenData_old}
                       />
                     )}
                   </div>
