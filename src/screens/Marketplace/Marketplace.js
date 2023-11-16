@@ -47,6 +47,7 @@ const Marketplace = ({
   nftCount,
   ethTokenData,
   dypTokenData,
+  dypTokenData_old
 }) => {
   const override = {
     display: "block",
@@ -1349,6 +1350,7 @@ const Marketplace = ({
                           <ItemCard
                             ethTokenData={ethTokenData}
                             dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1658,6 +1660,7 @@ const Marketplace = ({
                           <ItemCard
                             ethTokenData={ethTokenData}
                             dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}

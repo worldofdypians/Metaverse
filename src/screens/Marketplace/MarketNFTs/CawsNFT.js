@@ -34,7 +34,7 @@ const CawsNFT = ({
   listedNFTS,
   coinbase,
   ethTokenData,
-  dypTokenData,
+  dypTokenData,dypTokenData_old,
   cawsBought,
   handleRefreshListing,
   nftCount,
@@ -967,6 +967,7 @@ const CawsNFT = ({
                           <ItemCard
                             ethTokenData={ethTokenData}
                             dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1152,6 +1153,7 @@ const CawsNFT = ({
                       <ItemCard
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
+                        dypTokenData_old={dypTokenData_old}
                         key={nft.id}
                         nft={nft}
                         isConnected={isConnected}
@@ -1198,6 +1200,7 @@ const CawsNFT = ({
                           <ItemCard
                             ethTokenData={ethTokenData}
                             dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
