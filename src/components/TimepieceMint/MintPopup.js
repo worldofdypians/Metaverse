@@ -82,7 +82,7 @@ Base Beta Pass NFT
       {data.title === "Treasure Hunt" ? (
         <Link
           onClick={onClose}
-          to={"/marketplace/mint/base"}
+          to={"/marketplace/mint/timepiece"}
           state={{ event: data.state }}
           className="linear-border"
         >

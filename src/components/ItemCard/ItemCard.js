@@ -33,6 +33,7 @@ const ItemCard = ({
   coinbase,
   ethTokenData,
   dypTokenData,
+  dypTokenData_old,
   isFavorite,
   onFavorite,
   lastSold,
@@ -292,6 +293,7 @@ const ItemCard = ({
           state={purchasestate}
           ethTokenData={ethTokenData}
           dypTokenData={dypTokenData}
+          dypTokenData_old={dypTokenData_old}
         />
       )}
       <div className="item-wrapper" style={{ maxWidth: "100%" }}>
@@ -387,30 +389,34 @@ const ItemCard = ({
                       nft.price / 1e18,
                       nft.payment_priceType === 0 ? 2 : 0
                     )}{" "}
-                    {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                    {nft.payment_priceType === 0
+                      ? "ETH"
+                      : nft?.payment_tokenAddress ===
+                        window.config.dyp_token_address
+                      ? "DYPv1"
+                      : "DYPv2"}
                   </span>
-                 
-                    <span
-                      className={`nft-price-usd  ${
-                        (location.pathname.includes("/marketplace/caws") ||
-                          location.pathname.includes("/marketplace/land") ||
-                          location.pathname.includes(
-                            "/marketplace/timepiece"
-                          )) &&
-                        "nft-price-usdhover"
-                      } ${!isListed && "nft-price-usdhover2"}`}
-                      style={{ color: "#7DD9AF" }}
-                    >
-                      $
-                      {getFormattedNumber(
-                        nft.payment_priceType === 0  
-                          ?
-                           ethTokenData * (nft.price / 1e18)
-                          : dypTokenData * (nft.price / 1e18),
-                        2
-                      )}
-                    </span>
-                 
+
+                  <span
+                    className={`nft-price-usd  ${
+                      (location.pathname.includes("/marketplace/caws") ||
+                        location.pathname.includes("/marketplace/land") ||
+                        location.pathname.includes("/marketplace/timepiece")) &&
+                      "nft-price-usdhover"
+                    } ${!isListed && "nft-price-usdhover2"}`}
+                    style={{ color: "#7DD9AF" }}
+                  >
+                    $
+                    {getFormattedNumber(
+                      nft.payment_priceType === 0
+                        ? ethTokenData * (nft.price / 1e18)
+                        : nft?.payment_tokenAddress ===
+                          window.config.dyp_token_address
+                        ? dypTokenData_old * (nft.price / 1e18)
+                        : dypTokenData * (nft.price / 1e18),
+                      2
+                    )}
+                  </span>
                 </div>
               </div>
             ) : (

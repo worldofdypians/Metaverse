@@ -590,7 +590,10 @@ const BetaPassNFT = ({
             style={{ backgroundSize: "cover" }}
           >
             <div className="container-lg mx-0 position-relative">
-              <div className="row align-items-center justify-content-between mt-4 mb-5 gap-4 gap-lg-0" style={{minHeight: "232px"}}>
+              <div
+                className="row align-items-center justify-content-between mt-4 mb-5 gap-4 gap-lg-0"
+                style={{ minHeight: "232px" }}
+              >
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
@@ -707,20 +710,7 @@ const BetaPassNFT = ({
                     />
                     <span>Gate</span>
                   </NavLink>
-                  <NavLink
-                    to={"/marketplace/beta-pass/conflux"}
-                    className={`${
-                      location.pathname.includes("conflux") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                    onClick={() => {
-                      setSelectedMint(confluxData);
-                      setMintTitle("conflux");
-                    }}
-                  >
-                    <img src={conflux} className="beta-pass-chain-img" alt="" />
-                    <span>Conflux</span>
-                  </NavLink>
+
                   <NavLink
                     to={"/marketplace/beta-pass/coingecko"}
                     className={`${
@@ -738,6 +728,20 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>CoinGecko</span>
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/conflux"}
+                    className={`${
+                      location.pathname.includes("conflux") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(confluxData);
+                      setMintTitle("conflux");
+                    }}
+                  >
+                    <img src={conflux} className="beta-pass-chain-img" alt="" />
+                    <span>Conflux</span>
                   </NavLink>
                   {/* <NavLink
                     to={"/marketplace/beta-pass/coin98"}
@@ -1505,8 +1509,6 @@ const BetaPassNFT = ({
                                   className={`position-relative events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
                                   style={{ top: 0 }}
                                 >
-                                  
-
                                   <span>Expired</span>
                                 </div>
                               </div>
