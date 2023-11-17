@@ -23,7 +23,6 @@ import {
   dyp700Address,
   dyp700v1Address,
   idyp3500Address,
- 
 } from "../../web3";
 
 import { DYP_700V1_ABI, DYP_700_ABI } from "../../web3/abis";
@@ -766,7 +765,7 @@ const NewBundleCard = ({
 
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
-    if (priceType === 1 ) {
+    if (priceType === 1) {
       const week1 = ["1", "2", "3", "4", "5", "6", "7"];
       const week2 = ["8", "9", "10", "11", "12", "13", "14"];
       const week3 = ["15", "16", "17", "18", "19", "20", "21"];
@@ -863,7 +862,10 @@ const NewBundleCard = ({
         ) {
           handleRefreshCountdown700();
           setisAtlimit(false);
-        } else if (week3.includes(today_date.toString()) && bundlesBought >= 2) {
+        } else if (
+          week3.includes(today_date.toString()) &&
+          bundlesBought >= 2
+        ) {
           // const remainingTime3 = lastDayofBundle;
           // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
@@ -1044,11 +1046,14 @@ const NewBundleCard = ({
           // }
         } else if (
           week3.includes(today_date.toString()) &&
-          bundlesBought <= 3
+          bundlesBought <= 1
         ) {
           handleRefreshCountdown700();
           setisAtlimit(false);
-        } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
+        } else if (
+          week3.includes(today_date.toString()) &&
+          bundlesBought >= 2
+        ) {
           // const remainingTime3 = lastDayofBundle;
           // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
@@ -1211,9 +1216,15 @@ const NewBundleCard = ({
       setStatus3500(
         "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
       );
-      setStatus700(
-        "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
-      );
+      if (priceType === 0) {
+        setStatus700(
+          "Please make sure you're on Ethereum Chain and using the wallet address associated to your profile"
+        );
+      } else if (priceType === 1) {
+        setStatus700(
+          "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
+        );
+      }
     }
   }, [coinbase, chainId, wallet, priceType]);
 
@@ -1620,10 +1631,9 @@ const NewBundleCard = ({
                         className={`btn ${
                           ((depositState700 === "deposit" ||
                             showApproval700 === false) &&
-                            priceType === 0 &&
-                            chainId === 1) ||
-                          (priceType === 1 &&
-                            chainId === 56 &&
+                           ( (priceType === 0 &&
+                            chainId === 1)||(priceType === 1 &&
+                            chainId === 56) )  &&
                             checkWallet === true &&
                             isAtlimit === false)
                             ? "pill-btn"
