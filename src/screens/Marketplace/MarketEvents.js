@@ -1185,9 +1185,7 @@ const MarketEvents = ({
                         </li>
                       ) : (
                         <li className="popup-event-desc">
-                          Daily Rewards range from {dummyEvent.minRewards}DYP to
-                          &nbsp;
-                          {dummyEvent.maxRewards}DYP
+                          Daily Rewards
                         </li>
                       )}
                       {dummyEvent.id !== "event5" && (
@@ -1384,7 +1382,6 @@ const MarketEvents = ({
                 <span className="event-my-earnings2 mb-0">My earnings</span>
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
-                {dummyEvent.id !== "event5" && (
                   <div className="d-flex flex-column gap-2">
                     <h6 className="mb-0 event-earnings-coin2">
                       {getFormattedNumber(
@@ -1395,19 +1392,21 @@ const MarketEvents = ({
                           : dummyEvent.id === "event6"
                           ? gateUserPoints
                           : dummyEvent.id === "event4"
-                          ? baseUserPoints
+                          ? baseUserPoints 
+                          : dummyEvent.id === "event5"
+                          ? 0
                           : 0,
                         0
                       )}
+                      {dummyEvent.id === "event5" && " DYP"}
                     </h6>
 
                     <span className="mb-0 event-earnings-usd">
-                      Leaderboard Points
+                      {dummyEvent.id === "event5" ? "Amount" : "Leaderboard Points"}
                     </span>
                   </div>
-                )}
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1">
+                  <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1" style={{left: dummyEvent.id === "event5" && "0px"}}>
                     $
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
@@ -1421,7 +1420,9 @@ const MarketEvents = ({
                         : 0,
                       2
                     )}
-                    <span className="ethpricerewards specialstyle-wrapper-eth">
+                    <span className="ethpricerewards specialstyle-wrapper-eth" >
+                    {dummyEvent.id !== "event5" &&
+                    <>
                       {getFormattedNumber(
                         dummyEvent.id === "event1"
                           ? confluxEarnCFX
@@ -1445,6 +1446,8 @@ const MarketEvents = ({
                         : dummyEvent.id === "event6"
                         ? "BNB"
                         : "ETH"}
+                    </>
+                    }
                     </span>
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>
