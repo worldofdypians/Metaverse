@@ -71,7 +71,11 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
         <div className="d-flex col-6 col-lg-3 flex-column align-items-start align-items-lg-center">
           <div className="mybetaearnings">
             <h6 className="event-my-earnings3 mb-3">
-              ${getFormattedNumber(userEarnUsd, 2)}
+              {data.title !== "Dypius" ? (
+                <>${getFormattedNumber(userEarnUsd, 2)}</>
+              ) : (
+                <>0 DYP</>
+              )}
             </h6>
           </div>
         </div>
