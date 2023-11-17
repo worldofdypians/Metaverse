@@ -157,6 +157,14 @@ const NewBundleCard = ({
   const [idyptokenData, setIDypTokenData] = useState([]);
   const [priceType, setPriceType] = useState(0);
 
+  console.log(
+    dyptokenDatabnb,
+    idyptokenDatabnb,
+    dyptokenDatabnb_old,
+    dyptokenData_old,
+    "prices"
+  );
+
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
       if (coinbase !== wallet || chainId !== 56) {
@@ -1373,7 +1381,9 @@ const NewBundleCard = ({
                         <div className="d-flex flex-column flex-lg-row align-items-lg-center align-items-start gap-4">
                           <h6 className="purchase-price mb-0">
                             {getFormattedNumber(
-                              priceType === 0 ? 250 : packageData.price,
+                              priceType === 0
+                                ? packageData.usdPrice / dyptokenDatabnb_old
+                                : packageData.usdPrice / dyptokenDatabnb,
                               0
                             )}
                           </h6>
@@ -1438,12 +1448,12 @@ const NewBundleCard = ({
                           </div>
 
                           <span className="purchase-price-usd mb-0">
-                            $
-                            {getFormattedNumber(
+                            ${getFormattedNumber(packageData.usdPrice)}
+                            {/* {getFormattedNumber(
                               priceType === 1
                                 ? packageData.price * dyptokenDatabnb
                                 : 250 * dyptokenData_old
-                            )}
+                            )} */}
                           </span>
                         </div>
                       ) : (
@@ -1460,17 +1470,16 @@ const NewBundleCard = ({
                               alt=""
                             />
                             <h6 className="purchase-price mb-0">
-                              {getFormattedNumber(packageData.price, 0)}
+                            {getFormattedNumber(
+                              packageData.title === "Puzzle Madness"
+                                ? packageData.usdPrice / idyptokenDatabnb
+                                : packageData.usdPrice / dyptokenDatabnb
+                            )}
                             </h6>
                           </div>
 
                           <span className="purchase-price-usd mb-0">
-                            $
-                            {getFormattedNumber(
-                              packageData.title === "Puzzle Madness"
-                                ? packageData.price * idyptokenDatabnb
-                                : packageData.price * dyptokenDatabnb
-                            )}
+                            ${getFormattedNumber(packageData.usdPrice)}
                           </span>
                         </div>
                       )}
@@ -1629,13 +1638,12 @@ const NewBundleCard = ({
                             : false
                         }
                         className={`btn ${
-                          ((depositState700 === "deposit" ||
+                          (depositState700 === "deposit" ||
                             showApproval700 === false) &&
-                           ( (priceType === 0 &&
-                            chainId === 1)||(priceType === 1 &&
-                            chainId === 56) )  &&
-                            checkWallet === true &&
-                            isAtlimit === false)
+                          ((priceType === 0 && chainId === 1) ||
+                            (priceType === 1 && chainId === 56)) &&
+                          checkWallet === true &&
+                          isAtlimit === false
                             ? "pill-btn"
                             : "inactive-pill-btn"
                         }  py-2 px-4`}
