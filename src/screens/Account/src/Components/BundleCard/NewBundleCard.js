@@ -157,13 +157,7 @@ const NewBundleCard = ({
   const [idyptokenData, setIDypTokenData] = useState([]);
   const [priceType, setPriceType] = useState(0);
 
-  console.log(
-    dyptokenDatabnb,
-    idyptokenDatabnb,
-    dyptokenDatabnb_old,
-    dyptokenData_old,
-    "prices"
-  );
+  
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
