@@ -452,108 +452,112 @@ const NewBundleCard = ({
         .getTimeOfDeposit(coinbase)
         .call();
 
-      const timeofDeposit_miliseconds = timeofDeposit * 1000;
-      const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
+        if(timeofDeposit !== 0 || timeofDepositv1 !== 0) {
+          const timeofDeposit_miliseconds = timeofDeposit * 1000;
+          const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
+    
+    
+          const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          }).format(timeofDeposit_miliseconds);
+    
+          const timeofbundleBought_Datev1 = new Intl.DateTimeFormat("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          }).format(timeofDeposit_milisecondsv1);
+    
+          const timeofbundleBought_Date_formatted = new Date(
+            timeofbundleBought_Date
+          );
+    
+          const timeofbundleBought_Date_formattedv1 = new Date(
+            timeofbundleBought_Datev1
+          );
+    
+          const timeofbundleBought_day =
+            timeofbundleBought_Date_formatted.getDate();
+    
+            const timeofbundleBought_dayv1 =
+            timeofbundleBought_Date_formattedv1.getDate();
+    
+          setdatewhenBundleBought(timeofbundleBought_day);
+          setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
+    
+    
+          const expiringTime = await dypv2.methods
+            .getTimeOfExpireBuff(coinbase)
+            .call();
+    
+            const expiringTimev1 = await dypv1.methods
+            .getTimeOfExpireBuff(coinbase)
+            .call();
+    
+          const expiringTime_miliseconds = expiringTime * 1000;
+          const expiringTime_milisecondsv1 = expiringTimev1 * 1000;
+    
+    
+          const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          }).format(expiringTime_miliseconds);
+    
+          const expiringTime_Datev1 = new Intl.DateTimeFormat("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          }).format(expiringTime_milisecondsv1);
+    
+          const expiringTime_Date_formatted = new Date(expiringTime_Date);
+          const expiringTime_Date_formattedv1 = new Date(expiringTime_Datev1);
+    
+          setdateofBundle(expiringTime_Date_formatted);
+          setdateofBundlev1(expiringTime_Date_formattedv1);
+    
+    
+          const expiringTime_day = expiringTime_Date_formatted.getDate();
+          setbundleExpireDay(expiringTime_day);
+          setbundleExpireMiliseconds(expiringTime_miliseconds);
+    
+          const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          }).format(expiringTime_miliseconds);
+    
+          const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+          const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+          const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
+          const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
+          const final = timeofDeposit_Hours - 11;
+          setlastDayofBundleHours(final);
+    
+          const finalMinutes = timeofDeposit_Minutes - 11;
+    
+          setlastDayofBundleMinutes(finalMinutes);
+          setlastDayofBundle(timeofDeposit_day);
+          setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+        
+        }
 
-
-      const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(timeofDeposit_miliseconds);
-
-      const timeofbundleBought_Datev1 = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(timeofDeposit_milisecondsv1);
-
-      const timeofbundleBought_Date_formatted = new Date(
-        timeofbundleBought_Date
-      );
-
-      const timeofbundleBought_Date_formattedv1 = new Date(
-        timeofbundleBought_Datev1
-      );
-
-      const timeofbundleBought_day =
-        timeofbundleBought_Date_formatted.getDate();
-
-        const timeofbundleBought_dayv1 =
-        timeofbundleBought_Date_formattedv1.getDate();
-
-      setdatewhenBundleBought(timeofbundleBought_day);
-      setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
-
-
-      const expiringTime = await dypv2.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
-
-        const expiringTimev1 = await dypv1.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
-
-      const expiringTime_miliseconds = expiringTime * 1000;
-      const expiringTime_milisecondsv1 = expiringTimev1 * 1000;
-
-
-      const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(expiringTime_miliseconds);
-
-      const expiringTime_Datev1 = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(expiringTime_milisecondsv1);
-
-      const expiringTime_Date_formatted = new Date(expiringTime_Date);
-      const expiringTime_Date_formattedv1 = new Date(expiringTime_Datev1);
-
-      setdateofBundle(expiringTime_Date_formatted);
-      setdateofBundlev1(expiringTime_Date_formattedv1);
-
-
-      const expiringTime_day = expiringTime_Date_formatted.getDate();
-      setbundleExpireDay(expiringTime_day);
-      setbundleExpireMiliseconds(expiringTime_miliseconds);
-
-      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(expiringTime_miliseconds);
-
-      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
-      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
-      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
-      const final = timeofDeposit_Hours - 11;
-      setlastDayofBundleHours(final);
-
-      const finalMinutes = timeofDeposit_Minutes - 11;
-
-      setlastDayofBundleMinutes(finalMinutes);
-      setlastDayofBundle(timeofDeposit_day);
-      setlastDayofBundleMilliseconds(expiringTime_miliseconds);
     
   };
 
