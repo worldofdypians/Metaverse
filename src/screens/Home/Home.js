@@ -78,20 +78,20 @@ const Home = ({
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#popup");
 
-  useEffect(() => {
-    setTimeout(() => {
-      setActivePopup(true);
-    }, 500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setActivePopup(true);
+  //   }, 500);
+  // }, []);
 
-  useEffect(() => {
-    if (activePopup) {
-      html.classList.add("hidescroll");
-    } else {
-      // Enable scroll
-      html.classList.remove("hidescroll");
-    }
-  }, [activePopup]);
+  // useEffect(() => {
+  //   if (activePopup) {
+  //     html.classList.add("hidescroll");
+  //   } else {
+  //     // Enable scroll
+  //     html.classList.remove("hidescroll");
+  //   }
+  // }, [activePopup]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
