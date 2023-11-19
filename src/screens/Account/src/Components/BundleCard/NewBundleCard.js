@@ -1475,12 +1475,12 @@ const NewBundleCard = ({
                           </div>
 
                           <span className="purchase-price-usd mb-0">
-                            ${getFormattedNumber(packageData.usdPrice)}
-                            {/* {getFormattedNumber(
+                            {/* ${getFormattedNumber(packageData.usdPrice)} */}
+                            {getFormattedNumber(
                               priceType === 1
                                 ? packageData.price * dyptokenDatabnb
                                 : 250 * dyptokenData_old
-                            )} */}
+                            )}
                           </span>
                         </div>
                       ) : (
@@ -1497,16 +1497,16 @@ const NewBundleCard = ({
                               alt=""
                             />
                             <h6 className="purchase-price mb-0">
-                            {getFormattedNumber(
-                              packageData.title === "Puzzle Madness"
-                                ? packageData.usdPrice / idyptokenDatabnb
-                                : packageData.usdPrice / dyptokenDatabnb
-                            )}
+                            {getFormattedNumber(packageData.price, 0)}
                             </h6>
                           </div>
 
                           <span className="purchase-price-usd mb-0">
-                            ${getFormattedNumber(packageData.usdPrice)}
+                            ${getFormattedNumber(
+                              packageData.title === "Puzzle Madness"
+                                ? packageData.price * idyptokenDatabnb
+                                : packageData.price * dyptokenDatabnb
+                            )}
                           </span>
                         </div>
                       )}
