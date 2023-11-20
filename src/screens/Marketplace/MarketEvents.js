@@ -620,7 +620,7 @@ const MarketEvents = ({
       setSelectedPackage("dragon");
     } else if (eventId === "golden-pass") {
       setSelectedPackage("dyp");
-    } else if (eventId === "puzzle-maddness") {
+    } else if (eventId === "puzzle-madness") {
       setSelectedPackage("idyp");
     } else if (eventId === "critical-hit") {
       setSelectedPackage("criticalHit");

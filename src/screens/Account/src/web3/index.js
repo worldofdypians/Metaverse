@@ -19,13 +19,13 @@ const erc20Address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
 const token_address = "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4";
 const idyptoken_address = "0xBD100d061E120b2c67A24453CF6368E63f1Be056";
 
-const wod_address = "0xc40bE3A801A39bdC151BF6b3468B4035F8A4d440";
+const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
 const landNft_address = "0xcd60d912655281908ee557ce1add61e983385a03";
 const landNftStake_address = "0x6821710b0d6e9e10acfd8433ad023f874ed782f1";
-const dyp700_address = "0xc394E6A94460d4453dcC74eFd1c1653D2f640073";
-const dyp700v1_address = "0x856b233e6B9a5BF5c210A6c28a8B064eD5d6e246";
+const dyp700_address = "0xbbe732098223c23e57dDa97b8A899ba7e8c2a591";
+const dyp700v1_address = "0x6493e45F0D9B81355035f07d6FAf59309B2e2f89";
 
-const idyp3500_address = "0xc31311ba17ad370bf4a1be09f7f8f99a68355224";
+const idyp3500_address = "0x54ad1fAaf2781E58Fcb58b7D02E25c8289a08b06";
 
 export const web3 = new Web3();
 web3.setProvider(window.ethereum);
