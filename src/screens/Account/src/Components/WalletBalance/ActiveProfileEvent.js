@@ -9,6 +9,8 @@ import conflux from "./assets/conflux.svg";
 import cyanDate from "./assets/cyanDate.svg";
 import cyanDollar from "./assets/cyanDollar.svg";
 import cyanExplore from "./assets/cyanExplore.svg";
+import cyanFind from "./assets/cyanFind.svg";
+
 import Countdown from "react-countdown";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 
@@ -95,8 +97,13 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
-          <img src={cyanExplore} height={15} width={15} alt="" />
-          <span className="mb-0 event-bottom-text">Explore & Mine</span>
+          <img
+            src={event.eventType === "Explore & Mine" ? cyanExplore : cyanFind}
+            height={15}
+            width={15}
+            alt=""
+          />
+          <span className="mb-0 event-bottom-text">{event.eventType}</span>
         </div>
         <div className="d-flex align-items-center gap-1">
           {event.title === "Dypius" ? (
@@ -106,7 +113,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
           )}
           <span className="mb-0 event-bottom-text">
             {event.title === "Dypius" ? (
-              "0 DYP"
+              <>{getFormattedNumber(userEarnedUsd, 0)}DYP</>
             ) : (
               <>${getFormattedNumber(userEarnedUsd, 2)}</>
             )}
