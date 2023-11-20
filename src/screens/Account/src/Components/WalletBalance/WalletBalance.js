@@ -335,10 +335,10 @@ const WalletBalance = ({
   };
 
   const firstNext = () => {
-    slider.current.slickNext();
+    betaSlider.current.slickNext();
   };
   const firstPrev = () => {
-    slider.current.slickPrev();
+    betaSlider.current.slickPrev();
   };
 
   const handleFavoritesPage = (e, value) => {
@@ -3634,7 +3634,7 @@ const WalletBalance = ({
         {showAllEvents && (
           <div className="col-12 p-lg-3">
             <div
-              className="nft-outer-wrapper2 position-relative p-3 p-lg-3 gap-2"
+              className="nft-outer-wrapper2 position-relative p-3 p-lg-3 gap-2 position-relative"
               style={{
                 maxWidth: "100vw",
                 width: "100%",
@@ -3661,6 +3661,12 @@ const WalletBalance = ({
                   />
                 ))}
               </div> */}
+              <div className="prev-arrow-nft" onClick={firstPrev}>
+                <img src={nextArrow} alt="" />
+              </div>
+                  <div className="next-arrow-nft" onClick={firstNext}>
+                    <img src={nextArrow} alt="1" />
+                  </div>
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
                   <NewBetaEventCard
