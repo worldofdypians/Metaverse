@@ -161,8 +161,6 @@ const NewBundleCard = ({
   const [idyptokenData, setIDypTokenData] = useState([]);
   const [priceType, setPriceType] = useState(0);
 
-  
-
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
       if (coinbase?.toLowerCase() !== wallet?.toLowerCase() || chainId !== 56) {
@@ -444,121 +442,112 @@ const NewBundleCard = ({
     );
 
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
-      const timeofDeposit = await dypv2.methods
-        .getTimeOfDeposit(coinbase)
+    const timeofDeposit = await dypv2.methods.getTimeOfDeposit(coinbase).call();
+
+    const timeofDepositv1 = await dypv1.methods
+      .getTimeOfDeposit(coinbase)
+      .call();
+
+    if (timeofDeposit !== 0 || timeofDepositv1 !== 0) {
+      const timeofDeposit_miliseconds = timeofDeposit * 1000;
+      const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
+
+      const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(timeofDeposit_miliseconds);
+
+      const timeofbundleBought_Datev1 = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(timeofDeposit_milisecondsv1);
+
+      const timeofbundleBought_Date_formatted = new Date(
+        timeofbundleBought_Date
+      );
+
+      const timeofbundleBought_Date_formattedv1 = new Date(
+        timeofbundleBought_Datev1
+      );
+
+      const timeofbundleBought_day =
+        timeofbundleBought_Date_formatted.getDate();
+
+      const timeofbundleBought_dayv1 =
+        timeofbundleBought_Date_formattedv1.getDate();
+
+      setdatewhenBundleBought(timeofbundleBought_day);
+      setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
+
+      const expiringTime = await dypv2.methods
+        .getTimeOfExpireBuff(coinbase)
         .call();
 
-        const timeofDepositv1 = await dypv1.methods
-        .getTimeOfDeposit(coinbase)
+      const expiringTimev1 = await dypv1.methods
+        .getTimeOfExpireBuff(coinbase)
         .call();
 
-        if(timeofDeposit !== 0 || timeofDepositv1 !== 0) {
-          const timeofDeposit_miliseconds = timeofDeposit * 1000;
-          const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
-    
-    
-          const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          }).format(timeofDeposit_miliseconds);
-    
-          const timeofbundleBought_Datev1 = new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          }).format(timeofDeposit_milisecondsv1);
-    
-          const timeofbundleBought_Date_formatted = new Date(
-            timeofbundleBought_Date
-          );
-    
-          const timeofbundleBought_Date_formattedv1 = new Date(
-            timeofbundleBought_Datev1
-          );
-    
-          const timeofbundleBought_day =
-            timeofbundleBought_Date_formatted.getDate();
-    
-            const timeofbundleBought_dayv1 =
-            timeofbundleBought_Date_formattedv1.getDate();
-    
-          setdatewhenBundleBought(timeofbundleBought_day);
-          setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
-    
-    
-          const expiringTime = await dypv2.methods
-            .getTimeOfExpireBuff(coinbase)
-            .call();
-    
-            const expiringTimev1 = await dypv1.methods
-            .getTimeOfExpireBuff(coinbase)
-            .call();
-    
-          const expiringTime_miliseconds = expiringTime * 1000;
-          const expiringTime_milisecondsv1 = expiringTimev1 * 1000;
-    
-    
-          const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          }).format(expiringTime_miliseconds);
-    
-          const expiringTime_Datev1 = new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          }).format(expiringTime_milisecondsv1);
-    
-          const expiringTime_Date_formatted = new Date(expiringTime_Date);
-          const expiringTime_Date_formattedv1 = new Date(expiringTime_Datev1);
-    
-          setdateofBundle(expiringTime_Date_formatted);
-          setdateofBundlev1(expiringTime_Date_formattedv1);
-    
-    
-          const expiringTime_day = expiringTime_Date_formatted.getDate();
-          setbundleExpireDay(expiringTime_day);
-          setbundleExpireMiliseconds(expiringTime_miliseconds);
-    
-          const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          }).format(expiringTime_miliseconds);
-    
-          const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-          const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
-          const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
-          const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
-          const final = timeofDeposit_Hours - 11;
-          setlastDayofBundleHours(final);
-    
-          const finalMinutes = timeofDeposit_Minutes - 11;
-    
-          setlastDayofBundleMinutes(finalMinutes);
-          setlastDayofBundle(timeofDeposit_day);
-          setlastDayofBundleMilliseconds(expiringTime_miliseconds);
-        
-        }
+      const expiringTime_miliseconds = expiringTime * 1000;
+      const expiringTime_milisecondsv1 = expiringTimev1 * 1000;
 
-    
+      const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
+
+      const expiringTime_Datev1 = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_milisecondsv1);
+
+      const expiringTime_Date_formatted = new Date(expiringTime_Date);
+      const expiringTime_Date_formattedv1 = new Date(expiringTime_Datev1);
+
+      setdateofBundle(expiringTime_Date_formatted);
+      setdateofBundlev1(expiringTime_Date_formattedv1);
+
+      const expiringTime_day = expiringTime_Date_formatted.getDate();
+      setbundleExpireDay(expiringTime_day);
+      setbundleExpireMiliseconds(expiringTime_miliseconds);
+
+      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
+
+      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
+      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
+      const final = timeofDeposit_Hours - 11;
+      setlastDayofBundleHours(final);
+
+      const finalMinutes = timeofDeposit_Minutes - 11;
+
+      setlastDayofBundleMinutes(finalMinutes);
+      setlastDayofBundle(timeofDeposit_day);
+      setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+    }
   };
 
   const insertBundle = async () => {
@@ -876,11 +865,20 @@ const NewBundleCard = ({
         // );
         // setStatusColor700("#FE7A00");
 
-        const finalDateofBundle = dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1
-        const finalDateofBundleBought = datewhenBundleBought >= datewhenBundleBoughtv1 ? datewhenBundleBought : datewhenBundleBoughtv1
-        
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
+
         if (today < finalDateofBundle) {
-          if (bundlesBought <= 3 && finalDateofBundleBought < today_date && finalDateofBundleBought < 16) {
+          if (
+            bundlesBought <= 3 &&
+            finalDateofBundleBought < today_date &&
+            finalDateofBundleBought < 16 &&
+            finalDateofBundleBought !== 0
+          ) {
             setcountdown700(finalDateofBundle);
             setisAtlimit(false);
             handleSetAvailableTime(finalDateofBundle);
@@ -901,23 +899,29 @@ const NewBundleCard = ({
               "The Golden Pass bundle is currently not available for purchase. Please check back next month."
             );
           }
-        } else if (today > finalDateofBundle && bundlesBought > 0) {
+        } else if (
+          today > finalDateofBundle &&
+          bundlesBought > 0 &&
+          finalDateofBundleBought !== 0
+        ) {
           setisAtlimit(false);
           setcountdown700();
           handleSetAvailableTime();
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
+          setStatus700("");
           setStatusColor700("#FE7A00");
         }
-        
+
         // }
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
         handleRefreshCountdown700();
         setisAtlimit(false);
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
-        const finalDateofBundle = dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1
-        const finalDateofBundleBought = datewhenBundleBought >= datewhenBundleBoughtv1 ? datewhenBundleBought : datewhenBundleBoughtv1
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
 
         if (today < finalDateofBundle) {
           if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
@@ -952,7 +956,8 @@ const NewBundleCard = ({
         }
       }
     } else if (today_date > 25) {
-      const finalDateofBundle = dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1
+      const finalDateofBundle =
+        dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
 
       if (today < finalDateofBundle) {
         setisAtlimit(true);
@@ -1199,7 +1204,7 @@ const NewBundleCard = ({
   useEffect(() => {
     checkApproval700(priceType);
     checkBundleDates();
-  }, [coinbase, chainId,lastDayofBundle, bundlesBought]);
+  }, [coinbase, priceType, chainId, packageData, bundlesBought]);
 
   useEffect(() => {
     if (chainId !== 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
@@ -1497,12 +1502,13 @@ const NewBundleCard = ({
                               alt=""
                             />
                             <h6 className="purchase-price mb-0">
-                            {getFormattedNumber(packageData.price, 0)}
+                              {getFormattedNumber(packageData.price, 0)}
                             </h6>
                           </div>
 
                           <span className="purchase-price-usd mb-0">
-                            ${getFormattedNumber(
+                            $
+                            {getFormattedNumber(
                               packageData.title === "Puzzle Madness"
                                 ? packageData.price * idyptokenDatabnb
                                 : packageData.price * dyptokenDatabnb
