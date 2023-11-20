@@ -159,6 +159,8 @@ const MarketEvents = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+  let dypiusLastDay = new Date("2023-12-20T16:00:00.000+02:00");
+
 
   const dummyBetaPassData2 = [
     {
@@ -219,7 +221,7 @@ const MarketEvents = ({
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -230,11 +232,11 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status:  "Coming Soon",
+        status:  "Live",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
-        eventDuration: coingeckoLastDay,
+        eventDuration: dypiusLastDay,
         minRewards: "25",
         maxRewards: "50",
         learnMore: "",
