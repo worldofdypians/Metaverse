@@ -215,33 +215,7 @@ const MarketEvents = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-    {
-      title: "Gate.io",
-      logo: gate,
-      eventStatus: "Live",
-      totalRewards: "$2,000 in BNB Rewards",
-      myEarnings: 0,
-      eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
-      backgroundImage: gateUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Gate.io",
-        chain: "BNB Chain",
-        linkState: "gate",
-        rewards: "BNB",
-        status: "Live",
-        id: "event6",
-        totalRewards: "$2,000 in BNB Rewards",
-        eventDuration: gateLastDay,
-        eventDate: "October 20, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "20,000",
-        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
-      },
-    },
+    
     {
       title: "Dypius",
       logo: dypius,
@@ -265,6 +239,33 @@ const MarketEvents = ({
         maxRewards: "50",
         learnMore: "",
         eventDate: "November 20, 2023",
+      },
+    },
+    {
+      title: "Gate.io",
+      logo: gate,
+      eventStatus: "Expired",
+      totalRewards: "$2,000 in BNB Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: gateUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Gate.io",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event6",
+        totalRewards: "$2,000 in BNB Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "Ended",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
       },
     },
     {
@@ -812,7 +813,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -943,7 +944,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(4, 5).map((item, index) => (
+                  {dummyBetaPassData2.slice(3, 5).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}

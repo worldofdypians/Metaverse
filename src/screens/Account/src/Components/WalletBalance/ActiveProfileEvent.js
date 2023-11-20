@@ -3,7 +3,7 @@ import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import gate from "./assets/gate.svg";
 import baseLogo from "./assets/baseLogo.svg";
-
+import dypius from "./assets/dypIcon.svg";
 import cyanArrow from "./assets/cyanArrow.svg";
 import conflux from "./assets/conflux.svg";
 import cyanDate from "./assets/cyanDate.svg";
@@ -40,8 +40,7 @@ const renderer = ({ days, hours, minutes }) => {
     </>
   );
 };
-const ActiveProfileEvent = ({ onOpenEvent, event,  userEarnedUsd }) => {
- 
+const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
   return (
     <div
       className="profile-event-item d-flex flex-column position-relative"
@@ -58,6 +57,8 @@ const ActiveProfileEvent = ({ onOpenEvent, event,  userEarnedUsd }) => {
                 ? conflux
                 : event.title === "Base"
                 ? baseLogo
+                : event.title === "Dypius"
+                ? dypius
                 : gate
             }
             height={16}
@@ -98,12 +99,16 @@ const ActiveProfileEvent = ({ onOpenEvent, event,  userEarnedUsd }) => {
           <span className="mb-0 event-bottom-text">Explore & Mine</span>
         </div>
         <div className="d-flex align-items-center gap-1">
-          <img src={cyanDollar} height={15} width={15} alt="" />
+          {event.title === "Dypius" ? (
+            <img src={dypius} height={15} width={15} alt="" />
+          ) : (
+            <img src={cyanDollar} height={15} width={15} alt="" />
+          )}
           <span className="mb-0 event-bottom-text">
-            $
-            {getFormattedNumber(
-              userEarnedUsd,
-              2
+            {event.title === "Dypius" ? (
+              "0 DYP"
+            ) : (
+              <>${getFormattedNumber(userEarnedUsd, 2)}</>
             )}
           </span>
         </div>
