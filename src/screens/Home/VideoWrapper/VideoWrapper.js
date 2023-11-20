@@ -101,7 +101,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -114,7 +114,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Coming Soon",
+        status: "Live",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -128,7 +128,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Gate.io",
       logo: gateWhite,
-      eventStatus: "Expired",
+      eventStatus: "Live",
       totalRewards: "$2,000 in BNB Rewards",
       rewardsAmount: "$2,000",
       rewardsCurrency: "BNB Rewards",
@@ -141,7 +141,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "GT",
-        status: "Expired",
+        status: "Live",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDate: "Ended",
@@ -352,9 +352,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   <Slider {...settings} ref={betaSlider}>
                     {dummyBetaPassData2.map((item, index) => (
                       <NavLink
-                        to={`/marketplace/events/${
-                          item.title === "Gate.io" ? "past" : "treasure-hunt"
-                        }`}
+                        to={`/marketplace/events/treasure/hunt`}
                       >
                         <BetaEventCardHome
                           data={item}
@@ -401,9 +399,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
                   <NavLink
-                    to={`/marketplace/events/${
-                      item.title === "Gate.io" ? "past" : "treasure-hunt"
-                    }`}
+                    to={`/marketplace/events/treasure-hunt`}
                   >
                     <BetaEventCardHome
                       data={item}

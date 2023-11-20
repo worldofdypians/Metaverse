@@ -1182,7 +1182,7 @@ const WalletBalance = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let dypiusLastDay = new Date("2023-12-20T16:00:00.000+02:00");
+  let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
 
   const dummyConflux = {
     title: "Conflux",
@@ -1368,7 +1368,7 @@ const WalletBalance = ({
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -1379,7 +1379,7 @@ const WalletBalance = ({
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Coming Soon",
+        status: "Live",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -1393,11 +1393,11 @@ const WalletBalance = ({
     {
       title: "Gate.io",
       logo: gate,
-      eventStatus: "Expired",
+      eventStatus: "Live",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "Ended",
+      eventDate: "October 20, 2023",
       backgroundImage: gateUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -1405,11 +1405,11 @@ const WalletBalance = ({
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "GT",
-        status: "Expired",
+        status: "Live",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
-        eventDate: "Ended",
+        eventDate: "October 20, 2023",
         date: "Oct 20, 2023",
         minRewards: "0.5",
         maxRewards: "20",
