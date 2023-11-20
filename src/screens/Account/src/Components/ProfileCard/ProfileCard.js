@@ -30,6 +30,7 @@ import axios from "axios";
 import Countdown from "react-countdown";
 import { dyp700Address } from "../../web3";
 import { DYP_700_ABI } from "../../web3/abis";
+import becomePremium from "./assets/becomePremium.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -541,7 +542,7 @@ const ProfileCard = ({
                       <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
-                          {isPremium && (
+                          {/* {isPremium && (
                             <span
                               className={`${
                                 address && email && "premiumtext-active"
@@ -552,8 +553,8 @@ const ProfileCard = ({
                               )}
                               Premium
                             </span>
-                          )}
-                          {!isPremium && email && (
+                          )} */}
+                          {/* {!isPremium && email && (
                             <span
                               className="profile-div-title mb-0 text-decoration-underline"
                               style={{
@@ -570,7 +571,7 @@ const ProfileCard = ({
                             >
                               Upgrade to Premium
                             </span>
-                          )}
+                          )} */}
                         </span>
 
                         <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
@@ -587,13 +588,13 @@ const ProfileCard = ({
                                 address?.toLowerCase() ===
                                   coinbase?.toLowerCase() &&
                                 !isPremium &&
-                                "wallet-wrapper-active d-flex"
+                                "wallet-wrapper-active d-flex bg-transparent p-0"
                               } ${
                                 isVerified &&
                                 email &&
                                 syncStatus === "initial" &&
                                 isPremium &&
-                                "wallet-wrapper-active-premium d-flex"
+                                "wallet-wrapper-active-premium d-flex bg-transparent p-0"
                               } ${
                                 address &&
                                 email &&
@@ -813,6 +814,25 @@ const ProfileCard = ({
                     </div>
                   </div>
                 )}
+
+                {email && address && coinbase && !isPremium && (
+                  <div
+                    className={` wallet-wrapper-active2 hoveractive position-relative
+                    d-flex align-items-center position-relative mt-3 mt-lg-0`}
+                    onClick={onPremiumClick}
+                  >
+                    {/* <div className="table-separator position-absolute"></div> */}
+                    <h6 className="become-premium-title mb-0">
+                      Become a Premium Member
+                    </h6>
+
+                    <img
+                      src={becomePremium}
+                      alt=""
+                      className="become-premium-img"
+                    />
+                  </div>
+                )}
                 {email && address && (
                   <div
                     className={`${
@@ -821,7 +841,7 @@ const ProfileCard = ({
                         : "wallet-wrapper-active hoveractive"
                     }
                     position-relative
-                    d-flex flex-column align-items-center position-relative mt-3 mt-lg-0 gap-2`}
+                    d-flex flex-column align-items-center position-relative mt-3 mt-lg-0`}
                     onClick={onOpenLeaderboard}
                   >
                     {countdown700 && (
@@ -837,13 +857,17 @@ const ProfileCard = ({
                     {/* <div className="table-separator position-absolute"></div> */}
                     <h6
                       className="profile-div-title mb-0"
-                      style={{ fontSize: "14px", fontWeight: "500" }}
+                      style={{ fontSize: "10px" }}
                     >
                       Leaderboard
                     </h6>
                     <div className="d-flex align-items-center gap-4">
                       <div className="d-flex flex-column align-items-center">
-                        <img src={globalRank} alt="" />
+                        <img
+                          src={globalRank}
+                          alt=""
+                          style={{ width: 27, height: 27 }}
+                        />
                         <span className="  profile-rank mb-0">
                           #{userRank + 1}
                         </span>
@@ -852,7 +876,11 @@ const ProfileCard = ({
                       </span> */}
                       </div>
                       <div className="d-flex flex-column align-items-center">
-                        <img src={genesisRankImg} alt="" />
+                        <img
+                          src={genesisRankImg}
+                          alt=""
+                          style={{ width: 27, height: 27 }}
+                        />
                         <span className="  profile-rank mb-0">
                           #{genesisRank + 1}
                         </span>

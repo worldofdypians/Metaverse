@@ -1787,7 +1787,7 @@ const NewWalletBalance = ({
                   <b>*Note:</b> You can submit one post per time. The team will
                   not reply in any form, but if you are eligible, you will see
                   the reward here. The display of the rewards will occur every
-                  Monday.
+                  Monday and will be distributed monthly.
                 </p>
                 <div className="d-flex align-items-center gap-4 mb-4">
                   <StyledTextField
