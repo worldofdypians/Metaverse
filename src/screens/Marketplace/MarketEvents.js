@@ -219,7 +219,6 @@ const MarketEvents = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-
     {
       title: "Dypius",
       logo: dypius,
@@ -234,7 +233,7 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Live",
+        status:  "Live",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -248,11 +247,11 @@ const MarketEvents = ({
     {
       title: "Gate.io",
       logo: gate,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
+      eventDate: "Ended",
       backgroundImage: gateUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -260,11 +259,11 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
-        eventDate: "October 20, 2023",
+        eventDate: "Ended",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -831,7 +830,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -964,7 +963,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(4, 5).map((item, index) => (
+                  {dummyBetaPassData2.slice(3, 5).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
