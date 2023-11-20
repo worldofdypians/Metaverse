@@ -1602,6 +1602,15 @@ const WalletBalance = ({
             <div className="nft-outer-wrapper2 rankings-wrapper p-4  d-flex flex-column gap-4 position-relative custom-height-2 justify-content-center">
               <ActiveProfileEvent
                 onOpenEvent={() => {
+                  setDummyEvent(dummyDypius);
+                  setEventPopup(true);
+                }}
+                data={dummyDypius}
+                event={dummyDypius}
+                userEarnedUsd={dypiusEarnTokens}
+              />
+              <ActiveProfileEvent
+                onOpenEvent={() => {
                   setDummyEvent(dummyCoingecko);
                   setEventPopup(true);
                 }}
@@ -1618,15 +1627,7 @@ const WalletBalance = ({
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
               />
-              <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyDypius);
-                  setEventPopup(true);
-                }}
-                data={dummyDypius}
-                event={dummyDypius}
-                userEarnedUsd={dypiusEarnTokens}
-              />
+
               {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
@@ -1700,7 +1701,7 @@ const WalletBalance = ({
                           : item.title === "Base"
                           ? baseEarnUSD
                           : item.title === "Dypius"
-                        ? dypiusEarnTokens
+                          ? dypiusEarnTokens
                           : item.title === "Gate.io"
                           ? gateEarnUSD
                           : userEarnUsd
@@ -3680,9 +3681,9 @@ const WalletBalance = ({
               <div className="prev-arrow-nft" onClick={firstPrev}>
                 <img src={nextArrow} alt="" />
               </div>
-                  <div className="next-arrow-nft" onClick={firstNext}>
-                    <img src={nextArrow} alt="1" />
-                  </div>
+              <div className="next-arrow-nft" onClick={firstNext}>
+                <img src={nextArrow} alt="1" />
+              </div>
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
                   <NewBetaEventCard
