@@ -338,10 +338,10 @@ const WalletBalance = ({
   };
 
   const firstNext = () => {
-    slider.current.slickNext();
+    betaSlider.current.slickNext();
   };
   const firstPrev = () => {
-    slider.current.slickPrev();
+    betaSlider.current.slickPrev();
   };
 
   const handleFavoritesPage = (e, value) => {
@@ -1386,7 +1386,7 @@ const WalletBalance = ({
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
-        eventDuration: coingeckoLastDay,
+        eventDuration: dypiusLastDay,
         minRewards: "25",
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
@@ -1396,11 +1396,11 @@ const WalletBalance = ({
     {
       title: "Gate.io",
       logo: gate,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
+      eventDate: "Ended",
       backgroundImage: gateUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -1408,11 +1408,11 @@ const WalletBalance = ({
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "GT",
-        status: "Live",
+        status: "Expired",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
-        eventDate: "October 20, 2023",
+        eventDate: "Ended",
         date: "Oct 20, 2023",
         minRewards: "0.5",
         maxRewards: "20",
@@ -3650,7 +3650,7 @@ const WalletBalance = ({
         {showAllEvents && (
           <div className="col-12 p-lg-3">
             <div
-              className="nft-outer-wrapper2 position-relative p-3 p-lg-3 gap-2"
+              className="nft-outer-wrapper2 position-relative p-3 p-lg-3 gap-2 position-relative"
               style={{
                 maxWidth: "100vw",
                 width: "100%",
@@ -3677,6 +3677,12 @@ const WalletBalance = ({
                   />
                 ))}
               </div> */}
+              <div className="prev-arrow-nft" onClick={firstPrev}>
+                <img src={nextArrow} alt="" />
+              </div>
+                  <div className="next-arrow-nft" onClick={firstNext}>
+                    <img src={nextArrow} alt="1" />
+                  </div>
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
                   <NewBetaEventCard
