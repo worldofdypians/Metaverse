@@ -200,6 +200,9 @@ const WalletBalance = ({
   const [baseUserPoints, setBaseUserPoints] = useState(0);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [baseEarnETH, setBaseEarnETH] = useState(0);
+  const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
+  const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
+
   const betaSlider = useRef();
 
   var settings = {
@@ -335,10 +338,10 @@ const WalletBalance = ({
   };
 
   const firstNext = () => {
-    slider.current.slickNext();
+    betaSlider.current.slickNext();
   };
   const firstPrev = () => {
-    slider.current.slickPrev();
+    betaSlider.current.slickPrev();
   };
 
   const handleFavoritesPage = (e, value) => {
@@ -1182,6 +1185,7 @@ const WalletBalance = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+  let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
 
   const dummyConflux = {
     title: "Conflux",
@@ -1200,6 +1204,24 @@ const WalletBalance = ({
     minPoints: "5,000",
     maxPoints: "20,000",
     learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+  };
+  const dummyDypius = {
+    title: "Dypius",
+    chain: "BNB Chain",
+    linkState: "dypius",
+    rewards: "DYP",
+    status: "Live",
+    id: "event5",
+    eventType: "Explore & Find",
+    date: "November 20, 2023",
+    logo: dypius,
+    totalRewards: "300,000 in DYP Rewards",
+    eventDuration: dypiusLastDay,
+    minRewards: "1",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "20,000",
+    learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
   };
 
   const dummyGate = {
@@ -1345,38 +1367,11 @@ const WalletBalance = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-    {
-      title: "Gate.io",
-      logo: gate,
-      eventStatus: "Live",
-      totalRewards: "$2,000 in BNB Rewards",
-      myEarnings: 0,
-      eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
-      backgroundImage: gateUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Gate.io",
-        chain: "BNB Chain",
-        linkState: "gate",
-        rewards: "GT",
-        status: "Live",
-        id: "event6",
-        totalRewards: "$2,000 in BNB Rewards",
-        eventDuration: gateLastDay,
-        eventDate: "October 20, 2023",
-        date: "Oct 20, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "20,000",
-        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
-      },
-    },
+
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -1387,15 +1382,43 @@ const WalletBalance = ({
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status:  "Coming Soon",
+        status: "Live",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
-        eventDuration: coingeckoLastDay,
+        eventDuration: dypiusLastDay,
         minRewards: "25",
         maxRewards: "50",
-        learnMore: "",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
         eventDate: "November 20, 2023",
+      },
+    },
+    {
+      title: "Gate.io",
+      logo: gate,
+      eventStatus: "Expired",
+      totalRewards: "$2,000 in BNB Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: gateUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Gate.io",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "GT",
+        status: "Expired",
+        id: "event6",
+        totalRewards: "$2,000 in BNB Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "Ended",
+        date: "Oct 20, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
       },
     },
     {
@@ -1472,6 +1495,18 @@ const WalletBalance = ({
             return obj.betapassId === "base";
           });
 
+          const dypEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "all";
+          });
+
+          if (dypEvent) {
+            const userEarnedDyp =
+              dypEvent[0].reward.earn.total /
+              dypEvent[0].reward.earn.multiplier;
+            setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
+            setDypiusEarnTokens(userEarnedDyp);
+          }
+
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -1533,7 +1568,7 @@ const WalletBalance = ({
     if (email && address) {
       fetchTreasureHuntData(email, address);
     }
-  }, [email, address, bnbPrice, cfxPrice]);
+  }, [email, address, bnbPrice, cfxPrice, dyptokenDatabnb]);
 
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
@@ -1585,12 +1620,12 @@ const WalletBalance = ({
               />
               <ActiveProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyGate);
+                  setDummyEvent(dummyDypius);
                   setEventPopup(true);
                 }}
-                data={dummyGate}
-                event={dummyGate}
-                userEarnedUsd={gateEarnUSD}
+                data={dummyDypius}
+                event={dummyDypius}
+                userEarnedUsd={dypiusEarnTokens}
               />
               {/* <img
                 src={eventSkeleton}
@@ -1663,7 +1698,9 @@ const WalletBalance = ({
                         item.title === "Conflux"
                           ? confluxEarnUSD
                           : item.title === "Base"
-                          ? 0
+                          ? baseEarnUSD
+                          : item.title === "Dypius"
+                        ? dypiusEarnTokens
                           : item.title === "Gate.io"
                           ? gateEarnUSD
                           : userEarnUsd
@@ -3613,7 +3650,7 @@ const WalletBalance = ({
         {showAllEvents && (
           <div className="col-12 p-lg-3">
             <div
-              className="nft-outer-wrapper2 position-relative p-3 p-lg-3 gap-2"
+              className="nft-outer-wrapper2 position-relative p-3 p-lg-3 gap-2 position-relative"
               style={{
                 maxWidth: "100vw",
                 width: "100%",
@@ -3640,6 +3677,12 @@ const WalletBalance = ({
                   />
                 ))}
               </div> */}
+              <div className="prev-arrow-nft" onClick={firstPrev}>
+                <img src={nextArrow} alt="" />
+              </div>
+                  <div className="next-arrow-nft" onClick={firstNext}>
+                    <img src={nextArrow} alt="1" />
+                  </div>
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
                   <NewBetaEventCard
@@ -3656,6 +3699,8 @@ const WalletBalance = ({
                         ? gateEarnUSD
                         : item.title === "Base"
                         ? baseEarnUSD
+                        : item.title === "Dypius"
+                        ? dypiusEarnTokens
                         : userEarnUsd
                     }
                   />
@@ -4314,27 +4359,21 @@ const WalletBalance = ({
                     date={dummyEvent.eventDuration}
                   />
                 )}
-                {dummyEvent?.status === "Coming Soon" &&
-                    (
-                    <div className="d-flex flex-column">
-                      <span className="live-on">Live on</span>
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={
-                            require("./assets/greenCalendar.svg")
-                              .default
-                          }
-                          className="green-calendar"
-                          alt=""
-                        />
-                        <h6 className="live-on-date mb-0">
-                          {dummyEvent.eventDate}
-                        </h6>
-                      </div>
+                {dummyEvent?.status === "Coming Soon" && (
+                  <div className="d-flex flex-column">
+                    <span className="live-on">Live on</span>
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={require("./assets/greenCalendar.svg").default}
+                        className="green-calendar"
+                        alt=""
+                      />
+                      <h6 className="live-on-date mb-0">
+                        {dummyEvent.eventDate}
+                      </h6>
                     </div>
-                  )}
-
-                
+                  </div>
+                )}
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
@@ -4438,9 +4477,7 @@ const WalletBalance = ({
                           {dummyEvent.maxRewards}
                         </li>
                       ) : (
-                        <li className="popup-event-desc">
-                          Daily Rewards
-                        </li>
+                        <li className="popup-event-desc">Daily Rewards</li>
                       )}
                       {dummyEvent.id !== "event5" && (
                         <li className="popup-event-desc">
@@ -4636,31 +4673,36 @@ const WalletBalance = ({
                 <span className="event-my-earnings2 mb-0">My earnings</span>
               </div>
               <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
-                  <div className="d-flex flex-column gap-2">
-                    <h6 className="mb-0 event-earnings-coin2">
-                      {getFormattedNumber(
-                        dummyEvent.id === "event1"
-                          ? confluxUserPoints
-                          : dummyEvent.id === "event3"
-                          ? userPoints
-                          : dummyEvent.id === "event6"
-                          ? gateUserPoints
-                          : dummyEvent.id === "event4"
-                          ? baseUserPoints 
-                          : dummyEvent.id === "event5"
-                          ? 0
-                          : 0,
-                        0
-                      )}
-                      {dummyEvent.id === "event5" && " DYP"}
-                    </h6>
-
-                    <span className="mb-0 event-earnings-usd">
-                      {dummyEvent.id === "event5" ? "Amount" : "Leaderboard Points"}
-                    </span>
-                  </div>
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1" style={{left: dummyEvent.id === "event5" && "0px"}}>
+                  <h6 className="mb-0 event-earnings-coin2">
+                    {getFormattedNumber(
+                      dummyEvent.id === "event1"
+                        ? confluxUserPoints
+                        : dummyEvent.id === "event3"
+                        ? userPoints
+                        : dummyEvent.id === "event6"
+                        ? gateUserPoints
+                        : dummyEvent.id === "event4"
+                        ? baseUserPoints
+                        : dummyEvent.id === "event5"
+                        ? dypiusEarnTokens
+                        : 0,
+                      0
+                    )}
+                    {dummyEvent.id === "event5" && " DYP"}
+                  </h6>
+
+                  <span className="mb-0 event-earnings-usd">
+                    {dummyEvent.id === "event5"
+                      ? "Amount"
+                      : "Leaderboard Points"}
+                  </span>
+                </div>
+                <div className="d-flex flex-column gap-2">
+                  <h6
+                    className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1"
+                    style={{ left: dummyEvent.id === "event5" && "0px" }}
+                  >
                     $
                     {getFormattedNumber(
                       dummyEvent.id === "event1"
@@ -4671,37 +4713,37 @@ const WalletBalance = ({
                         ? gateEarnUSD
                         : dummyEvent.id === "event4"
                         ? baseEarnUSD
-                        : 0,
+                        : dypiusEarnUsd,
                       2
                     )}
-                    <span className="ethpricerewards specialstyle-wrapper-eth" >
-                    {dummyEvent.id !== "event5" &&
-                    <>
-                      {getFormattedNumber(
-                        dummyEvent.id === "event1"
-                          ? confluxEarnCFX
-                          : dummyEvent.id === "event3"
-                          ? userEarnETH
-                          : dummyEvent.id === "event6"
-                          ? gateEarnBNB
-                          : dummyEvent.id === "event4"
-                          ? baseEarnETH
-                          : 0,
-                        2
+                    <span className="ethpricerewards specialstyle-wrapper-eth">
+                      {dummyEvent.id !== "event5" && (
+                        <>
+                          {getFormattedNumber(
+                            dummyEvent.id === "event1"
+                              ? confluxEarnCFX
+                              : dummyEvent.id === "event3"
+                              ? userEarnETH
+                              : dummyEvent.id === "event6"
+                              ? gateEarnBNB
+                              : dummyEvent.id === "event4"
+                              ? baseEarnETH
+                              : 0,
+                            2
+                          )}
+                          {dummyEvent.id === "event1"
+                            ? "CFX"
+                            : dummyEvent.id === "event2"
+                            ? "C98"
+                            : dummyEvent.id === "event3"
+                            ? "BNB"
+                            : dummyEvent.id === "event5"
+                            ? "DYP"
+                            : dummyEvent.id === "event6"
+                            ? "BNB"
+                            : "ETH"}
+                        </>
                       )}
-                      {dummyEvent.id === "event1"
-                        ? "CFX"
-                        : dummyEvent.id === "event2"
-                        ? "C98"
-                        : dummyEvent.id === "event3"
-                        ? "BNB"
-                        : dummyEvent.id === "event5"
-                        ? "DYP"
-                        : dummyEvent.id === "event6"
-                        ? "BNB"
-                        : "ETH"}
-                    </>
-                    }
                     </span>
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>

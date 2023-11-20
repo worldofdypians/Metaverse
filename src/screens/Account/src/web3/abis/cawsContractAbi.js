@@ -1793,15 +1793,36 @@ const WOD_ABI = [
   },
   {
     inputs: [],
-    name: "MIN_DEPOSIT",
+    name: "ONE_HUNDRED_X_100",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
-    name: "TRUSTED_DYP_ADDRESS",
+    name: "SLIPPAGE_TOLERANCE_X_100",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_DAI_ADDRESS",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_PLATFORM_TOKEN_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "bundleCostInDai",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -1817,6 +1838,13 @@ const WOD_ABI = [
     name: "flipEmergency",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getEstimatedBundleDYPAmount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -1863,7 +1891,7 @@ const WOD_ABI = [
   },
   {
     inputs: [
-      { internalType: "uint256", name: "newMinDeposit", type: "uint256" },
+      { internalType: "uint256", name: "newBundleCostInDai", type: "uint256" },
     ],
     name: "setMinDeposit",
     outputs: [],
@@ -1904,6 +1932,15 @@ const WOD_ABI = [
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "uniswapRouterV2",
+    outputs: [
+      { internalType: "contract IUniswapV2Router", name: "", type: "address" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];
@@ -2714,15 +2751,36 @@ const DYP_700_ABI = [
   },
   {
     inputs: [],
-    name: "MIN_DEPOSIT",
+    name: "ONE_HUNDRED_X_100",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
-    name: "TRUSTED_DYP_ADDRESS",
+    name: "SLIPPAGE_TOLERANCE_X_100",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_DAI_ADDRESS",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_PLATFORM_TOKEN_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "bundleCostInDai",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -2738,6 +2796,13 @@ const DYP_700_ABI = [
     name: "flipEmergency",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getEstimatedBundleDYPAmount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -2784,7 +2849,7 @@ const DYP_700_ABI = [
   },
   {
     inputs: [
-      { internalType: "uint256", name: "newMinDeposit", type: "uint256" },
+      { internalType: "uint256", name: "newBundleCostInDai", type: "uint256" },
     ],
     name: "setMinDeposit",
     outputs: [],
@@ -2825,6 +2890,15 @@ const DYP_700_ABI = [
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "uniswapRouterV2",
+    outputs: [
+      { internalType: "contract IUniswapV2Router", name: "", type: "address" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];
@@ -2904,25 +2978,37 @@ const DYP_700V1_ABI = [
   },
   {
     inputs: [],
-    name: "MIN_DEPOSIT",
+    name: "ONE_HUNDRED_X_100",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
-    name: "TRUSTED_DYP_ADDRESS",
+    name: "SLIPPAGE_TOLERANCE_X_100",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_DAI_ADDRESS",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "_newTokenAddress", type: "address" },
-    ],
-    name: "changeTrustedToken",
-    outputs: [],
-    stateMutability: "nonpayable",
+    inputs: [],
+    name: "TRUSTED_PLATFORM_TOKEN_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "bundleCostInDai",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -2937,6 +3023,13 @@ const DYP_700V1_ABI = [
     name: "flipEmergency",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getEstimatedBundleDYPAmount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -2983,7 +3076,7 @@ const DYP_700V1_ABI = [
   },
   {
     inputs: [
-      { internalType: "uint256", name: "newMinDeposit", type: "uint256" },
+      { internalType: "uint256", name: "newBundleCostInDai", type: "uint256" },
     ],
     name: "setMinDeposit",
     outputs: [],
@@ -3024,6 +3117,15 @@ const DYP_700V1_ABI = [
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "uniswapRouterV2",
+    outputs: [
+      { internalType: "contract IUniswapV2Router", name: "", type: "address" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];
@@ -3103,15 +3205,36 @@ const iDYP_3500_ABI = [
   },
   {
     inputs: [],
-    name: "MIN_DEPOSIT",
+    name: "ONE_HUNDRED_X_100",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
-    name: "TRUSTED_DYP_ADDRESS",
+    name: "SLIPPAGE_TOLERANCE_X_100",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_DAI_ADDRESS",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_PLATFORM_TOKEN_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "bundleCostInDai",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -3127,6 +3250,13 @@ const iDYP_3500_ABI = [
     name: "flipEmergency",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getEstimatedBundleDYPAmount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -3173,7 +3303,7 @@ const iDYP_3500_ABI = [
   },
   {
     inputs: [
-      { internalType: "uint256", name: "newMinDeposit", type: "uint256" },
+      { internalType: "uint256", name: "newBundleCostInDai", type: "uint256" },
     ],
     name: "setMinDeposit",
     outputs: [],
@@ -3214,6 +3344,15 @@ const iDYP_3500_ABI = [
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "uniswapRouterV2",
+    outputs: [
+      { internalType: "contract IUniswapV2Router", name: "", type: "address" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];
