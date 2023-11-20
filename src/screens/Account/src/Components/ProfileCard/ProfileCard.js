@@ -72,7 +72,7 @@ const ProfileCard = ({
   isConnected,
   onOpenLeaderboard,
   onPremiumClick,
-  handleSetAvailableTime
+  handleSetAvailableTime,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -224,13 +224,12 @@ const ProfileCard = ({
       const finalMinutes = timeofDeposit_Minutes - 11;
 
       const result = remainingTime - finalHours * 60 * 60 - finalMinutes * 60;
-       
+
       setcountdown700(result * 1000);
-      handleSetAvailableTime(result*1000)
+      handleSetAvailableTime(result * 1000);
     } else {
       setcountdown700();
-      handleSetAvailableTime()
-
+      handleSetAvailableTime();
     }
   };
 
@@ -292,8 +291,9 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
 
         // }
       } else if (week2.includes(today_date.toString()) && bundlesBought <= 3) {
@@ -315,8 +315,9 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
 
         // }
       } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
@@ -341,8 +342,9 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
 
         // }
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
@@ -351,21 +353,22 @@ const ProfileCard = ({
         if (today < dateofBundle) {
           if (bundlesBought <= 3 && datewhenBundleBought < today_date) {
             setcountdown700(dateofBundle);
-      handleSetAvailableTime(dateofBundle)
-
+            handleSetAvailableTime(dateofBundle);
           } else {
             setcountdown700(
               today < oneNovember
                 ? oneNovember.getTime()
                 : oneDecember.getTime()
             );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+            handleSetAvailableTime(
+              today < oneNovember
+                ? oneNovember.getTime()
+                : oneDecember.getTime()
+            );
           }
         } else if (today > dateofBundle && bundlesBought > 0) {
           setcountdown700();
-      handleSetAvailableTime()
-
+          handleSetAvailableTime();
         }
       }
     } else if (today_date > 25) {
@@ -373,12 +376,12 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
       } else {
         setcountdown700();
-      handleSetAvailableTime()
-
+        handleSetAvailableTime();
       }
     }
   };
@@ -456,7 +459,6 @@ const ProfileCard = ({
     setlastDay();
   }, []);
 
-
   return (
     <div className="main-wrapper py-4 w-100">
       {countdown700 !== 0 && countdown700 && (
@@ -464,8 +466,7 @@ const ProfileCard = ({
           date={Number(countdown700)}
           onComplete={() => {
             setcountdown700();
-      handleSetAvailableTime()
-
+            handleSetAvailableTime();
           }}
         />
       )}
@@ -484,13 +485,6 @@ const ProfileCard = ({
               syncStatus !== "" &&
               isPremium &&
               "user-cardImg-active-premium"
-            } ${
-              address &&
-              email &&
-              coinbase &&
-              syncStatus !== "" &&
-              address?.toLowerCase() !== coinbase?.toLowerCase() &&
-              "user-cardImg-alert"
             }  user-cardImg`}
           >
             <div
@@ -535,37 +529,11 @@ const ProfileCard = ({
                       email &&
                       syncStatus !== "" &&
                       isPremium &&
-                      coinbase &&
-                      address?.toLowerCase() === coinbase?.toLowerCase() && (
+                      coinbase && (
                         <img
                           src={defaultAvatarPremium}
                           alt=""
                           className="userAvatarPremium"
-                        />
-                      )}
-                    {address &&
-                      email &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address?.toLowerCase() !== coinbase?.toLowerCase() &&
-                      isPremium && (
-                        <img
-                          src={defaultAvatarPremiumAlert}
-                          alt=""
-                          className="userAvatarPremium"
-                        />
-                      )}
-
-                    {address &&
-                      email &&
-                      !isPremium &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address?.toLowerCase() !== coinbase?.toLowerCase() && (
-                        <img
-                          src={defaultAvatarAlert}
-                          alt=""
-                          className="userAvatar-alert"
                         />
                       )}
 
@@ -576,35 +544,12 @@ const ProfileCard = ({
                           {isPremium && (
                             <span
                               className={`${
-                                address &&
-                                email &&
-                                syncStatus !== "" &&
-                                "premiumtext-active"
-                              } ${
-                                address &&
-                                email &&
-                                syncStatus !== "" &&
-                                coinbase &&
-                                address?.toLowerCase() !==
-                                  coinbase?.toLowerCase() &&
-                                "premiumtext-alert"
-                              } d-flex align-items-center gap-1`}
+                                address && email && "premiumtext-active"
+                              }  d-flex align-items-center gap-1`}
                             >
-                              {address &&
-                                email &&
-                                isPremium &&
-                                syncStatus !== "" &&
-                                (address?.toLowerCase() ===
-                                  coinbase?.toLowerCase() ||
-                                  !coinbase) && <img src={starActive} />}
-                              {address &&
-                                email &&
-                                coinbase &&
-                                syncStatus !== "" &&
-                                address?.toLowerCase() !==
-                                  coinbase?.toLowerCase() && (
-                                  <img src={starAlert} />
-                                )}
+                              {address && email && isPremium && (
+                                <img src={starActive} />
+                              )}
                               Premium
                             </span>
                           )}
@@ -945,7 +890,7 @@ const ProfileCard = ({
                           alt=""
                           style={{ width: "21px", height: "20px" }}
                         />
-                        <span className="sync-txt">
+                        <span className="premiumtext-alert">
                           Your gaming account is not linked to the wallet you
                           connected. To update the game wallet address, press
                           the synchronize button.
