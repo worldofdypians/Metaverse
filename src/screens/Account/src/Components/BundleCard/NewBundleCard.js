@@ -165,17 +165,17 @@ const NewBundleCard = ({
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
-      if (coinbase !== wallet || chainId !== 56) {
+      if (coinbase?.toLowerCase() !== wallet?.toLowerCase() || chainId !== 56) {
         setcheckWallet(false);
       }
-      if (coinbase === wallet && chainId === 56) {
+      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
         if (priceType === 1) {
           setcheckWallet(true);
         } else if (priceType === 0) {
           setcheckWallet(false);
         }
       }
-      if (coinbase === wallet && chainId === 1) {
+      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 1) {
         if (priceType === 1) {
           setcheckWallet(false);
         } else if (priceType === 0) {
@@ -186,7 +186,7 @@ const NewBundleCard = ({
   };
 
   const checkApproval = async () => {
-    if (coinbase === wallet && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await token_abi.methods
         .allowance(coinbase, wodAddress)
         .call()
