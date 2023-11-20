@@ -121,7 +121,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         // eventDuration: coingeckoLastDay,
         minRewards: "25",
         maxRewards: "50",
-        learnMore: "",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
         eventDate: "November 20, 2023",
       },
     },
