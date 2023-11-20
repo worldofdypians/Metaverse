@@ -9,7 +9,7 @@ import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-n
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
 const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
-  console.log(data);
+ 
   return (
     <div
       className={` ${
@@ -74,7 +74,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
               {data.title !== "Dypius" ? (
                 <>${getFormattedNumber(userEarnUsd, 2)}</>
               ) : (
-                <>0 DYP</>
+                <>{getFormattedNumber(userEarnUsd, 0)}DYP</>
               )}
             </h6>
           </div>

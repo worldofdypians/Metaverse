@@ -200,6 +200,9 @@ const WalletBalance = ({
   const [baseUserPoints, setBaseUserPoints] = useState(0);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [baseEarnETH, setBaseEarnETH] = useState(0);
+  const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
+  const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
+
   const betaSlider = useRef();
 
   var settings = {
@@ -1184,7 +1187,6 @@ const WalletBalance = ({
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
 
-
   const dummyConflux = {
     title: "Conflux",
     chain: "Conflux Network",
@@ -1219,7 +1221,7 @@ const WalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "20,000",
-    learnMore: "/news",
+    learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
   };
 
   const dummyGate = {
@@ -1387,7 +1389,7 @@ const WalletBalance = ({
         eventDuration: dypiusLastDay,
         minRewards: "25",
         maxRewards: "50",
-        learnMore: "",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
         eventDate: "November 20, 2023",
       },
     },
@@ -1493,6 +1495,18 @@ const WalletBalance = ({
             return obj.betapassId === "base";
           });
 
+          const dypEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "all";
+          });
+
+          if (dypEvent) {
+            const userEarnedDyp =
+              dypEvent[0].reward.earn.total /
+              dypEvent[0].reward.earn.multiplier;
+            setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
+            setDypiusEarnTokens(userEarnedDyp);
+          }
+
           const points = coingeckoEvent[0].reward.earn.totalPoints;
           setuserPoints(points);
 
@@ -1554,7 +1568,7 @@ const WalletBalance = ({
     if (email && address) {
       fetchTreasureHuntData(email, address);
     }
-  }, [email, address, bnbPrice, cfxPrice]);
+  }, [email, address, bnbPrice, cfxPrice, dyptokenDatabnb]);
 
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
@@ -1611,7 +1625,7 @@ const WalletBalance = ({
                 }}
                 data={dummyDypius}
                 event={dummyDypius}
-                userEarnedUsd={gateEarnUSD}
+                userEarnedUsd={dypiusEarnTokens}
               />
               {/* <img
                 src={eventSkeleton}
@@ -1684,7 +1698,9 @@ const WalletBalance = ({
                         item.title === "Conflux"
                           ? confluxEarnUSD
                           : item.title === "Base"
-                          ? 0
+                          ? baseEarnUSD
+                          : item.title === "Dypius"
+                        ? dypiusEarnTokens
                           : item.title === "Gate.io"
                           ? gateEarnUSD
                           : userEarnUsd
@@ -3683,6 +3699,8 @@ const WalletBalance = ({
                         ? gateEarnUSD
                         : item.title === "Base"
                         ? baseEarnUSD
+                        : item.title === "Dypius"
+                        ? dypiusEarnTokens
                         : userEarnUsd
                     }
                   />
@@ -4667,7 +4685,7 @@ const WalletBalance = ({
                         : dummyEvent.id === "event4"
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
-                        ? 0
+                        ? dypiusEarnTokens
                         : 0,
                       0
                     )}
@@ -4695,7 +4713,7 @@ const WalletBalance = ({
                         ? gateEarnUSD
                         : dummyEvent.id === "event4"
                         ? baseEarnUSD
-                        : 0,
+                        : dypiusEarnUsd,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">

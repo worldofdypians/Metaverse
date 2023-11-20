@@ -121,7 +121,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         // eventDuration: coingeckoLastDay,
         minRewards: "25",
         maxRewards: "50",
-        learnMore: "",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
         eventDate: "November 20, 2023",
       },
     },
@@ -145,7 +145,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDate: "Ended",
-        date: "Oct 20, 2023",
+        date: "Ended",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -352,9 +352,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   <Slider {...settings} ref={betaSlider}>
                     {dummyBetaPassData2.map((item, index) => (
                       <NavLink
-                        to={`/marketplace/events/${
-                          item.title === "Gate.io" ? "past" : "treasure-hunt"
-                        }`}
+                        to={`/marketplace/events/treasure/hunt`}
                       >
                         <BetaEventCardHome
                           data={item}
@@ -401,9 +399,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
                   <NavLink
-                    to={`/marketplace/events/${
-                      item.title === "Gate.io" ? "past" : "treasure-hunt"
-                    }`}
+                    to={`/marketplace/events/treasure-hunt`}
                   >
                     <BetaEventCardHome
                       data={item}
