@@ -1221,7 +1221,7 @@ const WalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "20,000",
-    learnMore: "/news",
+    learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
   };
 
   const dummyGate = {
@@ -1389,7 +1389,7 @@ const WalletBalance = ({
         eventDuration: coingeckoLastDay,
         minRewards: "25",
         maxRewards: "50",
-        learnMore: "",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
         eventDate: "November 20, 2023",
       },
     },
