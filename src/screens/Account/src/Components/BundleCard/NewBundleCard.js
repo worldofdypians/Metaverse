@@ -165,17 +165,17 @@ const NewBundleCard = ({
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
-      if (coinbase !== wallet || chainId !== 56) {
+      if (coinbase?.toLowerCase() !== wallet?.toLowerCase() || chainId !== 56) {
         setcheckWallet(false);
       }
-      if (coinbase === wallet && chainId === 56) {
+      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
         if (priceType === 1) {
           setcheckWallet(true);
         } else if (priceType === 0) {
           setcheckWallet(false);
         }
       }
-      if (coinbase === wallet && chainId === 1) {
+      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 1) {
         if (priceType === 1) {
           setcheckWallet(false);
         } else if (priceType === 0) {
@@ -186,7 +186,7 @@ const NewBundleCard = ({
   };
 
   const checkApproval = async () => {
-    if (coinbase === wallet && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await token_abi.methods
         .allowance(coinbase, wodAddress)
         .call()
@@ -1475,12 +1475,12 @@ const NewBundleCard = ({
                           </div>
 
                           <span className="purchase-price-usd mb-0">
-                            ${getFormattedNumber(packageData.usdPrice)}
-                            {/* {getFormattedNumber(
+                            {/* ${getFormattedNumber(packageData.usdPrice)} */}
+                            {getFormattedNumber(
                               priceType === 1
                                 ? packageData.price * dyptokenDatabnb
                                 : 250 * dyptokenData_old
-                            )} */}
+                            )}
                           </span>
                         </div>
                       ) : (
@@ -1497,16 +1497,16 @@ const NewBundleCard = ({
                               alt=""
                             />
                             <h6 className="purchase-price mb-0">
-                            {getFormattedNumber(
-                              packageData.title === "Puzzle Madness"
-                                ? packageData.usdPrice / idyptokenDatabnb
-                                : packageData.usdPrice / dyptokenDatabnb
-                            )}
+                            {getFormattedNumber(packageData.price, 0)}
                             </h6>
                           </div>
 
                           <span className="purchase-price-usd mb-0">
-                            ${getFormattedNumber(packageData.usdPrice)}
+                            ${getFormattedNumber(
+                              packageData.title === "Puzzle Madness"
+                                ? packageData.price * idyptokenDatabnb
+                                : packageData.price * dyptokenDatabnb
+                            )}
                           </span>
                         </div>
                       )}
