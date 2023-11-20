@@ -74,7 +74,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
               {data.title !== "Dypius" ? (
                 <>${getFormattedNumber(userEarnUsd, 2)}</>
               ) : (
-                <>{getFormattedNumber(userEarnUsd, 0)}DYP</>
+                <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
               )}
             </h6>
           </div>
