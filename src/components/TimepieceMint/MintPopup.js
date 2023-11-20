@@ -40,10 +40,10 @@ const MintPopup = ({ active, onClose, data }) => {
           <div class="d-flex align-items-center justify-content-center">
             <div class="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-Base Beta Pass NFT
+              300,000 DYPv2 Rewards
             </h6>
           </div>
-          <h6 className="mint-popup-title">Live Free Minting</h6>
+          <h6 className="mint-popup-title">Dypius Treasure Hunt</h6>
         </>
       ) : (
         <div className="d-flex align-items-center gap-2 mb-4 mb-lg-0">
@@ -65,13 +65,12 @@ Base Beta Pass NFT
       />
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
         {data.title === "Treasure Hunt" ? (
-          // <span className="popup-available-mint">
-          //   Explore the downtown area and use your <img src={whiteExplore} alt="" className="white-explore" />{" "}
-          //   to generate rewards
-          // </span>
           <span className="popup-available-mint">
-          Mint you free Base Beta Pass NFT Now!
+            {/* Explore the downtown area and use your <img src={whiteExplore} alt="" className="white-explore" />{" "}
+            to generate rewards */}
+            Explore the downtown area and generate DYP rewards!
           </span>
+         
         ) : (
           <span className="popup-available-mint">
             Get access to the game and a unique event filled with surprises and
@@ -82,7 +81,7 @@ Base Beta Pass NFT
       {data.title === "Treasure Hunt" ? (
         <Link
           onClick={onClose}
-          to={"/marketplace/mint/timepiece"}
+          to={"/marketplace/events/treasure-hunt"}
           state={{ event: data.state }}
           className="linear-border"
         >
