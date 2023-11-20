@@ -18,6 +18,8 @@ const MyRewardsPopup = ({
   bnbPrice,
   cfxPrice,
   ethTokenData,
+  openedChests,
+  allChests,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -49,6 +51,11 @@ const MyRewardsPopup = ({
   const [wodCawsRewards, setWodCawsRewards] = useState(0);
   const [wodRewards, setWodRewards] = useState(0);
   const [gemRewards, setGemRewards] = useState(0);
+
+  const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
+  const [treasureRewardNftCaws, setTreasureRewardNftCaws] = useState(0);
+  const [treasureRewardNftWod, setTreasureRewardNftWod] = useState(0);
+  const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -449,12 +456,48 @@ const MyRewardsPopup = ({
     }
   };
 
+  const getTreasureChestsInfo = async () => {
+    var pointsResult = 0;
+    var nftCawsResult = 0;
+    var nftLandResult = 0;
+    var nftBPResult = 0;
+    var moneyResult = 0;
+
+    if (openedChests && openedChests.length > 0) {
+      for (let i = 0; i < openedChests.length; i++) {
+        if (openedChests[i].rewardType === "Points") {
+          pointsResult += Number(openedChests[i].reward);
+        } else if (openedChests[i].rewardType === "Money") {
+          moneyResult += Number(openedChests[i].reward);
+        } else if (openedChests[i].rewardType === "NFT") {
+          if (openedChests[i].reward === "WoD") {
+            nftLandResult++;
+          } else if (openedChests[i].reward === "CAWS") {
+            nftCawsResult++;
+          }
+          if (openedChests[i].reward === "BetaPass") {
+            nftBPResult++;
+          }
+        }
+      }
+    }
+
+    setTreasureRewardMoney(moneyResult);
+    setTreasureRewardNftCaws(nftCawsResult);
+    setTreasureRewardNftWod(nftLandResult);
+    setTreasureRewardNftBetaPass(nftBPResult);
+  };
+
   useEffect(() => {
     fetchDailyRecordsAroundPlayer();
     fetchWeeklyRecordsAroundPlayer();
     fetchMonthlyRecordsAroundPlayer();
     fetchMonthlyGenesisRecordsAroundPlayer();
   }, [userId]);
+
+  useEffect(() => {
+    getTreasureChestsInfo();
+  }, [openedChests]);
 
   useEffect(() => {
     getBundles();
@@ -722,10 +765,14 @@ const MyRewardsPopup = ({
                 Treasure Chests
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-                {previousRewards ? "-" : "0"}
+                {treasureRewardMoney > 0 &&
+                  "$" + getFormattedNumber(treasureRewardMoney, 2)}{" "}
+                {treasureRewardNftBetaPass > 0 && "+ 1 BetaPass NFT"}{" "}
+                {treasureRewardNftCaws > 0 && "+ 1 CAWS NFT"}{" "}
+                {treasureRewardNftWod > 0 && "+ 1 WoD NFT"}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : " 0"}
+                USD/NFT
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards ? "-" : "0"}

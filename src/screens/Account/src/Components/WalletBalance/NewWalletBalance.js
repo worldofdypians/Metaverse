@@ -183,8 +183,6 @@ const NewWalletBalance = ({
   claimedChests,
   claimedPremiumChests,
   availableTime,
-  walletClaimedPremiumChests,
-  walletClaimedChests,
   canBuy,
   rewardsPopup,
   dailyPopup,
@@ -1090,7 +1088,7 @@ const NewWalletBalance = ({
       window.config.wod_caws_address
     );
     if (address) {
-      if (myStakes.length > 0) {
+      if (myStakes&& myStakes.length > 0) {
         let rewards = await contract.methods
           .calculateRewards(address, myStakes)
           .call()
@@ -1119,7 +1117,7 @@ const NewWalletBalance = ({
       window.config.landnftstake_address
     );
     if (address) {
-      if (myStakes.length > 0) {
+      if (myStakes && myStakes.length > 0) {
         calculateRewards = await staking_contract.methods
           .calculateRewards(address, myStakes)
           .call()
@@ -1175,32 +1173,30 @@ const NewWalletBalance = ({
 
   useEffect(() => {
     if (canBuy && email) {
-      if (isPremium) {
-        if (claimedChests === 0 && claimedPremiumChests === 0) {
-          setFinished(false);
-        } else if (
-          parseInt(claimedChests) + parseInt(claimedPremiumChests) < 20 ||
-          walletClaimedChests + walletClaimedPremiumChests < 20
-        ) {
-          setFinished(false);
-        } else if (
-          parseInt(claimedChests) + parseInt(claimedPremiumChests) === 20 ||
-          walletClaimedChests + walletClaimedPremiumChests === 20
-        ) {
-          setFinished(true);
-        }
-      } else if (!isPremium) {
-        if (claimedChests === 0) {
-          setFinished(false);
-        } else if (parseInt(claimedChests) < 10 || walletClaimedChests < 10) {
-          setFinished(false);
-        } else if (
-          parseInt(claimedChests) === 10 ||
-          walletClaimedChests === 10
-        ) {
-          setFinished(true);
-        }
-      }
+      // if (isPremium) {
+      //   if (claimedChests === 0 && claimedPremiumChests === 0) {
+      //     setFinished(false);
+      //   } else if (
+      //     parseInt(claimedChests) + parseInt(claimedPremiumChests) <
+      //     20
+      //   ) {
+      //     setFinished(false);
+      //   } else if (
+      //     parseInt(claimedChests) + parseInt(claimedPremiumChests) ===
+      //     20
+      //   ) {
+      //     setFinished(true);
+      //   }
+      // } else if (!isPremium) {
+      //   if (claimedChests === 0) {
+      //     setFinished(false);
+      //   } else if (parseInt(claimedChests) < 10) {
+      //     setFinished(false);
+      //   } else if (parseInt(claimedChests) === 10) {
+      //     setFinished(true);
+      //   }
+      // }
+      setFinished(false);
     } else if (!canBuy && email) {
       setFinished(true);
     } else if (!email) {
@@ -1793,7 +1789,7 @@ const NewWalletBalance = ({
                   <b>*Note:</b> You can submit one post per time. The team will
                   not reply in any form, but if you are eligible, you will see
                   the reward here. The display of the rewards will occur every
-                  Monday.
+                  Monday and will be distributed monthly.
                 </p>
                 <div className="d-flex align-items-center gap-4 mb-4">
                   <StyledTextField

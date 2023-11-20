@@ -40,13 +40,25 @@
   background: rgba(27, 245, 255, 0.15);
   padding: 10px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 10px;
 }
+
+.wallet-wrapper-active2 {
+  background: rgba(27, 245, 255, 0.15);
+  padding: 14px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
 .wallet-wrapper-active-premium {
   background: rgba(255, 191, 0, 0.15);
   padding: 10px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 10px;
+}
+
+.become-premium-img {
+  scale: 1.6;
 }
 
 .wallet-wrapper-alert {
@@ -1321,10 +1333,18 @@
   font-family: "Poppins";
 }
 
+.become-premium-title {
+  color: #FFF;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
 .profile-rank {
   color: #fff;
   text-align: center;
-  font-size: 14px;
+  font-size: 10px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

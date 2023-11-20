@@ -30,6 +30,7 @@ import axios from "axios";
 import Countdown from "react-countdown";
 import { dyp700Address } from "../../web3";
 import { DYP_700_ABI } from "../../web3/abis";
+import becomePremium from "./assets/becomePremium.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -72,7 +73,7 @@ const ProfileCard = ({
   isConnected,
   onOpenLeaderboard,
   onPremiumClick,
-  handleSetAvailableTime
+  handleSetAvailableTime,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -224,13 +225,12 @@ const ProfileCard = ({
       const finalMinutes = timeofDeposit_Minutes - 11;
 
       const result = remainingTime - finalHours * 60 * 60 - finalMinutes * 60;
-       
+
       setcountdown700(result * 1000);
-      handleSetAvailableTime(result*1000)
+      handleSetAvailableTime(result * 1000);
     } else {
       setcountdown700();
-      handleSetAvailableTime()
-
+      handleSetAvailableTime();
     }
   };
 
@@ -292,8 +292,9 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
 
         // }
       } else if (week2.includes(today_date.toString()) && bundlesBought <= 3) {
@@ -315,8 +316,9 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
 
         // }
       } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
@@ -341,8 +343,9 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
 
         // }
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
@@ -351,21 +354,22 @@ const ProfileCard = ({
         if (today < dateofBundle) {
           if (bundlesBought <= 3 && datewhenBundleBought < today_date) {
             setcountdown700(dateofBundle);
-      handleSetAvailableTime(dateofBundle)
-
+            handleSetAvailableTime(dateofBundle);
           } else {
             setcountdown700(
               today < oneNovember
                 ? oneNovember.getTime()
                 : oneDecember.getTime()
             );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+            handleSetAvailableTime(
+              today < oneNovember
+                ? oneNovember.getTime()
+                : oneDecember.getTime()
+            );
           }
         } else if (today > dateofBundle && bundlesBought > 0) {
           setcountdown700();
-      handleSetAvailableTime()
-
+          handleSetAvailableTime();
         }
       }
     } else if (today_date > 25) {
@@ -373,12 +377,12 @@ const ProfileCard = ({
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
         );
-      handleSetAvailableTime(today < oneNovember ? oneNovember.getTime() : oneDecember.getTime())
-
+        handleSetAvailableTime(
+          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        );
       } else {
         setcountdown700();
-      handleSetAvailableTime()
-
+        handleSetAvailableTime();
       }
     }
   };
@@ -456,7 +460,6 @@ const ProfileCard = ({
     setlastDay();
   }, []);
 
-
   return (
     <div className="main-wrapper py-4 w-100">
       {countdown700 !== 0 && countdown700 && (
@@ -464,8 +467,7 @@ const ProfileCard = ({
           date={Number(countdown700)}
           onComplete={() => {
             setcountdown700();
-      handleSetAvailableTime()
-
+            handleSetAvailableTime();
           }}
         />
       )}
@@ -484,13 +486,6 @@ const ProfileCard = ({
               syncStatus !== "" &&
               isPremium &&
               "user-cardImg-active-premium"
-            } ${
-              address &&
-              email &&
-              coinbase &&
-              syncStatus !== "" &&
-              address?.toLowerCase() !== coinbase?.toLowerCase() &&
-              "user-cardImg-alert"
             }  user-cardImg`}
           >
             <div
@@ -535,37 +530,11 @@ const ProfileCard = ({
                       email &&
                       syncStatus !== "" &&
                       isPremium &&
-                      coinbase &&
-                      address?.toLowerCase() === coinbase?.toLowerCase() && (
+                      coinbase && (
                         <img
                           src={defaultAvatarPremium}
                           alt=""
                           className="userAvatarPremium"
-                        />
-                      )}
-                    {address &&
-                      email &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address?.toLowerCase() !== coinbase?.toLowerCase() &&
-                      isPremium && (
-                        <img
-                          src={defaultAvatarPremiumAlert}
-                          alt=""
-                          className="userAvatarPremium"
-                        />
-                      )}
-
-                    {address &&
-                      email &&
-                      !isPremium &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address?.toLowerCase() !== coinbase?.toLowerCase() && (
-                        <img
-                          src={defaultAvatarAlert}
-                          alt=""
-                          className="userAvatar-alert"
                         />
                       )}
 
@@ -573,42 +542,19 @@ const ProfileCard = ({
                       <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
-                          {isPremium && (
+                          {/* {isPremium && (
                             <span
                               className={`${
-                                address &&
-                                email &&
-                                syncStatus !== "" &&
-                                "premiumtext-active"
-                              } ${
-                                address &&
-                                email &&
-                                syncStatus !== "" &&
-                                coinbase &&
-                                address?.toLowerCase() !==
-                                  coinbase?.toLowerCase() &&
-                                "premiumtext-alert"
-                              } d-flex align-items-center gap-1`}
+                                address && email && "premiumtext-active"
+                              }  d-flex align-items-center gap-1`}
                             >
-                              {address &&
-                                email &&
-                                isPremium &&
-                                syncStatus !== "" &&
-                                (address?.toLowerCase() ===
-                                  coinbase?.toLowerCase() ||
-                                  !coinbase) && <img src={starActive} />}
-                              {address &&
-                                email &&
-                                coinbase &&
-                                syncStatus !== "" &&
-                                address?.toLowerCase() !==
-                                  coinbase?.toLowerCase() && (
-                                  <img src={starAlert} />
-                                )}
+                              {address && email && isPremium && (
+                                <img src={starActive} />
+                              )}
                               Premium
                             </span>
-                          )}
-                          {!isPremium && email && (
+                          )} */}
+                          {/* {!isPremium && email && (
                             <span
                               className="profile-div-title mb-0 text-decoration-underline"
                               style={{
@@ -625,7 +571,7 @@ const ProfileCard = ({
                             >
                               Upgrade to Premium
                             </span>
-                          )}
+                          )} */}
                         </span>
 
                         <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
@@ -642,13 +588,13 @@ const ProfileCard = ({
                                 address?.toLowerCase() ===
                                   coinbase?.toLowerCase() &&
                                 !isPremium &&
-                                "wallet-wrapper-active d-flex"
+                                "wallet-wrapper-active d-flex bg-transparent p-0"
                               } ${
                                 isVerified &&
                                 email &&
                                 syncStatus === "initial" &&
                                 isPremium &&
-                                "wallet-wrapper-active-premium d-flex"
+                                "wallet-wrapper-active-premium d-flex bg-transparent p-0"
                               } ${
                                 address &&
                                 email &&
@@ -868,6 +814,25 @@ const ProfileCard = ({
                     </div>
                   </div>
                 )}
+
+                {email && address && coinbase && !isPremium && (
+                  <div
+                    className={` wallet-wrapper-active2 hoveractive position-relative
+                    d-flex align-items-center position-relative mt-3 mt-lg-0`}
+                    onClick={onPremiumClick}
+                  >
+                    {/* <div className="table-separator position-absolute"></div> */}
+                    <h6 className="become-premium-title mb-0">
+                      Become a Premium Member
+                    </h6>
+
+                    <img
+                      src={becomePremium}
+                      alt=""
+                      className="become-premium-img"
+                    />
+                  </div>
+                )}
                 {email && address && (
                   <div
                     className={`${
@@ -876,7 +841,7 @@ const ProfileCard = ({
                         : "wallet-wrapper-active hoveractive"
                     }
                     position-relative
-                    d-flex flex-column align-items-center position-relative mt-3 mt-lg-0 gap-2`}
+                    d-flex flex-column align-items-center position-relative mt-3 mt-lg-0`}
                     onClick={onOpenLeaderboard}
                   >
                     {countdown700 && (
@@ -892,13 +857,17 @@ const ProfileCard = ({
                     {/* <div className="table-separator position-absolute"></div> */}
                     <h6
                       className="profile-div-title mb-0"
-                      style={{ fontSize: "14px", fontWeight: "500" }}
+                      style={{ fontSize: "10px" }}
                     >
                       Leaderboard
                     </h6>
                     <div className="d-flex align-items-center gap-4">
                       <div className="d-flex flex-column align-items-center">
-                        <img src={globalRank} alt="" />
+                        <img
+                          src={globalRank}
+                          alt=""
+                          style={{ width: 27, height: 27 }}
+                        />
                         <span className="  profile-rank mb-0">
                           #{userRank + 1}
                         </span>
@@ -907,7 +876,11 @@ const ProfileCard = ({
                       </span> */}
                       </div>
                       <div className="d-flex flex-column align-items-center">
-                        <img src={genesisRankImg} alt="" />
+                        <img
+                          src={genesisRankImg}
+                          alt=""
+                          style={{ width: 27, height: 27 }}
+                        />
                         <span className="  profile-rank mb-0">
                           #{genesisRank + 1}
                         </span>
@@ -945,7 +918,7 @@ const ProfileCard = ({
                           alt=""
                           style={{ width: "21px", height: "20px" }}
                         />
-                        <span className="sync-txt">
+                        <span className="premiumtext-alert">
                           Your gaming account is not linked to the wallet you
                           connected. To update the game wallet address, press
                           the synchronize button.

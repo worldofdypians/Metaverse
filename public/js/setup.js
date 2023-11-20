@@ -1484,14 +1484,14 @@ window.config = {
     "0xbd100d061e120b2c67a24453cf6368e63f1be056": "idefiyieldprotocol",
   },
 
-  daily_bonus_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
-  daily_bonus_bnb_address: "0xf6085aF24f11CE3F76a74498CF2A714dcD096530",
+  daily_bonus_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
+  daily_bonus_bnb_address: "0xF4435c244A292a8E8D56767bf6DF9b9c4D59aEED",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
   vote_duration_in_seconds: 259200, // 5 minutes for test
   weth_address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7", // LOWERCASE! avax
   weth2_address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", // ethereum
-token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
+  token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
   farmweth_address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", //farm weth
 
   token_weth_address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", //vault weth
@@ -1516,13 +1516,13 @@ token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dy
   locker_address: "0x4c695f6198cd4e56efcbf750d0b8961d28885f57",
   lockereth_address: "0x0c5d9AA95329517918AA7b82BfDa25d60446E1ac",
   subscription_address: "0x5078a4912f6e0d74dcf99482ac5910df123e9b4b",
-  subscription_newavax_address: "0x82446d96129597ec6db0bf7f7be5a1ce7c0bef1a",
+  subscription_newavax_address: "0xef3819fc5bb5a5468cac4d47e2a1ee6905b8cc7d",
 
   subscriptioneth_address: "0x6cc47d895aa6da6012c2b6bfd2f6af3ebbf1d2e4",
-  subscription_neweth_address: "0xa1d6178f3d96b9da85802b6abd553e2b854c7382",
+  subscription_neweth_address: "0x29c90c6a1243455266afd7f92649e384213d45b0",
 
   subscriptionbnb_address: "0x0ec59a2d18e1e83ab393b3ac9d7d6d28cbff0d35",
-  subscription_newbnb_address: "0xB1c10aCbB6e4CCF24Cd57db4E5B524E39841A97C",
+  subscription_newbnb_address: "0xc8adbef45b75ee4f3b5c9d4da2e1a1af408378a2",
   //DYP-ETH 3 days
   token_address: "0xBa7872534a6C9097d805d8BEE97e030f4e372e54",
   staking_address: "0xa7d6F5fa9b0be0e98b3b40E6aC884e53F2F9460e",
@@ -1807,72 +1807,65 @@ token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dy
   // add supported subscription tokens here, lowercase
   // THESE TOKENS MUST HAVE BEEN ALREADY ADDED TO SMART CONTRACT!
   subscription_tokens: {
-    "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7": {
-      symbol: "USDT",
-      decimals: 6,
-    },
     "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7": {
       symbol: "WAVAX",
       decimals: 18,
     },
-    // "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
-    //   symbol: "DYP",
-    //   decimals: 18,
-    // },
-    "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E": {
-      symbol: "USDC",
+    "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7": {
+      symbol: "USDT",
       decimals: 6,
+    },
+    "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70": {
+      symbol: "DAI",
+      decimals: 18,
+    },
+    "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
+      symbol: "DYPv2",
+      decimals: 18,
     },
   },
 
   // add supported subscription tokens here, lowercase
   // THESE TOKENS MUST HAVE BEEN ALREADY ADDED TO SMART CONTRACT!
   subscriptioneth_tokens: {
-    "0xdac17f958d2ee523a2206206994597c13d831ec7": {
-      symbol: "USDT",
-      decimals: 6,
-    },
     "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
       symbol: "WETH",
       decimals: 18,
     },
-    // "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3": {
-    //   symbol: "DYP",
-    //   decimals: 18,
-    // },
     "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
       symbol: "USDC",
       decimals: 6,
     },
-
-    // "0x6b175474e89094c44da98b954eedeac495271d0f": {
-    //   symbol: "DAI",
-    //   decimals: 18,
-    // },
-  },
-
-  subscriptionbnb_tokens: {
-    "0x55d398326f99059fF775485246999027B3197955": {
+    "0xdac17f958d2ee523a2206206994597c13d831ec7": {
       symbol: "USDT",
+      decimals: 6,
+    },
+    "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3": {
+      symbol: "DYPv2",
       decimals: 18,
     },
+    "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17" : {
+      symbol: "DYPv1",
+      decimals: 18,
+    }
+  },
+  subscriptionbnb_tokens: {
     "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
       symbol: "WBNB",
       decimals: 18,
     },
-    // "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
-    //   symbol: "DYP",
-    //   decimals: 18,
-    // },
     "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56": {
       symbol: "BUSD",
       decimals: 18,
     },
-
-    // "0x6b175474e89094c44da98b954eedeac495271d0f": {
-    //   symbol: "DAI",
-    //   decimals: 18,
-    // },
+    "0x55d398326f99059fF775485246999027B3197955": {
+      symbol: "USDT",
+      decimals: 18,
+    },
+    "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
+      symbol: "DYPv2",
+      decimals: 18,
+    },
   },
 
   automated_trust_scores: {
@@ -4701,220 +4694,132 @@ window.tokenCG = {
 
 window.DAILY_BONUS_ABI = [
   {
-    type: "constructor",
     inputs: [
       {
+        internalType: "address[]",
         name: "initialPremiumUsers",
         type: "address[]",
-        internalType: "address[]",
       },
     ],
     stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
     name: "ChestOpened",
     type: "event",
-    inputs: [
-      { name: "user", type: "address", indexed: true, internalType: "address" },
-      {
-        name: "count",
-        type: "uint256",
-        indexed: false,
-        internalType: "uint256",
-      },
-      {
-        name: "timestamp",
-        type: "uint256",
-        indexed: false,
-        internalType: "uint256",
-      },
-    ],
-    anonymous: false,
-    signature:
-      "0xa773a434254ed7b086ef4e420491919e39c9471c1247e7861609e16fa7cb4ffa",
   },
   {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
     name: "PremiumChestOpened",
     type: "event",
-    inputs: [
-      { name: "user", type: "address", indexed: true, internalType: "address" },
-      {
-        name: "count",
-        type: "uint256",
-        indexed: false,
-        internalType: "uint256",
-      },
-      {
-        name: "timestamp",
-        type: "uint256",
-        indexed: false,
-        internalType: "uint256",
-      },
-    ],
-    anonymous: false,
-    signature:
-      "0xfbaec29918eaa230df2d1f2246c339d4dfa092a8d9e5f75ffbfb7fb833fc40f4",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
     name: "PremiumUserAdded",
     type: "event",
-    inputs: [
-      {
-        name: "user",
-        type: "address",
-        indexed: false,
-        internalType: "address",
-      },
-    ],
-    anonymous: false,
-    signature:
-      "0x7ddfb3db715dfc51b0190724e3d4e2948ecdd4e9ed9de99c6e4436177cf2c2d1",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
     name: "PremiumUserRemoved",
     type: "event",
-    inputs: [
-      {
-        name: "user",
-        type: "address",
-        indexed: false,
-        internalType: "address",
-      },
-    ],
-    anonymous: false,
-    signature:
-      "0x9f295aadccba810bff1bf2ef21c596812086c6784b548846b5c55c19a131964c",
   },
   {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "addPremiumUser",
-    type: "function",
-    inputs: [{ name: "user", type: "address", internalType: "address" }],
     outputs: [],
-    signature: "0x772f8316",
     stateMutability: "nonpayable",
-  },
-  {
-    name: "dailyChestCount",
     type: "function",
-    inputs: [{ name: "", type: "address", internalType: "address" }],
-    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
-    constant: true,
-    signature: "0x959a77f6",
-    stateMutability: "view",
   },
   {
-    name: "dailyPremiumChestCount",
-    type: "function",
-    inputs: [{ name: "", type: "address", internalType: "address" }],
-    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
-    constant: true,
-    signature: "0x1720f701",
-    stateMutability: "view",
-  },
-  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "isPremiumUser",
-    type: "function",
-    inputs: [{ name: "user", type: "address", internalType: "address" }],
-    outputs: [{ name: "", type: "bool", internalType: "bool" }],
-    constant: true,
-    signature: "0x4978c38a",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
+    type: "function",
   },
   {
-    name: "lastChestResetDay",
-    type: "function",
-    inputs: [{ name: "", type: "address", internalType: "address" }],
-    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
-    constant: true,
-    signature: "0x6d999077",
-    stateMutability: "view",
-  },
-  {
-    name: "lastChestResetDayPremium",
-    type: "function",
-    inputs: [{ name: "", type: "address", internalType: "address" }],
-    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
-    constant: true,
-    signature: "0x1637fe55",
-    stateMutability: "view",
-  },
-  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "lifetimeChestCount",
-    type: "function",
-    inputs: [{ name: "", type: "address", internalType: "address" }],
-    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
-    constant: true,
-    signature: "0xa51fb314",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
+    type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "lifetimePremiumChestCount",
-    type: "function",
-    inputs: [{ name: "", type: "address", internalType: "address" }],
-    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
-    constant: true,
-    signature: "0xa9b30310",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
+    type: "function",
   },
   {
-    name: "maxChestsPerDay",
-    type: "function",
     inputs: [],
-    outputs: [
-      { name: "", type: "uint256", value: "10", internalType: "uint256" },
-    ],
-    constant: true,
-    signature: "0xe31db2f1",
-    stateMutability: "view",
-  },
-  {
     name: "openChest",
-    type: "function",
-    inputs: [],
     outputs: [],
-    signature: "0x6f49a3c0",
     stateMutability: "nonpayable",
+    type: "function",
   },
   {
+    inputs: [],
     name: "openPremiumChest",
-    type: "function",
-    inputs: [],
     outputs: [],
-    signature: "0xea768f9f",
     stateMutability: "nonpayable",
+    type: "function",
   },
   {
+    inputs: [],
     name: "owner",
-    type: "function",
-    inputs: [],
-    outputs: [
-      {
-        name: "",
-        type: "address",
-        value: "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
-        internalType: "address",
-      },
-    ],
-    constant: true,
-    signature: "0x8da5cb5b",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
+    type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "premiumUsers",
-    type: "function",
-    inputs: [{ name: "", type: "address", internalType: "address" }],
-    outputs: [{ name: "", type: "bool", internalType: "bool" }],
-    constant: true,
-    signature: "0xe2b2d482",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
+    type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "removePremiumUser",
-    type: "function",
-    inputs: [{ name: "user", type: "address", internalType: "address" }],
     outputs: [],
-    signature: "0x6deb88fc",
     stateMutability: "nonpayable",
+    type: "function",
   },
 ];
 
@@ -4937,12 +4842,6 @@ window.DAILY_BONUS_BNB_ABI = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "count",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
         name: "timestamp",
         type: "uint256",
       },
@@ -4954,12 +4853,6 @@ window.DAILY_BONUS_BNB_ABI = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: "address", name: "user", type: "address" },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "count",
-        type: "uint256",
-      },
       {
         indexed: false,
         internalType: "uint256",
@@ -5004,37 +4897,9 @@ window.DAILY_BONUS_BNB_ABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "dailyChestCount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "dailyPremiumChestCount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "isPremiumUser",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "lastChestResetDay",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "lastChestResetDayPremium",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -5048,13 +4913,6 @@ window.DAILY_BONUS_BNB_ABI = [
   {
     inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "lifetimePremiumChestCount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "maxChestsPerDay",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
@@ -5492,7 +5350,6 @@ window.SUBSCRIPTION_ABI = [
     type: "function",
   },
 ];
-
 
 window.SUBSCRIPTION_NEWETH_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
@@ -6095,7 +5952,35 @@ window.SUBSCRIPTION_NEWAVAX_ABI = [
   },
   {
     inputs: [],
+    name: "TRUSTED_DYP_WAVAX_PAIR",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "TRUSTED_PLATFORM_TOKEN_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_USDT_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_USDT_WAVAX_PAIR",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_WAVAX_ADDRESS",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
@@ -6155,6 +6040,11 @@ window.SUBSCRIPTION_NEWAVAX_ABI = [
         name: "newSubscriptionFeeInDai",
         type: "uint256",
       },
+      {
+        internalType: "uint128",
+        name: "newSubscriptionFeeInUSDT",
+        type: "uint128",
+      },
     ],
     name: "setSubscriptionFee",
     outputs: [],
@@ -6175,6 +6065,13 @@ window.SUBSCRIPTION_NEWAVAX_ABI = [
     inputs: [],
     name: "subscriptionFeeInDai",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "subscriptionFeeInUSDT",
+    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
     stateMutability: "view",
     type: "function",
   },
@@ -36277,7 +36174,6 @@ async function subscriptionPlatformTokenAmount(account) {
   }
 }
 
-
 async function subscriptionPlatformTokenAmountNew(account) {
   if (account) {
     let subscriptionContract = await getContract({
@@ -36322,14 +36218,14 @@ async function getEstimatedTokenSubscriptionAmount(tokenAddress) {
 }
 
 async function getEstimatedTokenSubscriptionAmountETH(tokenAddress) {
-  let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWAVAX" });
+  let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWETH" });
   return await subscriptionContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
 }
 
 async function getEstimatedTokenSubscriptionAmountBNB(tokenAddress) {
-  let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWAVAX" });
+  let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB" });
   return await subscriptionContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
