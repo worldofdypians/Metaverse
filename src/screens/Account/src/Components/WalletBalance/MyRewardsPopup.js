@@ -810,7 +810,7 @@ const MyRewardsPopup = ({
 
             <tr>
               <td className="myrewards-td-second border-0 paddingLeftCell">
-                Social bonus
+                Social Bonus
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
                 $0.00
