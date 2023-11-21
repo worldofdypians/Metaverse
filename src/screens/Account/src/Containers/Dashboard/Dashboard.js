@@ -457,7 +457,7 @@ function Dashboard({
   const getOpenedChestPerWallet = async () => {
     if (email) {
       if (isPremium) {
-         if (claimedChests + claimedPremiumChests < 20) {
+        if (claimedChests + claimedPremiumChests < 20) {
           setCanBuy(true);
         } else if (claimedChests + claimedPremiumChests === 20) {
           setCanBuy(false);
@@ -473,8 +473,6 @@ function Dashboard({
       setCanBuy(false);
     }
   };
-
- 
 
   const getAllChests = async (userEmail) => {
     const emailData = { emailAddress: userEmail };
@@ -1648,6 +1646,14 @@ function Dashboard({
                             ethTokenData={ethTokenData}
                             openedChests={openedChests}
                             allChests={allChests}
+                            hasNft={
+                              MyNFTSCaws.length +
+                                MyNFTSLand.length +
+                                MyNFTSTimepiece.length >
+                              0
+                                ? true
+                                : false
+                            }
                           />
                         </div>
                       </OutsideClickHandler>

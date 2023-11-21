@@ -22,6 +22,7 @@ const MyRewardsPopup = ({
   ethTokenData,
   openedChests,
   allChests,
+  hasNft,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -470,7 +471,9 @@ const MyRewardsPopup = ({
         if (openedChests[i].rewardType === "Points") {
           pointsResult += Number(openedChests[i].reward);
         } else if (openedChests[i].rewardType === "Money") {
-          moneyResult += Number(openedChests[i].reward);
+          if (hasNft) {
+            moneyResult += Number(openedChests[i].reward);
+          }
         } else if (openedChests[i].rewardType === "NFT") {
           if (openedChests[i].reward === "WoD") {
             nftLandResult++;
@@ -499,7 +502,7 @@ const MyRewardsPopup = ({
 
   useEffect(() => {
     getTreasureChestsInfo();
-  }, [openedChests]);
+  }, [openedChests, hasNft]);
 
   useEffect(() => {
     getBundles();
@@ -763,9 +766,19 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
                 {treasureRewardMoney > 0 &&
                   "$" + getFormattedNumber(treasureRewardMoney, 2)}{" "}
-                {treasureRewardNftBetaPass > 0 && "+ 1 BetaPass NFT"}{" "}
-                {treasureRewardNftCaws > 0 && "+ 1 CAWS NFT"}{" "}
-                {treasureRewardNftWod > 0 && "+ 1 WoD NFT"}
+                {treasureRewardNftBetaPass > 0 && treasureRewardMoney > 0
+                  ? "+ 1 BetaPass NFT"
+                  : treasureRewardNftBetaPass > 0 && treasureRewardMoney === 0
+                  ? "1 BetaPass NFT"
+                  : ""}{" "}
+                {treasureRewardNftCaws > 0 && treasureRewardMoney > 0
+                  ? "+ 1 CAWS NFT"
+                  :treasureRewardNftCaws > 0 && treasureRewardMoney === 0 ? "1 CAWS NFT"
+                  : ""}{" "}
+                {treasureRewardNftWod > 0 && treasureRewardMoney > 0
+                  ? "+ 1 WoD NFT"
+                  :treasureRewardNftWod > 0 && treasureRewardMoney === 0 ? "1 WoD NFT"
+                  : ""}
                 {treasureRewardMoney === 0 &&
                   treasureRewardNftBetaPass === 0 &&
                   treasureRewardNftCaws === 0 &&
@@ -779,8 +792,6 @@ const MyRewardsPopup = ({
                 {previousRewards ? "-" : "0"}
               </td>
             </tr>
-
-
 
             <tr>
               <td className="myrewards-td-main border-0">
@@ -802,22 +813,15 @@ const MyRewardsPopup = ({
                 Social bonus
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-               
-                  $0.00
+                $0.00
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 0.0000WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
-              $0.00
+                $0.00
               </td>
             </tr>
-
-
-
-
-
-
 
             <tr>
               <td className="myrewards-td-main border-0">
