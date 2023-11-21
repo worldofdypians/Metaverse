@@ -671,20 +671,15 @@ const MyRewardsPopup = ({
                 Gate.io
               </td>
               <td className="myrewards-td-second border-0 specialCell text-center">
+                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : `${getFormattedNumber(0, 4)} WBNB`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
                   : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
-                {previousRewards
-                  ? "-"
-                  : `${getFormattedNumber(
-                      gateEarnUSDPrevious / bnbPrice,
-                      4
-                    )} WBNB`}
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
               </td>
             </tr>
             <tr>

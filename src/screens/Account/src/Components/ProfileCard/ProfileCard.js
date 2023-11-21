@@ -477,7 +477,6 @@ const ProfileCard = ({
             className={` ${
               isVerified &&
               email &&
-              address?.toLowerCase() === coinbase?.toLowerCase() &&
               !isPremium &&
               "user-cardImg-active"
             } ${
@@ -506,7 +505,6 @@ const ProfileCard = ({
                     {address &&
                       email &&
                       coinbase &&
-                      address?.toLowerCase() === coinbase?.toLowerCase() &&
                       !isPremium && (
                         <img
                           src={defaultAvatar}
@@ -599,7 +597,7 @@ const ProfileCard = ({
                                 syncStatus !== "" &&
                                 address.toLowerCase() !==
                                   coinbase.toLowerCase() &&
-                                "wallet-wrapper-alert d-flex"
+                                "wallet-wrapper-alert d-flex bg-transparent p-0"
                               } ${
                                 (coinbase && email && !address && !username) ||
                                 (coinbase && email && !address && username) ||
