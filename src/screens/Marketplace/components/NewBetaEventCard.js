@@ -8,7 +8,7 @@ import magnifier from "../assets/magnifier.svg";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
-const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
+const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
   return (
     <div
       className={` ${
@@ -25,9 +25,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
           : data.title === "Dypius"
           ? "upcoming-dyp-event"
           : "upcoming-mint-wrapper-coin98"
-      } ${
-        isFrontPage ? "justify-content-center" : "justify-content-between"
-      } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center px-0`}
+      } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
       style={{ cursor: "pointer" }}
     >
@@ -67,6 +65,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
           </span>
         </div>
       </div>
+
       <div className="d-flex align-items-center gap-3">
         <div className="d-flex col-6 flex-column align-items-start">
           <div
@@ -87,9 +86,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
             </h6>
           </div>
         </div>
-      
-      {!isFrontPage && (
-        <div className="d-flex flex-column d-none gap-3 pick-and-calendar">
+        <div className="d-flex flex-column d-flex gap-3">
           <div className="d-flex align-items-center gap-2">
             {data.eventType === "Explore & Mine" ? (
               <img src={whitePickaxe} alt="" />
@@ -112,7 +109,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
               {data.eventDate}
             </span>
           </div>
-        </div>)}
+        </div>
       </div>
       <div className="d-flex flex-column d-none gap-3 pick-and-calendar">
         <div className="d-flex align-items-center gap-2">
@@ -132,15 +129,13 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
           </span>
         </div>
       </div>
-           {!isFrontPage && (
-            <span
-              className="events-page-details d-flex my-3 align-items-center gap-2"
-              onClick={onOpenPopup}
-            >
-              Details
-              <img src={eventsArrow} alt="" />
-            </span>
-          )}
+      <span
+        className="events-page-details d-flex my-3 align-items-center gap-2"
+        onClick={onOpenPopup}
+      >
+        Details
+        <img src={eventsArrow} alt="" />
+      </span>
       <img
         src={data.backgroundImage}
         alt=""

@@ -1238,7 +1238,6 @@ const WalletBalance = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-
     {
       title: "Dypius",
       logo: dypius,
