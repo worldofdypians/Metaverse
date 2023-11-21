@@ -113,7 +113,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
           )}
           <span className="mb-0 event-bottom-text">
             {event.title === "Dypius" ? (
-              <>{getFormattedNumber(userEarnedUsd, 0)}DYP</>
+              <>{getFormattedNumber(userEarnedUsd, 0)} DYP</>
             ) : (
               <>${getFormattedNumber(userEarnedUsd, 2)}</>
             )}
