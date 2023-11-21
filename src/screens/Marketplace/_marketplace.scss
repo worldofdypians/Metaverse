@@ -48,6 +48,13 @@
   }
 }
 
+.nft-price-eth2 {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .checkicons {
   left: -8px;
 }
@@ -1196,7 +1203,7 @@
 }
 .home-card-rewards-currency {
   color: #ffeace;
-  font-size: 12 px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -2067,6 +2074,18 @@
     aspect-ratio: 1/1;
   }
 }
+.past-base-mint {
+  background-image: url("./assets/pastBaseMintBg.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/baseMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
 
 .sold-out-tag {
   border-radius: 20px;
@@ -2124,6 +2143,17 @@
 
 .past-conflux-mint-amount {
   color: #901c77;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+.past-base-mint-amount {
+  color: #0052FF;
   text-align: center;
   font-size: 40px;
   font-style: normal;
@@ -2428,6 +2458,13 @@
 
 .filters-dropdown {
   width: 200px !important;
+  @media screen and (max-width: 786px) {
+    width: 100% !important;
+  }
+}
+
+.filters-dropdown2 {
+  width: 160px !important;
   @media screen and (max-width: 786px) {
     width: 100% !important;
   }
@@ -2813,6 +2850,9 @@
   line-height: normal;
   letter-spacing: 0.12px;
   white-space: pre;
+  @media screen and (max-width: 1650px) {
+  font-size: 13px;
+  }
 }
 
 .events-page-status-tag-live {
@@ -3470,6 +3510,10 @@
 .upcoming-doge-event {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #ac5426 168.67%) !important;
+}
+.upcoming-dyp-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #1D4D17 168.67%);
 }
 
 .base-upcoming-mint-wrapper {

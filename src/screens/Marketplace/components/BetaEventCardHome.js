@@ -17,7 +17,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
     >
       <div className="d-flex align-items-center justify-content-between w-100">
        <div className="d-flex align-items-center gap-2">
-       <img src={data.logo} width={36} height={36} alt="" />
+       <img src={data.logo} width={24} height={24} alt="" />
         <h6 className="events-page-title mb-0">{data.title}</h6>
        </div>
         <div

@@ -18,7 +18,7 @@ const ConfirmationModal = ({
   state,
   nft,
   ethTokenData,
-  dypTokenData,
+  dypTokenData,dypTokenData_old
 }) => {
 
   const windowSize = useWindowSize();
@@ -95,15 +95,15 @@ const ConfirmationModal = ({
                   <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-center">
                     <span className="itemname" style={{whiteSpace: 'nowrap'}}>
                       {getFormattedNumber(nft.price / 1e18, 2)}{" "}
-                      {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                      {nft.payment_priceType === 0 ? "ETH" :nft?.payment_tokenAddress === window.config.dyp_token_address ? 'DYPv1' : "DYPv2"}
                     </span>
                     {nft.payment_priceType === 0 &&
                     <span className="itemcollectionName">
                       $
                       {getFormattedNumber(
                         nft.payment_priceType === 0
-                          && ethTokenData * (nft.price / 1e18),
-                          // : dypTokenData * (nft.price / 1e18),
+                          ? ethTokenData * (nft.price / 1e18)
+                          : nft?.payment_tokenAddress === window.config.dyp_token_address ? dypTokenData_old * (nft.price / 1e18) :  dypTokenData * (nft.price / 1e18),
                         nft.payment_priceType === 0 ? 3 : 0
                       )}
                     </span> }
@@ -169,15 +169,15 @@ const ConfirmationModal = ({
                   <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-center">
                     <span className="itemname" style={{whiteSpace: 'nowrap'}}>
                       {getFormattedNumber(nft.price / 1e18, 2)}{" "}
-                      {nft.payment_priceType === 0 ? "ETH" : "DYP"}
+                      {nft.payment_priceType === 0 ? "ETH" :nft?.payment_tokenAddress === window.config.dyp_token_address ? 'DYPv1' : "DYPv2"}
                     </span>
                     {nft.payment_priceType === 0 &&
                     <span className="itemcollectionName">
                       $
                       {getFormattedNumber(
                         nft.payment_priceType === 0
-                          && ethTokenData * (nft.price / 1e18),
-                          // : dypTokenData * (nft.price / 1e18),
+                          ? ethTokenData * (nft.price / 1e18)
+                          : nft?.payment_tokenAddress === window.config.dyp_token_address ? dypTokenData_old * (nft.price / 1e18) :  dypTokenData * (nft.price / 1e18),
                         nft.payment_priceType === 0 ? 3 : 0
                       )}
                     </span> }

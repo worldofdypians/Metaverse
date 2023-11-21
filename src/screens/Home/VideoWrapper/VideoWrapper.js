@@ -14,6 +14,7 @@ import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
 import gateWhite from "../../Marketplace/MarketNFTs/wallets/gateWallet.png";
 import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
+import dypius from "../../Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import Slider from "react-slick";
 import useWindowSize from "../../../hooks/useWindowSize";
 
@@ -93,65 +94,91 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
-
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
 
     {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Live",
+      totalRewards: "300,000 in DYPv2 Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "September xx, 2023",
+      rewardsAmount: "300,000",
+      rewardsCurrency: "DYP Rewards",
+      // backgroundImage: upcomingDyp,
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status: "Live",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYPv2 Rewards",
+        // eventDuration: coingeckoLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "November 20, 2023",
+      },
+    },
+    {
       title: "Gate.io",
       logo: gateWhite,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$2,000 in BNB Rewards",
       rewardsAmount: "$2,000",
       rewardsCurrency: "BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
+      eventDate: "Ended",
       popupInfo: {
         eventType: "Explore & Mine",
         title: "Gate.io",
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "GT",
-        status: "Live",
+        status: "Expired",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
-        eventDate: "October 20, 2023",
-        date: "Oct 20, 2023",
+        eventDate: "Ended",
+        date: "Ended",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "20,000",
       },
     },
-    {
-      title: "Conflux",
-      logo: conflux,
-      eventStatus: "Expired",
-      totalRewards: "$2,000 in CFX Rewards",
-      rewardsAmount: "$2,000",
-      rewardsCurrency: "CFX Rewards",
-      myEarnings: 0,
-      eventType: "Explore & Mine",
-      eventDate: "Ended",
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Conflux",
-        chain: "Conflux Network",
-        linkState: "conflux",
-        rewards: "CFX",
-        status: "Expired",
-        id: "event1",
-        totalRewards: "$2,000 in CFX Rewards",
-        eventDate: "Ended",
-        minRewards: "1",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "20,000",
-        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
-      },
-    },
+    // {
+    //   title: "Conflux",
+    //   logo: conflux,
+    //   eventStatus: "Expired",
+    //   totalRewards: "$2,000 in CFX Rewards",
+    //   rewardsAmount: "$2,000",
+    //   rewardsCurrency: "CFX Rewards",
+    //   myEarnings: 0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Ended",
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Conflux",
+    //     chain: "Conflux Network",
+    //     linkState: "conflux",
+    //     rewards: "CFX",
+    //     status: "Expired",
+    //     id: "event1",
+    //     totalRewards: "$2,000 in CFX Rewards",
+    //     eventDate: "Ended",
+    //     minRewards: "1",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "20,000",
+    //     learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+    //   },
+    // },
   ];
 
   var settings = {
@@ -324,7 +351,9 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
                   <Slider {...settings} ref={betaSlider}>
                     {dummyBetaPassData2.map((item, index) => (
-                      <NavLink to={`/marketplace/events/treasure-hunt`}>
+                      <NavLink
+                        to={`/marketplace/events/treasure/hunt`}
+                      >
                         <BetaEventCardHome
                           data={item}
                           key={index}
@@ -369,7 +398,9 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
-                  <NavLink to={`/marketplace/events/treasure-hunt`}>
+                  <NavLink
+                    to={`/marketplace/events/treasure-hunt`}
+                  >
                     <BetaEventCardHome
                       data={item}
                       key={index}

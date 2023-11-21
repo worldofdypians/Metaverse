@@ -43,12 +43,16 @@ import BetaEventCard from "../../../../Marketplace/components/BetaEventCard";
 import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
 import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
-
+import dypius from "./assets/dypIcon.svg";
+import upcomingDyp from "./assets/upcomingDyp.webp";
+import closeMark from "./assets/closeMark.svg";
+import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
 import confluxUpcoming from "./assets/confluxUpcoming.png";
 import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
+import dypeventPopupImage from "./assets/dypEventImage.png";
 
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
@@ -221,12 +225,7 @@ const WalletBalance = ({
     ],
   };
 
-  const firstNext = () => {
-    slider.current.slickNext();
-  };
-  const firstPrev = () => {
-    slider.current.slickPrev();
-  };
+
 
   const handleFavoritesPage = (e, value) => {
     setFavoritesPage(value);
@@ -797,15 +796,15 @@ const WalletBalance = ({
 
   const getPriceDYP = async () => {
     const dypprice = await axios
-    .get(
-      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-    )
-    .then((res) => {
-      return res.data.data.attributes.base_token_price_usd;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .get(
+        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+      )
+      .then((res) => {
+        return res.data.data.attributes.base_token_price_usd;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
@@ -819,7 +818,7 @@ const WalletBalance = ({
         const propertyDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
-      
+
         const propertyIDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
@@ -836,7 +835,6 @@ const WalletBalance = ({
         );
         const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
         setBnbPrice(bnb);
-    
 
         const propertyIDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
@@ -852,7 +850,6 @@ const WalletBalance = ({
         const propertyDyp = Object.entries(
           data.data.the_graph_avax_v2.token_data
         );
-      
 
         const propertyIDyp = Object.entries(
           data.data.the_graph_avax_v2.token_data
@@ -1022,7 +1019,7 @@ const WalletBalance = ({
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
     getTokenData();
-    getPriceDYP()
+    getPriceDYP();
     getTokenDataavax();
     getTokenDatabnb();
     getListed();
@@ -1059,6 +1056,7 @@ const WalletBalance = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+  let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
 
   const dummyConflux = {
     title: "Conflux",
@@ -1077,6 +1075,24 @@ const WalletBalance = ({
     minPoints: "5,000",
     maxPoints: "20,000",
     learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+  };
+  const dummyDypius = {
+    title: "Dypius",
+    chain: "BNB Chain",
+    linkState: "dypius",
+    rewards: "DYP",
+    status: "Live",
+    id: "event5",
+    eventType: "Explore & Find",
+    date: "November 20, 2023",
+    logo: dypius,
+    totalRewards: "300,000 in DYP Rewards",
+    eventDuration: dypiusLastDay,
+    minRewards: "1",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "20,000",
+    learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
   };
 
   const dummyGate = {
@@ -1143,10 +1159,8 @@ const WalletBalance = ({
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
   };
-
- 
 
   const dummyBetaPassData2 = [
     // {
@@ -1221,18 +1235,43 @@ const WalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event"
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+      },
+    },
 
+    {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Live",
+      totalRewards: "300,000 in DYPv2 Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "November 20, 2023",
+      backgroundImage: upcomingDyp,
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status: "Live",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYPv2 Rewards",
+        eventDuration: dypiusLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "November 20, 2023",
       },
     },
     {
       title: "Gate.io",
       logo: gate,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
-      eventDate: "October 20, 2023",
+      eventDate: "Ended",
       backgroundImage: gateUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -1240,11 +1279,11 @@ const WalletBalance = ({
         chain: "BNB Chain",
         linkState: "gate",
         rewards: "GT",
-        status: "Live",
+        status: "Expired",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
         eventDuration: gateLastDay,
-        eventDate: "October 20, 2023",
+        eventDate: "Ended",
         date: "Oct 20, 2023",
         minRewards: "0.5",
         maxRewards: "20",
@@ -2116,11 +2155,11 @@ const WalletBalance = ({
               {filterTitle === "Balance" && loading === false && (
                 <div className="d-flex flex-column align-items-center gap-3 balancewrapper3">
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-2">
+                    <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-3">
                       <img src={ethIcon} alt="" className="" />
                       <span className="eth-chain-text">Ethereum</span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img src={dypIcon} alt="dyp" className="dyp-icon" />
                         <h6 className="wallet-amount mb-0">
@@ -2134,7 +2173,7 @@ const WalletBalance = ({
                         ${getFormattedNumber(dypBalance * dyptokenData, 2)}
                       </span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img
                           src={idyp}
@@ -2156,11 +2195,11 @@ const WalletBalance = ({
                   </div>
                   <div className="balanceseparator"></div>
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-2">
+                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
                       <img src={bnbIcon} alt="" className="" />
                       <span className="bnb-chain-text">BNB Chain</span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img src={dypIcon} alt="dyp" className="dyp-icon" />
                         <h6 className="wallet-amount mb-0">
@@ -2175,7 +2214,7 @@ const WalletBalance = ({
                         {getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
                       </span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img
                           src={idyp}
@@ -2201,11 +2240,11 @@ const WalletBalance = ({
                   </div>
                   <div className="balanceseparator"></div>
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-2">
+                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
                       <img src={avaxIcon} alt="" className="" />
                       <span className="avax-chain-text">Avalanche</span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img src={dypIcon} alt="dyp" className="dyp-icon" />
                         <h6 className="wallet-amount mb-0">
@@ -2223,7 +2262,7 @@ const WalletBalance = ({
                         )}
                       </span>
                     </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
+                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-4">
                       <div className="d-flex align-items-center gap-2">
                         <img
                           src={idyp}
