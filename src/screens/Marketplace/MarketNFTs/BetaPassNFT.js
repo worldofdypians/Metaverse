@@ -331,22 +331,26 @@ const BetaPassNFT = ({
           const baseEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "base";
           });
+          if (coingeckoEvent) {
+            const usdValue =
+              coingeckoEvent[0].reward.earn.total /
+              coingeckoEvent[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue);
+          }
 
-          const usdValue =
-            coingeckoEvent[0].reward.earn.total /
-            coingeckoEvent[0].reward.earn.multiplier;
-          setuserEarnUsd(usdValue);
-          if (confluxEvent[0].reward.earn.multiplier !== 0) {
+          if (confluxEvent && confluxEvent[0] && confluxEvent[0].reward.earn.multiplier !== 0) {
             const usdValueConflux =
               confluxEvent[0].reward.earn.total /
               confluxEvent[0].reward.earn.multiplier;
             setuserEarnUsdConflux(usdValueConflux);
           }
+          if (gateEvent) {
+            const gateUsdValue =
+              gateEvent[0].reward.earn.total /
+              gateEvent[0].reward.earn.multiplier;
 
-          const gateUsdValue =
-            gateEvent[0].reward.earn.total /
-            gateEvent[0].reward.earn.multiplier;
-          setUserEarnUsdGate(gateUsdValue);
+            setUserEarnUsdGate(gateUsdValue);
+          }
 
           if (baseEvent) {
             if (baseEvent[0].reward.earn.multiplier !== 0) {
@@ -590,7 +594,10 @@ const BetaPassNFT = ({
             style={{ backgroundSize: "cover" }}
           >
             <div className="container-lg mx-0 position-relative">
-              <div className="row align-items-center justify-content-between mt-4 mb-5 gap-4 gap-lg-0" style={{minHeight: "232px"}}>
+              <div
+                className="row align-items-center justify-content-between mt-4 mb-5 gap-4 gap-lg-0"
+                style={{ minHeight: "232px" }}
+              >
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
@@ -690,6 +697,24 @@ const BetaPassNFT = ({
                     <span>Base</span>
                   </NavLink>
                   <NavLink
+                    to={"/marketplace/beta-pass/coingecko"}
+                    className={`${
+                      location.pathname.includes("coingecko") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(coingeckoData);
+                      setMintTitle("coingecko");
+                    }}
+                  >
+                    <img
+                      src={coingecko}
+                      className="beta-pass-chain-img"
+                      alt=""
+                    />
+                    <span>CoinGecko</span>
+                  </NavLink>
+                  <NavLink
                     to={"/marketplace/beta-pass/gate"}
                     className={`${
                       location.pathname.includes("gate") &&
@@ -720,24 +745,6 @@ const BetaPassNFT = ({
                   >
                     <img src={conflux} className="beta-pass-chain-img" alt="" />
                     <span>Conflux</span>
-                  </NavLink>
-                  <NavLink
-                    to={"/marketplace/beta-pass/coingecko"}
-                    className={`${
-                      location.pathname.includes("coingecko") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                    onClick={() => {
-                      setSelectedMint(coingeckoData);
-                      setMintTitle("coingecko");
-                    }}
-                  >
-                    <img
-                      src={coingecko}
-                      className="beta-pass-chain-img"
-                      alt=""
-                    />
-                    <span>CoinGecko</span>
                   </NavLink>
                   {/* <NavLink
                     to={"/marketplace/beta-pass/coin98"}
@@ -1505,8 +1512,6 @@ const BetaPassNFT = ({
                                   className={`position-relative events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
                                   style={{ top: 0 }}
                                 >
-                                  
-
                                   <span>Expired</span>
                                 </div>
                               </div>
@@ -1625,19 +1630,10 @@ const BetaPassNFT = ({
                                   Gate Treasure Hunt
                                 </h6>{" "}
                                 <div
-                                  className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
+                                  className={`position-relative events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
                                   style={{ top: 0 }}
                                 >
-                                  <div
-                                    class="pulsatingDot"
-                                    style={{
-                                      width: 7,
-                                      height: 7,
-                                      marginRight: 5,
-                                    }}
-                                  ></div>
-
-                                  <span>Live</span>
+                                  <span>Expired</span>
                                 </div>
                               </div>
                               <div className="gate-eventwrapper p-3">
@@ -1691,7 +1687,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/marketplace/events/past">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
