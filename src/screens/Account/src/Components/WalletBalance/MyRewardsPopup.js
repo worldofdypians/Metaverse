@@ -4,6 +4,8 @@ import dailyBonus from "./myrewardsAssets/dailyBonus.png";
 import leaderboard from "./myrewardsAssets/leaderboard.png";
 import nftStake from "./myrewardsAssets/nftStake.png";
 import treasureHunt from "./myrewardsAssets/treasureHunt.png";
+import specialRewards from "./myrewardsAssets/specialRewards.png";
+
 import Switch from "@mui/material/Switch";
 import axios from "axios";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
@@ -741,7 +743,6 @@ const MyRewardsPopup = ({
 
             <tr>
               <td className="myrewards-td-main border-0">
-                {" "}
                 <img
                   src={dailyBonus}
                   alt=""
@@ -765,6 +766,11 @@ const MyRewardsPopup = ({
                 {treasureRewardNftBetaPass > 0 && "+ 1 BetaPass NFT"}{" "}
                 {treasureRewardNftCaws > 0 && "+ 1 CAWS NFT"}{" "}
                 {treasureRewardNftWod > 0 && "+ 1 WoD NFT"}
+                {treasureRewardMoney === 0 &&
+                  treasureRewardNftBetaPass === 0 &&
+                  treasureRewardNftCaws === 0 &&
+                  treasureRewardNftWod === 0 &&
+                  "$0.00"}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 USD/NFT
@@ -773,6 +779,45 @@ const MyRewardsPopup = ({
                 {previousRewards ? "-" : "0"}
               </td>
             </tr>
+
+
+
+            <tr>
+              <td className="myrewards-td-main border-0">
+                <img
+                  src={specialRewards}
+                  alt=""
+                  style={{ width: 24, height: 24 }}
+                />
+                Special Rewards
+              </td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0 previousRewardsText"></td>
+            </tr>
+            <div className="table-separator"></div>
+
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Social bonus
+              </td>
+              <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
+               
+                  $0.00
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                0.0000WBNB
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+              $0.00
+              </td>
+            </tr>
+
+
+
+
+
+
 
             <tr>
               <td className="myrewards-td-main border-0">
