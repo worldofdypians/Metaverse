@@ -254,7 +254,7 @@ function App() {
         const propertyDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
         );
-        console.log('propertyDyp', propertyDyp)
+
         setDypTokenDatabnb_old(propertyDyp[0][1].token_price_usd);
 
         const propertyIDyp = Object.entries(
@@ -1690,8 +1690,6 @@ function App() {
       );
     }
   }, [coinbase, nftCount]);
-
- 
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -1745,7 +1743,6 @@ function App() {
                   nftCount={nftCount}
                   favorites={favorites}
                   dyptokenData_old={dypTokenData_old}
-
                 />
               }
             />
@@ -2193,7 +2190,6 @@ function App() {
                   }}
                   ethTokenData={ethTokenData}
                   dyptokenData_old={dypTokenData_old}
-
                 />
               }
             />
@@ -2237,7 +2233,6 @@ function App() {
                     setavailTime(value);
                   }}
                   dyptokenData_old={dypTokenData_old}
-
                   ethTokenData={ethTokenData}
                 />
               }

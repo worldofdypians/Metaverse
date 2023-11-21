@@ -317,16 +317,17 @@ const MyRewardsPopup = ({
         (item) => item.displayName === username
       );
 
-      const userPosition = testArray[0].position + 1;
-
-      if (bundlesBought > 0) {
-        setdailyplayerData(
-          userPosition > 10
-            ? 0
-            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
-        );
-      } else if (bundlesBought === 0) {
-        setdailyplayerData(userPosition > 10 ? 0 : dailyPrizes[userPosition]);
+      const userPosition = testArray[0].position;
+      if (bundlesBought && bundlesBought !== NaN) {
+        if (bundlesBought > 0) {
+          setdailyplayerData(
+            userPosition > 10
+              ? 0
+              : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
+          );
+        } else if (bundlesBought === 0) {
+          setdailyplayerData(userPosition > 10 ? 0 : dailyPrizes[userPosition]);
+        }
       }
     }
   };
@@ -498,7 +499,7 @@ const MyRewardsPopup = ({
     fetchWeeklyRecordsAroundPlayer();
     fetchMonthlyRecordsAroundPlayer();
     fetchMonthlyGenesisRecordsAroundPlayer();
-  }, [userId]);
+  }, [userId, bundlesBought]);
 
   useEffect(() => {
     getTreasureChestsInfo();
@@ -519,6 +520,7 @@ const MyRewardsPopup = ({
       fetchTreasureHuntData(email, address);
     }
   }, [email, address]);
+
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -773,11 +775,13 @@ const MyRewardsPopup = ({
                   : ""}{" "}
                 {treasureRewardNftCaws > 0 && treasureRewardMoney > 0
                   ? "+ 1 CAWS NFT"
-                  :treasureRewardNftCaws > 0 && treasureRewardMoney === 0 ? "1 CAWS NFT"
+                  : treasureRewardNftCaws > 0 && treasureRewardMoney === 0
+                  ? "1 CAWS NFT"
                   : ""}{" "}
                 {treasureRewardNftWod > 0 && treasureRewardMoney > 0
                   ? "+ 1 WoD NFT"
-                  :treasureRewardNftWod > 0 && treasureRewardMoney === 0 ? "1 WoD NFT"
+                  : treasureRewardNftWod > 0 && treasureRewardMoney === 0
+                  ? "1 WoD NFT"
                   : ""}
                 {treasureRewardMoney === 0 &&
                   treasureRewardNftBetaPass === 0 &&
@@ -816,7 +820,7 @@ const MyRewardsPopup = ({
                 $0.00
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                0.0000WBNB
+                0.0000 WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 $0.00
@@ -846,7 +850,7 @@ const MyRewardsPopup = ({
                 Genesis Gem
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-                {previousRewards ? "-" : `$${genesisData}`}
+                {previousRewards ? "-" : `$${getFormattedNumber(genesisData,2)}`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
