@@ -506,7 +506,6 @@ const ProfileCard = ({
                     {address &&
                       email &&
                       coinbase &&
-                      syncStatus !== "" &&
                       address?.toLowerCase() === coinbase?.toLowerCase() &&
                       !isPremium && (
                         <img
@@ -517,7 +516,6 @@ const ProfileCard = ({
                       )}
                     {address &&
                       email &&
-                      syncStatus !== "" &&
                       isPremium &&
                       !coinbase && (
                         <img
@@ -528,7 +526,6 @@ const ProfileCard = ({
                       )}
                     {address &&
                       email &&
-                      syncStatus !== "" &&
                       isPremium &&
                       coinbase && (
                         <img
