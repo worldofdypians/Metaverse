@@ -187,6 +187,8 @@ const NewWalletBalance = ({
   claimedPremiumChests,
   availableTime,
   canBuy,
+  rewardsPopup,
+  dailyPopup,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -817,12 +819,12 @@ const NewWalletBalance = ({
   }, [email, address, bnbPrice, cfxPrice]);
 
   useEffect(() => {
-    if (specialRewardsPopup === true) {
+    if (specialRewardsPopup || eventsPopup || stakePopup || rewardsPopup || dailyPopup) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [specialRewardsPopup]);
+  }, [specialRewardsPopup, eventsPopup, stakePopup, rewardsPopup, dailyPopup]);
 
   useEffect(() => {
     if (showAllEvents && windowSize.width > 786) {
