@@ -1392,25 +1392,25 @@ function App() {
 
   const refreshSubscription = async () => {
     let subscribedPlatformTokenAmountETH;
-    let subscribedPlatformTokenAmountAvax;
+    let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
 
     const web3eth = window.infuraWeb3;
-    const web3avax = window.avaxWeb3;
+    const web3cfx = window.confluxWeb3;
     const web3bnb = window.bscWeb3;
 
-    const AvaxABI = window.SUBSCRIPTION_ABI;
+    const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const EthABI = window.SUBSCRIPTIONETH_ABI;
     const BnbABI = window.SUBSCRIPTIONBNB_ABI;
 
     const ethsubscribeAddress = window.config.subscriptioneth_address;
-    const avaxsubscribeAddress = window.config.subscription_address;
+    const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscriptionbnb_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
-    const avaxcontract = new web3avax.eth.Contract(
-      AvaxABI,
-      avaxsubscribeAddress
+    const cfxcontract = new web3cfx.eth.Contract(
+      CfxABI,
+      cfxsubscribeAddress
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
@@ -1420,7 +1420,7 @@ function App() {
         .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
-      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+      subscribedPlatformTokenAmountCfx = await cfxcontract.methods
         .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
@@ -1429,14 +1429,14 @@ function App() {
         .call();
 
       if (
-        subscribedPlatformTokenAmountAvax === "0" &&
+        subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBNB === "0"
       ) {
         setIsPremium(false);
       }
       if (
-        subscribedPlatformTokenAmountAvax !== "0" ||
+        subscribedPlatformTokenAmountCfx !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
         subscribedPlatformTokenAmountBNB !== "0"
       ) {

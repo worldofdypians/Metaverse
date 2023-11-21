@@ -88,8 +88,8 @@ function Dashboard({
       symbol: "wbnb",
     },
     {
-      name: "Avalanche",
-      symbol: "wavax",
+      name: "Conflux",
+      symbol: "conflux",
     },
   ];
 
@@ -176,7 +176,7 @@ function Dashboard({
   const { BigNumber } = window;
 
   let wethAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
-  let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
+  let wcfx = "0xfe97E85d13ABD9c1c33384E796F10B73905637cE";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
 
   const metaverseBenefits = [
@@ -844,7 +844,9 @@ function Dashboard({
         ? window.config.subscriptioneth_tokens[token]?.decimals
         : chainId === 56
         ? window.config.subscriptionbnb_tokens[token]?.decimals
-        : window.config.subscription_tokens[token]?.decimals;
+        : chainId === 1030
+        ? window.config.subscriptioncfx_tokens[token]?.decimals
+        : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
     setTokenBalance("");
@@ -855,6 +857,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
         ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        : chainId === 1030
+        ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
     tokenprice = new BigNumber(tokenprice).toFixed(0);
 
@@ -871,7 +875,7 @@ function Dashboard({
   const handleApprove = async (e) => {
     // e.preventDefault();
     const ethsubscribeAddress = window.config.subscription_neweth_address;
-    const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const web3 = new Web3(window.ethereum);
 
@@ -887,7 +891,9 @@ function Dashboard({
           ? ethsubscribeAddress
           : chainId === 56
           ? bnbsubscribeAddress
-          : avaxsubscribeAddress,
+          : chainId === 1030
+          ? cfxsubscribeAddress
+          : cfxsubscribeAddress,
         price
       )
       .send({ from: coinbase })
@@ -912,10 +918,10 @@ function Dashboard({
   const handleCheckIfAlreadyApproved = async (token) => {
     const web3eth = new Web3(window.config.infura_endpoint);
     const bscWeb3 = new Web3(window.config.bsc_endpoint);
-    const avaxWeb3 = new Web3(window.config.avax_endpoint);
+    const cfxWeb3 = new Web3(window.config.conflux_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
-    const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
 
     const subscribeToken = token;
@@ -929,7 +935,7 @@ function Dashboard({
       subscribeToken
     );
 
-    const subscribeTokencontractavax = new avaxWeb3.eth.Contract(
+    const subscribeTokencontractcfx = new cfxWeb3.eth.Contract(
       window.ERC20_ABI,
       subscribeToken
     );
@@ -961,9 +967,9 @@ function Dashboard({
           setloadspinner(false);
           setisApproved(false);
         }
-      } else {
-        const result = await subscribeTokencontractavax.methods
-          .allowance(coinbase, avaxsubscribeAddress)
+      } else if(chainId === 1030) {
+        const result = await subscribeTokencontractcfx.methods
+          .allowance(coinbase, confluxsubscribeAddress)
           .call()
           .then();
 
@@ -986,7 +992,9 @@ function Dashboard({
           ? "SUBSCRIPTION_NEWETH"
           : chainId === 56
           ? "SUBSCRIPTION_NEWBNB"
-          : "SUBSCRIPTION_NEWAVAX",
+          : chainId === 1030
+          ? "SUBSCRIPTION_CFX"
+          : "",
     });
 
     setloadspinnerSub(true);
@@ -1136,6 +1144,18 @@ function Dashboard({
       handleSubscriptionTokenChange(wbnbAddress);
       handleCheckIfAlreadyApproved(wbnbAddress);
     }
+
+    else if (chainId === 1030) {
+      setChainDropdown(chainDropdowns[2]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioncfx_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wcfx);
+      handleCheckIfAlreadyApproved(wcfx);
+    }
+
     //  else if (chainId === 43114) {
     //   setChainDropdown(chainDropdowns[2]);
     //   setdropdownIcon("usdt");
@@ -1932,6 +1952,8 @@ function Dashboard({
                                           <img
                                             src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                             alt=""
+                                            style={{width: 20, height: 20}}
+
                                           />
                                           {/* {dropdownTitle} */}
                                         </div>
@@ -1945,6 +1967,9 @@ function Dashboard({
                                             : chainId === 56
                                             ? window.config
                                                 .subscriptionbnb_tokens
+                                                : chainId === 1030
+                                            ? window.config
+                                                .subscriptioncfx_tokens
                                             : window.config.subscription_tokens
                                         ).map((t, i) => (
                                           <li
@@ -1965,6 +1990,11 @@ function Dashboard({
                                                         .subscriptionbnb_tokens[
                                                         t
                                                       ]?.symbol
+                                                      : chainId === 1030
+                                                      ? window.config
+                                                          .subscriptioncfx_tokens[
+                                                          t
+                                                        ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -1978,6 +2008,11 @@ function Dashboard({
                                                     : chainId === 56
                                                     ? window.config
                                                         .subscriptionbnb_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                      : chainId === 1030
+                                                    ? window.config
+                                                        .subscriptioncfx_tokens[
                                                         t
                                                       ]?.symbol
                                                     : window.config
@@ -2003,11 +2038,16 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 1030
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
                                               }
                                               alt=""
+                                              style={{width: 20, height: 20}}
                                             />
                                             {chainId === 1
                                               ? window.config
@@ -2016,6 +2056,10 @@ function Dashboard({
                                               : chainId === 56
                                               ? window.config
                                                   .subscriptionbnb_tokens[t]
+                                                  ?.symbol
+                                                  : chainId === 1030
+                                              ? window.config
+                                                  .subscriptioncfx_tokens[t]
                                                   ?.symbol
                                               : window.config
                                                   .subscription_tokens[t]
