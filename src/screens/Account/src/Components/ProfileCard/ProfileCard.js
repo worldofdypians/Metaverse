@@ -477,7 +477,6 @@ const ProfileCard = ({
             className={` ${
               isVerified &&
               email &&
-              address?.toLowerCase() === coinbase?.toLowerCase() &&
               !isPremium &&
               "user-cardImg-active"
             } ${
@@ -506,8 +505,6 @@ const ProfileCard = ({
                     {address &&
                       email &&
                       coinbase &&
-                      syncStatus !== "" &&
-                      address?.toLowerCase() === coinbase?.toLowerCase() &&
                       !isPremium && (
                         <img
                           src={defaultAvatar}
@@ -517,7 +514,6 @@ const ProfileCard = ({
                       )}
                     {address &&
                       email &&
-                      syncStatus !== "" &&
                       isPremium &&
                       !coinbase && (
                         <img
@@ -528,7 +524,6 @@ const ProfileCard = ({
                       )}
                     {address &&
                       email &&
-                      syncStatus !== "" &&
                       isPremium &&
                       coinbase && (
                         <img
@@ -602,7 +597,7 @@ const ProfileCard = ({
                                 syncStatus !== "" &&
                                 address.toLowerCase() !==
                                   coinbase.toLowerCase() &&
-                                "wallet-wrapper-alert d-flex"
+                                "wallet-wrapper-alert d-flex bg-transparent p-0"
                               } ${
                                 (coinbase && email && !address && !username) ||
                                 (coinbase && email && !address && username) ||

@@ -4,6 +4,8 @@ import dailyBonus from "./myrewardsAssets/dailyBonus.png";
 import leaderboard from "./myrewardsAssets/leaderboard.png";
 import nftStake from "./myrewardsAssets/nftStake.png";
 import treasureHunt from "./myrewardsAssets/treasureHunt.png";
+import specialRewards from "./myrewardsAssets/specialRewards.png";
+
 import Switch from "@mui/material/Switch";
 import axios from "axios";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
@@ -20,6 +22,7 @@ const MyRewardsPopup = ({
   ethTokenData,
   openedChests,
   allChests,
+  hasNft,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -468,7 +471,9 @@ const MyRewardsPopup = ({
         if (openedChests[i].rewardType === "Points") {
           pointsResult += Number(openedChests[i].reward);
         } else if (openedChests[i].rewardType === "Money") {
-          moneyResult += Number(openedChests[i].reward);
+          if (hasNft) {
+            moneyResult += Number(openedChests[i].reward);
+          }
         } else if (openedChests[i].rewardType === "NFT") {
           if (openedChests[i].reward === "WoD") {
             nftLandResult++;
@@ -497,7 +502,7 @@ const MyRewardsPopup = ({
 
   useEffect(() => {
     getTreasureChestsInfo();
-  }, [openedChests]);
+  }, [openedChests, hasNft]);
 
   useEffect(() => {
     getBundles();
@@ -671,20 +676,15 @@ const MyRewardsPopup = ({
                 Gate.io
               </td>
               <td className="myrewards-td-second border-0 specialCell text-center">
+                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : `${getFormattedNumber(0, 4)} WBNB`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
                   : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
-                {previousRewards
-                  ? "-"
-                  : `${getFormattedNumber(
-                      gateEarnUSDPrevious / bnbPrice,
-                      4
-                    )} WBNB`}
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
               </td>
             </tr>
             <tr>
@@ -746,7 +746,6 @@ const MyRewardsPopup = ({
 
             <tr>
               <td className="myrewards-td-main border-0">
-                {" "}
                 <img
                   src={dailyBonus}
                   alt=""
@@ -767,15 +766,60 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
                 {treasureRewardMoney > 0 &&
                   "$" + getFormattedNumber(treasureRewardMoney, 2)}{" "}
-                {treasureRewardNftBetaPass > 0 && "+ 1 BetaPass NFT"}{" "}
-                {treasureRewardNftCaws > 0 && "+ 1 CAWS NFT"}{" "}
-                {treasureRewardNftWod > 0 && "+ 1 WoD NFT"}
+                {treasureRewardNftBetaPass > 0 && treasureRewardMoney > 0
+                  ? "+ 1 BetaPass NFT"
+                  : treasureRewardNftBetaPass > 0 && treasureRewardMoney === 0
+                  ? "1 BetaPass NFT"
+                  : ""}{" "}
+                {treasureRewardNftCaws > 0 && treasureRewardMoney > 0
+                  ? "+ 1 CAWS NFT"
+                  :treasureRewardNftCaws > 0 && treasureRewardMoney === 0 ? "1 CAWS NFT"
+                  : ""}{" "}
+                {treasureRewardNftWod > 0 && treasureRewardMoney > 0
+                  ? "+ 1 WoD NFT"
+                  :treasureRewardNftWod > 0 && treasureRewardMoney === 0 ? "1 WoD NFT"
+                  : ""}
+                {treasureRewardMoney === 0 &&
+                  treasureRewardNftBetaPass === 0 &&
+                  treasureRewardNftCaws === 0 &&
+                  treasureRewardNftWod === 0 &&
+                  "$0.00"}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 USD/NFT
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards ? "-" : "0"}
+              </td>
+            </tr>
+
+            <tr>
+              <td className="myrewards-td-main border-0">
+                <img
+                  src={specialRewards}
+                  alt=""
+                  style={{ width: 24, height: 24 }}
+                />
+                Special Rewards
+              </td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0"></td>
+              <td className="myrewards-td-second border-0 previousRewardsText"></td>
+            </tr>
+            <div className="table-separator"></div>
+
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Social bonus
+              </td>
+              <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
+                $0.00
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                0.0000WBNB
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                $0.00
               </td>
             </tr>
 

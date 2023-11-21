@@ -741,7 +741,7 @@ const DailyBonusPopup = ({
                       : "d-flex"
                   } p-2 mt-2 daily-error-text-wrapper justify-content-center`}
                 >
-                  {chainId !== 204 && chainId !== 56 && coinbase ? (
+                  {chainId !== 204 && chainId !== 56 && coinbase && canBuy ? (
                     <div className="row mx-0">
                       <span
                         className="sync-txt d-flex align-items-center gap-1"
