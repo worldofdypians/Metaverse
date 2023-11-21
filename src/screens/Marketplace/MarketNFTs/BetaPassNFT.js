@@ -331,22 +331,26 @@ const BetaPassNFT = ({
           const baseEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "base";
           });
+          if (coingeckoEvent) {
+            const usdValue =
+              coingeckoEvent[0].reward.earn.total /
+              coingeckoEvent[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue);
+          }
 
-          const usdValue =
-            coingeckoEvent[0].reward.earn.total /
-            coingeckoEvent[0].reward.earn.multiplier;
-          setuserEarnUsd(usdValue);
-          if (confluxEvent[0].reward.earn.multiplier !== 0) {
+          if (confluxEvent && confluxEvent[0] && confluxEvent[0].reward.earn.multiplier !== 0) {
             const usdValueConflux =
               confluxEvent[0].reward.earn.total /
               confluxEvent[0].reward.earn.multiplier;
             setuserEarnUsdConflux(usdValueConflux);
           }
+          if (gateEvent) {
+            const gateUsdValue =
+              gateEvent[0].reward.earn.total /
+              gateEvent[0].reward.earn.multiplier;
 
-          const gateUsdValue =
-            gateEvent[0].reward.earn.total /
-            gateEvent[0].reward.earn.multiplier;
-          setUserEarnUsdGate(gateUsdValue);
+            setUserEarnUsdGate(gateUsdValue);
+          }
 
           if (baseEvent) {
             if (baseEvent[0].reward.earn.multiplier !== 0) {

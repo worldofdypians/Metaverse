@@ -1506,42 +1506,47 @@ const WalletBalance = ({
             setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
             setDypiusEarnTokens(userEarnedDyp);
           }
-
-          const points = coingeckoEvent[0].reward.earn.totalPoints;
-          setuserPoints(points);
-
-          const usdValue =
-            coingeckoEvent[0].reward.earn.total /
-            coingeckoEvent[0].reward.earn.multiplier;
-          setuserEarnUsd(usdValue);
-          if (bnbPrice !== 0) {
-            setuserEarnETH(usdValue / bnbPrice);
-          }
-
-          const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
-          setConfluxUserPoints(cfxPoints);
-
-          if (confluxEvent[0].reward.earn.multiplier !== 0) {
-            const cfxUsdValue =
-              confluxEvent[0].reward.earn.total /
-              confluxEvent[0].reward.earn.multiplier;
-            setConfluxEarnUSD(cfxUsdValue);
-            if (cfxPrice !== 0) {
-              setConfluxEarnCFX(cfxUsdValue / cfxPrice);
-            }
-          }
-          const gatePoints = gateEvent[0].reward.earn.totalPoints;
-          setGateUserPoints(gatePoints);
-
-          if (gateEvent[0].reward.earn.multiplier !== 0) {
-            const gateUsdValue =
-              gateEvent[0].reward.earn.total /
-              gateEvent[0].reward.earn.multiplier;
-            setGateEarnUSD(gateUsdValue);
+          if (coingeckoEvent) {
+            const points = coingeckoEvent[0].reward.earn.totalPoints;
+            setuserPoints(points);
+            const usdValue =
+              coingeckoEvent[0].reward.earn.total /
+              coingeckoEvent[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue);
             if (bnbPrice !== 0) {
-              setGateEarnBNB(gateUsdValue / bnbPrice);
+              setuserEarnETH(usdValue / bnbPrice);
             }
           }
+
+          if (confluxEvent) {
+            const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
+            setConfluxUserPoints(cfxPoints);
+
+            if (confluxEvent[0].reward.earn.multiplier !== 0) {
+              const cfxUsdValue =
+                confluxEvent[0].reward.earn.total /
+                confluxEvent[0].reward.earn.multiplier;
+              setConfluxEarnUSD(cfxUsdValue);
+              if (cfxPrice !== 0) {
+                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+              }
+            }
+          }
+
+          if (gateEvent) {
+            const gatePoints = gateEvent[0].reward.earn.totalPoints;
+            setGateUserPoints(gatePoints);
+            if (gateEvent[0].reward.earn.multiplier !== 0) {
+              const gateUsdValue =
+                gateEvent[0].reward.earn.total /
+                gateEvent[0].reward.earn.multiplier;
+              setGateEarnUSD(gateUsdValue);
+              if (bnbPrice !== 0) {
+                setGateEarnBNB(gateUsdValue / bnbPrice);
+              }
+            }
+          }
+
           if (baseEvent) {
             const basePoints = baseEvent[0].reward.earn.totalPoints;
             setBaseUserPoints(basePoints);
