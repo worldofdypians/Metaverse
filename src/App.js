@@ -207,13 +207,13 @@ function App() {
   useEagerlyConnect();
 
   const searchDomain = async (domain) => {
-    // if(window.ethereum){
-    //   const provider = new providers.Web3Provider(window.ethereum)
-    //   const signer = provider.getSigner()
-    //   const register = new SIDRegisterOptions({signer, chainId: 56})
-    //   const available = await register.getAvailable(domain)
-    //   console.log(available, "Available");
-    // }
+    if(window.ethereum){
+      const provider = new providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const register = new SIDRegister({signer, chainId: 56})
+      const available = await register.getAvailable(domain)
+      console.log(available, "Available");
+    }
   }
 
 
