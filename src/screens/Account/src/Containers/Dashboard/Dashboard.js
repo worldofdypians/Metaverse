@@ -55,7 +55,8 @@ function Dashboard({
   myCawsWodStakes,
   landStaked,
   ethTokenData,
-  dypTokenData,dypTokenData_old,
+  dypTokenData,
+  dypTokenData_old,
   onSigninClick,
   onLogoutClick,
   availableTime,
@@ -90,6 +91,10 @@ function Dashboard({
     {
       name: "Conflux",
       symbol: "conflux",
+    },
+    {
+      name: "Base",
+      symbol: "base",
     },
   ];
 
@@ -177,6 +182,7 @@ function Dashboard({
 
   let wethAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
   let wcfx = "0xfe97E85d13ABD9c1c33384E796F10B73905637cE";
+  let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
 
   const metaverseBenefits = [
@@ -390,67 +396,70 @@ function Dashboard({
     }
   };
 
-  const refreshSubscription = async (userAddr, email) => {
-    let subscribedPlatformTokenAmountNewETH;
-    let subscribedPlatformTokenAmountNewAvax;
-    let subscribedPlatformTokenAmountNewBNB;
+  const refreshSubscription = async () => {
+    let subscribedPlatformTokenAmountETH;
+    let subscribedPlatformTokenAmountCfx;
+    let subscribedPlatformTokenAmountBNB;
+    let subscribedPlatformTokenAmountBase;
 
     const web3eth = window.infuraWeb3;
-    const web3avax = window.avaxWeb3;
+    const web3cfx = window.confluxWeb3;
+    const web3base = window.baseWeb3;
     const web3bnb = window.bscWeb3;
 
-    const ethsubscribeNewAddress = window.config.subscription_neweth_address;
-    const avaxsubscribeNewAddress = window.config.subscription_newavax_address;
-    const bnbsubscribeNewAddress = window.config.subscription_newbnb_address;
+    const CfxABI = window.SUBSCRIPTION_CFX_ABI;
+    const BaseABI = window.SUBSCRIPTION_BASE_ABI;
+    const EthABI = window.SUBSCRIPTIONETH_ABI;
+    const BnbABI = window.SUBSCRIPTIONBNB_ABI;
 
-    const AvaxNewABI = window.SUBSCRIPTION_NEWAVAX_ABI;
-    const EthNewABI = window.SUBSCRIPTION_NEWETH_ABI;
-    const BnbNewABI = window.SUBSCRIPTION_NEWBNB_ABI;
+    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const cfxsubscribeAddress = window.config.subscription_cfx_address;
+    const basesubscribeAddress = window.config.subscription_base_address;
+    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
 
-    const ethNewcontract = new web3eth.eth.Contract(
-      EthNewABI,
-      ethsubscribeNewAddress
+    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+    const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
+
+    const basecontract = new web3base.eth.Contract(
+      BaseABI,
+      basesubscribeAddress
     );
 
-    const avaxNewcontract = new web3avax.eth.Contract(
-      AvaxNewABI,
-      avaxsubscribeNewAddress
-    );
+    const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
 
-    const bnbNewcontract = new web3bnb.eth.Contract(
-      BnbNewABI,
-      bnbsubscribeNewAddress
-    );
-
-    if (userAddr && email) {
-      subscribedPlatformTokenAmountNewETH = await ethNewcontract.methods
-        .subscriptionPlatformTokenAmount(userAddr)
+    if (coinbase) {
+      subscribedPlatformTokenAmountETH = await ethcontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
-      subscribedPlatformTokenAmountNewAvax = await avaxNewcontract.methods
-        .subscriptionPlatformTokenAmount(userAddr)
+      subscribedPlatformTokenAmountCfx = await cfxcontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
-      subscribedPlatformTokenAmountNewBNB = await bnbNewcontract.methods
-        .subscriptionPlatformTokenAmount(userAddr)
+      subscribedPlatformTokenAmountBase = await basecontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
+        .call();
+
+      subscribedPlatformTokenAmountBNB = await bnbcontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
       if (
-        subscribedPlatformTokenAmountNewETH === "0" &&
-        subscribedPlatformTokenAmountNewAvax === "0" &&
-        subscribedPlatformTokenAmountNewBNB === "0"
+        subscribedPlatformTokenAmountCfx === "0" &&
+        subscribedPlatformTokenAmountETH === "0" &&
+        subscribedPlatformTokenAmountBase === "0" &&
+        subscribedPlatformTokenAmountBNB === "0"
       ) {
         setIsPremium(false);
       }
       if (
-        subscribedPlatformTokenAmountNewETH !== "0" ||
-        subscribedPlatformTokenAmountNewAvax !== "0" ||
-        subscribedPlatformTokenAmountNewBNB !== "0"
+        subscribedPlatformTokenAmountCfx !== "0" ||
+        subscribedPlatformTokenAmountETH !== "0" ||
+        subscribedPlatformTokenAmountBase !== "0" ||
+        subscribedPlatformTokenAmountBNB !== "0"
       ) {
         setIsPremium(true);
       }
-    } else {
-      setIsPremium(false);
     }
   };
 
@@ -846,12 +855,14 @@ function Dashboard({
         ? window.config.subscriptionbnb_tokens[token]?.decimals
         : chainId === 1030
         ? window.config.subscriptioncfx_tokens[token]?.decimals
+        : chainId === 8453
+        ? window.config.subscriptionbase_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
     setTokenBalance("");
     setselectedSubscriptionToken(token);
-
+console.log('token', token)
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -859,7 +870,10 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
+        : chainId === 8453
+        ? await window.getEstimatedTokenSubscriptionAmountBase(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
+
     tokenprice = new BigNumber(tokenprice).toFixed(0);
 
     let formattedTokenPrice = getFormattedNumber(
@@ -876,6 +890,7 @@ function Dashboard({
     // e.preventDefault();
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
+    const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const web3 = new Web3(window.ethereum);
 
@@ -893,6 +908,8 @@ function Dashboard({
           ? bnbsubscribeAddress
           : chainId === 1030
           ? cfxsubscribeAddress
+          : chainId === 8453
+          ? basesubscribeAddress
           : cfxsubscribeAddress,
         price
       )
@@ -919,10 +936,12 @@ function Dashboard({
     const web3eth = new Web3(window.config.infura_endpoint);
     const bscWeb3 = new Web3(window.config.bsc_endpoint);
     const cfxWeb3 = new Web3(window.config.conflux_endpoint);
+    const baseWeb3 = new Web3(window.config.base_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const basesubscribeAddress = window.config.subscription_base_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -936,6 +955,11 @@ function Dashboard({
     );
 
     const subscribeTokencontractcfx = new cfxWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractbase = new baseWeb3.eth.Contract(
       window.ERC20_ABI,
       subscribeToken
     );
@@ -967,9 +991,22 @@ function Dashboard({
           setloadspinner(false);
           setisApproved(false);
         }
-      } else if(chainId === 1030) {
+      } else if (chainId === 1030) {
         const result = await subscribeTokencontractcfx.methods
           .allowance(coinbase, confluxsubscribeAddress)
+          .call()
+          .then();
+
+        if (result != 0) {
+          setloadspinner(false);
+          setisApproved(true);
+        } else if (result == 0) {
+          setloadspinner(false);
+          setisApproved(false);
+        }
+      } else if (chainId === 8453) {
+        const result = await subscribeTokencontractbase.methods
+          .allowance(coinbase, basesubscribeAddress)
           .call()
           .then();
 
@@ -994,6 +1031,8 @@ function Dashboard({
           ? "SUBSCRIPTION_NEWBNB"
           : chainId === 1030
           ? "SUBSCRIPTION_CFX"
+          : chainId === 8453
+          ? "SUBSCRIPTION_BASE"
           : "",
     });
 
@@ -1101,6 +1140,7 @@ function Dashboard({
       await handleSwitchNetworkhook("0x2105")
         .then(() => {
           handleSwitchNetwork(8453);
+          setChainDropdown(chainDropdowns[3]);
         })
         .catch((e) => {
           console.log(e);
@@ -1114,6 +1154,7 @@ function Dashboard({
         await handleSwitchNetworkhook("0x406")
           .then(() => {
             handleSwitchNetwork(1030);
+            setChainDropdown(chainDropdowns[2]);
           })
           .catch((e) => {
             console.log(e);
@@ -1143,9 +1184,7 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wbnbAddress);
       handleCheckIfAlreadyApproved(wbnbAddress);
-    }
-
-    else if (chainId === 1030) {
+    } else if (chainId === 1030) {
       setChainDropdown(chainDropdowns[2]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1154,6 +1193,15 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wcfx);
       handleCheckIfAlreadyApproved(wcfx);
+    } else if (chainId === 8453) {
+      setChainDropdown(chainDropdowns[3]);
+      setdropdownIcon("weth");
+      setdropdownTitle("WETH");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionbase_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wbase);
+      handleCheckIfAlreadyApproved(wbase);
     }
 
     //  else if (chainId === 43114) {
@@ -1185,6 +1233,16 @@ function Dashboard({
     } else if (chainId === 56 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionbnb_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 1030 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptioncfx_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 8453 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionbase_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     }
@@ -1306,8 +1364,6 @@ function Dashboard({
     }
   }, [success]);
 
-
-  
   useEffect(() => {
     if (dailyBonusPopup) {
       html.classList.add("hidescroll");
@@ -1952,8 +2008,7 @@ function Dashboard({
                                           <img
                                             src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                             alt=""
-                                            style={{width: 20, height: 20}}
-
+                                            style={{ width: 20, height: 20 }}
                                           />
                                           {/* {dropdownTitle} */}
                                         </div>
@@ -1967,9 +2022,12 @@ function Dashboard({
                                             : chainId === 56
                                             ? window.config
                                                 .subscriptionbnb_tokens
-                                                : chainId === 1030
+                                            : chainId === 1030
                                             ? window.config
                                                 .subscriptioncfx_tokens
+                                            : chainId === 8453
+                                            ? window.config
+                                                .subscriptionbase_tokens
                                             : window.config.subscription_tokens
                                         ).map((t, i) => (
                                           <li
@@ -1990,11 +2048,16 @@ function Dashboard({
                                                         .subscriptionbnb_tokens[
                                                         t
                                                       ]?.symbol
-                                                      : chainId === 1030
-                                                      ? window.config
-                                                          .subscriptioncfx_tokens[
-                                                          t
-                                                        ]?.symbol
+                                                    : chainId === 8453
+                                                    ? window.config
+                                                        .subscriptionbase_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1030
+                                                    ? window.config
+                                                        .subscriptioncfx_tokens[
+                                                        t
+                                                      ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -2010,7 +2073,12 @@ function Dashboard({
                                                         .subscriptionbnb_tokens[
                                                         t
                                                       ]?.symbol
-                                                      : chainId === 1030
+                                                    : chainId === 8453
+                                                    ? window.config
+                                                        .subscriptionbase_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1030
                                                     ? window.config
                                                         .subscriptioncfx_tokens[
                                                         t
@@ -2038,8 +2106,12 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                                    : chainId === 1030
+                                                  : chainId === 1030
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 8453
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
@@ -2047,7 +2119,7 @@ function Dashboard({
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
                                               }
                                               alt=""
-                                              style={{width: 20, height: 20}}
+                                              style={{ width: 20, height: 20 }}
                                             />
                                             {chainId === 1
                                               ? window.config
@@ -2057,9 +2129,13 @@ function Dashboard({
                                               ? window.config
                                                   .subscriptionbnb_tokens[t]
                                                   ?.symbol
-                                                  : chainId === 1030
+                                              : chainId === 1030
                                               ? window.config
                                                   .subscriptioncfx_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 8453
+                                              ? window.config
+                                                  .subscriptionbase_tokens[t]
                                                   ?.symbol
                                               : window.config
                                                   .subscription_tokens[t]

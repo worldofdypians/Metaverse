@@ -1394,23 +1394,33 @@ function App() {
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
+    let subscribedPlatformTokenAmountBase;
+
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
+    const web3base = window.baseWeb3;
     const web3bnb = window.bscWeb3;
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
+    const BaseABI = window.SUBSCRIPTION_BASE_ABI;
     const EthABI = window.SUBSCRIPTIONETH_ABI;
     const BnbABI = window.SUBSCRIPTIONBNB_ABI;
 
     const ethsubscribeAddress = window.config.subscriptioneth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
+    const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscriptionbnb_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(
       CfxABI,
       cfxsubscribeAddress
+    );
+
+    const basecontract = new web3base.eth.Contract(
+      BaseABI,
+      basesubscribeAddress
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
@@ -1424,6 +1434,10 @@ function App() {
         .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
+        subscribedPlatformTokenAmountBase = await basecontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
+        .call();
+
       subscribedPlatformTokenAmountBNB = await bnbcontract.methods
         .subscriptionPlatformTokenAmount(coinbase)
         .call();
@@ -1431,6 +1445,7 @@ function App() {
       if (
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
+        subscribedPlatformTokenAmountBase === "0" &&
         subscribedPlatformTokenAmountBNB === "0"
       ) {
         setIsPremium(false);
@@ -1438,6 +1453,7 @@ function App() {
       if (
         subscribedPlatformTokenAmountCfx !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
+        subscribedPlatformTokenAmountBase !== "0" ||
         subscribedPlatformTokenAmountBNB !== "0"
       ) {
         setIsPremium(true);
