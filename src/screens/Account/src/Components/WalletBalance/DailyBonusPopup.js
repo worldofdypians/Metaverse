@@ -587,7 +587,7 @@ const DailyBonusPopup = ({
   };
 
   useEffect(() => {
-    setNames(shuffle(cryptoNames));
+    setNames(cryptoNames);
     setDummyPremiumChests(dummyPremiums);
     setDummyRegularChests(dummyChests);
   }, []);

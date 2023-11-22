@@ -819,7 +819,13 @@ const NewWalletBalance = ({
   }, [email, address, bnbPrice, cfxPrice]);
 
   useEffect(() => {
-    if (specialRewardsPopup || eventsPopup || stakePopup || rewardsPopup || dailyPopup) {
+    if (
+      specialRewardsPopup ||
+      eventsPopup ||
+      stakePopup ||
+      rewardsPopup ||
+      dailyPopup
+    ) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
@@ -973,10 +979,18 @@ const NewWalletBalance = ({
         setUserRank(
           userPosition > 10
             ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
             : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
         );
       } else if (!availableTime) {
-        setUserRank(userPosition > 10 ? 0 : monthlyPrizes[userPosition]);
+        setUserRank(
+          userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9]
+            : monthlyPrizes[userPosition]
+        );
       }
     }
   };
@@ -1023,13 +1037,19 @@ const NewWalletBalance = ({
       if (availableTime) {
         setdailyplayerData(
           userPosition > 10
-            ? 0 :
-            userPosition === 10
+            ? 0
+            : userPosition === 10
             ? dailyPrizes[9] + dailyPrizesGolden[9]
             : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
         );
       } else if (!availableTime) {
-        setdailyplayerData(userPosition > 10 ? 0 : dailyPrizes[userPosition]);
+        setdailyplayerData(
+          userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? dailyPrizes[9]
+            : dailyPrizes[userPosition]
+        );
       }
     }
   };
@@ -1055,10 +1075,18 @@ const NewWalletBalance = ({
         setweeklyplayerData(
           userPosition > 10
             ? 0
+            : userPosition === 10
+            ? weeklyPrizes[9] + weeklyPrizesGolden[9]
             : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
         );
       } else if (!availableTime) {
-        setweeklyplayerData(userPosition > 10 ? 0 : weeklyPrizes[userPosition]);
+        setweeklyplayerData(
+          userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? weeklyPrizes[9]
+            : weeklyPrizes[userPosition]
+        );
       }
     }
   };
@@ -1134,7 +1162,7 @@ const NewWalletBalance = ({
       window.config.wod_caws_address
     );
     if (address) {
-      if (myStakes&& myStakes.length > 0) {
+      if (myStakes && myStakes.length > 0) {
         let rewards = await contract.methods
           .calculateRewards(address, myStakes)
           .call()
@@ -1684,7 +1712,7 @@ const NewWalletBalance = ({
                   <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
                     <h6 className="profile-div-title mb-0">Stake NFT</h6>
                     <p className="profile-div-desc mb-0">
-                      Earn $ETH daily rewards by staking your NFTs
+                      Earn ETH daily rewards by staking your NFTs
                     </p>
 
                     <div className="d-flex align-items-center gap-2 green-link">
@@ -1918,12 +1946,12 @@ const NewWalletBalance = ({
             }}
             ref={releaseContent}
           >
-             <div className="prev-arrow-nft" onClick={firstPrev}>
-                <img src={nextArrow} alt="" />
-              </div>
-              <div className="next-arrow-nft" onClick={firstNext}>
-                <img src={nextArrow} alt="1" />
-              </div>
+            <div className="prev-arrow-nft" onClick={firstPrev}>
+              <img src={nextArrow} alt="" />
+            </div>
+            <div className="next-arrow-nft" onClick={firstNext}>
+              <img src={nextArrow} alt="1" />
+            </div>
             <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.map((item, index) => (
                 <NewBetaEventCard
@@ -1935,14 +1963,14 @@ const NewWalletBalance = ({
                   }}
                   userEarnUsd={
                     item.title === "Conflux"
-                    ? confluxEarnUSD
-                    : item.title === "Gate.io"
-                    ? gateEarnUSD
-                    : item.title === "Base"
-                    ? baseEarnUSD
-                    : item.title === "Dypius"
-                    ? dypiusEarnTokens
-                    : userEarnUsd
+                      ? confluxEarnUSD
+                      : item.title === "Gate.io"
+                      ? gateEarnUSD
+                      : item.title === "Base"
+                      ? baseEarnUSD
+                      : item.title === "Dypius"
+                      ? dypiusEarnTokens
+                      : userEarnUsd
                   }
                 />
               ))}
@@ -1951,7 +1979,7 @@ const NewWalletBalance = ({
         </div>
       )}
 
-{eventPopup && (
+      {eventPopup && (
         <OutsideClickHandler onOutsideClick={() => setEventPopup(false)}>
           <div className="profile-event-popup p-4">
             <div className="d-flex align-items-center justify-content-between mb-2">
