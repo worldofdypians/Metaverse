@@ -11,6 +11,7 @@ import axios from "axios";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import greenInfo from "./assets/greenInfo.svg";
 import OutsideClickHandler from "react-outside-click-handler";
+import { async } from "q";
 
 const MyRewardsPopup = ({
   username,
@@ -59,6 +60,8 @@ const MyRewardsPopup = ({
   const [treasureRewardNftCaws, setTreasureRewardNftCaws] = useState(0);
   const [treasureRewardNftWod, setTreasureRewardNftWod] = useState(0);
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
+  const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
+  const [gateRewardsUSD, setGateRewardsUSD] = useState(0)
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -434,6 +437,25 @@ const MyRewardsPopup = ({
     }
   };
 
+  const fetchConfluxUSDRewards = async() => {
+   await axios.get(`https://api.worldofdypians.com/api/conflux_rewards/${address}`).then((data) => {
+    if(data.data.userRewards){
+    setConfluxRewardsUSD(data.data.userRewards)
+    }else{
+    setConfluxRewardsUSD(0)  
+    }
+  })
+  }
+  const fetchGateUSDRewards = async() => {
+   await axios.get(`https://api.worldofdypians.com/api/gate_rewards/${address}`).then((data) => {
+    if(data.data.userRewards){
+      setGateRewardsUSD(data.data.userRewards)
+      }else{
+      setGateRewardsUSD(0)  
+      }
+  })
+  }
+
   const fetchNftRewards = async (userAddr) => {
     if (userAddr) {
       const cawsResult = await axios.get(
@@ -521,6 +543,8 @@ const MyRewardsPopup = ({
     fetchWeeklyRecordsAroundPlayer();
     fetchMonthlyRecordsAroundPlayer();
     fetchMonthlyGenesisRecordsAroundPlayer();
+    fetchConfluxUSDRewards();
+    fetchGateUSDRewards();
   }, [userId, bundlesBought]);
 
   useEffect(() => {
@@ -691,7 +715,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
-                  : `$${getFormattedNumber(confluxEarnUSDPrevious, 2)}`}
+                  : `$${getFormattedNumber(confluxRewardsUSD, 2)}`}
               </td>
             </tr>
             <tr>
@@ -707,7 +731,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
-                  : `$${getFormattedNumber(gateEarnUSDPrevious, 2)}`}
+                  : `$${getFormattedNumber(gateRewardsUSD, 2)}`}
               </td>
             </tr>
             <tr>
