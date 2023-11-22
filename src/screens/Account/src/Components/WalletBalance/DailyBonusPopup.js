@@ -588,7 +588,8 @@ const DailyBonusPopup = ({
 
   useEffect(() => {
     setNames(shuffle(cryptoNames));
-    setDummyPremiumChests(dummyPremiums);
+    setDummyPremiumChests(shuffle(dummyPremiums));
+    // shufflePremiums(dummyPremiums);
     setDummyRegularChests(dummyChests);
   }, []);
 
@@ -860,13 +861,13 @@ const DailyBonusPopup = ({
               </div>
             ) : rewardTypes === "premium" && email ? (
               <div className="rewardsgrid">
-                {premiumChests.map((item, index) => (
+                {dummypremiumChests.map((item, index) => (
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
-                    chestTitle={dummyPremiums[index].chestTitle}
+                    chestTitle={item.chestTitle}
                     open={item.isOpened}
-                    closedImg={dummyPremiums[index].closedImg}
+                    closedImg={item.closedImg}
                     rewardTypes={rewardTypes}
                     isPremium={isPremium}
                     address={address}
