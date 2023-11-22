@@ -1018,12 +1018,14 @@ const NewWalletBalance = ({
         (item) => item.displayName === username
       );
 
-      const userPosition = testArray[0].position + 1;
+      const userPosition = testArray[0].position;
 
       if (availableTime) {
         setdailyplayerData(
           userPosition > 10
-            ? 0
+            ? 0 :
+            userPosition === 10
+            ? dailyPrizes[9] + dailyPrizesGolden[9]
             : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
         );
       } else if (!availableTime) {
