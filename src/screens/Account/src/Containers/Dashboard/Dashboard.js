@@ -522,7 +522,7 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0"
+        subscribedPlatformTokenAmountBNB === "0" && coinbase?.toLowerCase() !== "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
       ) {
         setIsPremium(false);
       }
@@ -1600,8 +1600,7 @@ function Dashboard({
                         openedChests={openedChests}
                         hasNft={
                           MyNFTSCaws.length +
-                            MyNFTSLand.length +
-                            MyNFTSTimepiece.length >
+                            MyNFTSLand.length   >
                           0
                             ? true
                             : false
@@ -1838,8 +1837,7 @@ function Dashboard({
                             availableTime={goldenPassRemainingTime}
                             hasNft={
                               MyNFTSCaws.length +
-                                MyNFTSLand.length +
-                                MyNFTSTimepiece.length >
+                                MyNFTSLand.length  >
                               0
                                 ? true
                                 : false
