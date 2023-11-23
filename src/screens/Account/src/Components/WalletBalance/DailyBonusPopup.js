@@ -475,7 +475,6 @@ const DailyBonusPopup = ({
     }
     setRandomArray(arr);
   }
- 
 
   function randomNum() {
     var arr = [];
@@ -623,7 +622,6 @@ const DailyBonusPopup = ({
       setdisableBtn(true);
     }
   }, [canBuy, address, coinbase]);
-  console.log(dummyPremiums)
 
   return (
     <>
@@ -846,9 +844,9 @@ const DailyBonusPopup = ({
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
-                    chestTitle={dummyPremiums[index].chestTitle}
+                    chestTitle={dummypremiumChests[index].chestTitle}
                     open={item.isOpened}
-                    closedImg={dummyPremiums[index].closedImg}
+                    closedImg={dummypremiumChests[index].closedImg}
                     rewardTypes={rewardTypes}
                     isPremium={isPremium}
                     address={address}
