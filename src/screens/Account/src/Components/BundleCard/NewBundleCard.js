@@ -1017,17 +1017,34 @@ const NewBundleCard = ({
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
         // handleRefreshCountdown700();
         // setisAtlimit(false);
-        setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-        );
-        handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-        );
-        setisAtlimit(true);
-        setStatusColor700("#FE7A00");
-        setStatus700(
-          "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-        );
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
+
+            if (today < finalDateofBundle) {setcountdown700(
+              today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            );
+            handleSetAvailableTime(
+              today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            );
+            setisAtlimit(true);
+            setStatusColor700("#FE7A00");
+            setStatus700(
+              "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+            );
+          } else if (today > finalDateofBundle && bundlesBought > 0) {
+            setisAtlimit(false);
+            setcountdown700();
+            handleSetAvailableTime();
+            setStatus700(
+              "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+            );
+            setStatusColor700("#FE7A00");
+          }
+       
       } else if (week4.includes(today_date.toString()) && today_date > 22) {
         const finalDateofBundle =
           dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
