@@ -39,6 +39,8 @@ const MobileNavbar = ({
   const [unreadNotifications, setunreadNotifications] = useState(0);
   const [ethState, setEthState] = useState(true);
   const [bnbState, setBnbState] = useState(false);
+  const [opbnbState, setOpBnbState] = useState(false);
+
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
@@ -62,32 +64,44 @@ const MobileNavbar = ({
         setBnbState(false);
         setEthState(true);
         setBaseState(false);
+        setOpBnbState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
+        setOpBnbState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(true);
+        setOpBnbState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
         setEthState(false);
         setBaseState(false);
+        setOpBnbState(false);
+      } else if (chainId === 204) {
+        setAvaxState(false);
+        setBnbState(true);
+        setEthState(false);
+        setBaseState(false);
+        setOpBnbState(true);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
         setConfluxState(true);
+        setOpBnbState(false);
       } else {
         setAvaxState(false);
         setBnbState(false);
         setBaseState(false);
         setEthState(false);
+        setOpBnbState(false);
       }
     }
   };
@@ -98,6 +112,24 @@ const MobileNavbar = ({
         await handleSwitchNetworkhook("0x1")
           .then(() => {
             handleSwitchNetwork(1);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(1);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleAvaxPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa86a")
+          .then(() => {
+            handleSwitchNetwork(43114);
           })
           .catch((e) => {
             console.log(e);
@@ -122,6 +154,24 @@ const MobileNavbar = ({
           });
       } else {
         handleSwitchChainGateWallet(56);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleOpBnbPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xcc")
+          .then(() => {
+            handleSwitchNetwork(204);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(204);
       }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
@@ -240,13 +290,15 @@ const MobileNavbar = ({
                           ? eth
                           : bnbState === true
                           ? bnb
-                          : //:  : avaxState === true
-                            // ? avax
-                             baseState === true
-                            ? base
-                            :confluxState === true
-                            ? conflux
-                           : error
+                          : opbnbState === true
+                          ? bnb
+                          : // : avaxState === true
+                          // ? avax
+                          baseState === true
+                          ? base
+                          : confluxState === true
+                          ? conflux
+                          : error
                       }
                       height={16}
                       width={16}
@@ -257,13 +309,15 @@ const MobileNavbar = ({
                         ? "Ethereum"
                         : bnbState === true
                         ? "BNB Chain"
-                         //: : avaxState === true
-                          // ? "Avalanche"
-                          : baseState === true
-                          ? "Base"
-                          :confluxState === true
-                          ? "Conflux"
-                         : "Unsupported"}
+                        : opbnbState === true
+                        ? "opBNB Chain"
+                        : // : avaxState === true
+                        // ? "Avalanche"
+                        baseState === true
+                        ? "Base"
+                        : confluxState === true
+                        ? "Conflux"
+                        : "Unsupported"}
                     </span>
 
                     <img src={dropdown} alt="" />
@@ -278,15 +332,19 @@ const MobileNavbar = ({
                   <img src={bnb} alt="" />
                   BNB Chain
                 </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                  <img src={bnb} alt="" />
+                  opBNB Chain
+                </Dropdown.Item>
                 {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
                 <Dropdown.Item onClick={() => handleConfluxPool()}>
-              <img src={conflux} alt="" />
-              Conflux
-            </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleBasePool()}>
+                  <img src={conflux} alt="" />
+                  Conflux
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleBasePool()}>
                   <img src={base} alt="" />
                   Base
                 </Dropdown.Item>
