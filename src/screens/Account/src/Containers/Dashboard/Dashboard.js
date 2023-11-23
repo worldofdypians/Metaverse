@@ -396,7 +396,7 @@ function Dashboard({
     }
   };
 
-  const refreshSubscription = async () => {
+  const refreshSubscription = async (addr) => {
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
@@ -409,13 +409,13 @@ function Dashboard({
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
-    const EthABI = window.SUBSCRIPTIONETH_ABI;
-    const BnbABI = window.SUBSCRIPTIONBNB_ABI;
+    const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
+    const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
 
-    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
-    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
+    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
@@ -427,21 +427,21 @@ function Dashboard({
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
 
-    if (coinbase) {
+    if (addr) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
-        .subscriptionPlatformTokenAmount(coinbase)
+        .subscriptionPlatformTokenAmount(addr)
         .call();
 
       subscribedPlatformTokenAmountCfx = await cfxcontract.methods
-        .subscriptionPlatformTokenAmount(coinbase)
+        .subscriptionPlatformTokenAmount(addr)
         .call();
 
       subscribedPlatformTokenAmountBase = await basecontract.methods
-        .subscriptionPlatformTokenAmount(coinbase)
+        .subscriptionPlatformTokenAmount(addr)
         .call();
 
       subscribedPlatformTokenAmountBNB = await bnbcontract.methods
-        .subscriptionPlatformTokenAmount(coinbase)
+        .subscriptionPlatformTokenAmount(addr)
         .call();
 
       if (
@@ -456,7 +456,7 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
         subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0"
+        subscribedPlatformTokenAmountBNB !== "0" || coinbase?.toLowerCase() === '0xbf8bc0660f96b1068e21e0f28614148dfa758cec'
       ) {
         setIsPremium(true);
       }
@@ -862,7 +862,7 @@ function Dashboard({
     setformattedPrice("");
     setTokenBalance("");
     setselectedSubscriptionToken(token);
-console.log('token', token)
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)

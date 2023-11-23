@@ -524,7 +524,7 @@ console.log(availableTime)
 
           //setDypiusEarnTokens
 
-          if (dypEvent) {
+          if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
               dypEvent[0].reward.earn.total /
               dypEvent[0].reward.earn.multiplier;
@@ -532,7 +532,7 @@ console.log(availableTime)
             setDypiusEarnTokens(userEarnedDyp);
           }
 
-          if (coingeckoEvent) {
+          if (coingeckoEvent && coingeckoEvent[0]) {
             const points = coingeckoEvent[0].reward.earn.totalPoints;
             setuserPoints(points);
             const usdValue =
@@ -544,7 +544,7 @@ console.log(availableTime)
             }
           }
 
-          if (confluxEvent) {
+          if (confluxEvent && confluxEvent[0]) {
             const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
             setConfluxUserPoints(cfxPoints);
 
@@ -560,7 +560,7 @@ console.log(availableTime)
             }
           }
 
-          if (gateEvent) {
+          if (gateEvent && gateEvent[0]) {
             const gatePoints = gateEvent[0].reward.earn.totalPoints;
             setGateUserPoints(gatePoints);
             if (gateEvent[0].reward.earn.multiplier !== 0) {
@@ -575,7 +575,7 @@ console.log(availableTime)
             }
           }
 
-          if (baseEvent) {
+          if (baseEvent && baseEvent[0]) {
             const basePoints = baseEvent[0].reward.earn.totalPoints;
             setBaseUserPoints(basePoints);
             if (baseEvent[0].reward.earn.multiplier !== 0) {

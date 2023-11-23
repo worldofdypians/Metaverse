@@ -301,61 +301,61 @@ const DailyBonusPopup = ({
   const dummyPremiums = [
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Jewel Coffer",
       closedImg: "greenCrystal",
       chestId: 1,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Gold Hoard",
       closedImg: "blueCrystal",
       chestId: 2,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Pirate's Bounty",
       closedImg: "yellowCrystal",
       chestId: 3,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Gem Trove",
       closedImg: "purpleCrystal",
       chestId: 4,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Coin Chest",
       closedImg: "cyanCrystal",
       chestId: 5,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Silver Cache",
       closedImg: "greenCrystal",
       chestId: 6,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Ruby Stash",
       closedImg: "blueCrystal",
       chestId: 7,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Mystic Reliquary",
       closedImg: "yellowCrystal",
       chestId: 8,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Ancient Relics",
       closedImg: "purpleCrystal",
       chestId: 9,
     },
     {
       open: false,
-      chestTitle: "Crystal Chest",
+      chestTitle: "Emerald Trove",
       closedImg: "cyanCrystal",
       chestId: 10,
     },
@@ -476,25 +476,6 @@ const DailyBonusPopup = ({
     setRandomArray(arr);
   }
 
-  function shuffle(array) {
-    let currentIndex = array.length,
-      randomIndex;
-
-    // While there remain elements to shuffle.
-    while (currentIndex > 0) {
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-    return array;
-  }
-
   function randomNum() {
     var arr = [];
     let a = Math.floor(Math.random() * 6) + 1;
@@ -587,9 +568,8 @@ const DailyBonusPopup = ({
   };
 
   useEffect(() => {
-    setNames(shuffle(cryptoNames));
+    setNames(cryptoNames);
     setDummyPremiumChests(shuffle(dummyPremiums));
-    // shufflePremiums(dummyPremiums);
     setDummyRegularChests(dummyChests);
   }, []);
 
@@ -642,7 +622,6 @@ const DailyBonusPopup = ({
       setdisableBtn(true);
     }
   }, [canBuy, address, coinbase]);
-  // console.log(standardChests, dummyregularChests)
 
   return (
     <>
@@ -861,13 +840,13 @@ const DailyBonusPopup = ({
               </div>
             ) : rewardTypes === "premium" && email ? (
               <div className="rewardsgrid">
-                {dummypremiumChests.map((item, index) => (
+                {premiumChests.map((item, index) => (
                   <ChestItem
                     chestId={item.chestId}
                     chestIndex={index + 1}
-                    chestTitle={item.chestTitle}
+                    chestTitle={dummypremiumChests[index].chestTitle}
                     open={item.isOpened}
-                    closedImg={item.closedImg}
+                    closedImg={dummypremiumChests[index].closedImg}
                     rewardTypes={rewardTypes}
                     isPremium={isPremium}
                     address={address}

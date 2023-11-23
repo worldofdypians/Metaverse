@@ -326,10 +326,18 @@ const MyRewardsPopup = ({
           setdailyplayerData(
             userPosition > 10
               ? 0
+              : userPosition === 10
+              ? dailyPrizes[9] + dailyPrizesGolden[9]
               : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
           );
         } else if (bundlesBought === 0) {
-          setdailyplayerData(userPosition > 10 ? 0 : dailyPrizes[userPosition]);
+          setdailyplayerData(
+            userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? dailyPrizes[9]
+              : dailyPrizes[userPosition]
+          );
         }
       }
     }
@@ -356,10 +364,18 @@ const MyRewardsPopup = ({
         setweeklyplayerData(
           userPosition > 10
             ? 0
+            : userPosition === 10
+            ? weeklyPrizes[9] + weeklyPrizesGolden[9]
             : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
         );
       } else if (bundlesBought === 0) {
-        setweeklyplayerData(userPosition > 10 ? 0 : weeklyPrizes[userPosition]);
+        setweeklyplayerData(
+          userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? weeklyPrizes[9]
+            : weeklyPrizes[userPosition]
+        );
       }
     }
   };
@@ -385,11 +401,17 @@ const MyRewardsPopup = ({
         setmonthlyplayerData(
           userPosition > 10
             ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
             : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
         );
       } else if (bundlesBought === 0) {
         setmonthlyplayerData(
-          userPosition > 10 ? 0 : monthlyPrizes[userPosition]
+          userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9]
+            : monthlyPrizes[userPosition]
         );
       }
     }
@@ -544,7 +566,6 @@ const MyRewardsPopup = ({
       fetchTreasureHuntData(email, address);
     }
   }, [email, address]);
-
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -874,7 +895,9 @@ const MyRewardsPopup = ({
                 Genesis Gem
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-                {previousRewards ? "-" : `$${getFormattedNumber(genesisData,2)}`}
+                {previousRewards
+                  ? "-"
+                  : `$${getFormattedNumber(genesisData, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
