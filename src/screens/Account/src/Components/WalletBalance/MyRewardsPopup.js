@@ -24,6 +24,7 @@ const MyRewardsPopup = ({
   openedChests,
   allChests,
   hasNft,
+  availableTime
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -61,7 +62,7 @@ const MyRewardsPopup = ({
   const [treasureRewardNftWod, setTreasureRewardNftWod] = useState(0);
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
-  const [gateRewardsUSD, setGateRewardsUSD] = useState(0)
+  const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -321,8 +322,8 @@ const MyRewardsPopup = ({
       );
 
       const userPosition = testArray[0].position;
-      if (bundlesBought && bundlesBought !== NaN) {
-        if (bundlesBought > 0) {
+      if (availableTime && availableTime !== NaN) {
+        if (availableTime > 0) {
           setdailyplayerData(
             userPosition > 10
               ? 0
@@ -330,7 +331,7 @@ const MyRewardsPopup = ({
               ? dailyPrizes[9] + dailyPrizesGolden[9]
               : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
           );
-        } else if (bundlesBought === 0) {
+        } else if (availableTime === 0) {
           setdailyplayerData(
             userPosition > 10
               ? 0
@@ -360,7 +361,7 @@ const MyRewardsPopup = ({
       );
 
       const userPosition = testArray[0].position + 1;
-      if (bundlesBought > 0) {
+      if (availableTime > 0) {
         setweeklyplayerData(
           userPosition > 10
             ? 0
@@ -368,7 +369,7 @@ const MyRewardsPopup = ({
             ? weeklyPrizes[9] + weeklyPrizesGolden[9]
             : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
         );
-      } else if (bundlesBought === 0) {
+      } else if (availableTime === 0) {
         setweeklyplayerData(
           userPosition > 10
             ? 0
@@ -397,7 +398,7 @@ const MyRewardsPopup = ({
       );
 
       const userPosition = testArray[0].position + 1;
-      if (bundlesBought > 0) {
+      if (availableTime > 0) {
         setmonthlyplayerData(
           userPosition > 10
             ? 0
@@ -405,7 +406,7 @@ const MyRewardsPopup = ({
             ? monthlyPrizes[9] + monthlyPrizesGolden[9]
             : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
         );
-      } else if (bundlesBought === 0) {
+      } else if (availableTime === 0) {
         setmonthlyplayerData(
           userPosition > 10
             ? 0
@@ -437,24 +438,28 @@ const MyRewardsPopup = ({
     }
   };
 
-  const fetchConfluxUSDRewards = async() => {
-   await axios.get(`https://api.worldofdypians.com/api/conflux_rewards/${address}`).then((data) => {
-    if(data.data.userRewards){
-    setConfluxRewardsUSD(data.data.userRewards)
-    }else{
-    setConfluxRewardsUSD(0)  
-    }
-  })
-  }
-  const fetchGateUSDRewards = async() => {
-   await axios.get(`https://api.worldofdypians.com/api/gate_rewards/${address}`).then((data) => {
-    if(data.data.userRewards){
-      setGateRewardsUSD(data.data.userRewards)
-      }else{
-      setGateRewardsUSD(0)  
-      }
-  })
-  }
+  const fetchConfluxUSDRewards = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/conflux_rewards/${address}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          setConfluxRewardsUSD(data.data.userRewards);
+        } else {
+          setConfluxRewardsUSD(0);
+        }
+      });
+  };
+  const fetchGateUSDRewards = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/gate_rewards/${address}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          setGateRewardsUSD(data.data.userRewards);
+        } else {
+          setGateRewardsUSD(0);
+        }
+      });
+  };
 
   const fetchNftRewards = async (userAddr) => {
     if (userAddr) {
@@ -510,22 +515,37 @@ const MyRewardsPopup = ({
     var nftLandResult = 0;
     var nftBPResult = 0;
     var moneyResult = 0;
-
+   
     if (openedChests && openedChests.length > 0) {
       for (let i = 0; i < openedChests.length; i++) {
-        if (openedChests[i].rewardType === "Points") {
+        console.log(openedChests[i].rewards)
+        if (
+          openedChests[i].rewards.find((obj) => obj.rewardType === "Points")
+        ) {
           pointsResult += Number(openedChests[i].reward);
-        } else if (openedChests[i].rewardType === "Money") {
+        }  if (
+          openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
+        ) {
           if (hasNft) {
-            moneyResult += Number(openedChests[i].reward);
+            moneyResult += Number(openedChests[i].rewards.find((obj) => obj.rewardType === "Money").reward);
           }
-        } else if (openedChests[i].rewardType === "NFT") {
-          if (openedChests[i].reward === "WoD") {
+        }  if (
+          openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+        ) {
+          if (
+            openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+              .reward === "WoD"
+          ) {
             nftLandResult++;
-          } else if (openedChests[i].reward === "CAWS") {
+          }  if (
+            openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+              .reward === "CAWS"
+          ) {
             nftCawsResult++;
-          }
-          if (openedChests[i].reward === "BetaPass") {
+          }  if (
+            openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+              .reward === "BetaPass"
+          ) {
             nftBPResult++;
           }
         }
@@ -811,28 +831,10 @@ const MyRewardsPopup = ({
                 Treasure Chests
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-                {treasureRewardMoney > 0 &&
-                  "$" + getFormattedNumber(treasureRewardMoney, 2)}{" "}
-                {treasureRewardNftBetaPass > 0 && treasureRewardMoney > 0
-                  ? "+ 1 BetaPass NFT"
-                  : treasureRewardNftBetaPass > 0 && treasureRewardMoney === 0
-                  ? "1 BetaPass NFT"
-                  : ""}{" "}
-                {treasureRewardNftCaws > 0 && treasureRewardMoney > 0
-                  ? "+ 1 CAWS NFT"
-                  : treasureRewardNftCaws > 0 && treasureRewardMoney === 0
-                  ? "1 CAWS NFT"
-                  : ""}{" "}
-                {treasureRewardNftWod > 0 && treasureRewardMoney > 0
-                  ? "+ 1 WoD NFT"
-                  : treasureRewardNftWod > 0 && treasureRewardMoney === 0
-                  ? "1 WoD NFT"
-                  : ""}
-                {treasureRewardMoney === 0 &&
-                  treasureRewardNftBetaPass === 0 &&
-                  treasureRewardNftCaws === 0 &&
-                  treasureRewardNftWod === 0 &&
-                  "$0.00"}
+                {"$" + getFormattedNumber(treasureRewardMoney, 2)}<br/>
+                {treasureRewardNftBetaPass + " " + "BetaPass NFT"}<br/>
+                {treasureRewardNftCaws + " " + "CAWS NFT"}<br/>
+                {treasureRewardNftWod + " " + "WoD NFT"}<br/>
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 USD/NFT

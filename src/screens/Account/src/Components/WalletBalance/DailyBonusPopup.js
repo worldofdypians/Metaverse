@@ -40,7 +40,7 @@ const DailyBonusPopup = ({
   myNFTSTimepiece,
   allChests,
   canBuy,
-  dummypremiumChests
+  dummypremiumChests,
 }) => {
   const [rewardTypes, setRewardTypes] = useState("standard");
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -530,7 +530,6 @@ const DailyBonusPopup = ({
     for (let i = 0; i < 10; i++) {
       tempArray.push(dummyItem);
     }
- 
     return array;
   };
 
@@ -620,7 +619,6 @@ const DailyBonusPopup = ({
       setdisableBtn(true);
     }
   }, [canBuy, address, coinbase]);
-  console.log(liverewardData)
   return (
     <>
       <div
@@ -799,7 +797,9 @@ const DailyBonusPopup = ({
                 </div>
               </div>
             </div>
-            {rewardTypes === "standard" && email && standardChests?.length>0 ? (
+            {rewardTypes === "standard" &&
+            email &&
+            standardChests?.length > 0 ? (
               <div className="rewardsgrid">
                 {standardChests.map((item, index) => (
                   <ChestItem
@@ -836,7 +836,9 @@ const DailyBonusPopup = ({
                   />
                 ))}
               </div>
-            ) : rewardTypes === "premium" && email && premiumChests?.length>0 ? (
+            ) : rewardTypes === "premium" &&
+              email &&
+              premiumChests?.length > 0 ? (
               <div className="rewardsgrid">
                 {premiumChests.map((item, index) => (
                   <ChestItem
@@ -928,13 +930,21 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("Points") &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData.rewards.find(
+                            (obj) => obj.rewardType === "Points"
+                          ) &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes("Points") &&
-                            "grayscale(1)",
+                            (liverewardData &&
+                              liverewardData.rewards &&
+                              !liverewardData.rewards.find(
+                                (obj) => obj.rewardType === "Points"
+                              )) ||
+                            (liverewardData.length == 0 && "grayscale(1)"),
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
@@ -948,14 +958,25 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes(
-                                    "Points"
-                                  ) && "gray",
+                                  (liverewardData &&
+                                    liverewardData.rewards &&
+                                    !liverewardData.rewards.find(
+                                      (obj) => obj.rewardType === "Points"
+                                    )) ||
+                                  (liverewardData.length == 0 && "gray"),
                               }}
                             >
                               {getFormattedNumber(
-                               liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("Points")
-                                  ? liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward
+                                liverewardData &&
+                                  liverewardData.rewards &&
+                                  liverewardData.rewards.find(
+                                    (obj) => obj.rewardType === "Points"
+                                  )
+                                  ? liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "Points"
+                                      ).reward
                                   : 0,
                                 0
                               )}{" "}
@@ -969,12 +990,21 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("Money") &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData.rewards.find(
+                            (obj) => obj.rewardType === "Money"
+                          ) &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes("Money") &&
+                            ((liverewardData &&
+                              liverewardData.rewards &&
+                              !liverewardData.rewards.find(
+                                (obj) => obj.rewardType === "Money"
+                              )) ||
+                              liverewardData.length == 0) &&
                             "grayscale(1)",
                         }}
                       >
@@ -989,15 +1019,27 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes(
-                                    "Money"
-                                  ) && "gray",
+                                  ((liverewardData &&
+                                    liverewardData.rewards &&
+                                    !liverewardData.rewards.find(
+                                      (obj) => obj.rewardType === "Money"
+                                    )) ||
+                                    liverewardData.length == 0) &&
+                                  "gray",
                               }}
                             >
                               ${" "}
-                              {liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("Money")
+                              {liverewardData &&
+                              liverewardData.rewards &&
+                              liverewardData.rewards.find(
+                                (obj) => obj.rewardType === "Money"
+                              )
                                 ? getFormattedNumber(
-                                    Number(liverewardData?.rewards[0]?.reward),
+                                    Number(
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "Money"
+                                      ).reward
+                                    ),
                                     2
                                   )
                                 : "0"}{" "}
@@ -1006,7 +1048,11 @@ const DailyBonusPopup = ({
                             {myNFTSCaws === 0 &&
                               myNFTSLand === 0 &&
                               myNFTSTimepiece === 0 &&
-                              liverewardData && liverewardData.rewards &&  liverewardData?.rewards[0]?.reward?.includes("WoD") && (
+                              liverewardData &&
+                              liverewardData.rewards &&
+                              liverewardData.rewards.find(
+                                (obj) => obj.rewardType === "Money"
+                              ) && (
                                 <ToolTip
                                   title={
                                     <React.Fragment>
@@ -1028,17 +1074,42 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("WoD") &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          ) &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          )?.reward === "WoD" &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("WoD")
+                            (liverewardData &&
+                              liverewardData.rewards &&
+                              liverewardData.rewards.find(
+                                (obj) => obj.rewardType === "NFT"
+                              ) &&
+                              liverewardData &&
+                              liverewardData.rewards &&
+                              !liverewardData.rewards.find(
+                                (obj) => obj.rewardType === "NFT"
+                              )?.reward === "WoD") ||
+                            liverewardData.length == 0
                               ? "grayscale(1)"
-                              : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                              liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("WoD")
+                              : liverewardData &&
+                                liverewardData.rewards &&
+                                liverewardData.rewards.find(
+                                  (obj) => obj.rewardType === "NFT"
+                                ) &&
+                                liverewardData &&
+                                liverewardData.rewards &&
+                                liverewardData.rewards.find(
+                                  (obj) => obj.rewardType === "NFT"
+                                )?.reward === "WoD"
                               ? ""
                               : "grayscale(1)",
                         }}
@@ -1054,13 +1125,27 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("WoD")
+                                  liverewardData &&
+                                  liverewardData.rewards &&
+                                  liverewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  ) &&
+                                  liverewardData &&
+                                  liverewardData.rewards &&
+                                  !liverewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  )?.reward === "WoD"
                                     ? "gray"
-                                    : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes(
-                                        "NFT"
+                                    : liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "NFT"
                                       ) &&
-                                      liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("WoD")
+                                      liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "NFT"
+                                      )?.reward === "WoD"
                                     ? "white"
                                     : "gray",
                               }}
@@ -1075,17 +1160,41 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("CAWS") &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          ) &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          )?.reward === "CAWS" &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                          liverewardData && liverewardData.rewards &&  liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("CAWS")
+                            liverewardData &&
+                            liverewardData.rewards &&
+                            liverewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            ) &&
+                            liverewardData &&
+                            liverewardData.rewards &&
+                            !liverewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            )?.reward === "CAWS"
                               ? "grayscale(1)"
-                              : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                              liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("CAWS")
+                              : liverewardData &&
+                                liverewardData.rewards &&
+                                liverewardData.rewards.find(
+                                  (obj) => obj.rewardType === "NFT"
+                                ) &&
+                                liverewardData &&
+                                liverewardData.rewards &&
+                                liverewardData.rewards.find(
+                                  (obj) => obj.rewardType === "NFT"
+                                )?.reward === "CAWS"
                               ? ""
                               : "grayscale(1)",
                         }}
@@ -1101,13 +1210,27 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("CAWS")
+                                  liverewardData &&
+                                  liverewardData.rewards &&
+                                  liverewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  ) &&
+                                  liverewardData &&
+                                  liverewardData.rewards &&
+                                  !liverewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  )?.reward === "CAWS"
                                     ? "gray"
-                                    : liverewardData && liverewardData.rewards &&  liverewardData?.rewards[0]?.rewardType?.includes(
-                                        "NFT"
+                                    : liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "NFT"
                                       ) &&
-                                      liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("CAWS")
+                                      liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "NFT"
+                                      )?.reward === "CAWS"
                                     ? "white"
                                     : "gray",
                               }}
@@ -1122,17 +1245,41 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("BetaPass") &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          ) &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData?.rewards[0]?.reward?.includes(
+                            "BetaPass"
+                          ) &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("BetaPass")
+                            liverewardData &&
+                            liverewardData.rewards &&
+                            liverewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            ) &&
+                            liverewardData &&
+                            liverewardData.rewards &&
+                            !liverewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            )?.reward === "BetaPass"
                               ? "grayscale(1)"
-                              : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                              liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("BetaPass")
+                              : liverewardData &&
+                                liverewardData.rewards &&
+                                liverewardData.rewards.find(
+                                  (obj) => obj.rewardType === "NFT"
+                                ) &&
+                                liverewardData &&
+                                liverewardData.rewards &&
+                                liverewardData.rewards.find(
+                                  (obj) => obj.rewardType === "NFT"
+                                )?.reward === "BetaPass"
                               ? ""
                               : "grayscale(1)",
                         }}
@@ -1148,15 +1295,27 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
-                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("BetaPass")
+                                  liverewardData &&
+                                  liverewardData.rewards &&
+                                  liverewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  ) &&
+                                  liverewardData &&
+                                  liverewardData.rewards &&
+                                  !liverewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  )?.reward === "BetaPass"
                                     ? "gray"
-                                    : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes(
-                                        "NFT"
+                                    : liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "NFT"
                                       ) &&
-                                      liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes(
-                                        "BetaPass"
-                                      )
+                                      liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "NFT"
+                                      )?.reward === "BetaPass"
                                     ? "white"
                                     : "gray",
                               }}
@@ -1171,14 +1330,15 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("LargeMoney") &&
+                          liverewardData &&
+                          liverewardData.rewards &&
+                          liverewardData?.rewards[0]?.rewardType?.includes(
+                            "LargeMoney"
+                          ) &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
-                          filter:
-                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes(
-                              "LargeMoney"
-                            ) && "grayscale(1)",
+                          filter: "grayscale(1)",
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
@@ -1191,10 +1351,7 @@ const DailyBonusPopup = ({
                             <span
                               className="chest-prize-title mb-0"
                               style={{
-                                color:
-                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes(
-                                    "LargeMoney"
-                                  ) && "gray",
+                                color: "gray",
                               }}
                             >
                               $0 Reward
@@ -1202,7 +1359,11 @@ const DailyBonusPopup = ({
                             {myNFTSCaws === 0 &&
                               myNFTSLand === 0 &&
                               myNFTSTimepiece === 0 &&
-                              liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("BetaPass") && (
+                              liverewardData &&
+                              liverewardData.rewards &&
+                              liverewardData?.rewards[0]?.reward?.includes(
+                                "BetaPass"
+                              ) && (
                                 <ToolTip
                                   title={
                                     <React.Fragment>
@@ -1292,21 +1453,21 @@ const DailyBonusPopup = ({
 
             <div className="container px-3">
               <div className="d-flex flex-column" style={{ rowGap: "12px" }}>
-                {rewardData?.rewardType?.includes("Points") && (
+                {rewardData.rewards.find((obj) => obj.rewardType === "Points") && (
                   <div
                     className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
                     style={{ width: "fit-content" }}
                   >
                     <div
                       className={`prizeswrapper py-2 px-3  ${
-                        rewardData?.rewardType?.includes("Points") &&
+                        rewardData.rewards.find((obj) => obj.rewardType === "Points") &&
                         "prizeswrapper-premium"
                       } `}
-                      style={{
-                        filter:
-                          !rewardData?.rewardType?.includes("Points") &&
-                          "grayscale(1)",
-                      }}
+                      // style={{
+                      //   filter:
+                      //     !rewardData?.rewardType?.includes("Points") &&
+                      //     "grayscale(1)",
+                      // }}
                     >
                       <div className="d-flex align-items-center gap-2">
                         <img
@@ -1318,13 +1479,19 @@ const DailyBonusPopup = ({
                           <span
                             className="chest-prize-title mb-0"
                             style={{
-                              color:
-                                !rewardData?.rewardType?.includes("Points") &&
-                                "gray",
+                              // color:
+                              //   !rewardData?.rewardType?.includes("Points") &&
+                              //   "gray",
                               fontSize: "14px",
                             }}
                           >
-                            {getFormattedNumber(rewardData?.reward, 0)} Points
+                            {getFormattedNumber(
+                              rewardData.rewards.find(
+                                (obj) => obj.rewardType === "Points"
+                              ).reward,
+                              0
+                            )}{" "}
+                            Points
                           </span>
                         </div>
                       </div>
@@ -1334,17 +1501,23 @@ const DailyBonusPopup = ({
                 {rewardData?.rewardType?.includes("Points") && (
                   <span className="text-white d-flex m-auto reward-subtitle">
                     Congratulations, you have earned{" "}
-                    {getFormattedNumber(rewardData?.reward, 0)} Points.
+                    {getFormattedNumber(rewardData.rewards.find(
+                  (obj) => obj.rewardType === "Points"
+                )?.reward, 0)} Points.
                   </span>
                 )}
-                {rewardData?.rewardType?.includes("Money") && (
+                {rewardData.rewards.find(
+                  (obj) => obj.rewardType === "Money"
+                ) && (
                   <div
                     className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
                     style={{ width: "fit-content" }}
                   >
                     <div
                       className={`prizeswrapper py-2 px-3 ${
-                        rewardData?.rewardType?.includes("Money") &&
+                        rewardData.rewards.find(
+                          (obj) => obj.rewardType === "Money"
+                        ) &&
                         (myNFTSCaws > 0 ||
                           myNFTSLand > 0 ||
                           myNFTSTimepiece > 0) &&
@@ -1352,7 +1525,9 @@ const DailyBonusPopup = ({
                       } `}
                       style={{
                         filter:
-                          !rewardData?.rewardType?.includes("Money") &&
+                        rewardData.rewards.find(
+                            (obj) => obj.rewardType === "Money"
+                          ) &&
                           myNFTSCaws === 0 &&
                           myNFTSLand === 0 &&
                           myNFTSTimepiece === 0 &&
@@ -1370,7 +1545,9 @@ const DailyBonusPopup = ({
                             className="chest-prize-title mb-0"
                             style={{
                               color:
-                                !rewardData?.rewardType?.includes("Money") &&
+                              rewardData.rewards.find(
+                                (obj) => obj.rewardType === "Money"
+                              ) &&
                                 myNFTSCaws === 0 &&
                                 myNFTSLand === 0 &&
                                 myNFTSTimepiece === 0 &&
@@ -1379,9 +1556,13 @@ const DailyBonusPopup = ({
                             }}
                           >
                             $
-                            {rewardData?.rewardType?.includes("Money")
+                            {rewardData.rewards.find(
+                  (obj) => obj.rewardType === "Money"
+                )
                               ? getFormattedNumber(
-                                  Number(rewardData?.reward),
+                                  Number(rewardData.rewards.find(
+                                    (obj) => obj.rewardType === "Money"
+                                  )?.reward),
                                   2
                                 )
                               : "0"}
@@ -1392,20 +1573,26 @@ const DailyBonusPopup = ({
                     </div>
                   </div>
                 )}
-                {rewardData?.rewardType?.includes("Money") &&
+                {rewardData.rewards.find(
+                  (obj) => obj.rewardType === "Money"
+                ) &&
                   (myNFTSCaws > 0 || myNFTSLand > 0 || myNFTSTimepiece > 0) && (
                     <span className="text-white d-flex m-auto reward-subtitle">
                       Congratulations, you have earned $
-                      {getFormattedNumber(rewardData?.reward, 2)} Reward.
+                      {getFormattedNumber(rewardData.rewards.find(
+                  (obj) => obj.rewardType === "Money"
+                )?.reward, 2)} Reward.
                     </span>
                   )}
 
-                {rewardData?.rewardType?.includes("Money") &&
+                {rewardData.rewards.find(
+                  (obj) => obj.rewardType === "Money"
+                ) &&
                   myNFTSCaws === 0 &&
                   myNFTSLand === 0 &&
                   myNFTSTimepiece === 0 && (
-                    <div className="d-flex flex-column w-100 gap-2 p-2 daily-error-text-wrapper justify-content-center">
-                      <img src={triangle} alt="" />
+                    <div className="d-flex w-100 gap-2 p-2 daily-error-text-wrapper justify-content-center">
+                      <img src={triangle} alt="" style={{width: 20, height:20}}/>
                       <span className="text-white d-flex m-auto reward-subtitle">
                         You must hold CAWS NFT, Timepiece NFT or Genesis Land
                         NFT to claim this prize.
@@ -1413,22 +1600,34 @@ const DailyBonusPopup = ({
                     </div>
                   )}
 
-                {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("WoD") && (
+                {rewardData.rewards.find(
+                  (obj) => obj.rewardType === "NFT"
+                ) &&
+                rewardData.rewards.find(
+                  (obj) => obj.rewardType === "Money"
+                )?.reward?.includes("WoD") && (
                     <div
                       className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
                       style={{ width: "fit-content" }}
                     >
                       <div
                         className={`prizeswrapper py-2 px-3 ${
-                          rewardData?.rewardType?.includes("NFT") &&
-                          rewardData?.reward?.includes("WoD") &&
+                          rewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          ) &&
+                          rewardData.rewards.find(
+                            (obj) => obj.rewardType === "Money"
+                          )?.reward?.includes("WoD") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !rewardData?.rewardType?.includes("NFT") &&
-                            !rewardData?.reward?.includes("WoD") &&
+                            !rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            ) &&
+                            !rewardData.rewards.find(
+                              (obj) => obj.rewardType === "Money"
+                            )?.reward?.includes("WoD") &&
                             "grayscale(1)",
                         }}
                       >
@@ -1443,8 +1642,12 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !rewardData?.rewardType?.includes("NFT") &&
-                                  !rewardData?.reward?.includes("WoD") &&
+                                  !rewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  ) &&
+                                  !rewardData.rewards.find(
+                                    (obj) => obj.rewardType === "Money"
+                                  )?.reward?.includes("WoD") &&
                                   "gray",
                                 fontSize: "14px",
                               }}
@@ -1456,29 +1659,45 @@ const DailyBonusPopup = ({
                       </div>
                     </div>
                   )}
-                {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("WoD") && (
+                {rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            ) &&
+                            rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            )?.reward?.includes("WoD") && (
                     <span className="text-white d-flex m-auto reward-subtitle">
                       Congratulations, you have earned Genesis Land NFT.
                     </span>
                   )}
 
-                {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("CAWS") && (
+                {rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            ) &&
+                            rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            )?.reward?.includes("CAWS") && (
                     <div
                       className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
                       style={{ width: "fit-content" }}
                     >
                       <div
                         className={`prizeswrapper py-2 px-3 ${
-                          rewardData?.rewardType?.includes("NFT") &&
-                          rewardData?.reward?.includes("CAWS") &&
+                          rewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          ) &&
+                          rewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          )?.reward?.includes("CAWS") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !rewardData?.rewardType?.includes("NFT") &&
-                            !rewardData?.reward?.includes("CAWS") &&
+                            !rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            ) &&
+                            !rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            )?.reward?.includes("CAWS") &&
                             "grayscale(1)",
                         }}
                       >
@@ -1493,8 +1712,12 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !rewardData?.rewardType?.includes("NFT") &&
-                                  !rewardData?.reward?.includes("CAWS") &&
+                                  !rewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  ) &&
+                                  !rewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  )?.reward?.includes("CAWS") &&
                                   "gray",
                                 fontSize: "14px",
                               }}
@@ -1508,29 +1731,40 @@ const DailyBonusPopup = ({
                   )}
 
                 {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("CAWS") &&
-                  (myNFTSCaws > 0 || myNFTSLand > 0 || myNFTSTimepiece > 0) && (
+                  rewardData?.reward?.includes("CAWS") && (
                     <span className="text-white d-flex m-auto reward-subtitle">
                       Congratulations, you have earned CAWS NFT.
                     </span>
                   )}
 
-                {rewardData?.rewardType?.includes("NFT") &&
-                  rewardData?.reward?.includes("BetaPass") && (
+                {rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            ) &&
+                            rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            )?.reward?.includes("BetaPass") && (
                     <div
                       className="m-auto py-4 px-5 m-0 prizepopup-wrapper"
                       style={{ width: "fit-content" }}
                     >
                       <div
                         className={`prizeswrapper py-2 px-3 ${
-                          rewardData?.rewardType?.includes("NFT") &&
-                          rewardData?.reward?.includes("BetaPass") &&
+                          rewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          ) &&
+                          rewardData.rewards.find(
+                            (obj) => obj.rewardType === "NFT"
+                          )?.reward?.includes("BetaPass") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !rewardData?.rewardType?.includes("NFT") &&
-                            !rewardData?.reward?.includes("BetaPass") &&
+                            !rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            ) &&
+                            !rewardData.rewards.find(
+                              (obj) => obj.rewardType === "NFT"
+                            )?.reward?.includes("BetaPass") &&
                             "grayscale(1)",
                         }}
                       >
@@ -1545,8 +1779,12 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !rewardData?.rewardType?.includes("NFT") &&
-                                  !rewardData?.reward?.includes("BetaPass") &&
+                                  !rewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  ) &&
+                                  !rewardData.rewards.find(
+                                    (obj) => obj.rewardType === "NFT"
+                                  )?.reward?.includes("BetaPass") &&
                                   "gray",
                                 fontSize: "14px",
                               }}

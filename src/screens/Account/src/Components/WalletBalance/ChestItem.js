@@ -55,10 +55,13 @@ const ChestItem = ({
         userData_bnb
       );
       if (result.status === 200) {
-        onClaimRewards(result.data.chestRewards[0]);
+        onClaimRewards(result.data);
         setIsChestOpen(true);
         setchestStatus("success");
         onLoadingChest(false);
+      }
+      else if (result.status === 400) {
+        getUserRewardsByChest(userEmail, txHash, chestId, chainText);
       }
     } else {
       const result = await axios.post(
@@ -66,10 +69,13 @@ const ChestItem = ({
         userData
       );
       if (result.status === 200) {
-        onClaimRewards(result.data.chestRewards[0]);
+        onClaimRewards(result.data);
         setIsChestOpen(true);
         setchestStatus("success");
         onLoadingChest(false);
+      }
+      else if (result.status === 400) {
+        getUserRewardsByChest(userEmail, txHash, chestId, chainText);
       }
     }
   };

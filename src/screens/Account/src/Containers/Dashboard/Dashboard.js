@@ -1597,6 +1597,15 @@ function Dashboard({
                         claimedPremiumChests={claimedPremiumChests}
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
+                        openedChests={openedChests}
+                        hasNft={
+                          MyNFTSCaws.length +
+                            MyNFTSLand.length +
+                            MyNFTSTimepiece.length >
+                          0
+                            ? true
+                            : false
+                        }
                       />
                     </div>
                     <WalletBalance
@@ -1826,6 +1835,7 @@ function Dashboard({
                             ethTokenData={ethTokenData}
                             openedChests={openedChests}
                             allChests={allChests}
+                            availableTime={goldenPassRemainingTime}
                             hasNft={
                               MyNFTSCaws.length +
                                 MyNFTSLand.length +

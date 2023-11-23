@@ -189,6 +189,8 @@ const NewWalletBalance = ({
   canBuy,
   rewardsPopup,
   dailyPopup,
+  openedChests,
+  hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -588,6 +590,7 @@ const NewWalletBalance = ({
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
   const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
+  const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
 
   const slider = useRef(null);
   const [showFirstNext, setShowFirstNext] = useState(false);
@@ -673,6 +676,25 @@ const NewWalletBalance = ({
           setCfxPrice(obj.data["conflux-token"].usd);
         }
       });
+  };
+
+  const getTreasureChestsInfo = async () => {
+    var moneyResult = 0;
+
+    if (openedChests && openedChests.length > 0) {
+      for (let i = 0; i < openedChests.length; i++) {
+        if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
+          if (hasNft) {
+            moneyResult += Number(
+              openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
+                .reward
+            );
+          }
+        }
+      }
+    }
+
+    setTreasureRewardMoney(moneyResult);
   };
 
   const handleSubmit = async (e) => {
@@ -1054,13 +1076,15 @@ const NewWalletBalance = ({
     }
   };
 
+ 
+
   const fetchWeeklyRecordsAroundPlayer = async () => {
     const data = {
       StatisticName: "WeeklyLeaderboard",
       MaxResultsCount: 6,
       PlayerId: userId,
     };
-    if (userId) {
+
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
@@ -1088,7 +1112,7 @@ const NewWalletBalance = ({
             : weeklyPrizes[userPosition]
         );
       }
-    }
+    
   };
 
   const getStakesIds = async () => {
@@ -1237,7 +1261,6 @@ const NewWalletBalance = ({
   };
 
   useEffect(() => {
-    fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
     getTokenData();
     getTokenDatabnb();
@@ -1283,10 +1306,20 @@ const NewWalletBalance = ({
       calculateAllRewards();
       calculateAllRewardsCawsPool();
       calculateAllRewardsLandPool();
-      fetchDailyRecordsAroundPlayer();
-      fetchWeeklyRecordsAroundPlayer();
     }
   }, [address]);
+
+  useEffect(() => {
+    if (userId) {
+      fetchDailyRecordsAroundPlayer();
+      fetchWeeklyRecordsAroundPlayer();
+      fetchMonthlyRecordsAroundPlayer();
+    }
+  }, [userId,availableTime]);
+
+  useEffect(() => {
+    getTreasureChestsInfo();
+  }, [openedChests, hasNft, address]);
 
   const recaptchaRef = useRef(null);
 
@@ -1739,6 +1772,7 @@ const NewWalletBalance = ({
                           confluxEarnUSD +
                           gateEarnUSD +
                           userEarnUsd +
+                          treasureRewardMoney +
                           EthRewardsLandPool * ethTokenData +
                           EthRewardsCawsPool * ethTokenData +
                           EthRewards * ethTokenData,
