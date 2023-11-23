@@ -838,7 +838,12 @@ const ProfileCard = ({
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (today < finalDateofBundle) {
+        
+
+        if (
+          (today < finalDateofBundle && bundlesBought > 0) ||
+          finalDateofBundle.getFullYear() !== today.getFullYear()
+        ) {
           // if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
           //   setcountdown700(finalDateofBundle);
           //   setisAtlimit(false);
@@ -891,8 +896,8 @@ const ProfileCard = ({
 
   useEffect(() => {
     checkBundleDates();
-    setlastDay();
-  }, []);
+    setlastDay(); 
+  }, [bundlesBought, address, dateofBundle, dateofBundlev1]);
 
   return (
     <div className="main-wrapper py-4 w-100">
