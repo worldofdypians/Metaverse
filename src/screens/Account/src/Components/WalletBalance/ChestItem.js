@@ -29,13 +29,73 @@ const ChestItem = ({
   const [openRandom, setOpenRandom] = useState(1);
   const [ischestOpen, setIsChestOpen] = useState(false);
 
+  const getUserRewardsByChest2 = async (
+    userEmail,
+    txHash,
+    chestId,
+    chainText
+  ) => {
+   
+    const userData = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+    };
+
+    const userData_bnb = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+      chainId: chainText,
+    };
+
+    if (chainText) {
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+        userData_bnb
+      );
+      if (result.status === 200) {
+        onClaimRewards(result.data);
+        setIsChestOpen(true);
+        setchestStatus("success");
+        onLoadingChest(false);
+      }
+
+      else {
+        onLoadingChest(false);
+        setIsChestOpen(false);
+        window.alertify.error(result?.message);
+        setchestStatus("initial");
+      }
+     
+    } else {
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+        userData
+      );
+      if (result.status === 200) {
+        onClaimRewards(result.data);
+        setIsChestOpen(true);
+        setchestStatus("success");
+        onLoadingChest(false);
+      }
+      else {
+        onLoadingChest(false);
+        setIsChestOpen(false);
+        window.alertify.error(result?.message);
+        setchestStatus("initial");
+      }
+       
+    }
+  };
+
   const getUserRewardsByChest = async (
     userEmail,
     txHash,
     chestId,
     chainText
   ) => {
-    const rewardArray = [];
+   
     const userData = {
       transactionHash: txHash,
       emailAddress: userEmail,
@@ -61,7 +121,7 @@ const ChestItem = ({
         onLoadingChest(false);
       }
       else if (result.status === 400) {
-        getUserRewardsByChest(userEmail, txHash, chestId, chainText);
+        getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
       }
     } else {
       const result = await axios.post(
@@ -75,7 +135,7 @@ const ChestItem = ({
         onLoadingChest(false);
       }
       else if (result.status === 400) {
-        getUserRewardsByChest(userEmail, txHash, chestId, chainText);
+        getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
       }
     }
   };
