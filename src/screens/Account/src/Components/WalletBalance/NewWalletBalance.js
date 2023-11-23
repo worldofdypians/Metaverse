@@ -89,7 +89,7 @@ const StyledTextField = styled(TextField)({
     color: "#fff",
     fontFamily: "Poppins",
   },
-  "& .MuiOutlinedInput-root": {
+  "& .MuiOutlinedInput-root, & .MuiOutlinedInput-root:hover": {
     "& fieldset": {
       borderColor: "#62688F",
       fontFamily: "Poppins",

@@ -172,7 +172,7 @@ const ProfileCard = ({
 
   let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
   let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
-
+ 
   // const handleRefreshCountdown700 = async () => {
   //   const goldenpassAbi = new window.bscWeb3.eth.Contract(
   //     DYP_700_ABI,
@@ -437,6 +437,15 @@ const ProfileCard = ({
   //   setlastDayofBundleMilliseconds(expiringTime_miliseconds);
   // };
 
+  const countBundle = async () => {
+    const result = await axios.get(
+      `https://api3.dyp.finance/api/bundles/count/${address}`
+    ); 
+
+    const result_formatted = result.data.count;
+    setbundlesBought(result_formatted);
+  };
+
   const handleRefreshCountdown700 = async () => {
     const dypv1 = new window.infuraWeb3.eth.Contract(
       DYP_700V1_ABI,
@@ -446,22 +455,22 @@ const ProfileCard = ({
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
     const remainingTimev1 = await dypv1.methods
-      .getTimeOfExpireBuff(coinbase)
+      .getTimeOfExpireBuff(address)
       .call();
 
     const remainingTimev2 = await dypv2.methods
-      .getTimeOfExpireBuff(coinbase)
+      .getTimeOfExpireBuff(address)
       .call();
 
     var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
 
     var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
     const timeofDepositv1 = await dypv1.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfDeposit(address)
       .call();
 
     const timeofDepositv2 = await dypv2.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfDeposit(address)
       .call();
 
     if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
@@ -519,17 +528,17 @@ const ProfileCard = ({
     }
   };
 
-  const setlastDay = async () => {
+  const setlastDay = async (addr) => {
     const dypv1 = new window.infuraWeb3.eth.Contract(
       DYP_700V1_ABI,
       dyp700v1Address
     );
 
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
-    const timeofDeposit = await dypv2.methods.getTimeOfDeposit(coinbase).call();
+    const timeofDeposit = await dypv2.methods.getTimeOfDeposit(addr).call();
 
     const timeofDepositv1 = await dypv1.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfDeposit(addr)
       .call();
 
     if (timeofDeposit !== 0 || timeofDepositv1 !== 0) {
@@ -572,11 +581,11 @@ const ProfileCard = ({
       setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
 
       const expiringTime = await dypv2.methods
-        .getTimeOfExpireBuff(coinbase)
+        .getTimeOfExpireBuff(addr)
         .call();
 
       const expiringTimev1 = await dypv1.methods
-        .getTimeOfExpireBuff(coinbase)
+        .getTimeOfExpireBuff(addr)
         .call();
 
       const expiringTime_miliseconds = expiringTime * 1000;
@@ -895,21 +904,17 @@ const ProfileCard = ({
   };
 
   useEffect(() => {
+    countBundle();
+    setlastDay(address); 
+  }, [address]);
+
+  useEffect(() => {
     checkBundleDates();
-    setlastDay(); 
-  }, [bundlesBought, address, dateofBundle, dateofBundlev1]);
+  }, [bundlesBought, dateofBundle]);
 
   return (
     <div className="main-wrapper py-4 w-100">
-      {countdown700 !== 0 && countdown700 && (
-        <Countdown
-          date={Number(countdown700)}
-          onComplete={() => {
-            setcountdown700();
-            handleSetAvailableTime();
-          }}
-        />
-      )}
+      
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-lg-3 col-12">
           <div

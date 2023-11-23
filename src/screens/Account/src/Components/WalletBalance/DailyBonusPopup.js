@@ -40,6 +40,7 @@ const DailyBonusPopup = ({
   myNFTSTimepiece,
   allChests,
   canBuy,
+  dummypremiumChests
 }) => {
   const [rewardTypes, setRewardTypes] = useState("standard");
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -51,7 +52,6 @@ const DailyBonusPopup = ({
   const [isActiveIndex, setIsActiveIndex] = useState();
 
   const [dummyregularChests, setDummyRegularChests] = useState([]);
-  const [dummypremiumChests, setDummyPremiumChests] = useState([]);
   const [names, setNames] = useState([]);
 
   const dummyChests = [
@@ -530,8 +530,7 @@ const DailyBonusPopup = ({
     for (let i = 0; i < 10; i++) {
       tempArray.push(dummyItem);
     }
-
-    setDummyPremiumChests(tempArray);
+ 
     return array;
   };
 
@@ -569,7 +568,6 @@ const DailyBonusPopup = ({
 
   useEffect(() => {
     setNames(cryptoNames);
-    setDummyPremiumChests(shuffle(dummyPremiums));
     setDummyRegularChests(dummyChests);
   }, []);
 
@@ -622,7 +620,7 @@ const DailyBonusPopup = ({
       setdisableBtn(true);
     }
   }, [canBuy, address, coinbase]);
-
+  console.log(liverewardData)
   return (
     <>
       <div
@@ -801,7 +799,7 @@ const DailyBonusPopup = ({
                 </div>
               </div>
             </div>
-            {rewardTypes === "standard" && email ? (
+            {rewardTypes === "standard" && email && standardChests?.length>0 ? (
               <div className="rewardsgrid">
                 {standardChests.map((item, index) => (
                   <ChestItem
@@ -838,7 +836,7 @@ const DailyBonusPopup = ({
                   />
                 ))}
               </div>
-            ) : rewardTypes === "premium" && email ? (
+            ) : rewardTypes === "premium" && email && premiumChests?.length>0 ? (
               <div className="rewardsgrid">
                 {premiumChests.map((item, index) => (
                   <ChestItem
@@ -847,6 +845,7 @@ const DailyBonusPopup = ({
                     chestTitle={dummypremiumChests[index].chestTitle}
                     open={item.isOpened}
                     closedImg={dummypremiumChests[index].closedImg}
+                    premiumChestIndex={dummypremiumChests[index].chestId}
                     rewardTypes={rewardTypes}
                     isPremium={isPremium}
                     address={address}
@@ -929,12 +928,12 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.rewardType?.includes("Points") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("Points") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.rewardType?.includes("Points") &&
+                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes("Points") &&
                             "grayscale(1)",
                         }}
                       >
@@ -949,14 +948,14 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.rewardType?.includes(
+                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes(
                                     "Points"
                                   ) && "gray",
                               }}
                             >
                               {getFormattedNumber(
-                                liverewardData?.rewardType?.includes("Points")
-                                  ? liverewardData?.reward
+                               liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("Points")
+                                  ? liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward
                                   : 0,
                                 0
                               )}{" "}
@@ -970,12 +969,12 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.rewardType?.includes("Money") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("Money") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.rewardType?.includes("Money") &&
+                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes("Money") &&
                             "grayscale(1)",
                         }}
                       >
@@ -990,15 +989,15 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.rewardType?.includes(
+                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes(
                                     "Money"
                                   ) && "gray",
                               }}
                             >
                               ${" "}
-                              {liverewardData?.rewardType?.includes("Money")
+                              {liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("Money")
                                 ? getFormattedNumber(
-                                    Number(liverewardData?.reward),
+                                    Number(liverewardData?.rewards[0]?.reward),
                                     2
                                   )
                                 : "0"}{" "}
@@ -1007,7 +1006,7 @@ const DailyBonusPopup = ({
                             {myNFTSCaws === 0 &&
                               myNFTSLand === 0 &&
                               myNFTSTimepiece === 0 &&
-                              liverewardData?.reward?.includes("WoD") && (
+                              liverewardData && liverewardData.rewards &&  liverewardData?.rewards[0]?.reward?.includes("WoD") && (
                                 <ToolTip
                                   title={
                                     <React.Fragment>
@@ -1029,17 +1028,17 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.rewardType?.includes("NFT") &&
-                          liverewardData?.reward?.includes("WoD") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("WoD") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            liverewardData?.rewardType?.includes("NFT") &&
-                            !liverewardData?.reward?.includes("WoD")
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("WoD")
                               ? "grayscale(1)"
-                              : liverewardData?.rewardType?.includes("NFT") &&
-                                liverewardData?.reward?.includes("WoD")
+                              : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                              liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("WoD")
                               ? ""
                               : "grayscale(1)",
                         }}
@@ -1055,13 +1054,13 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  liverewardData?.rewardType?.includes("NFT") &&
-                                  !liverewardData?.reward?.includes("WoD")
+                                liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("WoD")
                                     ? "gray"
-                                    : liverewardData?.rewardType?.includes(
+                                    : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes(
                                         "NFT"
                                       ) &&
-                                      liverewardData?.reward?.includes("WoD")
+                                      liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("WoD")
                                     ? "white"
                                     : "gray",
                               }}
@@ -1076,17 +1075,17 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.rewardType?.includes("NFT") &&
-                          liverewardData?.reward?.includes("CAWS") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("CAWS") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            liverewardData?.rewardType?.includes("NFT") &&
-                            !liverewardData?.reward?.includes("CAWS")
+                          liverewardData && liverewardData.rewards &&  liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("CAWS")
                               ? "grayscale(1)"
-                              : liverewardData?.rewardType?.includes("NFT") &&
-                                liverewardData?.reward?.includes("CAWS")
+                              : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                              liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("CAWS")
                               ? ""
                               : "grayscale(1)",
                         }}
@@ -1102,13 +1101,13 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  liverewardData?.rewardType?.includes("NFT") &&
-                                  !liverewardData?.reward?.includes("CAWS")
+                                liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("CAWS")
                                     ? "gray"
-                                    : liverewardData?.rewardType?.includes(
+                                    : liverewardData && liverewardData.rewards &&  liverewardData?.rewards[0]?.rewardType?.includes(
                                         "NFT"
                                       ) &&
-                                      liverewardData?.reward?.includes("CAWS")
+                                      liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("CAWS")
                                     ? "white"
                                     : "gray",
                               }}
@@ -1123,17 +1122,17 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.rewardType?.includes("NFT") &&
-                          liverewardData?.reward?.includes("BetaPass") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("BetaPass") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            liverewardData?.rewardType?.includes("NFT") &&
-                            !liverewardData?.reward?.includes("BetaPass")
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("BetaPass")
                               ? "grayscale(1)"
-                              : liverewardData?.rewardType?.includes("NFT") &&
-                                liverewardData?.reward?.includes("BetaPass")
+                              : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                              liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("BetaPass")
                               ? ""
                               : "grayscale(1)",
                         }}
@@ -1149,13 +1148,13 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  liverewardData?.rewardType?.includes("NFT") &&
-                                  !liverewardData?.reward?.includes("BetaPass")
+                                liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("NFT") &&
+                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.reward?.includes("BetaPass")
                                     ? "gray"
-                                    : liverewardData?.rewardType?.includes(
+                                    : liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes(
                                         "NFT"
                                       ) &&
-                                      liverewardData?.reward?.includes(
+                                      liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes(
                                         "BetaPass"
                                       )
                                     ? "white"
@@ -1172,12 +1171,12 @@ const DailyBonusPopup = ({
                     <div className="col-12 col-lg-4">
                       <div
                         className={`prizeswrapper ${
-                          liverewardData?.rewardType?.includes("LargeMoney") &&
+                          liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.rewardType?.includes("LargeMoney") &&
                           "prizeswrapper-premium"
                         } `}
                         style={{
                           filter:
-                            !liverewardData?.rewardType?.includes(
+                          liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes(
                               "LargeMoney"
                             ) && "grayscale(1)",
                         }}
@@ -1193,7 +1192,7 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  !liverewardData?.rewardType?.includes(
+                                liverewardData && liverewardData.rewards && !liverewardData?.rewards[0]?.rewardType?.includes(
                                     "LargeMoney"
                                   ) && "gray",
                               }}
@@ -1203,7 +1202,7 @@ const DailyBonusPopup = ({
                             {myNFTSCaws === 0 &&
                               myNFTSLand === 0 &&
                               myNFTSTimepiece === 0 &&
-                              liverewardData?.reward?.includes("BetaPass") && (
+                              liverewardData && liverewardData.rewards && liverewardData?.rewards[0]?.reward?.includes("BetaPass") && (
                                 <ToolTip
                                   title={
                                     <React.Fragment>

@@ -165,6 +165,7 @@ function Dashboard({
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
   const [userWallet, setuserWallet] = useState("");
+  const [dummypremiumChests, setDummyPremiumChests] = useState([]);
 
   const [claimedChests, setclaimedChests] = useState(0);
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
@@ -184,6 +185,59 @@ function Dashboard({
   let wcfx = "0xfe97E85d13ABD9c1c33384E796F10B73905637cE";
   let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
+
+  const dummyPremiums = [
+    {
+      chestTitle: "Jewel Coffer",
+      closedImg: "greenCrystal",
+      chestId: 1,
+    },
+    {
+      chestTitle: "Gold Hoard",
+      closedImg: "blueCrystal",
+      chestId: 2,
+    },
+    {
+      chestTitle: "Pirate's Bounty",
+      closedImg: "yellowCrystal",
+      chestId: 3,
+    },
+    {
+      chestTitle: "Gem Trove",
+      closedImg: "purpleCrystal",
+      chestId: 4,
+    },
+    {
+      chestTitle: "Coin Chest",
+      closedImg: "cyanCrystal",
+      chestId: 5,
+    },
+    {
+      chestTitle: "Silver Cache",
+      closedImg: "greenCrystal",
+      chestId: 6,
+    },
+    {
+      chestTitle: "Ruby Stash",
+      closedImg: "blueCrystal",
+      chestId: 7,
+    },
+    {
+      chestTitle: "Mystic Reliquary",
+      closedImg: "yellowCrystal",
+      chestId: 8,
+    },
+    {
+      chestTitle: "Ancient Relics",
+      closedImg: "purpleCrystal",
+      chestId: 9,
+    },
+    {
+      chestTitle: "Emerald Trove",
+      closedImg: "cyanCrystal",
+      chestId: 10,
+    },
+  ];
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -216,6 +270,26 @@ function Dashboard({
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
     useMutation(VERIFY_WALLET);
+
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+    return array;
+  }
+
   //land only stakes
   const getStakesIdsWod = async () => {
     const address = coinbase;
@@ -456,7 +530,8 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
         subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0" || coinbase?.toLowerCase() === '0xbf8bc0660f96b1068e21e0f28614148dfa758cec'
+        subscribedPlatformTokenAmountBNB !== "0" ||
+        coinbase?.toLowerCase() === "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
       ) {
         setIsPremium(true);
       }
@@ -1164,6 +1239,23 @@ function Dashboard({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+
+  useEffect(()=>{
+    setDummyPremiumChests(shuffle(dummyPremiums))
+  },[])
+
+  useEffect(() => {
+    const checkMidnight = () => {
+      const now = new Date();
+      if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+        setDummyPremiumChests(shuffle(dummyPremiums))
+        clearInterval(interval);
+      }
+    };
+    const interval = setInterval(checkMidnight, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  
 
   useEffect(() => {
     if (chainId === 1) {
@@ -2394,6 +2486,7 @@ function Dashboard({
                     myNFTSTimepiece={MyNFTSTimepiece.length}
                     allChests={allChests}
                     canBuy={canBuy}
+                    dummypremiumChests={dummypremiumChests}
                   />
                 </div>
               </OutsideClickHandler>

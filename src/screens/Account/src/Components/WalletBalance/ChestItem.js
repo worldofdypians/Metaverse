@@ -23,6 +23,7 @@ const ChestItem = ({
   coinbase,
   isActive,
   isActiveIndex,
+  premiumChestIndex,
 }) => {
   const [chestStatus, setchestStatus] = useState("initial");
   const [openRandom, setOpenRandom] = useState(1);
@@ -54,7 +55,7 @@ const ChestItem = ({
         userData_bnb
       );
       if (result.status === 200) {
-        onClaimRewards(result.data.reward);
+        onClaimRewards(result.data.chestRewards[0]);
         setIsChestOpen(true);
         setchestStatus("success");
         onLoadingChest(false);
@@ -65,7 +66,7 @@ const ChestItem = ({
         userData
       );
       if (result.status === 200) {
-        onClaimRewards(result.data.reward);
+        onClaimRewards(result.data.chestRewards[0]);
         setIsChestOpen(true);
         setchestStatus("success");
         onLoadingChest(false);
@@ -256,9 +257,9 @@ const ChestItem = ({
         {rewardTypes === "premium" ? (
           <img
             src={
-              (open || ischestOpen) && chestIndex + 9 <= 14
+              (open || ischestOpen) && premiumChestIndex <= 5
                 ? require(`./chestImages/premium/${closedImg}OpenCoins.png`)
-                : (open || ischestOpen) && chestIndex + 9 > 14
+                : (open || ischestOpen) && premiumChestIndex > 5
                 ? require(`./chestImages/premium/${closedImg}OpenGems.png`)
                 : require(`./chestImages/premium/${closedImg}.png`)
             }

@@ -543,8 +543,6 @@ const MyRewardsPopup = ({
     fetchWeeklyRecordsAroundPlayer();
     fetchMonthlyRecordsAroundPlayer();
     fetchMonthlyGenesisRecordsAroundPlayer();
-    fetchConfluxUSDRewards();
-    fetchGateUSDRewards();
   }, [userId, bundlesBought]);
 
   useEffect(() => {
@@ -559,6 +557,8 @@ const MyRewardsPopup = ({
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
+    fetchConfluxUSDRewards();
+    fetchGateUSDRewards();
   }, [address, email]);
 
   useEffect(() => {
