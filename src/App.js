@@ -57,8 +57,9 @@ import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserMo
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import { useEagerlyConnect } from "web3-connector";
-import { SIDRegister } from "@web3-name-sdk/register";
-import { providers } from 'ethers'
+import SIDRegister from "@web3-name-sdk/register";
+import { createWeb3Name } from "@web3-name-sdk/core";
+import { providers } from "ethers";
 import {
   useWeb3React,
   disconnect,
@@ -130,9 +131,7 @@ function App() {
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
-
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
-  
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -153,7 +152,6 @@ function App() {
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
-
 
   const [fireAppcontent, setFireAppContent] = useState(false);
   const [activeUser, setactiveUser] = useState(false);
@@ -199,24 +197,65 @@ function App() {
   const [success, setSuccess] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
   const [domainPopup, setDomainPopup] = useState(false);
+  const [availableDomain, setAvailableDomain] = useState("initial");
+  const [domainPrice, setDomainPrice] = useState(0);
+  const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
+  const { BigNumber } = window;
   const { connector, account, accounts, isActive, isActivating, provider } =
     useWeb3React();
 
   useEagerlyConnect();
 
-  const searchDomain = async (domain) => {
-    if(window.ethereum){
-      const provider = new providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      const register = new SIDRegister({signer, chainId: 56})
-      const available = await register.getAvailable(domain)
-      console.log(available, "Available");
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (domainPopup === true) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
     }
-  }
+  }, [domainPopup]);
 
+  const getDomains = async () => {
+    const web3Name = createWeb3Name();
+    const name = await web3Name.getDomainName({
+      address: "0xE87601c9902FA22E454443F967a9eFf291780Ac0".toLowerCase(),
+      queryTldList: ['bnb'],
+    }).then((data) => {
+      console.log(data, "successdata");
+    }).catch((e) => 
+    console.log(e)
+    )
+    console.log(name,  "0xE87601c9902FA22E454443F967a9eFf291780Ac0".toLowerCase(), "domain")
+  };
 
+  const searchDomain = async (domain) => {
+    if (window.ethereum) {
+      const provider = new providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const register = new SIDRegister({ signer, chainId: 56 });
+      const available = await register.getAvailable(domain);
+      const price = await register.getRentPrice(domain, 1);
+      const newPrice = new BigNumber(price._hex / 1e18).toFixed();
+      setDomainPrice(newPrice);
+      if (domain == "") {
+        setAvailableDomain("initial");
+      } else {
+        setAvailableDomain(available);
+      }
+      console.log(availableDomain, domain.length);
+    }
+  };
+
+  const registerDomain = async (label, years) => {
+    const provider = new providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    const register = new SIDRegister({ signer, chainId: 56 });
+    await register.register(label, address, years);
+  };
 
   const getTokenData = async () => {
     await axios
@@ -225,7 +264,6 @@ function App() {
         const propertyDyp = Object.entries(
           data.data.the_graph_eth_v2.token_data
         );
-        
 
         const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
 
@@ -235,15 +273,15 @@ function App() {
 
   const getPriceDYP = async () => {
     const dypprice = await axios
-    .get(
-      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-    )
-    .then((res) => {
-      return res.data.data.attributes.base_token_price_usd;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .get(
+        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+      )
+      .then((res) => {
+        return res.data.data.attributes.base_token_price_usd;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
@@ -258,6 +296,7 @@ function App() {
         // );
         // setDypTokenDatabnb(propertyDyp[0][1].token_price_usd);
 
+        setBnbUSDPrice(data.data.the_graph_bsc_v2.usd_per_eth);
         const propertyIDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
         );
@@ -265,7 +304,6 @@ function App() {
       });
   };
 
- 
   const handleSwitchChain = async () => {
     const { ethereum } = window;
     const ETHPARAMS = {
@@ -513,15 +551,14 @@ function App() {
         setTotalConfluxNft(NFTS.length);
         setMyConfluxNfts(NFTS);
         setconfluxMintAllowed(NFTS.length > 0 ? 0 : 1);
-        setmyConfluxNFTsCreated(NFTS); 
+        setmyConfluxNFTsCreated(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
         settotalBaseNft(NFTS.length);
         setmyBaseNFTs(NFTS);
         setbaseMintAllowed(NFTS.length > 0 ? 0 : 1);
-        setmybaseNFTsCreated(NFTS); 
-
+        setmybaseNFTsCreated(NFTS);
       });
 
       //setmyBaseNFTs
@@ -1646,7 +1683,7 @@ function App() {
     getPriceDYP();
     getListedNfts2();
     getLatest20BoughtNFTS();
-
+    getDomains();
     // getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
     //   settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
     // );
@@ -1962,7 +1999,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -2004,7 +2040,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -2108,7 +2143,6 @@ function App() {
                   totalGateNft={totalGateNft}
                   totalBaseNft={totalBaseNft}
                   myBaseNFTs={myBaseNFTs}
-
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
                   timepieceMetadata={timepieceMetadata}
@@ -2127,41 +2161,41 @@ function App() {
               }
             />
             <Route
-                exact
-                path="/marketplace/beta-pass/base"
-                element={
-                  <BetaPassNFT
-                    type={"base"}
-                    ethTokenData={ethTokenData}
-                    dypTokenData={dypTokenData}
-                    cawsArray={allCawsForTimepieceMint}
-                    mintloading={mintloading}
-                    isConnected={isConnected}
-                    chainId={chainId}
-                    handleMint={handleTimepieceMint}
-                    mintStatus={mintStatus}
-                    textColor={textColor}
-                    calculateCaws={calculateCaws}
-                    totalCreated={totalTimepieceCreated}
-                    totalCoingeckoNft={totalCoingeckoNft}
-                    myNFTSCoingecko={MyNFTSCoingecko}
-                    myGateNfts={myGateNfts}
-                    totalGateNft={totalGateNft}
-                    totalBaseNft={totalBaseNft}
-                    myBaseNFTs={myBaseNFTs}
-                    totalConfluxNft={totalConfluxNft}
-                    myConfluxNfts={myConfluxNfts}
-                    timepieceMetadata={timepieceMetadata}
-                    handleConnect={handleShowWalletModal}
-                    listedNFTS={listedNFTS}
-                    coinbase={coinbase}
-                    timepieceBought={timepieceBought}
-                    handleRefreshListing={handleRefreshList}
-                    nftCount={nftCount}
-                    handleSwitchNetwork={handleSwitchNetwork}
-                  />
-                }
-              />
+              exact
+              path="/marketplace/beta-pass/base"
+              element={
+                <BetaPassNFT
+                  type={"base"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                />
+              }
+            />
             <Route
               exact
               path="/marketplace/events/:eventId"
@@ -2255,7 +2289,6 @@ function App() {
                   timepieceMetadata={timepieceMetadata}
                   myConfluxNFTsCreated={myConfluxNFTsCreated}
                   mybaseNFTsCreated={mybaseNFTsCreated}
-
                   handleConfluxMint={handleConfluxNftMint}
                   handleBaseNftMint={handleBaseNftMint}
                   confluxMintAllowed={confluxMintAllowed}
@@ -2277,11 +2310,19 @@ function App() {
             <Footer />
           )}
         </div>
-        
-        {domainPopup && 
-        <DomainModal onClose={() => setDomainPopup(false)} onSearch={searchDomain} />
-        }
-        
+
+        {domainPopup && (
+          <DomainModal
+            onClose={() => setDomainPopup(false)}
+            onSearch={searchDomain}
+            available={availableDomain}
+            price={domainPrice}
+            chainId={chainId}
+            bnbUSDPrice={bnbUSDPrice}
+            onRegister={registerDomain}
+          />
+        )}
+
         {showWalletModal === true && (
           <RegisterModal
             open={showWalletModal}
