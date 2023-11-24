@@ -1655,7 +1655,7 @@ const DailyBonusPopup = ({
                                     ),
                                     2
                                   )
-                                : "0"}
+                                : "0"}{" "}
                               Reward
                             </span>
                           </div>
