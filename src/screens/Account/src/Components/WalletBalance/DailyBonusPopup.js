@@ -432,7 +432,7 @@ const DailyBonusPopup = ({
       won: false,
     },
     {
-      title: "Large $ Rewards",
+      title: "$ Rewards",
       image: largeRewardsIcon,
       premium: false,
       won: false,
@@ -1367,15 +1367,20 @@ const DailyBonusPopup = ({
                         } `}
                         style={{
                           filter:
-                            ((liverewardData &&
+                          ((liverewardData &&
+                            liverewardData.rewards &&
+                            !liverewardData.rewards.find(
+                              (obj) => obj.rewardType === "Money"
+                            )) ||
+                            (liverewardData &&
                               liverewardData.rewards &&
-                              !liverewardData.rewards.find(
+                              liverewardData.rewards.find(
                                 (obj) => obj.rewardType === "Money"
                               ) &&
                               !liverewardData.rewards.find(
                                 (obj) => obj.rewardType === "Money"
                               )?.details) ||
-                              liverewardData.length == 0) &&
+                            liverewardData.length == 0) &&
                             "grayscale(1)",
                         }}
                       >
@@ -1390,12 +1395,20 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                  ((liverewardData &&
+                                ((liverewardData &&
+                                  liverewardData.rewards &&
+                                  !liverewardData.rewards.find(
+                                    (obj) => obj.rewardType === "Money"
+                                  )) ||
+                                  (liverewardData &&
                                     liverewardData.rewards &&
+                                    liverewardData.rewards.find(
+                                      (obj) => obj.rewardType === "Money"
+                                    ) &&
                                     !liverewardData.rewards.find(
                                       (obj) => obj.rewardType === "Money"
-                                    )) ||
-                                    liverewardData.length == 0) &&
+                                    )?.details) ||
+                                  liverewardData.length == 0) &&
                                   "gray",
                               }}
                             >

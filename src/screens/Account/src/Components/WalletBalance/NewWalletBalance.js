@@ -144,6 +144,8 @@ const renderer2 = ({ hours, minutes }) => {
 
 const NewWalletBalance = ({
   dypBalance,
+  weeklyplayerData,
+  dailyplayerData,
   address,
   coinbase,
   dypBalancebnb,
@@ -190,7 +192,9 @@ const NewWalletBalance = ({
   rewardsPopup,
   dailyPopup,
   openedChests,
-  hasNft,
+  userRank2,
+  genesisRank2,
+  // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -530,25 +534,9 @@ const NewWalletBalance = ({
     },
   ];
 
-  const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
-
-  const dailyPrizesGolden = [10, 8, 5, 5, 5, 5, 5, 5, 5, 5];
-
-  const weeklyPrizes = [25, 15, 10, 8, 0, 0, 0, 0, 0, 0];
-
-  const weeklyPrizesGolden = [25, 15, 10, 8, 5, 5, 5, 5, 5, 5, 5];
-
-  const monthlyPrizes = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
-
-  const monthlyPrizesGolden = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
-
   const [dummyEvent, setDummyEvent] = useState({});
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [eventPopup, setEventPopup] = useState(false);
-
-  const [userRank, setUserRank] = useState(0);
-
-  const [genesisRank, setGenesisRank] = useState(0);
   const [records, setRecords] = useState([]);
   const [activeSlide, setActiveSlide] = useState();
   const [showNext, setShowNext] = useState();
@@ -585,8 +573,6 @@ const NewWalletBalance = ({
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
-  const [dailyplayerData, setdailyplayerData] = useState(0);
-  const [weeklyplayerData, setweeklyplayerData] = useState(0);
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
   const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
@@ -602,8 +588,6 @@ const NewWalletBalance = ({
   const [selectedEvent, setSelectedEvent] = useState({});
   const [eventsPopup, setEventsPopup] = useState(false);
   const [stakePopup, setStakePopup] = useState(false);
-  const backendApi =
-    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
   const dummyEvents = [
     {
@@ -684,7 +668,10 @@ const NewWalletBalance = ({
     if (openedChests && openedChests.length > 0) {
       for (let i = 0; i < openedChests.length; i++) {
         if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
-          if (!openedChests[i].rewards.find((obj) => obj.rewardType === "Money")?.details) {
+          if (
+            !openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
+              ?.details
+          ) {
             moneyResult += Number(
               openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
                 .reward
@@ -980,141 +967,6 @@ const NewWalletBalance = ({
     ],
   };
 
-  const fetchMonthlyRecordsAroundPlayer = async () => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      setRecords(result.data.data.leaderboard);
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
-      const userPosition = testArray[0].position + 1;
-      if (availableTime) {
-        setUserRank(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
-            : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
-        );
-      } else if (!availableTime) {
-        setUserRank(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? monthlyPrizes[9]
-            : monthlyPrizes[userPosition]
-        );
-      }
-    }
-  };
-
-  const fetchGenesisAroundPlayer = async () => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-
-    if (userId) {
-      const result = await axios.post(
-        `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
-      setGenesisRank(testArray[0].statValue);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayer = async () => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
-      const userPosition = testArray[0].position;
-
-      if (availableTime) {
-        setdailyplayerData(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? dailyPrizes[9] + dailyPrizesGolden[9]
-            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
-        );
-      } else if (!availableTime) {
-        setdailyplayerData(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? dailyPrizes[9]
-            : dailyPrizes[userPosition]
-        );
-      }
-    }
-  };
-
- 
-
-  const fetchWeeklyRecordsAroundPlayer = async () => {
-    const data = {
-      StatisticName: "WeeklyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
-      const userPosition = testArray[0].position + 1;
-      if (availableTime) {
-        setweeklyplayerData(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? weeklyPrizes[9] + weeklyPrizesGolden[9]
-            : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
-        );
-      } else if (!availableTime) {
-        setweeklyplayerData(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? weeklyPrizes[9]
-            : weeklyPrizes[userPosition]
-        );
-      }
-    
-  };
-
   const getStakesIds = async () => {
     let stakenft = [];
 
@@ -1261,7 +1113,6 @@ const NewWalletBalance = ({
   };
 
   useEffect(() => {
-    fetchGenesisAroundPlayer();
     getTokenData();
     getTokenDatabnb();
     getTokenDataavax();
@@ -1310,16 +1161,8 @@ const NewWalletBalance = ({
   }, [address]);
 
   useEffect(() => {
-    if (userId) {
-      fetchDailyRecordsAroundPlayer();
-      fetchWeeklyRecordsAroundPlayer();
-      fetchMonthlyRecordsAroundPlayer();
-    }
-  }, [userId,availableTime]);
-
-  useEffect(() => {
     getTreasureChestsInfo();
-  }, [openedChests, hasNft, address]);
+  }, [openedChests, address]);
 
   const recaptchaRef = useRef(null);
 
@@ -1766,8 +1609,8 @@ const NewWalletBalance = ({
                       {getFormattedNumber(
                         weeklyplayerData +
                           dailyplayerData +
-                          userRank +
-                          genesisRank +
+                          userRank2 +
+                          genesisRank2 +
                           baseEarnUSD +
                           confluxEarnUSD +
                           gateEarnUSD +
@@ -2726,5 +2569,3 @@ const NewWalletBalance = ({
 };
 
 export default NewWalletBalance;
-
-// Email sent successfully

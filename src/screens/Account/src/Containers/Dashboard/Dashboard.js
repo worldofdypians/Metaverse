@@ -169,12 +169,20 @@ function Dashboard({
 
   const [claimedChests, setclaimedChests] = useState(0);
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
+  const [dailyplayerData, setdailyplayerData] = useState(0);
+  const [weeklyplayerData, setweeklyplayerData] = useState(0);
 
   const [canBuy, setCanBuy] = useState(false);
 
   const [allChests, setallChests] = useState(0);
 
   const [count, setCount] = useState(0);
+
+  const [userRank, setUserRank] = useState("");
+  const [userRank2, setUserRank2] = useState("");
+
+  const [genesisRank, setGenesisRank] = useState("");
+  const [genesisRank2, setGenesisRank2] = useState("");
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -185,6 +193,21 @@ function Dashboard({
   let wcfx = "0xfe97E85d13ABD9c1c33384E796F10B73905637cE";
   let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
+
+  const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
+
+  const dailyPrizesGolden = [10, 8, 5, 5, 5, 5, 5, 5, 5, 5];
+
+  const weeklyPrizes = [25, 15, 10, 8, 0, 0, 0, 0, 0, 0];
+
+  const weeklyPrizesGolden = [25, 15, 10, 8, 5, 5, 5, 5, 5, 5, 5];
+
+  const monthlyPrizes = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
+
+  const monthlyPrizesGolden = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
+
+  const backendApi =
+    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
   const dummyPremiums = [
     {
@@ -470,6 +493,136 @@ function Dashboard({
     }
   };
 
+  const fetchMonthlyRecordsAroundPlayer = async (userId, userName) => {
+    const data = {
+      StatisticName: "MonthlyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === userName
+    );
+    const userPosition = testArray[0].position + 1;
+
+    if (goldenPassRemainingTime) {
+      setUserRank2(
+        userPosition > 10
+          ? 0
+          : userPosition === 10
+          ? monthlyPrizes[9] + monthlyPrizesGolden[9]
+          : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+      );
+    } else if (!goldenPassRemainingTime) {
+      setUserRank2(
+        userPosition > 10
+          ? 0
+          : userPosition === 10
+          ? monthlyPrizes[9]
+          : monthlyPrizes[userPosition]
+      );
+    }
+
+    setUserRank(testArray[0].position);
+  };
+
+  const fetchGenesisAroundPlayer = async (userId, userName) => {
+    const data = {
+      StatisticName: "GenesisLandRewards",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === userName
+    );
+
+    setGenesisRank(testArray[0].position);
+    setGenesisRank2(testArray[0].statValue);
+  };
+
+  const fetchDailyRecordsAroundPlayer = async (userId, userName) => {
+    const data = {
+      StatisticName: "DailyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === userName
+      );
+
+      const userPosition = testArray[0].position;
+
+      if (goldenPassRemainingTime) {
+        setdailyplayerData(
+          userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? dailyPrizes[9] + dailyPrizesGolden[9]
+            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
+        );
+      } else if (!goldenPassRemainingTime) {
+        setdailyplayerData(
+          userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? dailyPrizes[9]
+            : dailyPrizes[userPosition]
+        );
+      }
+    }
+  };
+
+  const fetchWeeklyRecordsAroundPlayer = async (userId, userName) => {
+    const data = {
+      StatisticName: "WeeklyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+
+    const result = await axios.post(
+      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === userName
+    );
+
+    const userPosition = testArray[0].position + 1;
+    if (goldenPassRemainingTime) {
+      setweeklyplayerData(
+        userPosition > 10
+          ? 0
+          : userPosition === 10
+          ? weeklyPrizes[9] + weeklyPrizesGolden[9]
+          : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
+      );
+    } else if (!goldenPassRemainingTime) {
+      setweeklyplayerData(
+        userPosition > 10
+          ? 0
+          : userPosition === 10
+          ? weeklyPrizes[9]
+          : weeklyPrizes[userPosition]
+      );
+    }
+  };
+
   const refreshSubscription = async (addr) => {
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
@@ -522,7 +675,8 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0" && coinbase?.toLowerCase() !== "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
+        subscribedPlatformTokenAmountBNB === "0" &&
+        coinbase?.toLowerCase() !== "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
       ) {
         setIsPremium(false);
       }
@@ -1240,22 +1394,25 @@ function Dashboard({
     }
   };
 
-  useEffect(()=>{
-    setDummyPremiumChests(shuffle(dummyPremiums))
-  },[])
+  useEffect(() => {
+    setDummyPremiumChests(shuffle(dummyPremiums));
+  }, []);
 
   useEffect(() => {
     const checkMidnight = () => {
       const now = new Date();
-      if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
-        setDummyPremiumChests(shuffle(dummyPremiums))
+      if (
+        now.getHours() === 0 &&
+        now.getMinutes() === 0 &&
+        now.getSeconds() === 0
+      ) {
+        setDummyPremiumChests(shuffle(dummyPremiums));
         clearInterval(interval);
       }
     };
     const interval = setInterval(checkMidnight, 1000);
     return () => clearInterval(interval);
   }, []);
-  
 
   useEffect(() => {
     if (chainId === 1) {
@@ -1368,8 +1525,38 @@ function Dashboard({
       email
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress, email);
+     
     }
   }, [data, email]);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      email
+    ) {
+      fetchMonthlyRecordsAroundPlayer(
+        data.getPlayer.playerId,
+        data.getPlayer.displayName
+      );
+      fetchGenesisAroundPlayer(
+        data.getPlayer.playerId,
+        data.getPlayer.displayName
+      );
+      fetchWeeklyRecordsAroundPlayer(
+        data.getPlayer.playerId,
+        data.getPlayer.displayName
+      );
+      fetchDailyRecordsAroundPlayer(
+        data.getPlayer.playerId,
+        data.getPlayer.displayName
+      );
+    }
+  }, [data, email, count, goldenPassRemainingTime]);
 
   useEffect(() => {
     if (
@@ -1510,6 +1697,8 @@ function Dashboard({
                       className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
                     >
                       <ProfileCard
+                        userRank={userRank}
+                        genesisRank={genesisRank}
                         email={email}
                         username={data?.getPlayer?.displayName}
                         address={data?.getPlayer?.wallet?.publicAddress}
@@ -1548,6 +1737,10 @@ function Dashboard({
                         onDailyRewardsPopupOpen={() => {
                           setdailyBonusPopup(true);
                         }}
+                        weeklyplayerData={weeklyplayerData}
+                        dailyplayerData={dailyplayerData}
+                        userRank2={userRank2}
+                        genesisRank2={genesisRank2}
                         dailyPopup={dailyBonusPopup}
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
@@ -1598,13 +1791,13 @@ function Dashboard({
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
                         openedChests={openedChests}
-                        hasNft={
-                          MyNFTSCaws.length +
-                            MyNFTSLand.length   >
-                          0
-                            ? true
-                            : false
-                        }
+                        // hasNft={
+                        //   MyNFTSCaws.length +
+                        //     MyNFTSLand.length   >
+                        //   0
+                        //     ? true
+                        //     : false
+                        // }
                       />
                     </div>
                     <WalletBalance
@@ -1828,6 +2021,9 @@ function Dashboard({
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
                             address={data?.getPlayer?.wallet?.publicAddress}
+                            weeklyplayerData={weeklyplayerData}
+                            dailyplayerData={dailyplayerData}
+                            userRank2={userRank2}
                             email={email}
                             bnbPrice={bnbPrice}
                             cfxPrice={cfxPrice}
@@ -1835,13 +2031,13 @@ function Dashboard({
                             openedChests={openedChests}
                             allChests={allChests}
                             availableTime={goldenPassRemainingTime}
-                            hasNft={
-                              MyNFTSCaws.length +
-                                MyNFTSLand.length  >
-                              0
-                                ? true
-                                : false
-                            }
+                            // hasNft={
+                            //   MyNFTSCaws.length +
+                            //     MyNFTSLand.length  >
+                            //   0
+                            //     ? true
+                            //     : false
+                            // }
                           />
                         </div>
                       </OutsideClickHandler>

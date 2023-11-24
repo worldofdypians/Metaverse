@@ -74,50 +74,14 @@ const ProfileCard = ({
   onOpenLeaderboard,
   onPremiumClick,
   handleSetAvailableTime,
+  userRank,
+  genesisRank,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
-  const [userRank, setUserRank] = useState("");
-  const [genesisRank, setGenesisRank] = useState("");
   // const [countdown, setcountdown] = useState();
   // const [isactive, setisActive] = useState(false);
   // const [remainingTime, setRemainingTime] = useState("");
-
-  const fetchMonthlyRecordsAroundPlayer = async () => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    setUserRank(testArray[0].position);
-  };
-
-  const fetchGenesisAroundPlayer = async () => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    setGenesisRank(testArray[0].position);
-  };
 
   // const setlastDay = async () => {
   //   const timeofDeposit_Date = new Intl.DateTimeFormat("en-UK", {
@@ -131,11 +95,6 @@ const ProfileCard = ({
 
   //   setRemainingTime(timeofDeposit_Date);
   // };
-
-  useEffect(() => {
-    fetchMonthlyRecordsAroundPlayer();
-    fetchGenesisAroundPlayer();
-  }, []);
 
   // useEffect(() => {
   //   if (
@@ -172,7 +131,7 @@ const ProfileCard = ({
 
   let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
   let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
- 
+
   // const handleRefreshCountdown700 = async () => {
   //   const goldenpassAbi = new window.bscWeb3.eth.Contract(
   //     DYP_700_ABI,
@@ -440,7 +399,7 @@ const ProfileCard = ({
   const countBundle = async () => {
     const result = await axios.get(
       `https://api3.dyp.finance/api/bundles/count/${address}`
-    ); 
+    );
 
     const result_formatted = result.data.count;
     setbundlesBought(result_formatted);
@@ -537,9 +496,7 @@ const ProfileCard = ({
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
     const timeofDeposit = await dypv2.methods.getTimeOfDeposit(addr).call();
 
-    const timeofDepositv1 = await dypv1.methods
-      .getTimeOfDeposit(addr)
-      .call();
+    const timeofDepositv1 = await dypv1.methods.getTimeOfDeposit(addr).call();
 
     if (timeofDeposit !== 0 || timeofDepositv1 !== 0) {
       const timeofDeposit_miliseconds = timeofDeposit * 1000;
@@ -580,9 +537,7 @@ const ProfileCard = ({
       setdatewhenBundleBought(timeofbundleBought_day);
       setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
 
-      const expiringTime = await dypv2.methods
-        .getTimeOfExpireBuff(addr)
-        .call();
+      const expiringTime = await dypv2.methods.getTimeOfExpireBuff(addr).call();
 
       const expiringTimev1 = await dypv1.methods
         .getTimeOfExpireBuff(addr)
@@ -847,8 +802,6 @@ const ProfileCard = ({
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        
-
         if (
           (today < finalDateofBundle && bundlesBought > 0) ||
           finalDateofBundle.getFullYear() !== today.getFullYear()
@@ -905,7 +858,7 @@ const ProfileCard = ({
 
   useEffect(() => {
     countBundle();
-    setlastDay(address); 
+    setlastDay(address);
   }, [address]);
 
   useEffect(() => {
@@ -914,7 +867,6 @@ const ProfileCard = ({
 
   return (
     <div className="main-wrapper py-4 w-100">
-      
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-lg-3 col-12">
           <div

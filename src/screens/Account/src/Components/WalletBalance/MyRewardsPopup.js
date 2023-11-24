@@ -23,17 +23,15 @@ const MyRewardsPopup = ({
   ethTokenData,
   openedChests,
   allChests,
-  hasNft,
-  availableTime
+  weeklyplayerData,
+  dailyplayerData,userRank2
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
-  const [dailyplayerData, setdailyplayerData] = useState(0);
-  const [weeklyplayerData, setweeklyplayerData] = useState(0);
-  const [monthlyplayerData, setmonthlyplayerData] = useState(0);
+
   const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
 
   const [genesisData, setgenesisData] = useState(0);
@@ -64,17 +62,6 @@ const MyRewardsPopup = ({
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
 
-  const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
-
-  const dailyPrizesGolden = [10, 8, 5, 5, 5, 5, 5, 5, 5, 5];
-
-  const weeklyPrizes = [25, 15, 10, 8, 0, 0, 0, 0, 0, 0];
-
-  const weeklyPrizesGolden = [25, 15, 10, 8, 5, 5, 5, 5, 5, 5, 5];
-
-  const monthlyPrizes = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
-
-  const monthlyPrizesGolden = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
 
   const getBundles = async () => {
     if (address) {
@@ -304,119 +291,7 @@ const MyRewardsPopup = ({
       console.log("Error:", error);
     }
   };
-
-  const fetchDailyRecordsAroundPlayer = async () => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
-      const userPosition = testArray[0].position;
-      if (availableTime && availableTime !== NaN) {
-        if (availableTime > 0) {
-          setdailyplayerData(
-            userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? dailyPrizes[9] + dailyPrizesGolden[9]
-              : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
-          );
-        } else if (availableTime === 0) {
-          setdailyplayerData(
-            userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? dailyPrizes[9]
-              : dailyPrizes[userPosition]
-          );
-        }
-      }
-    }
-  };
-
-  const fetchWeeklyRecordsAroundPlayer = async () => {
-    const data = {
-      StatisticName: "WeeklyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
-      const userPosition = testArray[0].position + 1;
-      if (availableTime > 0) {
-        setweeklyplayerData(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? weeklyPrizes[9] + weeklyPrizesGolden[9]
-            : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
-        );
-      } else if (availableTime === 0) {
-        setweeklyplayerData(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? weeklyPrizes[9]
-            : weeklyPrizes[userPosition]
-        );
-      }
-    }
-  };
-
-  const fetchMonthlyRecordsAroundPlayer = async () => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
-      const userPosition = testArray[0].position + 1;
-      if (availableTime > 0) {
-        setmonthlyplayerData(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
-            : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
-        );
-      } else if (availableTime === 0) {
-        setmonthlyplayerData(
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? monthlyPrizes[9]
-            : monthlyPrizes[userPosition]
-        );
-      }
-    }
-  };
+ 
 
   const fetchMonthlyGenesisRecordsAroundPlayer = async () => {
     const data = {
@@ -518,7 +393,7 @@ const MyRewardsPopup = ({
    
     if (openedChests && openedChests.length > 0) {
       for (let i = 0; i < openedChests.length; i++) {
-        console.log(openedChests[i].rewards)
+        
         if (
           openedChests[i].rewards.find((obj) => obj.rewardType === "Points")
         ) {
@@ -559,15 +434,12 @@ const MyRewardsPopup = ({
   };
 
   useEffect(() => {
-    fetchDailyRecordsAroundPlayer();
-    fetchWeeklyRecordsAroundPlayer();
-    fetchMonthlyRecordsAroundPlayer();
     fetchMonthlyGenesisRecordsAroundPlayer();
   }, [userId, bundlesBought]);
 
   useEffect(() => {
     getTreasureChestsInfo();
-  }, [openedChests, hasNft]);
+  }, [openedChests]);
 
   useEffect(() => {
     getBundles();
@@ -793,7 +665,7 @@ const MyRewardsPopup = ({
                 {previousRewards
                   ? "-"
                   : `$${getFormattedNumber(
-                      dailyplayerData + weeklyplayerData + monthlyplayerData,
+                      dailyplayerData + weeklyplayerData + userRank2,
                       2
                     )}`}
               </td>
@@ -801,7 +673,7 @@ const MyRewardsPopup = ({
                 {previousRewards
                   ? "-"
                   : `${getFormattedNumber(
-                      (dailyplayerData + weeklyplayerData + monthlyplayerData) /
+                      (dailyplayerData + weeklyplayerData + userRank2) /
                         bnbPrice,
                       4
                     )} WBNB`}
