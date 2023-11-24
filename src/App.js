@@ -200,6 +200,10 @@ function App() {
   const [availableDomain, setAvailableDomain] = useState("initial");
   const [domainPrice, setDomainPrice] = useState(0);
   const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
+  const [successMessage, setSuccessMessage] = useState("")
+  const [domainName, setDomainName] = useState(null)
+  const [loadingDomain, setLoadingDomain] = useState(false)
+  const [domainMetaData, setDomainMetaData] = useState({})
   const location = useLocation();
   const navigate = useNavigate();
   const { BigNumber } = window;
@@ -218,18 +222,10 @@ function App() {
     }
   }, [domainPopup]);
 
-  const getDomains = async () => {
-    const web3Name = createWeb3Name();
-    const name = await web3Name.getDomainName({
-      address: "0xE87601c9902FA22E454443F967a9eFf291780Ac0".toLowerCase(),
-      queryTldList: ['bnb'],
-    }).then((data) => {
-      console.log(data, "successdata");
-    }).catch((e) => 
-    console.log(e)
-    )
-    console.log(name,  "0xE87601c9902FA22E454443F967a9eFf291780Ac0".toLowerCase(), "domain")
-  };
+  const web3Name = createWeb3Name();
+
+ 
+  
 
   const searchDomain = async (domain) => {
     if (window.ethereum) {
@@ -250,11 +246,19 @@ function App() {
   };
 
   const registerDomain = async (label, years) => {
+    setLoadingDomain(true)
     const provider = new providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
     const register = new SIDRegister({ signer, chainId: 56 });
-    await register.register(label, address, years);
+    await register.register(label, address, years, {
+      setPrimaryName: true,
+    }).then(() => {
+      setSuccessMessage("You have successfully registered your .bnb domain");
+      setLoadingDomain(false)
+    }).catch((e) => {
+      console.log(e);
+    })
   };
 
   const getTokenData = async () => {
@@ -1672,6 +1676,25 @@ function App() {
     }
   }
 
+  const getDomains = async () => {
+    if(coinbase && isConnected && logout === "false"){
+      const name = await web3Name.getDomainName({
+        address: coinbase,
+        queryChainIdList: [56],
+      })
+      setDomainName(name)
+      const metadata = await web3Name.getMetadata({ name: name })
+      // console.log(metadata, "metadata");
+      setDomainMetaData(metadata)
+    }
+   
+    // console.log(name, "domain")
+  };
+
+  useEffect(() => {
+   getDomains()
+  }, [coinbase, isConnected, logout, successMessage, loadingDomain])
+
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
@@ -1683,7 +1706,6 @@ function App() {
     getPriceDYP();
     getListedNfts2();
     getLatest20BoughtNFTS();
-    getDomains();
     // getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
     //   settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
     // );
@@ -1742,6 +1764,7 @@ function App() {
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
             handleOpenDomains={() => setDomainPopup(true)}
+            domainName={domainName}
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1758,6 +1781,7 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
+            domainName={domainName}
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -2320,6 +2344,9 @@ function App() {
             chainId={chainId}
             bnbUSDPrice={bnbUSDPrice}
             onRegister={registerDomain}
+            loading={loadingDomain}
+            successMessage={successMessage}
+            metadata={domainMetaData}
           />
         )}
 

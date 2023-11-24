@@ -66,7 +66,8 @@ const Header = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
-  handleOpenDomains
+  handleOpenDomains,
+  domainName
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -654,12 +655,17 @@ const Header = ({
               >
                 <div
                   className="btn connected px-3"
-                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF", minHeight: "34px"}}
                   onClick={() => {
                     setShowMenu(true);
                   }}
                 >
-                  {shortAddress(coinbase)} <img src={dropdown} alt="" />
+                 {domainName ? 
+                  domainName
+                  : 
+                  shortAddress(coinbase) 
+                }
+                  <img src={dropdown} alt="" />
                 </div>
               </Clipboard>
             </div>

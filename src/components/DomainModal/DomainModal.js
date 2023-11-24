@@ -18,26 +18,30 @@ const DomainModal = ({
   price,
   chainId,
   bnbUSDPrice,
-  onRegister
+  onRegister,
+  loading,
+  successMessage,
+  metadata
 }) => {
-
-  const windowSize = useWindowSize()
+  const windowSize = useWindowSize();
   const [domainSearch, setDomainSearch] = useState("");
   const [buyScreen, setBuyScreen] = useState(false);
   const [registrationYear, setRegistrationYear] = useState(1);
-  const [selectedName, setSelectedName] = useState("")
+  const [selectedName, setSelectedName] = useState("");
 
   function onlyLettersAndNumbers(str) {
     return Boolean(str.match(/^[A-Za-z0-9]*$/));
   }
 
+  var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+
+
   useEffect(() => {
-    if(domainSearch !== selectedName){
-      setBuyScreen(false)
-      setRegistrationYear(1)
+    if (domainSearch !== selectedName) {
+      setBuyScreen(false);
+      setRegistrationYear(1);
     }
-  }, [domainSearch])
-  
+  }, [domainSearch]);
 
   return (
     <OutsideClickHandler onOutsideClick={onClose}>
@@ -45,7 +49,8 @@ const DomainModal = ({
         className="popup-wrapper popup-active p-3"
         style={{
           width: "35%",
-          height: windowSize.width > 786 ? "500px" : "630px",
+          // height: windowSize.width > 786 ? "530px" : "650px",
+          minHeight: "330px",
           background: "#1A1C39",
           borderRadius: "10px",
         }}
@@ -78,6 +83,47 @@ const DomainModal = ({
             placeholder="example.bnb"
           />
         </div>
+        {chainId === 56 && metadata && buyScreen === false && domainSearch.length < 3 &&
+          <div
+          className="selected-domain-search-item d-flex align-items-center justify-content-between mt-5 p-3"
+        >
+          <div className="d-flex align-items-center gap-2">
+            <img src={metadata.image} width={60} height={60} alt="" className="your-domain-img" />
+            <div className="d-flex flex-column">
+              <div className="d-flex align-items-center gap-2">
+                <h6 className="domain-name mb-0">{metadata.name}</h6>
+              </div>
+              <span className="name-service mb-0">Your Domain</span>
+            </div>
+          </div>
+          {/* <div className="d-flex align-items-center justify-content-center flex-column gap-2">
+            <div className="d-flex align-items-center gap-1">
+              <div className="d-flex flex-column align-items-end gap-1">
+                <div className="domain-price mb-0">
+                  ${getFormattedNumber(price * bnbUSDPrice, 2)}
+                </div>
+                <span className="bnb-price-domain">
+                  {getFormattedNumber(price, 2)} BNB
+                </span>
+              </div>
+              <span className="name-service">/year</span>
+            </div>
+            <div className="d-flex align-items-center gap-2">
+              <span className="domain-register mb-0">Register now</span>
+              <img
+                src={registerDomainIcon}
+                width={10}
+                height={10}
+                alt=""
+              />
+            </div>
+          </div> */}
+           <div className="d-flex flex-column gap-1">
+                  <span className="name-service mb-0">Expires on </span>
+                  <span className="name-service mb-0">{new Date(metadata.attributes[2].value * 1000).toLocaleDateString("en-US", options)}</span>
+                </div>
+        </div>
+        }
         {chainId !== 56 && (
           <div className="domain-search-items d-flex align-items-center justify-content-center mt-3 p-5">
             <span className="no-domains-text mb-0">
@@ -87,15 +133,20 @@ const DomainModal = ({
         )}
         {buyScreen === false ? (
           <>
-            {onlyLettersAndNumbers(domainSearch) === false ? 
-             <div className="domain-search-items d-flex align-items-center justify-content-center mt-3 p-5">
-             <span className="no-domains-text mb-0">
-               Invalid domain name
-             </span>
-           </div>
-           :
-            available === true && domainSearch.length >= 3 ? (
-              <div className="domain-search-item d-flex align-items-center justify-content-between mt-5 p-3" onClick={() => {setBuyScreen(true); setSelectedName(domainSearch)}}>
+            {onlyLettersAndNumbers(domainSearch) === false ? (
+              <div className="domain-search-items d-flex align-items-center justify-content-center mt-3 p-5">
+                <span className="no-domains-text mb-0">
+                  Invalid domain name
+                </span>
+              </div>
+            ) : available === true && domainSearch.length >= 3 ? (
+              <div
+                className="domain-search-item d-flex align-items-center justify-content-between mt-5 p-3"
+                onClick={() => {
+                  setBuyScreen(true);
+                  setSelectedName(domainSearch);
+                }}
+              >
                 <div className="d-flex align-items-center gap-2">
                   <div className="bnb-domain-icon-green d-flex align-items-center justify-content-center">
                     <span className="mb-0">.bnb</span>
@@ -134,7 +185,7 @@ const DomainModal = ({
                 </div>
               </div>
             ) : available === false && domainSearch.length >= 3 ? (
-              <div className="domain-search-item d-flex align-items-center justify-content-between mt-5  p-3">
+              <div className="domain-search-item d-flex align-items-center justify-content-between mt-5  p-3" style={{minHeight: "92px"}}>
                 <div className="d-flex align-items-center gap-2">
                   <div className="bnb-domain-icon-orange d-flex align-items-center justify-content-center">
                     <span className="mb-0">.bnb</span>
@@ -145,8 +196,8 @@ const DomainModal = ({
                   </div>
                 </div>
                 <div className="d-flex flex-column flex-lg-row">
-                  <span className="name-service mb-0">Expires on</span>
-                  <span className="name-service mb-0">November 14, 2024</span>
+                  <span className="name-service mb-0">Domain Unavailable</span>
+                  {/* <span className="name-service mb-0">November 14, 2024</span> */}
                 </div>
               </div>
             ) : (
@@ -172,7 +223,7 @@ const DomainModal = ({
                   </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center flex-column gap-2">
-                <div className="d-flex align-items-center gap-1">
+                  <div className="d-flex align-items-center gap-1">
                     <div className="d-flex flex-column align-items-end gap-1">
                       <div className="domain-price mb-0">
                         ${getFormattedNumber(price * bnbUSDPrice, 2)}
@@ -201,11 +252,30 @@ const DomainModal = ({
                   </span>
                   <div
                     className="selected-domain-search-item p-2 d-flex justify-content-between align-items-center gap-4 gap-lg-5"
-                    style={{ borderRadius: "8px", width: windowSize.width > 786 ?  "160px" : "100%" }}
+                    style={{
+                      borderRadius: "8px",
+                      width: windowSize.width > 786 ? "160px" : "100%",
+                    }}
                   >
-                    <img src={minusIcon} onClick={() => registrationYear == 1 ? null : setRegistrationYear(registrationYear - 1)} style={{cursor: "pointer"}} alt="" />
-                    <span className="registration-year-amount mb-0">{registrationYear}</span>
-                    <img src={plusIcon} onClick={() => setRegistrationYear(registrationYear + 1)} style={{cursor: "pointer"}} alt="" />
+                    <img
+                      src={minusIcon}
+                      onClick={() =>
+                        registrationYear == 1
+                          ? null
+                          : setRegistrationYear(registrationYear - 1)
+                      }
+                      style={{ cursor: "pointer" }}
+                      alt=""
+                    />
+                    <span className="registration-year-amount mb-0">
+                      {registrationYear}
+                    </span>
+                    <img
+                      src={plusIcon}
+                      onClick={() => setRegistrationYear(registrationYear + 1)}
+                      style={{ cursor: "pointer" }}
+                      alt=""
+                    />
                   </div>
                 </div>
                 <div className="d-flex flex-column align-items-start align-items-lg-end gap-2 w-100">
@@ -214,17 +284,31 @@ const DomainModal = ({
                   </span>
                   <div
                     className="selected-domain-search-item p-2 justify-content-between d-flex align-items-center gap-4 gap-lg-5"
-                    style={{ borderRadius: "8px", width:  windowSize.width > 786 ?  "220px" : "100%" }}
+                    style={{
+                      borderRadius: "8px",
+                      width: windowSize.width > 786 ? "220px" : "100%",
+                    }}
                   >
-                    <span className="registration-year-amount mb-0" style={{whiteSpace: "pre"}}>
+                    <span
+                      className="registration-year-amount mb-0"
+                      style={{ whiteSpace: "pre" }}
+                    >
                       Total Price
                     </span>
                     <div className="d-flex align-items-center gap-2">
                       <div className="d-flex align-items-center gap-1">
                         <img src={bnbIcon} alt="" />
-                        <span className="domain-bnb-value mb-0">{getFormattedNumber(price * registrationYear, 2)}</span>
+                        <span className="domain-bnb-value mb-0">
+                          {getFormattedNumber(price * registrationYear, 2)}
+                        </span>
                       </div>
-                      <span className="domain-usd-value mb-0">${getFormattedNumber((price * bnbUSDPrice) * registrationYear, 2)}</span>
+                      <span className="domain-usd-value mb-0">
+                        $
+                        {getFormattedNumber(
+                          price * bnbUSDPrice * registrationYear,
+                          2
+                        )}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -232,9 +316,25 @@ const DomainModal = ({
               <hr className="domain-popup-divider w-100" />
               <div className="d-flex w-100 justify-content-center">
                 <div className="linear-border">
-                  <button className="btn filled-btn px-4" onClick={() => onRegister(selectedName, registrationYear)}>Register</button>
+                  <button
+                    className="btn filled-btn px-4"
+                    onClick={() => onRegister(selectedName, registrationYear)}
+                  >
+                    {loading ? (
+                      <div class="spinner-border text-light spinner-border-sm" role="status">
+                        <span class="sr-only"></span>
+                      </div>
+                    ) : (
+                      "Register"
+                    )}
+                  </button>
                 </div>
               </div>
+                {successMessage !== "" &&
+                <div className="d-flex w-100 justify-content-center align-items-center">
+                   <span className="text-white">{successMessage}</span>
+                </div>
+                }
             </div>
           </>
         )}
