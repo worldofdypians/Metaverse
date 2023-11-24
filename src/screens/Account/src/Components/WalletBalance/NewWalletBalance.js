@@ -684,7 +684,7 @@ const NewWalletBalance = ({
     if (openedChests && openedChests.length > 0) {
       for (let i = 0; i < openedChests.length; i++) {
         if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
-          if (hasNft) {
+          if (!openedChests[i].rewards.find((obj) => obj.rewardType === "Money")?.details) {
             moneyResult += Number(
               openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
                 .reward

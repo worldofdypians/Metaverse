@@ -526,7 +526,7 @@ const MyRewardsPopup = ({
         }  if (
           openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
         ) {
-          if (hasNft) {
+          if (!openedChests[i].rewards.find((obj) => obj.rewardType === "Money")?.details) {
             moneyResult += Number(openedChests[i].rewards.find((obj) => obj.rewardType === "Money").reward);
           }
         }  if (
