@@ -207,7 +207,7 @@ function App() {
   const [successMessage, setSuccessMessage] = useState("");
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
-  const [domainMetaData, setDomainMetaData] = useState({});
+  const [domainMetaData, setDomainMetaData] = useState(null);
   const [bscAmount, setBscAmount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
