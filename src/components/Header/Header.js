@@ -37,7 +37,10 @@ import updateIconActive from "../../screens/Marketplace/Notifications/assets/upd
 import welcomeIcon from "../../screens/Marketplace/Notifications/assets/welcomeIcon.svg";
 import welcomeIconActive from "../../screens/Marketplace/Notifications/assets/welcomeIconActive.svg";
 import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
-
+import domainIcon from './assets/domainIcon.svg'
+import popupXmark from './assets/popupXmark.svg'
+import searchIconDomain from './assets/searchIconDomain.svg'
+import registerDomainIcon from './assets/registerDomainIcon.svg'
 import avax from "./assets/avax.svg";
 import bnb from "./assets/bnb.svg";
 import eth from "./assets/eth.svg";
@@ -49,6 +52,7 @@ import dropdown from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import DomainModal from "../DomainModal/DomainModal";
 
 const Header = ({
   handleSignUp,
@@ -62,6 +66,8 @@ const Header = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
+  handleOpenDomains,
+  domainName
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -72,6 +78,7 @@ const Header = ({
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
+  // const [domainPopup, setDomainPopup] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -284,7 +291,8 @@ const Header = ({
   }, [myOffers, coinbase, nftCount]);
 
   return (
-    <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
+    <>
+      <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
       <div className="row justify-content-between mx-0 w-100">
         <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-between ps-0">
           <NavLink to="/">
@@ -647,12 +655,17 @@ const Header = ({
               >
                 <div
                   className="btn connected px-3"
-                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF", minHeight: "34px"}}
                   onClick={() => {
                     setShowMenu(true);
                   }}
                 >
-                  {shortAddress(coinbase)} <img src={dropdown} alt="" />
+                 {domainName ? 
+                  domainName
+                  : 
+                  shortAddress(coinbase) 
+                }
+                  <img src={dropdown} alt="" />
                 </div>
               </Clipboard>
             </div>
@@ -682,6 +695,12 @@ const Header = ({
                   <div className="d-flex flex-column gap-2">
                     <span
                       className="menuitem2"
+                      onClick={handleOpenDomains}
+                    >
+                      <img src={domainIcon} width={16} height={16} alt="" /> Domain Name{" "}
+                    </span>
+                    <span
+                      className="menuitem2"
                       onClick={() => {
                         setTooltip(true);
                         setTimeout(() => setTooltip(false), 2000);
@@ -707,6 +726,7 @@ const Header = ({
         </div>
       </div>
     </div>
+    </>
   );
 };
 export default Header;

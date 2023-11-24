@@ -1,0 +1,222 @@
+.popup-title {
+  color: #f7f7fc;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.domain-popup-desc {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.domain-popup-input {
+  border-radius: 15px;
+  border: 1px solid #8e97cd;
+  background: rgba(23, 25, 50, 0.4);
+  height: 45px;
+  padding-left: 40px;
+  color: #ffffff;
+}
+
+.domain-popup-input::placeholder {
+  opacity: 0.7;
+}
+.domain-popup-input:focus-visible {
+  border: 1px solid #8e97cd !important;
+}
+.domain-popup-input:focus {
+  border: 1px solid #8e97cd !important;
+}
+.domain-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.domain-search-items {
+  border-radius: 12px;
+  background: #15172f;
+  box-shadow: 0px 32px 64px 0px rgba(17, 17, 17, 0.12);
+}
+
+.domain-search-item {
+  border-bottom: 2px solid #8e97cd;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.selected-domain-search-item{
+  border-radius: 15px;
+border: 1px solid #8E97CD;
+background: rgba(23, 25, 50, 0.40);
+}
+
+.domain-search-item:hover{
+  background: rgba(142, 151, 205, 0.15);
+}
+
+.domain-search-item:last-child {
+  border-bottom: none !important;
+}
+
+.bnb-domain-icon-orange {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(
+    180deg,
+    rgba(232, 128, 0, 0.25) -23.88%,
+    rgba(232, 128, 0, 0) 99.99%
+  );
+  border-radius: 8px;
+  border: 1px solid #e88000;
+
+  span {
+    color: #e88000;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+.bnb-domain-icon-green {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid #3dbda7;
+  background: linear-gradient(
+    180deg,
+    rgba(61, 189, 167, 0.25) -23.88%,
+    rgba(61, 189, 167, 0) 99.99%
+  );
+
+  span {
+    color: #3dbda7;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
+.domain-name {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.name-service {
+  color: #8e97cd;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.domain-available-tag {
+  border-radius: 8px;
+  background: linear-gradient(92deg, #3dbda7 -6.32%, #067d71 157.01%);
+  span {
+    color: #f7f7fc;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px;
+  }
+}
+
+.domain-price {
+  color: #f7f7fc;
+  text-align: right;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 80% */
+}
+
+.domain-register {
+  color: #7dd9af;
+  text-align: right;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.no-domains-text {
+  color: #e88000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 16px; /* 133.333% */
+  text-align: center;
+}
+
+
+.registration-year{
+  color: #D6D8E7;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.registration-year-amount{
+  color: #F7F7FC;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
+}
+
+.bnb-balance{
+  color: #FFEACE;
+  text-align: right;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.domain-bnb-value{
+  color:#FFF;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
+}
+
+.domain-usd-value{
+  color: #7DD9AF;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.domain-popup-divider{
+  height: 2px;
+  background: #8E97CD;
+  opacity: 1 !important;
+}
+
+.bnb-price-domain{
+  color: #7DD9AF;
+font-size: 10px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
