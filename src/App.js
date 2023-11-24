@@ -67,6 +67,7 @@ import {
   ConnectionType,
 } from "web3-connector";
 import DomainModal from "./components/DomainModal/DomainModal.js";
+import Web3 from "web3";
 
 function App() {
   const CHAINLIST = {
@@ -203,10 +204,11 @@ function App() {
   const [availableDomain, setAvailableDomain] = useState("initial");
   const [domainPrice, setDomainPrice] = useState(0);
   const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
-  const [successMessage, setSuccessMessage] = useState("")
-  const [domainName, setDomainName] = useState(null)
-  const [loadingDomain, setLoadingDomain] = useState(false)
-  const [domainMetaData, setDomainMetaData] = useState({})
+  const [successMessage, setSuccessMessage] = useState("");
+  const [domainName, setDomainName] = useState(null);
+  const [loadingDomain, setLoadingDomain] = useState(false);
+  const [domainMetaData, setDomainMetaData] = useState({});
+  const [bscAmount, setBscAmount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const { BigNumber } = window;
@@ -227,9 +229,6 @@ function App() {
 
   const web3Name = createWeb3Name();
 
- 
-  
-
   const searchDomain = async (domain) => {
     if (window.ethereum) {
       const provider = new providers.Web3Provider(window.ethereum);
@@ -248,20 +247,34 @@ function App() {
     }
   };
 
+ 
+
   const registerDomain = async (label, years) => {
-    setLoadingDomain(true)
+    console.log(label, "label");
+    setLoadingDomain(true);
     const provider = new providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
     const register = new SIDRegister({ signer, chainId: 56 });
-    await register.register(label, address, years, {
-      setPrimaryName: true,
-    }).then(() => {
-      setSuccessMessage("You have successfully registered your .bnb domain");
-      setLoadingDomain(false)
-    }).catch((e) => {
-      console.log(e);
-    })
+    await register
+      .register(label, address, years, {
+        setPrimaryName: true,
+      })
+      .then(() => {
+        setSuccessMessage("You have successfully registered your .bnb domain");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 2500);
+        setLoadingDomain(false);
+      })
+      .catch((e) => {
+        setLoadingDomain(false);
+        setSuccessMessage("Something went wrong: Insufficent Balance");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 2500);
+        console.log(e);
+      });
   };
 
   const getTokenData = async () => {
@@ -303,7 +316,7 @@ function App() {
         const propertyDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
         );
-        console.log('propertyDyp', propertyDyp)
+        console.log("propertyDyp", propertyDyp);
         setDypTokenDatabnb_old(propertyDyp[0][1].token_price_usd);
 
         setBnbUSDPrice(data.data.the_graph_bsc_v2.usd_per_eth);
@@ -1683,23 +1696,40 @@ function App() {
   }
 
   const getDomains = async () => {
-    if(coinbase && isConnected && logout === "false"){
+    if (coinbase && isConnected && logout === "false") {
       const name = await web3Name.getDomainName({
         address: coinbase,
         queryChainIdList: [56],
-      })
-      setDomainName(name)
-      const metadata = await web3Name.getMetadata({ name: name })
+      });
+      setDomainName(name);
+      const metadata = await web3Name.getMetadata({ name: name });
       // console.log(metadata, "metadata");
-      setDomainMetaData(metadata)
+      setDomainMetaData(metadata);
     }
-   
+
     // console.log(name, "domain")
+  };
+  const fetchBscBalance = async () => {
+    if (coinbase && chainId === 56 && logout !== "false") {
+      const balance = await ethereum.request({
+        method: "eth_getBalance",
+        params: [coinbase, "latest"],
+      });
+
+      if (chainId === 56) {
+        const stringBalance = bscWeb3.utils.hexToNumberString(balance);
+        const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
+        setBscAmount(amount.slice(0, 7));
+      }
+
+      const bscWeb3 = new Web3(window.config.bsc_endpoint);
+    }
   };
 
   useEffect(() => {
-   getDomains()
-  }, [coinbase, isConnected, logout, successMessage, loadingDomain])
+    getDomains();
+    fetchBscBalance();
+  }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -1750,7 +1780,6 @@ function App() {
     }
   }, [coinbase, nftCount]);
 
- 
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -1807,7 +1836,6 @@ function App() {
                   nftCount={nftCount}
                   favorites={favorites}
                   dyptokenData_old={dypTokenData_old}
-
                 />
               }
             />
@@ -2254,7 +2282,6 @@ function App() {
                   }}
                   ethTokenData={ethTokenData}
                   dyptokenData_old={dypTokenData_old}
-
                 />
               }
             />
@@ -2298,7 +2325,6 @@ function App() {
                     setavailTime(value);
                   }}
                   dyptokenData_old={dypTokenData_old}
-
                   ethTokenData={ethTokenData}
                 />
               }
@@ -2370,6 +2396,7 @@ function App() {
             loading={loadingDomain}
             successMessage={successMessage}
             metadata={domainMetaData}
+            bscAmount={bscAmount}
           />
         )}
 

@@ -378,6 +378,7 @@
 
 .domain-search-item {
   border-bottom: 2px solid #8e97cd;
+  background: #15172F;
 }
 
 .domain-search-item:last-child {
@@ -444,6 +445,8 @@
 .domain-available-tag {
   border-radius: 8px;
   background: linear-gradient(92deg, #3dbda7 -6.32%, #067d71 157.01%);
+  padding-top: 4px;
+  padding-bottom: 4px;
   span {
     color: #f7f7fc;
     text-align: center;

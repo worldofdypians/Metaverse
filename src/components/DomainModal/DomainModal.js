@@ -21,7 +21,8 @@ const DomainModal = ({
   onRegister,
   loading,
   successMessage,
-  metadata
+  metadata,
+  bscAmount
 }) => {
   const windowSize = useWindowSize();
   const [domainSearch, setDomainSearch] = useState("");
@@ -234,15 +235,7 @@ const DomainModal = ({
                     </div>
                     <span className="name-service">/year</span>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <span className="domain-register mb-0">Register now</span>
-                    <img
-                      src={registerDomainIcon}
-                      width={10}
-                      height={10}
-                      alt=""
-                    />
-                  </div>
+        
                 </div>
               </div>
               <div className="d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between w-100">
@@ -280,7 +273,7 @@ const DomainModal = ({
                 </div>
                 <div className="d-flex flex-column align-items-start align-items-lg-end gap-2 w-100">
                   <span className="bnb-balance mb-0">
-                    My Balance: 2.14 WBNB
+                    My Balance: {getFormattedNumber(bscAmount, 2)} WBNB
                   </span>
                   <div
                     className="selected-domain-search-item p-2 justify-content-between d-flex align-items-center gap-4 gap-lg-5"
