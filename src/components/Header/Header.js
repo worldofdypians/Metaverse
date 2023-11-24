@@ -695,7 +695,7 @@ const Header = ({
                   <div className="d-flex flex-column gap-2">
                     <span
                       className="menuitem2"
-                      onClick={handleOpenDomains}
+                      onClick={()=>{handleOpenDomains();setShowMenu(false);}}
                     >
                       <img src={domainIcon} width={16} height={16} alt="" /> Domain Name{" "}
                     </span>

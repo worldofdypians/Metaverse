@@ -247,8 +247,6 @@ function App() {
     }
   };
 
- 
-
   const registerDomain = async (label, years) => {
     console.log(label, "label");
     setLoadingDomain(true);
@@ -264,15 +262,15 @@ function App() {
         setSuccessMessage("You have successfully registered your .bnb domain");
         setTimeout(() => {
           setSuccessMessage("");
-        }, 2500);
+        }, 5000);
         setLoadingDomain(false);
       })
       .catch((e) => {
         setLoadingDomain(false);
-        setSuccessMessage("Something went wrong: Insufficent Balance");
+        setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
         setTimeout(() => {
           setSuccessMessage("");
-        }, 2500);
+        }, 5000);
         console.log(e);
       });
   };
@@ -316,7 +314,7 @@ function App() {
         const propertyDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
         );
-        console.log("propertyDyp", propertyDyp);
+
         setDypTokenDatabnb_old(propertyDyp[0][1].token_price_usd);
 
         setBnbUSDPrice(data.data.the_graph_bsc_v2.usd_per_eth);
@@ -1701,10 +1699,14 @@ function App() {
         address: coinbase,
         queryChainIdList: [56],
       });
-      setDomainName(name);
-      const metadata = await web3Name.getMetadata({ name: name });
-      // console.log(metadata, "metadata");
-      setDomainMetaData(metadata);
+      if (name && name !== null) {
+        setDomainName(name);
+        const metadata = await web3Name.getMetadata({ name: name });
+        setDomainMetaData(metadata);
+      } else {
+        setDomainMetaData(null);
+        setDomainName(null);
+      }
     }
 
     // console.log(name, "domain")

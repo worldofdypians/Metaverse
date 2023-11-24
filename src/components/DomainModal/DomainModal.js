@@ -273,7 +273,7 @@ const DomainModal = ({
                 </div>
                 <div className="d-flex flex-column align-items-start align-items-lg-end gap-2 w-100">
                   <span className="bnb-balance mb-0">
-                    My Balance: {getFormattedNumber(bscAmount, 2)} WBNB
+                    My Balance: {getFormattedNumber(bscAmount, 2)} BNB
                   </span>
                   <div
                     className="selected-domain-search-item p-2 justify-content-between d-flex align-items-center gap-4 gap-lg-5"
