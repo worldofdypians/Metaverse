@@ -33,7 +33,7 @@ const WoDNFT = ({
   listedNFTS,
   coinbase,
   ethTokenData,
-  dypTokenData,
+  dypTokenData,dypTokenData_old,
   wodBought,
   handleRefreshListing,
   nftCount,
@@ -998,6 +998,7 @@ const WoDNFT = ({
                           <ItemCard
                             ethTokenData={ethTokenData}
                             dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1181,6 +1182,7 @@ const WoDNFT = ({
                           <ItemCard
                             ethTokenData={ethTokenData}
                             dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1233,6 +1235,7 @@ const WoDNFT = ({
                             <ItemCard
                               ethTokenData={ethTokenData}
                               dypTokenData={dypTokenData}
+                              dypTokenData_old={dypTokenData_old}
                               key={nft.id}
                               nft={nft}
                               isConnected={isConnected}

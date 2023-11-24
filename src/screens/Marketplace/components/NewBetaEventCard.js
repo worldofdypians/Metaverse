@@ -3,6 +3,8 @@ import liveDot from "../assets/liveDot.svg";
 import eventsArrow from "../assets/eventsArrow.svg";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
+import magnifier from "../assets/magnifier.svg";
+
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
@@ -20,6 +22,8 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
           ? "upcoming-mint-wrapper-base"
           : data.title === "Gate.io"
           ? "upcoming-mint-wrapper-gate"
+          : data.title === "Dypius"
+          ? "upcoming-dyp-event"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
@@ -64,35 +68,65 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
 
       <div className="d-flex align-items-center gap-3">
         <div className="d-flex col-6 flex-column align-items-start">
-          <div className="mybetaearnings" style={{width: "160px", height: "80px", top: 0, position: "relative"}}>
+          <div
+            className="mybetaearnings"
+            style={{
+              width: "160px",
+              height: "80px",
+              top: 0,
+              position: "relative",
+            }}
+          >
             <h6 className="event-my-earnings3 mb-3">
-              $
-              {getFormattedNumber(
-                 userEarnUsd,
-                2
+              {data.title !== "Dypius" ? (
+                <>${getFormattedNumber(userEarnUsd, 2)}</>
+              ) : (
+                <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
               )}
             </h6>
           </div>
         </div>
         <div className="d-flex flex-column d-flex gap-3">
           <div className="d-flex align-items-center gap-2">
-            <img src={whitePickaxe} alt="" />
-            <span className="white-events-text mb-0" style={{fontSize: "10px"}}>{data.eventType}</span>
+            {data.eventType === "Explore & Mine" ? (
+              <img src={whitePickaxe} alt="" />
+            ) : (
+              <img src={magnifier} alt="" className="test" />
+            )}
+            <span
+              className="white-events-text mb-0"
+              style={{ fontSize: "10px" }}
+            >
+              {data.eventType}
+            </span>
           </div>
           <div className="d-flex align-items-center gap-2">
             <img src={whiteCalendar} alt="" />
-            <span className="white-events-text mb-0" style={{fontSize: "10px"}}>{data.eventDate}</span>
+            <span
+              className="white-events-text mb-0"
+              style={{ fontSize: "10px" }}
+            >
+              {data.eventDate}
+            </span>
           </div>
         </div>
       </div>
       <div className="d-flex flex-column d-none gap-3 pick-and-calendar">
         <div className="d-flex align-items-center gap-2">
-          <img src={whitePickaxe} alt="" />
-          <span className="white-events-text mb-0" style={{fontSize: "10px"}}>{data.eventType}</span>
+          {data.eventType === "Explore & Mine" ? (
+            <img src={whitePickaxe} alt="" />
+          ) : (
+            <img src={magnifier} alt="" className="test" />
+          )}
+          <span className="white-events-text mb-0" style={{ fontSize: "10px" }}>
+            {data.eventType}
+          </span>
         </div>
         <div className="d-flex align-items-center gap-2">
           <img src={whiteCalendar} alt="" />
-          <span className="white-events-text mb-0" style={{fontSize: "10px"}}>{data.eventDate}</span>
+          <span className="white-events-text mb-0" style={{ fontSize: "10px" }}>
+            {data.eventDate}
+          </span>
         </div>
       </div>
       <span

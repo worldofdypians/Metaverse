@@ -331,24 +331,28 @@ const BetaPassNFT = ({
           const baseEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "base";
           });
+          if (coingeckoEvent && coingeckoEvent[0]) {
+            const usdValue =
+              coingeckoEvent[0].reward.earn.total /
+              coingeckoEvent[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue);
+          }
 
-          const usdValue =
-            coingeckoEvent[0].reward.earn.total /
-            coingeckoEvent[0].reward.earn.multiplier;
-          setuserEarnUsd(usdValue);
-          if (confluxEvent[0].reward.earn.multiplier !== 0) {
+          if (confluxEvent && confluxEvent[0] && confluxEvent[0].reward.earn.multiplier !== 0) {
             const usdValueConflux =
               confluxEvent[0].reward.earn.total /
               confluxEvent[0].reward.earn.multiplier;
             setuserEarnUsdConflux(usdValueConflux);
           }
+          if (gateEvent && gateEvent[0]) {
+            const gateUsdValue =
+              gateEvent[0].reward.earn.total /
+              gateEvent[0].reward.earn.multiplier;
 
-          const gateUsdValue =
-            gateEvent[0].reward.earn.total /
-            gateEvent[0].reward.earn.multiplier;
-          setUserEarnUsdGate(gateUsdValue);
+            setUserEarnUsdGate(gateUsdValue);
+          }
 
-          if (baseEvent) {
+          if (baseEvent && baseEvent[0]) {
             if (baseEvent[0].reward.earn.multiplier !== 0) {
               const baseUsdValue =
                 baseEvent[0].reward.earn.total /
@@ -693,25 +697,6 @@ const BetaPassNFT = ({
                     <span>Base</span>
                   </NavLink>
                   <NavLink
-                    to={"/marketplace/beta-pass/gate"}
-                    className={`${
-                      location.pathname.includes("gate") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                    onClick={() => {
-                      setSelectedMint(gateData);
-                      setMintTitle("gate");
-                    }}
-                  >
-                    <img
-                      src={gateWallet}
-                      className="beta-pass-chain-img"
-                      alt=""
-                    />
-                    <span>Gate</span>
-                  </NavLink>
-
-                  <NavLink
                     to={"/marketplace/beta-pass/coingecko"}
                     className={`${
                       location.pathname.includes("coingecko") &&
@@ -728,6 +713,24 @@ const BetaPassNFT = ({
                       alt=""
                     />
                     <span>CoinGecko</span>
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/gate"}
+                    className={`${
+                      location.pathname.includes("gate") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(gateData);
+                      setMintTitle("gate");
+                    }}
+                  >
+                    <img
+                      src={gateWallet}
+                      className="beta-pass-chain-img"
+                      alt=""
+                    />
+                    <span>Gate</span>
                   </NavLink>
                   <NavLink
                     to={"/marketplace/beta-pass/conflux"}
@@ -1627,19 +1630,10 @@ const BetaPassNFT = ({
                                   Gate Treasure Hunt
                                 </h6>{" "}
                                 <div
-                                  className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
+                                  className={`position-relative events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
                                   style={{ top: 0 }}
                                 >
-                                  <div
-                                    class="pulsatingDot"
-                                    style={{
-                                      width: 7,
-                                      height: 7,
-                                      marginRight: 5,
-                                    }}
-                                  ></div>
-
-                                  <span>Live</span>
+                                  <span>Expired</span>
                                 </div>
                               </div>
                               <div className="gate-eventwrapper p-3">
@@ -1693,7 +1687,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/marketplace/events/past">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>

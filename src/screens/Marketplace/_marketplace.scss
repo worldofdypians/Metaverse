@@ -48,6 +48,13 @@
   }
 }
 
+.nft-price-eth2 {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .checkicons {
   left: -8px;
 }
@@ -1861,6 +1868,18 @@
     aspect-ratio: 1/1;
   }
 }
+.past-base-mint {
+  background-image: url("./assets/pastBaseMintBg.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/baseMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
 
 .sold-out-tag {
   border-radius: 20px;
@@ -1918,6 +1937,17 @@
 
 .past-conflux-mint-amount {
   color: #901c77;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+.past-base-mint-amount {
+  color: #0052FF;
   text-align: center;
   font-size: 40px;
   font-style: normal;
@@ -2222,6 +2252,13 @@
 
 .filters-dropdown {
   width: 200px !important;
+  @media screen and (max-width: 786px) {
+    width: 100% !important;
+  }
+}
+
+.filters-dropdown2 {
+  width: 160px !important;
   @media screen and (max-width: 786px) {
     width: 100% !important;
   }

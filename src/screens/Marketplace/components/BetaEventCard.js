@@ -3,10 +3,13 @@ import liveDot from "../assets/liveDot.svg";
 import eventsArrow from "../assets/eventsArrow.svg";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
+import magnifier from "../assets/magnifier.svg";
+
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
 const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
+ 
   return (
     <div
       className={` ${
@@ -20,6 +23,8 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
           ? "upcoming-mint-wrapper-base"
           : data.title === "Gate.io"
           ? "upcoming-mint-wrapper-gate"
+          : data.title === "Dypius"
+          ? "upcoming-dyp-event"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
@@ -66,13 +71,21 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
         <div className="d-flex col-6 col-lg-3 flex-column align-items-start align-items-lg-center">
           <div className="mybetaearnings">
             <h6 className="event-my-earnings3 mb-3">
-              ${getFormattedNumber(userEarnUsd, 2)}
+              {data.title !== "Dypius" ? (
+                <>${getFormattedNumber(userEarnUsd, 2)}</>
+              ) : (
+                <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
+              )}
             </h6>
           </div>
         </div>
         <div className="d-flex flex-column d-flex d-lg-none gap-3">
           <div className="d-flex align-items-center gap-2">
-            <img src={whitePickaxe} alt="" />
+            {data.eventType === "Explore & Mine" ? (
+              <img src={whitePickaxe} alt="" />
+            ) : (
+              <img src={magnifier} alt="" className="test" />
+            )}
             <span className="white-events-text mb-0">{data.eventType}</span>
           </div>
           <div className="d-flex align-items-center gap-2">
@@ -83,7 +96,11 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
       </div>
       <div className="d-flex flex-column d-none d-lg-flex gap-3 pick-and-calendar">
         <div className="d-flex align-items-center gap-2">
-          <img src={whitePickaxe} alt="" />
+          {data.eventType === "Explore & Mine" ? (
+            <img src={whitePickaxe} alt="" />
+          ) : (
+            <img src={magnifier} alt="" className="test" />
+          )}
           <span className="white-events-text mb-0">{data.eventType}</span>
         </div>
         <div className="d-flex align-items-center gap-2">

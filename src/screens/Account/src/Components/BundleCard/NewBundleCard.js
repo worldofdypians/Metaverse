@@ -14,13 +14,24 @@ import newLandTooltip from "./assets/newLandTooltip.svg";
 import {
   wod_abi,
   token_abi,
+  token_abi_old,
   idyptoken_abi,
   dyp700_abi,
+  dyp700v1_abi,
   idyp3500_abi,
   wodAddress,
   dyp700Address,
+  dyp700v1Address,
   idyp3500Address,
 } from "../../web3";
+
+import {
+  DYP_700V1_ABI,
+  DYP_700_ABI,
+  WOD_ABI,
+  iDYP_3500_ABI,
+} from "../../web3/abis";
+
 import { CircularProgress } from "@mui/material";
 import Countdown from "react-countdown";
 import tooltipIcon from "./assets/tooltipIcon.svg";
@@ -35,6 +46,8 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 import { NavLink } from "react-router-dom";
 import { convertToUSD } from "../../../../../actions/convertUsd";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
+import checkActive from "./assets/checked.svg";
+import checkPassive from "./assets/empty.svg";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -93,6 +106,8 @@ const NewBundleCard = ({
   onOpenPopup,
   dyptokenDatabnb,
   idyptokenDatabnb,
+  dyptokenDatabnb_old,
+  dyptokenData_old,
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
@@ -142,23 +157,104 @@ const NewBundleCard = ({
     useState(0);
   const [dateofBundle, setdateofBundle] = useState(0);
   const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
+
+  const [dateofBundlev1, setdateofBundlev1] = useState(0);
+  const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
+
   const [lastDayofBundleHours, setlastDayofBundleHours] = useState(0);
   const [lastDayofBundleMinutes, setlastDayofBundleMinutes] = useState(0);
   const [idyptokenData, setIDypTokenData] = useState([]);
+  const [priceType, setPriceType] = useState(0);
+
+  const [dragonRuinsDypAmount, setDragonRuinsDypAmount] = useState(0);
+  const [goldenPassDypAmountV1, setGoldenPassDypAmountV1] = useState(0);
+  const [goldenPassDypAmountV2, setGoldenPassDypAmountV2] = useState(0);
+  const [puzzleMadnessDypAmount, setPuzzleMadnessDypAmount] = useState(0);
+
+  const getBundlePrizes = async () => {
+    const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
+
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+    const puzzleContract = new window.bscWeb3.eth.Contract(
+      iDYP_3500_ABI,
+      idyp3500Address
+    );
+
+    const result_dragon = await dragonContract.methods
+      .getEstimatedBundleDYPAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_dragon) {
+      setDragonRuinsDypAmount(result_dragon / 1e18);
+    }
+
+    const result_dypv1 = await dypv1.methods
+      .getEstimatedBundleDYPAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_dypv1) {
+      setGoldenPassDypAmountV1(result_dypv1 / 1e18);
+    }
+
+    const result_dypv2 = await dypv2.methods
+      .getEstimatedBundleDYPAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_dypv2) {
+      setGoldenPassDypAmountV2(result_dypv2 / 1e18);
+    }
+
+    const result_puzzle = await puzzleContract.methods
+      .getEstimatedBundleDYPAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_puzzle) {
+      setPuzzleMadnessDypAmount(result_puzzle / 1e18);
+    }
+  };
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
-      if (coinbase !== wallet || chainId !== 56) {
+      if ((coinbase?.toLowerCase() !== wallet?.toLowerCase()) || chainId !== 56) {
         setcheckWallet(false);
       }
-      if (coinbase === wallet && chainId === 56) {
-        setcheckWallet(true);
+      if ((coinbase?.toLowerCase() === wallet?.toLowerCase()) && chainId === 56) {
+        if (priceType === 1 && packageData.title === "Golden Pass") {
+          setcheckWallet(true);
+        } else if (priceType === 0 && packageData.title === "Golden Pass") {
+          setcheckWallet(false);
+        }
+        else setcheckWallet(true)
       }
-    } else setcheckWallet(false);
+      if ((coinbase?.toLowerCase() === wallet?.toLowerCase()) && chainId === 1) {
+        if (priceType === 1 && packageData.title === "Golden Pass") {
+          setcheckWallet(false);
+        } else if (priceType === 0 && packageData.title === "Golden Pass") {
+          setcheckWallet(true);
+        }
+      }
+    } 
+    else setcheckWallet(false);
   };
 
   const checkApproval = async () => {
-    if (coinbase === wallet && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await token_abi.methods
         .allowance(coinbase, wodAddress)
         .call()
@@ -188,25 +284,49 @@ const NewBundleCard = ({
       });
   };
 
-  const checkApproval700 = async () => {
-    if (coinbase === wallet && chainId === 56) {
-      await token_abi.methods
-        .allowance(coinbase, dyp700Address)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 2100000000000000000000) {
-            setshowApproval700(true);
-            setbundleState700("initial");
-          } else {
-            setshowApproval700(false);
-            setSliderValue700(2);
-            setbundleState700("deposit");
-            setDepositState700("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+  const checkApproval700 = async (tokenType) => {
+    if (coinbase === wallet) {
+      if (tokenType === 1 && chainId === 56) {
+        await token_abi.methods
+          .allowance(coinbase, dyp700Address)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 2100000000000000000000) {
+              setshowApproval700(true);
+              setbundleState700("initial");
+              setDepositState700("initial");
+              setSliderValue700(1);
+            } else {
+              setshowApproval700(false);
+              setSliderValue700(2);
+              setbundleState700("deposit");
+              setDepositState700("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (tokenType === 0 && chainId === 1) {
+        await token_abi_old.methods
+          .allowance(coinbase, dyp700v1Address)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 2100000000000000000000) {
+              setshowApproval700(true);
+              setbundleState700("initial");
+              setSliderValue700(1);
+              setDepositState700("initial");
+            } else {
+              setshowApproval700(false);
+              setSliderValue700(2);
+              setbundleState700("deposit");
+              setDepositState700("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -258,23 +378,41 @@ const NewBundleCard = ({
     setStatus700("Approving, please wait");
     setStatusColor700("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
-
-    await token_abi.methods
-      .approve(dyp700Address, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
-        setStatus700("Succesfully approved!");
-        setbundleState700("deposit");
-        setStatusColor700("#00FECF");
-        setSliderValue700(2);
-        setDepositState700("deposit");
-      })
-      .catch((e) => {
-        console.error(e);
-        setStatusColor700("#FE7A00");
-        setStatus700(e?.message);
-        setbundleState700("fail");
-      });
+    if (priceType === 1) {
+      await token_abi.methods
+        .approve(dyp700Address, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus700("Succesfully approved!");
+          setbundleState700("deposit");
+          setStatusColor700("#00FECF");
+          setSliderValue700(2);
+          setDepositState700("deposit");
+        })
+        .catch((e) => {
+          console.error(e);
+          setStatusColor700("#FE7A00");
+          setStatus700(e?.message);
+          setbundleState700("fail");
+        });
+    } else if (priceType === 0) {
+      await token_abi_old.methods
+        .approve(dyp700v1Address, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus700("Succesfully approved!");
+          setbundleState700("deposit");
+          setStatusColor700("#00FECF");
+          setSliderValue700(2);
+          setDepositState700("deposit");
+        })
+        .catch((e) => {
+          console.error(e);
+          setStatusColor700("#FE7A00");
+          setStatus700(e?.message);
+          setbundleState700("fail");
+        });
+    }
   };
 
   const handleApproval3500 = async () => {
@@ -368,68 +506,118 @@ const NewBundleCard = ({
   };
 
   const setlastDay = async () => {
-    const timeofDeposit = await dyp700_abi.methods
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
+
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+    const timeofDeposit = await dypv2.methods.getTimeOfDeposit(coinbase).call();
+
+    const timeofDepositv1 = await dypv1.methods
       .getTimeOfDeposit(coinbase)
       .call();
 
-    const expiringTime = await dyp700_abi.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
+    if (timeofDeposit !== 0 || timeofDepositv1 !== 0) {
+      const timeofDeposit_miliseconds = timeofDeposit * 1000;
+      const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
 
-    const expiringTime_miliseconds = expiringTime * 1000;
+      const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(timeofDeposit_miliseconds);
 
-    const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }).format(expiringTime_miliseconds);
+      const timeofbundleBought_Datev1 = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(timeofDeposit_milisecondsv1);
 
-    const expiringTime_Date_formatted = new Date(expiringTime_Date);
-    const expiringTime_day = expiringTime_Date_formatted.getDate();
-    setbundleExpireDay(expiringTime_day);
-    setbundleExpireMiliseconds(expiringTime_miliseconds);
-    const timeofDeposit_miliseconds = timeofDeposit * 1000;
+      const timeofbundleBought_Date_formatted = new Date(
+        timeofbundleBought_Date
+      );
 
-    const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }).format(timeofDeposit_miliseconds);
+      const timeofbundleBought_Date_formattedv1 = new Date(
+        timeofbundleBought_Datev1
+      );
 
-    const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }).format(expiringTime_miliseconds);
+      const timeofbundleBought_day =
+        timeofbundleBought_Date_formatted.getDate();
 
-    const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-    const timeofbundleBought_Date_formatted = new Date(timeofbundleBought_Date);
+      const timeofbundleBought_dayv1 =
+        timeofbundleBought_Date_formattedv1.getDate();
 
-    setdateofBundle(expiringTime_Date_formatted);
+      setdatewhenBundleBought(timeofbundleBought_day);
+      setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
 
-    const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
-    const timeofbundleBought_day = timeofbundleBought_Date_formatted.getDate();
-    setdatewhenBundleBought(timeofbundleBought_day);
+      const expiringTime = await dypv2.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
 
-    const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
-    const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
-    const final = timeofDeposit_Hours - 11;
-    setlastDayofBundleHours(final);
+      const expiringTimev1 = await dypv1.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
 
-    const finalMinutes = timeofDeposit_Minutes - 11;
+      const expiringTime_miliseconds = expiringTime * 1000;
+      const expiringTime_milisecondsv1 = expiringTimev1 * 1000;
 
-    setlastDayofBundleMinutes(finalMinutes);
-    setlastDayofBundle(timeofDeposit_day);
-    setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+      const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
+
+      const expiringTime_Datev1 = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_milisecondsv1);
+
+      const expiringTime_Date_formatted = new Date(expiringTime_Date);
+      const expiringTime_Date_formattedv1 = new Date(expiringTime_Datev1);
+
+      setdateofBundle(expiringTime_Date_formatted);
+      setdateofBundlev1(expiringTime_Date_formattedv1);
+
+      const expiringTime_day = expiringTime_Date_formatted.getDate();
+      setbundleExpireDay(expiringTime_day);
+      setbundleExpireMiliseconds(expiringTime_miliseconds);
+
+      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
+
+      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
+      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
+      const final = timeofDeposit_Hours - 11;
+      setlastDayofBundleHours(final);
+
+      const finalMinutes = timeofDeposit_Minutes - 11;
+
+      setlastDayofBundleMinutes(finalMinutes);
+      setlastDayofBundle(timeofDeposit_day);
+      setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+    }
   };
 
   const insertBundle = async () => {
@@ -443,31 +631,52 @@ const NewBundleCard = ({
     console.log(result);
   };
 
-  const handleDeposit700 = async () => {
+  const handleDeposit700 = async (priceType) => {
     setDepositState700("loading-deposit");
     setStatus700("Confirm to complete purchase");
     setStatusColor700("#00FECF");
 
     setlastDay();
 
-    await dyp700_abi.methods
-      .deposit()
-      .send({ from: coinbase })
-      .then(() => {
-        setStatus700("Bundle successfully purchased!");
-        setDepositState700("success");
-        setStatusColor700("#00FECF");
-        getDypBalance();
-        insertBundle();
-        increaseBundle();
-        checkBundleDates();
-        checkApproval700();
-      })
-      .catch((e) => {
-        setStatusColor700("#FE7A00");
-        setStatus700(e?.message);
-        setDepositState700("failDeposit");
-      });
+    if (priceType === 1) {
+      await dyp700_abi.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus700("Bundle successfully purchased!");
+          setDepositState700("success");
+          setStatusColor700("#00FECF");
+          getDypBalance();
+          insertBundle();
+          increaseBundle();
+          checkBundleDates();
+          checkApproval700(priceType);
+        })
+        .catch((e) => {
+          setStatusColor700("#FE7A00");
+          setStatus700(e?.message);
+          setDepositState700("failDeposit");
+        });
+    } else if (priceType === 0) {
+      await dyp700v1_abi.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus700("Bundle successfully purchased!");
+          setDepositState700("success");
+          setStatusColor700("#00FECF");
+          getDypBalance();
+          insertBundle();
+          increaseBundle();
+          checkBundleDates();
+          checkApproval700(priceType);
+        })
+        .catch((e) => {
+          setStatusColor700("#FE7A00");
+          setStatus700(e?.message);
+          setDepositState700("failDeposit");
+        });
+    }
   };
 
   const handleDeposit3500 = async () => {
@@ -502,37 +711,81 @@ const NewBundleCard = ({
   };
 
   const handleRefreshCountdown700 = async () => {
-    const remainingTime = await dyp700_abi.methods
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
+
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+
+    const remainingTimev1 = await dypv1.methods
       .getTimeOfExpireBuff(coinbase)
       .call();
 
-    const remainingTime_miliseconds = remainingTime * 1000;
-    const timeofDeposit = await dyp700_abi.methods
+    const remainingTimev2 = await dypv2.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call();
+
+    var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
+
+    var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
+    const timeofDepositv1 = await dypv1.methods
       .getTimeOfDeposit(coinbase)
       .call();
-    if (timeofDeposit !== 0) {
-      const timeofDeposit_miliseconds = timeofDeposit * 1000;
 
-      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+    const timeofDepositv2 = await dypv2.methods
+      .getTimeOfDeposit(coinbase)
+      .call();
+
+    if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
+      remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
+      remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
+
+      const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-      }).format(remainingTime_miliseconds);
+      }).format(remainingTime_milisecondsv1);
 
-      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
-      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
-      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
-      const finalHours = timeofDeposit_Hours - 11;
+      const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
 
-      const finalMinutes = timeofDeposit_Minutes - 11;
+      const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
+      const timeofDeposit_Minutesv1 =
+        timeofDeposit_Date_formattedv1.getMinutes();
+      const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
 
-      const result = remainingTime - finalHours * 60 * 60 - finalMinutes * 60;
-      setcountdown700(result * 1000);
-      handleSetAvailableTime(result * 1000);
+      const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
+
+      const resultv1 =
+        remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
+
+      const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(remainingTime_milisecondsv2);
+
+      const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
+      const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
+      const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
+      const timeofDeposit_Minutesv2 =
+        timeofDeposit_Date_formattedv2.getMinutes();
+      const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
+
+      const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
+
+      const resultv2 =
+        remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
+      setcountdown700((resultv2 + resultv1) * 1000);
+      handleSetAvailableTime((resultv2 + resultv1) * 1000);
+      // setcountdown700(result * 1000);
+      //
     } else {
       setcountdown700();
       handleSetAvailableTime();
@@ -548,7 +801,6 @@ const NewBundleCard = ({
 
   let twentyfiveNovember = new Date("2023-11-25 23:59:00 GMT+02:00");
   let today = new Date();
-  let oneOctober = new Date("2023-10-01 11:11:00 GMT+02:00");
   let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
   let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
 
@@ -557,33 +809,39 @@ const NewBundleCard = ({
     //he can buy until the 22 regular bundles (7days)
     //on the 23rd the bundle will be 7+4
     //last week rule: 32 - date => buy on 24rth=>7+1, 25=> 7+0, 26=> 7-1
+    // const dypv1 = new window.infuraWeb3.eth.Contract(
+    //   DYP_700V1_ABI,
+    //   dyp700v1Address
+    // );
+
+    // const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
     const week1 = ["1", "2", "3", "4", "5", "6", "7"];
     const week2 = ["8", "9", "10", "11", "12", "13", "14"];
     const week3 = ["15", "16", "17", "18", "19", "20", "21"];
     const week4 = ["22", "23", "24", "25"];
 
-    const timeofDeposit = await dyp700_abi.methods
-      .getTimeOfDeposit(coinbase)
-      .call();
-    const timeofDeposit_miliseconds = timeofDeposit * 1000;
+    // const timeofDepositv1 = await dypv2.methods
+    //   .getTimeOfDeposit(coinbase)
+    //   .call();
+    // const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
 
-    const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }).format(timeofDeposit_miliseconds);
+    // const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+    //   year: "numeric",
+    //   month: "2-digit",
+    //   day: "2-digit",
+    //   hour: "2-digit",
+    //   minute: "2-digit",
+    //   second: "2-digit",
+    // }).format(timeofDeposit_milisecondsv1);
 
     const today = new Date();
     const today_date = today.getDate();
 
-    const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-    const timeofDeposit_date = timeofDeposit_Date_formatted
-      .getDate()
-      .toString();
+    // const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Date);
+    // const timeofDeposit_date = timeofDeposit_Date_formattedv1
+    //   .getDate()
+    //   .toString();
 
     if (today_date <= 25) {
       if (week1.includes(today_date.toString()) && bundlesBought <= 3) {
@@ -645,10 +903,30 @@ const NewBundleCard = ({
         );
         setStatusColor700("#FE7A00");
         // }
-      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
-        handleRefreshCountdown700();
-        setisAtlimit(false);
-      } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
+      } else if (week3.includes(today_date.toString()) && bundlesBought === 1) {
+        // handleRefreshCountdown700();
+        // setisAtlimit(false);
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
+
+        if (today < finalDateofBundle) {
+          setcountdown700(
+            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          );
+          handleSetAvailableTime(
+            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          );
+          setisAtlimit(true);
+          setStatusColor700("#FE7A00");
+          setStatus700(
+            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          );
+        }
+      } else if (week3.includes(today_date.toString()) && bundlesBought >= 2) {
         // const remainingTime3 = lastDayofBundle;
         // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
@@ -665,45 +943,150 @@ const NewBundleCard = ({
 
         //   setcountdown700(final);
         //   handleSetAvailableTime(final);
-        setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-        );
-        handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-        );
-        setisAtlimit(true);
-        setStatus700(
-          "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-        );
-        setStatusColor700("#FE7A00");
+        // setcountdown700(
+        //   today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        // );
+        // handleSetAvailableTime(
+        //   today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        // );
+        // setisAtlimit(true);
+        // setStatus700(
+        //   "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+        // );
+        // setStatusColor700("#FE7A00");
+
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
+
+        if (today < finalDateofBundle) {
+          setcountdown700(
+            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          );
+          handleSetAvailableTime(
+            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          );
+          setisAtlimit(true);
+          setStatusColor700("#FE7A00");
+          setStatus700(
+            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          );
+
+          // if (
+          //   bundlesBought <= 3 &&
+          //   finalDateofBundleBought < today_date &&
+          //   finalDateofBundleBought < 16 &&
+          //   finalDateofBundleBought !== 0
+          // ) {
+          //   setcountdown700(finalDateofBundle);
+          //   setisAtlimit(false);
+          //   handleSetAvailableTime(finalDateofBundle);
+          // } else {
+          //   setcountdown700(
+          //     today < oneNovember
+          //       ? oneNovember.getTime()
+          //       : oneDecember.getTime()
+          //   );
+          //   handleSetAvailableTime(
+          //     today < oneNovember
+          //       ? oneNovember.getTime()
+          //       : oneDecember.getTime()
+          //   );
+          //   setisAtlimit(true);
+          //   setStatusColor700("#FE7A00");
+          //   setStatus700(
+          //     "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          //   );
+          // }
+        } else if (
+          today > finalDateofBundle &&
+          bundlesBought > 0 &&
+          finalDateofBundleBought !== 0
+        ) {
+          setisAtlimit(false);
+          setcountdown700();
+          handleSetAvailableTime();
+          setStatus700("");
+          setStatusColor700("#FE7A00");
+        }
+
         // }
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
-        handleRefreshCountdown700();
-        setisAtlimit(false);
-      } else if (week4.includes(today_date.toString()) && today_date > 22) {
-        if (today < dateofBundle) {
-          if (bundlesBought <= 3 && datewhenBundleBought < today_date) {
-            setcountdown700(dateofBundle);
-            setisAtlimit(false);
-            handleSetAvailableTime(dateofBundle);
-          } else {
-            setcountdown700(
-              today < oneNovember
-                ? oneNovember.getTime()
-                : oneDecember.getTime()
+        // handleRefreshCountdown700();
+        // setisAtlimit(false);
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
+
+            if (today < finalDateofBundle) {setcountdown700(
+              today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
             );
             handleSetAvailableTime(
-              today < oneNovember
-                ? oneNovember.getTime()
-                : oneDecember.getTime()
+              today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
             );
             setisAtlimit(true);
             setStatusColor700("#FE7A00");
             setStatus700(
               "The Golden Pass bundle is currently not available for purchase. Please check back next month."
             );
+          } else if (today > finalDateofBundle && bundlesBought > 0) {
+            setisAtlimit(false);
+            setcountdown700();
+            handleSetAvailableTime();
+            setStatus700(
+              "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+            );
+            setStatusColor700("#FE7A00");
           }
-        } else if (today > dateofBundle && bundlesBought > 0) {
+       
+      } else if (week4.includes(today_date.toString()) && today_date > 22) {
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
+
+        if (today < finalDateofBundle) {
+          // if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
+          //   setcountdown700(finalDateofBundle);
+          //   setisAtlimit(false);
+          //   handleSetAvailableTime(finalDateofBundle);
+          // } else {
+          //   setcountdown700(
+          //     today < oneNovember
+          //       ? oneNovember.getTime()
+          //       : oneDecember.getTime()
+          //   );
+          //   handleSetAvailableTime(
+          //     today < oneNovember
+          //       ? oneNovember.getTime()
+          //       : oneDecember.getTime()
+          //   );
+          //   setisAtlimit(true);
+          //   setStatusColor700("#FE7A00");
+          //   setStatus700(
+          //     "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          //   );
+          // }
+          setcountdown700(
+            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          );
+          handleSetAvailableTime(
+            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          );
+          setisAtlimit(true);
+          setStatusColor700("#FE7A00");
+          setStatus700(
+            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          );
+        } else if (today > finalDateofBundle && bundlesBought > 0) {
           setisAtlimit(false);
           setcountdown700();
           handleSetAvailableTime();
@@ -714,7 +1097,10 @@ const NewBundleCard = ({
         }
       }
     } else if (today_date > 25) {
-      if (today < dateofBundle) {
+      const finalDateofBundle =
+        dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+
+      if (today < finalDateofBundle) {
         setisAtlimit(true);
         setcountdown700(
           today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
@@ -738,15 +1124,16 @@ const NewBundleCard = ({
     }
   };
 
+
+
   useEffect(() => {
     if (packageData.title === "Dragon Ruins") {
       handleRefreshCountdown();
     } else if (packageData.title === "Puzzle Madness") {
       handleRefreshCountdown3500();
     }
-    checkBundleDates();
+
     checkWalletAddr();
-    checkApproval700();
     setlastDay();
     checkApproval3500();
     checkApproval();
@@ -754,11 +1141,17 @@ const NewBundleCard = ({
   }, [
     coinbase,
     chainId,
-    packageData.title,
+    packageData,
     lastDayofBundle,
     status700,
     bundlesBought,
+    priceType,
   ]);
+
+  useEffect(() => {
+    checkApproval700(priceType);
+    checkBundleDates();
+  }, [coinbase, chainId, packageData, bundlesBought]);
 
   useEffect(() => {
     if (chainId !== 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
@@ -768,9 +1161,17 @@ const NewBundleCard = ({
       setStatus3500(
         "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
       );
-      setStatus700(
-        "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
-      );
+      if (priceType === 1 && isAtlimit === false && packageData.title === 'Golden Pass') {
+        setStatus700(
+          "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
+        );
+      } else if (priceType === 0 && chainId === 1 && isAtlimit === false) {
+        setStatus700("");
+      } else if (priceType === 0 && chainId !== 1 && isAtlimit === false && packageData.title === 'Golden Pass') {
+        setStatus700(
+          "You are on the wrong chain. Switch back to Ethereum Chain to purchase the bundle."
+        );
+      }
     }
     if (chainId === 56 && coinbase?.toLowerCase() !== wallet?.toLowerCase()) {
       setStatus(
@@ -784,9 +1185,15 @@ const NewBundleCard = ({
       );
     }
     if (chainId === 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
+      if (priceType === 0) {
+        setStatus700(
+          "You are on the wrong chain. Switch back to Ethereum to purchase the bundle."
+        );
+      } else if (priceType === 1) {
+        setStatus700("");
+      }
       setStatus("");
       setStatus3500("");
-      setStatus700("");
     }
 
     if (chainId !== 56 && coinbase?.toLowerCase() !== wallet?.toLowerCase()) {
@@ -796,11 +1203,17 @@ const NewBundleCard = ({
       setStatus3500(
         "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
       );
-      setStatus700(
-        "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
-      );
+      if (priceType === 0) {
+        setStatus700(
+          "Please make sure you're on Ethereum Chain and using the wallet address associated to your profile"
+        );
+      } else if (priceType === 1) {
+        setStatus700(
+          "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
+        );
+      }
     }
-  }, [coinbase, chainId, wallet]);
+  }, [coinbase, chainId, wallet, priceType, isAtlimit, packageData]);
 
   const convertPrice = async () => {
     let price;
@@ -814,7 +1227,14 @@ const NewBundleCard = ({
   };
 
   useEffect(() => {
-    if (bundlesBought === 4 && lastDayofBundleMilliseconds > 0) {
+    if (
+      // bundlesBought === 4 &&
+      // lastDayofBundleMilliseconds > 0 &&
+      // bundleExpireMiliseconds > 0
+      bundlesBought === 4 
+      // && lastDayofBundleMilliseconds > 0 &&
+      // bundleExpireMiliseconds > 0
+    ) {
       setisAtlimit(true);
       setcountdown700(
         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
@@ -826,7 +1246,13 @@ const NewBundleCard = ({
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
       );
     }
-  }, [bundlesBought, countdown700]);
+  }, [
+    priceType,
+    chainId,
+    bundlesBought,
+    countdown700,
+    bundleExpireMiliseconds,
+  ]);
 
   useEffect(() => {
     getTokenData();
@@ -838,7 +1264,7 @@ const NewBundleCard = ({
   }, [today]);
 
   useEffect(() => {
-    // getTokenDatabnb();
+    getBundlePrizes();
   }, []);
 
   return (
@@ -933,41 +1359,141 @@ const NewBundleCard = ({
                   <div className="d-flex flex-column gap-2">
                     <div className="purchase-wrapper p-3">
                       <span className="purchase-price-title">Event price</span>
-                      <div className="d-flex align-items-center gap-4">
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={
-                              packageData.title === "Puzzle Madness"
-                                ? idyp
-                                : dypius
-                            }
-                            width={30}
-                            height={30}
-                            alt=""
-                          />
+                      {packageData.title === "Golden Pass" ? (
+                        <div className="d-flex flex-column flex-lg-row align-items-lg-center align-items-start gap-4">
                           <h6 className="purchase-price mb-0">
-                            {getFormattedNumber(packageData.price, 0)}
+                            {getFormattedNumber(
+                              priceType === 0
+                                ? goldenPassDypAmountV1
+                                : goldenPassDypAmountV2,
+                              2
+                            )}
                           </h6>
-                        </div>
+                          <div className="d-flex flex-row justify-content-around w-100 gap-2">
+                            <div
+                              className={`d-flex gap-2 align-items-center position-relative ${
+                                priceType === 0
+                                  ? "currencyWrapper"
+                                  : "currencyWrapper-inactive"
+                              }`}
+                              onClick={() => {
+                                setPriceType(0);
+                                checkApproval700(0);
+                              }}
+                            >
+                              <img
+                                src={
+                                  priceType === 0 ? checkActive : checkPassive
+                                }
+                                alt=""
+                                className={"position-absolute checkicons"}
+                              />
+                              <span className="nft-price-eth">
+                                <img
+                                  src={dypius}
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                DYPv1
+                              </span>
+                            </div>
 
-                        <span className="purchase-price-usd mb-0">
-                          $
-                          {getFormattedNumber(
-                            packageData.title === "Puzzle Madness"
-                              ? packageData.price * idyptokenDatabnb
-                              : packageData.price * dyptokenDatabnb
-                          )}
-                        </span>
-                      </div>
+                            <div
+                              className={`d-flex gap-2 align-items-center position-relative ${
+                                priceType === 1
+                                  ? "currencyWrapper"
+                                  : "currencyWrapper-inactive"
+                              }`}
+                              onClick={() => {
+                                setPriceType(1);
+                                checkApproval700(1);
+                              }}
+                            >
+                              <img
+                                src={
+                                  priceType === 1 ? checkActive : checkPassive
+                                }
+                                alt=""
+                                className={"position-absolute checkicons"}
+                              />
+                              <span className="nft-price-eth">
+                                <img
+                                  src={dypius}
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                DYPv2
+                              </span>
+                            </div>
+                          </div>
+
+                          <span className="purchase-price-usd mb-0">
+                            ${getFormattedNumber(packageData.usdPrice)}
+                            {/* {getFormattedNumber(
+                              priceType === 1
+                                ? packageData.price * dyptokenDatabnb
+                                : 250 * dyptokenData_old
+                            )} */}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="d-flex align-items-center gap-4">
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={
+                                packageData.title === "Puzzle Madness"
+                                  ? idyp
+                                  : dypius
+                              }
+                              width={30}
+                              height={30}
+                              alt=""
+                            />
+                            <h6 className="purchase-price mb-0">
+                              {getFormattedNumber(
+                                packageData.title === "Puzzle Madness"
+                                  ? puzzleMadnessDypAmount
+                                  : dragonRuinsDypAmount
+                              )}
+                            </h6>
+                          </div>
+
+                          <span className="purchase-price-usd mb-0">
+                            ${getFormattedNumber(packageData.usdPrice)}
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <div className="d-flex align-items-center gap-2">
-                      <span className="new-bnb-chain">
-                        Available only on BNB Chain
-                      </span>
-                      <img
-                        src={require("./assets/bnbIcon.svg").default}
-                        alt=""
-                      />
+                      {packageData.title === "Golden Pass" ? (
+                        priceType === 0 ? (
+                          <span className="new-bnb-chain d-flex align-items-center gap-1">
+                            Available only on Ethereum{" "}
+                            <img
+                              src={require("./assets/ethIcon.svg").default}
+                              alt=""
+                            />
+                          </span>
+                        ) : (
+                          <span className="new-bnb-chain d-flex align-items-center gap-1">
+                            Available only on BNB Chain{" "}
+                            <img
+                              src={require("./assets/bnbIcon.svg").default}
+                              alt=""
+                            />
+                          </span>
+                        )
+                      ) : (
+                        <span className="new-bnb-chain d-flex align-items-center gap-1">
+                          Available only on BNB Chain{" "}
+                          <img
+                            src={require("./assets/bnbIcon.svg").default}
+                            alt=""
+                          />
+                        </span>
+                      )}
                     </div>
                   </div>
                 </>
@@ -1043,6 +1569,8 @@ const NewBundleCard = ({
                           disabled={
                             bundleState700 === "deposit" ||
                             checkWallet === false ||
+                            (priceType === 0 && chainId !== 1) ||
+                            (priceType === 1 && chainId !== 56) ||
                             isAtlimit == true
                               ? true
                               : false
@@ -1050,7 +1578,9 @@ const NewBundleCard = ({
                           className={`btn ${
                             bundleState700 === "deposit" ||
                             checkWallet === false ||
-                            isAtlimit == true
+                            isAtlimit == true ||
+                            (priceType === 0 && chainId !== 1) ||
+                            (priceType === 1 && chainId !== 56)
                               ? "inactive-pill-btn"
                               : "pill-btn"
                           }  py-2 px-4`}
@@ -1074,12 +1604,17 @@ const NewBundleCard = ({
                       <button
                         disabled={
                           packageData.title !== "Golden Pass"
-                            ? depositState700 === "deposit" &&
-                              checkWallet === true
+                            ? (depositState700 === "deposit" &&
+                                checkWallet === true &&
+                                priceType === 0 &&
+                                chainId === 1) ||
+                              (priceType === 1 && chainId === 56)
                               ? false
                               : true
                             : isAtlimit === true ||
                               checkWallet === false ||
+                              (priceType === 0 && chainId !== 1) ||
+                              (priceType === 1 && chainId !== 56) ||
                               depositState700 !== "deposit"
                             ? true
                             : false
@@ -1087,13 +1622,15 @@ const NewBundleCard = ({
                         className={`btn ${
                           (depositState700 === "deposit" ||
                             showApproval700 === false) &&
+                          ((priceType === 0 && chainId === 1) ||
+                            (priceType === 1 && chainId === 56)) &&
                           checkWallet === true &&
                           isAtlimit === false
                             ? "pill-btn"
                             : "inactive-pill-btn"
                         }  py-2 px-4`}
                         onClick={() => {
-                          handleDeposit700();
+                          handleDeposit700(priceType);
                         }}
                       >
                         {depositState700 === "loading-deposit" ? (

@@ -36,7 +36,7 @@ const TimepieceNFT = ({
   listedNFTS,
   coinbase,
   ethTokenData,
-  dypTokenData,
+  dypTokenData,dypTokenData_old,
   timepieceBought,
   handleRefreshListing,
   nftCount,
@@ -1021,6 +1021,7 @@ const TimepieceNFT = ({
                           <ItemCard
                             ethTokenData={ethTokenData}
                             dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1206,6 +1207,7 @@ const TimepieceNFT = ({
                           <ItemCard
                             ethTokenData={ethTokenData}
                             dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1258,6 +1260,7 @@ const TimepieceNFT = ({
                             <ItemCard
                               ethTokenData={ethTokenData}
                               dypTokenData={dypTokenData}
+                              dypTokenData_old={dypTokenData_old}
                               key={nft.id}
                               nft={nft}
                               isConnected={isConnected}
