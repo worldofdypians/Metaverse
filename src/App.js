@@ -69,6 +69,7 @@ import {
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 
+
 function App() {
   const CHAINLIST = {
     1: {
