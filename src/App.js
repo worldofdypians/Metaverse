@@ -63,7 +63,6 @@ import {
   connectWallet,
   ConnectionType,
 } from "web3-connector";
-import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 
 
 function App() {
@@ -1677,8 +1676,6 @@ function App() {
     <ApolloProvider client={client}>
       <AuthProvider>
         <div className="container-fluid p-0 main-wrapper position-relative">
-        {!location.pathname.includes("account") &&
-          !location.pathname.includes("auth") && <ChestFlyout />}
           <Header
             handleSignUp={handleShowWalletModal}
             coinbase={coinbase}
