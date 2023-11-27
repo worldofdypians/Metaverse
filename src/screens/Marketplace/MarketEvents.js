@@ -71,6 +71,7 @@ import axios from "axios";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 import { useAuth } from "../Account/src/Utils.js/Auth/AuthDetails";
+import DailyBonusModal from "./DailyBonusModal";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -148,7 +149,7 @@ const MarketEvents = ({
   const [baseEarnETH, setBaseEarnETH] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
-
+  const [dailyBonusPopup, setDailyBonusPopup] = useState(false)
   const [activePopup, setActivePopup] = useState(false);
 
   const selected = useRef(null);
@@ -310,6 +311,20 @@ const MarketEvents = ({
       },
     },
   ];
+
+
+
+  const dailyBonusData =  {
+    eventType: "6 Available Rewards",
+    title: "Daily Bonus",
+    chain: "BNB Chain, opBNB Chain",
+    linkState: "conflux",
+    status: "Coming Soon",
+    id: "event10",
+    totalRewards: "$2,000 in CFX Rewards",
+    eventDate: "Dec 1, 2023",
+  }
+
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -954,7 +969,7 @@ const MarketEvents = ({
                       className="upcoming-mint-img"
                     />
                   </div> */}
-                  <div className=" border-0 upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className=" border-0 upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0" style={{cursor: "pointer"}} onClick={() => setDailyBonusPopup(true)}>
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Daily Bonus</h6>
                       <p className="upcoming-mint-desc">
@@ -1541,6 +1556,12 @@ const MarketEvents = ({
           </div>
         </OutsideClickHandler>
       )}
+
+      {dailyBonusPopup &&
+      <OutsideClickHandler onOutsideClick={() => setDailyBonusPopup(false)}>
+        <DailyBonusModal data={dailyBonusData} onClose={() => setDailyBonusPopup(false)} />
+      </OutsideClickHandler>
+      }
     </>
   );
 };
