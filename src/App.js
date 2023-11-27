@@ -1820,6 +1820,7 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
+            handleOpenDomains={() => setDomainPopup(true)}
             domainName={domainName}
           />
           <Routes>

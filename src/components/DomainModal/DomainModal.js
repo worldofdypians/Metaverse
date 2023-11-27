@@ -86,7 +86,7 @@ const DomainModal = ({
         </div>
         {chainId === 56 && metadata && buyScreen === false && domainSearch.length < 3 &&
           <div
-          className="selected-domain-search-item d-flex align-items-center justify-content-between mt-5 p-3"
+          className="selected-domain-search-item d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-between mt-5 p-3"
         >
           <div className="d-flex align-items-center gap-2">
             <img src={metadata.image} width={60} height={60} alt="" className="your-domain-img" />
@@ -119,7 +119,7 @@ const DomainModal = ({
               />
             </div>
           </div> */}
-           <div className="d-flex flex-column gap-1">
+           <div className="d-flex flex-lg-column flex-row gap-1">
                   <span className="name-service mb-0">Expires on </span>
                   <span className="name-service mb-0">{new Date(metadata.attributes[2].value * 1000).toLocaleDateString("en-US", options)}</span>
                 </div>
