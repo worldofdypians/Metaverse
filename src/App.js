@@ -1695,7 +1695,7 @@ function App() {
   }
 
   const getDomains = async () => {
-    if (coinbase && isConnected && logout === "false") {
+    if (coinbase && isConnected) {
       const name = await web3Name.getDomainName({
         address: coinbase,
         queryChainIdList: [56],
@@ -1713,17 +1713,16 @@ function App() {
     // console.log(name, "domain")
   };
   const fetchBscBalance = async () => {
-    if (coinbase && chainId === 56 && logout !== "false") {
+    if (coinbase && chainId === 56 && isConnected) {
       const balance = await ethereum.request({
         method: "eth_getBalance",
         params: [coinbase, "latest"],
       });
 
-      if (chainId === 56) {
         const stringBalance = bscWeb3.utils.hexToNumberString(balance);
         const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
         setBscAmount(amount.slice(0, 7));
-      }
+    
 
       const bscWeb3 = new Web3(window.config.bsc_endpoint);
     }
