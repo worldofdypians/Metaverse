@@ -1695,7 +1695,7 @@ function App() {
   }
 
   const getDomains = async () => {
-    if (coinbase && isConnected) {
+    if (coinbase) {
       const name = await web3Name.getDomainName({
         address: coinbase,
         queryChainIdList: [56],
@@ -1713,7 +1713,7 @@ function App() {
     // console.log(name, "domain")
   };
   const fetchBscBalance = async () => {
-    if (coinbase && chainId === 56 && isConnected) {
+    if (coinbase && chainId === 56) {
       const balance = await ethereum.request({
         method: "eth_getBalance",
         params: [coinbase, "latest"],
