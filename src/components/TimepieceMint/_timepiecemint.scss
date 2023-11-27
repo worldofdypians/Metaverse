@@ -386,7 +386,6 @@
     border: none;
     outline: none;
     padding: 10px;
-
   }
 
   .land-name2-passive {
@@ -1524,6 +1523,24 @@ input::-webkit-inner-spin-button {
   letter-spacing: 0.48px;
 }
 
+.uppertext {
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.bottomtext {
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
 .mint-popup {
   border-radius: 8px;
   background: linear-gradient(127deg, #181636 35.2%, #7133e5 191.04%);
@@ -1606,6 +1623,10 @@ input::-webkit-inner-spin-button {
       font-size: 13px;
     }
   }
+}
+
+.bottom-auto-bg {
+  bottom: auto !important;
 }
 
 .mint-popup-img {
