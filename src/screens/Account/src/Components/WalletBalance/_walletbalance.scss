@@ -702,3 +702,27 @@ text-transform: capitalize;
     height: 16px;
   }
 }
+
+
+.prizeswrapper-premium {
+  background: linear-gradient(
+    270deg,
+    rgba(219, 161, 34, 0) 38.72%,
+    rgba(219, 161, 34, 0.4) 104.23%
+  );
+  // clip-path: polygon(100% 0%, 94.312% 100%, 0% 100%, 5.688% 0%, 100% 0%);
+  padding: 10px;
+  // background: #dba122;
+  border-radius: 12px;
+  border: 1px solid #dba122;
+}
+
+.chest-prize-title{
+  color: #FFF;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+letter-spacing: 1.05px;
+text-transform: uppercase;
+}

@@ -64,11 +64,15 @@ import discord from "./assets/greenDiscord.svg";
 import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingDyp from "./assets/upcomingDyp.webp";
+import dailyBonus from "./assets/dailyBonus.webp";
+import MintPopup from "../../components/TimepieceMint/MintPopup";
 
 import axios from "axios";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 import { useAuth } from "../Account/src/Utils.js/Auth/AuthDetails";
+import DailyBonusModal from "./DailyBonusModal";
+
 const renderer = ({ days, hours, minutes }) => {
   return (
     <>
@@ -145,6 +149,8 @@ const MarketEvents = ({
   const [baseEarnETH, setBaseEarnETH] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
+  const [dailyBonusPopup, setDailyBonusPopup] = useState(false)
+  const [activePopup, setActivePopup] = useState(false);
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -163,6 +169,12 @@ const MarketEvents = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+
+  const dailyBonusMintData = {
+    title: "Daily Bonus",
+    subTitle: "Coming Soon",
+    img: dailyBonus,
+  };
 
   const dummyBetaPassData2 = [
     {
@@ -233,7 +245,7 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status:  "Live",
+        status: "Live",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -299,6 +311,20 @@ const MarketEvents = ({
       },
     },
   ];
+
+
+
+  const dailyBonusData =  {
+    eventType: "6 Available Rewards",
+    title: "Daily Bonus",
+    chain: "BNB Chain, opBNB Chain",
+    linkState: "conflux",
+    status: "Coming Soon",
+    id: "event10",
+    totalRewards: "$2,000 in CFX Rewards",
+    eventDate: "Dec 1, 2023",
+  }
+
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -524,7 +550,7 @@ const MarketEvents = ({
 
           //setDypiusEarnTokens
 
-          if (dypEvent) {
+          if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
               dypEvent[0].reward.earn.total /
               dypEvent[0].reward.earn.multiplier;
@@ -532,44 +558,50 @@ const MarketEvents = ({
             setDypiusEarnTokens(userEarnedDyp);
           }
 
-          const points = coingeckoEvent[0].reward.earn.totalPoints;
-          setuserPoints(points);
-
-          const usdValue =
-            coingeckoEvent[0].reward.earn.total /
-            coingeckoEvent[0].reward.earn.multiplier;
-          setuserEarnUsd(usdValue);
-          if (bnbPrice !== 0) {
-            setuserEarnETH(usdValue / bnbPrice);
-          }
-
-          const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
-          setConfluxUserPoints(cfxPoints);
-
-          if (confluxEvent[0].reward.earn.multiplier !== 0) {
-            const cfxUsdValue =
-              confluxEvent[0].reward.earn.total /
-              confluxEvent[0].reward.earn.multiplier;
-            setConfluxEarnUSD(cfxUsdValue);
-
-            if (cfxPrice !== 0) {
-              setConfluxEarnCFX(cfxUsdValue / cfxPrice);
-            }
-          }
-          const gatePoints = gateEvent[0].reward.earn.totalPoints;
-          setGateUserPoints(gatePoints);
-
-          if (gateEvent[0].reward.earn.multiplier !== 0) {
-            const gateUsdValue =
-              gateEvent[0].reward.earn.total /
-              gateEvent[0].reward.earn.multiplier;
-            setGateEarnUSD(gateUsdValue);
-
+          if (coingeckoEvent && coingeckoEvent[0]) {
+            const points = coingeckoEvent[0].reward.earn.totalPoints;
+            setuserPoints(points);
+            const usdValue =
+              coingeckoEvent[0].reward.earn.total /
+              coingeckoEvent[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue);
             if (bnbPrice !== 0) {
-              setGateEarnBNB(gateUsdValue / bnbPrice);
+              setuserEarnETH(usdValue / bnbPrice);
             }
           }
-          if (baseEvent) {
+
+          if (confluxEvent && confluxEvent[0]) {
+            const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
+            setConfluxUserPoints(cfxPoints);
+
+            if (confluxEvent[0].reward.earn.multiplier !== 0) {
+              const cfxUsdValue =
+                confluxEvent[0].reward.earn.total /
+                confluxEvent[0].reward.earn.multiplier;
+              setConfluxEarnUSD(cfxUsdValue);
+
+              if (cfxPrice !== 0) {
+                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+              }
+            }
+          }
+
+          if (gateEvent && gateEvent[0]) {
+            const gatePoints = gateEvent[0].reward.earn.totalPoints;
+            setGateUserPoints(gatePoints);
+            if (gateEvent[0].reward.earn.multiplier !== 0) {
+              const gateUsdValue =
+                gateEvent[0].reward.earn.total /
+                gateEvent[0].reward.earn.multiplier;
+              setGateEarnUSD(gateUsdValue);
+
+              if (bnbPrice !== 0) {
+                setGateEarnBNB(gateUsdValue / bnbPrice);
+              }
+            }
+          }
+
+          if (baseEvent && baseEvent[0]) {
             const basePoints = baseEvent[0].reward.earn.totalPoints;
             setBaseUserPoints(basePoints);
             if (baseEvent[0].reward.earn.multiplier !== 0) {
@@ -643,14 +675,41 @@ const MarketEvents = ({
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
-  }, [email, data, cfxPrice, bnbPrice,dyptokenDatabnb]);
+  }, [email, data, cfxPrice, bnbPrice, dyptokenDatabnb]);
 
   useEffect(() => {
     setActiveTab(tabState);
   }, [window.location.href]);
 
+  useEffect(() => {
+    const result = localStorage.getItem("activePopup");
+    if (result === "show" || !result) {
+      setTimeout(() => {
+        localStorage.setItem("activePopup", "show");
+        setActivePopup(true);
+      }, 500);
+    }
+  }, []);
+
+  useEffect(() => {
+    const result = localStorage.getItem("activePopup");
+
+    if (activePopup && result === "show") {
+      html.classList.add("hidescroll");
+    } else {
+      // Enable scroll
+      html.classList.remove("hidescroll");
+      localStorage.setItem("activePopup", "hide");
+    }
+  }, [activePopup]);
+
   return (
     <>
+      <MintPopup
+        active={activePopup}
+        data={dailyBonusMintData}
+        onClose={() => setActivePopup(false)}
+      />
       <div
         className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
@@ -670,9 +729,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -685,6 +742,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -909,7 +969,7 @@ const MarketEvents = ({
                       className="upcoming-mint-img"
                     />
                   </div> */}
-                  <div className=" border-0 upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className=" border-0 upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0" style={{cursor: "pointer"}} onClick={() => setDailyBonusPopup(true)}>
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Daily Bonus</h6>
                       <p className="upcoming-mint-desc">
@@ -1457,7 +1517,6 @@ const MarketEvents = ({
                               ? gateEarnBNB
                               : dummyEvent.id === "event4"
                               ? baseEarnETH
-                              
                               : 0,
                             2
                           )}
@@ -1497,6 +1556,12 @@ const MarketEvents = ({
           </div>
         </OutsideClickHandler>
       )}
+
+      {dailyBonusPopup &&
+      <OutsideClickHandler onOutsideClick={() => setDailyBonusPopup(false)}>
+        <DailyBonusModal data={dailyBonusData} onClose={() => setDailyBonusPopup(false)} />
+      </OutsideClickHandler>
+      }
     </>
   );
 };
