@@ -69,7 +69,6 @@ import {
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 
-
 function App() {
   const CHAINLIST = {
     1: {
@@ -249,7 +248,6 @@ function App() {
   };
 
   const registerDomain = async (label, years) => {
-    
     setLoadingDomain(true);
     const provider = new providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -1700,6 +1698,7 @@ function App() {
         address: coinbase,
         queryChainIdList: [56],
       });
+      console.log(name, coinbase);
       if (name && name !== null) {
         setDomainName(name);
         const metadata = await web3Name.getMetadata({ name: name });
@@ -1713,18 +1712,17 @@ function App() {
     // console.log(name, "domain")
   };
   const fetchBscBalance = async () => {
-    if (coinbase && chainId === 56) {
-      const balance = await ethereum.request({
+    if (coinbase && chainId === 56 && window.ethereum) {
+      const balance = await window.ethereum.request({
         method: "eth_getBalance",
         params: [coinbase, "latest"],
       });
 
-        const stringBalance = bscWeb3.utils.hexToNumberString(balance);
-        const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
-        setBscAmount(amount.slice(0, 7));
-    
-
       const bscWeb3 = new Web3(window.config.bsc_endpoint);
+      const stringBalance = bscWeb3.utils.hexToNumberString(balance);
+
+      const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
+      setBscAmount(amount.slice(0, 7));
     }
   };
 
