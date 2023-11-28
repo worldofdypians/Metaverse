@@ -249,7 +249,7 @@ function App() {
   };
 
   const registerDomain = async (label, years) => {
-    console.log(label, "label");
+    
     setLoadingDomain(true);
     const provider = new providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
