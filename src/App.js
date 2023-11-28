@@ -243,7 +243,7 @@ function App() {
       } else {
         setAvailableDomain(available);
       }
-      console.log(availableDomain, domain.length);
+      console.log(available, domain.length);
     }
   };
 
@@ -1698,7 +1698,7 @@ function App() {
         address: coinbase,
         queryChainIdList: [56],
       });
-      console.log(name, coinbase);
+
       if (name && name !== null) {
         setDomainName(name);
         const metadata = await web3Name.getMetadata({ name: name });
