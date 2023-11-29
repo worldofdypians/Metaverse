@@ -243,7 +243,7 @@ function App() {
         const propertyDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
         );
-        console.log('propertyDyp', propertyDyp)
+       
         setDypTokenDatabnb_old(propertyDyp[0][1].token_price_usd);
 
         const propertyIDyp = Object.entries(
