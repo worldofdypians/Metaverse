@@ -12,6 +12,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import criticalHit from "../Marketplace/MarketNFTs/assets/criticalHit2.webp";
+import dailyBonusImg from "../Marketplace/MarketNFTs/assets/dailyBonus.webp";
+
 import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
 import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
 import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
@@ -149,12 +151,12 @@ const MarketEvents = ({
   const [baseEarnETH, setBaseEarnETH] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
-  const [dailyBonusPopup, setDailyBonusPopup] = useState(false)
+  const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
   const [activePopup, setActivePopup] = useState(false);
 
   const selected = useRef(null);
   const { email } = useAuth();
-console.log(availableTime)
+
   const getTokenDatabnb = async () => {
     await axios
       .get("https://api.dyp.finance/api/the_graph_bsc_v2")
@@ -312,19 +314,16 @@ console.log(availableTime)
     },
   ];
 
-
-
-  const dailyBonusData =  {
+  const dailyBonusData = {
     eventType: "6 Available Rewards",
     title: "Daily Bonus",
     chain: "BNB Chain, opBNB Chain",
     linkState: "conflux",
-    status: "Coming Soon",
+    status: "Live",
     id: "event10",
     totalRewards: "$2,000 in CFX Rewards",
     eventDate: "Dec 1, 2023",
-  }
-
+  };
 
   const dragonData = {
     title: "Dragon Ruins",
@@ -660,6 +659,8 @@ console.log(availableTime)
       setSelectedPackage("betaPass");
     } else if (eventId === "treasure-hunt") {
       setSelectedPackage("treasure-hunt");
+    } else if (eventId === "daily-bonus") {
+      setSelectedPackage("daily-bonus");
     }
   }, [eventId, activeTab]);
 
@@ -705,11 +706,11 @@ console.log(availableTime)
 
   return (
     <>
-      <MintPopup
+      {/* <MintPopup
         active={activePopup}
         data={dailyBonusMintData}
         onClose={() => setActivePopup(false)}
-      />
+      /> */}
       <div
         className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
@@ -729,7 +730,9 @@ console.log(availableTime)
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                   
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -742,9 +745,7 @@ console.log(availableTime)
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -793,6 +794,28 @@ console.log(availableTime)
                             />
                             <span className="event-package-title">
                               Treasure Hunt
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/marketplace/events/daily-bonus">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
+                              selectedPackage === "daily-bonus" &&
+                              eventId === "daily-bonus" &&
+                              "selected-event-package"
+                            }`}
+                            onClick={() => setSelectedPackage("daily-bonus")}
+                          >
+                            <img
+                              src={dailyBonusImg}
+                              className="w-100"
+                              style={{ borderRadius: "16px", height: 145 }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Daily Bonus
                             </span>
                           </div>
                         </div>
@@ -912,6 +935,34 @@ console.log(availableTime)
                           />
                         ))}
                       </div>
+                    ) : selectedPackage === "daily-bonus" ? (
+                      <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
+                        <div
+                          className=" border-0 upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => setDailyBonusPopup(true)}
+                        >
+                          <div className="d-flex flex-column gap-2 ps-3 pe-3 pt-3 pb-3 pb-lg-0">
+                            <h6 className="upcoming-mint-title">Daily Bonus</h6>
+                            <p className="upcoming-mint-desc mb-0">
+                              Claim chests daily for a chance to win Game
+                              Points, exclusive NFTs, and exciting rewards!
+                              Don't miss out on your daily dose of gaming
+                              treasures.
+                            </p>
+                            <span className="mb-2 events-page-details d-none d-lg-flex align-items-center gap-2">
+                              Details
+                              <img src={eventsArrow} alt="" />
+                            </span>
+                          </div>
+
+                          <img
+                            src={upcomingDailyBonus}
+                            alt=""
+                            className="upcoming-mint-img"
+                          />
+                        </div>
+                      </div>
                     ) : (
                       <NewBundleCard
                         onOpenPopup={onOpenPopup}
@@ -969,21 +1020,7 @@ console.log(availableTime)
                       className="upcoming-mint-img"
                     />
                   </div> */}
-                  <div className=" border-0 upcoming-mint-wrapper upcoming-daily-bonus d-flex flex-column flex-lg-row align-items-center justify-content-between px-0" style={{cursor: "pointer"}} onClick={() => setDailyBonusPopup(true)}>
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Daily Bonus</h6>
-                      <p className="upcoming-mint-desc">
-                        Claim chests daily for a chance to win Game Points,
-                        exclusive NFTs, and exciting rewards! Don't miss out on
-                        your daily dose of gaming treasures.
-                      </p>
-                    </div>
-                    <img
-                      src={upcomingDailyBonus}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
-                  </div>
+
                   <div className="border-0 upcoming-mint-wrapper upcoming-doge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Dogecoin</h6>
@@ -1557,11 +1594,14 @@ console.log(availableTime)
         </OutsideClickHandler>
       )}
 
-      {dailyBonusPopup &&
-      <OutsideClickHandler onOutsideClick={() => setDailyBonusPopup(false)}>
-        <DailyBonusModal data={dailyBonusData} onClose={() => setDailyBonusPopup(false)} />
-      </OutsideClickHandler>
-      }
+      {dailyBonusPopup && (
+        <OutsideClickHandler onOutsideClick={() => setDailyBonusPopup(false)}>
+          <DailyBonusModal
+            data={dailyBonusData}
+            onClose={() => setDailyBonusPopup(false)}
+          />
+        </OutsideClickHandler>
+      )}
     </>
   );
 };

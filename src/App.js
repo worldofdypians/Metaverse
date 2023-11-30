@@ -268,6 +268,7 @@ function App() {
     await register
       .register(label, address, years, {
         setPrimaryName: true,
+        referrer: "dyp.bnb",
       })
       .then(() => {
         setSuccessMessage("You have successfully registered your .bnb domain");
@@ -1468,7 +1469,6 @@ function App() {
     let subscribedPlatformTokenAmountBNB;
     let subscribedPlatformTokenAmountBase;
 
-
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
     const web3base = window.baseWeb3;
@@ -1485,10 +1485,7 @@ function App() {
     const bnbsubscribeAddress = window.config.subscriptionbnb_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
-    const cfxcontract = new web3cfx.eth.Contract(
-      CfxABI,
-      cfxsubscribeAddress
-    );
+    const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
 
     const basecontract = new web3base.eth.Contract(
       BaseABI,
@@ -1506,7 +1503,7 @@ function App() {
         .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
-        subscribedPlatformTokenAmountBase = await basecontract.methods
+      subscribedPlatformTokenAmountBase = await basecontract.methods
         .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
@@ -1970,6 +1967,8 @@ function App() {
                   success={success}
                   availableTime={availTime}
                   handleSwitchNetwork={handleSwitchNetwork}
+                  handleOpenDomains={() => setDomainPopup(true)}
+                  domainName={domainName}
                 />
               }
             />

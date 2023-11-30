@@ -25,6 +25,8 @@ import walletImg from "../../Images/userProfile/wallet.svg";
 import circleArrow from "../../Images/userProfile/arrow-circle.svg";
 import blackWallet from "../../Images/userProfile/wallet-black.svg";
 import starActive from "./assets/star-active.svg";
+import starDefault from "./assets/star-default.svg";
+
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
 import Countdown from "react-countdown";
@@ -76,6 +78,8 @@ const ProfileCard = ({
   handleSetAvailableTime,
   userRank,
   genesisRank,
+  handleOpenDomains,
+  domainName,
 }) => {
   // const [dailyrecords, setRecords] = useState([]);
 
@@ -917,18 +921,23 @@ const ProfileCard = ({
                       <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
-                          {/* {isPremium && (
+                          {!domainName && (
                             <span
                               className={`${
-                                address && email && "premiumtext-active"
-                              }  d-flex align-items-center gap-1`}
+                                isPremium ? "premiumtext-active" : "premiumtext"
+                              }
+                              d-flex align-items-center gap-1`}
+                              style={{ cursor: "pointer" }}
+                              onClick={handleOpenDomains}
                             >
-                              {address && email && isPremium && (
-                                <img src={starActive} />
+                              {address && email && (
+                                <img
+                                  src={isPremium ? starActive : starDefault}
+                                />
                               )}
-                              Premium
+                              Get domain name
                             </span>
-                          )} */}
+                          )}
                           {/* {!isPremium && email && (
                             <span
                               className="profile-div-title mb-0 text-decoration-underline"
@@ -1013,15 +1022,21 @@ const ProfileCard = ({
                                   }}
                                 >
                                   <span className="emailtext">{email}</span>
-                                  <span className="wallet-address">
-                                    {windowSize.width > 991
-                                      ? isVerified && email
-                                        ? address
-                                        : coinbase
-                                      : isVerified && email
-                                      ? shortAddress(address)
-                                      : shortAddress(coinbase)}
-                                  </span>
+                                  {!domainName ? (
+                                    <span className="wallet-address">
+                                      {windowSize.width > 991
+                                        ? isVerified && email
+                                          ? address
+                                          : coinbase
+                                        : isVerified && email
+                                        ? shortAddress(address)
+                                        : shortAddress(coinbase)}
+                                    </span>
+                                  ) : (
+                                    <span className="wallet-address">
+                                      {domainName}
+                                    </span>
+                                  )}
                                 </div>
                               </div>
                             </Clipboard>
