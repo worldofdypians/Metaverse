@@ -1760,10 +1760,10 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    getDomains();
-    fetchBscBalance();
-  }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
+  // useEffect(() => {
+  //   getDomains();
+  //   fetchBscBalance();
+  // }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -1832,8 +1832,8 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
-            handleOpenDomains={() => setDomainPopup(true)}
-            domainName={domainName}
+            // handleOpenDomains={() => setDomainPopup(true)}
+            // domainName={domainName}
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1850,8 +1850,8 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
-            handleOpenDomains={() => setDomainPopup(true)}
-            domainName={domainName}
+            // handleOpenDomains={() => setDomainPopup(true)}
+            // domainName={domainName}
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1967,8 +1967,8 @@ function App() {
                   success={success}
                   availableTime={availTime}
                   handleSwitchNetwork={handleSwitchNetwork}
-                  handleOpenDomains={() => setDomainPopup(true)}
-                  domainName={domainName}
+                  // handleOpenDomains={() => setDomainPopup(true)}
+                  // domainName={domainName}
                 />
               }
             />

@@ -194,6 +194,7 @@ const NewWalletBalance = ({
   openedChests,
   userRank2,
   genesisRank2,
+  onDailyBonusInfoClick,
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -1468,12 +1469,10 @@ const NewWalletBalance = ({
           <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 px-0 gap-lg-0 mt-lg-0 mt-5">
             <div className="row gap-3 gap-lg-0">
               <div className="col-12 col-lg-4">
-                <div
-                  className="daily-bonus-wrapper"
-                  onClick={onDailyRewardsPopupOpen}
-                >
+                <div className="daily-bonus-wrapper">
                   <div className="green-div"></div>
                   <img
+                    onClick={onDailyRewardsPopupOpen}
                     src={finished ? dailyRewardsFinished : dailyRewards}
                     className={`${
                       finished
@@ -1503,7 +1502,18 @@ const NewWalletBalance = ({
                     </div>
                   </div>
                   <div className="d-flex flex-column justify-content-between h-100 p-3">
-                    <h6 className="profile-div-title mb-0">Daily Bonus</h6>
+                    <div
+                      className="d-flex align-items-center justify-content-between position-relative gap-1"
+                      style={{ width: "fit-content" }}
+                      onClick={onDailyBonusInfoClick}
+                    >
+                      <h6 className="profile-div-title mb-0">Daily Bonus</h6>
+                      <img
+                        src={require("./assets/greenInfo.svg").default}
+                        alt=""
+                        className="tooltipicon"
+                      />
+                    </div>
 
                     <div
                       className="d-flex flex-column align-items-center"
@@ -1512,6 +1522,7 @@ const NewWalletBalance = ({
                       <div
                         className="position-relative"
                         style={{ width: "96px", height: "40px", right: "0px" }}
+                        onClick={onDailyRewardsPopupOpen}
                       >
                         <span className="ready-to-claim mb-0">
                           {finished ? "Reset Time" : "Ready to Claim"}

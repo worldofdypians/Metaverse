@@ -78,8 +78,8 @@ const ProfileCard = ({
   handleSetAvailableTime,
   userRank,
   genesisRank,
-  handleOpenDomains,
-  domainName,
+  // handleOpenDomains,
+  // domainName,
 }) => {
   let id = Math.random().toString(36);
 
@@ -613,7 +613,7 @@ const ProfileCard = ({
                       <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
-                          {!domainName && (
+                          {/* {!domainName && (
                             <span
                               className={`${
                                 isPremium ? "premiumtext-active" : "premiumtext"
@@ -629,7 +629,7 @@ const ProfileCard = ({
                               )}
                               Get domain name
                             </span>
-                          )}
+                          )} */}
                           {/* {!isPremium && email && (
                             <span
                               className="profile-div-title mb-0 text-decoration-underline"
@@ -714,7 +714,7 @@ const ProfileCard = ({
                                   }}
                                 >
                                   <span className="emailtext">{email}</span>
-                                  {!domainName ? (
+                                  {/* {!domainName ? ( */}
                                     <span className="wallet-address">
                                       {windowSize.width > 991
                                         ? isVerified && email
@@ -724,11 +724,11 @@ const ProfileCard = ({
                                         ? shortAddress(address)
                                         : shortAddress(coinbase)}
                                     </span>
-                                  ) : (
+                                  {/* ) : (
                                     <span className="wallet-address">
                                       {domainName}
                                     </span>
-                                  )}
+                                  )} */}
                                 </div>
                               </div>
                             </Clipboard>

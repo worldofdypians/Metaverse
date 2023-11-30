@@ -127,7 +127,7 @@ const MarketEvents = ({
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
   const [availableTime, setAvailableTime] = useState();
   const [selectedPackage, setSelectedPackage] = useState(
-    location.state?.package ? location.state?.package : "dragon"
+    location.state?.package ? location.state?.package : "treasure-hunt"
   );
   const [popup, setPopup] = useState(false);
   const [packagePopup, setPackagePopup] = useState("");
@@ -663,7 +663,7 @@ const MarketEvents = ({
       setSelectedPackage("daily-bonus");
     }
   }, [eventId, activeTab]);
-// console.log()
+console.log(eventId, activeTab)
   useEffect(() => {
     if (
       email &&
@@ -774,7 +774,7 @@ const MarketEvents = ({
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/daily-bonus">
+                      {/* <NavLink to="/marketplace/events/daily-bonus">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
@@ -795,7 +795,7 @@ const MarketEvents = ({
                             </span>
                           </div>
                         </div>
-                      </NavLink>
+                      </NavLink> */}
                       <NavLink to="/marketplace/events/dragon-ruins">
                         <div className="">
                           <div

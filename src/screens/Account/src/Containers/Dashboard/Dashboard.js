@@ -45,6 +45,7 @@ import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
+import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 
 function Dashboard({
   account,
@@ -62,8 +63,8 @@ function Dashboard({
   availableTime,
   success,
   handleSwitchNetwork,
-  domainName,
-  handleOpenDomains,
+  // domainName,
+  // handleOpenDomains,
 }) {
   const { email, logout } = useAuth();
 
@@ -151,6 +152,8 @@ function Dashboard({
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
   const [balancePopup, setBalancePopup] = useState(false);
+  const [dailyBonusInfo, setdailyBonusInfo] = useState(false);
+
   const [dropdownIcon, setdropdownIcon] = useState("");
   const [dropdownTitle, setdropdownTitle] = useState("");
   const [status, setstatus] = useState("");
@@ -190,6 +193,17 @@ function Dashboard({
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
+
+  const dailyBonusData = {
+    eventType: "6 Available Rewards",
+    title: "Daily Bonus",
+    chain: "BNB Chain, opBNB Chain",
+    linkState: "conflux",
+    status: "Live",
+    id: "event10",
+    totalRewards: "$2,000 in CFX Rewards",
+    eventDate: "Dec 1, 2023",
+  };
 
   let wethAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
   let wcfx = "0xfe97E85d13ABD9c1c33384E796F10B73905637cE";
@@ -1732,8 +1746,8 @@ function Dashboard({
                         handleSetAvailableTime={(value) => {
                           setGoldenPassRemainingTime(value);
                         }}
-                        handleOpenDomains={handleOpenDomains}
-                        domainName={domainName}
+                        // handleOpenDomains={handleOpenDomains}
+                        // domainName={domainName}
                       />
 
                       <NewWalletBalance
@@ -1794,6 +1808,9 @@ function Dashboard({
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
                         openedChests={openedChests}
+                        onDailyBonusInfoClick={() => {
+                          setdailyBonusInfo(true);
+                        }}
                         // hasNft={
                         //   MyNFTSCaws.length +
                         //     MyNFTSLand.length   >
@@ -2044,6 +2061,13 @@ function Dashboard({
                           />
                         </div>
                       </OutsideClickHandler>
+                    )}
+
+                    {dailyBonusInfo && (
+                      <DailyBonusModal
+                        data={dailyBonusData}
+                        onClose={() => setdailyBonusInfo(false)}
+                      />
                     )}
 
                     {getPremiumPopup && (
