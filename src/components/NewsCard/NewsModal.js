@@ -27,26 +27,26 @@ const NewsModal = ({
   const elementRef = useRef();
   const [height, setHeight] = useState(0);
   const [tooltip, setTooltip] = useState(false);
-  const [arrow, setArrow] = useState(false)
+  const [arrow, setArrow] = useState(false);
 
   useEffect(() => {
     if (elementRef.current.clientHeight !== 0) {
       setHeight(elementRef.current.clientHeight);
     }
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   }, [newsId, content, elementRef.current?.clientHeight]);
 
-  const backArrow = document.getElementById('backButton')
+  const backArrow = document.getElementById("backButton");
 
   const setArrowWhite = () => {
-    setArrow(true)
-  }
+    setArrow(true);
+  };
   const setArrowBlack = () => {
-    setArrow(false)
-  }
+    setArrow(false);
+  };
 
-  backArrow?.addEventListener('mouseenter', setArrowWhite)
-  backArrow?.addEventListener('mouseleave', setArrowBlack)
+  backArrow?.addEventListener("mouseenter", setArrowWhite);
+  backArrow?.addEventListener("mouseleave", setArrowBlack);
 
   return (
     <div className="newsModal-wrapper d-flex flex-column flex-xxl-row flex-lg-row gap-3 mb-5">
@@ -58,7 +58,12 @@ const NewsModal = ({
               id="backButton"
               onClick={onModalClose}
             >
-              <img src={arrow === false ? goBackArrowBlack : goBackArrow} height={24} width={24} alt="goback" />
+              <img
+                src={arrow === false ? goBackArrowBlack : goBackArrow}
+                height={24}
+                width={24}
+                alt="goback"
+              />
             </button>
             <span className="mainNews-date">
               <img src={calendarIcon} alt="calendar" />{" "}
@@ -110,7 +115,7 @@ const NewsModal = ({
               <img
                 src={newsShare}
                 alt="share news"
-                style={{cursor: 'pointer'}}
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigator.clipboard.writeText(
                     `https://www.worldofdypians.com/news/${newsId}/${title.replace(
@@ -125,7 +130,7 @@ const NewsModal = ({
             </div>
             <div
               className={`tooltip-wrapper p-2 ${tooltip && "tooltip-active"}`}
-              style={{ top: '-20px', left: 150 }}
+              style={{ top: "-20px", left: 150 }}
             >
               <p className="tooltip-content m-0">Copied!</p>
             </div>
@@ -147,17 +152,16 @@ const NewsModal = ({
                   <NavLink
                     to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                     style={{ textDecoration: "none" }}
+                    key={index}
                   >
                     <AnnouncementMinCard
                       bgImage={item.image}
                       title={item.title}
                       content={item.content}
                       date={item.date}
-                      key={index}
                       newsId={item.id}
                       onShowModalClick={onOtherNewsClick}
-                  landscapeImg={item.image_second}
-
+                      landscapeImg={item.image_second}
                     />
                   </NavLink>
                 );

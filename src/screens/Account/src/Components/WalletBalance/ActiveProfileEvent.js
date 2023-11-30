@@ -45,7 +45,7 @@ const renderer = ({ days, hours, minutes }) => {
 const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
   return (
     <div
-      className="profile-event-item d-flex flex-column position-relative"
+      className="profile-event-item d-flex flex-column position-relative mb-1"
       onClick={onOpenEvent}
       style={{ transform: "translateX(0px)" }}
     >
