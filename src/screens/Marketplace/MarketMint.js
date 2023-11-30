@@ -189,7 +189,7 @@ const MarketMint = ({
       setSelectedMint(timepieceData);
       setMintTitle("timepiece");
     }
-    getTotalSupply();
+     getTotalSupply();
   }, []);
 
   useEffect(() => {

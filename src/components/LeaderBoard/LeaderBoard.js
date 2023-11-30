@@ -876,7 +876,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                       </td>
                       <td className="playerName col-5">
                         {isactive === true && item.displayName === username ? (
-                          <div className="position-relative">
+                          <div className="position-relative  d-flex align-items-center">
                             <img
                               src={premiumAvatar}
                               alt=""
@@ -885,7 +885,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             <span> {item.displayName}</span>
                           </div>
                         ) : (
-                          <div className="position-relative">
+                          <div className="position-relative  d-flex align-items-center">
                             <img
                               src={playerAvatar}
                               alt=""
@@ -958,7 +958,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                       </td>
                       <td className="playerName col-5">
                         {isactive === true && item.displayName === username ? (
-                          <div className="position-relative">
+                          <div className="position-relative d-flex align-items-center">
                             <img
                               src={premiumAvatar}
                               alt=""
@@ -967,7 +967,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             <span> {item.displayName}</span>
                           </div>
                         ) : (
-                          <div className="position-relative">
+                          <div className="position-relative d-flex align-items-center">
                             <img
                               src={playerAvatar}
                               alt=""
@@ -1024,7 +1024,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                       <td className="playerData col-1">#{item.position + 1}</td>
                       <td className="playerName col-5">
                         {isactive === true && item.displayName === username ? (
-                          <div className="position-relative">
+                          <div className="position-relative d-flex align-items-center">
                             <img
                               src={premiumAvatar}
                               alt=""
@@ -1033,7 +1033,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             <span> {item.displayName}</span>
                           </div>
                         ) : (
-                          <div className="position-relative">
+                          <div className="position-relative d-flex align-items-center">
                             <img
                               src={playerAvatar}
                               alt=""
@@ -1085,7 +1085,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                       <td className="playerData col-1">#{item.position + 1}</td>
                       <td className="playerName col-5">
                         {isactive === true && item.displayName === username ? (
-                          <div className="position-relative">
+                          <div className="position-relative d-flex align-items-center">
                             <img
                               src={premiumAvatar}
                               alt=""
@@ -1094,7 +1094,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                             <span> {item.displayName}</span>
                           </div>
                         ) : (
-                          <div className="position-relative">
+                          <div className="position-relative d-flex align-items-center">
                             <img
                               src={playerAvatar}
                               alt=""

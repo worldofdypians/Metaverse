@@ -618,6 +618,18 @@ input[type="range"]:focus::-ms-fill-upper {
   border: none;
 }
 
+.signinbtn {
+  border-radius: 8px;
+background: linear-gradient(90deg, #760F5A -10.16%, #624592 129.3%);
+color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+border: none;
+
+}
+
 .rewards-btn {
   background: linear-gradient(90deg, #5e54a0 -10.16%, #00fecf 129.3%);
   border-radius: 20px;

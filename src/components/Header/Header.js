@@ -43,6 +43,7 @@ import searchIconDomain from "./assets/searchIconDomain.svg";
 import registerDomainIcon from "./assets/registerDomainIcon.svg";
 import avax from "./assets/avax.svg";
 import bnb from "./assets/bnb.svg";
+import opbnb from "./assets/bnb.svg";
 import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
@@ -75,6 +76,8 @@ const Header = ({
   const [unreadNotifications, setunreadNotifications] = useState(0);
   const [ethState, setEthState] = useState(true);
   const [bnbState, setBnbState] = useState(false);
+  const [opbnbState, setopBnbState] = useState(false);
+
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
@@ -99,32 +102,44 @@ const Header = ({
         setBnbState(false);
         setEthState(true);
         setBaseState(false);
+        setopBnbState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
+        setopBnbState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(true);
+        setopBnbState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
         setEthState(false);
         setBaseState(false);
+        setopBnbState(false);
+      } else if (chainId === 204) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setopBnbState(true);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
         setConfluxState(true);
+        setopBnbState(false);
       } else {
         setAvaxState(false);
         setBnbState(false);
         setBaseState(false);
         setEthState(false);
+        setopBnbState(false);
       }
     }
   };
@@ -166,16 +181,38 @@ const Header = ({
   };
 
   const handleAvaxPool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0xa86a")
-        .then(() => {
-          handleSwitchNetwork(43114);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa86a")
+          .then(() => {
+            handleSwitchNetwork(43114);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(43114);
+      }
     } else {
-      handleSwitchChainGateWallet();
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleOpBnbPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xcc")
+          .then(() => {
+            handleSwitchNetwork(204);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(204);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -599,6 +636,8 @@ const Header = ({
                               ? eth
                               : bnbState === true
                               ? bnb
+                              : opbnbState === true
+                              ? bnb
                               : //: : avaxState === true
                               // ? avax
                               baseState === true
@@ -616,6 +655,8 @@ const Header = ({
                             ? "Ethereum"
                             : bnbState === true
                             ? "BNB Chain"
+                            : opbnbState === true
+                            ? "opBNB Chain"
                             : //:  : avaxState === true
                             // ? "Avalanche"
                             baseState === true
@@ -642,6 +683,10 @@ const Header = ({
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
+                    <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                  <img src={bnb} alt="" />
+                  opBNB Chain
+                </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux

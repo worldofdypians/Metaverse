@@ -154,7 +154,7 @@ const MarketEvents = ({
 
   const selected = useRef(null);
   const { email } = useAuth();
-
+console.log(availableTime)
   const getTokenDatabnb = async () => {
     await axios
       .get("https://api.dyp.finance/api/the_graph_bsc_v2")
