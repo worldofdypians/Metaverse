@@ -682,35 +682,11 @@ const MarketEvents = ({
     setActiveTab(tabState);
   }, [window.location.href]);
 
-  useEffect(() => {
-    const result = localStorage.getItem("activePopup");
-    if (result === "show" || !result) {
-      setTimeout(() => {
-        localStorage.setItem("activePopup", "show");
-        setActivePopup(true);
-      }, 500);
-    }
-  }, []);
 
-  useEffect(() => {
-    const result = localStorage.getItem("activePopup");
-
-    if (activePopup && result === "show") {
-      html.classList.add("hidescroll");
-    } else {
-      // Enable scroll
-      html.classList.remove("hidescroll");
-      localStorage.setItem("activePopup", "hide");
-    }
-  }, [activePopup]);
 
   return (
     <>
-      {/* <MintPopup
-        active={activePopup}
-        data={dailyBonusMintData}
-        onClose={() => setActivePopup(false)}
-      /> */}
+
       <div
         className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
