@@ -1121,29 +1121,6 @@ const NewWalletBalance = ({
 
   useEffect(() => {
     if (canBuy && email) {
-      // if (isPremium) {
-      //   if (claimedChests === 0 && claimedPremiumChests === 0) {
-      //     setFinished(false);
-      //   } else if (
-      //     parseInt(claimedChests) + parseInt(claimedPremiumChests) <
-      //     20
-      //   ) {
-      //     setFinished(false);
-      //   } else if (
-      //     parseInt(claimedChests) + parseInt(claimedPremiumChests) ===
-      //     20
-      //   ) {
-      //     setFinished(true);
-      //   }
-      // } else if (!isPremium) {
-      //   if (claimedChests === 0) {
-      //     setFinished(false);
-      //   } else if (parseInt(claimedChests) < 10) {
-      //     setFinished(false);
-      //   } else if (parseInt(claimedChests) === 10) {
-      //     setFinished(true);
-      //   }
-      // }
       setFinished(false);
     } else if (!canBuy && email) {
       setFinished(true);

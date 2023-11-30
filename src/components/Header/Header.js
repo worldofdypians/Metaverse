@@ -37,7 +37,10 @@ import updateIconActive from "../../screens/Marketplace/Notifications/assets/upd
 import welcomeIcon from "../../screens/Marketplace/Notifications/assets/welcomeIcon.svg";
 import welcomeIconActive from "../../screens/Marketplace/Notifications/assets/welcomeIconActive.svg";
 import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
-
+import domainIcon from "./assets/domainIcon.svg";
+import popupXmark from "./assets/popupXmark.svg";
+import searchIconDomain from "./assets/searchIconDomain.svg";
+import registerDomainIcon from "./assets/registerDomainIcon.svg";
 import avax from "./assets/avax.svg";
 import bnb from "./assets/bnb.svg";
 import opbnb from "./assets/bnb.svg";
@@ -50,6 +53,7 @@ import dropdown from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import DomainModal from "../DomainModal/DomainModal";
 
 const Header = ({
   handleSignUp,
@@ -63,6 +67,8 @@ const Header = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
+  handleOpenDomains,
+  domainName,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -75,6 +81,7 @@ const Header = ({
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
+  // const [domainPopup, setDomainPopup] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -321,265 +328,272 @@ const Header = ({
   }, [myOffers, coinbase, nftCount]);
 
   return (
-    <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
-      <div className="row justify-content-between mx-0 w-100">
-        <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-between ps-0">
-          <NavLink to="/">
-            <img src={metaverse} alt="metaverse" />
-          </NavLink>
-          <NavLink
-            to="/explorer"
-            className={({ isActive }) =>
-              isActive
-                ? "nav-anchor font-poppins activenavlink"
-                : "nav-anchor font-poppins"
-            }
-          >
-            Explore
-          </NavLink>
-          {/* <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a> */}
-          {/* <div className="nav-anchor font-poppins">Roadmap</div> */}
+    <>
+      <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
+        <div className="row justify-content-between mx-0 w-100">
+          <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-between ps-0">
+            <NavLink to="/">
+              <img src={metaverse} alt="metaverse" />
+            </NavLink>
+            <NavLink
+              to="/explorer"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-anchor font-poppins activenavlink"
+                  : "nav-anchor font-poppins"
+              }
+            >
+              Explore
+            </NavLink>
+            {/* <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a> */}
+            {/* <div className="nav-anchor font-poppins">Roadmap</div> */}
 
-          <NavLink
-            to="/land"
-            className={({ isActive }) =>
-              isActive
-                ? "nav-anchor font-poppins activenavlink"
-                : "nav-anchor font-poppins"
-            }
-          >
-            Land
-          </NavLink>
-          <NavLink
-            to="/marketplace"
-            className={({ isActive }) =>
-              isActive
-                ? "nav-anchor font-poppins activenavlink"
-                : "nav-anchor font-poppins"
-            }
-          >
-            Marketplace
-          </NavLink>
-          <NavLink
-            to="/roadmap"
-            className={({ isActive }) =>
-              isActive
-                ? "nav-anchor font-poppins activenavlink"
-                : "nav-anchor font-poppins"
-            }
-          >
-            Roadmap
-          </NavLink>
-          <NavLink
-            to="/news"
-            className={({ isActive }) =>
-              isActive
-                ? "nav-anchor font-poppins activenavlink"
-                : "nav-anchor font-poppins"
-            }
-          >
-            News
-          </NavLink>
-        </div>
-        <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
-          {!coinbase ? (
-            <div className="linearborder2">
-              <button className="btn connectwallet px-3" onClick={handleSignUp}>
-                Connect Wallet
-              </button>{" "}
-            </div>
-          ) : (
-            <div className="d-flex align-items-center gap-3">
-              <div className="position-relative">
-                <img
-                  src={bellIcon}
-                  width={30}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    setOpenNotifications(true);
-                    // markNotificationsAsRead()
-                  }}
-                  height={30}
-                  alt=""
-                />
-                {unreadNotifications > 0 && (
-                  <div className="bell-amount">
-                    <span className="mb-0">
-                      {unreadNotifications > 99 ? "99+" : unreadNotifications}
-                    </span>
-                  </div>
-                )}
-                <OutsideClickHandler
-                  onOutsideClick={() => {
-                    setOpenNotifications(false);
-                  }}
+            <NavLink
+              to="/land"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-anchor font-poppins activenavlink"
+                  : "nav-anchor font-poppins"
+              }
+            >
+              Land
+            </NavLink>
+            <NavLink
+              to="/marketplace"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-anchor font-poppins activenavlink"
+                  : "nav-anchor font-poppins"
+              }
+            >
+              Marketplace
+            </NavLink>
+            <NavLink
+              to="/roadmap"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-anchor font-poppins activenavlink"
+                  : "nav-anchor font-poppins"
+              }
+            >
+              Roadmap
+            </NavLink>
+            <NavLink
+              to="/news"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-anchor font-poppins activenavlink"
+                  : "nav-anchor font-poppins"
+              }
+            >
+              News
+            </NavLink>
+          </div>
+          <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
+            {!coinbase ? (
+              <div className="linearborder2">
+                <button
+                  className="btn connectwallet px-3"
+                  onClick={handleSignUp}
                 >
-                  <div
-                    className={`notifications-wrapper d-flex flex-column ${
-                      openNotifications && "open-notifications"
-                    }`}
-                    // style={{
-                    //   justifyContent: myOffers.length === 0 ? "center" : "",
-                    //   alignItems: myOffers.length === 0 ? "center" : "",
-                    // }}
+                  Connect Wallet
+                </button>{" "}
+              </div>
+            ) : (
+              <div className="d-flex align-items-center gap-3">
+                <div className="position-relative">
+                  <img
+                    src={bellIcon}
+                    width={30}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setOpenNotifications(true);
+                      // markNotificationsAsRead()
+                    }}
+                    height={30}
+                    alt=""
+                  />
+                  {unreadNotifications > 0 && (
+                    <div className="bell-amount">
+                      <span className="mb-0">
+                        {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                      </span>
+                    </div>
+                  )}
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
+                      setOpenNotifications(false);
+                    }}
                   >
-                    <NavLink
-                      to={"/notifications"}
-                      onClick={() => setOpenNotifications(false)}
-                      className="pending-notifications m-3 p-2 d-flex align-items-center justify-content-between"
+                    <div
+                      className={`notifications-wrapper d-flex flex-column ${
+                        openNotifications && "open-notifications"
+                      }`}
+                      // style={{
+                      //   justifyContent: myOffers.length === 0 ? "center" : "",
+                      //   alignItems: myOffers.length === 0 ? "center" : "",
+                      // }}
                     >
-                      <div className="d-flex align-items-center gap-1">
-                        <h6 className="notifications-amount mb-0">
-                          {unreadNotifications}
-                        </h6>
-                        <span className="pending-text mb-0">
-                          Pending Notifications
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <span className="pending-text mb-0">View All</span>
-                        <img src={viewAllArrow} alt="" />
-                      </div>
-                    </NavLink>
-                    <div className="inner-notifications">
-                      {myOffers &&
-                        myOffers.length > 0 &&
-                        myOffers.map((nft, index) => {
-                          return (
-                            <div
-                              className="position-relative header-notification"
-                              key={index}
-                            >
-                              <a
-                                href={
-                                  nft.welcome === "yes"
-                                    ? "https://www.worldofdypians.com/marketplace"
-                                    : nft.redirect_link
-                                    ? nft.redirect_link
-                                    : `https://www.worldofdypians.com/marketplace/nft/${
-                                        nft.tokenId
-                                      }/${nft.nftAddress.toLowerCase()}`
-                                }
-                                rel="noreferrer"
-                                style={{ textDecoration: "none" }}
-                                onClick={() => {
-                                  setOpenNotifications(false);
-                                  markNotificationAsRead(coinbase, nft._id);
-                                }}
-                                className="d-flex flex-column gap-1 p-3 header-notification-item"
+                      <NavLink
+                        to={"/notifications"}
+                        onClick={() => setOpenNotifications(false)}
+                        className="pending-notifications m-3 p-2 d-flex align-items-center justify-content-between"
+                      >
+                        <div className="d-flex align-items-center gap-1">
+                          <h6 className="notifications-amount mb-0">
+                            {unreadNotifications}
+                          </h6>
+                          <span className="pending-text mb-0">
+                            Pending Notifications
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="pending-text mb-0">View All</span>
+                          <img src={viewAllArrow} alt="" />
+                        </div>
+                      </NavLink>
+                      <div className="inner-notifications">
+                        {myOffers &&
+                          myOffers.length > 0 &&
+                          myOffers.map((nft, index) => {
+                            return (
+                              <div
+                                className="position-relative header-notification"
+                                key={index}
                               >
-                                <div className="d-flex align-items-center gap-1">
-                                  <img
-                                    height={16}
-                                    width={16}
-                                    src={
-                                      nft.bought === "yes" && nft.read === false
-                                        ? cartIconActive
-                                        : nft.bought === "yes" &&
-                                          nft.read === true
-                                        ? cartIcon
-                                        : nft.offer === "yes" &&
-                                          nft.read === false
-                                        ? offerIconActive
-                                        : nft.offer === "yes" &&
-                                          nft.read === true
-                                        ? offerIcon
-                                        : nft.buy === "yes" &&
-                                          nft.read === false
-                                        ? transferIconActive
-                                        : nft.buy === "yes" && nft.read === true
-                                        ? transferIcon
-                                        : //welcome
-                                        nft.welcome === "yes" &&
-                                          nft.read === false
-                                        ? welcomeIconActive
-                                        : nft.welcome === "yes" &&
-                                          nft.read === true
-                                        ? welcomeIcon
-                                        : //news
-                                        nft.news === "yes" && nft.read === false
-                                        ? newsIconActive
-                                        : nft.news === "yes" &&
-                                          nft.read === true
-                                        ? newsIcon
-                                        : //updates
-                                        nft.update === "yes" &&
-                                          nft.read === false
-                                        ? updateIconActive
-                                        : nft.update === "yes" &&
-                                          nft.read === true
-                                        ? updateIcon
-                                        : //events
-                                        nft.event === "yes" &&
-                                          nft.read === false
-                                        ? eventIconActive
-                                        : nft.event === "yes" &&
-                                          nft.read === true
-                                        ? eventIcon
-                                        : null
-                                    }
-                                    alt=""
-                                  />
-                                  <h6
-                                    className="notification-title mb-0"
-                                    style={{
-                                      color:
-                                        nft.read === false
-                                          ? "#11FED2"
-                                          : "#EEEDFF",
-                                      fontSize: "12px",
-                                    }}
-                                  >
-                                    {nft.buy === "yes"
-                                      ? "NFT Sold"
-                                      : nft.offer === "yes"
-                                      ? "New Offer"
-                                      : nft.bought === "yes"
-                                      ? "NFT Bought"
-                                      : nft.title}
-                                  </h6>
-                                </div>
-                                <p
-                                  className="notification-desc mb-0"
-                                  style={{ fontSize: "10px" }}
+                                <a
+                                  href={
+                                    nft.welcome === "yes"
+                                      ? "https://www.worldofdypians.com/marketplace"
+                                      : nft.redirect_link
+                                      ? nft.redirect_link
+                                      : `https://www.worldofdypians.com/marketplace/nft/${
+                                          nft.tokenId
+                                        }/${nft.nftAddress.toLowerCase()}`
+                                  }
+                                  rel="noreferrer"
+                                  style={{ textDecoration: "none" }}
+                                  onClick={() => {
+                                    setOpenNotifications(false);
+                                    markNotificationAsRead(coinbase, nft._id);
+                                  }}
+                                  className="d-flex flex-column gap-1 p-3 header-notification-item"
                                 >
-                                  {nft.bought === "yes"
-                                    ? `Congratulations on being the new owner of  ${
-                                        nft.nftAddress.toLowerCase() ===
-                                        window.config.nft_caws_address.toLowerCase()
-                                          ? "CAWS"
-                                          : nft.nftAddress.toLowerCase() ===
-                                            window.config.nft_land_address.toLowerCase()
-                                          ? "WOD"
-                                          : "Timepiece"
-                                      } #${nft.tokenId}.`
-                                    : nft.buy === "yes"
-                                    ? `Your  ${
-                                        nft.nftAddress.toLowerCase() ===
-                                        window.config.nft_caws_address.toLowerCase()
-                                          ? "CAWS"
-                                          : nft.nftAddress.toLowerCase() ===
-                                            window.config.nft_land_address.toLowerCase()
-                                          ? "WOD"
-                                          : "Timepiece"
-                                      } #${nft.tokenId} was sold.`
-                                    : nft.offer === "yes"
-                                    ? `There is a new offer for your ${
-                                        nft.nftAddress.toLowerCase() ===
-                                        window.config.nft_caws_address.toLowerCase()
-                                          ? "CAWS"
-                                          : nft.nftAddress.toLowerCase() ===
-                                            window.config.nft_land_address.toLowerCase()
-                                          ? "WOD"
-                                          : "Timepiece"
-                                      } #${nft.tokenId}`
-                                    : nft.description?.slice(0, 150) + "..."}
-                                </p>
-                                <span className="notification-relative-time mb-0">
-                                  {getRelativeTime(nft.timestamp)}
-                                </span>
-                              </a>
-                              {/* <div
+                                  <div className="d-flex align-items-center gap-1">
+                                    <img
+                                      height={16}
+                                      width={16}
+                                      src={
+                                        nft.bought === "yes" &&
+                                        nft.read === false
+                                          ? cartIconActive
+                                          : nft.bought === "yes" &&
+                                            nft.read === true
+                                          ? cartIcon
+                                          : nft.offer === "yes" &&
+                                            nft.read === false
+                                          ? offerIconActive
+                                          : nft.offer === "yes" &&
+                                            nft.read === true
+                                          ? offerIcon
+                                          : nft.buy === "yes" &&
+                                            nft.read === false
+                                          ? transferIconActive
+                                          : nft.buy === "yes" &&
+                                            nft.read === true
+                                          ? transferIcon
+                                          : //welcome
+                                          nft.welcome === "yes" &&
+                                            nft.read === false
+                                          ? welcomeIconActive
+                                          : nft.welcome === "yes" &&
+                                            nft.read === true
+                                          ? welcomeIcon
+                                          : //news
+                                          nft.news === "yes" &&
+                                            nft.read === false
+                                          ? newsIconActive
+                                          : nft.news === "yes" &&
+                                            nft.read === true
+                                          ? newsIcon
+                                          : //updates
+                                          nft.update === "yes" &&
+                                            nft.read === false
+                                          ? updateIconActive
+                                          : nft.update === "yes" &&
+                                            nft.read === true
+                                          ? updateIcon
+                                          : //events
+                                          nft.event === "yes" &&
+                                            nft.read === false
+                                          ? eventIconActive
+                                          : nft.event === "yes" &&
+                                            nft.read === true
+                                          ? eventIcon
+                                          : null
+                                      }
+                                      alt=""
+                                    />
+                                    <h6
+                                      className="notification-title mb-0"
+                                      style={{
+                                        color:
+                                          nft.read === false
+                                            ? "#11FED2"
+                                            : "#EEEDFF",
+                                        fontSize: "12px",
+                                      }}
+                                    >
+                                      {nft.buy === "yes"
+                                        ? "NFT Sold"
+                                        : nft.offer === "yes"
+                                        ? "New Offer"
+                                        : nft.bought === "yes"
+                                        ? "NFT Bought"
+                                        : nft.title}
+                                    </h6>
+                                  </div>
+                                  <p
+                                    className="notification-desc mb-0"
+                                    style={{ fontSize: "10px" }}
+                                  >
+                                    {nft.bought === "yes"
+                                      ? `Congratulations on being the new owner of  ${
+                                          nft.nftAddress.toLowerCase() ===
+                                          window.config.nft_caws_address.toLowerCase()
+                                            ? "CAWS"
+                                            : nft.nftAddress.toLowerCase() ===
+                                              window.config.nft_land_address.toLowerCase()
+                                            ? "WOD"
+                                            : "Timepiece"
+                                        } #${nft.tokenId}.`
+                                      : nft.buy === "yes"
+                                      ? `Your  ${
+                                          nft.nftAddress.toLowerCase() ===
+                                          window.config.nft_caws_address.toLowerCase()
+                                            ? "CAWS"
+                                            : nft.nftAddress.toLowerCase() ===
+                                              window.config.nft_land_address.toLowerCase()
+                                            ? "WOD"
+                                            : "Timepiece"
+                                        } #${nft.tokenId} was sold.`
+                                      : nft.offer === "yes"
+                                      ? `There is a new offer for your ${
+                                          nft.nftAddress.toLowerCase() ===
+                                          window.config.nft_caws_address.toLowerCase()
+                                            ? "CAWS"
+                                            : nft.nftAddress.toLowerCase() ===
+                                              window.config.nft_land_address.toLowerCase()
+                                            ? "WOD"
+                                            : "Timepiece"
+                                        } #${nft.tokenId}`
+                                      : nft.description?.slice(0, 150) + "..."}
+                                  </p>
+                                  <span className="notification-relative-time mb-0">
+                                    {getRelativeTime(nft.timestamp)}
+                                  </span>
+                                </a>
+                                {/* <div
                                 className="notification-delete d-flex flex-column align-items-center justify-content-center gap-2 px-3"
                                 onClick={() => {
                                   deleteNotification(nft._id);
@@ -591,167 +605,182 @@ const Header = ({
                                   Delete
                                 </span>
                               </div> */}
-                            </div>
-                          );
-                        })}
-                    </div>
+                              </div>
+                            );
+                          })}
+                      </div>
 
-                    {myOffers.length === 0 && (
-                      <div
-                        className="header-notification w-100  d-flex justify-content-center align-items-center gap-2 p-3 position-relative"
-                        style={{ pointerEvents: "none" }}
-                      >
-                        <span className="notification-text">
-                          No recent notifications
+                      {myOffers.length === 0 && (
+                        <div
+                          className="header-notification w-100  d-flex justify-content-center align-items-center gap-2 p-3 position-relative"
+                          style={{ pointerEvents: "none" }}
+                        >
+                          <span className="notification-text">
+                            No recent notifications
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </OutsideClickHandler>
+                </div>
+                <DropdownButton
+                  id="dropdown-basic-button"
+                  style={{ width: "124px" }}
+                  className="d-flex align-items-center justify-content-center"
+                  title={
+                    <span className="dropdown-title">
+                      <div className="d-flex align-items-center gap-1">
+                        <img
+                          src={
+                            ethState === true
+                              ? eth
+                              : bnbState === true
+                              ? bnb
+                              : opbnbState === true
+                              ? bnb
+                              : //: : avaxState === true
+                              // ? avax
+                              baseState === true
+                              ? base
+                              : confluxState === true
+                              ? conflux
+                              : error
+                          }
+                          height={16}
+                          width={16}
+                          alt=""
+                        />
+                        <span className="change-chain-text d-none d-lg-flex">
+                          {ethState === true
+                            ? "Ethereum"
+                            : bnbState === true
+                            ? "BNB Chain"
+                            : opbnbState === true
+                            ? "opBNB Chain"
+                            : //:  : avaxState === true
+                            // ? "Avalanche"
+                            baseState === true
+                            ? "Base"
+                            : confluxState === true
+                            ? "Conflux"
+                            : "Unsupported"}
                         </span>
                       </div>
-                    )}
-                  </div>
-                </OutsideClickHandler>
-              </div>
-              <DropdownButton
-                id="dropdown-basic-button"
-                style={{width: "124px"}}
-                className="d-flex align-items-center justify-content-center"
-                title={
-                  <span className="dropdown-title">
-                   <div className="d-flex align-items-center gap-1">
-                   <img
-                      src={
-                        ethState === true
-                          ? eth
-                          : bnbState === true
-                          ? bnb
-                          : opbnbState === true
-                          ? opbnb
-                          : // : avaxState === true
-                          // ? avax
-                          baseState === true
-                          ? base
-                          : confluxState === true
-                          ? conflux
-                          : error
-                      }
-                      height={16}
-                      width={16}
-                      alt=""
-                    />
-                    <span className="change-chain-text d-none d-lg-flex">
-                      {ethState === true
-                        ? "Ethereum"
-                        : bnbState === true
-                        ? "BNB Chain"
-                        : opbnbState === true
-                        ? "opBNB Chain"
-                        : // : avaxState === true
-                        // ? "Avalanche"
-                        baseState === true
-                        ? "Base"
-                        : confluxState === true
-                        ? "Conflux"
-                        : "Unsupported"}
-                    </span>
-                   </div>
 
-                    <img src={dropdown} alt="" />
-                  </span>
-                }
-              >
-                <Dropdown.Item onClick={() => handleEthPool()}>
-                  <img src={eth} alt="" />
-                  Ethereum
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBnbPool()}>
-                  <img src={bnb} alt="" />
-                  BNB Chain
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleOpBnbPool()}>
-                  <img src={bnb} alt="" />
-                  opBNB Chain
-                </Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
+                      <img src={dropdown} alt="" />
+                    </span>
+                  }
+                >
+                  <Dropdown.Item onClick={() => handleEthPool()}>
+                    <img src={eth} alt="" />
+                    Ethereum
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleBnbPool()}>
+                    <img src={bnb} alt="" />
+                    BNB Chain
+                  </Dropdown.Item>
+                  {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche
                 </Dropdown.Item> */}
-                <Dropdown.Item onClick={() => handleConfluxPool()}>
-                  <img src={conflux} alt="" />
-                  Conflux
+                    <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                  <img src={bnb} alt="" />
+                  opBNB Chain
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBasePool()}>
-                  <img src={base} alt="" />
-                  Base
-                </Dropdown.Item>
-              </DropdownButton>
-              <Clipboard
-                component="div"
-                data-event="click"
-                data-for={id}
-                data-tip="Copied To Clipboard!"
-                data-clipboard-text={coinbase}
-                className="wallet-wrapper d-flex align-items-center gap-2 position-relative p-0"
-              >
-                <div
-                  className="btn connected px-3"
-                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
-                  onClick={() => {
-                    setShowMenu(true);
+                  <Dropdown.Item onClick={() => handleConfluxPool()}>
+                    <img src={conflux} alt="" />
+                    Conflux
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleBasePool()}>
+                    <img src={base} alt="" />
+                    Base
+                  </Dropdown.Item>
+                </DropdownButton>
+                <Clipboard
+                  component="div"
+                  data-event="click"
+                  data-for={id}
+                  data-tip="Copied To Clipboard!"
+                  data-clipboard-text={coinbase}
+                  className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
+                >
+                  <div
+                    className="btn connected px-3"
+                    style={{
+                      color: tooltip ? "#82DAAB" : "#FFFFFF",
+                      minHeight: "34px",
+                    }}
+                    onClick={() => {
+                      setShowMenu(true);
+                    }}
+                  >
+                    {domainName ? domainName : shortAddress(coinbase)}
+                    <img src={dropdown} alt="" />
+                  </div>
+                </Clipboard>
+              </div>
+            )}
+            {!coinbase ? (
+              <NavLink to={"/account"}>
+                <img src={personNoCoinbase} className="account-icon" alt="" />
+              </NavLink>
+            ) : (
+              <NavLink to={"/account"}>
+                <img
+                  src={avatar ? avatar : personCoinbase}
+                  className="account-icon"
+                  alt=""
+                />
+              </NavLink>
+            )}
+
+            {showmenu === true && (
+              <div className="position-absolute" style={{ width: "210px" }}>
+                <OutsideClickHandler
+                  onOutsideClick={() => {
+                    setShowMenu(false);
                   }}
                 >
-                  {shortAddress(coinbase)} <img src={dropdown} alt="" />
-                </div>
-              </Clipboard>
-            </div>
-          )}
-          {!coinbase ? (
-            <NavLink to={"/account"}>
-              <img src={personNoCoinbase} className="account-icon" alt="" />
-            </NavLink>
-          ) : (
-            <NavLink to={"/account"}>
-              <img
-                src={avatar ? avatar : personCoinbase}
-                className="account-icon"
-                alt=""
-              />
-            </NavLink>
-          )}
+                  <div className="menuwrapper">
+                    <div className="d-flex flex-column gap-2">
+                      <span
+                        className="menuitem2"
+                        onClick={() => {
+                          handleOpenDomains();
+                          setShowMenu(false);
+                        }}
+                      >
+                        <img src={domainIcon} width={16} height={16} alt="" />{" "}
+                        Domain Name{" "}
+                      </span>
+                      <span
+                        className="menuitem2"
+                        onClick={() => {
+                          setTooltip(true);
+                          setTimeout(() => setTooltip(false), 2000);
+                        }}
+                      >
+                        <img src={tooltip ? check : copy} alt="" /> Copy{" "}
+                      </span>
 
-          {showmenu === true && (
-            <div className="position-absolute" style={{ width: "210px" }}>
-              <OutsideClickHandler
-                onOutsideClick={() => {
-                  setShowMenu(false);
-                }}
-              >
-                <div className="menuwrapper">
-                  <div className="d-flex flex-column gap-2">
-                    <span
-                      className="menuitem2"
-                      onClick={() => {
-                        setTooltip(true);
-                        setTimeout(() => setTooltip(false), 2000);
-                      }}
-                    >
-                      <img src={tooltip ? check : copy} alt="" /> Copy{" "}
-                    </span>
-
-                    <span
-                      className="menuitem2"
-                      onClick={() => {
-                        setShowMenu(false);
-                        manageDisconnect();
-                      }}
-                    >
-                      <img src={logout} alt="" /> Disconnect{" "}
-                    </span>
+                      <span
+                        className="menuitem2"
+                        onClick={() => {
+                          setShowMenu(false);
+                          manageDisconnect();
+                        }}
+                      >
+                        <img src={logout} alt="" /> Disconnect{" "}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </OutsideClickHandler>
-            </div>
-          )}
+                </OutsideClickHandler>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Header;

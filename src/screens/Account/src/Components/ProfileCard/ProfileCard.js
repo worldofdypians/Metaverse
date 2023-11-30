@@ -25,6 +25,8 @@ import walletImg from "../../Images/userProfile/wallet.svg";
 import circleArrow from "../../Images/userProfile/arrow-circle.svg";
 import blackWallet from "../../Images/userProfile/wallet-black.svg";
 import starActive from "./assets/star-active.svg";
+import starDefault from "./assets/star-default.svg";
+
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
 import Countdown from "react-countdown";
@@ -76,39 +78,9 @@ const ProfileCard = ({
   handleSetAvailableTime,
   userRank,
   genesisRank,
+  handleOpenDomains,
+  domainName,
 }) => {
-  // const [dailyrecords, setRecords] = useState([]);
-
-  // const [countdown, setcountdown] = useState();
-  // const [isactive, setisActive] = useState(false);
-  // const [remainingTime, setRemainingTime] = useState("");
-
-  // const setlastDay = async () => {
-  //   const timeofDeposit_Date = new Intl.DateTimeFormat("en-UK", {
-  //     year: "numeric",
-  //     month: "2-digit",
-  //     day: "2-digit",
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     second: "2-digit",
-  //   }).format(availableTime);
-
-  //   setRemainingTime(timeofDeposit_Date);
-  // };
-
-  // useEffect(() => {
-  //   if (
-  //     !availableTime ||
-  //     availableTime === undefined ||
-  //     availableTime === "0"
-  //   ) {
-  //     setisActive(false);
-  //   } else {
-  //     setisActive(true);
-  //     setlastDay();
-  //   }
-  // }, [availableTime]);
-
   let id = Math.random().toString(36);
 
   const windowSize = useWindowSize();
@@ -129,272 +101,8 @@ const ProfileCard = ({
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
 
-  let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
+  let oneJanuary = new Date("2024-01-01 11:11:00 GMT+02:00");
   let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
-
-  // const handleRefreshCountdown700 = async () => {
-  //   const goldenpassAbi = new window.bscWeb3.eth.Contract(
-  //     DYP_700_ABI,
-  //     dyp700Address
-  //   );
-  //   const remainingTime = await goldenpassAbi.methods
-  //     .getTimeOfExpireBuff(address)
-  //     .call();
-
-  //   const remainingTime_miliseconds = remainingTime * 1000;
-  //   const timeofDeposit = await goldenpassAbi.methods
-  //     .getTimeOfDeposit(address)
-  //     .call();
-  //   if (timeofDeposit !== 0) {
-  //     const timeofDeposit_miliseconds = timeofDeposit * 1000;
-
-  //     const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-  //       year: "numeric",
-  //       month: "2-digit",
-  //       day: "2-digit",
-  //       hour: "2-digit",
-  //       minute: "2-digit",
-  //       second: "2-digit",
-  //     }).format(remainingTime_miliseconds);
-
-  //     const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-  //     const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
-  //     const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
-  //     const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
-  //     const finalHours = timeofDeposit_Hours - 11;
-
-  //     const finalMinutes = timeofDeposit_Minutes - 11;
-
-  //     const result = remainingTime - finalHours * 60 * 60 - finalMinutes * 60;
-
-  //     setcountdown700(result * 1000);
-  //     handleSetAvailableTime(result * 1000);
-  //   } else {
-  //     setcountdown700();
-  //     handleSetAvailableTime();
-  //   }
-  // };
-
-  // const checkBundleDates = async () => {
-  //   //you can check how many bundles the user has bought
-  //   //he can buy until the 22 regular bundles (7days)
-  //   //on the 23rd the bundle will be 7+4
-  //   //last week rule: 32 - date => buy on 24rth=>7+1, 25=> 7+0, 26=> 7-1
-
-  //   const week1 = ["1", "2", "3", "4", "5", "6", "7"];
-  //   const week2 = ["8", "9", "10", "11", "12", "13", "14"];
-  //   const week3 = ["15", "16", "17", "18", "19", "20", "21"];
-  //   const week4 = ["22", "23", "24", "25"];
-  //   const goldenpassAbi = new window.bscWeb3.eth.Contract(
-  //     DYP_700_ABI,
-  //     dyp700Address
-  //   );
-
-  //   const timeofDeposit = await goldenpassAbi.methods
-  //     .getTimeOfDeposit(address)
-  //     .call();
-  //   const timeofDeposit_miliseconds = timeofDeposit * 1000;
-
-  //   const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-  //     year: "numeric",
-  //     month: "2-digit",
-  //     day: "2-digit",
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     second: "2-digit",
-  //   }).format(timeofDeposit_miliseconds);
-
-  //   const today = new Date();
-  //   const today_date = today.getDate();
-
-  //   const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-  //   const timeofDeposit_date = timeofDeposit_Date_formatted
-  //     .getDate()
-  //     .toString();
-
-  //   if (today_date <= 25) {
-  //     if (week1.includes(today_date.toString()) && bundlesBought <= 3) {
-  //       handleRefreshCountdown700();
-  //     } else if (week1.includes(today_date.toString()) && bundlesBought > 3) {
-  //       // const remainingTime_day = bundleExpireDay;
-  //       // const remainingTime_miliseconds = bundleExpireMiliseconds;
-
-  //       // if (parseInt(remainingTime_day) >= 25) {
-  //       //   const additional_remainingTime_time = 31 - remainingTime_day;
-  //       //   const additional_remaining_time_timestamp =
-  //       //     additional_remainingTime_time * 24 * 60 * 60 -
-  //       //     lastDayofBundleHours * 60 * 60 -
-  //       //     lastDayofBundleMinutes * 60;
-
-  //       //   const final =
-  //       //     Number(remainingTime_miliseconds) +
-  //       //     Number(additional_remaining_time_timestamp * 1000);
-
-  //       setcountdown700(
-  //         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-  //       );
-  //       handleSetAvailableTime(
-  //         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-  //       );
-
-  //       // }
-  //     } else if (week2.includes(today_date.toString()) && bundlesBought <= 3) {
-  //       handleRefreshCountdown700();
-  //     } else if (week2.includes(today_date.toString()) && bundlesBought > 3) {
-  //       // const remainingTime2 = lastDayofBundle;
-  //       // if (parseInt(remainingTime2) >= 25) {
-  //       //   const additional_remainingTime_time2 = 31 - remainingTime2;
-  //       //   const additional_remaining_time_timestamp2 =
-  //       //     additional_remainingTime_time2 * 24 * 60 * 60 -
-  //       //     lastDayofBundleHours * 60 * 60 -
-  //       //     lastDayofBundleMinutes * 60;
-  //       //   const remainingTime_miliseconds2 = bundleExpireMiliseconds;
-
-  //       //   const final =
-  //       //     Number(remainingTime_miliseconds2) +
-  //       //     Number(additional_remaining_time_timestamp2 * 1000);
-
-  //       setcountdown700(
-  //         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-  //       );
-  //       handleSetAvailableTime(
-  //         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-  //       );
-
-  //       // }
-  //     } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
-  //       handleRefreshCountdown700();
-  //     } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
-  //       // const remainingTime3 = lastDayofBundle;
-  //       // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
-
-  //       // if (parseInt(remainingTime3) >= 25) {
-  //       //   const additional_remainingTime_time3 = 31 - remainingTime3;
-  //       //   const additional_remaining_time_timestamp3 =
-  //       //     additional_remainingTime_time3 * 24 * 60 * 60 -
-  //       //     lastDayofBundleHours * 60 * 60 -
-  //       //     lastDayofBundleMinutes * 60;
-
-  //       //   const final =
-  //       //     Number(remainingTime_miliseconds3) +
-  //       //     Number(additional_remaining_time_timestamp3 * 1000);
-
-  //       //   setcountdown700(final);
-  //       //   handleSetAvailableTime(final);
-  //       setcountdown700(
-  //         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-  //       );
-  //       handleSetAvailableTime(
-  //         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-  //       );
-
-  //       // }
-  //     } else if (week4.includes(today_date.toString()) && today_date <= 22) {
-  //       handleRefreshCountdown700();
-  //     } else if (week4.includes(today_date.toString()) && today_date > 22) {
-  //       if (today < dateofBundle) {
-  //         if (bundlesBought <= 3 && datewhenBundleBought < today_date) {
-  //           setcountdown700(dateofBundle);
-  //           handleSetAvailableTime(dateofBundle);
-  //         } else {
-  //           setcountdown700(
-  //             today < oneNovember
-  //               ? oneNovember.getTime()
-  //               : oneDecember.getTime()
-  //           );
-  //           handleSetAvailableTime(
-  //             today < oneNovember
-  //               ? oneNovember.getTime()
-  //               : oneDecember.getTime()
-  //           );
-  //         }
-  //       } else if (today > dateofBundle && bundlesBought > 0) {
-  //         setcountdown700();
-  //         handleSetAvailableTime();
-  //       }
-  //     }
-  //   } else if (today_date > 25) {
-  //     if (today < dateofBundle) {
-  //       setcountdown700(
-  //         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-  //       );
-  //       handleSetAvailableTime(
-  //         today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-  //       );
-  //     } else {
-  //       setcountdown700();
-  //       handleSetAvailableTime();
-  //     }
-  //   }
-  // };
-  // const setlastDay = async () => {
-  //   const goldenpassAbi = new window.bscWeb3.eth.Contract(
-  //     DYP_700_ABI,
-  //     dyp700Address
-  //   );
-  //   const timeofDeposit = await goldenpassAbi.methods
-  //     .getTimeOfDeposit(address)
-  //     .call();
-
-  //   const expiringTime = await goldenpassAbi.methods
-  //     .getTimeOfExpireBuff(address)
-  //     .call();
-
-  //   const expiringTime_miliseconds = expiringTime * 1000;
-
-  //   const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
-  //     year: "numeric",
-  //     month: "2-digit",
-  //     day: "2-digit",
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     second: "2-digit",
-  //   }).format(expiringTime_miliseconds);
-
-  //   const expiringTime_Date_formatted = new Date(expiringTime_Date);
-  //   const expiringTime_day = expiringTime_Date_formatted.getDate();
-  //   setbundleExpireDay(expiringTime_day);
-  //   setbundleExpireMiliseconds(expiringTime_miliseconds);
-  //   const timeofDeposit_miliseconds = timeofDeposit * 1000;
-
-  //   const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
-  //     year: "numeric",
-  //     month: "2-digit",
-  //     day: "2-digit",
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     second: "2-digit",
-  //   }).format(timeofDeposit_miliseconds);
-
-  //   const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-  //     year: "numeric",
-  //     month: "2-digit",
-  //     day: "2-digit",
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     second: "2-digit",
-  //   }).format(expiringTime_miliseconds);
-
-  //   const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-  //   const timeofbundleBought_Date_formatted = new Date(timeofbundleBought_Date);
-
-  //   setdateofBundle(expiringTime_Date_formatted);
-
-  //   const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
-  //   const timeofbundleBought_day = timeofbundleBought_Date_formatted.getDate();
-  //   setdatewhenBundleBought(timeofbundleBought_day);
-
-  //   const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
-  //   const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
-  //   const final = timeofDeposit_Hours - 11;
-  //   setlastDayofBundleHours(final);
-
-  //   const finalMinutes = timeofDeposit_Minutes - 11;
-
-  //   setlastDayofBundleMinutes(finalMinutes);
-  //   setlastDayofBundle(timeofDeposit_day);
-  //   setlastDayofBundleMilliseconds(expiringTime_miliseconds);
-  // };
 
   const countBundle = async () => {
     const result = await axios.get(
@@ -656,10 +364,10 @@ const ProfileCard = ({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
 
         // }
@@ -680,32 +388,16 @@ const ProfileCard = ({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
 
         // }
-      } else if (week3.includes(today_date.toString()) && bundlesBought === 1) {
-        // handleRefreshCountdown700();
-        // setisAtlimit(false);
-        const finalDateofBundle =
-          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-        const finalDateofBundleBought =
-          datewhenBundleBought >= datewhenBundleBoughtv1
-            ? datewhenBundleBought
-            : datewhenBundleBoughtv1;
-
-        if (today < finalDateofBundle) {
-          setcountdown700(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-          );
-          handleSetAvailableTime(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-          );
-        }
-      } else if (week3.includes(today_date.toString()) && bundlesBought >= 2) {
+      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
+        handleRefreshCountdown700();
+      } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
         // const remainingTime3 = lastDayofBundle;
         // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
@@ -736,17 +428,22 @@ const ProfileCard = ({
 
         const finalDateofBundle =
           dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleFormatted = new Date(finalDateofBundle);
+
         const finalDateofBundleBought =
           datewhenBundleBought >= datewhenBundleBoughtv1
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (today < finalDateofBundle) {
+        if (
+          today < finalDateofBundle &&
+          today.getFullYear() === finalDateofBundleFormatted.getFullYear()
+        ) {
           setcountdown700(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
           handleSetAvailableTime(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
 
           // if (
@@ -778,7 +475,7 @@ const ProfileCard = ({
         } else if (
           today > finalDateofBundle &&
           bundlesBought > 0 &&
-          finalDateofBundleBought !== 0
+          today.getFullYear() !== finalDateofBundleFormatted.getFullYear()
         ) {
           setcountdown700();
           handleSetAvailableTime();
@@ -788,51 +485,50 @@ const ProfileCard = ({
       } else if (week4.includes(today_date.toString()) && today_date <= 22) {
         // handleRefreshCountdown700();
         // setisAtlimit(false);
-        setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-        );
-        handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-        );
-      } else if (week4.includes(today_date.toString()) && today_date > 22) {
         const finalDateofBundle =
           dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+
+        const finalDateofBundleFormatted = new Date(finalDateofBundle);
         const finalDateofBundleBought =
           datewhenBundleBought >= datewhenBundleBoughtv1
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (
-          (today < finalDateofBundle && bundlesBought > 0) ||
-          finalDateofBundle.getFullYear() !== today.getFullYear()
-        ) {
-          // if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
-          //   setcountdown700(finalDateofBundle);
-          //   setisAtlimit(false);
-          //   handleSetAvailableTime(finalDateofBundle);
-          // } else {
-          //   setcountdown700(
-          //     today < oneNovember
-          //       ? oneNovember.getTime()
-          //       : oneDecember.getTime()
-          //   );
-          //   handleSetAvailableTime(
-          //     today < oneNovember
-          //       ? oneNovember.getTime()
-          //       : oneDecember.getTime()
-          //   );
-          //   setisAtlimit(true);
-          //   setStatusColor700("#FE7A00");
-          //   setStatus700(
-          //     "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          //   );
-          // }
+        if (today < finalDateofBundle) {
           setcountdown700(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
           handleSetAvailableTime(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
+        } else if (today > finalDateofBundle && bundlesBought > 0) {
+          setcountdown700();
+          handleSetAvailableTime();
+        }
+      } else if (week4.includes(today_date.toString()) && today_date > 22) {
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+
+        const finalDateofBundleFormatted = new Date(finalDateofBundle);
+
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
+
+        if (today < finalDateofBundle) {
+          if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
+            setcountdown700(finalDateofBundle);
+
+            handleSetAvailableTime(finalDateofBundle);
+          } else {
+            setcountdown700(
+              today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            );
+            handleSetAvailableTime(
+              today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            );
+          }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
           handleSetAvailableTime();
@@ -844,10 +540,10 @@ const ProfileCard = ({
 
       if (today < finalDateofBundle) {
         setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
       } else {
         setcountdown700();
@@ -917,18 +613,23 @@ const ProfileCard = ({
                       <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
-                          {/* {isPremium && (
+                          {!domainName && (
                             <span
                               className={`${
-                                address && email && "premiumtext-active"
-                              }  d-flex align-items-center gap-1`}
+                                isPremium ? "premiumtext-active" : "premiumtext"
+                              }
+                              d-flex align-items-center gap-1`}
+                              style={{ cursor: "pointer" }}
+                              onClick={handleOpenDomains}
                             >
-                              {address && email && isPremium && (
-                                <img src={starActive} />
+                              {address && email && (
+                                <img
+                                  src={isPremium ? starActive : starDefault}
+                                />
                               )}
-                              Premium
+                              Get domain name
                             </span>
-                          )} */}
+                          )}
                           {/* {!isPremium && email && (
                             <span
                               className="profile-div-title mb-0 text-decoration-underline"
@@ -1013,15 +714,21 @@ const ProfileCard = ({
                                   }}
                                 >
                                   <span className="emailtext">{email}</span>
-                                  <span className="wallet-address">
-                                    {windowSize.width > 991
-                                      ? isVerified && email
-                                        ? address
-                                        : coinbase
-                                      : isVerified && email
-                                      ? shortAddress(address)
-                                      : shortAddress(coinbase)}
-                                  </span>
+                                  {!domainName ? (
+                                    <span className="wallet-address">
+                                      {windowSize.width > 991
+                                        ? isVerified && email
+                                          ? address
+                                          : coinbase
+                                        : isVerified && email
+                                        ? shortAddress(address)
+                                        : shortAddress(coinbase)}
+                                    </span>
+                                  ) : (
+                                    <span className="wallet-address">
+                                      {domainName}
+                                    </span>
+                                  )}
                                 </div>
                               </div>
                             </Clipboard>
@@ -1192,7 +899,7 @@ const ProfileCard = ({
 
                 {email && address && coinbase && !isPremium && (
                   <div
-                    className={` wallet-wrapper-active2 hoveractive position-relative
+                    className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
                     onClick={onPremiumClick}
                   >

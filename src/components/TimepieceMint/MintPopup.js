@@ -14,7 +14,10 @@ const MintPopup = ({ active, onClose, data }) => {
         active && "popup-active"
       } p-4 d-flex flex-column align-items-center justify-content-center`}
     >
-      <div className="w-100 d-flex align-items-center justify-content-end">
+      <div
+        className="w-100 d-flex align-items-center justify-content-end"
+        style={{ height: 1 }}
+      >
         <img
           src={closePopup}
           width={20}
@@ -34,6 +37,16 @@ const MintPopup = ({ active, onClose, data }) => {
             </h6>
           </div>
           <h6 className="mint-popup-title">Candy Rewards</h6>
+        </>
+      ) : data.title === "Daily Bonus" ? (
+        <>
+          <div className="d-flex align-items-center justify-content-center">
+            {/* <div className="pulsatingDot"></div> */}
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              {data.title}
+            </h6>
+          </div>
+          <h6 className="mint-popup-title">{data.subTitle}</h6>
         </>
       ) : data.title === "Treasure Hunt" ? (
         <>
@@ -59,44 +72,79 @@ const MintPopup = ({ active, onClose, data }) => {
 
       <img
         src={data.img}
-        className="mint-popup-img"
-        style={{ maxWidth: "100%" }}
+        className={`mint-popup-img ${data.title === 'Daily Bonus' && 'bottom-auto-bg'} ` }
+        style={{
+          maxWidth: "100%",
+          height: data.title === "Daily Bonus" ? 370 : "",
+        }}
         alt=""
       />
-      <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-        {data.title === "Treasure Hunt" ? (
-          <span className="popup-available-mint">
-            {/* Explore the downtown area and use your <img src={whiteExplore} alt="" className="white-explore" />{" "}
-            to generate rewards */}
-            Explore the downtown area and generate DYP rewards!
-          </span>
-         
-        ) : (
-          <span className="popup-available-mint">
-            Get access to the game and a unique event filled with surprises and
-            rewards!
-          </span>
-        )}
-      </div>
-      {data.title === "Treasure Hunt" ? (
-        <Link
-          onClick={onClose}
-          to={"/marketplace/events/treasure-hunt"}
-          state={{ event: data.state }}
-          className="linear-border"
-        >
-          <button className="btn filled-btn px-4">More</button>
-        </Link>
-      ) : (
-        <Link
-          onClick={onClose}
-          to={`/marketplace/beta-pass/${data.state}`}
-          state={{ event: data.state }}
-          className="linear-border"
-        >
-          <button className="btn filled-btn px-4">More</button>
-        </Link>
+      {data.title === "Daily Bonus" && (
+        <div className="col-12 mb-3 row mx-0 gap-lg-0 gap-2 align-items-center justify-content-center px-2 py-1">
+          <div className="col-lg-4 available-mint-bg d-flex flex-column bottom-auto-bg">
+            <span className="uppertext">December 1, 2023</span>
+            <span className="bottomtext">Launch Date</span>
+          </div>
+          <div className="col-lg-4 available-mint-bg d-flex flex-column bottom-auto-bg">
+            <span className="uppertext">BNB and opBNB</span>
+            <span className="bottomtext">Available Chains</span>
+          </div>
+          <div className="col-lg-4 available-mint-bg d-flex flex-column bottom-auto-bg">
+            <span className="uppertext">6</span>
+            <span className="bottomtext">Available Prizes</span>
+          </div>
+        </div>
       )}
+      {data.title === "Treasure Hunt" && (
+        <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+          {
+            data.title === "Treasure Hunt" && (
+              <span className="popup-available-mint">
+                {/* Explore the downtown area and use your <img src={whiteExplore} alt="" className="white-explore" />{" "}
+            to generate rewards */}
+                Explore the downtown area and generate DYP rewards!
+              </span>
+            )
+            // : (
+            //   <span className="popup-available-mint">
+            //     Get access to the game and a unique event filled with surprises and
+            //     rewards!
+            //   </span>
+            // )
+          }
+        </div>
+      )}
+      {
+        data.title === "Treasure Hunt" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/events/treasure-hunt"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
+        ) : (
+          <Link
+          onClick={onClose}
+          to={`/marketplace/events/upcoming`}
+          state={{ event: data.state }}
+          className="linear-border"
+        >
+          <button className="btn filled-btn px-4">Explore</button>
+        </Link>
+        )
+        // (
+        // <Link
+        //   onClick={onClose}
+        //   to={`/marketplace/beta-pass/${data.state}`}
+        //   state={{ event: data.state }}
+        //   className="linear-border"
+        // >
+        //   <button className="btn filled-btn px-4">More</button>
+        // </Link>
+        // )
+      }
     </div>
   );
 };

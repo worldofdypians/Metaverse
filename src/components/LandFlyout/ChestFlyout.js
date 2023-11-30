@@ -1,7 +1,7 @@
 import React from "react";
 import "./_landflyout.scss";
-import mainChest from "../../assets/mainChest.png";
-import closeFly from "./assets/closeFly.svg";
+// import mainChest from "../../assets/mainChest.png";
+// import closeFly from "./assets/closeFly.svg";
 import { useState } from "react";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";

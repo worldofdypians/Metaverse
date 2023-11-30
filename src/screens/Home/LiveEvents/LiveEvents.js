@@ -54,27 +54,32 @@ const LiveEvents = () => {
   const events = [
     {
       name: "Treasure Hunt",
-      image: "treasureHunt",
+      image: "treasureHunt.png",
       id: "treasure-hunt",
     },
     {
+      name: "Daily Bonus",
+      image: "dailyBonus.png",
+      id: "daily-bonus",
+    },
+    {
       name: "Dragon Ruins",
-      image: "dragonRuins",
+      image: "dragonRuins.png",
       id: "dragon-ruins",
     },
     {
       name: "Puzzle Madness",
-      image: "puzzleMadness",
+      image: "puzzleMadness.png",
       id: "puzzle-madness",
     },
     {
       name: "Golden Pass",
-      image: "goldenPass",
+      image: "goldenPass.png",
       id: "golden-pass",
     },
     {
       name: "Critical Hit",
-      image: "criticalHit",
+      image: "criticalHit.png",
       id: "critical-hit",
     },
   ]
@@ -92,7 +97,7 @@ const LiveEvents = () => {
           <Slider {...settings}>
             {events.map((item, index) => (
               <NavLink to={`/marketplace/events/${item.id}`} className="live-event-card p-3 d-flex flex-column align-items-center justify-content-center gap-3">
-              <img src={require(`./assets/${item.image}.png`)} className='w-100' alt="" />
+              <img src={require(`./assets/${item.image}`)} className='w-100' alt="" />
               <h6 className="live-event-card-title mb-0">{item.name}</h6>
              </NavLink>
             ))}

@@ -57,12 +57,17 @@ import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserMo
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import { useEagerlyConnect } from "web3-connector";
+import SIDRegister from "@web3-name-sdk/register";
+import { createWeb3Name } from "@web3-name-sdk/core";
+import { providers } from "ethers";
 import {
   useWeb3React,
   disconnect,
   connectWallet,
   ConnectionType,
 } from "web3-connector";
+import DomainModal from "./components/DomainModal/DomainModal.js";
+import Web3 from "web3";
 
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 
@@ -207,13 +212,80 @@ function App() {
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [success, setSuccess] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
-
+  const [domainPopup, setDomainPopup] = useState(false);
+  const [availableDomain, setAvailableDomain] = useState("initial");
+  const [domainPrice, setDomainPrice] = useState(0);
+  const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [domainName, setDomainName] = useState(null);
+  const [loadingDomain, setLoadingDomain] = useState(false);
+  const [domainMetaData, setDomainMetaData] = useState(null);
+  const [bscAmount, setBscAmount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
+  const { BigNumber } = window;
   const { connector, account, accounts, isActive, isActivating, provider } =
     useWeb3React();
 
   useEagerlyConnect();
+
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (domainPopup === true) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [domainPopup]);
+
+  const web3Name = createWeb3Name();
+
+  const searchDomain = async (domain) => {
+    if (window.ethereum) {
+      const provider = new providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const register = new SIDRegister({ signer, chainId: 56 });
+      const available = await register.getAvailable(domain);
+      const price = await register.getRentPrice(domain, 1);
+      const newPrice = new BigNumber(price._hex / 1e18).toFixed();
+      setDomainPrice(newPrice);
+      if (domain == "") {
+        setAvailableDomain("initial");
+      } else {
+        setAvailableDomain(available);
+      }
+      console.log(available, domain.length);
+    }
+  };
+
+  const registerDomain = async (label, years) => {
+    setLoadingDomain(true);
+    const provider = new providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    const register = new SIDRegister({ signer, chainId: 56 });
+    await register
+      .register(label, address, years, {
+        setPrimaryName: true,
+        referrer: "dyp.bnb",
+      })
+      .then(() => {
+        setSuccessMessage("You have successfully registered your .bnb domain");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 5000);
+        setLoadingDomain(false);
+      })
+      .catch((e) => {
+        setLoadingDomain(false);
+        setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 5000);
+        console.log(e);
+      });
+  };
 
   const getTokenData = async () => {
     await axios
@@ -257,6 +329,7 @@ function App() {
 
         setDypTokenDatabnb_old(propertyDyp[0][1].token_price_usd);
 
+        setBnbUSDPrice(data.data.the_graph_bsc_v2.usd_per_eth);
         const propertyIDyp = Object.entries(
           data.data.the_graph_bsc_v2.token_data
         );
@@ -1396,7 +1469,6 @@ function App() {
     let subscribedPlatformTokenAmountBNB;
     let subscribedPlatformTokenAmountBase;
 
-
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
     const web3base = window.baseWeb3;
@@ -1413,10 +1485,7 @@ function App() {
     const bnbsubscribeAddress = window.config.subscriptionbnb_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
-    const cfxcontract = new web3cfx.eth.Contract(
-      CfxABI,
-      cfxsubscribeAddress
-    );
+    const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
 
     const basecontract = new web3base.eth.Contract(
       BaseABI,
@@ -1434,7 +1503,7 @@ function App() {
         .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
-        subscribedPlatformTokenAmountBase = await basecontract.methods
+      subscribedPlatformTokenAmountBase = await basecontract.methods
         .subscriptionPlatformTokenAmount(coinbase)
         .call();
 
@@ -1657,6 +1726,45 @@ function App() {
     }
   }
 
+  const getDomains = async () => {
+    if (coinbase) {
+      const name = await web3Name.getDomainName({
+        address: coinbase,
+        queryChainIdList: [56],
+      });
+
+      if (name && name !== null) {
+        setDomainName(name);
+        const metadata = await web3Name.getMetadata({ name: name });
+        setDomainMetaData(metadata);
+      } else {
+        setDomainMetaData(null);
+        setDomainName(null);
+      }
+    }
+
+    // console.log(name, "domain")
+  };
+  const fetchBscBalance = async () => {
+    if (coinbase && chainId === 56 && window.ethereum) {
+      const balance = await window.ethereum.request({
+        method: "eth_getBalance",
+        params: [coinbase, "latest"],
+      });
+
+      const bscWeb3 = new Web3(window.config.bsc_endpoint);
+      const stringBalance = bscWeb3.utils.hexToNumberString(balance);
+
+      const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
+      setBscAmount(amount.slice(0, 7));
+    }
+  };
+
+  useEffect(() => {
+    getDomains();
+    fetchBscBalance();
+  }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
+
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
@@ -1668,7 +1776,6 @@ function App() {
     getPriceDYP();
     getListedNfts2();
     getLatest20BoughtNFTS();
-
     // getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
     //   settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
     // );
@@ -1725,6 +1832,8 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
+            handleOpenDomains={() => setDomainPopup(true)}
+            domainName={domainName}
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1741,6 +1850,8 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
+            handleOpenDomains={() => setDomainPopup(true)}
+            domainName={domainName}
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1856,6 +1967,8 @@ function App() {
                   success={success}
                   availableTime={availTime}
                   handleSwitchNetwork={handleSwitchNetwork}
+                  handleOpenDomains={() => setDomainPopup(true)}
+                  domainName={domainName}
                 />
               }
             />
@@ -2310,6 +2423,21 @@ function App() {
 
         {!location.pathname.includes("account") &&
           !location.pathname.includes("auth") && <ChestFlyout />}
+        {domainPopup && (
+          <DomainModal
+            onClose={() => setDomainPopup(false)}
+            onSearch={searchDomain}
+            available={availableDomain}
+            price={domainPrice}
+            chainId={chainId}
+            bnbUSDPrice={bnbUSDPrice}
+            onRegister={registerDomain}
+            loading={loadingDomain}
+            successMessage={successMessage}
+            metadata={domainMetaData}
+            bscAmount={bscAmount}
+          />
+        )}
 
         {showWalletModal === true && (
           <RegisterModal

@@ -33,6 +33,8 @@ const MobileNavbar = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
+  domainName,
+  handleOpenDomains,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -452,7 +454,7 @@ const MobileNavbar = ({
                 Connect Wallet
               </button>{" "}
             </div>
-          ) : (
+          ) : coinbase && !domainName ? (
             <div className="d-flex align-items-center gap-3">
               <Clipboard
                 component="div"
@@ -473,8 +475,41 @@ const MobileNavbar = ({
                   {shortAddress(coinbase)}{" "}
                   <img src={tooltip ? check : copy} alt="" />
                 </div>
+                <div
+                  className="btn pill-btn px-3"
+                  style={{fontSize: 12}} 
+                   onClick={()=>{handleOpenDomains(); setOpenNavbar(false)}}
+                >
+                  Domain Name
+                  
+                </div>
               </Clipboard>
             </div>
+          ) : domainName ? (
+            <div className="d-flex align-items-center gap-3" onClick={()=>{handleOpenDomains(); setOpenNavbar(false)}}>
+              <Clipboard
+                component="div"
+                data-event="click"
+                data-for={id}
+                data-tip="Copied To Clipboard!"
+                data-clipboard-text={coinbase}
+                className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
+              >
+                <div
+                  className="btn connected px-3"
+                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                  onClick={() => {
+                    setTooltip(true);
+                    setTimeout(() => setTooltip(false), 2000);
+                  }}
+                >
+                  {domainName}{" "}
+                   
+                </div>
+              </Clipboard>
+            </div>
+          ) : (
+            <></>
           )}
 
           {!coinbase ? (
