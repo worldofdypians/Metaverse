@@ -663,7 +663,7 @@ const MarketEvents = ({
       setSelectedPackage("daily-bonus");
     }
   }, [eventId, activeTab]);
-
+// console.log()
   useEffect(() => {
     if (
       email &&
@@ -787,7 +787,7 @@ const MarketEvents = ({
                             <img
                               src={dailyBonusImg}
                               className="w-100"
-                              style={{ borderRadius: "16px", height: 145 }}
+                              style={{ borderRadius: "16px", height: windowSize.width > 767 ? 145 : 130 }}
                               alt=""
                             />
                             <span className="event-package-title">

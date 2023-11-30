@@ -899,7 +899,7 @@ const ProfileCard = ({
 
                 {email && address && coinbase && !isPremium && (
                   <div
-                    className={` wallet-wrapper-active2 hoveractive position-relative
+                    className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
                     onClick={onPremiumClick}
                   >
