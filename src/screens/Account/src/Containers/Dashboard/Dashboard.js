@@ -85,7 +85,7 @@ function Dashboard({
   const chainDropdowns = [
     {
       name: "Ethereum",
-      symbol: "weth",
+      symbol: "eth",
     },
     {
       name: "BNB Chain",
@@ -1168,7 +1168,7 @@ function Dashboard({
         setstatus(e?.message);
         setloadspinner(false);
         setapproveStatus("fail");
-
+        window.alertify.error(e?.message);
         setTimeout(() => {
           setstatus("");
           setloadspinner(false);
@@ -1298,6 +1298,7 @@ function Dashboard({
         setloadspinner(false);
         setapproveStatus("fail");
         setstatus(e?.message);
+        window.alertify.error(e?.message);
 
         setTimeout(() => {
           setloadspinnerSub(false);
@@ -2064,10 +2065,14 @@ function Dashboard({
                     )}
 
                     {dailyBonusInfo && (
-                      <DailyBonusModal
-                        data={dailyBonusData}
-                        onClose={() => setdailyBonusInfo(false)}
-                      />
+                      <OutsideClickHandler
+                        onOutsideClick={() => setdailyBonusInfo(false)}
+                      >
+                        <DailyBonusModal
+                          data={dailyBonusData}
+                          onClose={() => setdailyBonusInfo(false)}
+                        />
+                      </OutsideClickHandler>
                     )}
 
                     {getPremiumPopup && (
@@ -2109,7 +2114,7 @@ function Dashboard({
                                   <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/wethIcon.svg`)
+                                        require(`../../Images/premium/tokens/ethIcon.svg`)
                                           .default
                                       }
                                       alt=""
@@ -2237,7 +2242,7 @@ function Dashboard({
                                     >
                                       <img
                                         src={
-                                          require(`../../Images/premium/tokens/wethIcon.svg`)
+                                          require(`../../Images/premium/tokens/ethIcon.svg`)
                                             .default
                                         }
                                         alt=""
@@ -2255,7 +2260,7 @@ function Dashboard({
                                         }
                                         alt=""
                                       />
-                                      Bnb Chain
+                                      BNB Chain
                                     </li>
                                     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -2269,7 +2274,7 @@ function Dashboard({
                                           height: "18px",
                                         }}
                                       />
-                                      Base Chain
+                                      Base Network
                                     </li>
                                     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -2283,7 +2288,7 @@ function Dashboard({
                                           height: "18px",
                                         }}
                                       />
-                                      Conflux Chain
+                                      Conflux Network
                                     </li>
                                     {/* <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"

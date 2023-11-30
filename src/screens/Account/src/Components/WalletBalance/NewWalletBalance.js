@@ -1481,7 +1481,10 @@ const NewWalletBalance = ({
                     }`}
                     alt=""
                   />
-                  <div className="progress-bar-group d-flex align-items-center gap-3 me-2">
+                  <div
+                    className="progress-bar-group d-flex align-items-center gap-3 me-2"
+                    onClick={onDailyRewardsPopupOpen}
+                  >
                     <div className="green-progress-outer">
                       <span className="mb-0 chest-progress">
                         {claimedChests}/10
@@ -1518,11 +1521,11 @@ const NewWalletBalance = ({
                     <div
                       className="d-flex flex-column align-items-center"
                       style={{ width: "fit-content" }}
+                      onClick={onDailyRewardsPopupOpen}
                     >
                       <div
                         className="position-relative"
                         style={{ width: "96px", height: "40px", right: "0px" }}
-                        onClick={onDailyRewardsPopupOpen}
                       >
                         <span className="ready-to-claim mb-0">
                           {finished ? "Reset Time" : "Ready to Claim"}
