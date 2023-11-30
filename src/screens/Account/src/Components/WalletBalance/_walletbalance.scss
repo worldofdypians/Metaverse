@@ -1334,7 +1334,7 @@
 }
 
 .become-premium-title {
-  color: #FFF;
+  color: #fff;
   font-size: 10px;
   font-style: normal;
   font-weight: 700;
@@ -2117,7 +2117,7 @@
   width: fit-content;
   height: fit-content;
   @media screen and (max-width: 786px) {
-   margin: auto 15px;
+    margin: auto 15px;
   }
 }
 
@@ -2419,4 +2419,13 @@
   border-radius: 8px;
   background: rgba(237, 130, 37, 0.2);
   width: fit-content;
+}
+.chest-prize-title {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1.05px;
+  text-transform: uppercase;
 }

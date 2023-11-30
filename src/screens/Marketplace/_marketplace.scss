@@ -3505,6 +3505,11 @@
 .upcoming-daily-bonus {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #47352f 168.67%) !important;
+  border: 1px solid transparent !important;
+}
+
+.upcoming-daily-bonus:hover {
+  border: 1px solid #11fed2 !important;
 }
 
 .upcoming-doge-event {
