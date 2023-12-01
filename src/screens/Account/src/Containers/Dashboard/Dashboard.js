@@ -526,20 +526,20 @@ function Dashboard({
     const userPosition = testArray[0].position + 1;
 
     if (goldenPassRemainingTime) {
-      setUserRank2(
+      setUserRank2(testArray[0].statValue !== 0 ?
         userPosition > 10
           ? 0
           : userPosition === 10
           ? monthlyPrizes[9] + monthlyPrizesGolden[9]
-          : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+          : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition] : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setUserRank2(
+      setUserRank2(testArray[0].statValue !== 0 ?
         userPosition > 10
           ? 0
           : userPosition === 10
           ? monthlyPrizes[9]
-          : monthlyPrizes[userPosition]
+          : monthlyPrizes[userPosition] : 0
       );
     }
 
@@ -580,24 +580,24 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === userName
       );
-
+ 
       const userPosition = testArray[0].position;
 
       if (goldenPassRemainingTime) {
-        setdailyplayerData(
+        setdailyplayerData( testArray[0].statValue !== 0 ?
           userPosition > 10
             ? 0
             : userPosition === 10
             ? dailyPrizes[9] + dailyPrizesGolden[9]
-            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
+            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition] : 0
         );
       } else if (!goldenPassRemainingTime) {
-        setdailyplayerData(
+        setdailyplayerData(testArray[0].statValue !== 0 ?
           userPosition > 10
             ? 0
             : userPosition === 10
             ? dailyPrizes[9]
-            : dailyPrizes[userPosition]
+            : dailyPrizes[userPosition] : 0
         );
       }
     }
@@ -621,20 +621,20 @@ function Dashboard({
 
     const userPosition = testArray[0].position + 1;
     if (goldenPassRemainingTime) {
-      setweeklyplayerData(
+      setweeklyplayerData(testArray[0].statValue !== 0 ?
         userPosition > 10
           ? 0
           : userPosition === 10
           ? weeklyPrizes[9] + weeklyPrizesGolden[9]
-          : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
+          : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition] : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setweeklyplayerData(
+      setweeklyplayerData(testArray[0].statValue !== 0 ?
         userPosition > 10
           ? 0
           : userPosition === 10
           ? weeklyPrizes[9]
-          : weeklyPrizes[userPosition]
+          : weeklyPrizes[userPosition] : 0
       );
     }
   };
