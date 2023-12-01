@@ -294,9 +294,9 @@ const MobileNavbar = ({
                           ? bnb
                           : opbnbState === true
                           ? bnb
-                          : // : avaxState === true
-                          // ? avax
-                          baseState === true
+                          : avaxState === true
+                          ? avax
+                          :baseState === true
                           ? base
                           : confluxState === true
                           ? conflux
@@ -313,9 +313,9 @@ const MobileNavbar = ({
                         ? "BNB Chain"
                         : opbnbState === true
                         ? "opBNB Chain"
-                        : // : avaxState === true
-                        // ? "Avalanche"
-                        baseState === true
+                         : avaxState === true
+                        ? "Avalanche"
+                        :baseState === true
                         ? "Base"
                         : confluxState === true
                         ? "Conflux"
@@ -338,10 +338,10 @@ const MobileNavbar = ({
                   <img src={bnb} alt="" />
                   opBNB Chain
                 </Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
+                <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche
-                </Dropdown.Item> */}
+                </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleConfluxPool()}>
                   <img src={conflux} alt="" />
                   Conflux
