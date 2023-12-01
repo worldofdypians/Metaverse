@@ -114,7 +114,13 @@ const ProfileCard = ({
   };
 
   const handleRefreshCountdown700 = async () => {
-    const dypv1 = new window.infuraWeb3.eth.Contract(
+    if(bundlesBought === 0) {
+      setcountdown700();
+      handleSetAvailableTime()
+    }
+    else if(bundlesBought > 0) {
+
+      const dypv1 = new window.infuraWeb3.eth.Contract(
       DYP_700V1_ABI,
       dyp700v1Address
     );
@@ -188,11 +194,13 @@ const ProfileCard = ({
       setcountdown700((resultv2 + resultv1) * 1000);
       handleSetAvailableTime((resultv2 + resultv1) * 1000);
       // setcountdown700(result * 1000);
-      //
-    } else {
+      //}
+    }
+    else {
       setcountdown700();
       handleSetAvailableTime();
     }
+  } 
   };
 
   const setlastDay = async (addr) => {
@@ -371,7 +379,7 @@ const ProfileCard = ({
         );
 
         // }
-      } else if (week2.includes(today_date.toString()) && bundlesBought <= 3) {
+      } else if (week2.includes(today_date.toString()) && bundlesBought <= 3 && bundlesBought !== 0) {
         handleRefreshCountdown700();
       } else if (week2.includes(today_date.toString()) && bundlesBought > 3) {
         // const remainingTime2 = lastDayofBundle;
@@ -395,7 +403,7 @@ const ProfileCard = ({
         );
 
         // }
-      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
+      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3 && bundlesBought !== 0) {
         handleRefreshCountdown700();
       } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
         // const remainingTime3 = lastDayofBundle;
@@ -494,7 +502,7 @@ const ProfileCard = ({
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (today < finalDateofBundle) {
+        if (today < finalDateofBundle  && bundlesBought !== 0) {
           setcountdown700(
             today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
@@ -516,7 +524,7 @@ const ProfileCard = ({
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (today < finalDateofBundle) {
+        if (today < finalDateofBundle && bundlesBought !== 0) {
           if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
             setcountdown700(finalDateofBundle);
 
