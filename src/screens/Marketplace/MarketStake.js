@@ -13,6 +13,8 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import instake from "./assets/instake.svg";
 import cawsStakeImage from './assets/cawsStakeImage.png'
 import cawsStakeMobileImage from './assets/cawsStakeMobileImage.png'
+import { useLocation } from "react-router-dom";
+
 
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const windowSize = useWindowSize();
@@ -45,6 +47,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [totalLocked, setTotalLocked] = useState(0);
   const [pastCawsUsdPrice, setPastCawsUsdPrice] = useState(0);
   const html = document.querySelector("html");
+  const location = useLocation();
 
   const fetchTvl = async () => {
     const result = await axios.get(
@@ -87,6 +90,22 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     } else setMyNFTs([]);
   };
 
+  useEffect(() => {
+    if(location?.state?.modal){
+      if(location.state.modal === "nftModal"){
+        setNftModal(true)
+      }else if(location.state.modal === "rewardModal"){
+        setRewardModal(true)
+      }else if(location.state.modal === "landStakeModal"){
+        setlandStakeModal(true)
+      }else if(location.state.modal === "landunStakeModal"){
+        setlandunStakeModal(true)
+      }
+    }
+  }, [location])
+
+
+  
   const getStakesIds = async () => {
     let stakenft = [];
 

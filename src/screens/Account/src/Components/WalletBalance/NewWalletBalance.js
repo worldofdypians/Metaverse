@@ -58,6 +58,7 @@ import dypius from "./assets/dypIcon.svg";
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import dypeventPopupImage from "./assets/dypEventImage.png";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
+import { abbreviateNumber } from "js-abbreviation-number";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -590,6 +591,9 @@ const NewWalletBalance = ({
   const [eventsPopup, setEventsPopup] = useState(false);
   const [stakePopup, setStakePopup] = useState(false);
 
+  const [landtvl, setlandTvl] = useState(0);
+  const [cawslandTvl, setCawsLandtvl] = useState(0);
+
   const dummyEvents = [
     {
       name: "Treasure Hunt",
@@ -636,6 +640,18 @@ const NewWalletBalance = ({
   };
   const firstPrev = () => {
     betaSlider.current.slickPrev();
+  };
+
+  const fetchTvl = async () => {
+    const result = await axios.get(
+      `https://api.dyp.finance/api/get_staking_info_eth`
+    );
+    if (result) {
+      const resultLand = result.data.stakingInfoLAND[0].tvl_usd;
+      const resultcawsWod = result.data.stakinginfoCAWSLAND[0].tvl_usd;
+      setlandTvl(resultLand);
+      setCawsLandtvl(resultcawsWod);
+    }
   };
 
   const validateUrl = (url) => {
@@ -1118,6 +1134,8 @@ const NewWalletBalance = ({
     getTokenDatabnb();
     getTokenDataavax();
     fetchCFXPrice();
+    fetchTvl();
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -2433,14 +2451,14 @@ const NewWalletBalance = ({
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-3">
-                          <button
+                        <NavLink to={"/marketplace/stake"} state={{modal: 'nftModal'}}
                             className="btn pill-btn px-3 py-2"
                             style={{ fontSize: "12px" }}
                             // onClick={() => setNftModal(true)}
                           >
                             Deposit
-                          </button>
-                          <button
+                            </NavLink>
+                            <NavLink to={"/marketplace/stake"} state={{modal: 'rewardModal'}}
                             className="btn rewards-btn px-3 py-2"
                             style={{ fontSize: "12px" }}
                             // onClick={() => {
@@ -2448,7 +2466,7 @@ const NewWalletBalance = ({
                             // }}
                           >
                             Rewards
-                          </button>
+                            </NavLink>
                         </div>
                       </div>
                       <div
@@ -2459,8 +2477,8 @@ const NewWalletBalance = ({
                           className="market-stake-tvl"
                           style={{ fontSize: "24px" }}
                         >
-                          {/* ${abbreviateNumber(cawslandTvl)} */}
-                          $15,000
+                          ${abbreviateNumber(cawslandTvl)}
+                          {/* $15,000 */}
                         </h6>
                       </div>
                     </div>
@@ -2507,7 +2525,7 @@ const NewWalletBalance = ({
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-3">
-                          <button
+                        <NavLink to={"/marketplace/stake"} state={{modal: "landStakeModal"}}
                             className="btn pill-btn px-3 py-2"
                             style={{ fontSize: "12px" }}
                             // onClick={() => {
@@ -2515,8 +2533,8 @@ const NewWalletBalance = ({
                             // }}
                           >
                             Deposit
-                          </button>
-                          <button
+                            </NavLink>
+                            <NavLink to={"/marketplace/stake"} state={{modal: "landunStakeModal"}}
                             className="btn rewards-btn px-3 py-2"
                             style={{ fontSize: "12px" }}
                             // onClick={() => {
@@ -2524,7 +2542,7 @@ const NewWalletBalance = ({
                             // }}
                           >
                             Rewards
-                          </button>
+                            </NavLink>
                         </div>
                         <div
                           className="tvl-wrapper"
@@ -2534,8 +2552,8 @@ const NewWalletBalance = ({
                             className="market-stake-tvl"
                             style={{ fontSize: "24px" }}
                           >
-                            {/* ${abbreviateNumber(landtvl)} */}
-                            $1,500
+                            ${abbreviateNumber(landtvl)}
+                            {/* $1,500 */}
                           </h6>
                         </div>
                         <div></div>
