@@ -559,11 +559,11 @@ const ProfileCard = ({
 
   useEffect(() => {
     checkBundleDates();
-  }, [bundlesBought, dateofBundle]);
+  }, [bundlesBought, address]);
 
   return (
     <div className="main-wrapper py-4 w-100">
-      {countdown700 !== 0 && countdown700 && (
+      {/* {countdown700 !== 0 && countdown700 && ( */}
         <Countdown
           date={Number(countdown700)}
           onComplete={() => {
@@ -571,7 +571,7 @@ const ProfileCard = ({
             handleSetAvailableTime();
           }}
         />
-      )}
+      {/* )} */}
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-lg-3 col-12">
           <div

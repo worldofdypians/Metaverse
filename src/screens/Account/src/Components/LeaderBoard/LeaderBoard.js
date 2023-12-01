@@ -428,9 +428,7 @@ const LeaderBoard = ({
     );
     if (testArray.length > 0) {
       setActivePlayer(true);
-    }
-
-    if (testArray.length === 0) {
+    } else if (testArray.length === 0) {
       setActivePlayer(false);
       fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
     }
@@ -705,7 +703,7 @@ const LeaderBoard = ({
 
   useEffect(() => {
     fetchDailyRecords();
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     if (inactiveBoard === true && optionText === "daily") {

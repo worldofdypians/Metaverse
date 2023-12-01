@@ -523,7 +523,8 @@ function Dashboard({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === userName
     );
-    const userPosition = testArray[0].position + 1;
+    const userPosition = testArray[0].position;
+    // console.log(userPosition)
 
     if (goldenPassRemainingTime) {
       setUserRank2(testArray[0].statValue !== 0 ?
@@ -619,7 +620,7 @@ function Dashboard({
       (item) => item.displayName === userName
     );
 
-    const userPosition = testArray[0].position + 1;
+    const userPosition = testArray[0].position;
     if (goldenPassRemainingTime) {
       setweeklyplayerData(testArray[0].statValue !== 0 ?
         userPosition > 10
