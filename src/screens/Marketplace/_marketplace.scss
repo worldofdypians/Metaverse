@@ -483,6 +483,10 @@
   }
 }
 
+.nft-outer-wrapper22:hover {
+  border: 2px solid #7dd9af;
+}
+
 // .nft-outer-wrapper2::before {
 //   content: "";
 //   position: absolute;
@@ -1380,25 +1384,176 @@
 }
 
 .caws-wod-stake-wrapper {
-  background-image: url("./assets/cawsWodBanner1.png");
-  background-size: 100% 100%;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #181b38 0.01%, #481150 168%);
+  position: relative;
+
   aspect-ratio: 4.52/1;
 
   @media screen and (max-width: 786px) {
     aspect-ratio: 0.63/1;
-    background-image: url("./assets/cawsWodBannerMobile.png");
+  }
+}
+
+.caws-wod-stake-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-image: url("./assets/landCawsStakeBg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/landCawsStakeBgMobile.png");
+    background-position: bottom;
   }
 }
 .wod-stake-wrapper {
-  background-image: url("./assets/wodBanner1.png");
-  background-size: 100% 100%;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #181b38 0%, #76473c 168.67%);
+  position: relative;
+
   aspect-ratio: 4.52/1;
 
   @media screen and (max-width: 786px) {
     aspect-ratio: 0.63/1;
-    background-image: url("./assets/wodBannerMobile.png");
   }
 }
+
+.wod-stake-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-image: url("./assets/landStakeBg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/landStakeBgMobile.png");
+    background-position: bottom;
+  }
+}
+
+.stake-stats-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 24%;
+  margin: auto;
+  height: fit-content;
+  @media screen and (max-width: 786px) {
+    right: 0;
+    left: 0;
+    bottom: -25%;
+  }
+}
+
+.stake-stats-item {
+  position: relative;
+  width: 70px;
+  height: 50px;
+  border-radius: 8px;
+  background: rgba(8, 11, 42, 0.25);
+  backdrop-filter: blur(3.7028565406799316px);
+  h6 {
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin-bottom: 0;
+  }
+
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+.stake-stats-item-2 {
+  position: relative;
+  width: 100px;
+  height: 65px;
+  border-radius: 8px;
+  background: rgba(8, 11, 42, 0.25);
+  backdrop-filter: blur(3.7028565406799316px);
+  h6 {
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin-bottom: 0;
+    @media screen and (max-width: 786px) {
+      font-size: 12px;
+    }
+  }
+
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    @media screen and (max-width: 786px) {
+      font-size: 10px;
+    }
+  }
+  @media screen and (max-width: 786px) {
+    width: 70px;
+    height: 50px;
+  }
+}
+
+.stake-stats-item:nth-child(1) {
+  left: 15px;
+  @media screen and (max-width: 786px) {
+    left: 0;
+  }
+}
+.stake-stats-item:nth-child(3) {
+  right: 15px;
+  @media screen and (max-width: 786px) {
+    right: 0;
+  }
+}
+.stake-stats-item-2:nth-child(1) {
+  left: 15px;
+  @media screen and (max-width: 786px) {
+    left: 0;
+  }
+}
+.stake-stats-item-2:nth-child(3) {
+  right: 15px;
+  @media screen and (max-width: 786px) {
+    right: 0;
+  }
+}
+
+// .wod-stake-wrapper {
+//   background-image: url("./assets/wodBanner1.png");
+//   background-size: 100% 100%;
+//   aspect-ratio: 4.52/1;
+
+//   @media screen and (max-width: 786px) {
+//     aspect-ratio: 0.63/1;
+//     background-image: url("./assets/wodBannerMobile.png");
+//   }
+// }
 
 .caws-wod-stake-wrapper2 {
   background-image: url("./assets/cawsWodBannerSmall.png");
@@ -1655,6 +1810,15 @@
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
 }
 
+.package-popup-wrapper2 {
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
 .dragon-popup {
   // background-image: url("./assets/dragonPopup.webp");
 }
@@ -1694,6 +1858,28 @@
   }
 }
 
+.package-popup2 {
+  pointer-events: auto !important;
+  z-index: 9999;
+  width: 750px;
+  height: 86%;
+  position: fixed;
+  top: 18px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  aspect-ratio: 0.76/1;
+  // background-size: 100% 100%;
+  z-index: 101;
+  // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+
+  @media screen and (max-width: 800px) {
+    width: 95%;
+    height: 67%;
+  }
+}
+
 .popup-linear {
   position: fixed;
   left: 0;
@@ -1705,10 +1891,30 @@
   width: 765px;
   z-index: 101;
   aspect-ratio: 0.76/1;
+  // filter: drop-shadow(0 0 0 1000px rgba(0, 0, 0, 0.5));
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  @media screen and (max-width: 800px) {
+    width: 95%;
+  }
+}
+
+.popup-linear2 {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  height: 96%;
+  width: 765px;
+  z-index: 101;
+  aspect-ratio: 0.76/1;
   filter: drop-shadow(0 0 0 1000px rgba(0, 0, 0, 0.5));
   pointer-events: none;
   @media screen and (max-width: 800px) {
     width: 95%;
+    height: 80% !important;
   }
 }
 
@@ -2010,7 +2216,7 @@
 }
 
 .custom-height-2 {
-  min-height: 400px;
+  min-height: 360px;
   max-height: fit-content;
   @media screen and (max-width: 1024px) {
     height: fit-content;
@@ -2902,8 +3108,8 @@
   right: 0%;
   margin: auto;
   z-index: 1000;
-  background: #312f69;
-  border-radius: 24px;
+  background: #1a1c39;
+  border-radius: 16px;
   pointer-events: auto !important;
   transition: all 0.25s ease-in-out;
   width: 50%;
@@ -3196,6 +3402,106 @@
   letter-spacing: 0.1px;
 }
 
+.premium-gold-bg {
+  border-radius: 12px;
+  border: 0.5px solid #ffbf00;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 191, 0, 0.25) -23.88%,
+    rgba(255, 191, 0, 0) 99.99%
+  );
+  box-shadow: 0px 32px 64px 0px rgba(17, 17, 17, 0.12);
+}
+
+.lifetime-plan {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 14px; /* 100% */
+}
+
+.plan-cost {
+  color: #f7f7fc;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 114.286% */
+}
+
+.subscription-chain {
+  color: #f7f7fc;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.popup-subtitle {
+  color: #f7f7fc;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.premium-benefits-wrapper {
+  border-radius: 12px;
+  border: 0.5px solid #8e97cd;
+  background: rgba(23, 25, 50, 0.4);
+  box-shadow: 0px 32px 64px 0px rgba(17, 17, 17, 0.12);
+}
+
+.premium-benefits-title {
+  color: #f7f7fc;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.premium-benefits-item {
+  color: #f7f7fc;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.subscription-price-text {
+  color: #d6d8e7;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.216px;
+}
+
+.subscription-price-token {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
+}
+
+.subscription-price-usd {
+  color: #7dd9af;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.my-premium-balance-text {
+  color: #ffeace;
+  text-align: right;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.18px;
+}
 .upcoming-daily-bonus {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #47352f 168.67%) !important;

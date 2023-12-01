@@ -648,6 +648,25 @@ const Marketplace = ({
                       />
                     </div>
                   </NavLink>
+
+                  {/* <NavLink
+                    to="/marketplace/events/daily-bonus"
+                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="position-relative package-blur">
+                      <div className="first-box-blur d-flex align-items-end justify-content-center">
+                        <span className="blur-package-title">Daily Bonus</span>
+                      </div>
+                      <div className="second-box-blur"></div>
+                      <img
+                        src={require("./assets/dailyBonus.png")}
+                        alt=""
+                        className="blur-img"
+                      />
+                    </div>
+                  </NavLink> */}
+
                   <NavLink
                     to="/marketplace/events/dragon-ruins"
                     state={{ package: "dragon" }}
@@ -744,6 +763,22 @@ const Marketplace = ({
                         </span>
                       </NavLink>
                     </div>
+                    {/* <div className="">
+                      <NavLink
+                        to="/marketplace/events/daily-bonus"
+                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                      >
+                        <img
+                          src={require("./assets/dailyBonus.png")}
+                          className="w-100"
+                          style={{ borderRadius: "16px", height: 130 }}
+                          alt=""
+                        />
+                        <span className="event-package-title">
+                          Daily Bonus
+                        </span>
+                      </NavLink>
+                    </div> */}
                     <div className="">
                       <NavLink
                         to="/marketplace/events/dragon-ruins"
