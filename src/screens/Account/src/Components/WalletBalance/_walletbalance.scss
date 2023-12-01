@@ -1940,7 +1940,7 @@
   height: 170px;
   border-radius: 10px;
   background: linear-gradient(to right, #252743 -13.33%, #124287 70.47%);
-  backdrop-filter: blur(26px);
+  // backdrop-filter: blur(26px);
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
@@ -2321,7 +2321,7 @@
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  width: 50%;
+  width: 43%;
 }
 
 .profile-staking-img {

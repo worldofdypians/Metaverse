@@ -691,8 +691,7 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0" &&
-        coinbase?.toLowerCase() !== "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
+        subscribedPlatformTokenAmountBNB === "0"  
       ) {
         setIsPremium(false);
       }
@@ -700,8 +699,7 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
         subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0" ||
-        coinbase?.toLowerCase() === "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
+        subscribedPlatformTokenAmountBNB !== "0"  
       ) {
         setIsPremium(true);
       }

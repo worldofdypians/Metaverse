@@ -122,22 +122,22 @@ const ProfileCard = ({
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
     const remainingTimev1 = await dypv1.methods
-      .getTimeOfExpireBuff(address)
+      .getTimeOfExpireBuff(coinbase)
       .call();
 
     const remainingTimev2 = await dypv2.methods
-      .getTimeOfExpireBuff(address)
+      .getTimeOfExpireBuff(coinbase)
       .call();
 
     var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
 
     var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
     const timeofDepositv1 = await dypv1.methods
-      .getTimeOfDeposit(address)
+      .getTimeOfDeposit(coinbase)
       .call();
 
     const timeofDepositv2 = await dypv2.methods
-      .getTimeOfDeposit(address)
+      .getTimeOfDeposit(coinbase)
       .call();
 
     if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
@@ -563,6 +563,15 @@ const ProfileCard = ({
 
   return (
     <div className="main-wrapper py-4 w-100">
+      {countdown700 !== 0 && countdown700 && (
+        <Countdown
+          date={Number(countdown700)}
+          onComplete={() => {
+            setcountdown700();
+            handleSetAvailableTime();
+          }}
+        />
+      )}
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-lg-3 col-12">
           <div
@@ -715,15 +724,15 @@ const ProfileCard = ({
                                 >
                                   <span className="emailtext">{email}</span>
                                   {/* {!domainName ? ( */}
-                                    <span className="wallet-address">
-                                      {windowSize.width > 991
-                                        ? isVerified && email
-                                          ? address
-                                          : coinbase
-                                        : isVerified && email
-                                        ? shortAddress(address)
-                                        : shortAddress(coinbase)}
-                                    </span>
+                                  <span className="wallet-address">
+                                    {windowSize.width > 991
+                                      ? isVerified && email
+                                        ? address
+                                        : coinbase
+                                      : isVerified && email
+                                      ? shortAddress(address)
+                                      : shortAddress(coinbase)}
+                                  </span>
                                   {/* ) : (
                                     <span className="wallet-address">
                                       {domainName}
