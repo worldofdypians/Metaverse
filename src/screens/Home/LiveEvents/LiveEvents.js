@@ -57,11 +57,11 @@ const LiveEvents = () => {
       image: "treasureHunt.png",
       id: "treasure-hunt",
     },
-    {
-      name: "Daily Bonus",
-      image: "dailyBonus.png",
-      id: "daily-bonus",
-    },
+    // {
+    //   name: "Daily Bonus",
+    //   image: "dailyBonus.png",
+    //   id: "daily-bonus",
+    // },
     {
       name: "Dragon Ruins",
       image: "dragonRuins.png",

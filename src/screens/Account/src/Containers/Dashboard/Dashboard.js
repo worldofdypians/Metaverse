@@ -45,6 +45,7 @@ import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
+import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 
 function Dashboard({
   account,
@@ -62,8 +63,8 @@ function Dashboard({
   availableTime,
   success,
   handleSwitchNetwork,
-  domainName,
-  handleOpenDomains,
+  // domainName,
+  // handleOpenDomains,
 }) {
   const { email, logout } = useAuth();
 
@@ -84,11 +85,15 @@ function Dashboard({
   const chainDropdowns = [
     {
       name: "Ethereum",
-      symbol: "weth",
+      symbol: "eth",
     },
     {
       name: "BNB Chain",
       symbol: "wbnb",
+    },
+    {
+      name: "Avalanche",
+      symbol: "wavax",
     },
     {
       name: "Conflux",
@@ -151,6 +156,8 @@ function Dashboard({
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
   const [balancePopup, setBalancePopup] = useState(false);
+  const [dailyBonusInfo, setdailyBonusInfo] = useState(false);
+
   const [dropdownIcon, setdropdownIcon] = useState("");
   const [dropdownTitle, setdropdownTitle] = useState("");
   const [status, setstatus] = useState("");
@@ -191,10 +198,23 @@ function Dashboard({
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
 
+  const dailyBonusData = {
+    eventType: "6 Available Rewards",
+    title: "Daily Bonus",
+    chain: "BNB Chain, opBNB Chain",
+    linkState: "conflux",
+    status: "Live",
+    id: "event10",
+    totalRewards: "$2,000 in CFX Rewards",
+    eventDate: "Dec 1, 2023",
+  };
+
   let wethAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
   let wcfx = "0xfe97E85d13ABD9c1c33384E796F10B73905637cE";
   let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
+  let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
+
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -509,23 +529,24 @@ function Dashboard({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === userName
     );
-    const userPosition = testArray[0].position + 1;
+    const userPosition = testArray[0].position;
+    // console.log(userPosition)
 
     if (goldenPassRemainingTime) {
-      setUserRank2(
+      setUserRank2(testArray[0].statValue !== 0 ?
         userPosition > 10
           ? 0
           : userPosition === 10
           ? monthlyPrizes[9] + monthlyPrizesGolden[9]
-          : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+          : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition] : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setUserRank2(
+      setUserRank2(testArray[0].statValue !== 0 ?
         userPosition > 10
           ? 0
           : userPosition === 10
           ? monthlyPrizes[9]
-          : monthlyPrizes[userPosition]
+          : monthlyPrizes[userPosition] : 0
       );
     }
 
@@ -566,24 +587,24 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === userName
       );
-
+ 
       const userPosition = testArray[0].position;
 
       if (goldenPassRemainingTime) {
-        setdailyplayerData(
+        setdailyplayerData( testArray[0].statValue !== 0 ?
           userPosition > 10
             ? 0
             : userPosition === 10
             ? dailyPrizes[9] + dailyPrizesGolden[9]
-            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
+            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition] : 0
         );
       } else if (!goldenPassRemainingTime) {
-        setdailyplayerData(
+        setdailyplayerData(testArray[0].statValue !== 0 ?
           userPosition > 10
             ? 0
             : userPosition === 10
             ? dailyPrizes[9]
-            : dailyPrizes[userPosition]
+            : dailyPrizes[userPosition] : 0
         );
       }
     }
@@ -605,22 +626,22 @@ function Dashboard({
       (item) => item.displayName === userName
     );
 
-    const userPosition = testArray[0].position + 1;
+    const userPosition = testArray[0].position;
     if (goldenPassRemainingTime) {
-      setweeklyplayerData(
+      setweeklyplayerData(testArray[0].statValue !== 0 ?
         userPosition > 10
           ? 0
           : userPosition === 10
           ? weeklyPrizes[9] + weeklyPrizesGolden[9]
-          : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
+          : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition] : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setweeklyplayerData(
+      setweeklyplayerData(testArray[0].statValue !== 0 ?
         userPosition > 10
           ? 0
           : userPosition === 10
           ? weeklyPrizes[9]
-          : weeklyPrizes[userPosition]
+          : weeklyPrizes[userPosition] : 0
       );
     }
   };
@@ -629,22 +650,28 @@ function Dashboard({
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
+    let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
     const web3base = window.baseWeb3;
     const web3bnb = window.bscWeb3;
+    const web3avax = window.avaxWeb3;
+
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
+    const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const avaxsubscribeAddress = window.config.subscription_newavax_address;
+
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
@@ -655,6 +682,8 @@ function Dashboard({
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+    const avaxcontract = new web3avax.eth.Contract(AvaxABI, avaxsubscribeAddress);
+
 
     if (addr) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
@@ -673,12 +702,16 @@ function Dashboard({
         .subscriptionPlatformTokenAmount(addr)
         .call();
 
+        subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call();
+
       if (
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0" &&
-        coinbase?.toLowerCase() !== "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
+        subscribedPlatformTokenAmountBNB === "0"  &&
+        subscribedPlatformTokenAmountAvax === "0"  
       ) {
         setIsPremium(false);
       }
@@ -686,8 +719,8 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
         subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0" ||
-        coinbase?.toLowerCase() === "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
+        subscribedPlatformTokenAmountBNB !== "0"   ||
+        subscribedPlatformTokenAmountAvax !== "0"  
       ) {
         setIsPremium(true);
       }
@@ -1088,6 +1121,8 @@ function Dashboard({
         ? window.config.subscriptioncfx_tokens[token]?.decimals
         : chainId === 8453
         ? window.config.subscriptionbase_tokens[token]?.decimals
+        : chainId === 43114
+        ? window.config.subscription_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -1101,6 +1136,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
+        : chainId === 43114
+        ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -1123,6 +1160,8 @@ function Dashboard({
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const avaxsubscribeAddress = window.config.subscription_newavax_address;
+
     const web3 = new Web3(window.ethereum);
 
     let tokenContract = new web3.eth.Contract(
@@ -1141,6 +1180,8 @@ function Dashboard({
           ? cfxsubscribeAddress
           : chainId === 8453
           ? basesubscribeAddress
+          : chainId === 43114
+          ? avaxsubscribeAddress
           : cfxsubscribeAddress,
         price
       )
@@ -1154,7 +1195,7 @@ function Dashboard({
         setstatus(e?.message);
         setloadspinner(false);
         setapproveStatus("fail");
-
+        window.alertify.error(e?.message);
         setTimeout(() => {
           setstatus("");
           setloadspinner(false);
@@ -1166,12 +1207,16 @@ function Dashboard({
   const handleCheckIfAlreadyApproved = async (token) => {
     const web3eth = new Web3(window.config.infura_endpoint);
     const bscWeb3 = new Web3(window.config.bsc_endpoint);
+    const avaxWeb3 = new Web3(window.config.avax_endpoint);
+
     const cfxWeb3 = new Web3(window.config.conflux_endpoint);
     const baseWeb3 = new Web3(window.config.base_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const avaxsubscribeAddress = window.config.subscription_newavax_address;
+
     const basesubscribeAddress = window.config.subscription_base_address;
 
     const subscribeToken = token;
@@ -1181,6 +1226,11 @@ function Dashboard({
     );
 
     const subscribeTokencontractbnb = new bscWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractavax = new avaxWeb3.eth.Contract(
       window.ERC20_ABI,
       subscribeToken
     );
@@ -1213,6 +1263,18 @@ function Dashboard({
       if (chainId === 56) {
         const result = await subscribeTokencontractbnb.methods
           .allowance(coinbase, bnbsubscribeAddress)
+          .call()
+          .then();
+        if (result != 0) {
+          setloadspinner(false);
+          setisApproved(true);
+        } else if (result == 0) {
+          setloadspinner(false);
+          setisApproved(false);
+        }
+      } else if (chainId === 43114) {
+        const result = await subscribeTokencontractavax.methods
+          .allowance(coinbase, avaxsubscribeAddress)
           .call()
           .then();
         if (result != 0) {
@@ -1260,6 +1322,8 @@ function Dashboard({
           ? "SUBSCRIPTION_NEWETH"
           : chainId === 56
           ? "SUBSCRIPTION_NEWBNB"
+          : chainId === 43114
+          ? "SUBSCRIPTION_NEWAVAX"
           : chainId === 1030
           ? "SUBSCRIPTION_CFX"
           : chainId === 8453
@@ -1284,6 +1348,7 @@ function Dashboard({
         setloadspinner(false);
         setapproveStatus("fail");
         setstatus(e?.message);
+        window.alertify.error(e?.message);
 
         setTimeout(() => {
           setloadspinnerSub(false);
@@ -1385,7 +1450,7 @@ function Dashboard({
         await handleSwitchNetworkhook("0x406")
           .then(() => {
             handleSwitchNetwork(1030);
-            setChainDropdown(chainDropdowns[2]);
+            setChainDropdown(chainDropdowns[4]);
           })
           .catch((e) => {
             console.log(e);
@@ -1436,7 +1501,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wbnbAddress);
       handleCheckIfAlreadyApproved(wbnbAddress);
     } else if (chainId === 1030) {
-      setChainDropdown(chainDropdowns[2]);
+      setChainDropdown(chainDropdowns[4]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
@@ -1454,16 +1519,15 @@ function Dashboard({
       handleSubscriptionTokenChange(wbase);
       handleCheckIfAlreadyApproved(wbase);
     }
-
-    //  else if (chainId === 43114) {
-    //   setChainDropdown(chainDropdowns[2]);
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("USDT");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscription_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wavaxAddress);
-    // }
+    else if (chainId === 43114) {
+      setChainDropdown(chainDropdowns[2]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscription_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wavaxAddress);
+    }
     else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1486,6 +1550,11 @@ function Dashboard({
         window.config.subscriptionbnb_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else if (chainId === 43114 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscription_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     } else if (chainId === 1030 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioncfx_tokens[selectedSubscriptionToken]
@@ -1497,11 +1566,6 @@ function Dashboard({
           ?.decimals
       );
     }
-    // else if (chainId === 43114 && selectedSubscriptionToken !== "") {
-    //   settokenDecimals(
-    //     window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
-    //   );
-    // }
   }, [chainId, selectedSubscriptionToken]);
 
   useEffect(() => {
@@ -1732,8 +1796,8 @@ function Dashboard({
                         handleSetAvailableTime={(value) => {
                           setGoldenPassRemainingTime(value);
                         }}
-                        handleOpenDomains={handleOpenDomains}
-                        domainName={domainName}
+                        // handleOpenDomains={handleOpenDomains}
+                        // domainName={domainName}
                       />
 
                       <NewWalletBalance
@@ -1794,6 +1858,9 @@ function Dashboard({
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
                         openedChests={openedChests}
+                        onDailyBonusInfoClick={() => {
+                          setdailyBonusInfo(true);
+                        }}
                         // hasNft={
                         //   MyNFTSCaws.length +
                         //     MyNFTSLand.length   >
@@ -2046,6 +2113,17 @@ function Dashboard({
                       </OutsideClickHandler>
                     )}
 
+                    {dailyBonusInfo && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => setdailyBonusInfo(false)}
+                      >
+                        <DailyBonusModal
+                          data={dailyBonusData}
+                          onClose={() => setdailyBonusInfo(false)}
+                        />
+                      </OutsideClickHandler>
+                    )}
+
                     {getPremiumPopup && (
                       <OutsideClickHandler
                         onOutsideClick={() => {
@@ -2085,7 +2163,7 @@ function Dashboard({
                                   <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/wethIcon.svg`)
+                                        require(`../../Images/premium/tokens/ethIcon.svg`)
                                           .default
                                       }
                                       alt=""
@@ -2109,6 +2187,20 @@ function Dashboard({
 
                                   <div className="d-flex align-items-center gap-2">
                                     <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                          .default
+                                      }
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                    Avalanche
+                                    </span>
+                                  </div>
+                                  
+
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
                                       src={baseLogo}
                                       alt=""
                                       style={{ width: 18, height: 18 }}
@@ -2129,18 +2221,7 @@ function Dashboard({
                                     </span>
                                   </div>
 
-                                  {/* <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={
-                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                          .default
-                                      }
-                                      alt=""
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Avalanche Network
-                                    </span>
-                                  </div> */}
+                                  
                                 </div>
                                 <img src={premiumIcon} alt="" />
                               </div>
@@ -2213,7 +2294,7 @@ function Dashboard({
                                     >
                                       <img
                                         src={
-                                          require(`../../Images/premium/tokens/wethIcon.svg`)
+                                          require(`../../Images/premium/tokens/ethIcon.svg`)
                                             .default
                                         }
                                         alt=""
@@ -2231,7 +2312,17 @@ function Dashboard({
                                         }
                                         alt=""
                                       />
-                                      Bnb Chain
+                                      BNB Chain
+                                    </li>
+                                     <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleAvaxPool}
+                                    >
+                                      <img
+                                        src={require(`../../Images/premium/tokens/wavaxIcon.svg`).default}
+                                        alt=""
+                                      />
+                                      Avalanche
                                     </li>
                                     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -2245,7 +2336,7 @@ function Dashboard({
                                           height: "18px",
                                         }}
                                       />
-                                      Base Chain
+                                      Base Network
                                     </li>
                                     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -2259,18 +2350,9 @@ function Dashboard({
                                           height: "18px",
                                         }}
                                       />
-                                      Conflux Chain
+                                      Conflux Network
                                     </li>
-                                    {/* <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={handleAvaxPool}
-                                    >
-                                      <img
-                                        src={require(`../../Images/premium/tokens/wavaxIcon.svg`).default}
-                                        alt=""
-                                      />
-                                      Avalanche
-                                    </li> */}
+                                   
                                   </ul>
                                 </div>
                               </div>
@@ -2324,6 +2406,9 @@ function Dashboard({
                                             : chainId === 1030
                                             ? window.config
                                                 .subscriptioncfx_tokens
+                                            : chainId === 43114
+                                            ? window.config
+                                                .subscription_tokens
                                             : chainId === 8453
                                             ? window.config
                                                 .subscriptionbase_tokens
@@ -2347,6 +2432,11 @@ function Dashboard({
                                                         .subscriptionbnb_tokens[
                                                         t
                                                       ]?.symbol
+                                                    : chainId === 43114
+                                                      ? window.config
+                                                          .subscription_tokens[
+                                                          t
+                                                        ]?.symbol
                                                     : chainId === 8453
                                                     ? window.config
                                                         .subscriptionbase_tokens[
@@ -2372,6 +2462,11 @@ function Dashboard({
                                                         .subscriptionbnb_tokens[
                                                         t
                                                       ]?.symbol
+                                                      : chainId === 43114
+                                                      ? window.config
+                                                          .subscription_tokens[
+                                                          t
+                                                        ]?.symbol
                                                     : chainId === 8453
                                                     ? window.config
                                                         .subscriptionbase_tokens[
@@ -2405,6 +2500,10 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
+                                                 : chainId === 43114
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : chainId === 1030
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
                                                       t
@@ -2428,6 +2527,10 @@ function Dashboard({
                                               ? window.config
                                                   .subscriptionbnb_tokens[t]
                                                   ?.symbol
+                                            : chainId === 43114
+                                                  ? window.config
+                                                      .subscription_tokens[t]
+                                                      ?.symbol
                                               : chainId === 1030
                                               ? window.config
                                                   .subscriptioncfx_tokens[t]

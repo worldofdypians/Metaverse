@@ -649,7 +649,7 @@ const Marketplace = ({
                     </div>
                   </NavLink>
 
-                  <NavLink
+                  {/* <NavLink
                     to="/marketplace/events/daily-bonus"
                     className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
                     style={{ textDecoration: "none" }}
@@ -665,7 +665,7 @@ const Marketplace = ({
                         className="blur-img"
                       />
                     </div>
-                  </NavLink>
+                  </NavLink> */}
 
                   <NavLink
                     to="/marketplace/events/dragon-ruins"
@@ -763,7 +763,7 @@ const Marketplace = ({
                         </span>
                       </NavLink>
                     </div>
-                    <div className="">
+                    {/* <div className="">
                       <NavLink
                         to="/marketplace/events/daily-bonus"
                         className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -778,7 +778,7 @@ const Marketplace = ({
                           Daily Bonus
                         </span>
                       </NavLink>
-                    </div>
+                    </div> */}
                     <div className="">
                       <NavLink
                         to="/marketplace/events/dragon-ruins"

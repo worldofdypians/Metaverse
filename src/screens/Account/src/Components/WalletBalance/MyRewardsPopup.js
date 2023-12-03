@@ -144,7 +144,7 @@ const MyRewardsPopup = ({
       window.config.wod_caws_address
     );
     if (address) {
-      if (myStakes.length > 0) {
+      if (myStakes && myStakes.length > 0) {
         let rewards = await contract.methods
           .calculateRewards(address, myStakes)
           .call()

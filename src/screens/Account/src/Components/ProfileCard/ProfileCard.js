@@ -78,8 +78,8 @@ const ProfileCard = ({
   handleSetAvailableTime,
   userRank,
   genesisRank,
-  handleOpenDomains,
-  domainName,
+  // handleOpenDomains,
+  // domainName,
 }) => {
   let id = Math.random().toString(36);
 
@@ -114,7 +114,13 @@ const ProfileCard = ({
   };
 
   const handleRefreshCountdown700 = async () => {
-    const dypv1 = new window.infuraWeb3.eth.Contract(
+    if(bundlesBought === 0) {
+      setcountdown700();
+      handleSetAvailableTime()
+    }
+    else if(bundlesBought > 0) {
+
+      const dypv1 = new window.infuraWeb3.eth.Contract(
       DYP_700V1_ABI,
       dyp700v1Address
     );
@@ -122,22 +128,22 @@ const ProfileCard = ({
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
     const remainingTimev1 = await dypv1.methods
-      .getTimeOfExpireBuff(address)
+      .getTimeOfExpireBuff(coinbase)
       .call();
 
     const remainingTimev2 = await dypv2.methods
-      .getTimeOfExpireBuff(address)
+      .getTimeOfExpireBuff(coinbase)
       .call();
 
     var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
 
     var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
     const timeofDepositv1 = await dypv1.methods
-      .getTimeOfDeposit(address)
+      .getTimeOfDeposit(coinbase)
       .call();
 
     const timeofDepositv2 = await dypv2.methods
-      .getTimeOfDeposit(address)
+      .getTimeOfDeposit(coinbase)
       .call();
 
     if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
@@ -188,11 +194,13 @@ const ProfileCard = ({
       setcountdown700((resultv2 + resultv1) * 1000);
       handleSetAvailableTime((resultv2 + resultv1) * 1000);
       // setcountdown700(result * 1000);
-      //
-    } else {
+      //}
+    }
+    else {
       setcountdown700();
       handleSetAvailableTime();
     }
+  } 
   };
 
   const setlastDay = async (addr) => {
@@ -371,7 +379,7 @@ const ProfileCard = ({
         );
 
         // }
-      } else if (week2.includes(today_date.toString()) && bundlesBought <= 3) {
+      } else if (week2.includes(today_date.toString()) && bundlesBought <= 3 && bundlesBought !== 0) {
         handleRefreshCountdown700();
       } else if (week2.includes(today_date.toString()) && bundlesBought > 3) {
         // const remainingTime2 = lastDayofBundle;
@@ -395,7 +403,7 @@ const ProfileCard = ({
         );
 
         // }
-      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
+      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3 && bundlesBought !== 0) {
         handleRefreshCountdown700();
       } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
         // const remainingTime3 = lastDayofBundle;
@@ -494,7 +502,7 @@ const ProfileCard = ({
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (today < finalDateofBundle) {
+        if (today < finalDateofBundle  && bundlesBought !== 0) {
           setcountdown700(
             today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
@@ -516,7 +524,7 @@ const ProfileCard = ({
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (today < finalDateofBundle) {
+        if (today < finalDateofBundle && bundlesBought !== 0) {
           if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
             setcountdown700(finalDateofBundle);
 
@@ -559,10 +567,19 @@ const ProfileCard = ({
 
   useEffect(() => {
     checkBundleDates();
-  }, [bundlesBought, dateofBundle]);
+  }, [bundlesBought, address]);
 
   return (
     <div className="main-wrapper py-4 w-100">
+      {/* {countdown700 !== 0 && countdown700 && ( */}
+        <Countdown
+          date={Number(countdown700)}
+          onComplete={() => {
+            setcountdown700();
+            handleSetAvailableTime();
+          }}
+        />
+      {/* )} */}
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-lg-3 col-12">
           <div
@@ -613,7 +630,7 @@ const ProfileCard = ({
                       <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
-                          {!domainName && (
+                          {/* {!domainName && (
                             <span
                               className={`${
                                 isPremium ? "premiumtext-active" : "premiumtext"
@@ -629,7 +646,7 @@ const ProfileCard = ({
                               )}
                               Get domain name
                             </span>
-                          )}
+                          )} */}
                           {/* {!isPremium && email && (
                             <span
                               className="profile-div-title mb-0 text-decoration-underline"
@@ -714,21 +731,21 @@ const ProfileCard = ({
                                   }}
                                 >
                                   <span className="emailtext">{email}</span>
-                                  {!domainName ? (
-                                    <span className="wallet-address">
-                                      {windowSize.width > 991
-                                        ? isVerified && email
-                                          ? address
-                                          : coinbase
-                                        : isVerified && email
-                                        ? shortAddress(address)
-                                        : shortAddress(coinbase)}
-                                    </span>
-                                  ) : (
+                                  {/* {!domainName ? ( */}
+                                  <span className="wallet-address">
+                                    {windowSize.width > 991
+                                      ? isVerified && email
+                                        ? address
+                                        : coinbase
+                                      : isVerified && email
+                                      ? shortAddress(address)
+                                      : shortAddress(coinbase)}
+                                  </span>
+                                  {/* ) : (
                                     <span className="wallet-address">
                                       {domainName}
                                     </span>
-                                  )}
+                                  )} */}
                                 </div>
                               </div>
                             </Clipboard>

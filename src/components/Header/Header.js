@@ -67,8 +67,8 @@ const Header = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
-  handleOpenDomains,
-  domainName,
+  // handleOpenDomains,
+  // domainName,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -426,13 +426,12 @@ const Header = ({
                     }}
                   >
                     <div
-                      className={`notifications-wrapper d-flex flex-column ${
-                        openNotifications && "open-notifications"
-                      }`}
-                      // style={{
-                      //   justifyContent: myOffers.length === 0 ? "center" : "",
-                      //   alignItems: myOffers.length === 0 ? "center" : "",
-                      // }}
+                      className={`notifications-wrapper d-flex flex-column ${openNotifications && "open-notifications"
+                        }`}
+                    // style={{
+                    //   justifyContent: myOffers.length === 0 ? "center" : "",
+                    //   alignItems: myOffers.length === 0 ? "center" : "",
+                    // }}
                     >
                       <NavLink
                         to={"/notifications"}
@@ -466,9 +465,8 @@ const Header = ({
                                     nft.welcome === "yes"
                                       ? "https://www.worldofdypians.com/marketplace"
                                       : nft.redirect_link
-                                      ? nft.redirect_link
-                                      : `https://www.worldofdypians.com/marketplace/nft/${
-                                          nft.tokenId
+                                        ? nft.redirect_link
+                                        : `https://www.worldofdypians.com/marketplace/nft/${nft.tokenId
                                         }/${nft.nftAddress.toLowerCase()}`
                                   }
                                   rel="noreferrer"
@@ -485,52 +483,52 @@ const Header = ({
                                       width={16}
                                       src={
                                         nft.bought === "yes" &&
-                                        nft.read === false
+                                          nft.read === false
                                           ? cartIconActive
                                           : nft.bought === "yes" &&
                                             nft.read === true
-                                          ? cartIcon
-                                          : nft.offer === "yes" &&
-                                            nft.read === false
-                                          ? offerIconActive
-                                          : nft.offer === "yes" &&
-                                            nft.read === true
-                                          ? offerIcon
-                                          : nft.buy === "yes" &&
-                                            nft.read === false
-                                          ? transferIconActive
-                                          : nft.buy === "yes" &&
-                                            nft.read === true
-                                          ? transferIcon
-                                          : //welcome
-                                          nft.welcome === "yes" &&
-                                            nft.read === false
-                                          ? welcomeIconActive
-                                          : nft.welcome === "yes" &&
-                                            nft.read === true
-                                          ? welcomeIcon
-                                          : //news
-                                          nft.news === "yes" &&
-                                            nft.read === false
-                                          ? newsIconActive
-                                          : nft.news === "yes" &&
-                                            nft.read === true
-                                          ? newsIcon
-                                          : //updates
-                                          nft.update === "yes" &&
-                                            nft.read === false
-                                          ? updateIconActive
-                                          : nft.update === "yes" &&
-                                            nft.read === true
-                                          ? updateIcon
-                                          : //events
-                                          nft.event === "yes" &&
-                                            nft.read === false
-                                          ? eventIconActive
-                                          : nft.event === "yes" &&
-                                            nft.read === true
-                                          ? eventIcon
-                                          : null
+                                            ? cartIcon
+                                            : nft.offer === "yes" &&
+                                              nft.read === false
+                                              ? offerIconActive
+                                              : nft.offer === "yes" &&
+                                                nft.read === true
+                                                ? offerIcon
+                                                : nft.buy === "yes" &&
+                                                  nft.read === false
+                                                  ? transferIconActive
+                                                  : nft.buy === "yes" &&
+                                                    nft.read === true
+                                                    ? transferIcon
+                                                    : //welcome
+                                                    nft.welcome === "yes" &&
+                                                      nft.read === false
+                                                      ? welcomeIconActive
+                                                      : nft.welcome === "yes" &&
+                                                        nft.read === true
+                                                        ? welcomeIcon
+                                                        : //news
+                                                        nft.news === "yes" &&
+                                                          nft.read === false
+                                                          ? newsIconActive
+                                                          : nft.news === "yes" &&
+                                                            nft.read === true
+                                                            ? newsIcon
+                                                            : //updates
+                                                            nft.update === "yes" &&
+                                                              nft.read === false
+                                                              ? updateIconActive
+                                                              : nft.update === "yes" &&
+                                                                nft.read === true
+                                                                ? updateIcon
+                                                                : //events
+                                                                nft.event === "yes" &&
+                                                                  nft.read === false
+                                                                  ? eventIconActive
+                                                                  : nft.event === "yes" &&
+                                                                    nft.read === true
+                                                                    ? eventIcon
+                                                                    : null
                                       }
                                       alt=""
                                     />
@@ -547,10 +545,10 @@ const Header = ({
                                       {nft.buy === "yes"
                                         ? "NFT Sold"
                                         : nft.offer === "yes"
-                                        ? "New Offer"
-                                        : nft.bought === "yes"
-                                        ? "NFT Bought"
-                                        : nft.title}
+                                          ? "New Offer"
+                                          : nft.bought === "yes"
+                                            ? "NFT Bought"
+                                            : nft.title}
                                     </h6>
                                   </div>
                                   <p
@@ -558,36 +556,33 @@ const Header = ({
                                     style={{ fontSize: "10px" }}
                                   >
                                     {nft.bought === "yes"
-                                      ? `Congratulations on being the new owner of  ${
-                                          nft.nftAddress.toLowerCase() ===
-                                          window.config.nft_caws_address.toLowerCase()
-                                            ? "CAWS"
-                                            : nft.nftAddress.toLowerCase() ===
-                                              window.config.nft_land_address.toLowerCase()
-                                            ? "WOD"
-                                            : "Timepiece"
-                                        } #${nft.tokenId}.`
+                                      ? `Congratulations on being the new owner of  ${nft.nftAddress.toLowerCase() ===
+                                        window.config.nft_caws_address.toLowerCase()
+                                        ? "CAWS"
+                                        : nft.nftAddress.toLowerCase() ===
+                                          window.config.nft_land_address.toLowerCase()
+                                          ? "WOD"
+                                          : "Timepiece"
+                                      } #${nft.tokenId}.`
                                       : nft.buy === "yes"
-                                      ? `Your  ${
-                                          nft.nftAddress.toLowerCase() ===
+                                        ? `Your  ${nft.nftAddress.toLowerCase() ===
                                           window.config.nft_caws_address.toLowerCase()
-                                            ? "CAWS"
-                                            : nft.nftAddress.toLowerCase() ===
-                                              window.config.nft_land_address.toLowerCase()
+                                          ? "CAWS"
+                                          : nft.nftAddress.toLowerCase() ===
+                                            window.config.nft_land_address.toLowerCase()
                                             ? "WOD"
                                             : "Timepiece"
                                         } #${nft.tokenId} was sold.`
-                                      : nft.offer === "yes"
-                                      ? `There is a new offer for your ${
-                                          nft.nftAddress.toLowerCase() ===
-                                          window.config.nft_caws_address.toLowerCase()
+                                        : nft.offer === "yes"
+                                          ? `There is a new offer for your ${nft.nftAddress.toLowerCase() ===
+                                            window.config.nft_caws_address.toLowerCase()
                                             ? "CAWS"
                                             : nft.nftAddress.toLowerCase() ===
                                               window.config.nft_land_address.toLowerCase()
-                                            ? "WOD"
-                                            : "Timepiece"
-                                        } #${nft.tokenId}`
-                                      : nft.description?.slice(0, 150) + "..."}
+                                              ? "WOD"
+                                              : "Timepiece"
+                                          } #${nft.tokenId}`
+                                          : nft.description?.slice(0, 150) + "..."}
                                   </p>
                                   <span className="notification-relative-time mb-0">
                                     {getRelativeTime(nft.timestamp)}
@@ -635,16 +630,16 @@ const Header = ({
                             ethState === true
                               ? eth
                               : bnbState === true
-                              ? bnb
-                              : opbnbState === true
-                              ? bnb
-                              : //: : avaxState === true
-                              // ? avax
-                              baseState === true
-                              ? base
-                              : confluxState === true
-                              ? conflux
-                              : error
+                                ? bnb
+                                : opbnbState === true
+                                  ? bnb
+                                  : avaxState === true
+                                    ? avax
+                                    : baseState === true
+                                      ? base
+                                      : confluxState === true
+                                        ? conflux
+                                        : error
                           }
                           height={16}
                           width={16}
@@ -654,16 +649,16 @@ const Header = ({
                           {ethState === true
                             ? "Ethereum"
                             : bnbState === true
-                            ? "BNB Chain"
-                            : opbnbState === true
-                            ? "opBNB Chain"
-                            : //:  : avaxState === true
-                            // ? "Avalanche"
-                            baseState === true
-                            ? "Base"
-                            : confluxState === true
-                            ? "Conflux"
-                            : "Unsupported"}
+                              ? "BNB Chain"
+                              : opbnbState === true
+                                ? "opBNB Chain"
+                                : avaxState === true
+                                  ? "Avalanche"
+                                   : baseState === true
+                                    ? "Base"
+                                    : confluxState === true
+                                      ? "Conflux"
+                                      : "Unsupported"}
                         </span>
                       </div>
 
@@ -679,14 +674,14 @@ const Header = ({
                     <img src={bnb} alt="" />
                     BNB Chain
                   </Dropdown.Item>
-                  {/* <Dropdown.Item onClick={() => handleAvaxPool()}>
-                  <img src={avax} alt="" />
-                  Avalanche
-                </Dropdown.Item> */}
-                    <Dropdown.Item onClick={() => handleOpBnbPool()}>
-                  <img src={bnb} alt="" />
-                  opBNB Chain
-                </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleAvaxPool()}>
+                    <img src={avax} alt="" />
+                    Avalanche
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                    <img src={bnb} alt="" />
+                    opBNB Chain
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
@@ -714,7 +709,8 @@ const Header = ({
                       setShowMenu(true);
                     }}
                   >
-                    {domainName ? domainName : shortAddress(coinbase)}
+                    {/* {domainName ? domainName : shortAddress(coinbase)} */}
+                    {shortAddress(coinbase)}
                     <img src={dropdown} alt="" />
                   </div>
                 </Clipboard>
@@ -743,7 +739,7 @@ const Header = ({
                 >
                   <div className="menuwrapper">
                     <div className="d-flex flex-column gap-2">
-                      <span
+                      {/* <span
                         className="menuitem2"
                         onClick={() => {
                           handleOpenDomains();
@@ -752,7 +748,7 @@ const Header = ({
                       >
                         <img src={domainIcon} width={16} height={16} alt="" />{" "}
                         Domain Name{" "}
-                      </span>
+                      </span> */}
                       <span
                         className="menuitem2"
                         onClick={() => {
