@@ -1870,6 +1870,9 @@
   left: 0;
   margin: auto;
   aspect-ratio: 0.76/1;
+  -webkit-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   // background-size: 100% 100%;
   z-index: 101;
   // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
@@ -2153,7 +2156,7 @@
   }
 }
 .past-base-mint-amount {
-  color: #0052FF;
+  color: #0052ff;
   text-align: center;
   font-size: 40px;
   font-style: normal;
@@ -2851,7 +2854,7 @@
   letter-spacing: 0.12px;
   white-space: pre;
   @media screen and (max-width: 1650px) {
-  font-size: 13px;
+    font-size: 13px;
   }
 }
 
@@ -3518,7 +3521,7 @@
 }
 .upcoming-dyp-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #1D4D17 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, #1d4d17 168.67%);
 }
 
 .base-upcoming-mint-wrapper {

@@ -63,8 +63,8 @@ function Dashboard({
   availableTime,
   success,
   handleSwitchNetwork,
-  // domainName,
-  // handleOpenDomains,
+  domainName,
+  handleOpenDomains,
 }) {
   const { email, logout } = useAuth();
 
@@ -1796,8 +1796,8 @@ function Dashboard({
                         handleSetAvailableTime={(value) => {
                           setGoldenPassRemainingTime(value);
                         }}
-                        // handleOpenDomains={handleOpenDomains}
-                        // domainName={domainName}
+                        handleOpenDomains={handleOpenDomains}
+                        domainName={domainName}
                       />
 
                       <NewWalletBalance
