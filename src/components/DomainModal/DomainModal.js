@@ -94,7 +94,7 @@ const DomainModal = ({
                   onSearch(e.target.value);
                   setDomainSearch(e.target.value);
                 }}
-                placeholder="example.bnb"
+                placeholder="Search"
               />
             </div>
             {chainId === 56 &&
