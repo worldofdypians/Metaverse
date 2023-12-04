@@ -67,8 +67,8 @@ const Header = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
-  // handleOpenDomains,
-  // domainName,
+  handleOpenDomains,
+  domainName,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -709,8 +709,8 @@ const Header = ({
                       setShowMenu(true);
                     }}
                   >
-                    {/* {domainName ? domainName : shortAddress(coinbase)} */}
-                    {shortAddress(coinbase)}
+                    {domainName ? domainName : shortAddress(coinbase)}
+                    {/* {shortAddress(coinbase)} */}
                     <img src={dropdown} alt="" />
                   </div>
                 </Clipboard>
@@ -739,7 +739,7 @@ const Header = ({
                 >
                   <div className="menuwrapper">
                     <div className="d-flex flex-column gap-2">
-                      {/* <span
+                      <span
                         className="menuitem2"
                         onClick={() => {
                           handleOpenDomains();
@@ -748,7 +748,7 @@ const Header = ({
                       >
                         <img src={domainIcon} width={16} height={16} alt="" />{" "}
                         Domain Name{" "}
-                      </span> */}
+                      </span>
                       <span
                         className="menuitem2"
                         onClick={() => {

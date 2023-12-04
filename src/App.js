@@ -217,6 +217,8 @@ function App() {
   const [domainPrice, setDomainPrice] = useState(0);
   const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
   const [successMessage, setSuccessMessage] = useState("");
+  const [successDomain, setSuccessDomain] = useState(false);
+
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
   const [domainMetaData, setDomainMetaData] = useState(null);
@@ -272,13 +274,16 @@ function App() {
       })
       .then(() => {
         setSuccessMessage("You have successfully registered your .bnb domain");
+        setSuccessDomain(true);
         setTimeout(() => {
           setSuccessMessage("");
+          setSuccessDomain(false);
         }, 5000);
         setLoadingDomain(false);
       })
       .catch((e) => {
         setLoadingDomain(false);
+        setSuccessDomain(false);
         setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
         setTimeout(() => {
           setSuccessMessage("");
@@ -1760,10 +1765,10 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   getDomains();
-  //   fetchBscBalance();
-  // }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
+  useEffect(() => {
+    getDomains();
+    fetchBscBalance();
+  }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -1832,8 +1837,8 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
-            // handleOpenDomains={() => setDomainPopup(true)}
-            // domainName={domainName}
+            handleOpenDomains={() => setDomainPopup(true)}
+            domainName={domainName}
           />
           <MobileNavbar
             handleSignUp={handleShowWalletModal}
@@ -1850,8 +1855,8 @@ function App() {
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
             handleSwitchChainGateWallet={handleSwitchNetwork}
-            // handleOpenDomains={() => setDomainPopup(true)}
-            // domainName={domainName}
+            handleOpenDomains={() => setDomainPopup(true)}
+            domainName={domainName}
           />
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
@@ -1967,8 +1972,8 @@ function App() {
                   success={success}
                   availableTime={availTime}
                   handleSwitchNetwork={handleSwitchNetwork}
-                  // handleOpenDomains={() => setDomainPopup(true)}
-                  // domainName={domainName}
+                  handleOpenDomains={() => setDomainPopup(true)}
+                  domainName={domainName}
                 />
               }
             />
@@ -2434,6 +2439,7 @@ function App() {
             onRegister={registerDomain}
             loading={loadingDomain}
             successMessage={successMessage}
+            successDomain={successDomain}
             metadata={domainMetaData}
             bscAmount={bscAmount}
           />
