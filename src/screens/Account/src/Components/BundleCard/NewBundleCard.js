@@ -231,26 +231,24 @@ const NewBundleCard = ({
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
-      if ((coinbase?.toLowerCase() !== wallet?.toLowerCase()) || chainId !== 56) {
+      if (coinbase?.toLowerCase() !== wallet?.toLowerCase() || chainId !== 56) {
         setcheckWallet(false);
       }
-      if ((coinbase?.toLowerCase() === wallet?.toLowerCase()) && chainId === 56) {
+      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
         if (priceType === 1 && packageData.title === "Golden Pass") {
           setcheckWallet(true);
         } else if (priceType === 0 && packageData.title === "Golden Pass") {
           setcheckWallet(false);
-        }
-        else setcheckWallet(true)
+        } else setcheckWallet(true);
       }
-      if ((coinbase?.toLowerCase() === wallet?.toLowerCase()) && chainId === 1) {
+      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 1) {
         if (priceType === 1 && packageData.title === "Golden Pass") {
           setcheckWallet(false);
         } else if (priceType === 0 && packageData.title === "Golden Pass") {
           setcheckWallet(true);
         }
       }
-    } 
-    else setcheckWallet(false);
+    } else setcheckWallet(false);
   };
 
   const checkApproval = async () => {
@@ -799,10 +797,10 @@ const NewBundleCard = ({
     setcountdown3500(remainingTime);
   };
 
-  let twentyfiveNovember = new Date("2023-11-25 23:59:00 GMT+02:00");
+  let twentyfiveDecember = new Date("2023-12-25 23:59:00 GMT+02:00");
   let today = new Date();
-  let oneNovember = new Date("2023-11-01 11:11:00 GMT+02:00");
   let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
+  let oneJanuary = new Date("2024-01-01 11:11:00 GMT+02:00");
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -863,10 +861,10 @@ const NewBundleCard = ({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         setisAtlimit(true);
         setStatus700(
@@ -892,10 +890,10 @@ const NewBundleCard = ({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         setisAtlimit(true);
         setStatus700(
@@ -903,30 +901,10 @@ const NewBundleCard = ({
         );
         setStatusColor700("#FE7A00");
         // }
-      } else if (week3.includes(today_date.toString()) && bundlesBought === 1) {
-        // handleRefreshCountdown700();
-        // setisAtlimit(false);
-        const finalDateofBundle =
-          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-        const finalDateofBundleBought =
-          datewhenBundleBought >= datewhenBundleBoughtv1
-            ? datewhenBundleBought
-            : datewhenBundleBoughtv1;
-
-        if (today < finalDateofBundle) {
-          setcountdown700(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-          );
-          handleSetAvailableTime(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-          );
-          setisAtlimit(true);
-          setStatusColor700("#FE7A00");
-          setStatus700(
-            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          );
-        }
-      } else if (week3.includes(today_date.toString()) && bundlesBought >= 2) {
+      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3) {
+        handleRefreshCountdown700();
+        setisAtlimit(false);
+      } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
         // const remainingTime3 = lastDayofBundle;
         // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
 
@@ -957,17 +935,22 @@ const NewBundleCard = ({
 
         const finalDateofBundle =
           dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleFormatted = new Date(finalDateofBundle);
+
         const finalDateofBundleBought =
           datewhenBundleBought >= datewhenBundleBoughtv1
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (today < finalDateofBundle) {
+        if (
+          today < finalDateofBundle &&
+          today.getFullYear() === finalDateofBundleFormatted.getFullYear()
+        ) {
           setcountdown700(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
           handleSetAvailableTime(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
           setisAtlimit(true);
           setStatusColor700("#FE7A00");
@@ -1004,7 +987,7 @@ const NewBundleCard = ({
         } else if (
           today > finalDateofBundle &&
           bundlesBought > 0 &&
-          finalDateofBundleBought !== 0
+          today.getFullYear() !== finalDateofBundleFormatted.getFullYear()
         ) {
           setisAtlimit(false);
           setcountdown700();
@@ -1019,73 +1002,63 @@ const NewBundleCard = ({
         // setisAtlimit(false);
         const finalDateofBundle =
           dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-        const finalDateofBundleBought =
-          datewhenBundleBought >= datewhenBundleBoughtv1
-            ? datewhenBundleBought
-            : datewhenBundleBoughtv1;
 
-            if (today < finalDateofBundle) {setcountdown700(
-              today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-            );
-            handleSetAvailableTime(
-              today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-            );
-            setisAtlimit(true);
-            setStatusColor700("#FE7A00");
-            setStatus700(
-              "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-            );
-          } else if (today > finalDateofBundle && bundlesBought > 0) {
-            setisAtlimit(false);
-            setcountdown700();
-            handleSetAvailableTime();
-            setStatus700(
-              "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-            );
-            setStatusColor700("#FE7A00");
-          }
-       
-      } else if (week4.includes(today_date.toString()) && today_date > 22) {
-        const finalDateofBundle =
-          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+        const finalDateofBundleFormatted = new Date(finalDateofBundle);
         const finalDateofBundleBought =
           datewhenBundleBought >= datewhenBundleBoughtv1
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
         if (today < finalDateofBundle) {
-          // if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
-          //   setcountdown700(finalDateofBundle);
-          //   setisAtlimit(false);
-          //   handleSetAvailableTime(finalDateofBundle);
-          // } else {
-          //   setcountdown700(
-          //     today < oneNovember
-          //       ? oneNovember.getTime()
-          //       : oneDecember.getTime()
-          //   );
-          //   handleSetAvailableTime(
-          //     today < oneNovember
-          //       ? oneNovember.getTime()
-          //       : oneDecember.getTime()
-          //   );
-          //   setisAtlimit(true);
-          //   setStatusColor700("#FE7A00");
-          //   setStatus700(
-          //     "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          //   );
-          // }
           setcountdown700(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
           handleSetAvailableTime(
-            today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
           );
           setisAtlimit(true);
           setStatusColor700("#FE7A00");
           setStatus700(
             "The Golden Pass bundle is currently not available for purchase. Please check back next month."
           );
+        } else if (today > finalDateofBundle && bundlesBought > 0) {
+          setisAtlimit(false);
+          setcountdown700();
+          handleSetAvailableTime();
+          setStatus700(
+            "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+          );
+          setStatusColor700("#FE7A00");
+        }
+      } else if (week4.includes(today_date.toString()) && today_date > 22) {
+        const finalDateofBundle =
+          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
+
+        const finalDateofBundleFormatted = new Date(finalDateofBundle);
+
+        const finalDateofBundleBought =
+          datewhenBundleBought >= datewhenBundleBoughtv1
+            ? datewhenBundleBought
+            : datewhenBundleBoughtv1;
+
+        if (today < finalDateofBundle) {
+          if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
+            setcountdown700(finalDateofBundle);
+            setisAtlimit(false);
+            handleSetAvailableTime(finalDateofBundle);
+          } else {
+            setcountdown700(
+              today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            );
+            handleSetAvailableTime(
+              today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            );
+            setisAtlimit(true);
+            setStatusColor700("#FE7A00");
+            setStatus700(
+              "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+            );
+          }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setisAtlimit(false);
           setcountdown700();
@@ -1103,10 +1076,10 @@ const NewBundleCard = ({
       if (today < finalDateofBundle) {
         setisAtlimit(true);
         setcountdown700(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         handleSetAvailableTime(
-          today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
         );
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
@@ -1124,8 +1097,6 @@ const NewBundleCard = ({
     }
   };
 
-
-
   useEffect(() => {
     if (packageData.title === "Dragon Ruins") {
       handleRefreshCountdown();
@@ -1138,20 +1109,12 @@ const NewBundleCard = ({
     checkApproval3500();
     checkApproval();
     increaseBundle();
-  }, [
-    coinbase,
-    chainId,
-    packageData,
-    lastDayofBundle,
-    status700,
-    bundlesBought,
-    priceType,
-  ]);
+  }, [coinbase, chainId, packageData, status700, bundlesBought, priceType]);
 
   useEffect(() => {
     checkApproval700(priceType);
     checkBundleDates();
-  }, [coinbase, chainId, packageData, bundlesBought]);
+  }, [coinbase, chainId, bundlesBought]);
 
   useEffect(() => {
     if (chainId !== 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
@@ -1161,13 +1124,22 @@ const NewBundleCard = ({
       setStatus3500(
         "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
       );
-      if (priceType === 1 && isAtlimit === false && packageData.title === 'Golden Pass') {
+      if (
+        priceType === 1 &&
+        isAtlimit === false &&
+        packageData.title === "Golden Pass"
+      ) {
         setStatus700(
           "You are on the wrong chain. Switch back to BNB Chain to purchase the bundle."
         );
       } else if (priceType === 0 && chainId === 1 && isAtlimit === false) {
         setStatus700("");
-      } else if (priceType === 0 && chainId !== 1 && isAtlimit === false && packageData.title === 'Golden Pass') {
+      } else if (
+        priceType === 0 &&
+        chainId !== 1 &&
+        isAtlimit === false &&
+        packageData.title === "Golden Pass"
+      ) {
         setStatus700(
           "You are on the wrong chain. Switch back to Ethereum Chain to purchase the bundle."
         );
@@ -1231,32 +1203,25 @@ const NewBundleCard = ({
       // bundlesBought === 4 &&
       // lastDayofBundleMilliseconds > 0 &&
       // bundleExpireMiliseconds > 0
-      bundlesBought === 4 
-      // && lastDayofBundleMilliseconds > 0 &&
+      bundlesBought === 4
       // bundleExpireMiliseconds > 0
     ) {
       setisAtlimit(true);
       setcountdown700(
-        today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
       );
       handleSetAvailableTime(
-        today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
+        today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
       );
       setStatus700(
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
       );
     }
-  }, [
-    priceType,
-    chainId,
-    bundlesBought,
-    countdown700,
-    bundleExpireMiliseconds,
-  ]);
+  }, [priceType, chainId, bundlesBought, countdown700]);
 
   useEffect(() => {
     getTokenData();
-    if (today > twentyfiveNovember) {
+    if (today > twentyfiveDecember) {
       setisAtlimit(true);
     }
 

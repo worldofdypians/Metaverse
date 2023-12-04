@@ -1,5 +1,3 @@
-
-
 export const handleSwitchNetworkhook = async (chainID) => {
   const { ethereum } = window;
   let error;
@@ -40,6 +38,19 @@ export const handleSwitchNetworkhook = async (chainID) => {
     blockExplorerUrls: ["https://bscscan.com"],
   };
 
+  const OPBNBPARAMS = {
+    chainId: "0xcc", // A 0x-prefixed hexadecimal string
+     rpcUrls: ["https://opbnb.publicnode.com"],
+     chainName: "opBNB Mainnet",
+    nativeCurrency: {
+      name: "opBNB",
+      symbol: "BNB", // 2-6 characters long
+      decimals: 18,
+    },
+   
+    blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
+  };
+
   const BASEPARAMS = {
     chainId: "0x2105", // A 0x-prefixed hexadecimal string
     chainName: "Base Mainnet",
@@ -65,19 +76,24 @@ export const handleSwitchNetworkhook = async (chainID) => {
   };
 
   try {
-  
-      await ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: chainID }],
-      });
-      if (window.ethereum && window.ethereum.isTrust === true) {
-        window.location.reload();
-      }
-   
+    await ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: chainID }],
+    });
+    if (window.ethereum && window.ethereum.isTrust === true) {
+      window.location.reload();
+    }
   } catch (switchError) {
     // This error code indicates that the chain has not been added to MetaMask.
     console.log(switchError, "switch");
-    if (switchError.code === 4902 || (chainID === "0x406" && switchError.code.toString().includes('32603')) || (chainID === "0x2105" && switchError.code.toString().includes('32603'))) {
+    if (
+      switchError.code === 4902 ||
+      (chainID === "0x406" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x2105" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
+      (switchError.code === 4902 &&
+        switchError.message.includes("Unrecognized chainID"))
+    ) {
       try {
         await ethereum.request({
           method: "wallet_addEthereumChain",
@@ -88,15 +104,15 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [AVAXPARAMS]
               : chainID === "0x38"
               ? [BNBPARAMS]
+              : chainID === "0xcc"
+              ? [OPBNBPARAMS]
               : chainID === "0x2105"
               ? [BASEPARAMS]
               : chainID === "0x406"
               ? [CONFLUXPARAMS]
               : "",
         });
-        if (
-          (window.ethereum && window.ethereum.isTrust === true) 
-        ) {
+        if (window.ethereum && window.ethereum.isTrust === true) {
           window.location.reload();
         }
       } catch (addError) {

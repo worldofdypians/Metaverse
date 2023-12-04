@@ -151,7 +151,7 @@ const DailyBonusModal = ({ data, onClose }) => {
           <p className="popup-event-desc">
             The rewards are pretty sweet! You can get Leaderboard points,
             regular Rewards, special Genesis Land NFTs, unique CAWS NFTs, the
-            elusive Beta Pass NFT, and some really big prizes. So, start
+            exclusive Beta Pass NFT, and some really big prizes. So, start
             unlocking those chests and enjoy the rewards!
           </p>
         </div>

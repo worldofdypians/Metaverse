@@ -39,7 +39,7 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel, syncStatus }) => {
       <Box sx={style}>
         <div className="d-flex flex-column gap-3">
           <div className="d-flex justify-content-between gap-1  position-relative">
-            <h6 className="text-white summarytitle"></h6>
+            <h6 className="text-white summarytitle">Synchronize Wallet</h6>
             <img
               src={closeX}
               alt=""
