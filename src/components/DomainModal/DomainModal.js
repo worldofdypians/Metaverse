@@ -321,7 +321,7 @@ const DomainModal = ({
                         className="selected-domain-search-item p-2 justify-content-between d-flex align-items-center gap-4 gap-lg-5"
                         style={{
                           borderRadius: "8px",
-                          width: windowSize.width > 786 ? "220px" : "100%",
+                          // width: windowSize.width > 786 ? "220px" : "100%",
                         }}
                       >
                         <span
