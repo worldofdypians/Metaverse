@@ -4,6 +4,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import dropdownIcon from "./assets/dropdownIcon.svg";
+import NftPopup from "./NftPopup";
 
 const NFTBridge = ({
   coinbase,
@@ -17,6 +18,7 @@ const NFTBridge = ({
   const [filterTitle, setFilterTitle] = useState("");
   const [destinationFilterTitle, setDestinationFilterTitle] = useState("");
   const [showPopup, setshowPopup] = useState(false);
+  const [nftType, setnftType] = useState("land");
 
   const showNftSelectionPopup = () => {
     setshowPopup(true);
@@ -282,6 +284,17 @@ const NFTBridge = ({
           </div>
         </div>
       </div>
+      {showPopup && (
+        <NftPopup
+          onModalClose={() => {
+            setshowPopup(false);
+          }}
+          nftItem={nftType === "land" ? myNFTSLand : myNFTSCaws}
+          onTabSelect={(value) => {
+            setnftType(value);
+          }}
+        />
+      )}
     </div>
   );
 };

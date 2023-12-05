@@ -564,6 +564,8 @@ function App() {
       setMyNFTs(nfts);
     }
   };
+
+  console.log(myNFTs)
   const getMyNFTS = async (coinbase, type) => {
     return await window.getMyNFTs(coinbase, type);
   };
@@ -1358,10 +1360,15 @@ function App() {
       myCAWStakes();
       myLandStakes();
       getmyCawsWodStakes();
-      myCAWNft();
+   
+    }
+    if (isConnected === true && coinbase) {
       myNft();
+      myCAWNft();
+   
     }
     fetchAllMyNfts();
+    
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
   // useEffect(() => {
@@ -1946,8 +1953,8 @@ function App() {
                   }}
                   chainId={chainId}
                   isConnected={isConnected}
-                  myNFTSLand={MyNFTSLand}
-                  myNFTSCaws={MyNFTSCaws}
+                  myNFTSLand={myNFTs}
+                  myNFTSCaws={myCAWNFTs}
                 />
               }
             />

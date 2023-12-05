@@ -8,7 +8,7 @@
   background: linear-gradient(
     148deg,
     rgba(20, 27, 68, 0.1) 0%,
-    rgba(20, 27, 68, 0.05) 100%
+    rgba(20, 27, 68, 0.5) 100%
   );
 }
 
@@ -49,13 +49,43 @@
 }
 
 .timeline-wrapper-item {
-    position: relative;
-    top: -20px;
-    left: 20px;
+  position: relative;
+  top: -20px;
+  left: 20px;
 }
 
 .timeline-wrapper-item2 {
-    position: relative;
-    top: -10px;
-    left: 20px;
+  position: relative;
+  top: -10px;
+  left: 20px;
+}
+
+.select-all-btn-new {
+  border-radius: 8px;
+  border: 1px solid #494b63;
+  background: rgba(8, 11, 42, 0.3);
+  color: #f7f7fc;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 147px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.select-all-btn-new-active {
+  border-radius: 8px;
+  border: 1px solid #18ffff;
+  background: rgba(24, 255, 255, 0.3);
+  color: #f7f7fc;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 147px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
 }
