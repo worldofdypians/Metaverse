@@ -68,8 +68,8 @@ import {
 } from "web3-connector";
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
-
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
+import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 
 function App() {
   const CHAINLIST = {
@@ -1931,6 +1931,23 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   timepieceMetadata={timepieceMetadata}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/marketplace/nft-bridge"
+              element={
+                <NFTBridge
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  chainId={chainId}
+                  isConnected={isConnected}
+                  myNFTSLand={MyNFTSLand}
+                  myNFTSCaws={MyNFTSCaws}
                 />
               }
             />
