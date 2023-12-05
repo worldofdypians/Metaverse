@@ -2203,7 +2203,7 @@ const NewWalletBalance = ({
                 rel="noreferrer"
                 className="d-flex gap-1 align-items-center greensocial"
               >
-                <img alt="" src={twitter} /> Twitter
+                <img alt="" width={16} height={16} src={twitter} /> Twitter
               </a>
 
               <a
