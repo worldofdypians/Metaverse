@@ -95,6 +95,8 @@ const Footer = () => {
             {socials.map((item, index) => (
               <a href={item.link} key={index} target="_blank" rel="noreferrer">
                 <img
+                 width={25}
+                 height={25}
                   src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                   alt={item.icon}
                 />
@@ -106,12 +108,15 @@ const Footer = () => {
             <div className="mobile-socials d-flex align-items-center justify-content-between w-100">
               {socials.slice(0, 4).map((item, index) => (
                 <a
+              
                   href={item.link}
                   key={index}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <img
+                    width={25}
+                    height={25}
                     src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                     alt={item.icon}
                   />
@@ -127,6 +132,8 @@ const Footer = () => {
                   rel="noreferrer"
                 >
                   <img
+                    width={25}
+                    height={25}
                     src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                     alt={item.icon}
                   />
