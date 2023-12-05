@@ -215,7 +215,6 @@ function Dashboard({
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
 
-
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
   const dailyPrizesGolden = [10, 8, 5, 5, 5, 5, 5, 5, 5, 5];
@@ -533,20 +532,24 @@ function Dashboard({
     // console.log(userPosition)
 
     if (goldenPassRemainingTime) {
-      setUserRank2(testArray[0].statValue !== 0 ?
-        userPosition > 10
-          ? 0
-          : userPosition === 10
-          ? monthlyPrizes[9] + monthlyPrizesGolden[9]
-          : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition] : 0
+      setUserRank2(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
+            : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+          : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setUserRank2(testArray[0].statValue !== 0 ?
-        userPosition > 10
-          ? 0
-          : userPosition === 10
-          ? monthlyPrizes[9]
-          : monthlyPrizes[userPosition] : 0
+      setUserRank2(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9]
+            : monthlyPrizes[userPosition]
+          : 0
       );
     }
 
@@ -587,24 +590,28 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === userName
       );
- 
+
       const userPosition = testArray[0].position;
 
       if (goldenPassRemainingTime) {
-        setdailyplayerData( testArray[0].statValue !== 0 ?
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? dailyPrizes[9] + dailyPrizesGolden[9]
-            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition] : 0
+        setdailyplayerData(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? dailyPrizes[9] + dailyPrizesGolden[9]
+              : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
+            : 0
         );
       } else if (!goldenPassRemainingTime) {
-        setdailyplayerData(testArray[0].statValue !== 0 ?
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? dailyPrizes[9]
-            : dailyPrizes[userPosition] : 0
+        setdailyplayerData(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? dailyPrizes[9]
+              : dailyPrizes[userPosition]
+            : 0
         );
       }
     }
@@ -628,20 +635,24 @@ function Dashboard({
 
     const userPosition = testArray[0].position;
     if (goldenPassRemainingTime) {
-      setweeklyplayerData(testArray[0].statValue !== 0 ?
-        userPosition > 10
-          ? 0
-          : userPosition === 10
-          ? weeklyPrizes[9] + weeklyPrizesGolden[9]
-          : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition] : 0
+      setweeklyplayerData(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? weeklyPrizes[9] + weeklyPrizesGolden[9]
+            : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
+          : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setweeklyplayerData(testArray[0].statValue !== 0 ?
-        userPosition > 10
-          ? 0
-          : userPosition === 10
-          ? weeklyPrizes[9]
-          : weeklyPrizes[userPosition] : 0
+      setweeklyplayerData(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? weeklyPrizes[9]
+            : weeklyPrizes[userPosition]
+          : 0
       );
     }
   };
@@ -659,7 +670,6 @@ function Dashboard({
     const web3bnb = window.bscWeb3;
     const web3avax = window.avaxWeb3;
 
-
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
@@ -672,7 +682,6 @@ function Dashboard({
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
 
-
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
 
@@ -682,8 +691,10 @@ function Dashboard({
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-    const avaxcontract = new web3avax.eth.Contract(AvaxABI, avaxsubscribeAddress);
-
+    const avaxcontract = new web3avax.eth.Contract(
+      AvaxABI,
+      avaxsubscribeAddress
+    );
 
     if (addr) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
@@ -702,7 +713,7 @@ function Dashboard({
         .subscriptionPlatformTokenAmount(addr)
         .call();
 
-        subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call();
 
@@ -710,8 +721,8 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0"  &&
-        subscribedPlatformTokenAmountAvax === "0"  
+        subscribedPlatformTokenAmountBNB === "0" &&
+        subscribedPlatformTokenAmountAvax === "0"
       ) {
         setIsPremium(false);
       }
@@ -719,8 +730,8 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
         subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0"   ||
-        subscribedPlatformTokenAmountAvax !== "0"  
+        subscribedPlatformTokenAmountBNB !== "0" ||
+        subscribedPlatformTokenAmountAvax !== "0"
       ) {
         setIsPremium(true);
       }
@@ -1518,8 +1529,7 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wbase);
       handleCheckIfAlreadyApproved(wbase);
-    }
-    else if (chainId === 43114) {
+    } else if (chainId === 43114) {
       setChainDropdown(chainDropdowns[2]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1527,8 +1537,7 @@ function Dashboard({
         Object.keys(window.config.subscription_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
-    }
-    else {
+    } else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
@@ -1552,8 +1561,7 @@ function Dashboard({
       );
     } else if (chainId === 43114 && selectedSubscriptionToken !== "") {
       settokenDecimals(
-        window.config.subscription_tokens[selectedSubscriptionToken]
-          ?.decimals
+        window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
       );
     } else if (chainId === 1030 && selectedSubscriptionToken !== "") {
       settokenDecimals(
@@ -1645,7 +1653,13 @@ function Dashboard({
       getmyCawsWodStakes();
       getmyWodStakes();
     }
-  }, [email, data?.getPlayer?.wallet?.publicAddress, coinbase, chainId]);
+  }, [
+    email,
+    userWallet,
+    data?.getPlayer?.wallet?.publicAddress,
+    coinbase,
+    chainId,
+  ]);
 
   useEffect(() => {
     getOtherNfts();
@@ -1903,6 +1917,7 @@ function Dashboard({
                       myNFTSCoingecko={MyNFTSCoingecko}
                       myGateNfts={myGateNfts}
                       myConfluxNfts={myConfluxNfts}
+                      myBaseNfts={myBaseNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
@@ -2194,10 +2209,9 @@ function Dashboard({
                                       alt=""
                                     />
                                     <span className="subscription-chain mb-0">
-                                    Avalanche
+                                      Avalanche
                                     </span>
                                   </div>
-                                  
 
                                   <div className="d-flex align-items-center gap-2">
                                     <img
@@ -2220,8 +2234,6 @@ function Dashboard({
                                       Conflux
                                     </span>
                                   </div>
-
-                                  
                                 </div>
                                 <img src={premiumIcon} alt="" />
                               </div>
@@ -2314,12 +2326,15 @@ function Dashboard({
                                       />
                                       BNB Chain
                                     </li>
-                                     <li
+                                    <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleAvaxPool}
                                     >
                                       <img
-                                        src={require(`../../Images/premium/tokens/wavaxIcon.svg`).default}
+                                        src={
+                                          require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                            .default
+                                        }
                                         alt=""
                                       />
                                       Avalanche
@@ -2352,7 +2367,6 @@ function Dashboard({
                                       />
                                       Conflux Network
                                     </li>
-                                   
                                   </ul>
                                 </div>
                               </div>
@@ -2407,8 +2421,7 @@ function Dashboard({
                                             ? window.config
                                                 .subscriptioncfx_tokens
                                             : chainId === 43114
-                                            ? window.config
-                                                .subscription_tokens
+                                            ? window.config.subscription_tokens
                                             : chainId === 8453
                                             ? window.config
                                                 .subscriptionbase_tokens
@@ -2433,10 +2446,9 @@ function Dashboard({
                                                         t
                                                       ]?.symbol
                                                     : chainId === 43114
-                                                      ? window.config
-                                                          .subscription_tokens[
-                                                          t
-                                                        ]?.symbol
+                                                    ? window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
                                                     : chainId === 8453
                                                     ? window.config
                                                         .subscriptionbase_tokens[
@@ -2462,11 +2474,10 @@ function Dashboard({
                                                         .subscriptionbnb_tokens[
                                                         t
                                                       ]?.symbol
-                                                      : chainId === 43114
-                                                      ? window.config
-                                                          .subscription_tokens[
-                                                          t
-                                                        ]?.symbol
+                                                    : chainId === 43114
+                                                    ? window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
                                                     : chainId === 8453
                                                     ? window.config
                                                         .subscriptionbase_tokens[
@@ -2500,10 +2511,10 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                                 : chainId === 43114
-                                                    ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                        t
-                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 43114
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : chainId === 1030
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
                                                       t
@@ -2527,10 +2538,10 @@ function Dashboard({
                                               ? window.config
                                                   .subscriptionbnb_tokens[t]
                                                   ?.symbol
-                                            : chainId === 43114
-                                                  ? window.config
-                                                      .subscription_tokens[t]
-                                                      ?.symbol
+                                              : chainId === 43114
+                                              ? window.config
+                                                  .subscription_tokens[t]
+                                                  ?.symbol
                                               : chainId === 1030
                                               ? window.config
                                                   .subscriptioncfx_tokens[t]
