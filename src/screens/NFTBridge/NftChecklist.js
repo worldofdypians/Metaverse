@@ -29,7 +29,8 @@ const NftChecklist = ({
           width: width,
           height: "auto",
           borderRadius: "20px",
-          border: checkbtn === true ? "2px solid #4ED5D2" : "none",
+          border:
+            checkbtn === true ? "2px solid #4ED5D2" : "2px solid transparent",
         }}
       >
         <div
@@ -70,11 +71,11 @@ const NftChecklist = ({
                     color: "#B8B8E0",
                   }}
                 >
-                  {nft.name}
+                  {nftType === "land" && "Genesis"} {nft.name}
                 </p>
 
                 <input
-                  type="checkbox"
+                  type="radio"
                   id={checklistItemID}
                   name="checkbtn"
                   checked={checkbtn}

@@ -1473,6 +1473,24 @@ window.config = {
   nft_conflux_address: "0x2deecf2a05f735890eb3ea085d55cec8f1a93895",
   nft_base_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
 
+  ccip_eth_caws_address: '0x2824Ac0Eab15744396E763A698b55F4Fe983a757',
+  ccip_bnb_caws_address: '0x0C5E19B9147c39d196bC6c88D087A7A84f99563E',
+  ccip_avax_caws_address: '0x8e99Eae11a1423e9ea27638C85648c702C818961',
+  ccip_base_caws_address: '0x81Dd9ac0886D77e219ce32476808d76ba609768c',
+
+
+  ccip_eth_wod_address: '0xec0E656E2Dcd53f1BCdD6e68D42328f5c76652c0',
+  ccip_bnb_wod_address: '0x108e599592c4e8114f5C72800767264d835c8340',
+  ccip_avax_wod_address: '0x5390F1cD564b23c4594247B3577da439ACB0B228',
+  ccip_base_wod_address: '0xB7433695Cc98f9BC799Ac9a090c45357f25F463f',
+
+  destination_chain_selector_eth: 5009297550715157269,
+  destination_chain_selector_bnb: 11344663589394136015,
+  destination_chain_selector_avax: 6433500567565415381,
+  destination_chain_selector_base: 15971525489660198786,
+
+
+
   nft_land_address: "0xcd60d912655281908ee557ce1add61e983385a03",
   cg_ids: {
     // lowercase contract address => coingecko id

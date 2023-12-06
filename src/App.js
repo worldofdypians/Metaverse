@@ -565,7 +565,7 @@ function App() {
     }
   };
 
-  console.log(myNFTs)
+
   const getMyNFTS = async (coinbase, type) => {
     return await window.getMyNFTs(coinbase, type);
   };
@@ -1955,6 +1955,8 @@ function App() {
                   isConnected={isConnected}
                   myNFTSLand={myNFTs}
                   myNFTSCaws={myCAWNFTs}
+            handleSwitchNetwork={handleSwitchNetwork}
+
                 />
               }
             />

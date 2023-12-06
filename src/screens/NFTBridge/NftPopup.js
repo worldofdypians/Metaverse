@@ -17,6 +17,7 @@ const NftPopup = ({
   onClaimAll,
   handleConnect,
   onTabSelect,
+  handleConfirmTransfer,
 }) => {
   const [showCaws, setshowCaws] = useState(false);
   const [showLands, setshowLands] = useState(true);
@@ -29,8 +30,6 @@ const NftPopup = ({
   const [selectNftIds, setSelectedNftIds] = useState([]);
 
   let nftIds = [];
-
-  // array containing items whether Staked or To Stake
 
   const devicewidth = window.innerWidth;
   return (
@@ -89,8 +88,9 @@ const NftPopup = ({
             ) : nftItem.length === 1 ? (
               <>
                 {nftItem.map((item, id) => {
-                  let nftId = item.name?.slice(1, nftItem.name?.length);
-
+                  let nftId = showLands
+                    ? item.name?.slice(1, nftItem.name?.length)
+                    : item.name?.slice(6, item.name?.length);
                   nftIds.push(nftId);
 
                   return (
@@ -140,7 +140,9 @@ const NftPopup = ({
             ) : (
               <>
                 {nftItem.map((item, id) => {
-                  let nftId = item.name?.slice(1, nftItem.name?.length);
+                  let nftId = showLands
+                    ? item.name?.slice(1, nftItem.name?.length)
+                    : item.name?.slice(6, item.name?.length);
                   nftIds.push(nftId);
 
                   return (
@@ -183,8 +185,13 @@ const NftPopup = ({
       <span className="d-flex my-3 market-stake-divider"></span>
       <div className="d-flex justify-content-center">
         <button
-          className="btn pill-btn px-4 py-2"
-          // onClick={showNftSelectionPopup}
+          className={`btn ${
+            selectNftIds.length > 0 ? "pill-btn" : "inactive-pill-btn"
+          } px-4 py-2`}
+          disabled={selectNftIds.length === 0}
+          onClick={() => {
+            handleConfirmTransfer(selectNftIds[0]);
+          }}
         >
           Select NFT
         </button>

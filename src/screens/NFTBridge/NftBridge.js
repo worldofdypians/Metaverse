@@ -5,6 +5,11 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import NftPopup from "./NftPopup";
+import avax from "./assets/avax.svg";
+import bnb from "./assets/bnb.svg";
+import eth from "./assets/eth.svg";
+import base from "./assets/base.svg";
+import { handleSwitchNetworkhook } from "../../hooks/hooks";
 
 const NFTBridge = ({
   coinbase,
@@ -13,16 +18,123 @@ const NFTBridge = ({
   isConnected,
   myNFTSLand,
   myNFTSCaws,
+  handleSwitchNetwork,
 }) => {
   const windowSize = useWindowSize();
   const [filterTitle, setFilterTitle] = useState("");
-  const [destinationFilterTitle, setDestinationFilterTitle] = useState("");
+  const [destinationFilterTitle, setDestinationFilterTitle] =
+    useState("Select");
+  const [destinationFilterArray, setDestinationFilterArray] = useState([]);
+  const [selectNftId, setSelectedNftId] = useState(0);
+
   const [showPopup, setshowPopup] = useState(false);
   const [nftType, setnftType] = useState("land");
 
   const showNftSelectionPopup = () => {
     setshowPopup(true);
   };
+
+  const handleEthPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x1")
+          .then(() => {
+            handleSwitchNetwork(1);
+            updateDestinationFilterTitle("Ethereum");
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  // console.log(avatar);
+  const handleBnbPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x38")
+          .then(() => {
+            handleSwitchNetwork(56);
+            updateDestinationFilterTitle("BNB Chain");
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleAvaxPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa86a")
+          .then(() => {
+            handleSwitchNetwork(43114);
+            updateDestinationFilterTitle("Avalanche");
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleBasePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x2105")
+          .then(() => {
+            handleSwitchNetwork(8453);
+            updateDestinationFilterTitle("Base Network");
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const updateDestinationFilterTitle = (filterText) => {
+    const allChainArray = [
+      { title: "Ethereum", logo: "eth" },
+      { title: "BNB Chain", logo: "bnb" },
+      { title: "Avalanche", logo: "avax" },
+      { title: "Base Network", logo: "base" },
+    ];
+    if (filterText === "Ethereum") {
+      setDestinationFilterArray(allChainArray.slice(1, 4));
+      setDestinationFilterTitle("Select");
+    } else {
+      setDestinationFilterArray(allChainArray.slice(0, 1));
+      setDestinationFilterTitle("Ethereum");
+    }
+  };
+
+  const handleTransferNft = () => {};
+
+  useEffect(() => {
+    if (chainId === 1) {
+      setFilterTitle("Ethereum");
+      updateDestinationFilterTitle("Ethereum");
+    } else if (chainId === 56) {
+      setFilterTitle("BNB Chain");
+      updateDestinationFilterTitle("BNB Chain");
+    } else if (chainId === 43114) {
+      setFilterTitle("Avalanche");
+      updateDestinationFilterTitle("Avalanche");
+    } else if (chainId === 8453) {
+      setFilterTitle("Base Network");
+      updateDestinationFilterTitle("Base Network");
+    }
+  }, [chainId]);
 
   return (
     <div
@@ -79,7 +191,21 @@ const NFTBridge = ({
                       aria-expanded="false"
                     >
                       <div className="d-flex align-items-center gap-2">
-                        <h6 className="filter-nav-title mb-0">{filterTitle}</h6>
+                        <h6 className="filter-nav-title mb-0 d-flex align-items-center gap-2">
+                          <img
+                            src={
+                              filterTitle === "Ethereum"
+                                ? eth
+                                : filterTitle === "BNB Chain"
+                                ? bnb
+                                : filterTitle === "Avalanche"
+                                ? avax
+                                : base
+                            }
+                            alt=""
+                          />
+                          {filterTitle}
+                        </h6>
                       </div>
                       <img src={dropdownIcon} alt="" />
                     </button>
@@ -88,37 +214,48 @@ const NFTBridge = ({
                         className="nft-dropdown-item"
                         onClick={() => {
                           setFilterTitle("Ethereum");
-                          //   sortNfts("all");
+                          handleEthPool();
                         }}
                       >
-                        <span>Ethereum</span>
+                        <span className="d-flex align-items-center gap-2">
+                          <img src={eth} alt="" />
+                          Ethereum
+                        </span>
                       </li>
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
                           setFilterTitle("BNB Chain");
-                          //   sortNfts("lto");
+                          handleBnbPool();
                         }}
                       >
-                        <span>BNB Chain</span>
+                        <span className="d-flex align-items-center gap-2">
+                          <img src={bnb} alt="" />
+                          BNB Chain
+                        </span>
                       </li>
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
                           setFilterTitle("Avalanche");
-                          //   sortNfts("lso");
+                          handleAvaxPool();
                         }}
                       >
-                        <span>Avalanche</span>
+                        <span className="d-flex align-items-center gap-2">
+                          <img src={avax} alt="" />
+                          Avalanche
+                        </span>
                       </li>
                       <li
                         className="nft-dropdown-item"
                         onClick={() => {
                           setFilterTitle("Base Network");
-                          //   sortNfts("lso");
+                          handleBasePool();
                         }}
                       >
-                        <span>Base Network</span>
+                        <span className="d-flex align-items-center gap-2">
+                          <img src={base} alt="" /> Base Network
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -134,49 +271,49 @@ const NFTBridge = ({
                       aria-expanded="false"
                     >
                       <div className="d-flex align-items-center gap-2">
-                        <h6 className="filter-nav-title mb-0">
+                        <h6 className="filter-nav-title mb-0 d-flex align-items-center gap-2">
+                          {destinationFilterTitle !== "Select" && (
+                            <img
+                              src={
+                                destinationFilterTitle === "Ethereum"
+                                  ? eth
+                                  : destinationFilterTitle === "BNB Chain"
+                                  ? bnb
+                                  : destinationFilterTitle === "Avalanche"
+                                  ? avax
+                                  : base
+                              }
+                              alt=""
+                            />
+                          )}
                           {destinationFilterTitle}
                         </h6>
                       </div>
                       <img src={dropdownIcon} alt="" />
                     </button>
                     <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
-                      <li
-                        className="nft-dropdown-item"
-                        onClick={() => {
-                          setDestinationFilterTitle("Ethereum");
-                          //   sortNfts("all");
-                        }}
-                      >
-                        <span>Ethereum</span>
-                      </li>
-                      <li
-                        className="nft-dropdown-item"
-                        onClick={() => {
-                          setDestinationFilterTitle("BNB Chain");
-                          //   sortNfts("lto");
-                        }}
-                      >
-                        <span>BNB Chain</span>
-                      </li>
-                      <li
-                        className="nft-dropdown-item"
-                        onClick={() => {
-                          setDestinationFilterTitle("Avalanche");
-                          //   sortNfts("lso");
-                        }}
-                      >
-                        <span>Avalanche</span>
-                      </li>
-                      <li
-                        className="nft-dropdown-item"
-                        onClick={() => {
-                          setDestinationFilterTitle("Base Network");
-                          //   sortNfts("lso");
-                        }}
-                      >
-                        <span>Base Network</span>
-                      </li>
+                      {destinationFilterArray &&
+                        destinationFilterArray.length > 0 &&
+                        destinationFilterArray.map((item, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className="nft-dropdown-item"
+                              onClick={() => {
+                                setDestinationFilterTitle(item.title);
+                                //   sortNfts("all");
+                              }}
+                            >
+                              <span className="d-flex align-items-center gap-2">
+                                <img
+                                  src={require(`./assets/${item.logo}.svg`)}
+                                  alt=""
+                                />{" "}
+                                {item.title}
+                              </span>
+                            </li>
+                          );
+                        })}
                     </ul>
                   </div>
                 </div>
@@ -195,17 +332,44 @@ const NFTBridge = ({
                       <div className="first-box-blur first-bigbox-blur d-none d-lg-flex align-items-end justify-content-center"></div>
                       <div className="second-box-blur d-none d-lg-flex second-bigbox-blur"></div>
                       <img
-                        src={require("./assets/emptyCawsWod.svg").default}
+                        src={
+                          selectNftId === 0
+                            ? require("./assets/emptyCawsWod.svg").default
+                            : nftType === "land"
+                            ? `https://mint.worldofdypians.com/thumbs/${selectNftId}.png`
+                            : `https://mint.dyp.finance/thumbs/${selectNftId}.png`
+                        }
                         alt=""
                         className="blur-img blur-img-big"
                       />
                     </div>
                   </div>
                   <button
-                    className="btn pill-btn px-4 py-2 mt-4 mx-auto w-50"
-                    onClick={showNftSelectionPopup}
+                    className={`btn ${
+                      isConnected && selectNftId === 0
+                        ? "pill-btn"
+                        : isConnected && selectNftId !== 0
+                        ? "conflux-btn"
+                        : "pill-btn"
+                    } px-4 py-2 mt-4 mx-auto w-50`}
+                    onClick={() => {
+                      !isConnected
+                        ? showWalletConnect()
+                        : selectNftId === 0
+                        ? showNftSelectionPopup()
+                        : handleTransferNft();
+                    }}
                   >
-                    Select NFT
+                    {!isConnected ? (
+                      "Connect wallet"
+                    ) : selectNftId === 0 ? (
+                      "Select NFT"
+                    ) : (
+                      <>
+                        Transfer NFT {nftType === "caws" ? "CAWS" : "Genesis"} #
+                        {selectNftId}{" "}
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -217,7 +381,9 @@ const NFTBridge = ({
                   <div>
                     <div>
                       <ul class="timeline-bridge mt-2" id="timeline">
-                        <li class="li complete">
+                        <li
+                          class={`li ${isConnected && coinbase && "complete"} `}
+                        >
                           <div class="status">
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item">
                               <h4 className="listtext"> Connect Wallet </h4>
@@ -229,7 +395,13 @@ const NFTBridge = ({
                             </div>
                           </div>
                         </li>
-                        <li class={` li  `}>
+                        <li
+                          class={` li ${
+                            destinationFilterTitle !== "Select" &&
+                            isConnected &&
+                            "complete"
+                          } `}
+                        >
                           <div class="status">
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item">
                               <h4 className="listtext">
@@ -244,7 +416,14 @@ const NFTBridge = ({
                             </div>
                           </div>
                         </li>
-                        <li class={` li  `}>
+                        <li
+                          class={` li ${
+                            destinationFilterTitle !== "Select" &&
+                            isConnected &&
+                            selectNftId !== 0 &&
+                            "complete"
+                          } `}
+                        >
                           <div class="status">
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item">
                               <h4 className="listtext">
@@ -292,6 +471,10 @@ const NFTBridge = ({
           nftItem={nftType === "land" ? myNFTSLand : myNFTSCaws}
           onTabSelect={(value) => {
             setnftType(value);
+          }}
+          handleConfirmTransfer={(value) => {
+            setSelectedNftId(value);
+            setshowPopup(false);
           }}
         />
       )}
