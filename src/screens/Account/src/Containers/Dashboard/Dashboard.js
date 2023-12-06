@@ -215,7 +215,6 @@ function Dashboard({
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
 
-
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
   const dailyPrizesGolden = [10, 8, 5, 5, 5, 5, 5, 5, 5, 5];
@@ -533,20 +532,24 @@ function Dashboard({
     // console.log(userPosition)
 
     if (goldenPassRemainingTime) {
-      setUserRank2(testArray[0].statValue !== 0 ?
-        userPosition > 10
-          ? 0
-          : userPosition === 10
-          ? monthlyPrizes[9] + monthlyPrizesGolden[9]
-          : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition] : 0
+      setUserRank2(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
+            : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+          : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setUserRank2(testArray[0].statValue !== 0 ?
-        userPosition > 10
-          ? 0
-          : userPosition === 10
-          ? monthlyPrizes[9]
-          : monthlyPrizes[userPosition] : 0
+      setUserRank2(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9]
+            : monthlyPrizes[userPosition]
+          : 0
       );
     }
 
@@ -587,24 +590,28 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === userName
       );
- 
+
       const userPosition = testArray[0].position;
 
       if (goldenPassRemainingTime) {
-        setdailyplayerData( testArray[0].statValue !== 0 ?
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? dailyPrizes[9] + dailyPrizesGolden[9]
-            : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition] : 0
+        setdailyplayerData(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? dailyPrizes[9] + dailyPrizesGolden[9]
+              : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
+            : 0
         );
       } else if (!goldenPassRemainingTime) {
-        setdailyplayerData(testArray[0].statValue !== 0 ?
-          userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? dailyPrizes[9]
-            : dailyPrizes[userPosition] : 0
+        setdailyplayerData(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? dailyPrizes[9]
+              : dailyPrizes[userPosition]
+            : 0
         );
       }
     }
@@ -628,20 +635,24 @@ function Dashboard({
 
     const userPosition = testArray[0].position;
     if (goldenPassRemainingTime) {
-      setweeklyplayerData(testArray[0].statValue !== 0 ?
-        userPosition > 10
-          ? 0
-          : userPosition === 10
-          ? weeklyPrizes[9] + weeklyPrizesGolden[9]
-          : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition] : 0
+      setweeklyplayerData(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? weeklyPrizes[9] + weeklyPrizesGolden[9]
+            : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
+          : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setweeklyplayerData(testArray[0].statValue !== 0 ?
-        userPosition > 10
-          ? 0
-          : userPosition === 10
-          ? weeklyPrizes[9]
-          : weeklyPrizes[userPosition] : 0
+      setweeklyplayerData(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? weeklyPrizes[9]
+            : weeklyPrizes[userPosition]
+          : 0
       );
     }
   };
@@ -659,7 +670,6 @@ function Dashboard({
     const web3bnb = window.bscWeb3;
     const web3avax = window.avaxWeb3;
 
-
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
@@ -672,7 +682,6 @@ function Dashboard({
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
 
-
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
 
@@ -682,8 +691,10 @@ function Dashboard({
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-    const avaxcontract = new web3avax.eth.Contract(AvaxABI, avaxsubscribeAddress);
-
+    const avaxcontract = new web3avax.eth.Contract(
+      AvaxABI,
+      avaxsubscribeAddress
+    );
 
     if (addr) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
@@ -702,7 +713,7 @@ function Dashboard({
         .subscriptionPlatformTokenAmount(addr)
         .call();
 
-        subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call();
 
@@ -710,8 +721,8 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0"  &&
-        subscribedPlatformTokenAmountAvax === "0"  
+        subscribedPlatformTokenAmountBNB === "0" &&
+        subscribedPlatformTokenAmountAvax === "0"
       ) {
         setIsPremium(false);
       }
@@ -719,8 +730,8 @@ function Dashboard({
         subscribedPlatformTokenAmountCfx !== "0" ||
         subscribedPlatformTokenAmountETH !== "0" ||
         subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0"   ||
-        subscribedPlatformTokenAmountAvax !== "0"  
+        subscribedPlatformTokenAmountBNB !== "0" ||
+        subscribedPlatformTokenAmountAvax !== "0"
       ) {
         setIsPremium(true);
       }
@@ -1245,19 +1256,35 @@ function Dashboard({
       subscribeToken
     );
 
+    let tokenprice =
+      chainId === 1
+        ? await window.getEstimatedTokenSubscriptionAmountETH(token)
+        : chainId === 56
+        ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        : chainId === 1030
+        ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
+        : chainId === 43114
+        ? await window.getEstimatedTokenSubscriptionAmount(token)
+        : chainId === 8453
+        ? await window.getEstimatedTokenSubscriptionAmountBase(token)
+        : await window.getEstimatedTokenSubscriptionAmount(token);
+
+    tokenprice = new BigNumber(tokenprice).toFixed(0);
+
     if (coinbase) {
       if (chainId === 1) {
         const result = await subscribeTokencontract.methods
           .allowance(coinbase, ethsubscribeAddress)
           .call()
           .then();
-
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       }
       if (chainId === 56) {
@@ -1265,24 +1292,28 @@ function Dashboard({
           .allowance(coinbase, bnbsubscribeAddress)
           .call()
           .then();
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
           .call()
           .then();
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       } else if (chainId === 1030) {
         const result = await subscribeTokencontractcfx.methods
@@ -1290,12 +1321,14 @@ function Dashboard({
           .call()
           .then();
 
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       } else if (chainId === 8453) {
         const result = await subscribeTokencontractbase.methods
@@ -1303,12 +1336,14 @@ function Dashboard({
           .call()
           .then();
 
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       }
     }
@@ -1338,18 +1373,21 @@ function Dashboard({
       .send({ from: await window.getCoinbase() })
       .then(() => {
         setloadspinnerSub(false);
-        setapproveStatus("success");
-
+        setapproveStatus("successsubscribe");
+        setTimeout(() => {
+          setloadspinnerSub(false);
+          setloadspinner(false);
+          setapproveStatus("initial");
+          setstatus("");
+        }, 5000);
         // this.props.onSubscribe();
         // window.location.href = "https://app.dypius.com/account";
       })
       .catch((e) => {
         setloadspinnerSub(false);
-        setloadspinner(false);
-        setapproveStatus("fail");
+        setapproveStatus("failsubscribe");
         setstatus(e?.message);
         window.alertify.error(e?.message);
-
         setTimeout(() => {
           setloadspinnerSub(false);
           setloadspinner(false);
@@ -1518,8 +1556,7 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wbase);
       handleCheckIfAlreadyApproved(wbase);
-    }
-    else if (chainId === 43114) {
+    } else if (chainId === 43114) {
       setChainDropdown(chainDropdowns[2]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1527,8 +1564,7 @@ function Dashboard({
         Object.keys(window.config.subscription_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
-    }
-    else {
+    } else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
@@ -1537,7 +1573,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId]);
+  }, [chainId, getPremiumPopup]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -1552,8 +1588,7 @@ function Dashboard({
       );
     } else if (chainId === 43114 && selectedSubscriptionToken !== "") {
       settokenDecimals(
-        window.config.subscription_tokens[selectedSubscriptionToken]
-          ?.decimals
+        window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
       );
     } else if (chainId === 1030 && selectedSubscriptionToken !== "") {
       settokenDecimals(
@@ -1645,7 +1680,13 @@ function Dashboard({
       getmyCawsWodStakes();
       getmyWodStakes();
     }
-  }, [email, data?.getPlayer?.wallet?.publicAddress, coinbase, chainId]);
+  }, [
+    email,
+    userWallet,
+    data?.getPlayer?.wallet?.publicAddress,
+    coinbase,
+    chainId,
+  ]);
 
   useEffect(() => {
     getOtherNfts();
@@ -1903,6 +1944,7 @@ function Dashboard({
                       myNFTSCoingecko={MyNFTSCoingecko}
                       myGateNfts={myGateNfts}
                       myConfluxNfts={myConfluxNfts}
+                      myBaseNfts={myBaseNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
@@ -2194,10 +2236,9 @@ function Dashboard({
                                       alt=""
                                     />
                                     <span className="subscription-chain mb-0">
-                                    Avalanche
+                                      Avalanche
                                     </span>
                                   </div>
-                                  
 
                                   <div className="d-flex align-items-center gap-2">
                                     <img
@@ -2220,8 +2261,6 @@ function Dashboard({
                                       Conflux
                                     </span>
                                   </div>
-
-                                  
                                 </div>
                                 <img src={premiumIcon} alt="" />
                               </div>
@@ -2314,12 +2353,15 @@ function Dashboard({
                                       />
                                       BNB Chain
                                     </li>
-                                     <li
+                                    <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleAvaxPool}
                                     >
                                       <img
-                                        src={require(`../../Images/premium/tokens/wavaxIcon.svg`).default}
+                                        src={
+                                          require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                            .default
+                                        }
                                         alt=""
                                       />
                                       Avalanche
@@ -2352,7 +2394,6 @@ function Dashboard({
                                       />
                                       Conflux Network
                                     </li>
-                                   
                                   </ul>
                                 </div>
                               </div>
@@ -2407,8 +2448,7 @@ function Dashboard({
                                             ? window.config
                                                 .subscriptioncfx_tokens
                                             : chainId === 43114
-                                            ? window.config
-                                                .subscription_tokens
+                                            ? window.config.subscription_tokens
                                             : chainId === 8453
                                             ? window.config
                                                 .subscriptionbase_tokens
@@ -2433,10 +2473,9 @@ function Dashboard({
                                                         t
                                                       ]?.symbol
                                                     : chainId === 43114
-                                                      ? window.config
-                                                          .subscription_tokens[
-                                                          t
-                                                        ]?.symbol
+                                                    ? window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
                                                     : chainId === 8453
                                                     ? window.config
                                                         .subscriptionbase_tokens[
@@ -2462,11 +2501,10 @@ function Dashboard({
                                                         .subscriptionbnb_tokens[
                                                         t
                                                       ]?.symbol
-                                                      : chainId === 43114
-                                                      ? window.config
-                                                          .subscription_tokens[
-                                                          t
-                                                        ]?.symbol
+                                                    : chainId === 43114
+                                                    ? window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
                                                     : chainId === 8453
                                                     ? window.config
                                                         .subscriptionbase_tokens[
@@ -2500,10 +2538,10 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                                 : chainId === 43114
-                                                    ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                        t
-                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 43114
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : chainId === 1030
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
                                                       t
@@ -2527,10 +2565,10 @@ function Dashboard({
                                               ? window.config
                                                   .subscriptionbnb_tokens[t]
                                                   ?.symbol
-                                            : chainId === 43114
-                                                  ? window.config
-                                                      .subscription_tokens[t]
-                                                      ?.symbol
+                                              : chainId === 43114
+                                              ? window.config
+                                                  .subscription_tokens[t]
+                                                  ?.symbol
                                               : chainId === 1030
                                               ? window.config
                                                   .subscriptioncfx_tokens[t]
@@ -2624,7 +2662,25 @@ function Dashboard({
                                   }
                                   onClick={(e) => handleApprove(e)}
                                 >
-                                  Approve
+                                  {loadspinner === false &&
+                                  (approveStatus === "initial" ||
+                                    approveStatus === "deposit" ||
+                                    approveStatus === "failsubscribe" ||
+                                    approveStatus === "successsubscribe") ? (
+                                    "Approve"
+                                  ) : loadspinner === false &&
+                                    approveStatus === "fail" ? (
+                                    "Failed"
+                                  ) : (
+                                    <div
+                                      className="spinner-border "
+                                      role="status"
+                                      style={{
+                                        height: "1rem",
+                                        width: "1rem",
+                                      }}
+                                    ></div>
+                                  )}
                                 </button>
                               </div>
                               <div
@@ -2642,7 +2698,27 @@ function Dashboard({
                                   } px-4`}
                                   onClick={() => handleSubscribe()}
                                 >
-                                  Buy
+                                  {loadspinnerSub === false &&
+                                  (approveStatus === "initial" ||
+                                    approveStatus === "fail" ||
+                                    approveStatus === "deposit") ? (
+                                    "Buy"
+                                  ) : loadspinnerSub === false &&
+                                    approveStatus === "successsubscribe" ? (
+                                    "Success"
+                                  ) : loadspinnerSub === false &&
+                                    approveStatus === "failsubscribe" ? (
+                                    "Failed"
+                                  ) : (
+                                    <div
+                                      className="spinner-border "
+                                      role="status"
+                                      style={{
+                                        height: "1rem",
+                                        width: "1rem",
+                                      }}
+                                    ></div>
+                                  )}
                                 </button>
                               </div>
                             </div>

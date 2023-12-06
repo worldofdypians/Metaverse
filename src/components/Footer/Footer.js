@@ -90,6 +90,8 @@ const Footer = () => {
             {socials.map((item, index) => (
               <a href={item.link} key={index} target="_blank" rel="noreferrer">
                 <img
+                width={25}
+                height={25}
                   src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                   alt={item.icon}
                 />
@@ -107,6 +109,8 @@ const Footer = () => {
                   rel="noreferrer"
                 >
                   <img
+                   width={25}
+                   height={25}
                     src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                     alt={item.icon}
                   />
@@ -122,6 +126,8 @@ const Footer = () => {
                   rel="noreferrer"
                 >
                   <img
+                   width={25}
+                   height={25}
                     src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                     alt={item.icon}
                   />
