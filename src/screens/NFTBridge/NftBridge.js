@@ -33,7 +33,7 @@ const NFTBridge = ({
   const [nftType, setnftType] = useState("land");
   const [finalNftType, setfinalNftType] = useState("");
   const [buttonText, setbuttonText] = useState("Approve");
-
+  const [isApproved, setisApproved] = useState(false);
 
   const showNftSelectionPopup = () => {
     setshowPopup(true);
@@ -290,71 +290,99 @@ const NFTBridge = ({
               window.config.ccip_bnb_wod_address;
             const destinationChainSelector =
               window.config.destination_chain_selector_bnb;
-            // const landContract = new web3.eth.Contract(
-            //   window.WOD_ABI,
-            //   window.config.nft_land_address
-            // );
-
-            // await landContract.methods
-            //   .approve(sourceBridge_address, selectNftId)
-            //   .then((data) => {
-            //     console.log("success");
-            //   });
-
-            const contract = new web3.eth.Contract(
-              window.CCIP_ABI,
-              sourceBridge_address
+            const landContract = new web3.eth.Contract(
+              window.WOD_ABI,
+              window.config.nft_land_address
             );
-            console.log(
-              "eth to bsc",
-              destinationChainSelector,
-              destinationBridge_address,
-              selectNftId
-            );
-            await contract.methods
-              .BridgeNFT(
-                destinationChainSelector,
-                destinationBridge_address,
-                1,
-                selectNftId
-              )
-              .send({ from: coinbase })
-              .then((data) => {
-                getStatus(filterTitle, destinationFilterTitle);
-                console.log(data);
-              })
-              .catch((e) => {
-                window.alertify.error(e?.message);
-                console.error(e);
-              });
+
+            if (!isApproved) {
+              setbuttonText("Approving...");
+              await landContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(() => {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                });
+            } else if (isApproved) {
+              const contract = new web3.eth.Contract(
+                window.CCIP_ABI,
+                sourceBridge_address
+              );
+              setbuttonText("Transfering...");
+              await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  1,
+                  selectNftId
+                )
+                .send({ from: coinbase })
+                .then((data) => {
+                  getStatus(filterTitle, destinationFilterTitle);
+                  setisApproved(false);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                });
+            }
           } else if (finalNftType === "caws") {
+            const web3 = new Web3(window.ethereum);
             const sourceBridge_address = window.config.ccip_eth_caws_address;
             const destinationBridge_address =
               window.config.ccip_bnb_caws_address;
             const destinationChainSelector =
               window.config.destination_chain_selector_bnb;
-            const web3 = new Web3(window.ethereum);
-            const contract = new web3.eth.Contract(
-              window.CCIP_ABI,
-              sourceBridge_address
+            const cawsContract = new web3.eth.Contract(
+              window.CAWS_ABI,
+              window.config.nft_caws_address
             );
 
-            await contract.methods
-              .BridgeNFT(
-                destinationChainSelector,
-                destinationBridge_address,
-                1,
-                selectNftId
-              )
-              .send({ from: coinbase })
-              .then((data) => {
-                getStatus(filterTitle, destinationFilterTitle);
-                console.log(data);
-              })
-              .catch((e) => {
-                window.alertify.error(e?.message);
-                console.error(e);
-              });
+            if (!isApproved) {
+              setbuttonText("Approving...");
+              await cawsContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(() => {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                });
+            } else if (isApproved) {
+              const contract = new web3.eth.Contract(
+                window.CCIP_ABI,
+                sourceBridge_address
+              );
+              setbuttonText("Transfering...");
+              await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  1,
+                  selectNftId
+                )
+                .send({ from: coinbase })
+                .then((data) => {
+                  getStatus(filterTitle, destinationFilterTitle);
+                  setisApproved(false);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                });
+            }
           }
         } else if (destinationFilterTitle === "Avalanche") {
           if (finalNftType === "land") {
@@ -369,34 +397,235 @@ const NFTBridge = ({
               sourceBridge_address
             );
 
-            await contract.methods
-              .BridgeNFT(
-                destinationChainSelector,
-                destinationBridge_address,
-                1,
-                selectNftId
-              )
-              .send({ from: coinbase })
-              .then((data) => {
-                getStatus(filterTitle, destinationFilterTitle);
-                console.log(data);
-              })
-              .catch((e) => {
-                window.alertify.error(e?.message);
-                console.error(e);
-              });
+            const landContract = new web3.eth.Contract(
+              window.WOD_ABI,
+              window.config.nft_land_address
+            );
+
+            if (!isApproved) {
+              setbuttonText("Approving...");
+              await landContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(() => {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                });
+            } else if (isApproved) {
+              setbuttonText("Transfering...");
+
+              await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  1,
+                  selectNftId
+                )
+                .send({ from: coinbase })
+                .then((data) => {
+                  getStatus(filterTitle, destinationFilterTitle);
+
+                  setisApproved(false);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                });
+            }
           } else if (finalNftType === "caws") {
+            const web3 = new Web3(window.ethereum);
             const sourceBridge_address = window.config.ccip_eth_caws_address;
             const destinationBridge_address =
               window.config.ccip_avax_caws_address;
             const destinationChainSelector =
               window.config.destination_chain_selector_avax;
+            const cawsContract = new web3.eth.Contract(
+              window.CAWS_ABI,
+              window.config.nft_caws_address
+            );
+
+            if (!isApproved) {
+              setbuttonText("Approving...");
+              await cawsContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(() => {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                });
+            } else if (isApproved) {
+              const contract = new web3.eth.Contract(
+                window.CCIP_ABI,
+                sourceBridge_address
+              );
+              setbuttonText("Transfering...");
+              await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  1,
+                  selectNftId
+                )
+                .send({ from: coinbase })
+                .then((data) => {
+                  getStatus(filterTitle, destinationFilterTitle);
+                  setisApproved(false);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                });
+            }
+          }
+        } else if (destinationFilterTitle === "Base Network") {
+          if (finalNftType === "land") {
+            const sourceBridge_address = window.config.ccip_eth_wod_address;
+            const destinationBridge_address =
+              window.config.ccip_base_wod_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_base;
             const web3 = new Web3(window.ethereum);
             const contract = new web3.eth.Contract(
               window.CCIP_ABI,
               sourceBridge_address
             );
 
+            const landContract = new web3.eth.Contract(
+              window.WOD_ABI,
+              window.config.nft_land_address
+            );
+
+            if (!isApproved) {
+              setbuttonText("Approving...");
+              await landContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(() => {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                });
+            } else if (isApproved) {
+              setbuttonText("Transfering...");
+              await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  1,
+                  selectNftId
+                )
+                .send({ from: coinbase })
+                .then((data) => {
+                  getStatus(filterTitle, destinationFilterTitle);
+                  setisApproved(false);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                });
+            }
+          } else if (finalNftType === "caws") {
+            const web3 = new Web3(window.ethereum);
+            const sourceBridge_address = window.config.ccip_eth_caws_address;
+            const destinationBridge_address =
+              window.config.ccip_base_caws_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_base;
+            const cawsContract = new web3.eth.Contract(
+              window.CAWS_ABI,
+              window.config.nft_caws_address
+            );
+
+            if (!isApproved) {
+              setbuttonText("Approving...");
+              await cawsContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(() => {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                });
+            } else if (isApproved) {
+              const contract = new web3.eth.Contract(
+                window.CCIP_ABI,
+                sourceBridge_address
+              );
+              setbuttonText("Transfering...");
+              await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  1,
+                  selectNftId
+                )
+                .send({ from: coinbase })
+                .then((data) => {
+                  getStatus(filterTitle, destinationFilterTitle);
+                  setisApproved(false);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                });
+            }
+          }
+        }
+      } else if (filterTitle === "BNB Chain") {
+        if (finalNftType === "land") {
+          const sourceBridge_address = window.config.ccip_bnb_wod_address;
+          const destinationBridge_address = window.config.ccip_eth_wod_address;
+          const destinationChainSelector =
+            window.config.destination_chain_selector_eth;
+          const web3 = new Web3(window.ethereum);
+          const contract = new web3.eth.Contract(
+            window.CCIP_ABI,
+            sourceBridge_address
+          );
+
+          const landContract = new web3.eth.Contract(
+            window.WOD_ABI,
+            window.config.nft_land_address
+          );
+
+          if (!isApproved) {
+            setbuttonText("Approving...");
+            await landContract.methods
+              .approve(sourceBridge_address, selectNftId)
+              .send({ from: coinbase })
+              .then(() => {
+                setbuttonText("Transfer");
+                setisApproved(true);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                setbuttonText("Approve");
+                setisApproved(false);
+              });
+          } else if (isApproved) {
+            setbuttonText("Transfering...");
             await contract.methods
               .BridgeNFT(
                 destinationChainSelector,
@@ -407,29 +636,265 @@ const NFTBridge = ({
               .send({ from: coinbase })
               .then((data) => {
                 getStatus(filterTitle, destinationFilterTitle);
-                console.log(data);
+                setisApproved(false);
               })
               .catch((e) => {
                 window.alertify.error(e?.message);
                 console.error(e);
+                setbuttonText("Transfer");
               });
           }
-        } else if (destinationFilterTitle === "Base Network") {
-          if (finalNftType === "land") {
-          } else if (finalNftType === "caws") {
-          }
-        }
-      } else if (filterTitle === "BNB Chain") {
-        if (finalNftType === "land") {
         } else if (finalNftType === "caws") {
+          const web3 = new Web3(window.ethereum);
+          const sourceBridge_address = window.config.ccip_bnb_caws_address;
+          const destinationBridge_address = window.config.ccip_eth_caws_address;
+          const destinationChainSelector =
+            window.config.destination_chain_selector_eth;
+          const cawsContract = new web3.eth.Contract(
+            window.CAWS_ABI,
+            window.config.nft_caws_address
+          );
+
+          if (!isApproved) {
+            setbuttonText("Approving...");
+            await cawsContract.methods
+              .approve(sourceBridge_address, selectNftId)
+              .send({ from: coinbase })
+              .then(() => {
+                setbuttonText("Transfer");
+                setisApproved(true);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                setbuttonText("Approve");
+                setisApproved(false);
+              });
+          } else if (isApproved) {
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI,
+              sourceBridge_address
+            );
+            setbuttonText("Transfering...");
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                setisApproved(false);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+                setbuttonText("Transfer");
+              });
+          }
         }
       } else if (filterTitle === "Avalanche") {
         if (finalNftType === "land") {
+          const sourceBridge_address = window.config.ccip_bnb_avax_address;
+          const destinationBridge_address = window.config.ccip_eth_wod_address;
+          const destinationChainSelector =
+            window.config.destination_chain_selector_eth;
+          const web3 = new Web3(window.ethereum);
+          const contract = new web3.eth.Contract(
+            window.CCIP_ABI,
+            sourceBridge_address
+          );
+
+          const landContract = new web3.eth.Contract(
+            window.WOD_ABI,
+            window.config.nft_land_address
+          );
+
+          if (!isApproved) {
+            setbuttonText("Approving...");
+            await landContract.methods
+              .approve(sourceBridge_address, selectNftId)
+              .send({ from: coinbase })
+              .then(() => {
+                setbuttonText("Transfer");
+                setisApproved(true);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                setbuttonText("Approve");
+                setisApproved(false);
+              });
+          } else if (isApproved) {
+            setbuttonText("Transfering...");
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                setisApproved(false);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+                setbuttonText("Transfer");
+              });
+          }
         } else if (finalNftType === "caws") {
+          const web3 = new Web3(window.ethereum);
+          const sourceBridge_address = window.config.ccip_avax_caws_address;
+          const destinationBridge_address = window.config.ccip_eth_caws_address;
+          const destinationChainSelector =
+            window.config.destination_chain_selector_eth;
+          const cawsContract = new web3.eth.Contract(
+            window.CAWS_ABI,
+            window.config.nft_caws_address
+          );
+
+          if (!isApproved) {
+            setbuttonText("Approving...");
+            await cawsContract.methods
+              .approve(sourceBridge_address, selectNftId)
+              .send({ from: coinbase })
+              .then(() => {
+                setbuttonText("Transfer");
+                setisApproved(true);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                setbuttonText("Approve");
+                setisApproved(false);
+              });
+          } else if (isApproved) {
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI,
+              sourceBridge_address
+            );
+            setbuttonText("Transfering...");
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                setisApproved(false);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+                setbuttonText("Transfer");
+              });
+          }
         }
       } else if (filterTitle === "Base Network") {
         if (finalNftType === "land") {
+          const sourceBridge_address = window.config.ccip_bnb_base_address;
+          const destinationBridge_address = window.config.ccip_eth_wod_address;
+          const destinationChainSelector =
+            window.config.destination_chain_selector_eth;
+          const web3 = new Web3(window.ethereum);
+          const contract = new web3.eth.Contract(
+            window.CCIP_ABI,
+            sourceBridge_address
+          );
+
+          const landContract = new web3.eth.Contract(
+            window.WOD_ABI,
+            window.config.nft_land_address
+          );
+
+          if (!isApproved) {
+            setbuttonText("Approving...");
+            await landContract.methods
+              .approve(sourceBridge_address, selectNftId)
+              .send({ from: coinbase })
+              .then(() => {
+                setbuttonText("Transfer");
+                setisApproved(true);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                setbuttonText("Approve");
+                setisApproved(false);
+              });
+          } else if (isApproved) {
+            setbuttonText("Transfering...");
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                setisApproved(false);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+                setbuttonText("Transfer");
+              });
+          }
         } else if (finalNftType === "caws") {
+          const web3 = new Web3(window.ethereum);
+          const sourceBridge_address = window.config.ccip_base_caws_address;
+          const destinationBridge_address = window.config.ccip_eth_caws_address;
+          const destinationChainSelector =
+            window.config.destination_chain_selector_eth;
+          const cawsContract = new web3.eth.Contract(
+            window.CAWS_ABI,
+            window.config.nft_caws_address
+          );
+
+          if (!isApproved) {
+            setbuttonText("Approving...");
+            await cawsContract.methods
+              .approve(sourceBridge_address, selectNftId)
+              .send({ from: coinbase })
+              .then(() => {
+                setbuttonText("Transfer");
+                setisApproved(true);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                setbuttonText("Approve");
+                setisApproved(false);
+              });
+          } else if (isApproved) {
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI,
+              sourceBridge_address
+            );
+            setbuttonText("Transfering...");
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                setisApproved(false);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+                setbuttonText("Transfer");
+              });
+          }
         }
       }
     }
