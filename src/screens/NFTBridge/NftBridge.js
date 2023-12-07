@@ -10,6 +10,8 @@ import bnb from "./assets/bnb.svg";
 import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import Web3 from "web3";
+import { ethers } from "ethers";
 
 const NFTBridge = ({
   coinbase,
@@ -29,6 +31,9 @@ const NFTBridge = ({
 
   const [showPopup, setshowPopup] = useState(false);
   const [nftType, setnftType] = useState("land");
+  const [finalNftType, setfinalNftType] = useState("");
+  const [buttonText, setbuttonText] = useState("Approve");
+
 
   const showNftSelectionPopup = () => {
     setshowPopup(true);
@@ -41,6 +46,7 @@ const NFTBridge = ({
           .then(() => {
             handleSwitchNetwork(1);
             updateDestinationFilterTitle("Ethereum");
+            // sourceBridge()
           })
           .catch((e) => {
             console.log(e);
@@ -118,7 +124,316 @@ const NFTBridge = ({
     }
   };
 
-  const handleTransferNft = () => {};
+  const getMessageState = (status) => {
+    const messageExecutionState = {
+      0: "UNTOUCHED",
+      1: "IN_PROGRESS",
+      2: "SUCCESS",
+      3: "FAILURE",
+    };
+
+    if (status in messageExecutionState) {
+      return messageExecutionState[status];
+    }
+    return "unknown";
+  };
+
+  const handleArguments = () => {
+    // Check if the correct number of arguments are passed
+    if (process.argv.length !== 5) {
+      throw new Error("Wrong number of arguments");
+    }
+
+    // Extract the arguments from the command line
+
+    const messageId = process.argv[4];
+
+    // Return the arguments in an object
+    return {
+      messageId,
+    };
+  };
+
+  const getStatus = async (filterTitle, destinationFilterTitle) => {
+    // Parse command-line arguments
+    const { messageId } = handleArguments();
+
+    const allChainsArray = {
+      Ethereum: {
+        rpcUrl: window.config.infura_endpoint,
+        srcSelector: window.config.destination_chain_selector_eth,
+        address: "0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
+      },
+      "BNB Chain": {
+        rpcUrl: window.config.bsc_endpoint,
+        srcSelector: window.config.destination_chain_selector_bnb,
+        address: "0x536d7E53D0aDeB1F20E7c81fea45d02eC9dBD698",
+      },
+      Avalanche: {
+        rpcUrl: window.config.avax_endpoint,
+        srcSelector: window.config.destination_chain_selector_avax,
+        address: "0x27F39D0af3303703750D4001fCc1844c6491563c",
+      },
+      "Base Network": {
+        rpcUrl: window.config.base_endpoint,
+        srcSelector: window.config.destination_chain_selector_base,
+        address: "0x673AA85efd75080031d44fcA061575d1dA427A28",
+      },
+    };
+
+    // Get the RPC URLs for both the source and destination chains
+    const destinationRpcUrl = allChainsArray[destinationFilterTitle].rpcUrl;
+
+    const sourceRpcUrl = allChainsArray[filterTitle].rpcUrl;
+
+    // // Initialize providers for interacting with the blockchains
+    const destinationProvider = new ethers.providers.JsonRpcProvider(
+      destinationRpcUrl
+    );
+    const sourceProvider = new ethers.providers.JsonRpcProvider(sourceRpcUrl);
+
+    // // Retrieve router configuration for the source and destination chains
+    const sourceRouterAddress = allChainsArray[filterTitle].address;
+    const sourceChainSelector = allChainsArray[filterTitle].srcSelector;
+    const destinationRouterAddress =
+      allChainsArray[destinationFilterTitle].address;
+    const destinationChainSelector =
+      allChainsArray[destinationFilterTitle].srcSelector;
+
+    // // Instantiate the router contract on the source chain
+    const sourceRouterContract = new ethers.Contract(
+      sourceRouterAddress,
+      window.CCIP_ROUTER_ABI,
+      sourceProvider
+    );
+
+    // // Fetch the OnRamp contract address on the source chain
+    const onRamp = await sourceRouterContract.getOnRamp(
+      destinationChainSelector
+    );
+    const onRampContract = new ethers.Contract(
+      onRamp,
+      window.CCIP_ONRAMP_ABI,
+      sourceProvider
+    );
+
+    // // Check if the messageId exists in the OnRamp contract
+    const events = await onRampContract.queryFilter("CCIPSendRequested");
+    let messageFound = false;
+    for (const event of events) {
+      if (
+        event.args &&
+        event.args.message &&
+        event.args.message.messageId === messageId
+      ) {
+        messageFound = true;
+        break;
+      }
+    }
+
+    // // If the messageId doesn't exist, log an error and exit
+    if (!messageFound) {
+      console.error(`Message ${messageId} does not exist on this lane`);
+      return;
+    }
+
+    // // Instantiate the router contract on the destination chain
+    const destinationRouterContract = new ethers.Contract(
+      destinationRouterAddress,
+      window.CCIP_ROUTER_ABI,
+      destinationProvider
+    );
+
+    // // Fetch the OffRamp contract addresses on the destination chain
+    const offRamps = await destinationRouterContract.getOffRamps();
+
+    // // Iterate through OffRamps to find the one linked to the source chain and check message status
+    for (const offRamp of offRamps) {
+      if (offRamp.sourceChainSelector.toString() === sourceChainSelector) {
+        const offRampContract = new ethers.Contract(
+          offRamp.offRamp,
+          window.CCIP_ROUTER_ABI,
+          destinationProvider
+        );
+        const events = await offRampContract.queryFilter(
+          "ExecutionStateChanged"
+        );
+
+        // Check if an event with the specific messageId exists and log its status
+        for (let event of events) {
+          if (event.args && event.args.messageId === messageId) {
+            const state = event.args.state;
+            const status = getMessageState(state);
+            console.log(`Status of message ${messageId} is ${status}`);
+            return;
+          }
+        }
+      }
+    }
+    // If no event found, the message has not yet been processed on the destination chain
+    console.log(
+      `Message ${messageId} is not processed yet on destination chain`
+    );
+  };
+
+  const handleTransferNft = async () => {
+    if (destinationFilterTitle === "Select") {
+      window.alertify.error("Please choose destination chain!");
+      return;
+    } else if (destinationFilterTitle !== "Select") {
+      if (filterTitle === "Ethereum") {
+        if (destinationFilterTitle === "BNB Chain") {
+          if (finalNftType === "land") {
+            const web3 = new Web3(window.ethereum);
+            const sourceBridge_address = window.config.ccip_eth_wod_address;
+            const destinationBridge_address =
+              window.config.ccip_bnb_wod_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_bnb;
+            // const landContract = new web3.eth.Contract(
+            //   window.WOD_ABI,
+            //   window.config.nft_land_address
+            // );
+
+            // await landContract.methods
+            //   .approve(sourceBridge_address, selectNftId)
+            //   .then((data) => {
+            //     console.log("success");
+            //   });
+
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI,
+              sourceBridge_address
+            );
+            console.log(
+              "eth to bsc",
+              destinationChainSelector,
+              destinationBridge_address,
+              selectNftId
+            );
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                console.log(data);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+              });
+          } else if (finalNftType === "caws") {
+            const sourceBridge_address = window.config.ccip_eth_caws_address;
+            const destinationBridge_address =
+              window.config.ccip_bnb_caws_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_bnb;
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI,
+              sourceBridge_address
+            );
+
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                console.log(data);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+              });
+          }
+        } else if (destinationFilterTitle === "Avalanche") {
+          if (finalNftType === "land") {
+            const sourceBridge_address = window.config.ccip_eth_wod_address;
+            const destinationBridge_address =
+              window.config.ccip_bnb_wod_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_bnb;
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI,
+              sourceBridge_address
+            );
+
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                console.log(data);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+              });
+          } else if (finalNftType === "caws") {
+            const sourceBridge_address = window.config.ccip_eth_caws_address;
+            const destinationBridge_address =
+              window.config.ccip_avax_caws_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_avax;
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI,
+              sourceBridge_address
+            );
+
+            await contract.methods
+              .BridgeNFT(
+                destinationChainSelector,
+                destinationBridge_address,
+                1,
+                selectNftId
+              )
+              .send({ from: coinbase })
+              .then((data) => {
+                getStatus(filterTitle, destinationFilterTitle);
+                console.log(data);
+              })
+              .catch((e) => {
+                window.alertify.error(e?.message);
+                console.error(e);
+              });
+          }
+        } else if (destinationFilterTitle === "Base Network") {
+          if (finalNftType === "land") {
+          } else if (finalNftType === "caws") {
+          }
+        }
+      } else if (filterTitle === "BNB Chain") {
+        if (finalNftType === "land") {
+        } else if (finalNftType === "caws") {
+        }
+      } else if (filterTitle === "Avalanche") {
+        if (finalNftType === "land") {
+        } else if (finalNftType === "caws") {
+        }
+      } else if (filterTitle === "Base Network") {
+        if (finalNftType === "land") {
+        } else if (finalNftType === "caws") {
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     if (chainId === 1) {
@@ -335,7 +650,7 @@ const NFTBridge = ({
                         src={
                           selectNftId === 0
                             ? require("./assets/emptyCawsWod.svg").default
-                            : nftType === "land"
+                            : finalNftType === "land"
                             ? `https://mint.worldofdypians.com/thumbs/${selectNftId}.png`
                             : `https://mint.dyp.finance/thumbs/${selectNftId}.png`
                         }
@@ -366,7 +681,8 @@ const NFTBridge = ({
                       "Select NFT"
                     ) : (
                       <>
-                        Transfer NFT {nftType === "caws" ? "CAWS" : "Genesis"} #
+                        {buttonText} NFT{" "}
+                        {finalNftType === "caws" ? "CAWS" : "Genesis"} #
                         {selectNftId}{" "}
                       </>
                     )}
@@ -467,15 +783,19 @@ const NFTBridge = ({
         <NftPopup
           onModalClose={() => {
             setshowPopup(false);
+            setnftType("land");
           }}
           nftItem={nftType === "land" ? myNFTSLand : myNFTSCaws}
           onTabSelect={(value) => {
             setnftType(value);
           }}
-          handleConfirmTransfer={(value) => {
+          itemSelected={selectNftId}
+          handleConfirmTransfer={(value, value2) => {
+            setfinalNftType(value2);
             setSelectedNftId(value);
             setshowPopup(false);
           }}
+          previousNftType={finalNftType}
         />
       )}
     </div>

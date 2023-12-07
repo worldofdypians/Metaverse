@@ -8,13 +8,17 @@ const NftChecklist = ({
   width,
   nftType,
   onChange,
+  checked,
+  checkedItem,
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
 
   const handleCawClick = () => {
-    setCheckBtn(!checkbtn);
+    setCheckBtn(true);
     onChange(checklistItemID);
   };
+
+ 
 
   return (
     <div className="d-flex flex-column gap-2">
@@ -30,7 +34,9 @@ const NftChecklist = ({
           height: "auto",
           borderRadius: "20px",
           border:
-            checkbtn === true ? "2px solid #4ED5D2" : "2px solid transparent",
+            (checkbtn && checked) || checklistItemID === checkedItem
+              ? "2px solid #4ED5D2"
+              : "2px solid transparent",
         }}
       >
         <div
@@ -78,7 +84,10 @@ const NftChecklist = ({
                   type="radio"
                   id={checklistItemID}
                   name="checkbtn"
-                  checked={checkbtn}
+                  checked={
+                    (checkbtn && checked === true) ||
+                    checklistItemID === checkedItem
+                  }
                   onChange={(e) => {
                     setCheckBtn(!checkbtn);
                   }}

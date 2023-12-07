@@ -18,20 +18,52 @@ const NftPopup = ({
   handleConnect,
   onTabSelect,
   handleConfirmTransfer,
+  itemSelected,
+  previousNftType,
 }) => {
   const [showCaws, setshowCaws] = useState(false);
   const [showLands, setshowLands] = useState(true);
-  const [checkbtn, setCheckBtn] = useState(false);
-  const [checkUnstakebtn, setCheckUnstakeBtn] = useState(false);
-
-  const [checknft, setchecknft] = useState(false);
-  const [val, setVal] = useState("");
-  const [color, setColor] = useState("#F13227");
   const [selectNftIds, setSelectedNftIds] = useState([]);
+  const [finalNftType, setfinalNftType] = useState("");
 
   let nftIds = [];
+  let nftIds2 = [];
 
   const devicewidth = window.innerWidth;
+
+  const handleManageNFTArray = (nftId) => {
+    if (selectNftIds.length === 0) {
+      setSelectedNftIds([nftId]);
+      if (showCaws) {
+        setfinalNftType("caws");
+      } else if (showLands) {
+        setfinalNftType("land");
+      }
+    } else if (selectNftIds.length > 0 && selectNftIds[0] !== nftId) {
+      selectNftIds.pop();
+      setSelectedNftIds([nftId]);
+      if (showCaws) {
+        setfinalNftType("caws");
+      } else if (showLands) {
+        setfinalNftType("land");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (itemSelected !== 0) {
+      setSelectedNftIds([itemSelected]);
+    }
+  }, [itemSelected]);
+
+  useEffect(() => {
+    onTabSelect("land");
+  }, []);
+
+  useEffect(() => {
+    setfinalNftType(previousNftType);
+  }, []);
+
   return (
     <div className="stake-modal p-3">
       <div className="d-flex align-items-center justify-content-between">
@@ -102,23 +134,28 @@ const NftPopup = ({
                         height={"auto"}
                         modalId="#newNftchecklist"
                         checked={
-                          ((isStake === false && checkbtn === true) ||
-                            (isStake === true && checkUnstakebtn === true)) &&
-                          selectNftIds.length <= 50
+                          selectNftIds[0] === nftId ||
+                          selectNftIds[0] === itemSelected
                         }
                         checklistItemID={nftId}
+                        checkedItem={
+                          selectNftIds.length > 0 ? selectNftIds[0] : "-1"
+                        }
                         onChange={(value) => {
-                          selectNftIds.indexOf(value) === -1
-                            ? selectNftIds.push(value)
-                            : selectNftIds.splice(
-                                selectNftIds.indexOf(value),
-                                1
-                              );
-                          setchecknft(!checknft);
-                          setSelectedNftIds(selectNftIds);
-                          getApprovedLandPoolsNfts(selectNftIds);
+                          handleManageNFTArray(value);
 
-                          setVal(value);
+                          // selectNftIds.indexOf(value) === -1
+                          //   ? selectNftIds.push(value)
+                          //   : selectNftIds.splice(
+                          //       selectNftIds.indexOf(value),
+                          //       1
+                          //     );
+                          // showCaws
+                          //   ? setchecknft(!checknft)
+                          //   : setCheckUnstakeBtn(!checkUnstakebtn);
+                          // setSelectedNftIds(selectNftIds);
+                          // getApprovedLandPoolsNfts(selectNftIds);
+                          // setVal(value);
                         }}
                         coinbase={coinbase}
                         isConnected={isConnected}
@@ -154,28 +191,41 @@ const NftPopup = ({
                         height={"auto"}
                         modalId="#newNftchecklist"
                         checked={
-                          ((isStake === true && checkbtn === true) ||
-                            (isStake === false && checkUnstakebtn === true)) &&
-                          selectNftIds.length <= 50
+                          selectNftIds[0] === nftId ||
+                          selectNftIds[0] === itemSelected
                         }
                         checklistItemID={nftId}
+                        checkedItem={
+                          selectNftIds.length > 0 ? selectNftIds[0] : "-1"
+                        }
                         onChange={(value) => {
-                          selectNftIds.indexOf(value) === -1
-                            ? selectNftIds.push(value)
-                            : selectNftIds.splice(
-                                selectNftIds.indexOf(value),
-                                1
-                              );
-                          setchecknft(!checknft);
-                          setSelectedNftIds(selectNftIds);
-                          getApprovedLandPoolsNfts(selectNftIds);
-
-                          setVal(value);
+                          handleManageNFTArray(value);
+                          // selectNftIds.indexOf(value) === -1
+                          //   ? selectNftIds.push(value)
+                          //   : selectNftIds.splice(
+                          //       selectNftIds.indexOf(value),
+                          //       1
+                          //     );
+                          // showCaws
+                          //   ? setchecknft(!checknft)
+                          //   : setCheckUnstakeBtn(!checkUnstakebtn);
+                          // setSelectedNftIds(selectNftIds);
+                          // getApprovedLandPoolsNfts(selectNftIds);
+                          // setVal(value);
                         }}
                         nftType={showCaws ? "caws" : "land"}
                       />
                     </>
                   );
+                })}
+                {[
+                  ...Array(
+                    devicewidth < 500
+                      ? 1
+                      : Math.abs(8 - parseInt(nftItem.length))
+                  ),
+                ].map((item, id) => {
+                  return <EmptyWodCard key={id} />;
                 })}
               </>
             )}
@@ -190,7 +240,7 @@ const NftPopup = ({
           } px-4 py-2`}
           disabled={selectNftIds.length === 0}
           onClick={() => {
-            handleConfirmTransfer(selectNftIds[0]);
+            handleConfirmTransfer(selectNftIds[0], finalNftType);
           }}
         >
           Select NFT

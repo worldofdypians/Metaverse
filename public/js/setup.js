@@ -1473,23 +1473,20 @@ window.config = {
   nft_conflux_address: "0x2deecf2a05f735890eb3ea085d55cec8f1a93895",
   nft_base_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
 
-  ccip_eth_caws_address: '0x2824Ac0Eab15744396E763A698b55F4Fe983a757',
-  ccip_bnb_caws_address: '0x0C5E19B9147c39d196bC6c88D087A7A84f99563E',
-  ccip_avax_caws_address: '0x8e99Eae11a1423e9ea27638C85648c702C818961',
-  ccip_base_caws_address: '0x81Dd9ac0886D77e219ce32476808d76ba609768c',
+  ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
+  ccip_bnb_caws_address: "0x0C5E19B9147c39d196bC6c88D087A7A84f99563E",
+  ccip_avax_caws_address: "0x8e99Eae11a1423e9ea27638C85648c702C818961",
+  ccip_base_caws_address: "0x81Dd9ac0886D77e219ce32476808d76ba609768c",
 
+  ccip_eth_wod_address: "0xec0E656E2Dcd53f1BCdD6e68D42328f5c76652c0",
+  ccip_bnb_wod_address: "0x108e599592c4e8114f5C72800767264d835c8340",
+  ccip_avax_wod_address: "0x5390F1cD564b23c4594247B3577da439ACB0B228",
+  ccip_base_wod_address: "0xB7433695Cc98f9BC799Ac9a090c45357f25F463f",
 
-  ccip_eth_wod_address: '0xec0E656E2Dcd53f1BCdD6e68D42328f5c76652c0',
-  ccip_bnb_wod_address: '0x108e599592c4e8114f5C72800767264d835c8340',
-  ccip_avax_wod_address: '0x5390F1cD564b23c4594247B3577da439ACB0B228',
-  ccip_base_wod_address: '0xB7433695Cc98f9BC799Ac9a090c45357f25F463f',
-
-  destination_chain_selector_eth: 5009297550715157269,
-  destination_chain_selector_bnb: 11344663589394136015,
-  destination_chain_selector_avax: 6433500567565415381,
-  destination_chain_selector_base: 15971525489660198786,
-
-
+  destination_chain_selector_eth: '5009297550715157269',
+  destination_chain_selector_bnb: '11344663589394136015',
+  destination_chain_selector_avax: '6433500567565415381',
+  destination_chain_selector_base: '15971525489660198786',
 
   nft_land_address: "0xcd60d912655281908ee557ce1add61e983385a03",
   cg_ids: {
@@ -1873,11 +1870,11 @@ window.config = {
     },
   },
   subscriptionbnb_tokens: {
-      "0x55d398326f99059fF775485246999027B3197955": {
+    "0x55d398326f99059fF775485246999027B3197955": {
       symbol: "USDT",
       decimals: 18,
     },
-     "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
+    "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
       symbol: "WBNB",
       decimals: 18,
     },
@@ -1885,7 +1882,7 @@ window.config = {
       symbol: "BUSD",
       decimals: 18,
     },
- 
+
     "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
       symbol: "DYPv2",
       decimals: 18,
@@ -4785,6 +4782,2950 @@ window.tokenCG = {
 
 //window.UNISWAP_PAIR_ABI = [{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0In","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1In","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount0Out","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1Out","type":"uint256"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"Swap","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint112","name":"reserve0","type":"uint112"},{"indexed":false,"internalType":"uint112","name":"reserve1","type":"uint112"}],"name":"Sync","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"constant":true,"inputs":[],"name":"DOMAIN_SEPARATOR","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"MINIMUM_LIQUIDITY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"PERMIT_TYPEHASH","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"}],"name":"burn","outputs":[{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"factory","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getReserves","outputs":[{"internalType":"uint112","name":"_reserve0","type":"uint112"},{"internalType":"uint112","name":"_reserve1","type":"uint112"},{"internalType":"uint32","name":"_blockTimestampLast","type":"uint32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_token0","type":"address"},{"internalType":"address","name":"_token1","type":"address"}],"name":"initialize","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"kLast","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"}],"name":"mint","outputs":[{"internalType":"uint256","name":"liquidity","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"nonces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"permit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"price0CumulativeLast","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"price1CumulativeLast","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"}],"name":"skim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"amount0Out","type":"uint256"},{"internalType":"uint256","name":"amount1Out","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"swap","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"sync","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]
 //window.LOCKER_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"unlockTimestamp","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"platformTokensLocked","type":"uint256"},{"indexed":false,"internalType":"bool","name":"claimed","type":"bool"}],"name":"Locked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"unlockTimestamp","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"platformTokensLocked","type":"uint256"},{"indexed":false,"internalType":"bool","name":"claimed","type":"bool"}],"name":"Unlocked","type":"event"},{"inputs":[],"name":"MAX_LOCK_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINIMUM_BASETOKEN_PERCENT_ETH_X_100","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ONE_HUNDRED_X_100","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PLATFORM_TOKEN","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SLIPPAGE_TOLERANCE_X_100","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"baseToken","type":"address"}],"name":"addBaseToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"claimEther","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"claimExtraTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"lockId","type":"uint256"}],"name":"claimUnlocked","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"pair","type":"address"},{"internalType":"address","name":"baseToken","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"unlockTimestamp","type":"uint256"}],"name":"createLock","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"startIndex","type":"uint256"},{"internalType":"uint256","name":"endIndex","type":"uint256"}],"name":"getActiveLockIds","outputs":[{"internalType":"uint256[]","name":"result","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"startIndex","type":"uint256"},{"internalType":"uint256","name":"endIndex","type":"uint256"}],"name":"getActiveLockIdsByRecipient","outputs":[{"internalType":"uint256[]","name":"result","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"startIndex","type":"uint256"},{"internalType":"uint256","name":"endIndex","type":"uint256"}],"name":"getActiveLockIdsByToken","outputs":[{"internalType":"uint256[]","name":"result","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getActiveLockIdsLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"}],"name":"getActiveLockIdsLengthByRecipient","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"getActiveLockIdsLengthByToken","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"startIndex","type":"uint256"},{"internalType":"uint256","name":"endIndex","type":"uint256"}],"name":"getBaseTokens","outputs":[{"internalType":"address[]","name":"result","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getBaseTokensLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"startIndex","type":"uint256"},{"internalType":"uint256","name":"endIndex","type":"uint256"}],"name":"getInactiveLockIds","outputs":[{"internalType":"uint256[]","name":"result","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"startIndex","type":"uint256"},{"internalType":"uint256","name":"endIndex","type":"uint256"}],"name":"getInactiveLockIdsByRecipient","outputs":[{"internalType":"uint256[]","name":"result","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"startIndex","type":"uint256"},{"internalType":"uint256","name":"endIndex","type":"uint256"}],"name":"getInactiveLockIdsByToken","outputs":[{"internalType":"uint256[]","name":"result","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getInactiveLockIdsLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"}],"name":"getInactiveLockIdsLengthByRecipient","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"getInactiveLockIdsLengthByToken","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getLockById","outputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"unlockTimestamp","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"bool","name":"claimed","type":"bool"},{"internalType":"uint256","name":"platformTokensLocked","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"startIndex","type":"uint256"},{"internalType":"uint256","name":"endIndex","type":"uint256"}],"name":"getLockedTokens","outputs":[{"internalType":"address[]","name":"tokens","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getLockedTokensLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"}],"name":"getLocksByIds","outputs":[{"internalType":"uint256[]","name":"_ids","type":"uint256[]"},{"internalType":"address[]","name":"tokens","type":"address[]"},{"internalType":"uint256[]","name":"unlockTimestamps","type":"uint256[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"},{"internalType":"address[]","name":"recipients","type":"address[]"},{"internalType":"bool[]","name":"claimeds","type":"bool[]"},{"internalType":"uint256[]","name":"platformTokensLockeds","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"pair","type":"address"},{"internalType":"address","name":"baseToken","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"getMinLockCreationFeeInWei","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address[]","name":"tokens","type":"address[]"}],"name":"getTokensBalances","outputs":[{"internalType":"uint256[]","name":"balances","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"locks","outputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"unlockTimestamp","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"bool","name":"claimed","type":"bool"},{"internalType":"uint256","name":"platformTokensLocked","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"locksLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"baseToken","type":"address"}],"name":"removeBaseToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"tokenBalances","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"uniswapRouterV2","outputs":[{"internalType":"contract IUniswapV2Router02","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"}]
+
+window.CCIP_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "router",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "link",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "nftAddress",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "target",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "FailedToWithdrawEth",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "router",
+        type: "address",
+      },
+    ],
+    name: "InvalidRouter",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+    ],
+    name: "CCIPTransferCompleted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+    ],
+    name: "CCIPTransferFailed",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bytes",
+        name: "data",
+        type: "bytes",
+      },
+    ],
+    name: "CCIPTransferInitiated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "messageId",
+        type: "bytes32",
+      },
+    ],
+    name: "MessageSent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferRequested",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "destinationChainSelector",
+        type: "uint64",
+      },
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        internalType: "enum BASEBridgeWOD.PayFeesIn",
+        name: "payFeesIn",
+        type: "uint8",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenIdToLock",
+        type: "uint256",
+      },
+    ],
+    name: "BridgeNFT",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "S_router",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "acceptOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "admin",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "allowedSenders",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "messageId",
+            type: "bytes32",
+          },
+          {
+            internalType: "uint64",
+            name: "sourceChainSelector",
+            type: "uint64",
+          },
+          {
+            internalType: "bytes",
+            name: "sender",
+            type: "bytes",
+          },
+          {
+            internalType: "bytes",
+            name: "data",
+            type: "bytes",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "token",
+                type: "address",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Client.EVMTokenAmount[]",
+            name: "destTokenAmounts",
+            type: "tuple[]",
+          },
+        ],
+        internalType: "struct Client.Any2EVMMessage",
+        name: "message",
+        type: "tuple",
+      },
+    ],
+    name: "ccipReceive",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newLink",
+        type: "address",
+      },
+    ],
+    name: "changeLink",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_nftAddress",
+        type: "address",
+      },
+    ],
+    name: "changeNFTAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newRouter",
+        type: "address",
+      },
+    ],
+    name: "changeRouter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getRouter",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "i_link",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "nft",
+    outputs: [
+      {
+        internalType: "contract IERC721",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "operator",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "data",
+        type: "bytes",
+      },
+    ],
+    name: "onERC721Received",
+    outputs: [
+      {
+        internalType: "bytes4",
+        name: "",
+        type: "bytes4",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "_allowedSenders",
+        type: "address[]",
+      },
+    ],
+    name: "setAllowedSenders",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "router",
+        type: "address",
+      },
+    ],
+    name: "setRouter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes4",
+        name: "interfaceId",
+        type: "bytes4",
+      },
+    ],
+    name: "supportsInterface",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "transferAnyNFT",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "beneficiary",
+        type: "address",
+      },
+    ],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "beneficiary",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+    ],
+    name: "withdrawToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
+  },
+];
+
+window.CCIP_ROUTER_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "wrappedNative",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "armProxy",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "BadARMSignal",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "FailedToSendValue",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InsufficientFeeTokenAmount",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidMsgValue",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "InvalidRecipientAddress",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "OffRampMismatch",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "OnlyOffRamp",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "destChainSelector",
+        type: "uint64",
+      },
+    ],
+    name: "UnsupportedDestinationChain",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "messageId",
+        type: "bytes32",
+      },
+      {
+        indexed: false,
+        internalType: "uint64",
+        name: "sourceChainSelector",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "offRamp",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "calldataHash",
+        type: "bytes32",
+      },
+    ],
+    name: "MessageExecuted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint64",
+        name: "sourceChainSelector",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "offRamp",
+        type: "address",
+      },
+    ],
+    name: "OffRampAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint64",
+        name: "sourceChainSelector",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "offRamp",
+        type: "address",
+      },
+    ],
+    name: "OffRampRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint64",
+        name: "destChainSelector",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "onRamp",
+        type: "address",
+      },
+    ],
+    name: "OnRampSet",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferRequested",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "MAX_RET_BYTES",
+    outputs: [
+      {
+        internalType: "uint16",
+        name: "",
+        type: "uint16",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "acceptOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "uint64",
+            name: "destChainSelector",
+            type: "uint64",
+          },
+          {
+            internalType: "address",
+            name: "onRamp",
+            type: "address",
+          },
+        ],
+        internalType: "struct Router.OnRamp[]",
+        name: "onRampUpdates",
+        type: "tuple[]",
+      },
+      {
+        components: [
+          {
+            internalType: "uint64",
+            name: "sourceChainSelector",
+            type: "uint64",
+          },
+          {
+            internalType: "address",
+            name: "offRamp",
+            type: "address",
+          },
+        ],
+        internalType: "struct Router.OffRamp[]",
+        name: "offRampRemoves",
+        type: "tuple[]",
+      },
+      {
+        components: [
+          {
+            internalType: "uint64",
+            name: "sourceChainSelector",
+            type: "uint64",
+          },
+          {
+            internalType: "address",
+            name: "offRamp",
+            type: "address",
+          },
+        ],
+        internalType: "struct Router.OffRamp[]",
+        name: "offRampAdds",
+        type: "tuple[]",
+      },
+    ],
+    name: "applyRampUpdates",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "destinationChainSelector",
+        type: "uint64",
+      },
+      {
+        components: [
+          {
+            internalType: "bytes",
+            name: "receiver",
+            type: "bytes",
+          },
+          {
+            internalType: "bytes",
+            name: "data",
+            type: "bytes",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "token",
+                type: "address",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Client.EVMTokenAmount[]",
+            name: "tokenAmounts",
+            type: "tuple[]",
+          },
+          {
+            internalType: "address",
+            name: "feeToken",
+            type: "address",
+          },
+          {
+            internalType: "bytes",
+            name: "extraArgs",
+            type: "bytes",
+          },
+        ],
+        internalType: "struct Client.EVM2AnyMessage",
+        name: "message",
+        type: "tuple",
+      },
+    ],
+    name: "ccipSend",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getArmProxy",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "destinationChainSelector",
+        type: "uint64",
+      },
+      {
+        components: [
+          {
+            internalType: "bytes",
+            name: "receiver",
+            type: "bytes",
+          },
+          {
+            internalType: "bytes",
+            name: "data",
+            type: "bytes",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "token",
+                type: "address",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Client.EVMTokenAmount[]",
+            name: "tokenAmounts",
+            type: "tuple[]",
+          },
+          {
+            internalType: "address",
+            name: "feeToken",
+            type: "address",
+          },
+          {
+            internalType: "bytes",
+            name: "extraArgs",
+            type: "bytes",
+          },
+        ],
+        internalType: "struct Client.EVM2AnyMessage",
+        name: "message",
+        type: "tuple",
+      },
+    ],
+    name: "getFee",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "fee",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getOffRamps",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint64",
+            name: "sourceChainSelector",
+            type: "uint64",
+          },
+          {
+            internalType: "address",
+            name: "offRamp",
+            type: "address",
+          },
+        ],
+        internalType: "struct Router.OffRamp[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "destChainSelector",
+        type: "uint64",
+      },
+    ],
+    name: "getOnRamp",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "chainSelector",
+        type: "uint64",
+      },
+    ],
+    name: "getSupportedTokens",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getWrappedNative",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "chainSelector",
+        type: "uint64",
+      },
+    ],
+    name: "isChainSupported",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "offRamp",
+        type: "address",
+      },
+    ],
+    name: "isOffRamp",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+      {
+        internalType: "uint64",
+        name: "",
+        type: "uint64",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "recoverTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "messageId",
+            type: "bytes32",
+          },
+          {
+            internalType: "uint64",
+            name: "sourceChainSelector",
+            type: "uint64",
+          },
+          {
+            internalType: "bytes",
+            name: "sender",
+            type: "bytes",
+          },
+          {
+            internalType: "bytes",
+            name: "data",
+            type: "bytes",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "token",
+                type: "address",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Client.EVMTokenAmount[]",
+            name: "destTokenAmounts",
+            type: "tuple[]",
+          },
+        ],
+        internalType: "struct Client.Any2EVMMessage",
+        name: "message",
+        type: "tuple",
+      },
+      {
+        internalType: "uint16",
+        name: "gasForCallExactCheck",
+        type: "uint16",
+      },
+      {
+        internalType: "uint256",
+        name: "gasLimit",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+    ],
+    name: "routeMessage",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "success",
+        type: "bool",
+      },
+      {
+        internalType: "bytes",
+        name: "retData",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "wrappedNative",
+        type: "address",
+      },
+    ],
+    name: "setWrappedNative",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "typeAndVersion",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+window.CCIP_ONRAMP_ABI = [
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "linkToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "chainSelector",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "destChainSelector",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "defaultTxGasLimit",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint96",
+            "name": "maxNopFeesJuels",
+            "type": "uint96"
+          },
+          {
+            "internalType": "address",
+            "name": "prevOnRamp",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "armProxy",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.StaticConfig",
+        "name": "staticConfig",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "router",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "maxTokensLength",
+            "type": "uint16"
+          },
+          {
+            "internalType": "address",
+            "name": "priceRegistry",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "maxDataSize",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "maxGasLimit",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.DynamicConfig",
+        "name": "dynamicConfig",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "pool",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct Internal.PoolUpdate[]",
+        "name": "tokensAndPools",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "allowlist",
+        "type": "address[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "isEnabled",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint128",
+            "name": "capacity",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint128",
+            "name": "rate",
+            "type": "uint128"
+          }
+        ],
+        "internalType": "struct RateLimiter.Config",
+        "name": "rateLimiterConfig",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "gasMultiplier",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint96",
+            "name": "networkFeeAmountUSD",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint32",
+            "name": "destGasOverhead",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "destGasPerPayloadByte",
+            "type": "uint16"
+          },
+          {
+            "internalType": "bool",
+            "name": "enabled",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.FeeTokenConfigArgs[]",
+        "name": "feeTokenConfigs",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "minFee",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "maxFee",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "ratio",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.TokenTransferFeeConfigArgs[]",
+        "name": "tokenTransferFeeConfigArgs",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "nop",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "weight",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.NopAndWeight[]",
+        "name": "nopsAndWeights",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "capacity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "requested",
+        "type": "uint256"
+      }
+    ],
+    "name": "AggregateValueMaxCapacityExceeded",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "minWaitInSeconds",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "available",
+        "type": "uint256"
+      }
+    ],
+    "name": "AggregateValueRateLimitReached",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BadARMSignal",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BucketOverfilled",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "encodedAddress",
+        "type": "bytes"
+      }
+    ],
+    "name": "InvalidAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidConfig",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidExtraArgsTag",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nop",
+        "type": "address"
+      }
+    ],
+    "name": "InvalidNopAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidTokenPoolConfig",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidWithdrawParams",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LinkBalanceNotSettled",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MaxFeeBalanceReached",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MessageGasLimitTooHigh",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "maxSize",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "actualSize",
+        "type": "uint256"
+      }
+    ],
+    "name": "MessageTooLarge",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MustBeCalledByRouter",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoFeesToPay",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoNopsToPay",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "NotAFeeToken",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OnlyCallableByAdminOrOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OnlyCallableByOwnerOrAdmin",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OnlyCallableByOwnerOrAdminOrNop",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PoolAlreadyAdded",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "PoolDoesNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "PriceNotFoundForToken",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "RouterMustSetOriginalSender",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "SenderNotAllowed",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "capacity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "requested",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "TokenMaxCapacityExceeded",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TokenPoolMismatch",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "minWaitInSeconds",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "available",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "TokenRateLimitReached",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TooManyNops",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnsupportedNumberOfTokens",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "UnsupportedToken",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "AllowListAdd",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "AllowListEnabledSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "AllowListRemove",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "sourceChainSelector",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "sequenceNumber",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint256",
+            "name": "feeTokenAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "nonce",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint256",
+            "name": "gasLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "strict",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "receiver",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Client.EVMTokenAmount[]",
+            "name": "tokenAmounts",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "address",
+            "name": "feeToken",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "messageId",
+            "type": "bytes32"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Internal.EVM2EVMMessage",
+        "name": "message",
+        "type": "tuple"
+      }
+    ],
+    "name": "CCIPSendRequested",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "linkToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "chainSelector",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "destChainSelector",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "defaultTxGasLimit",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint96",
+            "name": "maxNopFeesJuels",
+            "type": "uint96"
+          },
+          {
+            "internalType": "address",
+            "name": "prevOnRamp",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "armProxy",
+            "type": "address"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct EVM2EVMOnRamp.StaticConfig",
+        "name": "staticConfig",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "router",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "maxTokensLength",
+            "type": "uint16"
+          },
+          {
+            "internalType": "address",
+            "name": "priceRegistry",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "maxDataSize",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "maxGasLimit",
+            "type": "uint64"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct EVM2EVMOnRamp.DynamicConfig",
+        "name": "dynamicConfig",
+        "type": "tuple"
+      }
+    ],
+    "name": "ConfigSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "gasMultiplier",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint96",
+            "name": "networkFeeAmountUSD",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint32",
+            "name": "destGasOverhead",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "destGasPerPayloadByte",
+            "type": "uint16"
+          },
+          {
+            "internalType": "bool",
+            "name": "enabled",
+            "type": "bool"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct EVM2EVMOnRamp.FeeTokenConfigArgs[]",
+        "name": "feeConfig",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "FeeConfigSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "nop",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "NopPaid",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "nopWeightsTotal",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "nop",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "weight",
+            "type": "uint16"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct EVM2EVMOnRamp.NopAndWeight[]",
+        "name": "nopsAndWeights",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "NopsSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferRequested",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pool",
+        "type": "address"
+      }
+    ],
+    "name": "PoolAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pool",
+        "type": "address"
+      }
+    ],
+    "name": "PoolRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "minFee",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "maxFee",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "ratio",
+            "type": "uint16"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct EVM2EVMOnRamp.TokenTransferFeeConfigArgs[]",
+        "name": "transferFeeConfig",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "TokenTransferFeeConfigSet",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "acceptOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "removes",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "adds",
+        "type": "address[]"
+      }
+    ],
+    "name": "applyAllowListUpdates",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "pool",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct Internal.PoolUpdate[]",
+        "name": "removes",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "pool",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct Internal.PoolUpdate[]",
+        "name": "adds",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "applyPoolUpdates",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "currentRateLimiterState",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "tokens",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint32",
+            "name": "lastUpdated",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isEnabled",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint128",
+            "name": "capacity",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint128",
+            "name": "rate",
+            "type": "uint128"
+          }
+        ],
+        "internalType": "struct RateLimiter.TokenBucket",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "receiver",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Client.EVMTokenAmount[]",
+            "name": "tokenAmounts",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "address",
+            "name": "feeToken",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes",
+            "name": "extraArgs",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct Client.EVM2AnyMessage",
+        "name": "message",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "feeTokenAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "originalSender",
+        "type": "address"
+      }
+    ],
+    "name": "forwardFromRouter",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllowList",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllowListEnabled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getDynamicConfig",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "router",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "maxTokensLength",
+            "type": "uint16"
+          },
+          {
+            "internalType": "address",
+            "name": "priceRegistry",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "maxDataSize",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "maxGasLimit",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.DynamicConfig",
+        "name": "dynamicConfig",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getExpectedNextSequenceNumber",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "receiver",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Client.EVMTokenAmount[]",
+            "name": "tokenAmounts",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "address",
+            "name": "feeToken",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes",
+            "name": "extraArgs",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct Client.EVM2AnyMessage",
+        "name": "message",
+        "type": "tuple"
+      }
+    ],
+    "name": "getFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "getFeeTokenConfig",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint96",
+            "name": "networkFeeAmountUSD",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint64",
+            "name": "gasMultiplier",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "destGasOverhead",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "destGasPerPayloadByte",
+            "type": "uint16"
+          },
+          {
+            "internalType": "bool",
+            "name": "enabled",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.FeeTokenConfig",
+        "name": "feeTokenConfig",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getNopFeesJuels",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getNops",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "nop",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "weight",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.NopAndWeight[]",
+        "name": "nopsAndWeights",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "weightsTotal",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "sourceToken",
+        "type": "address"
+      }
+    ],
+    "name": "getPoolBySourceToken",
+    "outputs": [
+      {
+        "internalType": "contract IPool",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "getSenderNonce",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getStaticConfig",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "linkToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "chainSelector",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "destChainSelector",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "defaultTxGasLimit",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint96",
+            "name": "maxNopFeesJuels",
+            "type": "uint96"
+          },
+          {
+            "internalType": "address",
+            "name": "prevOnRamp",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "armProxy",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.StaticConfig",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSupportedTokens",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTokenLimitAdmin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "getTokenTransferFeeConfig",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint32",
+            "name": "minFee",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "maxFee",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "ratio",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.TokenTransferFeeConfig",
+        "name": "tokenTransferFeeConfig",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "linkAvailableForPayment",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "payNops",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "setAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "setAllowListEnabled",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "router",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "maxTokensLength",
+            "type": "uint16"
+          },
+          {
+            "internalType": "address",
+            "name": "priceRegistry",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "maxDataSize",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "maxGasLimit",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.DynamicConfig",
+        "name": "dynamicConfig",
+        "type": "tuple"
+      }
+    ],
+    "name": "setDynamicConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "gasMultiplier",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint96",
+            "name": "networkFeeAmountUSD",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint32",
+            "name": "destGasOverhead",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "destGasPerPayloadByte",
+            "type": "uint16"
+          },
+          {
+            "internalType": "bool",
+            "name": "enabled",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.FeeTokenConfigArgs[]",
+        "name": "feeTokenConfigArgs",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setFeeTokenConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "nop",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "weight",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.NopAndWeight[]",
+        "name": "nopsAndWeights",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setNops",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "isEnabled",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint128",
+            "name": "capacity",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint128",
+            "name": "rate",
+            "type": "uint128"
+          }
+        ],
+        "internalType": "struct RateLimiter.Config",
+        "name": "config",
+        "type": "tuple"
+      }
+    ],
+    "name": "setRateLimiterConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "minFee",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "maxFee",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "ratio",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct EVM2EVMOnRamp.TokenTransferFeeConfigArgs[]",
+        "name": "tokenTransferFeeConfigArgs",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setTokenTransferFeeConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "typeAndVersion",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "feeToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawNonLinkFees",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
 
 window.DAILY_BONUS_ABI = [
   {
@@ -36805,7 +39746,10 @@ async function getEstimatedTokenSubscriptionAmountCFX(tokenAddress) {
 }
 
 async function getEstimatedTokenSubscriptionAmountBase(tokenAddress) {
-  const baseContract = new window.baseWeb3.eth.Contract(window.SUBSCRIPTION_BASE_ABI, window.config.subscription_base_address);
+  const baseContract = new window.baseWeb3.eth.Contract(
+    window.SUBSCRIPTION_BASE_ABI,
+    window.config.subscription_base_address
+  );
   return await baseContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
