@@ -185,6 +185,11 @@ function App() {
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
 
+
+  const [MyNFTSCaws2, setMyNFTSCaws2] = useState([]);
+  const [myLandNFTs, setMyLandNFTs] = useState([]);
+
+
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setMyGateNfts] = useState([]);
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
@@ -564,6 +569,34 @@ function App() {
       setMyNFTs(nfts);
     }
   };
+
+  const myLandNft = async () => {
+    let myNft = await window.myNftLandListContract(coinbase);
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTs(nfts);
+    } else setMyLandNFTs([]);
+  };
+
+
+  const myNft2 = async () => {
+    let myNft = await window.myNftListContract(coinbase);
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCaws2(nfts);
+    } else setMyNFTSCaws2([]);
+  };
+
 
 
   const getMyNFTS = async (coinbase, type) => {
@@ -1360,6 +1393,8 @@ function App() {
       myCAWStakes();
       myLandStakes();
       getmyCawsWodStakes();
+      myNft2();
+      myLandNft()
    
     }
     if (isConnected === true && coinbase) {
@@ -1953,8 +1988,8 @@ function App() {
                   }}
                   chainId={chainId}
                   isConnected={isConnected}
-                  myNFTSLand={myNFTs}
-                  myNFTSCaws={myCAWNFTs}
+                  myNFTSLand={myLandNFTs}
+                  myNFTSCaws={MyNFTSCaws2}
             handleSwitchNetwork={handleSwitchNetwork}
 
                 />
