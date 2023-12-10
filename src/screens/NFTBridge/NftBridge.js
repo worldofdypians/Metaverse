@@ -141,7 +141,7 @@ const NFTBridge = ({
 
   const handleArguments = () => {
     // Check if the correct number of arguments are passed
- 
+
     if (process.argv.length !== 5) {
       throw new Error("Wrong number of arguments");
     }
@@ -299,7 +299,7 @@ const NFTBridge = ({
 
             if (!isApproved) {
               setbuttonStatus("loadingApprove");
-              setbuttonText("Approving...");
+              setbuttonText("Approving");
               await landContract.methods
                 .approve(sourceBridge_address, selectNftId)
                 .send({ from: coinbase })
@@ -320,8 +320,8 @@ const NFTBridge = ({
                 sourceBridge_address
               );
               setbuttonStatus("loadingDeposit");
-              setbuttonText("Transfering...");
-              console.log(contract.methods)
+              setbuttonText("Transferring");
+
               await contract.methods
                 .BridgeNFT(
                   destinationChainSelector,
@@ -331,7 +331,6 @@ const NFTBridge = ({
                 )
                 .send({ from: coinbase })
                 .then((data) => {
-                  getStatus(filterTitle, destinationFilterTitle);
                   setisApproved(false);
                   setbuttonStatus("successDeposit");
                 })
@@ -355,7 +354,7 @@ const NFTBridge = ({
             );
 
             if (!isApproved) {
-              setbuttonText("Approving...");
+              setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
               await cawsContract.methods
                 .approve(sourceBridge_address, selectNftId)
@@ -375,7 +374,7 @@ const NFTBridge = ({
                 window.CCIP_ABI,
                 sourceBridge_address
               );
-              setbuttonText("Transfering...");
+              setbuttonText("Transferring");
               setbuttonStatus("loadingDeposit");
 
               await contract.methods
@@ -387,7 +386,6 @@ const NFTBridge = ({
                 )
                 .send({ from: coinbase })
                 .then((data) => {
-                  getStatus(filterTitle, destinationFilterTitle);
                   setisApproved(false);
                   setbuttonStatus("successDeposit");
                 })
@@ -418,7 +416,7 @@ const NFTBridge = ({
             );
 
             if (!isApproved) {
-              setbuttonText("Approving...");
+              setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
 
               await landContract.methods
@@ -436,7 +434,7 @@ const NFTBridge = ({
                   setbuttonStatus("errorApprove");
                 });
             } else if (isApproved) {
-              setbuttonText("Transfering...");
+              setbuttonText("Transferring");
               setbuttonStatus("loadingDeposit");
 
               await contract.methods
@@ -448,7 +446,6 @@ const NFTBridge = ({
                 )
                 .send({ from: coinbase })
                 .then((data) => {
-                  getStatus(filterTitle, destinationFilterTitle);
                   setbuttonStatus("successDeposit");
 
                   setisApproved(false);
@@ -473,7 +470,7 @@ const NFTBridge = ({
             );
 
             if (!isApproved) {
-              setbuttonText("Approving...");
+              setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
 
               await cawsContract.methods
@@ -496,7 +493,7 @@ const NFTBridge = ({
                 window.CCIP_ABI,
                 sourceBridge_address
               );
-              setbuttonText("Transfering...");
+              setbuttonText("Transferring");
               setbuttonStatus("loadingDeposit");
 
               await contract.methods
@@ -508,7 +505,6 @@ const NFTBridge = ({
                 )
                 .send({ from: coinbase })
                 .then((data) => {
-                  getStatus(filterTitle, destinationFilterTitle);
                   setisApproved(false);
                   setbuttonStatus("successDeposit");
                 })
@@ -539,7 +535,7 @@ const NFTBridge = ({
             );
 
             if (!isApproved) {
-              setbuttonText("Approving...");
+              setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
 
               await landContract.methods
@@ -558,7 +554,7 @@ const NFTBridge = ({
                   setisApproved(false);
                 });
             } else if (isApproved) {
-              setbuttonText("Transfering...");
+              setbuttonText("Transferring");
               setbuttonStatus("loadingDeposit");
 
               await contract.methods
@@ -570,7 +566,6 @@ const NFTBridge = ({
                 )
                 .send({ from: coinbase })
                 .then((data) => {
-                  getStatus(filterTitle, destinationFilterTitle);
                   setisApproved(false);
                   setbuttonStatus("successDeposit");
                 })
@@ -594,7 +589,7 @@ const NFTBridge = ({
             );
 
             if (!isApproved) {
-              setbuttonText("Approving...");
+              setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
 
               await cawsContract.methods
@@ -616,7 +611,7 @@ const NFTBridge = ({
                 window.CCIP_ABI,
                 sourceBridge_address
               );
-              setbuttonText("Transfering...");
+              setbuttonText("Transferring");
               setbuttonStatus("loadingDeposit");
 
               await contract.methods
@@ -628,7 +623,6 @@ const NFTBridge = ({
                 )
                 .send({ from: coinbase })
                 .then((data) => {
-                  getStatus(filterTitle, destinationFilterTitle);
                   setisApproved(false);
                   setbuttonStatus("successDeposit");
                 })
@@ -654,12 +648,12 @@ const NFTBridge = ({
           );
 
           const landContract = new web3.eth.Contract(
-            window.WOD_ABI,
-            window.config.nft_land_address
+            window.LAND_CCIP_ABI,
+            window.config.nft_land_bnb_address
           );
 
           if (!isApproved) {
-            setbuttonText("Approving...");
+            setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
 
             await landContract.methods
@@ -677,7 +671,7 @@ const NFTBridge = ({
                 setbuttonStatus("errorApprove");
               });
           } else if (isApproved) {
-            setbuttonText("Transfering...");
+            setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
 
             await contract.methods
@@ -689,7 +683,6 @@ const NFTBridge = ({
               )
               .send({ from: coinbase })
               .then((data) => {
-                getStatus(filterTitle, destinationFilterTitle);
                 setisApproved(false);
                 setbuttonStatus("successDeposit");
               })
@@ -707,12 +700,12 @@ const NFTBridge = ({
           const destinationChainSelector =
             window.config.destination_chain_selector_eth;
           const cawsContract = new web3.eth.Contract(
-            window.CAWS_ABI,
-            window.config.nft_caws_address
+            window.CAWS_CCIP_ABI,
+            window.config.nft_caws_bnb_address
           );
 
           if (!isApproved) {
-            setbuttonText("Approving...");
+            setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
 
             await cawsContract.methods
@@ -735,7 +728,7 @@ const NFTBridge = ({
               window.CCIP_ABI,
               sourceBridge_address
             );
-            setbuttonText("Transfering...");
+            setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
 
             await contract.methods
@@ -747,7 +740,6 @@ const NFTBridge = ({
               )
               .send({ from: coinbase })
               .then((data) => {
-                getStatus(filterTitle, destinationFilterTitle);
                 setisApproved(false);
                 setbuttonStatus("successDeposit");
               })
@@ -772,12 +764,12 @@ const NFTBridge = ({
           );
 
           const landContract = new web3.eth.Contract(
-            window.WOD_ABI,
-            window.config.nft_land_address
+            window.LAND_CCIP_ABI,
+            window.config.nft_land_avax_address
           );
 
           if (!isApproved) {
-            setbuttonText("Approving...");
+            setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
 
             await landContract.methods
@@ -795,7 +787,7 @@ const NFTBridge = ({
                 setbuttonStatus("errorApprove");
               });
           } else if (isApproved) {
-            setbuttonText("Transfering...");
+            setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
 
             await contract.methods
@@ -807,7 +799,6 @@ const NFTBridge = ({
               )
               .send({ from: coinbase })
               .then((data) => {
-                getStatus(filterTitle, destinationFilterTitle);
                 setisApproved(false);
                 setbuttonStatus("successDeposit");
               })
@@ -825,12 +816,12 @@ const NFTBridge = ({
           const destinationChainSelector =
             window.config.destination_chain_selector_eth;
           const cawsContract = new web3.eth.Contract(
-            window.CAWS_ABI,
-            window.config.nft_caws_address
+            window.CAWS_CCIP_ABI,
+            window.config.nft_caws_avax_address
           );
 
           if (!isApproved) {
-            setbuttonText("Approving...");
+            setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
 
             await cawsContract.methods
@@ -853,7 +844,7 @@ const NFTBridge = ({
               window.CCIP_ABI,
               sourceBridge_address
             );
-            setbuttonText("Transfering...");
+            setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
 
             await contract.methods
@@ -867,7 +858,6 @@ const NFTBridge = ({
               .then((data) => {
                 setbuttonStatus("successDeposit");
 
-                getStatus(filterTitle, destinationFilterTitle);
                 setisApproved(false);
               })
               .catch((e) => {
@@ -891,12 +881,12 @@ const NFTBridge = ({
           );
 
           const landContract = new web3.eth.Contract(
-            window.WOD_ABI,
-            window.config.nft_land_address
+            window.LAND_CCIP_ABI,
+            window.config.nft_land_base_address
           );
 
           if (!isApproved) {
-            setbuttonText("Approving...");
+            setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
 
             await landContract.methods
@@ -914,7 +904,7 @@ const NFTBridge = ({
                 setbuttonStatus("errorApprove");
               });
           } else if (isApproved) {
-            setbuttonText("Transfering...");
+            setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
 
             await contract.methods
@@ -926,7 +916,6 @@ const NFTBridge = ({
               )
               .send({ from: coinbase })
               .then((data) => {
-                getStatus(filterTitle, destinationFilterTitle);
                 setisApproved(false);
                 setbuttonStatus("successDeposit");
               })
@@ -944,12 +933,12 @@ const NFTBridge = ({
           const destinationChainSelector =
             window.config.destination_chain_selector_eth;
           const cawsContract = new web3.eth.Contract(
-            window.CAWS_ABI,
-            window.config.nft_caws_address
+            window.CAWS_CCIP_ABI,
+            window.config.nft_caws_land_address
           );
 
           if (!isApproved) {
-            setbuttonText("Approving...");
+            setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
 
             await cawsContract.methods
@@ -971,7 +960,7 @@ const NFTBridge = ({
               window.CCIP_ABI,
               sourceBridge_address
             );
-            setbuttonText("Transfering...");
+            setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
 
             await contract.methods
@@ -983,7 +972,6 @@ const NFTBridge = ({
               )
               .send({ from: coinbase })
               .then((data) => {
-                getStatus(filterTitle, destinationFilterTitle);
                 setisApproved(false);
                 setbuttonStatus("successDeposit");
               })
@@ -1252,6 +1240,14 @@ const NFTBridge = ({
                         {buttonText} NFT{" "}
                         {finalNftType === "caws" ? "CAWS" : "Genesis"} #
                         {selectNftId}{" "}
+                        {(buttonText === "Approving" ||
+                          buttonText === "Transferring") && (
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{ height: "0.7rem", width: "0.7rem" }}
+                          ></div>
+                        )}
                       </>
                     )}
                   </button>
