@@ -329,7 +329,7 @@ const StakeModal = ({
       </div>
       <div className="row modal-scroll position-relative mt-3">
         <span className="vertical-stake-divider d-none d-lg-flex"></span>
-        <div className="col-12 col-lg-6">
+        <div className="col-6 col-lg-6">
           <div className="nft-modal-grid">
             {landItems.length === 0 ? (
               [...Array(devicewidth < 500 ? 1 : 2)].map((item, id) => {
@@ -444,7 +444,7 @@ const StakeModal = ({
             )}
           </div>
         </div>
-        <div className="col-12 col-lg-6">
+        <div className="col-6 col-lg-6">
           <div className="nft-modal-grid">
             {cawsItems.length === 0 ? (
               [...Array(devicewidth < 500 ? 1 : 2)].map((item, id) => {

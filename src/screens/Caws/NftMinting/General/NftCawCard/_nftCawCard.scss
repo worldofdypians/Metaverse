@@ -153,6 +153,10 @@ box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.16);
   display: flex;
   gap: 5px;
   align-items: baseline;
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+    line-height: 25px;
+  }
 }
 
 .caw-card2 {
