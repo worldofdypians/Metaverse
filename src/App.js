@@ -690,7 +690,6 @@ function App() {
       coinbase,
       window.config.nft_caws_base_address
     );
-    console.log(myNft)
     if (myNft && myNft.length > 0) {
       let nfts = myNft.map((nft) => window.getNft(nft));
 
@@ -698,8 +697,8 @@ function App() {
 
       nfts.reverse();
 
-      setMyNFTSCaws2(nfts);
-    } else setMyNFTSCaws2([]);
+      setMyNFTSCawsBase(nfts);
+    } else setMyNFTSCawsBase([]);
   };
 
   const getMyNFTS = async (coinbase, type) => {

@@ -1242,7 +1242,7 @@ const NFTBridge = ({
             window.config.destination_chain_selector_eth;
           const cawsContract = new web3.eth.Contract(
             window.CAWS_CCIP_ABI,
-            window.config.nft_caws_land_address
+            window.config.nft_caws_base_address
           );
 
           if (!isApproved) {
