@@ -494,6 +494,21 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
+.doge-mint-bg2 {
+  background-image: url("./assets/dogeBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+
+
 .coin98-mint-bg {
   background-image: url("./assets/coin98Background1.png");
   background-size: cover;
@@ -509,6 +524,17 @@
 
 .avalanche-mint-bg {
   background-image: url("./assets/avalanche-mint-bg.png");
+  background-size: 90%;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.doge-mint-bg {
+  background-image: url("./assets/dogeBackground.webp");
   background-size: 90%;
   background-position: right;
   background-repeat: no-repeat;
@@ -1624,6 +1650,19 @@ input::-webkit-inner-spin-button {
     }
   }
 }
+
+.doge-button{
+  border-radius: 20px;
+background: linear-gradient(90deg, #E87483 -13.56%, #6B1D90 129.3%);
+h6{
+  color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+}
+
 
 .bottom-auto-bg {
   bottom: auto !important;

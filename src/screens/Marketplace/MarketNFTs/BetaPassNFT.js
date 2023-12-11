@@ -11,7 +11,7 @@ import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import conflux from "./assets/conflux.svg";
 import gateWhite from "./assets/gateWhite.svg";
-
+import rightArrow from './assets/rightArrow.svg'
 import coinbaseimg from "./assets/base.svg";
 import { useLocation } from "react-router-dom";
 import blockChainIcon from "../assets/blockChainIcon.svg";
@@ -41,7 +41,7 @@ import pinkArea from "./assets/pinkArea.svg";
 import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
 import pinkAreaGate from "./assets/pinkAreaGate.svg";
 import pinkAreaBase from "./assets/pinkAreaBase.svg";
-
+import pinkAreaDoge from "./assets/pinkAreaDoge.svg";
 import avaxBetaBanner from "./assets/avaxBetaBanner.png";
 import coingeckoBetaBanner from "./assets/coingeckoBetaBanner.png";
 import confluxBetaBanner from "./assets/confluxBetaBanner.png";
@@ -164,7 +164,7 @@ const BetaPassNFT = ({
     id: "doge",
     cardTitle: "Doge Beta Pass",
     title: "Doge Beta Pass",
-    background: "avalanche-mint-bg",
+    background: "doge-mint-bg2",
   };
 
   const timepieceData = {
@@ -934,6 +934,13 @@ const BetaPassNFT = ({
                               </span>
                             </div>
                           ))}
+                          {mintTitle === "doge" && 
+                          <div className="doge-button mt-3 d-flex align-items-center gap-2 p-2">
+                              <img src={dogeLogo} alt="" />
+                              <h6 className="mb-0">DogeCoin Giveaway</h6>
+                              <img src={rightArrow} alt="" />
+                          </div>
+                          }
                           {
                             // mintTitle === "base" ? (
                             //   <div className="d-flex align-items-center gap-2">
@@ -981,6 +988,11 @@ const BetaPassNFT = ({
                         {mintTitle === "base" && (
                           <div className="position-relative">
                             <img src={pinkAreaBase} alt="" />
+                          </div>
+                        )}
+                        {mintTitle === "doge" && (
+                          <div className="position-relative">
+                            <img src={pinkAreaDoge} alt="" />
                           </div>
                         )}
                       </div>
@@ -2066,11 +2078,11 @@ const BetaPassNFT = ({
 
                         {linkWallet === true &&
                           !alreadyRegistered &&
-                          mintTitle === "base" && (
+                          mintTitle === "doge" && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
-                                the one you used for Doge Giveaway
+                                the one you used for DogeCoin Giveaway
                                 .
                               </span>
                               <div
