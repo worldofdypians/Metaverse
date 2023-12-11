@@ -1506,7 +1506,7 @@ const NFTBridge = ({
                 </div>
               </div>
             </div>
-            <span className="w-100 new-stake-divider mt-3 mb-5"></span>
+            <span className="w-100 new-stake-divider mt-3 mb-4"></span>
             <div className="row mx-0 gap-3 align-items-start">
               <div className="col-lg-6 col-12">
                 <div className="d-flex flex-column gap-3">
