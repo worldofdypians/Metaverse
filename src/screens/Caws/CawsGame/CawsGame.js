@@ -1,5 +1,6 @@
 import React from "react";
 import Ship from "../assets/images/ship.svg";
+import wodLogo from '../assets/wodLogo.png'
 import MultipleCaws from "../assets/images/multi-caws.png";
 import Console from "../assets/images/game-console.svg";
 import CawsLogo from "../assets/images/caws-logo2.png";
@@ -7,6 +8,7 @@ import MiniConsole from "../assets/images/console-small.svg";
 import ChevronArrowSvg from "../assets/General/ChevronArrowSvg/ChevronArrowSvg";
 import $alert from "../functions/$alert";
 import "./_cawsgame.scss";
+import { NavLink } from "react-router-dom";
 
 const CawsGame = () => {
   const bios = {
@@ -43,18 +45,31 @@ const CawsGame = () => {
                 <img src={MultipleCaws} id="multi-caws2" alt="" />
               </div>
             </div>
-            <a
-              href="https://opensea.io/collection/catsandwatchessocietycaws"
-              target={"_blank"}
-              rel="noreferrer"
-              style={{ textDecoration: 'none' }}
-            >
-              <div className="buy-caws-btn">
-                <img src={Ship} alt="" />
-                <span>BUY A CAT ON OPENSEA</span>
-                <ChevronArrowSvg size="12" />
-              </div>
-            </a>
+            <div className="d-flex align-items-center gap-2">
+              <a
+                href="https://opensea.io/collection/catsandwatchessocietycaws"
+                target={"_blank"}
+                rel="noreferrer"
+                style={{ textDecoration: "none" }}
+              >
+                <div className="buy-caws-btn">
+                  <img src={Ship} alt="" />
+                  <span>BUY A CAT ON OPENSEA</span>
+                  <ChevronArrowSvg size="12" />
+                </div>
+              </a>
+              <NavLink
+               to={'/marketplace/caws'}
+            
+                style={{ textDecoration: "none" }}
+              >
+                <div className="buy-caws-wod-btn">
+                  <img src={wodLogo} alt="" />
+                  <span>BUY A CAT ON WOD</span>
+                  <ChevronArrowSvg size="12" />
+                </div>
+              </NavLink>
+            </div>
           </div>
         </div>
         <div className="caws-right-wrapper p-0">
