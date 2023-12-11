@@ -1641,7 +1641,7 @@ const NFTBridge = ({
                             isConnected &&
                             selectNftId !== 0 &&
                             isApproved &&
-                            buttonText === "Transfer" &&
+                            buttonText.includes("Transfer")  &&
                             "complete"
                           } `}
                         >
