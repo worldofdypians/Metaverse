@@ -28,7 +28,7 @@ import subtractInactive from "../../../assets/landAssets/subtractInactive.svg";
 import dummyBadge from "../../../assets/landAssets/dummyBadge.png";
 import avaxLogo from "./assets/avaxLogo.svg";
 import dogeLogo from "./assets/dogeLogo.svg";
-
+import dogeBetaBanner from './assets/dogeBetaBanner.png'
 import betapassBanner from "./assets/betaPassBanner.png";
 import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
 import betapassBannerGate from "./assets/betaPassBannerGate.webp";
@@ -664,6 +664,8 @@ const BetaPassNFT = ({
                         ? coin98BetaBanner
                         : mintTitle === "base"
                         ? baseBetaBanner
+                        : mintTitle === "doge"
+                        ? dogeBetaBanner
                         : betapassBanner
                     }
                     className="w-100"

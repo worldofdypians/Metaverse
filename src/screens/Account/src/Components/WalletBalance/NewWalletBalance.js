@@ -2341,7 +2341,7 @@ const NewWalletBalance = ({
             {dummyEvent.status === "Coming Soon" &&
               dummyEvent.id !== "event5" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
-                  <NavLink to={`/marketplace/beta-pass/gate`}>
+                  <NavLink to={`/marketplace/beta-pass/doge`}>
                     <button className="btn get-beta-btn">Get Beta Pass</button>
                   </NavLink>
                 </div>

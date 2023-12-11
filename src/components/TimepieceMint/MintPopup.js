@@ -38,7 +38,19 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">Candy Rewards</h6>
         </>
-      ) : data.title === "Daily Bonus" ? (
+      ) : data.title === "DogeCoin" ? (
+        <>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              Live Giveaway
+            </h6>
+          </div>
+          <h6 className="mint-popup-title">DogeCoin Beta Pass</h6>
+        </>
+      ) :
+      
+      data.title === "Daily Bonus" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             {/* <div className="pulsatingDot"></div> */}
@@ -95,30 +107,46 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
         </div>
       )}
-      {data.title === "Treasure Hunt" && (
+      {data.title === "Treasure Hunt" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           {
             data.title === "Treasure Hunt" && (
               <span className="popup-available-mint">
-                {/* Explore the downtown area and use your <img src={whiteExplore} alt="" className="white-explore" />{" "}
-            to generate rewards */}
                 Explore the downtown area and generate DYP rewards!
               </span>
             )
-            // : (
-            //   <span className="popup-available-mint">
-            //     Get access to the game and a unique event filled with surprises and
-            //     rewards!
-            //   </span>
-            // )
           }
         </div>
-      )}
+      ) : data.title === "DogeCoin" ? 
+      (
+        <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+          {
+            data.title === "DogeCoin" && (
+              <span className="popup-available-mint">
+
+                Get access to the game and a unique event filled with surprises and rewards!
+              </span>
+            )
+        
+          }
+        </div>
+      )
+      : null
+    }
       {
         data.title === "Treasure Hunt" ? (
           <Link
             onClick={onClose}
             to={"/marketplace/events/treasure-hunt"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
+        ) : data.title === "DogeCoin" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/beta-pass/doge"}
             state={{ event: data.state }}
             className="linear-border"
           >
