@@ -11,7 +11,7 @@ import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import conflux from "./assets/conflux.svg";
 import gateWhite from "./assets/gateWhite.svg";
-import rightArrow from './assets/rightArrow.svg'
+import rightArrow from "./assets/rightArrow.svg";
 import coinbaseimg from "./assets/base.svg";
 import { useLocation } from "react-router-dom";
 import blockChainIcon from "../assets/blockChainIcon.svg";
@@ -28,7 +28,7 @@ import subtractInactive from "../../../assets/landAssets/subtractInactive.svg";
 import dummyBadge from "../../../assets/landAssets/dummyBadge.png";
 import avaxLogo from "./assets/avaxLogo.svg";
 import dogeLogo from "./assets/dogeLogo.svg";
-import dogeBetaBanner from './assets/dogeBetaBanner.png'
+import dogeBetaBanner from "./assets/dogeBetaBanner.png";
 import betapassBanner from "./assets/betaPassBanner.png";
 import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
 import betapassBannerGate from "./assets/betaPassBannerGate.webp";
@@ -162,8 +162,8 @@ const BetaPassNFT = ({
 
   const dogeData = {
     id: "doge",
-    cardTitle: "Doge Beta Pass",
-    title: "Doge Beta Pass",
+    cardTitle: "DogeCoin Beta Pass",
+    title: "DogeCoin Beta Pass",
     background: "doge-mint-bg2",
   };
 
@@ -347,7 +347,11 @@ const BetaPassNFT = ({
             setuserEarnUsd(usdValue);
           }
 
-          if (confluxEvent && confluxEvent[0] && confluxEvent[0].reward.earn.multiplier !== 0) {
+          if (
+            confluxEvent &&
+            confluxEvent[0] &&
+            confluxEvent[0].reward.earn.multiplier !== 0
+          ) {
             const usdValueConflux =
               confluxEvent[0].reward.earn.total /
               confluxEvent[0].reward.earn.multiplier;
@@ -514,12 +518,10 @@ const BetaPassNFT = ({
     } else if (locationState.includes("/beta-pass/avalanche")) {
       setSelectedMint(avaxData);
       setMintTitle("avalanche");
-    } 
-    else if (locationState.includes("/beta-pass/doge")) {
+    } else if (locationState.includes("/beta-pass/doge")) {
       setSelectedMint(dogeData);
       setMintTitle("doge");
-    } 
-    else if (locationState.includes("/beta-pass/gate")) {
+    } else if (locationState.includes("/beta-pass/gate")) {
       setSelectedMint(gateData);
       setMintTitle("gate");
     }
@@ -618,24 +620,36 @@ const BetaPassNFT = ({
                       {mintTitle === "coingecko" ? "CoinGecko" : mintTitle} Beta
                       Pass
                     </h6>
-                    <p className="collection-desc">
-                      The Beta Pass NFT provides you with a special ticket to
-                      enter the metaverse and participate in an exclusive event
-                      hosted by{" "}
-                      {mintTitle === "conflux"
-                        ? "Conflux"
-                        :mintTitle === "doge"
-                        ? "Doge"
-                        : mintTitle === "gate"
-                        ? "Gate.io"
-                        : mintTitle === "coingecko"
-                        ? "CoinGecko"
-                        : "our partners"}
-                      . During this event, players have the opportunity to earn
-                      Points for their leaderboard rankings, and also collect
-                      rewards in different tokens, which are distributed on a
-                      monthly basis.
-                    </p>
+                    {mintTitle !== "doge" ? (
+                      <p className="collection-desc">
+                        The Beta Pass NFT provides you with a special ticket to
+                        enter the metaverse and participate in an exclusive
+                        event hosted by{" "}
+                        {mintTitle === "conflux"
+                          ? "Conflux"
+                          : mintTitle === "doge"
+                          ? "Doge"
+                          : mintTitle === "gate"
+                          ? "Gate.io"
+                          : mintTitle === "coingecko"
+                          ? "CoinGecko"
+                          : "our partners"}
+                        . During this event, players have the opportunity to
+                        earn Points for their leaderboard rankings, and also
+                        collect rewards in different tokens, which are
+                        distributed on a monthly basis.
+                      </p>
+                    ) : (
+                      <p className="collection-desc">
+                        The Beta Pass NFT provides you with a special ticket to
+                        enter the metaverse and participate in an exclusive
+                        event hosted on BNB Chain. During this event, players
+                        have the opportunity to earn Points for their
+                        leaderboard rankings, and also collect rewards in
+                        different tokens, which are distributed on a monthly
+                        basis.
+                      </p>
+                    )}
                     {/* {mintTitle === "conflux" && (
                       <NavLink
                         to="/marketplace/mint/conflux"
@@ -691,12 +705,12 @@ const BetaPassNFT = ({
                   >
                     <img
                       src={avaxLogo}
-                      className="beta-pass-chain-img"
+                      className="beta-pass- -img"
                       alt=""
                     />
                     <span>Avalanche</span>
                   </NavLink> */}
-                   <NavLink
+                  <NavLink
                     to={"/marketplace/beta-pass/doge"}
                     className={`${
                       location.pathname.includes("doge") &&
@@ -803,7 +817,8 @@ const BetaPassNFT = ({
                 {mintTitle !== "coingecko" &&
                   mintTitle !== "conflux" &&
                   mintTitle !== "gate" &&
-                  mintTitle !== "base" && mintTitle !== "doge" && (
+                  mintTitle !== "base" &&
+                  mintTitle !== "doge" && (
                     <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                       <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                         <div className="d-flex flex-column position-relative">
@@ -872,7 +887,8 @@ const BetaPassNFT = ({
                   className={
                     mintTitle === "coingecko" ||
                     mintTitle === "conflux" ||
-                    mintTitle === "gate" || mintTitle === "doge" ||
+                    mintTitle === "gate" ||
+                    mintTitle === "doge" ||
                     mintTitle === "base"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
@@ -896,7 +912,8 @@ const BetaPassNFT = ({
                       {mintTitle !== "coingecko" &&
                         mintTitle !== "conflux" &&
                         mintTitle !== "gate" &&
-                        mintTitle !== "base" && mintTitle !== "doge" && (
+                        mintTitle !== "base" &&
+                        mintTitle !== "doge" && (
                           <>
                             Mint your {selectedMint.title}{" "}
                             <br className="d-none d-lg-flex" />
@@ -907,7 +924,8 @@ const BetaPassNFT = ({
                           </>
                         )}
                       {(mintTitle === "conflux" ||
-                        mintTitle === "gate" ||  mintTitle === "doge" ||
+                        mintTitle === "gate" ||
+                        mintTitle === "doge" ||
                         mintTitle === "base") && (
                         <>
                           Get your {selectedMint.title}{" "}
@@ -936,13 +954,13 @@ const BetaPassNFT = ({
                               </span>
                             </div>
                           ))}
-                          {mintTitle === "doge" && 
-                          <div className="doge-button mt-3 d-flex align-items-center gap-2 p-2">
+                          {mintTitle === "doge" && (
+                            <div className="doge-button mt-3 d-flex align-items-center gap-2 p-2">
                               <img src={dogeLogo} alt="" />
                               <h6 className="mb-0">DogeCoin Giveaway</h6>
                               <img src={rightArrow} alt="" />
-                          </div>
-                          }
+                            </div>
+                          )}
                           {
                             // mintTitle === "base" ? (
                             //   <div className="d-flex align-items-center gap-2">
@@ -1091,14 +1109,16 @@ const BetaPassNFT = ({
                   className={
                     mintTitle === "coingecko" ||
                     mintTitle === "conflux" ||
-                    mintTitle === "gate" || mintTitle === "doge" ||
+                    mintTitle === "gate" ||
+                    mintTitle === "doge" ||
                     mintTitle === "base"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
                 >
                   {mintTitle !== "coingecko" &&
-                  mintTitle !== "conflux" &&  mintTitle !== "doge" &&
+                  mintTitle !== "conflux" &&
+                  mintTitle !== "doge" &&
                   mintTitle !== "gate" &&
                   mintTitle !== "base" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
@@ -2084,8 +2104,7 @@ const BetaPassNFT = ({
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
-                                the one you used for DogeCoin Giveaway
-                                .
+                                the one you used for DogeCoin Giveaway .
                               </span>
                               <div
                                 className="walletconnectBtn w-100"
