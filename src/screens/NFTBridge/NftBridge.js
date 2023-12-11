@@ -21,7 +21,7 @@ const NFTBridge = ({
   myNFTSLand,
   myNFTSCaws,
   handleSwitchNetwork,
-  onSuccessTransfer
+  onSuccessTransfer,
 }) => {
   const windowSize = useWindowSize();
   const [filterTitle, setFilterTitle] = useState("");
@@ -515,7 +515,7 @@ const NFTBridge = ({
 
           const cawsContract = new web3.eth.Contract(
             window.CAWS_CCIP_ABI,
-            window.config.nft_caws_land_address
+            window.config.nft_caws_base_address
           );
           const isApproved2 = await cawsContract.methods
             .getApproved(selectNftId)
@@ -1362,11 +1362,11 @@ const NFTBridge = ({
           </div>
 
           <div className="nft-bridge-page-wrapper d-flex flex-column gap-3 p-3">
-            <div className="d-flex align-items-center gap-4 justify-content-between">
+            <div className="d-flex flex-column flex-lg-row align-items-center gap-4 justify-content-between">
               <span className="nft-bridge-select-route">
                 Select Bridge Route
               </span>
-              <div className="d-flex gap-4 align-items-center justify-content-between">
+              <div className="d-flex flex-column flex-lg-row gap-4 align-items-center justify-content-between">
                 <div className="d-flex gap-2 align-items-center">
                   <span className="nft-bridge-label">From</span>
                   <div className="dropdown filters-dropdown">
@@ -1538,7 +1538,7 @@ const NFTBridge = ({
                         : isConnected && selectNftId !== 0
                         ? "conflux-btn"
                         : "pill-btn"
-                    } px-4 py-2 mt-4 mx-auto w-50`}
+                    } px-4 py-2 mt-lg-4 mx-auto w-50`}
                     onClick={() => {
                       !isConnected
                         ? showWalletConnect()
@@ -1569,6 +1569,9 @@ const NFTBridge = ({
                   </button>
                 </div>
               </div>
+              {windowSize.width < 768 && (
+                <span className="w-100 new-stake-divider mt-3"></span>
+              )}
               <div className="col-lg-5 col-12">
                 <div className="d-flex flex-column gap-2">
                   <span className="bridge-guide-text">
@@ -1641,7 +1644,7 @@ const NFTBridge = ({
                             isConnected &&
                             selectNftId !== 0 &&
                             isApproved &&
-                            buttonText.includes("Transfer")  &&
+                            buttonText.includes("Transfer") &&
                             "complete"
                           } `}
                         >
@@ -1662,19 +1665,23 @@ const NFTBridge = ({
                           class={` li ${
                             buttonStatus === "successDeposit" && "complete"
                           } `}
-                          style={{ height: 0 }}
+                          style={{ height: windowSize.width > 992 ? 0 : "" }}
                         >
-                          <div class="status p-0" style={{ height: 0 }}>
+                          <div
+                            class="status p-0"
+                            style={{ height: windowSize.width > 992 ? 0 : "" }}
+                          >
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item2">
                               <h4
                                 className="listtext"
                                 style={{ whiteSpace: "nowrap" }}
                               >
-                                Wait timer
+                                Wait NFT transfer
                               </h4>
                               <span className="status-desc">
-                                Wait for the timer, and the NFT will be
-                                automatically added to your wallet.
+                                Your NFT will be automatically added to your
+                                wallet in the destination chain. This process
+                                might take 5 to 30 minutes.
                               </span>
                             </div>
                           </div>
