@@ -1256,19 +1256,35 @@ function Dashboard({
       subscribeToken
     );
 
+    let tokenprice =
+      chainId === 1
+        ? await window.getEstimatedTokenSubscriptionAmountETH(token)
+        : chainId === 56
+        ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        : chainId === 1030
+        ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
+        : chainId === 43114
+        ? await window.getEstimatedTokenSubscriptionAmount(token)
+        : chainId === 8453
+        ? await window.getEstimatedTokenSubscriptionAmountBase(token)
+        : await window.getEstimatedTokenSubscriptionAmount(token);
+
+    tokenprice = new BigNumber(tokenprice).toFixed(0);
+
     if (coinbase) {
       if (chainId === 1) {
         const result = await subscribeTokencontract.methods
           .allowance(coinbase, ethsubscribeAddress)
           .call()
           .then();
-
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       }
       if (chainId === 56) {
@@ -1276,24 +1292,28 @@ function Dashboard({
           .allowance(coinbase, bnbsubscribeAddress)
           .call()
           .then();
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
           .call()
           .then();
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       } else if (chainId === 1030) {
         const result = await subscribeTokencontractcfx.methods
@@ -1301,12 +1321,14 @@ function Dashboard({
           .call()
           .then();
 
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       } else if (chainId === 8453) {
         const result = await subscribeTokencontractbase.methods
@@ -1314,12 +1336,14 @@ function Dashboard({
           .call()
           .then();
 
-        if (result != 0) {
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(true);
-        } else if (result == 0) {
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
           setloadspinner(false);
           setisApproved(false);
+          setapproveStatus("initial");
         }
       }
     }
@@ -1349,18 +1373,21 @@ function Dashboard({
       .send({ from: await window.getCoinbase() })
       .then(() => {
         setloadspinnerSub(false);
-        setapproveStatus("success");
-
+        setapproveStatus("successsubscribe");
+        setTimeout(() => {
+          setloadspinnerSub(false);
+          setloadspinner(false);
+          setapproveStatus("initial");
+          setstatus("");
+        }, 5000);
         // this.props.onSubscribe();
         // window.location.href = "https://app.dypius.com/account";
       })
       .catch((e) => {
         setloadspinnerSub(false);
-        setloadspinner(false);
-        setapproveStatus("fail");
+        setapproveStatus("failsubscribe");
         setstatus(e?.message);
         window.alertify.error(e?.message);
-
         setTimeout(() => {
           setloadspinnerSub(false);
           setloadspinner(false);
@@ -1546,7 +1573,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId]);
+  }, [chainId, getPremiumPopup]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -2635,7 +2662,25 @@ function Dashboard({
                                   }
                                   onClick={(e) => handleApprove(e)}
                                 >
-                                  Approve
+                                  {loadspinner === false &&
+                                  (approveStatus === "initial" ||
+                                    approveStatus === "deposit" ||
+                                    approveStatus === "failsubscribe" ||
+                                    approveStatus === "successsubscribe") ? (
+                                    "Approve"
+                                  ) : loadspinner === false &&
+                                    approveStatus === "fail" ? (
+                                    "Failed"
+                                  ) : (
+                                    <div
+                                      className="spinner-border "
+                                      role="status"
+                                      style={{
+                                        height: "1rem",
+                                        width: "1rem",
+                                      }}
+                                    ></div>
+                                  )}
                                 </button>
                               </div>
                               <div
@@ -2653,7 +2698,27 @@ function Dashboard({
                                   } px-4`}
                                   onClick={() => handleSubscribe()}
                                 >
-                                  Buy
+                                  {loadspinnerSub === false &&
+                                  (approveStatus === "initial" ||
+                                    approveStatus === "fail" ||
+                                    approveStatus === "deposit") ? (
+                                    "Buy"
+                                  ) : loadspinnerSub === false &&
+                                    approveStatus === "successsubscribe" ? (
+                                    "Success"
+                                  ) : loadspinnerSub === false &&
+                                    approveStatus === "failsubscribe" ? (
+                                    "Failed"
+                                  ) : (
+                                    <div
+                                      className="spinner-border "
+                                      role="status"
+                                      style={{
+                                        height: "1rem",
+                                        width: "1rem",
+                                      }}
+                                    ></div>
+                                  )}
                                 </button>
                               </div>
                             </div>
