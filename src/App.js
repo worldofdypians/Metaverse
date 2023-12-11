@@ -214,6 +214,8 @@ function App() {
   ] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
+  const [count, setCount] = useState(1);
+
   const [dypTokenData, setDypTokenData] = useState(0);
   const [dypTokenData_old, setDypTokenData_old] = useState();
   const [ethTokenData, setEthTokenData] = useState(0);
@@ -668,7 +670,7 @@ function App() {
   };
 
   const myLandNftsBase = async () => {
-    let myNft = await window.myNftLandListContractCCIP(
+    let myNft = await window.myNftLandListContractCCIPBase(
       coinbase,
       window.config.nft_land_base_address
     );
@@ -684,10 +686,11 @@ function App() {
   };
 
   const myNftsBase = async () => {
-    let myNft = await window.myNftListContractCCIP(
+    let myNft = await window.myNftListContractCCIPBase(
       coinbase,
       window.config.nft_caws_base_address
     );
+    console.log(myNft)
     if (myNft && myNft.length > 0) {
       let nfts = myNft.map((nft) => window.getNft(nft));
 
@@ -1514,7 +1517,7 @@ function App() {
       myNftsBase();
       myLandNftsBase();
     }
-  }, [isConnected, chainId, coinbase]);
+  }, [isConnected, chainId, coinbase, count]);
 
   // useEffect(() => {
   //   if (
@@ -2121,6 +2124,9 @@ function App() {
                       : MyNFTSCaws2
                   }
                   handleSwitchNetwork={handleSwitchNetwork}
+                  onSuccessTransfer={() => {
+                    setCount(count + 1);
+                  }}
                 />
               }
             />

@@ -21,6 +21,7 @@ const NFTBridge = ({
   myNFTSLand,
   myNFTSCaws,
   handleSwitchNetwork,
+  onSuccessTransfer
 }) => {
   const windowSize = useWindowSize();
   const [filterTitle, setFilterTitle] = useState("");
@@ -278,6 +279,260 @@ const NFTBridge = ({
     );
   };
 
+  const checkNFTApproval = async () => {
+    if (destinationFilterTitle !== "Select") {
+      if (filterTitle === "Ethereum") {
+        if (destinationFilterTitle === "BNB Chain") {
+          if (finalNftType === "land") {
+            const web3 = new Web3(window.ethereum);
+            const sourceBridge_address = window.config.ccip_eth_wod_address;
+
+            const landContract = new web3.eth.Contract(
+              window.WOD_ABI,
+              window.config.nft_land_address
+            );
+
+            const isApproved2 = await landContract.methods
+              .getApproved(selectNftId)
+              .call()
+              .catch((e) => {
+                console.error(e);
+              });
+            const isApproved3 =
+              isApproved2 === sourceBridge_address ? true : false;
+            setbuttonText(isApproved3 ? "Transfer" : "Approve");
+            setisApproved(isApproved3);
+          } else if (finalNftType === "caws") {
+            const web3 = new Web3(window.ethereum);
+            const sourceBridge_address = window.config.ccip_eth_caws_address;
+
+            const cawsContract = new web3.eth.Contract(
+              window.CAWS_ABI,
+              window.config.nft_caws_address
+            );
+
+            const isApproved2 = await cawsContract.methods
+              .getApproved(selectNftId)
+              .call()
+              .catch((e) => {
+                console.error(e);
+              });
+            const isApproved3 =
+              isApproved2 === sourceBridge_address ? true : false;
+            setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+            setisApproved(isApproved3);
+          }
+        } else if (destinationFilterTitle === "Avalanche") {
+          if (finalNftType === "land") {
+            const sourceBridge_address = window.config.ccip_eth_wod_address;
+
+            const web3 = new Web3(window.ethereum);
+
+            const landContract = new web3.eth.Contract(
+              window.WOD_ABI,
+              window.config.nft_land_address
+            );
+            const isApproved2 = await landContract.methods
+              .getApproved(selectNftId)
+              .call()
+              .catch((e) => {
+                console.error(e);
+              });
+            const isApproved3 =
+              isApproved2 === sourceBridge_address ? true : false;
+            setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+            setisApproved(isApproved3);
+          } else if (finalNftType === "caws") {
+            const web3 = new Web3(window.ethereum);
+            const sourceBridge_address = window.config.ccip_eth_caws_address;
+
+            const cawsContract = new web3.eth.Contract(
+              window.CAWS_ABI,
+              window.config.nft_caws_address
+            );
+            const isApproved2 = await cawsContract.methods
+              .getApproved(selectNftId)
+              .call()
+              .catch((e) => {
+                console.error(e);
+              });
+            const isApproved3 =
+              isApproved2 === sourceBridge_address ? true : false;
+            setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+            setisApproved(isApproved3);
+          }
+        } else if (destinationFilterTitle === "Base Network") {
+          if (finalNftType === "land") {
+            const sourceBridge_address = window.config.ccip_eth_wod_address;
+
+            const web3 = new Web3(window.ethereum);
+
+            const landContract = new web3.eth.Contract(
+              window.WOD_ABI,
+              window.config.nft_land_address
+            );
+            const isApproved2 = await landContract.methods
+              .getApproved(selectNftId)
+              .call()
+              .catch((e) => {
+                console.error(e);
+              });
+            const isApproved3 =
+              isApproved2 === sourceBridge_address ? true : false;
+            setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+            setisApproved(isApproved3);
+          } else if (finalNftType === "caws") {
+            const web3 = new Web3(window.ethereum);
+            const sourceBridge_address = window.config.ccip_eth_caws_address;
+
+            const cawsContract = new web3.eth.Contract(
+              window.CAWS_ABI,
+              window.config.nft_caws_address
+            );
+            const isApproved2 = await cawsContract.methods
+              .getApproved(selectNftId)
+              .call()
+              .catch((e) => {
+                console.error(e);
+              });
+            const isApproved3 =
+              isApproved2 === sourceBridge_address ? true : false;
+            setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+            setisApproved(isApproved3);
+          }
+        }
+      } else if (filterTitle === "BNB Chain") {
+        if (finalNftType === "land") {
+          const sourceBridge_address = window.config.ccip_bnb_wod_address;
+          const web3 = new Web3(window.ethereum);
+
+          const landContract = new web3.eth.Contract(
+            window.LAND_CCIP_ABI,
+            window.config.nft_land_bnb_address
+          );
+
+          const isApproved2 = await landContract.methods
+            .getApproved(selectNftId)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+          const isApproved3 =
+            isApproved2 === sourceBridge_address ? true : false;
+
+          setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+          setisApproved(isApproved3);
+        } else if (finalNftType === "caws") {
+          const web3 = new Web3(window.ethereum);
+          const sourceBridge_address = window.config.ccip_bnb_caws_address;
+
+          const cawsContract = new web3.eth.Contract(
+            window.CAWS_CCIP_ABI,
+            window.config.nft_caws_bnb_address
+          );
+
+          const isApproved2 = await cawsContract.methods
+            .getApproved(selectNftId)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+          const isApproved3 =
+            isApproved2 === sourceBridge_address ? true : false;
+          setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+          setisApproved(isApproved3);
+        }
+      } else if (filterTitle === "Avalanche") {
+        if (finalNftType === "land") {
+          const sourceBridge_address = window.config.ccip_bnb_avax_address;
+
+          const web3 = new Web3(window.ethereum);
+
+          const landContract = new web3.eth.Contract(
+            window.LAND_CCIP_ABI,
+            window.config.nft_land_avax_address
+          );
+          const isApproved2 = await landContract.methods
+            .getApproved(selectNftId)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+          const isApproved3 =
+            isApproved2 === sourceBridge_address ? true : false;
+          setisApproved(isApproved3);
+        } else if (finalNftType === "caws") {
+          const web3 = new Web3(window.ethereum);
+          const sourceBridge_address = window.config.ccip_avax_caws_address;
+
+          const cawsContract = new web3.eth.Contract(
+            window.CAWS_CCIP_ABI,
+            window.config.nft_caws_avax_address
+          );
+          const isApproved2 = await cawsContract.methods
+            .getApproved(selectNftId)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+          const isApproved3 =
+            isApproved2 === sourceBridge_address ? true : false;
+          setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+          setisApproved(isApproved3);
+        }
+      } else if (filterTitle === "Base Network") {
+        if (finalNftType === "land") {
+          const sourceBridge_address = window.config.ccip_bnb_base_address;
+
+          const web3 = new Web3(window.ethereum);
+
+          const landContract = new web3.eth.Contract(
+            window.LAND_CCIP_ABI,
+            window.config.nft_land_base_address
+          );
+          const isApproved2 = await landContract.methods
+            .getApproved(selectNftId)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+          const isApproved3 =
+            isApproved2 === sourceBridge_address ? true : false;
+          setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+          setisApproved(isApproved3);
+        } else if (finalNftType === "caws") {
+          const web3 = new Web3(window.ethereum);
+          const sourceBridge_address = window.config.ccip_base_caws_address;
+
+          const cawsContract = new web3.eth.Contract(
+            window.CAWS_CCIP_ABI,
+            window.config.nft_caws_land_address
+          );
+          const isApproved2 = await cawsContract.methods
+            .getApproved(selectNftId)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+          const isApproved3 =
+            isApproved2 === sourceBridge_address ? true : false;
+          setbuttonText(isApproved3 ? "Transfer" : "Approve");
+
+          setisApproved(isApproved3);
+        }
+      }
+    }
+  };
+
   const handleTransferNft = async () => {
     if (destinationFilterTitle === "Select") {
       window.alertify.error("Please choose destination chain!");
@@ -330,9 +585,15 @@ const NFTBridge = ({
                   selectNftId
                 )
                 .send({ from: coinbase })
-                .then((data) => {
-                  setisApproved(false);
+                .then(() => {
                   setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
                 })
                 .catch((e) => {
                   window.alertify.error(e?.message);
@@ -385,9 +646,15 @@ const NFTBridge = ({
                   selectNftId
                 )
                 .send({ from: coinbase })
-                .then((data) => {
-                  setisApproved(false);
+                .then(() => {
                   setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
                 })
                 .catch((e) => {
                   window.alertify.error(e?.message);
@@ -418,7 +685,6 @@ const NFTBridge = ({
             if (!isApproved) {
               setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
-
               await landContract.methods
                 .approve(sourceBridge_address, selectNftId)
                 .send({ from: coinbase })
@@ -436,7 +702,6 @@ const NFTBridge = ({
             } else if (isApproved) {
               setbuttonText("Transferring");
               setbuttonStatus("loadingDeposit");
-
               await contract.methods
                 .BridgeNFT(
                   destinationChainSelector,
@@ -445,10 +710,15 @@ const NFTBridge = ({
                   selectNftId
                 )
                 .send({ from: coinbase })
-                .then((data) => {
+                .then(() => {
+                  setbuttonText("Successfully Transferred");
                   setbuttonStatus("successDeposit");
-
-                  setisApproved(false);
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
                 })
                 .catch((e) => {
                   window.alertify.error(e?.message);
@@ -472,7 +742,6 @@ const NFTBridge = ({
             if (!isApproved) {
               setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
-
               await cawsContract.methods
                 .approve(sourceBridge_address, selectNftId)
                 .send({ from: coinbase })
@@ -504,9 +773,15 @@ const NFTBridge = ({
                   selectNftId
                 )
                 .send({ from: coinbase })
-                .then((data) => {
-                  setisApproved(false);
+                .then(() => {
                   setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
                 })
                 .catch((e) => {
                   window.alertify.error(e?.message);
@@ -537,7 +812,6 @@ const NFTBridge = ({
             if (!isApproved) {
               setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
-
               await landContract.methods
                 .approve(sourceBridge_address, selectNftId)
                 .send({ from: coinbase })
@@ -556,7 +830,6 @@ const NFTBridge = ({
             } else if (isApproved) {
               setbuttonText("Transferring");
               setbuttonStatus("loadingDeposit");
-
               await contract.methods
                 .BridgeNFT(
                   destinationChainSelector,
@@ -565,9 +838,15 @@ const NFTBridge = ({
                   selectNftId
                 )
                 .send({ from: coinbase })
-                .then((data) => {
-                  setisApproved(false);
+                .then(() => {
                   setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
                 })
                 .catch((e) => {
                   window.alertify.error(e?.message);
@@ -591,7 +870,6 @@ const NFTBridge = ({
             if (!isApproved) {
               setbuttonText("Approving");
               setbuttonStatus("loadingApprove");
-
               await cawsContract.methods
                 .approve(sourceBridge_address, selectNftId)
                 .send({ from: coinbase })
@@ -613,7 +891,6 @@ const NFTBridge = ({
               );
               setbuttonText("Transferring");
               setbuttonStatus("loadingDeposit");
-
               await contract.methods
                 .BridgeNFT(
                   destinationChainSelector,
@@ -622,9 +899,15 @@ const NFTBridge = ({
                   selectNftId
                 )
                 .send({ from: coinbase })
-                .then((data) => {
-                  setisApproved(false);
+                .then(() => {
                   setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
                 })
                 .catch((e) => {
                   window.alertify.error(e?.message);
@@ -655,7 +938,6 @@ const NFTBridge = ({
           if (!isApproved) {
             setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
-
             await landContract.methods
               .approve(sourceBridge_address, selectNftId)
               .send({ from: coinbase })
@@ -674,6 +956,11 @@ const NFTBridge = ({
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
 
+            console.log(
+              destinationChainSelector,
+              destinationBridge_address,
+              selectNftId
+            );
             await contract.methods
               .BridgeNFT(
                 destinationChainSelector,
@@ -682,9 +969,15 @@ const NFTBridge = ({
                 selectNftId
               )
               .send({ from: coinbase })
-              .then((data) => {
-                setisApproved(false);
+              .then(() => {
                 setbuttonStatus("successDeposit");
+                setbuttonText("Successfully Transferred");
+                onSuccessTransfer();
+                setTimeout(() => {
+                  setSelectedNftId(0);
+                  setisApproved(false);
+                  setbuttonStatus("initial");
+                }, 4000);
               })
               .catch((e) => {
                 window.alertify.error(e?.message);
@@ -707,7 +1000,6 @@ const NFTBridge = ({
           if (!isApproved) {
             setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
-
             await cawsContract.methods
               .approve(sourceBridge_address, selectNftId)
               .send({ from: coinbase })
@@ -730,7 +1022,6 @@ const NFTBridge = ({
             );
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-
             await contract.methods
               .BridgeNFT(
                 destinationChainSelector,
@@ -739,9 +1030,15 @@ const NFTBridge = ({
                 selectNftId
               )
               .send({ from: coinbase })
-              .then((data) => {
-                setisApproved(false);
+              .then(() => {
                 setbuttonStatus("successDeposit");
+                setbuttonText("Successfully Transferred");
+                onSuccessTransfer();
+                setTimeout(() => {
+                  setSelectedNftId(0);
+                  setisApproved(false);
+                  setbuttonStatus("initial");
+                }, 4000);
               })
               .catch((e) => {
                 window.alertify.error(e?.message);
@@ -771,7 +1068,6 @@ const NFTBridge = ({
           if (!isApproved) {
             setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
-
             await landContract.methods
               .approve(sourceBridge_address, selectNftId)
               .send({ from: coinbase })
@@ -789,7 +1085,6 @@ const NFTBridge = ({
           } else if (isApproved) {
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-
             await contract.methods
               .BridgeNFT(
                 destinationChainSelector,
@@ -798,9 +1093,15 @@ const NFTBridge = ({
                 selectNftId
               )
               .send({ from: coinbase })
-              .then((data) => {
-                setisApproved(false);
+              .then(() => {
                 setbuttonStatus("successDeposit");
+                setbuttonText("Successfully Transferred");
+                onSuccessTransfer();
+                setTimeout(() => {
+                  setSelectedNftId(0);
+                  setisApproved(false);
+                  setbuttonStatus("initial");
+                }, 4000);
               })
               .catch((e) => {
                 window.alertify.error(e?.message);
@@ -823,7 +1124,6 @@ const NFTBridge = ({
           if (!isApproved) {
             setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
-
             await cawsContract.methods
               .approve(sourceBridge_address, selectNftId)
               .send({ from: coinbase })
@@ -846,7 +1146,6 @@ const NFTBridge = ({
             );
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-
             await contract.methods
               .BridgeNFT(
                 destinationChainSelector,
@@ -855,10 +1154,15 @@ const NFTBridge = ({
                 selectNftId
               )
               .send({ from: coinbase })
-              .then((data) => {
+              .then(() => {
                 setbuttonStatus("successDeposit");
-
-                setisApproved(false);
+                setbuttonText("Successfully Transferred");
+                onSuccessTransfer();
+                setTimeout(() => {
+                  setSelectedNftId(0);
+                  setisApproved(false);
+                  setbuttonStatus("initial");
+                }, 4000);
               })
               .catch((e) => {
                 window.alertify.error(e?.message);
@@ -888,7 +1192,6 @@ const NFTBridge = ({
           if (!isApproved) {
             setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
-
             await landContract.methods
               .approve(sourceBridge_address, selectNftId)
               .send({ from: coinbase })
@@ -906,7 +1209,6 @@ const NFTBridge = ({
           } else if (isApproved) {
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-
             await contract.methods
               .BridgeNFT(
                 destinationChainSelector,
@@ -915,9 +1217,15 @@ const NFTBridge = ({
                 selectNftId
               )
               .send({ from: coinbase })
-              .then((data) => {
-                setisApproved(false);
+              .then(() => {
                 setbuttonStatus("successDeposit");
+                setbuttonText("Successfully Transferred");
+                onSuccessTransfer();
+                setTimeout(() => {
+                  setSelectedNftId(0);
+                  setisApproved(false);
+                  setbuttonStatus("initial");
+                }, 4000);
               })
               .catch((e) => {
                 window.alertify.error(e?.message);
@@ -940,7 +1248,6 @@ const NFTBridge = ({
           if (!isApproved) {
             setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
-
             await cawsContract.methods
               .approve(sourceBridge_address, selectNftId)
               .send({ from: coinbase })
@@ -962,7 +1269,6 @@ const NFTBridge = ({
             );
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-
             await contract.methods
               .BridgeNFT(
                 destinationChainSelector,
@@ -971,9 +1277,15 @@ const NFTBridge = ({
                 selectNftId
               )
               .send({ from: coinbase })
-              .then((data) => {
-                setisApproved(false);
+              .then(() => {
                 setbuttonStatus("successDeposit");
+                setbuttonText("Successfully Transferred");
+                onSuccessTransfer();
+                setTimeout(() => {
+                  setSelectedNftId(0);
+                  setisApproved(false);
+                  setbuttonStatus("initial");
+                }, 4000);
               })
               .catch((e) => {
                 window.alertify.error(e?.message);
@@ -991,21 +1303,25 @@ const NFTBridge = ({
     if (chainId === 1) {
       setFilterTitle("Ethereum");
       updateDestinationFilterTitle("Ethereum");
+      setSelectedNftId(0);
     } else if (chainId === 56) {
       setFilterTitle("BNB Chain");
       updateDestinationFilterTitle("BNB Chain");
+      setSelectedNftId(0);
     } else if (chainId === 43114) {
       setFilterTitle("Avalanche");
       updateDestinationFilterTitle("Avalanche");
+      setSelectedNftId(0);
     } else if (chainId === 8453) {
       setFilterTitle("Base Network");
       updateDestinationFilterTitle("Base Network");
+      setSelectedNftId(0);
     }
   }, [chainId]);
 
-  // useEffect(()=>{
-  //   getStatus(filterTitle, destinationFilterTitle)
-  // },[filterTitle,destinationFilterTitle])
+  useEffect(() => {
+    checkNFTApproval();
+  }, [filterTitle, destinationFilterTitle, selectNftId]);
 
   return (
     <div
@@ -1342,7 +1658,12 @@ const NFTBridge = ({
                             </div>
                           </div>
                         </li>
-                        <li class={` li `} style={{ height: 0 }}>
+                        <li
+                          class={` li ${
+                            buttonStatus === "successDeposit" && "complete"
+                          } `}
+                          style={{ height: 0 }}
+                        >
                           <div class="status p-0" style={{ height: 0 }}>
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item2">
                               <h4

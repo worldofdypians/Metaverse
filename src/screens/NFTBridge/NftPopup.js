@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import xmark from "./assets/xmark.svg";
 import EmptyWodCard from "../../components/StakeModal/EmptyWodCard";
+import EmptyCawsCard from "../../components/StakeModal/EmptyCawsCard";
 import NftChecklist from "./NftChecklist";
 
 const NftPopup = ({
@@ -115,7 +116,11 @@ const NftPopup = ({
           <div className="nft-modal-grid2">
             {nftItem.length === 0 ? (
               [...Array(devicewidth < 500 ? 1 : 8)].map((item, id) => {
-                return <EmptyWodCard key={id} />;
+                return showLands ? (
+                  <EmptyWodCard key={id} />
+                ) : (
+                  <EmptyCawsCard key={id} />
+                );
               })
             ) : nftItem.length === 1 ? (
               <>
@@ -171,7 +176,11 @@ const NftPopup = ({
                       : Math.abs(8 - parseInt(nftItem.length))
                   ),
                 ].map((item, id) => {
-                  return <EmptyWodCard key={id} />;
+                  return showLands ? (
+                    <EmptyWodCard key={id} />
+                  ) : (
+                    <EmptyCawsCard key={id} />
+                  );
                 })}
               </>
             ) : (
@@ -225,7 +234,11 @@ const NftPopup = ({
                       : Math.abs(8 - parseInt(nftItem.length))
                   ),
                 ].map((item, id) => {
-                  return <EmptyWodCard key={id} />;
+                  return showLands ? (
+                    <EmptyWodCard key={id} />
+                  ) : (
+                    <EmptyCawsCard key={id} />
+                  );
                 })}
               </>
             )}

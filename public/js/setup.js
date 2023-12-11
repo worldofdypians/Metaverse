@@ -4696,6 +4696,22 @@ async function myNftListContractCCIP(address, nftAddress) {
   return nftList;
 }
 
+async function myNftListContractCCIPBase(address, nftAddress) {
+  baseweb3 = window.baseWeb3
+  let nft_contract = new baseweb3.eth.Contract(window.CAWS_CCIP_ABI, nftAddress);
+
+  let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
+
+  let nftList = [];
+
+  for (let i = 0; i < getBalanceOf; i++)
+    nftList.push(
+      await nft_contract.methods.tokenOfOwnerByIndex(address, i).call()
+    );
+
+  return nftList;
+}
+
 async function myNftLandListContract(address) {
   let nft_contract = await getContractLandNFT("LANDNFTSTAKE");
 
@@ -4715,6 +4731,22 @@ async function myNftLandListContract(address) {
 async function myNftLandListContractCCIP(address, nftAddress) {
   window.web3 = new Web3(window.ethereum);
   let nft_contract = new window.web3.eth.Contract(window.LAND_CCIP_ABI, nftAddress);
+
+  let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
+
+  let nftList = [];
+
+  for (let i = 0; i < getBalanceOf; i++)
+    nftList.push(
+      await nft_contract.methods.tokenOfOwnerByIndex(address, i).call()
+    );
+
+  return nftList;
+}
+
+async function myNftLandListContractCCIPBase(address, nftAddress) {
+  baseweb3 = window.baseWeb3
+  let nft_contract = new baseweb3.eth.Contract(window.LAND_CCIP_ABI, nftAddress);
 
   let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
 
