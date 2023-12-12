@@ -330,6 +330,7 @@ const StakeLandModal = ({
       </span>
 
       <span className="d-flex my-3 market-stake-divider"></span>
+      <div className="modal-scroll2">
       <div className="d-flex align-items-center justify-content-end">
         <div className="d-flex flex-column gap-2">
           {!isStake ? (
@@ -381,11 +382,11 @@ const StakeLandModal = ({
           )}
         </div>
       </div>
-      <div className="row modal-scroll position-relative mt-3">
+      <div className="row position-relative mt-3">
         <div className="col-12">
           <div className="nft-modal-grid2">
             {nftItem.length === 0 ? (
-              [...Array(devicewidth < 500 ? 1 : 4)].map((item, id) => {
+              [...Array(devicewidth < 500 ? 2 : 4)].map((item, id) => {
                 return <EmptyWodCard key={id} />;
               })
             ) : nftItem.length === 1 ? (
@@ -495,7 +496,7 @@ const StakeLandModal = ({
         </span>
       </div>
       {!isStake ? (
-        <div className="mt-3 d-flex align-items-end justify-content-between">
+        <div className="mt-3 d-flex flex-column flex-lg-row align-items-center align-items-lg-end justify-content-between">
           <div className="selected-nfts-wrapper p-3">
             <div className="d-flex align-items-center justify-content-between position-relative">
               <span className="selected-nfts-span mb-2">Selected NFTs:</span>
@@ -558,7 +559,11 @@ const StakeLandModal = ({
                 >
                   {loading ? (
                     <>
-                      <div className="spinner-border " role="status"></div>
+                       <div
+                className="spinner-border "
+                role="status"
+                style={{ height: "1.5rem", width: "1.5rem" }}
+              ></div>
                     </>
                   ) : (
                     "Approve"
@@ -746,7 +751,7 @@ const StakeLandModal = ({
             )}
           </div>
         </div>
-      )}
+      )}</div>
     </div>
   );
 };
