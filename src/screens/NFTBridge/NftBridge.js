@@ -140,145 +140,6 @@ const NFTBridge = ({
     return "unknown";
   };
 
-  const handleArguments = () => {
-    // Check if the correct number of arguments are passed
-
-    if (process.argv.length !== 5) {
-      throw new Error("Wrong number of arguments");
-    }
-
-    // Extract the arguments from the command line
-
-    const messageId = process.argv[4];
-
-    // Return the arguments in an object
-    return {
-      messageId,
-    };
-  };
-
-  const getStatus = async (filterTitle, destinationFilterTitle) => {
-    // Parse command-line arguments
-    const { messageId } = handleArguments();
-
-    const allChainsArray = {
-      Ethereum: {
-        rpcUrl: window.config.infura_endpoint,
-        srcSelector: window.config.destination_chain_selector_eth,
-        address: "0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
-      },
-      "BNB Chain": {
-        rpcUrl: window.config.bsc_endpoint,
-        srcSelector: window.config.destination_chain_selector_bnb,
-        address: "0x536d7E53D0aDeB1F20E7c81fea45d02eC9dBD698",
-      },
-      Avalanche: {
-        rpcUrl: window.config.avax_endpoint,
-        srcSelector: window.config.destination_chain_selector_avax,
-        address: "0x27F39D0af3303703750D4001fCc1844c6491563c",
-      },
-      "Base Network": {
-        rpcUrl: window.config.base_endpoint,
-        srcSelector: window.config.destination_chain_selector_base,
-        address: "0x673AA85efd75080031d44fcA061575d1dA427A28",
-      },
-    };
-
-    // Get the RPC URLs for both the source and destination chains
-    const destinationRpcUrl = allChainsArray[destinationFilterTitle].rpcUrl;
-
-    const sourceRpcUrl = allChainsArray[filterTitle].rpcUrl;
-
-    // // Initialize providers for interacting with the blockchains
-    const destinationProvider = new ethers.providers.JsonRpcProvider(
-      destinationRpcUrl
-    );
-    const sourceProvider = new ethers.providers.JsonRpcProvider(sourceRpcUrl);
-
-    // // Retrieve router configuration for the source and destination chains
-    const sourceRouterAddress = allChainsArray[filterTitle].address;
-    const sourceChainSelector = allChainsArray[filterTitle].srcSelector;
-    const destinationRouterAddress =
-      allChainsArray[destinationFilterTitle].address;
-    const destinationChainSelector =
-      allChainsArray[destinationFilterTitle].srcSelector;
-
-    // // Instantiate the router contract on the source chain
-    const sourceRouterContract = new ethers.Contract(
-      sourceRouterAddress,
-      window.CCIP_ROUTER_ABI,
-      sourceProvider
-    );
-
-    // // Fetch the OnRamp contract address on the source chain
-    const onRamp = await sourceRouterContract.getOnRamp(
-      destinationChainSelector
-    );
-    const onRampContract = new ethers.Contract(
-      onRamp,
-      window.CCIP_ONRAMP_ABI,
-      sourceProvider
-    );
-
-    // // Check if the messageId exists in the OnRamp contract
-    const events = await onRampContract.queryFilter("CCIPSendRequested");
-    let messageFound = false;
-    for (const event of events) {
-      if (
-        event.args &&
-        event.args.message &&
-        event.args.message.messageId === messageId
-      ) {
-        messageFound = true;
-        break;
-      }
-    }
-
-    // // If the messageId doesn't exist, log an error and exit
-    if (!messageFound) {
-      console.error(`Message ${messageId} does not exist on this lane`);
-      return;
-    }
-
-    // // Instantiate the router contract on the destination chain
-    const destinationRouterContract = new ethers.Contract(
-      destinationRouterAddress,
-      window.CCIP_ROUTER_ABI,
-      destinationProvider
-    );
-
-    // // Fetch the OffRamp contract addresses on the destination chain
-    const offRamps = await destinationRouterContract.getOffRamps();
-
-    // // Iterate through OffRamps to find the one linked to the source chain and check message status
-    for (const offRamp of offRamps) {
-      if (offRamp.sourceChainSelector.toString() === sourceChainSelector) {
-        const offRampContract = new ethers.Contract(
-          offRamp.offRamp,
-          window.CCIP_ROUTER_ABI,
-          destinationProvider
-        );
-        const events = await offRampContract.queryFilter(
-          "ExecutionStateChanged"
-        );
-
-        // Check if an event with the specific messageId exists and log its status
-        for (let event of events) {
-          if (event.args && event.args.messageId === messageId) {
-            const state = event.args.state;
-            const status = getMessageState(state);
-            console.log(`Status of message ${messageId} is ${status}`);
-            return;
-          }
-        }
-      }
-    }
-    // If no event found, the message has not yet been processed on the destination chain
-    console.log(
-      `Message ${messageId} is not processed yet on destination chain`
-    );
-  };
-
   const checkNFTApproval = async () => {
     if (destinationFilterTitle !== "Select") {
       if (filterTitle === "Ethereum") {
@@ -1317,6 +1178,11 @@ const NFTBridge = ({
   useEffect(() => {
     checkNFTApproval();
   }, [filterTitle, destinationFilterTitle, selectNftId]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "NFT Bridge";
+  }, []);
 
   return (
     <div
