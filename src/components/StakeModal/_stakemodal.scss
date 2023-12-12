@@ -243,6 +243,16 @@
   }
 }
 
+.modal-scroll2 {
+
+
+  @media screen and (max-width: 991px) {
+    height: 380px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
 .selected-nfts-wrapper {
   border-radius: 10px;
   border: 2px solid #494b63;
