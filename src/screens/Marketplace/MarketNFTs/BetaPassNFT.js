@@ -123,6 +123,7 @@ const BetaPassNFT = ({
   handleSwitchNetwork,
   success,
   myBaseNFTs,
+  totalDogeNft,myDogeNFTs
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -617,7 +618,7 @@ const BetaPassNFT = ({
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      {mintTitle === "coingecko" ? "CoinGecko" : mintTitle} Beta
+                      {mintTitle === "coingecko" ? "CoinGecko" : mintTitle === "doge" ? "Dogecoin" : mintTitle} Beta
                       Pass
                     </h6>
                     {mintTitle !== "doge" ? (
@@ -2146,12 +2147,8 @@ const BetaPassNFT = ({
                           )}
                         {alreadyRegistered && mintTitle === "doge" && (
                           <div className="d-flex flex-column justify-content-between h-100">
-                            {(totalCoingeckoNft === 0 &&
-                              mintTitle === "coingecko") ||
-                            (totalConfluxNft === 0 &&
-                              mintTitle === "conflux") ||
-                            (totalBaseNft === 0 && mintTitle === "base") ||
-                            (totalGateNft === 0 && mintTitle === "gate") ? (
+                            {(totalDogeNft === 0 &&
+                              mintTitle === "doge") ? (
                               <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
                                 <div
                                   className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
@@ -2162,13 +2159,7 @@ const BetaPassNFT = ({
                                 <div
                                   className="genesis-desc nomask px-3 py-2 position-relative"
                                   style={{
-                                    bottom:
-                                      totalCoingeckoNft > 0 ||
-                                      totalConfluxNft > 0 ||
-                                      totalGateNft > 0 ||
-                                      totalBaseNft > 0
-                                        ? "20px"
-                                        : "5px",
+                                    bottom: "5px",
                                     minWidth: "100%",
                                     maxWidth: "100%",
                                   }}
@@ -2177,80 +2168,36 @@ const BetaPassNFT = ({
                                     className="land-desc w-75 m-auto text-center justify-content-center"
                                     style={{ fontWeight: 500, fontSize: 16 }}
                                   >
-                                    {mintTitle === "coingecko" ||
-                                    mintTitle === "gate" ||
-                                    mintTitle === "conflux" ||
-                                    mintTitle === "base"
-                                      ? nftSymbol
-                                      : selectedMint.cardTitle}{" "}
-                                    {mintTitle === "coingecko"
-                                      ? totalCoingeckoNft > 0 &&
-                                        `#${myNFTSCoingecko[0]}`
-                                      : mintTitle === "gate"
-                                      ? totalGateNft > 0 && `#${myGateNfts[0]}`
-                                      : mintTitle === "base"
-                                      ? totalBaseNft > 0 && `#${myBaseNFTs[0]}`
-                                      : ""}
+                                    {selectedMint.cardTitle}
                                   </h6>
                                 </div>
                               </div>
                             ) : (
                               <NavLink
                                 to={`/marketplace/nft/${
-                                  mintTitle === "conflux"
-                                    ? myConfluxNfts[0]
-                                    : mintTitle === "gate"
-                                    ? myGateNfts[0]
-                                    : mintTitle === "base"
-                                    ? myBaseNFTs[0]
-                                    : myNFTSCoingecko[0]
+                                  myDogeNFTs[0]
+                                    
                                 }/${
-                                  mintTitle === "conflux"
-                                    ? window.config.nft_conflux_address
-                                    : mintTitle === "gate"
-                                    ? window.config.nft_gate_address
-                                    : mintTitle === "base"
-                                    ? window.config.nft_base_address
-                                    : window.config.nft_coingecko_address
+                                 window.config.nft_doge_address
                                 }`}
                                 onClick={() => {
                                   updateViewCount(
-                                    mintTitle === "conflux"
-                                      ? myConfluxNfts[0]
-                                      : mintTitle === "gate"
-                                      ? myGateNfts[0]
-                                      : mintTitle === "base"
-                                      ? myBaseNFTs[0]
-                                      : myNFTSCoingecko[0],
-                                    mintTitle === "conflux"
-                                      ? window.config.nft_conflux_address
-                                      : mintTitle === "gate"
-                                      ? window.config.nft_conflux_address
-                                      : mintTitle === "base"
-                                      ? window.config.nft_base_address
-                                      : window.config.nft_coingecko_address
+                                    myDogeNFTs[0],
+                                    window.config.nft_doge_address
                                   );
                                 }}
                               >
                                 <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper  ${
-                                      mintTitle !== "timepiece" &&
-                                      totalCoingeckoNft === 0 &&
-                                      mintTitle === "coingecko"
+                                     
+                                      totalDogeNft === 0 &&
+                                      mintTitle === "doge"
                                         ? "conflux-empty"
-                                        : totalCoingeckoNft > 0 &&
-                                          mintTitle === "coingecko"
-                                        ? "coingecko-active"
-                                        : totalGateNft > 0 &&
-                                          mintTitle === "gate"
-                                        ? "gate-active"
-                                        : totalBaseNft > 0 &&
-                                          mintTitle === "base"
-                                        ? "base-active"
-                                        : totalConfluxNft > 0 &&
-                                          mintTitle === "conflux"
-                                        ? "conflux-active"
+                                        : totalDogeNft > 0 &&
+                                          mintTitle === "doge"
+                                        ? "doge-active"
+                                     
                                         : "conflux-empty"
                                     } d-flex justify-content-center align-items-center p-3 position-relative`}
                                     style={{
@@ -2261,13 +2208,7 @@ const BetaPassNFT = ({
                                   <div
                                     className="genesis-desc nomask px-3 py-2 position-relative"
                                     style={{
-                                      bottom:
-                                        totalCoingeckoNft > 0 ||
-                                        totalConfluxNft > 0 ||
-                                        totalGateNft > 0 ||
-                                        totalBaseNft > 0
-                                          ? "20px"
-                                          : "5px",
+                                      bottom:"20px",
                                       minWidth: "100%",
                                       maxWidth: "100%",
                                     }}

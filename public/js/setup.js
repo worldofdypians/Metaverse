@@ -1472,6 +1472,7 @@ window.config = {
   nft_gate_address: "0x2FED6783AdA5eA6B2D7cE9aE749c76B9f4858526",
   nft_conflux_address: "0x2deecf2a05f735890eb3ea085d55cec8f1a93895",
   nft_base_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
+  nft_doge_address: "",
 
   nft_land_address: "0xcd60d912655281908ee557ce1add61e983385a03",
   cg_ids: {
@@ -4566,6 +4567,21 @@ async function getMyNFTs(address, type = "") {
     contract = new window.bscWeb3.eth.Contract(
       window.COINGECKO_NFT_ABI,
       window.config.nft_coingecko_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  } else if (type === "doge") {
+    contract = new window.bscWeb3.eth.Contract(
+      window.DOGE_NFT_ABI,
+      window.config.nft_doge_address
     );
 
     const balance = await contract.methods.balanceOf(address).call();
@@ -36786,7 +36802,10 @@ async function getEstimatedTokenSubscriptionAmountCFX(tokenAddress) {
 }
 
 async function getEstimatedTokenSubscriptionAmountBase(tokenAddress) {
-  const baseContract = new window.baseWeb3.eth.Contract(window.SUBSCRIPTION_BASE_ABI, window.config.subscription_base_address);
+  const baseContract = new window.baseWeb3.eth.Contract(
+    window.SUBSCRIPTION_BASE_ABI,
+    window.config.subscription_base_address
+  );
   return await baseContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
