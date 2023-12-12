@@ -507,8 +507,6 @@
   }
 }
 
-
-
 .coin98-mint-bg {
   background-image: url("./assets/coin98Background1.png");
   background-size: cover;
@@ -1658,18 +1656,16 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.doge-button{
+.doge-button {
   border-radius: 20px;
-background: linear-gradient(90deg, #E87483 -13.56%, #6B1D90 129.3%);
-h6{
-  color: #FFF;
-font-size: 12px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  background: linear-gradient(90deg, #e87483 -13.56%, #6b1d90 129.3%);
+  text-decoration: none;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
-}
-
 
 .bottom-auto-bg {
   bottom: auto !important;

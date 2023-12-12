@@ -123,7 +123,8 @@ const BetaPassNFT = ({
   handleSwitchNetwork,
   success,
   myBaseNFTs,
-  totalDogeNft,myDogeNFTs
+  totalDogeNft,
+  myDogeNFTs,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -618,8 +619,12 @@ const BetaPassNFT = ({
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      {mintTitle === "coingecko" ? "CoinGecko" : mintTitle === "doge" ? "Dogecoin" : mintTitle} Beta
-                      Pass
+                      {mintTitle === "coingecko"
+                        ? "CoinGecko"
+                        : mintTitle === "doge"
+                        ? "Dogecoin"
+                        : mintTitle}{" "}
+                      Beta Pass
                     </h6>
                     {mintTitle !== "doge" ? (
                       <p className="collection-desc">
@@ -956,11 +961,16 @@ const BetaPassNFT = ({
                             </div>
                           ))}
                           {mintTitle === "doge" && (
-                            <div className="doge-button mt-3 d-flex align-items-center gap-2 p-2">
+                            <a
+                              className="btn doge-button mt-3 d-flex align-items-center gap-2 p-2"
+                              href="https://sweepwidget.com/c/dogecoin-beta-pass-nft-giveaway"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
                               <img src={dogeLogo} alt="" />
-                              <h6 className="mb-0">DogeCoin Giveaway</h6>
+                              DogeCoin Giveaway
                               <img src={rightArrow} alt="" />
-                            </div>
+                            </a>
                           )}
                           {
                             // mintTitle === "base" ? (
@@ -2147,8 +2157,7 @@ const BetaPassNFT = ({
                           )}
                         {alreadyRegistered && mintTitle === "doge" && (
                           <div className="d-flex flex-column justify-content-between h-100">
-                            {(totalDogeNft === 0 &&
-                              mintTitle === "doge") ? (
+                            {totalDogeNft === 0 && mintTitle === "doge" ? (
                               <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
                                 <div
                                   className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
@@ -2174,12 +2183,7 @@ const BetaPassNFT = ({
                               </div>
                             ) : (
                               <NavLink
-                                to={`/marketplace/nft/${
-                                  myDogeNFTs[0]
-                                    
-                                }/${
-                                 window.config.nft_doge_address
-                                }`}
+                                to={`/marketplace/nft/${myDogeNFTs[0]}/${window.config.nft_doge_address}`}
                                 onClick={() => {
                                   updateViewCount(
                                     myDogeNFTs[0],
@@ -2190,14 +2194,11 @@ const BetaPassNFT = ({
                                 <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper  ${
-                                     
-                                      totalDogeNft === 0 &&
-                                      mintTitle === "doge"
+                                      totalDogeNft === 0 && mintTitle === "doge"
                                         ? "conflux-empty"
                                         : totalDogeNft > 0 &&
                                           mintTitle === "doge"
                                         ? "doge-active"
-                                     
                                         : "conflux-empty"
                                     } d-flex justify-content-center align-items-center p-3 position-relative`}
                                     style={{
@@ -2208,7 +2209,7 @@ const BetaPassNFT = ({
                                   <div
                                     className="genesis-desc nomask px-3 py-2 position-relative"
                                     style={{
-                                      bottom:"20px",
+                                      bottom: "20px",
                                       minWidth: "100%",
                                       maxWidth: "100%",
                                     }}
