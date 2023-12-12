@@ -3092,6 +3092,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media only screen and (max-width: 991px) {
+    padding: inherit;
+  }
+
   .li {
     transition: all 200ms ease-in;
     .listtext {

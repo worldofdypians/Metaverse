@@ -1367,7 +1367,7 @@ const NFTBridge = ({
                   <div className="dropdown filters-dropdown">
                     <button
                       className="btn btn-secondary nft-dropdown w-100
-                 d-flex align-items-center justify-content-between dropdown-toggle"
+                 d-flex align-items-center justify-content-between dropdown-toggle gap-1"
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
@@ -1447,7 +1447,7 @@ const NFTBridge = ({
                   <div className="dropdown filters-dropdown">
                     <button
                       className="btn btn-secondary nft-dropdown w-100
-                 d-flex align-items-center justify-content-between dropdown-toggle"
+                 d-flex align-items-center justify-content-between dropdown-toggle gap-1"
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
