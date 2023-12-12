@@ -956,11 +956,6 @@ const NFTBridge = ({
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
 
-            console.log(
-              destinationChainSelector,
-              destinationBridge_address,
-              selectNftId
-            );
             await contract.methods
               .BridgeNFT(
                 destinationChainSelector,
