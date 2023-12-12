@@ -1516,7 +1516,7 @@ const NFTBridge = ({
                       <img
                         src={
                           selectNftId === 0
-                            ? require("./assets/emptyCawsWod.svg").default
+                            ? require("./assets/emptyCawsWod.png")
                             : finalNftType === "land"
                             ? `https://mint.worldofdypians.com/thumbs/${selectNftId}.png`
                             : `https://mint.dyp.finance/thumbs/${selectNftId}.png`
