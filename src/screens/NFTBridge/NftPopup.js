@@ -115,7 +115,7 @@ const NftPopup = ({
         <div className="col-12">
           <div className="nft-modal-grid2">
             {nftItem.length === 0 ? (
-              [...Array(devicewidth < 500 ? 1 : 8)].map((item, id) => {
+              [...Array(devicewidth < 500 ? 2 : 8)].map((item, id) => {
                 return showLands ? (
                   <EmptyWodCard key={id} />
                 ) : (

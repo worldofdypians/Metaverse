@@ -1538,7 +1538,9 @@ const NFTBridge = ({
                         : isConnected && selectNftId !== 0
                         ? "conflux-btn"
                         : "pill-btn"
-                    } px-4 py-2 mt-lg-4 mx-auto w-50`}
+                    } px-4 py-2 mt-lg-4 mx-auto ${
+                      windowSize.width > 991 ? "w-50" : "w-100"
+                    } `}
                     onClick={() => {
                       !isConnected
                         ? showWalletConnect()
