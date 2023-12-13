@@ -889,7 +889,7 @@ const ProfileCard = ({
                     onClick={() => {
                       onSigninClick();
                     }}
-                    style={{ width: "fit-content", fontSize: 14 }}
+                    style={{ width: "fit-content", fontSize: 14, whiteSpace: 'nowrap' }}
                   >
                     Create player
                     <img src={greenarrow} alt="" />
@@ -897,7 +897,7 @@ const ProfileCard = ({
                 )}
                 {coinbase && email && username && !address && (
                   <div
-                    className="walletconnectBtn w-100"
+                    className="walletconnectBtn col-lg-3 col-12"
                     onClick={onLinkWallet}
                   >
                     <div className="d-flex gap-2 justify-content-between align-items-center">

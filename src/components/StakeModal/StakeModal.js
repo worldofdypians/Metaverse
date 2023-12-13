@@ -568,7 +568,7 @@ const StakeModal = ({
           depositing the NFTs.
         </span>
       </div>
-      <div className="mt-3 d-flex align-items-end justify-content-between">
+      <div className="mt-3 d-flex flex-column flex-lg-row align-items-center align-items-lg-end justify-content-between">
         <div className="selected-nfts-wrapper p-3">
           <div className="d-flex align-items-center justify-content-between position-relative">
             <span className="selected-nfts-span mb-2">Selected NFTs:</span>
