@@ -165,7 +165,7 @@ const BetaPassNFT = ({
   const dogeData = {
     id: "doge",
     cardTitle: "Dogecoin Beta Pass",
-    title: "DogeCoin Beta Pass",
+    title: "Dogecoin Beta Pass",
     background: "doge-mint-bg2",
   };
 
@@ -732,7 +732,7 @@ const BetaPassNFT = ({
                       className="beta-pass-chain-img"
                       alt=""
                     />
-                    <span>Doge</span>
+                    <span>Dogecoin</span>
                   </NavLink>
                   <NavLink
                     to={"/marketplace/beta-pass/base"}
