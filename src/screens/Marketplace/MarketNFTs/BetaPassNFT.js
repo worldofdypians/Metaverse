@@ -960,18 +960,7 @@ const BetaPassNFT = ({
                               </span>
                             </div>
                           ))}
-                          {mintTitle === "doge" && (
-                            <a
-                              className="btn doge-button mt-3 d-flex align-items-center gap-2 p-2"
-                              href="https://sweepwidget.com/c/dogecoin-beta-pass-nft-giveaway"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              <img src={dogeLogo} alt="" />
-                              Dogecoin Giveaway
-                              <img src={rightArrow} alt="" />
-                            </a>
-                          )}
+
                           {
                             // mintTitle === "base" ? (
                             //   <div className="d-flex align-items-center gap-2">
@@ -1113,6 +1102,18 @@ const BetaPassNFT = ({
                           />{" "}
                         </a>
                       )} */}
+                      {mintTitle === "doge" && (
+                        <a
+                          className="btn doge-button mt-3 d-flex align-items-center gap-2 p-2"
+                          href="https://sweepwidget.com/c/dogecoin-beta-pass-nft-giveaway"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <img src={dogeLogo} alt="" />
+                          Dogecoin Giveaway
+                          <img src={rightArrow} alt="" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
