@@ -1172,6 +1172,10 @@ const NFTBridge = ({
       setFilterTitle("Base Network");
       updateDestinationFilterTitle("Base Network");
       setSelectedNftId(0);
+    } else {
+      setFilterTitle("Select");
+      setDestinationFilterTitle("Select");
+      setSelectedNftId(0);
     }
   }, [chainId]);
 
@@ -1240,18 +1244,20 @@ const NFTBridge = ({
                     >
                       <div className="d-flex align-items-center gap-2">
                         <h6 className="filter-nav-title mb-0 d-flex align-items-center gap-2">
-                          <img
-                            src={
-                              filterTitle === "Ethereum"
-                                ? eth
-                                : filterTitle === "BNB Chain"
-                                ? bnb
-                                : filterTitle === "Avalanche"
-                                ? avax
-                                : base
-                            }
-                            alt=""
-                          />
+                          {filterTitle !== "Select" && (
+                            <img
+                              src={
+                                filterTitle === "Ethereum"
+                                  ? eth
+                                  : filterTitle === "BNB Chain"
+                                  ? bnb
+                                  : filterTitle === "Avalanche"
+                                  ? avax
+                                  : base
+                              }
+                              alt=""
+                            />
+                          )}
                           {filterTitle}
                         </h6>
                       </div>
