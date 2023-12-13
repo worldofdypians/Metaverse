@@ -45,7 +45,7 @@ const CawsGame = () => {
                 <img src={MultipleCaws} id="multi-caws2" alt="" />
               </div>
             </div>
-            <div className="d-flex align-items-center gap-2">
+            <div className="d-flex align-items-start align-items-lg-center mt-3 flex-column flex-lg-row gap-2">
               <a
                 href="https://opensea.io/collection/catsandwatchessocietycaws"
                 target={"_blank"}

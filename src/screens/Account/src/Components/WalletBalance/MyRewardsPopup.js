@@ -24,13 +24,13 @@ const MyRewardsPopup = ({
   openedChests,
   allChests,
   weeklyplayerData,
-  dailyplayerData,userRank2
+  dailyplayerData,
+  userRank2,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
-
 
   const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
 
@@ -61,7 +61,27 @@ const MyRewardsPopup = ({
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
+  const [userRewards, setuserRewards] = useState(0);
 
+  const getUserRewardData = async (addr) => {
+    const result = await axios
+      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data && result.data.rewards && result.data.rewards === 0) {
+        setuserRewards(0);
+      } else if (result.data && !result.data.rewards) {
+        let amount = 0;
+        for (let i = 0; i < result.data.length; i++) {
+          amount += result.data[i].amount;
+        }
+        setuserRewards(amount);
+      }
+    }
+  };
 
   const getBundles = async () => {
     if (address) {
@@ -291,7 +311,6 @@ const MyRewardsPopup = ({
       console.log("Error:", error);
     }
   };
- 
 
   const fetchMonthlyGenesisRecordsAroundPlayer = async () => {
     const data = {
@@ -315,23 +334,31 @@ const MyRewardsPopup = ({
 
   const fetchConfluxUSDRewards = async () => {
     await axios
-      .get(`https://api.worldofdypians.com/api/conflux_rewards/${address}`)
+      .get(
+        `https://api.worldofdypians.com/api/conflux_rewards/${address}`
+      )
       .then((data) => {
         if (data.data.userRewards) {
           setConfluxRewardsUSD(data.data.userRewards);
+          localStorage.setItem("cachedConfluxRewards", data.data.userRewards);
         } else {
           setConfluxRewardsUSD(0);
+          localStorage.setItem("cachedConfluxRewards", 0);
         }
       });
   };
   const fetchGateUSDRewards = async () => {
     await axios
-      .get(`https://api.worldofdypians.com/api/gate_rewards/${address}`)
+      .get(
+        `https://api.worldofdypians.com/api/gate_rewards/${address}`
+      )
       .then((data) => {
         if (data.data.userRewards) {
+          localStorage.setItem("cachedGateRewards", data.data.userRewards);
           setGateRewardsUSD(data.data.userRewards);
         } else {
           setGateRewardsUSD(0);
+          localStorage.setItem("cachedGateRewards", 0);
         }
       });
   };
@@ -349,16 +376,19 @@ const MyRewardsPopup = ({
       );
       if (cawsResult && cawsResult.status === 200) {
         const cawsuserRewards = cawsResult.data.userRewards;
+        localStorage.setItem("cachedCawsUserRewards", cawsuserRewards);
         setCawsRewards(cawsuserRewards);
       }
 
       if (wodcaws_Result && wodcaws_Result.status === 200) {
         const wodcaws_userRewards = wodcaws_Result.data.userRewards;
+        localStorage.setItem("cachedWodCawsUserRewards", wodcaws_userRewards);
         setWodCawsRewards(wodcaws_userRewards);
       }
 
       if (wodResult && wodResult.status === 200) {
         const wod_userRewards = wodResult.data.userRewards;
+        localStorage.setItem("cachedWodUserRewards", wod_userRewards);
         setWodRewards(wod_userRewards);
       }
     }
@@ -370,17 +400,27 @@ const MyRewardsPopup = ({
     );
     if (result && result.status === 200) {
       const gem_Rewards = result.data.userRewards;
+      localStorage.setItem("cachedGem_Rewards", gem_Rewards);
       setGemRewards(gem_Rewards);
     }
   };
 
   const fetchLeaderboardData = async (userAddr) => {
-    const result = await axios.get(
-      `https://api.worldofdypians.com/api/leaderboard_rewards/${userAddr}`
-    );
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/leaderboard_rewards/${userAddr}`
+      )
+      .catch((e) => {
+        console.log(e);
+        localStorage.setItem("cachedLeaderboardearnings", 0);
+      });
+
     if (result && result.status === 200) {
       const leaderboard_earnings = result.data.userRewards;
+      localStorage.setItem("cachedLeaderboardearnings", leaderboard_earnings);
       setleaderboardTotalData(leaderboard_earnings);
+    } else {
+      localStorage.setItem("cachedLeaderboardearnings", 0);
     }
   };
 
@@ -390,34 +430,38 @@ const MyRewardsPopup = ({
     var nftLandResult = 0;
     var nftBPResult = 0;
     var moneyResult = 0;
-   
     if (openedChests && openedChests.length > 0) {
       for (let i = 0; i < openedChests.length; i++) {
-        
         if (
           openedChests[i].rewards.find((obj) => obj.rewardType === "Points")
         ) {
           pointsResult += Number(openedChests[i].reward);
-        }  if (
-          openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-        ) {
-          if (!openedChests[i].rewards.find((obj) => obj.rewardType === "Money")?.details) {
-            moneyResult += Number(openedChests[i].rewards.find((obj) => obj.rewardType === "Money").reward);
+        }
+        if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
+          if (
+            !openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
+              ?.details
+          ) {
+            moneyResult += Number(
+              openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
+                .reward
+            );
           }
-        }  if (
-          openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-        ) {
+        }
+        if (openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")) {
           if (
             openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
               .reward === "WoD"
           ) {
             nftLandResult++;
-          }  if (
+          }
+          if (
             openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
               .reward === "CAWS"
           ) {
             nftCawsResult++;
-          }  if (
+          }
+          if (
             openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
               .reward === "BetaPass"
           ) {
@@ -431,6 +475,46 @@ const MyRewardsPopup = ({
     setTreasureRewardNftCaws(nftCawsResult);
     setTreasureRewardNftWod(nftLandResult);
     setTreasureRewardNftBetaPass(nftBPResult);
+  };
+
+  const fetchCachedData = () => {
+    const cachedConfluxRewards = localStorage.getItem("cachedConfluxRewards");
+    const cachedGateRewards = localStorage.getItem("cachedGateRewards");
+
+    const cachedCawsUserRewards = localStorage.getItem("cachedCawsUserRewards");
+    const cachedWodCawsUserRewards = localStorage.getItem(
+      "cachedWodCawsUserRewards"
+    );
+
+    const cachedWodUserRewards = localStorage.getItem("cachedWodUserRewards");
+    const cachedGem_Rewards = localStorage.getItem("cachedGem_Rewards");
+    const cachedLeaderboardearnings = localStorage.getItem(
+      "cachedLeaderboardearnings"
+    );
+
+    if (
+      cachedConfluxRewards &&
+      cachedGateRewards &&
+      cachedCawsUserRewards &&
+      cachedWodCawsUserRewards &&
+      cachedWodUserRewards &&
+      cachedGem_Rewards &&
+      cachedLeaderboardearnings
+    ) {
+      setConfluxRewardsUSD(Number(cachedConfluxRewards));
+
+      setGateRewardsUSD(Number(cachedGateRewards));
+
+      setCawsRewards(Number(cachedCawsUserRewards));
+
+      setWodCawsRewards(Number(cachedWodCawsUserRewards));
+
+      setWodRewards(Number(cachedWodUserRewards));
+
+      setGemRewards(Number(cachedGem_Rewards));
+
+      setleaderboardTotalData(Number(cachedLeaderboardearnings));
+    }
   };
 
   useEffect(() => {
@@ -451,11 +535,13 @@ const MyRewardsPopup = ({
     fetchLeaderboardData(address);
     fetchConfluxUSDRewards();
     fetchGateUSDRewards();
+    fetchCachedData();
   }, [address, email]);
 
   useEffect(() => {
     if (email && address) {
       fetchTreasureHuntData(email, address);
+      getUserRewardData(address);
     }
   }, [email, address]);
 
@@ -703,10 +789,14 @@ const MyRewardsPopup = ({
                 Treasure Chests
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-                {"$" + getFormattedNumber(treasureRewardMoney, 2)}<br/>
-                {treasureRewardNftBetaPass + " " + "BetaPass NFT"}<br/>
-                {treasureRewardNftCaws + " " + "CAWS NFT"}<br/>
-                {treasureRewardNftWod + " " + "WoD NFT"}<br/>
+                {"$" + getFormattedNumber(treasureRewardMoney, 2)}
+                <br />
+                {treasureRewardNftBetaPass + " " + "BetaPass NFT"}
+                <br />
+                {treasureRewardNftCaws + " " + "CAWS NFT"}
+                <br />
+                {treasureRewardNftWod + " " + "WoD NFT"}
+                <br />
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 USD/NFT
@@ -736,10 +826,10 @@ const MyRewardsPopup = ({
                 Social Bonus
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-                $0.00
+                ${getFormattedNumber(userRewards, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                0.0000 WBNB
+                {getFormattedNumber(userRewards / bnbPrice, 4)} WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 $0.00

@@ -593,6 +593,7 @@ const NewWalletBalance = ({
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
+  const [userRewards, setuserRewards] = useState(0);
 
   const dummyEvents = [
     {
@@ -631,6 +632,26 @@ const NewWalletBalance = ({
       button: "Get Genesis Land",
     },
   ];
+
+  const getUserRewardData = async (addr) => {
+    const result = await axios
+      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data && result.data.rewards && result.data.rewards === 0) {
+        setuserRewards(0);
+      } else if (result.data && !result.data.rewards) {
+        let amount = 0;
+        for (let i = 0; i < result.data.length; i++) {
+          amount += result.data[i].amount;
+        }
+        setuserRewards(amount);
+      }
+    }
+  };
 
   const openEvents = () => {
     setShowAllEvents(!showAllEvents);
@@ -841,6 +862,7 @@ const NewWalletBalance = ({
   useEffect(() => {
     if (email && address) {
       fetchTreasureHuntData(email, address);
+      getUserRewardData(address);
     }
   }, [email, address, bnbPrice, cfxPrice]);
 
@@ -1616,6 +1638,7 @@ const NewWalletBalance = ({
                     <h6 className="my-total-rewards mb-0 font-iceland">
                       $
                       {getFormattedNumber(
+                        userRewards+
                         weeklyplayerData +
                           dailyplayerData +
                           userRank2 +
@@ -1659,7 +1682,7 @@ const NewWalletBalance = ({
                         className="my-total-rewards mb-0 font-iceland"
                         style={{ fontSize: "20px" }}
                       >
-                        $0.00
+                       ${getFormattedNumber(userRewards, 2)}
                       </h6>
                       <span
                         className="my-total-earned mb-0 font-iceland"
@@ -1813,7 +1836,9 @@ const NewWalletBalance = ({
                 <hr className="linear-divider" />
                 <div className="d-flex align-items-center justify-content-between">
                   <span className="my-special-rewards mb-0">My Rewards</span>
-                  <h6 className="my-special-rewards-value mb-0">$0.00</h6>
+                  <h6 className="my-special-rewards-value mb-0">
+                    ${getFormattedNumber(userRewards, 2)}
+                  </h6>
                 </div>
               </>
             )}
@@ -2203,7 +2228,7 @@ const NewWalletBalance = ({
                 rel="noreferrer"
                 className="d-flex gap-1 align-items-center greensocial"
               >
-                <img alt="" src={twitter} /> Twitter
+                <img alt="" width={16} height={16} src={twitter} /> Twitter
               </a>
 
               <a
@@ -2451,14 +2476,18 @@ const NewWalletBalance = ({
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-3">
-                        <NavLink to={"/marketplace/stake"} state={{modal: 'nftModal'}}
+                          <NavLink
+                            to={"/marketplace/stake"}
+                            state={{ modal: "nftModal" }}
                             className="btn pill-btn px-3 py-2"
                             style={{ fontSize: "12px" }}
                             // onClick={() => setNftModal(true)}
                           >
                             Deposit
-                            </NavLink>
-                            <NavLink to={"/marketplace/stake"} state={{modal: 'rewardModal'}}
+                          </NavLink>
+                          <NavLink
+                            to={"/marketplace/stake"}
+                            state={{ modal: "rewardModal" }}
                             className="btn rewards-btn px-3 py-2"
                             style={{ fontSize: "12px" }}
                             // onClick={() => {
@@ -2466,7 +2495,7 @@ const NewWalletBalance = ({
                             // }}
                           >
                             Rewards
-                            </NavLink>
+                          </NavLink>
                         </div>
                       </div>
                       <div
@@ -2525,7 +2554,9 @@ const NewWalletBalance = ({
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-3">
-                        <NavLink to={"/marketplace/stake"} state={{modal: "landStakeModal"}}
+                          <NavLink
+                            to={"/marketplace/stake"}
+                            state={{ modal: "landStakeModal" }}
                             className="btn pill-btn px-3 py-2"
                             style={{ fontSize: "12px" }}
                             // onClick={() => {
@@ -2533,8 +2564,10 @@ const NewWalletBalance = ({
                             // }}
                           >
                             Deposit
-                            </NavLink>
-                            <NavLink to={"/marketplace/stake"} state={{modal: "landunStakeModal"}}
+                          </NavLink>
+                          <NavLink
+                            to={"/marketplace/stake"}
+                            state={{ modal: "landunStakeModal" }}
                             className="btn rewards-btn px-3 py-2"
                             style={{ fontSize: "12px" }}
                             // onClick={() => {
@@ -2542,7 +2575,7 @@ const NewWalletBalance = ({
                             // }}
                           >
                             Rewards
-                            </NavLink>
+                          </NavLink>
                         </div>
                         <div
                           className="tvl-wrapper"

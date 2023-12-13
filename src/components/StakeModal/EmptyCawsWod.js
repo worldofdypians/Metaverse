@@ -10,7 +10,7 @@ const EmptyCawsWodCard = () => {
         </div>
         <div className="empty-card-info p-2 w-100">
           <span className="info-text">
-            Get your World of Dypians Land & CAWS NFTs from the WoD Game Shop
+            Get your WoD Land & CAWS NFTs from the WoD Game Shop
           </span>
         </div>
       </div>
