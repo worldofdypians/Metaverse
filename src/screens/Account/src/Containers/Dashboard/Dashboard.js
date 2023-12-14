@@ -131,6 +131,8 @@ function Dashboard({
   const [myGateNfts, setmyGateNfts] = useState([]);
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
   const [myBaseNfts, setmyBaseNfts] = useState([]);
+  const [myDogeNfts, setmyDogeNfts] = useState([]);
+
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
 
@@ -856,6 +858,10 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "base").then((NFTS) =>
       setmyBaseNfts(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "doge").then((NFTS) =>
+    setmyDogeNfts(NFTS)
+  );
   };
 
   const getOtherNfts = async () => {
@@ -1945,6 +1951,7 @@ function Dashboard({
                       myGateNfts={myGateNfts}
                       myConfluxNfts={myConfluxNfts}
                       myBaseNfts={myBaseNfts}
+                      myDogeNfts={myDogeNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
