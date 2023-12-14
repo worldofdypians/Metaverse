@@ -89,3 +89,33 @@
   justify-content: center;
   padding: 5px;
 }
+
+.ccip-wrapper {
+  top: 5px;
+  left: 50%;
+  transform: translate(-35%, -50%);
+}
+
+.ccip-link {
+  color: #1a2b6b;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.powered-by-text {
+  color: #fff;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  img {
+    scale: 1.4;
+  }
+}
+
+.bridgenftImg {
+  filter: drop-shadow(0px 4px 20px rgba(11, 250, 210, 0.4));
+}

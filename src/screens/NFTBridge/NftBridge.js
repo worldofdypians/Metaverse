@@ -9,6 +9,9 @@ import avax from "./assets/avax.svg";
 import bnb from "./assets/bnb.svg";
 import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
+import ccipLogo from "./assets/ccipLogo.svg";
+import chainlinkLogo from "./assets/chainlinkLogo.svg";
+
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Web3 from "web3";
 import { ethers } from "ethers";
@@ -1200,7 +1203,17 @@ const NFTBridge = ({
         style={{ backgroundSize: "cover" }}
       >
         <div className="container-lg mt-5 mt-lg-4 mx-0 position-relative">
-          <div className="nft-bridge-hero-wrapper p-3 mt-5 mt-lg-0">
+          <div className="nft-bridge-hero-wrapper p-3 mt-5 mt-lg-0 position-relative">
+            <div className="position-absolute ccip-wrapper">
+              <a
+                href="https://chain.link/cross-chain"
+                target="_blank"
+                rel="noreferrer"
+                className="ccip-link d-flex align-items-center gap-1"
+              >
+                <img src={ccipLogo} alt="" />
+              </a>
+            </div>
             <div className="row mx-0 align-items-center justify-content-between m-0 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
@@ -1217,11 +1230,16 @@ const NFTBridge = ({
                 </div>
               </div>
               <div className="col-12 col-lg-4">
-                <img
-                  src={require("./assets/bridgenft.webp")}
-                  className="w-100"
-                  alt=""
-                />
+                <div className="d-flex flex-column justify-content-center align-items-center gap-2">
+                  <img
+                    src={require("./assets/bridgenft.webp")}
+                    className="w-100 bridgenftImg"
+                    alt=""
+                  />
+                  <span className="powered-by-text d-flex text-center gap-3 align-items-center">
+                    Powered by <img src={chainlinkLogo} alt="" />
+                  </span>
+                </div>
               </div>
             </div>
           </div>
