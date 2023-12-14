@@ -1531,7 +1531,7 @@ const SingleNft = ({
                         : nftAddress === window.config.nft_conflux_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
                         : nftAddress === window.config.nft_doge_address
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
                         : nftAddress === window.config.nft_base_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
