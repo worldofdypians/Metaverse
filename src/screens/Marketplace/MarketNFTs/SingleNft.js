@@ -1348,10 +1348,6 @@ const SingleNft = ({
   }, [nftId, nftAddress]);
 
   useEffect(() => {
-    if (nft.tokenId) {
-      getFavoritesCount(nft.tokenId, nft.nftAddress);
-      setNft(nft);
-    }
     if (nftAddress === window.config.nft_caws_address) {
       setType("caws");
     } else if (nftAddress === window.config.nft_timepiece_address) {

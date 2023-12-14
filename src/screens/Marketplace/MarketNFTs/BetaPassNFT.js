@@ -2222,25 +2222,7 @@ const BetaPassNFT = ({
                                         fontSize: 16,
                                       }}
                                     >
-                                      {mintTitle === "coingecko" ||
-                                      mintTitle === "gate" ||
-                                      mintTitle === "conflux" ||
-                                      mintTitle === "base"
-                                        ? nftSymbol
-                                        : selectedMint.cardTitle}{" "}
-                                      {mintTitle === "coingecko"
-                                        ? totalCoingeckoNft > 0 &&
-                                          `#${myNFTSCoingecko[0]}`
-                                        : mintTitle === "gate"
-                                        ? totalGateNft > 0 &&
-                                          `#${myGateNfts[0]}`
-                                        : mintTitle === "conflux"
-                                        ? totalConfluxNft > 0 &&
-                                          `#${myConfluxNfts[0]}`
-                                        : mintTitle === "base"
-                                        ? totalBaseNft > 0 &&
-                                          `#${myBaseNFTs[0]}`
-                                        : ""}
+                                      DCBP {`#${myDogeNFTs[0]}`}
                                     </h6>
                                   </div>
                                 </div>
