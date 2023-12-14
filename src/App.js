@@ -162,6 +162,7 @@ function App() {
   const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
   const [totalGateNft, setTotalGateNft] = useState(0);
   const [totalBaseNft, settotalBaseNft] = useState(0);
+  const [totalDogeNft, settotalDogeNft] = useState(0);
 
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
@@ -189,6 +190,7 @@ function App() {
   const [myGateNfts, setMyGateNfts] = useState([]);
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
   const [myBaseNFTs, setmyBaseNFTs] = useState([]);
+  const [myDogeNFTs, setmyDogeNFTs] = useState([]);
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -583,6 +585,11 @@ function App() {
       getMyNFTS(coinbase, "gate").then((NFTS) => {
         setTotalGateNft(NFTS.length);
         setMyGateNfts(NFTS);
+      });
+
+      getMyNFTS(coinbase, "doge").then((NFTS) => {
+        settotalDogeNft(NFTS.length);
+        setmyDogeNFTs(NFTS);
       });
 
       getMyNFTS(coinbase, "conflux").then((NFTS) => {
@@ -2116,6 +2123,49 @@ function App() {
                   showWalletConnect={() => {
                     setwalletModal(true);
                   }}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/marketplace/beta-pass/doge"
+              element={
+                <BetaPassNFT
+                  type={"doge"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  totalDogeNft={totalDogeNft}
+                  myDogeNFTs={myDogeNFTs}
                 />
               }
             />
