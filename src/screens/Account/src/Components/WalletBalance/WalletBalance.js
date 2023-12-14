@@ -884,6 +884,7 @@ const WalletBalance = ({
 
   const handleSortCollection = (value1, value2) => {
     if (filter1 === "all" && filter2 === "all") {
+      
       setcollectedItemsFiltered(collectedItems);
     } else if (filter1 === "land" && filter2 === "all") {
       let wodFilter = collectedItems.filter(
@@ -1829,7 +1830,7 @@ const WalletBalance = ({
                                   : item.type === "conflux"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "doge"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                   : item.type === "base"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
@@ -2833,7 +2834,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -3052,7 +3053,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                     : nft.nftAddress ===
                                     window.config.nft_doge_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
