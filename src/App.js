@@ -1513,7 +1513,10 @@ function App() {
   }, [isConnected, chainId, currencyAmount, coinbase]);
 
   useEffect(() => {
-    if (isConnected === true && coinbase && chainId === 56) {
+    if (isConnected === true && coinbase && chainId === 1) {
+      myNft2();
+      myLandNft();
+    } else if (isConnected === true && coinbase && chainId === 56) {
       myNftBNB();
       myLandNftBNB();
     } else if (isConnected === true && coinbase && chainId === 43114) {
