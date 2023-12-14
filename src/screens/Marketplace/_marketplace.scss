@@ -2508,9 +2508,10 @@
 .downloadbtn-coingecko:hover,
 .gate-btn:hover,
 .base-btn:hover,
+.doge-button:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
-  color: #fff;
+  color: #fff !important;
 }
 
 .mybetaearnings {
