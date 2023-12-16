@@ -15,7 +15,7 @@ const Footer = () => {
     },
     {
       icon: "telegram",
-      link: "https://t.me/dypius",
+      link: "https://t.me/worldofdypians",
     },
     {
       icon: "discord",

@@ -2236,7 +2236,7 @@ const NewWalletBalance = ({
                   dummyEvent.id === "event1"
                     ? "https://t.me/Conflux_English"
                     : dummyEvent.id === "event5"
-                    ? "https://t.me/dypius"
+                    ? "https://t.me/worldofdypians"
                     : dummyEvent.id === "event3"
                     ? "https://t.me/coingecko"
                     : dummyEvent.id === "event6"
