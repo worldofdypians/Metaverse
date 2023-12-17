@@ -663,7 +663,7 @@ const MarketEvents = ({
       setSelectedPackage("daily-bonus");
     }
   }, [eventId, activeTab]);
-console.log(eventId, activeTab)
+
   useEffect(() => {
     if (
       email &&
