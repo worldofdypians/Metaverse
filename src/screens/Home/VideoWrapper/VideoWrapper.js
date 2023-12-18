@@ -352,7 +352,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   <Slider {...settings} ref={betaSlider}>
                     {dummyBetaPassData2.map((item, index) => (
                       <NavLink
-                        to={`/marketplace/events/treasure/hunt`}
+                        to={`/marketplace/events/treasure-hunt`}
                       >
                         <BetaEventCardHome
                           data={item}
