@@ -101,7 +101,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Expired",
+      eventStatus: "Live",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -114,7 +114,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Expired",
+        status: "Live",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
