@@ -33,7 +33,7 @@ const MainNewsCard = ({
           onMouseEnter={() => setBannerShadow(true)}
           onMouseLeave={() => setBannerShadow(false)}
           style={{borderRadius: 8}}
-        >  <h2 className="mainNews-title update-title font-organetto m-0 w-100 position-absolute">
+        >  <h2 className="mainNews-title update-title font-organetto m-0 w-100">
             {title}
           </h2>
           {" "}
