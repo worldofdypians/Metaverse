@@ -839,12 +839,43 @@ function Dashboard({
       setMyNFTSCaws(NFTS)
     );
 
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
+      (NFTS) =>
+        // setMyNFTSCaws(NFTS)
+        console.log("")
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
+      (NFTS) =>
+        // setMyNFTSCaws(NFTS)
+        console.log("")
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
+      (NFTS) =>
+        // setMyNFTSCaws(NFTS)
+        console.log("")
+    );
+
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
       (NFTS) => setMyNFTSTimepiece(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
       setMyNFTSLand(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
+      (NFTS) =>
+        // setMyNFTSLand(NFTS)
+        console.log("")
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
+      (NFTS) =>
+        // setMyNFTSLand(NFTS)
+        console.log("")
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
+      (NFTS) =>
+        // setMyNFTSLand(NFTS)
+        console.log("")
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
@@ -860,8 +891,8 @@ function Dashboard({
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "doge").then((NFTS) =>
-    setmyDogeNfts(NFTS)
-  );
+      setmyDogeNfts(NFTS)
+    );
   };
 
   const getOtherNfts = async () => {
