@@ -61,6 +61,7 @@ import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
 import eventSkeleton from "./assets/eventSkeleton.png";
 import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
+import ExpiredProfileEvent from "./ExpiredProfileEvent";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -213,10 +214,10 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "dypius",
     rewards: "DYP",
-    status: "Live",
+    status: "Expired",
     id: "event5",
     eventType: "Explore & Find",
-    date: "November 20, 2023",
+    date: "Ended",
     logo: dypius,
     totalRewards: "300,000 in DYP Rewards",
     eventDuration: dypiusLastDay,
@@ -1226,7 +1227,16 @@ const NewWalletBalance = ({
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
               />
-              <img
+              <ExpiredProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyDypius);
+                  setEventPopup(true);
+                }}
+                data={dummyDypius}
+                event={dummyDypius}
+                userEarnedUsd={dypiusEarnTokens}
+              />
+              {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
                 style={{
@@ -1235,7 +1245,7 @@ const NewWalletBalance = ({
                   transform: "translateX(0px)",
                 }}
                 alt=""
-              />
+              /> */}
               {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
@@ -1640,8 +1650,8 @@ const NewWalletBalance = ({
                     <h6 className="my-total-rewards mb-0 font-iceland">
                       $
                       {getFormattedNumber(
-                        userRewards+
-                        weeklyplayerData +
+                        userRewards +
+                          weeklyplayerData +
                           dailyplayerData +
                           userRank2 +
                           genesisRank2 +
@@ -1684,7 +1694,7 @@ const NewWalletBalance = ({
                         className="my-total-rewards mb-0 font-iceland"
                         style={{ fontSize: "20px" }}
                       >
-                       ${getFormattedNumber(userRewards, 2)}
+                        ${getFormattedNumber(userRewards, 2)}
                       </h6>
                       <span
                         className="my-total-earned mb-0 font-iceland"
