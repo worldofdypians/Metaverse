@@ -1124,28 +1124,26 @@ const BetaPassNFT = ({
                       )} */}
 
                       {mintTitle === "cmc" && (
-                        <a
+                        <span
                           className={`btn cmc-btn px-3 d-flex align-items-center justify-content-center gap-2`}
-                          href="https://sweepwidget.com/c/conflux-beta-pass-nft"
-                          target="_blank"
-                          rel="noreferrer"
+                          // href="https://sweepwidget.com/c/conflux-beta-pass-nft"
+                          // target="_blank"
+                          // rel="noreferrer"
                         >
-                          <img
+                          {/* <img
                             src={cmc}
                             alt=""
-                            // style={{ width: 16, height: 16 }}
-                          />{" "}
-                          CMC Diamods
-                          <img
+                          />{" "} */}
+                          Coming Soon
+                          {/* <img
                             src={arrowRight}
                             alt=""
-                            // style={{ width: 16, height: 16 }}
-                          />{" "}
-                        </a>
+                          />{" "} */}
+                        </span>
                       )}
-                      {/* {mintTitle === "doge" && (
+                      {mintTitle === "doge" && (
                         <a
-                          className="btn doge-button mt-3 d-flex align-items-center gap-2 p-2"
+                          className="btn doge-button d-flex align-items-center gap-2 p-2"
                           href="https://sweepwidget.com/c/dogecoin-beta-pass-nft-giveaway"
                           target="_blank"
                           rel="noreferrer"
@@ -1154,7 +1152,7 @@ const BetaPassNFT = ({
                           Dogecoin Giveaway
                           <img src={rightArrow} alt="" />
                         </a>
-                      )} */}
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1441,7 +1439,7 @@ const BetaPassNFT = ({
                       className={`  justify-content-start
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
-                      {!alreadyRegistered && mintTitle === "cmc" && (
+                      {!alreadyRegistered && (mintTitle === "cmc" || mintTitle === "doge") && (
                         <div className="d-flex align-items-center justify-content-around gap-2">
                           <button
                             className={
@@ -2030,7 +2028,7 @@ const BetaPassNFT = ({
                               : "Registered"}{" "}
                           </h6>
                         )}
-                        {mintTitle === "doge" && (
+                        {alreadyRegistered && mintTitle === "doge" && (
                           <h6 className="land-name">
                             {mintTitle === "doge" && totalDogeNft > 0
                               ? "My NFT"
@@ -2039,7 +2037,7 @@ const BetaPassNFT = ({
                         )}
                         {!alreadyRegistered &&
                           activeTab === "create" &&
-                          mintTitle === "cmc" && (
+                          (mintTitle === "cmc" || mintTitle === 'doge') && (
                             <div>
                               <ul class="timeline m-0 p-0" id="timeline">
                                 <li class="col-3 li complete">
@@ -2083,7 +2081,7 @@ const BetaPassNFT = ({
                           )}
                         {playerCreation === false &&
                           !alreadyRegistered &&
-                          mintTitle === "cmc" && (
+                          (mintTitle === "cmc" || mintTitle === 'doge') && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
@@ -2110,7 +2108,7 @@ const BetaPassNFT = ({
                         {playerCreation === true &&
                           linkWallet === false &&
                           !alreadyRegistered &&
-                          mintTitle === "cmc" && (
+                          (mintTitle === "cmc" || mintTitle === 'doge') && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
@@ -2159,11 +2157,11 @@ const BetaPassNFT = ({
 
                         {linkWallet === true &&
                           !alreadyRegistered &&
-                          mintTitle === "cmc" && (
+                          (mintTitle === "cmc" || mintTitle === 'doge') && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
-                                the one you used for CoinMarketCap Giveaway .
+                                the one you used for  {mintTitle === 'cmc' ? 'CoinMarketCap' : 'Dogecoin'}  Giveaway .
                               </span>
                               <div
                                 className="walletconnectBtn w-100"
@@ -2309,7 +2307,7 @@ const BetaPassNFT = ({
                             </div>
                           </div>
                         )}
-                        {mintTitle === "doge" && (
+                        {alreadyRegistered && mintTitle === "doge" && (
                           <div className="d-flex flex-column justify-content-between h-100">
                             {totalDogeNft === 0 && mintTitle === "doge" ? (
                               <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">

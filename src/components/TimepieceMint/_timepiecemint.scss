@@ -1696,6 +1696,7 @@ input::-webkit-inner-spin-button {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  pointer-events: none;
 }
 
 .bottom-auto-bg {
