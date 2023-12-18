@@ -66,6 +66,8 @@ import discord from "./assets/greenDiscord.svg";
 import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingDyp from "./assets/upcomingDyp.webp";
+import upcomingCmc from "./assets/upcomingCmc.webp";
+
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
 
@@ -682,11 +684,8 @@ const MarketEvents = ({
     setActiveTab(tabState);
   }, [window.location.href]);
 
-
-
   return (
     <>
-
       <div
         className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
@@ -706,9 +705,6 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                  {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div> */}
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -721,7 +717,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                   
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1007,6 +1005,21 @@ const MarketEvents = ({
                     </div>
                     <img
                       src={upcomingDoge}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
+                  </div>
+
+                  <div className="border-0 upcoming-mint-wrapper upcoming-cmc-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">CoinMarketCap</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the CoinMarketCap event for a chance to grab a
+                        share of the $10,000 BNB reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingCmc}
                       alt=""
                       className="upcoming-mint-img"
                     />

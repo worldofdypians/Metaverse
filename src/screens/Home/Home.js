@@ -19,6 +19,8 @@ import basePopup from "../../components/TimepieceMint/assets/basePopup.png";
 import confluxPopup from "../../components/TimepieceMint/assets/confluxPopup.png";
 import dogePopup from "../../components/TimepieceMint/assets/dogePopup.png";
 import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
+import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
+
 import dypiusPopup from "../../components/TimepieceMint/assets/dypiusPopup.webp";
 
 import coingeckoPopup from "../../components/TimepieceMint/assets/coingeckoPopup.png";
@@ -81,6 +83,12 @@ const Home = ({
     state: "doge",
   };
 
+  const cmcPopupInfo = {
+    title: "CoinMarketCap",
+    img: cmcPopup,
+    state: "cmc",
+  };
+
   const [activePopup, setActivePopup] = useState(false);
 
   const html = document.querySelector("html");
@@ -114,7 +122,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={dogePopupInfo}
+          data={cmcPopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>

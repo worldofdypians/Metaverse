@@ -2509,6 +2509,7 @@
 .gate-btn:hover,
 .base-btn:hover,
 .doge-button:hover,
+.cmc-btn:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
   color: #fff !important;
@@ -2641,13 +2642,13 @@
 .beta-pass-item {
   border-radius: 15px;
   background: #252743;
-  width: 157px;
+  width: 160px;
   // backdrop-filter: blur(10px);
   margin: 0px;
   border: 1px solid transparent;
   justify-content: center;
-  @media screen and (max-width: 450px) {
-    width: 147px;
+  @media screen and (max-width: 500px) {
+    width: fit-content;
   }
   .beta-pass-chain-img {
     width: 25px;
@@ -2656,18 +2657,16 @@
   }
 
   span {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: rgb(238, 237, 255);
     text-transform: capitalize;
     transition: all 0.25s;
 
-    @media screen and (max-width: 435px) {
-      font-size: 14px;
+  
+    @media screen and (max-width: 500px) {
+      display: none;
     }
-    // @media screen and (max-width: 410px) {
-    //   font-size: 10px;
-    // }
   }
 }
 
@@ -2731,6 +2730,11 @@
 .upcoming-mint-wrapper-base {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
+}
+
+.upcoming-mint-wrapper-cmc {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(0, 72, 97, 0.05) 168.67%);
 }
 
 .upcoming-mint-wrapper-gate {
@@ -3520,6 +3524,12 @@
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #ac5426 168.67%) !important;
 }
+
+.upcoming-cmc-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(0, 72, 97, 0.05) 168.67%) !important;
+}
+
 .upcoming-dyp-event {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #1d4d17 168.67%);

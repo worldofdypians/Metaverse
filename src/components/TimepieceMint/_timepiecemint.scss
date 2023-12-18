@@ -507,6 +507,19 @@
   }
 }
 
+.cmc-mint-bg2 {
+  background-image: url("./assets/cmcBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
 .coin98-mint-bg {
   background-image: url("./assets/coin98Background1.png");
   background-size: cover;
@@ -974,6 +987,13 @@
 
 .doge-active {
   background-image: url("../../assets/dogeActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.cmc-active {
+  background-image: url("../../assets/cmcActive.webp");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;
@@ -1659,6 +1679,17 @@ input::-webkit-inner-spin-button {
 .doge-button {
   border-radius: 20px;
   background: linear-gradient(90deg, #e87483 -13.56%, #6b1d90 129.3%);
+  text-decoration: none;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.cmc-btn {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #755FEF -13.56%, #C43FB5 129.3%);
   text-decoration: none;
   color: #fff;
   font-size: 12px;
