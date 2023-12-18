@@ -1238,8 +1238,8 @@ const NewWalletBalance = ({
                   style={{
                     cursor: "pointer",
                     width: "fit-content",
-                    position: "absolute",
-                    bottom: windowSize.width > 992 ? "20px" : "5px",
+                    position:windowSize.width > 650 ? "absolute" : 'relative',
+                    bottom: windowSize.width > 992 ? "15px" : "-5px",
                     left: windowSize.width > 650 ? "43%" : "43%",
                   }}
                 >
