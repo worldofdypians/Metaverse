@@ -236,18 +236,18 @@ const MarketEvents = ({
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "November 20, 2023",
+      eventDate: "Ended",
       backgroundImage: upcomingDyp,
       popupInfo: {
         title: "Dypius",
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Live",
+        status: "Expired",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -255,7 +255,7 @@ const MarketEvents = ({
         minRewards: "25",
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "November 20, 2023",
+        eventDate: "Ended",
       },
     },
     {
@@ -889,7 +889,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1036,7 +1036,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(3, 5).map((item, index) => (
+                  {dummyBetaPassData2.slice(2, 5).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}

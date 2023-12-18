@@ -59,6 +59,8 @@ import upcomingDyp from "./assets/upcomingDyp.webp";
 import dypeventPopupImage from "./assets/dypEventImage.png";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
+import eventSkeleton from "./assets/eventSkeleton.png";
+import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -457,18 +459,18 @@ const NewWalletBalance = ({
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "November 20, 2023",
+      eventDate: "Ended",
       backgroundImage: upcomingDyp,
       popupInfo: {
         title: "Dypius",
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Live",
+        status: "Expired",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -476,7 +478,7 @@ const NewWalletBalance = ({
         minRewards: "25",
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "November 20, 2023",
+        eventDate: "Ended",
       },
     },
     {
@@ -1197,7 +1199,7 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-              <ActiveProfileEvent
+              {/* <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyDypius);
                   setEventPopup(true);
@@ -1205,7 +1207,7 @@ const NewWalletBalance = ({
                 data={dummyDypius}
                 event={dummyDypius}
                 userEarnedUsd={dypiusEarnTokens}
-              />
+              /> */}
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCoingecko);
@@ -1224,7 +1226,7 @@ const NewWalletBalance = ({
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
               />
-              {/* <img
+              <img
                 src={eventSkeleton}
                 className="profile-event-item"
                 style={{
@@ -1233,7 +1235,7 @@ const NewWalletBalance = ({
                   transform: "translateX(0px)",
                 }}
                 alt=""
-              /> */}
+              />
               {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
