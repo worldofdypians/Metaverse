@@ -101,7 +101,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -114,7 +114,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Live",
+        status: "Expired",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -122,7 +122,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         minRewards: "25",
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "November 20, 2023",
+        eventDate: "Ended",
       },
     },
     {
