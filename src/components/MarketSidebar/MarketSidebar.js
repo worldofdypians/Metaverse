@@ -101,7 +101,7 @@ const MarketSidebar = () => {
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
-                      to="/marketplace/beta-pass/doge"
+                      to="/marketplace/beta-pass/coinmarketcap"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -110,7 +110,8 @@ const MarketSidebar = () => {
                               location.pathname.includes("conflux") ||
                               location.pathname.includes("coin98") ||
                               location.pathname.includes("coingecko") ||
-                              location.pathname.includes("base")
+                              location.pathname.includes("base") ||
+                              location.pathname.includes("coinmarketcap")
                                 ? "sidebar-item-active nft-active"
                                 : null
                             }`
@@ -251,10 +252,14 @@ const MarketSidebar = () => {
             <img src={dypiansLogo} alt="" />
             <h6 className="build-wod-title mb-0">Build in WoD</h6>
             <p className="build-wod-desc mb-0">
-            Become a valued part of our ecosystem by bringing your business to World of Dypians
+              Become a valued part of our ecosystem by bringing your business to
+              World of Dypians
             </p>
           </div>
-          <a href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true" target="_blank">
+          <a
+            href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
+            target="_blank"
+          >
             <button className="btn join-now-btn">Apply</button>
           </a>
         </div>
