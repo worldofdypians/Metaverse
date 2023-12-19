@@ -251,7 +251,7 @@ body {
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 12pt;
     line-height: 24px;
     text-align: center;
     color: #ffffff;
@@ -320,10 +320,10 @@ body {
       0 100%
     );
     background: linear-gradient(90deg, #8EEE86 -13.56%, #0078D4 129.3%);
-    color: #FFF;
-    font-size: 16px;
+    color: #333333;
+    font-size: 12pt;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: normal;
     border: none !important;
     white-space: pre;
@@ -332,7 +332,7 @@ body {
 
   .filled-btn-download:hover {
     color: #fff;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 
   .filled-btn {

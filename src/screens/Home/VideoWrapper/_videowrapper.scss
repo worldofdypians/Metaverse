@@ -67,6 +67,37 @@
   }
 }
 
+.epicgame {
+  padding: 10px 11px 9px 11px;
+}
+
+.bigtitle {
+  color: #f7f7fc;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.small-green-btn {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #7bd8b0 0%, #dcfb85 98.44%);
+  color: #080b2a;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  outline: none;
+  width: 60px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .video-wrapper {
   background-size: cover;
   background-repeat: no-repeat;
@@ -143,8 +174,8 @@
 
 .download-buttons-wrapper {
   position: absolute;
-  left: 25%;
-  top: 40%;
+  left: 2.5%;
+  top: 38%;
   bottom: 0;
   margin: auto;
 

@@ -1593,7 +1593,7 @@ const BetaPassNFT = ({
                               <div className="summaryseparator mt-3 mb-3"></div>
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <a
-                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                   target="_blank"
                                   rel="noreferrer"
                                   className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
@@ -1714,7 +1714,7 @@ const BetaPassNFT = ({
                               <div className="summaryseparator mt-3 mb-3"></div>
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <a
-                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                   target="_blank"
                                   rel="noreferrer"
                                   className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
@@ -1837,7 +1837,7 @@ const BetaPassNFT = ({
                               <div className="summaryseparator mt-3 mb-3"></div>
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <a
-                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                   target="_blank"
                                   rel="noreferrer"
                                   className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
@@ -1969,7 +1969,7 @@ const BetaPassNFT = ({
                               <div className="summaryseparator mt-3 mb-3"></div>
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <a
-                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                   target="_blank"
                                   rel="noreferrer"
                                   className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
@@ -2279,7 +2279,7 @@ const BetaPassNFT = ({
                             <div className="summaryseparator mt-3 mb-3"></div>
                             <div className="d-flex align-items-center gap-2 justify-content-between">
                               <a
-                                href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                 target="_blank"
                                 rel="noreferrer"
                                 className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
@@ -2386,7 +2386,7 @@ const BetaPassNFT = ({
                             <div className="summaryseparator mt-3 mb-3"></div>
                             <div className="d-flex align-items-center gap-2 justify-content-between">
                               <a
-                                href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
+                                href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                 target="_blank"
                                 rel="noreferrer"
                                 className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
