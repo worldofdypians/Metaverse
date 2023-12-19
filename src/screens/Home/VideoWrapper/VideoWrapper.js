@@ -7,13 +7,9 @@ import downloadIcon from "../../../assets/downloadIcon.svg";
 import downloadIconWhite from "../../../assets/downloadIconWhite.svg";
 import windowsIcon from "../../../assets/windowsIcon.svg";
 import windowsIconWhite from "../../../assets/windowsIconWhite.svg";
-import epicblack from "../../../assets/epicblack.svg";
-import epicgreen2 from "../../../assets/epicgreen2.svg";
-import epicwhite2 from "../../../assets/epicwhite2.svg";
-
-import epicwhite from "../../../assets/epicwhite.svg";
-
 import { NavLink } from "react-router-dom";
+import epicwhite from "../../../assets/epicwhite.svg";
+import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
 import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
@@ -34,19 +30,19 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [showFirstNext, setShowFirstNext] = useState();
   const downloader = useRef();
   const windowSize = useWindowSize();
-  // downloader?.current?.addEventListener("mouseenter", () => {
-  //   setIcons(true);
-  // });
-  // downloader?.current?.addEventListener("mouseleave", () => {
-  //   setIcons(false);
-  // });
+  downloader?.current?.addEventListener("mouseenter", () => {
+    setIcons(true);
+  });
+  downloader?.current?.addEventListener("mouseleave", () => {
+    setIcons(false);
+  });
 
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
 
   const gotoDownload = () => {
     window.location.href =
-      "https://store.epicgames.com/p/world-of-dypians-2e0694";
+      "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp";
   };
 
   const dummyBetaPassData2 = [
@@ -302,57 +298,28 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           <div className="col-12 col-lg-8 video-diagonal">
             <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
               <div className="row m-0 gap-5 align-items-center justify-content-center">
-                <div className="d-flex flex-column px-0 align-items-center gap-1 flex-lg-row flex-md-row justify-content-center">
+                <div className="linear-border-download p-0" style={{
+                    width: "fit-content",
+                    zIndex: 5,
+                    position: "relative",
+                    textDecoration: "none",
+                  }} >
+                <div
+                  className="opacitywrapper5 download-filled-btn m-0 px-3"
+                 
+                >
                   <a
+                    className="game-event-download d-flex align-items-center gap-2"
                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                     target="_blank"
-                    style={{ zIndex: 5 }}
-                    onMouseEnter={() => {
-                      setIcons(true);
-                    }}
-                    onMouseLeave={() => {
-                      setIcons(false);
-                    }}
                   >
-                    <img
-                      src={icons ? epicgreen2 : epicwhite2}
-                      alt=""
-                      style={{ width: 107 }}
-                    />
+                    <img src={epicblack} alt="icon" className="epicgame2" />
+                    Download
                   </a>
-                  <div
-                    className="opacitywrapper2 position-relative"
-                    style={{ width: "90%" }}
-                  >
-                    <div className="d-flex flex-column h-100 gap-3 justify-content-between">
-                      <div className="d-flex align-items-center gap-2">
-                        <span className="font-organetto bigtitle">
-                          Beta Program
-                        </span>
-                        <NavLink to="join-beta">
-                          <button className="btn small-green-btn">Join</button>
-                        </NavLink>
-                      </div>
-                      <div className="d-flex flex-column">
-                        <div className="d-flex align-items-center gap-2">
-                          <span className="font-organetto bigtitle">
-                            Build in world of dypians
-                          </span>
-                          <a
-                            href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
-                            target="_blank"
-                          >
-                            <button className="btn small-green-btn">
-                              Apply
-                            </button>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* <div
-                  className="linear-border-download"
+                </div></div>
+                <NavLink
+                  to="join-beta"
+                  className="pink-linear-border"
                   style={{
                     width: "fit-content",
                     zIndex: 5,
@@ -361,20 +328,12 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   }}
                 >
                   <button
-                    ref={downloader}
-                    onClick={gotoDownload}
-                    className="btn filled-btn-download px-5 d-flex align-items-center gap-2"
+                    className="btn outline-btn px-5 d-flex align-items-center gap-2"
+                    // onClick={handleRegister}
                   >
-                    <img
-                      src={icons ? windowsIconWhite : windowsIcon}
-                      width={16}
-                      height={16}
-                      alt="windows icon"
-                    />
-                    Download
-                    
+                    Join Beta
                   </button>
-                </div> */}
+                </NavLink>
               </div>
               {/* <div className="d-flex align-items-center gap-2">
                 <img src={sysReq} alt="system requirements" />
