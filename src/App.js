@@ -163,6 +163,7 @@ function App() {
   const [totalGateNft, setTotalGateNft] = useState(0);
   const [totalBaseNft, settotalBaseNft] = useState(0);
   const [totalDogeNft, settotalDogeNft] = useState(0);
+  const [totalCmcNft, settotalCmcNft] = useState(0);
 
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
@@ -191,6 +192,7 @@ function App() {
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
   const [myBaseNFTs, setmyBaseNFTs] = useState([]);
   const [myDogeNFTs, setmyDogeNFTs] = useState([]);
+  const [myCmcNFTs, setmyCmcNFTs] = useState([]);
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -224,6 +226,8 @@ function App() {
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
   const [domainMetaData, setDomainMetaData] = useState(null);
+  const [totalTx, setTotalTx] = useState(0);
+  const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
@@ -590,6 +594,14 @@ function App() {
       getMyNFTS(coinbase, "doge").then((NFTS) => {
         settotalDogeNft(NFTS.length);
         setmyDogeNFTs(NFTS);
+      });
+
+      getMyNFTS(coinbase, "cmc").then((NFTS) => {
+        if(NFTS) {
+           settotalCmcNft(NFTS.length);
+        setmyCmcNFTs(NFTS);
+        }
+       
       });
 
       getMyNFTS(coinbase, "conflux").then((NFTS) => {
@@ -1772,6 +1784,34 @@ function App() {
     }
   };
 
+
+  const getAllData = async () => {
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/totalTXs")
+      .catch((e) => {
+        console.error(e);
+      });
+    const result2 = await axios
+      .get("https://api.worldofdypians.com/api/totalVolumes")
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result.data && result.data !== "NaN") {
+      setTotalTx(result.data);
+      localStorage.setItem("cachedTvl", result.data);
+    }
+
+    if (result2.data && result2.data !== "NaN") {
+      setTotalVolume(result2.data);
+      localStorage.setItem("cachedVolume", result2.data);
+    }
+  };
+
+  useEffect(()=>{
+    getAllData()
+  },[coinbase])
+
   useEffect(() => {
     getDomains();
     fetchBscBalance();
@@ -2029,6 +2069,8 @@ function App() {
                     ...top20BoughtByPriceAndPriceTypeDYPNFTS,
                   ]}
                   nftCount={nftCount}
+                  totalTx={totalTx}
+                  totalvolume={totalvolume}
                 />
               }
             />
@@ -2166,6 +2208,51 @@ function App() {
                   }}
                   totalDogeNft={totalDogeNft}
                   myDogeNFTs={myDogeNFTs}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/marketplace/beta-pass/coinmarketcap"
+              element={
+                <BetaPassNFT
+                  type={"cmc"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  totalDogeNft={totalDogeNft}
+                  myDogeNFTs={myDogeNFTs}
+                  totalCmcNft={totalCmcNft}
+                  myCmcNFTs={myCmcNFTs}
                 />
               }
             />

@@ -48,9 +48,17 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">DogeCoin Beta Pass</h6>
         </>
-      ) :
-      
-      data.title === "Daily Bonus" ? (
+      ) : data.title === "CoinMarketCap" ? (
+        <>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              Live Giveaway
+            </h6>
+          </div>
+          <h6 className="mint-popup-title">CoinMarketCap Beta Pass</h6>
+        </>
+      ) : data.title === "Daily Bonus" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             {/* <div className="pulsatingDot"></div> */}
@@ -84,7 +92,9 @@ const MintPopup = ({ active, onClose, data }) => {
 
       <img
         src={data.img}
-        className={`mint-popup-img ${data.title === 'Daily Bonus' && 'bottom-auto-bg'} ` }
+        className={`mint-popup-img ${
+          data.title === "Daily Bonus" && "bottom-auto-bg"
+        } `}
         style={{
           maxWidth: "100%",
           height: data.title === "Daily Bonus" ? 370 : "",
@@ -109,30 +119,31 @@ const MintPopup = ({ active, onClose, data }) => {
       )}
       {data.title === "Treasure Hunt" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          {
-            data.title === "Treasure Hunt" && (
-              <span className="popup-available-mint">
-                Explore the downtown area and generate DYP rewards!
-              </span>
-            )
-          }
+          {data.title === "Treasure Hunt" && (
+            <span className="popup-available-mint">
+              Explore the downtown area and generate DYP rewards!
+            </span>
+          )}
         </div>
-      ) : data.title === "DogeCoin" ? 
-      (
+      ) : data.title === "DogeCoin" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          {
-            data.title === "DogeCoin" && (
-              <span className="popup-available-mint">
-
-                Get access to the game and a unique event filled with surprises and rewards!
-              </span>
-            )
-        
-          }
+          {data.title === "DogeCoin" && (
+            <span className="popup-available-mint">
+              Get access to the game and a unique event filled with surprises
+              and rewards!
+            </span>
+          )}
         </div>
-      )
-      : null
-    }
+      ): data.title === "CoinMarketCap" ? (
+        <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+          {data.title === "CoinMarketCap" && (
+            <span className="popup-available-mint">
+              Get access to the game and a unique event filled with surprises
+              and rewards!
+            </span>
+          )}
+        </div>
+      )  : null}
       {
         data.title === "Treasure Hunt" ? (
           <Link
@@ -152,15 +163,24 @@ const MintPopup = ({ active, onClose, data }) => {
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
+        ) : data.title === "CoinMarketCap" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/beta-pass/coinmarketcap"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
         ) : (
           <Link
-          onClick={onClose}
-          to={`/marketplace/events/upcoming`}
-          state={{ event: data.state }}
-          className="linear-border"
-        >
-          <button className="btn filled-btn px-4">Explore</button>
-        </Link>
+            onClick={onClose}
+            to={`/marketplace/events/upcoming`}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">Explore</button>
+          </Link>
         )
         // (
         // <Link
