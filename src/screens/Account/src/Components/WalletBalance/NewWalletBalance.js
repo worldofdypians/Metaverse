@@ -31,6 +31,8 @@ import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
 import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import dogePopupImage from "./assets/dogePopupImage.png";
+import cmcPopupImage from "./assets/cmcPopupImage.png";
+
 
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
@@ -42,6 +44,7 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
@@ -429,6 +432,34 @@ const NewWalletBalance = ({
         maxPoints: "50,000",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
         eventDate: "December 22, 2023",
+      },
+    },
+    {
+      title: "CoinMarketCap",
+      logo: cmc,
+      eventStatus: "Coming Soon",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "December 26, 2023",
+      // backgroundImage: upcomingCmc,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        eventDate: "December 26, 2023",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
     {
@@ -1920,6 +1951,8 @@ const NewWalletBalance = ({
                         ? eventPopupImageBase
                         : dummyEvent.linkState === "doge"
                         ? dogePopupImage
+                        : dummyEvent.linkState === "coinmarketcap"
+                        ? cmcPopupImage
                         : eventPopupImage
                     }
                     alt=""
@@ -2055,6 +2088,18 @@ const NewWalletBalance = ({
                       Remember to log in to the game daily and venture into the
                       Dogecoin area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event8" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
+                      CoinMarketCap Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the CoinMarketCap area, players not only stand a
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      CoinMarketCap area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2102,7 +2147,8 @@ const NewWalletBalance = ({
                           ? "BNB"
                           : dummyEvent.id === "event5"
                           ? "DYP"
-                          : dummyEvent.id === "event6"
+                          : dummyEvent.id === "event6" ||
+                            dummyEvent.id === "event8"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -2135,6 +2181,8 @@ const NewWalletBalance = ({
                 ? "Gate.io"
                 : dummyEvent.id === "event7"
                 ? "Dogecoin"
+                : dummyEvent.id === "event8"
+                ? "CoinMarketCap"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2212,6 +2260,19 @@ const NewWalletBalance = ({
                 public ledger that is maintained by a network of computers
                 called nodes.
               </p>
+            ) : dummyEvent.id === "event8" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                CoinMarketCap provides cryptocurrency market cap rankings,
+                charts, and more. We tracks capitalization of various
+                cryptocurrencies by listing prices, available supply (amount of
+                coins that is currently in circulation), trade volume over last
+                24 hours, or market capitalizations. CoinMarketCap was founded
+                in May 2013 by Brandon Chez in Long Island City, Queens, New
+                York.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
@@ -2239,6 +2300,8 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/gate_io"
                     : dummyEvent.id === "event7"
                     ? "https://twitter.com/dogecoin"
+                    : dummyEvent.id === "event8"
+                    ? "https://twitter.com/CoinMarketCap"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2258,6 +2321,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/coingecko"
                     : dummyEvent.id === "event6"
                     ? "https://t.me/gateio_en"
+                    : dummyEvent.id === "event8"
+                    ? "https://t.me/CoinMarketCapAnnouncements"
                     : dummyEvent.id === "event7"
                     ? "https://discord.gg/dogecoin"
                     : "https://base.org/discord"
@@ -2290,6 +2355,8 @@ const NewWalletBalance = ({
                     ? "https://www.gate.io/"
                     : dummyEvent.id === "event7"
                     ? "https://dogecoin.com/"
+                    : dummyEvent.id === "event8"
+                    ? "https://coinmarketcap.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2375,7 +2442,7 @@ const NewWalletBalance = ({
                             ? "BNB"
                             : dummyEvent.id === "event5"
                             ? "DYP"
-                            : dummyEvent.id === "event6"
+                            : dummyEvent.id === "event6" || dummyEvent.id === "event8"
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
@@ -2395,9 +2462,9 @@ const NewWalletBalance = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event5" && (
+              dummyEvent.id !== "event7" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
-                  <NavLink to={`/marketplace/beta-pass/doge`}>
+                  <NavLink to={`/marketplace/beta-pass/${dummyEvent.linkState}`}>
                     <button className="btn get-beta-btn">Get Beta Pass</button>
                   </NavLink>
                 </div>

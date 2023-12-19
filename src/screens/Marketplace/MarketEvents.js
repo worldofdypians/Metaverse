@@ -21,6 +21,7 @@ import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
 import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
 import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
 import doge from "../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cmc from "../Marketplace/MarketNFTs/assets/cmc.svg";
 
 import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
@@ -42,6 +43,7 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.webp";
 import avaxUpcoming from "./assets/avaxUpcoming.png";
+
 import infoIcon from "./assets/infoIcon.svg";
 import liveDot from "./assets/liveDot.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
@@ -56,6 +58,8 @@ import dogePopupImage from "../Account/src/Components/WalletBalance/assets/dogeP
 import dypeventPopupImage from "../Account/src/Components/WalletBalance/assets/dypEventImage.png";
 
 import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
+import cmcPopupImage from "../Account/src/Components/WalletBalance/assets/cmcPopupImage.png";
+
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
 import eventPopupImageBase from "../Account/src/Components/WalletBalance/assets/eventPopupImageBase.png";
@@ -263,6 +267,34 @@ const MarketEvents = ({
         maxPoints: "50,000",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
         eventDate: "December 22, 2023",
+      },
+    },
+    {
+      title: "CoinMarketCap",
+      logo: cmc,
+      eventStatus: "Coming Soon",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "December 26, 2023",
+      backgroundImage: upcomingCmc,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        eventDate: "December 26, 2023",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
     {
@@ -918,7 +950,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1065,7 +1097,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(4, 5).map((item, index) => (
+                  {dummyBetaPassData2.slice(5, 7).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
@@ -1155,6 +1187,8 @@ const MarketEvents = ({
                         ? eventPopupImageBase
                         : dummyEvent.linkState === "doge"
                         ? dogePopupImage
+                        : dummyEvent.linkState === "coinmarketcap"
+                        ? cmcPopupImage
                         : eventPopupImage
                     }
                     alt=""
@@ -1293,6 +1327,18 @@ const MarketEvents = ({
                       Remember to log in to the game daily and venture into the
                       Dogecoin area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event8" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
+                      CoinMarketCap Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the CoinMarketCap area, players not only stand a
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      CoinMarketCap area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -1340,7 +1386,8 @@ const MarketEvents = ({
                           ? "BNB"
                           : dummyEvent.id === "event5"
                           ? "DYP"
-                          : dummyEvent.id === "event6"
+                          : dummyEvent.id === "event6" ||
+                            dummyEvent.id === "event8"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -1373,6 +1420,8 @@ const MarketEvents = ({
                 ? "Gate.io"
                 : dummyEvent.id === "event7"
                 ? "Dogecoin"
+                : dummyEvent.id === "event8"
+                ? "CoinMarketCap"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -1450,6 +1499,19 @@ const MarketEvents = ({
                 public ledger that is maintained by a network of computers
                 called nodes.
               </p>
+            ) : dummyEvent.id === "event8" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                CoinMarketCap provides cryptocurrency market cap rankings,
+                charts, and more. We tracks capitalization of various
+                cryptocurrencies by listing prices, available supply (amount of
+                coins that is currently in circulation), trade volume over last
+                24 hours, or market capitalizations. CoinMarketCap was founded
+                in May 2013 by Brandon Chez in Long Island City, Queens, New
+                York.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
@@ -1477,6 +1539,8 @@ const MarketEvents = ({
                     ? "https://twitter.com/gate_io"
                     : dummyEvent.id === "event7"
                     ? "https://twitter.com/dogecoin"
+                    : dummyEvent.id === "event8"
+                    ? "https://twitter.com/CoinMarketCap"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -1494,6 +1558,8 @@ const MarketEvents = ({
                     ? "https://t.me/worldofdypians"
                     : dummyEvent.id === "event3"
                     ? "https://t.me/coingecko"
+                    : dummyEvent.id === "event8"
+                    ? "https://t.me/CoinMarketCapAnnouncements"
                     : dummyEvent.id === "event6"
                     ? "https://t.me/gateio_en"
                     : dummyEvent.id === "event7"
@@ -1512,7 +1578,9 @@ const MarketEvents = ({
                       : discord
                   }
                 />
-                {dummyEvent.id !== "event4" && dummyEvent.id !== "event7"? "Telegram" : "Discord"}
+                {dummyEvent.id !== "event4" && dummyEvent.id !== "event7"
+                  ? "Telegram"
+                  : "Discord"}
               </a>
               <a
                 href={
@@ -1526,6 +1594,8 @@ const MarketEvents = ({
                     ? "https://www.gate.io/"
                     : dummyEvent.id === "event7"
                     ? "https://dogecoin.com/"
+                    : dummyEvent.id === "event8"
+                    ? "https://coinmarketcap.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -1603,7 +1673,7 @@ const MarketEvents = ({
                               : 0,
                             2
                           )}
-                         {dummyEvent.id === "event1"
+                          {dummyEvent.id === "event1"
                             ? "CFX"
                             : dummyEvent.id === "event2"
                             ? "C98"
@@ -1611,7 +1681,7 @@ const MarketEvents = ({
                             ? "BNB"
                             : dummyEvent.id === "event5"
                             ? "DYP"
-                            : dummyEvent.id === "event6"
+                            : dummyEvent.id === "event6" || dummyEvent.id === "event8"
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
@@ -1631,9 +1701,9 @@ const MarketEvents = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event5" && (
+              dummyEvent.id !== "event7" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
-                  <NavLink to={`/marketplace/beta-pass/doge`}>
+                  <NavLink to={`/marketplace/beta-pass/${dummyEvent.linkState}`}>
                     <button className="btn get-beta-btn">Get Beta Pass</button>
                   </NavLink>
                 </div>
