@@ -47,7 +47,8 @@ const Marketplace = ({
   nftCount,
   ethTokenData,
   dypTokenData,
-  dypTokenData_old
+  dypTokenData_old, totalTx, totalvolume
+
 }) => {
   const override = {
     display: "block",
@@ -70,8 +71,8 @@ const Marketplace = ({
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
   const windowSize = useWindowSize();
-  const [totalTx, setTotalTx] = useState(0);
-  const [totalvolume, setTotalVolume] = useState(0);
+  const [totalTx2, setTotalTx] = useState(0);
+  const [totalvolume2, setTotalVolume] = useState(0);
   const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
@@ -268,28 +269,7 @@ const Marketplace = ({
     );
   };
 
-  const getAllData = async () => {
-    const result = await axios
-      .get("https://api.worldofdypians.com/api/totalTXs")
-      .catch((e) => {
-        console.error(e);
-      });
-    const result2 = await axios
-      .get("https://api.worldofdypians.com/api/totalVolumes")
-      .catch((e) => {
-        console.error(e);
-      });
 
-    if (result.data && result.data !== "NaN") {
-      setTotalTx(result.data);
-      localStorage.setItem("cachedTvl", result.data);
-    }
-
-    if (result2.data && result2.data !== "NaN") {
-      setTotalVolume(result2.data);
-      localStorage.setItem("cachedVolume", result2.data);
-    }
-  };
 
   const fetchCachedData = () => {
     const cachedVolume = localStorage.getItem("cachedVolume");
@@ -356,8 +336,7 @@ const Marketplace = ({
     }
   }, [listedNFTS, nftCount, topSales, latest20RecentListedNFTS]);
 
-  useEffect(() => {
-    getAllData();
+  useEffect(() => { 
     fetchCachedData();
     getTotalSupply();
     window.scrollTo(0, 0);
@@ -595,9 +574,9 @@ const Marketplace = ({
               <div className="col-12 col-lg-4">
                 <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
-                    {getFormattedNumber(totalTx).slice(
+                    {getFormattedNumber(totalTx2).slice(
                       0,
-                      getFormattedNumber(totalTx).length - 3
+                      getFormattedNumber(totalTx2).length - 3
                     )}
                   </h6>
                   <span className="stats-desc">
@@ -609,7 +588,7 @@ const Marketplace = ({
                 <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
                   <h6 className="stats-value">
                     {/* {abbreviateNumber(totalvolume,4)}+ */}$
-                    {getFormattedNumber(totalvolume, 0)}
+                    {getFormattedNumber(totalvolume2, 0)}
                   </h6>
                   <span className="stats-desc">Total Volume (USD)</span>
                 </div>
