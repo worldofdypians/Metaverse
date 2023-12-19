@@ -20,6 +20,7 @@ import base from "../Header/assets/base.svg";
 import conflux from "../Header/assets/conflux.svg";
 import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const MobileNavbar = ({
   handleSignUp,
@@ -376,6 +377,7 @@ const MobileNavbar = ({
           )}
         </div>
       </div>
+      <OutsideClickHandler onOutsideClick={() => setOpenNavbar(false)}>
       <div
         className={`mobile-menu ${
           openNavbar && "mobile-menu-open"
@@ -544,6 +546,7 @@ const MobileNavbar = ({
           )}
         </div>
       </div>
+      </OutsideClickHandler>
     </>
   );
 };

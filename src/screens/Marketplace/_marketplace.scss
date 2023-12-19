@@ -2509,7 +2509,7 @@
 .gate-btn:hover,
 .base-btn:hover,
 .doge-button:hover,
-.cmc-btn:hover,
+// .cmc-btn:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
   color: #fff !important;
@@ -2648,7 +2648,7 @@
   border: 1px solid transparent;
   justify-content: center;
   @media screen and (max-width: 500px) {
-    width: fit-content;
+    width: 60px;
   }
   .beta-pass-chain-img {
     width: 25px;

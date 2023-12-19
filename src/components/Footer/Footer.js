@@ -5,13 +5,12 @@ import useWindowSize from "../../hooks/useWindowSize";
 import { useLocation } from "react-router-dom";
 
 const Footer = () => {
-
   const location = useLocation();
 
   const year = new Date().getFullYear();
 
   const windowSize = useWindowSize();
-  const [padding, setPadding] = useState(false)
+  const [padding, setPadding] = useState(false);
   const socials = [
     {
       icon: "twitter",
@@ -48,20 +47,87 @@ const Footer = () => {
   ];
 
   useEffect(() => {
-  
-    if(location.pathname.includes("marketplace")){
-      setPadding(true)
-    }else{
-      setPadding(false)
+    if (location.pathname.includes("marketplace")) {
+      setPadding(true);
+    } else {
+      setPadding(false);
     }
-
-  }, [location])
-  
+  }, [location]);
 
   return (
-    <div className={`${padding ? 'extra-padding' : null} footer-container flex-column px-3 px-lg-5 `}>
-      <div className="container-fluid d-flex w-100 pb-4 flex-column flex-xxl-row flex-lg-row flex-xl-row  gap-3 justify-content-between align-items-baseline">
-        <div className="d-flex pt-5  w-50 footer-wrapper flex-row align-items-start align-items-lg-center gap-4 gap-lg-0 justify-content-between">
+    <div
+      className={`${
+        padding ? "extra-padding" : null
+      } footer-container flex-column px-3 px-lg-5 `}
+    >
+      <div className="container-fluid d-flex w-100 pb-4 pt-4 flex-column flex-xxl-row flex-lg-row flex-xl-row  gap-3 justify-content-between align-items-baseline">
+        {windowSize.width > 992 ? (
+          <div className="footer-socials w-100">
+            {socials.map((item, index) => (
+              <a
+                href={item.link}
+                key={index}
+                target="_blank"
+                rel="noreferrer"
+                className="d-flex align-items-center gap-1"
+              >
+                <img
+                  width={25}
+                  height={25}
+                  src={require(`../../assets/footerIcons/${item.icon}.svg`)}
+                  alt={item.icon}
+                />
+                <span>{item.icon}</span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <>
+            <div className="mobile-socials d-flex align-items-center justify-content-between w-100 gap-1">
+              {socials.slice(0, 4).map((item, index) => (
+                <a
+                  href={item.link}
+                  key={index}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="d-flex gap-1 align-items-center"
+                >
+                  <img
+                    width={25}
+                    height={25}
+                    src={require(`../../assets/footerIcons/${item.icon}.svg`)}
+                    alt={item.icon}
+                  />
+                  <span>{item.icon}</span>
+                </a>
+              ))}
+            </div>
+            <div className="mobile-socials d-flex align-items-center justify-content-between w-100 gap-1">
+              {socials.slice(4, 8).map((item, index) => (
+                <a
+                  href={item.link}
+                  key={index}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="d-flex gap-1 align-items-center"
+                >
+                  <img
+                    width={25}
+                    height={25}
+                    src={require(`../../assets/footerIcons/${item.icon}.svg`)}
+                    alt={item.icon}
+                  />{" "}
+                  <span>{item.icon}</span>
+                </a>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <hr className="footer-divider mt-0 mb-4" />
+
+      <div className="d-flex w-100  justify-content-center mb-4 flex-column gap-2">
+        <div className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between" style={{width: 'fit-content'}}>
           <a
             href="https://www.dypius.com/"
             target="_blank"
@@ -70,7 +136,6 @@ const Footer = () => {
           >
             Dypius
           </a>
-          {/* <span className="footer-link font-poppins">Whitepaper</span> */}
           <NavLink to="/terms-conditions" style={{ textDecoration: "none" }}>
             <span className="footer-link font-poppins">Terms & Conditions</span>
           </NavLink>
@@ -85,64 +150,11 @@ const Footer = () => {
             <span className="footer-link font-poppins">Join Beta</span>
           </NavLink>
         </div>
-        {windowSize.width > 786 ? (
-          <div className="footer-socials">
-            {socials.map((item, index) => (
-              <a href={item.link} key={index} target="_blank" rel="noreferrer">
-                <img
-                width={25}
-                height={25}
-                  src={require(`../../assets/footerIcons/${item.icon}.svg`)}
-                  alt={item.icon}
-                />
-              </a>
-            ))}
-          </div>
-        ) : (
-          <>
-            <div className="mobile-socials d-flex align-items-center justify-content-between w-100">
-              {socials.slice(0, 4).map((item, index) => (
-                <a
-                  href={item.link}
-                  key={index}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img
-                   width={25}
-                   height={25}
-                    src={require(`../../assets/footerIcons/${item.icon}.svg`)}
-                    alt={item.icon}
-                  />
-                </a>
-              ))}
-            </div>
-            <div className="mobile-socials d-flex align-items-center justify-content-between w-100">
-              {socials.slice(4, 8).map((item, index) => (
-                <a
-                  href={item.link}
-                  key={index}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img
-                   width={25}
-                   height={25}
-                    src={require(`../../assets/footerIcons/${item.icon}.svg`)}
-                    alt={item.icon}
-                  />
-                </a>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-      <hr className="footer-divider mt-0 mb-4" />
-      <div className="d-flex w-100 align-items-center justify-content-center mb-4 flex-column">
+        <div className="d-flex flex-column">
         <span className="footer-link font-poppins">
           Copyright © World of Dypians {year}. All rights reserved.
         </span>
-        <span className="footer-link font-poppins">Powered by Dypius.</span>
+        <span className="footer-link font-poppins">Powered by Dypius.</span></div>
       </div>
     </div>
   );

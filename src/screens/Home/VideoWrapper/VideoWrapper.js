@@ -13,6 +13,8 @@ import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
 import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
 import gateWhite from "../../Marketplace/MarketNFTs/wallets/gateWallet.png";
 import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
+import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 import dypius from "../../Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import Slider from "react-slick";
@@ -101,7 +103,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Expired",
+      eventStatus: "Live",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -114,7 +116,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Expired",
+        status: "Live",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -123,6 +125,43 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
         eventDate: "Ended",
+      },
+    },
+    {
+      title: "Dogecoin",
+      chain: "BNB Chain",
+      linkState: "doge",
+      rewards: "DOGE",
+      status: "Coming Soon",
+      eventStatus: "Coming Soon",
+      id: "event7",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: doge,
+      totalRewards: "$10,000 in DOGE Rewards",
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "DOGE Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Coming Soon",
+        id: "event7",
+        eventStatus: "Coming Soon",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
       },
     },
     {

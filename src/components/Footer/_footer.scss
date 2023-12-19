@@ -1,13 +1,12 @@
 .footer-container {
-    // min-width: 100%;
-    margin: auto;
+  // min-width: 100%;
+  margin: auto;
   max-width: 2400px;
   position: relative;
   bottom: 0;
   overflow: hidden;
   background: #080b2a;
-z-index: 8;
-  
+  z-index: 8;
 
   .footer-link {
     font-style: normal;
@@ -19,20 +18,32 @@ z-index: 8;
     text-decoration: none;
   }
 
-  .footer-divider{
+  .footer-divider {
     width: 100%;
     background: #ffffff;
     height: 3px;
     opacity: 0.3;
   }
 
-
-  .footer-socials{
+  .footer-socials {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 40px;
-  }
+    place-items: center;
 
+    span {
+      text-transform: capitalize;
+      color: #ffffff;
+    }
+  }
+}
+
+.mobile-socials {
+  span {
+    text-transform: capitalize;
+    color: #ffffff;
+    font-size: 12px;
+  }
 }
 
 .poweredtext {
@@ -40,7 +51,7 @@ z-index: 8;
 }
 
 @media screen and (max-width: 786px) {
-  .footer-socials{
+  .footer-socials {
     grid-template-columns: repeat(4, 1fr) !important;
     gap: 100% !important;
   }
@@ -57,30 +68,24 @@ z-index: 8;
   }
 }
 @media screen and (max-width: 400px) {
-  .footer-wrapper{
+  .footer-wrapper {
     column-gap: 30px !important;
-
   }
-  
 }
 @media screen and (max-width: 360px) {
-  .footer-wrapper{
+  .footer-wrapper {
     column-gap: 0px !important;
-
   }
-  
 }
 
-
 @media screen and (max-width: 991px) {
- .footer-wrapper {
-   width: 100% !important;
- }
-
+  .footer-wrapper {
+    width: 100% !important;
+  }
 }
 
 @media screen and (max-width: 786px) {
- .extra-padding{
-  padding-bottom: 50px;
- }
+  .extra-padding {
+    padding-bottom: 50px;
+  }
 }
