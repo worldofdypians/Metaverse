@@ -193,6 +193,19 @@ const Footer = () => {
               <NavLink to="/join-beta" style={{ textDecoration: "none" }}>
                 <span className="footer-link font-poppins">Join Beta</span>
               </NavLink>
+              <a
+                href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                target="_blank"
+              >
+                <img
+                  src={
+                    require("../../assets/footerIcons/epicgames.svg").default
+                  }
+                  width={50}
+                  height={50}
+                  alt=""
+                />
+              </a>
             </div>
             <div className="d-flex flex-column">
               <span className="footer-link font-poppins">

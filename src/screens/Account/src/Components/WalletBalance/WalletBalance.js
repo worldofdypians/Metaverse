@@ -1425,18 +1425,16 @@ const WalletBalance = ({
                       />
                     </span>
                   </div>
-                  <a
-                    className="game-event-download"
-                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                    target="_blank"
-                  >
-                    <img
-                      src={epicwhite}
-                      alt="icon"
-                      className="epicgame"
-                    />
-                    Download
-                  </a>
+                  <div className="opacitywrapper3">
+                    <a
+                      className="game-event-download d-flex align-items-center gap-2"
+                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                      target="_blank"
+                    >
+                      <img src={epicwhite} alt="icon" className="epicgame" />
+                      Download
+                    </a>
+                  </div>
                 </div>
                 <div className="d-flex flex-column">
                   <div
