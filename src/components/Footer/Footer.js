@@ -126,8 +126,8 @@ const Footer = () => {
       </div>
       <hr className="footer-divider mt-0 mb-4" />
 
-      <div className="d-flex w-100 align-items-center justify-content-center mb-4 flex-column">
-        <div className="d-flex w-50 footer-wrapper flex-row align-items-start align-items-lg-center gap-4 gap-lg-0 justify-content-between">
+      <div className="d-flex w-100  justify-content-center mb-4 flex-column gap-2">
+        <div className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between" style={{width: 'fit-content'}}>
           <a
             href="https://www.dypius.com/"
             target="_blank"
