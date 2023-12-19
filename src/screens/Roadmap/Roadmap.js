@@ -21,6 +21,9 @@ import caws3d from './assets/caws3d.webp'
 import betaPassCollection from './assets/betaPassCollection.png';
 import marketplaceIntroduction from './assets/marketplaceIntroduction.png';
 import newEvents from './assets/newEvents.png';
+import betaPassAddition from './assets/betaPassAddition.png';
+import globalEvents from './assets/globalEvents.png';
+import partnershipAddition from './assets/partnershipAddition.png';
 
 const Roadmap = () => {
   useEffect(() => {
@@ -229,12 +232,24 @@ const Roadmap = () => {
 
       content: [
         {
-          title: "Introduction of tutorial guide v1",
-          desc: "In-depth tips and tricks to help players master World of Dypians.",
+          title: "Global Events",
+          desc: "Initiating Global Events (Treasure Hunt, Daily Bonus) that invite all players to participate and earn multiple rewards.",
+          completed: true,
         },
         {
-          title: "Introduction of Mall and shopping centers",
-          desc: "Users can acquire game items, skins, and much more.",
+          title: "Legal Entity",
+          desc: "World of Dypians is established as a legal entity, fully registered and licensed, complying with all necessary regulations.",
+          completed: true,
+        },
+        {
+          title: "Addition of Beta Pass NFTs",
+          desc: "Developing Beta Pass NFT collections for World of Dypians partners, offering associated benefits within the game.",
+          completed: true,
+        },
+        {
+          title: "Addition and development of partnerships",
+          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more",
+          completed: true,
         },
         {
           title: "Multiplayer PVE",
@@ -248,26 +263,26 @@ const Roadmap = () => {
           title: "In-game chat",
           desc: "Users can communicate via voice and chat texts in multiple channels.",
         },
-        {
-          title: "P2P trade",
-          desc: "Exchange and trade items directly with other users.",
-        },
-        {
-          title: "Global environmental events",
-          desc: "Participate in huge global events with leaderboards and prizes.",
-        },
-        {
-          title: "Introduction of tutorial guide v2",
-          desc: "In-depth tips and tricks to help players master World of Dypians.",
-        },
-        {
-          title: "Weapons and armor customization",
-          desc: "Users can customize unique in-game assets such as weapons, armor, skins, and much more. These NFTs can be bought, sold, and traded on the open market. In addition, these tailor-made NFTs can be equipped and used by players in game.",
-        },
-        {
-          title: "Addition and development of partnerships",
-          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
-        },
+        // {
+        //   title: "P2P trade",
+        //   desc: "Exchange and trade items directly with other users.",
+        // },
+        // {
+        //   title: "Global environmental events",
+        //   desc: "Participate in huge global events with leaderboards and prizes.",
+        // },
+        // {
+        //   title: "Introduction of tutorial guide v2",
+        //   desc: "In-depth tips and tricks to help players master World of Dypians.",
+        // },
+        // {
+        //   title: "Weapons and armor customization",
+        //   desc: "Users can customize unique in-game assets such as weapons, armor, skins, and much more. These NFTs can be bought, sold, and traded on the open market. In addition, these tailor-made NFTs can be equipped and used by players in game.",
+        // },
+        // {
+        //   title: "Addition and development of partnerships",
+        //   desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
+        // },
       ],
     },
     // {
@@ -294,6 +309,21 @@ const Roadmap = () => {
   ];
 
   const mainUpdate = [
+    {
+      title: "Addition and development of Parnerships",
+      date: "Dec 2023",
+      image: partnershipAddition,
+    },
+    {
+      title: "Addition of Beta Pass NFTs",
+      date: "Sept 2023",
+      image: betaPassAddition,
+    },
+    {
+      title: "Global Events",
+      date: "Oct 2023",
+      image: globalEvents,
+    },
     {
       title: "Introduction of Beta Passes NFT collection",
       date: "Sept 2023",
@@ -513,7 +543,26 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  {mainUpdate.slice(12, mainUpdate.length).map((item) => (
+                  {mainUpdate.slice(12,15).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  {mainUpdate.slice(15, mainUpdate.length).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}
