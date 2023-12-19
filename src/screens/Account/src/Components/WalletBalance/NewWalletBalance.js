@@ -65,6 +65,7 @@ import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
 import eventSkeleton from "./assets/eventSkeleton.png";
 import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
+import ExpiredProfileEvent from "./ExpiredProfileEvent";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -217,10 +218,10 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "dypius",
     rewards: "DYP",
-    status: "Live",
+    status: "Expired",
     id: "event5",
     eventType: "Explore & Find",
-    date: "November 20, 2023",
+    date: "Ended",
     logo: dypius,
     totalRewards: "300,000 in DYP Rewards",
     eventDuration: dypiusLastDay,
