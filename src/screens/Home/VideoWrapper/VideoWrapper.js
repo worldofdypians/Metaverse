@@ -140,7 +140,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       },
     },
     {
-      title: "CoinMarketCap",
+      title: "CMC",
       logo: cmc,
       eventStatus: "Coming Soon",
       totalRewards: "$10,000 in BNB Rewards",

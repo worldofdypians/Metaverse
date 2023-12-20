@@ -33,7 +33,6 @@ import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import dogePopupImage from "./assets/dogePopupImage.png";
 import cmcPopupImage from "./assets/cmcPopupImage.png";
 
-
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
@@ -364,6 +363,72 @@ const NewWalletBalance = ({
 
   const dummyBetaPassData2 = [
     {
+      title: "Dogecoin",
+      chain: "BNB Chain",
+      linkState: "doge",
+      rewards: "DOGE",
+      status: "Coming Soon",
+      eventStatus: "Coming Soon",
+      id: "event7",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      eventDate: "December 22, 2023",
+      logo: doge,
+      totalRewards: "$10,000 in DOGE Rewards",
+      eventDuration: coingeckoLastDay,
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Coming Soon",
+        id: "event7",
+        eventStatus: "Coming Soon",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        eventDuration: dypiusLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+    {
+      title: "CMC",
+      logo: cmc,
+      eventStatus: "Coming Soon",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "December 26, 2023",
+      // backgroundImage: upcomingCmc,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        eventDate: "December 26, 2023",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
+    {
       title: "CoinGecko",
       logo: coingecko,
       eventStatus: "Live",
@@ -418,72 +483,7 @@ const NewWalletBalance = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-    {
-      title: "Dogecoin",
-      chain: "BNB Chain",
-      linkState: "doge",
-      rewards: "DOGE",
-      status: "Coming Soon",
-      eventStatus: "Coming Soon",
-      id: "event7",
-      eventType: "Explore & Mine",
-      date: "December 22, 2023",
-      eventDate: "December 22, 2023",
-      logo: doge,
-      totalRewards: "$10,000 in DOGE Rewards",
-      eventDuration: coingeckoLastDay,
-      minRewards: "1",
-      maxRewards: "100",
-      minPoints: "5,000",
-      maxPoints: "50,000",
-      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      popupInfo: {
-        title: "Dogecoin",
-        chain: "BNB Chain",
-        linkState: "doge",
-        rewards: "DOGE",
-        status: "Coming Soon",
-        id: "event7",
-        eventStatus: "Coming Soon",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in DOGE Rewards",
-        eventDuration: dypiusLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
-      },
-    },
-    {
-      title: "CoinMarketCap",
-      logo: cmc,
-      eventStatus: "Coming Soon",
-      totalRewards: "$10,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "December 26, 2023",
-      // backgroundImage: upcomingCmc,
-      popupInfo: {
-        title: "CoinMarketCap",
-        chain: "BNB Chain",
-        linkState: "coinmarketcap",
-        rewards: "BNB",
-        status: "Coming Soon",
-        id: "event8",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in BNB Rewards",
-        eventDuration: coingeckoLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        eventDate: "December 26, 2023",
-        learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      },
-    },
+
     {
       title: "Dypius",
       logo: dypius,
@@ -1254,7 +1254,7 @@ const NewWalletBalance = ({
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
               /> */}
-                 <UpcomingProfileEvent
+              <UpcomingProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCmc);
                   setEventPopup(true);
@@ -1298,7 +1298,7 @@ const NewWalletBalance = ({
                   style={{
                     cursor: "pointer",
                     width: "fit-content",
-                    position:windowSize.width > 650 ? "absolute" : 'relative',
+                    position: windowSize.width > 650 ? "absolute" : "relative",
                     bottom: windowSize.width > 992 ? "15px" : "-5px",
                     left: windowSize.width > 650 ? "43%" : "43%",
                   }}
@@ -2471,7 +2471,8 @@ const NewWalletBalance = ({
                             ? "BNB"
                             : dummyEvent.id === "event5"
                             ? "DYP"
-                            : dummyEvent.id === "event6" || dummyEvent.id === "event8"
+                            : dummyEvent.id === "event6" ||
+                              dummyEvent.id === "event8"
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
@@ -2493,7 +2494,9 @@ const NewWalletBalance = ({
             {dummyEvent.status === "Coming Soon" &&
               dummyEvent.id !== "event7" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
-                  <NavLink to={`/marketplace/beta-pass/${dummyEvent.linkState}`}>
+                  <NavLink
+                    to={`/marketplace/beta-pass/${dummyEvent.linkState}`}
+                  >
                     <button className="btn get-beta-btn">Get Beta Pass</button>
                   </NavLink>
                 </div>
