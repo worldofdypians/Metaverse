@@ -568,8 +568,8 @@ const BetaPassNFT = ({
     ) {
       setalreadyRegistered(true);
     }
-  }, [data]);
-
+  }, [data,email]);
+  
   useEffect(() => {
     if (
       data &&
@@ -2248,7 +2248,7 @@ const BetaPassNFT = ({
                                         fontSize: 16,
                                       }}
                                     >
-                                      CMBP {`#${myCmcNFTs[0]}`}
+                                      CMCBP {`#${myCmcNFTs[0]}`}
                                     </h6>
                                   </div>
                                 </div>

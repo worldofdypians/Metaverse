@@ -122,7 +122,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={dogePopupInfo}
+          data={cmcPopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>
