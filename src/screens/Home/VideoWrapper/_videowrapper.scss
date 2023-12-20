@@ -67,6 +67,45 @@
   }
 }
 
+.epicgame {
+  // padding: 10px 11px 9px 11px;
+  width: 38px;
+  height: 42px;
+}
+
+.epicgame2 {
+  width: 30px;
+  height: 34px;
+}
+
+
+.bigtitle {
+  color: #f7f7fc;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.small-green-btn {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #7bd8b0 0%, #dcfb85 98.44%);
+  color: #080b2a;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  outline: none;
+  width: 60px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .video-wrapper {
   background-size: cover;
   background-repeat: no-repeat;
