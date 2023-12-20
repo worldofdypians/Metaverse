@@ -20,6 +20,7 @@ import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPac
 import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
 import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
 import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
+import doge from "../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 
 import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
@@ -50,6 +51,8 @@ import magnifier from "./assets/magnifier.svg";
 import whiteCalendar from "./assets/whiteCalendar.svg";
 import BetaEventCard from "./components/BetaEventCard";
 import eventPopupImage from "../Account/src/Components/WalletBalance/assets/eventPopupImage.png";
+import dogePopupImage from "../Account/src/Components/WalletBalance/assets/dogePopupImage.png";
+
 import dypeventPopupImage from "../Account/src/Components/WalletBalance/assets/dypEventImage.png";
 
 import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
@@ -66,6 +69,8 @@ import discord from "./assets/greenDiscord.svg";
 import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingDyp from "./assets/upcomingDyp.webp";
+import upcomingCmc from "./assets/upcomingCmc.webp";
+
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
 
@@ -234,20 +239,47 @@ const MarketEvents = ({
       },
     },
     {
+      title: "Dogecoin",
+      logo: doge,
+      eventStatus: "Coming Soon",
+      totalRewards: "$10,000 in DOGE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "December 22, 2023",
+      backgroundImage: upcomingDoge,
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Coming Soon",
+        id: "event7",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        eventDuration: dypiusLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+    {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "November 20, 2023",
+      eventDate: "Ended",
       backgroundImage: upcomingDyp,
       popupInfo: {
         title: "Dypius",
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Live",
+        status: "Expired",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -255,9 +287,10 @@ const MarketEvents = ({
         minRewards: "25",
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "November 20, 2023",
+        eventDate: "Ended",
       },
     },
+
     {
       title: "Gate.io",
       logo: gate,
@@ -682,11 +715,8 @@ const MarketEvents = ({
     setActiveTab(tabState);
   }, [window.location.href]);
 
-
-
   return (
     <>
-
       <div
         className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
@@ -706,9 +736,6 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                  {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div> */}
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -721,7 +748,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                   
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -898,15 +927,11 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "Conflux"
-                                ? confluxEarnUSD
-                                : item.title === "Gate.io"
-                                ? gateEarnUSD
-                                : item.title === "Dypius"
-                                ? dypiusEarnTokens
+                              item.title === "CoinGecko"
+                                ? userEarnUsd
                                 : item.title === "Base"
                                 ? baseEarnUSD
-                                : userEarnUsd
+                                : 0
                             }
                           />
                         ))}
@@ -982,22 +1007,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-dyp-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Dypius</h6>
-                      <p className="upcoming-mint-desc">
-                        Join the Dypius event for a chance to grab a share of
-                        the DYP v2 rewards.
-                      </p>
-                    </div>
-                    <img
-                      src={upcomingDyp}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
-                  </div> */}
-
-                  <div className="border-0 upcoming-mint-wrapper upcoming-doge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-doge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Dogecoin</h6>
                       <p className="upcoming-mint-desc">
@@ -1007,6 +1017,21 @@ const MarketEvents = ({
                     </div>
                     <img
                       src={upcomingDoge}
+                      alt=""
+                      className="upcoming-mint-img"
+                    />
+                  </div> */}
+
+                  <div className="border-0 upcoming-mint-wrapper upcoming-cmc-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">CoinMarketCap</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the CoinMarketCap event for a chance to grab a
+                        share of the $10,000 BNB reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingCmc}
                       alt=""
                       className="upcoming-mint-img"
                     />
@@ -1036,7 +1061,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(3, 5).map((item, index) => (
+                  {dummyBetaPassData2.slice(3, 6).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
@@ -1049,9 +1074,9 @@ const MarketEvents = ({
                           ? confluxEarnUSD
                           : item.title === "Gate.io"
                           ? gateEarnUSD
-                          : item.title === "Base"
-                          ? baseEarnUSD
-                          : userEarnUsd
+                          : item.title === "Dypius"
+                          ? dypiusEarnUsd
+                          : 0
                       }
                     />
                   ))}
@@ -1124,6 +1149,8 @@ const MarketEvents = ({
                         ? gatePopupImage
                         : dummyEvent.linkState === "base"
                         ? eventPopupImageBase
+                        : dummyEvent.linkState === "doge"
+                        ? dogePopupImage
                         : eventPopupImage
                     }
                     alt=""
@@ -1250,6 +1277,18 @@ const MarketEvents = ({
                       the game daily and venture into the Gate.io area to
                       uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event7" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Dogecoin Beta Pass NFT</b>. You can get the
+                      Dogecoin Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Dogecoin area, players not only stand a
+                      chance to secure daily rewards in DOGE, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Dogecoin area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -1299,6 +1338,8 @@ const MarketEvents = ({
                           ? "DYP"
                           : dummyEvent.id === "event6"
                           ? "BNB"
+                          : dummyEvent.id === "event7"
+                          ? "DOGE"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -1326,6 +1367,8 @@ const MarketEvents = ({
                 ? "Dypius"
                 : dummyEvent.id === "event6"
                 ? "Gate.io"
+                : dummyEvent.id === "event7"
+                ? "Dogecoin"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -1390,6 +1433,19 @@ const MarketEvents = ({
                 committed to complying with the applicable laws where it
                 operates.
               </p>
+            ) : dummyEvent.id === "event7" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                An open-source peer-to-peer digital currency, favoured by Shiba
+                Inus worldwide.At its heart, Dogecoin is the accidental crypto
+                movement that makes people smile! It is also an opensource
+                peer-to-peer cryptocurrency that utilises blockchain technology,
+                a highly secure decentralised system of storing information as a
+                public ledger that is maintained by a network of computers
+                called nodes.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
@@ -1415,6 +1471,8 @@ const MarketEvents = ({
                     ? "https://twitter.com/coingecko"
                     : dummyEvent.id === "event6"
                     ? "https://twitter.com/gate_io"
+                    : dummyEvent.id === "event7"
+                    ? "https://twitter.com/dogecoin"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -1434,6 +1492,8 @@ const MarketEvents = ({
                     ? "https://t.me/coingecko"
                     : dummyEvent.id === "event6"
                     ? "https://t.me/gateio_en"
+                    : dummyEvent.id === "event7"
+                    ? "https://discord.gg/dogecoin"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -1442,9 +1502,13 @@ const MarketEvents = ({
               >
                 <img
                   alt=""
-                  src={dummyEvent.id !== "event4" ? telegram : discord}
+                  src={
+                    dummyEvent.id !== "event4" && dummyEvent.id !== "event7"
+                      ? telegram
+                      : discord
+                  }
                 />
-                {dummyEvent.id !== "event4" ? "Telegram" : "Discord"}
+                {dummyEvent.id !== "event4" && dummyEvent.id !== "event7"? "Telegram" : "Discord"}
               </a>
               <a
                 href={
@@ -1456,6 +1520,8 @@ const MarketEvents = ({
                     ? "https://www.coingecko.com/"
                     : dummyEvent.id === "event6"
                     ? "https://www.gate.io/"
+                    : dummyEvent.id === "event7"
+                    ? "https://dogecoin.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -1533,7 +1599,7 @@ const MarketEvents = ({
                               : 0,
                             2
                           )}
-                          {dummyEvent.id === "event1"
+                         {dummyEvent.id === "event1"
                             ? "CFX"
                             : dummyEvent.id === "event2"
                             ? "C98"
@@ -1543,6 +1609,8 @@ const MarketEvents = ({
                             ? "DYP"
                             : dummyEvent.id === "event6"
                             ? "BNB"
+                            : dummyEvent.id === "event7"
+                            ? "DOGE"
                             : "ETH"}
                         </>
                       )}

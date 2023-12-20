@@ -36,7 +36,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
               style={{ width: 7, height: 7, marginRight: 5 }}
             ></div>
           )}
-          <span>{data.eventStatus}</span>
+          <span style={{fontSize: data.eventStatus === 'Coming Soon' && '10px'}}>{data.eventStatus}</span>
         </div>
       </div>
       <div className="d-flex col-12 align-items-start pt-3 gap-3">
