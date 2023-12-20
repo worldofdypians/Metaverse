@@ -1126,7 +1126,7 @@ const BetaPassNFT = ({
                       {mintTitle === "cmc" && (
                         <a
                           className={`btn cmc-btn px-3 d-flex align-items-center justify-content-center gap-2`}
-                          href="https://sweepwidget.com/c/conflux-beta-pass-nft"
+                          href="https://coinmarketcap.com/account/rewards/"
                           target="_blank"
                           rel="noreferrer"
                         >

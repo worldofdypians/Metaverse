@@ -312,6 +312,26 @@ const NewWalletBalance = ({
     learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
   };
 
+  const dummyCmc = {
+    title: "CoinMarketCap",
+    chain: "BNB Chain",
+    linkState: "coinmarketcap",
+    rewards: "BNB",
+    status: "Coming Soon",
+    id: "event8",
+    eventType: "Explore & Mine",
+    eventDate: "December 26, 2023",
+    date: "December 26, 2023",
+    logo: cmc,
+    totalRewards: "$10,000 in BNB Rewards",
+    eventDuration: coingeckoLastDay,
+    minRewards: "1",
+    maxRewards: "100",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+  };
+
   const dummyCoin98 = {
     title: "Coin98 Pass",
     chain: "BNB Chain",
@@ -1225,7 +1245,7 @@ const NewWalletBalance = ({
                 event={dummyCoingecko}
                 userEarnedUsd={userEarnUsd}
               />
-              <ActiveProfileEvent
+              {/* <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
                   setEventPopup(true);
@@ -1233,6 +1253,13 @@ const NewWalletBalance = ({
                 data={dummyBase}
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
+              /> */}
+                 <UpcomingProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyCmc);
+                  setEventPopup(true);
+                }}
+                data={dummyCmc}
               />
               <UpcomingProfileEvent
                 onOpenEvent={() => {
