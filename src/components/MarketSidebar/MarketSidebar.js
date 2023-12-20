@@ -111,8 +111,9 @@ const MarketSidebar = () => {
                               location.pathname.includes("coin98") ||
                               location.pathname.includes("coingecko") ||
                               location.pathname.includes("base") ||
+                              location.pathname.includes("coinmarketcap") ||
                               location.pathname.includes("doge") ||
-                              location.pathname.includes("coinmarketcap")
+                              location.pathname.includes("gate")
                                 ? "sidebar-item-active nft-active"
                                 : null
                             }`
