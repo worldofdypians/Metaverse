@@ -405,6 +405,7 @@ const NewWalletBalance = ({
       id: "event7",
       eventType: "Explore & Mine",
       date: "December 22, 2023",
+      eventDate: "December 22, 2023",
       logo: doge,
       totalRewards: "$10,000 in DOGE Rewards",
       eventDuration: coingeckoLastDay,
