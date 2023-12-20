@@ -385,7 +385,7 @@ const LandStaking = ({
                 >
                   Enjoy your new property inside of WoD.
                   <a
-                    href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp?usp=sharing"
+                    href="https://store.epicgames.com/p/world-of-dypians-2e0694?usp=sharing"
                     target="_blank"
                     rel="noreferrer"
                     style={{ textDecoration: "none" }}

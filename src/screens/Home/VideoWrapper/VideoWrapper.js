@@ -8,6 +8,8 @@ import downloadIconWhite from "../../../assets/downloadIconWhite.svg";
 import windowsIcon from "../../../assets/windowsIcon.svg";
 import windowsIconWhite from "../../../assets/windowsIconWhite.svg";
 import { NavLink } from "react-router-dom";
+import epicwhite from "../../../assets/epicwhite.svg";
+import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
 import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
@@ -99,11 +101,47 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-
+    {
+      title: "Dogecoin",
+      chain: "BNB Chain",
+      linkState: "doge",
+      rewards: "DOGE",
+      status: "Coming Soon",
+      eventStatus: "Coming Soon",
+      id: "event7",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: doge,
+      totalRewards: "$10,000 in DOGE Rewards",
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "DOGE Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Coming Soon",
+        id: "event7",
+        eventStatus: "Coming Soon",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -116,7 +154,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Live",
+        status: "Expired",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -296,6 +334,25 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           <div className="col-12 col-lg-8 video-diagonal">
             <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
               <div className="row m-0 gap-5 align-items-center justify-content-center">
+                <div className="linear-border-download p-0" style={{
+                    width: "fit-content",
+                    zIndex: 5,
+                    position: "relative",
+                    textDecoration: "none",
+                  }} >
+                <div
+                  className="opacitywrapper5 download-filled-btn m-0 px-3"
+                 
+                >
+                  <a
+                    className="game-event-download d-flex align-items-center gap-2"
+                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                    target="_blank"
+                  >
+                    <img src={epicblack} alt="icon" className="epicgame2" />
+                    Download
+                  </a>
+                </div></div>
                 <NavLink
                   to="join-beta"
                   className="pink-linear-border"
@@ -313,62 +370,13 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                     Join Beta
                   </button>
                 </NavLink>
-                {/* <div
-                  className="linear-border-download"
-                  style={{
-                    width: "fit-content",
-                    zIndex: 5,
-                    position: "relative",
-                    textDecoration: "none",
-                  }}
-                >
-                  <button
-                    ref={downloader}
-                    onClick={gotoDownload}
-                    className="btn filled-btn-download px-5 d-flex align-items-center gap-2"
-                  >
-                    <img
-                      src={icons ? windowsIconWhite : windowsIcon}
-                      width={16}
-                      height={16}
-                      alt="windows icon"
-                    />
-                    Download
-                    
-                  </button>
-                </div> */}
-                <a
-                  className="linear-border-download"
-                  style={{
-                    width: "fit-content",
-                    zIndex: 5,
-                    position: "relative",
-                    textDecoration: "none",
-                  }}
-                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                  target="_blank"
-                >
-                  <button
-                    ref={downloader}
-                    // onClick={gotoDownload}
-                    className="btn filled-btn-download px-5 d-flex align-items-center gap-2"
-                  >
-                    <img
-                      src={icons ? windowsIconWhite : windowsIcon}
-                      width={16}
-                      height={16}
-                      alt="windows icon"
-                    />
-                    Download
-                  </button>
-                </a>
               </div>
-              <div className="d-flex align-items-center gap-2">
+              {/* <div className="d-flex align-items-center gap-2">
                 <img src={sysReq} alt="system requirements" />
                 <span className="sys-req" onClick={() => setModal(true)}>
                   System requirements
                 </span>
-              </div>
+              </div> */}
             </div>
             {windowSize.width < 992 && (
               <NavLink
@@ -390,9 +398,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
                   <Slider {...settings} ref={betaSlider}>
                     {dummyBetaPassData2.map((item, index) => (
-                      <NavLink
-                        to={`/marketplace/events/treasure-hunt`}
-                      >
+                      <NavLink to={`/marketplace/events/treasure-hunt`}>
                         <BetaEventCardHome
                           data={item}
                           key={index}
@@ -437,9 +443,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
-                  <NavLink
-                    to={`/marketplace/events/treasure-hunt`}
-                  >
+                  <NavLink to={`/marketplace/events/treasure-hunt`}>
                     <BetaEventCardHome
                       data={item}
                       key={index}

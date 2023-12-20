@@ -127,7 +127,10 @@ const Footer = () => {
       <hr className="footer-divider mt-0 mb-4" />
 
       <div className="d-flex w-100  justify-content-center mb-4 flex-column gap-2">
-        <div className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between" style={{width: 'fit-content'}}>
+        <div
+          className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between"
+          style={{ width: "fit-content" }}
+        >
           <a
             href="https://www.dypius.com/"
             target="_blank"
@@ -149,12 +152,24 @@ const Footer = () => {
           <NavLink to="/join-beta" style={{ textDecoration: "none" }}>
             <span className="footer-link font-poppins">Join Beta</span>
           </NavLink>
+          <a
+            href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+            target="_blank"
+          >
+            <img
+              src={require("../../assets/footerIcons/epicgames.svg").default}
+              width={50}
+              height={50}
+              alt=""
+            />
+          </a>
         </div>
         <div className="d-flex flex-column">
-        <span className="footer-link font-poppins">
-          Copyright © World of Dypians {year}. All rights reserved.
-        </span>
-        <span className="footer-link font-poppins">Powered by Dypius.</span></div>
+          <span className="footer-link font-poppins">
+            Copyright © World of Dypians {year}. All rights reserved.
+          </span>
+          <span className="footer-link font-poppins">Powered by Dypius.</span>
+        </div>
       </div>
     </div>
   );

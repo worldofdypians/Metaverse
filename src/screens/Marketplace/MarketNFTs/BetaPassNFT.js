@@ -89,7 +89,7 @@ import SignUpConflux from "../../Account/src/Containers/SingUp/SignUpConflux";
 import PlayerCreationConflux from "../../Account/src/Containers/PlayerCreation/PlayerCreationConflux";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
-import Countdown from "react-countdown";
+import epicwhite from "../assets/epicwhite.svg";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -1594,30 +1594,25 @@ const BetaPassNFT = ({
                               </span>
                               <div className="summaryseparator mt-3 mb-3"></div>
                               <div className="d-flex align-items-center gap-2 justify-content-between">
-                                <a
-                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
-                                  onMouseEnter={() => {
-                                    setIcons(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    setIcons(false);
-                                  }}
-                                >
-                                  <img
-                                    src={icons ? windowsIconWhite : windowIcon}
-                                    alt=""
-                                    style={{ height: 12, width: 12 }}
-                                  />
-                                  Download
-                                </a>
+                                <div className="opacitywrapper4 m-0">
+                                  <a
+                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={epicwhite}
+                                      alt="icon"
+                                      className="epicgame2"
+                                    />
+                                    Download
+                                  </a>
+                                </div>
                                 <NavLink
                                   to="/account"
                                   className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                                 >
-                                  <img src={user} alt="" />
+                                  <img src={user} alt="" className="user2" />
                                   My Account
                                 </NavLink>
                               </div>
@@ -1715,30 +1710,25 @@ const BetaPassNFT = ({
                               </span>
                               <div className="summaryseparator mt-3 mb-3"></div>
                               <div className="d-flex align-items-center gap-2 justify-content-between">
-                                <a
-                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
-                                  onMouseEnter={() => {
-                                    setIcons(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    setIcons(false);
-                                  }}
-                                >
-                                  <img
-                                    src={icons ? windowsIconWhite : windowIcon}
-                                    alt=""
-                                    style={{ height: 12, width: 12 }}
-                                  />
-                                  Download
-                                </a>
+                                <div className="opacitywrapper4 m-0">
+                                  <a
+                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={epicwhite}
+                                      alt="icon"
+                                      className="epicgame2"
+                                    />
+                                    Download
+                                  </a>
+                                </div>
                                 <NavLink
                                   to="/account"
                                   className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                                 >
-                                  <img src={user} alt="" />
+                                  <img src={user} alt="" className="user2" />
                                   My Account
                                 </NavLink>
                               </div>
@@ -1838,30 +1828,25 @@ const BetaPassNFT = ({
                               </span>
                               <div className="summaryseparator mt-3 mb-3"></div>
                               <div className="d-flex align-items-center gap-2 justify-content-between">
-                                <a
-                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
-                                  onMouseEnter={() => {
-                                    setIcons(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    setIcons(false);
-                                  }}
-                                >
-                                  <img
-                                    src={icons ? windowsIconWhite : windowIcon}
-                                    alt=""
-                                    style={{ height: 12, width: 12 }}
-                                  />
-                                  Download
-                                </a>
+                                <div className="opacitywrapper4 m-0">
+                                  <a
+                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={epicwhite}
+                                      alt="icon"
+                                      className="epicgame2"
+                                    />
+                                    Download
+                                  </a>
+                                </div>
                                 <NavLink
                                   to="/account"
                                   className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                                 >
-                                  <img src={user} alt="" />
+                                  <img src={user} alt="" className="user2" />
                                   My Account
                                 </NavLink>
                               </div>
@@ -1970,30 +1955,25 @@ const BetaPassNFT = ({
                               </span>
                               <div className="summaryseparator mt-3 mb-3"></div>
                               <div className="d-flex align-items-center gap-2 justify-content-between">
-                                <a
-                                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
-                                  onMouseEnter={() => {
-                                    setIcons(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    setIcons(false);
-                                  }}
-                                >
-                                  <img
-                                    src={icons ? windowsIconWhite : windowIcon}
-                                    alt=""
-                                    style={{ height: 12, width: 12 }}
-                                  />
-                                  Download
-                                </a>
+                                <div className="opacitywrapper4 m-0">
+                                  <a
+                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={epicwhite}
+                                      alt="icon"
+                                      className="epicgame2"
+                                    />
+                                    Download
+                                  </a>
+                                </div>
                                 <NavLink
                                   to="/account"
                                   className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                                 >
-                                  <img src={user} alt="" />
+                                  <img src={user} alt="" className="user2" />
                                   My Account
                                 </NavLink>
                               </div>
@@ -2280,30 +2260,25 @@ const BetaPassNFT = ({
                             </span>
                             <div className="summaryseparator mt-3 mb-3"></div>
                             <div className="d-flex align-items-center gap-2 justify-content-between">
-                              <a
-                                href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
-                                onMouseEnter={() => {
-                                  setIcons(true);
-                                }}
-                                onMouseLeave={() => {
-                                  setIcons(false);
-                                }}
-                              >
-                                <img
-                                  src={icons ? windowsIconWhite : windowIcon}
-                                  alt=""
-                                  style={{ height: 12, width: 12 }}
-                                />
-                                Download
-                              </a>
+                              <div className="opacitywrapper4 m-0">
+                                <a
+                                  className="game-event-download text-white  d-flex align-items-center gap-2"
+                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={epicwhite}
+                                    alt="icon"
+                                    className="epicgame2"
+                                  />
+                                  Download
+                                </a>
+                              </div>
                               <NavLink
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" />
+                                <img src={user} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2387,30 +2362,25 @@ const BetaPassNFT = ({
                             </span>
                             <div className="summaryseparator mt-3 mb-3"></div>
                             <div className="d-flex align-items-center gap-2 justify-content-between">
-                              <a
-                                href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="downloadbtn-coingecko btn d-flex align-items-center gap-1"
-                                onMouseEnter={() => {
-                                  setIcons(true);
-                                }}
-                                onMouseLeave={() => {
-                                  setIcons(false);
-                                }}
-                              >
-                                <img
-                                  src={icons ? windowsIconWhite : windowIcon}
-                                  alt=""
-                                  style={{ height: 12, width: 12 }}
-                                />
-                                Download
-                              </a>
+                              <div className="opacitywrapper4 m-0">
+                                <a
+                                  className="game-event-download text-white  d-flex align-items-center gap-2"
+                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={epicwhite}
+                                    alt="icon"
+                                    className="epicgame2"
+                                  />
+                                  Download
+                                </a>
+                              </div>
                               <NavLink
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" />
+                                <img src={user} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
