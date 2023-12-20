@@ -65,6 +65,7 @@ import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
 import eventSkeleton from "./assets/eventSkeleton.png";
 import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
+import ExpiredProfileEvent from "./ExpiredProfileEvent";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -217,10 +218,10 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "dypius",
     rewards: "DYP",
-    status: "Live",
+    status: "Expired",
     id: "event5",
     eventType: "Explore & Find",
-    date: "November 20, 2023",
+    date: "Ended",
     logo: dypius,
     totalRewards: "300,000 in DYP Rewards",
     eventDuration: dypiusLastDay,
@@ -434,18 +435,18 @@ const NewWalletBalance = ({
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "November 20, 2023",
+      eventDate: "Ended",
       backgroundImage: upcomingDyp,
       popupInfo: {
         title: "Dypius",
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Live",
+        status: "Expired",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -453,7 +454,7 @@ const NewWalletBalance = ({
         minRewards: "25",
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "November 20, 2023",
+        eventDate: "Ended",
       },
     },
     {
