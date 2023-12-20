@@ -1344,7 +1344,9 @@ const NewWalletBalance = ({
                           ? dypiusEarnTokens
                           : item.title === "Gate.io"
                           ? gateEarnUSD
-                          : userEarnUsd
+                          : item.title === "CoinGecko"
+                          ? userEarnUsd
+                          : 0
                       }
                     />
                   ))}
@@ -1919,13 +1921,15 @@ const NewWalletBalance = ({
                   userEarnUsd={
                     item.title === "Conflux"
                       ? confluxEarnUSD
-                      : item.title === "Gate.io"
-                      ? gateEarnUSD
                       : item.title === "Base"
                       ? baseEarnUSD
                       : item.title === "Dypius"
                       ? dypiusEarnTokens
-                      : userEarnUsd
+                      : item.title === "Gate.io"
+                      ? gateEarnUSD
+                      : item.title === "CoinGecko"
+                      ? userEarnUsd
+                      : 0
                   }
                 />
               ))}
