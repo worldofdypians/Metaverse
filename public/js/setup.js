@@ -4587,6 +4587,51 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
+  } else if (type === "landbnb") {
+    contract = new window.bscWeb3.eth.Contract(
+      window.LAND_CCIP_ABI,
+      window.config.nft_land_bnb_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  } else if (type === "landavax") {
+    contract = new window.avaxWeb3.eth.Contract(
+      window.LAND_CCIP_ABI,
+      window.config.nft_land_avax_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  } else if (type === "landbase") {
+    contract = new window.baseWeb3.eth.Contract(
+      window.LAND_CCIP_ABI,
+      window.config.nft_land_base_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
   } else if (type === "coingecko") {
     contract = new window.bscWeb3.eth.Contract(
       window.COINGECKO_NFT_ABI,
@@ -4677,7 +4722,52 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
-  }
+  } else if (type === "cawsbnb") {
+    contract = new window.bscWeb3.eth.Contract(
+      window.CAWS_CCIP_ABI,
+      window.config.nft_caws_bnb_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  } else if (type === "cawsavax") {
+    contract = new window.avaxWeb3.eth.Contract(
+      window.CAWS_CCIP_ABI,
+      window.config.nft_caws_avax_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  } else if (type === "cawsbase") {
+    contract = new window.baseWeb3.eth.Contract(
+      window.CAWS_CCIP_ABI,
+      window.config.nft_caws_base_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  } 
 }
 
 async function myNftListContract(address) {

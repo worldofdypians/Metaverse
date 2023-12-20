@@ -127,6 +127,16 @@ function Dashboard({
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+
+  const [MyNFTSLandBNB, setMyNFTSLandBNB] = useState([]);
+  const [MyNFTSCawsBNB, setMyNFTSCawsBNB] = useState([]);
+
+  const [MyNFTSLandAvax, setMyNFTSLandAvax] = useState([]);
+  const [MyNFTSCawsAvax, setMyNFTSCawsAvax] = useState([]);
+
+  const [MyNFTSLandBase, setMyNFTSLandBase] = useState([]);
+  const [MyNFTSCawsBase, setMyNFTSCawsBase] = useState([]);
+
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setmyGateNfts] = useState([]);
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
@@ -841,18 +851,15 @@ function Dashboard({
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
       (NFTS) =>
-        // setMyNFTSCaws(NFTS)
-        console.log("")
+        setMyNFTSCawsBNB(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
       (NFTS) =>
-        // setMyNFTSCaws(NFTS)
-        console.log("")
+        setMyNFTSCawsBase(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
       (NFTS) =>
-        // setMyNFTSCaws(NFTS)
-        console.log("")
+        setMyNFTSCawsAvax(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
@@ -864,18 +871,15 @@ function Dashboard({
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
       (NFTS) =>
-        // setMyNFTSLand(NFTS)
-        console.log("")
+        setMyNFTSLandBNB(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
       (NFTS) =>
-        // setMyNFTSLand(NFTS)
-        console.log("")
+        setMyNFTSLandBase(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
       (NFTS) =>
-        // setMyNFTSLand(NFTS)
-        console.log("")
+        setMyNFTSLandAvax(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
@@ -1986,6 +1990,12 @@ function Dashboard({
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
+                      MyNFTSLandBNB={MyNFTSLandBNB}
+                      MyNFTSCawsBNB={MyNFTSCawsBNB}
+                      MyNFTSLandAvax={MyNFTSLandAvax}
+                      MyNFTSCawsAvax={MyNFTSCawsAvax}
+                      MyNFTSLandBase={MyNFTSLandBase}
+                      MyNFTSCawsBase={MyNFTSCawsBase}
                     />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
