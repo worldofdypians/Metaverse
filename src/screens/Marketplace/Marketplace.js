@@ -270,7 +270,28 @@ const Marketplace = ({
   };
 
 
+  const getAllData = async () => {
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/totalTXs")
+      .catch((e) => {
+        console.error(e);
+      });
+    const result2 = await axios
+      .get("https://api.worldofdypians.com/api/totalVolumes")
+      .catch((e) => {
+        console.error(e);
+      });
 
+    if (result.data && result.data !== "NaN") {
+      setTotalTx(result.data);
+      localStorage.setItem("cachedTvl", result.data);
+    }
+
+    if (result2.data && result2.data !== "NaN") {
+      setTotalVolume(result2.data);
+      localStorage.setItem("cachedVolume", result2.data);
+    }
+  };
   const fetchCachedData = () => {
     const cachedVolume = localStorage.getItem("cachedVolume");
     const cachedTvl = localStorage.getItem("cachedTvl");
@@ -336,7 +357,8 @@ const Marketplace = ({
     }
   }, [listedNFTS, nftCount, topSales, latest20RecentListedNFTS]);
 
-  useEffect(() => { 
+  useEffect(() => {
+    getAllData();
     fetchCachedData();
     getTotalSupply();
     window.scrollTo(0, 0);
