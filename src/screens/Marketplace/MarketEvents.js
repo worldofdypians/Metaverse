@@ -927,15 +927,11 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "Conflux"
-                                ? confluxEarnUSD
-                                : item.title === "Gate.io"
-                                ? gateEarnUSD
-                                : item.title === "Dypius"
-                                ? dypiusEarnTokens
+                              item.title === "CoinGecko"
+                                ? userEarnUsd
                                 : item.title === "Base"
                                 ? baseEarnUSD
-                                : userEarnUsd
+                                : 0
                             }
                           />
                         ))}
@@ -1065,7 +1061,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(3, 5).map((item, index) => (
+                  {dummyBetaPassData2.slice(3, 6).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
@@ -1078,9 +1074,9 @@ const MarketEvents = ({
                           ? confluxEarnUSD
                           : item.title === "Gate.io"
                           ? gateEarnUSD
-                          : item.title === "Base"
-                          ? baseEarnUSD
-                          : userEarnUsd
+                          : item.title === "Dypius"
+                          ? dypiusEarnUsd
+                          : 0
                       }
                     />
                   ))}
