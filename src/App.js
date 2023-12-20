@@ -226,6 +226,8 @@ function App() {
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
   const [domainMetaData, setDomainMetaData] = useState(null);
+  const [totalTx, setTotalTx] = useState(0);
+  const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
@@ -1782,6 +1784,34 @@ function App() {
     }
   };
 
+
+  const getAllData = async () => {
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/totalTXs")
+      .catch((e) => {
+        console.error(e);
+      });
+    const result2 = await axios
+      .get("https://api.worldofdypians.com/api/totalVolumes")
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result.data && result.data !== "NaN") {
+      setTotalTx(result.data);
+      localStorage.setItem("cachedTvl", result.data);
+    }
+
+    if (result2.data && result2.data !== "NaN") {
+      setTotalVolume(result2.data);
+      localStorage.setItem("cachedVolume", result2.data);
+    }
+  };
+
+  useEffect(()=>{
+    getAllData()
+  },[coinbase])
+
   useEffect(() => {
     getDomains();
     fetchBscBalance();
@@ -2039,6 +2069,8 @@ function App() {
                     ...top20BoughtByPriceAndPriceTypeDYPNFTS,
                   ]}
                   nftCount={nftCount}
+                  totalTx={totalTx}
+                  totalvolume={totalvolume}
                 />
               }
             />
