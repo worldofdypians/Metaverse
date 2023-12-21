@@ -212,6 +212,8 @@ const NewWalletBalance = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+  let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
+
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
@@ -296,14 +298,14 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "doge",
     rewards: "DOGE",
-    status: "Coming Soon",
+    status: "Live",
     id: "event7",
     eventType: "Explore & Mine",
     eventDate: "Dec 22, 2023",
     date: "Dec 22, 2023",
     logo: doge,
     totalRewards: "$10,000 in DOGE Rewards",
-    eventDuration: coingeckoLastDay,
+    eventDuration: dogeLastDay,
     minRewards: "1",
     maxRewards: "100",
     minPoints: "5,000",
@@ -367,15 +369,15 @@ const NewWalletBalance = ({
       chain: "BNB Chain",
       linkState: "doge",
       rewards: "DOGE",
-      status: "Coming Soon",
-      eventStatus: "Coming Soon",
+      status: "Live",
+      eventStatus: "Live",
       id: "event7",
       eventType: "Explore & Mine",
       date: "Dec 22, 2023",
       eventDate: "Dec 22, 2023",
       logo: doge,
       totalRewards: "$10,000 in DOGE Rewards",
-      eventDuration: coingeckoLastDay,
+      eventDuration: dogeLastDay,
       minRewards: "1",
       maxRewards: "100",
       minPoints: "5,000",
@@ -386,12 +388,12 @@ const NewWalletBalance = ({
         chain: "BNB Chain",
         linkState: "doge",
         rewards: "DOGE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event7",
-        eventStatus: "Coming Soon",
+        eventStatus: "Live",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in DOGE Rewards",
-        eventDuration: dypiusLastDay,
+        eventDuration: dogeLastDay,
         minRewards: "1",
         maxRewards: "100",
         minPoints: "5,000",
@@ -599,6 +601,10 @@ const NewWalletBalance = ({
   const [gateUserPoints, setGateUserPoints] = useState(0);
   const [gateEarnBnb, setGateEarnBNB] = useState(0);
 
+  const [dogeUserPoints, setDogeUserPoints] = useState(0);
+  const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
+  const [dogeEarnBNB, setDogeEarnBNB] = useState(0);
+
   const [baseUserPoints, setBaseUserPoints] = useState(0);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [baseEarnETH, setBaseEarnETH] = useState(0);
@@ -799,6 +805,11 @@ const NewWalletBalance = ({
           const dypEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "all";
           });
+
+          const dogeEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "doge";
+          });
+
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
               dypEvent[0].reward.earn.total /
@@ -815,6 +826,18 @@ const NewWalletBalance = ({
             setuserEarnUsd(usdValue);
             if (bnbPrice !== 0) {
               setuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (dogeEvent && dogeEvent[0]) {
+            const points = dogeEvent[0].reward.earn.totalPoints;
+            setDogeUserPoints(points);
+            const usdValue =
+              dogeEvent[0].reward.earn.total /
+              dogeEvent[0].reward.earn.multiplier;
+            setDogeEarnUSD(usdValue);
+            if (bnbPrice !== 0) {
+              setDogeEarnBNB(usdValue / bnbPrice);
             }
           }
 
@@ -1206,15 +1229,15 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-              {/* <ActiveProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyDypius);
+                  setDummyEvent(dummyDoge);
                   setEventPopup(true);
                 }}
-                data={dummyDypius}
-                event={dummyDypius}
-                userEarnedUsd={dypiusEarnTokens}
-              /> */}
+                data={dummyDoge}
+                event={dummyDoge}
+                userEarnedUsd={dogeEarnUSD}
+              />
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCoingecko);
@@ -1240,13 +1263,7 @@ const NewWalletBalance = ({
                 }}
                 data={dummyCmc}
               />
-              <UpcomingProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyDoge);
-                  setEventPopup(true);
-                }}
-                data={dummyDoge}
-              />
+           
               {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
@@ -1325,6 +1342,8 @@ const NewWalletBalance = ({
                           ? gateEarnUSD
                           : item.title === "CoinGecko"
                           ? userEarnUsd
+                          : item.title === "Dogecoin"
+                          ? dogeEarnUSD
                           : 0
                       }
                     />
@@ -1670,7 +1689,7 @@ const NewWalletBalance = ({
                           genesisRank2 +
                           baseEarnUSD +
                           confluxEarnUSD +
-                          gateEarnUSD +
+                          gateEarnUSD + dogeEarnUSD +
                           userEarnUsd +
                           treasureRewardMoney +
                           EthRewardsLandPool * ethTokenData +
@@ -1908,6 +1927,8 @@ const NewWalletBalance = ({
                       ? gateEarnUSD
                       : item.title === "CoinGecko"
                       ? userEarnUsd
+                      : item.title === "Dogecoin"
+                      ? dogeEarnUSD
                       : 0
                   }
                 />
@@ -2399,6 +2420,8 @@ const NewWalletBalance = ({
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
+                        : dummyEvent.id === "event7"
+                        ? dogeUserPoints
                         : 0,
                       0
                     )}
@@ -2428,6 +2451,8 @@ const NewWalletBalance = ({
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
+                        : dummyEvent.id === "event7"
+                        ? dogeEarnUSD
                         : 0,
                       2
                     )}
@@ -2443,6 +2468,8 @@ const NewWalletBalance = ({
                               ? gateEarnBnb
                               : dummyEvent.id === "event4"
                               ? baseEarnETH
+                              : dummyEvent.id === "event7"
+                              ? dogeEarnBNB
                               : 0,
                             2
                           )}

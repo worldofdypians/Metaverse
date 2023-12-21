@@ -46,6 +46,9 @@ const MyRewardsPopup = ({
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [baseEarnETH, setBaseEarnETH] = useState(0);
 
+  const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
+  const [dogeEarnBNB, setDogeEarnBNB] = useState(0);
+
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
   const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
@@ -253,6 +256,11 @@ const MyRewardsPopup = ({
             return obj.betapassId === "base";
           });
 
+          const dogeEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "doge";
+          });
+
+
           const usdValue_previous =
             coingeckoEvent[0].reward.earn.total /
             coingeckoEvent[0].reward.earn.multiplier;
@@ -270,6 +278,17 @@ const MyRewardsPopup = ({
               gateEvent[0].reward.earn.total /
               gateEvent[0].reward.earn.multiplier;
             setgateEarnUSDPrevious(gateUsdValue_previous);
+          }
+
+          if (dogeEvent && dogeEvent[0]) {
+
+            const usdValue =
+              dogeEvent[0].reward.earn.total /
+              dogeEvent[0].reward.earn.multiplier;
+            setDogeEarnUSD(usdValue);
+            if (bnbPrice !== 0) {
+              setDogeEarnBNB(usdValue / bnbPrice);
+            }
           }
 
           if (baseEvent) {
@@ -327,6 +346,7 @@ const MyRewardsPopup = ({
         }
       });
   };
+
   const fetchGateUSDRewards = async () => {
     await axios
       .get(
@@ -700,6 +720,21 @@ const MyRewardsPopup = ({
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {getFormattedNumber(baseEarnETH, 4)} WETH
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr>
+
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Dogecoin
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(dogeEarnUSD, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(dogeEarnBNB, 4)} WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(0, 2)}
