@@ -25,7 +25,7 @@ const MyRewardsPopup = ({
   allChests,
   weeklyplayerData,
   dailyplayerData,
-  userRank2,userSocialRewards
+  userRank2,userSocialRewards,dypTokenData
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -61,7 +61,8 @@ const MyRewardsPopup = ({
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
-
+  const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
+  const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
   const getBundles = async () => {
     if (address) {
@@ -252,6 +253,20 @@ const MyRewardsPopup = ({
           const baseEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "base";
           });
+
+          const dypEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "all";
+          });
+
+          if (dypEvent && dypEvent[0]) {
+            const userEarnedDyp =
+            dypEvent[0].reward.earn.total /
+            dypEvent[0].reward.earn.multiplier;
+
+            setDypiusEarnUsd(dypTokenData * userEarnedDyp);
+            setDypiusEarnTokens(userEarnedDyp);
+          }
+
 
           const usdValue_previous =
             coingeckoEvent[0].reward.earn.total /
@@ -695,7 +710,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Base
               </td>
-              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+              <td className="myrewards-td-second border-0 specialCell text-center">
                 ${getFormattedNumber(baseEarnUSD, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
@@ -705,7 +720,20 @@ const MyRewardsPopup = ({
                 ${getFormattedNumber(0, 2)}
               </td>
             </tr>
-
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Dypius
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(dypiusEarnUsd, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(dypiusEarnTokens, 4)} DYP
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr>
             <tr>
               <td className="myrewards-td-main border-0">
                 {" "}

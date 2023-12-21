@@ -2009,7 +2009,6 @@ function App() {
                 <Dashboard
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
-                  dypTokenData_old={dypTokenData_old}
                   coinbase={coinbase}
                   account={coinbase}
                   isConnected={isConnected}

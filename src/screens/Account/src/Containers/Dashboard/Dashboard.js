@@ -57,7 +57,6 @@ function Dashboard({
   landStaked,
   ethTokenData,
   dypTokenData,
-  dypTokenData_old,
   onSigninClick,
   onLogoutClick,
   availableTime,
@@ -2216,6 +2215,7 @@ function Dashboard({
                             allChests={allChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
+                            dypTokenData={dypTokenData}
                             // hasNft={
                             //   MyNFTSCaws.length +
                             //     MyNFTSLand.length  >
