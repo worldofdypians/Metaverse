@@ -98,7 +98,7 @@ const WalletBalance = ({
   myGateNfts,
   myConfluxNfts,
   myBaseNfts,
-  myDogeNfts,
+  myDogeNfts,myCmcNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -437,6 +437,7 @@ const WalletBalance = ({
     let confluxNftsArray = [];
     let baseNftsArray = [];
     let dogeNftsArray = [];
+    let cmcNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -563,6 +564,22 @@ const WalletBalance = ({
               buyer: coinbase,
               tokenId: i,
               type: "doge",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myCmcNfts && myCmcNfts.length > 0) {
+        await Promise.all(
+          myCmcNfts.map(async (i) => {
+            cmcNftsArray.push({
+              nftAddress: window.config.nft_cmc_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "cmc",
               chain: 56,
               isStaked: false,
               isListed: false,
@@ -730,6 +747,7 @@ const WalletBalance = ({
         ...gateNftsArray,
         ...baseNftsArray,
         ...dogeNftsArray,
+        ...cmcNftsArray,
         ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
@@ -901,6 +919,9 @@ const WalletBalance = ({
       let dogeFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_doge_address
       );
+      let cmcFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_cmc_address
+      );
       let confluxFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_conflux_address
       );
@@ -912,6 +933,7 @@ const WalletBalance = ({
         ...confluxFilter,
         ...gateFilter,
         ...dogeFilter,
+        ...cmcFilter,
         ...baseFilter,
       ];
       setcollectedItemsFiltered(allBetapassArray);
@@ -1833,6 +1855,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "doge"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                  : item.type === "cmc"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                   : item.type === "base"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
@@ -1856,6 +1880,8 @@ const WalletBalance = ({
                                   ? "BSBP"
                                   : item.type === "doge"
                                   ? "DCBP"
+                                  : item.type === "cmc"
+                                  ? "CMCBP"
                                   : item.type === "gate"
                                   ? "GTBP"
                                   : "Timepiece"}{" "}
@@ -2787,6 +2813,9 @@ const WalletBalance = ({
                                   window.config.nft_doge_address
                                 ? "doge"
                                 : nft.nftAddress ===
+                                  window.config.nft_cmc_address
+                                ? "cmc"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -2838,6 +2867,9 @@ const WalletBalance = ({
                                       window.config.nft_doge_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_cmc_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -2868,6 +2900,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
                                     ? "DCBP"
+                                    : nft.nftAddress ===
+                                    window.config.nft_cmc_address
+                                  ? "CMCBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3004,6 +3039,9 @@ const WalletBalance = ({
                                   window.config.nft_doge_address
                                 ? "doge"
                                 : nft.nftAddress ===
+                                window.config.nft_cmc_address
+                              ? "cmc"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -3057,6 +3095,9 @@ const WalletBalance = ({
                                       window.config.nft_doge_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_cmc_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -3089,6 +3130,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
                                     ? "DCBP"
+                                    : nft.nftAddress ===
+                                    window.config.nft_cmc_address
+                                  ? "CMCBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>

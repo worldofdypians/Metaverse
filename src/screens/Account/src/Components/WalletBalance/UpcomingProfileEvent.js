@@ -14,6 +14,7 @@ import coingeckoProfileBanner from "./assets/coingeckoProfileBanner.png";
 import gateProfileBanner from "./assets/gateProfileBanner.png";
 import baseProfileBanner from "./assets/baseProfileBanner.png";
 import dogeProfileBanner from "./assets/dogeProfileBanner.png";
+import cmcProfileBanner from "./assets/cmcProfileBanner.png";
 
 const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
   return (
@@ -59,10 +60,14 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
               ? baseProfileBanner
               : data.linkState == "doge"
               ? dogeProfileBanner
+              : data.linkState == "coinmarketcap"
+              ? cmcProfileBanner
               : coingeckoProfileBanner
           }
           style={{ height: "50px", width: "25%" }}
           alt=""
+          className="profilebannerimg"
+
         />
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
