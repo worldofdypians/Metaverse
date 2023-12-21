@@ -66,6 +66,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
             height={16}
             width={16}
             alt=""
+            className="profilebannerimg"
           />
           <div className="d-flex flex-column">
             <h6 className="profile-event-title d-flex align-items-center gap-1 mb-0">
@@ -105,7 +106,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
           />
           <span className="mb-0 event-bottom-text">{event.eventType}</span>
         </div>
-        <div className="d-flex align-items-center gap-1">
+        <div className="d-flex align-items-center gap-1 eventusd">
           {event.title === "Dypius" ? (
             <img src={dypius} height={15} width={15} alt="" />
           ) : (

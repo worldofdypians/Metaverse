@@ -299,8 +299,8 @@ const NewWalletBalance = ({
     status: "Coming Soon",
     id: "event7",
     eventType: "Explore & Mine",
-    eventDate: "December 22, 2023",
-    date: "December 22, 2023",
+    eventDate: "Dec 22, 2023",
+    date: "Dec 22, 2023",
     logo: doge,
     totalRewards: "$10,000 in DOGE Rewards",
     eventDuration: coingeckoLastDay,
@@ -319,8 +319,8 @@ const NewWalletBalance = ({
     status: "Coming Soon",
     id: "event8",
     eventType: "Explore & Mine",
-    eventDate: "December 26, 2023",
-    date: "December 26, 2023",
+    eventDate: "Dec 26, 2023",
+    date: "Dec 26, 2023",
     logo: cmc,
     totalRewards: "$10,000 in BNB Rewards",
     eventDuration: coingeckoLastDay,
@@ -371,8 +371,8 @@ const NewWalletBalance = ({
       eventStatus: "Coming Soon",
       id: "event7",
       eventType: "Explore & Mine",
-      date: "December 22, 2023",
-      eventDate: "December 22, 2023",
+      date: "Dec 22, 2023",
+      eventDate: "Dec 22, 2023",
       logo: doge,
       totalRewards: "$10,000 in DOGE Rewards",
       eventDuration: coingeckoLastDay,
@@ -397,7 +397,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
+        eventDate: "Dec 22, 2023",
       },
     },
     {
@@ -407,7 +407,7 @@ const NewWalletBalance = ({
       totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "December 26, 2023",
+      eventDate: "Dec 26, 2023",
       // backgroundImage: upcomingCmc,
       popupInfo: {
         title: "CoinMarketCap",
@@ -423,7 +423,7 @@ const NewWalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
-        eventDate: "December 26, 2023",
+        eventDate: "Dec 26, 2023",
         learnMore:
           "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
@@ -1219,7 +1219,7 @@ const NewWalletBalance = ({
       <div className="container px-0">
         <div className="row gap-3 gap-lg-0 mx-0">
           <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
-            <div className="purple-container rankings-wrapper px-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
+            <div className="purple-container rankings-wrapper px-3 px-lg-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
               <div className="green-div"></div>
               <h6
                 className="profile-div-title mb-0"

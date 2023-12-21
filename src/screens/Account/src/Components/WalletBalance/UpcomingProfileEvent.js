@@ -66,6 +66,8 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
           }
           style={{ height: "50px", width: "25%" }}
           alt=""
+          className="profilebannerimg"
+
         />
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
