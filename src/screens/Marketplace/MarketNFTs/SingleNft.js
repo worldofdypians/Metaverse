@@ -197,6 +197,7 @@ const SingleNft = ({
     if (
       type !== "conflux" &&
       type !== "doge" &&
+      type !== "cmc" &&
       type !== "coingecko" &&
       type !== "gate" &&
       type !== "base"
@@ -417,6 +418,19 @@ const SingleNft = ({
         });
 
       console.log(owner);
+
+      setowner(owner);
+    } else if (type === "cmc") {
+      const nft_contract = new window.bscWeb3.eth.Contract(
+        window.CMC_NFT_ABI,
+        window.config.nft_cmc_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
       setowner(owner);
     } else if (type === "base") {
@@ -1308,6 +1322,8 @@ const SingleNft = ({
         ? "conflux"
         : nftAddress === window.config.nft_doge_address
         ? "doge"
+        : nftAddress === window.config.nft_cmc_address
+        ? "cmc"
         : nftAddress === window.config.nft_base_address
         ? "base"
         : "caws",
@@ -1336,6 +1352,8 @@ const SingleNft = ({
         ? "conflux"
         : nftAddress === window.config.nft_doge_address
         ? "doge"
+        : nftAddress === window.config.nft_cmc_address
+        ? "cmc"
         : nftAddress === window.config.nft_base_address
         ? "base"
         : "land",
@@ -1360,6 +1378,8 @@ const SingleNft = ({
       setType("conflux");
     } else if (nftAddress === window.config.nft_doge_address) {
       setType("doge");
+    } else if (nftAddress === window.config.nft_cmc_address) {
+      setType("cmc");
     } else if (nftAddress === window.config.nft_base_address) {
       setType("base");
     } else if (nftAddress === window.config.nft_gate_address) {
@@ -1498,6 +1518,18 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
+            ) : type === "cmc" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  CoinMarketCap{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
             ) : (
               <>
                 <h6 className="market-banner-title d-flex align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -1532,6 +1564,8 @@ const SingleNft = ({
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
                         : nftAddress === window.config.nft_doge_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
+                        : nftAddress === window.config.nft_cmc_address
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
                         : nftAddress === window.config.nft_base_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
@@ -1552,7 +1586,8 @@ const SingleNft = ({
                       src={
                         type === "coingecko" ||
                         type === "gate" ||
-                        type === "doge"
+                        type === "doge" ||
+                        type === "cmc"
                           ? bnbLogo
                           : type === "conflux"
                           ? confluxLogo
@@ -1562,7 +1597,10 @@ const SingleNft = ({
                       }
                       alt=""
                     />{" "}
-                    {type === "coingecko" || type === "gate" || type === "doge"
+                    {type === "coingecko" ||
+                    type === "gate" ||
+                    type === "doge" ||
+                    type === "cmc"
                       ? "BNB Chain"
                       : type === "conflux"
                       ? "Conflux"
@@ -1592,6 +1630,8 @@ const SingleNft = ({
                         ? "Conflux Beta Pass"
                         : type === "doge"
                         ? "Dogecoin Beta Pass"
+                        : type === "cmc"
+                        ? "CoinMarketCap Beta Pass"
                         : type === "base"
                         ? "Base Beta Pass"
                         : "CAWS Timepiece"}{" "}
@@ -1899,7 +1939,8 @@ const SingleNft = ({
                       type !== "gate" &&
                       type !== "conflux" &&
                       type !== "base" &&
-                      type !== "doge" && (
+                      type !== "doge" &&
+                      type !== "cmc" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -2087,7 +2128,8 @@ const SingleNft = ({
                         type === "gate" ||
                         type === "conflux" ||
                         type === "base" ||
-                        type === "doge") && (
+                        type === "doge" ||
+                        type === "cmc") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">
@@ -2104,7 +2146,8 @@ const SingleNft = ({
                             href={
                               type === "coingecko" ||
                               type === "gate" ||
-                              type === "doge"
+                              type === "doge" ||
+                              type === "cmc"
                                 ? `https://bscscan.com/address/${owner}`
                                 : type === "conflux"
                                 ? `https://evm.confluxscan.net/address/${owner}`
@@ -2298,7 +2341,8 @@ const SingleNft = ({
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "base" &&
-                        type !== "doge" && (
+                        type !== "doge" &&
+                        type !== "cmc" && (
                           <button
                             disabled={
                               sellLoading === true || sellStatus === "failed"
@@ -2359,7 +2403,8 @@ const SingleNft = ({
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "base" &&
-                        type !== "doge" && (
+                        type !== "doge" &&
+                        type !== "cmc" && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
@@ -2378,7 +2423,8 @@ const SingleNft = ({
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "base" &&
-                        type !== "doge" && (
+                        type !== "doge" &&
+                        type !== "cmc" && (
                           <button
                             className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
@@ -2413,7 +2459,8 @@ const SingleNft = ({
             type !== "gate" &&
             type !== "conflux" &&
             type !== "base" &&
-            type !== "doge" && (
+            type !== "doge" &&
+            type !== "cmc" && (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -2672,7 +2719,8 @@ const SingleNft = ({
             type === "gate" ||
             type === "conflux" ||
             type === "base" ||
-            type === "doge") && (
+            type === "doge" ||
+            type === "cmc") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">

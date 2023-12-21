@@ -8,12 +8,15 @@ import downloadIconWhite from "../../../assets/downloadIconWhite.svg";
 import windowsIcon from "../../../assets/windowsIcon.svg";
 import windowsIconWhite from "../../../assets/windowsIconWhite.svg";
 import { NavLink } from "react-router-dom";
+import epicwhite from "../../../assets/epicwhite.svg";
+import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
 import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
 import gateWhite from "../../Marketplace/MarketNFTs/wallets/gateWallet.png";
 import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
 import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cmc from '../../Marketplace/MarketNFTs/assets/cmc.svg'
 
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 import dypius from "../../Account/src/Components/WalletBalance/assets/dypIcon.svg";
@@ -99,34 +102,6 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-
-    {
-      title: "Dypius",
-      logo: dypius,
-      eventStatus: "Live",
-      totalRewards: "300,000 in DYPv2 Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "September xx, 2023",
-      rewardsAmount: "300,000",
-      rewardsCurrency: "DYP Rewards",
-      // backgroundImage: upcomingDyp,
-      popupInfo: {
-        title: "Dypius",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "DYP",
-        status: "Live",
-        id: "event5",
-        eventType: "Explore & Find",
-        totalRewards: "300,000 in DYPv2 Rewards",
-        // eventDuration: coingeckoLastDay,
-        minRewards: "25",
-        maxRewards: "50",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "Ended",
-      },
-    },
     {
       title: "Dogecoin",
       chain: "BNB Chain",
@@ -165,32 +140,92 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       },
     },
     {
-      title: "Gate.io",
-      logo: gateWhite,
-      eventStatus: "Expired",
-      totalRewards: "$2,000 in BNB Rewards",
-      rewardsAmount: "$2,000",
-      rewardsCurrency: "BNB Rewards",
-      myEarnings: 0,
+      title: "CMC",
+      logo: cmc,
+      eventStatus: "Coming Soon",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Ended",
+      eventDate: "December 26, 2023",
+      // backgroundImage: upcomingCmc,
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "BNB Rewards",
       popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Gate.io",
+        title: "CoinMarketCap",
         chain: "BNB Chain",
-        linkState: "gate",
-        rewards: "GT",
-        status: "Expired",
-        id: "event6",
-        totalRewards: "$2,000 in BNB Rewards",
-        eventDate: "Ended",
-        date: "Ended",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        rewardsAmount: "$10,000",
+        rewardsCurrency: "BNB Rewards",
+        // eventDuration: coingeckoLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "20,000",
+        maxPoints: "30,000",
+        eventDate: "December 26, 2023",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
+    // {
+    //   title: "Dypius",
+    //   logo: dypius,
+    //   eventStatus: "Expired",
+    //   totalRewards: "300,000 in DYPv2 Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "September xx, 2023",
+    //   rewardsAmount: "300,000",
+    //   rewardsCurrency: "DYP Rewards",
+    //   // backgroundImage: upcomingDyp,
+    //   popupInfo: {
+    //     title: "Dypius",
+    //     chain: "BNB Chain",
+    //     linkState: "dypius",
+    //     rewards: "DYP",
+    //     status: "Expired",
+    //     id: "event5",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "300,000 in DYPv2 Rewards",
+    //     // eventDuration: coingeckoLastDay,
+    //     minRewards: "25",
+    //     maxRewards: "50",
+    //     learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+    //     eventDate: "Ended",
+    //   },
+    // },
+
+    // {
+    //   title: "Gate.io",
+    //   logo: gateWhite,
+    //   eventStatus: "Expired",
+    //   totalRewards: "$2,000 in BNB Rewards",
+    //   rewardsAmount: "$2,000",
+    //   rewardsCurrency: "BNB Rewards",
+    //   myEarnings: 0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Ended",
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Gate.io",
+    //     chain: "BNB Chain",
+    //     linkState: "gate",
+    //     rewards: "GT",
+    //     status: "Expired",
+    //     id: "event6",
+    //     totalRewards: "$2,000 in BNB Rewards",
+    //     eventDate: "Ended",
+    //     date: "Ended",
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "20,000",
+    //   },
+    // },
     // {
     //   title: "Conflux",
     //   logo: conflux,
@@ -296,6 +331,25 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           <div className="col-12 col-lg-8 video-diagonal">
             <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
               <div className="row m-0 gap-5 align-items-center justify-content-center">
+                <div className="linear-border-download p-0" style={{
+                    width: "fit-content",
+                    zIndex: 5,
+                    position: "relative",
+                    textDecoration: "none",
+                  }} >
+                <div
+                  className="opacitywrapper5 download-filled-btn m-0 px-3"
+                 
+                >
+                  <a
+                    className="game-event-download d-flex align-items-center gap-2"
+                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                    target="_blank"
+                  >
+                    <img src={epicblack} alt="icon" className="epicgame2" />
+                    Download
+                  </a>
+                </div></div>
                 <NavLink
                   to="join-beta"
                   className="pink-linear-border"
@@ -313,62 +367,13 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                     Join Beta
                   </button>
                 </NavLink>
-                {/* <div
-                  className="linear-border-download"
-                  style={{
-                    width: "fit-content",
-                    zIndex: 5,
-                    position: "relative",
-                    textDecoration: "none",
-                  }}
-                >
-                  <button
-                    ref={downloader}
-                    onClick={gotoDownload}
-                    className="btn filled-btn-download px-5 d-flex align-items-center gap-2"
-                  >
-                    <img
-                      src={icons ? windowsIconWhite : windowsIcon}
-                      width={16}
-                      height={16}
-                      alt="windows icon"
-                    />
-                    Download
-                    
-                  </button>
-                </div> */}
-                <a
-                  className="linear-border-download"
-                  style={{
-                    width: "fit-content",
-                    zIndex: 5,
-                    position: "relative",
-                    textDecoration: "none",
-                  }}
-                  href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                  target="_blank"
-                >
-                  <button
-                    ref={downloader}
-                    // onClick={gotoDownload}
-                    className="btn filled-btn-download px-5 d-flex align-items-center gap-2"
-                  >
-                    <img
-                      src={icons ? windowsIconWhite : windowsIcon}
-                      width={16}
-                      height={16}
-                      alt="windows icon"
-                    />
-                    Download
-                  </button>
-                </a>
               </div>
-              <div className="d-flex align-items-center gap-2">
+              {/* <div className="d-flex align-items-center gap-2">
                 <img src={sysReq} alt="system requirements" />
                 <span className="sys-req" onClick={() => setModal(true)}>
                   System requirements
                 </span>
-              </div>
+              </div> */}
             </div>
             {windowSize.width < 992 && (
               <NavLink
@@ -390,9 +395,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
                   <Slider {...settings} ref={betaSlider}>
                     {dummyBetaPassData2.map((item, index) => (
-                      <NavLink
-                        to={`/marketplace/events/treasure-hunt`}
-                      >
+                      <NavLink to={`/marketplace/events/treasure-hunt`}>
                         <BetaEventCardHome
                           data={item}
                           key={index}
@@ -437,9 +440,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.map((item, index) => (
-                  <NavLink
-                    to={`/marketplace/events/treasure-hunt`}
-                  >
+                  <NavLink to={`/marketplace/events/treasure-hunt`}>
                     <BetaEventCardHome
                       data={item}
                       key={index}

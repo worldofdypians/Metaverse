@@ -59,6 +59,8 @@ import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
+import epicblack from "./newAssets/epicblack.svg";
+import epicwhite from "./newAssets/epicwhite.svg";
 
 const WalletBalance = ({
   dypBalance,
@@ -96,7 +98,7 @@ const WalletBalance = ({
   myGateNfts,
   myConfluxNfts,
   myBaseNfts,
-  myDogeNfts
+  myDogeNfts,myCmcNfts,latestVersion
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -151,6 +153,7 @@ const WalletBalance = ({
   const windowSize = useWindowSize();
   const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
+  const [icon, setIcon] = useState(false);
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -225,8 +228,6 @@ const WalletBalance = ({
       },
     ],
   };
-
-
 
   const handleFavoritesPage = (e, value) => {
     setFavoritesPage(value);
@@ -435,7 +436,8 @@ const WalletBalance = ({
     let gateNftsArray = [];
     let confluxNftsArray = [];
     let baseNftsArray = [];
-    let dogeNftsArray = []
+    let dogeNftsArray = [];
+    let cmcNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -562,6 +564,22 @@ const WalletBalance = ({
               buyer: coinbase,
               tokenId: i,
               type: "doge",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myCmcNfts && myCmcNfts.length > 0) {
+        await Promise.all(
+          myCmcNfts.map(async (i) => {
+            cmcNftsArray.push({
+              nftAddress: window.config.nft_cmc_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "cmc",
               chain: 56,
               isStaked: false,
               isListed: false,
@@ -729,6 +747,7 @@ const WalletBalance = ({
         ...gateNftsArray,
         ...baseNftsArray,
         ...dogeNftsArray,
+        ...cmcNftsArray,
         ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
@@ -884,7 +903,6 @@ const WalletBalance = ({
 
   const handleSortCollection = (value1, value2) => {
     if (filter1 === "all" && filter2 === "all") {
-      
       setcollectedItemsFiltered(collectedItems);
     } else if (filter1 === "land" && filter2 === "all") {
       let wodFilter = collectedItems.filter(
@@ -901,6 +919,9 @@ const WalletBalance = ({
       let dogeFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_doge_address
       );
+      let cmcFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_cmc_address
+      );
       let confluxFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_conflux_address
       );
@@ -912,6 +933,7 @@ const WalletBalance = ({
         ...confluxFilter,
         ...gateFilter,
         ...dogeFilter,
+        ...cmcFilter,
         ...baseFilter,
       ];
       setcollectedItemsFiltered(allBetapassArray);
@@ -1399,7 +1421,6 @@ const WalletBalance = ({
   }, [showAllEvents]);
 
   var options = { year: "numeric", month: "short", day: "numeric" };
- 
 
   return (
     <>
@@ -1420,25 +1441,22 @@ const WalletBalance = ({
                       World of Dypians
                     </span>
                     <span className="game-event-patchtitle d-flex algin-items-center gap-1">
-                      Latest Patch: v0.2.1{" "}
+                      Latest Patch: {latestVersion}{" "}
                       <img
                         src={require("./newAssets/orangePatch.svg").default}
                       />
                     </span>
                   </div>
-                  <a
-                    className="game-event-download"
-                    href="https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp"
-                    target="_blank"
-                  >
-                    <img
-                      src={halfCircleArrow}
-                      width={16}
-                      height={16}
-                      alt="icon"
-                    />
-                    Download
-                  </a>
+                  <div className="opacitywrapper3">
+                    <a
+                      className="game-event-download text-white d-flex align-items-center gap-2"
+                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                      target="_blank"
+                    >
+                      <img src={epicwhite} alt="icon" className="epicgame" />
+                      Download
+                    </a>
+                  </div>
                 </div>
                 <div className="d-flex flex-column">
                   <div
@@ -1474,12 +1492,18 @@ const WalletBalance = ({
                           <span
                             className="game-news-desc"
                             dangerouslySetInnerHTML={{
-                              __html: announcementsNews?.content?.slice(0, 200) + '...',
+                              __html:
+                                announcementsNews?.content?.slice(0, 200) +
+                                "...",
                             }}
                           ></span>
                           <div className="d-flex align-items-center gap-2 justify-content-between">
                             <span className="game-news-date d-flex align-items-center gap-1 ">
-                              <img alt="" src={grayCalendar} />{announcementsNews?.date?.toLocaleDateString("en-US", options)}
+                              <img alt="" src={grayCalendar} />
+                              {announcementsNews?.date?.toLocaleDateString(
+                                "en-US",
+                                options
+                              )}
                             </span>
                             <img src={arrowCircle} alt="" />
                           </div>
@@ -1831,6 +1855,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "doge"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                  : item.type === "cmc"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                   : item.type === "base"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
@@ -1854,6 +1880,8 @@ const WalletBalance = ({
                                   ? "BSBP"
                                   : item.type === "doge"
                                   ? "DCBP"
+                                  : item.type === "cmc"
+                                  ? "CMCBP"
                                   : item.type === "gate"
                                   ? "GTBP"
                                   : "Timepiece"}{" "}
@@ -2785,6 +2813,9 @@ const WalletBalance = ({
                                   window.config.nft_doge_address
                                 ? "doge"
                                 : nft.nftAddress ===
+                                  window.config.nft_cmc_address
+                                ? "cmc"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -2836,6 +2867,9 @@ const WalletBalance = ({
                                       window.config.nft_doge_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_cmc_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -2866,6 +2900,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
                                     ? "DCBP"
+                                    : nft.nftAddress ===
+                                    window.config.nft_cmc_address
+                                  ? "CMCBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3002,6 +3039,9 @@ const WalletBalance = ({
                                   window.config.nft_doge_address
                                 ? "doge"
                                 : nft.nftAddress ===
+                                window.config.nft_cmc_address
+                              ? "cmc"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : "timepiece",
@@ -3052,8 +3092,11 @@ const WalletBalance = ({
                                       window.config.nft_base_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                     : nft.nftAddress ===
-                                    window.config.nft_doge_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                      window.config.nft_doge_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_cmc_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -3087,6 +3130,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
                                     ? "DCBP"
+                                    : nft.nftAddress ===
+                                    window.config.nft_cmc_address
+                                  ? "CMCBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>

@@ -20,8 +20,6 @@ html {
   overflow-x: hidden;
 }
 
-
-
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -34,22 +32,22 @@ html {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #26264F; 
+  background: #26264f;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #8E97CD; 
+  background: #8e97cd;
   border-radius: 8px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 a {
   text-decoration: none;
- }
+}
 
 body {
   background: #080b2a;
@@ -67,10 +65,9 @@ body {
     font-family: "Iceland" !important;
   }
 
-  .font-raleway{
-    font-family: 'Raleway', sans-serif !important;
+  .font-raleway {
+    font-family: "Raleway", sans-serif !important;
   }
-
 
   .linear-border {
     position: relative;
@@ -92,13 +89,10 @@ body {
     content: "";
   }
 
-
-  
-
   .linear-border-download {
     position: relative;
     padding: 3px;
-    background: linear-gradient(90deg, #8EEE86 -13.56%, #0078D4 129.3%);
+    background: linear-gradient(90deg, #8eee86 -13.56%, #0078d4 129.3%);
     border-radius: 8px;
     clip-path: polygon(
       0 20px,
@@ -115,11 +109,10 @@ body {
     content: "";
   }
 
-
   .timepiece-border {
     position: relative;
     padding: 3px;
-    background: linear-gradient(89.7deg, #BD185D 0.23%, #BA18BD 99.72%);;
+    background: linear-gradient(89.7deg, #bd185d 0.23%, #ba18bd 99.72%);
     border-radius: 8px;
     clip-path: polygon(
       0 20px,
@@ -132,13 +125,12 @@ body {
     height: fit-content;
   }
 
-
   .linear-border-purp {
     position: relative;
     padding: 3px;
     pointer-events: none;
     user-select: none;
-    background: linear-gradient(89.7deg, #7E39FD 0.23%, #2F1369 99.72%);
+    background: linear-gradient(89.7deg, #7e39fd 0.23%, #2f1369 99.72%);
     border-radius: 8px;
     clip-path: polygon(
       0 20px,
@@ -153,7 +145,6 @@ body {
   .linear-border-purp::before {
     content: "";
   }
-
 
   .walletbutton {
     background: var(--box-bg);
@@ -174,7 +165,7 @@ body {
   .walletbutton:hover {
     border: 1px solid rgb(140, 86, 255);
   }
-  
+
   .walletmodal-wrapper {
     padding: 2rem;
     display: flex;
@@ -192,7 +183,7 @@ body {
   .linear-border-disabled {
     position: relative;
     padding: 2px;
-    background: #C4C4C4;
+    background: #c4c4c4;
     border-radius: 8px;
     clip-path: polygon(
       0 20px,
@@ -251,7 +242,7 @@ body {
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 12pt;
     line-height: 24px;
     text-align: center;
     color: #ffffff;
@@ -267,7 +258,7 @@ body {
       calc(100% - 19px) 100%,
       0 100%
     );
-    background: linear-gradient(89.7deg, #7B84D8 0.23%, #A4FB85 99.72%);
+    background: linear-gradient(89.7deg, #7b84d8 0.23%, #a4fb85 99.72%);
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -287,14 +278,14 @@ body {
       calc(100% - 19px) 100%,
       0 100%
     );
-    background: #C4C4C4;
+    background: #c4c4c4;
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
     text-align: center;
-    color: #080B2A;
+    color: #080b2a;
     white-space: pre;
     border: none;
     outline: none;
@@ -319,20 +310,20 @@ body {
       calc(100% - 19px) 100%,
       0 100%
     );
-    background: linear-gradient(90deg, #8EEE86 -13.56%, #0078D4 129.3%);
-    color: #FFF;
-    font-size: 16px;
+    background: linear-gradient(90deg, #8eee86 -13.56%, #0078d4 129.3%);
+    color: #333333;
+    font-size: 12pt;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: normal;
     border: none !important;
     white-space: pre;
-    transition: all .25s;
+    transition: all 0.25s;
   }
 
   .filled-btn-download:hover {
     color: #fff;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 
   .filled-btn {
@@ -353,7 +344,7 @@ body {
     color: #080b2a;
     border: none !important;
     white-space: pre;
-    transition: all .25s;
+    transition: all 0.25s;
   }
   .timepiece-btn {
     clip-path: polygon(
@@ -364,7 +355,7 @@ body {
       calc(100% - 19px) 100%,
       0 100%
     );
-    background: linear-gradient(89.7deg, #BD185D 0.23%, #BA18BD 99.72%);;
+    background: linear-gradient(89.7deg, #bd185d 0.23%, #ba18bd 99.72%);
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -373,7 +364,46 @@ body {
     color: #fff;
     border: none !important;
     white-space: pre;
-    transition: all .25s;
+    transition: all 0.25s;
+  }
+
+  .download-linear-border {
+    position: relative;
+    padding: 2px;
+    background: transparent;
+    border-radius: 8px;
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+  }
+
+  .download-filled-btn {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    // background: linear-gradient(
+    //   148deg,
+    //   rgba(0, 0, 0, 0.1) 0%,
+    //   rgba(0, 0, 0, 0.5) 100%
+    // );
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #080b2a;
+    border: none !important;
+    white-space: pre;
   }
 
   .filled-error-btn {
@@ -385,7 +415,7 @@ body {
       calc(100% - 19px) 100%,
       0 100%
     );
-    background: linear-gradient(89.7deg, #D87B7B 0.23%, #FB85D3 99.72%);
+    background: linear-gradient(89.7deg, #d87b7b 0.23%, #fb85d3 99.72%);
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -394,13 +424,12 @@ body {
     color: #080b2a;
     border: none !important;
     white-space: pre;
-    transition: all .25s;
+    transition: all 0.25s;
   }
 
-  .filled-btn:hover{
+  .filled-btn:hover {
     color: #ffffff;
     background: #080b2a;
-
   }
 
   .pink-filled-btn {
@@ -412,7 +441,7 @@ body {
       calc(100% - 19px) 100%,
       0 100%
     );
-    background: linear-gradient(89.7deg, #5690FF 0.23%, #8C56FF 99.72%);
+    background: linear-gradient(89.7deg, #5690ff 0.23%, #8c56ff 99.72%);
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -426,7 +455,7 @@ body {
   .pink-linear-border {
     position: relative;
     padding: 2px;
-    background: linear-gradient(89.7deg, #5690FF 0.23%, #8C56FF 99.72%);
+    background: linear-gradient(89.7deg, #5690ff 0.23%, #8c56ff 99.72%);
     border-radius: 8px;
     clip-path: polygon(
       0 20px,
@@ -444,7 +473,7 @@ body {
 }
 
 .purple-btn {
-  background: linear-gradient(266.71deg,#a420e2 8.87%,#1829bd 91.56%);
+  background: linear-gradient(266.71deg, #a420e2 8.87%, #1829bd 91.56%);
   clip-path: polygon(
     0 20px,
     20px 0,
@@ -467,7 +496,9 @@ body {
   content: "";
 }
 
-.outline-btn-green, .outline-btn-green:hover, .outline-btn-green:focus {
+.outline-btn-green,
+.outline-btn-green:hover,
+.outline-btn-green:focus {
   background: #14142a;
   border-radius: 8px;
   border: 1px solid #4ed5d2;
@@ -476,11 +507,11 @@ body {
   font-size: 12px;
   line-height: 16px;
   color: #4ed5d2;
-  width: 145px!important;
+  width: 145px !important;
 }
 
 .linear-border-purple {
-  background: linear-gradient(266.71deg,#a420e2 8.87%,#1829bd 91.56%);
+  background: linear-gradient(266.71deg, #a420e2 8.87%, #1829bd 91.56%);
   border: transparent;
   position: relative;
   padding: 3px;
@@ -497,7 +528,6 @@ body {
   @media only screen and (max-width: 500px) {
     align-self: center;
   }
-
 }
 
 .hidescroll {
@@ -540,7 +570,7 @@ body {
   align-items: center;
 }
 
-.scroll-to-top{
+.scroll-to-top {
   position: fixed;
   bottom: 5%;
   right: 3%;

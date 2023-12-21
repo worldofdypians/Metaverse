@@ -31,6 +31,7 @@ import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
 import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import dogePopupImage from "./assets/dogePopupImage.png";
+import cmcPopupImage from "./assets/cmcPopupImage.png";
 
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
@@ -42,6 +43,7 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
@@ -65,6 +67,7 @@ import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import { abbreviateNumber } from "js-abbreviation-number";
 import eventSkeleton from "./assets/eventSkeleton.png";
 import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
+import ExpiredProfileEvent from "./ExpiredProfileEvent";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -201,7 +204,7 @@ const NewWalletBalance = ({
   openedChests,
   userRank2,
   genesisRank2,
-  onDailyBonusInfoClick,
+  onDailyBonusInfoClick,userSocialRewards
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -217,10 +220,10 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "dypius",
     rewards: "DYP",
-    status: "Live",
+    status: "Expired",
     id: "event5",
     eventType: "Explore & Find",
-    date: "November 20, 2023",
+    date: "Ended",
     logo: dypius,
     totalRewards: "300,000 in DYP Rewards",
     eventDuration: dypiusLastDay,
@@ -296,10 +299,30 @@ const NewWalletBalance = ({
     status: "Coming Soon",
     id: "event7",
     eventType: "Explore & Mine",
-    eventDate: "December 22, 2023",
-    date: "December 22, 2023",
+    eventDate: "Dec 22, 2023",
+    date: "Dec 22, 2023",
     logo: doge,
     totalRewards: "$10,000 in DOGE Rewards",
+    eventDuration: coingeckoLastDay,
+    minRewards: "1",
+    maxRewards: "100",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+  };
+
+  const dummyCmc = {
+    title: "CoinMarketCap",
+    chain: "BNB Chain",
+    linkState: "coinmarketcap",
+    rewards: "BNB",
+    status: "Coming Soon",
+    id: "event8",
+    eventType: "Explore & Mine",
+    eventDate: "Dec 26, 2023",
+    date: "Dec 26, 2023",
+    logo: cmc,
+    totalRewards: "$10,000 in BNB Rewards",
     eventDuration: coingeckoLastDay,
     minRewards: "1",
     maxRewards: "100",
@@ -339,6 +362,72 @@ const NewWalletBalance = ({
   };
 
   const dummyBetaPassData2 = [
+    {
+      title: "Dogecoin",
+      chain: "BNB Chain",
+      linkState: "doge",
+      rewards: "DOGE",
+      status: "Coming Soon",
+      eventStatus: "Coming Soon",
+      id: "event7",
+      eventType: "Explore & Mine",
+      date: "Dec 22, 2023",
+      eventDate: "Dec 22, 2023",
+      logo: doge,
+      totalRewards: "$10,000 in DOGE Rewards",
+      eventDuration: coingeckoLastDay,
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Coming Soon",
+        id: "event7",
+        eventStatus: "Coming Soon",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        eventDuration: dypiusLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "Dec 22, 2023",
+      },
+    },
+    {
+      title: "CMC",
+      logo: cmc,
+      eventStatus: "Coming Soon",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 26, 2023",
+      // backgroundImage: upcomingCmc,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        eventDate: "Dec 26, 2023",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -394,58 +483,22 @@ const NewWalletBalance = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-    {
-      title: "Dogecoin",
-      chain: "BNB Chain",
-      linkState: "doge",
-      rewards: "DOGE",
-      status: "Coming Soon",
-      eventStatus: "Coming Soon",
-      id: "event7",
-      eventType: "Explore & Mine",
-      date: "December 22, 2023",
-      logo: doge,
-      totalRewards: "$10,000 in DOGE Rewards",
-      eventDuration: coingeckoLastDay,
-      minRewards: "1",
-      maxRewards: "100",
-      minPoints: "5,000",
-      maxPoints: "50,000",
-      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      popupInfo: {
-        title: "Dogecoin",
-        chain: "BNB Chain",
-        linkState: "doge",
-        rewards: "DOGE",
-        status: "Coming Soon",
-        id: "event7",
-        eventStatus: "Coming Soon",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in DOGE Rewards",
-        eventDuration: dypiusLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
-      },
-    },
+
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "November 20, 2023",
+      eventDate: "Ended",
       backgroundImage: upcomingDyp,
       popupInfo: {
         title: "Dypius",
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "DYP",
-        status: "Live",
+        status: "Expired",
         id: "event5",
         eventType: "Explore & Find",
         totalRewards: "300,000 in DYPv2 Rewards",
@@ -453,7 +506,7 @@ const NewWalletBalance = ({
         minRewards: "25",
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "November 20, 2023",
+        eventDate: "Ended",
       },
     },
     {
@@ -570,7 +623,6 @@ const NewWalletBalance = ({
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
-  const [userRewards, setuserRewards] = useState(0);
 
   const dummyEvents = [
     {
@@ -610,25 +662,6 @@ const NewWalletBalance = ({
     },
   ];
 
-  const getUserRewardData = async (addr) => {
-    const result = await axios
-      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`)
-      .catch((e) => {
-        console.error(e);
-      });
-
-    if (result && result.status === 200) {
-      if (result.data && result.data.rewards && result.data.rewards === 0) {
-        setuserRewards(0);
-      } else if (result.data && !result.data.rewards) {
-        let amount = 0;
-        for (let i = 0; i < result.data.length; i++) {
-          amount += result.data[i].amount;
-        }
-        setuserRewards(amount);
-      }
-    }
-  };
 
   const openEvents = () => {
     setShowAllEvents(!showAllEvents);
@@ -839,7 +872,6 @@ const NewWalletBalance = ({
   useEffect(() => {
     if (email && address) {
       fetchTreasureHuntData(email, address);
-      getUserRewardData(address);
     }
   }, [email, address, bnbPrice, cfxPrice]);
 
@@ -1166,7 +1198,7 @@ const NewWalletBalance = ({
       <div className="container px-0">
         <div className="row gap-3 gap-lg-0 mx-0">
           <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
-            <div className="purple-container rankings-wrapper px-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
+            <div className="purple-container rankings-wrapper px-3 px-lg-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
               <div className="green-div"></div>
               <h6
                 className="profile-div-title mb-0"
@@ -1192,7 +1224,7 @@ const NewWalletBalance = ({
                 event={dummyCoingecko}
                 userEarnedUsd={userEarnUsd}
               />
-              <ActiveProfileEvent
+              {/* <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
                   setEventPopup(true);
@@ -1200,6 +1232,13 @@ const NewWalletBalance = ({
                 data={dummyBase}
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
+              /> */}
+              <UpcomingProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyCmc);
+                  setEventPopup(true);
+                }}
+                data={dummyCmc}
               />
               <UpcomingProfileEvent
                 onOpenEvent={() => {
@@ -1238,7 +1277,7 @@ const NewWalletBalance = ({
                   style={{
                     cursor: "pointer",
                     width: "fit-content",
-                    position:windowSize.width > 650 ? "absolute" : 'relative',
+                    position: windowSize.width > 650 ? "absolute" : "relative",
                     bottom: windowSize.width > 992 ? "15px" : "-5px",
                     left: windowSize.width > 650 ? "43%" : "43%",
                   }}
@@ -1284,7 +1323,9 @@ const NewWalletBalance = ({
                           ? dypiusEarnTokens
                           : item.title === "Gate.io"
                           ? gateEarnUSD
-                          : userEarnUsd
+                          : item.title === "CoinGecko"
+                          ? userEarnUsd
+                          : 0
                       }
                     />
                   ))}
@@ -1622,7 +1663,7 @@ const NewWalletBalance = ({
                     <h6 className="my-total-rewards mb-0 font-iceland">
                       $
                       {getFormattedNumber(
-                        userRewards +
+                        userSocialRewards +
                           weeklyplayerData +
                           dailyplayerData +
                           userRank2 +
@@ -1666,7 +1707,7 @@ const NewWalletBalance = ({
                         className="my-total-rewards mb-0 font-iceland"
                         style={{ fontSize: "20px" }}
                       >
-                        ${getFormattedNumber(userRewards, 2)}
+                        ${getFormattedNumber(userSocialRewards, 2)}
                       </h6>
                       <span
                         className="my-total-earned mb-0 font-iceland"
@@ -1821,7 +1862,7 @@ const NewWalletBalance = ({
                 <div className="d-flex align-items-center justify-content-between">
                   <span className="my-special-rewards mb-0">My Rewards</span>
                   <h6 className="my-special-rewards-value mb-0">
-                    ${getFormattedNumber(userRewards, 2)}
+                    ${getFormattedNumber(userSocialRewards, 2)}
                   </h6>
                 </div>
               </>
@@ -1859,13 +1900,15 @@ const NewWalletBalance = ({
                   userEarnUsd={
                     item.title === "Conflux"
                       ? confluxEarnUSD
-                      : item.title === "Gate.io"
-                      ? gateEarnUSD
                       : item.title === "Base"
                       ? baseEarnUSD
                       : item.title === "Dypius"
                       ? dypiusEarnTokens
-                      : userEarnUsd
+                      : item.title === "Gate.io"
+                      ? gateEarnUSD
+                      : item.title === "CoinGecko"
+                      ? userEarnUsd
+                      : 0
                   }
                 />
               ))}
@@ -1920,6 +1963,8 @@ const NewWalletBalance = ({
                         ? eventPopupImageBase
                         : dummyEvent.linkState === "doge"
                         ? dogePopupImage
+                        : dummyEvent.linkState === "coinmarketcap"
+                        ? cmcPopupImage
                         : eventPopupImage
                     }
                     alt=""
@@ -2055,6 +2100,18 @@ const NewWalletBalance = ({
                       Remember to log in to the game daily and venture into the
                       Dogecoin area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event8" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
+                      CoinMarketCap Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the CoinMarketCap area, players not only stand a
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      CoinMarketCap area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2102,7 +2159,8 @@ const NewWalletBalance = ({
                           ? "BNB"
                           : dummyEvent.id === "event5"
                           ? "DYP"
-                          : dummyEvent.id === "event6"
+                          : dummyEvent.id === "event6" ||
+                            dummyEvent.id === "event8"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -2135,6 +2193,8 @@ const NewWalletBalance = ({
                 ? "Gate.io"
                 : dummyEvent.id === "event7"
                 ? "Dogecoin"
+                : dummyEvent.id === "event8"
+                ? "CoinMarketCap"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2212,6 +2272,19 @@ const NewWalletBalance = ({
                 public ledger that is maintained by a network of computers
                 called nodes.
               </p>
+            ) : dummyEvent.id === "event8" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                CoinMarketCap provides cryptocurrency market cap rankings,
+                charts, and more. We tracks capitalization of various
+                cryptocurrencies by listing prices, available supply (amount of
+                coins that is currently in circulation), trade volume over last
+                24 hours, or market capitalizations. CoinMarketCap was founded
+                in May 2013 by Brandon Chez in Long Island City, Queens, New
+                York.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
@@ -2239,6 +2312,8 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/gate_io"
                     : dummyEvent.id === "event7"
                     ? "https://twitter.com/dogecoin"
+                    : dummyEvent.id === "event8"
+                    ? "https://twitter.com/CoinMarketCap"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2258,6 +2333,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/coingecko"
                     : dummyEvent.id === "event6"
                     ? "https://t.me/gateio_en"
+                    : dummyEvent.id === "event8"
+                    ? "https://t.me/CoinMarketCapAnnouncements"
                     : dummyEvent.id === "event7"
                     ? "https://discord.gg/dogecoin"
                     : "https://base.org/discord"
@@ -2290,6 +2367,8 @@ const NewWalletBalance = ({
                     ? "https://www.gate.io/"
                     : dummyEvent.id === "event7"
                     ? "https://dogecoin.com/"
+                    : dummyEvent.id === "event8"
+                    ? "https://coinmarketcap.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2375,7 +2454,8 @@ const NewWalletBalance = ({
                             ? "BNB"
                             : dummyEvent.id === "event5"
                             ? "DYP"
-                            : dummyEvent.id === "event6"
+                            : dummyEvent.id === "event6" ||
+                              dummyEvent.id === "event8"
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
@@ -2395,9 +2475,11 @@ const NewWalletBalance = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event5" && (
+              dummyEvent.id !== "event7" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
-                  <NavLink to={`/marketplace/beta-pass/doge`}>
+                  <NavLink
+                    to={`/marketplace/beta-pass/${dummyEvent.linkState}`}
+                  >
                     <button className="btn get-beta-btn">Get Beta Pass</button>
                   </NavLink>
                 </div>

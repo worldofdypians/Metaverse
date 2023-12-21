@@ -86,7 +86,7 @@ const CheckAuthUserModal = ({
         navigate("/auth");
         if (donwloadSelected === true)
           window.location.href =
-            "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp";
+            "https://store.epicgames.com/p/world-of-dypians-2e0694";
         else {
           // handleRedirect();
           onClose();
