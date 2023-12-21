@@ -133,6 +133,7 @@ function Dashboard({
   const [myBaseNfts, setmyBaseNfts] = useState([]);
   const [myDogeNfts, setmyDogeNfts] = useState([]);
   const [myCmcNfts, setmyCmcNfts] = useState([]);
+  const [latestVersion, setLatestVersion] = useState(0);
 
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
@@ -337,6 +338,23 @@ function Dashboard({
     }
     return array;
   }
+
+
+
+  const fetchReleases = async () => {
+    const newReleases = await axios
+      .get("https://api3.dyp.finance/api/wod_releases")
+      .then((res) => {
+        return res.data;
+      });
+
+    const datedReleasedNews = newReleases.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
+ 
+    setLatestVersion(datedReleasedNews[0]?.version);
+  };
+
 
   //land only stakes
   const getStakesIdsWod = async () => {
@@ -1533,6 +1551,7 @@ function Dashboard({
 
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
+    fetchReleases()
   }, []);
 
   useEffect(() => {
@@ -2000,6 +2019,7 @@ function Dashboard({
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
+                      latestVersion={latestVersion}
                     />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
